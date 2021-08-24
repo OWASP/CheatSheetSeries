@@ -2136,12 +2136,12 @@
  <span class="nt">&lt;/configuration&gt;</span>
 </code></pre></div>
 <ul>
-<li>Remove the version header.</li>
+<li>Remove the version header by adding the following line in <code>Machine.config</code> file:</li>
 </ul>
 <div class="highlight"><pre><span></span><code><span class="nt">&lt;httpRuntime</span> <span class="na">enableVersionHeader=</span><span class="s">&quot;false&quot;</span> <span class="nt">/&gt;</span>
 </code></pre></div>
 <ul>
-<li>Also remove the Server header.</li>
+<li>Also remove the Server header using the HttpContext Class in your code.</li>
 </ul>
 <div class="highlight"><pre><span></span><code><span class="n">HttpContext</span><span class="p">.</span><span class="n">Current</span><span class="p">.</span><span class="n">Response</span><span class="p">.</span><span class="n">Headers</span><span class="p">.</span><span class="n">Remove</span><span class="p">(</span><span class="s">&quot;Server&quot;</span><span class="p">);</span>
 </code></pre></div>
