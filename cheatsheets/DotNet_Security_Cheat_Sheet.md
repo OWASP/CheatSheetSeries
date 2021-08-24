@@ -185,13 +185,13 @@ if ((string)ViewState[AntiXsrfTokenKey] != _antiXsrfTokenValue ||
  </configuration>
 ```
 
-- Remove the version header.
+- Remove the version header by adding the following line in `Machine.config` file:
 
 ```xml
 <httpRuntime enableVersionHeader="false" />
 ```
 
-- Also remove the Server header.
+- Also remove the Server header using the HttpContext Class in your code.
 
 ```csharp
 HttpContext.Current.Response.Headers.Remove("Server");
