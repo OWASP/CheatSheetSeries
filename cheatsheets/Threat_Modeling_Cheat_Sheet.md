@@ -216,7 +216,7 @@ During this phase conduct the following activities:
 
 ### Mapping Abuse Cases to Use Cases
 
-This is a very important step that can help identifying application logical threats. list of all possible abuse cases should be developed for each application use case. Being familiar with the types of application logical attack is an important during the mapping process. You can refer to OWASP Testing Guide 4.0: Business Logic Testing and OWASP ASVA for more details.
+This is a very important step that can help identifying application logical threats. list of all possible abuse cases should be developed for each application use case. Being familiar with the types of application logical attack is an important during the mapping process. You can refer to OWASP Testing Guide 4.0: Business Logic Testing and OWASP ASVS for more details.
 
 ### Re-Define attack vectors
 
