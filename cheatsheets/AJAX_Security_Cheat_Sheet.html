@@ -347,14 +347,14 @@
         
           <li class="md-nav__item">
   <a href="#use-innertext-instead-of-innerhtml" class="md-nav__link">
-    Use .innerText instead of .innerHtml
+    Use .innerText instead of .innerHTML
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#dont-use-eval" class="md-nav__link">
-    Don't use eval
+  <a href="#dont-use-eval-new-function-or-other-code-evaluation-tools" class="md-nav__link">
+    Don't use eval(), new Function() or other code evaluation tools
   </a>
   
 </li>
@@ -1445,14 +1445,14 @@
         
           <li class="md-nav__item">
   <a href="#use-innertext-instead-of-innerhtml" class="md-nav__link">
-    Use .innerText instead of .innerHtml
+    Use .innerText instead of .innerHTML
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#dont-use-eval" class="md-nav__link">
-    Don't use eval
+  <a href="#dont-use-eval-new-function-or-other-code-evaluation-tools" class="md-nav__link">
+    Don't use eval(), new Function() or other code evaluation tools
   </a>
   
 </li>
@@ -1615,9 +1615,9 @@
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>This document will provide a starting point for AJAX security and will hopefully be updated and expanded reasonably often to provide more detailed information about specific frameworks and technologies.</p>
 <h3 id="client-side-javascript">Client Side (JavaScript)<a class="headerlink" href="#client-side-javascript" title="Permanent link">&para;</a></h3>
-<h4 id="use-innertext-instead-of-innerhtml">Use .innerText instead of .innerHtml<a class="headerlink" href="#use-innertext-instead-of-innerhtml" title="Permanent link">&para;</a></h4>
+<h4 id="use-innertext-instead-of-innerhtml">Use <code>.innerText</code> instead of <code>.innerHTML</code><a class="headerlink" href="#use-innertext-instead-of-innerhtml" title="Permanent link">&para;</a></h4>
 <p>The use of <code>.innerText</code> will prevent most XSS problems as it will automatically encode the text.</p>
-<h4 id="dont-use-eval">Don't use eval<a class="headerlink" href="#dont-use-eval" title="Permanent link">&para;</a></h4>
+<h4 id="dont-use-eval-new-function-or-other-code-evaluation-tools">Don't use <code>eval()</code>, <code>new Function()</code> or other code evaluation tools<a class="headerlink" href="#dont-use-eval-new-function-or-other-code-evaluation-tools" title="Permanent link">&para;</a></h4>
 <p><code>eval()</code> function is evil, never use it. Needing to use eval usually indicates a problem in your design.</p>
 <h4 id="canonicalize-data-to-consumer-read-encode-before-use">Canonicalize data to consumer (read: encode before use)<a class="headerlink" href="#canonicalize-data-to-consumer-read-encode-before-use" title="Permanent link">&para;</a></h4>
 <p>When using data to build HTML, script, CSS, XML, JSON, etc. make sure you take into account how that data must be presented in a literal sense to keep its logical meaning.</p>
