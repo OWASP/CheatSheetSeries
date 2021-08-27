@@ -6,11 +6,11 @@ This document will provide a starting point for AJAX security and will hopefully
 
 ### Client Side (JavaScript)
 
-#### Use .innerText instead of .innerHtml
+#### Use `.innerText` instead of `.innerHTML`
 
 The use of `.innerText` will prevent most XSS problems as it will automatically encode the text.
 
-#### Don't use eval
+#### Don't use `eval()`, `new Function()` or other code evaluation tools
 
 `eval()` function is evil, never use it. Needing to use eval usually indicates a problem in your design.
 
