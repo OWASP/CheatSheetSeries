@@ -228,6 +228,11 @@ To detect containers with known vulnerabilities - scan images using static analy
     - [JFrog XRay](https://jfrog.com/xray/)
     - [Qualys](https://www.qualys.com/apps/container-security/)
 
+To detect secrets in images:
+
+- [ggshield](https://github.com/GitGuardian/ggshield) **(open source and free option available)**
+- [SecretScanner](https://github.com/deepfence/SecretScanner) **(free)**
+
 To detect misconfigurations in Kubernetes:
 
 - [kubeaudit](https://github.com/Shopify/kubeaudit)
