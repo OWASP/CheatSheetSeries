@@ -21,6 +21,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://cheatsheetseries.owasp.org/IndexTopTen.html</loc>
+         <lastmod>2021-09-09</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://cheatsheetseries.owasp.org/cheatsheets/AJAX_Security_Cheat_Sheet.html</loc>
          <lastmod>2021-09-09</lastmod>
          <changefreq>daily</changefreq>
