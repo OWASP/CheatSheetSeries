@@ -26,7 +26,7 @@ cp -r ../assets $WORK/cheatsheets/assets
 cp ../Index.md $WORK/cheatsheets/cheatsheets/Index.md
 cp ../IndexASVS.md $WORK/cheatsheets/cheatsheets/IndexASVS.md
 cp ../IndexProactiveControls.md $WORK/cheatsheets/cheatsheets/IndexProactiveControls.md
-cp ../IndexProactiveControls.md $WORK/cheatsheets/cheatsheets/IndexProactiveControls.md
+cp ../IndexTopTen.md $WORK/cheatsheets/cheatsheets/IndexTopTen.md
 sed -i 's/assets\//..\/assets\//g' $WORK/cheatsheets/cheatsheets/Index.md
 sed -i 's/assets\//..\/assets\//g' $WORK/cheatsheets/cheatsheets/IndexASVS.md
 sed -i 's/assets\//..\/assets\//g' $WORK/cheatsheets/cheatsheets/IndexTopTen.md
