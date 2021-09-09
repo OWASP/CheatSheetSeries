@@ -30,6 +30,7 @@ cp -r ../assets $WORK/cheatsheets/assets
 cp ../Index.md $WORK/cheatsheets/Glossary.md
 cp ../IndexASVS.md $WORK/cheatsheets/IndexASVS.md
 cp ../IndexProactiveControls.md $WORK/cheatsheets/IndexProactiveControls.md
+cp ../IndexTopTen.md $WORK/cheatsheets/IndexTopTen.md
 
 cp ../assets/WebSite_Favicon.ico $WORK/custom_theme/img/favicon.ico
 cp ../assets/WebSite_Favicon.png $WORK/custom_theme/img/apple-touch-icon-precomposed-152.png
@@ -51,12 +52,16 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     sed -i '' "1i\\
         Title: Index Proactive Controls\\
         " $WORK/cheatsheets/IndexProactiveControls.md
+    sed -i '' "1i\\
+        Title: Index Top 10\\
+        " $WORK/cheatsheets/IndexTopTen.md
 else
     sed -i "1iTitle: Introduction\n" $WORK/cheatsheets/index.md
     sed -i 's/Index.md/Glossary.md/g' $WORK/cheatsheets/Glossary.md
     sed -i "1iTitle: Index Alphabetical\n" $WORK/cheatsheets/Glossary.md
     sed -i "1iTitle: Index ASVS\n" $WORK/cheatsheets/IndexASVS.md
     sed -i "1iTitle: Index Proactive Controls\n" $WORK/cheatsheets/IndexProactiveControls.md
+    sed -i "1iTitle: Index Top 10\n" $WORK/cheatsheets/IndexTopTen.md
 fi
 
 echo "Step 4/7: Inserting markdown metadata."
