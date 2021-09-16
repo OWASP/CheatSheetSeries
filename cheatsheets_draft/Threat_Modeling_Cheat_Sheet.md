@@ -62,7 +62,7 @@ A nominated person should take notes during discussions, noting down the type of
 
 ### Document and share the results
 
-As the threat modeling session comes to an end and discussions start to close, ensure that you have complete and clear notes, writing down anything that you may have missed. The next step is to formalise the risks identified and score them accordingly, so they can be reviewed and prioritized by the team.
+As the threat modeling session comes to an end and discussions start to close, ensure that you have complete and clear notes, writing down anything that you may have missed. The next step is to formalize the risks identified and score them accordingly, so they can be reviewed and prioritized by the team.
 
 TODO scoring, review each threat identified etc.
 

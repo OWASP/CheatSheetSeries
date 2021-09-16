@@ -120,8 +120,7 @@ protected void master_Page_PreLoad(object sender, EventArgs e)
     else
     {
        // Validate the Anti-XSRF token
-
-if ((string)ViewState[AntiXsrfTokenKey] != _antiXsrfTokenValue ||
+       if ((string)ViewState[AntiXsrfTokenKey] != _antiXsrfTokenValue ||
           (string)ViewState[AntiXsrfUserNameKey] != (Context.User.Identity.Name ?? String.Empty))
        {
           throw new InvalidOperationException("Validation of Anti-XSRF token failed.");
@@ -783,27 +782,27 @@ How to log all errors from the `Startup.cs`, so that anytime an error is thrown 
 ``` csharp
 public void Configure(IApplicationBuilder app, IHostingEnvironment env)
 {
- if (env.IsDevelopment())
- {
-  _isDevelopment = true;
-  app.UseDeveloperExceptionPage();
+    if (env.IsDevelopment())
+    {
+        _isDevelopment = true;
+        app.UseDeveloperExceptionPage();
+    }
+
+    //Log all errors in the application
+    app.UseExceptionHandler(errorApp =>
+    {
+        errorApp.Run(async context =>
+        {
+            var errorFeature = context.Features.Get<IExceptionHandlerFeature>();
+            var exception = errorFeature.Error;
+
+            Log.Error(String.Format("Stacktrace of error: {0}",exception.StackTrace.ToString()));
+        });
+    });
+
+    app.UseAuthentication();
+    app.UseMvc();
  }
-
- //Log all errors in the application
- app.UseExceptionHandler(errorApp =>
- {
-  errorApp.Run(async context =>
-  {
-      var errorFeature = context.Features.Get<IExceptionHandlerFeature>();
-      var exception = errorFeature.Error;
-
-      Log.Error(String.Format("Stacktrace of error: {0}",exception.StackTrace.ToString()));
-  });
- });
-
-        app.UseAuthentication();
-            app.UseMvc();
-        }
 }
 ```
 
@@ -819,7 +818,7 @@ public class AccountsController : Controller
             _Logger = logger;
         }
 
- [HttpPost]
+        [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
@@ -829,18 +828,18 @@ public class AccountsController : Controller
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-   //Log all successful log in attempts
-   Log.Information(String.Format("User: {0}, Successfully Logged in", model.Email));
-   //Code for successful login
-  }
-  else
-  {
-   //Log all incorrect log in attempts
-   Log.Information(String.Format("User: {0}, Incorrect Password", model.Email));
-  }
- }
-
- ...
+                    //Log all successful log in attempts
+                    Log.Information(String.Format("User: {0}, Successfully Logged in", model.Email));
+                    //Code for successful login
+                }
+                else
+                {
+                //Log all incorrect log in attempts
+                Log.Information(String.Format("User: {0}, Incorrect Password", model.Email));
+                }
+             }
+            ...
+        }
 ```
 
 Logging levels for ILogger are listed below, in order of high to low importance:

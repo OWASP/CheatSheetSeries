@@ -1,4 +1,4 @@
-# NodeJS security cheat sheet
+# NodeJS Security Cheat Sheet
 
 ## Introduction
 

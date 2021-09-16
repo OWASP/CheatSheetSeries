@@ -20,9 +20,9 @@ This cheatsheet will help users of the [OWASP Proactive Controls](https://owasp.
 
 [PHP Configuration Cheat Sheet](cheatsheets/PHP_Configuration_Cheat_Sheet.md)
 
-[Ruby on Rails Cheatsheet (Tools)](cheatsheets/Ruby_on_Rails_Cheat_Sheet.md#tools)
+[Ruby on Rails Cheat Sheet (Tools)](cheatsheets/Ruby_on_Rails_Cheat_Sheet.md#tools)
 
-[Ruby on Rails Cheatsheet (XSS)](cheatsheets/Ruby_on_Rails_Cheat_Sheet.md#cross-site-scripting-xss)
+[Ruby on Rails Cheat Sheet (XSS)](cheatsheets/Ruby_on_Rails_Cheat_Sheet.md#cross-site-scripting-xss)
 
 [Vulnerable Dependency Management Cheat Sheet](cheatsheets/Vulnerable_Dependency_Management_Cheat_Sheet.md)
 
@@ -34,7 +34,7 @@ This cheatsheet will help users of the [OWASP Proactive Controls](https://owasp.
 
 [Query Parameterization Cheat Sheet](cheatsheets/Query_Parameterization_Cheat_Sheet.md)
 
-[Ruby on Rails Cheatsheet (SQL Injection)](cheatsheets/Ruby_on_Rails_Cheat_Sheet.md#sql-injection)
+[Ruby on Rails Cheat Sheet (SQL Injection)](cheatsheets/Ruby_on_Rails_Cheat_Sheet.md#sql-injection)
 
 [SQL Injection Prevention Cheat Sheet](cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.md)
 
@@ -78,9 +78,9 @@ This cheatsheet will help users of the [OWASP Proactive Controls](https://owasp.
 
 [REST Security Cheat Sheet (Input Validation)](cheatsheets/REST_Security_Cheat_Sheet.md#input-validation)
 
-[Ruby on Rails Cheatsheet (Command Injection)](cheatsheets/Ruby_on_Rails_Cheat_Sheet.md#command-injection)
+[Ruby on Rails Cheat Sheet (Command Injection)](cheatsheets/Ruby_on_Rails_Cheat_Sheet.md#command-injection)
 
-[Ruby on Rails Cheatsheet (Mass Assignment and Strong Parameters)](cheatsheets/Ruby_on_Rails_Cheat_Sheet.md#mass-assignment-and-strong-parameters)
+[Ruby on Rails Cheat Sheet (Mass Assignment and Strong Parameters)](cheatsheets/Ruby_on_Rails_Cheat_Sheet.md#mass-assignment-and-strong-parameters)
 
 [Unvalidated Redirects and Forwards Cheat Sheet](cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md)
 
@@ -108,9 +108,9 @@ This cheatsheet will help users of the [OWASP Proactive Controls](https://owasp.
 
 [REST Security Cheat Sheet (JWT)](cheatsheets/REST_Security_Cheat_Sheet.md#jwt)
 
-[Ruby on Rails Cheatsheet (Sessions)](cheatsheets/Ruby_on_Rails_Cheat_Sheet.md#sessions)
+[Ruby on Rails Cheat Sheet (Sessions)](cheatsheets/Ruby_on_Rails_Cheat_Sheet.md#sessions)
 
-[Ruby on Rails Cheatsheet (Authentication)](cheatsheets/Ruby_on_Rails_Cheat_Sheet.md#authentication)
+[Ruby on Rails Cheat Sheet (Authentication)](cheatsheets/Ruby_on_Rails_Cheat_Sheet.md#authentication)
 
 [SAML Security Cheat Sheet](cheatsheets/SAML_Security_Cheat_Sheet.md)
 
@@ -132,9 +132,9 @@ This cheatsheet will help users of the [OWASP Proactive Controls](https://owasp.
 
 [REST Security Cheat Sheet (Access Control)](cheatsheets/REST_Security_Cheat_Sheet.md#access-control)
 
-[Ruby on Rails Cheatsheet (Insecure Direct Object Reference or Forceful Browsing)](cheatsheets/Ruby_on_Rails_Cheat_Sheet.md#insecure-direct-object-reference-or-forceful-browsing)
+[Ruby on Rails Cheat Sheet (Insecure Direct Object Reference or Forceful Browsing)](cheatsheets/Ruby_on_Rails_Cheat_Sheet.md#insecure-direct-object-reference-or-forceful-browsing)
 
-[Ruby on Rails Cheatsheet (CSRF)](cheatsheets/Ruby_on_Rails_Cheat_Sheet.md#csrf-cross-site-request-forgery)
+[Ruby on Rails Cheat Sheet (CSRF)](cheatsheets/Ruby_on_Rails_Cheat_Sheet.md#csrf-cross-site-request-forgery)
 
 [Insecure Direct Object Reference Prevention Cheat Sheet](cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md)
 
@@ -160,7 +160,7 @@ This cheatsheet will help users of the [OWASP Proactive Controls](https://owasp.
 
 [REST Security Cheat Sheet (HTTPS)](cheatsheets/REST_Security_Cheat_Sheet.md#https)
 
-[Ruby on Rails Cheatsheet (Encryption)](cheatsheets/Ruby_on_Rails_Cheat_Sheet.md#encryption)
+[Ruby on Rails Cheat Sheet (Encryption)](cheatsheets/Ruby_on_Rails_Cheat_Sheet.md#encryption)
 
 [User Privacy Protection Cheat Sheet](cheatsheets/User_Privacy_Protection_Cheat_Sheet.md)
 
