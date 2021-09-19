@@ -1,4 +1,4 @@
-# npm Security best practices
+# NPM Security best practices
 
 In the following npm cheatsheet, we’re going to focus on [10 npm security best practices](https://snyk.io/blog/ten-npm-security-best-practices) and productivity tips, useful for JavaScript and Node.js developers.
 
