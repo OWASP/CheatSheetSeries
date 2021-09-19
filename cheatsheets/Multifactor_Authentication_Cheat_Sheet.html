@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#multifactor-authentication-cheat-sheet" class="md-skip">
+        <a href="#multi-factor-authentication-cheat-sheet" class="md-skip">
           Skip to content
         </a>
       
@@ -2174,9 +2174,9 @@
               
                 
                 
-                <h1 id="multifactor-authentication-cheat-sheet">Multifactor Authentication Cheat Sheet<a class="headerlink" href="#multifactor-authentication-cheat-sheet" title="Permanent link">&para;</a></h1>
+                <h1 id="multi-factor-authentication-cheat-sheet">Multi-Factor Authentication Cheat Sheet<a class="headerlink" href="#multi-factor-authentication-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>Multifactor authentication (MFA), or Two-Factor Authentication (2FA) is when a user is required to present more than one type of evidence in order to authenticate on a system. There are four different types of evidence (or factors) that can be used, listed in the table below:</p>
+<p>Multi-Factor authentication (MFA), or Two-Factor Authentication (2FA) is when a user is required to present more than one type of evidence in order to authenticate on a system. There are four different types of evidence (or factors) that can be used, listed in the table below:</p>
 <table>
 <thead>
 <tr>
@@ -2271,7 +2271,7 @@
 </ul>
 </li>
 <li>Allow the user to attempt to <a href="#resetting-mfa">reset their MFA</a>.</li>
-<li>Notify the user of the failed login attempt, and encourage them to change their password if they don't recognise it.<ul>
+<li>Notify the user of the failed login attempt, and encourage them to change their password if they don't recognize it.<ul>
 <li>The notification should include the time, browser and geographic location of the login attempt.</li>
 <li>This should be displayed next time they login, and optionally emailed to them as well.</li>
 </ul>
@@ -2298,7 +2298,7 @@
 <p>The most common type of authentication is based on something the users knows - typically a password. The biggest advantage of this factor is that it has very low requirements for both the developers and the end user, as it does not require any special hardware, or integration with other services.</p>
 <h3 id="passwords-and-pins">Passwords and PINs<a class="headerlink" href="#passwords-and-pins" title="Permanent link">&para;</a></h3>
 <p>Passwords and PINs are the most common form of authentication due to the simplicity of implementing them. The <a href="Authentication_Cheat_Sheet.html#implement-proper-password-strength-controls">Authentication Cheat Sheet</a> has guidance on how to implement a strong password policy, and the <a href="Password_Storage_Cheat_Sheet.html">Password Storage Cheat Sheet</a> has guidance on how to securely store passwords.</p>
-<p>Most multifactor authentication systems make use of a password, as well as at least one other factor.</p>
+<p>Most multi-factor authentication systems make use of a password, as well as at least one other factor.</p>
 <p>It should be noted that PINs, "secret words" and other similar type of information are all effectively the same as passwords. Using two different types of passwords <strong>does not constitute MFA</strong>.</p>
 <h4 id="pros">Pros<a class="headerlink" href="#pros" title="Permanent link">&para;</a></h4>
 <ul>
@@ -2346,7 +2346,7 @@
 </ul>
 <h3 id="software-totp-tokens">Software TOTP Tokens<a class="headerlink" href="#software-totp-tokens" title="Permanent link">&para;</a></h3>
 <p>A cheaper and easier alternative to hardware tokens is using software to generate Time-based One Time Password (TOTP) codes. This would typically involve the user installing a TOTP application on their mobile phone, and then scanning a QR code provided by the web application which provides the initial seed. The authenticator app then generates a six digit number every 60 seconds, in much the same way as a hardware token.</p>
-<p>Most websites use standardised TOTP tokens, allowing the user to install any authenticator app that supports TOTP. However, a small number of applications use their own variants of this (such as Symantec), which requires the users to install a specific app in order to use the service. This should be avoided in favour of a standards-based approach.</p>
+<p>Most websites use standardized TOTP tokens, allowing the user to install any authenticator app that supports TOTP. However, a small number of applications use their own variants of this (such as Symantec), which requires the users to install a specific app in order to use the service. This should be avoided in favour of a standards-based approach.</p>
 <h4 id="pros_3">Pros<a class="headerlink" href="#pros_3" title="Permanent link">&para;</a></h4>
 <ul>
 <li>The absence of physical tokens greatly reduces the cost and administrative overhead of implementing the system.</li>

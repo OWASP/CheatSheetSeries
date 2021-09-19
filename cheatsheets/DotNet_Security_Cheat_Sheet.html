@@ -2087,8 +2087,7 @@
     <span class="k">else</span>
     <span class="p">{</span>
        <span class="c1">// Validate the Anti-XSRF token</span>
-
-<span class="k">if</span> <span class="p">((</span><span class="kt">string</span><span class="p">)</span><span class="n">ViewState</span><span class="p">[</span><span class="n">AntiXsrfTokenKey</span><span class="p">]</span> <span class="p">!=</span> <span class="n">_antiXsrfTokenValue</span> <span class="p">||</span>
+       <span class="k">if</span> <span class="p">((</span><span class="kt">string</span><span class="p">)</span><span class="n">ViewState</span><span class="p">[</span><span class="n">AntiXsrfTokenKey</span><span class="p">]</span> <span class="p">!=</span> <span class="n">_antiXsrfTokenValue</span> <span class="p">||</span>
           <span class="p">(</span><span class="kt">string</span><span class="p">)</span><span class="n">ViewState</span><span class="p">[</span><span class="n">AntiXsrfUserNameKey</span><span class="p">]</span> <span class="p">!=</span> <span class="p">(</span><span class="n">Context</span><span class="p">.</span><span class="n">User</span><span class="p">.</span><span class="n">Identity</span><span class="p">.</span><span class="n">Name</span> <span class="p">??</span> <span class="n">String</span><span class="p">.</span><span class="n">Empty</span><span class="p">))</span>
        <span class="p">{</span>
           <span class="k">throw</span> <span class="k">new</span> <span class="n">InvalidOperationException</span><span class="p">(</span><span class="s">&quot;Validation of Anti-XSRF token failed.&quot;</span><span class="p">);</span>
@@ -2563,27 +2562,27 @@ If a deserialized hostile object tries to initiate a system processes or access 
 <p>How to log all errors from the <code>Startup.cs</code>, so that anytime an error is thrown it will be logged.</p>
 <div class="highlight"><pre><span></span><code><span class="k">public</span> <span class="k">void</span> <span class="nf">Configure</span><span class="p">(</span><span class="n">IApplicationBuilder</span> <span class="n">app</span><span class="p">,</span> <span class="n">IHostingEnvironment</span> <span class="n">env</span><span class="p">)</span>
 <span class="p">{</span>
- <span class="k">if</span> <span class="p">(</span><span class="n">env</span><span class="p">.</span><span class="n">IsDevelopment</span><span class="p">())</span>
- <span class="p">{</span>
-  <span class="n">_isDevelopment</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
-  <span class="n">app</span><span class="p">.</span><span class="n">UseDeveloperExceptionPage</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">env</span><span class="p">.</span><span class="n">IsDevelopment</span><span class="p">())</span>
+    <span class="p">{</span>
+        <span class="n">_isDevelopment</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+        <span class="n">app</span><span class="p">.</span><span class="n">UseDeveloperExceptionPage</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="c1">//Log all errors in the application</span>
+    <span class="n">app</span><span class="p">.</span><span class="n">UseExceptionHandler</span><span class="p">(</span><span class="n">errorApp</span> <span class="p">=&gt;</span>
+    <span class="p">{</span>
+        <span class="n">errorApp</span><span class="p">.</span><span class="n">Run</span><span class="p">(</span><span class="k">async</span> <span class="n">context</span> <span class="p">=&gt;</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">errorFeature</span> <span class="p">=</span> <span class="n">context</span><span class="p">.</span><span class="n">Features</span><span class="p">.</span><span class="n">Get</span><span class="p">&lt;</span><span class="n">IExceptionHandlerFeature</span><span class="p">&gt;();</span>
+            <span class="kt">var</span> <span class="n">exception</span> <span class="p">=</span> <span class="n">errorFeature</span><span class="p">.</span><span class="n">Error</span><span class="p">;</span>
+
+            <span class="n">Log</span><span class="p">.</span><span class="n">Error</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;Stacktrace of error: {0}&quot;</span><span class="p">,</span><span class="n">exception</span><span class="p">.</span><span class="n">StackTrace</span><span class="p">.</span><span class="n">ToString</span><span class="p">()));</span>
+        <span class="p">});</span>
+    <span class="p">});</span>
+
+    <span class="n">app</span><span class="p">.</span><span class="n">UseAuthentication</span><span class="p">();</span>
+    <span class="n">app</span><span class="p">.</span><span class="n">UseMvc</span><span class="p">();</span>
  <span class="p">}</span>
-
- <span class="c1">//Log all errors in the application</span>
- <span class="n">app</span><span class="p">.</span><span class="n">UseExceptionHandler</span><span class="p">(</span><span class="n">errorApp</span> <span class="p">=&gt;</span>
- <span class="p">{</span>
-  <span class="n">errorApp</span><span class="p">.</span><span class="n">Run</span><span class="p">(</span><span class="k">async</span> <span class="n">context</span> <span class="p">=&gt;</span>
-  <span class="p">{</span>
-      <span class="kt">var</span> <span class="n">errorFeature</span> <span class="p">=</span> <span class="n">context</span><span class="p">.</span><span class="n">Features</span><span class="p">.</span><span class="n">Get</span><span class="p">&lt;</span><span class="n">IExceptionHandlerFeature</span><span class="p">&gt;();</span>
-      <span class="kt">var</span> <span class="n">exception</span> <span class="p">=</span> <span class="n">errorFeature</span><span class="p">.</span><span class="n">Error</span><span class="p">;</span>
-
-      <span class="n">Log</span><span class="p">.</span><span class="n">Error</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;Stacktrace of error: {0}&quot;</span><span class="p">,</span><span class="n">exception</span><span class="p">.</span><span class="n">StackTrace</span><span class="p">.</span><span class="n">ToString</span><span class="p">()));</span>
-  <span class="p">});</span>
- <span class="p">});</span>
-
-        <span class="n">app</span><span class="p">.</span><span class="n">UseAuthentication</span><span class="p">();</span>
-            <span class="n">app</span><span class="p">.</span><span class="n">UseMvc</span><span class="p">();</span>
-        <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
 <p>e.g Injecting into the class constructor, which makes writing unit test simpler. It is recommended if instances of the class will be created using dependency injection (e.g. MVC controllers).  The below example shows logging of all unsuccessful log in attempts.</p>
@@ -2596,7 +2595,7 @@ If a deserialized hostile object tries to initiate a system processes or access 
             <span class="n">_Logger</span> <span class="p">=</span> <span class="n">logger</span><span class="p">;</span>
         <span class="p">}</span>
 
-<span class="na"> [HttpPost]</span>
+<span class="na">        [HttpPost]</span>
 <span class="na">        [AllowAnonymous]</span>
 <span class="na">        [ValidateAntiForgeryToken]</span>
         <span class="k">public</span> <span class="k">async</span> <span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span> <span class="n">Login</span><span class="p">(</span><span class="n">LoginViewModel</span> <span class="n">model</span><span class="p">)</span>
@@ -2606,18 +2605,18 @@ If a deserialized hostile object tries to initiate a system processes or access 
                 <span class="kt">var</span> <span class="n">result</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_signInManager</span><span class="p">.</span><span class="n">PasswordSignInAsync</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">Email</span><span class="p">,</span> <span class="n">model</span><span class="p">.</span><span class="n">Password</span><span class="p">,</span> <span class="n">model</span><span class="p">.</span><span class="n">RememberMe</span><span class="p">,</span> <span class="n">lockoutOnFailure</span><span class="p">:</span> <span class="k">false</span><span class="p">);</span>
                 <span class="k">if</span> <span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">Succeeded</span><span class="p">)</span>
                 <span class="p">{</span>
-   <span class="c1">//Log all successful log in attempts</span>
-   <span class="n">Log</span><span class="p">.</span><span class="n">Information</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;User: {0}, Successfully Logged in&quot;</span><span class="p">,</span> <span class="n">model</span><span class="p">.</span><span class="n">Email</span><span class="p">));</span>
-   <span class="c1">//Code for successful login</span>
-  <span class="p">}</span>
-  <span class="k">else</span>
-  <span class="p">{</span>
-   <span class="c1">//Log all incorrect log in attempts</span>
-   <span class="n">Log</span><span class="p">.</span><span class="n">Information</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;User: {0}, Incorrect Password&quot;</span><span class="p">,</span> <span class="n">model</span><span class="p">.</span><span class="n">Email</span><span class="p">));</span>
-  <span class="p">}</span>
- <span class="p">}</span>
-
- <span class="p">...</span>
+                    <span class="c1">//Log all successful log in attempts</span>
+                    <span class="n">Log</span><span class="p">.</span><span class="n">Information</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;User: {0}, Successfully Logged in&quot;</span><span class="p">,</span> <span class="n">model</span><span class="p">.</span><span class="n">Email</span><span class="p">));</span>
+                    <span class="c1">//Code for successful login</span>
+                <span class="p">}</span>
+                <span class="k">else</span>
+                <span class="p">{</span>
+                <span class="c1">//Log all incorrect log in attempts</span>
+                <span class="n">Log</span><span class="p">.</span><span class="n">Information</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;User: {0}, Incorrect Password&quot;</span><span class="p">,</span> <span class="n">model</span><span class="p">.</span><span class="n">Email</span><span class="p">));</span>
+                <span class="p">}</span>
+             <span class="p">}</span>
+            <span class="p">...</span>
+        <span class="p">}</span>
 </code></pre></div>
 <p>Logging levels for ILogger are listed below, in order of high to low importance:</p>
 <h4 id="monitoring">Monitoring<a class="headerlink" href="#monitoring" title="Permanent link">&para;</a></h4>
