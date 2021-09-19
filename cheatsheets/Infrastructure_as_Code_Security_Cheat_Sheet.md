@@ -4,7 +4,7 @@ Licensed under the Creative Commons Attribution-ShareAlike 3.0 Unported License
 SPDX-License-Identifier: CC-BY-SA-3.0
 --->
 
-# Infrastructure as Code Security Cheat Sheet
+# Infrastructure as Code Security Cheatsheet
 
 ## Introduction
 
