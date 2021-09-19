@@ -1,8 +1,8 @@
-# Multifactor Authentication Cheat Sheet
+# Multi-Factor Authentication Cheat Sheet
 
 ## Introduction
 
-Multifactor authentication (MFA), or Two-Factor Authentication (2FA) is when a user is required to present more than one type of evidence in order to authenticate on a system. There are four different types of evidence (or factors) that can be used, listed in the table below:
+Multi-Factor authentication (MFA), or Two-Factor Authentication (2FA) is when a user is required to present more than one type of evidence in order to authenticate on a system. There are four different types of evidence (or factors) that can be used, listed in the table below:
 
 | Factor | Examples |
 |--------|----------|
@@ -82,7 +82,7 @@ There are a number of steps that should be taken when this occurs:
 - Prompt the user to try another form of MFA
     - For example, an SMS code rather than using their hardware OTP token.
 - Allow the user to attempt to [reset their MFA](#resetting-mfa).
-- Notify the user of the failed login attempt, and encourage them to change their password if they don't recognise it.
+- Notify the user of the failed login attempt, and encourage them to change their password if they don't recognize it.
     - The notification should include the time, browser and geographic location of the login attempt.
     - This should be displayed next time they login, and optionally emailed to them as well.
 
@@ -114,7 +114,7 @@ The most common type of authentication is based on something the users knows - t
 
 Passwords and PINs are the most common form of authentication due to the simplicity of implementing them. The [Authentication Cheat Sheet](Authentication_Cheat_Sheet.md#implement-proper-password-strength-controls) has guidance on how to implement a strong password policy, and the [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.md) has guidance on how to securely store passwords.
 
-Most multifactor authentication systems make use of a password, as well as at least one other factor.
+Most multi-factor authentication systems make use of a password, as well as at least one other factor.
 
 It should be noted that PINs, "secret words" and other similar type of information are all effectively the same as passwords. Using two different types of passwords **does not constitute MFA**.
 
@@ -174,7 +174,7 @@ Physical hardware OTP tokens can be used which generate constantly changing nume
 
 A cheaper and easier alternative to hardware tokens is using software to generate Time-based One Time Password (TOTP) codes. This would typically involve the user installing a TOTP application on their mobile phone, and then scanning a QR code provided by the web application which provides the initial seed. The authenticator app then generates a six digit number every 60 seconds, in much the same way as a hardware token.
 
-Most websites use standardised TOTP tokens, allowing the user to install any authenticator app that supports TOTP. However, a small number of applications use their own variants of this (such as Symantec), which requires the users to install a specific app in order to use the service. This should be avoided in favour of a standards-based approach.
+Most websites use standardized TOTP tokens, allowing the user to install any authenticator app that supports TOTP. However, a small number of applications use their own variants of this (such as Symantec), which requires the users to install a specific app in order to use the service. This should be avoided in favour of a standards-based approach.
 
 #### Pros
 

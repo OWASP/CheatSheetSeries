@@ -1,4 +1,4 @@
-# Authorization Testing Automation
+# Authorization Testing Automation Cheat Sheet
 
 ## Introduction
 

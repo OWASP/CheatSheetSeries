@@ -1,4 +1,4 @@
-# Ruby on Rails Cheatsheet
+# Ruby on Rails Cheat Sheet
 
 ## Introduction
 

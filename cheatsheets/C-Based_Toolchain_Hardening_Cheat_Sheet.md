@@ -1,4 +1,4 @@
-# C-Based Toolchain Hardening
+# C-Based Toolchain Hardening Cheat Sheet
 
 ## Introduction
 

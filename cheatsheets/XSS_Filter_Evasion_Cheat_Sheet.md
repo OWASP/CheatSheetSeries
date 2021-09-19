@@ -140,7 +140,7 @@ Some websites claim that any of the chars 09-13 (decimal) will work for this att
 
 ### Null breaks up JavaScript Directive
 
-Null chars also work as XSS vectors but not like above, you need to inject them directly using something like Burp Proxy or use `%00` in the URL string or if you want to write your own injection tool you can either use vim (`^V^@` will produce a null) or the following program to generate it into a text file. Okay, I lied again, older versions of Opera (circa 7.11 on Windows) were vulnerable to one additional char 173 (the soft hypen control char). But the null char `%00` is much more useful and helped me bypass certain real world filters with a variation on this example:
+Null chars also work as XSS vectors but not like above, you need to inject them directly using something like Burp Proxy or use `%00` in the URL string or if you want to write your own injection tool you can either use vim (`^V^@` will produce a null) or the following program to generate it into a text file. Okay, I lied again, older versions of Opera (circa 7.11 on Windows) were vulnerable to one additional char 173 (the soft hyphen control char). But the null char `%00` is much more useful and helped me bypass certain real world filters with a variation on this example:
 
 `perl -e 'print "<IMG SRC=java\0script:alert(\"XSS\")>";' > out`
 
@@ -168,7 +168,7 @@ Yair Amit brought this to my attention that there is slightly different behavior
 
 ### Extraneous Open Brackets
 
-Submitted by Franz Sedlmaier, this XSS vector could defeat certain detection engines that work by first using matching pairs of open and close angle brackets and then by doing a comparison of the tag inside, instead of a more efficient algorythm like Boyer-Moore that looks for entire string matches of the open angle bracket and associated tag (post de-obfuscation, of course). The double slash comments out the ending extraneous bracket to supress a JavaScript error:
+Submitted by Franz Sedlmaier, this XSS vector could defeat certain detection engines that work by first using matching pairs of open and close angle brackets and then by doing a comparison of the tag inside, instead of a more efficient algorithm like Boyer-Moore that looks for entire string matches of the open angle bracket and associated tag (post de-obfuscation, of course). The double slash comments out the ending extraneous bracket to suppress a JavaScript error:
 
 `<<SCRIPT>alert("XSS");//\<</SCRIPT>`
 

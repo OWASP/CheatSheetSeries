@@ -31,13 +31,13 @@ Sorting applied on the name is an alphabetical one.
 * Sven Neuhaus
 * Timo Goosen
 
-**[Authorization Testing Automation](https://github.com/OWASP/CheatSheetSeries/tree/master/cheatsheets/Authorization_Testing_Automation.md)**
+**[Authorization Testing Automation Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/tree/master/cheatsheets/Authorization_Testing_Automation.md)**
 * Dominique Righetto - dominique.righetto@owasp.org
 
 **[Bean Validation Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/tree/master/cheatsheets/Bean_Validation_Cheat_Sheet.md)**
 * Anton Abashkin - abashkin.anton@gmail.com
 
-**[C-Based Toolchain Hardening](https://github.com/OWASP/CheatSheetSeries/tree/master/cheatsheets/C-Based_Toolchain_Hardening.md)**
+**[C-Based Toolchain Hardening Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/tree/master/cheatsheets/C-Based_Toolchain_Hardening.md)**
 * Jeffrey Walton - jeffrey@owasp.org
 * Jim Manico - jim@owasp.org
 * Kevin Wall - kevin@owasp.org
