@@ -1,3 +1,3 @@
 # Deprecated
 
-#REDIRECT [[https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html]] 
+# REDIRECT [[https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html]]
