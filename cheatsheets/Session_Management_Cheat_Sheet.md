@@ -136,7 +136,7 @@ See also: [HttpOnly](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#S
 
 ### SameSite Attribute
 
-SameSite allows a server define a cookie attribute making it impossible to the browser send this cookie along with cross-site requests. The main goal is to mitigate the risk of cross-origin information leakage, and provides some protection against cross-site request forgery attacks.
+SameSite defines a cookie attribute preventing browsers from sending a SameSite flagged cookie with cross-site requests. The main goal is to mitigate the risk of cross-origin information leakage, and provides some protection against cross-site request forgery attacks.
 
 See also: [SameSite](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#SameSite_cookies)
 
