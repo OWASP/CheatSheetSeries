@@ -1,4 +1,4 @@
-# Access Control Cheatsheet.
+# Access Control Cheatsheet
 
 The Access Control cheeetsheet has been deprecated.
 
