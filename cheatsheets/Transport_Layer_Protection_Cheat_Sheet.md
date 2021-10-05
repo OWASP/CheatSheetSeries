@@ -73,6 +73,7 @@ There are a number of online tools that can be used to quickly validate the conf
 - [Hardenize](https://www.hardenize.com/)
 - [ImmuniWeb](https://www.immuniweb.com/ssl/)
 - [Observatory by Mozilla](https://observatory.mozilla.org)
+- [Scanigma](https://scanigma.com)
 
 Additionally, there are a number of offline tools that can be used:
 
