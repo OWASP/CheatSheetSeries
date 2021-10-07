@@ -380,7 +380,7 @@ namespace MyProject
 }
 ```
 
-Setting ccustomErrors section to the **Web.config** file within the ```csharp <system.web>``` node as follows.
+Setting customErrors section to the **Web.config** file within the ```csharp <system.web>``` node as follows.
 
 ```csharp
 <configuration>
