@@ -80,7 +80,7 @@ Refactor inline code. Moving inline code into hosted files will prevent allow yo
 - Nonces
 - Trusted Types
 
-A fully mature CSP uses a combination of nonces, strict-dynamic, and trusted types over domain and path allowlisting of content. The (w3 explanation)[https://www.w3.org/TR/CSP3/#strict-dynamic-usage] of Strict-Dynamic and nonce based validation is clear about the benefits and implementation.
+A fully mature CSP uses a combination of nonces, strict-dynamic, and trusted types over domain and path allowlisting of content. The [w3 explanation](https://www.w3.org/TR/CSP3/#strict-dynamic-usage) of Strict-Dynamic and nonce based validation is clear about the benefits and implementation.
 
 Using a trusted type requires you to process string data before passing it to one of the below dangerous DOM functions.
 
@@ -90,12 +90,12 @@ Using a trusted type requires you to process string data before passing it to on
 - JavaScript code compilation like `eval` or `setTimeout`
 
 ```js
-anElement.innerHTML = location.href; // Browser will not execute this
+anElement.innerHTML = location.href; // Browser will not execute this as it is a string
 
-anElement.innerHTML = aTrustedHTML; // TrustedHTML Object is accepted to use.\
+anElement.innerHTML = aTrustedHTML; // TrustedHTML will execute as it is a safe object 
 ```
 
-Trusted Types reduce the DOM XSS attack surface of your application. For detailed guidance, refer to this guide at (web dev)[https://web.dev/trusted-types/].
+Trusted Types reduce the DOM XSS attack surface of your application. For detailed guidance, refer to this guide at [web dev](https://web.dev/trusted-types/).
 
 ### X-XSS-Protection
 
