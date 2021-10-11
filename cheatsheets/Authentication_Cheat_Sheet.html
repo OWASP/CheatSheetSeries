@@ -508,6 +508,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#change-password-feature" class="md-nav__link">
+    Change Password Feature
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#transmit-passwords-only-over-tls-or-other-strong-transport" class="md-nav__link">
     Transmit Passwords Only Over TLS or Other Strong Transport
   </a>
@@ -1799,6 +1806,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#change-password-feature" class="md-nav__link">
+    Change Password Feature
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#transmit-passwords-only-over-tls-or-other-strong-transport" class="md-nav__link">
     Transmit Passwords Only Over TLS or Other Strong Transport
   </a>
@@ -2059,6 +2073,12 @@
 <li>Has a maximum input length, to protect against denial of service attacks with very long inputs.</li>
 <li>Explicitly sets the type of both variable, to protect against type confusion attacks such as <a href="https://www.whitehatsec.com/blog/magic-hashes/">Magic Hashes</a> in PHP.</li>
 <li>Returns in constant time, to protect against timing attacks.</li>
+</ul>
+<h3 id="change-password-feature">Change Password Feature<a class="headerlink" href="#change-password-feature" title="Permanent link">&para;</a></h3>
+<p>When developing change password feature, ensure to have:</p>
+<ul>
+<li>User is authenticated with active session.</li>
+<li>Current password verification. This is to ensure that it's the legitimate user who is changing the password. The abuse case is this: a legitimate user is using public computer to login. This user forgets to logout. Then another user is using this public computer. If we don't verify current password, this another user able to change the password.</li>
 </ul>
 <h3 id="transmit-passwords-only-over-tls-or-other-strong-transport">Transmit Passwords Only Over TLS or Other Strong Transport<a class="headerlink" href="#transmit-passwords-only-over-tls-or-other-strong-transport" title="Permanent link">&para;</a></h3>
 <p>See: <a href="Transport_Layer_Protection_Cheat_Sheet.html">Transport Layer Protection Cheat Sheet</a></p>
