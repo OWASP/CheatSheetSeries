@@ -60,8 +60,8 @@ Where possible, the user-supplied password should be compared to the stored pass
 
 When developing change password feature, ensure to have:
 
-* User is authenticated with active session.
-* Current password verification. This is to ensure that it's the legitimate user who is changing the password. The abuse case is this: a legitimate user is using public computer to login. This user forgets to logout. Then another user is using this public computer. If we don't verify current password, this another user able to change the password.
+- User is authenticated with active session.
+- Current password verification. This is to ensure that it's the legitimate user who is changing the password. The abuse case is this: a legitimate user is using public computer to login. This user forgets to logout. Then another user is using this public computer. If we don't verify current password, this another user able to change the password.
 
 ### Transmit Passwords Only Over TLS or Other Strong Transport
 
