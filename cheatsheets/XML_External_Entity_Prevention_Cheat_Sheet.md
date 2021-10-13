@@ -180,6 +180,8 @@ To protect a Java `XMLInputFactory` from XXE, do this:
 ``` java
 // This disables DTDs entirely for that factory
 xmlInputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+// This causes XMLStreamException to be thrown if external DTDs are accessed.
+xmlInputFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
 // disable external entities
 xmlInputFactory.setProperty("javax.xml.stream.isSupportingExternalEntities", false);
 ```
