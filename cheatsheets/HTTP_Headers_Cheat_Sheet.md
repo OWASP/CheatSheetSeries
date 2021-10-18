@@ -161,7 +161,11 @@ Provides information about the .NET version.
 
 #### Recommendation
 
-Disable sending this header. Review the [ASP.NET Version Disclosure](https://www.thesmartscanner.com/vulnerability-list/asp-net-version-disclosure) issue for details.
+Disable sending this header. Add the following line in your `web.config` in the `<system.web>` section to remove it.
+
+```xml
+<httpRuntime enableVersionHeader="false" />
+```
 
 ### X-AspNetMvc-Version
 
@@ -169,7 +173,11 @@ Provides information about the .NET version.
 
 #### Recommendation
 
-Disable sending this header. Review the [ASP.NET Version Disclosure](https://www.thesmartscanner.com/vulnerability-list/asp-net-version-disclosure) issue for details.
+Disable sending this header. To remove the `X-AspNetMvc-Version` header, add the below line in `Global.asax` file.
+
+```lang-none
+MvcHandler.DisableMvcResponseHeader = true;
+```
 
 ### X-DNS-Prefetch-Control
 
