@@ -77,6 +77,8 @@ The HTTP `Strict-Transport-Security` response header (often abbreviated as HSTS)
 Enable HTTPS-only access for the site and sub domains.
 > `Strict-Transport-Security: max-age=63072000; includeSubDomains; preload`
 
+Please checkout [HTTP Strict Transport Security Cheat Sheet](HTTP_Strict_Transport_Security_Cheat_Sheet.md) for more information.
+
 ### Expect-CT
 
 The `Expect-CT` header lets sites opt-in to reporting and/or enforcement of Certificate Transparency requirements, to prevent the use of misissued certificates for that site from going unnoticed.
