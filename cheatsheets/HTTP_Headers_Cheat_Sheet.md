@@ -271,7 +271,7 @@ The [Mozilla Observatory](https://observatory.mozilla.org/) is an online tool th
 
 ### SmartScanner
 
-[SmartScanner](https://www.thesmartscanner.com/) has a dedicated [test profile](https://www.thesmartscanner.com/docs/security-tests) for testing security of HTTP headers.
+[SmartScanner](https://www.thesmartscanner.com/) has a dedicated [test profile](https://www.thesmartscanner.com/docs/configuring-security-tests) for testing security of HTTP headers.
 Online tools usually test the homepage of the given address. But SmartScanner scans the whole website. So, you can make sure all of your web pages have the right HTTP Headers in place.
 
 ## References
