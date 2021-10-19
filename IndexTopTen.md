@@ -7,7 +7,6 @@ This cheat sheet will help users of the [OWASP Top Ten](https://owasp.org/www-pr
 ## [A01:2021 – Broken Access Control](https://owasp.org/Top10/A01_2021-Broken_Access_Control/)
 
 * [Authorization_Cheat_Sheet](cheatsheets/Authorization_Cheat_Sheet.md)
-* [Access Control Cheat Sheet](cheatsheets/Access_Control_Cheat_Sheet.md)
 
 ## [A02:2021 – Cryptographic Failures](https://owasp.org/Top10/A02_2021-Cryptographic_Failures/)
 
