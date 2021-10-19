@@ -52,7 +52,7 @@ This cheat sheet will help users of the [OWASP Top Ten](https://owasp.org/www-pr
 
 ## [A08:2021 – Software and Data Integrity Failures](https://owasp.org/Top10/A08_2021-Software_and_Data_Integrity_Failures/)
 
-* [Deserialization_Cheat_Sheet](cheatsheets/Deserialization_Cheat_Sheet.md)
+* [Deserialization Cheat Sheet](cheatsheets/Deserialization_Cheat_Sheet.md)
 
 ## [A09:2021 – Security Logging and Monitoring Failures](https://owasp.org/Top10/A09_2021-Security_Logging_and_Monitoring_Failures/)
 
