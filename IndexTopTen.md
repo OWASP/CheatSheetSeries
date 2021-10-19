@@ -10,11 +10,15 @@ This cheat sheet will help users of the [OWASP Top Ten](https://owasp.org/www-pr
 
 ## [A02:2021 – Cryptographic Failures](https://owasp.org/Top10/A02_2021-Cryptographic_Failures/)
 
-* [Cryptographic Storage Cheat Sheet](cheatsheets/Cryptographic_Storage_Cheat_Sheet.html)
-* [Transport_Layer_Protection_Cheat Sheet](cheatsheets/Transport_Layer_Protection_Cheat_Sheet.html)
-* [HTTP_Strict_Transport_Security_Cheat_Sheet](cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html)
+* [Cryptographic Storage Cheat Sheet](cheatsheets/Cryptographic_Storage_Cheat_Sheet.md)
+* [Transport_Layer_Protection_Cheat Sheet](cheatsheets/Transport_Layer_Protection_Cheat_Sheet.md)
+* [HTTP_Strict_Transport_Security_Cheat_Sheet](cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.md)
+* [TLS_Cipher_String_Cheat_Sheet](cheatsheets/TLS_Cipher_String_Cheat_Sheet.md)
 
 ## [A03:2021 – Injection](https://owasp.org/Top10/A03_2021-Injection/)
+
+* [SQL_Injection_Prevention_Cheat_Sheet](cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.md)
+* [Query_Parameterization_Cheat_Sheet](cheatsheets/Query_Parameterization_Cheat_Sheet.md)
 
 ## [A04:2021 – Insecure Design](https://owasp.org/Top10/A04_2021-Insecure_Design/)
 
