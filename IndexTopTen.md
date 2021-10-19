@@ -34,11 +34,9 @@ This cheat sheet will help users of the [OWASP Top Ten](https://owasp.org/www-pr
 
 ## [A06:2021 – Vulnerable and Outdated Components](https://owasp.org/Top10/A06_2021-Vulnerable_and_Outdated_Components/)
 
-[Vulnerable Dependency Management Cheat Sheet](cheatsheets/Vulnerable_Dependency_Management_Cheat_Sheet.html)
-
-[Third Party JavaScript Management Cheat Sheet](cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.html)
-
-[npm Security best practices](cheatsheets/npm_Security_CheatSheet.html)
+* [Vulnerable Dependency Management Cheat Sheet](cheatsheets/Vulnerable_Dependency_Management_Cheat_Sheet.html)
+* [Third Party JavaScript Management Cheat Sheet](cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.html)
+* [npm Security best practices](cheatsheets/npm_Security_CheatSheet.html)
 
 ## [A07:2021 – Identification and Authentication Failures](https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures/)
 
@@ -46,12 +44,11 @@ This cheat sheet will help users of the [OWASP Top Ten](https://owasp.org/www-pr
 
 ## [A09:2021 – Security Logging and Monitoring Failures](https://owasp.org/Top10/A09_2021-Security_Logging_and_Monitoring_Failures/)
 
-[Logging Cheat Sheet](cheatsheets/Logging_Cheat_Sheet.html)
-
-[Application Logging Vocabulary Cheat Sheet](cheatsheets/Application_Logging_Vocabulary_Cheat_Sheet.html)
+* [Logging Cheat Sheet](cheatsheets/Logging_Cheat_Sheet.html)
+* [Application Logging Vocabulary Cheat Sheet](cheatsheets/Application_Logging_Vocabulary_Cheat_Sheet.html)
 
 ## [A10:2021 – Server-Side Request Forgery (SSRF)](https://owasp.org/Top10/A10_2021-Server-Side_Request_Forgery_%28SSRF%29/)
 
-[Server Side Request Forgery Prevention Cheat Sheet](cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md)
+* [Server Side Request Forgery Prevention Cheat Sheet](cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md)
 
 ## [A11:2021 – Next Steps](https://owasp.org/Top10/A11_2021-Next_Steps/)
