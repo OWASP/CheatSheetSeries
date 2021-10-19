@@ -1,18 +1,19 @@
 # OWASP Top Ten
 
-**This page is still under construction !!!** PRs are welcome!
-
-## Objective
-
 The [OWASP Top Ten](https://owasp.org/www-project-top-ten/) is a standard awareness document for developers and web application security. It represents a broad consensus about the most critical security risks to web applications.
 
 This cheat sheet will help users of the [OWASP Top Ten](https://owasp.org/www-project-top-ten/) identify which cheat sheets map to each security risk. This mapping is based the [OWASP Top Ten 2021 version](https://owasp.org/www-project-top-ten/) .
 
 ## [A01:2021 – Broken Access Control](https://owasp.org/Top10/A01_2021-Broken_Access_Control/)
 
+[Authorization Cheat Sheet](cheatsheets/Authorization_Cheat_Sheet.html)
 [Access Control Cheat Sheet](cheatsheets/Access_Control_Cheat_Sheet.md)
 
 ## [A02:2021 – Cryptographic Failures](https://owasp.org/Top10/A02_2021-Cryptographic_Failures/)
+
+[Cryptographic Storage Cheat Sheet](cheatsheets/Cryptographic_Storage_Cheat_Sheet.html)
+[Transport_Layer_Protection_Cheat Sheet](cheatsheets/Transport_Layer_Protection_Cheat_Sheet.html)
+[HTTP_Strict_Transport_Security_Cheat_Sheet](cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html)
 
 ## [A03:2021 – Injection](https://owasp.org/Top10/A03_2021-Injection/)
 
