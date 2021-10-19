@@ -30,7 +30,11 @@ This cheat sheet will help users of the [OWASP Top Ten](https://owasp.org/www-pr
 
 ## [A04:2021 – Insecure Design](https://owasp.org/Top10/A04_2021-Insecure_Design/)
 
+* [Threat Modeling Cheat Sheet](cheatsheets/Threat_Modeling_Cheat_Sheet.md)
+
 ## [A05:2021 – Security Misconfiguration](https://owasp.org/Top10/A05_2021-Security_Misconfiguration/)
+
+* [Infrastructure as Code Security Cheat Sheet](cheatsheets/Infrastructure_as_Code_Security_Cheat_Sheet.md)
 
 ## [A06:2021 – Vulnerable and Outdated Components](https://owasp.org/Top10/A06_2021-Vulnerable_and_Outdated_Components/)
 
