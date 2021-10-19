@@ -23,8 +23,8 @@ The HTTP `X-XSS-Protection` response header is a feature of Internet Explorer, C
 
 #### Recommendation
 
-Enable XSS filtering and prevent browsers from rendering pages if an attack is detected.
-> `X-XSS-Protection: 1; mode=block`
+Do not set this header or explicitly turn it off.
+> `X-XSS-Protection: 0`
 
 ### X-Content-Type-Options
 
