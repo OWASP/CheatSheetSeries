@@ -51,6 +51,17 @@ This cheat sheet will help users of the [OWASP Top Ten](https://owasp.org/www-pr
 
 ## [A07:2021 – Identification and Authentication Failures](https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures/)
 
+* [Authentication Cheat Sheet](cheatsheets/Authentication_Cheat_Sheet.md)
+* [Session Management Cheat Sheet](cheatsheets/Session_Management_Cheat_Sheet.md)
+* [Forgot Password Cheat Sheet](cheatsheets/Forgot_Password_Cheat_Sheet.md)
+* [Choosing and_ sing Security Questions_Cheat_Sheet](cheatsheets/Choosing_and_Using_Security_Questions_Cheat_Sheet.md)
+* [Credential Stuffing Prevention Cheat Sheet](cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.md)
+* [Denial of Service Cheat Sheet](cheatsheets/Denial_of_Service_Cheat_Sheet.md)
+* [JSON Web Token for Java Cheat_Sheet](cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.md)
+* [Multifactor Authentication Cheat Sheet](cheatsheets/Multifactor_Authentication_Cheat_Sheet.md)
+* [Password Storage Cheat Sheet](cheatsheets/Password_Storage_Cheat_Sheet.md)
+* [SAML Security Cheat Sheet](cheatsheets/SAML_Security_Cheat_Sheet.md)
+
 ## [A08:2021 – Software and Data Integrity Failures](https://owasp.org/Top10/A08_2021-Software_and_Data_Integrity_Failures/)
 
 * [Deserialization Cheat Sheet](cheatsheets/Deserialization_Cheat_Sheet.md)
