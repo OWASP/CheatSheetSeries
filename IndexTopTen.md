@@ -8,6 +8,7 @@ This cheat sheet will help users of the [OWASP Top Ten](https://owasp.org/www-pr
 
 * [Authorization Cheat Sheet](cheatsheets/Authorization_Cheat_Sheet.md)
 * [Insecure Direct Object Reference Prevention Cheat Sheet](cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md)
+* [Transaction Authorization Cheat Sheet](cheatsheets/Transaction_Authorization_Cheat_Sheet.md)
 * [Cross-Site Request Forgery Prevention Cheat Sheet](cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md)
 
 ## [A02:2021 – Cryptographic Failures](https://owasp.org/Top10/A02_2021-Cryptographic_Failures/)
@@ -17,10 +18,13 @@ This cheat sheet will help users of the [OWASP Top Ten](https://owasp.org/www-pr
 * [HTTP Strict Transport Security Cheat Sheet](cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.md)
 * [TLS Cipher String Cheat Sheet](cheatsheets/TLS_Cipher_String_Cheat_Sheet.md)
 * [Key Management Cheat Sheet](cheatsheets/Key_Management_Cheat_Sheet.md)
+* [Pinning Cheat Sheet](cheatsheets/Pinning_Cheat_Sheet.md)
 
 ## [A03:2021 – Injection](https://owasp.org/Top10/A03_2021-Injection/)
 
 * [Injection Prevention Cheat Sheet](cheatsheets/Injection_Prevention_Cheat_Sheet.md)
+* [LDAP Injection Prevention Cheat Sheet](cheatsheets/LDAP_Injection_Prevention_Cheat_Sheet.md)
+* [OS Command Injection Defense Cheat Sheet](cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.md)
 * [Injection Prevention in Java Cheat Sheet](cheatsheets/Injection_Prevention_in_Java_Cheat_Sheet.md)
 * [SQL Injection Prevention Cheat Sheet](cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.md)
 * [Query Parameterization Cheat Sheet](cheatsheets/Query_Parameterization_Cheat_Sheet.md)
@@ -35,6 +39,8 @@ This cheat sheet will help users of the [OWASP Top Ten](https://owasp.org/www-pr
 ## [A05:2021 – Security Misconfiguration](https://owasp.org/Top10/A05_2021-Security_Misconfiguration/)
 
 * [Infrastructure as Code Security Cheat Sheet](cheatsheets/Infrastructure_as_Code_Security_Cheat_Sheet.md)
+* [XML External Entity Prevention Cheat Sheet](cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md)
+* [PHP Configuration Cheat Sheet](cheatsheets/PHP_Configuration_Cheat_Sheet.md)
 
 ## [A06:2021 – Vulnerable and Outdated Components](https://owasp.org/Top10/A06_2021-Vulnerable_and_Outdated_Components/)
 
@@ -45,6 +51,8 @@ This cheat sheet will help users of the [OWASP Top Ten](https://owasp.org/www-pr
 ## [A07:2021 – Identification and Authentication Failures](https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures/)
 
 ## [A08:2021 – Software and Data Integrity Failures](https://owasp.org/Top10/A08_2021-Software_and_Data_Integrity_Failures/)
+
+* [Deserialization_Cheat_Sheet](cheatsheets/Deserialization_Cheat_Sheet.md)
 
 ## [A09:2021 – Security Logging and Monitoring Failures](https://owasp.org/Top10/A09_2021-Security_Logging_and_Monitoring_Failures/)
 
