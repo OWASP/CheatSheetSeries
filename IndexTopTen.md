@@ -54,7 +54,7 @@ This cheat sheet will help users of the [OWASP Top Ten](https://owasp.org/www-pr
 * [Authentication Cheat Sheet](cheatsheets/Authentication_Cheat_Sheet.md)
 * [Session Management Cheat Sheet](cheatsheets/Session_Management_Cheat_Sheet.md)
 * [Forgot Password Cheat Sheet](cheatsheets/Forgot_Password_Cheat_Sheet.md)
-* [Choosing and_Using Security Questions_Cheat_Sheet](cheatsheets/Choosing_and_Using_Security_Questions_Cheat_Sheet.md)
+* [Choosing and Using Security Questions_Cheat_Sheet](cheatsheets/Choosing_and_Using_Security_Questions_Cheat_Sheet.md)
 * [Credential Stuffing Prevention Cheat Sheet](cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.md)
 * [Denial of Service Cheat Sheet](cheatsheets/Denial_of_Service_Cheat_Sheet.md)
 * [JSON Web Token for Java Cheat Sheet](cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.md)
