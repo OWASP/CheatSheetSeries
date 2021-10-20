@@ -107,8 +107,8 @@ The `Access-Control-Allow-Origin` response header indicates whether the response
 
 #### Recommendation
 
-Use `*` or specific domain names.
-> `Access-Control-Allow-Origin: *`
+Prefer using specific [origin](https://developer.mozilla.org/en-US/docs/Glossary/Origin) instead of `*`. Checkout [Access-Control-Allow-Origin](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin) for details.
+> `Access-Control-Allow-Origin: https://yoursite.com`
 
 ### Cross-Origin-Opener-Policy
 
@@ -286,7 +286,6 @@ Online tools usually test the homepage of the given address. But SmartScanner sc
 - [Mozilla: Expect-CT](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Expect-CT)
 - [Mozilla: Set-Cookie](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie)
 - [content-security-policy.com](https://content-security-policy.com/)
-- [Mozilla: Access-Control-Allow-Origin](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin)
 - [Mozilla: Cross-Origin-Opener-Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cross-Origin-Opener-Policy)
 - [resourcepolicy.fyi](https://resourcepolicy.fyi/)
 - [Mozilla: Cross-Origin-Resource-Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cross-Origin-Resource-Policy)
