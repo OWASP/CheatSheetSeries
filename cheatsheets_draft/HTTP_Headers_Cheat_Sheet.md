@@ -1,16 +1,16 @@
-# HTTP Headers Cheat Sheet
+# HTTP Security Response Headers Cheat Sheet
 
 ## Introduction
 
-HTTP Headers are a great booster for web security with easy implementation. Proper HTTP headers can prevent security vulnerabilities like Cross-Site Scripting, Click-jacking, Packet sniffing and, information disclosure.
+HTTP Headers are a great booster for web security with easy implementation. Proper HTTP response eaders can help prevent security vulnerabilities like Cross-Site Scripting, Clickjacking, Information disclosure and more.
 
-In this cheat sheet, we will review all security-related HTTP headers and the recommended configurations for them.
+In this cheat sheet, we will review all security-related HTTP headers, recommended configurations, and reference other sources for complicated headers.
 
 ## Security Headers
 
 ### X-Frame-Options
 
-The `X-Frame-Options` HTTP response header can be used to indicate whether or not a browser should be allowed to render a page in a `<frame>`, `<iframe>`, `<embed>` or `<object>`. Sites can use this to avoid click-jacking attacks, by ensuring that their content is not embedded into other sites.
+The `X-Frame-Options` HTTP response header can be used to indicate whether or not a browser should be allowed to render a page in a `<frame>`, `<iframe>`, `<embed>` or `<object>`. Sites can use this to avoid clickjacking attacks, by ensuring that their content is not embedded into other sites.
 
 #### Recommendation
 
@@ -45,7 +45,7 @@ The `Referrer-Policy` HTTP header controls how much referrer information (sent v
 Send everything to the same site but only the origin for other sites.
 > `Referrer-Policy: strict-origin-when-cross-origin`
 
-- *NOTE:* This is the default in modern browsers. Read about it on the [Mozilla Referrer-Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy) page.
+- *NOTE:* This is the default in modern browsers. For more information on configuring this header please see [Mozilla Referrer-Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy).
 
 ### Content-Type
 
@@ -64,10 +64,7 @@ The `Set-Cookie` HTTP response header is used to send a cookie from the server t
 
 #### Recommendation
 
-> `Set-Cookie: name=value; Secure; HttpOnly; SameSite=Strict`
-
-- *NOTE:* The `Domain` attribute has been removed intentionally
-- Please read [Session Management Cheat_Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#cookies) for detailed explanation.
+- Please read [Session Management Cheat_Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#cookies) for a detailed explanation on cookie configuration options.
 
 ### Strict-Transport-Security
 
@@ -95,11 +92,7 @@ Content Security Policy (CSP) is an added layer of security that helps to detect
 
 #### Recommendation
 
-Restrict most of the resource types to the same site and subdomains of `yourdoamin.com`
-> `Content-Security-Policy: default-src 'self' *.yourdomain.com; block-all-mixed-content; font-src 'self' https: data:; img-src 'self' data: blob:; object-src 'none'; script-src-attr 'none'; style-src 'self' https: 'unsafe-inline'; upgrade-insecure-requests;`
-
-- *WARNING*: Inline `script` elements and inline script event handlers like `onload` will stop working with the above header. But this is required to neutralize XSS attacks.
-- For explanation and customization, read [Content Security Policy Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Content_Security_Policy_Cheat_Sheet.md)
+Content Security Policy is very complex to configure and maintain. For an explanation on customization options, please read [Content Security Policy Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Content_Security_Policy_Cheat_Sheet.md)
 
 ### Access-Control-Allow-Origin
 
