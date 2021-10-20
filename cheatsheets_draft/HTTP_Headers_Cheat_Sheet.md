@@ -99,6 +99,7 @@ Restrict most of the resource types to the same site and subdomains of `yourdoam
 > `Content-Security-Policy: default-src 'self' *.yourdomain.com; block-all-mixed-content; font-src 'self' https: data:; img-src 'self' data: blob:; object-src 'none'; script-src-attr 'none'; style-src 'self' https: 'unsafe-inline'; upgrade-insecure-requests;`
 
 - *WARNING*: Inline `script` elements and inline script event handlers like `onload` will stop working with the above header. But this is required to neutralize XSS attacks.
+- For explanation and customization, read [Content Security Policy Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Content_Security_Policy_Cheat_Sheet.md)
 
 ### Access-Control-Allow-Origin
 
