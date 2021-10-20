@@ -45,7 +45,7 @@ The `Referrer-Policy` HTTP header controls how much referrer information (sent v
 Send everything to the same site but only the origin for other sites.
 > `Referrer-Policy: strict-origin-when-cross-origin`
 
-- *NOTE:* This is the default in modern browsers
+- *NOTE:* This is the default in modern browsers. Read about it on the [Mozilla Referrer-Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy) page.
 
 ### Content-Type
 
@@ -283,7 +283,6 @@ Online tools usually test the homepage of the given address. But SmartScanner sc
 - [Mozilla: Strict-Transport-Security](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security)
 - [Mozilla: Content-Type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type)
 - [Mozilla: Expect-CT](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Expect-CT)
-- [Mozilla: Referrer-Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy)
 - [Mozilla: Set-Cookie](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie)
 - [content-security-policy.com](https://content-security-policy.com/)
 - [Mozilla: Access-Control-Allow-Origin](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin)
