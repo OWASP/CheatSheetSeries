@@ -67,6 +67,7 @@ The `Set-Cookie` HTTP response header is used to send a cookie from the server t
 > `Set-Cookie: name=value; Secure; HttpOnly; SameSite=Strict`
 
 - *NOTE:* The `Domain` attribute has been removed intentionally
+- Please read [Session Management Cheat_Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#cookies) for detailed explanation.
 
 ### Strict-Transport-Security
 
