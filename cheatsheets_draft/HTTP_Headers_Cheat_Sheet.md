@@ -45,7 +45,7 @@ The `Referrer-Policy` HTTP header controls how much referrer information (sent v
 Send everything to the same site but only the origin for other sites.
 > `Referrer-Policy: strict-origin-when-cross-origin`
 
-- *NOTE:* This is the default in modern browsers
+- *NOTE:* This is the default in modern browsers. Read about it on the [Mozilla Referrer-Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy) page.
 
 ### Content-Type
 
@@ -67,6 +67,7 @@ The `Set-Cookie` HTTP response header is used to send a cookie from the server t
 > `Set-Cookie: name=value; Secure; HttpOnly; SameSite=Strict`
 
 - *NOTE:* The `Domain` attribute has been removed intentionally
+- Please read [Session Management Cheat_Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#cookies) for detailed explanation.
 
 ### Strict-Transport-Security
 
@@ -98,6 +99,7 @@ Restrict most of the resource types to the same site and subdomains of `yourdoam
 > `Content-Security-Policy: default-src 'self' *.yourdomain.com; block-all-mixed-content; font-src 'self' https: data:; img-src 'self' data: blob:; object-src 'none'; script-src-attr 'none'; style-src 'self' https: 'unsafe-inline'; upgrade-insecure-requests;`
 
 - *WARNING*: Inline `script` elements and inline script event handlers like `onload` will stop working with the above header. But this is required to neutralize XSS attacks.
+- For explanation and customization, read [Content Security Policy Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Content_Security_Policy_Cheat_Sheet.md)
 
 ### Access-Control-Allow-Origin
 
@@ -105,8 +107,8 @@ The `Access-Control-Allow-Origin` response header indicates whether the response
 
 #### Recommendation
 
-Use `*` or specific domain names.
-> `Access-Control-Allow-Origin: *`
+Prefer using specific [origin](https://developer.mozilla.org/en-US/docs/Glossary/Origin) instead of `*`. Checkout [Access-Control-Allow-Origin](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin) for details.
+> `Access-Control-Allow-Origin: https://yoursite.com`
 
 ### Cross-Origin-Opener-Policy
 
@@ -282,10 +284,8 @@ Online tools usually test the homepage of the given address. But SmartScanner sc
 - [Mozilla: Strict-Transport-Security](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security)
 - [Mozilla: Content-Type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type)
 - [Mozilla: Expect-CT](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Expect-CT)
-- [Mozilla: Referrer-Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy)
 - [Mozilla: Set-Cookie](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie)
 - [content-security-policy.com](https://content-security-policy.com/)
-- [Mozilla: Access-Control-Allow-Origin](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin)
 - [Mozilla: Cross-Origin-Opener-Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cross-Origin-Opener-Policy)
 - [resourcepolicy.fyi](https://resourcepolicy.fyi/)
 - [Mozilla: Cross-Origin-Resource-Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cross-Origin-Resource-Policy)
