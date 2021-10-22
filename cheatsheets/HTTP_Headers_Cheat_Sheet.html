@@ -1,0 +1,2723 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Website with the collection of all the cheat sheets of the project.">
+      
+      
+      
+      
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html">
+      
+      <link rel="icon" href="../assets/WebSite_Favicon.png">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.3.4">
+    
+    
+      
+        <title>HTTP Headers - OWASP Cheat Sheet Series</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.db9e7362.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+  
+
+
+
+  
+  
+
+
+
+  <script>window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","UA-4531126-15","auto"),ga("set","anonymizeIp",!0),ga("send","pageview"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){var e;this.value&&(e=document.location.pathname,ga("send","pageview",e+"?q="+this.value))}),"undefined"!=typeof location$&&location$.subscribe(function(e){ga("send","pageview",e.pathname)})})</script>
+  <script async src="https://www.google-analytics.com/analytics.js"></script>
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#http-security-response-headers-cheat-sheet" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../index.html" title="OWASP Cheat Sheet Series" class="md-header__button md-logo" aria-label="OWASP Cheat Sheet Series" data-md-component="logo">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OWASP Cheat Sheet Series
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              HTTP Headers
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="OWASP Cheat Sheet Series" class="md-nav__button md-logo" aria-label="OWASP Cheat Sheet Series" data-md-component="logo">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
+
+    </a>
+    OWASP Cheat Sheet Series
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Glossary.html" class="md-nav__link">
+        Index Alphabetical
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IndexASVS.html" class="md-nav__link">
+        Index ASVS
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IndexProactiveControls.html" class="md-nav__link">
+        Index Proactive Controls
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IndexTopTen.html" class="md-nav__link">
+        Index Top 10
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          Cheatsheets
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Cheatsheets" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Cheatsheets
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="AJAX_Security_Cheat_Sheet.html" class="md-nav__link">
+        AJAX Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Abuse_Case_Cheat_Sheet.html" class="md-nav__link">
+        Abuse Case
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Access_Control_Cheat_Sheet.html" class="md-nav__link">
+        Access Control
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Application_Logging_Vocabulary_Cheat_Sheet.html" class="md-nav__link">
+        Application Logging Vocabulary
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Attack_Surface_Analysis_Cheat_Sheet.html" class="md-nav__link">
+        Attack Surface Analysis
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Authentication_Cheat_Sheet.html" class="md-nav__link">
+        Authentication
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Authorization_Cheat_Sheet.html" class="md-nav__link">
+        Authorization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Authorization_Testing_Automation_Cheat_Sheet.html" class="md-nav__link">
+        Authorization Testing Automation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Bean_Validation_Cheat_Sheet.html" class="md-nav__link">
+        Bean Validation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html" class="md-nav__link">
+        C-Based Toolchain Hardening
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html" class="md-nav__link">
+        Choosing and Using Security Questions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Clickjacking_Defense_Cheat_Sheet.html" class="md-nav__link">
+        Clickjacking Defense
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Content_Security_Policy_Cheat_Sheet.html" class="md-nav__link">
+        Content Security Policy
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Credential Stuffing Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Cross-Site Request Forgery Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Cross Site Scripting Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Cryptographic_Storage_Cheat_Sheet.html" class="md-nav__link">
+        Cryptographic Storage
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        DOM based XSS Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Database_Security_Cheat_Sheet.html" class="md-nav__link">
+        Database Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Denial_of_Service_Cheat_Sheet.html" class="md-nav__link">
+        Denial of Service
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Deserialization_Cheat_Sheet.html" class="md-nav__link">
+        Deserialization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Docker_Security_Cheat_Sheet.html" class="md-nav__link">
+        Docker Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="DotNet_Security_Cheat_Sheet.html" class="md-nav__link">
+        DotNet Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Error_Handling_Cheat_Sheet.html" class="md-nav__link">
+        Error Handling
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="File_Upload_Cheat_Sheet.html" class="md-nav__link">
+        File Upload
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Forgot_Password_Cheat_Sheet.html" class="md-nav__link">
+        Forgot Password
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="GraphQL_Cheat_Sheet.html" class="md-nav__link">
+        GraphQL
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="HTML5_Security_Cheat_Sheet.html" class="md-nav__link">
+        HTML5 Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          HTTP Headers
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="HTTP_Headers_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+        HTTP Headers
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security-headers" class="md-nav__link">
+    Security Headers
+  </a>
+  
+    <nav class="md-nav" aria-label="Security Headers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#x-frame-options" class="md-nav__link">
+    X-Frame-Options
+  </a>
+  
+    <nav class="md-nav" aria-label="X-Frame-Options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation" class="md-nav__link">
+    Recommendation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#x-xss-protection" class="md-nav__link">
+    X-XSS-Protection
+  </a>
+  
+    <nav class="md-nav" aria-label="X-XSS-Protection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_1" class="md-nav__link">
+    Recommendation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#x-content-type-options" class="md-nav__link">
+    X-Content-Type-Options
+  </a>
+  
+    <nav class="md-nav" aria-label="X-Content-Type-Options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_2" class="md-nav__link">
+    Recommendation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#referrer-policy" class="md-nav__link">
+    Referrer-Policy
+  </a>
+  
+    <nav class="md-nav" aria-label="Referrer-Policy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_3" class="md-nav__link">
+    Recommendation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#content-type" class="md-nav__link">
+    Content-Type
+  </a>
+  
+    <nav class="md-nav" aria-label="Content-Type">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_4" class="md-nav__link">
+    Recommendation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-cookie" class="md-nav__link">
+    Set-Cookie
+  </a>
+  
+    <nav class="md-nav" aria-label="Set-Cookie">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_5" class="md-nav__link">
+    Recommendation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#strict-transport-security" class="md-nav__link">
+    Strict-Transport-Security
+  </a>
+  
+    <nav class="md-nav" aria-label="Strict-Transport-Security">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_6" class="md-nav__link">
+    Recommendation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#expect-ct" class="md-nav__link">
+    Expect-CT
+  </a>
+  
+    <nav class="md-nav" aria-label="Expect-CT">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_7" class="md-nav__link">
+    Recommendation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#content-security-policy" class="md-nav__link">
+    Content-Security-Policy
+  </a>
+  
+    <nav class="md-nav" aria-label="Content-Security-Policy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_8" class="md-nav__link">
+    Recommendation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#access-control-allow-origin" class="md-nav__link">
+    Access-Control-Allow-Origin
+  </a>
+  
+    <nav class="md-nav" aria-label="Access-Control-Allow-Origin">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_9" class="md-nav__link">
+    Recommendation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-origin-opener-policy" class="md-nav__link">
+    Cross-Origin-Opener-Policy
+  </a>
+  
+    <nav class="md-nav" aria-label="Cross-Origin-Opener-Policy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_10" class="md-nav__link">
+    Recommendation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-origin-resource-policy" class="md-nav__link">
+    Cross-Origin-Resource-Policy
+  </a>
+  
+    <nav class="md-nav" aria-label="Cross-Origin-Resource-Policy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_11" class="md-nav__link">
+    Recommendation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-origin-embedder-policy" class="md-nav__link">
+    Cross-Origin-Embedder-Policy
+  </a>
+  
+    <nav class="md-nav" aria-label="Cross-Origin-Embedder-Policy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_12" class="md-nav__link">
+    Recommendation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#server" class="md-nav__link">
+    Server
+  </a>
+  
+    <nav class="md-nav" aria-label="Server">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_13" class="md-nav__link">
+    Recommendation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#x-powered-by" class="md-nav__link">
+    X-Powered-By
+  </a>
+  
+    <nav class="md-nav" aria-label="X-Powered-By">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_14" class="md-nav__link">
+    Recommendation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#x-aspnet-version" class="md-nav__link">
+    X-AspNet-Version
+  </a>
+  
+    <nav class="md-nav" aria-label="X-AspNet-Version">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_15" class="md-nav__link">
+    Recommendation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#x-aspnetmvc-version" class="md-nav__link">
+    X-AspNetMvc-Version
+  </a>
+  
+    <nav class="md-nav" aria-label="X-AspNetMvc-Version">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_16" class="md-nav__link">
+    Recommendation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#x-dns-prefetch-control" class="md-nav__link">
+    X-DNS-Prefetch-Control
+  </a>
+  
+    <nav class="md-nav" aria-label="X-DNS-Prefetch-Control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_17" class="md-nav__link">
+    Recommendation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#public-key-pins" class="md-nav__link">
+    Public-Key-Pins ❌
+  </a>
+  
+    <nav class="md-nav" aria-label="Public-Key-Pins ❌">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_18" class="md-nav__link">
+    Recommendation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-http-headers-in-different-technologies" class="md-nav__link">
+    Adding Http Headers in Different Technologies
+  </a>
+  
+    <nav class="md-nav" aria-label="Adding Http Headers in Different Technologies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#php" class="md-nav__link">
+    PHP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apache" class="md-nav__link">
+    Apache
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iis" class="md-nav__link">
+    IIS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#haproxy" class="md-nav__link">
+    HAProxy
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nginx" class="md-nav__link">
+    Nginx
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#express" class="md-nav__link">
+    Express
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-proper-implementation-of-security-headers" class="md-nav__link">
+    Testing Proper Implementation of Security Headers
+  </a>
+  
+    <nav class="md-nav" aria-label="Testing Proper Implementation of Security Headers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mozilla-observatory" class="md-nav__link">
+    Mozilla Observatory
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#smartscanner" class="md-nav__link">
+    SmartScanner
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html" class="md-nav__link">
+        HTTP Strict Transport Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Infrastructure_as_Code_Security_Cheat_Sheet.html" class="md-nav__link">
+        Infrastructure as Code Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Injection Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Injection_Prevention_in_Java_Cheat_Sheet.html" class="md-nav__link">
+        Injection Prevention in Java
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Input_Validation_Cheat_Sheet.html" class="md-nav__link">
+        Input Validation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Insecure Direct Object Reference Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="JAAS_Cheat_Sheet.html" class="md-nav__link">
+        JAAS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="JSON_Web_Token_for_Java_Cheat_Sheet.html" class="md-nav__link">
+        JSON Web Token for Java
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Key_Management_Cheat_Sheet.html" class="md-nav__link">
+        Key Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Kubernetes_Security_Cheat_Sheet.html" class="md-nav__link">
+        Kubernetes Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="LDAP_Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        LDAP Injection Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Laravel_Cheat_Sheet.html" class="md-nav__link">
+        Laravel
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Logging_Cheat_Sheet.html" class="md-nav__link">
+        Logging
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Mass_Assignment_Cheat_Sheet.html" class="md-nav__link">
+        Mass Assignment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html" class="md-nav__link">
+        Microservices based Security Arch Doc
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Microservices_security.html" class="md-nav__link">
+        Microservices security.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Multifactor_Authentication_Cheat_Sheet.html" class="md-nav__link">
+        Multifactor Authentication
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="NPM_Security_Cheat_Sheet.html" class="md-nav__link">
+        NPM Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="NodeJS_Docker_Cheat_Sheet.html" class="md-nav__link">
+        NodeJS Docker
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Nodejs_Security_Cheat_Sheet.html" class="md-nav__link">
+        Nodejs Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="OS_Command_Injection_Defense_Cheat_Sheet.html" class="md-nav__link">
+        OS Command Injection Defense
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="PHP_Configuration_Cheat_Sheet.html" class="md-nav__link">
+        PHP Configuration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Password_Storage_Cheat_Sheet.html" class="md-nav__link">
+        Password Storage
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Pinning_Cheat_Sheet.html" class="md-nav__link">
+        Pinning
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Query_Parameterization_Cheat_Sheet.html" class="md-nav__link">
+        Query Parameterization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="REST_Assessment_Cheat_Sheet.html" class="md-nav__link">
+        REST Assessment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="REST_Security_Cheat_Sheet.html" class="md-nav__link">
+        REST Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ruby_on_Rails_Cheat_Sheet.html" class="md-nav__link">
+        Ruby on Rails
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="SAML_Security_Cheat_Sheet.html" class="md-nav__link">
+        SAML Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="SQL_Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        SQL Injection Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html" class="md-nav__link">
+        Securing Cascading Style Sheets
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Server Side Request Forgery Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Session_Management_Cheat_Sheet.html" class="md-nav__link">
+        Session Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="TLS_Cipher_String_Cheat_Sheet.html" class="md-nav__link">
+        TLS Cipher String
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Third_Party_Javascript_Management_Cheat_Sheet.html" class="md-nav__link">
+        Third Party Javascript Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Threat_Modeling_Cheat_Sheet.html" class="md-nav__link">
+        Threat Modeling
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Transaction_Authorization_Cheat_Sheet.html" class="md-nav__link">
+        Transaction Authorization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Transport_Layer_Protection_Cheat_Sheet.html" class="md-nav__link">
+        Transport Layer Protection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html" class="md-nav__link">
+        Unvalidated Redirects and Forwards
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="User_Privacy_Protection_Cheat_Sheet.html" class="md-nav__link">
+        User Privacy Protection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Virtual_Patching_Cheat_Sheet.html" class="md-nav__link">
+        Virtual Patching
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Vulnerability_Disclosure_Cheat_Sheet.html" class="md-nav__link">
+        Vulnerability Disclosure
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html" class="md-nav__link">
+        Vulnerable Dependency Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Web_Service_Security_Cheat_Sheet.html" class="md-nav__link">
+        Web Service Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="XML_External_Entity_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        XML External Entity Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="XML_Security_Cheat_Sheet.html" class="md-nav__link">
+        XML Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="XSS_Filter_Evasion_Cheat_Sheet.html" class="md-nav__link">
+        XSS Filter Evasion
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security-headers" class="md-nav__link">
+    Security Headers
+  </a>
+  
+    <nav class="md-nav" aria-label="Security Headers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#x-frame-options" class="md-nav__link">
+    X-Frame-Options
+  </a>
+  
+    <nav class="md-nav" aria-label="X-Frame-Options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation" class="md-nav__link">
+    Recommendation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#x-xss-protection" class="md-nav__link">
+    X-XSS-Protection
+  </a>
+  
+    <nav class="md-nav" aria-label="X-XSS-Protection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_1" class="md-nav__link">
+    Recommendation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#x-content-type-options" class="md-nav__link">
+    X-Content-Type-Options
+  </a>
+  
+    <nav class="md-nav" aria-label="X-Content-Type-Options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_2" class="md-nav__link">
+    Recommendation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#referrer-policy" class="md-nav__link">
+    Referrer-Policy
+  </a>
+  
+    <nav class="md-nav" aria-label="Referrer-Policy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_3" class="md-nav__link">
+    Recommendation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#content-type" class="md-nav__link">
+    Content-Type
+  </a>
+  
+    <nav class="md-nav" aria-label="Content-Type">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_4" class="md-nav__link">
+    Recommendation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set-cookie" class="md-nav__link">
+    Set-Cookie
+  </a>
+  
+    <nav class="md-nav" aria-label="Set-Cookie">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_5" class="md-nav__link">
+    Recommendation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#strict-transport-security" class="md-nav__link">
+    Strict-Transport-Security
+  </a>
+  
+    <nav class="md-nav" aria-label="Strict-Transport-Security">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_6" class="md-nav__link">
+    Recommendation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#expect-ct" class="md-nav__link">
+    Expect-CT
+  </a>
+  
+    <nav class="md-nav" aria-label="Expect-CT">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_7" class="md-nav__link">
+    Recommendation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#content-security-policy" class="md-nav__link">
+    Content-Security-Policy
+  </a>
+  
+    <nav class="md-nav" aria-label="Content-Security-Policy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_8" class="md-nav__link">
+    Recommendation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#access-control-allow-origin" class="md-nav__link">
+    Access-Control-Allow-Origin
+  </a>
+  
+    <nav class="md-nav" aria-label="Access-Control-Allow-Origin">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_9" class="md-nav__link">
+    Recommendation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-origin-opener-policy" class="md-nav__link">
+    Cross-Origin-Opener-Policy
+  </a>
+  
+    <nav class="md-nav" aria-label="Cross-Origin-Opener-Policy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_10" class="md-nav__link">
+    Recommendation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-origin-resource-policy" class="md-nav__link">
+    Cross-Origin-Resource-Policy
+  </a>
+  
+    <nav class="md-nav" aria-label="Cross-Origin-Resource-Policy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_11" class="md-nav__link">
+    Recommendation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-origin-embedder-policy" class="md-nav__link">
+    Cross-Origin-Embedder-Policy
+  </a>
+  
+    <nav class="md-nav" aria-label="Cross-Origin-Embedder-Policy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_12" class="md-nav__link">
+    Recommendation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#server" class="md-nav__link">
+    Server
+  </a>
+  
+    <nav class="md-nav" aria-label="Server">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_13" class="md-nav__link">
+    Recommendation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#x-powered-by" class="md-nav__link">
+    X-Powered-By
+  </a>
+  
+    <nav class="md-nav" aria-label="X-Powered-By">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_14" class="md-nav__link">
+    Recommendation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#x-aspnet-version" class="md-nav__link">
+    X-AspNet-Version
+  </a>
+  
+    <nav class="md-nav" aria-label="X-AspNet-Version">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_15" class="md-nav__link">
+    Recommendation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#x-aspnetmvc-version" class="md-nav__link">
+    X-AspNetMvc-Version
+  </a>
+  
+    <nav class="md-nav" aria-label="X-AspNetMvc-Version">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_16" class="md-nav__link">
+    Recommendation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#x-dns-prefetch-control" class="md-nav__link">
+    X-DNS-Prefetch-Control
+  </a>
+  
+    <nav class="md-nav" aria-label="X-DNS-Prefetch-Control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_17" class="md-nav__link">
+    Recommendation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#public-key-pins" class="md-nav__link">
+    Public-Key-Pins ❌
+  </a>
+  
+    <nav class="md-nav" aria-label="Public-Key-Pins ❌">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_18" class="md-nav__link">
+    Recommendation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-http-headers-in-different-technologies" class="md-nav__link">
+    Adding Http Headers in Different Technologies
+  </a>
+  
+    <nav class="md-nav" aria-label="Adding Http Headers in Different Technologies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#php" class="md-nav__link">
+    PHP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apache" class="md-nav__link">
+    Apache
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iis" class="md-nav__link">
+    IIS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#haproxy" class="md-nav__link">
+    HAProxy
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nginx" class="md-nav__link">
+    Nginx
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#express" class="md-nav__link">
+    Express
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-proper-implementation-of-security-headers" class="md-nav__link">
+    Testing Proper Implementation of Security Headers
+  </a>
+  
+    <nav class="md-nav" aria-label="Testing Proper Implementation of Security Headers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mozilla-observatory" class="md-nav__link">
+    Mozilla Observatory
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#smartscanner" class="md-nav__link">
+    SmartScanner
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="http-security-response-headers-cheat-sheet">HTTP Security Response Headers Cheat Sheet<a class="headerlink" href="#http-security-response-headers-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>HTTP Headers are a great booster for web security with easy implementation. Proper HTTP response eaders can help prevent security vulnerabilities like Cross-Site Scripting, Clickjacking, Information disclosure and more.</p>
+<p>In this cheat sheet, we will review all security-related HTTP headers, recommended configurations, and reference other sources for complicated headers.</p>
+<h2 id="security-headers">Security Headers<a class="headerlink" href="#security-headers" title="Permanent link">&para;</a></h2>
+<h3 id="x-frame-options">X-Frame-Options<a class="headerlink" href="#x-frame-options" title="Permanent link">&para;</a></h3>
+<p>The <code>X-Frame-Options</code> HTTP response header can be used to indicate whether or not a browser should be allowed to render a page in a <code>&lt;frame&gt;</code>, <code>&lt;iframe&gt;</code>, <code>&lt;embed&gt;</code> or <code>&lt;object&gt;</code>. Sites can use this to avoid clickjacking attacks, by ensuring that their content is not embedded into other sites.</p>
+<h4 id="recommendation">Recommendation<a class="headerlink" href="#recommendation" title="Permanent link">&para;</a></h4>
+<p>Do not allow displaying of the page in a frame.</p>
+<blockquote>
+<p><code>X-Frame-Options: DENY</code></p>
+</blockquote>
+<h3 id="x-xss-protection">X-XSS-Protection<a class="headerlink" href="#x-xss-protection" title="Permanent link">&para;</a></h3>
+<p>The HTTP <code>X-XSS-Protection</code> response header is a feature of Internet Explorer, Chrome, and Safari that stops pages from loading when they detect reflected cross-site scripting (XSS) attacks.</p>
+<h4 id="recommendation_1">Recommendation<a class="headerlink" href="#recommendation_1" title="Permanent link">&para;</a></h4>
+<p>Do not set this header or explicitly turn it off.</p>
+<blockquote>
+<p><code>X-XSS-Protection: 0</code></p>
+</blockquote>
+<h3 id="x-content-type-options">X-Content-Type-Options<a class="headerlink" href="#x-content-type-options" title="Permanent link">&para;</a></h3>
+<p>The <code>X-Content-Type-Options</code> response HTTP header is used by the server to prevent browsers from guessing the media type ( MIME type).
+This is known as <strong>MIME sniffing</strong> in which the browser guesses the correct MIME type by looking at the contents of the resource.
+The absence of this header might cause browsers to transform non-executable content into executable content.</p>
+<h4 id="recommendation_2">Recommendation<a class="headerlink" href="#recommendation_2" title="Permanent link">&para;</a></h4>
+<blockquote>
+<p><code>X-Content-Type-Options: nosniff</code></p>
+</blockquote>
+<h3 id="referrer-policy">Referrer-Policy<a class="headerlink" href="#referrer-policy" title="Permanent link">&para;</a></h3>
+<p>The <code>Referrer-Policy</code> HTTP header controls how much referrer information (sent via the Referer header) should be included with requests.</p>
+<h4 id="recommendation_3">Recommendation<a class="headerlink" href="#recommendation_3" title="Permanent link">&para;</a></h4>
+<p>Send everything to the same site but only the origin for other sites.</p>
+<blockquote>
+<p><code>Referrer-Policy: strict-origin-when-cross-origin</code></p>
+</blockquote>
+<ul>
+<li><em>NOTE:</em> This is the default in modern browsers. For more information on configuring this header please see <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy">Mozilla Referrer-Policy</a>.</li>
+</ul>
+<h3 id="content-type">Content-Type<a class="headerlink" href="#content-type" title="Permanent link">&para;</a></h3>
+<p>The <code>Content-Type</code> representation header is used to indicate the original media type of the resource (before any content encoding is applied for sending).</p>
+<h4 id="recommendation_4">Recommendation<a class="headerlink" href="#recommendation_4" title="Permanent link">&para;</a></h4>
+<blockquote>
+<p><code>Content-Type: text/html; charset=UTF-8</code></p>
+</blockquote>
+<ul>
+<li><em>NOTE:</em> the <code>charset</code> attribute is necessary to prevent XSS in <strong>HTML</strong> pages</li>
+<li><em>NOTE</em>: the <code>text/html</code> can be any of the possible <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types">MIME types</a></li>
+</ul>
+<h3 id="set-cookie">Set-Cookie<a class="headerlink" href="#set-cookie" title="Permanent link">&para;</a></h3>
+<p>The <code>Set-Cookie</code> HTTP response header is used to send a cookie from the server to the user agent, so the user agent can send it back to the server later. To send multiple cookies, multiple Set-Cookie headers should be sent in the same response.</p>
+<h4 id="recommendation_5">Recommendation<a class="headerlink" href="#recommendation_5" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Please read <a href="https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#cookies">Session Management Cheat_Sheet</a> for a detailed explanation on cookie configuration options.</li>
+</ul>
+<h3 id="strict-transport-security">Strict-Transport-Security<a class="headerlink" href="#strict-transport-security" title="Permanent link">&para;</a></h3>
+<p>The HTTP <code>Strict-Transport-Security</code> response header (often abbreviated as HSTS) lets a website tell browsers that it should only be accessed using HTTPS, instead of using HTTP.</p>
+<h4 id="recommendation_6">Recommendation<a class="headerlink" href="#recommendation_6" title="Permanent link">&para;</a></h4>
+<p>Enable HTTPS-only access for the site and sub domains.</p>
+<blockquote>
+<p><code>Strict-Transport-Security: max-age=63072000; includeSubDomains; preload</code></p>
+</blockquote>
+<p>Please checkout <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html">HTTP Strict Transport Security Cheat Sheet</a> for more information.</p>
+<h3 id="expect-ct">Expect-CT<a class="headerlink" href="#expect-ct" title="Permanent link">&para;</a></h3>
+<p>The <code>Expect-CT</code> header lets sites opt-in to reporting and/or enforcement of Certificate Transparency requirements, to prevent the use of misissued certificates for that site from going unnoticed.</p>
+<h4 id="recommendation_7">Recommendation<a class="headerlink" href="#recommendation_7" title="Permanent link">&para;</a></h4>
+<p>Enforce Certificate Transparency for 24 hours.</p>
+<blockquote>
+<p><code>Expect-CT: max-age=86400</code></p>
+</blockquote>
+<h3 id="content-security-policy">Content-Security-Policy<a class="headerlink" href="#content-security-policy" title="Permanent link">&para;</a></h3>
+<p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross-Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement to distribution of malware.</p>
+<h4 id="recommendation_8">Recommendation<a class="headerlink" href="#recommendation_8" title="Permanent link">&para;</a></h4>
+<p>Content Security Policy is very complex to configure and maintain. For an explanation on customization options, please read <a href="https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Content_Security_Policy_Cheat_Sheet.md">Content Security Policy Cheat Sheet</a></p>
+<h3 id="access-control-allow-origin">Access-Control-Allow-Origin<a class="headerlink" href="#access-control-allow-origin" title="Permanent link">&para;</a></h3>
+<p>The <code>Access-Control-Allow-Origin</code> response header indicates whether the response can be shared with requesting code from the given origin.</p>
+<h4 id="recommendation_9">Recommendation<a class="headerlink" href="#recommendation_9" title="Permanent link">&para;</a></h4>
+<p>Prefer using specific <a href="https://developer.mozilla.org/en-US/docs/Glossary/Origin">origin</a> instead of <code>*</code>. Checkout <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin">Access-Control-Allow-Origin</a> for details.</p>
+<blockquote>
+<p><code>Access-Control-Allow-Origin: https://yoursite.com</code></p>
+</blockquote>
+<h3 id="cross-origin-opener-policy">Cross-Origin-Opener-Policy<a class="headerlink" href="#cross-origin-opener-policy" title="Permanent link">&para;</a></h3>
+<p>The HTTP <code>Cross-Origin-Opener-Policy</code> (COOP) response header allows you to ensure a top-level document does not share a browsing context group with cross-origin documents.</p>
+<h4 id="recommendation_10">Recommendation<a class="headerlink" href="#recommendation_10" title="Permanent link">&para;</a></h4>
+<p>Isolates the browsing context exclusively to same-origin documents.</p>
+<blockquote>
+<p><code>HTTP Cross-Origin-Opener-Policy: same-origin</code></p>
+</blockquote>
+<h3 id="cross-origin-resource-policy">Cross-Origin-Resource-Policy<a class="headerlink" href="#cross-origin-resource-policy" title="Permanent link">&para;</a></h3>
+<p>The <code>Cross-Origin-Resource-Policy</code> (CORP) header allows you to control the set of origins that are empowered to include a resource. It is a robust defense against attacks like <a href="https://meltdownattack.com/">Spectre</a>, as it allows browsers to block a given response before it enters an attacker's process.</p>
+<h4 id="recommendation_11">Recommendation<a class="headerlink" href="#recommendation_11" title="Permanent link">&para;</a></h4>
+<p>Limit current resource loading to the site and sub-domains only.</p>
+<blockquote>
+<p><code>Cross-Origin-Resource-Policy: same-site</code></p>
+</blockquote>
+<h3 id="cross-origin-embedder-policy">Cross-Origin-Embedder-Policy<a class="headerlink" href="#cross-origin-embedder-policy" title="Permanent link">&para;</a></h3>
+<p>The HTTP <code>Cross-Origin-Embedder-Policy</code> (COEP) response header prevents a document from loading any cross-origin resources that don't explicitly grant the document permission (using <a href="#cross-origin-resource-policy">CORP</a> or CORS).</p>
+<h4 id="recommendation_12">Recommendation<a class="headerlink" href="#recommendation_12" title="Permanent link">&para;</a></h4>
+<p>A document can only load resources from the same origin, or resources explicitly marked as loadable from another origin.</p>
+<blockquote>
+<p><code>Cross-Origin-Embedder-Policy: require-corp</code></p>
+</blockquote>
+<ul>
+<li><em>NOTE</em>: you can bypass it by adding the <code>crossorigin</code> attribute like below:</li>
+<li><code>&lt;img src="https://thirdparty.com/img.png" crossorigin&gt;</code></li>
+</ul>
+<h3 id="server">Server<a class="headerlink" href="#server" title="Permanent link">&para;</a></h3>
+<p>The <code>Server</code> header describes the software used by the origin server that handled the request — that is, the server that generated the response.</p>
+<h4 id="recommendation_13">Recommendation<a class="headerlink" href="#recommendation_13" title="Permanent link">&para;</a></h4>
+<p>Remove this header or set non-informative values.</p>
+<blockquote>
+<p><code>Server: webserver</code></p>
+</blockquote>
+<h3 id="x-powered-by">X-Powered-By<a class="headerlink" href="#x-powered-by" title="Permanent link">&para;</a></h3>
+<p>The <code>X-Powered-By</code> header describes the technologies used by the webserver. This information exposes the server to attackers. Using the information in this header, attackers can find vulnerabilities easier.</p>
+<h4 id="recommendation_14">Recommendation<a class="headerlink" href="#recommendation_14" title="Permanent link">&para;</a></h4>
+<p>Remove all <code>X-Powered-By</code> headers.</p>
+<h3 id="x-aspnet-version">X-AspNet-Version<a class="headerlink" href="#x-aspnet-version" title="Permanent link">&para;</a></h3>
+<p>Provides information about the .NET version.</p>
+<h4 id="recommendation_15">Recommendation<a class="headerlink" href="#recommendation_15" title="Permanent link">&para;</a></h4>
+<p>Disable sending this header. Add the following line in your <code>web.config</code> in the <code>&lt;system.web&gt;</code> section to remove it.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;httpRuntime</span> <span class="na">enableVersionHeader=</span><span class="s">&quot;false&quot;</span> <span class="nt">/&gt;</span>
+</code></pre></div>
+<h3 id="x-aspnetmvc-version">X-AspNetMvc-Version<a class="headerlink" href="#x-aspnetmvc-version" title="Permanent link">&para;</a></h3>
+<p>Provides information about the .NET version.</p>
+<h4 id="recommendation_16">Recommendation<a class="headerlink" href="#recommendation_16" title="Permanent link">&para;</a></h4>
+<p>Disable sending this header. To remove the <code>X-AspNetMvc-Version</code> header, add the below line in <code>Global.asax</code> file.</p>
+<div class="highlight"><pre><span></span><code>MvcHandler.DisableMvcResponseHeader = true;
+</code></pre></div>
+<h3 id="x-dns-prefetch-control">X-DNS-Prefetch-Control<a class="headerlink" href="#x-dns-prefetch-control" title="Permanent link">&para;</a></h3>
+<p>The <code>X-DNS-Prefetch-Control</code> HTTP response header controls DNS prefetching, a feature by which browsers proactively perform domain name resolution on both links that the user may choose to follow as well as URLs for items referenced by the document, including images, CSS, JavaScript, and so forth.</p>
+<h4 id="recommendation_17">Recommendation<a class="headerlink" href="#recommendation_17" title="Permanent link">&para;</a></h4>
+<p>The default behavior of browsers is to perform DNS caching which is good for most websites.
+If you do not control links on your website, you might want to set <code>off</code> as a value to disable DNS prefetch to avoid leaking information to those domains.</p>
+<h3 id="public-key-pins">Public-Key-Pins ❌<a class="headerlink" href="#public-key-pins" title="Permanent link">&para;</a></h3>
+<p>The HTTP <code>Public-Key-Pins</code> response header is used to associate a specific cryptographic public key with a certain web server to decrease the risk of MITM attacks with forged certificates.</p>
+<h4 id="recommendation_18">Recommendation<a class="headerlink" href="#recommendation_18" title="Permanent link">&para;</a></h4>
+<p>This header is deprecated. Use <code>Expect-CT</code> instead.</p>
+<h2 id="adding-http-headers-in-different-technologies">Adding Http Headers in Different Technologies<a class="headerlink" href="#adding-http-headers-in-different-technologies" title="Permanent link">&para;</a></h2>
+<h3 id="php">PHP<a class="headerlink" href="#php" title="Permanent link">&para;</a></h3>
+<p>Below sample code sets the <code>X-XSS-Protection</code> header in PHP.</p>
+<div class="highlight"><pre><span></span><code><span class="x">header(&quot;X-XSS-Protection: 1; mode=block&quot;);</span>
+</code></pre></div>
+<h3 id="apache">Apache<a class="headerlink" href="#apache" title="Permanent link">&para;</a></h3>
+<p>Below <code>.htaccess</code> sample configuration sets the <code>X-XSS-Protection</code> header in Apache.</p>
+<div class="highlight"><pre><span></span><code>&lt;IfModule mod_headers.c&gt;
+Header set X-XSS-Protection &quot;1; mode=block&quot;
+&lt;/IfModule&gt;
+</code></pre></div>
+<h3 id="iis">IIS<a class="headerlink" href="#iis" title="Permanent link">&para;</a></h3>
+<p>Add below configurations to your <code>Web.config</code> in ISS to send the <code>X-XSS-Protection</code> header</p>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;system.webServer&gt;</span>
+...
+ <span class="nt">&lt;httpProtocol&gt;</span>
+   <span class="nt">&lt;customHeaders&gt;</span>
+     <span class="nt">&lt;add</span> <span class="na">name=</span><span class="s">&quot;X-XSS-Protection&quot;</span> <span class="na">value=</span><span class="s">&quot;1; mode=block&quot;</span> <span class="nt">/&gt;</span>
+   <span class="nt">&lt;/customHeaders&gt;</span>
+ <span class="nt">&lt;/httpProtocol&gt;</span>
+...
+<span class="nt">&lt;/system.webServer&gt;</span>
+</code></pre></div>
+<h3 id="haproxy">HAProxy<a class="headerlink" href="#haproxy" title="Permanent link">&para;</a></h3>
+<p>Add the below line to your font-end, listen, or backend configurations to send the <code>X-XSS-Protection</code> header</p>
+<div class="highlight"><pre><span></span><code>http-response set-header X-XSS-Protection 1; mode=block
+</code></pre></div>
+<h3 id="nginx">Nginx<a class="headerlink" href="#nginx" title="Permanent link">&para;</a></h3>
+<p>Below sample configuration, sets the <code>X-XSS-Protection</code> header in Nginx.</p>
+<div class="highlight"><pre><span></span><code>add_header &quot;X-XSS-Protection&quot; &quot;1; mode=block&quot;;
+</code></pre></div>
+<h3 id="express">Express<a class="headerlink" href="#express" title="Permanent link">&para;</a></h3>
+<p>You can use <a href="https://www.npmjs.com/package/helmet">helmet</a> to setup HTTP headers in Express. Below code is sample for adding the <code>X-Frame-Options</code> header.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span> <span class="nx">helmet</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;helmet&#39;</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">express</span><span class="p">();</span>
+<span class="c1">// Sets &quot;X-Frame-Options: SAMEORIGIN&quot;</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span>
+ <span class="nx">helmet</span><span class="p">.</span><span class="nx">frameguard</span><span class="p">({</span>
+   <span class="nx">action</span><span class="o">:</span> <span class="s2">&quot;sameorigin&quot;</span><span class="p">,</span>
+ <span class="p">})</span>
+<span class="p">);</span>
+</code></pre></div>
+<h2 id="testing-proper-implementation-of-security-headers">Testing Proper Implementation of Security Headers<a class="headerlink" href="#testing-proper-implementation-of-security-headers" title="Permanent link">&para;</a></h2>
+<h3 id="mozilla-observatory">Mozilla Observatory<a class="headerlink" href="#mozilla-observatory" title="Permanent link">&para;</a></h3>
+<p>The <a href="https://observatory.mozilla.org/">Mozilla Observatory</a> is an online tool that you can check your website's header status.</p>
+<h3 id="smartscanner">SmartScanner<a class="headerlink" href="#smartscanner" title="Permanent link">&para;</a></h3>
+<p><a href="https://www.thesmartscanner.com/">SmartScanner</a> has a dedicated <a href="https://www.thesmartscanner.com/docs/configuring-security-tests">test profile</a> for testing security of HTTP headers.
+Online tools usually test the homepage of the given address. But SmartScanner scans the whole website. So, you can make sure all of your web pages have the right HTTP Headers in place.</p>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options">Mozilla: X-Frame-Options</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection">Mozilla: X-XSS-Protection</a></li>
+<li><a href="https://hstspreload.org/">hstspreload.org</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security">Mozilla: Strict-Transport-Security</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type">Mozilla: Content-Type</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Expect-CT">Mozilla: Expect-CT</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie">Mozilla: Set-Cookie</a></li>
+<li><a href="https://content-security-policy.com/">content-security-policy.com</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cross-Origin-Opener-Policy">Mozilla: Cross-Origin-Opener-Policy</a></li>
+<li><a href="https://resourcepolicy.fyi/">resourcepolicy.fyi</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cross-Origin-Resource-Policy">Mozilla: Cross-Origin-Resource-Policy</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cross-Origin-Embedder-Policy">Mozilla: Cross-Origin-Embedder-Policy</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Server">Mozilla: Server Header</a></li>
+</ul>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="HTML5_Security_Cheat_Sheet.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: HTML5 Security" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              HTML5 Security
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html" class="md-footer__link md-footer__link--next" aria-label="Next: HTTP Strict Transport Security" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              HTTP Strict Transport Security
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            ©Copyright 2021 - CheatSheets Series Team - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">Creative Commons Attribution 3.0 Unported License</a>.
+          </div>
+        
+        
+          Made with
+          <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+            Material for MkDocs
+          </a>
+        
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.8397ff9e.min.js", "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.1e84347e.min.js"></script>
+      
+    
+  </body>
+</html>
