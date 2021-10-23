@@ -193,36 +193,36 @@ The HTTP `Public-Key-Pins` response header is used to associate a specific crypt
 
 This header is deprecated. Use `Expect-CT` instead.
 
-## Adding Http Headers in Different Technologies
+## Adding HTTP Headers in Different Technologies
 
 ### PHP
 
-Below sample code sets the `X-XSS-Protection` header in PHP.
+The sample code below sets the `X-Frame-Options` header in PHP.
 
 ```php
-header("X-XSS-Protection: 1; mode=block");
+header("X-Frame-Options: DENY");
 ```
 
 ### Apache
 
-Below `.htaccess` sample configuration sets the `X-XSS-Protection` header in Apache.
+Below is an `.htaccess` sample configuration which sets the `X-Frame-Options` header in Apache.
 
 ```lang-bsh
 <IfModule mod_headers.c>
-Header set X-XSS-Protection "1; mode=block"
+Header set X-Frame-Options "DENY"
 </IfModule>
 ```
 
 ### IIS
 
-Add below configurations to your `Web.config` in ISS to send the `X-XSS-Protection` header
+Add configurations below to your `Web.config` in ISS to send the `X-Frame-Options` header.
 
 ```xml
 <system.webServer>
 ...
  <httpProtocol>
    <customHeaders>
-     <add name="X-XSS-Protection" value="1; mode=block" />
+     <add name="X-Frame-Options" value="DENY" />
    </customHeaders>
  </httpProtocol>
 ...
@@ -231,23 +231,23 @@ Add below configurations to your `Web.config` in ISS to send the `X-XSS-Protecti
 
 ### HAProxy
 
-Add the below line to your font-end, listen, or backend configurations to send the `X-XSS-Protection` header
+Add the line below to your font-end, listen, or backend configurations to send the `X-Frame-Options` header.
 
 ```lang-none
-http-response set-header X-XSS-Protection 1; mode=block
+http-response set-header X-Frame-Options DENY
 ```
 
 ### Nginx
 
-Below sample configuration, sets the `X-XSS-Protection` header in Nginx.
+Below is a sample configuration, it sets the `X-Frame-Options` header in Nginx.
 
 ```lang-none
-add_header "X-XSS-Protection" "1; mode=block";
+add_header "X-Frame-Options" "DENY";
 ```
 
 ### Express
 
-You can use [helmet](https://www.npmjs.com/package/helmet) to setup HTTP headers in Express. Below code is sample for adding the `X-Frame-Options` header.
+You can use [helmet](https://www.npmjs.com/package/helmet) to setup HTTP headers in Express. The code below is sample for adding the `X-Frame-Options` header.
 
 ```javascript
 const helmet = require('helmet');
