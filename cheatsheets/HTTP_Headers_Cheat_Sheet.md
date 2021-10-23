@@ -26,6 +26,8 @@ The HTTP `X-XSS-Protection` response header is a feature of Internet Explorer, C
 Do not set this header or explicitly turn it off.
 > `X-XSS-Protection: 0`
 
+Please read [X-XSS_Protection should be disabled](https://github.com/OWASP/CheatSheetSeries/master/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md#x-xss-protection-header) for details.
+
 ### X-Content-Type-Options
 
 The `X-Content-Type-Options` response HTTP header is used by the server to prevent browsers from guessing the media type ( MIME type).
