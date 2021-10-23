@@ -1148,10 +1148,10 @@
       
         <li class="md-nav__item">
   <a href="#adding-http-headers-in-different-technologies" class="md-nav__link">
-    Adding Http Headers in Different Technologies
+    Adding HTTP Headers in Different Technologies
   </a>
   
-    <nav class="md-nav" aria-label="Adding Http Headers in Different Technologies">
+    <nav class="md-nav" aria-label="Adding HTTP Headers in Different Technologies">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2335,10 +2335,10 @@
       
         <li class="md-nav__item">
   <a href="#adding-http-headers-in-different-technologies" class="md-nav__link">
-    Adding Http Headers in Different Technologies
+    Adding HTTP Headers in Different Technologies
   </a>
   
-    <nav class="md-nav" aria-label="Adding Http Headers in Different Technologies">
+    <nav class="md-nav" aria-label="Adding HTTP Headers in Different Technologies">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2572,39 +2572,39 @@ If you do not control links on your website, you might want to set <code>off</co
 <p>The HTTP <code>Public-Key-Pins</code> response header is used to associate a specific cryptographic public key with a certain web server to decrease the risk of MITM attacks with forged certificates.</p>
 <h4 id="recommendation_18">Recommendation<a class="headerlink" href="#recommendation_18" title="Permanent link">&para;</a></h4>
 <p>This header is deprecated. Use <code>Expect-CT</code> instead.</p>
-<h2 id="adding-http-headers-in-different-technologies">Adding Http Headers in Different Technologies<a class="headerlink" href="#adding-http-headers-in-different-technologies" title="Permanent link">&para;</a></h2>
+<h2 id="adding-http-headers-in-different-technologies">Adding HTTP Headers in Different Technologies<a class="headerlink" href="#adding-http-headers-in-different-technologies" title="Permanent link">&para;</a></h2>
 <h3 id="php">PHP<a class="headerlink" href="#php" title="Permanent link">&para;</a></h3>
-<p>Below sample code sets the <code>X-XSS-Protection</code> header in PHP.</p>
-<div class="highlight"><pre><span></span><code><span class="x">header(&quot;X-XSS-Protection: 1; mode=block&quot;);</span>
+<p>The sample code below sets the <code>X-Frame-Options</code> header in PHP.</p>
+<div class="highlight"><pre><span></span><code><span class="x">header(&quot;X-Frame-Options: DENY&quot;);</span>
 </code></pre></div>
 <h3 id="apache">Apache<a class="headerlink" href="#apache" title="Permanent link">&para;</a></h3>
-<p>Below <code>.htaccess</code> sample configuration sets the <code>X-XSS-Protection</code> header in Apache.</p>
+<p>Below is an <code>.htaccess</code> sample configuration which sets the <code>X-Frame-Options</code> header in Apache.</p>
 <div class="highlight"><pre><span></span><code>&lt;IfModule mod_headers.c&gt;
-Header set X-XSS-Protection &quot;1; mode=block&quot;
+Header set X-Frame-Options &quot;DENY&quot;
 &lt;/IfModule&gt;
 </code></pre></div>
 <h3 id="iis">IIS<a class="headerlink" href="#iis" title="Permanent link">&para;</a></h3>
-<p>Add below configurations to your <code>Web.config</code> in ISS to send the <code>X-XSS-Protection</code> header</p>
+<p>Add configurations below to your <code>Web.config</code> in ISS to send the <code>X-Frame-Options</code> header.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">&lt;system.webServer&gt;</span>
 ...
  <span class="nt">&lt;httpProtocol&gt;</span>
    <span class="nt">&lt;customHeaders&gt;</span>
-     <span class="nt">&lt;add</span> <span class="na">name=</span><span class="s">&quot;X-XSS-Protection&quot;</span> <span class="na">value=</span><span class="s">&quot;1; mode=block&quot;</span> <span class="nt">/&gt;</span>
+     <span class="nt">&lt;add</span> <span class="na">name=</span><span class="s">&quot;X-Frame-Options&quot;</span> <span class="na">value=</span><span class="s">&quot;DENY&quot;</span> <span class="nt">/&gt;</span>
    <span class="nt">&lt;/customHeaders&gt;</span>
  <span class="nt">&lt;/httpProtocol&gt;</span>
 ...
 <span class="nt">&lt;/system.webServer&gt;</span>
 </code></pre></div>
 <h3 id="haproxy">HAProxy<a class="headerlink" href="#haproxy" title="Permanent link">&para;</a></h3>
-<p>Add the below line to your font-end, listen, or backend configurations to send the <code>X-XSS-Protection</code> header</p>
-<div class="highlight"><pre><span></span><code>http-response set-header X-XSS-Protection 1; mode=block
+<p>Add the line below to your font-end, listen, or backend configurations to send the <code>X-Frame-Options</code> header.</p>
+<div class="highlight"><pre><span></span><code>http-response set-header X-Frame-Options DENY
 </code></pre></div>
 <h3 id="nginx">Nginx<a class="headerlink" href="#nginx" title="Permanent link">&para;</a></h3>
-<p>Below sample configuration, sets the <code>X-XSS-Protection</code> header in Nginx.</p>
-<div class="highlight"><pre><span></span><code>add_header &quot;X-XSS-Protection&quot; &quot;1; mode=block&quot;;
+<p>Below is a sample configuration, it sets the <code>X-Frame-Options</code> header in Nginx.</p>
+<div class="highlight"><pre><span></span><code>add_header &quot;X-Frame-Options&quot; &quot;DENY&quot;;
 </code></pre></div>
 <h3 id="express">Express<a class="headerlink" href="#express" title="Permanent link">&para;</a></h3>
-<p>You can use <a href="https://www.npmjs.com/package/helmet">helmet</a> to setup HTTP headers in Express. Below code is sample for adding the <code>X-Frame-Options</code> header.</p>
+<p>You can use <a href="https://www.npmjs.com/package/helmet">helmet</a> to setup HTTP headers in Express. The code below is sample for adding the <code>X-Frame-Options</code> header.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">const</span> <span class="nx">helmet</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;helmet&#39;</span><span class="p">);</span>
 <span class="kd">const</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">express</span><span class="p">();</span>
 <span class="c1">// Sets &quot;X-Frame-Options: SAMEORIGIN&quot;</span>
