@@ -81,7 +81,7 @@ Please checkout [HTTP Strict Transport Security Cheat Sheet](HTTP_Strict_Transpo
 
 ### Expect-CT
 
-The `Expect-CT` header lets sites opt-in to reporting and/or enforcement of Certificate Transparency requirements, to prevent the use of misissued certificates for that site from going unnoticed.
+The `Expect-CT` header lets sites opt-in to reporting of Certificate Transparency (CT) requirements. Given that mainstream clients now require CT qualification, the only remaining value is reporting such occurrences to the nominated report-uri value in the header. The header is now less about enforcement and more about detection/reporting.
 
 #### Recommendation
 
