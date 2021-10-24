@@ -85,8 +85,8 @@ The `Expect-CT` header lets sites opt-in to reporting of Certificate Transparenc
 
 #### Recommendation
 
-Enforce Certificate Transparency for 24 hours.
-> `Expect-CT: max-age=86400`
+Set Certificate Transparency so user agents report Expect-CT failures.
+> `Expect-CT: max-age=604800, report-uri="https://foo.example/report"`
 
 ### Content-Security-Policy
 
