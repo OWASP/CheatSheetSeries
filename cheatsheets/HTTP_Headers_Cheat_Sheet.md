@@ -286,3 +286,4 @@ Online tools usually test the homepage of the given address. But SmartScanner sc
 - [Mozilla: Cross-Origin-Resource-Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cross-Origin-Resource-Policy)
 - [Mozilla: Cross-Origin-Embedder-Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cross-Origin-Embedder-Policy)
 - [Mozilla: Server Header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Server)
+- [Linked OWASP project: Secure Headers Project](https://owasp.org/www-project-secure-headers/)
