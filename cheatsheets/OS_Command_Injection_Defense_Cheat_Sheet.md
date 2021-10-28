@@ -198,6 +198,7 @@ process.StartInfo = startInfo;
 
 process.Start();
 ```
+
 Where input validation cannot be relied upon, arguments can be made safe by escaping double quotes within the arguments and then surrounding each argument with double quotes.
 
 ``` csharp
