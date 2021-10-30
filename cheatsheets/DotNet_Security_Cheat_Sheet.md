@@ -300,6 +300,27 @@ if (!string.IsNullOrEmpty(ipAddress))
 }
 ```
 
+DO: Use character escaping where allow-list validation cannot be relied upon.
+
+e.g. escaping double quotes within arguments and then surrounding the arguments with double quotes.
+
+``` csharp
+// This list will contain the arguments which we want to escape before passing to the function
+var arguments = new List<string>(){"Argument1", "Argument\"2&|", "\"Argument3\""};
+
+// Escaping Stage 1: All " (double quote) characters within the arguments are doubled to escape  
+// them on the command line so they will only ever be interpreted as data and not as an
+// argument separator
+arguments = arguments.ConvertAll(s => s.Replace("\"", "\"\""));
+
+// Escaping Stage 2: The arguments should be surrounded by " (double quote) characters to 
+// ensure that the data in the arguments cannot break out of the current argument
+arguments = arguments.ConvertAll(s => $"\"{s}\"");
+
+// Pass the escaped arguments to the "ProcessStartInfo" object
+process.Arguments = string.Join(" ", arguments);
+```
+
 #### LDAP injection
 
 Almost any characters can be used in Distinguished Names. However, some must be escaped with the backslash `\` escape character. A table showing which characters that should be escaped for Active Directory can be found at the in the [LDAP Injection Prevention Cheat Sheet](LDAP_Injection_Prevention_Cheat_Sheet.md#introduction).

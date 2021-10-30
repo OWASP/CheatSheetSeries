@@ -199,6 +199,25 @@ process.StartInfo = startInfo;
 process.Start();
 ```
 
+Where input validation cannot be relied upon, arguments can be made safe by escaping double quotes within the arguments and then surrounding each argument with double quotes.
+
+``` csharp
+// This list will contain the arguments which we want to escape before passing to the function
+var arguments = new List<string>(){"Argument1", "Argument\"2&|", "\"Argument3\""};
+
+// Escaping Stage 1: All " (double quote) characters within the arguments are doubled to escape  
+// them on the command line so they will only ever be interpreted as data and not as an
+// argument separator
+arguments = arguments.ConvertAll(s => s.Replace("\"", "\"\""));
+
+// Escaping Stage 2: The arguments should be surrounded by " (double quote) characters to 
+// ensure that the data in the arguments cannot break out of the current argument
+arguments = arguments.ConvertAll(s => $"\"{s}\"");
+
+// Pass the escaped arguments to the "ProcessStartInfo" object
+process.Arguments = string.Join(" ", arguments);
+```
+
 ### PHP
 
 In PHP use [escapeshellarg()](https://www.php.net/manual/en/function.escapeshellarg.php) or [escapeshellcmd()](https://www.php.net/manual/en/function.escapeshellcmd.php) rather than [exec()](https://www.php.net/manual/en/function.exec.php), [system()](https://www.php.net/manual/en/function.system.php), [passthru()](https://www.php.net/manual/en/function.passthru.php).
