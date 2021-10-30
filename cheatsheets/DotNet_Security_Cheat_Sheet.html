@@ -14,7 +14,7 @@
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/DotNet_Security_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.3.5">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.3.6">
     
     
       
@@ -22,7 +22,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.cdeb8541.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.a57b2b03.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.3f5d1f46.min.css">
@@ -2415,6 +2415,23 @@
     <span class="p">...</span>
 <span class="p">}</span>
 </code></pre></div>
+<p>DO: Use character escaping where allow-list validation cannot be relied upon.</p>
+<p>e.g. escaping double quotes within arguments and then surrounding the arguments with double quotes.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// This list will contain the arguments which we want to escape before passing to the function</span>
+<span class="kt">var</span> <span class="n">arguments</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;(){</span><span class="s">&quot;Argument1&quot;</span><span class="p">,</span> <span class="s">&quot;Argument\&quot;2&amp;|&quot;</span><span class="p">,</span> <span class="s">&quot;\&quot;Argument3\&quot;&quot;</span><span class="p">};</span>
+
+<span class="c1">// Escaping Stage 1: All &quot; (double quote) characters within the arguments are doubled to escape  </span>
+<span class="c1">// them on the command line so they will only ever be interpreted as data and not as an</span>
+<span class="c1">// argument separator</span>
+<span class="n">arguments</span> <span class="p">=</span> <span class="n">arguments</span><span class="p">.</span><span class="n">ConvertAll</span><span class="p">(</span><span class="n">s</span> <span class="p">=&gt;</span> <span class="n">s</span><span class="p">.</span><span class="n">Replace</span><span class="p">(</span><span class="s">&quot;\&quot;&quot;</span><span class="p">,</span> <span class="s">&quot;\&quot;\&quot;&quot;</span><span class="p">));</span>
+
+<span class="c1">// Escaping Stage 2: The arguments should be surrounded by &quot; (double quote) characters to </span>
+<span class="c1">// ensure that the data in the arguments cannot break out of the current argument</span>
+<span class="n">arguments</span> <span class="p">=</span> <span class="n">arguments</span><span class="p">.</span><span class="n">ConvertAll</span><span class="p">(</span><span class="n">s</span> <span class="p">=&gt;</span> <span class="s">$&quot;\&quot;{s}\&quot;&quot;</span><span class="p">);</span>
+
+<span class="c1">// Pass the escaped arguments to the &quot;ProcessStartInfo&quot; object</span>
+<span class="n">process</span><span class="p">.</span><span class="n">Arguments</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Join</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">,</span> <span class="n">arguments</span><span class="p">);</span>
+</code></pre></div>
 <h4 id="ldap-injection">LDAP injection<a class="headerlink" href="#ldap-injection" title="Permanent link">&para;</a></h4>
 <p>Almost any characters can be used in Distinguished Names. However, some must be escaped with the backslash <code>\</code> escape character. A table showing which characters that should be escaped for Active Directory can be found at the in the <a href="LDAP_Injection_Prevention_Cheat_Sheet.html#introduction">LDAP Injection Prevention Cheat Sheet</a>.</p>
 <p>NB: The space character must be escaped only if it is the leading or trailing character in a component name, such as a Common Name. Embedded spaces should not be escaped.</p>
@@ -2931,10 +2948,10 @@ If a deserialized hostile object tries to initiate a system processes or access 
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.8397ff9e.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.fcfe8b6d.min.js", "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.1e84347e.min.js"></script>
+      <script src="../assets/javascripts/bundle.b1047164.min.js"></script>
       
     
   </body>
