@@ -140,7 +140,7 @@ A document can only load resources from the same origin, or resources explicitly
 FLoC is a method proposed by Google in 2021 to deliver interest-based advertisements to groups of users ("cohorts"). The [Electronic Frontier Foundation](https://www.eff.org/deeplinks/2021/03/googles-floc-terrible-idea), [Mozilla](https://blog.mozilla.org/en/privacy-security/privacy-analysis-of-floc/), and others believe FLoC does not do enough to protect users' privacy.
 
 #### Recommendation
-    
+
 A site can declare that it does not want to be included in the user's list of sites for cohort calculation by sending this HTTP header.
 > Permissions-Policy: interest-cohort=()
 
