@@ -136,7 +136,7 @@ A document can only load resources from the same origin, or resources explicitly
 - `<img src="https://thirdparty.com/img.png" crossorigin>`
 
 ### FLoC (Federated Learning of Cohorts)
-    
+
 FLoC is a method proposed by Google in 2021 to deliver interest-based advertisements to groups of users ("cohorts"). The [Electronic Frontier Foundation](https://www.eff.org/deeplinks/2021/03/googles-floc-terrible-idea), [Mozilla](https://blog.mozilla.org/en/privacy-security/privacy-analysis-of-floc/), and others believe FLoC does not do enough to protect users' privacy.
 
 #### Recommendation
