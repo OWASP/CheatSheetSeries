@@ -2510,12 +2510,12 @@ The absence of this header might cause browsers to transform non-executable cont
 <h3 id="referrer-policy">Referrer-Policy<a class="headerlink" href="#referrer-policy" title="Permanent link">&para;</a></h3>
 <p>The <code>Referrer-Policy</code> HTTP header controls how much referrer information (sent via the Referer header) should be included with requests.</p>
 <h4 id="recommendation_3">Recommendation<a class="headerlink" href="#recommendation_3" title="Permanent link">&para;</a></h4>
-<p>Send everything to the same site but only the origin for other sites.</p>
+<p>Referrer policy has been supported by browsers since 2014. Today, the default behavior in modern browsers is to no longer send all referrer information (origin, path, and query string) to the same site but to only send the origin to other sites. However, since not all users may be using the latest browsers we suggest forcing this behavior by sending this header on all requests.</p>
 <blockquote>
 <p><code>Referrer-Policy: strict-origin-when-cross-origin</code></p>
 </blockquote>
 <ul>
-<li><em>NOTE:</em> This is the default in modern browsers. For more information on configuring this header please see <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy">Mozilla Referrer-Policy</a>.</li>
+<li><em>NOTE:</em> For more information on configuring this header please see <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy">Mozilla Referrer-Policy</a>.</li>
 </ul>
 <h3 id="content-type">Content-Type<a class="headerlink" href="#content-type" title="Permanent link">&para;</a></h3>
 <p>The <code>Content-Type</code> representation header is used to indicate the original media type of the resource (before any content encoding is applied for sending).</p>
