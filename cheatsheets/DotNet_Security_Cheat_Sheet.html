@@ -2385,8 +2385,8 @@
 <p>Information about OS Injection can be found on this <a href="OS_Command_Injection_Defense_Cheat_Sheet.html#net">cheat sheet</a>.</p>
 <p>DO: Use <a href="https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.process.start?view=netframework-4.7.2">System.Diagnostics.Process.Start</a> to call underlying OS functions.</p>
 <p>e.g</p>
-<div class="highlight"><pre><span></span><code><span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">Process</span> <span class="n">process</span> <span class="p">=</span> <span class="k">new</span> <span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">Process</span><span class="p">();</span>
-<span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">ProcessStartInfo</span> <span class="n">startInfo</span> <span class="p">=</span> <span class="k">new</span> <span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">ProcessStartInfo</span><span class="p">();</span>
+<div class="highlight"><pre><span></span><code><span class="kt">var</span> <span class="n">process</span> <span class="p">=</span> <span class="k">new</span> <span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">Process</span><span class="p">();</span>
+<span class="kt">var</span> <span class="n">startInfo</span> <span class="p">=</span> <span class="k">new</span> <span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">ProcessStartInfo</span><span class="p">();</span>
 <span class="n">startInfo</span><span class="p">.</span><span class="n">FileName</span> <span class="p">=</span> <span class="s">&quot;validatedCommand&quot;</span><span class="p">;</span>
 <span class="n">startInfo</span><span class="p">.</span><span class="n">Arguments</span> <span class="p">=</span> <span class="s">&quot;validatedArg1 validatedArg2 validatedArg3&quot;</span><span class="p">;</span>
 <span class="n">process</span><span class="p">.</span><span class="n">StartInfo</span> <span class="p">=</span> <span class="n">startInfo</span><span class="p">;</span>
@@ -2417,16 +2417,18 @@
 </code></pre></div>
 <p>DO: Use character escaping where allow-list validation cannot be relied upon.</p>
 <p>e.g. escaping double quotes within arguments and then surrounding the arguments with double quotes.</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// This list will contain the arguments which we want to escape before passing to the function</span>
-<span class="kt">var</span> <span class="n">arguments</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;(){</span><span class="s">&quot;Argument1&quot;</span><span class="p">,</span> <span class="s">&quot;Argument\&quot;2&amp;|&quot;</span><span class="p">,</span> <span class="s">&quot;\&quot;Argument3\&quot;&quot;</span><span class="p">};</span>
+<div class="highlight"><pre><span></span><code><span class="c1">// This list will contain the arguments which we want to escape before </span>
+<span class="c1">// passing to the function</span>
+<span class="kt">var</span> <span class="n">arguments</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;(){</span><span class="s">&quot;Arg1&quot;</span><span class="p">,</span> <span class="s">&quot;Arg\&quot;2&amp;|&quot;</span><span class="p">,</span> <span class="s">&quot;\&quot;Arg3\&quot;&quot;</span><span class="p">};</span>
 
-<span class="c1">// Escaping Stage 1: All &quot; (double quote) characters within the arguments are doubled to escape  </span>
-<span class="c1">// them on the command line so they will only ever be interpreted as data and not as an</span>
-<span class="c1">// argument separator</span>
+<span class="c1">// Escaping Stage 1: All &quot; (double quote) characters within the arguments </span>
+<span class="c1">// are doubled to escape them on the command line so they will only ever </span>
+<span class="c1">// be interpreted as data and not as anargument separator</span>
 <span class="n">arguments</span> <span class="p">=</span> <span class="n">arguments</span><span class="p">.</span><span class="n">ConvertAll</span><span class="p">(</span><span class="n">s</span> <span class="p">=&gt;</span> <span class="n">s</span><span class="p">.</span><span class="n">Replace</span><span class="p">(</span><span class="s">&quot;\&quot;&quot;</span><span class="p">,</span> <span class="s">&quot;\&quot;\&quot;&quot;</span><span class="p">));</span>
 
-<span class="c1">// Escaping Stage 2: The arguments should be surrounded by &quot; (double quote) characters to </span>
-<span class="c1">// ensure that the data in the arguments cannot break out of the current argument</span>
+<span class="c1">// Escaping Stage 2: The arguments should be surrounded by &quot; (double quote) </span>
+<span class="c1">// characters to ensure that the data in the arguments cannot break out of</span>
+<span class="c1">// the current argument</span>
 <span class="n">arguments</span> <span class="p">=</span> <span class="n">arguments</span><span class="p">.</span><span class="n">ConvertAll</span><span class="p">(</span><span class="n">s</span> <span class="p">=&gt;</span> <span class="s">$&quot;\&quot;{s}\&quot;&quot;</span><span class="p">);</span>
 
 <span class="c1">// Pass the escaped arguments to the &quot;ProcessStartInfo&quot; object</span>
