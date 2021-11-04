@@ -1809,7 +1809,7 @@
 <p>There are three main mechanisms that can be used to defend against these attacks:</p>
 <ul>
 <li>Preventing the browser from loading the page in frame using the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options">X-Frame-Options</a> or <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors">Content Security Policy (frame-ancestors)</a> HTTP headers.</li>
-<li>Preventing session cookies from being included when the page is loaded in a frame using the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Directives">SameSite</a> cookie attribute.</li>
+<li>Preventing session cookies from being included when the page is loaded in a frame using the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite">SameSite</a> cookie attribute.</li>
 <li>Implementing JavaScript code in the page to attempt to prevent it being loaded in a frame (known as a "frame-buster").</li>
 </ul>
 <p>Note that these mechanisms are all independent of each other, and where possible more than one of them should be implemented in order to provide defense in depth.</p>
