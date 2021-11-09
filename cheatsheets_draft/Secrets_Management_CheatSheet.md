@@ -42,7 +42,7 @@ The ability to configure access control on even the tiniest component of a syste
 
 ### 2.4 Remove Human Interaction
 
-Dynamic secrets are those that are generated for each request. When an application starts it could request it's database credentials, which when dynamically generated will be provided with new credentials for that session. Dynamic secrets should be used where possible to reduce the surface area of credential re-use. Should the application's database credentials be stolen, upon reboot they would be expired. <TODO: ADD REFERENCES TO SENSIBLE SOURCES>
+Dynamic secrets are those that are generated for each request. When an application starts it could request it's database credentials, which when dynamically generated will be provided with new credentials for that session. Dynamic secrets should be used where possible to reduce the surface area of credential re-use. Should the application's database credentials be stolen, upon reboot they would be expired. <TODO: ADD REFERENCES TO SENSIBLE SOURCES AND MAYBE MAKE THIS AN OPTION AS THE "NEXT STEP"?>
 
 Manually maintaining configuration files and password changes can be wasteful. The use of dynamic secrets removes the need for human interaction.
 
@@ -110,6 +110,7 @@ Emergency break-glass credentials therefore should be regularly backed up in a s
 Policies defining the minimum complexity requirements of passwords, as well as approved encryption algorithms are typically set at an organisation-wide level and should be enforced consistently. The use of a centralised secrets management solution would help companies to enforce these policies. <TODO: REDO THIS, POLICIES SHOULD GO IN DIFFERENT WAYS PERHAPS HERE!>
 
 <TODO: SEE https://xebia.com/blog/secure-deployment-10-pointers-on-secrets-management/ what we might be missing here>
+<TODO: CAN WE SPLIT THIS SOMEHOW WHAT? THERE ARE THINGS YOU SHOULD IMMEDIATELY DO, BUT THERE ARE A LOT OF THINGS THAT YOUS HOULD DO EVENTUALLY. ASLO: MAYBE ADD OSMETHING REGARDING METADATA, SO YOU ARE READY TO MOVE THE SECRET INTO ANOTHER SYSTEM AS THESE SYSTEMS STILL CHANGE A LOT IN ORGANIZATIONS?>
 
 ## 3. Continuous Integration (CI) and Continuous Deployment (CD)
 
@@ -123,7 +124,8 @@ The process of integrating features and deploying changes commonly requires secr
 
 ### 3.4. Deployment
 
-## 4. Cloud Providers
+## 4. Cloud Providers 
+<TODO; LET'S HAVE SOME CONTENT IN HIGHLIGHT/COMMENTS WHATWE WANT TO WRITE DOWN: ECAUSE CLOUD NATIVE SECRETS MANAGEMENT CAN HELP IF YOU HAVE A CLOUD NATIVE STRATEGY. LOCKIN IS AS DEEP AS YOU WANT IT TO BE WITH ANY SECRETS MANAGEMENT PROVIDER>
 
 ### 4.1. Vendor Lock-in
 
@@ -142,7 +144,6 @@ The process of integrating features and deploying changes commonly requires secr
 ### 5.3. Internal vs External Access
 
 ### 5.4. Retrieving them on-demand
-
 
 ## 6. Implementation Guidance
 
@@ -164,11 +165,11 @@ The process of integrating features and deploying changes commonly requires secr
 
 ### 8.3. Ease of On-boarding
 
-## 9. Workflow in Case of Compromise
-
-### 9.1. Process
+## 9. Incident response in case of secret compromize
 
 ## 10. Secrets Management Tooling Guidelines
+
+## 11. Secret Deteciton
 
 - Many native integrations possible (Cloud platforms, CI/CD tooling, application libraries, container orchestrators)
 - Secret lifecycle (rotation, deletion, lifespan)
