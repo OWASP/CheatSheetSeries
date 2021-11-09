@@ -26,14 +26,15 @@ The following sections address the main concepts relating to secrets management.
 ### 2.1 High Availability
 
 It is important to select a technology that is robust enough to reliably service traffic from:
-* Users (e.g. SSH keys, root account passwords). In an incident response scenario users expect to be provisioned with credentials rapidly so they can recover services that have gone offline. Having to wait for credentials could impact the responsiveness of the operations team.
-* Applications (e.g. database credentials and API keys). If the service is not preferment it could degrade the availability of dependent applications or increase application startup times.
+
+- Users (e.g. SSH keys, root account passwords). In an incident response scenario users expect to be provisioned with credentials rapidly so they can recover services that have gone offline. Having to wait for credentials could impact the responsiveness of the operations team.
+- Applications (e.g. database credentials and API keys). If the service is not preferment it could degrade the availability of dependent applications or increase application startup times.
 
 Within a large organisation such a service could receive a huge volume of requests.
 
 ### 2.2 Centralized Approach
 
-It makes sense to maintain a single system for the purpose of secrets management. Having too many systems could result in confusion over which one to use, and this could slow down a response to an incident.
+It makes sense to standardize and centrlaize your secrets management. Having too many systems could result in confusion over which one to use, and this could slow down a response to an incident. <TODO: ADD HERE THAT YOU NEED TO MAKE SURE THAT YOU ARE READY TO MOVE, AND THAT THE SYSTEMS NEED OT BE FIT FOR PURPOSE, YET WELL MAINTAINED (AND REFERENCE TO METADATA AND REPLACEMENT)>
 
 ### 2.3 Fine Grained Access-Control List (ACL)
 
@@ -41,28 +42,30 @@ The ability to configure access control on even the tiniest component of a syste
 
 ### 2.4 Remove Human Interaction
 
-Dynamic secrets are those that are generated for each request. When an application starts it could request it's database credentials, which when dynamically generated will be provided with new credentials for that session. Dynamic secrets should be used where possible to reduce the surface area of credential re-use. Should the application's database credentials be stolen, upon reboot they would be expired.
+Dynamic secrets are those that are generated for each request. When an application starts it could request it's database credentials, which when dynamically generated will be provided with new credentials for that session. Dynamic secrets should be used where possible to reduce the surface area of credential re-use. Should the application's database credentials be stolen, upon reboot they would be expired. <TODO: ADD REFERENCES TO SENSIBLE SOURCES>
 
 Manually maintaining configuration files and password changes can be wasteful. The use of dynamic secrets removes the need for human interaction.
 
 ### 2.5 Auditing
 
 Auditing is an important role of secrets management due to the nature of the application. Auditing must be implemented in a secure way so as to be resilient against attempts to tamper with or delete the audit logs. At minimum the following should be audited:
-* Who requested a secret and for what system and role.
-* Whether the secret request was approved or rejected.
-* When the secret was used and by whom/source.
-* When the secret has expired.
-* If any attempts to re-use expired expired secrets have been made.
-* If there have been any authentication errors.
 
-It is important that all auditing is correctly timestamped, another reason for a centralised approach, to maintain temporal consistency.
+- Who requested a secret and for what system and role.
+- Whether the secret request was approved or rejected.
+- When the secret was used and by whom/source.
+- When the secret has expired.
+- If any attempts to re-use expired expired secrets have been made.
+- If there have been any authentication errors.
+
+~It is important that all auditing is correctly timestamped, another reason for a centralised approach, to maintain temporal consistency.~ <TODO: REMOVE THIS AND TALK ABOUT TIME MANAGEMENT AND TIME SYNC INSTEAD: HETEROGENITY IS NOT A BAD THING!>
 
 ### 2.6 Secret Lifecycle
 
-Secrets follow a lifecycle. The stages in the lifecycle are as follows:
-* Creation
-* Rotation
-* Deletion
+Secrets follow a lifecycle. The stages in the lifecycle are as follows: <TODO: SEE IF CONSUMPTION SHOULD BE PART OF THIS OR AOTHER WAYS TO SHOW THAT THERE IS A DIFFERNECE BETWEEN AN ACTIVE AND A DEAD SECRET : THERE ARE MULTIPLE SOURCES THAT WORK WITH THAT>
+
+- Creation
+- Rotation
+- Deletion
 
 #### 2.6.1 Creation
 
@@ -94,17 +97,19 @@ Furthermore secrets management solutions can be used to effectively provision SS
 
 ### 2.8 Automate Key Rotation
 
-Key rotation is a challenging process when implemented manually, and can lead to mistakes. It is therefor highly recommended to automate the rotation of keys.
+Key rotation is a challenging process when implemented manually, and can lead to mistakes. It is therefor highly recommended to automate the rotation of keys. <TODO: EXPLAIN IN WHICH POINTS THIS CAN AND WHEN THAT CANNOT BE THE CASE:SO WHAT DOES THIS MEAN?>
 
 ### 2.9 Restore and Backup
 
 Consideration must be made for the possibility that the central secrets management service could become unavailable, perhaps due to scheduled down-time for maintenance - in which case it could be impossible to retrieve the credentials required to restore the service if they were not previously acquired. Furthermore should the system become unavailable due to other reasons, emergency break-glass processes should be implemented to restore the service.
 
-Emergency break-glass credentials therefore should be regularly backed up in a secure fashion, and tested routinely to verify they work.
+Emergency break-glass credentials therefore should be regularly backed up in a secure fashion, and tested routinely to verify they work. <TODO; ADD EXPLANATIONS ON AUDITABILITY, ETC. HERE>
 
 ### 2.10 Policies
 
-Policies defining the minimum complexity requirements of passwords, as well as approved encryption algorithms are typically set at an organisation-wide level and should be enforced consistently. The use of a centralised secrets management solution would help companies to enforce these policies.
+Policies defining the minimum complexity requirements of passwords, as well as approved encryption algorithms are typically set at an organisation-wide level and should be enforced consistently. The use of a centralised secrets management solution would help companies to enforce these policies. <TODO: REDO THIS, POLICIES SHOULD GO IN DIFFERENT WAYS PERHAPS HERE!>
+
+<TODO: SEE https://xebia.com/blog/secure-deployment-10-pointers-on-secrets-management/ what we might be missing here>
 
 ## 3. Continuous Integration (CI) and Continuous Deployment (CD)
 
@@ -135,6 +140,9 @@ The process of integrating features and deploying changes commonly requires secr
 ### 5.2. Short Lived Side-car Containers
 
 ### 5.3. Internal vs External Access
+
+### 5.4. Retrieving them on-demand
+
 
 ## 6. Implementation Guidance
 
@@ -179,8 +187,3 @@ The process of integrating features and deploying changes commonly requires secr
 - Fine grained policies (mfa requirements)
 - Extensibility
 - Documentation
-
-## Authors and Primary Editors
-
-* Dominik de Smit - dominik.de.smit@araido.com
-* Anthony Fielding - anthony.fielding@orbital3.com
