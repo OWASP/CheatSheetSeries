@@ -26,8 +26,9 @@ The following sections address the main concepts relating to secrets management.
 ### 2.1 High Availability
 
 It is important to select a technology that is robust enough to reliably service traffic from:
-* Users (e.g. SSH keys, root account passwords). In an incident response scenario users expect to be provisioned with credentials rapidly so they can recover services that have gone offline. Having to wait for credentials could impact the responsiveness of the operations team.
-* Applications (e.g. database credentials and API keys). If the service is not preferment it could degrade the availability of dependent applications or increase application startup times.
+
+- Users (e.g. SSH keys, root account passwords). In an incident response scenario users expect to be provisioned with credentials rapidly so they can recover services that have gone offline. Having to wait for credentials could impact the responsiveness of the operations team.
+- Applications (e.g. database credentials and API keys). If the service is not preferment it could degrade the availability of dependent applications or increase application startup times.
 
 Within a large organisation such a service could receive a huge volume of requests.
 
@@ -48,21 +49,23 @@ Manually maintaining configuration files and password changes can be wasteful. T
 ### 2.5 Auditing
 
 Auditing is an important role of secrets management due to the nature of the application. Auditing must be implemented in a secure way so as to be resilient against attempts to tamper with or delete the audit logs. At minimum the following should be audited:
-* Who requested a secret and for what system and role.
-* Whether the secret request was approved or rejected.
-* When the secret was used and by whom/source.
-* When the secret has expired.
-* If any attempts to re-use expired expired secrets have been made.
-* If there have been any authentication errors.
+
+- Who requested a secret and for what system and role.
+- Whether the secret request was approved or rejected.
+- When the secret was used and by whom/source.
+- When the secret has expired.
+- If any attempts to re-use expired expired secrets have been made.
+- If there have been any authentication errors.
 
 It is important that all auditing is correctly timestamped, another reason for a centralised approach, to maintain temporal consistency.
 
 ### 2.6 Secret Lifecycle
 
 Secrets follow a lifecycle. The stages in the lifecycle are as follows:
-* Creation
-* Rotation
-* Deletion
+
+- Creation
+- Rotation
+- Deletion
 
 #### 2.6.1 Creation
 
@@ -162,6 +165,8 @@ The process of integrating features and deploying changes commonly requires secr
 
 ## 10. Secrets Management Tooling Guidelines
 
+## 11. Secret detection
+
 - Many native integrations possible (Cloud platforms, CI/CD tooling, application libraries, container orchestrators)
 - Secret lifecycle (rotation, deletion, lifespan)
 - Key material management (keys to kingdom)
@@ -179,8 +184,3 @@ The process of integrating features and deploying changes commonly requires secr
 - Fine grained policies (mfa requirements)
 - Extensibility
 - Documentation
-
-## Authors and Primary Editors
-
-* Dominik de Smit - dominik.de.smit@araido.com
-* Anthony Fielding - anthony.fielding@orbital3.com
