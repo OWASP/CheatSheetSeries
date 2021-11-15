@@ -199,7 +199,26 @@ process.StartInfo = startInfo;
 process.Start();
 ```
 
-Where input validation cannot be relied upon, arguments can be made safe by escaping double quotes within the arguments and then surrounding each argument with double quotes.
+In .NET Core 2.2 and greater and .NET 5 and greater, use [ProcessStartInfo.ArgumentList](https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.argumentlist) which will automatically escape dangerous characters.
+
+``` csharp
+
+var process = new System.Diagnostics.Process();
+var startInfo = new System.Diagnostics.ProcessStartInfo();
+startInfo.FileName = "validatedCommand";
+
+// Value added here will automatically be made sense when the process is run
+info.ArgumentList.Add("/c");
+info.ArgumentList.Add("fred\\\" a");
+info.ArgumentList.Add(@"C:\Program Files\dotnet");
+
+process.StartInfo = startInfo;
+process.Start();
+```
+
+If this property is not available, and where input validation cannot be relied upon, arguments can be made safe by escaping double quotes within the arguments and then surrounding each argument with double quotes.
+
+**WARNING:** The code below won't correctly handle a combination of backslash and double quotes.
 
 ``` csharp
 // This list will contain the arguments which we want to escape before 
@@ -208,7 +227,7 @@ var arguments = new List<string>(){"Arg1", "Arg\"2&|", "\"Arg3\""};
 
 // Escaping Stage 1: All " (double quote) characters within the arguments 
 // are doubled to escape them on the command line so they will only ever 
-// be interpreted as data and not as anargument separator
+// be interpreted as data and not as an argument separator
 arguments = arguments.ConvertAll(s => s.Replace("\"", "\"\""));
 
 // Escaping Stage 2: The arguments should be surrounded by " (double quote) 
