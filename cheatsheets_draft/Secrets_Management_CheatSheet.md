@@ -32,7 +32,7 @@ It is important to select a technology that is robust enough to reliably service
 
 Within a large organisation such a service could receive a huge volume of requests.
 
-### 2.2 Centralized and Standardize
+### 2.2 Centralize and Standardize
 
 Secrets used by your DevOps teams might for your applications might be consumbed differently, then then secrets stored by your marketeers or your SRE team. When consumers and/or producers of a secret are not catered to their needs, you often will find the secret badly maintained within the organization. Therefore, it is key that you standardize and centralize the secrets management solution. This can still mean that you centralize to multiple secret management solutions. For instance: your cloud native development teams choose to use the solution provided by the cloud provider, while your private cloud uses a third party solution, and everybody has an account for a selected password manager.
 By making sure that the teams standardize the interaction with these different solutions, they remain maintainable and usable in the eevent of an incident.
@@ -114,6 +114,16 @@ Emergency break-glass credentials therefore should be regularly backed up in a s
 Policies defining the minimum complexity requirements of passwords, as well as approved encryption algorithms are typically set at an organisation-wide level and should be enforced consistently. The use of a centralised secrets management solution would help companies to enforce these policies.
 
 ### 2.11 Metadata: prepare to move the secret
+
+A secret management solution should provide the capability to store at least the following metadata about a secret:
+
+- When it was created/consumed/archived/deleted
+- By whom it was created (E.g. both the actual producter, as well as the engineer using the production method)
+- By what it was created
+- Who to contact when having trouble with the secret or having questions about it
+- For what the secret is used (E.g. designated intended consumers and purpose of the secret)
+- What tyep of secret it is (E.g. AES Key, HMAC key, RSA private key)
+- When it needs to be rotated if done manually
 
 ## 3. Continuous Integration (CI) and Continuous Deployment (CD)
 
