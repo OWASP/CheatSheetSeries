@@ -197,7 +197,7 @@ Search for content with the following text:
 
 #### General Precautions
 
-Microsoft have stated that the `BinaryFormatter` type is dangerous and cannot be secured. As such, it should not be used.
+Microsoft has stated that the `BinaryFormatter` type is dangerous and cannot be secured. As such, it should not be used. Full details are in the [BinaryFormatter security guide](https://docs.microsoft.com/en-us/dotnet/standard/serialization/binaryformatter-security-guide).
 
 Don't allow the datastream to define the type of object that the stream will be deserialized to. You can prevent this by for example using the `DataContractSerializer` or `XmlSerializer` if at all possible.
 
