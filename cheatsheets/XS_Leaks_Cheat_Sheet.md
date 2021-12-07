@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This article describes examples of attacks and defenses against cross-site leaks vulnerability (XS Leaks). Since this vulnerability is based on the core mechanism of modern web browsers, it's also called a browser side-channel attack. XS-Leaks attacks seek to exploit the fact of seemingly insignificant information that is exchanged in cross-site communications between sites. TThis information infers answers to the previously asked questions about the victim's user account. Examples of question:
+This article describes examples of attacks and defenses against cross-site leaks vulnerability (XS Leaks). Since this vulnerability is based on the core mechanism of modern web browsers, it's also called a browser side-channel attack. XS-Leaks attacks seek to exploit the fact of seemingly insignificant information that is exchanged in cross-site communications between sites. This information infers answers to the previously asked questions about the victim's user account. Examples of question:
 
 - Is the user currently logged in?
 - Is the user ID is 1337?
@@ -259,7 +259,7 @@ console.log(win.frames.length) // Cannot read property 'length' of null
 
 ## Attacks using browser cache
 
-This helps to significantly reduce the time it takes for a page to load when revisited. However, it can also pose a risk of information leakage. If an attacker is able to detect whether a resource was loaded from the cache after the load time, he will be able to draw some conclusions based on it.
+Browser cache helps to significantly reduce the time it takes for a page to load when revisited. However, it can also pose a risk of information leakage. If an attacker is able to detect whether a resource was loaded from the cache after the load time, he will be able to draw some conclusions based on it.
 
 The principle is simple, a resource loaded from cache memory will load incomparably faster than from the server.
 
