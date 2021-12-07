@@ -1,0 +1,2395 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Website with the collection of all the cheat sheets of the project.">
+      
+      
+      
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/XS_Leaks_Cheat_Sheet.html">
+      
+      <link rel="icon" href="../assets/WebSite_Favicon.png">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.0.5">
+    
+    
+      
+        <title>XS Leaks - OWASP Cheat Sheet Series</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.a617204b.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.9204c3b2.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#cross-site-leaks-cheat-sheet" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../index.html" title="OWASP Cheat Sheet Series" class="md-header__button md-logo" aria-label="OWASP Cheat Sheet Series" data-md-component="logo">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OWASP Cheat Sheet Series
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              XS Leaks
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="OWASP Cheat Sheet Series" class="md-nav__button md-logo" aria-label="OWASP Cheat Sheet Series" data-md-component="logo">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
+
+    </a>
+    OWASP Cheat Sheet Series
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Glossary.html" class="md-nav__link">
+        Index Alphabetical
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IndexASVS.html" class="md-nav__link">
+        Index ASVS
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IndexProactiveControls.html" class="md-nav__link">
+        Index Proactive Controls
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IndexTopTen.html" class="md-nav__link">
+        Index Top 10
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          Cheatsheets
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Cheatsheets" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Cheatsheets
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="AJAX_Security_Cheat_Sheet.html" class="md-nav__link">
+        AJAX Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Abuse_Case_Cheat_Sheet.html" class="md-nav__link">
+        Abuse Case
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Access_Control_Cheat_Sheet.html" class="md-nav__link">
+        Access Control
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Attack_Surface_Analysis_Cheat_Sheet.html" class="md-nav__link">
+        Attack Surface Analysis
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Authentication_Cheat_Sheet.html" class="md-nav__link">
+        Authentication
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Authorization_Cheat_Sheet.html" class="md-nav__link">
+        Authorization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Authorization_Testing_Automation_Cheat_Sheet.html" class="md-nav__link">
+        Authorization Testing Automation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Bean_Validation_Cheat_Sheet.html" class="md-nav__link">
+        Bean Validation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html" class="md-nav__link">
+        C-Based Toolchain Hardening
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html" class="md-nav__link">
+        Choosing and Using Security Questions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Clickjacking_Defense_Cheat_Sheet.html" class="md-nav__link">
+        Clickjacking Defense
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Content_Security_Policy_Cheat_Sheet.html" class="md-nav__link">
+        Content Security Policy
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Credential Stuffing Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Cross-Site Request Forgery Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Cross Site Scripting Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Cryptographic_Storage_Cheat_Sheet.html" class="md-nav__link">
+        Cryptographic Storage
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        DOM based XSS Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Database_Security_Cheat_Sheet.html" class="md-nav__link">
+        Database Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Denial_of_Service_Cheat_Sheet.html" class="md-nav__link">
+        Denial of Service
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Deserialization_Cheat_Sheet.html" class="md-nav__link">
+        Deserialization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Docker_Security_Cheat_Sheet.html" class="md-nav__link">
+        Docker Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="DotNet_Security_Cheat_Sheet.html" class="md-nav__link">
+        DotNet Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Error_Handling_Cheat_Sheet.html" class="md-nav__link">
+        Error Handling
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="File_Upload_Cheat_Sheet.html" class="md-nav__link">
+        File Upload
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Forgot_Password_Cheat_Sheet.html" class="md-nav__link">
+        Forgot Password
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="GraphQL_Cheat_Sheet.html" class="md-nav__link">
+        GraphQL
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="HTML5_Security_Cheat_Sheet.html" class="md-nav__link">
+        HTML5 Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="HTTP_Headers_Cheat_Sheet.html" class="md-nav__link">
+        HTTP Headers
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html" class="md-nav__link">
+        HTTP Strict Transport Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Infrastructure_as_Code_Security_Cheat_Sheet.html" class="md-nav__link">
+        Infrastructure as Code Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Injection Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Injection_Prevention_in_Java_Cheat_Sheet.html" class="md-nav__link">
+        Injection Prevention in Java
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Input_Validation_Cheat_Sheet.html" class="md-nav__link">
+        Input Validation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Insecure Direct Object Reference Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="JAAS_Cheat_Sheet.html" class="md-nav__link">
+        JAAS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="JSON_Web_Token_for_Java_Cheat_Sheet.html" class="md-nav__link">
+        JSON Web Token for Java
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Key_Management_Cheat_Sheet.html" class="md-nav__link">
+        Key Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Kubernetes_Security_Cheat_Sheet.html" class="md-nav__link">
+        Kubernetes Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="LDAP_Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        LDAP Injection Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Laravel_Cheat_Sheet.html" class="md-nav__link">
+        Laravel
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Logging_Cheat_Sheet.html" class="md-nav__link">
+        Logging
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Logging_Vocabulary_Cheat_Sheet.html" class="md-nav__link">
+        Logging Vocabulary
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Mass_Assignment_Cheat_Sheet.html" class="md-nav__link">
+        Mass Assignment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html" class="md-nav__link">
+        Microservices based Security Arch Doc
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Microservices_security.html" class="md-nav__link">
+        Microservices security.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Multifactor_Authentication_Cheat_Sheet.html" class="md-nav__link">
+        Multifactor Authentication
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="NPM_Security_Cheat_Sheet.html" class="md-nav__link">
+        NPM Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="NodeJS_Docker_Cheat_Sheet.html" class="md-nav__link">
+        NodeJS Docker
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Nodejs_Security_Cheat_Sheet.html" class="md-nav__link">
+        Nodejs Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="OS_Command_Injection_Defense_Cheat_Sheet.html" class="md-nav__link">
+        OS Command Injection Defense
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="PHP_Configuration_Cheat_Sheet.html" class="md-nav__link">
+        PHP Configuration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Password_Storage_Cheat_Sheet.html" class="md-nav__link">
+        Password Storage
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Pinning_Cheat_Sheet.html" class="md-nav__link">
+        Pinning
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Query_Parameterization_Cheat_Sheet.html" class="md-nav__link">
+        Query Parameterization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="REST_Assessment_Cheat_Sheet.html" class="md-nav__link">
+        REST Assessment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="REST_Security_Cheat_Sheet.html" class="md-nav__link">
+        REST Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ruby_on_Rails_Cheat_Sheet.html" class="md-nav__link">
+        Ruby on Rails
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="SAML_Security_Cheat_Sheet.html" class="md-nav__link">
+        SAML Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="SQL_Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        SQL Injection Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html" class="md-nav__link">
+        Securing Cascading Style Sheets
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Server Side Request Forgery Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Session_Management_Cheat_Sheet.html" class="md-nav__link">
+        Session Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="TLS_Cipher_String_Cheat_Sheet.html" class="md-nav__link">
+        TLS Cipher String
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Third_Party_Javascript_Management_Cheat_Sheet.html" class="md-nav__link">
+        Third Party Javascript Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Threat_Modeling_Cheat_Sheet.html" class="md-nav__link">
+        Threat Modeling
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Transaction_Authorization_Cheat_Sheet.html" class="md-nav__link">
+        Transaction Authorization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Transport_Layer_Protection_Cheat_Sheet.html" class="md-nav__link">
+        Transport Layer Protection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html" class="md-nav__link">
+        Unvalidated Redirects and Forwards
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="User_Privacy_Protection_Cheat_Sheet.html" class="md-nav__link">
+        User Privacy Protection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Virtual_Patching_Cheat_Sheet.html" class="md-nav__link">
+        Virtual Patching
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Vulnerability_Disclosure_Cheat_Sheet.html" class="md-nav__link">
+        Vulnerability Disclosure
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html" class="md-nav__link">
+        Vulnerable Dependency Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Web_Service_Security_Cheat_Sheet.html" class="md-nav__link">
+        Web Service Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="XML_External_Entity_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        XML External Entity Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="XML_Security_Cheat_Sheet.html" class="md-nav__link">
+        XML Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="XSS_Filter_Evasion_Cheat_Sheet.html" class="md-nav__link">
+        XSS Filter Evasion
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          XS Leaks
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="XS_Leaks_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+        XS Leaks
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attack-vector" class="md-nav__link">
+    Attack vector
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#same-origin-policy-sop" class="md-nav__link">
+    Same Origin Policy (SOP)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#samesite-cookies" class="md-nav__link">
+    SameSite Cookies
+  </a>
+  
+    <nav class="md-nav" aria-label="SameSite Cookies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-do-we-know-that-two-sites-are-samesite" class="md-nav__link">
+    How do we know that two sites are SameSite?
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attacks-using-the-element-id-attribute" class="md-nav__link">
+    Attacks using the element ID attribute
+  </a>
+  
+    <nav class="md-nav" aria-label="Attacks using the element ID attribute">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#defense" class="md-nav__link">
+    Defense
+  </a>
+  
+    <nav class="md-nav" aria-label="Defense">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#framing-protection" class="md-nav__link">
+    Framing protection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fetch-metadata-sec-fetch-dest" class="md-nav__link">
+    Fetch metadata (Sec-Fetch-Dest)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attacks-based-on-error-events" class="md-nav__link">
+    Attacks based on error events
+  </a>
+  
+    <nav class="md-nav" aria-label="Attacks based on error events">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#defense_1" class="md-nav__link">
+    Defense
+  </a>
+  
+    <nav class="md-nav" aria-label="Defense">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subresouce-protection" class="md-nav__link">
+    Subresouce protection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fetch-metadata-sec-fetch-site" class="md-nav__link">
+    Fetch metadata (Sec-Fetch-Site)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-origin-resource-policy-corp" class="md-nav__link">
+    Cross-Origin-Resource-Policy (CORP)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attacks-on-postmessage-commmunication" class="md-nav__link">
+    Attacks on postMessage commmunication
+  </a>
+  
+    <nav class="md-nav" aria-label="Attacks on postMessage commmunication">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#defense_2" class="md-nav__link">
+    Defense
+  </a>
+  
+    <nav class="md-nav" aria-label="Defense">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#specify-strict-targetorign" class="md-nav__link">
+    Specify strict targetOrign
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#frame-counting-attacks" class="md-nav__link">
+    Frame counting attacks
+  </a>
+  
+    <nav class="md-nav" aria-label="Frame counting attacks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#defense_3" class="md-nav__link">
+    Defense
+  </a>
+  
+    <nav class="md-nav" aria-label="Defense">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cross-origin-opener-policy-coop" class="md-nav__link">
+    Cross-Origin-Opener-Policy (COOP)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attacks-using-browser-cache" class="md-nav__link">
+    Attacks using browser cache
+  </a>
+  
+    <nav class="md-nav" aria-label="Attacks using browser cache">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#defense_4" class="md-nav__link">
+    Defense
+  </a>
+  
+    <nav class="md-nav" aria-label="Defense">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#unpredictable-tokens-for-images" class="md-nav__link">
+    Unpredictable tokens for images
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-the-cache-control-header" class="md-nav__link">
+    Using the Cache-Control header
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-recommendations" class="md-nav__link">
+    Quick recommendations
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+    <nav class="md-nav" aria-label="References">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#xs-leaks" class="md-nav__link">
+    XS Leaks
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fetch-metadata" class="md-nav__link">
+    Fetch Metadata
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#framing-protection_1" class="md-nav__link">
+    Framing protection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#samesite" class="md-nav__link">
+    SameSite
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#coop-and-corp-header" class="md-nav__link">
+    COOP and CORP header
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attack-vector" class="md-nav__link">
+    Attack vector
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#same-origin-policy-sop" class="md-nav__link">
+    Same Origin Policy (SOP)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#samesite-cookies" class="md-nav__link">
+    SameSite Cookies
+  </a>
+  
+    <nav class="md-nav" aria-label="SameSite Cookies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-do-we-know-that-two-sites-are-samesite" class="md-nav__link">
+    How do we know that two sites are SameSite?
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attacks-using-the-element-id-attribute" class="md-nav__link">
+    Attacks using the element ID attribute
+  </a>
+  
+    <nav class="md-nav" aria-label="Attacks using the element ID attribute">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#defense" class="md-nav__link">
+    Defense
+  </a>
+  
+    <nav class="md-nav" aria-label="Defense">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#framing-protection" class="md-nav__link">
+    Framing protection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fetch-metadata-sec-fetch-dest" class="md-nav__link">
+    Fetch metadata (Sec-Fetch-Dest)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attacks-based-on-error-events" class="md-nav__link">
+    Attacks based on error events
+  </a>
+  
+    <nav class="md-nav" aria-label="Attacks based on error events">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#defense_1" class="md-nav__link">
+    Defense
+  </a>
+  
+    <nav class="md-nav" aria-label="Defense">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subresouce-protection" class="md-nav__link">
+    Subresouce protection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fetch-metadata-sec-fetch-site" class="md-nav__link">
+    Fetch metadata (Sec-Fetch-Site)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-origin-resource-policy-corp" class="md-nav__link">
+    Cross-Origin-Resource-Policy (CORP)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attacks-on-postmessage-commmunication" class="md-nav__link">
+    Attacks on postMessage commmunication
+  </a>
+  
+    <nav class="md-nav" aria-label="Attacks on postMessage commmunication">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#defense_2" class="md-nav__link">
+    Defense
+  </a>
+  
+    <nav class="md-nav" aria-label="Defense">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#specify-strict-targetorign" class="md-nav__link">
+    Specify strict targetOrign
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#frame-counting-attacks" class="md-nav__link">
+    Frame counting attacks
+  </a>
+  
+    <nav class="md-nav" aria-label="Frame counting attacks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#defense_3" class="md-nav__link">
+    Defense
+  </a>
+  
+    <nav class="md-nav" aria-label="Defense">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cross-origin-opener-policy-coop" class="md-nav__link">
+    Cross-Origin-Opener-Policy (COOP)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attacks-using-browser-cache" class="md-nav__link">
+    Attacks using browser cache
+  </a>
+  
+    <nav class="md-nav" aria-label="Attacks using browser cache">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#defense_4" class="md-nav__link">
+    Defense
+  </a>
+  
+    <nav class="md-nav" aria-label="Defense">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#unpredictable-tokens-for-images" class="md-nav__link">
+    Unpredictable tokens for images
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-the-cache-control-header" class="md-nav__link">
+    Using the Cache-Control header
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-recommendations" class="md-nav__link">
+    Quick recommendations
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+    <nav class="md-nav" aria-label="References">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#xs-leaks" class="md-nav__link">
+    XS Leaks
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fetch-metadata" class="md-nav__link">
+    Fetch Metadata
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#framing-protection_1" class="md-nav__link">
+    Framing protection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#samesite" class="md-nav__link">
+    SameSite
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#coop-and-corp-header" class="md-nav__link">
+    COOP and CORP header
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+<h1 id="cross-site-leaks-cheat-sheet">Cross-site leaks Cheat Sheet<a class="headerlink" href="#cross-site-leaks-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>This article describes examples of attacks and defenses against cross-site leaks vulnerability (XS Leaks). Since this vulnerability is based on the core mechanism of modern web browsers, it's also called a browser side-channel attack. XS-Leaks attacks seek to exploit the fact of seemingly insignificant information that is exchanged in cross-site communications between sites. This information infers answers to the previously asked questions about the victim's user account. Please take a look at the examples provided below:</p>
+<ul>
+<li>Is the user currently logged in?</li>
+<li>Is the user ID 1337?</li>
+<li>Is the user an administrator?</li>
+<li>Does the user have a person with a particular email address in their contact list?</li>
+</ul>
+<p>On the basis of such questions, the attacker might try to deduce the answers, depending on the application's context. In most cases, the answers will be in binary form (yes or no). The impact of this vulnerability depends strongly on the application's risk profile. Despite this, XS Leaks may pose a real threat to user privacy and anonymity.</p>
+<h2 id="attack-vector">Attack vector<a class="headerlink" href="#attack-vector" title="Permanent link">&para;</a></h2>
+<p><img alt="XS Leaks Attack Vector" src="../assets/XS_Attack_Vector.png" /></p>
+<ul>
+<li>The entire attack takes place on the victim's browser side - just like an XSS attack</li>
+<li>In some cases, the victim must remain on the attacker's site longer for the attack to succeed.</li>
+</ul>
+<h2 id="same-origin-policy-sop">Same Origin Policy (SOP)<a class="headerlink" href="#same-origin-policy-sop" title="Permanent link">&para;</a></h2>
+<p>Before describing attacks, it's good to understand one of the most critical security mechanisms in browsers - The Same-origin Policy. A few key aspects:</p>
+<ul>
+<li>Two URLs are considered as <strong>same-origin</strong> if their <strong>protocol</strong>, <strong>port</strong>, and <strong>host</strong> are the same</li>
+<li>Any origin can send a request to another source, but due to the Same-origin Policy, they will not be able to read the response directly</li>
+<li>Same Origin Policy may be relaxed by <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS">Cross Origin Resource Sharing (CORS)</a>.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Origin A</th>
+<th>Origin B</th>
+<th>Same origin?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>https://example.com</code></td>
+<td><code>http://sub.example.com</code></td>
+<td>No, diffrent hosts</td>
+</tr>
+<tr>
+<td><code>https://example.com</code></td>
+<td><code>https://example.com:443</code></td>
+<td>Yes! Implicit port in Origin A</td>
+</tr>
+</tbody>
+</table>
+<p>Although the SOP principle protects us from accessing information in cross-origin communication, XS-Leaks attacks based on residual data can infer some information.</p>
+<h2 id="samesite-cookies">SameSite Cookies<a class="headerlink" href="#samesite-cookies" title="Permanent link">&para;</a></h2>
+<p>The SameSite attribute of a cookie tells the browser whether it should include the cookie in the request from the other site. The SameSite attribute takes the following values:</p>
+<ul>
+<li><code>None</code> -  the cookie will be attached to a request from another site, but it must be sent over a secure HTTPS channel</li>
+<li><code>Lax</code> - the cookie will be appended to the request from another page if the request method is GET and the request is made to top-level navigation (i.e. the navigation changes the address in the browser top bar)</li>
+<li><code>Strict</code> - the cookie will never be sent from another site</li>
+</ul>
+<p>It is worth mentioning here the attitude of Chromium based browsers in which cookies without SameSite attribute set by default are treated as Lax.</p>
+<p>Cookies with the appropriate SameSite attribute provide a <strong>strong defense</strong> against both XS Leaks and also <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">CSRF attacks</a>.</p>
+<h3 id="how-do-we-know-that-two-sites-are-samesite">How do we know that two sites are SameSite?<a class="headerlink" href="#how-do-we-know-that-two-sites-are-samesite" title="Permanent link">&para;</a></h3>
+<p><img alt="XS Leaks eTLD explanation" src="../assets/XS_Leaks_eTLD.png" /></p>
+<p>In the context of the SameSite attribute, we consider the site to be the combination of the TLD (top-level domain) and the domain name before it. For example:</p>
+<table>
+<thead>
+<tr>
+<th>Full URL</th>
+<th>Site (eTLD+1)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>https://example.com:443/data?query=test</code></td>
+<td><code>example.com</code></td>
+</tr>
+</tbody>
+</table>
+<p>Why are we talking about eTLD+1 and not just TLD+1? It's because of domains like <code>.github.io</code> or <code>.eu.org</code>. Such parts are not atomic enough to be compared well. For this reason, a list of "effective" TLDs (eTLDs) was created and can be found <a href="https://publicsuffix.org/list/public_suffix_list.dat">here</a>.</p>
+<p>Sites that have the same eTLD+1 are considered SameSite, examples:</p>
+<table>
+<thead>
+<tr>
+<th>Origin A</th>
+<th>Origin B</th>
+<th>SameSite?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>https://example.com</code></td>
+<td><code>http://example.com</code></td>
+<td>Yes, schemes don't matter</td>
+</tr>
+<tr>
+<td><code>https://evil.net</code></td>
+<td><code>https://example.com</code></td>
+<td>No, diffrent eTLD+1</td>
+</tr>
+<tr>
+<td><code>https://sub.example.com</code></td>
+<td><code>https://data.example.com</code></td>
+<td>Yes, subdomains don't matter</td>
+</tr>
+</tbody>
+</table>
+<p>For more information about SamSite, see the excellent article <a href="https://web.dev/same-site-same-origin/">Understanding "same-site"</a>.</p>
+<h2 id="attacks-using-the-element-id-attribute">Attacks using the element ID attribute<a class="headerlink" href="#attacks-using-the-element-id-attribute" title="Permanent link">&para;</a></h2>
+<p>Elements in the DOM can have an ID attribute that is unique within the document. For example:</p>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">button</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;pro&quot;</span><span class="p">&gt;</span>Pro account<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</code></pre></div>
+<p>The browser will automatically focus on an element with a given ID if we append a hash to the URL, e.g. <code>https://example.com#pro</code>. What's more JavaScript <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/focus_event">focus event</a> gets fired. The attacker may try to embed the application in the iframe with specific source on its own controlled page:</p>
+<p><img alt="XS-Leaks-ID" src="../assets/XS_Leaks_ID.png" /></p>
+<p>then add listener in main document for <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/blur_event">blur event</a> (the oposite of focus). When the victim visits the attackers site, the blur event gets fired. The attacker will be able to conclude that the victim has a pro account.</p>
+<h3 id="defense">Defense<a class="headerlink" href="#defense" title="Permanent link">&para;</a></h3>
+<h4 id="framing-protection">Framing protection<a class="headerlink" href="#framing-protection" title="Permanent link">&para;</a></h4>
+<p>If you don't need other origins to embed your application in a frame, you can consider using one of two mechanisms:</p>
+<ul>
+<li><strong>Content Security Policy frame ancestors</strong> directive. <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-src">Read more about syntax</a>.</li>
+<li><strong>X-Frame-Options</strong>  - mainly if you want to support old browsers.</li>
+</ul>
+<p>Setting up framing protection efficiently blocks the ability to embed your application in a frame on the attacker-controlled origin and protects from other attacks like <a href="https://cheatsheetseries.owasp.org/cheatsheets/Clickjacking_Defense_Cheat_Sheet.html">Clickjacking</a>.</p>
+<h4 id="fetch-metadata-sec-fetch-dest">Fetch metadata (Sec-Fetch-Dest)<a class="headerlink" href="#fetch-metadata-sec-fetch-dest" title="Permanent link">&para;</a></h4>
+<p>Sec-Fetch-Dest header provides us with a piece of information about what is the end goal of the request. This header is included automatically by the browser and is one of the headers within the Fetch Metadata standard.</p>
+<p>With Sec-Fetch-Dest you can build effective own resource isolation policies, for example:</p>
+<div class="highlight"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;Sec-Fetch-Dest&#39;</span><span class="p">)</span> <span class="o">===</span> <span class="s1">&#39;iframe&#39;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">res</span><span class="p">.</span><span class="nx">sendStatus</span><span class="p">(</span><span class="mf">403</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">({</span>
+        <span class="nx">message</span><span class="o">:</span> <span class="s1">&#39;Hello!&#39;</span>
+    <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div>
+<p><img alt="XS Leaks Sec-Fetch-Dest" src="../assets/XS_Leaks_Sec_Fetch_Dest.png" /></p>
+<p>If you want to use headers from the Fetch Metadata standard, make sure that your users' browsers support this standard (you can check it <a href="https://caniuse.com/?search=sec-fetch">here</a>). Also, think about using the appropriate fallback in code if the Sec-Fetch-* header is not included in the request.</p>
+<h2 id="attacks-based-on-error-events">Attacks based on error events<a class="headerlink" href="#attacks-based-on-error-events" title="Permanent link">&para;</a></h2>
+<p>Embedding from resources from other origins is generally allowed. For example, you can embed an image from another origin or even script on your page. What is not permitted is reading cross-origin resource due the SOP policy.</p>
+<p>When the browser sends a request for a resource, the server processes the request and decides on the response e.g. (200 OK or 404 NOT FOUND). The browser receives the HTTP response and based on that, the appropriate JavaScript event is fired (onload or onerror).</p>
+<p>In this way, we can try to load resources and, based on the response status, infer whether they exist or not in the context of the logged-in victim. Let's look at the following situation:</p>
+<ul>
+<li><code>GET /api/user/1234</code> - 200 OK - currently logged-in user is 1234 because we succefuly loaded resource (<a href="https://developer.mozilla.org/en-US/docs/Web/API/GlobalEventHandlers/onload">onload</a> event fired)</li>
+<li><code>GET /api/user/1235</code> - 401 Unauthorized  - 1235 is not the ID of the currently logged in user (<a href="https://developer.mozilla.org/en-US/docs/Web/API/GlobalEventHandlers/onerror">onerror</a> event will be triggered)</li>
+</ul>
+<p>Given the above example, an attacker can use JavaScript on his controlled origin to guess the victim's ID by enumerating over all the values in a simple loop.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">function</span> <span class="nx">checkId</span><span class="p">(</span><span class="nx">id</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">script</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;script&#39;</span><span class="p">);</span>
+    <span class="nx">script</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="sb">`https://example.com/api/users/</span><span class="si">${</span><span class="nx">id</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
+    <span class="nx">script</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Logged user id: </span><span class="si">${</span><span class="nx">id</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+    <span class="p">};</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">script</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// Generate array [0, 1, ..., 40]</span>
+<span class="kd">const</span> <span class="nx">ids</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">(</span><span class="mf">41</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">fill</span><span class="p">()</span>
+    <span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">_</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">i</span> <span class="o">+</span> <span class="mf">0</span><span class="p">);</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="kd">const</span> <span class="nx">id</span> <span class="k">of</span> <span class="nx">ids</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">checkId</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Note that the attacker here does not care about reading the response body even though it would not be able to due to solid isolation mechanisms in browsers such as <a href="https://www.chromium.org/Home/chromium-security/corb-for-developers">Cross-Origin Resource Blocking</a>. All it needs is the success information it receives when the <code>onload</code> event fires.</p>
+<h3 id="defense_1">Defense<a class="headerlink" href="#defense_1" title="Permanent link">&para;</a></h3>
+<h4 id="subresouce-protection">Subresouce protection<a class="headerlink" href="#subresouce-protection" title="Permanent link">&para;</a></h4>
+<p>In some cases, mechanism of special unique tokens may be implemented to protect our sensitive endpoints.</p>
+<div class="highlight"><pre><span></span><code>/api/users/1234?token=be930b8cfb5011eb9a030242ac130003
+</code></pre></div>
+<ul>
+<li>Token should be long and unique</li>
+<li>The back-end must correctly validate the token passed in the request</li>
+</ul>
+<p>Although it is pretty effective, the solution generates a significant overhead in proper implementation.</p>
+<h4 id="fetch-metadata-sec-fetch-site">Fetch metadata (Sec-Fetch-Site)<a class="headerlink" href="#fetch-metadata-sec-fetch-site" title="Permanent link">&para;</a></h4>
+<p>This header specifies where the request was sent from, and it takes the following values:</p>
+<ul>
+<li><code>cross-site</code></li>
+<li><code>same-origin</code></li>
+<li><code>same-site</code></li>
+<li><code>none</code> - user directly reached the page</li>
+</ul>
+<p>Like Sec-Fetch-Dest, this header is automatically appended by the browser to each request and is part of the Fetch Metadata standard. Example usage:</p>
+<div class="highlight"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/api/users/:id&#39;</span><span class="p">,</span> <span class="nx">authorization</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;Sec-Fetch-Site&#39;</span><span class="p">)</span> <span class="o">===</span> <span class="s1">&#39;cross-site&#39;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">res</span><span class="p">.</span><span class="nx">sendStatus</span><span class="p">(</span><span class="mf">403</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">// ... more code</span>
+
+    <span class="k">return</span> <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">({</span> <span class="nx">id</span><span class="o">:</span> <span class="mf">1234</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="nx">role</span><span class="o">:</span> <span class="s1">&#39;admin&#39;</span> <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div>
+<h4 id="cross-origin-resource-policy-corp">Cross-Origin-Resource-Policy (CORP)<a class="headerlink" href="#cross-origin-resource-policy-corp" title="Permanent link">&para;</a></h4>
+<p>If the server returns this header with the appropriate value, the the browser will not load resources from our site or origin (even static images) in another application. Possible values:</p>
+<ul>
+<li><code>same-site</code></li>
+<li><code>same-origin</code></li>
+<li><code>cross-origin</code></li>
+</ul>
+<p>Read more about CORP <a href="https://resourcepolicy.fyi/">here</a>.</p>
+<h2 id="attacks-on-postmessage-commmunication">Attacks on postMessage commmunication<a class="headerlink" href="#attacks-on-postmessage-commmunication" title="Permanent link">&para;</a></h2>
+<p>Sometimes in controlled situations we would like despite SOP to exchange information between different origns. We can use the postMessage mechanism. See below example:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Origin: http://example.com</span>
+<span class="kd">const</span> <span class="nx">site</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">URLSearchParams</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">search</span><span class="p">).</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;site&#39;</span><span class="p">);</span> <span class="c1">// https://evil.com</span>
+<span class="kd">const</span> <span class="nx">popup</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="nx">site</span><span class="p">);</span>
+<span class="nx">popup</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span><span class="s1">&#39;secret message!&#39;</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">);</span>
+
+<span class="c1">// Origin: https://evil.com</span>
+<span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="nx">e</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">data</span><span class="p">)</span> <span class="c1">// secret message! - leak</span>
+<span class="p">});</span>
+</code></pre></div>
+<h3 id="defense_2">Defense<a class="headerlink" href="#defense_2" title="Permanent link">&para;</a></h3>
+<h4 id="specify-strict-targetorign">Specify strict targetOrign<a class="headerlink" href="#specify-strict-targetorign" title="Permanent link">&para;</a></h4>
+<p>To avoid situations like the one above, where an attacker manages to get the reference for a window to receive a message, always specify the exact <code>targetOrigin</code> in postMessage. Passing to the <code>targetOrigin</code> wildcard <code>*</code> causes any origin to receive the message.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Origin: http://example.com</span>
+<span class="kd">const</span> <span class="nx">site</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">URLSearchParams</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">search</span><span class="p">).</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;site&#39;</span><span class="p">);</span> <span class="c1">// https://evil.com</span>
+<span class="kd">const</span> <span class="nx">popup</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="nx">site</span><span class="p">);</span>
+<span class="nx">popup</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span><span class="s1">&#39;secret message!&#39;</span><span class="p">,</span> <span class="s1">&#39;https://sub.example.com&#39;</span><span class="p">);</span>
+
+<span class="c1">// Origin: https://evil.com</span>
+<span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="nx">e</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">data</span><span class="p">)</span> <span class="c1">// no data!</span>
+<span class="p">});</span>
+</code></pre></div>
+<h2 id="frame-counting-attacks">Frame counting attacks<a class="headerlink" href="#frame-counting-attacks" title="Permanent link">&para;</a></h2>
+<p>Information about the number of loaded frames in a window can be a source of leakage. Take for example an application that loads search results into a frame, if the results are empty then the frame does not appear.</p>
+<p><img alt="XS-Leaks-Frame-Counting" src="../assets/XS_Leaks_Frame_Counting.png" /></p>
+<p>An attacker can get information about the number of loaded frames in a window by counting the number of frames in a <code>window.frames</code> object.</p>
+<p>So finally, an attacker can obtain the email list and, in a simple loop, open subsequent windows and count the number of frames. If the number of frames in the opened window is equal to 1, the email is in the client's database of the application used by the victim.</p>
+<h3 id="defense_3">Defense<a class="headerlink" href="#defense_3" title="Permanent link">&para;</a></h3>
+<h4 id="cross-origin-opener-policy-coop">Cross-Origin-Opener-Policy (COOP)<a class="headerlink" href="#cross-origin-opener-policy-coop" title="Permanent link">&para;</a></h4>
+<p>Setting this header will prevent cross-origin documents from opening in the same browsing context group. This solution ensures that document A opening another document will not have access to the <code>window</code>object. Possible values:</p>
+<ul>
+<li><code>unsafe-none</code></li>
+<li><code>same-origin-allow-popups</code></li>
+<li><code>same-origin</code></li>
+</ul>
+<p>In case the server returns for example <code>same-origin</code> COOP header, the attack fails:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span> <span class="nx">win</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">&#39;https://example.com/admin/customers?search=john%40example.com&#39;</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">win</span><span class="p">.</span><span class="nx">frames</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="c1">// Cannot read property &#39;length&#39; of null</span>
+</code></pre></div>
+<h2 id="attacks-using-browser-cache">Attacks using browser cache<a class="headerlink" href="#attacks-using-browser-cache" title="Permanent link">&para;</a></h2>
+<p>Browser cache helps to significantly reduce the time it takes for a page to load when revisited. However, it can also pose a risk of information leakage. If an attacker is able to detect whether a resource was loaded from the cache after the load time, he will be able to draw some conclusions based on it.</p>
+<p>The principle is simple, a resource loaded from cache memory will load incomparably faster than from the server.</p>
+<p><img alt="XS Leaks Cache Attack" src="../assets/XS_Leaks_Cache_Attack.png" /></p>
+<p>An attacker can embed a resource on their site that is only accessible to a user with the admin role. Then, using JavaScript, read the load time of a particular resource and, based on this information, deduce whether the resource is in cache or not.</p>
+<div class="highlight"><pre><span></span><code>    <span class="c1">// Threshold above which we consider a resource to have loaded from the server</span>
+    <span class="c1">// const THRESHOLD = ...</span>
+
+    <span class="kd">const</span> <span class="nx">adminImagePerfEntry</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">performance</span>
+        <span class="p">.</span><span class="nx">getEntries</span><span class="p">()</span>
+        <span class="p">.</span><span class="nx">filter</span><span class="p">((</span><span class="nx">entry</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">entry</span><span class="p">.</span><span class="nx">name</span><span class="p">.</span><span class="nx">endsWith</span><span class="p">(</span><span class="s1">&#39;admin.svg&#39;</span><span class="p">));</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="nx">adminImagePerfEntry</span><span class="p">.</span><span class="nx">duration</span> <span class="o">&lt;</span> <span class="nx">THRESHOLD</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Image loaded from cache!&#39;</span><span class="p">)</span>
+    <span class="p">}</span>
+</code></pre></div>
+<h3 id="defense_4">Defense<a class="headerlink" href="#defense_4" title="Permanent link">&para;</a></h3>
+<h4 id="unpredictable-tokens-for-images">Unpredictable tokens for images<a class="headerlink" href="#unpredictable-tokens-for-images" title="Permanent link">&para;</a></h4>
+<p>This technique is accurate when the user wants the resources to still be cached, while an attacker will not be able to find out about it.</p>
+<div class="highlight"><pre><span></span><code>/avatars/admin.svg?token=be930b8cfb5011eb9a030242ac130003
+</code></pre></div>
+<ul>
+<li>Tokens should be unique in context of each user</li>
+<li>If an attacker cannot guess this token, it will not be able to detect whether the resource was loaded from cache</li>
+</ul>
+<h4 id="using-the-cache-control-header">Using the Cache-Control header<a class="headerlink" href="#using-the-cache-control-header" title="Permanent link">&para;</a></h4>
+<p>You can disable the cache mechanism if you accept the degraded performance related to the necessity of reloading resources from the server every time a user visits the site. To disable caching for resources you want to protect, set the response header <code>Cache-Control: no-store</code>.</p>
+<h2 id="quick-recommendations">Quick recommendations<a class="headerlink" href="#quick-recommendations" title="Permanent link">&para;</a></h2>
+<ul>
+<li>If your application uses cookies, make sure to set the appropriate <a href="#samesite-cookies">SameSite attribute</a>.</li>
+<li>Think about whether you really want to allow your application to be embedded in frames. If not, consider using the mechanisms described in the <a href="#framing-protection">framing protection</a> section.</li>
+<li>To strengthen the isolation of your application between other origins, use <a href="#cross-origin-resource-policy-corp">Cross Origin Resource Policy</a> and <a href="#cross-origin-opener-policy-coop">Cross Origin Opener Policy</a> headers with appropriate values.</li>
+<li>Use the headers available within Fetch Metadata to build your own resource isolation policy.</li>
+</ul>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<h3 id="xs-leaks">XS Leaks<a class="headerlink" href="#xs-leaks" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://xsleaks.dev/">XS Leaks Wiki</a></li>
+<li><a href="https://www.appsecmonkey.com/blog/xs-leaks">XS Leaks Attacks &amp; Prevention</a></li>
+</ul>
+<h3 id="fetch-metadata">Fetch Metadata<a class="headerlink" href="#fetch-metadata" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://www.appsecmonkey.com/blog/fetch-metadata">Fetch Metadata and Isolation Polcies</a></li>
+<li><a href="https://web.dev/fetch-metadata/">Protect your resources from attacks with Fetch Metadata</a></li>
+</ul>
+<h3 id="framing-protection_1">Framing protection<a class="headerlink" href="#framing-protection_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://pragmaticwebsecurity.com/articles/securitypolicies/preventing-framing-with-policies.html">Preventing framing with policies</a></li>
+<li><a href="https://content-security-policy.com/frame-ancestors/">CSP 'frame-ancestors' policy</a></li>
+</ul>
+<h3 id="samesite">SameSite<a class="headerlink" href="#samesite" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://web.dev/samesite-cookies-explained/">SameSite cookies explained</a></li>
+<li><a href="https://web.dev/samesite-cookie-recipes/">SameSite cookies recipies</a></li>
+</ul>
+<h3 id="coop-and-corp-header">COOP and CORP header<a class="headerlink" href="#coop-and-corp-header" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://web.dev/coop-coep/">Making your site "cross-origin isolated"</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Cross-Origin_Resource_Policy_%28CORP%29">MDN Web Docs about CORP</a></li>
+</ul>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="XSS_Filter_Evasion_Cheat_Sheet.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: XSS Filter Evasion" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              XSS Filter Evasion
+            </div>
+          </div>
+        </a>
+      
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      ©Copyright 2021 - CheatSheets Series Team - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">Creative Commons Attribution 3.0 Unported License</a>.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.cefbb252.min.js"}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f8ea78.min.js"></script>
+      
+    
+  </body>
+</html>
