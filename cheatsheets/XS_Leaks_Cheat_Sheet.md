@@ -2,10 +2,10 @@
 
 ## Introduction
 
-This article describes examples of attacks and defenses against cross-site leaks vulnerability (XS Leaks). Since this vulnerability is based on the core mechanism of modern web browsers, it's also called a browser side-channel attack. XS-Leaks attacks seek to exploit the fact of seemingly insignificant information that is exchanged in cross-site communications between sites. This information infers answers to the previously asked questions about the victim's user account. Examples of question:
+This article describes examples of attacks and defenses against cross-site leaks vulnerability (XS Leaks). Since this vulnerability is based on the core mechanism of modern web browsers, it's also called a browser side-channel attack. XS-Leaks attacks seek to exploit the fact of seemingly insignificant information that is exchanged in cross-site communications between sites. This information infers answers to the previously asked questions about the victim's user account. Please take a look at the examples provided below:
 
 - Is the user currently logged in?
-- Is the user ID is 1337?
+- Is the user ID 1337?
 - Is the user an administrator?
 - Does the user have a person with a particular email address in their contact list?
 
@@ -20,9 +20,9 @@ On the basis of such questions, the attacker might try to deduce the answers, de
 
 ## Same Origin Policy (SOP)
 
-Before we begin to decribe attacks, it's good to understand one of the most important security mechanisms in browsers - Same Origin Policy. A few key aspects:
+Before describing attacks, it's good to understand one of the most critical security mechanisms in browsers - The Same-origin Policy. A few key aspects:
 
-- Two URLs are considered as **same-orign** if their **protocol**, **port**, and **host** are the same
+- Two URLs are considered as **same-origin** if their **protocol**, **port**, and **host** are the same
 - Any origin can send a request to another source, but due to the Same-origin Policy, they will not be able to read the response directly
 - Same Origin Policy may be relaxed by [Cross Origin Resource Sharing (CORS)](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS).
 
