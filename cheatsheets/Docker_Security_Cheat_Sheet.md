@@ -34,18 +34,18 @@ Configuring the container to use an unprivileged user is the best way to prevent
 
 1. During runtime using `-u` option of `docker run` command e.g.:
 
-```bash
-docker run -u 4000 alpine
-```
+    ```bash
+    docker run -u 4000 alpine
+    ```
 
 2. During build time. Simple add user in Dockerfile and use it. For example:
 
-```docker
-FROM alpine
-RUN groupadd -r myuser && useradd -r -g myuser myuser
-<HERE DO WHAT YOU HAVE TO DO AS A ROOT USER LIKE INSTALLING PACKAGES ETC.>
-USER myuser
-```
+    ```docker
+    FROM alpine
+    RUN groupadd -r myuser && useradd -r -g myuser myuser
+    <HERE DO WHAT YOU HAVE TO DO AS A ROOT USER LIKE INSTALLING PACKAGES ETC.>
+    USER myuser
+    ```
 
 3. Enable user namespace support (`--userns-remap=default`) in [Docker daemon](https://docs.docker.com/engine/security/userns-remap/#enable-userns-remap-on-the-daemon)
 
