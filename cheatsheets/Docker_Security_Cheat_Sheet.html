@@ -1698,20 +1698,22 @@ If you really, <strong>really</strong> have to do this, you should secure it. Ch
 <h3 id="rule-2-set-a-user">RULE #2 - Set a user<a class="headerlink" href="#rule-2-set-a-user" title="Permanent link">&para;</a></h3>
 <p>Configuring the container to use an unprivileged user is the best way to prevent privilege escalation attacks. This can be accomplished in three different ways as follows:</p>
 <ol>
-<li>During runtime using <code>-u</code> option of <code>docker run</code> command e.g.:</li>
-</ol>
+<li>
+<p>During runtime using <code>-u</code> option of <code>docker run</code> command e.g.:</p>
 <div class="highlight"><pre><span></span><code>docker run -u <span class="m">4000</span> alpine
 </code></pre></div>
-<ol>
-<li>During build time. Simple add user in Dockerfile and use it. For example:</li>
-</ol>
+</li>
+<li>
+<p>During build time. Simple add user in Dockerfile and use it. For example:</p>
 <div class="highlight"><pre><span></span><code><span class="k">FROM</span> <span class="s">alpine</span>
 <span class="k">RUN</span> groupadd -r myuser <span class="o">&amp;&amp;</span> useradd -r -g myuser myuser
 &lt;HERE DO WHAT YOU HAVE TO DO AS A ROOT USER LIKE INSTALLING PACKAGES ETC.&gt;
 <span class="k">USER</span><span class="s"> myuser</span>
 </code></pre></div>
-<ol>
-<li>Enable user namespace support (<code>--userns-remap=default</code>) in <a href="https://docs.docker.com/engine/security/userns-remap/#enable-userns-remap-on-the-daemon">Docker daemon</a></li>
+</li>
+<li>
+<p>Enable user namespace support (<code>--userns-remap=default</code>) in <a href="https://docs.docker.com/engine/security/userns-remap/#enable-userns-remap-on-the-daemon">Docker daemon</a></p>
+</li>
 </ol>
 <p>More information about this topic can be found at <a href="https://docs.docker.com/engine/security/userns-remap/">Docker official documentation</a></p>
 <p>In kubernetes, this can be configured in <a href="https://kubernetes.io/docs/tasks/configure-pod-container/security-context/">Security Context</a> using <code>runAsNonRoot</code> field e.g.:</p>
