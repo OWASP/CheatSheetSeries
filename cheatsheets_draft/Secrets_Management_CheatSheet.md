@@ -107,10 +107,9 @@ Emergency break-glass credentials therefore should be regularly backed up in a s
 Policies defining the minimum complexity requirements of passwords, as well as approved encryption algorithms are typically set at an organisation-wide level and should be enforced consistently. The use of a centralised secrets management solution would help companies to enforce these policies.
 
 ## 3. Continuous Integration (CI) and Continuous Deployment (CD)
-
 The process of integrating features and deploying changes commonly requires secrets to several systems, such as version control.
 
-### 3.1. Build Tools
+### 3.1. Build Tools    
 
 ### 3.2. Rotation vs Dynamic Creation
 
@@ -121,7 +120,7 @@ The process of integrating features and deploying changes commonly requires secr
 ## 4. Cloud Providers
 
 ### 4.1. Vendor Lock-in
-
+Vendor lock-in refers to a situation where the cost of switching to a different vendor is so high that the customer is essentially stuck with the original vendor. Because of financial pressures, an insufficient workforce, or the need to avoid interruptions to business operations, the customer is "locked in" to what may be an inferior product or service. If secret generation and management is dependent on cloud provider then a user may face vendor lock-in situation.
 ### 4.2. Geo Restrictions
 
 ### 4.3. Latency
@@ -134,7 +133,7 @@ The process of integrating features and deploying changes commonly requires secr
     Ther are 3 ways to get secrets to an app inside a docker container
     * Environment variables: We can provide secrets directly as the part of the docker container configuration. In this method the secrets could be either hard coded in docker configuration file or could be passed as argument at docker runtime.
     * Mounted volumes (file): In this method we keep our secrets within a particular config/secret file and mount that file to our instance as a mounted volume.
-    * Fetch from secret store (in-memory): A sidecar app/container fetches the secrets it need directly from a secret manager service without having to deal with docker config. This solution allows you to use dynamically constructed secrets without worrying about the secrets being viewable from the file system or from checking the docker container's env variables. 
+    * Fetch from secret store (in-memory): A sidecar app/container fetches the secrets it need directly from a secret manager service without having to deal with docker config. This solution allows you to use dynamically constructed secrets without worrying about the secrets being viewable from the file system or from checking the docker container's env variables.
 ### 5.2. Short Lived Side-car Containers
     To inject secret within a container one could create short lived side-car containers that fethces secret from some remote end point and then store them on a
     shared volume which is also mounted to the original container. The original container can now use the secrets from mounted volume benefit of using this approach is that we don't need to integrate any third party tool or code to get secrets. Once the secret are fethced the side car container dies and that's why they are called short lived. Example of one such service is Vault Agent Sidecar Injector. The Vault Agent Injector alters pod specifications to include Vault Agent containers that render Vault secrets to a shared memory volume using Vault Agent Templates. By rendering secrets to a shared volume, containers within the pod can consume Vault secrets without being Vault aware 
@@ -151,7 +150,12 @@ The process of integrating features and deploying changes commonly requires secr
 ## 7. Encryption
 
 ### 7.1. Encryption as a Service (EaaS)
-
+    EaaS is a model in which users subscribe to a cloud-based encryption service without having to install encryption in their own systems.
+    By using Encryption as a service we get following benefits:
+    * Data can be encrypted at rest
+    * Data is secured in Transit (TLS)
+    * Key handling and cryptographic implementations is taken care by Encryption Service, not by developers
+    * More services could be added to interact with the sensitive data
 ## 8. Applications
 
 ### 8.1. Least Amount of Impact (LAoI)
