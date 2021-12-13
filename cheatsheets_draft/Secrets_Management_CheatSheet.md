@@ -120,7 +120,7 @@ The process of integrating features and deploying changes commonly requires secr
 ## 4. Cloud Providers
 
 ### 4.1. Vendor Lock-in
-Vendor lock-in refers to a situation where the cost of switching to a different vendor is so high that the customer is essentially stuck with the original vendor. Because of financial pressures, an insufficient workforce, or the need to avoid interruptions to business operations, the customer is "locked in" to what may be an inferior product or service. If secret generation and management is dependent on cloud provider then a user may face vendor lock-in situation.
+"[Vendor lock-in](https://www.cloudflare.com/learning/cloud/what-is-vendor-lock-in/) refers to a situation where the cost of switching to a different vendor is so high that the customer is essentially stuck with the original vendor. Because of financial pressures, an insufficient workforce, or the need to avoid interruptions to business operations, the customer is "locked in" to what may be an inferior product or service." If secret generation and management is dependent on cloud provider then a user may face vendor lock-in situation.
 ### 4.2. Geo Restrictions
 
 ### 4.3. Latency
