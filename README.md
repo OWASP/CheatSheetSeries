@@ -20,7 +20,7 @@ In order to read the cheat sheets and **reference** them, use the project [offic
 
 We're easy to find on Slack:
 
-1. Join the OWASP Group Slack with this [invitation link](https://owasp-slack.herokuapp.com/).
+1. Join the OWASP Group Slack with this [invitation link](https://owasp.org/slack/invite).
 2. Join the [#cheatsheets channel](https://owasp.slack.com/messages/C073YNUQG).
 
 Feel free to ask questions, suggest ideas, or share your best recipes.
