@@ -144,7 +144,9 @@ The process of building, testing and deploying changes generally requires access
 
 ### 3.1. Hardening your CI/CD pipeline
 
-Given that the CI/CD tooling heavily consume secrets, it is key that the pipeline cannot be easily hacked 
+Given that the CI/CD tooling heavily consume secrets, it is key that the pipeline cannot be easily hacked or misused by employees. Here are a few guidelines which can help you:
+
+- <TODO CONTINUE HERE>
 
 ### 3.2. Where should a secret be?
 
