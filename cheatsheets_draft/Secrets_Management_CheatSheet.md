@@ -146,9 +146,18 @@ The process of building, testing and deploying changes generally requires access
 
 Given that the CI/CD tooling heavily consume secrets, it is key that the pipeline cannot be easily hacked or misused by employees. Here are a few guidelines which can help you:
 
-- <TODO CONTINUE HERE>
+- Thread your CI/CD tooling as a production environment: harden it, patch it and ensure that the underlying infrastructure and services are hardened.
+- Have Security Event Monitoring in place.
+- Implement least-privilege access: developers do not need to be able to administrate projects, instead they only need to be able to execute required functions, such as setting up pipelines, running them, and working with code. Administrative tasks can easily be done by means of configuration-as-code in a separate repository which is used by the CI/CD system to update its configuration. This way there is no need for privileged roles which might have access to secrets.
+- Make sure that pipelines their output does not leak secrets, nor that production pipelines can be debugged.
+- Make sure that any runners and/or workers for a CI/CD system cannot be exec'ed into.
+- Have proper authentication, authorization and accounting in place.
+- Make sure that pipelines can only be created by means of an approved process, including MR/PR steps to make sure that a created pipeline is security-reviewed.
 
 ### 3.2. Where should a secret be?
+
+A pipeline should not store production secrets. Instead, it should only host temporal credentials (E.g. often rotated credentials) to the secret management-system. TODO: CONTINUE HERE!  
+
 
 ### 3.3. Rotation vs Dynamic Creation
 
@@ -160,7 +169,10 @@ Given that the CI/CD tooling heavily consume secrets, it is key that the pipelin
 <TODO; LET'S HAVE SOME CONTENT IN HIGHLIGHT/COMMENTS WHATWE WANT TO WRITE DOWN: ECAUSE CLOUD NATIVE SECRETS MANAGEMENT CAN HELP IF YOU HAVE A CLOUD NATIVE STRATEGY. LOCKIN IS AS DEEP AS YOU WANT IT TO BE WITH ANY SECRETS MANAGEMENT PROVIDER>
 
 ### 4.1. Vendor Lock-in
-"[Vendor lock-in](https://www.cloudflare.com/learning/cloud/what-is-vendor-lock-in/) refers to a situation where the cost of switching to a different vendor is so high that the customer is essentially stuck with the original vendor. Because of financial pressures, an insufficient workforce, or the need to avoid interruptions to business operations, the customer is "locked in" to what may be an inferior product or service." If secret generation and management is dependent on cloud provider then a user may face vendor lock-in situation.
+[comment]: TODO: REPLACE/REWRITE/REMOVE as agreed with @bendehaan
+"[Vendor lock-in](https://www.cloudflare.com/learning/cloud/what-is-vendor-lock-in/) refers to a situation where the cost of switching to a different vendor is so high that the customer is essentially stuck with the original vendor. Because of financial pressures, an insufficient workforce, or the need to avoid interruptions to business operations, the customer is "locked in" to what may be an inferior product or service." If a secret management solution is written in such a way that it is hard to discern which secrets are used for what, and secrets cannot be easily extracted, you end up with a vendor lockin. This can make it harder to find a better fit-for-purpose in the future.
+
+
 ### 4.2. Geo Restrictions
 
 ### 4.3. Latency
@@ -238,3 +250,4 @@ Given that the CI/CD tooling heavily consume secrets, it is key that the pipelin
 - [Cryptographic Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html)
 - [OWASP WrongSecrets project](https://github.com/commjoen/wrongsecrets/)
 - [Blog: 10 Pointers on Secrets Management](https://xebia.com/blog/secure-deployment-10-pointers-on-secrets-management/)
+- [Blog: From build to run: pointers on secure deployment](https://xebia.com/from-build-to-run-pointers-on-secure-deployment/)
