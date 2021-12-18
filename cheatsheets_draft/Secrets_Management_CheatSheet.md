@@ -44,11 +44,16 @@ Standardization should at least include: secrets life cycle management, Authenti
 
 The ability to configure access control on even the tiniest component of a system, such as an object in a data store, if required allows for granular access control. A secrets management solution should cater for this level of configuration.
 
-### 2.4 Remove Human Interaction
+### 2.4 Remove Human Interaction and Use Least Privilege
 
-Dynamic secrets are those that are generated for each request. When an application starts it could request it's database credentials, which when dynamically generated will be provided with new credentials for that session. Dynamic secrets should be used where possible to reduce the surface area of credential re-use. Should the application's database credentials be stolen, upon reboot they would be expired.
+When users can actually read the secret in a secret management system and/or update it, it means that the secret can now leak through that user, as well as through the system he used to touch the secret.
+Therefore, it is best that engineers do not have access to all secrets in the secrets management system.
+Manually maintenance does not only increase the risk of leakage, it introduces the risk of human errors while maintaining the secret. Furthermore, it can become wasteful.
+Therefore it is better to limit or remove the human interaction with the actual secrets. This can be done in multiple ways:
 
-Manually maintaining configuration files and password changes can be wasteful. The use of dynamic secrets removes the need for human interaction.
+- having a secrets pipeline which does large parts of the secret management (E.g. creation, rotation, etc.)
+- Using dynamic secrets: these are generated for each request. When an application starts it could request it's database credentials, which when dynamically generated will be provided with new credentials for that session. Dynamic secrets should be used where possible to reduce the surface area of credential re-use. Should the application's database credentials be stolen, upon reboot they would be expired.
+- Using automation to rotate static secrets by other services and applications.
 
 ### 2.5 Auditing
 
@@ -141,13 +146,15 @@ The process of building, testing and deploying changes generally requires access
 
 ### 3.1. Hardening your CI/CD pipeline
 
-Given that the CI/CD pipeline <todo continue here>
+Given that the CI/CD tooling heavily consume secrets, it is key that the pipeline cannot be easily hacked 
 
 ### 3.2. Where should a secret be?
 
 ### 3.3. Rotation vs Dynamic Creation
 
 ### 3.4. Deployment
+
+### 3.5. Pipeline Created Secrets
 
 ## 4. Cloud Providers
 <TODO; LET'S HAVE SOME CONTENT IN HIGHLIGHT/COMMENTS WHATWE WANT TO WRITE DOWN: ECAUSE CLOUD NATIVE SECRETS MANAGEMENT CAN HELP IF YOU HAVE A CLOUD NATIVE STRATEGY. LOCKIN IS AS DEEP AS YOU WANT IT TO BE WITH ANY SECRETS MANAGEMENT PROVIDER>
