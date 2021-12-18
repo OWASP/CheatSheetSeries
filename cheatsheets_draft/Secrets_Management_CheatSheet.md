@@ -49,7 +49,7 @@ The ability to configure access control on even the tiniest component of a syste
 When users can actually read the secret in a secret management system and/or update it, it means that the secret can now leak through that user, as well as through the system he used to touch the secret.
 Therefore, it is best that engineers do not have access to all secrets in the secrets management system.
 Manually maintenance does not only increase the risk of leakage, it introduces the risk of human errors while maintaining the secret. Furthermore, it can become wasteful.
-Therefore it is better to limit or remove the human interaction with the actual secrets. This can be done in multiple ways:
+Therefore, it is better to limit or remove the human interaction with the actual secrets. This can be done in multiple ways:
 
 - having a secrets pipeline which does large parts of the secret management (E.g. creation, rotation, etc.)
 - Using dynamic secrets: these are generated for each request. When an application starts it could request it's database credentials, which when dynamically generated will be provided with new credentials for that session. Dynamic secrets should be used where possible to reduce the surface area of credential re-use. Should the application's database credentials be stolen, upon reboot they would be expired.
@@ -57,13 +57,13 @@ Therefore it is better to limit or remove the human interaction with the actual 
 
 ### 2.5 Auditing
 
-Auditing is an important role of secrets management due to the nature of the application. Auditing must be implemented in a secure way so as to be resilient against attempts to tamper with or delete the audit logs. At minimum the following should be audited:
+Auditing is an important role of secrets management due to the nature of the application. Auditing must be implemented in a secure way to be resilient against attempts to tamper with or delete the audit logs. At minimum the following should be audited:
 
 - Who requested a secret and for what system and role.
 - Whether the secret request was approved or rejected.
 - When the secret was used and by whom/source.
 - When the secret has expired.
-- If any attempts to re-use expired expired secrets have been made.
+- If any attempts to re-use expired secrets have been made.
 - If there have been any authentication or authorization errors.
 - When the secret was updated and by whom/what.
 - Any administrative actions and possible user activity on the underlying supporting infrastructure stack.
@@ -96,19 +96,18 @@ When secrets are no longer required they must be securely revoked in order to re
 
 #### 2.6.4 Lifespan
 
-Secrets should, where ever possible, always be created to expire after a defined time. This can either be an active expiration by the secret consuming system, or an expiration date set at the secrets management system, forcing supporting processes to be triggered resulting in a rotation of the secret.
-
+Secrets should, where ever possible, always be created to expire after a defined time. This can either be an active expiration by the secret consuming system, or an expiration date set at the secrets management system, forcing supporting processes to be triggered resulting in a rotation of the secret. 
 Policies should be applied by the secrets management solution to ensure credentials are only made available for a limited time that is appropriate for the type of credential.
 
 ### 2.7 Transport Layer Security (TLS) Everywhere
 
 It goes without saying that no secrets should ever be transmitted via plaintext. There is no excuse in this day and age given the ubiquitous adoption of SSL/TLS to not use encryption to protect the secrets in transit.
 
-Furthermore secrets management solutions can be used to effectively provision SSL certificates.
+Furthermore, secrets management solutions can be used to effectively provision SSL certificates.
 
 ### 2.8 Automate Key Rotation
 
-Key rotation is a challenging process when implemented manually, and can lead to mistakes. It is therefor highly recommended to automate the rotation of keys or at least ensure that the process is sufficiently supported by IT.
+Key rotation is a challenging process when implemented manually, and can lead to mistakes. It is therefore better to automate the rotation of keys or at least ensure that the process is sufficiently supported by IT.
 
 ### 2.9 Downtime, Break-glass, Backup and Restore
 
@@ -120,7 +119,7 @@ Next, the backup and restore procedures of the system should be regularly tested
 - Restore procedures are tested frequently, in order to guarantee that the backups are intact.
 - Backups are encrypted on a secure storage with reduced access rights. The backup location should be monitored for (unauthorized) access and administrative actions.
 
-LAst, should the system become unavailable due to other reasons than normal maintenance, emergency break-glass processes should be implemented to restore the service. Emergency break-glass credentials therefore should be regularly backed up in a secure fashion in a secondary secrets management system, and tested routinely to verify they work.
+Last, should the system become unavailable due to other reasons than normal maintenance, emergency break-glass processes should be implemented to restore the service. Emergency break-glass credentials therefore should be regularly backed up in a secure fashion in a secondary secrets management system, and tested routinely to verify they work.
 
 ### 2.10 Policies
 
@@ -141,7 +140,6 @@ A secret management solution should provide the capability to store at least the
 - When it needs to be rotated, if done manually
 
 ## 3. Continuous Integration (CI) and Continuous Deployment (CD)
-
 The process of building, testing and deploying changes generally requires access to many systems. Continuous Integration (CI) and Continuous Deployment (CD) tools typically store secrets themselves for providing configuration to the application or for during deployment. Alternatively, they interact heavily with the secrets management system.
 
 ### 3.1. Hardening your CI/CD pipeline
@@ -160,7 +158,7 @@ Given that the CI/CD tooling heavily consume secrets, it is key that the pipelin
 <TODO; LET'S HAVE SOME CONTENT IN HIGHLIGHT/COMMENTS WHATWE WANT TO WRITE DOWN: ECAUSE CLOUD NATIVE SECRETS MANAGEMENT CAN HELP IF YOU HAVE A CLOUD NATIVE STRATEGY. LOCKIN IS AS DEEP AS YOU WANT IT TO BE WITH ANY SECRETS MANAGEMENT PROVIDER>
 
 ### 4.1. Vendor Lock-in
-
+"[Vendor lock-in](https://www.cloudflare.com/learning/cloud/what-is-vendor-lock-in/) refers to a situation where the cost of switching to a different vendor is so high that the customer is essentially stuck with the original vendor. Because of financial pressures, an insufficient workforce, or the need to avoid interruptions to business operations, the customer is "locked in" to what may be an inferior product or service." If secret generation and management is dependent on cloud provider then a user may face vendor lock-in situation.
 ### 4.2. Geo Restrictions
 
 ### 4.3. Latency
@@ -170,9 +168,13 @@ Given that the CI/CD tooling heavily consume secrets, it is key that the pipelin
 ## 5. Containers & Orchestrators
 
 ### 5.1. Injection of Secrets (file, in-memory)
-
+    Ther are 3 ways to get secrets to an app inside a docker container
+    * Environment variables: We can provide secrets directly as the part of the docker container configuration. In this method the secrets could be either hard coded in docker configuration file or could be passed as argument at docker runtime.
+    * Mounted volumes (file): In this method we keep our secrets within a particular config/secret file and mount that file to our instance as a mounted volume.
+    * Fetch from secret store (in-memory): A sidecar app/container fetches the secrets it need directly from a secret manager service without having to deal with docker config. This solution allows you to use dynamically constructed secrets without worrying about the secrets being viewable from the file system or from checking the docker container's env variables.
 ### 5.2. Short Lived Side-car Containers
-
+    To inject secret within a container one could create short lived side-car containers that fethces secret from some remote end point and then store them on a
+    shared volume which is also mounted to the original container. The original container can now use the secrets from mounted volume benefit of using this approach is that we don't need to integrate any third party tool or code to get secrets. Once the secret are fethced the side car container dies and that's why they are called short lived. Example of one such service is Vault Agent Sidecar Injector. The Vault Agent Injector alters pod specifications to include Vault Agent containers that render Vault secrets to a shared memory volume using Vault Agent Templates. By rendering secrets to a shared volume, containers within the pod can consume Vault secrets without being Vault aware 
 ### 5.3. Internal vs External Access
 
 ## 6. Implementation Guidance
@@ -186,7 +188,12 @@ Given that the CI/CD tooling heavily consume secrets, it is key that the pipelin
 ## 7. Encryption
 
 ### 7.1. Encryption as a Service (EaaS)
-
+    EaaS is a model in which users subscribe to a cloud-based encryption service without having to install encryption in their own systems.
+    By using Encryption as a service we get following benefits:
+    * Data can be encrypted at rest
+    * Data is secured in Transit (TLS)
+    * Key handling and cryptographic implementations is taken care by Encryption Service, not by developers
+    * More services could be added to interact with the sensitive data
 ## 8. Applications
 
 ### 8.1. Least Amount of Impact (LAoI)
