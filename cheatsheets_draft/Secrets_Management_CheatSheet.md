@@ -27,38 +27,43 @@ The following sections address the main concepts relating to secrets management.
 
 It is important to select a technology that is robust enough to reliably service traffic from:
 
-- Users (e.g. SSH keys, root account passwords). In an incident response scenario users expect to be provisioned with credentials rapidly so they can recover services that have gone offline. Having to wait for credentials could impact the responsiveness of the operations team.
+- Users (e.g. SSH keys, root account passwords). In an incident response scenario users expect to be provisioned with credentials rapidly, so they can recover services that have gone offline. Having to wait for credentials could impact the responsiveness of the operations team.
 - Applications (e.g. database credentials and API keys). If the service is not preferment it could degrade the availability of dependent applications or increase application startup times.
 
 Within a large organisation such a service could receive a huge volume of requests.
 
 ### 2.2 Centralize and Standardize
 
-Secrets used by your DevOps teams for your applications might be consumbed differently, then then secrets stored by your marketeers or your SRE team. When consumers and/or producers of a secret are not catered to their needs, you often will find the secret badly maintained within the organization. Therefore, it is key that you standardize and centralize the secrets management solution. This can still mean that you centralize to multiple secret management solutions. For instance: your cloud native development teams choose to use the solution provided by the cloud provider, while your private cloud uses a third party solution, and everybody has an account for a selected password manager.
-By making sure that the teams standardize the interaction with these different solutions, they remain maintainable and usable in the eevent of an incident.
-Even when a company centralizes its secrets management to just one solution, you will still often have to secure the master secret of that secrets management solution in a secondary secrets management solution. For instance: a cloud provider its facilitiies can be used to store secrets, but then the root/master credentials of that cloud provider need to be stored somewher else.
+Secrets used by your DevOps teams for your applications might be consumed differently, then secrets stored by your marketeers or your SRE team. When consumers and/or producers of a secret are not catered to their needs, you often find the secret badly maintained within the organization. Therefore, it is key that you standardize and centralize the secrets management solution. This can still mean that you centralize to multiple secret management solutions. For instance: your cloud native development teams choose to use the solution provided by the cloud provider, while your private cloud uses a third party solution, and everybody has an account for a selected password manager.
+By making sure that the teams standardize the interaction with these different solutions, they remain maintainable and usable in the event of an incident.
+Even when a company centralizes its secrets management to just one solution, you will still often have to secure the master secret of that secrets management solution in a secondary secrets management solution. For instance: a cloud provider its facilities can be used to store secrets, but then the root/master credentials of that cloud provider need to be stored somewhere else.
 
-Standardization should at least include: secrets life cycle management, Authentication, Authorization, and Accounting of the secrets management solution, and life cycle management of the secrets management solution itself. Note that it should be immediately clear to an organization where a secret is used for and where to find it. The more places are used for secrets management, the more evident it is to have some documentation accross the various secret management solutions to identify which solution is responsible for which (group of) of secrets.
+Standardization should at least include: secrets life cycle management, Authentication, Authorization, and Accounting of the secrets management solution, and life cycle management of the secrets management solution itself. Note that it should be immediately clear to an organization where a secret is used for and where to find it. The more places are used for secrets management, the more evident it is to have some documentation across the various secret management solutions to identify which solution is responsible for which (group of) of secrets.
 
 ### 2.3 Fine Grained Access-Control List (ACL)
 
 The ability to configure access control on even the tiniest component of a system, such as an object in a data store, if required allows for granular access control. A secrets management solution should cater for this level of configuration.
 
-### 2.4 Remove Human Interaction
+### 2.4 Remove Human Interaction and Use Least Privilege
 
-Dynamic secrets are those that are generated for each request. When an application starts it could request it's database credentials, which when dynamically generated will be provided with new credentials for that session. Dynamic secrets should be used where possible to reduce the surface area of credential re-use. Should the application's database credentials be stolen, upon reboot they would be expired.
+When users can actually read the secret in a secret management system and/or update it, it means that the secret can now leak through that user, as well as through the system he used to touch the secret.
+Therefore, it is best that engineers do not have access to all secrets in the secrets management system.
+Manually maintenance does not only increase the risk of leakage, it introduces the risk of human errors while maintaining the secret. Furthermore, it can become wasteful.
+Therefore, it is better to limit or remove the human interaction with the actual secrets. This can be done in multiple ways:
 
-Manually maintaining configuration files and password changes can be wasteful. The use of dynamic secrets removes the need for human interaction.
+- having a secrets pipeline which does large parts of the secret management (E.g. creation, rotation, etc.)
+- Using dynamic secrets: these are generated for each request. When an application starts it could request it's database credentials, which when dynamically generated will be provided with new credentials for that session. Dynamic secrets should be used where possible to reduce the surface area of credential re-use. Should the application's database credentials be stolen, upon reboot they would be expired.
+- Using automation to rotate static secrets by other services and applications.
 
 ### 2.5 Auditing
 
-Auditing is an important role of secrets management due to the nature of the application. Auditing must be implemented in a secure way so as to be resilient against attempts to tamper with or delete the audit logs. At minimum the following should be audited:
+Auditing is an important role of secrets management due to the nature of the application. Auditing must be implemented in a secure way to be resilient against attempts to tamper with or delete the audit logs. At minimum the following should be audited:
 
 - Who requested a secret and for what system and role.
 - Whether the secret request was approved or rejected.
 - When the secret was used and by whom/source.
 - When the secret has expired.
-- If any attempts to re-use expired expired secrets have been made.
+- If any attempts to re-use expired secrets have been made.
 - If there have been any authentication or authorization errors.
 - When the secret was updated and by whom/what.
 - Any administrative actions and possible user activity on the underlying supporting infrastructure stack.
@@ -71,13 +76,13 @@ Secrets follow a lifecycle. The stages in the lifecycle are as follows:
 
 - Creation
 - Rotation
-- Deletion
+- Revocation
 
 #### 2.6.1 Creation
 
 New secrets must be securely generated and cryptographically robust enough for their purpose. Secrets must have the minimum privileges assigned to them to enable their requested use/role.
 
-Credentials should be transmitted in a secure manor, such that ideally the password would not be transmitted along with the username when requesting user accounts. Instead the password should be transmitted via a side-channel such as SMS.
+Credentials should be transmitted in a secure way, such that ideally the password would not be transmitted along with the username when requesting user accounts. Instead, the password should be transmitted via a side-channel such as SMS.
 
 Applications may not benefit from having multiple channels for communication and so credentials must be provisioned in a secure way.
 
@@ -85,69 +90,89 @@ Applications may not benefit from having multiple channels for communication and
 
 Secrets should be regularly rotated so that any stolen credentials will only work for a short period of time. This will also reduce the tendency for users to fall bac to bad-habits such as re-using credentials.
 
-#### 2.6.3 Deletion
+#### 2.6.3 Revocation
 
 When secrets are no longer required they must be securely revoked in order to restrict access. With certificates such as SSL certificates this also involves certificate revocation.
 
 #### 2.6.4 Lifespan
 
-Secrets should, where ever possible, always be created to expire after a defined time. This can either be an active expxiration by the secret consuming system, or an expiration date set at the secrets managemnet system, forcing supporting processes to be triggered resulting in a rotation of the secret.
-
+Secrets should, where ever possible, always be created to expire after a defined time. This can either be an active expiration by the secret consuming system, or an expiration date set at the secrets management system, forcing supporting processes to be triggered resulting in a rotation of the secret. 
 Policies should be applied by the secrets management solution to ensure credentials are only made available for a limited time that is appropriate for the type of credential.
 
 ### 2.7 Transport Layer Security (TLS) Everywhere
 
 It goes without saying that no secrets should ever be transmitted via plaintext. There is no excuse in this day and age given the ubiquitous adoption of SSL/TLS to not use encryption to protect the secrets in transit.
 
-Furthermore secrets management solutions can be used to effectively provision SSL certificates.
+Furthermore, secrets management solutions can be used to effectively provision SSL certificates.
 
 ### 2.8 Automate Key Rotation
 
-Key rotation is a challenging process when implemented manually, and can lead to mistakes. It is therefor highly recommended to automate the rotation of keys or at least ensure that the process is sufficiently supported by IT.
+Key rotation is a challenging process when implemented manually, and can lead to mistakes. It is therefore better to automate the rotation of keys or at least ensure that the process is sufficiently supported by IT.
 
 ### 2.9 Downtime, Break-glass, Backup and Restore
 
 Consideration must be made for the possibility that a secrets management service could become unavailable. This could be due to various reasons, such as scheduled down-time for maintenance. In that case it could be impossible to retrieve the credentials required to restore the service if they were not previously acquired. This means that possible downtime windows need to be chosen carefully based on earlier metrics and/or audit-logs. You can best give short downtime to the system at a time when its secrets are often not updated and/or retrieved.
 
-Next, the backup and restore procedures of the system should be regularely tested, and audited for their security. A few requirements regarding backup & restore. Ensure that:
+Next, the backup and restore procedures of the system should be regularly tested, and audited for their security. A few requirements regarding backup & restore. Ensure that:
 
 - An automated backup procedure is in place and executed periodically; the frequency of the backup/snapshot should be based on the amount of secrets, and their lifecycle;
 - Restore procedures are tested frequently, in order to guarantee that the backups are intact.
 - Backups are encrypted on a secure storage with reduced access rights. The backup location should be monitored for (unauthorized) access and administrative actions.
 
-LAst, should the system become unavailable due to other reasons than normal maintenance, emergency break-glass processes should be implemented to restore the service. Emergency break-glass credentials therefore should be regularly backed up in a secure fashion in a secondary secrets management system, and tested routinely to verify they work.
+Last, should the system become unavailable due to other reasons than normal maintenance, emergency break-glass processes should be implemented to restore the service. Emergency break-glass credentials therefore should be regularly backed up in a secure fashion in a secondary secrets management system, and tested routinely to verify they work.
 
 ### 2.10 Policies
 
-Policies defining the minimum complexity requirements of passwords, as well as approved encryption algorithms are typically set at an organisation-wide level and should be enforced consistently. The use of a centralised secrets management solution would help companies to enforce these policies.
+Policies defining the minimum complexity requirements of passwords, as well as approved encryption algorithms are typically set at an organisation-wide level and should be enforced consistently. The use of a centralised secrets management solution would help companies to enforce these policies.  
+
+Next to that, having an organization wide secrets management policy can help to enforce application of the best practices defined in this cheatsheet.
 
 ### 2.11 Metadata: prepare to move the secret
 
 A secret management solution should provide the capability to store at least the following metadata about a secret:
 
 - When it was created/consumed/archived/rotated/deleted
-- By whom it was created (E.g. both the actual producter, as well as the engineer using the production method)
+- By whom it was created (E.g. both the actual producer, and the engineer using the production method)
 - By what it was created
 - Who to contact when having trouble with the secret or having questions about it
 - For what the secret is used (E.g. designated intended consumers and purpose of the secret)
-- What tyep of secret it is (E.g. AES Key, HMAC key, RSA private key)
+- What type of secret it is (E.g. AES Key, HMAC key, RSA private key)
 - When it needs to be rotated, if done manually
 
 ## 3. Continuous Integration (CI) and Continuous Deployment (CD)
-The process of integrating features and deploying changes commonly requires secrets to several systems, such as version control.
+The process of building, testing and deploying changes generally requires access to many systems. Continuous Integration (CI) and Continuous Deployment (CD) tools typically store secrets themselves for providing configuration to the application or for during deployment. Alternatively, they interact heavily with the secrets management system.
 
-### 3.1. Build Tools    
+### 3.1. Hardening your CI/CD pipeline
 
-### 3.2. Rotation vs Dynamic Creation
+Given that the CI/CD tooling heavily consume secrets, it is key that the pipeline cannot be easily hacked or misused by employees. Here are a few guidelines which can help you:
 
-### 3.3. Identity Authentication
+- Thread your CI/CD tooling as a production environment: harden it, patch it and ensure that the underlying infrastructure and services are hardened.
+- Have Security Event Monitoring in place.
+- Implement least-privilege access: developers do not need to be able to administrate projects, instead they only need to be able to execute required functions, such as setting up pipelines, running them, and working with code. Administrative tasks can easily be done by means of configuration-as-code in a separate repository which is used by the CI/CD system to update its configuration. This way there is no need for privileged roles which might have access to secrets.
+- Make sure that pipelines their output does not leak secrets, nor that production pipelines can be debugged.
+- Make sure that any runners and/or workers for a CI/CD system cannot be exec'ed into.
+- Have proper authentication, authorization and accounting in place.
+- Make sure that pipelines can only be created by means of an approved process, including MR/PR steps to make sure that a created pipeline is security-reviewed.
+
+### 3.2. Where should a secret be?
+
+A pipeline should not store production secrets. Instead, it should only host temporal credentials (E.g. often rotated credentials) to the secret management-system. TODO: CONTINUE HERE!  
+
+
+### 3.3. Rotation vs Dynamic Creation
 
 ### 3.4. Deployment
 
+### 3.5. Pipeline Created Secrets
+
 ## 4. Cloud Providers
+<TODO; LET'S HAVE SOME CONTENT IN HIGHLIGHT/COMMENTS WHATWE WANT TO WRITE DOWN: ECAUSE CLOUD NATIVE SECRETS MANAGEMENT CAN HELP IF YOU HAVE A CLOUD NATIVE STRATEGY. LOCKIN IS AS DEEP AS YOU WANT IT TO BE WITH ANY SECRETS MANAGEMENT PROVIDER>
 
 ### 4.1. Vendor Lock-in
-"[Vendor lock-in](https://www.cloudflare.com/learning/cloud/what-is-vendor-lock-in/) refers to a situation where the cost of switching to a different vendor is so high that the customer is essentially stuck with the original vendor. Because of financial pressures, an insufficient workforce, or the need to avoid interruptions to business operations, the customer is "locked in" to what may be an inferior product or service." If secret generation and management is dependent on cloud provider then a user may face vendor lock-in situation.
+[comment]: TODO: REPLACE/REWRITE/REMOVE as agreed with @bendehaan
+"[Vendor lock-in](https://www.cloudflare.com/learning/cloud/what-is-vendor-lock-in/) refers to a situation where the cost of switching to a different vendor is so high that the customer is essentially stuck with the original vendor. Because of financial pressures, an insufficient workforce, or the need to avoid interruptions to business operations, the customer is "locked in" to what may be an inferior product or service." If a secret management solution is written in such a way that it is hard to discern which secrets are used for what, and secrets cannot be easily extracted, you end up with a vendor lockin. This can make it harder to find a better fit-for-purpose in the future.
+
+
 ### 4.2. Geo Restrictions
 
 ### 4.3. Latency
@@ -225,3 +250,4 @@ The process of integrating features and deploying changes commonly requires secr
 - [Cryptographic Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html)
 - [OWASP WrongSecrets project](https://github.com/commjoen/wrongsecrets/)
 - [Blog: 10 Pointers on Secrets Management](https://xebia.com/blog/secure-deployment-10-pointers-on-secrets-management/)
+- [Blog: From build to run: pointers on secure deployment](https://xebia.com/from-build-to-run-pointers-on-secure-deployment/)
