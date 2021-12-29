@@ -334,7 +334,7 @@ For more information on security context for Pods, refer to the documentation at
 
 A service mesh is an infrastructure layer for microservices applications that can help reduce the complexity of managing microservices and deployments by handling infrastructure service communication quickly, securely and reliably. Service meshes are great at solving operational challenges and issues when running containers and microservices because they provide a uniform way to secure, connect and monitor microservices. Service mesh provides the following advantages:
 
-#### Obeservability
+#### Observability
 
 Service Mesh provides tracing and telemetry metrics that make it easy to understand your system and quickly root cause any problems.
 
