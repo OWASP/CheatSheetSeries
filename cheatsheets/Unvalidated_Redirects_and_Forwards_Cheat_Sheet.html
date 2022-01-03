@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.3">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.4">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.edf004c2.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.bb3983ee.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.e6a45f82.min.css">
@@ -1625,7 +1625,7 @@
 <span class="cp">?&gt;</span><span class="x"></span>
 </code></pre></div>
 <p>ASP .NET</p>
-<div class="highlight"><pre><span></span><code><span class="n">Response</span><span class="p">.</span><span class="n">Redirect</span><span class="p">(</span><span class="s">&quot;~/folder/Login.aspx&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="n">Response</span><span class="p">.</span><span class="n">Redirect</span><span class="p">(</span><span class="s">&quot;~/folder/Login.aspx&quot;</span><span class="p">)</span><span class="w"></span>
 </code></pre></div>
 <p>Rails</p>
 <div class="highlight"><pre><span></span><code><span class="n">redirect_to</span> <span class="n">login_path</span>
@@ -1642,8 +1642,8 @@
 <span class="x">header(&quot;Location: &quot; . $redirect_url);</span>
 </code></pre></div>
 <p>A similar example of C# .NET Vulnerable Code:</p>
-<div class="highlight"><pre><span></span><code><span class="kt">string</span> <span class="n">url</span> <span class="p">=</span> <span class="n">request</span><span class="p">.</span><span class="n">QueryString</span><span class="p">[</span><span class="s">&quot;url&quot;</span><span class="p">];</span>
-<span class="n">Response</span><span class="p">.</span><span class="n">Redirect</span><span class="p">(</span><span class="n">url</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="kt">string</span><span class="w"> </span><span class="n">url</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="n">QueryString</span><span class="p">[</span><span class="s">&quot;url&quot;</span><span class="p">];</span><span class="w"></span>
+<span class="n">Response</span><span class="p">.</span><span class="n">Redirect</span><span class="p">(</span><span class="n">url</span><span class="p">);</span><span class="w"></span>
 </code></pre></div>
 <p>And in Rails:</p>
 <div class="highlight"><pre><span></span><code><span class="n">redirect_to</span> <span class="n">params</span><span class="o">[</span><span class="ss">:url</span><span class="o">]</span>
@@ -1657,32 +1657,32 @@
 <p><a href="https://docs.microsoft.com/en-us/aspnet/mvc/overview/security/preventing-open-redirection-attacks">ASP .NET MVC 1 &amp; 2 websites</a> are particularly vulnerable to open redirection attacks. In order to avoid this vulnerability, you need to apply MVC 3.</p>
 <p>The code for the LogOn action in an ASP.NET MVC 2 application is shown below. After a successful login, the controller returns a redirect to the returnUrl. You can see that no validation is being performed against the returnUrl parameter.</p>
 <p>ASP.NET MVC 2 LogOn action in <code>AccountController.cs</code> (see Microsoft Docs link provided above for the context):</p>
-<div class="highlight"><pre><span></span><code><span class="na">[HttpPost]</span>
- <span class="k">public</span> <span class="n">ActionResult</span> <span class="nf">LogOn</span><span class="p">(</span><span class="n">LogOnModel</span> <span class="n">model</span><span class="p">,</span> <span class="kt">string</span> <span class="n">returnUrl</span><span class="p">)</span>
- <span class="p">{</span>
-   <span class="k">if</span> <span class="p">(</span><span class="n">ModelState</span><span class="p">.</span><span class="n">IsValid</span><span class="p">)</span>
-   <span class="p">{</span>
-     <span class="k">if</span> <span class="p">(</span><span class="n">MembershipService</span><span class="p">.</span><span class="n">ValidateUser</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">UserName</span><span class="p">,</span> <span class="n">model</span><span class="p">.</span><span class="n">Password</span><span class="p">))</span>
-     <span class="p">{</span>
-       <span class="n">FormsService</span><span class="p">.</span><span class="n">SignIn</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">UserName</span><span class="p">,</span> <span class="n">model</span><span class="p">.</span><span class="n">RememberMe</span><span class="p">);</span>
-       <span class="k">if</span> <span class="p">(!</span><span class="n">String</span><span class="p">.</span><span class="n">IsNullOrEmpty</span><span class="p">(</span><span class="n">returnUrl</span><span class="p">))</span>
-       <span class="p">{</span>
-         <span class="k">return</span> <span class="nf">Redirect</span><span class="p">(</span><span class="n">returnUrl</span><span class="p">);</span>
-       <span class="p">}</span>
-       <span class="k">else</span>
-       <span class="p">{</span>
-         <span class="k">return</span> <span class="nf">RedirectToAction</span><span class="p">(</span><span class="s">&quot;Index&quot;</span><span class="p">,</span> <span class="s">&quot;Home&quot;</span><span class="p">);</span>
-       <span class="p">}</span>
-     <span class="p">}</span>
-     <span class="k">else</span>
-     <span class="p">{</span>
-       <span class="n">ModelState</span><span class="p">.</span><span class="n">AddModelError</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="s">&quot;The user name or password provided is incorrect.&quot;</span><span class="p">);</span>
-     <span class="p">}</span>
-   <span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="na">[HttpPost]</span><span class="w"></span>
+<span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">ActionResult</span><span class="w"> </span><span class="nf">LogOn</span><span class="p">(</span><span class="n">LogOnModel</span><span class="w"> </span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">returnUrl</span><span class="p">)</span><span class="w"></span>
+<span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ModelState</span><span class="p">.</span><span class="n">IsValid</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="p">{</span><span class="w"></span>
+<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">MembershipService</span><span class="p">.</span><span class="n">ValidateUser</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">UserName</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="n">Password</span><span class="p">))</span><span class="w"></span>
+<span class="w">     </span><span class="p">{</span><span class="w"></span>
+<span class="w">       </span><span class="n">FormsService</span><span class="p">.</span><span class="n">SignIn</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">UserName</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="n">RememberMe</span><span class="p">);</span><span class="w"></span>
+<span class="w">       </span><span class="k">if</span><span class="w"> </span><span class="p">(!</span><span class="n">String</span><span class="p">.</span><span class="n">IsNullOrEmpty</span><span class="p">(</span><span class="n">returnUrl</span><span class="p">))</span><span class="w"></span>
+<span class="w">       </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="k">return</span><span class="w"> </span><span class="nf">Redirect</span><span class="p">(</span><span class="n">returnUrl</span><span class="p">);</span><span class="w"></span>
+<span class="w">       </span><span class="p">}</span><span class="w"></span>
+<span class="w">       </span><span class="k">else</span><span class="w"></span>
+<span class="w">       </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="k">return</span><span class="w"> </span><span class="nf">RedirectToAction</span><span class="p">(</span><span class="s">&quot;Index&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Home&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">       </span><span class="p">}</span><span class="w"></span>
+<span class="w">     </span><span class="p">}</span><span class="w"></span>
+<span class="w">     </span><span class="k">else</span><span class="w"></span>
+<span class="w">     </span><span class="p">{</span><span class="w"></span>
+<span class="w">       </span><span class="n">ModelState</span><span class="p">.</span><span class="n">AddModelError</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;The user name or password provided is incorrect.&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">     </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
 
-   <span class="c1">// If we got this far, something failed, redisplay form</span>
-   <span class="k">return</span> <span class="nf">View</span><span class="p">(</span><span class="n">model</span><span class="p">);</span>
- <span class="p">}</span>
+<span class="w">   </span><span class="c1">// If we got this far, something failed, redisplay form</span>
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="nf">View</span><span class="p">(</span><span class="n">model</span><span class="p">);</span><span class="w"></span>
+<span class="w"> </span><span class="p">}</span><span class="w"></span>
 </code></pre></div>
 <h3 id="dangerous-forward-example">Dangerous Forward Example<a class="headerlink" href="#dangerous-forward-example" title="Permanent link">&para;</a></h3>
 <p>When applications allow user input to forward requests between different parts of the site, the application must check that the user is authorized to access the URL, perform the functions it provides, and it is an appropriate URL request.</p>
@@ -1806,10 +1806,10 @@
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.0bbba5b5.min.js"}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.361d90f1.min.js"}</script>
     
     
-      <script src="../assets/javascripts/bundle.e1a181d9.min.js"></script>
+      <script src="../assets/javascripts/bundle.289a2a4b.min.js"></script>
       
     
   </body>

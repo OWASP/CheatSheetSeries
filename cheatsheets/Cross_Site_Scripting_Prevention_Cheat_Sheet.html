@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.3">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.4">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.edf004c2.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.bb3983ee.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.e6a45f82.min.css">
@@ -1884,7 +1884,7 @@ tag anywhere, or an event handler attribute like onmouseover, or inside CSS, or 
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;...</span><span class="nx">NEVER</span> <span class="nx">PUT</span> <span class="nx">UNTRUSTED</span> <span class="nx">DATA</span> <span class="nx">HERE</span><span class="p">...&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
 <p>Inside an HTML comment:</p>
-<div class="highlight"><pre><span></span><code><span class="c">&lt;!--...NEVER PUT UNTRUSTED DATA HERE...--&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="cm">&lt;!--...NEVER PUT UNTRUSTED DATA HERE...--&gt;</span>
 </code></pre></div>
 <p>In an attribute name:</p>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">div</span> <span class="err">...</span><span class="na">NEVER</span> <span class="na">PUT</span> <span class="na">UNTRUSTED</span> <span class="na">DATA</span> <span class="na">HERE</span><span class="err">...=</span><span class="na">test</span> <span class="p">/&gt;</span>
@@ -1893,8 +1893,8 @@ tag anywhere, or an event handler attribute like onmouseover, or inside CSS, or 
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">NEVER</span> <span class="na">PUT</span> <span class="na">UNTRUSTED</span> <span class="na">DATA</span> <span class="na">HERE</span><span class="err">...</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;/test&quot;</span> <span class="p">/&gt;</span>
 </code></pre></div>
 <p>Directly in CSS:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
-<span class="o">..</span><span class="p">.</span><span class="nc">NEVER</span> <span class="nt">PUT</span> <span class="nt">UNTRUSTED</span> <span class="nt">DATA</span> <span class="nt">HERE</span><span class="o">...</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span><span class="w"></span>
+<span class="o">..</span><span class="p">.</span><span class="nc">NEVER</span><span class="w"> </span><span class="nt">PUT</span><span class="w"> </span><span class="nt">UNTRUSTED</span><span class="w"> </span><span class="nt">DATA</span><span class="w"> </span><span class="nt">HERE</span><span class="o">...</span><span class="w"></span>
 <span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
 </code></pre></div>
 <p>Most importantly, never accept actual JavaScript code from an untrusted source and then run it. For example, a parameter named "callback" that contains a JavaScript code snippet. No amount of encoding/escaping can fix that.</p>
@@ -2003,20 +2003,20 @@ Content-Type: application/json; charset=utf-8 &lt;--good
 <p>Rule #4 is for when you want to put untrusted data into a style sheet or a style tag. CSS is surprisingly powerful, and can be used for numerous attacks. Therefore, it's important that you only use untrusted data in a property <strong>value</strong> and not into other places in style data. You should stay away from putting untrusted data into complex properties like <code>url</code>, <code>behavior</code>, and custom (<code>-moz-binding</code>).</p>
 <p>You should also not put untrusted data into IE's expression property value which allows JavaScript.</p>
 <p>Property value:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
-<span class="nt">selector</span> <span class="p">{</span> <span class="n">property</span> <span class="p">:</span> <span class="o">...</span><span class="n">ENCODE</span> <span class="n">UNTRUSTED</span> <span class="n">DATA</span> <span class="n">BEFORE</span> <span class="n">PUTTING</span> <span class="n">HERE</span><span class="o">...</span><span class="p">;</span> <span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span><span class="w"></span>
+<span class="nt">selector</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">property</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="o">...</span><span class="n">ENCODE</span><span class="w"> </span><span class="n">UNTRUSTED</span><span class="w"> </span><span class="n">DATA</span><span class="w"> </span><span class="n">BEFORE</span><span class="w"> </span><span class="n">PUTTING</span><span class="w"> </span><span class="n">HERE</span><span class="o">...</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
 <span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
-<span class="nt">selector</span> <span class="p">{</span> <span class="n">property</span> <span class="p">:</span> <span class="s2">&quot;...ENCODE UNTRUSTED DATA BEFORE PUTTING HERE...&quot;</span><span class="p">;</span> <span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span><span class="w"></span>
+<span class="nt">selector</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">property</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;...ENCODE UNTRUSTED DATA BEFORE PUTTING HERE...&quot;</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
 <span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">span</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;property : ...ENCODE UNTRUSTED DATA BEFORE PUTTING HERE...&quot;</span><span class="p">&gt;</span>text<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
 </code></pre></div>
 <p>Please note there are some CSS contexts that can never safely use untrusted data as input - <strong>EVEN IF PROPERLY CSS ENCODED!</strong> You will have to ensure that URLs only start with <code>http</code> not <code>javascript</code> and that properties never start with "expression".</p>
 <p>For example:</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span> <span class="n">background-url</span> <span class="p">:</span> <span class="s2">&quot;javascript:alert(1)&quot;</span><span class="p">;</span> <span class="p">}</span>  <span class="o">//</span> <span class="nt">and</span> <span class="nt">all</span> <span class="nt">other</span> <span class="nt">URLs</span>
-<span class="p">{</span> <span class="n">text-size</span><span class="p">:</span> <span class="s2">&quot;expression(alert(&#39;XSS&#39;))&quot;</span><span class="p">;</span> <span class="p">}</span>   <span class="o">//</span> <span class="nt">only</span> <span class="nt">in</span> <span class="nt">IE</span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"> </span><span class="n">background-url</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;javascript:alert(1)&quot;</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="nt">and</span><span class="w"> </span><span class="nt">all</span><span class="w"> </span><span class="nt">other</span><span class="w"> </span><span class="nt">URLs</span><span class="w"></span>
+<span class="p">{</span><span class="w"> </span><span class="n">text-size</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;expression(alert(&#39;XSS&#39;))&quot;</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w">   </span><span class="o">//</span><span class="w"> </span><span class="nt">only</span><span class="w"> </span><span class="nt">in</span><span class="w"> </span><span class="nt">IE</span><span class="w"></span>
 </code></pre></div>
 <p>Except for alphanumeric characters, encode all characters with ASCII values less than 256 with the \HH encoding format. <strong>DO NOT</strong> use any escaping shortcuts like <code>\"</code> because the quote character may be matched by the HTML attribute parser which runs first. These escaping shortcuts are also susceptible to <strong>escape-the-escape attacks</strong> where the attacker sends <code>\"</code> and the vulnerable code turns that into <code>\\"</code> which enables the quote.</p>
 <p>If attribute is quoted, breaking out requires the corresponding quote. All attributes should be quoted but your encoding should be strong enough to prevent XSS when untrusted data is placed in unquoted contexts.</p>
@@ -2040,9 +2040,9 @@ Content-Type: application/json; charset=utf-8 &lt;--good
 <p>If your application handles markup -- untrusted input that is supposed to contain HTML -- it can be very difficult to validate. Encoding is also difficult, since it would break all the tags that are supposed to be in the input. Therefore, you need a library that can parse and clean HTML formatted text. There are several available at OWASP that are simple to use:</p>
 <p><strong><a href="https://github.com/mganss/HtmlSanitizer">HtmlSanitizer</a></strong></p>
 <p>An open-source .Net library. The HTML is cleaned with an "allow list" approach. All allowed tags and attributes can be configured. The library is unit tested with the OWASP <a href="https://owasp.org/www-community/xss-filter-evasion-cheatsheet">XSS Filter Evasion Cheat Sheet</a></p>
-<div class="highlight"><pre><span></span><code><span class="kt">var</span> <span class="n">sanitizer</span> <span class="p">=</span> <span class="k">new</span> <span class="n">HtmlSanitizer</span><span class="p">();</span>
-<span class="n">sanitizer</span><span class="p">.</span><span class="n">AllowedAttributes</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="s">&quot;class&quot;</span><span class="p">);</span>
-<span class="kt">var</span> <span class="n">sanitized</span> <span class="p">=</span> <span class="n">sanitizer</span><span class="p">.</span><span class="n">Sanitize</span><span class="p">(</span><span class="n">html</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="kt">var</span><span class="w"> </span><span class="n">sanitizer</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HtmlSanitizer</span><span class="p">();</span><span class="w"></span>
+<span class="n">sanitizer</span><span class="p">.</span><span class="n">AllowedAttributes</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="s">&quot;class&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="kt">var</span><span class="w"> </span><span class="n">sanitized</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">sanitizer</span><span class="p">.</span><span class="n">Sanitize</span><span class="p">(</span><span class="n">html</span><span class="p">);</span><span class="w"></span>
 </code></pre></div>
 <p><strong><a href="https://owasp.org/www-project-java-html-sanitizer/">OWASP Java HTML Sanitizer</a></strong></p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.owasp.html.Sanitizers</span><span class="p">;</span>
@@ -2306,10 +2306,10 @@ If you <strong>really</strong> have to use them remember that now all the data m
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.0bbba5b5.min.js"}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.361d90f1.min.js"}</script>
     
     
-      <script src="../assets/javascripts/bundle.e1a181d9.min.js"></script>
+      <script src="../assets/javascripts/bundle.289a2a4b.min.js"></script>
       
     
   </body>

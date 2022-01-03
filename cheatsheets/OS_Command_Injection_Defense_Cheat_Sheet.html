@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.3">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.4">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.edf004c2.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.bb3983ee.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.e6a45f82.min.css">
@@ -1890,35 +1890,35 @@ ERROR :
 </code></pre></div>
 <h3 id="net">.Net<a class="headerlink" href="#net" title="Permanent link">&para;</a></h3>
 <p>In .Net use <a href="https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.process.start?view=netframework-4.7.2">System.Diagnostics.Process.Start</a> to call underlying OS functions.</p>
-<div class="highlight"><pre><span></span><code><span class="kt">var</span> <span class="n">process</span> <span class="p">=</span> <span class="k">new</span> <span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">Process</span><span class="p">();</span>
+<div class="highlight"><pre><span></span><code><span class="kt">var</span><span class="w"> </span><span class="n">process</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">Process</span><span class="p">();</span><span class="w"></span>
 
-<span class="kt">var</span> <span class="n">startInfo</span> <span class="p">=</span> <span class="k">new</span> <span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">ProcessStartInfo</span><span class="p">();</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">startInfo</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">ProcessStartInfo</span><span class="p">();</span><span class="w"></span>
 
-<span class="n">startInfo</span><span class="p">.</span><span class="n">FileName</span> <span class="p">=</span> <span class="s">&quot;validatedCommand&quot;</span><span class="p">;</span>
+<span class="n">startInfo</span><span class="p">.</span><span class="n">FileName</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;validatedCommand&quot;</span><span class="p">;</span><span class="w"></span>
 
-<span class="n">startInfo</span><span class="p">.</span><span class="n">Arguments</span> <span class="p">=</span> <span class="s">&quot;validatedArg1 validatedArg2 validatedArg3&quot;</span><span class="p">;</span>
+<span class="n">startInfo</span><span class="p">.</span><span class="n">Arguments</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;validatedArg1 validatedArg2 validatedArg3&quot;</span><span class="p">;</span><span class="w"></span>
 
-<span class="n">process</span><span class="p">.</span><span class="n">StartInfo</span> <span class="p">=</span> <span class="n">startInfo</span><span class="p">;</span>
+<span class="n">process</span><span class="p">.</span><span class="n">StartInfo</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">startInfo</span><span class="p">;</span><span class="w"></span>
 
-<span class="n">process</span><span class="p">.</span><span class="n">Start</span><span class="p">();</span>
+<span class="n">process</span><span class="p">.</span><span class="n">Start</span><span class="p">();</span><span class="w"></span>
 </code></pre></div>
 <p>Where input validation cannot be relied upon, arguments can be made safe by escaping double quotes within the arguments and then surrounding each argument with double quotes.</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// This list will contain the arguments which we want to escape before </span>
 <span class="c1">// passing to the function</span>
-<span class="kt">var</span> <span class="n">arguments</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;(){</span><span class="s">&quot;Arg1&quot;</span><span class="p">,</span> <span class="s">&quot;Arg\&quot;2&amp;|&quot;</span><span class="p">,</span> <span class="s">&quot;\&quot;Arg3\&quot;&quot;</span><span class="p">};</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">arguments</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">List</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;(){</span><span class="s">&quot;Arg1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Arg\&quot;2&amp;|&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\&quot;Arg3\&quot;&quot;</span><span class="p">};</span><span class="w"></span>
 
 <span class="c1">// Escaping Stage 1: All &quot; (double quote) characters within the arguments </span>
 <span class="c1">// are doubled to escape them on the command line so they will only ever </span>
 <span class="c1">// be interpreted as data and not as anargument separator</span>
-<span class="n">arguments</span> <span class="p">=</span> <span class="n">arguments</span><span class="p">.</span><span class="n">ConvertAll</span><span class="p">(</span><span class="n">s</span> <span class="p">=&gt;</span> <span class="n">s</span><span class="p">.</span><span class="n">Replace</span><span class="p">(</span><span class="s">&quot;\&quot;&quot;</span><span class="p">,</span> <span class="s">&quot;\&quot;\&quot;&quot;</span><span class="p">));</span>
+<span class="n">arguments</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">arguments</span><span class="p">.</span><span class="n">ConvertAll</span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">Replace</span><span class="p">(</span><span class="s">&quot;\&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\&quot;\&quot;&quot;</span><span class="p">));</span><span class="w"></span>
 
 <span class="c1">// Escaping Stage 2: The arguments should be surrounded by &quot; (double quote) </span>
 <span class="c1">// characters to ensure that the data in the arguments cannot break out of</span>
 <span class="c1">// the current argument</span>
-<span class="n">arguments</span> <span class="p">=</span> <span class="n">arguments</span><span class="p">.</span><span class="n">ConvertAll</span><span class="p">(</span><span class="n">s</span> <span class="p">=&gt;</span> <span class="s">$&quot;\&quot;{s}\&quot;&quot;</span><span class="p">);</span>
+<span class="n">arguments</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">arguments</span><span class="p">.</span><span class="n">ConvertAll</span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="s">$&quot;\&quot;{s}\&quot;&quot;</span><span class="p">);</span><span class="w"></span>
 
 <span class="c1">// Pass the escaped arguments to the &quot;ProcessStartInfo&quot; object</span>
-<span class="n">process</span><span class="p">.</span><span class="n">Arguments</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Join</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">,</span> <span class="n">arguments</span><span class="p">);</span>
+<span class="n">process</span><span class="p">.</span><span class="n">Arguments</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="kt">string</span><span class="p">.</span><span class="n">Join</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">arguments</span><span class="p">);</span><span class="w"></span>
 </code></pre></div>
 <h3 id="php">PHP<a class="headerlink" href="#php" title="Permanent link">&para;</a></h3>
 <p>In PHP use <a href="https://www.php.net/manual/en/function.escapeshellarg.php">escapeshellarg()</a> or <a href="https://www.php.net/manual/en/function.escapeshellcmd.php">escapeshellcmd()</a> rather than <a href="https://www.php.net/manual/en/function.exec.php">exec()</a>, <a href="https://www.php.net/manual/en/function.system.php">system()</a>, <a href="https://www.php.net/manual/en/function.passthru.php">passthru()</a>.</p>
@@ -2012,10 +2012,10 @@ ERROR :
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.0bbba5b5.min.js"}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.361d90f1.min.js"}</script>
     
     
-      <script src="../assets/javascripts/bundle.e1a181d9.min.js"></script>
+      <script src="../assets/javascripts/bundle.289a2a4b.min.js"></script>
       
     
   </body>

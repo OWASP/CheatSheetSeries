@@ -17,7 +17,7 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Testing_Automation_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.3">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.4">
     
     
       
@@ -25,7 +25,7 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.edf004c2.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.bb3983ee.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.e6a45f82.min.css">
@@ -1631,22 +1631,22 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
 <p>Placeholders (values between {}) are used to mark location where test value must be placed by the integration tests if needed</p>
 </blockquote>
 <div class="highlight"><pre><span></span><code>  <span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-  <span class="c">&lt;!--</span>
-<span class="c">      This file materializes the authorization matrix for the different</span>
-<span class="c">      services exposed by the system.</span>
+  <span class="cm">&lt;!--</span>
+<span class="cm">      This file materializes the authorization matrix for the different</span>
+<span class="cm">      services exposed by the system.</span>
 
-<span class="c">      It will be used by the tests as a input source for the different tests cases:</span>
-<span class="c">      1) Evaluate legitimate access and its correct implementation</span>
-<span class="c">      2) Identify not legitimate access (authorization definition issue</span>
-<span class="c">      on service implementation)</span>
+<span class="cm">      It will be used by the tests as a input source for the different tests cases:</span>
+<span class="cm">      1) Evaluate legitimate access and its correct implementation</span>
+<span class="cm">      2) Identify not legitimate access (authorization definition issue</span>
+<span class="cm">      on service implementation)</span>
 
-<span class="c">      The &quot;name&quot; attribute is used to uniquely identify a SERVICE or a ROLE.</span>
-<span class="c">  --&gt;</span>
+<span class="cm">      The &quot;name&quot; attribute is used to uniquely identify a SERVICE or a ROLE.</span>
+<span class="cm">  --&gt;</span>
   <span class="nt">&lt;authorization-matrix&gt;</span>
 
-      <span class="c">&lt;!-- Describe the possible logical roles used in the system, is used here to</span>
-<span class="c">      provide a list+explanation</span>
-<span class="c">      of the different roles (authorization level) --&gt;</span>
+      <span class="cm">&lt;!-- Describe the possible logical roles used in the system, is used here to</span>
+<span class="cm">      provide a list+explanation</span>
+<span class="cm">      of the different roles (authorization level) --&gt;</span>
       <span class="nt">&lt;roles&gt;</span>
           <span class="nt">&lt;role</span> <span class="na">name=</span><span class="s">&quot;ANONYMOUS&quot;</span>
           <span class="na">description=</span><span class="s">&quot;Indicate that no authorization is needed&quot;</span><span class="nt">/&gt;</span>
@@ -1656,8 +1656,8 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
           <span class="na">description=</span><span class="s">&quot;Role affecting an administrator user (highest access right)&quot;</span><span class="nt">/&gt;</span>
       <span class="nt">&lt;/roles&gt;</span>
 
-      <span class="c">&lt;!-- List and describe the available services exposed by the system and the associated</span>
-<span class="c">      logical role(s) that can call them --&gt;</span>
+      <span class="cm">&lt;!-- List and describe the available services exposed by the system and the associated</span>
+<span class="cm">      logical role(s) that can call them --&gt;</span>
       <span class="nt">&lt;services&gt;</span>
           <span class="nt">&lt;service</span> <span class="na">name=</span><span class="s">&quot;ReadSingleMessage&quot;</span> <span class="na">uri=</span><span class="s">&quot;/{messageId}&quot;</span> <span class="na">http-method=</span><span class="s">&quot;GET&quot;</span>
           <span class="na">http-response-code-for-access-allowed=</span><span class="s">&quot;200&quot;</span> <span class="na">http-response-code-for-access-denied=</span><span class="s">&quot;403&quot;</span><span class="nt">&gt;</span>
@@ -1682,7 +1682,7 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
           <span class="nt">&lt;/service&gt;</span>
       <span class="nt">&lt;/services&gt;</span>
 
-      <span class="c">&lt;!-- Provide a test payload for each service if needed --&gt;</span>
+      <span class="cm">&lt;!-- Provide a test payload for each service if needed --&gt;</span>
       <span class="nt">&lt;services-testing&gt;</span>
           <span class="nt">&lt;service</span> <span class="na">name=</span><span class="s">&quot;ReadSingleMessage&quot;</span><span class="nt">&gt;</span>
               <span class="nt">&lt;payload/&gt;</span>
@@ -2141,10 +2141,10 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.0bbba5b5.min.js"}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.361d90f1.min.js"}</script>
     
     
-      <script src="../assets/javascripts/bundle.e1a181d9.min.js"></script>
+      <script src="../assets/javascripts/bundle.289a2a4b.min.js"></script>
       
     
   </body>

@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Laravel_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.3">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.4">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.edf004c2.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.bb3983ee.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.e6a45f82.min.css">
@@ -1866,7 +1866,7 @@
 <ul>
 <li>Make sure your app is not in debug mode while in production. To turn off debug mode, set your <code>APP_DEBUG</code> environment variable to <code>false</code>:</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="na">APP_DEBUG</span><span class="o">=</span><span class="s">false</span>
+<div class="highlight"><pre><span></span><code><span class="na">APP_DEBUG</span><span class="o">=</span><span class="s">false</span><span class="w"></span>
 </code></pre></div>
 <ul>
 <li>Make sure your application key has been generated. Laravel applications use the app key for symmetric encryption and SHA256 hashes such as cookie encryption, signed URLs, password reset tokens and session data encryption. To generate the app key, you may run the <code>key:generate</code> Artisan command:</li>
@@ -1978,7 +1978,7 @@
 <span class="x">User::where(&#39;email&#39;, $email)-&gt;get();</span>
 </code></pre></div>
 <p>The code above fires the query below:</p>
-<div class="highlight"><pre><span></span><code><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="o">`</span><span class="n">users</span><span class="o">`</span> <span class="k">where</span> <span class="o">`</span><span class="n">email</span><span class="o">`</span> <span class="o">=</span> <span class="o">?</span>
+<div class="highlight"><pre><span></span><code><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="o">`</span><span class="n">users</span><span class="o">`</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="o">`</span><span class="n">email</span><span class="o">`</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span><span class="w"></span>
 </code></pre></div>
 <p>So, even if <code>$email</code> is untrusted user input data, you are protected from SQL injection attacks.</p>
 <h3 id="raw-query-sql-injection">Raw Query SQL Injection<a class="headerlink" href="#raw-query-sql-injection" title="Permanent link">&para;</a></h3>
@@ -1992,7 +1992,7 @@
 </code></pre></div>
 <p>Both lines of code actually execute the same query, which is vulnerable to SQL injection as the query does not use SQL bindings for untrusted user input data.</p>
 <p>The code above fires the following query:</p>
-<div class="highlight"><pre><span></span><code><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="o">`</span><span class="n">users</span><span class="o">`</span> <span class="k">where</span> <span class="o">`</span><span class="n">email</span><span class="o">`</span> <span class="o">=</span> <span class="ss">&quot;value of email query parameter&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="o">`</span><span class="n">users</span><span class="o">`</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="o">`</span><span class="n">email</span><span class="o">`</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;value of email query parameter&quot;</span><span class="w"></span>
 </code></pre></div>
 <p>Always remember to use SQL bindings for request data. We can fix the above code by making the following modification:</p>
 <div class="highlight"><pre><span></span><code><span class="x">use App\Models\User;</span>
@@ -2120,7 +2120,7 @@
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">form</span> <span class="na">method</span><span class="o">=</span><span class="s">&quot;POST&quot;</span> <span class="na">action</span><span class="o">=</span><span class="s">&quot;/profile&quot;</span><span class="p">&gt;</span>
     @csrf
 
-    <span class="c">&lt;!-- Equivalent to... --&gt;</span>
+    <span class="cm">&lt;!-- Equivalent to... --&gt;</span>
     <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;hidden&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;_token&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;{{ csrf_token() }}&quot;</span> <span class="p">/&gt;</span>
 <span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
 </code></pre></div>
@@ -2233,10 +2233,10 @@
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.0bbba5b5.min.js"}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.361d90f1.min.js"}</script>
     
     
-      <script src="../assets/javascripts/bundle.e1a181d9.min.js"></script>
+      <script src="../assets/javascripts/bundle.289a2a4b.min.js"></script>
       
     
   </body>

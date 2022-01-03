@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.3">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.4">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.edf004c2.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.bb3983ee.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.e6a45f82.min.css">
@@ -2611,19 +2611,19 @@ For made safe from between attack types follow <a href="http://msdn.microsoft.co
 <h3 id="xmldocument">XmlDocument<a class="headerlink" href="#xmldocument" title="Permanent link">&para;</a></h3>
 <p>Prior to .NET Framework version 4.5.2, <code>System.Xml.XmlDocument</code> is <strong>unsafe</strong> by default. The <code>XmlDocument</code> object has an <code>XmlResolver</code> object within it that needs to be set to null in versions prior to 4.5.2. In versions 4.5.2 and up, this <code>XmlResolver</code> is set to null by default.</p>
 <p>The following example shows how it is made safe:</p>
-<div class="highlight"><pre><span></span><code> <span class="k">static</span> <span class="k">void</span> <span class="nf">LoadXML</span><span class="p">()</span>
- <span class="p">{</span>
-   <span class="kt">string</span> <span class="n">xxePayload</span> <span class="p">=</span> <span class="s">&quot;&lt;!DOCTYPE doc [&lt;!ENTITY win SYSTEM &#39;file:///C:/Users/testdata2.txt&#39;&gt;]&gt;&quot;</span>
-                     <span class="p">+</span> <span class="s">&quot;&lt;doc&gt;&amp;win;&lt;/doc&gt;&quot;</span><span class="p">;</span>
-   <span class="kt">string</span> <span class="n">xml</span> <span class="p">=</span> <span class="s">&quot;&lt;?xml version=&#39;1.0&#39; ?&gt;&quot;</span> <span class="p">+</span> <span class="n">xxePayload</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">LoadXML</span><span class="p">()</span><span class="w"></span>
+<span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="kt">string</span><span class="w"> </span><span class="n">xxePayload</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;&lt;!DOCTYPE doc [&lt;!ENTITY win SYSTEM &#39;file:///C:/Users/testdata2.txt&#39;&gt;]&gt;&quot;</span><span class="w"></span>
+<span class="w">                     </span><span class="p">+</span><span class="w"> </span><span class="s">&quot;&lt;doc&gt;&amp;win;&lt;/doc&gt;&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="kt">string</span><span class="w"> </span><span class="n">xml</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;&lt;?xml version=&#39;1.0&#39; ?&gt;&quot;</span><span class="w"> </span><span class="p">+</span><span class="w"> </span><span class="n">xxePayload</span><span class="p">;</span><span class="w"></span>
 
-   <span class="n">XmlDocument</span> <span class="n">xmlDoc</span> <span class="p">=</span> <span class="k">new</span> <span class="n">XmlDocument</span><span class="p">();</span>
-   <span class="c1">// Setting this to NULL disables DTDs - Its NOT null by default.</span>
-   <span class="n">xmlDoc</span><span class="p">.</span><span class="n">XmlResolver</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
-   <span class="n">xmlDoc</span><span class="p">.</span><span class="n">LoadXml</span><span class="p">(</span><span class="n">xml</span><span class="p">);</span>
-   <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">xmlDoc</span><span class="p">.</span><span class="n">InnerText</span><span class="p">);</span>
-   <span class="n">Console</span><span class="p">.</span><span class="n">ReadLine</span><span class="p">();</span>
- <span class="p">}</span>
+<span class="w">   </span><span class="n">XmlDocument</span><span class="w"> </span><span class="n">xmlDoc</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">XmlDocument</span><span class="p">();</span><span class="w"></span>
+<span class="w">   </span><span class="c1">// Setting this to NULL disables DTDs - Its NOT null by default.</span>
+<span class="w">   </span><span class="n">xmlDoc</span><span class="p">.</span><span class="n">XmlResolver</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">null</span><span class="p">;</span><span class="w"></span>
+<span class="w">   </span><span class="n">xmlDoc</span><span class="p">.</span><span class="n">LoadXml</span><span class="p">(</span><span class="n">xml</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">xmlDoc</span><span class="p">.</span><span class="n">InnerText</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">Console</span><span class="p">.</span><span class="n">ReadLine</span><span class="p">();</span><span class="w"></span>
+<span class="w"> </span><span class="p">}</span><span class="w"></span>
 </code></pre></div>
 <p><code>XmlDocument</code> can become unsafe if you create your own nonnull <code>XmlResolver</code> with default or unsafe settings. If you need to enable DTD processing, instructions on how to do so safely are described in detail in the <a href="https://msdn.microsoft.com/en-us/magazine/ee335713.aspx">referenced MSDN article</a>.</p>
 <h3 id="xmlnodereader">XmlNodeReader<a class="headerlink" href="#xmlnodereader" title="Permanent link">&para;</a></h3>
@@ -2638,18 +2638,18 @@ For made safe from between attack types follow <a href="http://msdn.microsoft.co
 <h4 id="prior-to-net-40">Prior to .NET 4.0<a class="headerlink" href="#prior-to-net-40" title="Permanent link">&para;</a></h4>
 <p>In .NET Framework versions prior to 4.0, DTD parsing behavior for <code>XmlReader</code> objects like <code>XmlTextReader</code> are controlled by the Boolean <code>ProhibitDtd</code> property found in the <code>System.Xml.XmlReaderSettings</code> and <code>System.Xml.XmlTextReader</code> classes.</p>
 <p>Set these values to true to disable inline DTDs completely.</p>
-<div class="highlight"><pre><span></span><code><span class="n">XmlTextReader</span> <span class="n">reader</span> <span class="p">=</span> <span class="k">new</span> <span class="n">XmlTextReader</span><span class="p">(</span><span class="n">stream</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="n">XmlTextReader</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">XmlTextReader</span><span class="p">(</span><span class="n">stream</span><span class="p">);</span><span class="w"></span>
 <span class="c1">// NEEDED because the default is FALSE!!</span>
-<span class="n">reader</span><span class="p">.</span><span class="n">ProhibitDtd</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>  
+<span class="n">reader</span><span class="p">.</span><span class="n">ProhibitDtd</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span><span class="w">  </span>
 </code></pre></div>
 <h4 id="net-40-net-452">.NET 4.0 - .NET 4.5.2<a class="headerlink" href="#net-40-net-452" title="Permanent link">&para;</a></h4>
 <p>In .NET Framework version 4.0, DTD parsing behavior has been changed. The <code>ProhibitDtd</code> property has been deprecated in favor of the new <code>DtdProcessing</code> property.</p>
 <p>However, they didn't change the default settings so <code>XmlTextReader</code> is still vulnerable to XXE by default.</p>
 <p>Setting <code>DtdProcessing</code> to <code>Prohibit</code> causes the runtime to throw an exception if a <code>&lt;!DOCTYPE&gt;</code> element is present in the XML.</p>
 <p>To set this value yourself, it looks like this:</p>
-<div class="highlight"><pre><span></span><code><span class="n">XmlTextReader</span> <span class="n">reader</span> <span class="p">=</span> <span class="k">new</span> <span class="n">XmlTextReader</span><span class="p">(</span><span class="n">stream</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="n">XmlTextReader</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">XmlTextReader</span><span class="p">(</span><span class="n">stream</span><span class="p">);</span><span class="w"></span>
 <span class="c1">// NEEDED because the default is Parse!!</span>
-<span class="n">reader</span><span class="p">.</span><span class="n">DtdProcessing</span> <span class="p">=</span> <span class="n">DtdProcessing</span><span class="p">.</span><span class="n">Prohibit</span><span class="p">;</span>  
+<span class="n">reader</span><span class="p">.</span><span class="n">DtdProcessing</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">DtdProcessing</span><span class="p">.</span><span class="n">Prohibit</span><span class="p">;</span><span class="w">  </span>
 </code></pre></div>
 <p>Alternatively, you can set the <code>DtdProcessing</code> property to <code>Ignore</code>, which will not throw an exception on encountering a <code>&lt;!DOCTYPE&gt;</code> element but will simply skip over it and not process it. Finally, you can set <code>DtdProcessing</code> to <code>Parse</code> if you do want to allow and process inline DTDs.</p>
 <h4 id="net-452-and-later">.NET 4.5.2 and later<a class="headerlink" href="#net-452-and-later" title="Permanent link">&para;</a></h4>
@@ -2659,10 +2659,10 @@ For made safe from between attack types follow <a href="http://msdn.microsoft.co
 <p>This is due to the fact that it implements <code>IXPathNavigable</code> objects like <code>XmlDocument</code>, which are also unsafe by default in versions prior to 4.5.2.</p>
 <p>You can make <code>XPathNavigator</code> safe by giving it a safe parser like <code>XmlReader</code> (which is safe by default) in the <code>XPathDocument</code>'s constructor.</p>
 <p>Here is an example:</p>
-<div class="highlight"><pre><span></span><code><span class="n">XmlReader</span> <span class="n">reader</span> <span class="p">=</span> <span class="n">XmlReader</span><span class="p">.</span><span class="n">Create</span><span class="p">(</span><span class="s">&quot;example.xml&quot;</span><span class="p">);</span>
-<span class="n">XPathDocument</span> <span class="n">doc</span> <span class="p">=</span> <span class="k">new</span> <span class="n">XPathDocument</span><span class="p">(</span><span class="n">reader</span><span class="p">);</span>
-<span class="n">XPathNavigator</span> <span class="n">nav</span> <span class="p">=</span> <span class="n">doc</span><span class="p">.</span><span class="n">CreateNavigator</span><span class="p">();</span>
-<span class="kt">string</span> <span class="n">xml</span> <span class="p">=</span> <span class="n">nav</span><span class="p">.</span><span class="n">InnerXml</span><span class="p">.</span><span class="n">ToString</span><span class="p">();</span>
+<div class="highlight"><pre><span></span><code><span class="n">XmlReader</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">XmlReader</span><span class="p">.</span><span class="n">Create</span><span class="p">(</span><span class="s">&quot;example.xml&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="n">XPathDocument</span><span class="w"> </span><span class="n">doc</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">XPathDocument</span><span class="p">(</span><span class="n">reader</span><span class="p">);</span><span class="w"></span>
+<span class="n">XPathNavigator</span><span class="w"> </span><span class="n">nav</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">doc</span><span class="p">.</span><span class="n">CreateNavigator</span><span class="p">();</span><span class="w"></span>
+<span class="kt">string</span><span class="w"> </span><span class="n">xml</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">nav</span><span class="p">.</span><span class="n">InnerXml</span><span class="p">.</span><span class="n">ToString</span><span class="p">();</span><span class="w"></span>
 </code></pre></div>
 <h3 id="xslcompiledtransform">XslCompiledTransform<a class="headerlink" href="#xslcompiledtransform" title="Permanent link">&para;</a></h3>
 <p><code>System.Xml.Xsl.XslCompiledTransform</code> (an XML transformer) is safe by default as long as the parser it's given is safe.</p>
@@ -2849,10 +2849,10 @@ Rule can be played here <a href="https://semgrep.dev/s/salecharohit:xxe-XMLReade
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.0bbba5b5.min.js"}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.361d90f1.min.js"}</script>
     
     
-      <script src="../assets/javascripts/bundle.e1a181d9.min.js"></script>
+      <script src="../assets/javascripts/bundle.289a2a4b.min.js"></script>
       
     
   </body>

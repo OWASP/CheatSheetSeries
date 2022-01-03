@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/AJAX_Security_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.3">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.4">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.edf004c2.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.bb3983ee.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.e6a45f82.min.css">
@@ -1839,13 +1839,13 @@
 <h5 id="always-return-json-with-an-object-on-the-outside">Always return JSON with an Object on the outside<a class="headerlink" href="#always-return-json-with-an-object-on-the-outside" title="Permanent link">&para;</a></h5>
 <p>Always have the outside primitive be an object for JSON strings:</p>
 <p><strong>Exploitable:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="p">[{</span><span class="nt">&quot;object&quot;</span><span class="p">:</span> <span class="s2">&quot;inside an array&quot;</span><span class="p">}]</span>
+<div class="highlight"><pre><span></span><code><span class="p">[{</span><span class="nt">&quot;object&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inside an array&quot;</span><span class="p">}]</span><span class="w"></span>
 </code></pre></div>
 <p><strong>Not exploitable:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;object&quot;</span><span class="p">:</span> <span class="s2">&quot;not inside an array&quot;</span><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;object&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;not inside an array&quot;</span><span class="p">}</span><span class="w"></span>
 </code></pre></div>
 <p><strong>Also not exploitable:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;result&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="nt">&quot;object&quot;</span><span class="p">:</span> <span class="s2">&quot;inside an array&quot;</span><span class="p">}]}</span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;result&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;object&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inside an array&quot;</span><span class="p">}]}</span><span class="w"></span>
 </code></pre></div>
 <h4 id="avoid-writing-serialization-code-server-side">Avoid writing serialization code Server Side<a class="headerlink" href="#avoid-writing-serialization-code-server-side" title="Permanent link">&para;</a></h4>
 <p>Remember ref vs. value types! Look for an existing library that has been reviewed.</p>
@@ -1925,10 +1925,10 @@
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.0bbba5b5.min.js"}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.361d90f1.min.js"}</script>
     
     
-      <script src="../assets/javascripts/bundle.e1a181d9.min.js"></script>
+      <script src="../assets/javascripts/bundle.289a2a4b.min.js"></script>
       
     
   </body>

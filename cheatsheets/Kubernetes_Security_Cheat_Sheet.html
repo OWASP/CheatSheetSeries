@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Kubernetes_Security_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.3">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.4">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.edf004c2.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.bb3983ee.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.e6a45f82.min.css">
@@ -2941,19 +2941,19 @@ Learn more about webhook at <a href="https://kubernetes.io/docs/reference/access
 </tbody>
 </table>
 <p>Here is an example for pod definition with security context parameters:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">v1</span>  
-<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Pod</span>  
-<span class="nt">metadata</span><span class="p">:</span>  
-  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">hello-world</span>  
-<span class="nt">spec</span><span class="p">:</span>  
-  <span class="nt">containers</span><span class="p">:</span>  
-  <span class="c1"># specification of the pod’s containers  </span>
-  <span class="c1"># ...</span>
-  <span class="c1"># ...</span>
-  <span class="c1"># Security Context</span>
-  <span class="nt">securityContext</span><span class="p">:</span>  
-    <span class="nt">readOnlyRootFilesystem</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>  
-    <span class="nt">runAsNonRoot</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span><span class="w">  </span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Pod</span><span class="w">  </span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w">  </span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hello-world</span><span class="w">  </span>
+<span class="nt">spec</span><span class="p">:</span><span class="w">  </span>
+<span class="w">  </span><span class="nt">containers</span><span class="p">:</span><span class="w">  </span>
+<span class="w">  </span><span class="c1"># specification of the pod’s containers  </span><span class="w"></span>
+<span class="w">  </span><span class="c1"># ...</span><span class="w"></span>
+<span class="w">  </span><span class="c1"># ...</span><span class="w"></span>
+<span class="w">  </span><span class="c1"># Security Context</span><span class="w"></span>
+<span class="w">  </span><span class="nt">securityContext</span><span class="p">:</span><span class="w">  </span>
+<span class="w">    </span><span class="nt">readOnlyRootFilesystem</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">  </span>
+<span class="w">    </span><span class="nt">runAsNonRoot</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
 </code></pre></div>
 <p>For more information on security context for Pods, refer to the documentation at <a href="https://kubernetes.io/docs/tasks/configure-pod-container/security-context">https://kubernetes.io/docs/tasks/configure-pod-container/security-context</a></p>
 <h3 id="implement-service-mesh">Implement Service Mesh<a class="headerlink" href="#implement-service-mesh" title="Permanent link">&para;</a></h3>
@@ -3011,17 +3011,17 @@ Service mesh adds a layer of security that allows you to monitor and address com
 <p>An option of running resource-unbound containers puts your system in risk of DoS or “noisy neighbor” scenarios. To prevent and minimize those risks you should define resource quotas. By default, all resources in Kubernetes cluster are created with unbounded CPU and memory requests/limits. You can create resource quota policies, attached to Kubernetes namespace, in order to limit the CPU and memory a pod is allowed to consume.</p>
 <p>The following is an example for namespace resource quota definition that will limit number of pods in the namespace to 4, limiting their CPU requests between 1 and 2 and memory requests between 1GB to 2GB.</p>
 <p>compute-resources.yaml:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">v1</span>  
-<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ResourceQuota</span>  
-<span class="nt">metadata</span><span class="p">:</span>  
-  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">compute-resources</span>  
-<span class="nt">spec</span><span class="p">:</span>  
-  <span class="nt">hard</span><span class="p">:</span>  
-    <span class="nt">pods</span><span class="p">:</span> <span class="s">&quot;4&quot;</span>  
-    <span class="nt">requests.cpu</span><span class="p">:</span> <span class="s">&quot;1&quot;</span>  
-    <span class="nt">requests.memory</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1Gi</span>  
-    <span class="nt">limits.cpu</span><span class="p">:</span> <span class="s">&quot;2&quot;</span>  
-    <span class="nt">limits.memory</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2Gi</span>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span><span class="w">  </span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ResourceQuota</span><span class="w">  </span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w">  </span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">compute-resources</span><span class="w">  </span>
+<span class="nt">spec</span><span class="p">:</span><span class="w">  </span>
+<span class="w">  </span><span class="nt">hard</span><span class="p">:</span><span class="w">  </span>
+<span class="w">    </span><span class="nt">pods</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;4&quot;</span><span class="w">  </span>
+<span class="w">    </span><span class="nt">requests.cpu</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="w">  </span>
+<span class="w">    </span><span class="nt">requests.memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1Gi</span><span class="w">  </span>
+<span class="w">    </span><span class="nt">limits.cpu</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2&quot;</span><span class="w">  </span>
+<span class="w">    </span><span class="nt">limits.memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2Gi</span><span class="w"></span>
 </code></pre></div>
 <p>Assign a resource quota to namespace:</p>
 <div class="highlight"><pre><span></span><code>kubectl create -f ./compute-resources.yaml --namespace<span class="o">=</span>myspace
@@ -3032,27 +3032,27 @@ Service mesh adds a layer of security that allows you to monitor and address com
 <p>Network segmentation policies are a key security control that can prevent lateral movement across containers in the case that an attacker breaks in. One of the challenges in Kubernetes deployments is creating network segmentation between pods, services and containers. This is a challenge due to the “dynamic” nature of container network identities (IPs), along with the fact that containers can communicate both inside the same node or between nodes.</p>
 <p>Users of Google Cloud Platform can benefit from automatic firewall rules, preventing cross-cluster communication. A similar implementation can be deployed on-premises using network firewalls or SDN solutions. There is work being done in this area by the Kubernetes Network SIG, which will greatly improve the pod-to-pod communication policies. A new network policy API should address the need to create firewall rules around pods, limiting the network access that a containerized can have.</p>
 <p>The following is an example of a network policy that controls the network for “backend” pods, only allowing inbound network access from “frontend” pods:</p>
-<div class="highlight"><pre><span></span><code><span class="err">POST</span> <span class="err">/apis/</span><span class="kc">net</span><span class="err">.alpha.kuber</span><span class="kc">netes</span><span class="err">.io/v</span><span class="mi">1</span><span class="err">alpha</span><span class="mi">1</span><span class="err">/</span><span class="kc">na</span><span class="err">mespaces/</span><span class="kc">tenant</span><span class="mi">-</span><span class="err">a/</span><span class="kc">net</span><span class="err">workpolicys</span>  
-<span class="p">{</span>  
-  <span class="nt">&quot;kind&quot;</span><span class="p">:</span> <span class="s2">&quot;NetworkPolicy&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;metadata&quot;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;pol1&quot;</span>
-  <span class="p">},</span>
-  <span class="nt">&quot;spec&quot;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="nt">&quot;allowIncoming&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="nt">&quot;from&quot;</span><span class="p">:</span> <span class="p">[{</span>
-        <span class="nt">&quot;pods&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;segment&quot;</span><span class="p">:</span> <span class="s2">&quot;frontend&quot;</span> <span class="p">}</span>
-      <span class="p">}],</span>
-      <span class="nt">&quot;toPorts&quot;</span><span class="p">:</span> <span class="p">[{</span>
-        <span class="nt">&quot;port&quot;</span><span class="p">:</span> <span class="mi">80</span><span class="p">,</span>
-        <span class="nt">&quot;protocol&quot;</span><span class="p">:</span> <span class="s2">&quot;TCP&quot;</span>
-      <span class="p">}]</span>
-    <span class="p">},</span>
-    <span class="nt">&quot;podSelector&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="nt">&quot;segment&quot;</span><span class="p">:</span> <span class="s2">&quot;backend&quot;</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="err">POST</span><span class="w"> </span><span class="err">/apis/</span><span class="kc">net</span><span class="err">.alpha.kuber</span><span class="kc">netes</span><span class="err">.io/v</span><span class="mi">1</span><span class="err">alpha</span><span class="mi">1</span><span class="err">/</span><span class="kc">na</span><span class="err">mespaces/</span><span class="kc">tenant</span><span class="mi">-</span><span class="err">a/</span><span class="kc">net</span><span class="err">workpolicys</span><span class="w">  </span>
+<span class="p">{</span><span class="w">  </span>
+<span class="w">  </span><span class="nt">&quot;kind&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;NetworkPolicy&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;metadata&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;pol1&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="p">},</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;spec&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;allowIncoming&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;from&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;pods&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;segment&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;frontend&quot;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="p">}],</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;toPorts&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;port&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">80</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nt">&quot;protocol&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TCP&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p">}]</span><span class="w"></span>
+<span class="w">    </span><span class="p">},</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;podSelector&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;segment&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;backend&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div>
 <p>For more information on configuring network policies, refer to the Kubernetes documentation at <a href="https://kubernetes.io/docs/concepts/services-networking/network-policies">https://kubernetes.io/docs/concepts/services-networking/network-policies</a>.</p>
 <h3 id="securing-data">Securing data<a class="headerlink" href="#securing-data" title="Permanent link">&para;</a></h3>
@@ -3136,29 +3136,29 @@ blacklist sctp
 <h5 id="audit-logs">Audit logs<a class="headerlink" href="#audit-logs" title="Permanent link">&para;</a></h5>
 <p>Audit logs can be useful for compliance as they should help you answer the questions of what happened, who did what and when. Kubernetes provides flexible auditing of kube-apiserver requests based on policies. These help you track all activities in chronological order.</p>
 <p>Here is an example of an audit log:</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-  <span class="nt">&quot;kind&quot;</span><span class="p">:</span><span class="s2">&quot;Event&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;apiVersion&quot;</span><span class="p">:</span><span class="s2">&quot;audit.k8s.io/v1beta1&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;metadata&quot;</span><span class="p">:{</span> <span class="nt">&quot;creationTimestamp&quot;</span><span class="p">:</span><span class="s2">&quot;2019-08-22T12:00:00Z&quot;</span> <span class="p">},</span>
-  <span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="s2">&quot;Metadata&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="s2">&quot;2019-08-22T12:00:00Z&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;auditID&quot;</span><span class="p">:</span><span class="s2">&quot;23bc44ds-2452-242g-fsf2-4242fe3ggfes&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;stage&quot;</span><span class="p">:</span><span class="s2">&quot;RequestReceived&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;requestURI&quot;</span><span class="p">:</span><span class="s2">&quot;/api/v1/namespaces/default/persistentvolumeclaims&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;verb&quot;</span><span class="p">:</span><span class="s2">&quot;list&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;user&quot;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="nt">&quot;username&quot;</span><span class="p">:</span><span class="s2">&quot;user@example.org&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;groups&quot;</span><span class="p">:[</span> <span class="s2">&quot;system:authenticated&quot;</span> <span class="p">]</span>
-  <span class="p">},</span>
-  <span class="nt">&quot;sourceIPs&quot;</span><span class="p">:[</span> <span class="s2">&quot;172.12.56.1&quot;</span> <span class="p">],</span>
-  <span class="nt">&quot;objectRef&quot;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="nt">&quot;resource&quot;</span><span class="p">:</span><span class="s2">&quot;persistentvolumeclaims&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;namespace&quot;</span><span class="p">:</span><span class="s2">&quot;default&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;apiVersion&quot;</span><span class="p">:</span><span class="s2">&quot;v1&quot;</span>
-  <span class="p">},</span>
-  <span class="nt">&quot;requestReceivedTimestamp&quot;</span><span class="p">:</span><span class="s2">&quot;2019-08-22T12:00:00Z&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;stageTimestamp&quot;</span><span class="p">:</span><span class="s2">&quot;2019-08-22T12:00:00Z&quot;</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;kind&quot;</span><span class="p">:</span><span class="s2">&quot;Event&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;apiVersion&quot;</span><span class="p">:</span><span class="s2">&quot;audit.k8s.io/v1beta1&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;metadata&quot;</span><span class="p">:{</span><span class="w"> </span><span class="nt">&quot;creationTimestamp&quot;</span><span class="p">:</span><span class="s2">&quot;2019-08-22T12:00:00Z&quot;</span><span class="w"> </span><span class="p">},</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="s2">&quot;Metadata&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="s2">&quot;2019-08-22T12:00:00Z&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;auditID&quot;</span><span class="p">:</span><span class="s2">&quot;23bc44ds-2452-242g-fsf2-4242fe3ggfes&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;stage&quot;</span><span class="p">:</span><span class="s2">&quot;RequestReceived&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;requestURI&quot;</span><span class="p">:</span><span class="s2">&quot;/api/v1/namespaces/default/persistentvolumeclaims&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;verb&quot;</span><span class="p">:</span><span class="s2">&quot;list&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;user&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;username&quot;</span><span class="p">:</span><span class="s2">&quot;user@example.org&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;groups&quot;</span><span class="p">:[</span><span class="w"> </span><span class="s2">&quot;system:authenticated&quot;</span><span class="w"> </span><span class="p">]</span><span class="w"></span>
+<span class="w">  </span><span class="p">},</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;sourceIPs&quot;</span><span class="p">:[</span><span class="w"> </span><span class="s2">&quot;172.12.56.1&quot;</span><span class="w"> </span><span class="p">],</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;objectRef&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;resource&quot;</span><span class="p">:</span><span class="s2">&quot;persistentvolumeclaims&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;namespace&quot;</span><span class="p">:</span><span class="s2">&quot;default&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;apiVersion&quot;</span><span class="p">:</span><span class="s2">&quot;v1&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="p">},</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;requestReceivedTimestamp&quot;</span><span class="p">:</span><span class="s2">&quot;2019-08-22T12:00:00Z&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;stageTimestamp&quot;</span><span class="p">:</span><span class="s2">&quot;2019-08-22T12:00:00Z&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div>
 <h4 id="define-audit-policies">Define Audit Policies<a class="headerlink" href="#define-audit-policies" title="Permanent link">&para;</a></h4>
 <p>Audit policy defines rules about what events should be recorded and what data they should include. The audit policy object structure is defined in the audit.k8s.io API group. When an event is processed, it's compared against the list of rules in order. The first matching rule sets the "audit level" of the event.</p>
@@ -3178,15 +3178,15 @@ blacklist sctp
 <li>The easiest method for logging containers is to write to the standard output (stdout) and standard error (stderr) streams.</li>
 </ul>
 <p>Manifest is as follows.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">v1</span>
-<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Pod</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">example</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="nt">containers</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">example</span>
-<span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">busybox</span>
-<span class="nt">args</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">/bin/sh</span><span class="p p-Indicator">,</span> <span class="nv">-c</span><span class="p p-Indicator">,</span> <span class="s">&#39;while</span><span class="nv"> </span><span class="s">true;</span><span class="nv"> </span><span class="s">do</span><span class="nv"> </span><span class="s">echo</span><span class="nv"> </span><span class="s">$(date);</span><span class="nv"> </span><span class="s">sleep</span><span class="nv"> </span><span class="s">1;</span><span class="nv"> </span><span class="s">done&#39;</span><span class="p p-Indicator">]</span>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span><span class="w"></span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Pod</span><span class="w"></span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example</span><span class="w"></span>
+<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
+<span class="nt">containers</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example</span><span class="w"></span>
+<span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">busybox</span><span class="w"></span>
+<span class="nt">args</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">/bin/sh</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">-c</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;while</span><span class="nv"> </span><span class="s">true;</span><span class="nv"> </span><span class="s">do</span><span class="nv"> </span><span class="s">echo</span><span class="nv"> </span><span class="s">$(date);</span><span class="nv"> </span><span class="s">sleep</span><span class="nv"> </span><span class="s">1;</span><span class="nv"> </span><span class="s">done&#39;</span><span class="p p-Indicator">]</span><span class="w"></span>
 </code></pre></div>
 <p>To apply the manifest, run:</p>
 <div class="highlight"><pre><span></span><code>kubectl apply -f example.yaml
@@ -3198,35 +3198,35 @@ blacklist sctp
 <li>For persisting container logs, the common approach is to write logs to a log file and then use a sidecar container. As shown below in the pod configuration above, a sidecar container will run in the same pod along with the application container, mounting the same volume and processing the logs separately.</li>
 </ul>
 <p>Pod Manifest is as follows:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">v1</span>
-<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Pod</span>
-<span class="nt">metadata</span><span class="p">:</span>
-  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">example</span>
-<span class="nt">spec</span><span class="p">:</span>
-  <span class="nt">containers</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">example</span>
-    <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">busybox</span>
-    <span class="nt">args</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">/bin/sh</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">-c</span>
-    <span class="p p-Indicator">-</span> <span class="p p-Indicator">&gt;</span>
-      <span class="no">while true;</span>
-      <span class="no">do</span>
-        <span class="no">echo &quot;$(date)\n&quot; &gt;&gt; /var/log/example.log;</span>
-        <span class="no">sleep 1;</span>
-      <span class="no">done</span>
-    <span class="nt">volumeMounts</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">varlog</span>
-      <span class="nt">mountPath</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/var/log</span>
-  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sidecar</span>
-    <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">busybox</span>
-    <span class="nt">args</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">/bin/sh</span><span class="p p-Indicator">,</span> <span class="nv">-c</span><span class="p p-Indicator">,</span> <span class="s">&#39;tail</span><span class="nv"> </span><span class="s">-f</span><span class="nv"> </span><span class="s">/var/log/example.log&#39;</span><span class="p p-Indicator">]</span>
-    <span class="nt">volumeMounts</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">varlog</span>
-      <span class="nt">mountPath</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/var/log</span>
-  <span class="nt">volumes</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">varlog</span>
-    <span class="nt">emptyDir</span><span class="p">:</span> <span class="p p-Indicator">{}</span>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span><span class="w"></span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Pod</span><span class="w"></span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example</span><span class="w"></span>
+<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">containers</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example</span><span class="w"></span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">busybox</span><span class="w"></span>
+<span class="w">    </span><span class="nt">args</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/bin/sh</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-c</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">&gt;</span><span class="w"></span>
+<span class="w">      </span><span class="no">while true;</span><span class="w"></span>
+<span class="w">      </span><span class="no">do</span><span class="w"></span>
+<span class="w">        </span><span class="no">echo &quot;$(date)\n&quot; &gt;&gt; /var/log/example.log;</span><span class="w"></span>
+<span class="w">        </span><span class="no">sleep 1;</span><span class="w"></span>
+<span class="w">      </span><span class="no">done</span><span class="w"></span>
+<span class="w">    </span><span class="nt">volumeMounts</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">varlog</span><span class="w"></span>
+<span class="w">      </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/log</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sidecar</span><span class="w"></span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">busybox</span><span class="w"></span>
+<span class="w">    </span><span class="nt">args</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">/bin/sh</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">-c</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;tail</span><span class="nv"> </span><span class="s">-f</span><span class="nv"> </span><span class="s">/var/log/example.log&#39;</span><span class="p p-Indicator">]</span><span class="w"></span>
+<span class="w">    </span><span class="nt">volumeMounts</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">varlog</span><span class="w"></span>
+<span class="w">      </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/log</span><span class="w"></span>
+<span class="w">  </span><span class="nt">volumes</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">varlog</span><span class="w"></span>
+<span class="w">    </span><span class="nt">emptyDir</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"></span>
 </code></pre></div>
 <h5 id="node-logging">Node logging<a class="headerlink" href="#node-logging" title="Permanent link">&para;</a></h5>
 <p>When a container running on Kubernetes writes its logs to stdout or stderr streams, the container engine streams them to the logging driver configured in Kubernetes.</p>
@@ -3362,10 +3362,10 @@ Events:
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.0bbba5b5.min.js"}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.361d90f1.min.js"}</script>
     
     
-      <script src="../assets/javascripts/bundle.e1a181d9.min.js"></script>
+      <script src="../assets/javascripts/bundle.289a2a4b.min.js"></script>
       
     
   </body>
