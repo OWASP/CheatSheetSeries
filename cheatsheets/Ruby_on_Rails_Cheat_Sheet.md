@@ -38,7 +38,7 @@ The statement is injectable because the name parameter is not escaped.
 Here is the idiom for building this kind of statement:
 
 ``` ruby
-@projects = Project.where("name like ?", "%#{params[:name]}%")
+@projects = Project.where("name like ?", "%#{ActiveRecord::Base.sanitize_sql_like(params[:name])}%")
 ```
 
 Use caution not to build SQL statements based on user controlled input. A list of more realistic and detailed examples is here: [rails-sqli.org](https://rails-sqli.org). OWASP has extensive information about [SQL Injection](https://owasp.org/www-community/attacks/SQL_Injection).
