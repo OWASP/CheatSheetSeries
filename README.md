@@ -5,9 +5,9 @@
 
 Welcome to the official repository for the Open Web Application Security Project® (OWASP) Cheat Sheet Series project. The project focuses on providing good security practices for builders in order to secure their applications.
 
-In order to read the cheat sheets and **reference** them, use the project's [official website](https://cheatsheetseries.owasp.org). The project details can be viewed on the [OWASP main website](https://owasp.org/www-project-cheat-sheets/) without the cheat sheets.
+In order to read the cheat sheets and **reference** them, use the project [official website](https://cheatsheetseries.owasp.org). The project details can be viewed on the [OWASP main website](https://owasp.org/www-project-cheat-sheets/) without the cheat sheets.
 
-:triangular_flag_on_post: Markdown files are the working sources and are not intended to be referenced in any external documentation, books or websites.
+:triangular_flag_on_post: Markdown files are the working sources and aren't intended to be referenced in any external documentation, books or websites.
 
 ## Cheat Sheet Series Team
 
@@ -20,7 +20,7 @@ In order to read the cheat sheets and **reference** them, use the project's [off
 
 We're easy to find on Slack:
 
-1. Join the OWASP Group Slack with this [invitation link](https://owasp-slack.herokuapp.com/).
+1. Join the OWASP Group Slack with this [invitation link](https://owasp.org/slack/invite).
 2. Join the [#cheatsheets channel](https://owasp.slack.com/messages/C073YNUQG).
 
 Feel free to ask questions, suggest ideas, or share your best recipes.

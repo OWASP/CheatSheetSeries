@@ -334,7 +334,7 @@ For more information on security context for Pods, refer to the documentation at
 
 A service mesh is an infrastructure layer for microservices applications that can help reduce the complexity of managing microservices and deployments by handling infrastructure service communication quickly, securely and reliably. Service meshes are great at solving operational challenges and issues when running containers and microservices because they provide a uniform way to secure, connect and monitor microservices. Service mesh provides the following advantages:
 
-#### Obeservability
+#### Observability
 
 Service Mesh provides tracing and telemetry metrics that make it easy to understand your system and quickly root cause any problems.
 
@@ -789,3 +789,4 @@ Master documentation - <https://kubernetes.io>
 15. Introducing Policy As Code: The Open Policy Agent (OPA) - <https://www.magalix.com/blog/introducing-policy-as-code-the-open-policy-agent-opa>
 16. What service mesh provides - <https://aspenmesh.io/what-service-mesh-provides>
 17. Three Technical Benefits of Service Meshes and their Operational Limitations, Part 1 - <https://glasnostic.com/blog/service-mesh-istio-limits-and-benefits-part-1>
+18. Open Policy Agent: What Is OPA and How It Works (Examples) - <https://spacelift.io/blog/what-is-open-policy-agent-and-how-it-works>

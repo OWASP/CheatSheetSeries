@@ -35,7 +35,7 @@ A *data flow diagram* is a depiction of how information flows through your syste
 
 A *trust boundary* (in the context of threat modeling) is a location on the data flow diagram where data changes its level of trust. Any place where data is passed between two processes is typically a trust boundary. If your application reads a file from disk, there's a trust boundary between the application and the file because outside processes and users can modify the data in the file. If your application makes a call to a remote process, or a remote process makes calls to your application, that's a trust boundary. If you read data from a database, there's typically a trust boundary because other processes can modify the data in the database. Any place you accept user input in any form is always a trust boundary.
 
-In addition to the above terminologies, it is important to be familiar with the key threat modeling principles defined in the [Threat Modeling Manifesto](https://www.threatmodelingmanifesto.org)project. Those principles are considered throughout the following steps in this cheat sheet.
+In addition to the above terminologies, it is important to be familiar with the key threat modeling principles defined in the [Threat Modeling Manifesto](https://www.threatmodelingmanifesto.org) project. Those principles are considered throughout the following steps in this cheat sheet.
 
 ## Getting Started
 
@@ -216,7 +216,7 @@ During this phase conduct the following activities:
 
 ### Mapping Abuse Cases to Use Cases
 
-This is a very important step that can help identifying application logical threats. list of all possible abuse cases should be developed for each application use case. Being familiar with the types of application logical attack is an important during the mapping process. You can refer to OWASP Testing Guide 4.0: Business Logic Testing and OWASP ASVS for more details.
+This is a very important step that can help identifying application logical threats. List of all possible abuse cases should be developed for each application use case. Being familiar with the types of application logical attack is an important during the mapping process. You can refer to OWASP Testing Guide 4.0: Business Logic Testing and OWASP ASVS for more details.
 
 ### Re-Define attack vectors
 

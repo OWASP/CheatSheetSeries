@@ -197,6 +197,8 @@ Search for content with the following text:
 
 #### General Precautions
 
+Microsoft has stated that the `BinaryFormatter` type is dangerous and cannot be secured. As such, it should not be used. Full details are in the [BinaryFormatter security guide](https://docs.microsoft.com/en-us/dotnet/standard/serialization/binaryformatter-security-guide).
+
 Don't allow the datastream to define the type of object that the stream will be deserialized to. You can prevent this by for example using the `DataContractSerializer` or `XmlSerializer` if at all possible.
 
 Where `JSON.Net` is being used make sure the `TypeNameHandling` is only set to `None`.
@@ -240,7 +242,7 @@ if (suspectObject is SomeDangerousObjectType)
 }
 ```
 
-For `BinaryFormatter` and `JSON.Net` it is possible to create a safer form of allow-list control using a custom `SerializationBinder`.
+For `JSON.Net` it is possible to create a safer form of allow-list control using a custom `SerializationBinder`.
 
 Try to keep up-to-date on known .Net insecure deserialization gadgets and pay special attention where such types can be created by your deserialization processes. **A deserializer can only instantiate types that it knows about**.
 

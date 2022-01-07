@@ -56,6 +56,13 @@ Where possible, the user-supplied password should be compared to the stored pass
 - Explicitly sets the type of both variable, to protect against type confusion attacks such as [Magic Hashes](https://www.whitehatsec.com/blog/magic-hashes/) in PHP.
 - Returns in constant time, to protect against timing attacks.
 
+### Change Password Feature
+
+When developing change password feature, ensure to have:
+
+- User is authenticated with active session.
+- Current password verification. This is to ensure that it's the legitimate user who is changing the password. The abuse case is this: a legitimate user is using public computer to login. This user forgets to logout. Then another user is using this public computer. If we don't verify current password, this another user able to change the password.
+
 ### Transmit Passwords Only Over TLS or Other Strong Transport
 
 See: [Transport Layer Protection Cheat Sheet](Transport_Layer_Protection_Cheat_Sheet.md)

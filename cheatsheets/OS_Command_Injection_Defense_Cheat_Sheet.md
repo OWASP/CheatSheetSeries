@@ -186,9 +186,9 @@ Process p = pb.start();
 In .Net use [System.Diagnostics.Process.Start](https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.process.start?view=netframework-4.7.2) to call underlying OS functions.
 
 ``` csharp
-System.Diagnostics.Process process = new System.Diagnostics.Process();
+var process = new System.Diagnostics.Process();
 
-System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+var startInfo = new System.Diagnostics.ProcessStartInfo();
 
 startInfo.FileName = "validatedCommand";
 
@@ -197,6 +197,27 @@ startInfo.Arguments = "validatedArg1 validatedArg2 validatedArg3";
 process.StartInfo = startInfo;
 
 process.Start();
+```
+
+Where input validation cannot be relied upon, arguments can be made safe by escaping double quotes within the arguments and then surrounding each argument with double quotes.
+
+``` csharp
+// This list will contain the arguments which we want to escape before 
+// passing to the function
+var arguments = new List<string>(){"Arg1", "Arg\"2&|", "\"Arg3\""};
+
+// Escaping Stage 1: All " (double quote) characters within the arguments 
+// are doubled to escape them on the command line so they will only ever 
+// be interpreted as data and not as anargument separator
+arguments = arguments.ConvertAll(s => s.Replace("\"", "\"\""));
+
+// Escaping Stage 2: The arguments should be surrounded by " (double quote) 
+// characters to ensure that the data in the arguments cannot break out of
+// the current argument
+arguments = arguments.ConvertAll(s => $"\"{s}\"");
+
+// Pass the escaped arguments to the "ProcessStartInfo" object
+process.Arguments = string.Join(" ", arguments);
 ```
 
 ### PHP
