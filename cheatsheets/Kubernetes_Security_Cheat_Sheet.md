@@ -789,3 +789,4 @@ Master documentation - <https://kubernetes.io>
 15. Introducing Policy As Code: The Open Policy Agent (OPA) - <https://www.magalix.com/blog/introducing-policy-as-code-the-open-policy-agent-opa>
 16. What service mesh provides - <https://aspenmesh.io/what-service-mesh-provides>
 17. Three Technical Benefits of Service Meshes and their Operational Limitations, Part 1 - <https://glasnostic.com/blog/service-mesh-istio-limits-and-benefits-part-1>
+18. Open Policy Agent: What Is OPA and How It Works (Examples) - <https://spacelift.io/blog/what-is-open-policy-agent-and-how-it-works>
