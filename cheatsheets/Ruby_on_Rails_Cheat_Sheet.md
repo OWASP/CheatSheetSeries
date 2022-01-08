@@ -17,7 +17,17 @@ eval("ruby code here")
 system("os command here")
 `ls -al /` # (backticks contain os command)
 exec("os command here")
+spawn("os command here")
 open("\| os command here")
+Process.exec("os command here")
+Process.spawn("os command here")
+IO.binread("| os command here")
+IO.binwrite("| os command here", "foo")
+IO.foreach("| os command here") {}
+IO.popen("os command here")
+IO.read("| os command here")
+IO.readlines("| os command here")
+IO.write("| os command here", "foo")
 ```
 
 While the power of these commands is quite useful, extreme care should be taken when using them in a Rails based application. Usually, its just a bad idea. If need be, an allow-list of possible values should be used and any input should be validated as thoroughly as possible.
