@@ -18,7 +18,7 @@ system("os command here")
 `ls -al /` # (backticks contain os command)
 exec("os command here")
 spawn("os command here")
-open("\| os command here")
+open("| os command here")
 Process.exec("os command here")
 Process.spawn("os command here")
 IO.binread("| os command here")
@@ -183,7 +183,7 @@ And configure the required password complexity:
 
 ``` ruby
 # in config/initializers/devise.rb
-Devise.setup do \|config\|
+Devise.setup do |config|
   # zxcvbn score for devise
   config.min_password_score = 4 # complexity score here.
   ...
