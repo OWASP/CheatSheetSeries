@@ -41,7 +41,7 @@ Consider the following points and best practices:
 Permission should be validated correctly on every request, regardless of whether the request was initiated by an AJAX script, server-side, or any other source. The technology used to perform such checks should allow for global, application-wide configuration rather than needing to be applied individually to every method or class. Remember an attacker only needs to find one way in. Even if just a single access control check is "missed", the confidentiality and/or integrity of a resource can be jeopardized. Validating permissions correctly on just the majority of requests is insufficient. Specific technologies that can help developers in performing such consistent permission checks include the following:
 
 - [Java/Jakarta EE Filters](https://jakarta.ee/specifications/platform/8/apidocs/javax/servlet/Filter.html) including implementations in [Spring Security](https://docs.spring.io/spring-security/site/docs/5.4.0/reference/html5/#servlet-security-filters)
-- [Middleware in the Django Framework](https://docs.djangoproject.com/en/4.0/topics/http/middleware/)
+- [Middleware in the Django Framework](https://docs.djangoproject.com/en/4.0/ref/middleware/)
 - [.NET Core Filters](https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/filters?view=aspnetcore-3.1#authorization-filters)
 - [Middleware in the Laravel PHP Framework](https://laravel.com/docs/8.x/middleware)
 
