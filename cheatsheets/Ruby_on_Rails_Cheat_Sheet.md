@@ -106,7 +106,7 @@ link_to "Personal Website", 'javascript:alert(1);'.html_safe()
 # "<a href="javascript:alert(1);">Personal Website</a>"
 ```
 
-Using [Content Security](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) Policy is one more security measure to forbid execution for links starting with `javascript:` .
+Using [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) is one more security measure to forbid execution for links starting with `javascript:` .
 
 [Brakeman scanner](https://github.com/presidentbeef/brakeman) helps in finding XSS problems in Rails apps.
 
