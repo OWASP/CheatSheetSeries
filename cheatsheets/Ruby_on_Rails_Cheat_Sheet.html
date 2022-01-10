@@ -17,7 +17,7 @@ redirect_from: "/cheatsheets/Ruby_on_Rails_Cheatsheet.html"
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Ruby_on_Rails_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.4">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.5">
     
     
       
@@ -25,7 +25,7 @@ redirect_from: "/cheatsheets/Ruby_on_Rails_Cheatsheet.html"
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.bb3983ee.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.ee0f47ba.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.e6a45f82.min.css">
@@ -1790,7 +1790,17 @@ redirect_from: "/cheatsheets/Ruby_on_Rails_Cheatsheet.html"
 <span class="nb">system</span><span class="p">(</span><span class="s2">&quot;os command here&quot;</span><span class="p">)</span>
 <span class="sb">`ls -al /`</span> <span class="c1"># (backticks contain os command)</span>
 <span class="nb">exec</span><span class="p">(</span><span class="s2">&quot;os command here&quot;</span><span class="p">)</span>
-<span class="nb">open</span><span class="p">(</span><span class="s2">&quot;\| os command here&quot;</span><span class="p">)</span>
+<span class="n">spawn</span><span class="p">(</span><span class="s2">&quot;os command here&quot;</span><span class="p">)</span>
+<span class="nb">open</span><span class="p">(</span><span class="s2">&quot;| os command here&quot;</span><span class="p">)</span>
+<span class="no">Process</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s2">&quot;os command here&quot;</span><span class="p">)</span>
+<span class="no">Process</span><span class="o">.</span><span class="n">spawn</span><span class="p">(</span><span class="s2">&quot;os command here&quot;</span><span class="p">)</span>
+<span class="no">IO</span><span class="o">.</span><span class="n">binread</span><span class="p">(</span><span class="s2">&quot;| os command here&quot;</span><span class="p">)</span>
+<span class="no">IO</span><span class="o">.</span><span class="n">binwrite</span><span class="p">(</span><span class="s2">&quot;| os command here&quot;</span><span class="p">,</span> <span class="s2">&quot;foo&quot;</span><span class="p">)</span>
+<span class="no">IO</span><span class="o">.</span><span class="n">foreach</span><span class="p">(</span><span class="s2">&quot;| os command here&quot;</span><span class="p">)</span> <span class="p">{}</span>
+<span class="no">IO</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="s2">&quot;os command here&quot;</span><span class="p">)</span>
+<span class="no">IO</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s2">&quot;| os command here&quot;</span><span class="p">)</span>
+<span class="no">IO</span><span class="o">.</span><span class="n">readlines</span><span class="p">(</span><span class="s2">&quot;| os command here&quot;</span><span class="p">)</span>
+<span class="no">IO</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;| os command here&quot;</span><span class="p">,</span> <span class="s2">&quot;foo&quot;</span><span class="p">)</span>
 </code></pre></div>
 <p>While the power of these commands is quite useful, extreme care should be taken when using them in a Rails based application. Usually, its just a bad idea. If need be, an allow-list of possible values should be used and any input should be validated as thoroughly as possible.</p>
 <p>The guides from <a href="https://guides.rubyonrails.org/security.html#command-line-injection">Rails</a> and <a href="https://owasp.org/www-community/attacks/Command_Injection">OWASP</a> contain further information on command injection.</p>
@@ -1884,7 +1894,7 @@ redirect_from: "/cheatsheets/Ruby_on_Rails_Cheatsheet.html"
 </code></pre></div>
 <p>And configure the required password complexity:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># in config/initializers/devise.rb</span>
-<span class="no">Devise</span><span class="o">.</span><span class="n">setup</span> <span class="k">do</span> <span class="p">\</span><span class="o">|</span><span class="n">config</span><span class="p">\</span><span class="o">|</span>
+<span class="no">Devise</span><span class="o">.</span><span class="n">setup</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
   <span class="c1"># zxcvbn score for devise</span>
   <span class="n">config</span><span class="o">.</span><span class="n">min_password_score</span> <span class="o">=</span> <span class="mi">4</span> <span class="c1"># complexity score here.</span>
   <span class="o">...</span>
@@ -2131,10 +2141,10 @@ gem <span class="s1">&#39;omniauth&#39;</span>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.361d90f1.min.js"}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.b6ff8c07.min.js"}</script>
     
     
-      <script src="../assets/javascripts/bundle.289a2a4b.min.js"></script>
+      <script src="../assets/javascripts/bundle.5e13d264.min.js"></script>
       
     
   </body>
