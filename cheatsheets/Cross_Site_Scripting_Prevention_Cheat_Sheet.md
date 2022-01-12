@@ -6,7 +6,7 @@ This cheat sheet provides guidance to prevent XSS vulnerabilities.
 
 Cross-Site Scripting is a misnomer. The name originated from early versions of the attack where stealing data cross-site was the primary focus. Since then, it has extended to include injection of basically any content, but we still refer to this as XSS. 
 
-XSS is serious and can lead to account impersonation, taking actions as a user, observing user behaviour, loading external content, and stealing sensitive data. This cheatsheet is a list of techniques to prevent or limit the impact of XSS. No single technique will solve XSS. Using the right combination of Framework Security Measures, Output Encoding, and HTML Sanitization will prevent most XSS attacks.
+XSS is serious and can lead to account impersonation, taking actions as a user, observing user behaviour, loading external content, and stealing sensitive data. This cheatsheet is a list of techniques to prevent or limit the impact of XSS. No single technique will solve XSS. Using the right combination of Framework Security Measures, Output Encoding, and HTML Sanitization techniques will prevent most XSS attacks.
 
 ## 2022 Updates
 
