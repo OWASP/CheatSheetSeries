@@ -51,7 +51,7 @@ There are many different output encoding methods because browsers parse HTML, JS
 
 ### Output Encoding for “HTML Contexts”
 
-“HTML Context” refers to placing a variable between HTML tags. This can occur when we want users to be able to write text for a blog post for example, or write a comment,  or update their profile name.
+“HTML Context” refers to placing a variable between HTML tags. This can occur when we want users to be able to write text for a blog post for example, or write a comment, or update their profile name.
 
 ```html
 <div> $varUnsafe </div>
