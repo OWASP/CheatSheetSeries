@@ -44,7 +44,7 @@ It’s critical to use quotation marks like `"` or `'` to surround your variable
 
 ### Output Encoding for “HTML Contexts”
 
-“HTML Context” refers to placing a variable between HTML tags. This can occur when our users need to write text for a blog post for example, or write a comment,  or update their profile name.
+“HTML Context” refers to placing a variable between HTML tags. This can occur when our users need to write text for a blog post for example, or write a comment, or update their profile name.
 
 ```html
 <div> $varUnsafe </div>
