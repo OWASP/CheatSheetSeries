@@ -1,23 +1,12 @@
-# Cross Site Scripting (XSS) Prevention Cheat Sheet
+# Cross Site Scripting Prevention Cheat Sheet
 
 ## Introduction
 
-This cheat sheet provides guidance to prevent XSS vulnerabilities. 
+This cheat sheet provides guidance to prevent XSS vulnerabilities.
 
-Cross-Site Scripting is a misnomer. The name originated from early versions of the attack where stealing data cross-site was the primary focus. Since then, it has extended to include injection of basically any content, but we still refer to this as XSS. 
+Cross-Site Scripting (XSS) is a misnomer. The name originated from early versions of the attack where stealing data cross-site was the primary focus. Since then, it has extended to include injection of basically any content, but we still refer to this as XSS.
 
-XSS is serious and can lead to account impersonation, taking actions as a user, observing user behaviour, loading external content, and stealing sensitive data. This cheatsheet is a list of techniques to prevent or limit the impact of XSS. No single technique will solve XSS. Using the right combination of Framework Security Measures, Output Encoding, and HTML Sanitization will prevent most XSS attacks.
-
-## 2022 Updates
-
-Web development has changed drastically since the original XSS Prevention Cheatsheet was released. The original prevention techniques are still highly effective. However, developers continue to make XSS defense mistakes like: 
-
-- Not performing validation, encoding, or sanitization on variables
-- Using the wrong output encoding method for the context they’re placing variables in
-- Opting to not perform validation on variables due to business requirements (hyphens and apostrophes in names, etc)
-- Relying on WAFs or CSPs that are easily bypassable
-
-This update focussed on simplifying the content. We want developers to be able to easily refer to this guide and immediately find what they are looking for. Explanations need to be clear, given real-world examples of where it is relevant, and be brief. In addition, most engineers use frameworks that provide some measure of security, we hope to include security advice surrounding popular frameworks into additional cheatsheets to complement this cheatsheet later this year. We hope you enjoy the updated XSS Prevention CheatSheet!
+XSS is serious and can lead to account impersonation, taking actions as a user, observing user behaviour, loading external content, and stealing sensitive data. This cheatsheet is a list of techniques to prevent or limit the impact of XSS. No single technique will solve XSS but using the right combination will prevent most attacks.
 
 ## Framework Security
 
@@ -31,58 +20,63 @@ Less XSS bugs appear in applications built with modern web frameworks. These fra
 - Not keeping your framework patched
 - .. and more!
 
-Understand how your framework prevents XSS and where it has gaps. There will be times where you need to do something outside the protection provided by your framework. This is where Output Encoding and HTML Sanitization are critical. We are producing framework specific cheatsheets for [React](), [Vue](), and [Angular]() (available April 2022).
+Understand how your framework prevents XSS and where it has gaps. There will be times where you need to do something outside the protection provided by your framework. This is where Output Encoding and HTML Sanitization are critical. OWASP are producing framework specific cheatsheets for React, Vue, and Angular.
 
 ## XSS Defense Philosophy
 
-For XSS attacks to be successful, an attacker needs to insert and execute malicious content in a webpage. We want to stop this by protecting every variable in your web application. All variables must go through validation, escaping, and sanitization. We call this perfect injection resistance. If any variable gets a free ride, you’re introducing a weakness that may become an XSS vulnerability.
+For XSS attacks to be successful, an attacker needs to insert and execute malicious content in a webpage. Each variable in a web application needs to be protected. Ensuring that all variables go through validation and are then escaped or sanitized is known as perfect injection resistance. Any variable that does not go through this process is a potential weakness. Frameworks make it easy to ensure variables are correctly validated and escaped/sanitised.
 
-Frameworks have dramatically reduced the areas where variables miss one of these steps. But they aren't perfect, and that is why we need to continue to use Output Encoding and HTML Sanitization.
+However, frameworks aren't perfect and security gaps still exist in popular frameworks like React and Angular. Output Encoding and HTML Sanitization help address those gaps.
 
 ## Output Encoding
 
-Output Encoding is recommended when you need to safely display data exactly as a user typed it in. We do not want variables to be interpreted as code instead of text. This section covers each form of output encoding, where to use it, and where to avoid using dynamic variables entirely.
+Output Encoding is recommended when you need to safely display data exactly as a user typed it in. Variables should not be interpreted as code instead of text. This section covers each form of output encoding, where to use it, and where to avoid using dynamic variables entirely.
 
-Start with using your framework’s default protections. Automatic encoding and escaping functions are built into most frameworks. For further details, check out our [React](), [Vue](), and [Angular]() guides (available April 2022).
+Start with using your framework’s default protections. Automatic encoding and escaping functions are built into most frameworks.
 
-If you’re not using a framework or need to cover gaps in the framework then you should use an output encoding library. Each variable used in the user interface should be passed through an output encoding function. 
+If you’re not using a framework or need to cover gaps in the framework then you should use an output encoding library. Each variable used in the user interface should be passed through an output encoding function. A list of output encoding libraries is included in the appendix.
 
 There are many different output encoding methods because browsers parse HTML, JS, URL’s, and CSS differently. Using the wrong encoding method may introduce weaknesses or harm the functionality of your application.
 
+### On Quotes
+
+It’s critical to use quotation marks like `"` or `'` to surround your variables. Quoting makes it difficult to change the context a variable operates in, which helps prevent XSS. Quoting also significantly reduces the characterset that you need to encode, making your application more reliable and the encoding easier to implement.
+
 ### Output Encoding for “HTML Contexts”
 
-“HTML Context” refers to placing a variable between HTML tags. This can occur when we want users to be able to write text for a blog post for example, or write a comment,  or update their profile name.
+“HTML Context” refers to placing a variable between HTML tags. This can occur when our users need to write text for a blog post for example, or write a comment,  or update their profile name.
 
 ```html
 <div> $varUnsafe </div>
-
 <div> <script>alert`1`</script> </div> // Example Attack
 ```
 
 Use HTML entity encoding for that variable, here are some examples of encoded values for specific characters.
 
 ```html
-&	&amp;
-<	&lt;
->	&gt;
-"	&quot;
-'	&#x27;
+&    &amp;
+<    &lt;
+>    &gt;
+"    &quot;
+'    &#x27;
 ```
+
+If you're using JavaScript for writing to HTML, look at the `.textContent` attribute as it is a **Safe Sin** and will automatically HTML Entity Encode.
 
 ### Output Encoding for “HTML Attribute Contexts”
 
-“HTML Attribute Contexts” refer to placing a variable in an HTML attribute value. You may want to do this to change a hyperlink, hide an element, add alt-text for an image, or change inline CSS styles. You should apply HTML Attribute Encoding to variables being placed in most HTML attributes. A list of Safe HTML Attributes is provided in the _Safe Sinks_ section.
+“HTML Attribute Contexts” refer to placing a variable in an HTML attribute value. You may want to do this to change a hyperlink, hide an element, add alt-text for an image, or change inline CSS styles. You should apply HTML Attribute Encoding to variables being placed in most HTML attributes. A list of Safe HTML Attributes is provided in the **Safe Sinks** section.
 
 ```html
 <div attr="$varUnsafe">
-
 <div attr=”*x” onblur=”alert(1)*”> // Example Attack
 ```
-Please note in the example above that the variable is quoted. It’s critical to quote attributes with `"` or `'`. Quoting makes it difficult for attackers to escape the HTML Attribute context. Most encoding libraries distinguish between HTML Entity Encoding and HTML Attribute Encoding.
+
+If you're using JavaScript for writing to a HTML Attribute, look at the `.setAttribute` and `[attribute]` methods as they are **Safe Sinks** and will automatically HTML Attribute Encode.
 
 ### Output Encoding for “JavaScript Contexts”
 
-“JavaScript Contexts” refer to placing variables into inline JavaScript which is then used in an HTML document. We commonly see this in WYSIWYG editors, tutorials for software development, and sandboxes for people to test software products. 
+“JavaScript Contexts” refer to placing variables into inline JavaScript which is then used in an HTML document. This is commonly seen in WYSIWYG editors, tutorials for software development, and sandboxes for people to test software products.
 
 The only ‘safe’ location for placing variables in JavaScript is inside a “quoted data value”. All other contexts are unsafe and you should not place variable data in them.
 
@@ -96,11 +90,11 @@ Examples of “Quoted Data Values”
 
 Encode all characters using the `\xHH` format. Do not use other formats or escape strings. Escaping, changing execution context, and abusing the parser order can all trigger XSS.
 
-Event handler attributes are often left unquoted. If you can guarantee quoting then a smaller character set is okay. Otherwise, take our aggressive encoding approach to be safe. 
+Event handler attributes are often left unquoted. If you can guarantee quoting then a smaller character set is okay. Otherwise, take our aggressive encoding approach to be safe.
 
 Please look at the [OWASP Java Encoder JavaScript encoding examples](https://owasp.org/www-project-java-encoder/) for examples of proper JavaScript use that requires minimal encoding.
 
-For JSON, verify that the `Content-Type` header is `application/json` and not `text/html` to prevent XSS. In addition, encode HTML Characters (as above) and JavaScript Line Terminators in JSON.
+For JSON, verify that the `Content-Type` header is `application/json` and not `text/html` to prevent XSS.
 
 ### Output Encoding for “CSS Contexts”
 
@@ -112,6 +106,8 @@ For JSON, verify that the `Content-Type` header is `application/json` and not `t
 <span style="property : $varUnsafe">Oh no</span>
 ```
 
+If you're using JavaScript to change a css property, look into using `style.property = x`. This is a **Safe Sink** and will automatically CSS encode data in it.
+
 Encode all characters using the `\xHH` format. Do not use other formats or escape strings. Escaping, changing execution context, and abusing parser order apply to CSS too.
 
 ### Output Encoding for “URL Contexts”
@@ -119,19 +115,24 @@ Encode all characters using the `\xHH` format. Do not use other formats or escap
 “URL Contexts” refer to variables placed into a URL. Most commonly, you’ll be updating a parameter. Use URL Encoding for data being placed in a HTTP Get Parameter.
 
 ```html
-<a href="http://www.somesite.com?test=$varUnsafe">link</a >
+<a href="http://www.owasp.org?test=$varUnsafe">link</a >
 ```
+
 Encode all characters with ASCII values less than 256 with the `%HH` encoding format. Make sure any attributes are fully quoted, same as JS and CSS.
 
-Validate the protocol and domain when placing variables into `href`, `src`, or other URL-based attributes. After that, URLs should be encoded based on the context. 
+If you're using JavaScript to construct a url Query Value, look into using `window.encodeURIComponent(x)`. This is a **Safe Sink** and will automatically URL encode data in it.
+
+Validate the protocol and domain when placing variables into `href`, `src`, or other URL-based attributes. After that, URLs should be encoded based on the context.
 
 Take this example. `href` is a HTML attribute value. Input validation and then HTML Attribute Encoding should be applied.
 
 ```html
 <a href="$varUnsafe">link</a >
 ```
+
 ### Dangerous Contexts
-Output Encoding is not perfect. It will not always prevent XSS. We refer to these locations where it is ineffective as Dangerous Contexts. Dangerous contexts include:
+
+Output Encoding is not perfect. It will not always prevent XSS. These locations are known as Dangerous Contexts. Dangerous contexts include:
 
 ```html
 <script>Directly in a script</script>
@@ -140,6 +141,7 @@ Output Encoding is not perfect. It will not always prevent XSS. We refer to thes
 <div ToDefineAnAttribute=test />
 <ToDefineATag href="/test" />
 ```
+
 Other areas to be careful of include:
 
 - Callback Functions
@@ -147,15 +149,15 @@ Other areas to be careful of include:
 - All JavaScript event handlers (`onclick()`, `onerror()`, `onmouseover()`).
 - Unsafe JS Functions like `eval()`, `setInterval()`, `setTimeout()`
 
-Don't place variables into Dangerous Contexts as even with Output Encoding, it will not prevent an XSS attack fully. 
+Don't place variables into Dangerous Contexts as even with Output Encoding, it will not prevent an XSS attack fully.
 
 That’s why it’s important to combine Output Encoding with HTML Sanitization.
 
 ## Html Sanitization
 
-Sometimes users need to write HTML. One scenario would be in a Wordpress WYSIWYG editor and using HTML to change the styling or structure of a blog post. Output encoding here will prevent XSS, but it will also prevent our users from customising their posts. This scenario is common all over the web, so we can’t rely on Output Encoding alone. We must also use HTML Sanitization. 
+Sometimes users need to write HTML. One scenario would be in a Wordpress WYSIWYG editor and using HTML to change the styling or structure of a blog post. Output encoding here will prevent XSS, but it will also prevent our users from customising their posts. This scenario is common all over the web. Output Encoding must also be used with HTML Sanitization.
 
-Passing a variable through a HTML Sanitization function will strip out everything that contains dangerous HTML and return a clean string. We recommend [DOMPurify](https://github.com/cure53/DOMPurify) for HTML Sanitization. 
+Passing a variable through a HTML Sanitization function will strip out everything that contains dangerous HTML and return a clean string. OWASP recommend s[DOMPurify](https://github.com/cure53/DOMPurify) for HTML Sanitization.
 
 ```js
 let clean = DOMPurify.sanitize(dirty);
@@ -166,16 +168,16 @@ There are some further things to consider.
 - You should make sure all variables are being sanitized, if you don’t you’re opening a hole in your web application. Don’t let any variable get a free ride.
 - If you sanitize content and then modify it afterwards, you can easily void your efforts.
 - If you sanitize content and then send it to a library for use, check that it doesn’t mutate that string somehow. Otherwise, again, your efforts are void.
-- You must regularly patch DOMPurify. Browsers change and bypasses are being discovered regularly. 
+- You must regularly patch DOMPurify. Browsers change and bypasses are being discovered regularly.
 - Bypasses do exist in the form of Mutation-Based XSS. Browsers will mutate content they receive and do their best to render it. Sometimes their best will include XSS payloads. This attack vector is why a [browser-based sanitizer API is being developed](https://wicg.github.io/sanitizer-api/).
 
 ## Safe Sinks
 
-We often talk in terms of sources and sinks in computer security. Think of a waterfall, if you pollute a source it'll flow into a sink eventually. It’s the same with computer security. For XSS, the sinks we refer to are usually locations you use variables in your webpage.
+Security professionals often talk in terms of sources and sinks. If you pollute a river, it'll flow downstream somewhere. It’s the same with computer security. XSS sinks are places where variables are placed into your webpage.
 
 Thankfully, many sinks where variables can be placed are safe. This is because these sinks treat the variable as text and will never execute it. Try to refactor your code to remove references to unsafe sinks like innerHTML, and instead use textContent or value.
 
-Here is a list of some safe HTML and HTML Attribute sinks we recommend refactoring your code to use.
+Here is a list of some safe HTML and HTML Attribute sinks OWASP recommends refactoring your code to use.
 
 ```js
 elem.textContent = dangerVariable;
@@ -192,12 +194,12 @@ elem.innerHTML = DOMPurify.sanitize(dangerVar);
 
 ## Other Controls
 
-Framework Security Protections, Output Encoding, and HTML Sanitization will provide the best protection for your application and we recommend these in all circumstances. 
+Framework Security Protections, Output Encoding, and HTML Sanitization will provide the best protection for your application. OWASP recommends these in all circumstances.
 
 Consider adopting the following controls in addition to the above.
 
 - Cookie Attributes - These change how JavaScript and browsers can interact with cookies. Cookie attributes try to limit the impact of an XSS attack but don’t prevent the execution of malicious content or address the root cause of the vulnerability.
-- Content Security Policy - An allowlist that prevents content being loaded. It’s easy to make mistakes with the implementation so we don’t recommend relying on a CSP as your primary defense mechanism. We recommend using a CSP as an additional layer of defense and have a [cheatsheet here](https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html).
+- Content Security Policy - An allowlist that prevents content being loaded. It’s easy to make mistakes with the implementation so it should not be your primary defense mechanism. Use a CSP as an additional layer of defense and have a look at the [cheatsheet here](https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html).
 - Web Application Firewalls - These look for known attack strings and block them. WAF’s are unreliable and new bypass techniques are being discovered regularly. WAFs also don’t address the root cause of an XSS vulnerability. In addition, WAFs also miss a class of XSS vulnerabilities that operate exclusively client-side. WAFs are not recommended for preventing XSS, especially DOM-Based XSS.
 - Security Headers - These are relatively easy to configure, but ultimately have limited impact on preventing XSS issues compared to addressing the root cause.
 
@@ -216,8 +218,6 @@ The following snippets of HTML demonstrate how to safely render untrusted data i
 | HTML      | HTML Body                                | `<div>UNTRUSTED HTML</div>`                                                                             | HTML Validation (JSoup, AntiSamy, HTML Sanitizer...).                                                                                                                                          |
 | String    | DOM XSS                                  | `<script>document.write("UNTRUSTED INPUT: " + document.location.hash );<script/>`                        | [DOM based XSS Prevention Cheat Sheet](DOM_based_XSS_Prevention_Cheat_Sheet.md)                                                                                                                |
 
-
-
 ### Output Encoding Rules Summary
 
 The purpose of output encoding (as it relates to Cross Site Scripting) is to convert untrusted input into a safe form where the input is displayed as **data** to the user without executing as **code** in the browser. The following charts details a list of critical output encoding methods needed to stop Cross Site Scripting.
@@ -229,7 +229,6 @@ The purpose of output encoding (as it relates to Cross Site Scripting) is to con
 | URL Encoding            | Standard percent encoding, see [here](http://www.w3schools.com/tags/ref_urlencode.asp). URL encoding should only be used to encode parameter values, not the entire URL or path fragments of a URL.                                                                                                                              |
 | JavaScript Encoding     | Except for alphanumeric characters, encode all characters with the `\uXXXX` unicode encoding format (**X** = Integer).                                                                                                                                                                                                               |
 | CSS Hex Encoding        | CSS encoding supports `\XX` and `\XXXXXX`. Using a two character encode can  cause problems if the next character continues the encode sequence.  There are two solutions: (a) Add a space after the CSS encode (will be  ignored by the CSS parser) (b) use the full amount of CSS encoding  possible by zero padding the value. |
-
 
 ## Related Articles
 
