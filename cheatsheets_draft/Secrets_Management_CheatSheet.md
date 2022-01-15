@@ -155,15 +155,13 @@ Given that the CI/CD tooling heavily consume secrets, it is key that the pipelin
 - Have proper authentication, authorization and accounting in place.
 - Make sure that pipelines can only be created by means of an approved process, including MR/PR steps to make sure that a created pipeline is security-reviewed.
 
-
 ### 3.2 Where should a secret be?
 
-- DO YOU PUT THE SECRET IN GIT PROVISIONGIN SYSTEM?J
+- DO YOU PUT THE SECRET IN GIT PROVISIONGIN SYSTEM?
 - DO YOU PUT THE SECRET IN YOUR BUILDTOOL?
 - DO THESE SYSTEMS HAVE A LINK TO A SECRETS MANAGEMENT SYSTEM WHICH HAS THE SECRET?
-
+- DO YOU TOUCH ALL THE SECRETS, OR JUST THOSE WHIC ARE REQUIRED FOR DEPLOYMENT?
 A pipeline should not store production secrets. Instead, it should only host temporal credentials (E.g. often rotated credentials) to the secret management-system. TODO: CONTINUE HERE!  
-
 
 #### 3.2.1 Using Git provisioning system
 
@@ -177,6 +175,8 @@ EXPLAIN DO'S AND DON'TS
 
 EXPLAIN DO'S AND DON'TS
 
+#### 3.2.4 Not touched by CI/CD at all
+
 ### 3.3: Authentication and Authorization
 
 HOW DOES A PIPELIEN AUTHENTICATE? HOW DO YOU KNOW AUTHORIZAITON IS OK?
@@ -189,11 +189,7 @@ HOW CAN YOU TELL WHO ACCESSED THE SECRET WITH THE PIPELINE?
 
 DO YOU ROTATE PER ACTION, OR CREATE NEW SECRETS UPON DEPLOYMENT?
 
-### 3.6. Bring the Secret close to the consumer
-
-EXPLAIN WHAT YOU CAN DO INSTEAD: LEVERAGE POST-DEPLOYMENT TO LET THE ACTUAL APP DO
-
-### 3.7. Pipeline Created Secrets
+### 3.6. Pipeline Created Secrets
 
 HOW TO USE A SECRETS PIPELINE
 
