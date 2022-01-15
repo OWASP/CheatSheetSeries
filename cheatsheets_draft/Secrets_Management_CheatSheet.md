@@ -157,6 +157,10 @@ Given that the CI/CD tooling heavily consume secrets, it is key that the pipelin
 
 ### 3.2 Where should a secret be?
 
+There are various places at which you can store a secret in order to execute certain CI/CD actions:
+
+- As part of your Git-provisioning system: 
+
 - DO YOU PUT THE SECRET IN GIT PROVISIONGIN SYSTEM?
 - DO YOU PUT THE SECRET IN YOUR BUILDTOOL?
 - DO THESE SYSTEMS HAVE A LINK TO A SECRETS MANAGEMENT SYSTEM WHICH HAS THE SECRET?
