@@ -17,7 +17,17 @@ eval("ruby code here")
 system("os command here")
 `ls -al /` # (backticks contain os command)
 exec("os command here")
-open("\| os command here")
+spawn("os command here")
+open("| os command here")
+Process.exec("os command here")
+Process.spawn("os command here")
+IO.binread("| os command here")
+IO.binwrite("| os command here", "foo")
+IO.foreach("| os command here") {}
+IO.popen("os command here")
+IO.read("| os command here")
+IO.readlines("| os command here")
+IO.write("| os command here", "foo")
 ```
 
 While the power of these commands is quite useful, extreme care should be taken when using them in a Rails based application. Usually, its just a bad idea. If need be, an allow-list of possible values should be used and any input should be validated as thoroughly as possible.
@@ -38,7 +48,7 @@ The statement is injectable because the name parameter is not escaped.
 Here is the idiom for building this kind of statement:
 
 ``` ruby
-@projects = Project.where("name like ?", "%#{params[:name]}%")
+@projects = Project.where("name like ?", "%#{ActiveRecord::Base.sanitize_sql_like(params[:name])}%")
 ```
 
 Use caution not to build SQL statements based on user controlled input. A list of more realistic and detailed examples is here: [rails-sqli.org](https://rails-sqli.org). OWASP has extensive information about [SQL Injection](https://owasp.org/www-community/attacks/SQL_Injection).
@@ -96,7 +106,7 @@ link_to "Personal Website", 'javascript:alert(1);'.html_safe()
 # "<a href="javascript:alert(1);">Personal Website</a>"
 ```
 
-Using [Content Security](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) Policy is one more security measure to forbid execution for links starting with `javascript:` .
+Using [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) is one more security measure to forbid execution for links starting with `javascript:` .
 
 [Brakeman scanner](https://github.com/presidentbeef/brakeman) helps in finding XSS problems in Rails apps.
 
@@ -173,7 +183,7 @@ And configure the required password complexity:
 
 ``` ruby
 # in config/initializers/devise.rb
-Devise.setup do \|config\|
+Devise.setup do |config|
   # zxcvbn score for devise
   config.min_password_score = 4 # complexity score here.
   ...

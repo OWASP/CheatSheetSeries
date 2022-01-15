@@ -69,7 +69,7 @@ This cheat sheet will help users of the [OWASP Top Ten](https://owasp.org/www-pr
 ## [A09:2021 – Security Logging and Monitoring Failures](https://owasp.org/Top10/A09_2021-Security_Logging_and_Monitoring_Failures/)
 
 * [Logging Cheat Sheet](cheatsheets/Logging_Cheat_Sheet.md)
-* [Application Logging Vocabulary Cheat Sheet](cheatsheets/Application_Logging_Vocabulary_Cheat_Sheet.md)
+* [Application Logging Vocabulary Cheat Sheet](cheatsheets/Logging_Vocabulary_Cheat_Sheet.md)
 
 ## [A10:2021 – Server-Side Request Forgery (SSRF)](https://owasp.org/Top10/A10_2021-Server-Side_Request_Forgery_%28SSRF%29/)
 
