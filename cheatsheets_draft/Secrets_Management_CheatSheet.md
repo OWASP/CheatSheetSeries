@@ -159,27 +159,21 @@ Given that the CI/CD tooling heavily consume secrets, it is key that the pipelin
 
 There are various places at which you can store a secret in order to execute certain CI/CD actions:
 
-- As part of your Git-provisioning system: 
-
-- DO YOU PUT THE SECRET IN GIT PROVISIONGIN SYSTEM?
-- DO YOU PUT THE SECRET IN YOUR BUILDTOOL?
+- As part of your CI/CD tooling: a secret can be stored as a secret in [Gitlab](https://docs.gitlab.com/charts/installation/secrets.html)/[Github](https://docs.github.com/en/actions/security-guides/encrypted-secrets)/[jenkins](https://www.jenkins.io/doc/developer/security/secrets/). This is not the same as committing it to code.
+- As part of our secrets-management system: here you can store a secret in //TODO CONTINUE HERE!
 - DO THESE SYSTEMS HAVE A LINK TO A SECRETS MANAGEMENT SYSTEM WHICH HAS THE SECRET?
 - DO YOU TOUCH ALL THE SECRETS, OR JUST THOSE WHIC ARE REQUIRED FOR DEPLOYMENT?
 A pipeline should not store production secrets. Instead, it should only host temporal credentials (E.g. often rotated credentials) to the secret management-system. TODO: CONTINUE HERE!  
 
-#### 3.2.1 Using Git provisioning system
+#### 3.2.1 As part of your CI/CD tooling
 
 EXPLAIN DO'S AND DON'TS
 
-#### 3.2.2 Using the pipeline tool
+#### 3.2.2 Storing it in a secrets management system
 
 EXPLAIN DO'S AND DON'TS
 
-#### 3.2.3 Storing it in a secrets management system
-
-EXPLAIN DO'S AND DON'TS
-
-#### 3.2.4 Not touched by CI/CD at all
+#### 3.2.3 Not touched by CI/CD at all
 
 ### 3.3: Authentication and Authorization
 
