@@ -140,7 +140,8 @@ A secret management solution should provide the capability to store at least the
 - When it needs to be rotated, if done manually
 
 ## 3. Continuous Integration (CI) and Continuous Deployment (CD)
-The process of building, testing and deploying changes generally requires access to many systems. Continuous Integration (CI) and Continuous Deployment (CD) tools typically store secrets themselves for providing configuration to the application or for during deployment. Alternatively, they interact heavily with the secrets management system.
+
+The process of building, testing and deploying changes generally requires access to many systems. Continuous Integration (CI) and Continuous Deployment (CD) tools typically store secrets themselves for providing configuration to the application or for during deployment. Alternatively, they interact heavily with the secrets management system. There are various best-practices which can help smoothing out secret management in CI/CD, some of them will be dealt with in this section.
 
 ### 3.1. Hardening your CI/CD pipeline
 
@@ -154,16 +155,41 @@ Given that the CI/CD tooling heavily consume secrets, it is key that the pipelin
 - Have proper authentication, authorization and accounting in place.
 - Make sure that pipelines can only be created by means of an approved process, including MR/PR steps to make sure that a created pipeline is security-reviewed.
 
-### 3.2. Where should a secret be?
+### 3.2 Where should a secret be?
 
+There are various places at which you can store a secret in order to execute certain CI/CD actions:
+
+- As part of your CI/CD tooling: a secret can be stored as a secret in [Gitlab](https://docs.gitlab.com/charts/installation/secrets.html)/[Github](https://docs.github.com/en/actions/security-guides/encrypted-secrets)/[jenkins](https://www.jenkins.io/doc/developer/security/secrets/). This is not the same as committing it to code.
+- As part of our secrets-management system: here you can store a secret in //TODO CONTINUE HERE!
+- DO THESE SYSTEMS HAVE A LINK TO A SECRETS MANAGEMENT SYSTEM WHICH HAS THE SECRET?
+- DO YOU TOUCH ALL THE SECRETS, OR JUST THOSE WHIC ARE REQUIRED FOR DEPLOYMENT?
 A pipeline should not store production secrets. Instead, it should only host temporal credentials (E.g. often rotated credentials) to the secret management-system. TODO: CONTINUE HERE!  
 
+#### 3.2.1 As part of your CI/CD tooling
 
-### 3.3. Rotation vs Dynamic Creation
+EXPLAIN DO'S AND DON'TS
 
-### 3.4. Deployment
+#### 3.2.2 Storing it in a secrets management system
 
-### 3.5. Pipeline Created Secrets
+EXPLAIN DO'S AND DON'TS
+
+#### 3.2.3 Not touched by CI/CD at all
+
+### 3.3: Authentication and Authorization
+
+HOW DOES A PIPELIEN AUTHENTICATE? HOW DO YOU KNOW AUTHORIZAITON IS OK?
+
+### 3.4: Logging and accounting
+ 
+HOW CAN YOU TELL WHO ACCESSED THE SECRET WITH THE PIPELINE?
+
+### 3.5. Rotation vs Dynamic Creation
+
+DO YOU ROTATE PER ACTION, OR CREATE NEW SECRETS UPON DEPLOYMENT?
+
+### 3.6. Pipeline Created Secrets
+
+HOW TO USE A SECRETS PIPELINE
 
 ## 4. Cloud Providers
 <TODO; LET'S HAVE SOME CONTENT IN HIGHLIGHT/COMMENTS WHATWE WANT TO WRITE DOWN: ECAUSE CLOUD NATIVE SECRETS MANAGEMENT CAN HELP IF YOU HAVE A CLOUD NATIVE STRATEGY. LOCKIN IS AS DEEP AS YOU WANT IT TO BE WITH ANY SECRETS MANAGEMENT PROVIDER>
@@ -182,13 +208,17 @@ A pipeline should not store production secrets. Instead, it should only host tem
 ## 5. Containers & Orchestrators
 
 ### 5.1. Injection of Secrets (file, in-memory)
-    Ther are 3 ways to get secrets to an app inside a docker container
-    * Environment variables: We can provide secrets directly as the part of the docker container configuration. In this method the secrets could be either hard coded in docker configuration file or could be passed as argument at docker runtime.
-    * Mounted volumes (file): In this method we keep our secrets within a particular config/secret file and mount that file to our instance as a mounted volume.
-    * Fetch from secret store (in-memory): A sidecar app/container fetches the secrets it need directly from a secret manager service without having to deal with docker config. This solution allows you to use dynamically constructed secrets without worrying about the secrets being viewable from the file system or from checking the docker container's env variables.
+
+Ther are 3 ways to get secrets to an app inside a docker container
+
+- Environment variables: We can provide secrets directly as the part of the docker container configuration. In this method the secrets could be either hard coded in docker configuration file or could be passed as argument at docker runtime.
+- Mounted volumes (file): In this method we keep our secrets within a particular config/secret file and mount that file to our instance as a mounted volume.
+- Fetch from secret store (in-memory): A sidecar app/container fetches the secrets it need directly from a secret manager service without having to deal with docker config. This solution allows you to use dynamically constructed secrets without worrying about the secrets being viewable from the file system or from checking the docker container's env variables.
+
 ### 5.2. Short Lived Side-car Containers
-    To inject secret within a container one could create short lived side-car containers that fethces secret from some remote end point and then store them on a
-    shared volume which is also mounted to the original container. The original container can now use the secrets from mounted volume benefit of using this approach is that we don't need to integrate any third party tool or code to get secrets. Once the secret are fethced the side car container dies and that's why they are called short lived. Example of one such service is Vault Agent Sidecar Injector. The Vault Agent Injector alters pod specifications to include Vault Agent containers that render Vault secrets to a shared memory volume using Vault Agent Templates. By rendering secrets to a shared volume, containers within the pod can consume Vault secrets without being Vault aware 
+
+To inject secret within a container one could create short lived side-car containers that fethces secret from some remote end point and then store them on a shared volume which is also mounted to the original container. The original container can now use the secrets from mounted volume benefit of using this approach is that we don't need to integrate any third party tool or code to get secrets. Once the secret are fethced the side car container dies and that's why they are called short lived. Example of one such service is Vault Agent Sidecar Injector. The Vault Agent Injector alters pod specifications to include Vault Agent containers that render Vault secrets to a shared memory volume using Vault Agent Templates. By rendering secrets to a shared volume, containers within the pod can consume Vault secrets without being Vault aware.
+
 ### 5.3. Internal vs External Access
 
 ## 6. Implementation Guidance
