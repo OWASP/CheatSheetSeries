@@ -192,7 +192,7 @@ Jeroen does: DO YOU ROTATE PER ACTION, OR CREATE NEW SECRETS UPON DEPLOYMENT?
 
 ### 3.6. Pipeline Created Secrets
 
-Jeroen does:HOW TO USE A SECRETS PIPELINE
+Jeroen does: HOW TO USE A SECRETS PIPELINE
 
 ## 4. Cloud Providers
 
