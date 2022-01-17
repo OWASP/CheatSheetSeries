@@ -96,7 +96,7 @@ When secrets are no longer required they must be securely revoked in order to re
 
 #### 2.6.4 Lifespan
 
-Secrets should, where ever possible, always be created to expire after a defined time. This can either be an active expiration by the secret consuming system, or an expiration date set at the secrets management system, forcing supporting processes to be triggered resulting in a rotation of the secret. 
+Secrets should, where ever possible, always be created to expire after a defined time. This can either be an active expiration by the secret consuming system, or an expiration date set at the secrets management system, forcing supporting processes to be triggered resulting in a rotation of the secret.
 Policies should be applied by the secrets management solution to ensure credentials are only made available for a limited time that is appropriate for the type of credential.
 
 ### 2.7 Transport Layer Security (TLS) Everywhere
@@ -181,7 +181,7 @@ EXPLAIN DO'S AND DON'TS
 HOW DOES A PIPELIEN AUTHENTICATE? HOW DO YOU KNOW AUTHORIZAITON IS OK?
 
 ### 3.4: Logging and accounting
- 
+
 HOW CAN YOU TELL WHO ACCESSED THE SECRET WITH THE PIPELINE?
 
 ### 3.5. Rotation vs Dynamic Creation
@@ -193,12 +193,13 @@ DO YOU ROTATE PER ACTION, OR CREATE NEW SECRETS UPON DEPLOYMENT?
 HOW TO USE A SECRETS PIPELINE
 
 ## 4. Cloud Providers
+
 <TODO; LET'S HAVE SOME CONTENT IN HIGHLIGHT/COMMENTS WHATWE WANT TO WRITE DOWN: ECAUSE CLOUD NATIVE SECRETS MANAGEMENT CAN HELP IF YOU HAVE A CLOUD NATIVE STRATEGY. LOCKIN IS AS DEEP AS YOU WANT IT TO BE WITH ANY SECRETS MANAGEMENT PROVIDER>
 
 ### 4.1. Vendor Lock-in
+
 [comment]: TODO: REPLACE/REWRITE/REMOVE as agreed with @bendehaan
 "[Vendor lock-in](https://www.cloudflare.com/learning/cloud/what-is-vendor-lock-in/) refers to a situation where the cost of switching to a different vendor is so high that the customer is essentially stuck with the original vendor. Because of financial pressures, an insufficient workforce, or the need to avoid interruptions to business operations, the customer is "locked in" to what may be an inferior product or service." If a secret management solution is written in such a way that it is hard to discern which secrets are used for what, and secrets cannot be easily extracted, you end up with a vendor lockin. This can make it harder to find a better fit-for-purpose in the future.
-
 
 ### 4.2. Geo Restrictions
 
@@ -233,12 +234,14 @@ To inject secret within a container one could create short lived side-car contai
 ## 7. Encryption
 
 ### 7.1. Encryption as a Service (EaaS)
-    EaaS is a model in which users subscribe to a cloud-based encryption service without having to install encryption in their own systems.
-    By using Encryption as a service we get following benefits:
-    * Data can be encrypted at rest
-    * Data is secured in Transit (TLS)
-    * Key handling and cryptographic implementations is taken care by Encryption Service, not by developers
-    * More services could be added to interact with the sensitive data
+
+EaaS is a model in which users subscribe to a cloud-based encryption service without having to install encryption in their own systems. By using Encryption as a service we get following benefits:
+
+- Data can be encrypted at rest
+- Data is secured in Transit (TLS)
+- Key handling and cryptographic implementations is taken care by Encryption Service, not by developers
+- More services could be added to interact with the sensitive data
+
 ## 8. Applications
 
 ### 8.1. Least Amount of Impact (LAoI)
