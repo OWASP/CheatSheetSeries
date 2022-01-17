@@ -160,12 +160,13 @@ Given that the CI/CD tooling heavily consume secrets, it is key that the pipelin
 There are various places at which you can store a secret in order to execute certain CI/CD actions:
 
 - As part of your CI/CD tooling: a secret can be stored as a secret in [Gitlab](https://docs.gitlab.com/charts/installation/secrets.html)/[Github](https://docs.github.com/en/actions/security-guides/encrypted-secrets)/[jenkins](https://www.jenkins.io/doc/developer/security/secrets/). This is not the same as committing it to code.
-- As part of our secrets-management system: here you can store a secret in //TODO CONTINUE HERE!
-- DO THESE SYSTEMS HAVE A LINK TO A SECRETS MANAGEMENT SYSTEM WHICH HAS THE SECRET?
-- DO YOU TOUCH ALL THE SECRETS, OR JUST THOSE WHIC ARE REQUIRED FOR DEPLOYMENT?
-A pipeline should not store production secrets. Instead, it should only host temporal credentials (E.g. often rotated credentials) to the secret management-system. TODO: CONTINUE HERE!  
+- As part of our secrets-management system: here you can store a secret in a secrets management system, such as facilities provided by a cloud provider ([AWS Secret Manager](https://aws.amazon.com/secrets-manager/), [Azure Key Vault](https://azure.microsoft.com/nl-nl/services/key-vault/)), or other third party facilities ([Hashicorp Vault](https://www.vaultproject.io/), [Keeper](https://www.keepersecurity.com/), [Confidant](https://lyft.github.io/confidant/)). In this case, the CI/CD pipeline tooling requires credentials to connect to these secret management systems in order to have secrets in place.
+
+Note: not all secrets are required to be at the CI/CD pipeline to get to the actual deployment. Instead, make sure that the services which are deployed, will take care of part of their secrets management at first boot.
 
 #### 3.2.1 As part of your CI/CD tooling
+
+//TODO: CONTINUE HERE!
 
 EXPLAIN DO'S AND DON'TS
 
