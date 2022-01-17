@@ -1,15 +1,15 @@
 # Secrets Management Cheatsheet
 
 1. [Introduction](#1-Introduction)
-1. [General](#2-General-Secrets-Management)
-1. [Continuous Integration (CI) and Continuous Deployment (CD)](#3-Continuous-Integration-(CI)-and-Continuous-Deployment-(CD))
-1. [Cloud Providers](#4-Cloud-Providers)
-1. [Containers and Orchestration](#5-Containers-&-Orchestrators)
-1. [Implementation](#6-Implementation)
-1. [Encryption](#7-Encryption)
-1. [Applications](#8-Applications)
-1. [Workflow in case of compromise](#9-Workflow-in-case-of-compromise)
-1. [Secrets Management Tooling](#10-Secrets-Management-Tooling-Guidelines)
+2. [General](#2-General-Secrets-Management)
+3. [Continuous Integration (CI) and Continuous Deployment (CD)](#3-Continuous-Integration-(CI)-and-Continuous-Deployment-(CD))
+4. [Cloud Providers](#4-Cloud-Providers)
+5. [Containers and Orchestration](#5-Containers-&-Orchestrators)
+6. [Implementation](#6-Implementation)
+7. [Encryption](#7-Encryption)
+8. [Applications](#8-Applications)
+9. [Workflow in case of compromise](#9-Workflow-in-case-of-compromise)
+10. [Secrets Management Tooling](#10-Secrets-Management-Tooling-Guidelines)
 
 ## 1. Introduction
 
@@ -168,29 +168,31 @@ Note: not all secrets are required to be at the CI/CD pipeline to get to the act
 
 //TODO: CONTINUE HERE!
 
-EXPLAIN DO'S AND DON'TS
+Jeroen does:EXPLAIN DO'S AND DONT'S
 
 #### 3.2.2 Storing it in a secrets management system
 
-EXPLAIN DO'S AND DON'TS
+Jeroen does: EXPLAIN DO'S AND DONT'S
 
 #### 3.2.3 Not touched by CI/CD at all
 
+Jeroen does: EXPLAIN DO'S AND DONT'S
+
 ### 3.3: Authentication and Authorization
 
-HOW DOES A PIPELIEN AUTHENTICATE? HOW DO YOU KNOW AUTHORIZAITON IS OK?
+Jeroen does:HOW DOES A PIPELINE AUTHENTICATE? HOW DO YOU KNOW AUTHORIZAITON IS OK?
 
 ### 3.4: Logging and accounting
 
-HOW CAN YOU TELL WHO ACCESSED THE SECRET WITH THE PIPELINE?
+Jeroen does:HOW CAN YOU TELL WHO ACCESSED THE SECRET WITH THE PIPELINE?
 
 ### 3.5. Rotation vs Dynamic Creation
 
-DO YOU ROTATE PER ACTION, OR CREATE NEW SECRETS UPON DEPLOYMENT?
+Jeroen does: DO YOU ROTATE PER ACTION, OR CREATE NEW SECRETS UPON DEPLOYMENT?
 
 ### 3.6. Pipeline Created Secrets
 
-HOW TO USE A SECRETS PIPELINE
+Jeroen does:HOW TO USE A SECRETS PIPELINE
 
 ## 4. Cloud Providers
 
