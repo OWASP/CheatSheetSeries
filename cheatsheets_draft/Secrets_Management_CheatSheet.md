@@ -166,11 +166,19 @@ Note: not all secrets are required to be at the CI/CD pipeline to get to the act
 
 #### 3.2.1 As part of your CI/CD tooling
 
-//TODO: CONTINUE HERE!
+When secrets are part of your CI/CD tooling (E.g. Github secrets, Gitlab repository secrets, ENV Vars/Var Groups in Microsoft Azure Devops, Jenkins Secrets, et cetera), it means that the secret is exposed to your CI/CD jobs when these are executed.
+Very often, these secrets are configurable/viewable by people who have authorization to do so (e.g. a maintainer in Github, a project owner in Gitlab, an admin in jenkins, etc.). Which together lines up for the following best practices:
 
-Jeroen does:EXPLAIN DO'S AND DONT'S
+- make sure that there are no long-term / high blast-radius / high value secrets as part of your CI/CD tooling;
+- have a clear overview of which users are able to view/alter the secrets.
+- Assemble all the logs from the CI/CD tooling and have rules in place on secret extraction, whether through accessing them by means of a web-interface, or dumping them while double base64 encoding and/or encrypting them with openssl.
+- Make sure secrets stored here are timely rotated.
+- Validate that a fork of the repository and/or copy of the job definition does not copy the secret as well.
+- Make sure you document which secrets are stored as part of your CI/CD tooling and why, so that these can be migrated easily when required.
 
 #### 3.2.2 Storing it in a secrets management system
+
+Secrets can be stored in a secrets management solution. //TODO: CONTINUE HERE!@
 
 Jeroen does: EXPLAIN DO'S AND DONT'S
 
