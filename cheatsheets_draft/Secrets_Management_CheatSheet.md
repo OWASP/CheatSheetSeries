@@ -169,24 +169,27 @@ Note: not all secrets are required to be at the CI/CD pipeline to get to the act
 When secrets are part of your CI/CD tooling (E.g. Github secrets, Gitlab repository secrets, ENV Vars/Var Groups in Microsoft Azure Devops, Jenkins Secrets, et cetera), it means that the secret is exposed to your CI/CD jobs when these are executed.
 Very often, these secrets are configurable/viewable by people who have authorization to do so (e.g. a maintainer in Github, a project owner in Gitlab, an admin in jenkins, etc.). Which together lines up for the following best practices:
 
-- make sure that there are no long-term / high blast-radius / high value secrets as part of your CI/CD tooling;
-- have a clear overview of which users are able to view/alter the secrets.
-- Assemble all the logs from the CI/CD tooling and have rules in place on secret extraction, whether through accessing them by means of a web-interface, or dumping them while double base64 encoding and/or encrypting them with openssl.
-- Make sure secrets stored here are timely rotated.
-- Validate that a fork of the repository and/or copy of the job definition does not copy the secret as well.
-- Make sure you document which secrets are stored as part of your CI/CD tooling and why, so that these can be migrated easily when required.
+- No "big secret": make sure that there are no long-term / high blast-radius / high value secrets as part of your CI/CD tooling; make sure that every secret is not the same for different purposes (e.g. never have one password for all administrative users).
+- IST/SOLL: have a clear overview of which users are able to view/alter the secrets.
+- Log & Alert: Assemble all the logs from the CI/CD tooling and have rules in place to detect secret extraction, or misuse, whether through accessing them by means of a web-interface, or dumping them while double base64 encoding and/or encrypting them with openssl.
+- Rotation: Make sure secrets stored here are timely rotated.
+- Forking should not leak: Validate that a fork of the repository and/or copy of the job definition does not copy the secret as well.
+- Document: Make sure you document which secrets are stored as part of your CI/CD tooling and why, so that these can be migrated easily when required.
 
 #### 3.2.2 Storing it in a secrets management system
 
-Secrets can be stored in a secrets management solution. This can be a solution offered by your (cloud) infrastructure provider, such as [AWS Secrets Manager]() [Google Secrets Manager]() [Azure KeyVault](), or more specific the use of a cloudHSM [^1].
+Secrets can be stored in a secrets management solution. This can be a solution offered by your (cloud) infrastructure provider, such as [AWS Secrets Manager]() [Google Secrets Manager]() [Azure KeyVault](), which are described in section 4 of this cheatsheet. Another option is a dedicated secrets management system, such as [Hashicorp Vault](), [Keeper](https://www.keepersecurity.com/), [Confidant](https://lyft.github.io/confidant/), [Cyberark Vault](). Here are a few do's and don'ts from the CI/CD interaction with these systems. Make sure thatthe following is taken care of:
 
-[^1]: Note: cloudHSMs is more part of the [Key Management cheatsheet]().
-
-Jeroen does: EXPLAIN DO'S AND DONT'S
+- Rotation/Temporaility: credentials used by the CI/CD tooling to authenticate against the secret management system are rotated frequently and expire after a job is completed.
+- Scope of authorization: credentials used by the CI/CD tooling (e.g. roles, users, etc.) are scoped e.g. only authorized to those secrets and services of the secret management system which are required for the CI/CD tooling to execute its job.
+- Attribution of the caller: credentials used by the CI/CD tooling still hold attribution of the one calling/orchestrating the call towards the secrets management solution, so that any calls made by the CI/CD tooling can be attributed to a person/service that requested the actions of the CI/CD tooling. If this is not possible by means of default configuraiton of the secrets manager, make sure that you have a correlation setup in terms of request-parameters.
+- All of the above: Still follow those do's and don'ts listed in section 3.2.1: log & alert, take care of forking, etc.
+- TODO: WHAT AM I MISSING HERE?
 
 #### 3.2.3 Not touched by CI/CD at all
 
-Jeroen does: EXPLAIN DO'S AND DONT'S
+Secrets do not necessarilty need to be brought to a consumer of the secret by a CI/CD pipeline. It is even better when the secret is actually retrieved by the consumer of the secret. In that case, the CI/CD pipeline still needs to instruct the orchestrating system (e.g. [Kubernetes]()) that it needs to schedule a certain service with a given service account. This means that the CI/CD tooling still has credentials towards the orchestrating platform, but no longer has access to the secrets themselves. The do's and don'ts regarding these type of credentials are similar to the ones described in section 3.2.2.  TODO: CHECK WHAT WE NEED TO REWRITE AND MAKE THE FLOW MORE EXPLICIT ON WHAT IS HAPPENING, ADD DO'S AND DONT'S FROM THE CI/CD PERSPECTIVE
+
 
 ### 3.3: Authentication and Authorization
 
@@ -206,7 +209,8 @@ Jeroen does: HOW TO USE A SECRETS PIPELINE
 
 ## 4. Cloud Providers
 
-<TODO; LET'S HAVE SOME CONTENT IN HIGHLIGHT/COMMENTS WHATWE WANT TO WRITE DOWN: ECAUSE CLOUD NATIVE SECRETS MANAGEMENT CAN HELP IF YOU HAVE A CLOUD NATIVE STRATEGY. LOCKIN IS AS DEEP AS YOU WANT IT TO BE WITH ANY SECRETS MANAGEMENT PROVIDER>
+<TODO; LET'S HAVE SOME CONTENT IN HIGHLIGHT/COMMENTS WHATWE WANT TO WRITE DOWN: ECAUSE CLOUD NATIVE SECRETS MANAGEMENT CAN HELP IF YOU HAVE A CLOUD NATIVE STRATEGY. LOCKIN IS AS DEEP AS YOU WANT IT TO BE WITH ANY SECRETS MANAGEMENT PROVIDER> [^1]
+[^1]: Note: cloudHSMs is more part of the [Key Management cheatsheet]().
 
 ### 4.1. Vendor Lock-in
 
