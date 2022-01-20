@@ -178,7 +178,9 @@ Very often, these secrets are configurable/viewable by people who have authoriza
 
 #### 3.2.2 Storing it in a secrets management system
 
-Secrets can be stored in a secrets management solution. //TODO: CONTINUE HERE!@
+Secrets can be stored in a secrets management solution. This can be a solution offered by your (cloud) infrastructure provider, such as [AWS Secrets Manager]() [Google Secrets Manager]() [Azure KeyVault](), or more specific the use of a cloudHSM [^1].
+
+[^1]: Note: cloudHSMs is more part of the [Key Management cheatsheet]().
 
 Jeroen does: EXPLAIN DO'S AND DONT'S
 
