@@ -217,8 +217,6 @@ Important considerations:
 - Blast radius (IAM configuration, permission scope)
     - Example: Azure Key vault
 - API quotas or service limits
-- Cost vs. cost at scale
-- Data key caching
 
 ### 4.1. Services to use
 
@@ -251,8 +249,9 @@ Azure Key Vault example
 
 Multiple roads lead to Rome: competing ways to grant access to a secret
 
-### 4.2. API limits
+### 4.4. API limits
 
+- (D)DoS-ing yourself
 - Data key caching
 
 ## 5. Containers & Orchestrators
