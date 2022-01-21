@@ -208,12 +208,14 @@ Logs should be at least queryable for 90 days and stored for a longer period of 
 
 ### 3.5. Rotation vs Dynamic Creation
 
-Jeroen does: DO YOU ROTATE PER ACTION, OR CREATE NEW SECRETS UPON DEPLOYMENT?
+CI/CD tooling can be used to rotate secrets or instruct other components to do the rotation of the secret. For instance, the CI/CD tool can request a secrets management system, or anoter application to do the actual rotation of the secret by replacing the actual value by a new one. Alternatively, the CI/CD tool or another component could setup a dynamic secret: a secret required for a consumer to use for as long as it lives, after which the secret is invalidated when the consumer no longer lives. This reduces possible leakage of a secret, and allows for easy detection of misuse: after all if a the secret is used anywhere else than from the IP of the consumer: then the secret is misused.
 
 ### 3.6. Pipeline Created Secrets
 
 The pipeline tooling can be used to generate secrets and either offer them directly to the service which is deployed by the tooling, or provision the secret to a secrets management solution. alternatively the secret can be stored encrypted in git, so that the secret and its metadata is as close to the developer daily place of work as possible. This does require that developers cannot decrypt the secrets themselves, and that every consumer of a secret has its own encrypted variant of the secret. For instance: the secret should then be different per DTAP environment, and be encrypted with a different key. For each environment, only the designated consumer at that environment should be able to decrypt the specific secret. That way, a secret does not leak cross-environment and can still be easily stored next to the code.
 Consumers of a secret could now decrypt the secret using a side-car, as described in section 5.2, where instead of retrieving the secrets, the consumer would leverage the side-car to do decryption of the secret.
+
+When a pipeline itself creates a secret, make sure that the scripts and/or binaries involved of the creation adhere to best practices for secret generation (e.g. secure-randomness, proper length of secret creation, etc.) and that the secret is created based on well defined metadata which is stored somewhere in Git or somewhere else.
 
 ## BEN: 4. Cloud Providers
 
