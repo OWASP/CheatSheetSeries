@@ -123,7 +123,7 @@ Last, should the system become unavailable due to other reasons than normal main
 
 ### 2.10 Policies
 
-Policies defining the minimum complexity requirements of passwords, as well as approved encryption algorithms are typically set at an organisation-wide level and should be enforced consistently. The use of a centralised secrets management solution would help companies to enforce these policies.  
+Policies defining the minimum complexity requirements of passwords, as well as approved encryption algorithms are typically set at an organisation-wide level and should be enforced consistently. The use of a centralised secrets management solution would help companies to enforce these policies.
 
 Next to that, having an organization wide secrets management policy can help to enforce application of the best practices defined in this cheatsheet.
 
@@ -138,6 +138,8 @@ A secret management solution should provide the capability to store at least the
 - For what the secret is used (E.g. designated intended consumers and purpose of the secret)
 - What type of secret it is (E.g. AES Key, HMAC key, RSA private key)
 - When it needs to be rotated, if done manually
+
+Note: if you don't store metadata about the secret, nor prepare to move, you will increase the probability of vendor lock-in.
 
 ## 3. Continuous Integration (CI) and Continuous Deployment (CD)
 
@@ -190,7 +192,6 @@ Secrets can be stored in a secrets management solution. This can be a solution o
 
 Secrets do not necessarilty need to be brought to a consumer of the secret by a CI/CD pipeline. It is even better when the secret is actually retrieved by the consumer of the secret. In that case, the CI/CD pipeline still needs to instruct the orchestrating system (e.g. [Kubernetes]()) that it needs to schedule a certain service with a given service account. This means that the CI/CD tooling still has credentials towards the orchestrating platform, but no longer has access to the secrets themselves. The do's and don'ts regarding these type of credentials are similar to the ones described in section 3.2.2.  TODO: CHECK WHAT WE NEED TO REWRITE AND MAKE THE FLOW MORE EXPLICIT ON WHAT IS HAPPENING, ADD DO'S AND DONT'S FROM THE CI/CD PERSPECTIVE
 
-
 ### 3.3: Authentication and Authorization
 
 Jeroen does:HOW DOES A PIPELINE AUTHENTICATE? HOW DO YOU KNOW AUTHORIZAITON IS OK?
@@ -207,21 +208,52 @@ Jeroen does: DO YOU ROTATE PER ACTION, OR CREATE NEW SECRETS UPON DEPLOYMENT?
 
 Jeroen does: HOW TO USE A SECRETS PIPELINE
 
-## 4. Cloud Providers
+## BEN: 4. Cloud Providers
 
-<TODO; LET'S HAVE SOME CONTENT IN HIGHLIGHT/COMMENTS WHATWE WANT TO WRITE DOWN: ECAUSE CLOUD NATIVE SECRETS MANAGEMENT CAN HELP IF YOU HAVE A CLOUD NATIVE STRATEGY. LOCKIN IS AS DEEP AS YOU WANT IT TO BE WITH ANY SECRETS MANAGEMENT PROVIDER> [^1]
-[^1]: Note: cloudHSMs is more part of the [Key Management cheatsheet]().
+Important considerations:
 
-### 4.1. Vendor Lock-in
+- Designated secret storage/management solutions
+- Envelope encryption (mostly default)
+- Blast radius (IAM configuration, permission scope)
+    - Example: Azure Key vault
+- API quotas or service limits
+- Cost vs. cost at scale
+- Data key caching
 
-[comment]: TODO: REPLACE/REWRITE/REMOVE as agreed with @bendehaan
-"[Vendor lock-in](https://www.cloudflare.com/learning/cloud/what-is-vendor-lock-in/) refers to a situation where the cost of switching to a different vendor is so high that the customer is essentially stuck with the original vendor. Because of financial pressures, an insufficient workforce, or the need to avoid interruptions to business operations, the customer is "locked in" to what may be an inferior product or service." If a secret management solution is written in such a way that it is hard to discern which secrets are used for what, and secrets cannot be easily extracted, you end up with a vendor lockin. This can make it harder to find a better fit-for-purpose in the future.
+### 4.1. Services to use
 
-### 4.2. Geo Restrictions
+AWS Secrets manager
+Note on the AWS Parameter store
 
-### 4.3. Latency
+GCP Secret manager
 
-### 4.4. Data Access (keys of the kingdom)
+Azure Key Vault
+
+Rotating secrets automatically w/ functions (shouldn't be able to assume roles used for rotating)
+
+### 4.2. Envelope encryption
+
+Customer master key -> data key
+
+BYOK vs. Cloud provider key
+
+Client-side encryption for end-to-end purposes
+
+### 4.3. Identity and Access Management (IAM)
+
+Applies to both cloud and on-premise. IAM control plane of cloud.
+
+Leverage temporality (roles, service account impersonation, etc)
+
+Permission scope
+
+Azure Key Vault example
+
+Multiple roads lead to Rome: competing ways to grant access to a secret
+
+### 4.2. API limits
+
+- Data key caching
 
 ## 5. Containers & Orchestrators
 
