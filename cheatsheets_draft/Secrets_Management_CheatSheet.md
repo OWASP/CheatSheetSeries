@@ -238,6 +238,8 @@ Azure Key Vault
 
 Rotating secrets automatically w/ functions (shouldn't be able to assume roles used for rotating)
 
+MAYBE A FEW MORENOTES ON ROTATION? (E.G. USAGE OF SERVERLESS FUNCTIONS/LAMBDA'S FOR THAT?)
+
 ### 4.2. Envelope encryption
 
 Customer master key -> data key
@@ -269,8 +271,8 @@ Multiple roads lead to Rome: competing ways to grant access to a secret
 
 Ther are 3 ways to get secrets to an app inside a docker container
 
-- Environment variables: We can provide secrets directly as the part of the docker container configuration. In this method the secrets could be either hard coded in docker configuration file or could be passed as argument at docker runtime.
-- Mounted volumes (file): In this method we keep our secrets within a particular config/secret file and mount that file to our instance as a mounted volume.
+- Environment variables: We can provide secrets directly as the part of the docker container configuration. Note that secrets itself should never be hardcoded by means of docker ENV or docker ARG commands, as these can easily leak with the container definitions. See the Docker challenges at [WrongSecrets]() as well. Instead let an orchestrator overwrite the environment variable with the actual secret and make sure that this is not hardcoded by itself.
+- Mounted volumes (file): In this method we keep our secrets within a particular config/secret file and mount that file to our instance as a mounted volume. Make sure that these mounts are mounted in by the orchestrator and never build in at container build time, as this will leak the secret with the contianer definition, instead: make sure that the orchestrator mounts in the volume when required.
 - Fetch from secret store (in-memory): A sidecar app/container fetches the secrets it need directly from a secret manager service without having to deal with docker config. This solution allows you to use dynamically constructed secrets without worrying about the secrets being viewable from the file system or from checking the docker container's env variables.
 
 ### 5.2. Short Lived Side-car Containers
@@ -278,6 +280,8 @@ Ther are 3 ways to get secrets to an app inside a docker container
 To inject secret within a container one could create short lived side-car containers that fethces secret from some remote end point and then store them on a shared volume which is also mounted to the original container. The original container can now use the secrets from mounted volume benefit of using this approach is that we don't need to integrate any third party tool or code to get secrets. Once the secret are fethced the side car container dies and that's why they are called short lived. Example of one such service is Vault Agent Sidecar Injector. The Vault Agent Injector alters pod specifications to include Vault Agent containers that render Vault secrets to a shared memory volume using Vault Agent Templates. By rendering secrets to a shared volume, containers within the pod can consume Vault secrets without being Vault aware.
 
 ### 5.3. Internal vs External Access
+
+
 
 ## 6. Implementation Guidance
 
