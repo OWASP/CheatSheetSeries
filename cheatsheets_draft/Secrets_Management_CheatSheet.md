@@ -283,7 +283,7 @@ To inject secret within a container one could create short lived side-car contai
 
 ### 5.3. Internal vs External Access
 
-TODO: WRITE DOWN HOW THIS DIFFERS IN SECRET INJECTION
+Secrets should only be exposed to internal communication mechanisms between the container and the deployment representation (E.g. a Kunbernetes Pod), it should never be exposed through external access mechanisms which are shared among deployments and/or orchestrators (e.g. a shared volume).
 
 ## 6. Implementation Guidance
 
