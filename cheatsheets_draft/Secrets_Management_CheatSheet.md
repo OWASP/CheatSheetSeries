@@ -267,6 +267,8 @@ Multiple roads lead to Rome: competing ways to grant access to a secret
 
 ## 5. Containers & Orchestrators
 
+There are various ways how containers can be enriched with secrets: at container build time (not recommended) and during orchestratrion/deployment.
+
 ### 5.1. Injection of Secrets (file, in-memory)
 
 Ther are 3 ways to get secrets to an app inside a docker container
@@ -281,7 +283,7 @@ To inject secret within a container one could create short lived side-car contai
 
 ### 5.3. Internal vs External Access
 
-
+TODO: WRITE DOWN HOW THIS DIFFERS IN SECRET INJECTION
 
 ## 6. Implementation Guidance
 
