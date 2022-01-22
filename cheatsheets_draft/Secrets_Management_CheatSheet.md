@@ -183,7 +183,7 @@ Very often, these secrets are configurable/viewable by people who have authoriza
 
 #### 3.2.2 Storing it in a secrets management system
 
-Secrets can be stored in a secrets management solution. This can be a solution offered by your (cloud) infrastructure provider, such as [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/) [Google Secrets Manager]() [Azure KeyVault](), which are described in section 4 of this cheatsheet. Another option is a dedicated secrets management system, such as [Hashicorp Vault](), [Keeper](https://www.keepersecurity.com/), [Confidant](https://lyft.github.io/confidant/), [Cyberark Vault](). Here are a few do's and don'ts from the CI/CD interaction with these systems. Make sure thatthe following is taken care of:
+Secrets can be stored in a secrets management solution. This can be a solution offered by your (cloud) infrastructure provider, such as [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/) [Google Secrets Manager](https://cloud.google.com/secret-manager) [Azure KeyVault](https://azure.microsoft.com/nl-nl/services/key-vault/), which are described in section 4 of this cheatsheet. Another option is a dedicated secrets management system, such as [Hashicorp Vault](https://www.vaultproject.io/), [Keeper](https://www.keepersecurity.com/), [Confidant](https://lyft.github.io/confidant/), [Cyberark Vault](https://www.cyberark.com/). Here are a few do's and don'ts from the CI/CD interaction with these systems. Make sure thatthe following is taken care of:
 
 - Rotation/Temporaility: credentials used by the CI/CD tooling to authenticate against the secret management system are rotated frequently and expire after a job is completed.
 - Scope of authorization: credentials used by the CI/CD tooling (e.g. roles, users, etc.) are scoped e.g. only authorized to those secrets and services of the secret management system which are required for the CI/CD tooling to execute its job.
@@ -193,7 +193,7 @@ Secrets can be stored in a secrets management solution. This can be a solution o
 
 #### 3.2.3 Not touched by CI/CD at all
 
-Secrets do not necessarilty need to be brought to a consumer of the secret by a CI/CD pipeline. It is even better when the secret is actually retrieved by the consumer of the secret. In that case, the CI/CD pipeline still needs to instruct the orchestrating system (e.g. [Kubernetes]()) that it needs to schedule a certain service with a given service account with which the consumer can then retrieve the actual required secret. This means that the CI/CD tooling still has credentials towards the orchestrating platform, but no longer has access to the secrets themselves. The do's and don'ts regarding these type of credentials are similar to the ones described in section 3.2.2.
+Secrets do not necessarilty need to be brought to a consumer of the secret by a CI/CD pipeline. It is even better when the secret is actually retrieved by the consumer of the secret. In that case, the CI/CD pipeline still needs to instruct the orchestrating system (e.g. [Kubernetes](https://kubernetes.io/)) that it needs to schedule a certain service with a given service account with which the consumer can then retrieve the actual required secret. This means that the CI/CD tooling still has credentials towards the orchestrating platform, but no longer has access to the secrets themselves. The do's and don'ts regarding these type of credentials are similar to the ones described in section 3.2.2.
 
 ### 3.3: Authentication and Authorization of CI/CD tooling
 
@@ -273,7 +273,7 @@ There are various ways how containers can be enriched with secrets: at container
 
 Ther are 3 ways to get secrets to an app inside a docker container
 
-- Environment variables: We can provide secrets directly as the part of the docker container configuration. Note that secrets itself should never be hardcoded by means of docker ENV or docker ARG commands, as these can easily leak with the container definitions. See the Docker challenges at [WrongSecrets]() as well. Instead let an orchestrator overwrite the environment variable with the actual secret and make sure that this is not hardcoded by itself.
+- Environment variables: We can provide secrets directly as the part of the docker container configuration. Note that secrets itself should never be hardcoded by means of docker ENV or docker ARG commands, as these can easily leak with the container definitions. See the Docker challenges at [WrongSecrets](https://github.com/commjoen/wrongsecrets) as well. Instead let an orchestrator overwrite the environment variable with the actual secret and make sure that this is not hardcoded by itself.
 - Mounted volumes (file): In this method we keep our secrets within a particular config/secret file and mount that file to our instance as a mounted volume. Make sure that these mounts are mounted in by the orchestrator and never build in at container build time, as this will leak the secret with the contianer definition, instead: make sure that the orchestrator mounts in the volume when required.
 - Fetch from secret store (in-memory): A sidecar app/container fetches the secrets it need directly from a secret manager service without having to deal with docker config. This solution allows you to use dynamically constructed secrets without worrying about the secrets being viewable from the file system or from checking the docker container's env variables.
 
@@ -294,6 +294,7 @@ TODO: WRITE DOWN HOW THIS DIFFERS IN SECRET INJECTION
 ### 6.3. Processes and Governance
 
 ## 7. Encryption
+TODO: REWRITE THIS CHAPTER: WHAT TO DO ENCRYPTION WISE? WHAT (NOT) TO USE, REFER TO OTHER CHEAT-SHEETS, WORK ON HOW TO APPLY ENCRYPTION, ETC.!
 
 ### 7.1. Encryption as a Service (EaaS)
 
