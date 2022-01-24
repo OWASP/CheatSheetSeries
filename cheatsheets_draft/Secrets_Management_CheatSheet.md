@@ -227,6 +227,8 @@ Important considerations:
     - Example: Azure Key vault
 - API quotas or service limits
 
+(WIP by @bendehaan)
+
 ### 4.1. Services to use
 
 AWS Secrets manager
@@ -301,6 +303,7 @@ Secrets Management goes hand in hand with encryption. After all: the secrets sho
 
 ### 7.1 Encryption Types to Use
 
+There are various encryption types to use when it comes to securing a secret. (WIP by @commjoen)
 
 ### 7.2 Convergent Encryption
 
@@ -324,12 +327,14 @@ EaaS is a model in which users subscribe to a cloud-based encryption service wit
 ### 8.3. Ease of On-boarding
 
 ## 9. Workflow in Case of Compromise
+(by @thatsjet)
 
 ### 9.1. Process
 
 ## 10. Secrets Management Tooling Guidelines
 
-## 11. Secret detection
+## 11. Secret detection 
+(by @thatsjet)
 
 - Many native integrations possible (Cloud platforms, CI/CD tooling, application libraries, container orchestrators)
 - Secret lifecycle (rotation, deletion, lifespan)
