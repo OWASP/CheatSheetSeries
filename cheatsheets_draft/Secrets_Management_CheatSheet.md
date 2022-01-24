@@ -285,6 +285,8 @@ To inject secret within a container one could create short lived side-car contai
 
 Secrets should only be exposed to internal communication mechanisms between the container and the deployment representation (E.g. a Kunbernetes Pod), it should never be exposed through external access mechanisms which are shared among deployments and/or orchestrators (e.g. a shared volume).
 
+When secrets are stored by the orchestrator (e.g. Kubernetes Secrets), make sure that the storage backend of the orchestrator is encrypted and keys mare managed well.
+
 ## 6. Implementation Guidance
 
 ### 6.1. Key Material Management Policies
@@ -294,9 +296,17 @@ Secrets should only be exposed to internal communication mechanisms between the 
 ### 6.3. Processes and Governance
 
 ## 7. Encryption
-TODO: REWRITE THIS CHAPTER: WHAT TO DO ENCRYPTION WISE? WHAT (NOT) TO USE, REFER TO OTHER CHEAT-SHEETS, WORK ON HOW TO APPLY ENCRYPTION, ETC.!
 
-### 7.1. Encryption as a Service (EaaS)
+Secrets Management goes hand in hand with encryption. After all: the secrets should be stored encrypted somewhere to protect their confidentiality and Integrity.
+
+### 7.1 Encryption Types to Use
+
+
+### 7.2 Convergent Encryption
+
+### 7.3 Where to store the Encryption Keys?
+
+### 7.4. Encryption as a Service (EaaS)
 
 EaaS is a model in which users subscribe to a cloud-based encryption service without having to install encryption in their own systems. By using Encryption as a service we get following benefits:
 
