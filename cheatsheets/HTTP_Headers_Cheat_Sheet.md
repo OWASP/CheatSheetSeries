@@ -84,6 +84,8 @@ Please checkout [HTTP Strict Transport Security Cheat Sheet](HTTP_Strict_Transpo
 
 The `Expect-CT` header lets sites opt-in to reporting of Certificate Transparency (CT) requirements. Given that mainstream clients now require CT qualification, the only remaining value is reporting such occurrences to the nominated report-uri value in the header. The header is now less about enforcement and more about detection/reporting.
 
+Please note Mozilla states that [this header will be obsolete](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Expect-CT) in June 2021. []
+
 #### Recommendation
 
 Set Certificate Transparency so user agents report Expect-CT failures.
