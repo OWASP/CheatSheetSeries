@@ -1818,7 +1818,7 @@
 <li>Both pages should only interpret the exchanged messages as <strong>data</strong>. Never evaluate passed messages as code (e.g. via <code>eval()</code>) or insert it to a page DOM (e.g. via <code>innerHTML</code>), as that would create a DOM-based XSS vulnerability. For more information see <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">DOM based XSS Prevention Cheat Sheet</a>.</li>
 <li>To assign the data value to an element, instead of using a insecure method like <code>element.innerHTML=data;</code>, use the safer option: <code>element.textContent=data;</code></li>
 <li>Check the origin properly exactly to match the FQDN(s) you expect. Note that the following code: <code>if(message.origin.indexOf(".owasp.org")!=-1) { /* ... */ }</code> is very insecure and will not have the desired behavior as <code>owasp.org.attacker.com</code> will match.</li>
-<li>If you need to embed external content/untrusted gadgets and allow user-controlled scripts (which is highly discouraged), consider using a JavaScript rewriting framework such as <a href="http://code.google.com/p/google-caja/">Google Caja</a> or check the information on <a href="HTML5_Security_Cheat_Sheet.html#sandboxed-frames">sandboxed frames</a>.</li>
+<li>If you need to embed external content/untrusted gadgets and allow user-controlled scripts (which is highly discouraged), please check the information on <a href="HTML5_Security_Cheat_Sheet.html#sandboxed-frames">sandboxed frames</a>.</li>
 </ul>
 <h3 id="cross-origin-resource-sharing">Cross Origin Resource Sharing<a class="headerlink" href="#cross-origin-resource-sharing" title="Permanent link">&para;</a></h3>
 <ul>
@@ -1826,7 +1826,7 @@
 <li>Ensure that URLs responding with <code>Access-Control-Allow-Origin: *</code> do not include any sensitive content or information that might aid attacker in further attacks. Use the <code>Access-Control-Allow-Origin</code> header only on chosen URLs that need to be accessed cross-domain. Don't use the header for the whole domain.</li>
 <li>Allow only selected, trusted domains in the <code>Access-Control-Allow-Origin</code> header. Prefer allowing specific domains over blocking or allowing any domain (do not use <code>*</code> wildcard nor blindly return the <code>Origin</code> header content without any checks).</li>
 <li>Keep in mind that CORS does not prevent the requested data from going to an unauthorized location. It's still important for the server to perform usual <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">CSRF</a> prevention.</li>
-<li>While the RFC recommends a pre-flight request with the <code>OPTIONS</code> verb, current implementations might not perform this request, so it's important that "ordinary" (<code>GET</code> and <code>POST</code>) requests perform any access control necessary.</li>
+<li>While the <a href="https://fetch.spec.whatwg.org/#http-cors-protocol">Fetch Standard</a> recommends a pre-flight request with the <code>OPTIONS</code> verb, current implementations might not perform this request, so it's important that "ordinary" (<code>GET</code> and <code>POST</code>) requests perform any access control necessary.</li>
 <li>Discard requests received over plain HTTP with HTTPS origins to prevent mixed content bugs.</li>
 <li>Don't rely only on the Origin header for Access Control checks. Browser always sends this header in CORS requests, but may be spoofed outside the browser. Application-level protocols should be used to protect sensitive data.</li>
 </ul>
@@ -1858,7 +1858,7 @@
 <li>A single <a href="https://owasp.org/www-community/attacks/xss/">Cross Site Scripting</a> can be used to load malicious data into these objects too, so don't consider objects in these to be trusted.</li>
 <li>Pay extra attention to "localStorage.getItem" and "setItem" calls implemented in HTML5 page. It helps in detecting when developers build solutions that put sensitive information in local storage, which can be a severe risk if authentication or authorization to that data is incorrectly assumed.</li>
 <li>Do not store session identifiers in local storage as the data is always accessible by JavaScript. Cookies can mitigate this risk using the <code>httpOnly</code> flag.</li>
-<li>There is no way to restrict the visibility of an object to a specific path like with the attribute path of HTTP Cookies, every object is shared within an origin and protected with the Same Origin Policy. Avoid host multiple applications on the same origin, all of them would share the same localStorage object, use different subdomains instead.</li>
+<li>There is no way to restrict the visibility of an object to a specific path like with the attribute path of HTTP Cookies, every object is shared within an origin and protected with the Same Origin Policy. Avoid hosting multiple applications on the same origin, all of them would share the same localStorage object, use different subdomains instead.</li>
 </ul>
 <h3 id="client-side-databases">Client-side databases<a class="headerlink" href="#client-side-databases" title="Permanent link">&para;</a></h3>
 <ul>
@@ -1869,7 +1869,7 @@
 </ul>
 <h2 id="geolocation">Geolocation<a class="headerlink" href="#geolocation" title="Permanent link">&para;</a></h2>
 <ul>
-<li>The Geolocation RFC recommends that the user agent ask the user's permission before calculating location. Whether or how this decision is remembered varies from browser to browser. Some user agents require the user to visit the page again in order to turn off the ability to get the user's location without asking, so for privacy reasons, it's recommended to require user input before calling <code>getCurrentPosition</code> or <code>watchPosition</code>.</li>
+<li>The <a href="https://www.w3.org/TR/2021/WD-geolocation-20211124/#security">Geolocation API</a> requires that user agents ask for the user's permission before calculating location. Whether or how this decision is remembered varies from browser to browser. Some user agents require the user to visit the page again in order to turn off the ability to get the user's location without asking, so for privacy reasons, it's recommended to require user input before calling <code>getCurrentPosition</code> or <code>watchPosition</code>.</li>
 </ul>
 <h2 id="web-workers">Web Workers<a class="headerlink" href="#web-workers" title="Permanent link">&para;</a></h2>
 <ul>
