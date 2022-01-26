@@ -311,9 +311,11 @@ When secrets are stored by the orchestrator (e.g. Kubernetes Secrets), make sure
 
 ### 6.1 Key Material Management Policies
 
+Key material management is discussed in the [Key management Secret CheatSheet](cheatsheets/Key_Management_Cheat_Sheet)
+
 ### 6.2 Dynamic vs Static Use Cases
 
-### 6.3 Processes and Governance
+TODO: DISCUSS THE POSSIBLE USE CASES: WHEN CAN SOMETHING BE DYNAMIC AND WHEN NOT
 
 ## 7 Encryption
 
@@ -349,8 +351,6 @@ EaaS is a model in which users subscribe to a cloud-based encryption service wit
 (by @thatsjet)
 
 ### 9.1 Process
-
-## 10 Secrets Management Tooling Guidelines
 
 ## 11 Secret detection
 
