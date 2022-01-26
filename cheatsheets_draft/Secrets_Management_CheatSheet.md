@@ -339,7 +339,7 @@ Secrets Management goes hand in hand with encryption. After all: the secrets sho
 
 ### 7.1 Encryption Types to Use
 
-There are various encryption types to use when it comes to securing a secret. (WIP by @commjoen - continue here!)
+There are various encryption types to use when it comes to securing a secret. (TODO/WIP by @commjoen - continue here!)
 
 ### 7.2 Convergent Encryption
 
