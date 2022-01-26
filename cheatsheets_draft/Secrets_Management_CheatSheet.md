@@ -238,6 +238,8 @@ Sometimes it's possible to automatically rotate your secret, either via a servic
 
 For AWS, the recommended solution is [AWS secret manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html).
 
+Permissions are granted at the secret level. Check out the [Secrets Manager best practices](https://docs.aws.amazon.com/secretsmanager/latest/userguide/best-practices.html) for more information.
+
 It is also possible to use the [Systems Manager Parameter store](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html), which is cheaper, but that has a few downsides:
 
 - you'll need to make sure you've specified encryption yourself (secrets manager does that by default)
@@ -246,19 +248,21 @@ It is also possible to use the [Systems Manager Parameter store](https://docs.aw
 - it doesn't support cross-region replication
 - there are fewer [security hub controls](https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-standards-fsbp-controls.html) available
 
-Permissions are granted at the secret level.
-
 #### 4.1.2 GCP
 
 For GCP, the recommended service is [Secret Manager](https://cloud.google.com/secret-manager/docs).
 
 Permissions are granted at the secret level.
 
+Check out the [Secret Manager best practices](https://cloud.google.com/secret-manager/docs/best-practices) for more information.
+
 #### 4.1.3 Azure
 
 For Azure, the recommended service is [Key Vault](https://docs.microsoft.com/en-us/azure/key-vault/).
 
 Contrary to other clouds, permisssions are granted at the _**Key Vault**_ level. This means secrets for separate workloads and separate sensitivity levels should be in separated Key Vaults accordingly.
+
+Check out the [Key Vault best practices](https://docs.microsoft.com/en-us/azure/key-vault/general/best-practices) for more information.
 
 ### 4.2 Envelope & client-side encryption
 
