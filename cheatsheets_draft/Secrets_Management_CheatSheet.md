@@ -313,6 +313,8 @@ When secrets are stored by the orchestrator (e.g. Kubernetes Secrets), make sure
 
 ## 6 Implementation Guidance
 
+In this section we slightly touch upon the implementation of various concepts. Note that for the actual implementation it is better to always refer to the documentation of the secrets managing system of your choice as this will be better up to date than any secodnary document such as this cheatsheet.
+
 ### 6.1 Key Material Management Policies
 
 Key material management is discussed in the [Key management Secret CheatSheet](cheatsheets/Key_Management_Cheat_Sheet)
@@ -337,7 +339,7 @@ Secrets Management goes hand in hand with encryption. After all: the secrets sho
 
 ### 7.1 Encryption Types to Use
 
-There are various encryption types to use when it comes to securing a secret. (WIP by @commjoen)
+There are various encryption types to use when it comes to securing a secret. (WIP by @commjoen - continue here!)
 
 ### 7.2 Convergent Encryption
 
