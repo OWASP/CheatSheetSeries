@@ -319,7 +319,17 @@ Key material management is discussed in the [Key management Secret CheatSheet](c
 
 ### 6.2 Dynamic vs Static Use Cases
 
-TODO: DISCUSS THE POSSIBLE USE CASES: WHEN CAN SOMETHING BE DYNAMIC AND WHEN NOT
+We see the following usecases for dynamic secrets, amongst others:
+
+- short living secrets (E.g. credentials and/or API keys) for a secondary service that expres the intent for connecting the primary service (e.g. consumer) to the service.
+- short lived integrity and encryption controls for guarding and securing in memory processes and runtime communication processes. Think of encryption keys which only need to live for a single session or a single deployment lifetime.
+- short lived credentials which are required to build a stack during the deployment of a service for interacting with the deployers and supporting infrastructure.
+- TODO: ANYTHING WE NEED TO ADD HERE?
+
+Note that these dynamic secrets often need to be created at the service/technology stack to which we need to connect. In order to create these type of dynamic secrets, we often need long term static secrets so that we can actually create the dynamic secrets themselves. Other static use cases:
+
+- key materials that need to live longer than a single deployment due to the nature of their usage in the interaction with other instances of the same service (e.g. storage encryption keys, TLS PKI keys)
+- key materials and/or credentials to connect to services which do not support creating temporal roles and/or credentials.
 
 ## 7 Encryption
 
