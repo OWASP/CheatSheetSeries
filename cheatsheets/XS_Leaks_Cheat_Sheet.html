@@ -1501,8 +1501,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#subresouce-protection" class="md-nav__link">
-    Subresouce protection
+  <a href="#subresource-protection" class="md-nav__link">
+    SubResource protection
   </a>
   
 </li>
@@ -1532,11 +1532,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#attacks-on-postmessage-commmunication" class="md-nav__link">
-    Attacks on postMessage commmunication
+  <a href="#attacks-on-postmessage-communication" class="md-nav__link">
+    Attacks on postMessage communication
   </a>
   
-    <nav class="md-nav" aria-label="Attacks on postMessage commmunication">
+    <nav class="md-nav" aria-label="Attacks on postMessage communication">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1548,8 +1548,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#specify-strict-targetorign" class="md-nav__link">
-    Specify strict targetOrign
+  <a href="#specify-strict-targetorigin" class="md-nav__link">
+    Specify strict targetOrigin
   </a>
   
 </li>
@@ -1831,8 +1831,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#subresouce-protection" class="md-nav__link">
-    Subresouce protection
+  <a href="#subresource-protection" class="md-nav__link">
+    SubResource protection
   </a>
   
 </li>
@@ -1862,11 +1862,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#attacks-on-postmessage-commmunication" class="md-nav__link">
-    Attacks on postMessage commmunication
+  <a href="#attacks-on-postmessage-communication" class="md-nav__link">
+    Attacks on postMessage communication
   </a>
   
-    <nav class="md-nav" aria-label="Attacks on postMessage commmunication">
+    <nav class="md-nav" aria-label="Attacks on postMessage communication">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1878,8 +1878,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#specify-strict-targetorign" class="md-nav__link">
-    Specify strict targetOrign
+  <a href="#specify-strict-targetorigin" class="md-nav__link">
+    Specify strict targetOrigin
   </a>
   
 </li>
@@ -2070,7 +2070,7 @@
 <tr>
 <td><code>https://example.com</code></td>
 <td><code>http://sub.example.com</code></td>
-<td>No, diffrent hosts</td>
+<td>No, different hosts</td>
 </tr>
 <tr>
 <td><code>https://example.com</code></td>
@@ -2125,7 +2125,7 @@
 <tr>
 <td><code>https://evil.net</code></td>
 <td><code>https://example.com</code></td>
-<td>No, diffrent eTLD+1</td>
+<td>No, different eTLD+1</td>
 </tr>
 <tr>
 <td><code>https://sub.example.com</code></td>
@@ -2141,7 +2141,7 @@
 </code></pre></div>
 <p>The browser will automatically focus on an element with a given ID if we append a hash to the URL, e.g. <code>https://example.com#pro</code>. What's more JavaScript <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/focus_event">focus event</a> gets fired. The attacker may try to embed the application in the iframe with specific source on its own controlled page:</p>
 <p><img alt="XS-Leaks-ID" src="../assets/XS_Leaks_ID.png" /></p>
-<p>then add listener in main document for <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/blur_event">blur event</a> (the oposite of focus). When the victim visits the attackers site, the blur event gets fired. The attacker will be able to conclude that the victim has a pro account.</p>
+<p>then add listener in main document for <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/blur_event">blur event</a> (the opposite of focus). When the victim visits the attackers site, the blur event gets fired. The attacker will be able to conclude that the victim has a pro account.</p>
 <h3 id="defense">Defense<a class="headerlink" href="#defense" title="Permanent link">&para;</a></h3>
 <h4 id="framing-protection">Framing protection<a class="headerlink" href="#framing-protection" title="Permanent link">&para;</a></h4>
 <p>If you don't need other origins to embed your application in a frame, you can consider using one of two mechanisms:</p>
@@ -2169,7 +2169,7 @@
 <p>When the browser sends a request for a resource, the server processes the request and decides on the response e.g. (200 OK or 404 NOT FOUND). The browser receives the HTTP response and based on that, the appropriate JavaScript event is fired (onload or onerror).</p>
 <p>In this way, we can try to load resources and, based on the response status, infer whether they exist or not in the context of the logged-in victim. Let's look at the following situation:</p>
 <ul>
-<li><code>GET /api/user/1234</code> - 200 OK - currently logged-in user is 1234 because we succefuly loaded resource (<a href="https://developer.mozilla.org/en-US/docs/Web/API/GlobalEventHandlers/onload">onload</a> event fired)</li>
+<li><code>GET /api/user/1234</code> - 200 OK - currently logged-in user is 1234 because we successfully loaded resource (<a href="https://developer.mozilla.org/en-US/docs/Web/API/GlobalEventHandlers/onload">onload</a> event fired)</li>
 <li><code>GET /api/user/1235</code> - 401 Unauthorized  - 1235 is not the ID of the currently logged in user (<a href="https://developer.mozilla.org/en-US/docs/Web/API/GlobalEventHandlers/onerror">onerror</a> event will be triggered)</li>
 </ul>
 <p>Given the above example, an attacker can use JavaScript on his controlled origin to guess the victim's ID by enumerating over all the values in a simple loop.</p>
@@ -2193,7 +2193,7 @@
 </code></pre></div>
 <p>Note that the attacker here does not care about reading the response body even though it would not be able to due to solid isolation mechanisms in browsers such as <a href="https://www.chromium.org/Home/chromium-security/corb-for-developers">Cross-Origin Resource Blocking</a>. All it needs is the success information it receives when the <code>onload</code> event fires.</p>
 <h3 id="defense_1">Defense<a class="headerlink" href="#defense_1" title="Permanent link">&para;</a></h3>
-<h4 id="subresouce-protection">Subresouce protection<a class="headerlink" href="#subresouce-protection" title="Permanent link">&para;</a></h4>
+<h4 id="subresource-protection">SubResource protection<a class="headerlink" href="#subresource-protection" title="Permanent link">&para;</a></h4>
 <p>In some cases, mechanism of special unique tokens may be implemented to protect our sensitive endpoints.</p>
 <div class="highlight"><pre><span></span><code>/api/users/1234?token=be930b8cfb5011eb9a030242ac130003
 </code></pre></div>
@@ -2229,8 +2229,8 @@
 <li><code>cross-origin</code></li>
 </ul>
 <p>Read more about CORP <a href="https://resourcepolicy.fyi/">here</a>.</p>
-<h2 id="attacks-on-postmessage-commmunication">Attacks on postMessage commmunication<a class="headerlink" href="#attacks-on-postmessage-commmunication" title="Permanent link">&para;</a></h2>
-<p>Sometimes in controlled situations we would like despite SOP to exchange information between different origns. We can use the postMessage mechanism. See below example:</p>
+<h2 id="attacks-on-postmessage-communication">Attacks on postMessage communication<a class="headerlink" href="#attacks-on-postmessage-communication" title="Permanent link">&para;</a></h2>
+<p>Sometimes in controlled situations we would like despite SOP to exchange information between different origins. We can use the postMessage mechanism. See below example:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// Origin: http://example.com</span>
 <span class="kd">const</span> <span class="nx">site</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">URLSearchParams</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">search</span><span class="p">).</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;site&#39;</span><span class="p">);</span> <span class="c1">// https://evil.com</span>
 <span class="kd">const</span> <span class="nx">popup</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="nx">site</span><span class="p">);</span>
@@ -2242,7 +2242,7 @@
 <span class="p">});</span>
 </code></pre></div>
 <h3 id="defense_2">Defense<a class="headerlink" href="#defense_2" title="Permanent link">&para;</a></h3>
-<h4 id="specify-strict-targetorign">Specify strict targetOrign<a class="headerlink" href="#specify-strict-targetorign" title="Permanent link">&para;</a></h4>
+<h4 id="specify-strict-targetorigin">Specify strict targetOrigin<a class="headerlink" href="#specify-strict-targetorigin" title="Permanent link">&para;</a></h4>
 <p>To avoid situations like the one above, where an attacker manages to get the reference for a window to receive a message, always specify the exact <code>targetOrigin</code> in postMessage. Passing to the <code>targetOrigin</code> wildcard <code>*</code> causes any origin to receive the message.</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// Origin: http://example.com</span>
 <span class="kd">const</span> <span class="nx">site</span> <span class="o">=</span> <span class="ow">new</span> <span class="nx">URLSearchParams</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">search</span><span class="p">).</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;site&#39;</span><span class="p">);</span> <span class="c1">// https://evil.com</span>
@@ -2313,7 +2313,7 @@
 </ul>
 <h3 id="fetch-metadata">Fetch Metadata<a class="headerlink" href="#fetch-metadata" title="Permanent link">&para;</a></h3>
 <ul>
-<li><a href="https://www.appsecmonkey.com/blog/fetch-metadata">Fetch Metadata and Isolation Polcies</a></li>
+<li><a href="https://www.appsecmonkey.com/blog/fetch-metadata">Fetch Metadata and Isolation Policies</a></li>
 <li><a href="https://web.dev/fetch-metadata/">Protect your resources from attacks with Fetch Metadata</a></li>
 </ul>
 <h3 id="framing-protection_1">Framing protection<a class="headerlink" href="#framing-protection_1" title="Permanent link">&para;</a></h3>
@@ -2324,7 +2324,7 @@
 <h3 id="samesite">SameSite<a class="headerlink" href="#samesite" title="Permanent link">&para;</a></h3>
 <ul>
 <li><a href="https://web.dev/samesite-cookies-explained/">SameSite cookies explained</a></li>
-<li><a href="https://web.dev/samesite-cookie-recipes/">SameSite cookies recipies</a></li>
+<li><a href="https://web.dev/samesite-cookie-recipes/">SameSite cookies recipes</a></li>
 </ul>
 <h3 id="coop-and-corp-header">COOP and CORP header<a class="headerlink" href="#coop-and-corp-header" title="Permanent link">&para;</a></h3>
 <ul>
