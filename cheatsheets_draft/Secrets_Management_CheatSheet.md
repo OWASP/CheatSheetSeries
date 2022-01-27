@@ -13,11 +13,11 @@
 
 ## 1 Introduction
 
-Secrets are being used everywhere nowadays, especially with the popularity DevOps movement. Application Programming Interface (API) keys, database credentials, Identity and Access Management (IAM) permissions, Secure Shell (SSH) keys, certificates, etc. Many organizations have them hard coded in plaintext within the source code, littered throughout configuration files and configuration management tools.
+Secrets are being used everywhere nowadays, especially with the popularity of the DevOps movement. Application Programming Interface (API) keys, database credentials, Identity and Access Management (IAM) permissions, Secure Shell (SSH) keys, certificates, etc. Many organizations have them hard coded in plaintext within the source code, littered throughout configuration files and configuration management tools.
 
-There is a growing need for organisations to centralise the storage, provisioning, auditing, rotation and management of secrets in order to control access to and prevent secrets from leaking and compromising the organization. Most of the time, services share the same secrets that make identifying the source of compromise or leak very challenging.
+There is a growing need for organizations to c the storage, provisioning, auditing, rotation and management of secrets in order to control access to secrets and prevent them from leaking and compromising the organization. Most of the time, services share the same secrets that make identifying the source of compromise or leak very challenging.
 
-This cheat sheet offers best practices and guidelines to help implement secrets management properly.
+This cheatsheet offers best practices and guidelines to help properly implement secrets management.
 
 ## 2 General Secrets Management
 
@@ -28,13 +28,13 @@ The following sections address the main concepts relating to secrets management.
 It is important to select a technology that is robust enough to reliably service traffic from:
 
 - Users (e.g. SSH keys, root account passwords). In an incident response scenario users expect to be provisioned with credentials rapidly, so they can recover services that have gone offline. Having to wait for credentials could impact the responsiveness of the operations team.
-- Applications (e.g. database credentials and API keys). If the service is not preferment it could degrade the availability of dependent applications or increase application startup times.
+- Applications (e.g. database credentials and API keys). If the service is not performant, it could degrade the availability of dependent applications or increase application startup times.
 
-Within a large organisation such a service could receive a huge volume of requests.
+Within a large organization, such a service could receive a huge volume of requests.
 
 ### 2.2 Centralize and Standardize
 
-Secrets used by your DevOps teams for your applications might be consumed differently, then secrets stored by your marketeers or your SRE team. When consumers and/or producers of a secret are not catered to their needs, you often find the secret badly maintained within the organization. Therefore, it is key that you standardize and centralize the secrets management solution. This can still mean that you centralize to multiple secret management solutions. For instance: your cloud native development teams choose to use the solution provided by the cloud provider, while your private cloud uses a third party solution, and everybody has an account for a selected password manager.
+Secrets used by your DevOps teams for your applications might be consumed differently, than secrets stored by your marketeers or your SRE team. When consumers and/or producers of a secret are not catered to their needs, you often find the secret badly maintained within the organization. Therefore, it is key that you standardize and centralize the secrets management solution. This can still mean that you centralize to multiple secret management solutions. For instance: your cloud native development teams choose to use the solution provided by the cloud provider, while your private cloud uses a third party solution, and everybody has an account for a selected password manager.
 By making sure that the teams standardize the interaction with these different solutions, they remain maintainable and usable in the event of an incident.
 Even when a company centralizes its secrets management to just one solution, you will still often have to secure the master secret of that secrets management solution in a secondary secrets management solution. For instance: a cloud provider its facilities can be used to store secrets, but then the root/master credentials of that cloud provider need to be stored somewhere else.
 
@@ -72,7 +72,7 @@ It is important that all auditing is correctly timestamped, therefore, the secre
 
 ### 2.6 Secret Lifecycle
 
-Secrets follow a lifecycle. The stages in the lifecycle are as follows:
+Secrets follow a lifecycle. The stages of the lifecycle are as follows:
 
 - Creation
 - Rotation
@@ -123,7 +123,7 @@ Last, should the system become unavailable due to other reasons than normal main
 
 ### 2.10 Policies
 
-Policies defining the minimum complexity requirements of passwords, as well as approved encryption algorithms are typically set at an organisation-wide level and should be enforced consistently. The use of a centralised secrets management solution would help companies to enforce these policies.
+Policies defining the minimum complexity requirements of passwords, as well as approved encryption algorithms are typically set at an organization-wide level and should consistently be enforced. The use of a centralised secrets management solution would help companies to enforce these policies.
 
 Next to that, having an organization wide secrets management policy can help to enforce application of the best practices defined in this cheatsheet.
 
@@ -143,7 +143,7 @@ Note: if you don't store metadata about the secret, nor prepare to move, you wil
 
 ## 3 Continuous Integration (CI) and Continuous Deployment (CD)
 
-The process of building, testing and deploying changes generally requires access to many systems. Continuous Integration (CI) and Continuous Deployment (CD) tools typically store secrets themselves for providing configuration to the application or for during deployment. Alternatively, they interact heavily with the secrets management system. There are various best-practices which can help smoothing out secret management in CI/CD, some of them will be dealt with in this section.
+The process of building, testing and deploying changes generally requires access to many systems. Continuous Integration (CI) and Continuous Deployment (CD) tools typically store secrets themselves for providing configuration to the application or for during deployment. Alternatively, they interact heavily with the secrets management system. There are various best practices which can help smoothing out secret management in CI/CD, some of them will be dealt with in this section.
 
 ### 3.1 Hardening your CI/CD pipeline
 
@@ -161,7 +161,7 @@ Given that the CI/CD tooling heavily consume secrets, it is key that the pipelin
 
 There are various places at which you can store a secret in order to execute certain CI/CD actions:
 
-- As part of your CI/CD tooling: a secret can be stored as a secret in [Gitlab](https://docs.gitlab.com/charts/installation/secrets.html)/[Github](https://docs.github.com/en/actions/security-guides/encrypted-secrets)/[jenkins](https://www.jenkins.io/doc/developer/security/secrets/). This is not the same as committing it to code.
+- As part of your CI/CD tooling: a secret can be stored as a secret in [GitLab](https://docs.gitlab.com/charts/installation/secrets.html)/[GitHub](https://docs.github.com/en/actions/security-guides/encrypted-secrets)/[jenkins](https://www.jenkins.io/doc/developer/security/secrets/). This is not the same as committing it to code.
 - As part of our secrets-management system: here you can store a secret in a secrets management system, such as facilities provided by a cloud provider ([AWS Secret Manager](https://aws.amazon.com/secrets-manager/), [Azure Key Vault](https://azure.microsoft.com/nl-nl/services/key-vault/)), or other third party facilities ([Hashicorp Vault](https://www.vaultproject.io/), [Keeper](https://www.keepersecurity.com/), [Confidant](https://lyft.github.io/confidant/)).In this case, the CI/CD pipeline tooling requires credentials to connect to these secret management systems in order to have secrets in place.
 
 Another alternative here, is using the CI/CD pipeline to leverage the Encryption as a Service from the secrets management systems to do the encryption of a secret. The CI/CD tooling can then commit the secret encrypted to Git, which can then be fetched by the consuming service at deployment and decrypted again. See section 3.6 for more details.
@@ -170,11 +170,11 @@ Note: not all secrets are required to be at the CI/CD pipeline to get to the act
 
 #### 3.2.1 As part of your CI/CD tooling
 
-When secrets are part of your CI/CD tooling (E.g. Github secrets, Gitlab repository secrets, ENV Vars/Var Groups in Microsoft Azure Devops, Jenkins Secrets, et cetera), it means that the secret is exposed to your CI/CD jobs when these are executed.
-Very often, these secrets are configurable/viewable by people who have authorization to do so (e.g. a maintainer in Github, a project owner in Gitlab, an admin in jenkins, etc.). Which together lines up for the following best practices:
+When secrets are part of your CI/CD tooling (E.g. GitHub secrets, GitLab repository secrets, ENV Vars/Var Groups in Microsoft Azure DevOps, Jenkins Secrets, et cetera), it means that the secret is exposed to your CI/CD jobs when these are executed.
+Very often, these secrets are configurable/viewable by people who have authorization to do so (e.g. a maintainer in GitHub, a project owner in GitLab, an admin in jenkins, etc.). Which together lines up for the following best practices:
 
 - No "big secret": make sure that there are no long-term / high blast-radius / high value secrets as part of your CI/CD tooling; make sure that every secret is not the same for different purposes (e.g. never have one password for all administrative users).
-- IST/SOLL: have a clear overview of which users are able to view/alter the secrets. This often means that maintainers of a gitlab/github project can see its secrets.
+- IST/SOLL: have a clear overview of which users are able to view/alter the secrets. This often means that maintainers of a GitLab/GitHub project can see its secrets.
 - Reduce the amount of people that can do administrative tasks on the project in order to expose the secrets to less people.
 - Log & Alert: Assemble all the logs from the CI/CD tooling and have rules in place to detect secret extraction, or misuse, whether through accessing them by means of a web-interface, or dumping them while double base64 encoding and/or encrypting them with openssl.
 - Rotation: Make sure secrets stored here are timely rotated.
