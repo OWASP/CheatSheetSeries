@@ -238,6 +238,8 @@ Sometimes it's possible to automatically rotate your secret, either via a servic
 
 For AWS, the recommended solution is [AWS secret manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html).
 
+Permissions are granted at the secret level. Check out the [Secrets Manager best practices](https://docs.aws.amazon.com/secretsmanager/latest/userguide/best-practices.html) for more information.
+
 It is also possible to use the [Systems Manager Parameter store](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html), which is cheaper, but that has a few downsides:
 
 - you'll need to make sure you've specified encryption yourself (secrets manager does that by default)
@@ -246,19 +248,21 @@ It is also possible to use the [Systems Manager Parameter store](https://docs.aw
 - it doesn't support cross-region replication
 - there are fewer [security hub controls](https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-standards-fsbp-controls.html) available
 
-Permissions are granted at the secret level.
-
 #### 4.1.2 GCP
 
 For GCP, the recommended service is [Secret Manager](https://cloud.google.com/secret-manager/docs).
 
 Permissions are granted at the secret level.
 
+Check out the [Secret Manager best practices](https://cloud.google.com/secret-manager/docs/best-practices) for more information.
+
 #### 4.1.3 Azure
 
 For Azure, the recommended service is [Key Vault](https://docs.microsoft.com/en-us/azure/key-vault/).
 
 Contrary to other clouds, permisssions are granted at the _**Key Vault**_ level. This means secrets for separate workloads and separate sensitivity levels should be in separated Key Vaults accordingly.
+
+Check out the [Key Vault best practices](https://docs.microsoft.com/en-us/azure/key-vault/general/best-practices) for more information.
 
 ### 4.2 Envelope & client-side encryption
 
@@ -309,11 +313,25 @@ When secrets are stored by the orchestrator (e.g. Kubernetes Secrets), make sure
 
 ## 6 Implementation Guidance
 
+In this section we slightly touch upon the implementation of various concepts. Note that for the actual implementation it is better to always refer to the documentation of the secrets managing system of your choice as this will be better up to date than any secodnary document such as this cheatsheet.
+
 ### 6.1 Key Material Management Policies
+
+Key material management is discussed in the [Key management Secret CheatSheet](cheatsheets/Key_Management_Cheat_Sheet)
 
 ### 6.2 Dynamic vs Static Use Cases
 
-### 6.3 Processes and Governance
+We see the following usecases for dynamic secrets, amongst others:
+
+- short living secrets (E.g. credentials and/or API keys) for a secondary service that expres the intent for connecting the primary service (e.g. consumer) to the service.
+- short lived integrity and encryption controls for guarding and securing in memory processes and runtime communication processes. Think of encryption keys which only need to live for a single session or a single deployment lifetime.
+- short lived credentials which are required to build a stack during the deployment of a service for interacting with the deployers and supporting infrastructure.
+- TODO: ANYTHING WE NEED TO ADD HERE?
+
+Note that these dynamic secrets often need to be created at the service/technology stack to which we need to connect. In order to create these type of dynamic secrets, we often need long term static secrets so that we can actually create the dynamic secrets themselves. Other static use cases:
+
+- key materials that need to live longer than a single deployment due to the nature of their usage in the interaction with other instances of the same service (e.g. storage encryption keys, TLS PKI keys)
+- key materials and/or credentials to connect to services which do not support creating temporal roles and/or credentials.
 
 ## 7 Encryption
 
@@ -321,7 +339,7 @@ Secrets Management goes hand in hand with encryption. After all: the secrets sho
 
 ### 7.1 Encryption Types to Use
 
-There are various encryption types to use when it comes to securing a secret. (WIP by @commjoen)
+There are various encryption types to use when it comes to securing a secret. (TODO/WIP by @commjoen - continue here!)
 
 ### 7.2 Convergent Encryption
 
@@ -349,8 +367,6 @@ EaaS is a model in which users subscribe to a cloud-based encryption service wit
 (by @thatsjet)
 
 ### 9.1 Process
-
-## 10 Secrets Management Tooling Guidelines
 
 ## 11 Secret detection
 

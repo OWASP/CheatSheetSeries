@@ -28,7 +28,7 @@ Before describing attacks, it's good to understand one of the most critical secu
 
 | Origin A              | Origin B                  | Same origin?                   |
 | -------------         | -------------             | -------------                  |
-| `https://example.com` | `http://sub.example.com`  | No, diffrent hosts             |
+| `https://example.com` | `http://sub.example.com`  | No, different hosts             |
 | `https://example.com` | `https://example.com:443` | Yes! Implicit port in Origin A |
 
 Although the SOP principle protects us from accessing information in cross-origin communication, XS-Leaks attacks based on residual data can infer some information.
@@ -62,7 +62,7 @@ Sites that have the same eTLD+1 are considered SameSite, examples:
 | Origin A                  | Origin B                   | SameSite?                    |
 | ------------------------- | -------------------------- | ---------------------        |
 | `https://example.com`     | `http://example.com`       | Yes, schemes don't matter    |
-| `https://evil.net`        | `https://example.com`      | No, diffrent eTLD+1          |
+| `https://evil.net`        | `https://example.com`      | No, different eTLD+1          |
 | `https://sub.example.com` | `https://data.example.com` | Yes, subdomains don't matter |
 
 For more information about SamSite, see the excellent article [Understanding "same-site"](https://web.dev/same-site-same-origin/).
@@ -79,7 +79,7 @@ The browser will automatically focus on an element with a given ID if we append 
 
 ![XS-Leaks-ID](../assets/XS_Leaks_ID.png)
 
-then add listener in main document for [blur event](https://developer.mozilla.org/en-US/docs/Web/API/Element/blur_event) (the oposite of focus). When the victim visits the attackers site, the blur event gets fired. The attacker will be able to conclude that the victim has a pro account.
+then add listener in main document for [blur event](https://developer.mozilla.org/en-US/docs/Web/API/Element/blur_event) (the opposite of focus). When the victim visits the attackers site, the blur event gets fired. The attacker will be able to conclude that the victim has a pro account.
 
 ### Defense
 
@@ -121,7 +121,7 @@ When the browser sends a request for a resource, the server processes the reques
 
 In this way, we can try to load resources and, based on the response status, infer whether they exist or not in the context of the logged-in victim. Let's look at the following situation:
 
-- `GET /api/user/1234` - 200 OK - currently logged-in user is 1234 because we succefuly loaded resource ([onload](https://developer.mozilla.org/en-US/docs/Web/API/GlobalEventHandlers/onload) event fired)
+- `GET /api/user/1234` - 200 OK - currently logged-in user is 1234 because we successfully loaded resource ([onload](https://developer.mozilla.org/en-US/docs/Web/API/GlobalEventHandlers/onload) event fired)
 - `GET /api/user/1235` - 401 Unauthorized  - 1235 is not the ID of the currently logged in user ([onerror](https://developer.mozilla.org/en-US/docs/Web/API/GlobalEventHandlers/onerror) event will be triggered)
 
 Given the above example, an attacker can use JavaScript on his controlled origin to guess the victim's ID by enumerating over all the values in a simple loop.
@@ -150,7 +150,7 @@ Note that the attacker here does not care about reading the response body even t
 
 ### Defense
 
-#### Subresouce protection
+#### SubResource protection
 
 In some cases, mechanism of special unique tokens may be implemented to protect our sensitive endpoints.
 
@@ -196,9 +196,9 @@ If the server returns this header with the appropriate value, the the browser wi
 
 Read more about CORP [here](https://resourcepolicy.fyi/).
 
-## Attacks on postMessage commmunication
+## Attacks on postMessage communication
 
-Sometimes in controlled situations we would like despite SOP to exchange information between different origns. We can use the postMessage mechanism. See below example:
+Sometimes in controlled situations we would like despite SOP to exchange information between different origins. We can use the postMessage mechanism. See below example:
 
 ```javascript
 // Origin: http://example.com
@@ -214,7 +214,7 @@ window.addEventListener('message', e => {
 
 ### Defense
 
-#### Specify strict targetOrign
+#### Specify strict targetOrigin
 
 To avoid situations like the one above, where an attacker manages to get the reference for a window to receive a message, always specify the exact `targetOrigin` in postMessage. Passing to the `targetOrigin` wildcard `*` causes any origin to receive the message.
 
@@ -313,7 +313,7 @@ You can disable the cache mechanism if you accept the degraded performance relat
 
 ### Fetch Metadata
 
-- [Fetch Metadata and Isolation Polcies](https://www.appsecmonkey.com/blog/fetch-metadata)
+- [Fetch Metadata and Isolation Policies](https://www.appsecmonkey.com/blog/fetch-metadata)
 - [Protect your resources from attacks with Fetch Metadata](https://web.dev/fetch-metadata/)
 
 ### Framing protection
@@ -324,7 +324,7 @@ You can disable the cache mechanism if you accept the degraded performance relat
 ### SameSite
 
 - [SameSite cookies explained](https://web.dev/samesite-cookies-explained/)
-- [SameSite cookies recipies](https://web.dev/samesite-cookie-recipes/)
+- [SameSite cookies recipes](https://web.dev/samesite-cookie-recipes/)
 
 ### COOP and CORP header
 
