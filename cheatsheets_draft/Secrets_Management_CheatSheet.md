@@ -170,7 +170,7 @@ Note: not all secrets are required to be at the CI/CD pipeline to get to the act
 
 #### 3.2.1 As part of your CI/CD tooling
 
-When secrets are part of your CI/CD tooling (E.g. GitHub secrets, GitLab repository secrets, ENV Vars/Var Groups in Microsoft Azure DevOps, Jenkins Secrets, et cetera), it means that the secret is exposed to your CI/CD jobs when these are executed.
+When secrets are part of your CI/CD tooling (E.g. GitHub secrets, GitLab repository secrets, ENV Vars/Var Groups in Microsoft Azure DevOps, Secrets, et cetera), it means that the secret is exposed to your CI/CD jobs when these are executed.
 Very often, these secrets are configurable/viewable by people who have authorization to do so (e.g. a maintainer in GitHub, a project owner in GitLab, an admin in jenkins, etc.). Which together lines up for the following best practices:
 
 - No "big secret": make sure that there are no long-term / high blast-radius / high value secrets as part of your CI/CD tooling; make sure that every secret is not the same for different purposes (e.g. never have one password for all administrative users).
@@ -195,13 +195,13 @@ Secrets can be stored in a secrets management solution. This can be a solution o
 
 Secrets do not necessarilty need to be brought to a consumer of the secret by a CI/CD pipeline. It is even better when the secret is actually retrieved by the consumer of the secret. In that case, the CI/CD pipeline still needs to instruct the orchestrating system (e.g. [Kubernetes](https://kubernetes.io/)) that it needs to schedule a certain service with a given service account with which the consumer can then retrieve the actual required secret. This means that the CI/CD tooling still has credentials towards the orchestrating platform, but no longer has access to the secrets themselves. The do's and don'ts regarding these type of credentials are similar to the ones described in section 3.2.2.
 
-### 3.3 Authentication and Authorization of CI/CD tooling
+### 3.3 Authentication and Authorization of CI/CD Tooling
 
 CI/CD tooling should have designegated service accounts, which can only operate in the scope of the actual needed secrets and/or orchestration of the consumers of a secret. Next to that, a ci/cd pipeline its run should be easily attributable to the one who has defined the job and/or triggered it in order to detect who has tried to exfiltrate secrets and/or manipulate them. This means that, when certificate based auth is used, the actual caller of the pipeline its identity should be part of the used certificate. If a token is used to authenticate towards the mentioned systems, make sure that the principal requesting these actions is set as well (E.g. the user or the creator of the job).
 
 Verify on a periodically basis whether this is (still) the case for your system, so that logging, attribution of, and security alerting on suspicious actions can be done effectively.
 
-### 3.4 Logging and accounting
+### 3.4 Logging and Accounting
 
 CI/CD tooling can be used in various ways to extract secrets by an attacker: from using administrative interfaces, to job creation which exfiltrates the secret using double base64 encoding or encryption. Therefore, you should log every action which happens at a CI/CD tool. Security alerting rules should be defined at every non-standard manipulation of the pipeline tool and its administrative interface, in order to be able to monitor secret usage.
 Logs should be at least queryable for 90 days and stored for a longer period of time on cold storage, as it might take security teams time to understand how a secret can be exfiltrated and/or manipulated with the CI/CD tooling.
