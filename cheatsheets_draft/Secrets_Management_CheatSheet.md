@@ -15,7 +15,7 @@
 
 Secrets are being used everywhere nowadays, especially with the popularity of the DevOps movement. Application Programming Interface (API) keys, database credentials, Identity and Access Management (IAM) permissions, Secure Shell (SSH) keys, certificates, etc. Many organizations have them hard coded in plaintext within the source code, littered throughout configuration files and configuration management tools.
 
-There is a growing need for organizations to c the storage, provisioning, auditing, rotation and management of secrets in order to control access to secrets and prevent them from leaking and compromising the organization. Most of the time, services share the same secrets that make identifying the source of compromise or leak very challenging.
+There is a growing need for organizations to centralise the storage, provisioning, auditing, rotation and management of secrets in order to control access to secrets and prevent them from leaking and compromising the organization. Most of the time, services share the same secrets that make identifying the source of compromise or leak very challenging.
 
 This cheatsheet offers best practices and guidelines to help properly implement secrets management.
 
