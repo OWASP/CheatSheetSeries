@@ -352,6 +352,7 @@ Always monitor who/what, from which IP, and with what methodology is accessing t
 Ensure that the secrets managemnet solution is easy to use, as you do not want people to work around it or use it not effictively due to complexity. This requires:
 
 - an easy onboarding of new secrets and removal of invalidated secrets.
+- an easy integration with the existing software: it should be easy to integrate applications as consumers of the secret management system. For instance: there should be an SDK available and/or a simple sidecar container in order to communicate with the secret management system. Examples of this can be found in the AWS, Google and Azure SDKs which allows an application to interact with the secrets management solution of the cloud directly. Similar examples can be found with the Hashicorp Vault software integrations, as well as the Vault Agent Sidecar Injector.
 - a clear understandig at the organization of why secrets management is important, and which processes need to be followed if it comes to handling secrets.
 
 ## 7 Encryption
