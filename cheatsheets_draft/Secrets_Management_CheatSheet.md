@@ -353,11 +353,20 @@ Secrets Management goes hand in hand with encryption. After all: the secrets sho
 
 ### 7.1 Encryption Types to Use
 
-There are various encryption types to use when it comes to securing a secret. (TODO/WIP by @commjoen - continue here!)
+There are various encryption types to use when it comes to securing a secret, as long as they provide sufficient security, including sufficient resistance against quantum computing based attacks. Given that this is a moving field, it is best to take a look at sources as [keylength.com](https://www.keylength.com/en/4/), which enumerate up to date recommendations on the usage of encryption types and keylengths for existing standards, as well as the [OWASP Cryptographic Storage CheatSheet](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html).
+Note that post-quantum cryptography approaches are still in development at this time of writing. For this it is best to keep an ey eon [Nist Post Quantum Cryptography Standardization Page](https://csrc.nist.gov/projects/post-quantum-cryptography/post-quantum-cryptography-standardization), which explains which future algorithms might be recommended in a post-quantum computing stage.
+
+Please note that in all cases we need to preferably select an algortihm which provides encyrption and confidentity at the same time, such as AES-256 using GCM [(Gallois Counter Mode)](https://en.wikipedia.org/wiki/Galois/Counter_Mode). Or a mixture of ChaCha20 and Poly1305 according to the best practices in the field.
 
 ### 7.2 Convergent Encryption
 
+[Convergent Encryption](https://en.wikipedia.org/wiki/Convergent_encryption) ensures that a given plaintext and its key results in the same ciphertext. This can help in order to detect possible reuse of secrets as this will result in the same ciphertext.
+The challenge with enabling convergent encryption, is that it allows for attackers which can use the system to generate a set of cryptographic strings which might end up in the same secret, which allows the attacker to derive the plain text secret. This risk can be mitigated to make sure that the convergent cryptosystem in use has sufficient resource challenges during encryption given the algorihtm and key in use. Another factor that can help reducing the risk is by ensuring that a secret needs to be of sufficient length, further hampering the possible guess-iteration time required.
+
 ### 7.3 Where to store the Encryption Keys?
+
+Keys should never be stored next to the secrets they encrypt. Start by consulting the [OWASP Key
+Magagement Cheatsheet](https://cheatsheetseries.owasp.org/cheatsheets/Key_Management_Cheat_Sheet.html) on where or how to store the encryption and possible HMAC keys.
 
 ### 7.4 Encryption as a Service (EaaS)
 
