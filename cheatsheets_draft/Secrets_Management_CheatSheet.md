@@ -422,3 +422,5 @@ EaaS is a model in which users subscribe to a cloud-based encryption service wit
 - [OWASP WrongSecrets project](https://github.com/commjoen/wrongsecrets/)
 - [Blog: 10 Pointers on Secrets Management](https://xebia.com/blog/secure-deployment-10-pointers-on-secrets-management/)
 - [Blog: From build to run: pointers on secure deployment](https://xebia.com/from-build-to-run-pointers-on-secure-deployment/)
+- [Listing of possible secret management tooling](https://gist.github.com/maxvt/bb49a6c7243163b8120625fc8ae3f3cd)
+- [Github listing on secrets detection tools](https://github.com/topics/secrets-detection)
