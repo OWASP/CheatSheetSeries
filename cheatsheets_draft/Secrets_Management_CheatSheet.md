@@ -347,6 +347,13 @@ Always monitor who/what, from which IP, and with what methodology is accessing t
 - Monitor who accesses the secret at the secret management system: is this normal behavior? So if the CI/CD credentials are used to access the secret management solution from a different IP than where the CI/CD system is running: provide a security alert and assume the secret compromised.
 - Monitor at the actual service requiring the secret (if possible) whether the user of the secret is actually coming from an expected IP, with expected user agent. If not: alert and assume the secret compromised.
 
+### 6.5 Ease of Use
+
+Ensure that the secrets managemnet solution is easy to use, as you do not want people to work around it or use it not effictively due to complexity. This requires:
+
+- an easy onboarding of new secrets and removal of invalidated secrets.
+- a clear understandig at the organization of why secrets management is important, and which processes need to be followed if it comes to handling secrets.
+
 ## 7 Encryption
 
 Secrets Management goes hand in hand with encryption. After all: the secrets should be stored encrypted somewhere to protect their confidentiality and Integrity.
@@ -376,14 +383,6 @@ EaaS is a model in which users subscribe to a cloud-based encryption service wit
 - Data is secured in Transit (TLS)
 - Key handling and cryptographic implementations is taken care by Encryption Service, not by developers
 - More services could be added to interact with the sensitive data
-
-## 8 Applications
-
-### 8.1 Least Amount of Impact (LAoI)
-
-### 8.2 Ease of Use
-
-### 8.3 Ease of On-boarding
 
 ## 9 Workflow in Case of Compromise
 
