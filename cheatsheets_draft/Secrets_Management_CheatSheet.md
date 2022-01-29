@@ -333,6 +333,20 @@ Note that these dynamic secrets often need to be created at the service/technolo
 - key materials that need to live longer than a single deployment due to the nature of their usage in the interaction with other instances of the same service (e.g. storage encryption keys, TLS PKI keys)
 - key materials and/or credentials to connect to services which do not support creating temporal roles and/or credentials.
 
+### 6.3 Ensure limitations are in Place
+
+Secrets should never be retrievable by everyone and everything. Always make sure that you put limits in place:
+
+- Do you have the oppertunities to create access policies: make sure that there are policies in place to limit the amount of entitites that can read or write at the secret. At the same time: make sure that the policies are written in such a way that they can easily be extended and are not to complicated to use.
+- Is there no way to reduce access to certain secrets within a secrets management solution? Consider separating the production and development secrets from each other by having separate secret management solutions and then reduce access to the production secrets management solution.
+
+### 6.4 Security Event Monitoring is Key
+
+Always monitor who/what, from which IP, and with what methodology is accessing the secret. There are various patterns where you need to look out for, such as, but not limitted to:
+
+- Monitor who accesses the secret at the secret management system: is this normal behavior? So if the CI/CD credentials are used to access the secret management solution from a different IP than where the CI/CD system is running: provide a security alert and assume the secret compromised.
+- Monitor at the actual service requiring the secret (if possible) whether the user of the secret is actually coming from an expected IP, with expected user agent. If not: alert and assume the secret compromised.
+
 ## 7 Encryption
 
 Secrets Management goes hand in hand with encryption. After all: the secrets should be stored encrypted somewhere to protect their confidentiality and Integrity.
