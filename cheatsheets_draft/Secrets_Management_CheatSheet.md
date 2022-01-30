@@ -83,7 +83,7 @@ Secrets follow a lifecycle. The stages of the lifecycle are as follows:
 
 New secrets must be securely generated and cryptographically robust enough for their purpose. Secrets must have the minimum privileges assigned to them to enable their requested use/role.
 
-Credentials should be transmitted in a secure way, such that ideally the password would not be transmitted along with the username when requesting user accounts. Instead, the password should be transmitted via secure channel (f.e. mutually authenticated connection) or a side-channel such as push notification, SMS, email. Refer to Multi-Factor Authentication Cheat Sheet](cheatsheets/Multifactor_Authentication_Cheat_Sheet) to learn about pros and cons of each channel.
+Credentials should be transmitted in a secure way, such that ideally the password would not be transmitted along with the username when requesting user accounts. Instead, the password should be transmitted via secure channel (f.e. mutually authenticated connection) or a side-channel such as push notification, SMS, email. Refer to the [Multi-Factor Authentication Cheat Sheet](cheatsheets/Multifactor_Authentication_Cheat_Sheet) to learn about pros and cons of each channel.
 
 Applications may not benefit from having multiple channels for communication and so credentials must be provisioned in a secure way.
 
