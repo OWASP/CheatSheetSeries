@@ -284,16 +284,12 @@ Client-side encryption of secrets ensures that the secret remains encrypted unti
 
 When you encrypt a secret at rest, the question is: with which key do you want to do this? The less trust you have with the cloudprovider, the more you will have to manage the key yourself.
 
-Often, you can either encrypt a secret with a key management at the secrets management service, or use a key management solution within the cloudprovider to encrypt the secret with.
-
-TODO: CONTINUE HERE ON CMK/DATA KEY SCHEMES AND CLOUDHSM USAGE!
-
-Customer master key -> data key
-
-BYOK vs. Cloud provider key
+Often, you can either encrypt a secret with a key managed at the secrets management service, or use a key management solution within the cloudprovider to encrypt the secret with. The key offered through the key management solution of the cloudprovider can be either managed by the cloudprovider, or managed by yourself. In the latter case it is called "bring your own key"  (BYOK) scenario. This key can either be directly imported and/or generated at the key management solution, or be created at the cloudHSM supported by the cloud provdier.
+In the case of a BYOK - or sometimes referred to as Custommer Master Key (CMK) is then used to encrypt the data key at the secrets management solution. The data key is then used to encrypt the actual secret. This means that, by manageing the CMK, you have the control over the data key at the secrets management solution.
 
 ### 4.3 Identity and Access Management (IAM)
 
+TODO: continue here! 
 Applies to both cloud and on-premise. IAM control plane of cloud.
 
 Leverage temporality (roles, service account impersonation, etc)
