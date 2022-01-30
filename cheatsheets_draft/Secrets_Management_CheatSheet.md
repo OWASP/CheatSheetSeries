@@ -278,9 +278,9 @@ Client-side encryption of secrets ensures that the secret remains encrypted unti
 
 When you encrypt a secret at rest, the question is: with which key do you want to do this? The less trust you have with the cloudprovider, the more you will have to manage the key yourself.
 
-Often, you can either encrypt a secret with a key management at the secrets management service, or use a key management solution within the cloudprovider to encrypt the secret with. 
- 
- TODO: CONTINUE HERE ON CMK/DATA KEY SCHEMES AND CLOUDHSM USAGE!
+Often, you can either encrypt a secret with a key management at the secrets management service, or use a key management solution within the cloudprovider to encrypt the secret with.
+
+TODO: CONTINUE HERE ON CMK/DATA KEY SCHEMES AND CLOUDHSM USAGE!
 
 Customer master key -> data key
 
