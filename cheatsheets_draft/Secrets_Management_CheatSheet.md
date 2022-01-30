@@ -266,13 +266,19 @@ Check out the [Key Vault best practices](https://docs.microsoft.com/en-us/azure/
 
 ### 4.2 Envelope & client-side encryption
 
+There are various considereations when it comes to secrets management in the cloud. Two we want to deal with here, is how the secret is encrypted and how the keys for that encryption can be managed in the cloud.
 
+#### 4.2.1 Client-side encryption versus server-side encryption
+
+TODO: CONTINUE HERE!
+
+Client-side encryption for end-to-end purposes
+
+#### 4.2.2 Bring Your Own Key versus Cloud Provider Key
 
 Customer master key -> data key
 
 BYOK vs. Cloud provider key
-
-Client-side encryption for end-to-end purposes
 
 ### 4.3 Identity and Access Management (IAM)
 
