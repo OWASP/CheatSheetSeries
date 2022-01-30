@@ -1,15 +1,14 @@
 # Secrets Management Cheatsheet
 
 1. [Introduction](#1-Introduction)
-2. [General](#2-General-Secrets-Management)
+2. [General Secrets Management](#2-General-Secrets-Management)
 3. [Continuous Integration (CI) and Continuous Deployment (CD)](#3-Continuous-Integration-(CI)-and-Continuous-Deployment-(CD))
 4. [Cloud Providers](#4-Cloud-Providers)
 5. [Containers and Orchestration](#5-Containers-&-Orchestrators)
 6. [Implementation](#6-Implementation)
 7. [Encryption](#7-Encryption)
-8. [Applications](#8-Applications)
 9. [Workflow in case of compromise](#9-Workflow-in-case-of-compromise)
-10. [Secrets Management Tooling](#10-Secrets-Management-Tooling-Guidelines)
+11. [Secret detection](#10-Secret-detection)
 
 ## 1 Introduction
 
@@ -191,7 +190,6 @@ Secrets can be stored in a secrets management solution. This can be a solution o
 - Scope of authorization: credentials used by the CI/CD tooling (e.g. roles, users, etc.) are scoped e.g. only authorized to those secrets and services of the secret management system which are required for the CI/CD tooling to execute its job.
 - Attribution of the caller: credentials used by the CI/CD tooling still hold attribution of the one calling/orchestrating the call towards the secrets management solution, so that any calls made by the CI/CD tooling can be attributed to a person/service that requested the actions of the CI/CD tooling. If this is not possible by means of default configuraiton of the secrets manager, make sure that you have a correlation setup in terms of request-parameters.
 - All of the above: Still follow those do's and don'ts listed in section 3.2.1: log & alert, take care of forking, etc.
-- TODO: WHAT AM I MISSING HERE?
 
 #### 3.2.3 Not touched by CI/CD at all
 
@@ -268,6 +266,8 @@ Check out the [Key Vault best practices](https://docs.microsoft.com/en-us/azure/
 
 ### 4.2 Envelope & client-side encryption
 
+
+
 Customer master key -> data key
 
 BYOK vs. Cloud provider key
@@ -328,7 +328,6 @@ We see the following usecases for dynamic secrets, amongst others:
 - short living secrets (E.g. credentials and/or API keys) for a secondary service that expres the intent for connecting the primary service (e.g. consumer) to the service.
 - short lived integrity and encryption controls for guarding and securing in memory processes and runtime communication processes. Think of encryption keys which only need to live for a single session or a single deployment lifetime.
 - short lived credentials which are required to build a stack during the deployment of a service for interacting with the deployers and supporting infrastructure.
-- TODO: ANYTHING WE NEED TO ADD HERE?
 
 Note that these dynamic secrets often need to be created at the service/technology stack to which we need to connect. In order to create these type of dynamic secrets, we often need long term static secrets so that we can actually create the dynamic secrets themselves. Other static use cases:
 
@@ -354,7 +353,7 @@ Always monitor who/what, from which IP, and with what methodology is accessing t
 Ensure that the secrets managemnet solution is easy to use, as you do not want people to work around it or use it not effictively due to complexity. This requires:
 
 - an easy onboarding of new secrets and removal of invalidated secrets.
-- an easy integration with the existing software: it should be easy to integrate applications as consumers of the secret management system. For instance: there should be an SDK available and/or a simple sidecar container in order to communicate with the secret management system. Examples of this can be found in the AWS, Google and Azure SDKs which allows an application to interact with the secrets management solution of the cloud directly. Similar examples can be found with the Hashicorp Vault software integrations, as well as the Vault Agent Sidecar Injector.
+- an easy integration with the existing software: it should be easy to integrate applications as consumers of the secret management system. For instance: there should be an SDK available and/or a simple sidecar container in order to communicate with the secret management system so that existing software does not need heavy modification. Examples of this can be found in the AWS, Google and Azure SDKs which allows an application to interact with the secrets management solution of the cloud directly. Similar examples can be found with the Hashicorp Vault software integrations, as well as the Vault Agent Sidecar Injector.
 - a clear understandig at the organization of why secrets management is important, and which processes need to be followed if it comes to handling secrets.
 
 ## 7 Encryption
