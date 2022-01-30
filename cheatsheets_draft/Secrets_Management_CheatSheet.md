@@ -77,37 +77,42 @@ Secrets follow a lifecycle. The stages of the lifecycle are as follows:
 - Creation
 - Rotation
 - Revocation
+- Expiration
 
 #### 2.6.1 Creation
 
 New secrets must be securely generated and cryptographically robust enough for their purpose. Secrets must have the minimum privileges assigned to them to enable their requested use/role.
 
-Credentials should be transmitted in a secure way, such that ideally the password would not be transmitted along with the username when requesting user accounts. Instead, the password should be transmitted via a side-channel such as SMS.
+Credentials should be transmitted in a secure way, such that ideally the password would not be transmitted along with the username when requesting user accounts. Instead, the password should be transmitted via secure channel (f.e. mutually authenticated connection) or a side-channel such as push notification, SMS, email. Refer to Multi-Factor Authentication Cheat Sheet](cheatsheets/Multifactor_Authentication_Cheat_Sheet) to learn about pros and cons of each channel.
 
 Applications may not benefit from having multiple channels for communication and so credentials must be provisioned in a secure way.
 
 #### 2.6.2 Rotation
 
-Secrets should be regularly rotated so that any stolen credentials will only work for a short period of time. This will also reduce the tendency for users to fall bac to bad-habits such as re-using credentials.
+Secrets should be regularly rotated so that any stolen credentials will only work for a short period of time. This will also reduce the tendency for users to fall back to bad-habits such as re-using credentials.
+
+Depending on a secret's function and what it protects, the lifetime could be from minutes (think end-to-end encrypted chats with forward secrecy) to years (think harware secrets).
 
 #### 2.6.3 Revocation
 
-When secrets are no longer required they must be securely revoked in order to restrict access. With certificates such as SSL certificates this also involves certificate revocation.
+When secrets are no longer required or potentially compromised they must be securely revoked in order to restrict access. With certificates such as TLS certificates this also involves certificate revocation.
 
-#### 2.6.4 Lifespan
+#### 2.6.4 Expiration
 
 Secrets should, where ever possible, always be created to expire after a defined time. This can either be an active expiration by the secret consuming system, or an expiration date set at the secrets management system, forcing supporting processes to be triggered resulting in a rotation of the secret.
-Policies should be applied by the secrets management solution to ensure credentials are only made available for a limited time that is appropriate for the type of credential.
+Policies should be applied by the secrets management solution to ensure credentials are only made available for a limited time that is appropriate for the type of credential. Applications should verify that the secret is still active before trusting it.
 
 ### 2.7 Transport Layer Security (TLS) Everywhere
 
-It goes without saying that no secrets should ever be transmitted via plaintext. There is no excuse in this day and age given the ubiquitous adoption of SSL/TLS to not use encryption to protect the secrets in transit.
+It goes without saying that no secrets should ever be transmitted via plaintext. There is no excuse in this day and age given the ubiquitous adoption of TLS to not use encryption to protect the secrets in transit.
 
-Furthermore, secrets management solutions can be used to effectively provision SSL certificates.
+Furthermore, secrets management solutions can be used to effectively provision TLS certificates.
 
 ### 2.8 Automate Key Rotation
 
 Key rotation is a challenging process when implemented manually, and can lead to mistakes. It is therefore better to automate the rotation of keys or at least ensure that the process is sufficiently supported by IT.
+
+Rotating some keys, like data encryption keys, might trigger fully or partially data re-encryption. Different strategies of rotating keys exist: gradual rotation; introducing new keys for Write operations, leaving old keys for Read operations; immediate rotation; rotation by schedule; etc.
 
 ### 2.9 Downtime, Break-glass, Backup and Restore
 
@@ -162,7 +167,7 @@ Given that the CI/CD tooling heavily consume secrets, it is key that the pipelin
 There are various places at which you can store a secret in order to execute certain CI/CD actions:
 
 - As part of your CI/CD tooling: a secret can be stored as a secret in [GitLab](https://docs.gitlab.com/charts/installation/secrets.html)/[GitHub](https://docs.github.com/en/actions/security-guides/encrypted-secrets)/[jenkins](https://www.jenkins.io/doc/developer/security/secrets/). This is not the same as committing it to code.
-- As part of our secrets-management system: here you can store a secret in a secrets management system, such as facilities provided by a cloud provider ([AWS Secret Manager](https://aws.amazon.com/secrets-manager/), [Azure Key Vault](https://azure.microsoft.com/nl-nl/services/key-vault/)), or other third party facilities ([Hashicorp Vault](https://www.vaultproject.io/), [Keeper](https://www.keepersecurity.com/), [Confidant](https://lyft.github.io/confidant/)).In this case, the CI/CD pipeline tooling requires credentials to connect to these secret management systems in order to have secrets in place.
+- As part of our secrets-management system: here you can store a secret in a secrets management system, such as facilities provided by a cloud provider ([AWS Secret Manager](https://aws.amazon.com/secrets-manager/), [Azure Key Vault](https://azure.microsoft.com/nl-nl/services/key-vault/)), or other third party facilities ([Hashicorp Vault](https://www.vaultproject.io/), [Keeper](https://www.keepersecurity.com/), [Confidant](https://lyft.github.io/confidant/)). In this case, the CI/CD pipeline tooling requires credentials to connect to these secret management systems in order to have secrets in place.
 
 Another alternative here, is using the CI/CD pipeline to leverage the Encryption as a Service from the secrets management systems to do the encryption of a secret. The CI/CD tooling can then commit the secret encrypted to Git, which can then be fetched by the consuming service at deployment and decrypted again. See section 3.6 for more details.
 
@@ -189,6 +194,7 @@ Secrets can be stored in a secrets management solution. This can be a solution o
 - Scope of authorization: credentials used by the CI/CD tooling (e.g. roles, users, etc.) are scoped e.g. only authorized to those secrets and services of the secret management system which are required for the CI/CD tooling to execute its job.
 - Attribution of the caller: credentials used by the CI/CD tooling still hold attribution of the one calling/orchestrating the call towards the secrets management solution, so that any calls made by the CI/CD tooling can be attributed to a person/service that requested the actions of the CI/CD tooling. If this is not possible by means of default configuraiton of the secrets manager, make sure that you have a correlation setup in terms of request-parameters.
 - All of the above: Still follow those do's and don'ts listed in section 3.2.1: log & alert, take care of forking, etc.
+- Backup: secrets to product-critical operations should be backed up in a separate storage (f.e. cold storage), especially encryption keys.
 - TODO: WHAT AM I MISSING HERE?
 
 #### 3.2.3 Not touched by CI/CD at all
@@ -399,3 +405,4 @@ EaaS is a model in which users subscribe to a cloud-based encryption service wit
 - [OWASP WrongSecrets project](https://github.com/commjoen/wrongsecrets/)
 - [Blog: 10 Pointers on Secrets Management](https://xebia.com/blog/secure-deployment-10-pointers-on-secrets-management/)
 - [Blog: From build to run: pointers on secure deployment](https://xebia.com/from-build-to-run-pointers-on-secure-deployment/)
+- [NIST SP 800-57 Recommendation for Key Management](https://csrc.nist.gov/publications/detail/sp/800-57-part-1/rev-5/final)
