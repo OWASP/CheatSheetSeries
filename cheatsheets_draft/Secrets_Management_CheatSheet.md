@@ -86,6 +86,8 @@ Credentials should be transmitted in a secure way, such that ideally the passwor
 
 Applications may not benefit from having multiple channels for communication and so credentials must be provisioned in a secure way.
 
+See [the Open CRE project on secrets lookup](https://www.opencre.org/search/secret) for more technical recommendations on secret creation.
+
 #### 2.6.2 Rotation
 
 Secrets should be regularly rotated so that any stolen credentials will only work for a short period of time. This will also reduce the tendency for users to fall bac to bad-habits such as re-using credentials.
@@ -424,3 +426,4 @@ EaaS is a model in which users subscribe to a cloud-based encryption service wit
 - [Blog: From build to run: pointers on secure deployment](https://xebia.com/from-build-to-run-pointers-on-secure-deployment/)
 - [Listing of possible secret management tooling](https://gist.github.com/maxvt/bb49a6c7243163b8120625fc8ae3f3cd)
 - [Github listing on secrets detection tools](https://github.com/topics/secrets-detection)
+- [OpenCRE References to secrets](https://www.opencre.org/search/secret)
