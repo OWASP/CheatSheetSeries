@@ -1,15 +1,14 @@
 # Secrets Management Cheatsheet
 
 1. [Introduction](#1-Introduction)
-2. [General](#2-General-Secrets-Management)
+2. [General Secrets Management](#2-General-Secrets-Management)
 3. [Continuous Integration (CI) and Continuous Deployment (CD)](#3-Continuous-Integration-(CI)-and-Continuous-Deployment-(CD))
 4. [Cloud Providers](#4-Cloud-Providers)
 5. [Containers and Orchestration](#5-Containers-&-Orchestrators)
 6. [Implementation](#6-Implementation)
 7. [Encryption](#7-Encryption)
-8. [Applications](#8-Applications)
 9. [Workflow in case of compromise](#9-Workflow-in-case-of-compromise)
-10. [Secrets Management Tooling](#10-Secrets-Management-Tooling-Guidelines)
+11. [Secret detection](#10-Secret-detection)
 
 ## 1 Introduction
 
@@ -86,6 +85,8 @@ New secrets must be securely generated and cryptographically robust enough for t
 Credentials should be transmitted in a secure way, such that ideally the password would not be transmitted along with the username when requesting user accounts. Instead, the password should be transmitted via secure channel (f.e. mutually authenticated connection) or a side-channel such as push notification, SMS, email. Refer to the [Multi-Factor Authentication Cheat Sheet](cheatsheets/Multifactor_Authentication_Cheat_Sheet) to learn about pros and cons of each channel.
 
 Applications may not benefit from having multiple channels for communication and so credentials must be provisioned in a secure way.
+
+See [the Open CRE project on secrets lookup](https://www.opencre.org/search/secret) for more technical recommendations on secret creation.
 
 #### 2.6.2 Rotation
 
@@ -195,7 +196,6 @@ Secrets can be stored in a secrets management solution. This can be a solution o
 - Attribution of the caller: credentials used by the CI/CD tooling still hold attribution of the one calling/orchestrating the call towards the secrets management solution, so that any calls made by the CI/CD tooling can be attributed to a person/service that requested the actions of the CI/CD tooling. If this is not possible by means of default configuraiton of the secrets manager, make sure that you have a correlation setup in terms of request-parameters.
 - All of the above: Still follow those do's and don'ts listed in section 3.2.1: log & alert, take care of forking, etc.
 - Backup: secrets to product-critical operations should be backed up in a separate storage (f.e. cold storage), especially encryption keys.
-- TODO: WHAT AM I MISSING HERE?
 
 #### 3.2.3 Not touched by CI/CD at all
 
@@ -272,11 +272,25 @@ Check out the [Key Vault best practices](https://docs.microsoft.com/en-us/azure/
 
 ### 4.2 Envelope & client-side encryption
 
+There are various considereations when it comes to secrets management in the cloud. Two we want to deal with here, is how the secret is encrypted and how the keys for that encryption can be managed in the cloud.
+
+#### 4.2.1 Client-side encryption versus server-side encryption
+
+Server-side encryption of secrets ensures that the cloud-provider takes care of the encryption of the secret at storage. This means that the secret is safeguarded against compromise while being at rest. This often does not require any additional work, other than selecting the key to encrypt it with (See section 4.2.2). However: when the secret is submitted to another service to consume the secret, it will no longer be encrypted, as it is decrypted before submission to the intended service or human user where it sould be shared with.
+
+Client-side encryption of secrets ensures that the secret remains encrypted until you actively decrypt it. This means it is encrypted at rest and while it arrives at the intended consumer, until it is decrypted. This does mean that you need to have a proper cryptosystem to cater for this. Think about mechanisms such as PGP using a safe configuration and other more scalable and relatively easy to use systems. Client-side encryption can provide an end2end encryption of the secret: from producer till consumer.
+
+#### 4.2.2 Bring Your Own Key versus Cloud Provider Key
+
+When you encrypt a secret at rest, the question is: with which key do you want to do this? The less trust you have with the cloudprovider, the more you will have to manage the key yourself.
+
+Often, you can either encrypt a secret with a key management at the secrets management service, or use a key management solution within the cloudprovider to encrypt the secret with.
+
+TODO: CONTINUE HERE ON CMK/DATA KEY SCHEMES AND CLOUDHSM USAGE!
+
 Customer master key -> data key
 
 BYOK vs. Cloud provider key
-
-Client-side encryption for end-to-end purposes
 
 ### 4.3 Identity and Access Management (IAM)
 
@@ -332,12 +346,33 @@ We see the following usecases for dynamic secrets, amongst others:
 - short living secrets (E.g. credentials and/or API keys) for a secondary service that expres the intent for connecting the primary service (e.g. consumer) to the service.
 - short lived integrity and encryption controls for guarding and securing in memory processes and runtime communication processes. Think of encryption keys which only need to live for a single session or a single deployment lifetime.
 - short lived credentials which are required to build a stack during the deployment of a service for interacting with the deployers and supporting infrastructure.
-- TODO: ANYTHING WE NEED TO ADD HERE?
 
 Note that these dynamic secrets often need to be created at the service/technology stack to which we need to connect. In order to create these type of dynamic secrets, we often need long term static secrets so that we can actually create the dynamic secrets themselves. Other static use cases:
 
 - key materials that need to live longer than a single deployment due to the nature of their usage in the interaction with other instances of the same service (e.g. storage encryption keys, TLS PKI keys)
 - key materials and/or credentials to connect to services which do not support creating temporal roles and/or credentials.
+
+### 6.3 Ensure limitations are in Place
+
+Secrets should never be retrievable by everyone and everything. Always make sure that you put limits in place:
+
+- Do you have the oppertunities to create access policies: make sure that there are policies in place to limit the amount of entitites that can read or write at the secret. At the same time: make sure that the policies are written in such a way that they can easily be extended and are not to complicated to use.
+- Is there no way to reduce access to certain secrets within a secrets management solution? Consider separating the production and development secrets from each other by having separate secret management solutions and then reduce access to the production secrets management solution.
+
+### 6.4 Security Event Monitoring is Key
+
+Always monitor who/what, from which IP, and with what methodology is accessing the secret. There are various patterns where you need to look out for, such as, but not limitted to:
+
+- Monitor who accesses the secret at the secret management system: is this normal behavior? So if the CI/CD credentials are used to access the secret management solution from a different IP than where the CI/CD system is running: provide a security alert and assume the secret compromised.
+- Monitor at the actual service requiring the secret (if possible) whether the user of the secret is actually coming from an expected IP, with expected user agent. If not: alert and assume the secret compromised.
+
+### 6.5 Ease of Use
+
+Ensure that the secrets managemnet solution is easy to use, as you do not want people to work around it or use it not effictively due to complexity. This requires:
+
+- an easy onboarding of new secrets and removal of invalidated secrets.
+- an easy integration with the existing software: it should be easy to integrate applications as consumers of the secret management system. For instance: there should be an SDK available and/or a simple sidecar container in order to communicate with the secret management system so that existing software does not need heavy modification. Examples of this can be found in the AWS, Google and Azure SDKs which allows an application to interact with the secrets management solution of the cloud directly. Similar examples can be found with the Hashicorp Vault software integrations, as well as the Vault Agent Sidecar Injector.
+- a clear understandig at the organization of why secrets management is important, and which processes need to be followed if it comes to handling secrets.
 
 ## 7 Encryption
 
@@ -345,11 +380,20 @@ Secrets Management goes hand in hand with encryption. After all: the secrets sho
 
 ### 7.1 Encryption Types to Use
 
-There are various encryption types to use when it comes to securing a secret. (TODO/WIP by @commjoen - continue here!)
+There are various encryption types to use when it comes to securing a secret, as long as they provide sufficient security, including sufficient resistance against quantum computing based attacks. Given that this is a moving field, it is best to take a look at sources as [keylength.com](https://www.keylength.com/en/4/), which enumerate up to date recommendations on the usage of encryption types and keylengths for existing standards, as well as the [OWASP Cryptographic Storage CheatSheet](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html).
+Note that post-quantum cryptography approaches are still in development at this time of writing. For this it is best to keep an ey eon [Nist Post Quantum Cryptography Standardization Page](https://csrc.nist.gov/projects/post-quantum-cryptography/post-quantum-cryptography-standardization), which explains which future algorithms might be recommended in a post-quantum computing stage.
+
+Please note that in all cases we need to preferably select an algortihm which provides encyrption and confidentity at the same time, such as AES-256 using GCM [(Gallois Counter Mode)](https://en.wikipedia.org/wiki/Galois/Counter_Mode). Or a mixture of ChaCha20 and Poly1305 according to the best practices in the field.
 
 ### 7.2 Convergent Encryption
 
+[Convergent Encryption](https://en.wikipedia.org/wiki/Convergent_encryption) ensures that a given plaintext and its key results in the same ciphertext. This can help in order to detect possible reuse of secrets as this will result in the same ciphertext.
+The challenge with enabling convergent encryption, is that it allows for attackers which can use the system to generate a set of cryptographic strings which might end up in the same secret, which allows the attacker to derive the plain text secret. This risk can be mitigated to make sure that the convergent cryptosystem in use has sufficient resource challenges during encryption given the algorihtm and key in use. Another factor that can help reducing the risk is by ensuring that a secret needs to be of sufficient length, further hampering the possible guess-iteration time required.
+
 ### 7.3 Where to store the Encryption Keys?
+
+Keys should never be stored next to the secrets they encrypt. Start by consulting the [OWASP Key
+Magagement Cheatsheet](https://cheatsheetseries.owasp.org/cheatsheets/Key_Management_Cheat_Sheet.html) on where or how to store the encryption and possible HMAC keys.
 
 ### 7.4 Encryption as a Service (EaaS)
 
@@ -359,14 +403,6 @@ EaaS is a model in which users subscribe to a cloud-based encryption service wit
 - Data is secured in Transit (TLS)
 - Key handling and cryptographic implementations is taken care by Encryption Service, not by developers
 - More services could be added to interact with the sensitive data
-
-## 8 Applications
-
-### 8.1 Least Amount of Impact (LAoI)
-
-### 8.2 Ease of Use
-
-### 8.3 Ease of On-boarding
 
 ## 9 Workflow in Case of Compromise
 
@@ -405,4 +441,7 @@ EaaS is a model in which users subscribe to a cloud-based encryption service wit
 - [OWASP WrongSecrets project](https://github.com/commjoen/wrongsecrets/)
 - [Blog: 10 Pointers on Secrets Management](https://xebia.com/blog/secure-deployment-10-pointers-on-secrets-management/)
 - [Blog: From build to run: pointers on secure deployment](https://xebia.com/from-build-to-run-pointers-on-secure-deployment/)
+- [Listing of possible secret management tooling](https://gist.github.com/maxvt/bb49a6c7243163b8120625fc8ae3f3cd)
+- [Github listing on secrets detection tools](https://github.com/topics/secrets-detection)
+- [OpenCRE References to secrets](https://www.opencre.org/search/secret)
 - [NIST SP 800-57 Recommendation for Key Management](https://csrc.nist.gov/publications/detail/sp/800-57-part-1/rev-5/final)
