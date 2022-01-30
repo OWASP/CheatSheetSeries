@@ -270,11 +270,17 @@ There are various considereations when it comes to secrets management in the clo
 
 #### 4.2.1 Client-side encryption versus server-side encryption
 
-TODO: CONTINUE HERE!
+Server-side encryption of secrets ensures that the cloud-provider takes care of the encryption of the secret at storage. This means that the secret is safeguarded against compromise while being at rest. This often does not require any additional work, other than selecting the key to encrypt it with (See section 4.2.2). However: when the secret is submitted to another service to consume the secret, it will no longer be encrypted, as it is decrypted before submission to the intended service or human user where it sould be shared with.
 
-Client-side encryption for end-to-end purposes
+Client-side encryption of secrets ensures that the secret remains encrypted until you actively decrypt it. This means it is encrypted at rest and while it arrives at the intended consumer, until it is decrypted. This does mean that you need to have a proper cryptosystem to cater for this. Think about mechanisms such as PGP using a safe configuration and other more scalable and relatively easy to use systems. Client-side encryption can provide an end2end encryption of the secret: from producer till consumer.
 
 #### 4.2.2 Bring Your Own Key versus Cloud Provider Key
+
+When you encrypt a secret at rest, the question is: with which key do you want to do this? The less trust you have with the cloudprovider, the more you will have to manage the key yourself.
+
+Often, you can either encrypt a secret with a key management at the secrets management service, or use a key management solution within the cloudprovider to encrypt the secret with. 
+ 
+ TODO: CONTINUE HERE ON CMK/DATA KEY SCHEMES AND CLOUDHSM USAGE!
 
 Customer master key -> data key
 
