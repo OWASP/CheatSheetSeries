@@ -273,6 +273,7 @@ Check out the [Key Vault best practices](https://docs.microsoft.com/en-us/azure/
 ### 4.2 Envelope & client-side encryption
 
 There are various considereations when it comes to secrets management in the cloud. Two we want to deal with here, is how the secret is encrypted and how the keys for that encryption can be managed in the cloud.
+Encryption services from cloud providers
 
 #### 4.2.1 Client-side encryption versus server-side encryption
 
@@ -285,7 +286,9 @@ Client-side encryption of secrets ensures that the secret remains encrypted unti
 When you encrypt a secret at rest, the question is: with which key do you want to do this? The less trust you have with the cloudprovider, the more you will have to manage the key yourself.
 
 Often, you can either encrypt a secret with a key managed at the secrets management service, or use a key management solution within the cloudprovider to encrypt the secret with. The key offered through the key management solution of the cloudprovider can be either managed by the cloudprovider, or managed by yourself. In the latter case it is called "bring your own key"  (BYOK) scenario. This key can either be directly imported and/or generated at the key management solution, or be created at the cloudHSM supported by the cloud provdier.
-In the case of a BYOK - or sometimes referred to as Custommer Master Key (CMK) is then used to encrypt the data key at the secrets management solution. The data key is then used to encrypt the actual secret. This means that, by manageing the CMK, you have the control over the data key at the secrets management solution.
+In the case of a BYOK - or sometimes referred to as Custommer Master Key (CMK) is then used to encrypt the data key at the secrets management solution. The data key is then used to encrypt the actual secret. This means that, by managing the CMK, you have the control over the data key at the secrets management solution.
+
+While importing your own key material can generally be done with all providers ([AWS](https://docs.aws.amazon.com/kms/latest/developerguide/importing-keys.html), [Azure](https://docs.microsoft.com/en-us/azure/key-vault/keys/byok-specification), [GCP](https://cloud.google.com/kms/docs/key-import)). Unless you really know what you are doing and your threat model and/or policy requires this, this is not a recommended solution.
 
 ### 4.3 Identity and Access Management (IAM)
 
@@ -297,8 +300,7 @@ Next, make sure that you scope access to your secrets: one should not be simply 
 
 ### 4.4 API limits
 
-- (D)DoS-ing yourself
-- Data key caching
+Cloud services can generally provide a limited amount of API calls over a given time period. This means you could potentially (D)DoS yourself when you run into these limits. Most of these limits apply per account, project, or subscription, so limit your blast radius accordingly by spreading workloads. Additionally, some services may support data key caching, preventing load on the key management service api (see for example [AWS data key caching](https://docs.aws.amazon.com/encryption-sdk/latest/developer-guide/data-key-caching.html)). Some services can leverage built-in data key caching. [S3 is one such example](https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-key.html).
 
 ## 5 Containers & Orchestrators
 
