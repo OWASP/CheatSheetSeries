@@ -401,33 +401,97 @@ EaaS is a model in which users subscribe to a cloud-based encryption service wit
 - Key handling and cryptographic implementations are taken care of by Encryption Service, not by developers
 - The provider could add more services to interact with the sensitive data
 
-## 9 Workflow in Case of Compromise
+## 8 Detection
 
-(by @thatsjet)
+There are many approaches to secrets detection and some very useful open source projects to help with this. Of note, the [Yelp Detect Secrets](https://github.com/Yelp/detect-secrets) project is mature and has signature matching for around 20 secrets.
 
-### 9.1 Process
+### 8.1 General detection approaches
 
-## 11 Secret detection
+- Create standard test secrets and use them universally across the organization. This allows for the reduction of false-positives by only needing to track a single test secret for each secret type.
+- Consider enabling secrets detection at the developer level to avoid checking secrets into code before commit/PR.
+- Make secrets detection part of the threat model. Consider secrets as part of the attack surface during threat modeling exercises.
+- Evaluate detection utilities and related signatures often to ensure they meet expectations.
+- Consider having more than one detection utility and correlating/de-duping results to identify potential areas of detection weakness.
 
-(by @thatsjet)
 
-- Many native integrations possible (Cloud platforms, CI/CD tooling, application libraries, container orchestrators)
-- Secret lifecycle (rotation, deletion, lifespan)
-- Key material management (keys to the kingdom)
-- Open source? (Depending on security posture)
-- Encryption (at rest, in transit)
-- Access control (fine-grained)
-- Performance
-- Audit logs
-- Scalable (enterprise)
-- Manageable operations (upgrading, recovery)
-- Agnostic
-- Support for many secrets backends: database, certificates, ssh keys, cloud providers, key/value, etc
-- Dynamic secrets
-- Encryption as a service
-- Fine-grained policies (MFA requirements)
-- Extensibility
-- Documentation
+### 8.2 Types of secrets to be detected
+
+Many types of secrets exists and signatures for each should be considered to ensure accurate detection for all. Among the more common types are:
+
+- High availability secrets (Tokens that are difficult to rotate)
+- Application configuration files
+- Connection strings
+- Credentials
+- Platform specific secret types (e.g.; Amazon Web Services, Google Cloud)
+
+### 8.3 Detection lifecycle
+
+Secrets are like any other authorization token. They should:
+
+- Exist only for as long as necessary (rotate often)
+- Have a method for automatic rotation
+- Only be visible to those who need them (least privilege)
+- Be revokable (including the logging of attempt to use a revoked secret)
+- Never be logged
+
+Detections should exist during each of these stages of the secret lifecycle to ensure secrets were not introduced but missed in a prior step.
+
+### 8.4 Documentation for how to detect secrets
+
+Ensure documentation is created and updated regularly to inform the developer community on procedures and systems available at your company and what types of secrets management is expected, how to test for secrets, and what to do in event of secrets detected.
+
+Documentation should:
+
+- Exist and be updated often, especially in response to an incident
+- Include the following information:
+    - Who has access to the secret
+    - How it gets rotated
+    - Any upstream or downstream dependencies that could potentially be broken during secret rotation
+    - Who is the point of contact during an incident
+    - Security impact of exposure
+
+- Identify when secrets may be handled differently depending on the threat risk, data classification, etc.
+
+## 9 Incident Response
+
+Quick response in the event of a secret being exposed is perhaps one of the most important considerations for secrets management.
+
+### 9.1 Documentation
+
+The primary consideration for responding to the exposure of a secret is to ensure that everyone in the chain of custody is aware of and understands how to respond in the event of exposure. This includes application creators (every member of a development team), information security, and technology leadership.
+
+Documentation must include:
+
+- How to test for secrets and secrets handling, especially during business continuity reviews.
+- Whom to alert when a secret is detected.
+- Steps to take for containment
+- Information to log during the event
+
+### 9.2 Remediation
+
+The primary goal of incident response is rapid response and containment. 
+
+Containment should follow these procedures:
+
+1. Revocation: Keys that were exposed should ensure immediate revocation. They secret must be able to be de-authorized quickly and systems must be in place to identify the revocation status of a secret.
+1. Rotation: A new secret must be able to be quickly created and implemented, preferably via an automated process to ensure repeatability, low rate of implementation error, and least-privilege (not directly human-readable).
+1. Deletion: Secrets revoked/rotated must be removed from the exposed system immediately, this includes secrets discovered in code or logs. Secrets in code should have commit history for the exposure squashed to before the introduction of the secret, and logs must have a process for removing the secret while maintaining log integrity.
+1. Logging: Incident response teams must have access to information about the lifecycle of a secret to aid in containment and remediation including (see more in logging section below):
+    - Who had access?
+    - When did they use it?
+    - When was it previously rotated?
+
+### 9.3 Logging
+
+Additional considerations for logging of secrets usage should include:
+
+- Logging for incident response should be to a single location accessible by IR teams
+- Fidelity of logging information should be ensured during purple team exercises such as:
+    - What should have been logged?
+    - What was actually logged?
+    - Do we have adequate alerts in place to ensure this?
+
+Consider the use of a standardized logging format and vocabulary such as the [Application Logging Vocabulary Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Vocabulary_Cheat_Sheet.html) to ensure that all necessary information is logged.
 
 ## 12 Related Cheat Sheets & further reading
 
