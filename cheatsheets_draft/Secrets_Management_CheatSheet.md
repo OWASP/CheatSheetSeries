@@ -403,15 +403,18 @@ EaaS is a model in which users subscribe to a cloud-based encryption service wit
 
 ## 8 Detection
 
-There are many approaches to secrets detection and some very useful open source projects to help with this. Of note, the [Yelp Detect Secrets](https://github.com/Yelp/detect-secrets) project is mature and has signature matching for around 20 secrets.
+There are many approaches to secrets detection and some very useful open source projects to help with this. Of note, the [Yelp Detect Secrets](https://github.com/Yelp/detect-secrets) project is mature and has signature matching for around 20 secrets. For more information other tools to help you in the detection space check out the [Secrets Detection](https://github.com/topics/secrets-detection) topic on GitHub.
 
 ### 8.1 General detection approaches
 
+Shift-left and DevSecOps principals apply to secrets detection as well. These general approaches below are aimed at considering secrets earlier and evolving the practice over time.
+
 - Create standard test secrets and use them universally across the organization. This allows for the reduction of false-positives by only needing to track a single test secret for each secret type.
-- Consider enabling secrets detection at the developer level to avoid checking secrets into code before commit/PR.
+- Consider enabling secrets detection at the developer level to avoid checking secrets into code before commit/PR either in the IDE, as part of test-driven development, or via pre-commit hook.
 - Make secrets detection part of the threat model. Consider secrets as part of the attack surface during threat modeling exercises.
 - Evaluate detection utilities and related signatures often to ensure they meet expectations.
 - Consider having more than one detection utility and correlating/de-duping results to identify potential areas of detection weakness.
+- Also consider exploring a balance between entropy and ease of detection. Secrets with consistent formats are easier to detect with lower false-positive rates, but you also don't want to miss a human-created password simply because it doesn't match your detection rules.
 
 
 ### 8.2 Types of secrets to be detected
@@ -421,8 +424,15 @@ Many types of secrets exists and signatures for each should be considered to ens
 - High availability secrets (Tokens that are difficult to rotate)
 - Application configuration files
 - Connection strings
+- API keys
 - Credentials
+- Passwords
+- 2FA keys
+- Private keys (like ssh keys)
+- Session tokens
 - Platform specific secret types (e.g.; Amazon Web Services, Google Cloud)
+
+For more fun learning about secrets and practice rooting them out check out the [Wrong Secrets](https://owasp.org/www-project-wrongsecrets/) project.
 
 ### 8.3 Detection lifecycle
 
@@ -432,7 +442,7 @@ Secrets are like any other authorization token. They should:
 - Have a method for automatic rotation
 - Only be visible to those who need them (least privilege)
 - Be revokable (including the logging of attempt to use a revoked secret)
-- Never be logged
+- Never be logged (must implement either an encryption or masking approach in place to avoid logging plaintext secrets)
 
 Detections should exist during each of these stages of the secret lifecycle to ensure secrets were not introduced but missed in a prior step.
 
