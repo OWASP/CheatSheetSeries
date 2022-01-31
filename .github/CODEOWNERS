@@ -1,3 +1,5 @@
 # See https://help.github.com/en/articles/about-code-owners
 # These owners will be the default owners for everything in the repo.
 *       @mackowski @jmanico
+# commjoen have full access to Secrets_Management_CheatSheet
+* /cheatsheets_draft/Secrets_Management_CheatSheet.md @commjoen 
