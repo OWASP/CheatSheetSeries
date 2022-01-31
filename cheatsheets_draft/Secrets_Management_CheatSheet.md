@@ -210,29 +210,29 @@ Secrets do not necessarily need to be brought to a consumer of the secret by a C
 
 ### 3.3 Authentication and Authorization of CI/CD tooling
 
-CI/CD tooling should have designated service accounts, which can only operate in the scope of the required secrets or orchestration of the consumers of a secret. Additionally, a CI/CD pipeline run should be easily attributable to the one who has defined the job or triggered it to detect who has tried to exfiltrate secrets or manipulate them. When you use certificate-based auth, the caller of the pipeline identity should be part of the certificate. If you use a token to authenticate towards the mentioned systems, make sure that you set the principal requesting these actions (E.g. the user or the job creator).
+CI/CD tooling should have designated service accounts, which can only operate in the scope of the required secrets or orchestration of the consumers of a secret. Additionally, a CI/CD pipeline run should be easily attributable to the one who has defined the job or triggered it to detect who has tried to exfiltrate secrets or manipulate them. When you use certificate-based auth, the caller of the pipeline identity should be part of the certificate. If you use a token to authenticate towards the mentioned systems, make sure you set the principal requesting these actions (E.g. the user or the job creator).
 
 Verify on a periodical basis whether this is (still) the case for your system so that you can do logging, attribution, and security alerting on suspicious actions effectively.
 
 ### 3.4 Logging and Accounting
 
-CI/CD tooling can be used in various ways to extract secrets by an attacker: from using administrative interfaces, to job creation which exfiltrates the secret using double base64 encoding or encryption. Therefore, you should log every action which happens at a CI/CD tool. Security alerting rules should be defined at every non-standard manipulation of the pipeline tool and its administrative interface, to be able to monitor secret usage.
-Logs should be at least queryable for 90 days and stored for a longer period on cold storage, as it might take security teams time to understand how a secret can be exfiltrated and/or manipulated with the CI/CD tooling.
+Attackers can use CI/CD tooling to extract secrets. They could, for example, use administrative interfaces or job creation which exfiltrates the secret using encryption or double base64 encoding. Therefore, you should log every action in a CI/CD tool. You should define security alerting rules at every non-standard manipulation of the pipeline tool and its administrative interface to monitor secret usage.
+Logs should be at least queryable for 90 days and stored for a more extended period on cold storage. It might take security teams time to understand how attackers can exfiltrate or manipulate a secret using CI/CD tooling.
 
 ### 3.5 Rotation vs Dynamic Creation
 
-CI/CD tooling can be used to rotate secrets or instruct other components to do the rotation of the secret. For instance, the CI/CD tool can request a secrets management system, or another application to do the actual rotation of the secret by replacing the actual value with a new one. Alternatively, the CI/CD tool or another component could set up a dynamic secret: a secret required for a consumer to use for as long as it lives, after which the secret is invalidated when the consumer no longer lives. This reduces possible leakage of a secret, and allows for easy detection of misuse: if a secret is used anywhere else than from the IP of the consumer: then the secret is misused.
+You can leverage CI/CD tooling to rotate secrets or instruct other components to do the rotation of the secret. For instance, the CI/CD tool can request a secrets management system or another application to rotate the secret. Alternatively, the CI/CD tool or another component could set up a dynamic secret: a secret required for a consumer to use for as long as it lives. The secret is invalidated when the consumer no longer lives. This procedure reduces possible leakage of a secret and allows for easy detection of misuse. If an attacker uses secret from anywhere other than the consumer's IP, you can easily detect it.
 
 ### 3.6 Pipeline Created Secrets
 
-The pipeline tooling can be used to generate secrets and either offer them directly to the service which is deployed by the tooling, or provision the secret to a secrets management solution. Alternatively, the secret can be stored encrypted in git, so that the secret and its metadata is as close to the developer daily place of work as possible. This does require that developers cannot decrypt the secrets themselves and that every consumer of a secret has its encrypted variant of the secret. For instance: the secret should then be different per DTAP environment, and be encrypted with a different key. For each environment, only the designated consumer in that environment should be able to decrypt the specific secret. That way, a secret does not leak cross-environment and can still be easily stored next to the code.
-Consumers of a secret could now decrypt the secret using a side-car, as described in section 5.2, where instead of retrieving the secrets, the consumer would leverage the side-car to do decryption of the secret.
+You can use pipeline tooling to generate secrets and either offer them directly to the service deployed by the tooling or provide the secret to a secrets management solution. Alternatively, the secret can be stored encrypted in git so that the secret and its metadata is as close to the developer daily place of work as possible. A git-stored secret does require that developers cannot decrypt the secrets themselves and that every consumer of a secret has its encrypted variant of the secret. For instance: the secret should then be different per DTAP environment and be encrypted with another key. For each environment, only the designated consumer in that environment should be able to decrypt the specific secret. A secret does not leak cross-environment and can still be easily stored next to the code.
+Consumers of a secret could now decrypt the secret using a sidecar, as described in section 5.2. Instead of retrieving the secrets, the consumer would leverage the sidecar to decrypt the secret.
 
-When a pipeline  creates a secret itself, make sure that the scripts and/or binaries involved in the creation adhere to best practices for secret generation (e.g. secure-randomness, proper length of secret creation, etc.) and that the secret is created based on well-defined metadata which is stored somewhere in Git or somewhere else.
+When a pipeline creates a secret by itself, ensure that the scripts or binaries involved adhere to best practices for secret generation. Best practices include secure-randomness, proper length of secret creation, etc.) and that the secret is created based on well-defined metadata stored somewhere in git or somewhere else.
 
 ## 4 Cloud Providers
 
-For cloud providers, there are at least four important topics to touch upon:
+For cloud providers, there are at least four essential topics to touch upon:
 
 - Designated secret storage/management solutions. Which service(s) do you use?
 - Envelope & client-side encryption
@@ -241,15 +241,15 @@ For cloud providers, there are at least four important topics to touch upon:
 
 ### 4.1 Services to Use
 
-In any environment, it is best to use a designated secret management solution. Most cloud providers have at least one service that offers secret management. Of course, it's also possible to run a different secret management solution (e.g. HashiCorp Vault) on compute resources within the cloud, but we'll consider cloud provider service offerings in this section.
+It is best to use a designated secret management solution in any environment. Most cloud providers have at least one service that offers secret management. Of course, it's also possible to run a different secret management solution (e.g. HashiCorp Vault) on compute resources within the cloud. We'll consider cloud provider service offerings in this section.
 
-Sometimes it's possible to automatically rotate your secret, either via a service provided by your cloud provider or a (custom-built) function. Generally, the cloud provider's solution is preferred since the barrier of entry and risk of misconfiguration are lower. If you use a custom solution, ensure the role the function uses to do its rotation can only be assumed by said function.
+Sometimes it's possible to automatically rotate your secret, either via a service provided by your cloud provider or a (custom-built) function. Generally, you should prefer the cloud provider's solution since the barrier of entry and risk of misconfiguration are lower. If you use a custom solution, ensure the function's role to do its rotation can only be assumed by said function.
 
 #### 4.1.1 AWS
 
 For AWS, the recommended solution is [AWS secret manager](https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html).
 
-Permissions are granted at the secret level. Check out the [Secrets Manager best practices](https://docs.aws.amazon.com/secretsmanager/latest/userguide/best-practices.html) for more information.
+Permissions are granted at the secret level. Check out the [Secrets Manager best practices](https://docs.aws.amazon.com/secretsmanager/latest/userguide/best-practices.html).
 
 It is also possible to use the [Systems Manager Parameter store](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html), which is cheaper, but that has a few downsides:
 
@@ -265,7 +265,7 @@ For GCP, the recommended service is [Secret Manager](https://cloud.google.com/se
 
 Permissions are granted at the secret level.
 
-Check out the [Secret Manager best practices](https://cloud.google.com/secret-manager/docs/best-practices) for more information.
+Check out the [Secret Manager best practices](https://cloud.google.com/secret-manager/docs/best-practices).
 
 #### 4.1.3 Azure
 
@@ -273,64 +273,64 @@ For Azure, the recommended service is [Key Vault](https://docs.microsoft.com/en-
 
 Contrary to other clouds, permissions are granted at the _**Key Vault**_ level. This means secrets for separate workloads and separate sensitivity levels should be in separated Key Vaults accordingly.
 
-Check out the [Key Vault best practices](https://docs.microsoft.com/en-us/azure/key-vault/general/best-practices) for more information.
+Check out the [Key Vault best practices](https://docs.microsoft.com/en-us/azure/key-vault/general/best-practices).
 
 ### 4.2 Envelope & client-side encryption
 
-Two considerations we want to deal with here are how the secret is encrypted and how the keys for that encryption can be managed in the cloud.
+This section will describe how a secret is encrypted and how you can manage the keys for that encryption in the cloud.
 
 #### 4.2.1 Client-side encryption versus server-side encryption
 
-Server-side encryption of secrets ensures that the cloud provider takes care of the encryption of the secret at storage. This means that the secret is safeguarded against compromise while being at rest. This often does not require any additional work, other than selecting the key to encrypt it with (See section 4.2.2). However: when the secret is submitted to another service to consume the secret, it will no longer be encrypted, as it is decrypted before submission to the intended service or human user with whom it should be shared.
+Server-side encryption of secrets ensures that the cloud provider takes care of the encryption of the secret at storage. The secret is then safeguarded against compromise while at rest. Encryption at rest often does not require additional work other than selecting the key to encrypt it with (See section 4.2.2). However: when you submit the secret to another service, it will no longer be encrypted. It is decrypted before sharing with the intended service or human user.
 
-Client-side encryption of secrets ensures that the secret remains encrypted until you actively decrypt it. This means it is encrypted at rest and while it arrives at the intended consumer until it is decrypted. This does mean that you need to have a proper cryptosystem to cater for this. Think about mechanisms such as PGP using a safe configuration and other more scalable and relatively easy to use systems. Client-side encryption can provide an end2end encryption of the secret: from producer till consumer.
+Client-side encryption of secrets ensures that the secret remains encrypted until you actively decrypt it. This means it is only decrypted when it arrives at the consumer. You need to have a proper cryptosystem to cater for this. Think about mechanisms such as PGP using a safe configuration and other more scalable and relatively easy to use systems. Client-side encryption can provide an end2end encryption of the secret: from producer till consumer.
 
 #### 4.2.2 Bring Your Own Key versus Cloud Provider Key
 
-When you encrypt a secret at rest, the question is: with which key do you want to do this? The less trust you have in the cloud provider, the more you will have to manage yourself.
+When you encrypt a secret at rest, the question is: which key do you want to use? The less trust you have in the cloud provider, the more you will have to manage yourself.
 
-Often, you can either encrypt a secret with a key managed at the secrets management service or use a key management solution from the cloud provider to encrypt the secret. The key offered through the key management solution of the cloud provider can be either managed by the cloud provider or by yourself. In the latter case, it is called "bring your own key"  (BYOK). This key can either be directly imported and/or generated at the key management solution or be created at the cloud HSM supported by the cloud provider.
-Either your key or the customer master key from the provider is then used to encrypt the data key of the secrets management solution. The data key is then in turn used to encrypt the secret. This means that, by managing the CMK, you have control over the data key at the secrets management solution.
+Often, you can either encrypt a secret with a key managed at the secrets management service or use a key management solution from the cloud provider to encrypt the secret. The key offered through the key management solution of the cloud provider can be either managed by the cloud provider or by yourself. Industry standards call the latter "bring your own key"  (BYOK). You can either directly import or generate this key at the key management solution or using cloud HSM supported by the cloud provider.
+You can then either use your key or the customer master key from the provider to encrypt the data key of the secrets management solution. The data key, in turn, encrypts the secret. By managing the CMK, you have control over the data key at the secrets management solution.
 
-While importing your own key material can generally be done with all providers ([AWS](https://docs.aws.amazon.com/kms/latest/developerguide/importing-keys.html), [Azure](https://docs.microsoft.com/en-us/azure/key-vault/keys/byok-specification), [GCP](https://cloud.google.com/kms/docs/key-import)). Unless you know what you are doing and your threat model and/or policy require this, this is not a recommended solution.
+While importing your own key material can generally be done with all providers ([AWS](https://docs.aws.amazon.com/kms/latest/developerguide/importing-keys.html), [Azure](https://docs.microsoft.com/en-us/azure/key-vault/keys/byok-specification), [GCP](https://cloud.google.com/kms/docs/key-import)). Unless you know what you are doing and your threat model and policy require this, this is not a recommended solution.
 
 ### 4.3 Identity and Access Management (IAM)
 
-IAM applies to both on-premise and cloud setups: to effectively manage secrets, you need to set up the right access policies and roles. This goes beyond setting up policies regarding who can access a secret and who can't, it should include hardening the full IAM setup, as it could otherwise allow for privilege escalation attacks. Make sure you never allow for open "pass role" privileges or open IAM creation privileges, as these can be used to use and/or create credentials that again have access to the secrets. Next, make sure you tightly control what can impersonate a service account: are your machines' roles accessible by an attacker exploiting your server? Can service roles from the data-pipeline tooling access the secrets easily? Make sure you include IAM for every cloud component in your threat model (e.g. ask yourself: how can you do elevation of privileges with this component?). See [this blog entry](https://xebia.com/ten-pitfalls-you-should-look-out-for-in-aws-iam/) for multiple do's and don'ts with examples.
+IAM applies to both on-premise and cloud setups: to effectively manage secrets, you need to set up suitable access policies and roles. Setting this up goes beyond policies regarding secrets; it should include hardening the full IAM setup, as it could otherwise allow for privilege escalation attacks. Ensure you never allow open "pass role" privileges or unrestricted IAM creation privileges, as these can use or create credentials that have access to the secrets. Next, make sure you tightly control what can impersonate a service account: are your machines' roles accessible by an attacker exploiting your server? Can service roles from the data-pipeline tooling access the secrets easily? Ensure you include IAM for every cloud component in your threat model (e.g. ask yourself: how can you do elevation of privileges with this component?). See [this blog entry](https://xebia.com/ten-pitfalls-you-should-look-out-for-in-aws-iam/) for multiple do's and don'ts with examples.
 
-Make sure that you leverage the temporality of the IAM principals effectively way: e.g. ensure that only certain roles and service accounts that require it can access the secrets. Monitor these accounts, so that you can tell who or what used them to access the secrets.
+Leverage the temporality of the IAM principals effectively: e.g. ensure that only specific roles and service accounts that require it can access the secrets. Monitor these accounts so that you can tell who or what used them to access the secrets.
 
-Next, make sure that you scope access to your secrets: one should not be simply allowed to access all secrets. In GCP and AWS, you can create fine-grained access policies to ensure that a principal cannot access all secrets at once. In Azure having access to the keyvault, means having access to all secrets in that Key Vault. This is why it is key to have separate key vaults when working on Azure to segregate access.
+Next, make sure that you scope access to your secrets: one should not be simply allowed to access all secrets. In GCP and AWS, you can create fine-grained access policies to ensure that a principal cannot access all secrets at once. In Azure, having access to the key vault means having access to all secrets in that key vault. It is, thus, essential to have separate key vaults when working on Azure to segregate access.
 
 ### 4.4 API limits
 
-Cloud services can generally provide a limited amount of API calls over a given period. This means you could potentially (D)DoS yourself when you run into these limits. Most of these limits apply per account, project, or subscription, so limit your blast radius accordingly by spreading workloads. Additionally, some services may support data key caching, preventing load on the key management service API (see for example [AWS data key caching](https://docs.aws.amazon.com/encryption-sdk/latest/developer-guide/data-key-caching.html)). Some services can leverage built-in data key caching. [S3 is one such example](https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-key.html).
+Cloud services can generally provide a limited amount of API calls over a given period. You could potentially (D)DoS yourself when you run into these limits. Most of these limits apply per account, project, or subscription, so spread workloads to limit your blast radius accordingly. Additionally, some services may support data key caching, preventing load on the key management service API (see for example [AWS data key caching](https://docs.aws.amazon.com/encryption-sdk/latest/developer-guide/data-key-caching.html)). Some services can leverage built-in data key caching. [S3 is one such example](https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-key.html).
 
 ## 5 Containers & Orchestrators
 
-There are various ways how containers can be enriched with secrets: at container build time (not recommended) and during orchestration/deployment.
+You can enrich containers with secrets in multiple ways: build time (not recommended) and during orchestration/deployment.
 
 ### 5.1 Injection of Secrets (file, in-memory)
 
-Ther are 3 ways to get secrets to an app inside a docker container
+There are three ways to get secrets to an app inside a docker container.
 
-- Environment variables: We can provide secrets directly as part of the docker container configuration. Note that secrets themselves should never be hardcoded using docker ENV or docker ARG commands, as these can easily leak with the container definitions. See the Docker challenges at [WrongSecrets](https://github.com/commjoen/wrongsecrets) as well. Instead, let an orchestrator overwrite the environment variable with the actual secret and make sure that this is not hardcoded by itself.
-- Mounted volumes (file): With this method, we keep our secrets within a particular config/secret file and mount that file to our instance as a mounted volume. Make sure that these mounts are mounted in by the orchestrator and never build in at container build time, as this will leak the secret with the container definition, instead: make sure that the orchestrator mounts in the volume when required.
-- Fetch from the secret store (in-memory): A sidecar app/container fetches the secrets it need directly from a secret manager service without having to deal with docker config. This solution allows you to use dynamically constructed secrets without worrying about the secrets being viewable from the file system or from checking the docker container's env variables.
+- Environment variables: We can provide secrets directly as part of the docker container configuration. Note: secrets themselves should never be hardcoded using docker ENV or docker ARG commands, as these can easily leak with the container definitions. See the Docker challenges at [WrongSecrets](https://github.com/commjoen/wrongsecrets) as well. Instead, let an orchestrator overwrite the environment variable with the actual secret and ensure that this is not hardcoded.
+- Mounted volumes (file): With this method, we keep our secrets within a particular config/secret file and mount that file to our instance as a mounted volume. Ensure that these mounts are mounted in by the orchestrator and never built-in, as this will leak the secret with the container definition. Instead: make sure that the orchestrator mounts in the volume when required.
+- Fetch from the secret store (in-memory): A sidecar app/container fetches the secrets it needs directly from a secret manager service without dealing with docker config. This solution allows you to use dynamically constructed secrets without worrying about the secrets being viewable from the file system or from checking the docker container's env variables.
 
 ### 5.2 Short Lived Side-car Containers
 
-To inject secrets into a container one could create short-lived side-car containers that fetch secrets from some remote endpoint and then store them on a shared volume which is also mounted to the original container. The original container can now use the secrets from mounted volume benefit of using this approach is that we don't need to integrate any third-party tool or code to get secrets. Once the secrets are fetched the sidecar container terminates that's why they are called short lived. An example of one such service is Vault Agent Sidecar Injector. The Vault Agent Injector alters pod specifications to include Vault Agent containers that render Vault secrets to a shared memory volume using Vault Agent Templates. By rendering secrets to a shared volume, containers within the pod can consume Vault secrets without being Vault aware.
+To inject secrets, you could create short-lived sidecar containers that fetch secrets from some remote endpoint and then store them on a shared volume mounted to the original container. The original container can now use the secrets from mounted volume benefit of using this approach is that we don't need to integrate any third-party tool or code to get secrets. Once the sidecar has fetched the secrets, it terminates. An example is the Vault Agent Sidecar Injector. The Vault Agent Injector alters pod specifications to include Vault Agent containers that render Vault secrets to a shared memory volume using Vault Agent Templates. By mounting secrets to a volume shared with the pod, containers within the pod can consume Vault secrets without being aware of Vault.
 
 ### 5.3 Internal vs External Access
 
-Secrets should only be exposed to internal communication mechanisms between the container and the deployment representation (E.g. a Kubernetes Pod), it should never be exposed through external access mechanisms which are shared among deployments and/or orchestrators (e.g. a shared volume).
+You should only expose secrets to communication mechanisms between the container and the deployment representation (E.g. a Kubernetes Pod). Never expose secrets through external access mechanisms shared among deployments or orchestrators (e.g. a shared volume).
 
-When secrets are stored by the orchestrator (e.g. Kubernetes Secrets), make sure that the storage backend of the orchestrator is encrypted and keys are managed well.
+When the orchestrator stores secrets (e.g. Kubernetes Secrets), make sure that the storage backend of the orchestrator is encrypted and you manage the keys well.
 
 ## 6 Implementation Guidance
 
-In this section, we discuss the implementation. Note that for the actual implementation it is better to always refer to the documentation of the secrets management system of choice as this will be better up to date than any secondary document such as this cheat sheet.
+In this section, we discuss the implementation. Note that it is better to always refer to the documentation of the secrets management system of choice for the actual implementation as this will be better up to date than any secondary document such as this cheat sheet.
 
 ### 6.1 Key Material Management Policies
 
@@ -340,52 +340,52 @@ Key material management is discussed in the [Key management Secret cheat sheet](
 
 We see the following use cases for dynamic secrets, amongst others:
 
-- short living secrets (E.g. credentials and/or API keys) for a secondary service that expresses the intent for connecting the primary service (e.g. consumer) to the service.
+- short-lived secrets (e.g. credentials or API keys) for a secondary service that expresses the intent for connecting the primary service (e.g. consumer) to the service.
 - short-lived integrity and encryption controls for guarding and securing in-memory and runtime communication processes. Think of encryption keys that only need to live for a single session or a single deployment lifetime.
-- short-lived credentials that are required to build a stack during the deployment of a service for interacting with the deployers and supporting infrastructure.
+- short-lived credentials for building a stack during the deployment of a service for interacting with the deployers and supporting infrastructure.
 
-Note that these dynamic secrets often need to be created at the service/technology stack to which we need to connect. To create these types of dynamic secrets, we often need long term static secrets so that we can create the dynamic secrets themselves. Other static use cases:
+Note that these dynamic secrets often need to be created with the service we need to connect to. To create these types of dynamic secrets, we usually require long term static secrets to create the dynamic secrets themselves. Other static use cases:
 
-- key materials that need to live longer than a single deployment due to the nature of their usage in the interaction with other instances of the same service (e.g. storage encryption keys, TLS PKI keys)
-- key materials and/or credentials to connect to services that do not support creating temporal roles and/or credentials.
+- key material that needs to live longer than a single deployment due to the nature of their usage in the interaction with other instances of the same service (e.g. storage encryption keys, TLS PKI keys)
+- key material or credentials to connect to services that do not support creating temporal roles or credentials.
 
 ### 6.3 Ensure limitations are in place
 
 Secrets should never be retrievable by everyone and everything. Always make sure that you put guardrails in place:
 
-- Do you have the opportunity to create access policies? Make sure that there are policies in place to limit the number of entities that can read or write the secret. At the same time: make sure that the policies are written in such a way that they can easily be extended and are not too complicated to use.
-- Is there no way to reduce access to certain secrets within a secrets management solution? Consider separating the production and development secrets from each other by having separate secret management solutions. Then, reduce access to the production secrets management solution.
+- Do you have the opportunity to create access policies? Ensure that there are policies in place to limit the number of entities that can read or write the secret. At the same time: write the policies so that you can easily extend them, and they are not too complicated to use.
+- Is there no way to reduce access to certain secrets within a secrets management solution? Consider separating the production and development secrets by having separate secret management solutions. Then, reduce access to the production secrets management solution.
 
 ### 6.4 Security Event Monitoring is Key
 
-Always monitor who/what, from which IP, and with what methodology is accessing the secret. There are various patterns where you need to look out for, such as, but not limited to:
+Continually monitor who/what, from which IP, and what methodology accesses the secret. There are various patterns where you need to look out for, such as, but not limited to:
 
-- Monitor who accesses the secret at the secret management system: is this normal behavior? So if the CI/CD credentials are used to access the secret management solution from a different IP than where the CI/CD system is running: provide a security alert and assume the secret compromised.
-- Monitor the service requiring the secret (if possible), e.g., whether the user of the secret is actually coming from an expected IP, with an expected user agent. If not: alert and assume the secret is compromised.
+- Monitor who accesses the secret at the secret management system: is this normal behavior? If the CI/CD credentials are used to access the secret management solution from a different IP than where the CI/CD system is running: provide a security alert and assume the secret compromised.
+- Monitor the service requiring the secret (if possible), e.g., whether the user of the secret is coming from an expected IP, with an expected user agent. If not: alert and assume the secret is compromised.
 
-### 6.5 Ease of Use
+### 6.5 Usability
 
-Ensure that the secrets management solution is easy to use, as you do not want people to work around it or use it not effectively due to complexity. This requires:
+Ensure that the secrets management solution is easy to use, as you do not want people to work around it or use it ineffectively due to complexity. This usability requires:
 
 - Easy onboarding of new secrets and removal of invalidated secrets.
-- Easy integration with the existing software: it should be easy to integrate applications as consumers of the secret management system. For instance: there should be an SDK available and/or a simple sidecar container to communicate with the secret management system so that existing software does not need heavy modification. Examples of this can be found in the AWS, Google and Azure SDKs which allows an application to interact with the secrets management solution of the cloud directly. Similar examples can be found with the Hashicorp Vault software integrations, as well as the Vault Agent Sidecar Injector.
-- A clear understanding of the organization on why secrets management is important, and which processes need to be followed when it comes to handling secrets.
+- Easy integration with the existing software: it should be easy to integrate applications as consumers of the secret management system. For instance, an SDK or simple sidecar container should be available to communicate with the secret management system so that existing software is decoupled and does not need extensive modification. You can find examples of this in the AWS, Google, and Azure SDKs. These SDKs allow an application to interact with the respective secrets management solutions. You can find similar examples in the HashiCorp Vault software integrations and the Vault Agent Sidecar Injector.
+- A clear understanding of the organization of secrets management and its processes is essential.
 
 ## 7 Encryption
 
-Secrets Management goes hand in hand with encryption. After all: the secrets should be stored encrypted somewhere to protect their confidentiality and Integrity.
+Secrets Management goes hand in hand with encryption. After all: the secrets should be stored encrypted somewhere to protect their confidentiality and integrity.
 
 ### 7.1 Encryption Types to Use
 
-There are various encryption types to use when it comes to securing a secret, as long as they provide sufficient security, including sufficient resistance against quantum computing based attacks. Given that this is a moving field, it is best to take a look at sources like [keylength.com](https://www.keylength.com/en/4/), which enumerate up to date recommendations on the usage of encryption types and key lengths for existing standards, as well as the [OWASP Cryptographic Storage cheat sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html).
-Note that post-quantum cryptography approaches are still in development at this time of writing. For this, it is best to keep an eye on [Nist Post Quantum Cryptography Standardization Page](https://csrc.nist.gov/projects/post-quantum-cryptography/post-quantum-cryptography-standardization), which explains which future algorithms might be recommended in a post-quantum computing stage.
+You can use various encryption types to secure a secret as long as they provide sufficient security, including adequate resistance against quantum computing-based attacks. Given that this is a moving field, it is best to take a look at sources like [keylength.com](https://www.keylength.com/en/4/), which enumerate up to date recommendations on the usage of encryption types and key lengths for existing standards, as well as the [OWASP Cryptographic Storage CheatSheet](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html).
+Note that post-quantum cryptography approaches are still in development at this time of writing. We recommend watching [Nist Post Quantum Cryptography Standardization Page](https://csrc.nist.gov/projects/post-quantum-cryptography/post-quantum-cryptography-standardization), which might recommend algorithms for a post-quantum computing stage.
 
-Please note that in all cases we need to preferably select an algorithm that provides encryption and confidentiality at the same time, such as AES-256 using GCM [(Gallois Counter Mode)](https://en.wikipedia.org/wiki/Galois/Counter_Mode). Or a mixture of ChaCha20 and Poly1305 according to the best practices in the field.
+Please note that in all cases, we need to preferably select an algorithm that provides encryption and confidentiality at the same time, such as AES-256 using GCM [(Gallois Counter Mode)](https://en.wikipedia.org/wiki/Galois/Counter_Mode). Or a mixture of ChaCha20 and Poly1305 according to the best practices in the field.
 
 ### 7.2 Convergent Encryption
 
-[Convergent Encryption](https://en.wikipedia.org/wiki/Convergent_encryption) ensures that a given plaintext and its key results in the same ciphertext. This can help to detect possible re-use of secrets as this will result in the same ciphertext.
-The challenge with enabling convergent encryption is that it allows for attackers who can use the system to generate a set of cryptographic strings that might end up in the same secret, which allows the attacker to derive the plain text secret. You can mitigate this risk if the convergent cryptosystem you use has sufficient resource challenges during encryption given the algorithm and key. Another factor that can help reduce the risk is ensuring that a secret needs to be of sufficient length, further hampering the possible guess-iteration time required.
+[Convergent Encryption](https://en.wikipedia.org/wiki/Convergent_encryption) ensures that a given plaintext and its key results in the same ciphertext. This can help detect possible re-use of secrets, resulting in the same ciphertext.
+The challenge with enabling convergent encryption is that it allows attackers to use the system to generate a set of cryptographic strings that might end up in the same secret, allowing the attacker to derive the plain text secret. Given the algorithm and key, you can mitigate this risk if the convergent cryptosystem you use has sufficient resource challenges during encryption. Another factor that can help reduce the risk is ensuring that a secret is of adequate length, further hampering the possible guess-iteration time required.
 
 ### 7.3 Where to store the Encryption Keys?
 
@@ -398,7 +398,7 @@ EaaS is a model in which users subscribe to a cloud-based encryption service wit
 
 - Encryption at rest
 - Encryption in Transit (TLS)
-- Key handling and cryptographic implementations are taken care of by Encryption Secvice, not by developers
+- Key handling and cryptographic implementations are taken care of by Encryption Service, not by developers
 - The provider could add more services to interact with the sensitive data
 
 ## 8 Detection
