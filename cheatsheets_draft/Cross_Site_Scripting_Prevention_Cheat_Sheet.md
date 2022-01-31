@@ -14,7 +14,7 @@ Less XSS bugs appear in applications built with modern web frameworks. These fra
 
 - The use of *escape hatches* that frameworks use to directly manipulate the DOM
 - The use of React’s `dangerouslySetInnerHTML` without sanitising the HTML
-- The use of user-driven `javascript:` or `data:` URL’s in React without specialized validation
+- The use of user-driven `javascript:` or `data:` URLs in React without specialized validation
 - The use of Angular’s `bypassSecurityTrustAs*` functions
 - The general problem of template injection
 - Not keeping your framework patched
@@ -36,7 +36,7 @@ Start with using your framework’s default protections. Automatic encoding and 
 
 If you’re not using a framework or need to cover gaps in the framework then you should use an output encoding library. Each variable used in the user interface should be passed through an output encoding function. A list of output encoding libraries is included in the appendix.
 
-There are many different output encoding methods because browsers parse HTML, JS, URL’s, and CSS differently. Using the wrong encoding method may introduce weaknesses or harm the functionality of your application.
+There are many different output encoding methods because browsers parse HTML, JS, URLs, and CSS differently. Using the wrong encoding method may introduce weaknesses or harm the functionality of your application.
 
 ### On Quotes
 
@@ -46,14 +46,14 @@ It’s critical to use quotation marks like `"` or `'` to surround your variable
 
 “HTML Context” refers to placing a variable between HTML tags. This can occur when our users need to write text for a blog post for example, or write a comment, or update their profile name.
 
-```html
+```HTML
 <div> $varUnsafe </div>
 <div> <script>alert`1`</script> </div> // Example Attack
 ```
 
 Use HTML entity encoding for that variable, here are some examples of encoded values for specific characters.
 
-```html
+```HTML
 &    &amp;
 <    &lt;
 >    &gt;
@@ -67,7 +67,7 @@ If you're using JavaScript for writing to HTML, look at the `.textContent` attri
 
 “HTML Attribute Contexts” refer to placing a variable in an HTML attribute value. You may want to do this to change a hyperlink, hide an element, add alt-text for an image, or change inline CSS styles. You should apply HTML Attribute Encoding to variables being placed in most HTML attributes. A list of Safe HTML Attributes is provided in the **Safe Sinks** section.
 
-```html
+```HTML
 <div attr="$varUnsafe">
 <div attr=”*x” onblur=”alert(1)*”> // Example Attack
 ```
@@ -82,7 +82,7 @@ The only ‘safe’ location for placing variables in JavaScript is inside a “
 
 Examples of “Quoted Data Values”
 
-```html
+```HTML
 <script>alert('$varUnsafe’)</script>
 <script>x=’$varUnsafe’</script>
 <div onmouseover="'$varUnsafe'"</div>
@@ -100,13 +100,13 @@ For JSON, verify that the `Content-Type` header is `application/json` and not `t
 
 “CSS Contexts” refer to variables placed into inline CSS. This is common when you want users to be able to customize the look and feel of their webpages, or even in a WYSIWYG editor. CSS is surprisingly powerful and has been used for many types of attacks. Variables should only be placed in a CSS property value. Other “CSS Contexts” are unsafe and you should not place variable data in them.
 
-```html
+```HTML
 <style> selector { property : $varUnsafe; } </style>
 <style> selector { property : "$varUnsafe"; } </style>
 <span style="property : $varUnsafe">Oh no</span>
 ```
 
-If you're using JavaScript to change a css property, look into using `style.property = x`. This is a **Safe Sink** and will automatically CSS encode data in it.
+If you're using JavaScript to change a CSS property, look into using `style.property = x`. This is a **Safe Sink** and will automatically CSS encode data in it.
 
 Encode all characters using the `\xHH` format. Do not use other formats or escape strings. Escaping, changing execution context, and abusing parser order apply to CSS too.
 
@@ -114,19 +114,19 @@ Encode all characters using the `\xHH` format. Do not use other formats or escap
 
 “URL Contexts” refer to variables placed into a URL. Most commonly, you’ll be updating a parameter. Use URL Encoding for data being placed in a HTTP Get Parameter.
 
-```html
+```HTML
 <a href="http://www.owasp.org?test=$varUnsafe">link</a >
 ```
 
 Encode all characters with ASCII values less than 256 with the `%HH` encoding format. Make sure any attributes are fully quoted, same as JS and CSS.
 
-If you're using JavaScript to construct a url Query Value, look into using `window.encodeURIComponent(x)`. This is a **Safe Sink** and will automatically URL encode data in it.
+If you're using JavaScript to construct a URL Query Value, look into using `window.encodeURIComponent(x)`. This is a **Safe Sink** and will automatically URL encode data in it.
 
 Validate the protocol and domain when placing variables into `href`, `src`, or other URL-based attributes. After that, URLs should be encoded based on the context.
 
 Take this example. `href` is a HTML attribute value. Input validation and then HTML Attribute Encoding should be applied.
 
-```html
+```HTML
 <a href="$varUnsafe">link</a >
 ```
 
@@ -134,7 +134,7 @@ Take this example. `href` is a HTML attribute value. Input validation and then H
 
 Output Encoding is not perfect. It will not always prevent XSS. These locations are known as Dangerous Contexts. Dangerous contexts include:
 
-```html
+```HTML
 <script>Directly in a script</script>
 <!-- Inside an HTML comment -->
 <style>Directly in CSS</style>
@@ -145,7 +145,7 @@ Output Encoding is not perfect. It will not always prevent XSS. These locations 
 Other areas to be careful of include:
 
 - Callback Functions
-- Where URL’s are handled in code such as this CSS { background-url : “javascript:alert(xss)”; }
+- Where URLs are handled in code such as this CSS { background-url : “javascript:alert(xss)”; }
 - All JavaScript event handlers (`onclick()`, `onerror()`, `onmouseover()`).
 - Unsafe JS Functions like `eval()`, `setInterval()`, `setTimeout()`
 
@@ -153,9 +153,9 @@ Don't place variables into Dangerous Contexts as even with Output Encoding, it w
 
 That’s why it’s important to combine Output Encoding with HTML Sanitization.
 
-## Html Sanitization
+## HTML Sanitization
 
-Sometimes users need to write HTML. One scenario would be in a Wordpress WYSIWYG editor and using HTML to change the styling or structure of a blog post. Output encoding here will prevent XSS, but it will also prevent our users from customising their posts. This scenario is common all over the web. Output Encoding must also be used with HTML Sanitization.
+Sometimes users need to write HTML. One scenario would be in a WordPress WYSIWYG editor and using HTML to change the styling or structure of a blog post. Output encoding here will prevent XSS, but it will also prevent our users from customising their posts. This scenario is common all over the web. Output Encoding must also be used with HTML Sanitization.
 
 Passing a variable through a HTML Sanitization function will strip out everything that contains dangerous HTML and return a clean string. OWASP recommend s[DOMPurify](https://github.com/cure53/DOMPurify) for HTML Sanitization.
 
@@ -213,7 +213,7 @@ The following snippets of HTML demonstrate how to safely render untrusted data i
 | String    | Safe HTML Attributes                     | `<input type="text" name="fname" value="UNTRUSTED DATA ">`                                               | Aggressive HTML Entity Encoding (rule \#2), Only place untrusted data into a list of safe attributes (listed below), Strictly validate unsafe attributes such as background, ID and name. |
 | String    | GET Parameter                            | `<a href="/site/search?value=UNTRUSTED DATA ">clickme</a>`                                               | URL Encoding (rule \#5).                                                                                                                                                                       |
 | String    | Untrusted URL in a SRC or HREF attribute | `<a href="UNTRUSTED URL ">clickme</a> <iframe src="UNTRUSTED URL " />`                                   | Canonicalize input, URL Validation, Safe URL verification, Allow-list http and HTTPS URLs only (Avoid the JavaScript Protocol to Open a new Window), Attribute encoder.                        |
-| String    | CSS Value                                | `html <div style="width: UNTRUSTED DATA ;">Selection</div>`                                                   | Strict structural validation (rule \#4), CSS Hex encoding, Good design of CSS Features.                                                                                                        |
+| String    | CSS Value                                | `HTML <div style="width: UNTRUSTED DATA ;">Selection</div>`                                                   | Strict structural validation (rule \#4), CSS Hex encoding, Good design of CSS Features.                                                                                                        |
 | String    | JavaScript Variable                      | `<script>var currentValue='UNTRUSTED DATA ';</script> <script>someFunction('UNTRUSTED DATA ');</script>` | Ensure JavaScript variables are quoted, JavaScript Hex Encoding, JavaScript Unicode Encoding, Avoid backslash encoding (`\"` or `\'` or `\\`).                                                 |
 | HTML      | HTML Body                                | `<div>UNTRUSTED HTML</div>`                                                                             | HTML Validation (JSoup, AntiSamy, HTML Sanitizer...).                                                                                                                                          |
 | String    | DOM XSS                                  | `<script>document.write("UNTRUSTED INPUT: " + document.location.hash );<script/>`                        | [DOM based XSS Prevention Cheat Sheet](DOM_based_XSS_Prevention_Cheat_Sheet.md)                                                                                                                |
