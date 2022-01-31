@@ -289,16 +289,15 @@ In the case of a BYOK - or sometimes referred to as Custommer Master Key (CMK) i
 
 ### 4.3 Identity and Access Management (IAM)
 
-TODO: continue here! 
-Applies to both cloud and on-premise. IAM control plane of cloud.
+IAM applies to both on-premise and cloud setups: to effectively manage secrets, you need to setup the right access policies and roles. This statemet goes beyond setting up polocies on who can access a secret and who not, it should include hardenign the full IaM control plane, as it will otherwise allows for privilege escalation attacks. Make sure you never allow for open passrole proviliges or open IaM creation privileges, as these can be used to use and/or create credentials that again have access to the secrets. Next, make sure you tightly control what can impersonate a service account: are your machines their roles accessible by an attacker exploiting your server? Can service roles from the data-pipeline tooling access the secrets easily? Make sure you make IaM for every cloud component part of your threatmodel (e.g. ask yourself: how can you do elevation of privileges with this component?). See [this blog entry](https://xebia.com/ten-pitfalls-you-should-look-out-for-in-aws-iam/) for multiple do's and dont's with examples.
 
-Leverage temporality (roles, service account impersonation, etc)
+Make sure that you leverage temporality of the IAM principals in an effective way: e.g. ensure that only certain roles and service accounts which really require it, can access the secrets.
+
+TODO: CONTINUE HERE!
 
 Permission scope
 
 Azure Key Vault example
-
-Multiple roads lead to Rome: competing ways to grant access to a secret
 
 ### 4.4 API limits
 
