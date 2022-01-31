@@ -370,7 +370,7 @@ Secrets Management goes hand in hand with encryption. After all: the secrets sho
 
 ### 7.1 Encryption Types to Use
 
-There are various encryption types to use when it comes to securing a secret, as long as they provide sufficient security, including sufficient resistance against quantum computing based attacks. Given that this is a moving field, it is best to take a look at sources like [keylength.com](https://www.keylength.com/en/4/), which enumerate up to date recommendations on the usage of encryption types and key lengths for existing standards, as well as the [OWASP Cryptographic Storage cheat sheet](<<https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html>).
+There are various encryption types to use when it comes to securing a secret, as long as they provide sufficient security, including sufficient resistance against quantum computing based attacks. Given that this is a moving field, it is best to take a look at sources like [keylength.com](https://www.keylength.com/en/4/), which enumerate up to date recommendations on the usage of encryption types and key lengths for existing standards, as well as the [OWASP Cryptographic Storage cheat sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html).
 Note that post-quantum cryptography approaches are still in development at this time of writing. For this, it is best to keep an eye on [Nist Post Quantum Cryptography Standardization Page](https://csrc.nist.gov/projects/post-quantum-cryptography/post-quantum-cryptography-standardization), which explains which future algorithms might be recommended in a post-quantum computing stage.
 
 Please note that in all cases we need to preferably select an algorithm that provides encryption and confidentiality at the same time, such as AES-256 using GCM [(Gallois Counter Mode)](https://en.wikipedia.org/wiki/Galois/Counter_Mode). Or a mixture of ChaCha20 and Poly1305 according to the best practices in the field.
@@ -383,7 +383,7 @@ The challenge with enabling convergent encryption is that it allows for attacker
 ### 7.3 Where to store the Encryption Keys?
 
 Keys should never be stored next to the secrets they encrypt. Start by consulting the [OWASP Key
-Management Cheat Sheet](<<https://cheatsheetseries.owasp.org/cheatsheets/Key_Management_Cheat_Sheet.html>) on where or how to store the encryption and possible HMAC keys.
+Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Key_Management_Cheat_Sheet.html) on where or how to store the encryption and possible HMAC keys.
 
 ### 7.4 Encryption as a Service (EaaS)
 
@@ -424,10 +424,10 @@ EaaS is a model in which users subscribe to a cloud-based encryption service wit
 
 ## 12 Related Cheat Sheets & further reading
 
-- [Key Management Cheat Sheet](<<https://cheatsheetseries.owasp.org/cheatsheets/Key_Management_Cheat_Sheet.html>)
-- [Logging Cheat Sheet](<<https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html>)
-- [Password Storage Cheat Sheet](<<https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html>)
-- [Cryptographic Storage Cheat Sheet](<<https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html>)
+- [Key Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Key_Management_Cheat_Sheet.html)
+- [Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html)
+- [Password Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html)
+- [Cryptographic Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html)
 - [OWASP WrongSecrets project](https://github.com/commjoen/wrongsecrets/)
 - [Blog: 10 Pointers on Secrets Management](https://xebia.com/blog/secure-deployment-10-pointers-on-secrets-management/)
 - [Blog: From build to run: pointers on secure deployment](https://xebia.com/from-build-to-run-pointers-on-secure-deployment/)
