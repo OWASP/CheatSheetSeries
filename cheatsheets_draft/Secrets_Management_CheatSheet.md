@@ -403,7 +403,7 @@ EaaS is a model in which users subscribe to a cloud-based encryption service wit
 
 ## 8 Detection
 
-There are many approaches to secrets detection and some very useful open source projects to help with this. Of note, the [Yelp Detect Secrets](https://github.com/Yelp/detect-secrets) project is mature and has signature matching for around 20 secrets. For more information other tools to help you in the detection space check out the [Secrets Detection](https://github.com/topics/secrets-detection) topic on GitHub.
+There are many approaches to secrets detection and some very useful open source projects to help with this. The [Yelp Detect Secrets](https://github.com/Yelp/detect-secrets) project is mature and has signature matching for around 20 secrets. For more information on other tools to help you in the detection space, check out the [Secrets Detection](https://github.com/topics/secrets-detection) topic on GitHub.
 
 ### 8.1 General detection approaches
 
