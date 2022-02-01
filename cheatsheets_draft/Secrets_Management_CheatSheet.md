@@ -496,7 +496,7 @@ Containment should follow these procedures:
 Additional considerations for logging of secrets usage should include:
 
 - Logging for incident response should be to a single location accessible by IR teams
-- Fidelity of logging information should be ensured during purple team exercises such as:
+- Ensure fidelity of logging information during purple team exercises such as:
     - What should have been logged?
     - What was actually logged?
     - Do we have adequate alerts in place to ensure this?
