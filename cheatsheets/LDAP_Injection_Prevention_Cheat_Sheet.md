@@ -98,6 +98,12 @@ To minimize the potential damage of a successful LDAP injection attack, you shou
 
 Input validation can be used to detect unauthorized input before it is passed to the LDAP query. For more information please see the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md).
 
+#### Enabling Bind Authentication
+
+If LDAP protocol is configured with bind Authentication, attackers would not be able to perform LDAP injection attacks because of verification 
+and authorization checks that are performed against valid credentials passed by the user.
+
+An attacker can still bypass bind authentication through an anonymous connection or by exploiting the use of unauthenticated bind: Anonymous Bind (LDAP) and Unauthenticated Bind (LDAP).
 ## Related Articles
 
 - OWASP article on [LDAP Injection](https://owasp.org/www-community/attacks/LDAP_Injection) Vulnerabilities.
