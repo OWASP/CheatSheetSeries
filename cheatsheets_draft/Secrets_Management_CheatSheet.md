@@ -409,7 +409,7 @@ There are many approaches to secrets detection and some very useful open source 
 
 Shift-left and DevSecOps principles apply to secrets detection as well. These general approaches below aim to consider secrets earlier and evolve the practice over time.
 
-- Create standard test secrets and use them universally across the organization. This allows for the reduction of false-positives by only needing to track a single test secret for each secret type.
+- Create standard test secrets and use them universally across the organization. This allows for reducing false positives by only needing to track a single test secret for each secret type.
 - Consider enabling secrets detection at the developer level to avoid checking secrets into code before commit/PR either in the IDE, as part of test-driven development, or via pre-commit hook.
 - Make secrets detection part of the threat model. Consider secrets as part of the attack surface during threat modeling exercises.
 - Evaluate detection utilities and related signatures often to ensure they meet expectations.
