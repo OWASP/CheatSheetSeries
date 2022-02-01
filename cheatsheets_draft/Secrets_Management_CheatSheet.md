@@ -39,20 +39,19 @@ Even when a company centralizes its secrets management to just one solution, you
 
 Standardization should at least include: secrets life cycle management, Authentication, Authorization, and Accounting of the secrets management solution, and life cycle management of the secrets management solution itself. Note that it should be immediately clear to an organization where a secret is used for and where to find it. The more places are used for secrets management, the more evident it is to have some documentation across the various secret management solutions to identify which solution is responsible for which (group of) of secrets.
 
-### 2.3 Fine Grained Access-Control List (ACL)
+### 2.3 Access Controls
 
-The ability to configure access control on even the tiniest component of a system, such as an object in a data store, if required allows for granular access control. A secrets management solution should cater for this level of configuration.
+When users can read the secret in a secret management system and/or update it, it means that the secret can now leak through that user and the system he used to touch the secret.
+Therefore, engineers should not have access to all secrets in the secrets management system, and the least privilege required principle is applied. The secret management system needs to provide the ability to configure fine granular access controls on each object and component to accomplish the least privilege required principle.
 
-### 2.4 Remove Human Interaction and Use Least Privilege
+### 2.4 Automate Secrets Management
 
-When users can actually read the secret in a secret management system and/or update it, it means that the secret can now leak through that user, as well as through the system he used to touch the secret.
-Therefore, it is best that engineers do not have access to all secrets in the secrets management system.
 Manually maintenance does not only increase the risk of leakage, it introduces the risk of human errors while maintaining the secret. Furthermore, it can become wasteful.
 Therefore, it is better to limit or remove the human interaction with the actual secrets. This can be done in multiple ways:
 
-- having a secrets pipeline which does large parts of the secret management (E.g. creation, rotation, etc.)
-- Using dynamic secrets: these are generated for each request. When an application starts it could request it's database credentials, which when dynamically generated will be provided with new credentials for that session. Dynamic secrets should be used where possible to reduce the surface area of credential re-use. Should the application's database credentials be stolen, upon reboot they would be expired.
-- Using automation to rotate static secrets by other services and applications.
+- **Secrets pipeline:** Having a secrets pipeline which does large parts of the secret management (E.g. creation, rotation, etc.)
+- **Using dynamic secrets:** When an application starts it could request it's database credentials, which when dynamically generated will be provided with new credentials for that session. Dynamic secrets should be used where possible to reduce the surface area of credential re-use. Should the application's database credentials be stolen, upon reboot they would be expired.
+- **Automated rotatation of static secrets:** Key rotation is a challenging process when implemented manually, and can lead to mistakes. It is therefore better to automate the rotation of keys or at least ensure that the process is sufficiently supported by IT.
 
 ### 2.5 Auditing
 
@@ -89,7 +88,7 @@ See [the Open CRE project on secrets lookup](https://www.opencre.org/search/secr
 
 #### 2.6.2 Rotation
 
-Secrets should be regularly rotated so that any stolen credentials will only work for a short period of time. This will also reduce the tendency for users to fall bac to bad-habits such as re-using credentials.
+Secrets should be regularly rotated so that any stolen credentials will only work for a short period of time. This will also reduce the tendency for users to fall bac to bad-habits such as re-using credentials. User credentials are excluded from regularl rotating. These should only be rotated if there is suspicion or evidence that they have been compromised.
 
 #### 2.6.3 Revocation
 
@@ -106,11 +105,7 @@ It goes without saying that no secrets should ever be transmitted via plaintext.
 
 Furthermore, secrets management solutions can be used to effectively provision SSL certificates.
 
-### 2.8 Automate Key Rotation
-
-Key rotation is a challenging process when implemented manually, and can lead to mistakes. It is therefore better to automate the rotation of keys or at least ensure that the process is sufficiently supported by IT.
-
-### 2.9 Downtime, Break-glass, Backup and Restore
+### 2.8 Downtime, Break-glass, Backup and Restore
 
 Consideration must be made for the possibility that a secrets management service could become unavailable. This could be due to various reasons, such as scheduled down-time for maintenance. In that case it could be impossible to retrieve the credentials required to restore the service if they were not previously acquired. This means that possible downtime windows need to be chosen carefully based on earlier metrics and/or audit-logs. You can best give short downtime to the system at a time when its secrets are often not updated and/or retrieved.
 
@@ -122,18 +117,18 @@ Next, the backup and restore procedures of the system should be regularly tested
 
 Last, should the system become unavailable due to other reasons than normal maintenance, emergency break-glass processes should be implemented to restore the service. Emergency break-glass credentials therefore should be regularly backed up in a secure fashion in a secondary secrets management system, and tested routinely to verify they work.
 
-### 2.10 Policies
+### 2.9 Policies
 
 Policies defining the minimum complexity requirements of passwords, as well as approved encryption algorithms are typically set at an organization-wide level and should consistently be enforced. The use of a centralised secrets management solution would help companies to enforce these policies.
 
 Next to that, having an organization wide secrets management policy can help to enforce application of the best practices defined in this cheatsheet.
 
-### 2.11 Metadata: prepare to move the secret
+### 2.10 Metadata: prepare to move the secret
 
 A secret management solution should provide the capability to store at least the following metadata about a secret:
 
 - When it was created/consumed/archived/rotated/deleted
-- By whom it was created (E.g. both the actual producer, and the engineer using the production method)
+- By whom it was created/consumed/archived/rotated/deleted (E.g. both the actual producer, and the engineer using the production method)
 - By what it was created
 - Who to contact when having trouble with the secret or having questions about it
 - For what the secret is used (E.g. designated intended consumers and purpose of the secret)
@@ -163,7 +158,7 @@ Given that the CI/CD tooling heavily consume secrets, it is key that the pipelin
 There are various places at which you can store a secret in order to execute certain CI/CD actions:
 
 - As part of your CI/CD tooling: a secret can be stored as a secret in [GitLab](https://docs.gitlab.com/charts/installation/secrets.html)/[GitHub](https://docs.github.com/en/actions/security-guides/encrypted-secrets)/[Jenkins](https://www.jenkins.io/doc/developer/security/secrets/). This is not the same as committing it to code.
-- As part of our secrets-management system: here you can store a secret in a secrets management system, such as facilities provided by a cloud provider ([AWS Secrets Manager](https://aws.amazon.com/secrets-manager/), [Azure Key Vault](https://azure.microsoft.com/nl-nl/services/key-vault/)), or other third party facilities ([Hashicorp Vault](https://www.vaultproject.io/), [Keeper](https://www.keepersecurity.com/), [Confidant](https://lyft.github.io/confidant/)).In this case, the CI/CD pipeline tooling requires credentials to connect to these secret management systems in order to have secrets in place.
+- As part of our secrets-management system: here you can store a secret in a secrets management system, such as facilities provided by a cloud provider ([AWS Secrets Manager](https://aws.amazon.com/secrets-manager/), [Azure Key Vault](https://azure.microsoft.com/nl-nl/services/key-vault/), [Google Secret Manager](https://cloud.google.com/secret-manager)), or other third party facilities ([Hashicorp Vault](https://www.vaultproject.io/), [Keeper](https://www.keepersecurity.com/), [Confidant](https://lyft.github.io/confidant/)).In this case, the CI/CD pipeline tooling requires credentials to connect to these secret management systems in order to have secrets in place.
 
 Another alternative here, is using the CI/CD pipeline to leverage the Encryption as a Service from the secrets management systems to do the encryption of a secret. The CI/CD tooling can then commit the secret encrypted to Git, which can then be fetched by the consuming service at deployment and decrypted again. See section 3.6 for more details.
 
@@ -248,6 +243,17 @@ It is also possible to use the [Systems Manager Parameter store](https://docs.aw
 - it doesn't support cross-region replication
 - there are fewer [security hub controls](https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-standards-fsbp-controls.html) available
 
+##### 4.1.1.1 AWS Nitro Enclaves
+
+- TODO: https://aws.amazon.com/ec2/nitro/nitro-enclaves/
+
+##### 4.1.1.2 AWS CloudHSM
+
+- TODO: https://aws.amazon.com/cloudhsm/
+
+##### 4.1.1.3 
+
+
 #### 4.1.2 GCP
 
 For GCP, the recommended service is [Secret Manager](https://cloud.google.com/secret-manager/docs).
@@ -256,6 +262,10 @@ Permissions are granted at the secret level.
 
 Check out the [Secret Manager best practices](https://cloud.google.com/secret-manager/docs/best-practices) for more information.
 
+##### 4.1.2.1 Google Cloud Confidential Computing
+
+TODO: https://cloud.google.com/confidential-computing
+
 #### 4.1.3 Azure
 
 For Azure, the recommended service is [Key Vault](https://docs.microsoft.com/en-us/azure/key-vault/).
@@ -263,6 +273,14 @@ For Azure, the recommended service is [Key Vault](https://docs.microsoft.com/en-
 Contrary to other clouds, permisssions are granted at the _**Key Vault**_ level. This means secrets for separate workloads and separate sensitivity levels should be in separated Key Vaults accordingly.
 
 Check out the [Key Vault best practices](https://docs.microsoft.com/en-us/azure/key-vault/general/best-practices) for more information.
+
+##### 4.1.3.1 Azure Confidential Computing
+
+TODO: https://azure.microsoft.com/en-us/solutions/confidential-compute/#overview
+
+##### 4.1.3.2 Azure Dedicated HSM
+
+TODO: https://azure.microsoft.com/en-us/services/azure-dedicated-hsm/
 
 ### 4.2 Envelope & client-side encryption
 
