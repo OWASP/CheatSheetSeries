@@ -419,7 +419,7 @@ Shift-left and DevSecOps principles apply to secrets detection as well. These ge
 
 ### 8.2 Types of secrets to be detected
 
-Many types of secrets exists and signatures for each should be considered to ensure accurate detection for all. Among the more common types are:
+Many types of secrets exist, and you should consider signatures for each to ensure accurate detection for all. Among the more common types are:
 
 - High availability secrets (Tokens that are difficult to rotate)
 - Application configuration files
