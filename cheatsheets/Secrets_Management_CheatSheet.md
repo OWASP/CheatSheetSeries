@@ -283,7 +283,7 @@ This section will describe how a secret is encrypted and how you can manage the 
 
 Server-side encryption of secrets ensures that the cloud provider takes care of the encryption of the secret at storage. The secret is then safeguarded against compromise while at rest. Encryption at rest often does not require additional work other than selecting the key to encrypt it with (See section 4.2.2). However: when you submit the secret to another service, it will no longer be encrypted. It is decrypted before sharing with the intended service or human user.
 
-Client-side encryption of secrets ensures that the secret remains encrypted until you actively decrypt it. This means it is only decrypted when it arrives at the consumer. You need to have a proper cryptosystem to cater for this. Think about mechanisms such as PGP using a safe configuration and other more scalable and relatively easy to use systems. Client-side encryption can provide an end2end encryption of the secret: from producer till consumer.
+Client-side encryption of secrets ensures that the secret remains encrypted until you actively decrypt it. This means it is only decrypted when it arrives at the consumer. You need to have a proper cryptosystem to cater for this. Think about mechanisms such as PGP using a safe configuration and other more scalable and relatively easy to use systems. Client-side encryption can provide an end-to-end encryption of the secret: from producer till consumer.
 
 #### 4.2.2 Bring Your Own Key versus Cloud Provider Key
 
