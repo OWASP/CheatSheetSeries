@@ -501,7 +501,7 @@ Additional considerations for logging of secrets usage should include:
     - What was actually logged?
     - Do we have adequate alerts in place to ensure this?
 
-Consider the use of a standardized logging format and vocabulary such as the [Application Logging Vocabulary Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Vocabulary_Cheat_Sheet.html) to ensure that all necessary information is logged.
+Consider using a standardized logging format and vocabulary such as the [Application Logging Vocabulary Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Vocabulary_Cheat_Sheet.html) to ensure that all necessary information is logged.
 
 ## 12 Related Cheat Sheets & further reading
 
