@@ -483,7 +483,7 @@ The primary goal of incident response is rapid response and containment.
 
 Containment should follow these procedures:
 
-1. Revocation: Keys that were exposed should ensure immediate revocation. They secret must be able to be de-authorized quickly and systems must be in place to identify the revocation status of a secret.
+1. Revocation: Keys that were exposed should ensure immediate revocation. The secret must be able to be de-authorized quickly, and systems must be in place to identify the revocation status.
 1. Rotation: A new secret must be able to be quickly created and implemented, preferably via an automated process to ensure repeatability, low rate of implementation error, and least-privilege (not directly human-readable).
 1. Deletion: Secrets revoked/rotated must be removed from the exposed system immediately, including secrets discovered in code or logs. Secrets in code should have commit history for the exposure squashed to before the introduction of the secret, and logs must have a process for removing the secret while maintaining log integrity.
 1. Logging: Incident response teams must have access to information about the lifecycle of a secret to aid in containment and remediation, including:
