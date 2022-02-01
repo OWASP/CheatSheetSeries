@@ -5,10 +5,10 @@
 3. [Continuous Integration (CI) and Continuous Deployment (CD)](#3-Continuous-Integration-(CI)-and-Continuous-Deployment-(CD))
 4. [Cloud Providers](#4-Cloud-Providers)
 5. [Containers and Orchestration](#5-Containers-&-Orchestrators)
-6. [Implementation](#6-Implementation)
+6. [Implementation Guidance](#6-Implementation-Guidance)
 7. [Encryption](#7-Encryption)
-9. [Workflow in case of compromise](#9-Workflow-in-case-of-compromise)
-11. [Secret detection](#10-Secret-detection)
+8. [Secret detection](#8-Detection)
+9. [Incident Response](#9-Incident-Response)
 
 ## 1 Introduction
 
@@ -416,7 +416,6 @@ Shift-left and DevSecOps principles apply to secrets detection as well. These ge
 - Consider having more than one detection utility and correlating/de-duping results to identify potential areas of detection weakness.
 - Explore a balance between entropy and ease of detection. Secrets with consistent formats are easier to detect with lower false-positive rates, but you also don't want to miss a human-created password simply because it doesn't match your detection rules.
 
-
 ### 8.2 Types of secrets to be detected
 
 Many types of secrets exist, and you should consider signatures for each to ensure accurate detection for all. Among the more common types are:
@@ -479,14 +478,14 @@ Documentation must include:
 
 ### 9.2 Remediation
 
-The primary goal of incident response is rapid response and containment. 
+The primary goal of incident response is rapid response and containment.
 
 Containment should follow these procedures:
 
 1. Revocation: Keys that were exposed should ensure immediate revocation. The secret must be able to be de-authorized quickly, and systems must be in place to identify the revocation status.
-1. Rotation: A new secret must be able to be quickly created and implemented, preferably via an automated process to ensure repeatability, low rate of implementation error, and least-privilege (not directly human-readable).
-1. Deletion: Secrets revoked/rotated must be removed from the exposed system immediately, including secrets discovered in code or logs. Secrets in code should have commit history for the exposure squashed to before the introduction of the secret, and logs must have a process for removing the secret while maintaining log integrity.
-1. Logging: Incident response teams must have access to information about the lifecycle of a secret to aid in containment and remediation, including:
+2. Rotation: A new secret must be able to be quickly created and implemented, preferably via an automated process to ensure repeatability, low rate of implementation error, and least-privilege (not directly human-readable).
+3. Deletion: Secrets revoked/rotated must be removed from the exposed system immediately, including secrets discovered in code or logs. Secrets in code should have commit history for the exposure squashed to before the introduction of the secret, and logs must have a process for removing the secret while maintaining log integrity.
+4. Logging: Incident response teams must have access to information about the lifecycle of a secret to aid in containment and remediation, including:
     - Who had access?
     - When did they use it?
     - When was it previously rotated?
@@ -503,7 +502,7 @@ Additional considerations for logging of secrets usage should include:
 
 Consider using a standardized logging format and vocabulary such as the [Application Logging Vocabulary Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Vocabulary_Cheat_Sheet.html) to ensure that all necessary information is logged.
 
-## 12 Related Cheat Sheets & further reading
+## 10 Related Cheat Sheets & further reading
 
 - [Key Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Key_Management_Cheat_Sheet.html)
 - [Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html)
