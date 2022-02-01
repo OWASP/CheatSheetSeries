@@ -414,7 +414,7 @@ Shift-left and DevSecOps principles apply to secrets detection as well. These ge
 - Make secrets detection part of the threat model. Consider secrets as part of the attack surface during threat modeling exercises.
 - Evaluate detection utilities and related signatures often to ensure they meet expectations.
 - Consider having more than one detection utility and correlating/de-duping results to identify potential areas of detection weakness.
-- Also consider exploring a balance between entropy and ease of detection. Secrets with consistent formats are easier to detect with lower false-positive rates, but you also don't want to miss a human-created password simply because it doesn't match your detection rules.
+- Explore a balance between entropy and ease of detection. Secrets with consistent formats are easier to detect with lower false-positive rates, but you also don't want to miss a human-created password simply because it doesn't match your detection rules.
 
 
 ### 8.2 Types of secrets to be detected
