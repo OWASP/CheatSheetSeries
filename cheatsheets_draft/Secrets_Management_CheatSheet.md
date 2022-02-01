@@ -430,7 +430,7 @@ Many types of secrets exist, and you should consider signatures for each to ensu
 - 2FA keys
 - Private keys (like ssh keys)
 - Session tokens
-- Platform specific secret types (e.g.; Amazon Web Services, Google Cloud)
+- Platform-specific secret types (e.g., Amazon Web Services, Google Cloud)
 
 For more fun learning about secrets and practice rooting them out check out the [Wrong Secrets](https://owasp.org/www-project-wrongsecrets/) project.
 
@@ -444,11 +444,11 @@ Secrets are like any other authorization token. They should:
 - Be revokable (including the logging of attempt to use a revoked secret)
 - Never be logged (must implement either an encryption or masking approach in place to avoid logging plaintext secrets)
 
-Detections should exist during each of these stages of the secret lifecycle to ensure secrets were not introduced but missed in a prior step.
+Create detection rules for each of the stages of the secret lifecycle.
 
 ### 8.4 Documentation for how to detect secrets
 
-Ensure documentation is created and updated regularly to inform the developer community on procedures and systems available at your company and what types of secrets management is expected, how to test for secrets, and what to do in event of secrets detected.
+Create documentation and update it regularly to inform the developer community on procedures and systems available at your company and what types of secrets management you expect, how to test for secrets, and what to do in event of detected secrets.
 
 Documentation should:
 
@@ -464,11 +464,11 @@ Documentation should:
 
 ## 9 Incident Response
 
-Quick response in the event of a secret being exposed is perhaps one of the most important considerations for secrets management.
+Quick response in the event of a secret exposure is perhaps one of the most critical considerations for secrets management.
 
 ### 9.1 Documentation
 
-The primary consideration for responding to the exposure of a secret is to ensure that everyone in the chain of custody is aware of and understands how to respond in the event of exposure. This includes application creators (every member of a development team), information security, and technology leadership.
+Incident response in the event of secret exposure should ensure that everyone in the chain of custody is aware and understands how to respond. This includes application creators (every member of a development team), information security, and technology leadership.
 
 Documentation must include:
 
