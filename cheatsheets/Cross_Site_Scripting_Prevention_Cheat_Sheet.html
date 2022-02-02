@@ -2071,7 +2071,7 @@ Content-Type: application/json; charset=utf-8 &lt;--good
 <h3 id="bonus-rule-2-implement-content-security-policy">Bonus Rule #2: Implement Content Security Policy<a class="headerlink" href="#bonus-rule-2-implement-content-security-policy" title="Permanent link">&para;</a></h3>
 <p>There is another good complex solution to mitigate the impact of an XSS flaw called Content Security Policy. It's a browser side mechanism which allows you to create source allow lists for client side resources of your web application, e.g. JavaScript, CSS, images, etc. CSP via special HTTP header instructs the browser to only execute or render resources from those sources.</p>
 <p>For example this CSP:</p>
-<div class="highlight"><pre><span></span><code>Content-Security-Policy: default-src: &#39;self&#39;; script-src: &#39;self&#39; static.domain.tld
+<div class="highlight"><pre><span></span><code>Content-Security-Policy: default-src: &#39;self&#39;; script-src: &#39;self&#39; static.domain.tld
 </code></pre></div>
 <p>Will instruct web browser to load all resources only from the page's origin and JavaScript source code files additionally from <code>static.domain.tld</code>. For more details on Content Security Policy, including what it does, and how to use it, see this article on <a href="https://content-security-policy.com">Content Security Policy</a>.</p>
 <h3 id="bonus-rule-3-use-an-auto-escaping-template-system">Bonus Rule #3: Use an Auto-Escaping Template System<a class="headerlink" href="#bonus-rule-3-use-an-auto-escaping-template-system" title="Permanent link">&para;</a></h3>
