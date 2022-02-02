@@ -355,7 +355,7 @@ There is another good complex solution to mitigate the impact of an XSS flaw cal
 For example this CSP:
 
 ```text
-Content-Security-Policy: default-src: 'self'; script-src: 'self' static.domain.tld
+Content-Security-Policy: default-src: 'self'; script-src: 'self' static.domain.tld
 ```
 
 Will instruct web browser to load all resources only from the page's origin and JavaScript source code files additionally from `static.domain.tld`. For more details on Content Security Policy, including what it does, and how to use it, see this article on [Content Security Policy](https://content-security-policy.com).
