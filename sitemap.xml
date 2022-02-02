@@ -321,6 +321,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_CheatSheet.html</loc>
+         <lastmod>2022-02-02</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://cheatsheetseries.owasp.org/cheatsheets/Securing_Cascading_Style_Sheets_Cheat_Sheet.html</loc>
          <lastmod>2022-02-02</lastmod>
          <changefreq>daily</changefreq>
