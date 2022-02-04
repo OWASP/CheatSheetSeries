@@ -4,27 +4,27 @@
 
 This cheat sheet provides guidance to prevent XSS vulnerabilities.
 
-Cross-Site Scripting (XSS) is a misnomer. The name originated from early versions of the attack where stealing data cross-site was the primary focus. Since then, it has extended to include injection of basically any content, but we still refer to this as XSS.
+Cross-Site Scripting (XSS) is a misnomer. The name originated from early versions of the attack where stealing data cross-site was the primary focus. Since then, it has extended to include injection of basically any content, but we still refer to this as XSS. XSS is serious and can  lead to account impersonation, observing user behaviour, loading external content, stealing sensitive data, and more.
 
-XSS is serious and can lead to account impersonation, taking actions as a user, observing user behaviour, loading external content, and stealing sensitive data. This cheatsheet is a list of techniques to prevent or limit the impact of XSS. No single technique will solve XSS but using the right combination will prevent most attacks.
+**This cheatsheet is a list of techniques to prevent or limit the impact of XSS. No single technique will solve XSS. Using the right combination of defensive techniques is necessary to prevent XSS.**
 
 ## Framework Security
 
 Less XSS bugs appear in applications built with modern web frameworks. These frameworks steer developers towards good security practices and help mitigate XSS by using templating, auto-escaping, and more. That said, developers need to be aware of problems that can occur when using frameworks insecurely such as:
 
-- The use of *escape hatches* that frameworks use to directly manipulate the DOM
-- The use of React’s `dangerouslySetInnerHTML` without sanitising the HTML
-- The use of user-driven `javascript:` or `data:` URLs in React without specialized validation
-- The use of Angular’s `bypassSecurityTrustAs*` functions
-- The general problem of template injection
-- Not keeping your framework patched
-- .. and more!
+- *escape hatches* that frameworks use to directly manipulate the DOM
+- React’s `dangerouslySetInnerHTML` without sanitising the HTML
+- React cannot handle `javascript:` or `data:` URLs without specialized validation
+- Angular’s `bypassSecurityTrustAs*` functions
+- Template injection
+- Out of date framework plugins or components
+- and more
 
 Understand how your framework prevents XSS and where it has gaps. There will be times where you need to do something outside the protection provided by your framework. This is where Output Encoding and HTML Sanitization are critical. OWASP are producing framework specific cheatsheets for React, Vue, and Angular.
 
 ## XSS Defense Philosophy
 
-For XSS attacks to be successful, an attacker needs to insert and execute malicious content in a webpage. Each variable in a web application needs to be protected. Ensuring that all variables go through validation and are then escaped or sanitized is known as perfect injection resistance. Any variable that does not go through this process is a potential weakness. Frameworks make it easy to ensure variables are correctly validated and escaped/sanitised.
+For XSS attacks to be successful, an attacker needs to insert and execute malicious content in a webpage. Each variable in a web application needs to be protected. Ensuring that **all variables** go through validation and are then escaped or sanitized is known as perfect injection resistance. Any variable that does not go through this process is a potential weakness. Frameworks make it easy to ensure variables are correctly validated and escaped or sanitised.
 
 However, frameworks aren't perfect and security gaps still exist in popular frameworks like React and Angular. Output Encoding and HTML Sanitization help address those gaps.
 
@@ -32,26 +32,31 @@ However, frameworks aren't perfect and security gaps still exist in popular fram
 
 Output Encoding is recommended when you need to safely display data exactly as a user typed it in. Variables should not be interpreted as code instead of text. This section covers each form of output encoding, where to use it, and where to avoid using dynamic variables entirely.
 
-Start with using your framework’s default protections. Automatic encoding and escaping functions are built into most frameworks.
+Start with using your framework’s default output encoding protection when you wish to display data as the user typed it in. Automatic encoding and escaping functions are built into most frameworks.
 
 If you’re not using a framework or need to cover gaps in the framework then you should use an output encoding library. Each variable used in the user interface should be passed through an output encoding function. A list of output encoding libraries is included in the appendix.
 
 There are many different output encoding methods because browsers parse HTML, JS, URLs, and CSS differently. Using the wrong encoding method may introduce weaknesses or harm the functionality of your application.
 
-### On Quotes
-
-It’s critical to use quotation marks like `"` or `'` to surround your variables. Quoting makes it difficult to change the context a variable operates in, which helps prevent XSS. Quoting also significantly reduces the characterset that you need to encode, making your application more reliable and the encoding easier to implement.
-
 ### Output Encoding for “HTML Contexts”
 
-“HTML Context” refers to placing a variable between HTML tags. This can occur when our users need to write text for a blog post for example, or write a comment, or update their profile name.
+“HTML Context” refers to inserting a variable between two basic HTML tags like a `<div>` or `<b>`. For example..
 
 ```HTML
 <div> $varUnsafe </div>
+```
+
+An attacker could modify data that is rendered as `$varUnsafe`. This could lead to an attack being added to a webpage.. for example.
+
+```HTML
 <div> <script>alert`1`</script> </div> // Example Attack
 ```
 
-Use HTML entity encoding for that variable, here are some examples of encoded values for specific characters.
+In order to add a variable to a HTML context safely, use HTML entity encoding for that variable as you add it to a web template.
+
+Here are some examples of encoded values for specific characters.
+
+If you're using JavaScript for writing to HTML, look at the `.textContent` attribute as it is a **Safe Sink** and will automatically HTML Entity Encode.
 
 ```HTML
 &    &amp;
@@ -61,22 +66,22 @@ Use HTML entity encoding for that variable, here are some examples of encoded va
 '    &#x27;
 ```
 
-If you're using JavaScript for writing to HTML, look at the `.textContent` attribute as it is a **Safe Sin** and will automatically HTML Entity Encode.
-
 ### Output Encoding for “HTML Attribute Contexts”
 
-“HTML Attribute Contexts” refer to placing a variable in an HTML attribute value. You may want to do this to change a hyperlink, hide an element, add alt-text for an image, or change inline CSS styles. You should apply HTML Attribute Encoding to variables being placed in most HTML attributes. A list of Safe HTML Attributes is provided in the **Safe Sinks** section.
+“HTML Attribute Contexts” refer to placing a variable in an HTML attribute value. You may want to do this to change a hyperlink, hide an element, add alt-text for an image, or change inline CSS styles. You should apply HTML attribute encoding to variables being placed in most HTML attributes. A list of safe HTML attributes is provided in the **Safe Sinks** section.
 
 ```HTML
 <div attr="$varUnsafe">
 <div attr=”*x” onblur=”alert(1)*”> // Example Attack
 ```
 
+It’s critical to use quotation marks like `"` or `'` to surround your variables. Quoting makes it difficult to change the context a variable operates in, which helps prevent XSS. Quoting also significantly reduces the characterset that you need to encode, making your application more reliable and the encoding easier to implement.
+
 If you're using JavaScript for writing to a HTML Attribute, look at the `.setAttribute` and `[attribute]` methods as they are **Safe Sinks** and will automatically HTML Attribute Encode.
 
 ### Output Encoding for “JavaScript Contexts”
 
-“JavaScript Contexts” refer to placing variables into inline JavaScript which is then used in an HTML document. This is commonly seen in WYSIWYG editors, tutorials for software development, and sandboxes for people to test software products.
+“JavaScript Contexts” refer to placing variables into inline JavaScript which is then embedded in an HTML document. This is commonly seen in programs that heavily use custom JavaScript embedded in their web pages.
 
 The only ‘safe’ location for placing variables in JavaScript is inside a “quoted data value”. All other contexts are unsafe and you should not place variable data in them.
 
@@ -88,9 +93,7 @@ Examples of “Quoted Data Values”
 <div onmouseover="'$varUnsafe'"</div>
 ```
 
-Encode all characters using the `\xHH` format. Do not use other formats or escape strings. Escaping, changing execution context, and abusing the parser order can all trigger XSS.
-
-Event handler attributes are often left unquoted. If you can guarantee quoting then a smaller character set is okay. Otherwise, take our aggressive encoding approach to be safe.
+Encode all characters using the `\xHH` format. Encoding libraries often have a `EncodeForJavaScript` or similar to support this function.
 
 Please look at the [OWASP Java Encoder JavaScript encoding examples](https://owasp.org/www-project-java-encoder/) for examples of proper JavaScript use that requires minimal encoding.
 
@@ -98,7 +101,7 @@ For JSON, verify that the `Content-Type` header is `application/json` and not `t
 
 ### Output Encoding for “CSS Contexts”
 
-“CSS Contexts” refer to variables placed into inline CSS. This is common when you want users to be able to customize the look and feel of their webpages, or even in a WYSIWYG editor. CSS is surprisingly powerful and has been used for many types of attacks. Variables should only be placed in a CSS property value. Other “CSS Contexts” are unsafe and you should not place variable data in them.
+“CSS Contexts” refer to variables placed into inline CSS. This is common when you want users to be able to customize the look and feel of their webpages. CSS is surprisingly powerful and has been used for many types of attacks. Variables should only be placed in a CSS property value. Other “CSS Contexts” are unsafe and you should not place variable data in them.
 
 ```HTML
 <style> selector { property : $varUnsafe; } </style>
@@ -108,11 +111,11 @@ For JSON, verify that the `Content-Type` header is `application/json` and not `t
 
 If you're using JavaScript to change a CSS property, look into using `style.property = x`. This is a **Safe Sink** and will automatically CSS encode data in it.
 
-Encode all characters using the `\xHH` format. Do not use other formats or escape strings. Escaping, changing execution context, and abusing parser order apply to CSS too.
+// Add CSS Encoding Advice
 
 ### Output Encoding for “URL Contexts”
 
-“URL Contexts” refer to variables placed into a URL. Most commonly, you’ll be updating a parameter. Use URL Encoding for data being placed in a HTTP Get Parameter.
+“URL Contexts” refer to variables placed into a URL. Most commonly, a developer will add a parameter or URL fragment to a URL base that is then displayed or used in some operation. Use URL Encoding for these scenarios.
 
 ```HTML
 <a href="http://www.owasp.org?test=$varUnsafe">link</a >
