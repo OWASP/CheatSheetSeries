@@ -117,7 +117,7 @@ INFO
 {
     "datetime": "2019-01-01 00:00:00,000",
     "appid": "foobar.netportal_auth",
-    "event": "authn_login_success:joebob1,2",
+    "event": "authn_login_successafterfail:joebob1,2",
     "level": "INFO",
     "description": "User joebob1 login successfully",
     ...
