@@ -2,9 +2,11 @@
 
 ## Introduction
 
-**WARNING: Security questions are no longer recognized as an acceptable authentication factor per NIST SP 800-63. Account recovery is just an alternate way to authenticate so it should be no weaker than regular authentication. See SP 800-63B sec 5.1.1.2 paragraph 4: *Verifiers SHALL NOT prompt subscribers to use specific types of information (e.g., “What was the name of your first pet?”) when choosing memorized secrets*.**
+**WARNING: Security questions are no longer recognized as an acceptable authentication factor per [NIST SP 800-63](https://pages.nist.gov/800-63-3/sp800-63b.html). Account recovery is just an alternate way to authenticate so it should be no weaker than regular authentication. See [SP 800-63B sec 5.1.1.2 paragraph 4](https://pages.nist.gov/800-63-3/sp800-63b.html#sec5): *Verifiers SHALL NOT prompt subscribers to use specific types of information (e.g., “What was the name of your first pet?”) when choosing memorized secrets*.**
 
-While there are no acceptable uses of security questions in secure software, this cheat sheet provides guidance on how to choose strong security questions for legacy purposes.
+If you are curious, please have a look at this [study](https://www.microsoft.com/en-us/research/publication/its-no-secret-measuring-the-security-and-reliability-of-authentication-via-secret-questions/) by Microsoft Research in 2009 and this [study](https://research.google/pubs/pub43783/) performed at Google in 2015. The accompanying [Security blog](https://security.googleblog.com/2015/05/new-research-some-tough-questions-for.html) update includes an infographic on the issues identified with security questions.
+
+**Please Note:** While there are no acceptable uses of security questions in secure software, this cheat sheet provides guidance on how to choose strong security questions for legacy purposes.
 
 ## Choosing Security Questions
 
@@ -42,7 +44,7 @@ Any questions that do not have all of the characteristics discussed above should
 | What is your favourite cricket team? | Not applicable to most users. |
 | What is the make and model of your first car? | Fairly small range of likely answers. |
 
-Additionally, when the context of the application must be considered when deciding whether questions are good or bad. For example, a question such as "What was your maths teacher's surname in your 8th year of school?" would be very easy to guess if it was using in a virtual learning environment for your school (as other students probably know this information), but would be much stronger for an online gaming website.
+Additionally, the context of the application must be considered when deciding whether questions are good or bad. For example, a question such as "What was your maths teacher's surname in your 8th year of school?" would be very easy to guess if it was using in a virtual learning environment for your school (as other students probably know this information), but would be much stronger for an online gaming website.
 
 #### Good Questions
 
@@ -93,9 +95,9 @@ The questions that can be used will vary hugely depending on the application, an
 
 ### When to Use Security Questions
 
-Applications should generally use a password along with a second authentication factor (such as an OTP code) to authenticate users. The combination of a password and security questions **does not constitute MFA**, as both factors as the same (i.e, something you know).
+Applications should generally use a password along with a second authentication factor (such as an OTP code) to authenticate users. The combination of a password and security questions **does not constitute MFA**, as both factors as the same (i.e. something you know)..
 
-**Security questions should never be relied upon as the sole mechanism to authenticate a user**. However, they can provide a useful additional layer of security when other stronger factors are not available. Common cases where they would be use include:
+**Security questions should never be relied upon as the sole mechanism to authenticate a user**. However, they can provide a useful additional layer of security when other stronger factors are not available. Common cases where they would be used include:
 
 - Logging in.
 - Resetting a forgotten password.
@@ -117,7 +119,7 @@ Forgotten password functionality often provides a mechanism for attackers to enu
 
 - The user enters email address (and solves a CAPTCHA).
 - The application displays a generic message such as "If the email address was correct, an email will be sent to it".
-- An email email with a randomly generated, single-use link is sent to the user.
+- An email with a randomly generated, single-use link is sent to the user.
 - The user clicks the link.
 - The user is presented with the security question(s).
 - If the answer is correct, the user can enter a new password.
