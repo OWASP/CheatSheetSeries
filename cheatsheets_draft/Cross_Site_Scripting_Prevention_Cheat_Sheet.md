@@ -121,21 +121,22 @@ If you're using JavaScript to change a CSS property, look into using `style.prop
 <a href="http://www.owasp.org?test=$varUnsafe">link</a >
 ```
 
-Encode all characters with ASCII values less than 256 with the `%HH` encoding format. Make sure any attributes are fully quoted, same as JS and CSS.
+Encode all characters with the `%HH` encoding format. Make sure any attributes are fully quoted, same as JS and CSS.
+
+#### Common Mistake
+
+There will be situations where you use a URL in different contexts. The most common one would be adding it to an `href` or `src` attribute of an `<a>` tag. In these scenarios, you should do URL encoding, followed by HTML attribute encoding.
+
+```HTML
+url = "https://site.com?data=" + urlencode(parameter)
+<a href='attributeEncode(url)'>link</a>
+```
 
 If you're using JavaScript to construct a URL Query Value, look into using `window.encodeURIComponent(x)`. This is a **Safe Sink** and will automatically URL encode data in it.
 
-Validate the protocol and domain when placing variables into `href`, `src`, or other URL-based attributes. After that, URLs should be encoded based on the context.
-
-Take this example. `href` is a HTML attribute value. Input validation and then HTML Attribute Encoding should be applied.
-
-```HTML
-<a href="$varUnsafe">link</a >
-```
-
 ### Dangerous Contexts
 
-Output Encoding is not perfect. It will not always prevent XSS. These locations are known as Dangerous Contexts. Dangerous contexts include:
+Output encoding is not perfect. It will not always prevent XSS. These locations are known as **dangerous contexts**. Dangerous contexts include:
 
 ```HTML
 <script>Directly in a script</script>
@@ -147,40 +148,34 @@ Output Encoding is not perfect. It will not always prevent XSS. These locations 
 
 Other areas to be careful of include:
 
-- Callback Functions
+- Callback functions
 - Where URLs are handled in code such as this CSS { background-url : “javascript:alert(xss)”; }
 - All JavaScript event handlers (`onclick()`, `onerror()`, `onmouseover()`).
-- Unsafe JS Functions like `eval()`, `setInterval()`, `setTimeout()`
+- Unsafe JS functions like `eval()`, `setInterval()`, `setTimeout()`
 
-Don't place variables into Dangerous Contexts as even with Output Encoding, it will not prevent an XSS attack fully.
-
-That’s why it’s important to combine Output Encoding with HTML Sanitization.
+Don't place variables into dangerous contexts as even with output encoding, it will not prevent an XSS attack fully.
 
 ## HTML Sanitization
 
-Sometimes users need to write HTML. One scenario would be in a WordPress WYSIWYG editor and using HTML to change the styling or structure of a blog post. Output encoding here will prevent XSS, but it will also prevent our users from customising their posts. This scenario is common all over the web. Output Encoding must also be used with HTML Sanitization.
+Sometimes users need to author HTML. One scenario would be allow users to change the styling or structure of content inside a WYSIWYG editor. Output encoding here will prevent XSS, but it will break the intended functionality of the application. The styling will not be rendered. In these cases, HTML Sanitization should be used.
 
-Passing a variable through a HTML Sanitization function will strip out everything that contains dangerous HTML and return a clean string. OWASP recommend s[DOMPurify](https://github.com/cure53/DOMPurify) for HTML Sanitization.
+HTML Sanitization will strip dangerous HTML from a variable and return a safe string of HTML. OWASP recommends [DOMPurify](https://github.com/cure53/DOMPurify) for HTML Sanitization.
 
 ```js
 let clean = DOMPurify.sanitize(dirty);
 ```
 
-There are some further things to consider.
+There are some further things to consider:
 
-- You should make sure all variables are being sanitized, if you don’t you’re opening a hole in your web application. Don’t let any variable get a free ride.
-- If you sanitize content and then modify it afterwards, you can easily void your efforts.
-- If you sanitize content and then send it to a library for use, check that it doesn’t mutate that string somehow. Otherwise, again, your efforts are void.
-- You must regularly patch DOMPurify. Browsers change and bypasses are being discovered regularly.
-- Bypasses do exist in the form of Mutation-Based XSS. Browsers will mutate content they receive and do their best to render it. Sometimes their best will include XSS payloads. This attack vector is why a [browser-based sanitizer API is being developed](https://wicg.github.io/sanitizer-api/).
+- If you sanitize content and then modify it afterwards, you can easily void your security efforts.
+- If you sanitize content and then send it to a library for use, check that it doesn’t mutate that string somehow. Otherwise, again, your security efforts are void.
+- You must regularly patch DOMPurify or other HTML Sanitization libraries that you use. Browsers change functionality and bypasses are being discovered regularly.
 
 ## Safe Sinks
 
 Security professionals often talk in terms of sources and sinks. If you pollute a river, it'll flow downstream somewhere. It’s the same with computer security. XSS sinks are places where variables are placed into your webpage.
 
 Thankfully, many sinks where variables can be placed are safe. This is because these sinks treat the variable as text and will never execute it. Try to refactor your code to remove references to unsafe sinks like innerHTML, and instead use textContent or value.
-
-Here is a list of some safe HTML and HTML Attribute sinks OWASP recommends refactoring your code to use.
 
 ```js
 elem.textContent = dangerVariable;
@@ -195,6 +190,8 @@ elem.innerHTML = DOMPurify.sanitize(dangerVar);
 
 **Safe HTML Attributes include:** `align`, `alink`, `alt`, `bgcolor`, `border`, `cellpadding`, `cellspacing`, `class`, `color`, `cols`, `colspan`, `coords`, `dir`, `face`, `height`, `hspace`, `ismap`, `lang`, `marginheight`, `marginwidth`, `multiple`, `nohref`, `noresize`, `noshade`, `nowrap`, `ref`, `rel`, `rev`, `rows`, `rowspan`, `scrolling`, `shape`, `span`, `summary`, `tabindex`, `title`, `usemap`, `valign`, `value`, `vlink`, `vspace`, `width`.
 
+For a comprehensive list, check out the [DOMPurify allowlist](https://github.com/cure53/DOMPurify/blob/main/src/attrs.js)
+
 ## Other Controls
 
 Framework Security Protections, Output Encoding, and HTML Sanitization will provide the best protection for your application. OWASP recommends these in all circumstances.
@@ -204,7 +201,6 @@ Consider adopting the following controls in addition to the above.
 - Cookie Attributes - These change how JavaScript and browsers can interact with cookies. Cookie attributes try to limit the impact of an XSS attack but don’t prevent the execution of malicious content or address the root cause of the vulnerability.
 - Content Security Policy - An allowlist that prevents content being loaded. It’s easy to make mistakes with the implementation so it should not be your primary defense mechanism. Use a CSP as an additional layer of defense and have a look at the [cheatsheet here](https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html).
 - Web Application Firewalls - These look for known attack strings and block them. WAF’s are unreliable and new bypass techniques are being discovered regularly. WAFs also don’t address the root cause of an XSS vulnerability. In addition, WAFs also miss a class of XSS vulnerabilities that operate exclusively client-side. WAFs are not recommended for preventing XSS, especially DOM-Based XSS.
-- Security Headers - These are relatively easy to configure, but ultimately have limited impact on preventing XSS issues compared to addressing the root cause.
 
 ### XSS Prevention Rules Summary
 
