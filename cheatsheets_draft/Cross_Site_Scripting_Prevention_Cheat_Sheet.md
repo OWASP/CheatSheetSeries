@@ -4,27 +4,27 @@
 
 This cheat sheet provides guidance to prevent XSS vulnerabilities.
 
-Cross-Site Scripting (XSS) is a misnomer. The name originated from early versions of the attack where stealing data cross-site was the primary focus. Since then, it has extended to include injection of basically any content, but we still refer to this as XSS.
+Cross-Site Scripting (XSS) is a misnomer. The name originated from early versions of the attack where stealing data cross-site was the primary focus. Since then, it has extended to include injection of basically any content, but we still refer to this as XSS. XSS is serious and can  lead to account impersonation, observing user behaviour, loading external content, stealing sensitive data, and more.
 
-XSS is serious and can lead to account impersonation, taking actions as a user, observing user behaviour, loading external content, and stealing sensitive data. This cheatsheet is a list of techniques to prevent or limit the impact of XSS. No single technique will solve XSS but using the right combination will prevent most attacks.
+**This cheatsheet is a list of techniques to prevent or limit the impact of XSS. No single technique will solve XSS. Using the right combination of defensive techniques is necessary to prevent XSS.**
 
 ## Framework Security
 
 Less XSS bugs appear in applications built with modern web frameworks. These frameworks steer developers towards good security practices and help mitigate XSS by using templating, auto-escaping, and more. That said, developers need to be aware of problems that can occur when using frameworks insecurely such as:
 
-- The use of *escape hatches* that frameworks use to directly manipulate the DOM
-- The use of React’s `dangerouslySetInnerHTML` without sanitising the HTML
-- The use of user-driven `javascript:` or `data:` URLs in React without specialized validation
-- The use of Angular’s `bypassSecurityTrustAs*` functions
-- The general problem of template injection
-- Not keeping your framework patched
-- .. and more!
+- *escape hatches* that frameworks use to directly manipulate the DOM
+- React’s `dangerouslySetInnerHTML` without sanitising the HTML
+- React cannot handle `javascript:` or `data:` URLs without specialized validation
+- Angular’s `bypassSecurityTrustAs*` functions
+- Template injection
+- Out of date framework plugins or components
+- and more
 
 Understand how your framework prevents XSS and where it has gaps. There will be times where you need to do something outside the protection provided by your framework. This is where Output Encoding and HTML Sanitization are critical. OWASP are producing framework specific cheatsheets for React, Vue, and Angular.
 
 ## XSS Defense Philosophy
 
-For XSS attacks to be successful, an attacker needs to insert and execute malicious content in a webpage. Each variable in a web application needs to be protected. Ensuring that all variables go through validation and are then escaped or sanitized is known as perfect injection resistance. Any variable that does not go through this process is a potential weakness. Frameworks make it easy to ensure variables are correctly validated and escaped/sanitised.
+For XSS attacks to be successful, an attacker needs to insert and execute malicious content in a webpage. Each variable in a web application needs to be protected. Ensuring that **all variables** go through validation and are then escaped or sanitized is known as perfect injection resistance. Any variable that does not go through this process is a potential weakness. Frameworks make it easy to ensure variables are correctly validated and escaped or sanitised.
 
 However, frameworks aren't perfect and security gaps still exist in popular frameworks like React and Angular. Output Encoding and HTML Sanitization help address those gaps.
 
@@ -32,15 +32,11 @@ However, frameworks aren't perfect and security gaps still exist in popular fram
 
 Output Encoding is recommended when you need to safely display data exactly as a user typed it in. Variables should not be interpreted as code instead of text. This section covers each form of output encoding, where to use it, and where to avoid using dynamic variables entirely.
 
-Start with using your framework’s default protections. Automatic encoding and escaping functions are built into most frameworks.
+Start with using your framework’s default output encoding protection when you wish to display data as the user typed it in. Automatic encoding and escaping functions are built into most frameworks.
 
 If you’re not using a framework or need to cover gaps in the framework then you should use an output encoding library. Each variable used in the user interface should be passed through an output encoding function. A list of output encoding libraries is included in the appendix.
 
 There are many different output encoding methods because browsers parse HTML, JS, URLs, and CSS differently. Using the wrong encoding method may introduce weaknesses or harm the functionality of your application.
-
-### On Quotes
-
-It’s critical to use quotation marks like `"` or `'` to surround your variables. Quoting makes it difficult to change the context a variable operates in, which helps prevent XSS. Quoting also significantly reduces the characterset that you need to encode, making your application more reliable and the encoding easier to implement.
 
 ### Output Encoding for “HTML Contexts”
 
@@ -73,6 +69,8 @@ If you're using JavaScript for writing to HTML, look at the `.textContent` attri
 ```
 
 If you're using JavaScript for writing to a HTML Attribute, look at the `.setAttribute` and `[attribute]` methods as they are **Safe Sinks** and will automatically HTML Attribute Encode.
+
+It’s critical to use quotation marks like `"` or `'` to surround your variables. Quoting makes it difficult to change the context a variable operates in, which helps prevent XSS. Quoting also significantly reduces the characterset that you need to encode, making your application more reliable and the encoding easier to implement.
 
 ### Output Encoding for “JavaScript Contexts”
 
