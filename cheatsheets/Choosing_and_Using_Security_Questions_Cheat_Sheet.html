@@ -1813,8 +1813,9 @@
 
 <h1 id="choosing-and-using-security-questions-cheat-sheet">Choosing and Using Security Questions Cheat Sheet<a class="headerlink" href="#choosing-and-using-security-questions-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p><strong>WARNING: Security questions are no longer recognized as an acceptable authentication factor per NIST SP 800-63. Account recovery is just an alternate way to authenticate so it should be no weaker than regular authentication. See SP 800-63B sec 5.1.1.2 paragraph 4: <em>Verifiers SHALL NOT prompt subscribers to use specific types of information (e.g., “What was the name of your first pet?”) when choosing memorized secrets</em>.</strong></p>
-<p>While there are no acceptable uses of security questions in secure software, this cheat sheet provides guidance on how to choose strong security questions for legacy purposes.</p>
+<p><strong>WARNING: Security questions are no longer recognized as an acceptable authentication factor per <a href="https://pages.nist.gov/800-63-3/sp800-63b.html">NIST SP 800-63</a>. Account recovery is just an alternate way to authenticate so it should be no weaker than regular authentication. See <a href="https://pages.nist.gov/800-63-3/sp800-63b.html#sec5">SP 800-63B sec 5.1.1.2 paragraph 4</a>: <em>Verifiers SHALL NOT prompt subscribers to use specific types of information (e.g., “What was the name of your first pet?”) when choosing memorized secrets</em>.</strong></p>
+<p>If you are curious, please have a look at this <a href="https://www.microsoft.com/en-us/research/publication/its-no-secret-measuring-the-security-and-reliability-of-authentication-via-secret-questions/">study</a> by Microsoft Research in 2009 and this <a href="https://research.google/pubs/pub43783/">study</a> performed at Google in 2015. The accompanying <a href="https://security.googleblog.com/2015/05/new-research-some-tough-questions-for.html">Security blog</a> update includes an infographic on the issues identified with security questions.</p>
+<p><strong>Please Note:</strong> While there are no acceptable uses of security questions in secure software, this cheat sheet provides guidance on how to choose strong security questions for legacy purposes.</p>
 <h2 id="choosing-security-questions">Choosing Security Questions<a class="headerlink" href="#choosing-security-questions" title="Permanent link">&para;</a></h2>
 <h3 id="desired-characteristics">Desired Characteristics<a class="headerlink" href="#desired-characteristics" title="Permanent link">&para;</a></h3>
 <p>Any security questions presented to users to reset forgotten passwords must meet the following characteristics:</p>
@@ -1885,7 +1886,7 @@
 </tr>
 </tbody>
 </table>
-<p>Additionally, when the context of the application must be considered when deciding whether questions are good or bad. For example, a question such as "What was your maths teacher's surname in your 8th year of school?" would be very easy to guess if it was using in a virtual learning environment for your school (as other students probably know this information), but would be much stronger for an online gaming website.</p>
+<p>Additionally, the context of the application must be considered when deciding whether questions are good or bad. For example, a question such as "What was your maths teacher's surname in your 8th year of school?" would be very easy to guess if it was using in a virtual learning environment for your school (as other students probably know this information), but would be much stronger for an online gaming website.</p>
 <h4 id="good-questions">Good Questions<a class="headerlink" href="#good-questions" title="Permanent link">&para;</a></h4>
 <p>Many good security questions are not applicable to all users, so the best approach is to give the user a list of security questions that they can choose from. This allows you to have more specific questions (with more secure answers), while still providing every user with questions that they can answer.</p>
 <p>The following list provides some examples of good questions:</p>
@@ -1921,8 +1922,8 @@
 </ul>
 <h2 id="using-security-questions">Using Security Questions<a class="headerlink" href="#using-security-questions" title="Permanent link">&para;</a></h2>
 <h3 id="when-to-use-security-questions">When to Use Security Questions<a class="headerlink" href="#when-to-use-security-questions" title="Permanent link">&para;</a></h3>
-<p>Applications should generally use a password along with a second authentication factor (such as an OTP code) to authenticate users. The combination of a password and security questions <strong>does not constitute MFA</strong>, as both factors as the same (i.e, something you know).</p>
-<p><strong>Security questions should never be relied upon as the sole mechanism to authenticate a user</strong>. However, they can provide a useful additional layer of security when other stronger factors are not available. Common cases where they would be use include:</p>
+<p>Applications should generally use a password along with a second authentication factor (such as an OTP code) to authenticate users. The combination of a password and security questions <strong>does not constitute MFA</strong>, as both factors as the same (i.e. something you know)..</p>
+<p><strong>Security questions should never be relied upon as the sole mechanism to authenticate a user</strong>. However, they can provide a useful additional layer of security when other stronger factors are not available. Common cases where they would be used include:</p>
 <ul>
 <li>Logging in.</li>
 <li>Resetting a forgotten password.</li>
@@ -1941,7 +1942,7 @@
 <ul>
 <li>The user enters email address (and solves a CAPTCHA).</li>
 <li>The application displays a generic message such as "If the email address was correct, an email will be sent to it".</li>
-<li>An email email with a randomly generated, single-use link is sent to the user.</li>
+<li>An email with a randomly generated, single-use link is sent to the user.</li>
 <li>The user clicks the link.</li>
 <li>The user is presented with the security question(s).</li>
 <li>If the answer is correct, the user can enter a new password.</li>
