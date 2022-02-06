@@ -41,7 +41,7 @@ With this capability, bad actors may create or alter packages to perform malicio
 Apply these npm security best practices in order to minimize the malicious module attack surface:
 
 - Always vet and perform due-diligence on third-party modules that you install in order to confirm their health and credibility.
-- Hold-off on upgrading blindly to new versions; allow new package versions some time to circulate before trying them out.
+- Hold-off on upgrading immediately to new versions; allow new package versions some time to circulate before trying them out.
 - Before upgrading, make sure to review changelog and release notes for the upgraded version.
 - When installing packages make sure to add the `--ignore-scripts` suffix to disable the execution of any scripts by third-party packages.
 - Consider adding `ignore-scripts` to your `.npmrc` project file, or to your global npm configuration.
