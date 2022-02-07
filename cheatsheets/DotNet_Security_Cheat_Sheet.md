@@ -308,7 +308,7 @@ DO NOT: Rely on methods without a security guarantee.
 
 e.g. .NET Core 2.2 and greater and .NET 5 and greater support [ProcessStartInfo.ArgumentList](https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.argumentlist) which performs some character escaping but it is not clear if this is guaranteed to be secure.
 
-DO: Look at alternatives to passing raw untrusted arguments via command line parameters such as encoding using Base64 (which would safely encode any special characters as well) and then decode the parameters in the receiving application.
+DO: Look at alternatives to passing raw untrusted arguments via command-line parameters such as encoding using Base64 (which would safely encode any special characters as well) and then decode the parameters in the receiving application.
 
 #### LDAP injection
 
