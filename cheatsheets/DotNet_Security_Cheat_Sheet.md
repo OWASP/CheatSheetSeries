@@ -258,7 +258,7 @@ DO: Practice Least Privilege - Connect to the database using an account with a m
 
 #### OS Injection
 
-Information about OS Injection can be found on this [cheat sheet](OS_Command_Injection_Defense_Cheat_Sheet.md#net).
+General guidance about OS Injection can be found on this [cheat sheet](OS_Command_Injection_Defense_Cheat_Sheet.md).
 
 DO: Use [System.Diagnostics.Process.Start](https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.process.start?view=netframework-4.7.2) to call underlying OS functions.
 
