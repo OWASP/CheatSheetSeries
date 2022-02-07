@@ -273,7 +273,7 @@ process.StartInfo = startInfo;
 process.Start();
 ```
 
-DO: Use allow-list validation on all user supplied input. Input validation prevents improperly formed data from entering an information system. For more information please see the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md).
+DO: Use allow-list validation on all user supplied input wherever possible. Input validation prevents improperly formed data from entering an information system. For more information please see the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md).
 
 e.g Validating user input using [IPAddress.TryParse Method](https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress.tryparse?view=netframework-4.8)
 
@@ -300,49 +300,15 @@ if (!string.IsNullOrEmpty(ipAddress))
 }
 ```
 
-DO: Use safe methods where available.
+DO: Try to only accept characters which are simple alphanumeric.
 
-e.g. .NET Core 2.2 and greater and .NET 5 and greater support [ProcessStartInfo.ArgumentList](https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.argumentlist) which will automatically escape dangerous characters.
+DO NOT: Assume you can sanitize special characters without actually removing them. Various combinations of ```\```, ```'``` and ```@``` may have an unexpected impact on sanitization attempts.
 
-``` csharp
+DO NOT: Rely on methods without a security guarantee.
 
-var process = new System.Diagnostics.Process();
-var startInfo = new System.Diagnostics.ProcessStartInfo();
-startInfo.FileName = "validatedCommand";
+e.g. .NET Core 2.2 and greater and .NET 5 and greater support [ProcessStartInfo.ArgumentList](https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.argumentlist) which performs some character escaping but it is not clear if this is guaranteed to be secure.
 
-// Value added here will automatically be made sense when the process is run
-info.ArgumentList.Add("/c");
-info.ArgumentList.Add("fred\\\" a");
-info.ArgumentList.Add(@"C:\Program Files\dotnet");
-
-process.StartInfo = startInfo;
-process.Start();
-```
-
-DO: If on a lower version of .NET and where allow-list validation cannot be relied upon, use character escaping.
-
-e.g. escaping double quotes within arguments and then surrounding the arguments with double quotes.
-
-**WARNING:** The code below won't correctly handle a combination of backslash and double quotes.
-
-``` csharp
-// This list will contain the arguments which we want to escape before 
-// passing to the function
-var arguments = new List<string>(){"Arg1", "Arg\"2&|", "\"Arg3\""};
-
-// Escaping Stage 1: All " (double quote) characters within the arguments 
-// are doubled to escape them on the command line so they will only ever 
-// be interpreted as data and not as an argument separator
-arguments = arguments.ConvertAll(s => s.Replace("\"", "\"\""));
-
-// Escaping Stage 2: The arguments should be surrounded by " (double quote) 
-// characters to ensure that the data in the arguments cannot break out of
-// the current argument
-arguments = arguments.ConvertAll(s => $"\"{s}\"");
-
-// Pass the escaped arguments to the "ProcessStartInfo" object
-process.Arguments = string.Join(" ", arguments);
-```
+DO: Look at alternatives to passing raw untrusted arguments via command line parameters such as encoding using Base64 (which would safely encode any special characters as well) and then decode the parameters in the receiving application.
 
 #### LDAP injection
 

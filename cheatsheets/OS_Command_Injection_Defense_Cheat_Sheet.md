@@ -183,61 +183,7 @@ Process p = pb.start();
 
 ### .Net
 
-In .Net use [System.Diagnostics.Process.Start](https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.process.start?view=netframework-4.7.2) to call underlying OS functions.
-
-``` csharp
-var process = new System.Diagnostics.Process();
-
-var startInfo = new System.Diagnostics.ProcessStartInfo();
-
-startInfo.FileName = "validatedCommand";
-
-startInfo.Arguments = "validatedArg1 validatedArg2 validatedArg3";
-
-process.StartInfo = startInfo;
-
-process.Start();
-```
-
-In .NET Core 2.2 and greater and .NET 5 and greater, use [ProcessStartInfo.ArgumentList](https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.argumentlist) which will automatically escape dangerous characters.
-
-``` csharp
-
-var process = new System.Diagnostics.Process();
-var startInfo = new System.Diagnostics.ProcessStartInfo();
-startInfo.FileName = "validatedCommand";
-
-// Value added here will automatically be made sense when the process is run
-info.ArgumentList.Add("/c");
-info.ArgumentList.Add("fred\\\" a");
-info.ArgumentList.Add(@"C:\Program Files\dotnet");
-
-process.StartInfo = startInfo;
-process.Start();
-```
-
-If this property is not available, and where input validation cannot be relied upon, arguments can be made safe by escaping double quotes within the arguments and then surrounding each argument with double quotes.
-
-**WARNING:** The code below won't correctly handle a combination of backslash and double quotes.
-
-``` csharp
-// This list will contain the arguments which we want to escape before 
-// passing to the function
-var arguments = new List<string>(){"Arg1", "Arg\"2&|", "\"Arg3\""};
-
-// Escaping Stage 1: All " (double quote) characters within the arguments 
-// are doubled to escape them on the command line so they will only ever 
-// be interpreted as data and not as an argument separator
-arguments = arguments.ConvertAll(s => s.Replace("\"", "\"\""));
-
-// Escaping Stage 2: The arguments should be surrounded by " (double quote) 
-// characters to ensure that the data in the arguments cannot break out of
-// the current argument
-arguments = arguments.ConvertAll(s => $"\"{s}\"");
-
-// Pass the escaped arguments to the "ProcessStartInfo" object
-process.Arguments = string.Join(" ", arguments);
-```
+See relevant details in the [DotNet Security Cheat Sheet](DotNet_Security_Cheat_Sheet.md#os-injection)
 
 ### PHP
 
