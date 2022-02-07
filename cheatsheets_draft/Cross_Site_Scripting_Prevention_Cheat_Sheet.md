@@ -10,7 +10,7 @@ Cross-Site Scripting (XSS) is a misnomer. The name originated from early version
 
 ## Framework Security
 
-Less XSS bugs appear in applications built with modern web frameworks. These frameworks steer developers towards good security practices and help mitigate XSS by using templating, auto-escaping, and more. That said, developers need to be aware of problems that can occur when using frameworks insecurely such as:
+Fewer XSS bugs appear in applications built with modern web frameworks. These frameworks steer developers towards good security practices and help mitigate XSS by using templating, auto-escaping, and more. That said, developers need to be aware of problems that can occur when using frameworks insecurely such as:
 
 - *escape hatches* that frameworks use to directly manipulate the DOM
 - React’s `dangerouslySetInnerHTML` without sanitising the HTML
