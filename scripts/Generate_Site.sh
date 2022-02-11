@@ -25,13 +25,16 @@ cp -r ../cheatsheets $WORK/cheatsheets/cheatsheets
 cp -r ../assets $WORK/cheatsheets/assets
 cp ../Index.md $WORK/cheatsheets/cheatsheets/Index.md
 cp ../IndexASVS.md $WORK/cheatsheets/cheatsheets/IndexASVS.md
+cp ../IndexMASVS.md $WORK/cheatsheets/cheatsheets/IndexMASVS.md
 cp ../IndexProactiveControls.md $WORK/cheatsheets/cheatsheets/IndexProactiveControls.md
 cp ../IndexTopTen.md $WORK/cheatsheets/cheatsheets/IndexTopTen.md
 sed -i 's/assets\//..\/assets\//g' $WORK/cheatsheets/cheatsheets/Index.md
 sed -i 's/assets\//..\/assets\//g' $WORK/cheatsheets/cheatsheets/IndexASVS.md
+sed -i 's/assets\//..\/assets\//g' $WORK/cheatsheets/cheatsheets/IndexMASVS.md
 sed -i 's/assets\//..\/assets\//g' $WORK/cheatsheets/cheatsheets/IndexTopTen.md
 sed -i 's/cheatsheets\///g' $WORK/cheatsheets/cheatsheets/Index.md
 sed -i 's/cheatsheets\///g' $WORK/cheatsheets/cheatsheets/IndexASVS.md
+sed -i 's/cheatsheets\///g' $WORK/cheatsheets/cheatsheets/IndexMASVS.md
 sed -i 's/cheatsheets\///g' $WORK/cheatsheets/cheatsheets/IndexProactiveControls.md
 sed -i 's/cheatsheets\///g' $WORK/cheatsheets/cheatsheets/IndexTopTen.md
 echo "Step 4/5: Generate the site."
