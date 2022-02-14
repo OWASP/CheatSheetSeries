@@ -94,6 +94,12 @@ Beyond adopting one of the two primary defenses, we also recommend adopting all 
 
 To minimize the potential damage of a successful LDAP injection attack, you should minimize the privileges assigned to the LDAP binding account in your environment.
 
+#### Enabling Bind Authentication
+
+If LDAP protocol is configured with bind Authentication, attackers would not be able to perform LDAP injection attacks because of verification
+and authorization checks that are performed against valid credentials passed by the user.
+An attacker can still bypass bind authentication through an anonymous connection or by exploiting the use of unauthenticated bind: Anonymous Bind (LDAP) and Unauthenticated Bind (LDAP).
+
 #### Allow-List Input Validation
 
 Input validation can be used to detect unauthorized input before it is passed to the LDAP query. For more information please see the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md).
