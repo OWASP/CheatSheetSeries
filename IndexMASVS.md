@@ -25,7 +25,6 @@ This index is based on the version 1.x.x of the MASVS.
 [Abuse Case Cheat Sheet](cheatsheets/Abuse_Case_Cheat_Sheet.md).
 
 [Attack Surface Analysis Cheat Sheet](cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.md).
-md).
 
 ## V2: Data Storage and Privacy Requirements
 
@@ -57,7 +56,7 @@ md).
 
 [JSON Web Token Cheat Sheet for Java](cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.md).
 
-[Credential Stuffing Prevention Cheat Sheet](cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.md)
+[Credential Stuffing Prevention Cheat Sheet](cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.md).
 
 ## V5: Network Communication Requirements
 
