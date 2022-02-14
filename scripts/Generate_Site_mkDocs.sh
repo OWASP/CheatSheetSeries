@@ -29,6 +29,7 @@ cp -r ../cheatsheets $WORK/cheatsheets/cheatsheets
 cp -r ../assets $WORK/cheatsheets/assets
 cp ../Index.md $WORK/cheatsheets/Glossary.md
 cp ../IndexASVS.md $WORK/cheatsheets/IndexASVS.md
+cp ../IndexMASVS.md $WORK/cheatsheets/IndexMASVS.md
 cp ../IndexProactiveControls.md $WORK/cheatsheets/IndexProactiveControls.md
 cp ../IndexTopTen.md $WORK/cheatsheets/IndexTopTen.md
 
@@ -50,6 +51,9 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         Title: Index ASVS\\
         " $WORK/cheatsheets/IndexASVS.md
     sed -i '' "1i\\
+        Title: Index MASVS\\
+        " $WORK/cheatsheets/IndexMASVS.md
+    sed -i '' "1i\\
         Title: Index Proactive Controls\\
         " $WORK/cheatsheets/IndexProactiveControls.md
     sed -i '' "1i\\
@@ -60,6 +64,7 @@ else
     sed -i 's/Index.md/Glossary.md/g' $WORK/cheatsheets/Glossary.md
     sed -i "1iTitle: Index Alphabetical\n" $WORK/cheatsheets/Glossary.md
     sed -i "1iTitle: Index ASVS\n" $WORK/cheatsheets/IndexASVS.md
+    sed -i "1iTitle: Index MASVS\n" $WORK/cheatsheets/IndexMASVS.md
     sed -i "1iTitle: Index Proactive Controls\n" $WORK/cheatsheets/IndexProactiveControls.md
     sed -i "1iTitle: Index Top 10\n" $WORK/cheatsheets/IndexTopTen.md
 fi
