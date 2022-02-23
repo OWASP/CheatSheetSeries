@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/DotNet_Security_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.11">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.2.1">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.50e68009.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.e8d9bf0c.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.e6a45f82.min.css">
@@ -2178,6 +2178,7 @@
               
                 
 
+
 <h1 id="dotnet-security-cheat-sheet">DotNet Security Cheat Sheet<a class="headerlink" href="#dotnet-security-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>This page intends to provide quick basic .NET security tips for developers.</p>
@@ -2407,7 +2408,7 @@
 </code></pre></div>
 <p>DO: Practice Least Privilege - Connect to the database using an account with a minimum set of permissions required to do it's job i.e. not the sa account</p>
 <h4 id="os-injection">OS Injection<a class="headerlink" href="#os-injection" title="Permanent link">&para;</a></h4>
-<p>Information about OS Injection can be found on this <a href="OS_Command_Injection_Defense_Cheat_Sheet.html#net">cheat sheet</a>.</p>
+<p>General guidance about OS Injection can be found on this <a href="OS_Command_Injection_Defense_Cheat_Sheet.html">cheat sheet</a>.</p>
 <p>DO: Use <a href="https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.process.start?view=netframework-4.7.2">System.Diagnostics.Process.Start</a> to call underlying OS functions.</p>
 <p>e.g</p>
 <div class="highlight"><pre><span></span><code><span class="kt">var</span><span class="w"> </span><span class="n">process</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">Process</span><span class="p">();</span><span class="w"></span>
@@ -2417,7 +2418,8 @@
 <span class="n">process</span><span class="p">.</span><span class="n">StartInfo</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">startInfo</span><span class="p">;</span><span class="w"></span>
 <span class="n">process</span><span class="p">.</span><span class="n">Start</span><span class="p">();</span><span class="w"></span>
 </code></pre></div>
-<p>DO: Use allow-list validation on all user supplied input. Input validation prevents improperly formed data from entering an information system. For more information please see the <a href="Input_Validation_Cheat_Sheet.html">Input Validation Cheat Sheet</a>.</p>
+<p>DO NOT: Assume that this mechanism will protect against malicious input designed to break out of one argument and then tamper with another argument to the process. This will still be possible.</p>
+<p>DO: Use allow-list validation on all user supplied input wherever possible. Input validation prevents improperly formed data from entering an information system. For more information please see the <a href="Input_Validation_Cheat_Sheet.html">Input Validation Cheat Sheet</a>.</p>
 <p>e.g Validating user input using <a href="https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress.tryparse?view=netframework-4.8">IPAddress.TryParse Method</a></p>
 <div class="highlight"><pre><span></span><code><span class="c1">//User input</span>
 <span class="kt">string</span><span class="w"> </span><span class="n">ipAddress</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">;</span><span class="w"></span>
@@ -2440,25 +2442,11 @@
 <span class="w">    </span><span class="p">...</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 </code></pre></div>
-<p>DO: Use character escaping where allow-list validation cannot be relied upon.</p>
-<p>e.g. escaping double quotes within arguments and then surrounding the arguments with double quotes.</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// This list will contain the arguments which we want to escape before </span>
-<span class="c1">// passing to the function</span>
-<span class="kt">var</span><span class="w"> </span><span class="n">arguments</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">List</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;(){</span><span class="s">&quot;Arg1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Arg\&quot;2&amp;|&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\&quot;Arg3\&quot;&quot;</span><span class="p">};</span><span class="w"></span>
-
-<span class="c1">// Escaping Stage 1: All &quot; (double quote) characters within the arguments </span>
-<span class="c1">// are doubled to escape them on the command line so they will only ever </span>
-<span class="c1">// be interpreted as data and not as anargument separator</span>
-<span class="n">arguments</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">arguments</span><span class="p">.</span><span class="n">ConvertAll</span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">Replace</span><span class="p">(</span><span class="s">&quot;\&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\&quot;\&quot;&quot;</span><span class="p">));</span><span class="w"></span>
-
-<span class="c1">// Escaping Stage 2: The arguments should be surrounded by &quot; (double quote) </span>
-<span class="c1">// characters to ensure that the data in the arguments cannot break out of</span>
-<span class="c1">// the current argument</span>
-<span class="n">arguments</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">arguments</span><span class="p">.</span><span class="n">ConvertAll</span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="s">$&quot;\&quot;{s}\&quot;&quot;</span><span class="p">);</span><span class="w"></span>
-
-<span class="c1">// Pass the escaped arguments to the &quot;ProcessStartInfo&quot; object</span>
-<span class="n">process</span><span class="p">.</span><span class="n">Arguments</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="kt">string</span><span class="p">.</span><span class="n">Join</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">arguments</span><span class="p">);</span><span class="w"></span>
-</code></pre></div>
+<p>DO: Try to only accept characters which are simple alphanumeric.</p>
+<p>DO NOT: Assume you can sanitize special characters without actually removing them. Various combinations of <code>\</code>, <code>'</code> and <code>@</code> may have an unexpected impact on sanitization attempts.</p>
+<p>DO NOT: Rely on methods without a security guarantee.</p>
+<p>e.g. .NET Core 2.2 and greater and .NET 5 and greater support <a href="https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.argumentlist">ProcessStartInfo.ArgumentList</a> which performs some character escaping but it is not clear if this is guaranteed to be secure.</p>
+<p>DO: Look at alternatives to passing raw untrusted arguments via command-line parameters such as encoding using Base64 (which would safely encode any special characters as well) and then decode the parameters in the receiving application.</p>
 <h4 id="ldap-injection">LDAP injection<a class="headerlink" href="#ldap-injection" title="Permanent link">&para;</a></h4>
 <p>Almost any characters can be used in Distinguished Names. However, some must be escaped with the backslash <code>\</code> escape character. A table showing which characters that should be escaped for Active Directory can be found at the in the <a href="LDAP_Injection_Prevention_Cheat_Sheet.html#introduction">LDAP Injection Prevention Cheat Sheet</a>.</p>
 <p>NB: The space character must be escaped only if it is the leading or trailing character in a component name, such as a Common Name. Embedded spaces should not be escaped.</p>
@@ -2966,10 +2954,10 @@ If a deserialized hostile object tries to initiate a system processes or access 
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.092fa1f6.min.js"}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.bd0b6b67.min.js"}</script>
     
     
-      <script src="../assets/javascripts/bundle.5a9542cf.min.js"></script>
+      <script src="../assets/javascripts/bundle.8aa65030.min.js"></script>
       
     
   </body>
