@@ -188,7 +188,7 @@ xmlInputFactory.setProperty("javax.xml.stream.isSupportingExternalEntities", fal
 
 ### Oracle DOM Parser
 
-Follow [Oracle reomendation]('https://docs.oracle.com/en/database/oracle/oracle-database/18/adxdk/security-considerations-oracle-xml-developers-kit.html#GUID-45303542-41DE-4455-93B3-854A826EF8BB') e.g.:
+Follow [Oracle recommendation](https://docs.oracle.com/en/database/oracle/oracle-database/18/adxdk/security-considerations-oracle-xml-developers-kit.html#GUID-45303542-41DE-4455-93B3-854A826EF8BB) e.g.:
 
 ``` java
     // Extend oracle.xml.parser.v2.XMLParser
