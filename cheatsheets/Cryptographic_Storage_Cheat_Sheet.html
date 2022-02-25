@@ -621,6 +621,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#random-padding" class="md-nav__link">
+    Random Padding
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#secure-random-number-generation" class="md-nav__link">
     Secure Random Number Generation
   </a>
@@ -1679,6 +1686,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#random-padding" class="md-nav__link">
+    Random Padding
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#secure-random-number-generation" class="md-nav__link">
     Secure Random Number Generation
   </a>
@@ -1826,6 +1840,9 @@
 <p>If GCM or CCM are not available, then <a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_%28CTR%29">CTR</a> mode or <a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Cipher_Block_Chaining_%28CBC%29">CBC</a> mode should be used. As these do not provide any guarantees about the authenticity of the data, separate authentication should be implemented, such as using the <a href="https://en.wikipedia.org/wiki/Authenticated_encryption#Encrypt-then-MAC_%28EtM%29">Encrypt-then-MAC</a> technique. Care needs to be taken when using this method with <a href="https://en.wikipedia.org/wiki/CBC-MAC#Security_with_fixed_and_variable-length_messages">variable length messages</a></p>
 <p>If random access to the encrypted data is required then <a href="https://en.wikipedia.org/wiki/Disk_encryption_theory#XTS">XTS</a> mode should be used. This is typically used for disk encryption, so it unlikely to be used by a web application.</p>
 <p><a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#ECB">ECB</a> should not be used outside of very specific circumstances.</p>
+<h3 id="random-padding">Random Padding<a class="headerlink" href="#random-padding" title="Permanent link">&para;</a></h3>
+<p>For RSA, it is essential to enable Random Padding. Random Padding is also known as OAEP or Optimal Asymmetric Encryption Padding. This class of defense protects against Known Plain Text Attacks by adding randomness at the beginning of the payload.</p>
+<p>The Padding Schema of <a href="https://wikipedia.org/wiki/RSA_(cryptosystem)#Padding_schemes">PKCS#1</a> is typicaly used in this case.</p>
 <h3 id="secure-random-number-generation">Secure Random Number Generation<a class="headerlink" href="#secure-random-number-generation" title="Permanent link">&para;</a></h3>
 <p>Random numbers (or strings) are needed for various security critical functionality, such as generating encryption keys, IVs, session IDs, CSRF tokens or password reset tokens. As such, it is important that these are generated securely, and that it is not possible for an attacker to guess and predict them.</p>
 <p>It is generally not possible for computers to generate truly random numbers (without special hardware), so most systems and languages provide two different types of randomness.</p>
