@@ -86,7 +86,7 @@ You should transmit credentials securely, such that ideally, you don't send the 
 
 Applications may not benefit from having multiple communication channels, so you must provision credentials securely.
 
-See [the Open CRE project on secrets lookup](https://www.opencre.org/search/secret) for more technical recommendations on secret creation.
+See [the Open CRE project on secrets lookup](https://www.opencre.org/cre/223-780) for more technical recommendations on secret creation.
 
 #### 2.6.2 Rotation
 
