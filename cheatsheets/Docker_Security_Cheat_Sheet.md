@@ -220,6 +220,7 @@ To detect containers with known vulnerabilities - scan images using static analy
 
 - Free
     - [Clair](https://github.com/coreos/clair)
+    - [ThreatMapper](https://github.com/deepfence/ThreatMapper)
     - [Trivy](https://github.com/knqyf263/trivy)
 - Commercial
     - [Snyk](https://snyk.io/) **(open source and free option available)**
@@ -231,7 +232,7 @@ To detect containers with known vulnerabilities - scan images using static analy
 To detect secrets in images:
 
 - [ggshield](https://github.com/GitGuardian/ggshield) **(open source and free option available)**
-- [SecretScanner](https://github.com/deepfence/SecretScanner) **(free)**
+- [SecretScanner](https://github.com/deepfence/SecretScanner) **(open source)**
 
 To detect misconfigurations in Kubernetes:
 

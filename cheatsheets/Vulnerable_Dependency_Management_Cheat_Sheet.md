@@ -242,6 +242,9 @@ It's important to ensure, during the selection process of a vulnerable dependenc
         - Full support: NodeJS, JavaScript.
         - HTML report available via this [module](https://www.npmjs.com/package/npm-audit-html).
     - [OWASP Dependency Track](https://dependencytrack.org/) can be used to manage vulnerable dependencies across an organization.
+    - [ThreatMapper](https://github.com/deepfence/ThreatMapper)
+        - Full support: Base OS, Java, NodeJS, JavaScript, Ruby, Python
+        - Targets: Kubernetes (nodes and container), Docker (node and containers), Fargate (containers), Bare Metal/VM (Host and app)
 - Commercial
     - [Snyk](https://snyk.io/) (open source and free option available):
         - [Full support](https://snyk.io/docs/) for many languages and package manager.
