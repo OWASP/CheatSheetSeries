@@ -63,6 +63,12 @@ If random access to the encrypted data is required then [XTS](https://en.wikiped
 
 [ECB](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#ECB) should not be used outside of very specific circumstances.
 
+### Random Padding
+
+For RSA, it is essential to enable Random Padding. Random Padding is also known as OAEP or Optimal Asymmetric Encryption Padding. This class of defense protects against Known Plain Text Attacks by adding randomness at the beginning of the payload.
+
+The Padding Schema of [PKCS#1](https://wikipedia.org/wiki/RSA_(cryptosystem)#Padding_schemes) is typicaly used in this case.
+
 ### Secure Random Number Generation
 
 Random numbers (or strings) are needed for various security critical functionality, such as generating encryption keys, IVs, session IDs, CSRF tokens or password reset tokens. As such, it is important that these are generated securely, and that it is not possible for an attacker to guess and predict them.
