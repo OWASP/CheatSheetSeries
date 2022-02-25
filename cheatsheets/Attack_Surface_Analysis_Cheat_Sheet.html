@@ -408,6 +408,19 @@
     Defining the Attack Surface of an Application
   </a>
   
+    <nav class="md-nav" aria-label="Defining the Attack Surface of an Application">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#microservice-and-cloud-native-applications" class="md-nav__link">
+    Microservice and Cloud Native Applications
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1520,6 +1533,19 @@
     Defining the Attack Surface of an Application
   </a>
   
+    <nav class="md-nav" aria-label="Defining the Attack Surface of an Application">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#microservice-and-cloud-native-applications" class="md-nav__link">
+    Microservice and Cloud Native Applications
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1580,6 +1606,9 @@
 <p>You overlay this model with the different types of users - roles, privilege levels - that can access the system (whether authorized or not). Complexity increases with the number of different types of users. But it is important to focus especially on the two extremes: unauthenticated, anonymous users and highly privileged admin users (e.g. database administrators, system administrators).</p>
 <p>Group each type of attack point into buckets based on risk (external-facing or internal-facing), purpose, implementation, design and technology. You can then count the number of attack points of each type, then choose some cases for each type, and focus your review/assessment on those cases.</p>
 <p>With this approach, you don't need to understand every endpoint in order to understand the Attack Surface and the potential risk profile of a system. Instead, you can count the different general type of endpoints and the number of points of each type. With this you can budget what it will take to assess risk at scale, and you can tell when the risk profile of an application has significantly changed.</p>
+<h3 id="microservice-and-cloud-native-applications">Microservice and Cloud Native Applications<a class="headerlink" href="#microservice-and-cloud-native-applications" title="Permanent link">&para;</a></h3>
+<p>Microservice and Cloud Native applications are comprised of multiple smaller components, loosely coupled using APIs and independently scalable.  When assessing the attack surface for applications of this architectural style, you should prioritize the components that are reachable from an attack source (e.g. external traffic from the Internet).  Such components may be located behind tiers of proxies, load balancers and ingress controllers, and may auto-scale without warning.</p>
+<p>Open source tooling such as <a href="https://github.com/weaveworks/scope">Scope</a> or <a href="https://github.com/deepfence/ThreatMapper">ThreatMapper</a> assist in visualizing the attack surface.</p>
 <h2 id="identifying-and-mapping-the-attack-surface">Identifying and Mapping the Attack Surface<a class="headerlink" href="#identifying-and-mapping-the-attack-surface" title="Permanent link">&para;</a></h2>
 <p>You can start building a baseline description of the Attack Surface in a picture and notes. Spend a few hours reviewing design and architecture documents from an attacker's perspective. Read through the source code and identify different points of entry/exit:</p>
 <ul>
