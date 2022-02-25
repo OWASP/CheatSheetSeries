@@ -65,7 +65,7 @@ If random access to the encrypted data is required then [XTS](https://en.wikiped
 
 ### Random Padding
 
-For RSA it is important to Enable Random Padding. This is also known as OAEP(Optimal Asymmetric Encryption Padding). This protects againt a Known Plain Text Attacks by adding randomness at the beginning of the payload.
+For RSA, it is essential to enable Random Padding. Random Padding is also known as OAEP or Optimal Asymmetric Encryption Padding. This class of defense protects against Known Plain Text Attacks by adding randomness at the beginning of the payload.
 
 The Padding Schema of [PKCS#1](https://wikipedia.org/wiki/RSA_(cryptosystem)#Padding_schemes) is typicaly used in this case.
 
