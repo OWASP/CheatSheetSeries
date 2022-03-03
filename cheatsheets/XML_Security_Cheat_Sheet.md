@@ -146,9 +146,9 @@ Defining the correct data type for numbers can be more complex since there are m
 XML Schema numeric data types can include different ranges of numbers. They could include:
 
 - **negativeInteger**: Only negative numbers
-- **nonNegativeInteger**: Negative numbers and the zero value
+- **nonNegativeInteger**: Positive numbers and the zero value
 - **positiveInteger**: Only positive numbers
-- **nonPositiveInteger**: Positive numbers and the zero value
+- **nonPositiveInteger**: Negative numbers and the zero value
 
 The following sample document defines an `id` for a product, a `price`, and a `quantity` value that is under the control of an attacker:
 
