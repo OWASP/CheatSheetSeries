@@ -55,12 +55,12 @@ Therefore, it is better to limit or remove the human interaction with the actual
 
 Like data encryption keys, Rotating some keys might trigger fully or partially data re-encryption. Different strategies of rotating keys exist:
 
-	- Gradual rotation
-	- Introducing new keys for Write operations
-	- Leaving old keys for Read operations
-	- Rapid rotation
-	- Scheduled rotation
-	- and more...
+- Gradual rotation
+- Introducing new keys for Write operations
+- Leaving old keys for Read operations
+- Rapid rotation
+- Scheduled rotation
+- and more...
 
 ### 2.5 Auditing
 
