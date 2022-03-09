@@ -911,6 +911,31 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#distinguished-name-escaping" class="md-nav__link">
+    Distinguished Name Escaping
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#search-filter-escaping" class="md-nav__link">
+    Search Filter Escaping
+  </a>
+  
+    <nav class="md-nav" aria-label="Search Filter Escaping">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#safe-java-escaping-example" class="md-nav__link">
     Safe Java Escaping Example
   </a>
@@ -921,11 +946,6 @@
   <a href="#safe-c-sharp-net-tba-example" class="md-nav__link">
     Safe C Sharp .NET TBA Example
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -1593,6 +1613,31 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#distinguished-name-escaping" class="md-nav__link">
+    Distinguished Name Escaping
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#search-filter-escaping" class="md-nav__link">
+    Search Filter Escaping
+  </a>
+  
+    <nav class="md-nav" aria-label="Search Filter Escaping">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#safe-java-escaping-example" class="md-nav__link">
     Safe Java Escaping Example
   </a>
@@ -1603,11 +1648,6 @@
   <a href="#safe-c-sharp-net-tba-example" class="md-nav__link">
     Safe C Sharp .NET TBA Example
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -1699,6 +1739,7 @@
 </ul>
 <h2 id="primary-defenses">Primary Defenses<a class="headerlink" href="#primary-defenses" title="Permanent link">&para;</a></h2>
 <h3 id="defense-option-1-escape-all-variables-using-the-right-ldap-encoding-function">Defense Option 1: Escape all variables using the right LDAP encoding function<a class="headerlink" href="#defense-option-1-escape-all-variables-using-the-right-ldap-encoding-function" title="Permanent link">&para;</a></h3>
+<h4 id="distinguished-name-escaping">Distinguished Name Escaping<a class="headerlink" href="#distinguished-name-escaping" title="Permanent link">&para;</a></h4>
 <p>The main way LDAP stores names is based on DN (distinguished name). You can think of this like a unique identifier. These are sometimes used to access resources, like a username.</p>
 <p>A DN might look like this</p>
 <p><code>cn=Richard Feynman, ou=Physics Department, dc=Caltech, dc=edu</code></p>
@@ -1709,6 +1750,7 @@
 <p>Some "special" characters that are allowed in Distinguished Names and do not need to be escaped include:</p>
 <div class="highlight"><pre><span></span><code>* ( ) . &amp; - _ [ ] ` ~ | @ $ % ^ ? : { } ! &#39;
 </code></pre></div>
+<h2 id="search-filter-escaping">Search Filter Escaping<a class="headerlink" href="#search-filter-escaping" title="Permanent link">&para;</a></h2>
 <p>Each DN points to exactly 1 entry, which can be thought of sort of like a row in a RDBMS. For each entry, there will be 1 or more attributes which are analogous to RDBMS columns. If you are interested in searching through LDAP for users will certain attributes, you may do so with search filters.</p>
 <p>In a search filter, you can use standard boolean logic to get a list of users matching an arbitrary constraint. Search filters are written in Polish notation AKA prefix notation.</p>
 <p>Example:</p>
@@ -1718,6 +1760,10 @@
 ))
 </code></pre></div>
 <p>When building LDAP queries in application code, you MUST escape any untrusted data that is added to any LDAP query. There are two forms of LDAP escaping. Encoding for LDAP Search and Encoding for LDAP DN (distinguished name). The proper escaping depends on whether you are sanitizing input for a search filter, or you are using a DN as a username-like credential for accessing some resource.</p>
+<p>Some "special" characters that are allowed in search filters and must be escaped include:</p>
+<div class="highlight"><pre><span></span><code>* ( ) \ NUL
+</code></pre></div>
+<p>For more information on search filter escaping visit <a href="https://datatracker.ietf.org/doc/html/rfc4515#section-3">RFC4515</a>.</p>
 <h4 id="safe-java-escaping-example">Safe Java Escaping Example<a class="headerlink" href="#safe-java-escaping-example" title="Permanent link">&para;</a></h4>
 <ul>
 <li><a href="https://wiki.sei.cmu.edu/confluence/spaces/flyingpdf/pdfpageexport.action?pageId=88487534">Prevent LDAP injection</a>.</li>
