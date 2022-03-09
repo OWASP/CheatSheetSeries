@@ -49,7 +49,7 @@ Some "special" characters that are allowed in Distinguished Names and do not nee
 * ( ) . & - _ [ ] ` ~ | @ $ % ^ ? : { } ! '
 ```
 
-## Search Filter Escaping
+#### Search Filter Escaping
 
 Each DN points to exactly 1 entry, which can be thought of sort of like a row in a RDBMS. For each entry, there will be 1 or more attributes which are analogous to RDBMS columns. If you are interested in searching through LDAP for users will certain attributes, you may do so with search filters.
 
