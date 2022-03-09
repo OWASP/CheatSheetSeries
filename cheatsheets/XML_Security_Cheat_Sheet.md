@@ -687,7 +687,7 @@ When the definition of an element `A` is another element `B`, and that element `
 
 #### Quadratic Blowup
 
-Instead of defining multiple small, deeply nested entities, the attacker in this scenario defines one very large entity and refers to it as many times as possible, resulting in a quadratic expansion (<i>O(n<sup>2</sup>)</i>).
+Instead of defining multiple small, deeply nested entities, the attacker in this scenario defines one very large entity and refers to it as many times as possible, resulting in a quadratic expansion (*O(n^2)*).
 
 The result of the following attack will be 100,000 x 100,000 characters in memory.
 
