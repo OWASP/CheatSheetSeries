@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/XML_Security_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.2.4">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.2.5">
     
     
       
@@ -2618,7 +2618,7 @@
  <span class="nt">&lt;body&gt;</span>Don&#39;t forget me this weekend<span class="nt">&lt;/body&gt;</span>
 <span class="nt">&lt;/note&gt;</span>
 </code></pre></div>
-<p>All restrictions on the note element could be removed or altered, allowing the sending of any type of data to the server. Furthermore, if the server is processing external entities, the attacker could use the schema, for example, to read remote files from the server. This type of schema only serves as a suggestion for sending a document, but it must contains a way to check the embedded schema integrity to be used safely. Attacks through embedded schemas are commonly used to exploit external entity expansions. Embedded XML schemas can also assist in port scans of internal hosts or brute force attacks.</p>
+<p>All restrictions on the note element could be removed or altered, allowing the sending of any type of data to the server. Furthermore, if the server is processing external entities, the attacker could use the schema, for example, to read remote files from the server. This type of schema only serves as a suggestion for sending a document, but it must contain a way to check the embedded schema integrity to be used safely. Attacks through embedded schemas are commonly used to exploit external entity expansions. Embedded XML schemas can also assist in port scans of internal hosts or brute force attacks.</p>
 <h5 id="incorrect-permissions">Incorrect Permissions<a class="headerlink" href="#incorrect-permissions" title="Permanent link">&para;</a></h5>
 <p>You can often circumvent the risk of using remotely tampered versions by processing a local schema.</p>
 <div class="highlight"><pre><span></span><code><span class="cp">&lt;!DOCTYPE note SYSTEM &quot;note.dtd&quot;&gt;</span>
@@ -2847,7 +2847,7 @@ root:*:0:0:System Administrator:/var/root:/bin/sh
 <span class="nt">&lt;A&gt;</span><span class="ni">&amp;A;</span><span class="nt">&lt;/A&gt;</span>
 </code></pre></div>
 <h4 id="quadratic-blowup">Quadratic Blowup<a class="headerlink" href="#quadratic-blowup" title="Permanent link">&para;</a></h4>
-<p>Instead of defining multiple small, deeply nested entities, the attacker in this scenario defines one very large entity and refers to it as many times as possible, resulting in a quadratic expansion <code>(O(n2))</code>.</p>
+<p>Instead of defining multiple small, deeply nested entities, the attacker in this scenario defines one very large entity and refers to it as many times as possible, resulting in a quadratic expansion (<em>O(n^2)</em>).</p>
 <p>The result of the following attack will be 100,000 x 100,000 characters in memory.</p>
 <div class="highlight"><pre><span></span><code><span class="cp">&lt;!DOCTYPE root [</span>
 <span class="cp"> &lt;!ELEMENT root ANY&gt;</span>
@@ -3026,7 +3026,7 @@ root:*:0:0:System Administrator:/var/root:/bin/sh
     <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.bd0b6b67.min.js"}</script>
     
     
-      <script src="../assets/javascripts/bundle.5413a266.min.js"></script>
+      <script src="../assets/javascripts/bundle.467223ff.min.js"></script>
       
     
   </body>
