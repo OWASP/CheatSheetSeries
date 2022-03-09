@@ -21,7 +21,7 @@ Primary Defenses:
 
 Additional Defenses:
 
-- Use a framework (like [LINQtoAD](https://archive.codeplex.com/?p=linqtoad)) that escapes automatically.
+- Use a framework (like [LINQtoLDAP](https://www.nuget.org/packages/LinqToLdap/) that escapes automatically.
 
 ## Primary Defenses
 
@@ -107,5 +107,4 @@ Input validation can be used to detect unauthorized input before it is passed to
 ## Related Articles
 
 - OWASP article on [LDAP Injection](https://owasp.org/www-community/attacks/LDAP_Injection) Vulnerabilities.
-- OWASP article on [Preventing LDAP Injection Prevention](https://cheatsheetseries.owasp.org/cheatsheets/LDAP_Injection_Prevention_Cheat_Sheet.html).
 - [OWASP Testing Guide](https://owasp.org/www-project-web-security-testing-guide/) article on how to [Test for LDAP Injection](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/06-Testing_for_LDAP_Injection.html) Vulnerabilities.
