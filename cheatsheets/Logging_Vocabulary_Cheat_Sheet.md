@@ -247,6 +247,29 @@ INFO
 
 ---
 
+### authn_password_change_fail[:userid]
+
+**Description**
+An attempt to change a password that failed. May also trigger other events such as `authn_login_lock`.
+
+**Level:**
+INFO
+
+**Example:**
+
+```
+{
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "authn_password_change:joebob1",
+    "level": "INFO",
+    "description": "User joebob1 failed to changing their password",
+    ...
+}
+```
+
+---
+
 ### authn_impossible_travel[:userid,region1,region2]
 
 **Description**
