@@ -2100,13 +2100,13 @@
 <li>Logs contain technical secrets such as passwords. Attackers use it as a stepping stone for deeper attacks.</li>
 </ul>
 <h3 id="integrity">Integrity<a class="headerlink" href="#integrity" title="Permanent link">&para;</a></h3>
-<p>Which information should be modifiable by whom? </p>
+<p>Which information should be modifiable by whom?</p>
 <ul>
 <li>An attacker with read access to a log uses it to exfiltrate secrets.</li>
 <li>An attack leverages logs to connect with exploitable facets of logging platforms, such as sending in a payload over syslog in order to cause an out-of-bounds write.</li>
 </ul>
 <h3 id="availability">Availability<a class="headerlink" href="#availability" title="Permanent link">&para;</a></h3>
-<p>What downtime is acceptable? </p>
+<p>What downtime is acceptable?</p>
 <ul>
 <li>An attacker floods log files in order to exhaust disk space available for non-logging facets of system functioning. For example, the same disk used for log files might be used for SQL storage of application data.</li>
 <li>An attacker floods log files in order to exhaust disk space available for further logging.</li>
