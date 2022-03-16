@@ -290,7 +290,7 @@ Legal, regulatory and contractual obligations may impact on these periods.
 
 ## Attacks on Logs
 
-Because of their usefulness as a defense, logs may be a target of attacks. See also OWASP [Log Injection](https://owasp.org/www-community/attacks/Log_Injection) and [CWE-117](https://cwe.mitre.org/data/definitions/117.html). 
+Because of their usefulness as a defense, logs may be a target of attacks. See also OWASP [Log Injection](https://owasp.org/www-community/attacks/Log_Injection) and [CWE-117](https://cwe.mitre.org/data/definitions/117.html).
 
 ### Confidentiality
 
