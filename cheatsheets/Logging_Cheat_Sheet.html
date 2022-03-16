@@ -1047,6 +1047,47 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#attacks-on-logs" class="md-nav__link">
+    Attacks on Logs
+  </a>
+  
+    <nav class="md-nav" aria-label="Attacks on Logs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#confidentiality" class="md-nav__link">
+    Confidentiality
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#integrity" class="md-nav__link">
+    Integrity
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#availability" class="md-nav__link">
+    Availability
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#accountability" class="md-nav__link">
+    Accountability
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#related-articles" class="md-nav__link">
     Related articles
   </a>
@@ -1744,6 +1785,47 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#attacks-on-logs" class="md-nav__link">
+    Attacks on Logs
+  </a>
+  
+    <nav class="md-nav" aria-label="Attacks on Logs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#confidentiality" class="md-nav__link">
+    Confidentiality
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#integrity" class="md-nav__link">
+    Integrity
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#availability" class="md-nav__link">
+    Availability
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#accountability" class="md-nav__link">
+    Accountability
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#related-articles" class="md-nav__link">
     Related articles
   </a>
@@ -2009,6 +2091,35 @@
 <h3 id="disposal-of-logs">Disposal of logs<a class="headerlink" href="#disposal-of-logs" title="Permanent link">&para;</a></h3>
 <p>Log data, temporary debug logs, and backups/copies/extractions, must not be destroyed before the duration of the required data retention period, and must not be kept beyond this time.</p>
 <p>Legal, regulatory and contractual obligations may impact on these periods.</p>
+<h2 id="attacks-on-logs">Attacks on Logs<a class="headerlink" href="#attacks-on-logs" title="Permanent link">&para;</a></h2>
+<p>Because of their usefulness as a defense, logs may be a target of attacks.</p>
+<h3 id="confidentiality">Confidentiality<a class="headerlink" href="#confidentiality" title="Permanent link">&para;</a></h3>
+<p>Who should be able to read what? A confidentiality attack enables an unauthorized party to access sensitive information stored in logs.</p>
+<ul>
+<li>Logs contain PII of users. Attackers gather PII, then either release it or use it as a stepping stone for futher attacks on those users.</li>
+<li>Logs contain technical secrets such as passwords. Attackers use it as a stepping stone for deeper attacks.</li>
+</ul>
+<h3 id="integrity">Integrity<a class="headerlink" href="#integrity" title="Permanent link">&para;</a></h3>
+<p>Which information should be modifiable by whom? </p>
+<ul>
+<li>An attacker with read access to a log uses it to exfiltrate secrets.</li>
+<li>An attack leverages logs to connect with exploitable facets of logging platforms, such as sending in a payload over syslog in order to cause an out-of-bounds write.</li>
+</ul>
+<h3 id="availability">Availability<a class="headerlink" href="#availability" title="Permanent link">&para;</a></h3>
+<p>What downtime is acceptable? </p>
+<ul>
+<li>An attacker floods log files in order to exhaust disk space available for non-logging facets of system functioning. For example, the same disk used for log files might be used for SQL storage of application data.</li>
+<li>An attacker floods log files in order to exhaust disk space available for further logging.</li>
+<li>An attacker uses one log entry to destroy other log entries.</li>
+<li>An attacker leverages poor performance of logging code to reduce application performance</li>
+</ul>
+<h3 id="accountability">Accountability<a class="headerlink" href="#accountability" title="Permanent link">&para;</a></h3>
+<p>Who is responsible for harm?</p>
+<ul>
+<li>An attacker prevent writes in order to cover their tracks.</li>
+<li>An attacker prevent damages the log in order to cover their tracks.</li>
+<li>An attacker causes the wrong identity to be logged in order to conceal the responsible party.</li>
+</ul>
 <h2 id="related-articles">Related articles<a class="headerlink" href="#related-articles" title="Permanent link">&para;</a></h2>
 <ul>
 <li>OWASP <a href="https://owasp.org/www-project-enterprise-security-api/">ESAPI Documentation</a>.</li>
