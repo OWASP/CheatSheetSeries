@@ -55,7 +55,7 @@ The .NET Framework is the set of APIs that support an advanced type system, data
 - Lock down the config file.
     - Remove all aspects of configuration that are not in use.
     - Encrypt sensitive parts of the `web.config` using `aspnet_regiis -pe` ([command line help](https://docs.microsoft.com/en-us/previous-versions/dotnet/netframework-2.0/k6h9cz8h(v=vs.80))).
-- For Click Once applications the .Net Framework should be upgraded to use version `4.6.2` to ensure `TLS 1.1/1.2` support.
+- For Click Once applications the .Net Framework should be upgraded to use version `4.6.2` to ensure `TLS 1.2` or later support.
 
 ## ASP NET Web Forms Guidance
 
