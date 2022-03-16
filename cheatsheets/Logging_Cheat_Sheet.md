@@ -301,14 +301,14 @@ Who should be able to read what? A confidentiality attack enables an unauthorize
 
 ### Integrity
 
-Which information should be modifiable by whom? 
+Which information should be modifiable by whom?
 
 - An attacker with read access to a log uses it to exfiltrate secrets.
 - An attack leverages logs to connect with exploitable facets of logging platforms, such as sending in a payload over syslog in order to cause an out-of-bounds write.
 
 ### Availability
 
-What downtime is acceptable? 
+What downtime is acceptable?
 
 - An attacker floods log files in order to exhaust disk space available for non-logging facets of system functioning. For example, the same disk used for log files might be used for SQL storage of application data.
 - An attacker floods log files in order to exhaust disk space available for further logging.
