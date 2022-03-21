@@ -556,26 +556,81 @@
     Introduction
   </a>
   
-    <nav class="md-nav" aria-label="Introduction">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#framework-security" class="md-nav__link">
+    Framework Security
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#xss-defense-philosophy" class="md-nav__link">
+    XSS Defense Philosophy
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#output-encoding" class="md-nav__link">
+    Output Encoding
+  </a>
+  
+    <nav class="md-nav" aria-label="Output Encoding">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#a-positive-xss-prevention-model" class="md-nav__link">
-    A Positive XSS Prevention Model
+  <a href="#output-encoding-for-html-contexts" class="md-nav__link">
+    Output Encoding for “HTML Contexts”
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#why-cant-i-just-html-entity-encode-untrusted-data" class="md-nav__link">
-    Why Can't I Just HTML Entity Encode Untrusted Data
+  <a href="#output-encoding-for-html-attribute-contexts" class="md-nav__link">
+    Output Encoding for “HTML Attribute Contexts”
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#you-need-a-security-encoding-library" class="md-nav__link">
-    You Need a Security Encoding Library
+  <a href="#output-encoding-for-javascript-contexts" class="md-nav__link">
+    Output Encoding for “JavaScript Contexts”
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#output-encoding-for-css-contexts" class="md-nav__link">
+    Output Encoding for “CSS Contexts”
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#output-encoding-for-url-contexts" class="md-nav__link">
+    Output Encoding for “URL Contexts”
+  </a>
+  
+    <nav class="md-nav" aria-label="Output Encoding for “URL Contexts”">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#common-mistake" class="md-nav__link">
+    Common Mistake
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dangerous-contexts" class="md-nav__link">
+    Dangerous Contexts
   </a>
   
 </li>
@@ -586,160 +641,43 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#xss-prevention-rules" class="md-nav__link">
-    XSS Prevention Rules
+  <a href="#html-sanitization" class="md-nav__link">
+    HTML Sanitization
   </a>
-  
-    <nav class="md-nav" aria-label="XSS Prevention Rules">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#rule-0-never-insert-untrusted-data-except-in-allowed-locations" class="md-nav__link">
-    RULE #0 - Never Insert Untrusted Data Except in Allowed Locations
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#rule-1-html-encode-before-inserting-untrusted-data-into-html-element-content" class="md-nav__link">
-    RULE #1 - HTML Encode Before Inserting Untrusted Data into HTML Element Content
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#rule-2-attribute-encode-before-inserting-untrusted-data-into-html-common-attributes" class="md-nav__link">
-    RULE #2 - Attribute Encode Before Inserting Untrusted Data into HTML Common Attributes
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#rule-3-javascript-encode-before-inserting-untrusted-data-into-javascript-data-values" class="md-nav__link">
-    RULE #3 - JavaScript Encode Before Inserting Untrusted Data into JavaScript Data Values
-  </a>
-  
-    <nav class="md-nav" aria-label="RULE #3 - JavaScript Encode Before Inserting Untrusted Data into JavaScript Data Values">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#rule-31-html-encode-json-values-in-an-html-context-and-read-the-data-with-jsonparse" class="md-nav__link">
-    RULE #3.1 - HTML Encode JSON values in an HTML context and read the data with JSON.parse
-  </a>
-  
-    <nav class="md-nav" aria-label="RULE #3.1 - HTML Encode JSON values in an HTML context and read the data with JSON.parse">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#json-serialization" class="md-nav__link">
-    JSON serialization
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#html-entity-encoding" class="md-nav__link">
-    HTML entity encoding
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#rule-4-css-encode-and-strictly-validate-before-inserting-untrusted-data-into-html-style-property-values" class="md-nav__link">
-    RULE #4 - CSS Encode And Strictly Validate Before Inserting Untrusted Data into HTML Style Property Values
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#rule-5-url-encode-before-inserting-untrusted-data-into-html-url-parameter-values" class="md-nav__link">
-    RULE #5 - URL Encode Before Inserting Untrusted Data into HTML URL Parameter Values
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#rule-6-sanitize-html-markup-with-a-library-designed-for-the-job" class="md-nav__link">
-    RULE #6 - Sanitize HTML Markup with a Library Designed for the Job
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#rule-7-avoid-javascript-urls" class="md-nav__link">
-    RULE #7 - Avoid JavaScript URLs
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#rule-8-prevent-dom-based-xss" class="md-nav__link">
-    RULE #8 - Prevent DOM-based XSS
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#bonus-rule-1-use-httponly-cookie-flag" class="md-nav__link">
-    Bonus Rule #1: Use HTTPOnly cookie flag
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#bonus-rule-2-implement-content-security-policy" class="md-nav__link">
-    Bonus Rule #2: Implement Content Security Policy
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#bonus-rule-3-use-an-auto-escaping-template-system" class="md-nav__link">
-    Bonus Rule #3: Use an Auto-Escaping Template System
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#bonus-rule-4-properly-use-modern-js-frameworks" class="md-nav__link">
-    Bonus Rule #4: Properly use modern JS frameworks
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#x-xss-protection-header" class="md-nav__link">
-    X-XSS-Protection Header
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
+  <a href="#safe-sinks" class="md-nav__link">
+    Safe Sinks
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#other-controls" class="md-nav__link">
+    Other Controls
+  </a>
+  
+    <nav class="md-nav" aria-label="Other Controls">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#xss-prevention-rules-summary" class="md-nav__link">
     XSS Prevention Rules Summary
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#output-encoding-rules-summary" class="md-nav__link">
     Output Encoding Rules Summary
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1678,26 +1616,81 @@
     Introduction
   </a>
   
-    <nav class="md-nav" aria-label="Introduction">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#framework-security" class="md-nav__link">
+    Framework Security
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#xss-defense-philosophy" class="md-nav__link">
+    XSS Defense Philosophy
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#output-encoding" class="md-nav__link">
+    Output Encoding
+  </a>
+  
+    <nav class="md-nav" aria-label="Output Encoding">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#a-positive-xss-prevention-model" class="md-nav__link">
-    A Positive XSS Prevention Model
+  <a href="#output-encoding-for-html-contexts" class="md-nav__link">
+    Output Encoding for “HTML Contexts”
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#why-cant-i-just-html-entity-encode-untrusted-data" class="md-nav__link">
-    Why Can't I Just HTML Entity Encode Untrusted Data
+  <a href="#output-encoding-for-html-attribute-contexts" class="md-nav__link">
+    Output Encoding for “HTML Attribute Contexts”
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#you-need-a-security-encoding-library" class="md-nav__link">
-    You Need a Security Encoding Library
+  <a href="#output-encoding-for-javascript-contexts" class="md-nav__link">
+    Output Encoding for “JavaScript Contexts”
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#output-encoding-for-css-contexts" class="md-nav__link">
+    Output Encoding for “CSS Contexts”
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#output-encoding-for-url-contexts" class="md-nav__link">
+    Output Encoding for “URL Contexts”
+  </a>
+  
+    <nav class="md-nav" aria-label="Output Encoding for “URL Contexts”">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#common-mistake" class="md-nav__link">
+    Common Mistake
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dangerous-contexts" class="md-nav__link">
+    Dangerous Contexts
   </a>
   
 </li>
@@ -1708,160 +1701,43 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#xss-prevention-rules" class="md-nav__link">
-    XSS Prevention Rules
+  <a href="#html-sanitization" class="md-nav__link">
+    HTML Sanitization
   </a>
-  
-    <nav class="md-nav" aria-label="XSS Prevention Rules">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#rule-0-never-insert-untrusted-data-except-in-allowed-locations" class="md-nav__link">
-    RULE #0 - Never Insert Untrusted Data Except in Allowed Locations
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#rule-1-html-encode-before-inserting-untrusted-data-into-html-element-content" class="md-nav__link">
-    RULE #1 - HTML Encode Before Inserting Untrusted Data into HTML Element Content
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#rule-2-attribute-encode-before-inserting-untrusted-data-into-html-common-attributes" class="md-nav__link">
-    RULE #2 - Attribute Encode Before Inserting Untrusted Data into HTML Common Attributes
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#rule-3-javascript-encode-before-inserting-untrusted-data-into-javascript-data-values" class="md-nav__link">
-    RULE #3 - JavaScript Encode Before Inserting Untrusted Data into JavaScript Data Values
-  </a>
-  
-    <nav class="md-nav" aria-label="RULE #3 - JavaScript Encode Before Inserting Untrusted Data into JavaScript Data Values">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#rule-31-html-encode-json-values-in-an-html-context-and-read-the-data-with-jsonparse" class="md-nav__link">
-    RULE #3.1 - HTML Encode JSON values in an HTML context and read the data with JSON.parse
-  </a>
-  
-    <nav class="md-nav" aria-label="RULE #3.1 - HTML Encode JSON values in an HTML context and read the data with JSON.parse">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#json-serialization" class="md-nav__link">
-    JSON serialization
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#html-entity-encoding" class="md-nav__link">
-    HTML entity encoding
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#rule-4-css-encode-and-strictly-validate-before-inserting-untrusted-data-into-html-style-property-values" class="md-nav__link">
-    RULE #4 - CSS Encode And Strictly Validate Before Inserting Untrusted Data into HTML Style Property Values
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#rule-5-url-encode-before-inserting-untrusted-data-into-html-url-parameter-values" class="md-nav__link">
-    RULE #5 - URL Encode Before Inserting Untrusted Data into HTML URL Parameter Values
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#rule-6-sanitize-html-markup-with-a-library-designed-for-the-job" class="md-nav__link">
-    RULE #6 - Sanitize HTML Markup with a Library Designed for the Job
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#rule-7-avoid-javascript-urls" class="md-nav__link">
-    RULE #7 - Avoid JavaScript URLs
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#rule-8-prevent-dom-based-xss" class="md-nav__link">
-    RULE #8 - Prevent DOM-based XSS
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#bonus-rule-1-use-httponly-cookie-flag" class="md-nav__link">
-    Bonus Rule #1: Use HTTPOnly cookie flag
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#bonus-rule-2-implement-content-security-policy" class="md-nav__link">
-    Bonus Rule #2: Implement Content Security Policy
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#bonus-rule-3-use-an-auto-escaping-template-system" class="md-nav__link">
-    Bonus Rule #3: Use an Auto-Escaping Template System
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#bonus-rule-4-properly-use-modern-js-frameworks" class="md-nav__link">
-    Bonus Rule #4: Properly use modern JS frameworks
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#x-xss-protection-header" class="md-nav__link">
-    X-XSS-Protection Header
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
+  <a href="#safe-sinks" class="md-nav__link">
+    Safe Sinks
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#other-controls" class="md-nav__link">
+    Other Controls
+  </a>
+  
+    <nav class="md-nav" aria-label="Other Controls">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#xss-prevention-rules-summary" class="md-nav__link">
     XSS Prevention Rules Summary
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#output-encoding-rules-summary" class="md-nav__link">
     Output Encoding Rules Summary
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1888,269 +1764,132 @@
 
 <h1 id="cross-site-scripting-prevention-cheat-sheet">Cross Site Scripting Prevention Cheat Sheet<a class="headerlink" href="#cross-site-scripting-prevention-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>This article provides a simple positive model for preventing <a href="https://owasp.org/www-community/attacks/xss/">XSS</a> using output encoding properly. While there are a huge number of XSS attack vectors, following a few simple rules can completely defend against this serious attack.</p>
-<p>This article does not explore the technical or business impact of XSS. Suffice it to say that it can lead to an attacker gaining the ability to do anything a victim can do through their browser.</p>
-<p>Both <a href="https://owasp.org/www-community/attacks/xss/#stored-and-reflected-xss-attacks">reflected and stored XSS</a> can be addressed by performing the appropriate validation and encoding on the server-side. <a href="https://owasp.org/www-community/attacks/DOM_Based_XSS">DOM Based XSS</a> can be addressed with a special subset of rules described in the <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">DOM based XSS Prevention Cheat Sheet</a>.</p>
-<p>For a cheatsheet on the attack vectors related to XSS, please refer to the <a href="https://owasp.org/www-community/xss-filter-evasion-cheatsheet">XSS Filter Evasion Cheat Sheet</a>. More background on browser security and the various browsers can be found in the <a href="https://code.google.com/archive/p/browsersec/">Browser Security Handbook</a>.</p>
-<p>Before reading this cheatsheet, it is important to have a fundamental understanding of <a href="https://owasp.org/www-community/Injection_Theory">Injection Theory</a>.</p>
-<h3 id="a-positive-xss-prevention-model">A Positive XSS Prevention Model<a class="headerlink" href="#a-positive-xss-prevention-model" title="Permanent link">&para;</a></h3>
-<p>This article treats an HTML page like a template, with slots where a developer is allowed to put untrusted data. These slots cover the vast majority of the common places where a developer might want to put untrusted data. Putting untrusted data in other places in the HTML is not allowed. This is an "allow list" model, that denies everything that is not specifically allowed.</p>
-<p>Given the way browsers parse HTML, each of the different types of slots has slightly different security rules. When you put untrusted data into these slots, you need to take certain steps to make sure that the data does not break out of that slot into a context that allows code execution. In a way, this approach treats an HTML document like a parameterized database query - the data is kept in specific places and is isolated from code contexts with encoding.</p>
-<p>This document sets out the most common types of slots and the rules for putting untrusted data into them safely. Based on the various specifications, known XSS vectors, and a great deal of manual testing with all the popular browsers, we have determined that the rules proposed here are safe.</p>
-<p>The slots are defined and a few examples of each are provided. Developers <strong>SHOULD NOT</strong> put data into any other slots without a very careful analysis to ensure that what they are doing is safe. Browser parsing is extremely tricky and many innocuous looking characters can be significant in the right context.</p>
-<h3 id="why-cant-i-just-html-entity-encode-untrusted-data">Why Can't I Just HTML Entity Encode Untrusted Data<a class="headerlink" href="#why-cant-i-just-html-entity-encode-untrusted-data" title="Permanent link">&para;</a></h3>
-<p>HTML entity encoding is okay for untrusted data that you put in the body of the HTML document, such as inside a <code>&lt;div&gt;</code> tag. It even sort of works for untrusted data that goes into attributes, particularly if you're religious about using quotes around your attributes. But HTML entity encoding doesn't work if you're putting untrusted data inside a <code>&lt;script&gt;</code>
-tag anywhere, or an event handler attribute like onmouseover, or inside CSS, or in a URL. So even if you use an HTML entity encoding method everywhere, you are still most likely vulnerable to XSS. <strong>You MUST use the encode syntax for the part of the HTML document you're putting untrusted data into.</strong> That's what the rules below are all about.</p>
-<h3 id="you-need-a-security-encoding-library">You Need a Security Encoding Library<a class="headerlink" href="#you-need-a-security-encoding-library" title="Permanent link">&para;</a></h3>
-<p>Writing these encoders is not tremendously difficult, but there are quite a few hidden pitfalls. For example, you might be tempted to use some of the escaping shortcuts like <code>\"</code> in JavaScript. However, these values are dangerous and may be misinterpreted by the nested parsers in the browser. You might also forget to escape the escape character, which attackers can use to neutralize your attempts to be safe. OWASP recommends using a security-focused encoding library to make sure these rules are properly implemented.</p>
-<p>Microsoft provides a <a href="https://docs.microsoft.com/fr-fr/dotnet/api/system.web.security.antixss.antixssencoder">System.Web.Security.AntiXss.AntiXssEncoder Class</a> for .NET 4.5 to 4.8, and ASP.Net Core has <a href="https://docs.microsoft.com/en-us/aspnet/core/security/cross-site-scripting">a few (limited) built-in features</a>. ASP.NET 2.0 Framework has built-in <a href="https://msdn.microsoft.com/en-us/library/ms972969.aspx#securitybarriers_topic6">ValidateRequest</a> function that provides <strong>limited</strong> sanitization.</p>
-<p>The <a href="https://owasp.org/www-project-java-encoder/">OWASP Java Encoder Project</a> provides a high-performance encoding library for Java.</p>
-<h2 id="xss-prevention-rules">XSS Prevention Rules<a class="headerlink" href="#xss-prevention-rules" title="Permanent link">&para;</a></h2>
-<p>The following rules are intended to prevent all XSS in your application. While these rules do not allow absolute freedom in putting untrusted data into an HTML document, they should cover the vast majority of common use cases. You do not have to allow <strong>all</strong> the rules in your organization. Many organizations may find that <strong>allowing only Rule #1 and Rule #2 are sufficient for their needs</strong>. Please add a note to the discussion page if there is an additional context that is often required and can be secured with encoding.</p>
-<p><strong>Do NOT</strong> simply encode/escape the list of example characters provided in the various rules. It is NOT sufficient to encode/escape only that list. Block list approaches are quite fragile. The allow list rules here have been carefully designed to provide protection even against future vulnerabilities introduced by browser changes.</p>
-<h3 id="rule-0-never-insert-untrusted-data-except-in-allowed-locations">RULE #0 - Never Insert Untrusted Data Except in Allowed Locations<a class="headerlink" href="#rule-0-never-insert-untrusted-data-except-in-allowed-locations" title="Permanent link">&para;</a></h3>
-<p>The first rule is to <strong>deny all</strong> - don't put untrusted data into your HTML document unless it is within one of the slots defined in Rule #1 through Rule #5. The reason for Rule #0 is that there are so many strange contexts within HTML that the list of encoding rules gets very complicated. We can't think of any good reason to put untrusted data in these contexts. This includes "nested contexts" like a URL inside a JavaScript -- the encoding rules for those locations are tricky and dangerous.</p>
-<p>If you insist on putting untrusted data into nested contexts, please do a lot of cross-browser testing and let us know what you find out.</p>
-<p>Directly in a script:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;...</span><span class="nx">NEVER</span> <span class="nx">PUT</span> <span class="nx">UNTRUSTED</span> <span class="nx">DATA</span> <span class="nx">HERE</span><span class="p">...&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</code></pre></div>
-<p>Inside an HTML comment:</p>
-<div class="highlight"><pre><span></span><code><span class="cm">&lt;!--...NEVER PUT UNTRUSTED DATA HERE...--&gt;</span>
-</code></pre></div>
-<p>In an attribute name:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">div</span> <span class="err">...</span><span class="na">NEVER</span> <span class="na">PUT</span> <span class="na">UNTRUSTED</span> <span class="na">DATA</span> <span class="na">HERE</span><span class="err">...=</span><span class="na">test</span> <span class="p">/&gt;</span>
-</code></pre></div>
-<p>In a tag name:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">NEVER</span> <span class="na">PUT</span> <span class="na">UNTRUSTED</span> <span class="na">DATA</span> <span class="na">HERE</span><span class="err">...</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;/test&quot;</span> <span class="p">/&gt;</span>
-</code></pre></div>
-<p>Directly in CSS:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span><span class="w"></span>
-<span class="o">..</span><span class="p">.</span><span class="nc">NEVER</span><span class="w"> </span><span class="nt">PUT</span><span class="w"> </span><span class="nt">UNTRUSTED</span><span class="w"> </span><span class="nt">DATA</span><span class="w"> </span><span class="nt">HERE</span><span class="o">...</span><span class="w"></span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-</code></pre></div>
-<p>Most importantly, never accept actual JavaScript code from an untrusted source and then run it. For example, a parameter named "callback" that contains a JavaScript code snippet. No amount of encoding/escaping can fix that.</p>
-<h3 id="rule-1-html-encode-before-inserting-untrusted-data-into-html-element-content">RULE #1 - HTML Encode Before Inserting Untrusted Data into HTML Element Content<a class="headerlink" href="#rule-1-html-encode-before-inserting-untrusted-data-into-html-element-content" title="Permanent link">&para;</a></h3>
-<p>Rule #1 is for when you want to put untrusted data directly into the HTML body somewhere. This includes inside normal tags like <code>div</code>, <code>p</code>, <code>b</code>, <code>td</code>, etc. Most web frameworks have a method for HTML encoding/escaping for the characters detailed below. However, this is <strong>absolutely not sufficient for other HTML contexts.</strong> You need to implement the other rules detailed here as well.</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
-...ENCODE UNTRUSTED DATA BEFORE PUTTING HERE...
-<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
-...ENCODE UNTRUSTED DATA BEFORE PUTTING HERE...
-<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-</code></pre></div>
-<p>Encode the following characters with HTML entity encoding to prevent switching into any execution context, such as script, style, or event handlers. Using hex entities is recommended in the spec. The 5 characters significant in XML (<code>&amp;</code>, <code>&lt;</code>, <code>&gt;</code>, <code>"</code>, <code>'</code>):</p>
-<div class="highlight"><pre><span></span><code> &amp; --&gt; &amp;amp;
- &lt; --&gt; &amp;lt;
- &gt; --&gt; &amp;gt;
- &quot; --&gt; &amp;quot;
- &#39; --&gt; &amp;#x27;
-
- &amp;apos; not recommended because its not in the HTML spec (See: section 24.4.1) &amp;apos; is in the XML and XHTML specs.
-</code></pre></div>
-<h3 id="rule-2-attribute-encode-before-inserting-untrusted-data-into-html-common-attributes">RULE #2 - Attribute Encode Before Inserting Untrusted Data into HTML Common Attributes<a class="headerlink" href="#rule-2-attribute-encode-before-inserting-untrusted-data-into-html-common-attributes" title="Permanent link">&para;</a></h3>
-<p>Rule #2 is for putting untrusted data into HTML attribute values like <code>width</code>, <code>name</code>, <code>value</code>, etc.</p>
-<p>For example:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">div</span> <span class="na">attr</span><span class="o">=</span><span class="s">&quot;...ENCODE UNTRUSTED DATA BEFORE PUTTING HERE...&quot;</span><span class="p">&gt;</span>content
-</code></pre></div>
-<ol>
-<li>Always quote dynamic attributes with <code>"</code> or <code>'</code>. Quoted attributes can only be broken out of with the corresponding quote, while unquoted attributes can be broken out of with many characters, including <code>[space]</code> <code>%</code> <code>*</code> <code>+</code> <code>,</code> <code>-</code> <code>/</code> <code>;</code> <code>&lt;</code> <code>=</code> <code>&gt;</code> <code>^</code> and <code>|</code>.</li>
-<li>Encode the corresponding quote: <code>"</code> and <code>'</code> should be encoded to <code>&amp;#x22;</code> and <code>&amp;#x27;</code> respectively.</li>
-<li>Some attributes can be used for attack event with encoding and should not be dynamic, or with extra care<ul>
-<li><code>href</code> can be used to inject JavaScript with <code>javascript</code> pseudo protocol (e.g. <code>href="javascript:attack()</code>)</li>
-<li>all event handlers (<code>onclick</code>, <code>onerror</code>, <code>onmouseover</code>, ...) can be used to inject JavaScript</li>
-<li><code>src</code> can also be used to inject external scripts depending on the context (e.g. in a script tag)</li>
-<li><code>style</code> can be exploited, see rule 4.</li>
-</ul>
-</li>
-</ol>
-<h3 id="rule-3-javascript-encode-before-inserting-untrusted-data-into-javascript-data-values">RULE #3 - JavaScript Encode Before Inserting Untrusted Data into JavaScript Data Values<a class="headerlink" href="#rule-3-javascript-encode-before-inserting-untrusted-data-into-javascript-data-values" title="Permanent link">&para;</a></h3>
-<p>Rule #3 concerns dynamically generated JavaScript code - both script blocks and event-handler attributes. The only safe place to put untrusted data into this code is inside a quoted "data value." Including untrusted data inside any other JavaScript context is quite dangerous, as it is extremely easy to switch into an execution context with characters including (but not limited to) semi-colon, equals, space, plus, and many more, so use with caution.</p>
-<p>Inside a quoted string:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;...ENCODE UNTRUSTED DATA BEFORE PUTTING HERE...&#39;</span><span class="p">)&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</code></pre></div>
-<p>One side of a quoted expression:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">x</span><span class="o">=</span><span class="s1">&#39;...ENCODE UNTRUSTED DATA BEFORE PUTTING HERE...&#39;</span><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</code></pre></div>
-<p>Inside quoted event handler:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">div</span> <span class="na">onmouseover</span><span class="o">=</span><span class="s">&quot;x=&#39;...ENCODE UNTRUSTED DATA BEFORE PUTTING HERE...&#39;&quot;</span><span class="err">&lt;/</span><span class="na">div</span><span class="p">&gt;</span>
-</code></pre></div>
-<!-- textlint-disable terminology -->
-<p>Please note there are some JavaScript functions that can never safely use untrusted data as input - <strong>EVEN IF JAVASCRIPT ENCODED!</strong></p>
-<!-- textlint-enable -->
-
-<p>For example:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="nb">window</span><span class="p">.</span><span class="nx">setInterval</span><span class="p">(</span><span class="s1">&#39;...EVEN IF YOU ENCODE UNTRUSTED DATA YOU ARE XSSED HERE...&#39;</span><span class="p">);</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</code></pre></div>
-<p>Except for alphanumeric characters, encode all characters with the <code>\xHH</code> format to prevent switching out of the data value into the script context or into another attribute. <strong>DO NOT</strong> use any escaping shortcuts like <code>\"</code> because the quote character may be matched by the HTML attribute parser which runs first. These escaping shortcuts are also susceptible to <strong>escape-the-escape attacks</strong> where the attacker sends <code>\"</code> and the vulnerable code turns that into <code>\\"</code> which enables the quote.</p>
-<p>If an event handler is properly quoted, breaking out requires the corresponding quote. However, we have intentionally made this rule quite broad because event handler attributes are often left unquoted. Unquoted attributes can be broken out of with many characters including <code>[space]</code> <code>%</code> <code>*</code> <code>+</code> <code>,</code> <code>-</code> <code>/</code> <code>;</code> <code>&lt;</code> <code>=</code> <code>&gt;</code> <code>^</code> and <code>|</code>.</p>
-<p>Also, a <code>&lt;/script&gt;</code> closing tag will close a script block even though it is inside a quoted string because the HTML parser runs before the JavaScript parser. Please note this is an aggressive encoding policy that over-encodes. If there is a guarantee that proper quoting is accomplished then a much smaller character set is needed. Please look at the <a href="https://wiki.owasp.org/index.php/OWASP_Java_Encoder_Project#tab=Use_the_Java_Encoder_Project">OWASP Java Encoder</a> JavaScript encoding examples for examples of proper JavaScript use that requires minimal encoding.</p>
-<h4 id="rule-31-html-encode-json-values-in-an-html-context-and-read-the-data-with-jsonparse">RULE #3.1 - HTML Encode JSON values in an HTML context and read the data with JSON.parse<a class="headerlink" href="#rule-31-html-encode-json-values-in-an-html-context-and-read-the-data-with-jsonparse" title="Permanent link">&para;</a></h4>
-<p>In a Web 2.0 world, the need for having data dynamically generated by an application in a JavaScript context is common. One strategy is to make an AJAX call to get the values, but this isn't always performant. Often, an initial block of JSON is loaded into the page to act as a single place to store multiple values. This data is tricky, though not impossible, to encode/escape correctly without breaking the format and content of the values.</p>
-<p><strong>Ensure returned <code>Content-Type</code> header is <code>application/json</code> and not <code>text/html</code>.</strong> This shall instruct the browser not misunderstand the context and execute injected script</p>
-<p><strong>Bad HTTP response:</strong></p>
-<div class="highlight"><pre><span></span><code>HTTP/1.1 200
-Date: Wed, 06 Feb 2013 10:28:54 GMT
-Server: Microsoft-IIS/7.5....
-Content-Type: text/html; charset=utf-8 &lt;-- bad
-....
-Content-Length: 373
-Keep-Alive: timeout=5, max=100
-Connection: Keep-Alive
-{&quot;Message&quot;:&quot;No HTTP resource was found that matches the request URI &#39;dev.net.ie/api/pay/.html?HouseNumber=9&amp;AddressLine
-=The+Gardens&lt;script&gt;alert(1)&lt;/script&gt;&amp;AddressLine2=foxlodge+woods&amp;TownName=Meath&#39;.&quot;,&quot;MessageDetail&quot;:&quot;No type was found
-that matches the controller named &#39;pay&#39;.&quot;}   &lt;-- this script will pop!!
-</code></pre></div>
-<p><strong>Good HTTP response:</strong></p>
-<div class="highlight"><pre><span></span><code>HTTP/1.1 200
-Date: Wed, 06 Feb 2013 10:28:54 GMT
-Server: Microsoft-IIS/7.5....
-Content-Type: application/json; charset=utf-8 &lt;--good
-.....
-</code></pre></div>
-<p>A common <strong>anti-pattern</strong> one would see:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="c1">// Do NOT do this without encoding the data with one of the techniques listed below.</span>
-<span class="kd">var</span> <span class="nx">initData</span> <span class="o">=</span> <span class="o">&lt;%=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">to_json</span> <span class="o">%&gt;</span><span class="p">;</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</code></pre></div>
-<h5 id="json-serialization">JSON serialization<a class="headerlink" href="#json-serialization" title="Permanent link">&para;</a></h5>
-<p>A safe JSON serializer will allow developers to serialize JSON as a string of literal JavaScript which can be embedded in an HTML in the contents of the <code>&lt;script&gt;</code> tag. HTML characters and JavaScript line terminators need be encoded. Consider the <a href="https://github.com/yahoo/serialize-javascript">Yahoo JavaScript Serializer</a> for this task.</p>
-<h5 id="html-entity-encoding">HTML entity encoding<a class="headerlink" href="#html-entity-encoding" title="Permanent link">&para;</a></h5>
-<p>This technique has the advantage that HTML entity encoding is widely supported and helps separate data from server side code without crossing any context boundaries. Consider placing the JSON block on the page as a normal element and then parsing the innerHTML to get the contents. The JavaScript that reads the span can live in an external file, thus making the implementation of <a href="https://content-security-policy.com/">CSP</a> enforcement easier.</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;init_data&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;display: none&quot;</span><span class="p">&gt;</span>
- <span class="err">&lt;</span>%= html_encode(data.to_json) %&gt;
-<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="c1">// external js file</span>
-<span class="kd">var</span> <span class="nx">dataElement</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;init_data&#39;</span><span class="p">);</span>
-<span class="c1">// decode and parse the content of the div</span>
-<span class="kd">var</span> <span class="nx">initData</span> <span class="o">=</span> <span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">dataElement</span><span class="p">.</span><span class="nx">textContent</span><span class="p">);</span>
-</code></pre></div>
-<p>An alternative to encoding and decoding JSON directly in JavaScript, is to normalize JSON server-side by converting <code>&lt;</code> to <code>\u003c</code> before delivering it to the browser.</p>
-<h3 id="rule-4-css-encode-and-strictly-validate-before-inserting-untrusted-data-into-html-style-property-values">RULE #4 - CSS Encode And Strictly Validate Before Inserting Untrusted Data into HTML Style Property Values<a class="headerlink" href="#rule-4-css-encode-and-strictly-validate-before-inserting-untrusted-data-into-html-style-property-values" title="Permanent link">&para;</a></h3>
-<p>Rule #4 is for when you want to put untrusted data into a style sheet or a style tag. CSS is surprisingly powerful, and can be used for numerous attacks. Therefore, it's important that you only use untrusted data in a property <strong>value</strong> and not into other places in style data. You should stay away from putting untrusted data into complex properties like <code>url</code>, <code>behavior</code>, and custom (<code>-moz-binding</code>).</p>
-<p>You should also not put untrusted data into IE's expression property value which allows JavaScript.</p>
-<p>Property value:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span><span class="w"></span>
-<span class="nt">selector</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">property</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="o">...</span><span class="n">ENCODE</span><span class="w"> </span><span class="n">UNTRUSTED</span><span class="w"> </span><span class="n">DATA</span><span class="w"> </span><span class="n">BEFORE</span><span class="w"> </span><span class="n">PUTTING</span><span class="w"> </span><span class="n">HERE</span><span class="o">...</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span><span class="w"></span>
-<span class="nt">selector</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">property</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;...ENCODE UNTRUSTED DATA BEFORE PUTTING HERE...&quot;</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">span</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;property : ...ENCODE UNTRUSTED DATA BEFORE PUTTING HERE...&quot;</span><span class="p">&gt;</span>text<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
-</code></pre></div>
-<p>Please note there are some CSS contexts that can never safely use untrusted data as input - <strong>EVEN IF PROPERLY CSS ENCODED!</strong> You will have to ensure that URLs only start with <code>http</code> not <code>javascript</code> and that properties never start with "expression".</p>
-<p>For example:</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"> </span><span class="n">background-url</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;javascript:alert(1)&quot;</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="nt">and</span><span class="w"> </span><span class="nt">all</span><span class="w"> </span><span class="nt">other</span><span class="w"> </span><span class="nt">URLs</span><span class="w"></span>
-<span class="p">{</span><span class="w"> </span><span class="n">text-size</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;expression(alert(&#39;XSS&#39;))&quot;</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w">   </span><span class="o">//</span><span class="w"> </span><span class="nt">only</span><span class="w"> </span><span class="nt">in</span><span class="w"> </span><span class="nt">IE</span><span class="w"></span>
-</code></pre></div>
-<p>Except for alphanumeric characters, encode all characters with ASCII values less than 256 with the \HH encoding format. <strong>DO NOT</strong> use any escaping shortcuts like <code>\"</code> because the quote character may be matched by the HTML attribute parser which runs first. These escaping shortcuts are also susceptible to <strong>escape-the-escape attacks</strong> where the attacker sends <code>\"</code> and the vulnerable code turns that into <code>\\"</code> which enables the quote.</p>
-<p>If attribute is quoted, breaking out requires the corresponding quote. All attributes should be quoted but your encoding should be strong enough to prevent XSS when untrusted data is placed in unquoted contexts.</p>
-<p>Unquoted attributes can be broken out of with many characters including <code>[space]</code> <code>%</code> <code>*</code> <code>+</code> <code>,</code> <code>-</code> <code>/</code> <code>;</code> <code>&lt;</code> <code>=</code> <code>&gt;</code> <code>^</code> and <code>|</code>.</p>
-<p>Also, the <code>&lt;/style&gt;</code> tag will close the style block even though it is inside a quoted string because the HTML parser runs before the JavaScript parser. Please note that we recommend aggressive CSS encoding and validation to prevent XSS attacks for both quoted and unquoted attributes.</p>
-<h3 id="rule-5-url-encode-before-inserting-untrusted-data-into-html-url-parameter-values">RULE #5 - URL Encode Before Inserting Untrusted Data into HTML URL Parameter Values<a class="headerlink" href="#rule-5-url-encode-before-inserting-untrusted-data-into-html-url-parameter-values" title="Permanent link">&para;</a></h3>
-<p>Rule #5 is for when you want to put untrusted data into HTTP GET parameter value.</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;http://www.somesite.com?test=...ENCODE UNTRUSTED DATA BEFORE PUTTING HERE...&quot;</span><span class="p">&gt;</span>link<span class="p">&lt;/</span><span class="nt">a</span> <span class="p">&gt;</span>
-</code></pre></div>
-<p>Except for alphanumeric characters, encode all characters with ASCII values less than 256 with the <code>%HH</code> encoding format. Including untrusted data in <code>data:</code> URLs should not be allowed as there is no good way to disable attacks with encoding/escaping to prevent switching out of the URL.</p>
-<p>All attributes should be quoted. Unquoted attributes can be broken out of with many characters including <code>[space]</code> <code>%</code> <code>*</code> <code>+</code> <code>,</code> <code>-</code> <code>/</code> <code>;</code> <code>&lt;</code> <code>=</code> <code>&gt;</code> <code>^</code> and <code>|</code>. Note that entity encoding is useless in this context.</p>
-<p>WARNING: Do not encode complete or relative URLs with URL encoding! If untrusted input is meant to be placed into <code>href</code>, <code>src</code> or other URL-based attributes, it should be validated to make sure it does not point to an unexpected protocol, especially <code>javascript</code> links. URLs should then be encoded based on the context of display like any other piece of data. For example, user driven URLs in <code>HREF</code> links should be attribute encoded.</p>
-<p>For example:</p>
-<div class="highlight"><pre><span></span><code><span class="n">String</span> <span class="n">userURL</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span> <span class="s">&quot;userURL&quot;</span> <span class="p">)</span>
-<span class="kt">boolean</span> <span class="n">isValidURL</span> <span class="o">=</span> <span class="n">Validator</span><span class="p">.</span><span class="na">IsValidURL</span><span class="p">(</span><span class="n">userURL</span><span class="p">,</span> <span class="mi">255</span><span class="p">);</span>
-<span class="k">if</span> <span class="p">(</span><span class="n">isValidURL</span><span class="p">)</span> <span class="p">{</span>
-    <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s">&quot;&lt;%=encoder.encodeForHTMLAttribute(userURL)%&gt;&quot;</span><span class="o">&gt;</span><span class="n">link</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
-<span class="p">}</span>
-</code></pre></div>
-<h3 id="rule-6-sanitize-html-markup-with-a-library-designed-for-the-job">RULE #6 - Sanitize HTML Markup with a Library Designed for the Job<a class="headerlink" href="#rule-6-sanitize-html-markup-with-a-library-designed-for-the-job" title="Permanent link">&para;</a></h3>
-<p>If your application handles markup -- untrusted input that is supposed to contain HTML -- it can be very difficult to validate. Encoding is also difficult, since it would break all the tags that are supposed to be in the input. Therefore, you need a library that can parse and clean HTML formatted text. There are several available at OWASP that are simple to use:</p>
-<p><strong><a href="https://github.com/mganss/HtmlSanitizer">HtmlSanitizer</a></strong></p>
-<p>An open-source .Net library. The HTML is cleaned with an "allow list" approach. All allowed tags and attributes can be configured. The library is unit tested with the OWASP <a href="https://owasp.org/www-community/xss-filter-evasion-cheatsheet">XSS Filter Evasion Cheat Sheet</a></p>
-<div class="highlight"><pre><span></span><code><span class="kt">var</span><span class="w"> </span><span class="n">sanitizer</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HtmlSanitizer</span><span class="p">();</span><span class="w"></span>
-<span class="n">sanitizer</span><span class="p">.</span><span class="n">AllowedAttributes</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="s">&quot;class&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="kt">var</span><span class="w"> </span><span class="n">sanitized</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">sanitizer</span><span class="p">.</span><span class="n">Sanitize</span><span class="p">(</span><span class="n">html</span><span class="p">);</span><span class="w"></span>
-</code></pre></div>
-<p><strong><a href="https://owasp.org/www-project-java-html-sanitizer/">OWASP Java HTML Sanitizer</a></strong></p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">org.owasp.html.Sanitizers</span><span class="p">;</span>
-<span class="kn">import</span> <span class="nn">org.owasp.html.PolicyFactory</span><span class="p">;</span>
-<span class="n">PolicyFactory</span> <span class="n">sanitizer</span> <span class="o">=</span> <span class="n">Sanitizers</span><span class="p">.</span><span class="na">FORMATTING</span><span class="p">.</span><span class="na">and</span><span class="p">(</span><span class="n">Sanitizers</span><span class="p">.</span><span class="na">BLOCKS</span><span class="p">);</span>
-<span class="n">String</span> <span class="n">cleanResults</span> <span class="o">=</span> <span class="n">sanitizer</span><span class="p">.</span><span class="na">sanitize</span><span class="p">(</span><span class="s">&quot;&lt;p&gt;Hello, &lt;b&gt;World!&lt;/b&gt;&quot;</span><span class="p">);</span>
-</code></pre></div>
-<p>For more information on OWASP Java HTML Sanitizer policy construction, see <a href="https://github.com/OWASP/java-html-sanitizer">here</a>.</p>
-<p><strong><a href="http://api.rubyonrails.org/classes/ActionView/Helpers/SanitizeHelper.html">Ruby on Rails SanitizeHelper</a></strong></p>
-<p>The <code>SanitizeHelper</code> module provides a set of methods for scrubbing text of undesired HTML elements.</p>
-<div class="highlight"><pre><span></span><code><span class="o">&lt;%=</span> <span class="n">sanitize</span> <span class="vi">@comment</span><span class="o">.</span><span class="n">body</span><span class="p">,</span> <span class="ss">tags</span><span class="p">:</span> <span class="sx">%w(strong em a)</span><span class="p">,</span> <span class="ss">attributes</span><span class="p">:</span> <span class="sx">%w(href)</span> <span class="o">%&gt;</span>
-</code></pre></div>
-<p><strong>Other libraries that provide HTML Sanitization include:</strong></p>
+<p>This cheat sheet provides guidance to prevent XSS vulnerabilities.</p>
+<p>Cross-Site Scripting (XSS) is a misnomer. The name originated from early versions of the attack where stealing data cross-site was the primary focus. Since then, it has extended to include injection of basically any content, but we still refer to this as XSS. XSS is serious and can  lead to account impersonation, observing user behaviour, loading external content, stealing sensitive data, and more.</p>
+<p><strong>This cheatsheet is a list of techniques to prevent or limit the impact of XSS. No single technique will solve XSS. Using the right combination of defensive techniques is necessary to prevent XSS.</strong></p>
+<h2 id="framework-security">Framework Security<a class="headerlink" href="#framework-security" title="Permanent link">&para;</a></h2>
+<p>Fewer XSS bugs appear in applications built with modern web frameworks. These frameworks steer developers towards good security practices and help mitigate XSS by using templating, auto-escaping, and more. That said, developers need to be aware of problems that can occur when using frameworks insecurely such as:</p>
 <ul>
-<li><a href="https://github.com/google/closure-library/blob/master/closure/goog/html/sanitizer/htmlsanitizer.js">HTML sanitizer</a> from <a href="https://developers.google.com/closure/library/">Google Closure Library</a> (JavaScript/Node.js, <a href="https://google.github.io/closure-library/api/goog.html.sanitizer.HtmlSanitizer.html">docs</a>)</li>
-<li><a href="https://github.com/cure53/DOMPurify">DOMPurify</a> (JavaScript, requires <a href="https://github.com/jsdom/jsdom">jsdom</a> for Node.js)</li>
-<li><a href="http://htmlpurifier.org/">PHP HTML Purifier</a></li>
-<li><a href="https://pypi.python.org/pypi/bleach">Python Bleach</a></li>
+<li><em>escape hatches</em> that frameworks use to directly manipulate the DOM</li>
+<li>React’s <code>dangerouslySetInnerHTML</code> without sanitising the HTML</li>
+<li>React cannot handle <code>javascript:</code> or <code>data:</code> URLs without specialized validation</li>
+<li>Angular’s <code>bypassSecurityTrustAs*</code> functions</li>
+<li>Template injection</li>
+<li>Out of date framework plugins or components</li>
+<li>and more</li>
 </ul>
-<h3 id="rule-7-avoid-javascript-urls">RULE #7 - Avoid JavaScript URLs<a class="headerlink" href="#rule-7-avoid-javascript-urls" title="Permanent link">&para;</a></h3>
-<p>Untrusted URLs that include the protocol javascript: will execute JavaScript code when used in URL DOM locations such as anchor tag HREF attributes or iFrame src locations. Be sure to validate all untrusted URLs to ensure they only contain safe schemes such as HTTPS.</p>
-<h3 id="rule-8-prevent-dom-based-xss">RULE #8 - Prevent DOM-based XSS<a class="headerlink" href="#rule-8-prevent-dom-based-xss" title="Permanent link">&para;</a></h3>
-<p>For details on what DOM-based XSS is, and defenses against this type of XSS flaw, please see the OWASP article on <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html">DOM based XSS Prevention Cheat Sheet</a>.</p>
-<h3 id="bonus-rule-1-use-httponly-cookie-flag">Bonus Rule #1: Use HTTPOnly cookie flag<a class="headerlink" href="#bonus-rule-1-use-httponly-cookie-flag" title="Permanent link">&para;</a></h3>
-<p>Preventing all XSS flaws in an application is hard, as you can see. To help mitigate the impact of an XSS flaw on your site, OWASP also recommends you set the HTTPOnly flag on your session cookie and any custom cookies you have that are not accessed by any JavaScript you wrote. This cookie flag is typically on by default in .NET apps, but in other languages you have to set it manually. For more details on the HTTPOnly cookie flag, including what it does, and how to use it, see the OWASP article on <a href="https://owasp.org/www-community/HttpOnly">HTTPOnly</a>.</p>
-<h3 id="bonus-rule-2-implement-content-security-policy">Bonus Rule #2: Implement Content Security Policy<a class="headerlink" href="#bonus-rule-2-implement-content-security-policy" title="Permanent link">&para;</a></h3>
-<p>There is another good complex solution to mitigate the impact of an XSS flaw called Content Security Policy. It's a browser side mechanism which allows you to create source allow lists for client side resources of your web application, e.g. JavaScript, CSS, images, etc. CSP via special HTTP header instructs the browser to only execute or render resources from those sources.</p>
-<p>For example this CSP:</p>
-<div class="highlight"><pre><span></span><code>Content-Security-Policy: default-src: &#39;self&#39;; script-src: &#39;self&#39; static.domain.tld
+<p>Understand how your framework prevents XSS and where it has gaps. There will be times where you need to do something outside the protection provided by your framework. This is where Output Encoding and HTML Sanitization are critical. OWASP are producing framework specific cheatsheets for React, Vue, and Angular.</p>
+<h2 id="xss-defense-philosophy">XSS Defense Philosophy<a class="headerlink" href="#xss-defense-philosophy" title="Permanent link">&para;</a></h2>
+<p>For XSS attacks to be successful, an attacker needs to insert and execute malicious content in a webpage. Each variable in a web application needs to be protected. Ensuring that <strong>all variables</strong> go through validation and are then escaped or sanitized is known as perfect injection resistance. Any variable that does not go through this process is a potential weakness. Frameworks make it easy to ensure variables are correctly validated and escaped or sanitised.</p>
+<p>However, frameworks aren't perfect and security gaps still exist in popular frameworks like React and Angular. Output Encoding and HTML Sanitization help address those gaps.</p>
+<h2 id="output-encoding">Output Encoding<a class="headerlink" href="#output-encoding" title="Permanent link">&para;</a></h2>
+<p>Output Encoding is recommended when you need to safely display data exactly as a user typed it in. Variables should not be interpreted as code instead of text. This section covers each form of output encoding, where to use it, and where to avoid using dynamic variables entirely.</p>
+<p>Start with using your framework’s default output encoding protection when you wish to display data as the user typed it in. Automatic encoding and escaping functions are built into most frameworks.</p>
+<p>If you’re not using a framework or need to cover gaps in the framework then you should use an output encoding library. Each variable used in the user interface should be passed through an output encoding function. A list of output encoding libraries is included in the appendix.</p>
+<p>There are many different output encoding methods because browsers parse HTML, JS, URLs, and CSS differently. Using the wrong encoding method may introduce weaknesses or harm the functionality of your application.</p>
+<h3 id="output-encoding-for-html-contexts">Output Encoding for “HTML Contexts”<a class="headerlink" href="#output-encoding-for-html-contexts" title="Permanent link">&para;</a></h3>
+<p>“HTML Context” refers to inserting a variable between two basic HTML tags like a <code>&lt;div&gt;</code> or <code>&lt;b&gt;</code>. For example..</p>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span> $varUnsafe <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </code></pre></div>
-<p>Will instruct web browser to load all resources only from the page's origin and JavaScript source code files additionally from <code>static.domain.tld</code>. For more details on Content Security Policy, including what it does, and how to use it, see this article on <a href="https://content-security-policy.com">Content Security Policy</a>.</p>
-<h3 id="bonus-rule-3-use-an-auto-escaping-template-system">Bonus Rule #3: Use an Auto-Escaping Template System<a class="headerlink" href="#bonus-rule-3-use-an-auto-escaping-template-system" title="Permanent link">&para;</a></h3>
-<p>Many web application frameworks provide automatic contextual escaping functionality such as <a href="https://docs.angularjs.org/api/ng/service/$sce">AngularJS strict contextual escaping</a> and <a href="https://golang.org/pkg/html/template/">Go Templates</a>. Use these technologies when you can.</p>
-<h3 id="bonus-rule-4-properly-use-modern-js-frameworks">Bonus Rule #4: Properly use modern JS frameworks<a class="headerlink" href="#bonus-rule-4-properly-use-modern-js-frameworks" title="Permanent link">&para;</a></h3>
-<p>Modern JavaScript frameworks have pretty good XSS protection built in.
-Usually framework API allows bypassing that protection in order to render unescaped HTML or include executable code.</p>
-<p>The following API methods and props in the table below are considered dangerous and by using them you are potentially exposing your users to an XSS vulnerability.
-If you <strong>really</strong> have to use them remember that now all the data must be <a href="#rule-6---sanitize-html-markup-with-a-library-designed-for-the-job">sanitized</a> by yourself.</p>
-<table>
-<thead>
-<tr>
-<th>JavaScript framework</th>
-<th>Dangerous methods / props</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Angular (2+)</td>
-<td><a href="https://angular.io/guide/security#bypass-security-apis">bypassSecurityTrust</a></td>
-</tr>
-<tr>
-<td>React</td>
-<td><a href="https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml"><code>dangerouslySetInnerHTML</code></a></td>
-</tr>
-<tr>
-<td>Svelte</td>
-<td><a href="https://svelte.dev/docs#html"><code>{@html ...}</code></a></td>
-</tr>
-<tr>
-<td>Vue (2+)</td>
-<td><a href="https://vuejs.org/v2/api/#v-html"><code>v-html</code></a></td>
-</tr>
-</tbody>
-</table>
-<p>Avoid template injection in Angular by building with <code>--prod</code> parameter (<code>ng build --prod</code>).</p>
-<p>Also remember to keep your framework updated to the latest version with all possible bugfixes.</p>
-<h3 id="x-xss-protection-header">X-XSS-Protection Header<a class="headerlink" href="#x-xss-protection-header" title="Permanent link">&para;</a></h3>
-<p>The <code>X-XSS-Protection</code> header has been deprecated by modern browsers and its use can introduce <strong>additional</strong> security issues on the client side. As such, it is recommended to set the header as <code>X-XSS-Protection: 0</code> in order to disable the XSS Auditor, and not allow it to take the default behavior of the browser handling the response. Check the below references for a better understanding on this topic:</p>
+<p>An attacker could modify data that is rendered as <code>$varUnsafe</code>. This could lead to an attack being added to a webpage.. for example.</p>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">alert</span><span class="sb">`1`</span><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span> <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span> // Example Attack
+</code></pre></div>
+<p>In order to add a variable to a HTML context safely, use HTML entity encoding for that variable as you add it to a web template.</p>
+<p>Here are some examples of encoded values for specific characters.</p>
+<p>If you're using JavaScript for writing to HTML, look at the <code>.textContent</code> attribute as it is a <strong>Safe Sink</strong> and will automatically HTML Entity Encode.</p>
+<div class="highlight"><pre><span></span><code><span class="err">&amp;</span>    <span class="ni">&amp;amp;</span>
+<span class="err">&lt;</span>    <span class="ni">&amp;lt;</span>
+&gt;    <span class="ni">&amp;gt;</span>
+&quot;    <span class="ni">&amp;quot;</span>
+&#39;    <span class="ni">&amp;#x27;</span>
+</code></pre></div>
+<h3 id="output-encoding-for-html-attribute-contexts">Output Encoding for “HTML Attribute Contexts”<a class="headerlink" href="#output-encoding-for-html-attribute-contexts" title="Permanent link">&para;</a></h3>
+<p>“HTML Attribute Contexts” refer to placing a variable in an HTML attribute value. You may want to do this to change a hyperlink, hide an element, add alt-text for an image, or change inline CSS styles. You should apply HTML attribute encoding to variables being placed in most HTML attributes. A list of safe HTML attributes is provided in the <strong>Safe Sinks</strong> section.</p>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">div</span> <span class="na">attr</span><span class="o">=</span><span class="s">&quot;$varUnsafe&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">attr</span><span class="o">=</span><span class="s">”*x”</span> <span class="na">onblur</span><span class="o">=</span><span class="s">”alert(1)*”</span><span class="p">&gt;</span> // Example Attack
+</code></pre></div>
+<p>It’s critical to use quotation marks like <code>"</code> or <code>'</code> to surround your variables. Quoting makes it difficult to change the context a variable operates in, which helps prevent XSS. Quoting also significantly reduces the characterset that you need to encode, making your application more reliable and the encoding easier to implement.</p>
+<p>If you're using JavaScript for writing to a HTML Attribute, look at the <code>.setAttribute</code> and <code>[attribute]</code> methods as they are <strong>Safe Sinks</strong> and will automatically HTML Attribute Encode.</p>
+<h3 id="output-encoding-for-javascript-contexts">Output Encoding for “JavaScript Contexts”<a class="headerlink" href="#output-encoding-for-javascript-contexts" title="Permanent link">&para;</a></h3>
+<p>“JavaScript Contexts” refer to placing variables into inline JavaScript which is then embedded in an HTML document. This is commonly seen in programs that heavily use custom JavaScript embedded in their web pages.</p>
+<p>The only ‘safe’ location for placing variables in JavaScript is inside a “quoted data value”. All other contexts are unsafe and you should not place variable data in them.</p>
+<p>Examples of “Quoted Data Values”</p>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">alert</span><span class="p">(</span><span class="err">&#39;</span><span class="nx">$varUnsafe</span><span class="err">’</span><span class="p">)&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">x</span><span class="o">=</span><span class="err">’</span><span class="nx">$varUnsafe</span><span class="err">’</span><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">onmouseover</span><span class="o">=</span><span class="s">&quot;&#39;$varUnsafe&#39;&quot;</span><span class="err">&lt;/</span><span class="na">div</span><span class="p">&gt;</span>
+</code></pre></div>
+<p>Encode all characters using the <code>\xHH</code> format. Encoding libraries often have a <code>EncodeForJavaScript</code> or similar to support this function.</p>
+<p>Please look at the <a href="https://owasp.org/www-project-java-encoder/">OWASP Java Encoder JavaScript encoding examples</a> for examples of proper JavaScript use that requires minimal encoding.</p>
+<p>For JSON, verify that the <code>Content-Type</code> header is <code>application/json</code> and not <code>text/html</code> to prevent XSS.</p>
+<h3 id="output-encoding-for-css-contexts">Output Encoding for “CSS Contexts”<a class="headerlink" href="#output-encoding-for-css-contexts" title="Permanent link">&para;</a></h3>
+<p>“CSS Contexts” refer to variables placed into inline CSS. This is common when you want users to be able to customize the look and feel of their webpages. CSS is surprisingly powerful and has been used for many types of attacks. Variables should only be placed in a CSS property value. Other “CSS Contexts” are unsafe and you should not place variable data in them.</p>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span><span class="w"> </span><span class="nt">selector</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">property</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="err">$</span><span class="n">varUnsafe</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span><span class="w"> </span><span class="nt">selector</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">property</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;$varUnsafe&quot;</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">span</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;property : $varUnsafe&quot;</span><span class="p">&gt;</span>Oh no<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+</code></pre></div>
+<p>If you're using JavaScript to change a CSS property, look into using <code>style.property = x</code>. This is a <strong>Safe Sink</strong> and will automatically CSS encode data in it.</p>
+<p>// Add CSS Encoding Advice</p>
+<h3 id="output-encoding-for-url-contexts">Output Encoding for “URL Contexts”<a class="headerlink" href="#output-encoding-for-url-contexts" title="Permanent link">&para;</a></h3>
+<p>“URL Contexts” refer to variables placed into a URL. Most commonly, a developer will add a parameter or URL fragment to a URL base that is then displayed or used in some operation. Use URL Encoding for these scenarios.</p>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;http://www.owasp.org?test=$varUnsafe&quot;</span><span class="p">&gt;</span>link<span class="p">&lt;/</span><span class="nt">a</span> <span class="p">&gt;</span>
+</code></pre></div>
+<p>Encode all characters with the <code>%HH</code> encoding format. Make sure any attributes are fully quoted, same as JS and CSS.</p>
+<h4 id="common-mistake">Common Mistake<a class="headerlink" href="#common-mistake" title="Permanent link">&para;</a></h4>
+<p>There will be situations where you use a URL in different contexts. The most common one would be adding it to an <code>href</code> or <code>src</code> attribute of an <code>&lt;a&gt;</code> tag. In these scenarios, you should do URL encoding, followed by HTML attribute encoding.</p>
+<div class="highlight"><pre><span></span><code>url = &quot;https://site.com?data=&quot; + urlencode(parameter)
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#39;attributeEncode(url)&#39;</span><span class="p">&gt;</span>link<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</code></pre></div>
+<p>If you're using JavaScript to construct a URL Query Value, look into using <code>window.encodeURIComponent(x)</code>. This is a <strong>Safe Sink</strong> and will automatically URL encode data in it.</p>
+<h3 id="dangerous-contexts">Dangerous Contexts<a class="headerlink" href="#dangerous-contexts" title="Permanent link">&para;</a></h3>
+<p>Output encoding is not perfect. It will not always prevent XSS. These locations are known as <strong>dangerous contexts</strong>. Dangerous contexts include:</p>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">Directly</span> <span class="ow">in</span> <span class="nx">a</span> <span class="nx">script</span><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="cm">&lt;!-- Inside an HTML comment --&gt;</span>
+<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span><span class="nt">Directly</span><span class="w"> </span><span class="nt">in</span><span class="w"> </span><span class="nt">CSS</span><span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">ToDefineAnAttribute</span><span class="o">=</span><span class="s">test</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">ToDefineATag</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;/test&quot;</span> <span class="p">/&gt;</span>
+</code></pre></div>
+<p>Other areas to be careful of include:</p>
 <ul>
-<li><a href="https://portswigger.net/daily-swig/google-chromes-xss-auditor-goes-back-to-filter-mode">Google Chrome’s XSS Auditor goes back to filter mode</a></li>
-<li><a href="https://www.chromestatus.com/feature/5021976655560704">Chrome removed the XSS Auditor</a></li>
-<li><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=528661">Firefox does not implement the XSSAuditor</a></li>
-<li><a href="https://blogs.windows.com/windowsexperience/2018/07/25/announcing-windows-10-insider-preview-build-17723-and-build-18204/">Edge retired their XSS filter</a></li>
-<li><a href="https://github.com/zaproxy/zaproxy/issues/5849">OWASP ZAP deprecated the scan for the header</a></li>
-<li><a href="https://scotthelme.co.uk/security-headers-updates/#removing-the-x-xss-protection-header">SecurityHeaders.com no longer scans for the header</a></li>
+<li>Callback functions</li>
+<li>Where URLs are handled in code such as this CSS { background-url : “javascript:alert(xss)”; }</li>
+<li>All JavaScript event handlers (<code>onclick()</code>, <code>onerror()</code>, <code>onmouseover()</code>).</li>
+<li>Unsafe JS functions like <code>eval()</code>, <code>setInterval()</code>, <code>setTimeout()</code></li>
 </ul>
-<h2 id="xss-prevention-rules-summary">XSS Prevention Rules Summary<a class="headerlink" href="#xss-prevention-rules-summary" title="Permanent link">&para;</a></h2>
+<p>Don't place variables into dangerous contexts as even with output encoding, it will not prevent an XSS attack fully.</p>
+<h2 id="html-sanitization">HTML Sanitization<a class="headerlink" href="#html-sanitization" title="Permanent link">&para;</a></h2>
+<p>Sometimes users need to author HTML. One scenario would be allow users to change the styling or structure of content inside a WYSIWYG editor. Output encoding here will prevent XSS, but it will break the intended functionality of the application. The styling will not be rendered. In these cases, HTML Sanitization should be used.</p>
+<p>HTML Sanitization will strip dangerous HTML from a variable and return a safe string of HTML. OWASP recommends <a href="https://github.com/cure53/DOMPurify">DOMPurify</a> for HTML Sanitization.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">let</span> <span class="nx">clean</span> <span class="o">=</span> <span class="nx">DOMPurify</span><span class="p">.</span><span class="nx">sanitize</span><span class="p">(</span><span class="nx">dirty</span><span class="p">);</span>
+</code></pre></div>
+<p>There are some further things to consider:</p>
+<ul>
+<li>If you sanitize content and then modify it afterwards, you can easily void your security efforts.</li>
+<li>If you sanitize content and then send it to a library for use, check that it doesn’t mutate that string somehow. Otherwise, again, your security efforts are void.</li>
+<li>You must regularly patch DOMPurify or other HTML Sanitization libraries that you use. Browsers change functionality and bypasses are being discovered regularly.</li>
+</ul>
+<h2 id="safe-sinks">Safe Sinks<a class="headerlink" href="#safe-sinks" title="Permanent link">&para;</a></h2>
+<p>Security professionals often talk in terms of sources and sinks. If you pollute a river, it'll flow downstream somewhere. It’s the same with computer security. XSS sinks are places where variables are placed into your webpage.</p>
+<p>Thankfully, many sinks where variables can be placed are safe. This is because these sinks treat the variable as text and will never execute it. Try to refactor your code to remove references to unsafe sinks like innerHTML, and instead use textContent or value.</p>
+<div class="highlight"><pre><span></span><code><span class="nx">elem</span><span class="p">.</span><span class="nx">textContent</span> <span class="o">=</span> <span class="nx">dangerVariable</span><span class="p">;</span>
+<span class="nx">elem</span><span class="p">.</span><span class="nx">insertAdjacentText</span><span class="p">(</span><span class="nx">dangerVariable</span><span class="p">);</span>
+<span class="nx">elem</span><span class="p">.</span><span class="nx">className</span> <span class="o">=</span> <span class="nx">dangerVariable</span><span class="p">;</span>
+<span class="nx">elem</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="nx">safeName</span><span class="p">,</span> <span class="nx">dangerVariable</span><span class="p">);</span>
+<span class="nx">formfield</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">dangerVariable</span><span class="p">;</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">createTextNode</span><span class="p">(</span><span class="nx">dangerVariable</span><span class="p">);</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="nx">dangerVariable</span><span class="p">);</span>
+<span class="nx">elem</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">DOMPurify</span><span class="p">.</span><span class="nx">sanitize</span><span class="p">(</span><span class="nx">dangerVar</span><span class="p">);</span>
+</code></pre></div>
+<p><strong>Safe HTML Attributes include:</strong> <code>align</code>, <code>alink</code>, <code>alt</code>, <code>bgcolor</code>, <code>border</code>, <code>cellpadding</code>, <code>cellspacing</code>, <code>class</code>, <code>color</code>, <code>cols</code>, <code>colspan</code>, <code>coords</code>, <code>dir</code>, <code>face</code>, <code>height</code>, <code>hspace</code>, <code>ismap</code>, <code>lang</code>, <code>marginheight</code>, <code>marginwidth</code>, <code>multiple</code>, <code>nohref</code>, <code>noresize</code>, <code>noshade</code>, <code>nowrap</code>, <code>ref</code>, <code>rel</code>, <code>rev</code>, <code>rows</code>, <code>rowspan</code>, <code>scrolling</code>, <code>shape</code>, <code>span</code>, <code>summary</code>, <code>tabindex</code>, <code>title</code>, <code>usemap</code>, <code>valign</code>, <code>value</code>, <code>vlink</code>, <code>vspace</code>, <code>width</code>.</p>
+<p>For a comprehensive list, check out the <a href="https://github.com/cure53/DOMPurify/blob/main/src/attrs.js">DOMPurify allowlist</a></p>
+<h2 id="other-controls">Other Controls<a class="headerlink" href="#other-controls" title="Permanent link">&para;</a></h2>
+<p>Framework Security Protections, Output Encoding, and HTML Sanitization will provide the best protection for your application. OWASP recommends these in all circumstances.</p>
+<p>Consider adopting the following controls in addition to the above.</p>
+<ul>
+<li>Cookie Attributes - These change how JavaScript and browsers can interact with cookies. Cookie attributes try to limit the impact of an XSS attack but don’t prevent the execution of malicious content or address the root cause of the vulnerability.</li>
+<li>Content Security Policy - An allowlist that prevents content being loaded. It’s easy to make mistakes with the implementation so it should not be your primary defense mechanism. Use a CSP as an additional layer of defense and have a look at the <a href="https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html">cheatsheet here</a>.</li>
+<li>Web Application Firewalls - These look for known attack strings and block them. WAF’s are unreliable and new bypass techniques are being discovered regularly. WAFs also don’t address the root cause of an XSS vulnerability. In addition, WAFs also miss a class of XSS vulnerabilities that operate exclusively client-side. WAFs are not recommended for preventing XSS, especially DOM-Based XSS.</li>
+</ul>
+<h3 id="xss-prevention-rules-summary">XSS Prevention Rules Summary<a class="headerlink" href="#xss-prevention-rules-summary" title="Permanent link">&para;</a></h3>
 <p>The following snippets of HTML demonstrate how to safely render untrusted data in a variety of different contexts.</p>
 <table>
 <thead>
@@ -2189,7 +1928,7 @@ If you <strong>really</strong> have to use them remember that now all the data m
 <tr>
 <td>String</td>
 <td>CSS Value</td>
-<td><code>html &lt;div style="width: UNTRUSTED DATA ;"&gt;Selection&lt;/div&gt;</code></td>
+<td><code>HTML &lt;div style="width: UNTRUSTED DATA ;"&gt;Selection&lt;/div&gt;</code></td>
 <td>Strict structural validation (rule #4), CSS Hex encoding, Good design of CSS Features.</td>
 </tr>
 <tr>
@@ -2212,8 +1951,7 @@ If you <strong>really</strong> have to use them remember that now all the data m
 </tr>
 </tbody>
 </table>
-<p><strong>Safe HTML Attributes include:</strong> <code>align</code>, <code>alink</code>, <code>alt</code>, <code>bgcolor</code>, <code>border</code>, <code>cellpadding</code>, <code>cellspacing</code>, <code>class</code>, <code>color</code>, <code>cols</code>, <code>colspan</code>, <code>coords</code>, <code>dir</code>, <code>face</code>, <code>height</code>, <code>hspace</code>, <code>ismap</code>, <code>lang</code>, <code>marginheight</code>, <code>marginwidth</code>, <code>multiple</code>, <code>nohref</code>, <code>noresize</code>, <code>noshade</code>, <code>nowrap</code>, <code>ref</code>, <code>rel</code>, <code>rev</code>, <code>rows</code>, <code>rowspan</code>, <code>scrolling</code>, <code>shape</code>, <code>span</code>, <code>summary</code>, <code>tabindex</code>, <code>title</code>, <code>usemap</code>, <code>valign</code>, <code>value</code>, <code>vlink</code>, <code>vspace</code>, <code>width</code>.</p>
-<h2 id="output-encoding-rules-summary">Output Encoding Rules Summary<a class="headerlink" href="#output-encoding-rules-summary" title="Permanent link">&para;</a></h2>
+<h3 id="output-encoding-rules-summary">Output Encoding Rules Summary<a class="headerlink" href="#output-encoding-rules-summary" title="Permanent link">&para;</a></h3>
 <p>The purpose of output encoding (as it relates to Cross Site Scripting) is to convert untrusted input into a safe form where the input is displayed as <strong>data</strong> to the user without executing as <strong>code</strong> in the browser. The following charts details a list of critical output encoding methods needed to stop Cross Site Scripting.</p>
 <table>
 <thead>
@@ -2241,7 +1979,7 @@ If you <strong>really</strong> have to use them remember that now all the data m
 </tr>
 <tr>
 <td>CSS Hex Encoding</td>
-<td>CSS encoding supports <code>\XX</code> and <code>\XXXXXX</code>. Using a two character encode can  cause problems if the next character continues the encode sequence.  There are two solutions (a) Add a space after the CSS encode (will be  ignored by the CSS parser) (b) use the full amount of CSS encoding  possible by zero padding the value.</td>
+<td>CSS encoding supports <code>\XX</code> and <code>\XXXXXX</code>. Using a two character encode can  cause problems if the next character continues the encode sequence.  There are two solutions: (a) Add a space after the CSS encode (will be  ignored by the CSS parser) (b) use the full amount of CSS encoding  possible by zero padding the value.</td>
 </tr>
 </tbody>
 </table>
@@ -2249,7 +1987,7 @@ If you <strong>really</strong> have to use them remember that now all the data m
 <p><strong>XSS Attack Cheat Sheet:</strong></p>
 <p>The following article describes how to exploit different kinds of XSS Vulnerabilities that this article was created to help you avoid:</p>
 <ul>
-<li>OWASP: <a href="https://owasp.org/www-community/xss-filter-evasion-cheatsheet">XSS Filter Evasion Cheat Sheet</a>.</li>
+<li>OWASP: <a href="https://cheatsheetseries.owasp.org/cheatsheets/XSS_Filter_Evasion_Cheat_Sheet.html">XSS Filter Evasion Cheat Sheet</a>.</li>
 </ul>
 <p><strong>Description of XSS Vulnerabilities:</strong></p>
 <ul>
@@ -2265,7 +2003,7 @@ If you <strong>really</strong> have to use them remember that now all the data m
 </ul>
 <p><strong>How to Test for Cross-site scripting Vulnerabilities:</strong></p>
 <ul>
-<li><a href="https://owasp.org/www-project-web-security-testing-guide/">OWASP Testing Guide</a> article on <a href="https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/11-Client_Side_Testing/README.html">Testing for Cross site scripting</a> Vulnerabilities.</li>
+<li><a href="https://owasp.org/www-project-web-security-testing-guide/">OWASP Testing Guide</a> article on testing for Cross-Site Scripting vulnerabilities.</li>
 <li><a href="https://wiki.owasp.org/index.php/XSS_Experimental_Minimal_Encoding_Rules">XSS Experimental Minimal Encoding Rules</a></li>
 </ul>
 
