@@ -113,16 +113,16 @@ func1("input1")
 And using async/await:
 
 ```JavaScript
-function func1(name) {
+function async func1(name) {
   // operations that takes a bit of time and then resolves the promise
 }
-function func2(name) {
+function async func2(name) {
   // operations that takes a bit of time and then resolves the promise
 }
-function func3(name) {
+function async func3(name) {
   // operations that takes a bit of time and then resolves the promise
 }
-function func4(name) {
+function async func4(name) {
   // operations that takes a bit of time and then resolves the promise
 }
 

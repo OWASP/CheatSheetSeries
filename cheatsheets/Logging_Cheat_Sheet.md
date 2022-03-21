@@ -288,6 +288,41 @@ Log data, temporary debug logs, and backups/copies/extractions, must not be dest
 
 Legal, regulatory and contractual obligations may impact on these periods.
 
+## Attacks on Logs
+
+Because of their usefulness as a defense, logs may be a target of attacks. See also OWASP [Log Injection](https://owasp.org/www-community/attacks/Log_Injection) and [CWE-117](https://cwe.mitre.org/data/definitions/117.html).
+
+### Confidentiality
+
+Who should be able to read what? A confidentiality attack enables an unauthorized party to access sensitive information stored in logs.
+
+- Logs contain PII of users. Attackers gather PII, then either release it or use it as a stepping stone for futher attacks on those users.
+- Logs contain technical secrets such as passwords. Attackers use it as a stepping stone for deeper attacks.
+
+### Integrity
+
+Which information should be modifiable by whom?
+
+- An attacker with read access to a log uses it to exfiltrate secrets.
+- An attack leverages logs to connect with exploitable facets of logging platforms, such as sending in a payload over syslog in order to cause an out-of-bounds write.
+
+### Availability
+
+What downtime is acceptable?
+
+- An attacker floods log files in order to exhaust disk space available for non-logging facets of system functioning. For example, the same disk used for log files might be used for SQL storage of application data.
+- An attacker floods log files in order to exhaust disk space available for further logging.
+- An attacker uses one log entry to destroy other log entries.
+- An attacker leverages poor performance of logging code to reduce application performance
+
+### Accountability
+
+Who is responsible for harm?
+
+- An attacker prevent writes in order to cover their tracks.
+- An attacker prevent damages the log in order to cover their tracks.
+- An attacker causes the wrong identity to be logged in order to conceal the responsible party.
+
 ## Related articles
 
 - OWASP [ESAPI Documentation](https://owasp.org/www-project-enterprise-security-api/).

@@ -146,9 +146,9 @@ Defining the correct data type for numbers can be more complex since there are m
 XML Schema numeric data types can include different ranges of numbers. They could include:
 
 - **negativeInteger**: Only negative numbers
-- **nonNegativeInteger**: Negative numbers and the zero value
+- **nonNegativeInteger**: Positive numbers and the zero value
 - **positiveInteger**: Only positive numbers
-- **nonPositiveInteger**: Positive numbers and the zero value
+- **nonPositiveInteger**: Negative numbers and the zero value
 
 The following sample document defines an `id` for a product, a `price`, and a `quantity` value that is under the control of an attacker:
 
@@ -390,7 +390,7 @@ The most trivial type of schema poisoning takes place when the schema is defined
 </note>
 ```
 
-All restrictions on the note element could be removed or altered, allowing the sending of any type of data to the server. Furthermore, if the server is processing external entities, the attacker could use the schema, for example, to read remote files from the server. This type of schema only serves as a suggestion for sending a document, but it must contains a way to check the embedded schema integrity to be used safely. Attacks through embedded schemas are commonly used to exploit external entity expansions. Embedded XML schemas can also assist in port scans of internal hosts or brute force attacks.
+All restrictions on the note element could be removed or altered, allowing the sending of any type of data to the server. Furthermore, if the server is processing external entities, the attacker could use the schema, for example, to read remote files from the server. This type of schema only serves as a suggestion for sending a document, but it must contain a way to check the embedded schema integrity to be used safely. Attacks through embedded schemas are commonly used to exploit external entity expansions. Embedded XML schemas can also assist in port scans of internal hosts or brute force attacks.
 
 ##### Incorrect Permissions
 
@@ -687,7 +687,7 @@ When the definition of an element `A` is another element `B`, and that element `
 
 #### Quadratic Blowup
 
-Instead of defining multiple small, deeply nested entities, the attacker in this scenario defines one very large entity and refers to it as many times as possible, resulting in a quadratic expansion `(O(n2))`.
+Instead of defining multiple small, deeply nested entities, the attacker in this scenario defines one very large entity and refers to it as many times as possible, resulting in a quadratic expansion (*O(n^2)*).
 
 The result of the following attack will be 100,000 x 100,000 characters in memory.
 

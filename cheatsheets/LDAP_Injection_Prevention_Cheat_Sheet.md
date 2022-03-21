@@ -21,11 +21,13 @@ Primary Defenses:
 
 Additional Defenses:
 
-- Use a framework (like [LINQtoAD](https://archive.codeplex.com/?p=linqtoad)) that escapes automatically.
+- Use a framework (like [LINQtoLDAP](https://www.nuget.org/packages/LinqToLdap/) that escapes automatically.
 
 ## Primary Defenses
 
 ### Defense Option 1: Escape all variables using the right LDAP encoding function
+
+#### Distinguished Name Escaping
 
 The main way LDAP stores names is based on DN (distinguished name). You can think of this like a unique identifier. These are sometimes used to access resources, like a username.
 
@@ -47,6 +49,8 @@ Some "special" characters that are allowed in Distinguished Names and do not nee
 * ( ) . & - _ [ ] ` ~ | @ $ % ^ ? : { } ! '
 ```
 
+#### Search Filter Escaping
+
 Each DN points to exactly 1 entry, which can be thought of sort of like a row in a RDBMS. For each entry, there will be 1 or more attributes which are analogous to RDBMS columns. If you are interested in searching through LDAP for users will certain attributes, you may do so with search filters.
 
 In a search filter, you can use standard boolean logic to get a list of users matching an arbitrary constraint. Search filters are written in Polish notation AKA prefix notation.
@@ -61,6 +65,14 @@ Example:
 ```
 
 When building LDAP queries in application code, you MUST escape any untrusted data that is added to any LDAP query. There are two forms of LDAP escaping. Encoding for LDAP Search and Encoding for LDAP DN (distinguished name). The proper escaping depends on whether you are sanitizing input for a search filter, or you are using a DN as a username-like credential for accessing some resource.
+
+Some "special" characters that are allowed in search filters and must be escaped include:
+
+```text
+* ( ) \ NUL
+```
+
+For more information on search filter escaping visit [RFC4515](https://datatracker.ietf.org/doc/html/rfc4515#section-3).
 
 #### Safe Java Escaping Example
 
@@ -94,6 +106,12 @@ Beyond adopting one of the two primary defenses, we also recommend adopting all 
 
 To minimize the potential damage of a successful LDAP injection attack, you should minimize the privileges assigned to the LDAP binding account in your environment.
 
+#### Enabling Bind Authentication
+
+If LDAP protocol is configured with bind Authentication, attackers would not be able to perform LDAP injection attacks because of verification
+and authorization checks that are performed against valid credentials passed by the user.
+An attacker can still bypass bind authentication through an anonymous connection or by exploiting the use of unauthenticated bind: Anonymous Bind (LDAP) and Unauthenticated Bind (LDAP).
+
 #### Allow-List Input Validation
 
 Input validation can be used to detect unauthorized input before it is passed to the LDAP query. For more information please see the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md).
@@ -101,5 +119,4 @@ Input validation can be used to detect unauthorized input before it is passed to
 ## Related Articles
 
 - OWASP article on [LDAP Injection](https://owasp.org/www-community/attacks/LDAP_Injection) Vulnerabilities.
-- OWASP article on [Preventing LDAP Injection Prevention](https://cheatsheetseries.owasp.org/cheatsheets/LDAP_Injection_Prevention_Cheat_Sheet.html).
 - [OWASP Testing Guide](https://owasp.org/www-project-web-security-testing-guide/) article on how to [Test for LDAP Injection](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/06-Testing_for_LDAP_Injection.html) Vulnerabilities.

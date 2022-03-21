@@ -24,10 +24,12 @@ with open("TOC.md", "w") as index_file:
     index_file.write("\n")
     index_file.write(cs_md_link_template % ("Index ASVS", "IndexASVS.md"))
     index_file.write("\n")
+    index_file.write(cs_md_link_template % ("Index ASVS", "IndexMASVS.md"))
+    index_file.write("\n")
     index_file.write(cs_md_link_template % ("Index Proactive Controls", "IndexProactiveControls.md"))
     index_file.write("\n")
     for cheatsheet in cheatsheets:
-        if cheatsheet != "Index.md" and cheatsheet != "IndexASVS.md" and cheatsheet != "IndexProactiveControls.md" and cheatsheet != "TOC.md":
+        if cheatsheet != "Index.md" and cheatsheet != "IndexASVS.md" and cheatsheet != "IndexMASVS.md" and cheatsheet != "IndexProactiveControls.md" and cheatsheet != "TOC.md":
             cs_name = cheatsheet.replace("_"," ").replace(".md", "").replace("Cheat Sheet", "")
             index_file.write(cs_md_link_template % (cs_name, cheatsheet))
             index_file.write("\n")

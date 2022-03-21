@@ -31,6 +31,12 @@ Group each type of attack point into buckets based on risk (external-facing or i
 
 With this approach, you don't need to understand every endpoint in order to understand the Attack Surface and the potential risk profile of a system. Instead, you can count the different general type of endpoints and the number of points of each type. With this you can budget what it will take to assess risk at scale, and you can tell when the risk profile of an application has significantly changed.
 
+### Microservice and Cloud Native Applications
+
+Microservice and Cloud Native applications are comprised of multiple smaller components, loosely coupled using APIs and independently scalable.  When assessing the attack surface for applications of this architectural style, you should prioritize the components that are reachable from an attack source (e.g. external traffic from the Internet).  Such components may be located behind tiers of proxies, load balancers and ingress controllers, and may auto-scale without warning.
+
+Open source tooling such as [Scope](https://github.com/weaveworks/scope) or [ThreatMapper](https://github.com/deepfence/ThreatMapper) assist in visualizing the attack surface.
+
 ## Identifying and Mapping the Attack Surface
 
 You can start building a baseline description of the Attack Surface in a picture and notes. Spend a few hours reviewing design and architecture documents from an attacker's perspective. Read through the source code and identify different points of entry/exit:

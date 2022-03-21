@@ -55,7 +55,7 @@ The .NET Framework is the set of APIs that support an advanced type system, data
 - Lock down the config file.
     - Remove all aspects of configuration that are not in use.
     - Encrypt sensitive parts of the `web.config` using `aspnet_regiis -pe` ([command line help](https://docs.microsoft.com/en-us/previous-versions/dotnet/netframework-2.0/k6h9cz8h(v=vs.80))).
-- For Click Once applications the .Net Framework should be upgraded to use version `4.6.2` to ensure `TLS 1.1/1.2` support.
+- For Click Once applications, the .NET Framework should be upgraded to use the latest version to ensure `TLS 1.2` or later support.
 
 ## ASP NET Web Forms Guidance
 
@@ -258,7 +258,7 @@ DO: Practice Least Privilege - Connect to the database using an account with a m
 
 #### OS Injection
 
-Information about OS Injection can be found on this [cheat sheet](OS_Command_Injection_Defense_Cheat_Sheet.md#net).
+General guidance about OS Injection can be found on this [cheat sheet](OS_Command_Injection_Defense_Cheat_Sheet.md).
 
 DO: Use [System.Diagnostics.Process.Start](https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.process.start?view=netframework-4.7.2) to call underlying OS functions.
 
@@ -273,7 +273,9 @@ process.StartInfo = startInfo;
 process.Start();
 ```
 
-DO: Use allow-list validation on all user supplied input. Input validation prevents improperly formed data from entering an information system. For more information please see the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md).
+DO NOT: Assume that this mechanism will protect against malicious input designed to break out of one argument and then tamper with another argument to the process. This will still be possible.
+
+DO: Use allow-list validation on all user supplied input wherever possible. Input validation prevents improperly formed data from entering an information system. For more information please see the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md).
 
 e.g Validating user input using [IPAddress.TryParse Method](https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress.tryparse?view=netframework-4.8)
 
@@ -300,28 +302,15 @@ if (!string.IsNullOrEmpty(ipAddress))
 }
 ```
 
-DO: Use character escaping where allow-list validation cannot be relied upon.
+DO: Try to only accept characters which are simple alphanumeric.
 
-e.g. escaping double quotes within arguments and then surrounding the arguments with double quotes.
+DO NOT: Assume you can sanitize special characters without actually removing them. Various combinations of ```\```, ```'``` and ```@``` may have an unexpected impact on sanitization attempts.
 
-``` csharp
-// This list will contain the arguments which we want to escape before 
-// passing to the function
-var arguments = new List<string>(){"Arg1", "Arg\"2&|", "\"Arg3\""};
+DO NOT: Rely on methods without a security guarantee.
 
-// Escaping Stage 1: All " (double quote) characters within the arguments 
-// are doubled to escape them on the command line so they will only ever 
-// be interpreted as data and not as anargument separator
-arguments = arguments.ConvertAll(s => s.Replace("\"", "\"\""));
+e.g. .NET Core 2.2 and greater and .NET 5 and greater support [ProcessStartInfo.ArgumentList](https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.argumentlist) which performs some character escaping but it is not clear if this is guaranteed to be secure.
 
-// Escaping Stage 2: The arguments should be surrounded by " (double quote) 
-// characters to ensure that the data in the arguments cannot break out of
-// the current argument
-arguments = arguments.ConvertAll(s => $"\"{s}\"");
-
-// Pass the escaped arguments to the "ProcessStartInfo" object
-process.Arguments = string.Join(" ", arguments);
-```
+DO: Look at alternatives to passing raw untrusted arguments via command-line parameters such as encoding using Base64 (which would safely encode any special characters as well) and then decode the parameters in the receiving application.
 
 #### LDAP injection
 
