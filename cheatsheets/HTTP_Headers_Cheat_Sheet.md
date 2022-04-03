@@ -26,7 +26,7 @@ The HTTP `X-XSS-Protection` response header is a feature of Internet Explorer, C
 Do not set this header or explicitly turn it off.
 > `X-XSS-Protection: 0`
 
-Please read [X-XSS_Protection should be disabled](https://github.com/OWASP/CheatSheetSeries/master/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md#x-xss-protection-header) for details.
+Please see [Mozilla X-XSS-Protection](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection) for details.
 
 ### X-Content-Type-Options
 
@@ -67,7 +67,7 @@ The `Set-Cookie` HTTP response header is used to send a cookie from the server t
 
 #### Recommendation
 
-- Please read [Session Management Cheat_Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#cookies) for a detailed explanation on cookie configuration options.
+- Please read [Session Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#cookies) for a detailed explanation on cookie configuration options.
 
 ### Strict-Transport-Security
 
@@ -84,7 +84,7 @@ Please checkout [HTTP Strict Transport Security Cheat Sheet](HTTP_Strict_Transpo
 
 The `Expect-CT` header lets sites opt-in to reporting of Certificate Transparency (CT) requirements. Given that mainstream clients now require CT qualification, the only remaining value is reporting such occurrences to the nominated report-uri value in the header. The header is now less about enforcement and more about detection/reporting.
 
-Please note Mozilla states that [this header will be obsolete](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Expect-CT) in June 2021. []
+Please note Mozilla states that [this header will be obsolete](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Expect-CT) in June 2021.
 
 #### Recommendation
 
@@ -97,7 +97,7 @@ Content Security Policy (CSP) is an added layer of security that helps to detect
 
 #### Recommendation
 
-Content Security Policy is very complex to configure and maintain. For an explanation on customization options, please read [Content Security Policy Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Content_Security_Policy_Cheat_Sheet.md)
+Content Security Policy is very complex to configure and maintain. For an explanation on customization options, please read [Content Security Policy Cheat Sheet](Content_Security_Policy_Cheat_Sheet.md)
 
 ### Access-Control-Allow-Origin
 
