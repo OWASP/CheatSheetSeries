@@ -51,7 +51,7 @@ Therefore, it is better to limit or remove the human interaction with the actual
 
 - **Secrets pipeline:** Having a secrets pipeline which does large parts of the secret management (E.g. creation, rotation, etc.)
 - **Using dynamic secrets:** When an application starts it could request it's database credentials, which when dynamically generated will be provided with new credentials for that session. Dynamic secrets should be used where possible to reduce the surface area of credential re-use. Should the application's database credentials be stolen, upon reboot they would be expired.
-- **Automated rotatation of static secrets:** Key rotation is a challenging process when implemented manually, and can lead to mistakes. It is therefore better to automate the rotation of keys or at least ensure that the process is sufficiently supported by IT.
+- **Automated rotation of static secrets:** Key rotation is a challenging process when implemented manually, and can lead to mistakes. It is therefore better to automate the rotation of keys or at least ensure that the process is sufficiently supported by IT.
 
 Like data encryption keys, Rotating some keys might trigger fully or partially data re-encryption. Different strategies of rotating keys exist:
 
