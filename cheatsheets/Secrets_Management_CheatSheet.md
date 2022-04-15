@@ -184,7 +184,7 @@ When secrets are part of your CI/CD tooling, it means that these secrets are exp
 These secrets are often configurable/viewable by people who have the authorization to do so (e.g. a maintainer in GitHub, a project owner in GitLab, an admin in Jenkins, etc.). Which together lines up for the following best practices:
 
 - No "big secret": ensure that secrets in your CI/CD tooling that are not long-term, don't have a prominent blast radius, and don't have a high value. Also, limit shared secrets (e.g. never have one password for all administrative users).
-- IST/SOLL: have a clear overview of which users can view or alter the secrets. Often, maintainers of a GitLab/GitHub project can see or otherwise extract its secrets.
+- As is / To be: have a clear overview of which users can view or alter the secrets. Often, maintainers of a GitLab/GitHub project can see or otherwise extract its secrets.
 - Reduce the number of people that can perform administrative tasks on the project to limit exposure.
 - Log & Alert: Assemble all the logs from the CI/CD tooling and have rules in place to detect secret extraction, or misuse, whether through accessing them through a web interface or dumping them while double base64 encoding or encrypting them with OpenSSL.
 - Rotation: Regularly rotate secrets.
