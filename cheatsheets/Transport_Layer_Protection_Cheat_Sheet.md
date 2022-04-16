@@ -74,6 +74,7 @@ There are a number of online tools that can be used to quickly validate the conf
 - [ImmuniWeb](https://www.immuniweb.com/ssl/)
 - [Observatory by Mozilla](https://observatory.mozilla.org)
 - [Scanigma](https://scanigma.com)
+- [OWASP PurpleTeam](https://purpleteam-labs.com/) `cloud`
 
 Additionally, there are a number of offline tools that can be used:
 
@@ -84,6 +85,7 @@ Additionally, there are a number of offline tools that can be used:
 - [SSLyze](https://github.com/nabla-c0d3/sslyze)
 - [testssl.sh - Testing any TLS/SSL encryption](https://testssl.sh)
 - [tls-scan](https://github.com/prbinu/tls-scan)
+- [OWASP PurpleTeam](https://purpleteam-labs.com/) `local`
 
 ## Certificates
 
