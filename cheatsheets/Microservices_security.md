@@ -160,7 +160,7 @@ High-level recommendations to logging subsystem architecture with its rationales
 9. Logging agent shall publish log messages in structured logs format (e.g., JSON, CSV).
 10. Logging agent shall append log messages with context data, e.g., platform context (hostname, container name), runtime context (class name, filename).
 
-For comprehensive overview of events that should be logged and possible data format, please see the [OWASP Logging Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Logging_Cheat_Sheet.md#which-events-to-log) and [Application Logging Vocabulary Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Application_Logging_Vocabulary_Cheat_Sheet.md)
+For comprehensive overview of events that should be logged and possible data format, please see the [OWASP Logging Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Logging_Cheat_Sheet.md#which-events-to-log) and [Application Logging Vocabulary Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Logging_Vocabulary_Cheat_Sheet.md)
 
 ## References
 
