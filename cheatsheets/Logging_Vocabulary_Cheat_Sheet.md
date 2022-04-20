@@ -9,8 +9,9 @@ Each year IBM Security commissions the Ponemon Institute to survey companies aro
 In addition to the millions of dollars lost due to breaches the report finds that the **mean time to identify** a breach continues to hover around **200 days**. Clearly our ability to monitor applications and alert on anomalous behavior would improve our time to identify and mitigate an attack against our applications.
 
 ![IBM Cost of Data Breach Report 2020](../assets/cost-of-breach-2020.png)
-> IBM Cost of a Data Breach Study 2020, Fig.34, pg.52,  [https://www.ibm.com/security/data-breach]
-  
+
+> IBM Cost of a Data Breach Study 2020, Fig.34, pg.52, [https://www.ibm.com/security/data-breach]
+
 This logging standard would seek to define specific keywords which, when applied consistently across software, would allow groups to simply monitor for these events terms across all applications and respond quickly in the event of attack.
 
 ## Assumptions
@@ -48,7 +49,7 @@ In order to better understand security event logging a good high-level understan
 
 ## Format
 
-*NOTE: All dates should be logged in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format **WITH** UTC offset to ensure maximum portability*
+_NOTE: All dates should be logged in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format **WITH** UTC offset to ensure maximum portability_
 
 ```
 {
@@ -598,7 +599,7 @@ WARN
 When a user submits data to a backend handler that was not expected it can indicate probing for input validation errors. If your backend service receives data it does not handle or have an input for this is an indication of likely malicious abuse.
 
 **Level:**
-WARN
+CRITICAL
 
 **Example:**
 
@@ -620,10 +621,10 @@ WARN
 **Description**
 When obvious attack tools are identified either by signature or by user agent they should be logged.
 
-**TODO:** A future version of this standard should link to known attack tools, signatures and user-agent strings. For instance, the tool "Nikto" leaves behind its user agent by default with a string like ***"Mozilla/5.00 (Nikto/2.1.6) (Evasions:None) (Test:Port Check)"***
+**TODO:** A future version of this standard should link to known attack tools, signatures and user-agent strings. For instance, the tool "Nikto" leaves behind its user agent by default with a string like **_"Mozilla/5.00 (Nikto/2.1.6) (Evasions:None) (Test:Port Check)"_**
 
 **Level:**
-WARN
+CRITICAL
 
 **Example:**
 
@@ -645,10 +646,10 @@ WARN
 **Description**
 When attempts are made from unauthorized origins they should of course be blocked, but also logged whenever possible. Even if we block an illegal cross-origin request the fact that the request is being made could be an indication of attack.
 
-*NOTE: Did you know that the word "referer" is misspelled in the original HTTP specification? The correct spelling should be "referrer" but the original typo persists to this day and is used here intentionally.*
+_NOTE: Did you know that the word "referer" is misspelled in the original HTTP specification? The correct spelling should be "referrer" but the original typo persists to this day and is used here intentionally._
 
 **Level:**
-WARN
+CRITICAL
 
 **Example:**
 
@@ -671,7 +672,7 @@ WARN
 A common attack against authentication and authorization is to directly access an object without credentials or appropriate access authority. Failing to prevent this flaw used to be one of the OWASP Top Ten called **Insecure Direct Object Reference**. Assuming you've correctly prevented this attack, logging the attempt is valuable to identify malicious users.
 
 **Level:**
-WARN
+CRITICAL
 
 **Example:**
 
@@ -797,7 +798,7 @@ WARN
 ### sensitive_delete:[userid,file|object]
 
 **Description**
-All data marked as sensitive or placed into a directory/table/repository where sensitive data is stored should have deletions of the data logged and reviewed periodically. The file should not be immediately deleted but marked for deletion and an archive of  file should be maintained according to legal/privacy requirements.
+All data marked as sensitive or placed into a directory/table/repository where sensitive data is stored should have deletions of the data logged and reviewed periodically. The file should not be immediately deleted but marked for deletion and an archive of file should be maintained according to legal/privacy requirements.
 
 **Level:**
 WARN
@@ -819,14 +820,14 @@ WARN
 
 ## Sequence Errors [SEQUENCE]
 
-Also called a ***business logic attack***, if a specific path is expected through a system and an attempt is made to skip or change the order of that path it could indicate malicious intent.
+Also called a **_business logic attack_**, if a specific path is expected through a system and an attempt is made to skip or change the order of that path it could indicate malicious intent.
 
 ---
 
 ### sequence_fail:[userid]
 
 **Description**
-Tracking changes to objects to which there are access control restrictions can uncover attempt to escalate privilege on those files by unauthorized users.
+When a user reaches a part of the application out of sequence it may indicate intentional abuse of the business logic and should be tracked.
 
 **Level:**
 WARN
@@ -837,9 +838,9 @@ WARN
 {
     "datetime": "2019-01-01 00:00:00,000",
     "appid": "foobar.netportal_auth",
-    "event": "malicious_direct:joebob1, /users/admin/some/important/path,0511,0777",
+    "event": "sequence_fail:joebob1",
     "level": "WARN",
-    "description": "User joebob1 changed permissions on /users/admin/some/important/path",
+    "description": "User joebob1 has reached a part of the application out of the normal application flow.",
     ...
 }
 ```
