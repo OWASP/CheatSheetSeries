@@ -599,7 +599,7 @@ WARN
 When a user submits data to a backend handler that was not expected it can indicate probing for input validation errors. If your backend service receives data it does not handle or have an input for this is an indication of likely malicious abuse.
 
 **Level:**
-WARN
+CRITICAL
 
 **Example:**
 
@@ -624,7 +624,7 @@ When obvious attack tools are identified either by signature or by user agent th
 **TODO:** A future version of this standard should link to known attack tools, signatures and user-agent strings. For instance, the tool "Nikto" leaves behind its user agent by default with a string like **_"Mozilla/5.00 (Nikto/2.1.6) (Evasions:None) (Test:Port Check)"_**
 
 **Level:**
-WARN
+CRITICAL
 
 **Example:**
 
@@ -649,7 +649,7 @@ When attempts are made from unauthorized origins they should of course be blocke
 _NOTE: Did you know that the word "referer" is misspelled in the original HTTP specification? The correct spelling should be "referrer" but the original typo persists to this day and is used here intentionally._
 
 **Level:**
-WARN
+CRITICAL
 
 **Example:**
 
@@ -672,7 +672,7 @@ WARN
 A common attack against authentication and authorization is to directly access an object without credentials or appropriate access authority. Failing to prevent this flaw used to be one of the OWASP Top Ten called **Insecure Direct Object Reference**. Assuming you've correctly prevented this attack, logging the attempt is valuable to identify malicious users.
 
 **Level:**
-WARN
+CRITICAL
 
 **Example:**
 
