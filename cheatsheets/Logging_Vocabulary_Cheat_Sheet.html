@@ -2565,7 +2565,7 @@ redirect_from: "/cheatsheets/Application_Logging_Vocabulary_Cheat_Sheet.html"
 <p>In addition to the millions of dollars lost due to breaches the report finds that the <strong>mean time to identify</strong> a breach continues to hover around <strong>200 days</strong>. Clearly our ability to monitor applications and alert on anomalous behavior would improve our time to identify and mitigate an attack against our applications.</p>
 <p><img alt="IBM Cost of Data Breach Report 2020" src="../assets/cost-of-breach-2020.png" /></p>
 <blockquote>
-<p>IBM Cost of a Data Breach Study 2020, Fig.34, pg.52,  [https://www.ibm.com/security/data-breach]</p>
+<p>IBM Cost of a Data Breach Study 2020, Fig.34, pg.52, [https://www.ibm.com/security/data-breach]</p>
 </blockquote>
 <p>This logging standard would seek to define specific keywords which, when applied consistently across software, would allow groups to simply monitor for these events terms across all applications and respond quickly in the event of attack.</p>
 <h2 id="assumptions">Assumptions<a class="headerlink" href="#assumptions" title="Permanent link">&para;</a></h2>
@@ -2610,7 +2610,7 @@ redirect_from: "/cheatsheets/Application_Logging_Vocabulary_Cheat_Sheet.html"
 <li>An API coded incorrectly doing things the author did not intend.</li>
 </ol>
 <h2 id="format">Format<a class="headerlink" href="#format" title="Permanent link">&para;</a></h2>
-<p><em>NOTE: All dates should be logged in <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a> format </em><em>WITH</em><em> UTC offset to ensure maximum portability</em></p>
+<p><em>NOTE: All dates should be logged in <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a> format <strong>WITH</strong> UTC offset to ensure maximum portability</em></p>
 <div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2021-01-01T01:01:01-0700&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
@@ -2990,7 +2990,7 @@ WARN</p>
 <p><strong>Description</strong>
 When a user submits data to a backend handler that was not expected it can indicate probing for input validation errors. If your backend service receives data it does not handle or have an input for this is an indication of likely malicious abuse.</p>
 <p><strong>Level:</strong>
-WARN</p>
+CRITICAL</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
@@ -3007,7 +3007,7 @@ WARN</p>
 When obvious attack tools are identified either by signature or by user agent they should be logged.</p>
 <p><strong>TODO:</strong> A future version of this standard should link to known attack tools, signatures and user-agent strings. For instance, the tool "Nikto" leaves behind its user agent by default with a string like <strong><em>"Mozilla/5.00 (Nikto/2.1.6) (Evasions:None) (Test:Port Check)"</em></strong></p>
 <p><strong>Level:</strong>
-WARN</p>
+CRITICAL</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
@@ -3024,7 +3024,7 @@ WARN</p>
 When attempts are made from unauthorized origins they should of course be blocked, but also logged whenever possible. Even if we block an illegal cross-origin request the fact that the request is being made could be an indication of attack.</p>
 <p><em>NOTE: Did you know that the word "referer" is misspelled in the original HTTP specification? The correct spelling should be "referrer" but the original typo persists to this day and is used here intentionally.</em></p>
 <p><strong>Level:</strong>
-WARN</p>
+CRITICAL</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
@@ -3040,7 +3040,7 @@ WARN</p>
 <p><strong>Description</strong>
 A common attack against authentication and authorization is to directly access an object without credentials or appropriate access authority. Failing to prevent this flaw used to be one of the OWASP Top Ten called <strong>Insecure Direct Object Reference</strong>. Assuming you've correctly prevented this attack, logging the attempt is valuable to identify malicious users.</p>
 <p><strong>Level:</strong>
-WARN</p>
+CRITICAL</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
@@ -3125,7 +3125,7 @@ WARN</p>
 <hr />
 <h3 id="sensitive_deleteuseridfileobject">sensitive_delete:[userid,file|object]<a class="headerlink" href="#sensitive_deleteuseridfileobject" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
-All data marked as sensitive or placed into a directory/table/repository where sensitive data is stored should have deletions of the data logged and reviewed periodically. The file should not be immediately deleted but marked for deletion and an archive of  file should be maintained according to legal/privacy requirements.</p>
+All data marked as sensitive or placed into a directory/table/repository where sensitive data is stored should have deletions of the data logged and reviewed periodically. The file should not be immediately deleted but marked for deletion and an archive of file should be maintained according to legal/privacy requirements.</p>
 <p><strong>Level:</strong>
 WARN</p>
 <p><strong>Example:</strong></p>
@@ -3144,16 +3144,16 @@ WARN</p>
 <hr />
 <h3 id="sequence_failuserid">sequence_fail:[userid]<a class="headerlink" href="#sequence_failuserid" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
-Tracking changes to objects to which there are access control restrictions can uncover attempt to escalate privilege on those files by unauthorized users.</p>
+When a user reaches a part of the application out of sequence it may indicate intentional abuse of the business logic and should be tracked.</p>
 <p><strong>Level:</strong>
 WARN</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;malicious_direct:joebob1, /users/admin/some/important/path,0511,0777&quot;,
+    &quot;event&quot;: &quot;sequence_fail:joebob1&quot;,
     &quot;level&quot;: &quot;WARN&quot;,
-    &quot;description&quot;: &quot;User joebob1 changed permissions on /users/admin/some/important/path&quot;,
+    &quot;description&quot;: &quot;User joebob1 has reached a part of the application out of the normal application flow.&quot;,
     ...
 }
 </code></pre></div>
