@@ -41,6 +41,14 @@ See the following documentation for further details and more complex examples:
 - **Browser support:** CSP frame-ancestors is not supported by all the major browsers yet.
 - **X-Frame-Options takes priority:** [Section "Relation to X-Frame-Options" of the CSP Spec](https://w3c.github.io/webappsec/specs/content-security-policy/#frame-ancestors-and-frame-options) says: "*If a resource is delivered with an policy that includes a directive named frame-ancestors and whose disposition is "enforce", then the X-Frame-Options header MUST be ignored*", but Chrome 40 & Firefox 35 ignore the frame-ancestors directive and follow the X-Frame-Options header instead.
 
+### Browser Support
+
+The following [browsers](https://caniuse.com/?search=frame-ancestors) support CSP frame-ancestors.
+
+References:
+
+- [Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors#browser_compatibility)
+
 ## Defending with X-Frame-Options Response Headers
 
 The `X-Frame-Options` HTTP response header can be used to indicate whether or not a browser should be allowed to render a page in a `<frame>` or `<iframe>`. Sites can use this to avoid Clickjacking attacks, by ensuring that their content is not embedded into other sites. Set the X-Frame-Options header for all responses containing HTML content. The possible values are "DENY", "SAMEORIGIN", or "ALLOW-FROM uri"
@@ -61,7 +69,7 @@ The following [browsers](https://caniuse.com/#search=X-Frame-Options) support X-
 
 References:
 
-- [Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/HTTP/X-Frame-Options)
+- [Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/web/http/headers/x-frame-options#browser_compatibility)
 - [IETF Draft](http://datatracker.ietf.org/doc/draft-ietf-websec-x-frame-options/)
 - [X-Frame-Options Compatibility Test](https://erlend.oftedal.no/blog/tools/xframeoptions/) - Check this for the LATEST browser support info for the X-Frame-Options header
 
@@ -83,7 +91,7 @@ Meta-tags that attempt to apply the X-Frame-Options directive DO NOT WORK. For e
 
 ![NestedFrames](../assets/Clickjacking_Defense_Cheat_Sheet_NestedFrames.png)
 
-- **X-Frame-Options Deprecated** While the X-Frame-Options header is supported by the major browsers, it was never standardized and has been deprecated in favour of the frame-ancestors directive from the CSP Level 2 specification.
+- **X-Frame-Options Deprecated** While the X-Frame-Options header is supported by the major browsers, it has been obsoleted in favour of the frame-ancestors directive from the CSP Level 2 specification.
 - **Proxies** Web proxies are notorious for adding and stripping headers. If a web proxy strips the X-Frame-Options header then the site loses its framing protection.
 
 ## Defending with SameSite Cookies
