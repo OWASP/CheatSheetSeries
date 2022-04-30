@@ -12,6 +12,8 @@ This cheat sheet is a derivative work of the [SQL Injection Prevention Cheat She
 
 SQL Injection is best prevented through the use of [*parameterized queries*](SQL_Injection_Prevention_Cheat_Sheet.md). The following chart demonstrates, with real-world code samples, how to build parameterized queries in most of the common web languages. The purpose of these code samples is to demonstrate to the web developer how to avoid SQL Injection when building database queries within a web application.
 
+Please note, many client side frameworks and libraries offer client side query parameterization. These libraries often just build queries with string concatenation before sending raw queries to a server. Please ensure that query parameterization is done server-side!
+
 ### Prepared Statement Examples
 
 #### Using Java built-in feature
