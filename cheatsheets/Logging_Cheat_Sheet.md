@@ -296,7 +296,7 @@ Because of their usefulness as a defense, logs may be a target of attacks. See a
 
 Who should be able to read what? A confidentiality attack enables an unauthorized party to access sensitive information stored in logs.
 
-- Logs contain PII of users. Attackers gather PII, then either release it or use it as a stepping stone for futher attacks on those users.
+- Logs contain PII of users. Attackers gather PII, then either release it or use it as a stepping stone for further attacks on those users.
 - Logs contain technical secrets such as passwords. Attackers use it as a stepping stone for deeper attacks.
 
 ### Integrity

