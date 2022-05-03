@@ -63,7 +63,7 @@ The certificate is easiest to pin. You can fetch the certificate out of band for
 
 **Benefits:**
 
-- It might be easier to implement than the other methods, especially in laguages such as Cocoa/CocoaTouch and OpenSSL.
+- It might be easier to implement than the other methods, especially in languages such as Cocoa/CocoaTouch and OpenSSL.
 
 **Downsides:**
 
