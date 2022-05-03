@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Error_Handling_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.11">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.13">
     
     
       
@@ -21,10 +21,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.8c5ef100.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.e411adfe.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.9647289d.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cc9b2e1e.min.css">
         
       
     
@@ -1706,57 +1706,57 @@ in D:\app\index_new.php on line 188
 <span class="nt">&lt;/web-app&gt;</span>
 </code></pre></div>
 <p>Content of the <strong>error.jsp</strong> file:</p>
-<div class="highlight"><pre><span></span><code><span class="o">&lt;%</span><span class="err">@</span> <span class="n">page</span> <span class="n">language</span><span class="o">=</span><span class="s">&quot;java&quot;</span> <span class="n">isErrorPage</span><span class="o">=</span><span class="s">&quot;true&quot;</span> <span class="n">contentType</span><span class="o">=</span><span class="s">&quot;application/json; charset=UTF-8&quot;</span>
-    <span class="n">pageEncoding</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="o">%&gt;</span>
-<span class="o">&lt;%</span>
-<span class="n">String</span> <span class="n">errorMessage</span> <span class="o">=</span> <span class="n">exception</span><span class="p">.</span><span class="na">getMessage</span><span class="p">();</span>
-<span class="c1">//Log the exception via the content of the implicit variable named &quot;exception&quot;</span>
-<span class="c1">//...</span>
-<span class="c1">//We build a generic response with a JSON format because we are in a REST API app context</span>
-<span class="c1">//We also add an HTTP response header to indicate to the client app that the response is an error</span>
-<span class="n">response</span><span class="p">.</span><span class="na">setHeader</span><span class="p">(</span><span class="s">&quot;X-ERROR&quot;</span><span class="p">,</span> <span class="s">&quot;true&quot;</span><span class="p">);</span>
-<span class="c1">//Note that we&#39;re using an internal server error response</span>
-<span class="c1">//In some cases it may be prudent to return 4xx error codes, when we have misbehaving clients</span>
-<span class="n">response</span><span class="p">.</span><span class="na">setStatus</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>
-<span class="o">%&gt;</span>
-<span class="p">{</span><span class="s">&quot;message&quot;</span><span class="p">:</span><span class="s">&quot;An error occur, please retry&quot;</span><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="o">&lt;%</span><span class="err">@</span><span class="w"> </span><span class="n">page</span><span class="w"> </span><span class="n">language</span><span class="o">=</span><span class="s">&quot;java&quot;</span><span class="w"> </span><span class="n">isErrorPage</span><span class="o">=</span><span class="s">&quot;true&quot;</span><span class="w"> </span><span class="n">contentType</span><span class="o">=</span><span class="s">&quot;application/json; charset=UTF-8&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="n">pageEncoding</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="o">%&gt;</span><span class="w"></span>
+<span class="o">&lt;%</span><span class="w"></span>
+<span class="n">String</span><span class="w"> </span><span class="n">errorMessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">exception</span><span class="p">.</span><span class="na">getMessage</span><span class="p">();</span><span class="w"></span>
+<span class="c1">//Log the exception via the content of the implicit variable named &quot;exception&quot;</span><span class="w"></span>
+<span class="c1">//...</span><span class="w"></span>
+<span class="c1">//We build a generic response with a JSON format because we are in a REST API app context</span><span class="w"></span>
+<span class="c1">//We also add an HTTP response header to indicate to the client app that the response is an error</span><span class="w"></span>
+<span class="n">response</span><span class="p">.</span><span class="na">setHeader</span><span class="p">(</span><span class="s">&quot;X-ERROR&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;true&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="c1">//Note that we&#39;re using an internal server error response</span><span class="w"></span>
+<span class="c1">//In some cases it may be prudent to return 4xx error codes, when we have misbehaving clients</span><span class="w"></span>
+<span class="n">response</span><span class="p">.</span><span class="na">setStatus</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span><span class="w"></span>
+<span class="o">%&gt;</span><span class="w"></span>
+<span class="p">{</span><span class="s">&quot;message&quot;</span><span class="p">:</span><span class="s">&quot;An error occur, please retry&quot;</span><span class="p">}</span><span class="w"></span>
 </code></pre></div>
 <h3 id="java-springmvcspringboot-web-application">Java SpringMVC/SpringBoot web application<a class="headerlink" href="#java-springmvcspringboot-web-application" title="Permanent link">&para;</a></h3>
 <p>With <a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html">SpringMVC</a> or <a href="https://spring.io/projects/spring-boot">SpringBoot</a>, you can define a global error handler by implementing the following class in your project.</p>
 <p>We indicate to the handler, via the annotation <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/ExceptionHandler.html">@ExceptionHandler</a>, to act when any exception extending the class <em>java.lang.Exception</em> is thrown by the application.</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">net.minidev.json.JSONObject</span><span class="p">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.http.HttpHeaders</span><span class="p">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.http.HttpStatus</span><span class="p">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.http.MediaType</span><span class="p">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.http.ResponseEntity</span><span class="p">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.ControllerAdvice</span><span class="p">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.ExceptionHandler</span><span class="p">;</span>
-<span class="kn">import</span> <span class="nn">org.springframework.web.context.request.WebRequest</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">net.minidev.json.JSONObject</span><span class="p">;</span><span class="w"></span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.http.HttpHeaders</span><span class="p">;</span><span class="w"></span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.http.HttpStatus</span><span class="p">;</span><span class="w"></span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.http.MediaType</span><span class="p">;</span><span class="w"></span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.http.ResponseEntity</span><span class="p">;</span><span class="w"></span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.bind.annotation.ControllerAdvice</span><span class="p">;</span><span class="w"></span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.bind.annotation.ExceptionHandler</span><span class="p">;</span><span class="w"></span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.context.request.WebRequest</span><span class="p">;</span><span class="w"></span>
 
 <span class="cm">/**</span>
 <span class="cm"> * Global error handler in charge of returning a generic response in case of unexpected error situation.</span>
-<span class="cm"> */</span>
-<span class="nd">@ControllerAdvice</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">RestResponseEntityExceptionHandler</span> <span class="p">{</span>
+<span class="cm"> */</span><span class="w"></span>
+<span class="nd">@ControllerAdvice</span><span class="w"></span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">RestResponseEntityExceptionHandler</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 
-    <span class="nd">@ExceptionHandler</span><span class="p">(</span><span class="n">value</span> <span class="o">=</span> <span class="p">{</span><span class="n">Exception</span><span class="p">.</span><span class="na">class</span><span class="p">})</span>
-    <span class="kd">public</span> <span class="n">ResponseEntity</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span> <span class="nf">handleGlobalError</span><span class="p">(</span><span class="n">RuntimeException</span> <span class="n">exception</span><span class="p">,</span> <span class="n">WebRequest</span> <span class="n">request</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c1">//Log the exception via the content of the parameter named &quot;exception&quot;</span>
-        <span class="c1">//...</span>
-        <span class="c1">//We build a generic response with a JSON format because we are in a REST API app context</span>
-        <span class="c1">//We also add an HTTP response header to indicate to the client app that the response is an error</span>
-        <span class="n">HttpHeaders</span> <span class="n">responseHeaders</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HttpHeaders</span><span class="p">();</span>
-        <span class="n">responseHeaders</span><span class="p">.</span><span class="na">setContentType</span><span class="p">(</span><span class="n">MediaType</span><span class="p">.</span><span class="na">APPLICATION_JSON</span><span class="p">);</span>
-        <span class="n">responseHeaders</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;X-ERROR&quot;</span><span class="p">,</span> <span class="s">&quot;true&quot;</span><span class="p">);</span>
-        <span class="n">JSONObject</span> <span class="n">responseBody</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONObject</span><span class="p">();</span>
-        <span class="n">responseBody</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;message&quot;</span><span class="p">,</span> <span class="s">&quot;An error occur, please retry&quot;</span><span class="p">);</span>
-        <span class="c1">//Note that we&#39;re using an internal server error response</span>
-        <span class="c1">//In some cases it may be prudent to return 4xx error codes, if we have misbehaving clients</span>
-        <span class="n">ResponseEntity</span><span class="o">&lt;</span><span class="n">JSONObject</span><span class="o">&gt;</span> <span class="n">response</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ResponseEntity</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">responseBody</span><span class="p">,</span> <span class="n">responseHeaders</span><span class="p">,</span>
-                                                                   <span class="n">HttpStatus</span><span class="p">.</span><span class="na">INTERNAL_SERVER_ERROR</span><span class="p">);</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">ResponseEntity</span><span class="p">)</span> <span class="n">response</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+<span class="w">    </span><span class="nd">@ExceptionHandler</span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">Exception</span><span class="p">.</span><span class="na">class</span><span class="p">})</span><span class="w"></span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">ResponseEntity</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">handleGlobalError</span><span class="p">(</span><span class="n">RuntimeException</span><span class="w"> </span><span class="n">exception</span><span class="p">,</span><span class="w"> </span><span class="n">WebRequest</span><span class="w"> </span><span class="n">request</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="c1">//Log the exception via the content of the parameter named &quot;exception&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="c1">//...</span><span class="w"></span>
+<span class="w">        </span><span class="c1">//We build a generic response with a JSON format because we are in a REST API app context</span><span class="w"></span>
+<span class="w">        </span><span class="c1">//We also add an HTTP response header to indicate to the client app that the response is an error</span><span class="w"></span>
+<span class="w">        </span><span class="n">HttpHeaders</span><span class="w"> </span><span class="n">responseHeaders</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HttpHeaders</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="n">responseHeaders</span><span class="p">.</span><span class="na">setContentType</span><span class="p">(</span><span class="n">MediaType</span><span class="p">.</span><span class="na">APPLICATION_JSON</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">responseHeaders</span><span class="p">.</span><span class="na">set</span><span class="p">(</span><span class="s">&quot;X-ERROR&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;true&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="n">JSONObject</span><span class="w"> </span><span class="n">responseBody</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">JSONObject</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="n">responseBody</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;message&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;An error occur, please retry&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="c1">//Note that we&#39;re using an internal server error response</span><span class="w"></span>
+<span class="w">        </span><span class="c1">//In some cases it may be prudent to return 4xx error codes, if we have misbehaving clients</span><span class="w"></span>
+<span class="w">        </span><span class="n">ResponseEntity</span><span class="o">&lt;</span><span class="n">JSONObject</span><span class="o">&gt;</span><span class="w"> </span><span class="n">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ResponseEntity</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">responseBody</span><span class="p">,</span><span class="w"> </span><span class="n">responseHeaders</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                                   </span><span class="n">HttpStatus</span><span class="p">.</span><span class="na">INTERNAL_SERVER_ERROR</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="n">ResponseEntity</span><span class="p">)</span><span class="w"> </span><span class="n">response</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div>
 <p>References:</p>
 <ul>
@@ -2061,7 +2061,7 @@ in D:\app\index_new.php on line 188
     <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.748e2769.min.js"></script>
+      <script src="../assets/javascripts/bundle.ed9748b7.min.js"></script>
       
     
   </body>

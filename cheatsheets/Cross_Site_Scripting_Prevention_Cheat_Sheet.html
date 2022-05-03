@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.11">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.13">
     
     
       
@@ -21,10 +21,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.8c5ef100.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.e411adfe.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.9647289d.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cc9b2e1e.min.css">
         
       
     
@@ -1842,7 +1842,7 @@
 <p>If you're using JavaScript to construct a URL Query Value, look into using <code>window.encodeURIComponent(x)</code>. This is a <strong>Safe Sink</strong> and will automatically URL encode data in it.</p>
 <h3 id="dangerous-contexts">Dangerous Contexts<a class="headerlink" href="#dangerous-contexts" title="Permanent link">&para;</a></h3>
 <p>Output encoding is not perfect. It will not always prevent XSS. These locations are known as <strong>dangerous contexts</strong>. Dangerous contexts include:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">Directly</span> <span class="ow">in</span> <span class="nx">a</span> <span class="nx">script</span><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">Directly</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">script</span><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 <span class="cm">&lt;!-- Inside an HTML comment --&gt;</span>
 <span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span><span class="nt">Directly</span><span class="w"> </span><span class="nt">in</span><span class="w"> </span><span class="nt">CSS</span><span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">div</span> <span class="na">ToDefineAnAttribute</span><span class="o">=</span><span class="s">test</span> <span class="p">/&gt;</span>
@@ -1859,7 +1859,7 @@
 <h2 id="html-sanitization">HTML Sanitization<a class="headerlink" href="#html-sanitization" title="Permanent link">&para;</a></h2>
 <p>Sometimes users need to author HTML. One scenario would be allow users to change the styling or structure of content inside a WYSIWYG editor. Output encoding here will prevent XSS, but it will break the intended functionality of the application. The styling will not be rendered. In these cases, HTML Sanitization should be used.</p>
 <p>HTML Sanitization will strip dangerous HTML from a variable and return a safe string of HTML. OWASP recommends <a href="https://github.com/cure53/DOMPurify">DOMPurify</a> for HTML Sanitization.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">let</span> <span class="nx">clean</span> <span class="o">=</span> <span class="nx">DOMPurify</span><span class="p">.</span><span class="nx">sanitize</span><span class="p">(</span><span class="nx">dirty</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="nx">clean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">DOMPurify</span><span class="p">.</span><span class="nx">sanitize</span><span class="p">(</span><span class="nx">dirty</span><span class="p">);</span><span class="w"></span>
 </code></pre></div>
 <p>There are some further things to consider:</p>
 <ul>
@@ -1870,14 +1870,14 @@
 <h2 id="safe-sinks">Safe Sinks<a class="headerlink" href="#safe-sinks" title="Permanent link">&para;</a></h2>
 <p>Security professionals often talk in terms of sources and sinks. If you pollute a river, it'll flow downstream somewhere. It’s the same with computer security. XSS sinks are places where variables are placed into your webpage.</p>
 <p>Thankfully, many sinks where variables can be placed are safe. This is because these sinks treat the variable as text and will never execute it. Try to refactor your code to remove references to unsafe sinks like innerHTML, and instead use textContent or value.</p>
-<div class="highlight"><pre><span></span><code><span class="nx">elem</span><span class="p">.</span><span class="nx">textContent</span> <span class="o">=</span> <span class="nx">dangerVariable</span><span class="p">;</span>
-<span class="nx">elem</span><span class="p">.</span><span class="nx">insertAdjacentText</span><span class="p">(</span><span class="nx">dangerVariable</span><span class="p">);</span>
-<span class="nx">elem</span><span class="p">.</span><span class="nx">className</span> <span class="o">=</span> <span class="nx">dangerVariable</span><span class="p">;</span>
-<span class="nx">elem</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="nx">safeName</span><span class="p">,</span> <span class="nx">dangerVariable</span><span class="p">);</span>
-<span class="nx">formfield</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">dangerVariable</span><span class="p">;</span>
-<span class="nb">document</span><span class="p">.</span><span class="nx">createTextNode</span><span class="p">(</span><span class="nx">dangerVariable</span><span class="p">);</span>
-<span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="nx">dangerVariable</span><span class="p">);</span>
-<span class="nx">elem</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">DOMPurify</span><span class="p">.</span><span class="nx">sanitize</span><span class="p">(</span><span class="nx">dangerVar</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="nx">elem</span><span class="p">.</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">dangerVariable</span><span class="p">;</span><span class="w"></span>
+<span class="nx">elem</span><span class="p">.</span><span class="nx">insertAdjacentText</span><span class="p">(</span><span class="nx">dangerVariable</span><span class="p">);</span><span class="w"></span>
+<span class="nx">elem</span><span class="p">.</span><span class="nx">className</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">dangerVariable</span><span class="p">;</span><span class="w"></span>
+<span class="nx">elem</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="nx">safeName</span><span class="p">,</span><span class="w"> </span><span class="nx">dangerVariable</span><span class="p">);</span><span class="w"></span>
+<span class="nx">formfield</span><span class="p">.</span><span class="nx">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">dangerVariable</span><span class="p">;</span><span class="w"></span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">createTextNode</span><span class="p">(</span><span class="nx">dangerVariable</span><span class="p">);</span><span class="w"></span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="nx">dangerVariable</span><span class="p">);</span><span class="w"></span>
+<span class="nx">elem</span><span class="p">.</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">DOMPurify</span><span class="p">.</span><span class="nx">sanitize</span><span class="p">(</span><span class="nx">dangerVar</span><span class="p">);</span><span class="w"></span>
 </code></pre></div>
 <p><strong>Safe HTML Attributes include:</strong> <code>align</code>, <code>alink</code>, <code>alt</code>, <code>bgcolor</code>, <code>border</code>, <code>cellpadding</code>, <code>cellspacing</code>, <code>class</code>, <code>color</code>, <code>cols</code>, <code>colspan</code>, <code>coords</code>, <code>dir</code>, <code>face</code>, <code>height</code>, <code>hspace</code>, <code>ismap</code>, <code>lang</code>, <code>marginheight</code>, <code>marginwidth</code>, <code>multiple</code>, <code>nohref</code>, <code>noresize</code>, <code>noshade</code>, <code>nowrap</code>, <code>ref</code>, <code>rel</code>, <code>rev</code>, <code>rows</code>, <code>rowspan</code>, <code>scrolling</code>, <code>shape</code>, <code>span</code>, <code>summary</code>, <code>tabindex</code>, <code>title</code>, <code>usemap</code>, <code>valign</code>, <code>value</code>, <code>vlink</code>, <code>vspace</code>, <code>width</code>.</p>
 <p>For a comprehensive list, check out the <a href="https://github.com/cure53/DOMPurify/blob/main/src/attrs.js">DOMPurify allowlist</a></p>
@@ -2078,7 +2078,7 @@
     <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.748e2769.min.js"></script>
+      <script src="../assets/javascripts/bundle.ed9748b7.min.js"></script>
       
     
   </body>

@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.11">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.13">
     
     
       
@@ -21,10 +21,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.8c5ef100.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.e411adfe.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.9647289d.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cc9b2e1e.min.css">
         
       
     
@@ -2067,11 +2067,11 @@
 <p>will not work.</p>
 <h4 id="3-restricting-unsafe-javascript">3. Restricting Unsafe JavaScript<a class="headerlink" href="#3-restricting-unsafe-javascript" title="Permanent link">&para;</a></h4>
 <p>By preventing the page from executing text-to-JavaScript functions like <code>eval</code>, the website will be safe from vulnerabilities like the this:</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// A Simple Calculator</span>
-<span class="kd">var</span> <span class="nx">op1</span> <span class="o">=</span> <span class="nx">getUrlParameter</span><span class="p">(</span><span class="s2">&quot;op1&quot;</span><span class="p">);</span>
-<span class="kd">var</span> <span class="nx">op2</span> <span class="o">=</span> <span class="nx">getUrlParameter</span><span class="p">(</span><span class="s2">&quot;op2&quot;</span><span class="p">);</span>
-<span class="kd">var</span> <span class="nx">sum</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">op1</span><span class="si">}</span><span class="sb"> + </span><span class="si">${</span><span class="nx">op2</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`The sum is: </span><span class="si">${</span><span class="nx">sum</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="c1">// A Simple Calculator</span><span class="w"></span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">op1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">getUrlParameter</span><span class="p">(</span><span class="s2">&quot;op1&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">op2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">getUrlParameter</span><span class="p">(</span><span class="s2">&quot;op2&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">eval</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">op1</span><span class="si">}</span><span class="sb"> + </span><span class="si">${</span><span class="nx">op2</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span><span class="w"></span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`The sum is: </span><span class="si">${</span><span class="nx">sum</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span><span class="w"></span>
 </code></pre></div>
 <h4 id="4-restricting-form-submissions">4. Restricting Form submissions<a class="headerlink" href="#4-restricting-form-submissions" title="Permanent link">&para;</a></h4>
 <p>By restricting where HTML forms on your website can submit their data, injecting phishing forms won't work either.</p>
@@ -2236,13 +2236,13 @@
 <p>Using hashes is generally not a very good approach. If you change <em>anything</em> inside the script tag (even whitespace) by, e.g., formatting your code, the hash will be different, and the script won't render.</p>
 <h3 id="nonces">Nonces<a class="headerlink" href="#nonces" title="Permanent link">&para;</a></h3>
 <p>Nonces are unique one-time-use random values that you generate for each HTTP response, and add to the Content-Security-Policy header, like so:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">const</span> <span class="nx">nonce</span> <span class="o">=</span> <span class="nx">uuid</span><span class="p">.</span><span class="nx">v4</span><span class="p">();</span>
-<span class="nx">scriptSrc</span> <span class="o">+=</span> <span class="sb">` &#39;nonce-</span><span class="si">${</span><span class="nx">nonce</span><span class="si">}</span><span class="sb">&#39;`</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">nonce</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">uuid</span><span class="p">.</span><span class="nx">v4</span><span class="p">();</span><span class="w"></span>
+<span class="nx">scriptSrc</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="sb">` &#39;nonce-</span><span class="si">${</span><span class="nx">nonce</span><span class="si">}</span><span class="sb">&#39;`</span><span class="p">;</span><span class="w"></span>
 </code></pre></div>
 <p>You would then pass this nonce to your view (using nonces requires a non-static HTML) and render script tags that look something like this:</p>
-<div class="highlight"><pre><span></span><code><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">nonce</span><span class="o">=</span><span class="s2">&quot;&lt;%= nonce %&gt;&quot;</span><span class="o">&gt;</span>
-    <span class="p">...</span>
-<span class="o">&lt;</span><span class="err">/script&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="o">&lt;</span><span class="nx">script</span><span class="w"> </span><span class="nx">nonce</span><span class="o">=</span><span class="s2">&quot;&lt;%= nonce %&gt;&quot;</span><span class="o">&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="p">...</span><span class="w"></span>
+<span class="o">&lt;</span><span class="err">/script&gt;</span><span class="w"></span>
 </code></pre></div>
 <h4 id="warning">Warning<a class="headerlink" href="#warning" title="Permanent link">&para;</a></h4>
 <p><strong>Don't</strong> create a middleware that replaces all script tags with "script nonce=..." because attacker-injected scripts will then get the nonces as well. You need an actual HTML templating engine to use nonces.</p>
@@ -2304,20 +2304,20 @@ object-src &#39;none&#39;; base-uri &#39;none&#39;;
 </code></pre></div>
 <h3 id="refactoring-inline-code">Refactoring inline code<a class="headerlink" href="#refactoring-inline-code" title="Permanent link">&para;</a></h3>
 <p>When <code>default-src</code> or <code>script-src*</code> directives are active, CSP by default disables any JavaScript code placed inline in the HTML source, such as this:</p>
-<div class="highlight"><pre><span></span><code><span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
-<span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="s2">&quot;314&quot;</span>
-<span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span><span class="w"></span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;314&quot;</span><span class="w"></span>
+<span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span><span class="w"></span>
 </code></pre></div>
 <p>The inline code can be moved to a separate JavaScript file and the code in the page becomes:</p>
-<div class="highlight"><pre><span></span><code><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;app.js&quot;</span><span class="o">&gt;</span>
-<span class="o">&lt;</span><span class="err">/script&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="o">&lt;</span><span class="nx">script</span><span class="w"> </span><span class="nx">src</span><span class="o">=</span><span class="s2">&quot;app.js&quot;</span><span class="o">&gt;</span><span class="w"></span>
+<span class="o">&lt;</span><span class="err">/script&gt;</span><span class="w"></span>
 </code></pre></div>
 <p>With <code>app.js</code> containing the <code>var foo = "314"</code> code.</p>
 <p>The inline code restriction also applies to <code>inline event handlers</code>, so that the following construct will be blocked under CSP:</p>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">button</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;button1&quot;</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;doSomething()&quot;</span><span class="p">&gt;</span>
 </code></pre></div>
 <p>This should be replaced by <code>addEventListener</code> calls:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;button1&quot;</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="nx">doSomething</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;button1&quot;</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">doSomething</span><span class="p">);</span><span class="w"></span>
 </code></pre></div>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2405,7 +2405,7 @@ object-src &#39;none&#39;; base-uri &#39;none&#39;;
     <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.748e2769.min.js"></script>
+      <script src="../assets/javascripts/bundle.ed9748b7.min.js"></script>
       
     
   </body>

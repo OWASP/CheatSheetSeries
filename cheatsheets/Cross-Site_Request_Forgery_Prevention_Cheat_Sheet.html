@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.11">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.13">
     
     
       
@@ -21,10 +21,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.8c5ef100.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.e411adfe.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.9647289d.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cc9b2e1e.min.css">
         
       
     
@@ -2088,81 +2088,81 @@ Set-Cookie: JSESSIONID=xxxxx; SameSite=Lax
 <h4 id="xmlhttprequest-native-javascript">XMLHttpRequest (Native JavaScript)<a class="headerlink" href="#xmlhttprequest-native-javascript" title="Permanent link">&para;</a></h4>
 <p>XMLHttpRequest's open() method can be overridden to set the <code>anti-csrf-token</code> header whenever the <code>open()</code> method is invoked next. The function <code>csrfSafeMethod()</code> defined below will filter out the safe HTTP methods and only add the header to unsafe HTTP methods.</p>
 <p>This can be done as demonstrated in the following code snippet:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
-    <span class="kd">var</span> <span class="nx">csrf_token</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;meta[name=&#39;csrf-token&#39;]&quot;</span><span class="p">).</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">);</span>
-    <span class="kd">function</span> <span class="nx">csrfSafeMethod</span><span class="p">(</span><span class="nx">method</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c1">// these HTTP methods do not require CSRF protection</span>
-        <span class="k">return</span> <span class="p">(</span><span class="sr">/^(GET|HEAD|OPTIONS)$/</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">method</span><span class="p">));</span>
-    <span class="p">}</span>
-    <span class="kd">var</span> <span class="nx">o</span> <span class="o">=</span> <span class="nx">XMLHttpRequest</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">open</span><span class="p">;</span>
-    <span class="nx">XMLHttpRequest</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">open</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
-        <span class="kd">var</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">o</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">);</span>
-        <span class="kd">var</span> <span class="nx">err</span> <span class="o">=</span> <span class="ow">new</span> <span class="ne">Error</span><span class="p">();</span>
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">csrfSafeMethod</span><span class="p">(</span><span class="nx">arguments</span><span class="p">[</span><span class="mf">0</span><span class="p">]))</span> <span class="p">{</span>
-            <span class="k">this</span><span class="p">.</span><span class="nx">setRequestHeader</span><span class="p">(</span><span class="s1">&#39;anti-csrf-token&#39;</span><span class="p">,</span> <span class="nx">csrf_token</span><span class="p">);</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="nx">res</span><span class="p">;</span>
-    <span class="p">};</span>
- <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">csrf_token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;meta[name=&#39;csrf-token&#39;]&quot;</span><span class="p">).</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="kd">function</span><span class="w"> </span><span class="nx">csrfSafeMethod</span><span class="p">(</span><span class="nx">method</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// these HTTP methods do not require CSRF protection</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="sr">/^(GET|HEAD|OPTIONS)$/</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">method</span><span class="p">));</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">o</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">XMLHttpRequest</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">open</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="nx">XMLHttpRequest</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">open</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="p">(){</span><span class="w"></span>
+<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">res</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">o</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="nx">arguments</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="ne">Error</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">csrfSafeMethod</span><span class="p">(</span><span class="nx">arguments</span><span class="p">[</span><span class="mf">0</span><span class="p">]))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="nx">setRequestHeader</span><span class="p">(</span><span class="s1">&#39;anti-csrf-token&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">csrf_token</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">res</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">};</span><span class="w"></span>
+<span class="w"> </span><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
 <h4 id="angularjs">AngularJS<a class="headerlink" href="#angularjs" title="Permanent link">&para;</a></h4>
 <p>AngularJS allows for setting default headers for HTTP operations. Further documentation can be found at AngularJS's documentation for <a href="https://docs.angularjs.org/api/ng/provider/$httpProvider#defaults">$httpProvider</a>.</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-    <span class="kd">var</span> <span class="nx">csrf_token</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;meta[name=&#39;csrf-token&#39;]&quot;</span><span class="p">).</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">csrf_token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;meta[name=&#39;csrf-token&#39;]&quot;</span><span class="p">).</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">);</span><span class="w"></span>
 
-    <span class="kd">var</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s2">&quot;app&quot;</span><span class="p">,</span> <span class="p">[]);</span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s2">&quot;app&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[]);</span><span class="w"></span>
 
-    <span class="nx">app</span><span class="p">.</span><span class="nx">config</span><span class="p">([</span><span class="s1">&#39;$httpProvider&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">$httpProvider</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">$httpProvider</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">post</span><span class="p">[</span><span class="s2">&quot;anti-csrf-token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nx">csrf_token</span><span class="p">;</span>
-        <span class="nx">$httpProvider</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">put</span><span class="p">[</span><span class="s2">&quot;anti-csrf-token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nx">csrf_token</span><span class="p">;</span>
-        <span class="nx">$httpProvider</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">patch</span><span class="p">[</span><span class="s2">&quot;anti-csrf-token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nx">csrf_token</span><span class="p">;</span>
-        <span class="c1">// AngularJS does not create an object for DELETE and TRACE methods by default, and has to be manually created.</span>
-        <span class="nx">$httpProvider</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="ow">delete</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;Content-Type&quot;</span> <span class="o">:</span> <span class="s2">&quot;application/json;charset=utf-8&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;anti-csrf-token&quot;</span> <span class="o">:</span> <span class="nx">csrf_token</span>
-        <span class="p">};</span>
-        <span class="nx">$httpProvider</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">trace</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;Content-Type&quot;</span> <span class="o">:</span> <span class="s2">&quot;application/json;charset=utf-8&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;anti-csrf-token&quot;</span> <span class="o">:</span> <span class="nx">csrf_token</span>
-        <span class="p">};</span>
-      <span class="p">}]);</span>
- <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="w">    </span><span class="nx">app</span><span class="p">.</span><span class="nx">config</span><span class="p">([</span><span class="s1">&#39;$httpProvider&#39;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">$httpProvider</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nx">$httpProvider</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">post</span><span class="p">[</span><span class="s2">&quot;anti-csrf-token&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">csrf_token</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="nx">$httpProvider</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">put</span><span class="p">[</span><span class="s2">&quot;anti-csrf-token&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">csrf_token</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="nx">$httpProvider</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">patch</span><span class="p">[</span><span class="s2">&quot;anti-csrf-token&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">csrf_token</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// AngularJS does not create an object for DELETE and TRACE methods by default, and has to be manually created.</span><span class="w"></span>
+<span class="w">        </span><span class="nx">$httpProvider</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="ow">delete</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;Content-Type&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;application/json;charset=utf-8&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;anti-csrf-token&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nx">csrf_token</span><span class="w"></span>
+<span class="w">        </span><span class="p">};</span><span class="w"></span>
+<span class="w">        </span><span class="nx">$httpProvider</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">trace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;Content-Type&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;application/json;charset=utf-8&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="s2">&quot;anti-csrf-token&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nx">csrf_token</span><span class="w"></span>
+<span class="w">        </span><span class="p">};</span><span class="w"></span>
+<span class="w">      </span><span class="p">}]);</span><span class="w"></span>
+<span class="w"> </span><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
 <p>This code snippet has been tested with AngularJS version 1.7.7.</p>
 <h4 id="axios">Axios<a class="headerlink" href="#axios" title="Permanent link">&para;</a></h4>
 <p><a href="https://github.com/axios/axios">Axios</a> allows us to set default headers for the POST, PUT, DELETE and PATCH actions.</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
-    <span class="kd">var</span> <span class="nx">csrf_token</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;meta[name=&#39;csrf-token&#39;]&quot;</span><span class="p">).</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">csrf_token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;meta[name=&#39;csrf-token&#39;]&quot;</span><span class="p">).</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">);</span><span class="w"></span>
 
-    <span class="nx">axios</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">post</span><span class="p">[</span><span class="s1">&#39;anti-csrf-token&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nx">csrf_token</span><span class="p">;</span>
-    <span class="nx">axios</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">put</span><span class="p">[</span><span class="s1">&#39;anti-csrf-token&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nx">csrf_token</span><span class="p">;</span>
-    <span class="nx">axios</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="ow">delete</span><span class="p">[</span><span class="s1">&#39;anti-csrf-token&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nx">csrf_token</span><span class="p">;</span>
-    <span class="nx">axios</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">patch</span><span class="p">[</span><span class="s1">&#39;anti-csrf-token&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nx">csrf_token</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">axios</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">post</span><span class="p">[</span><span class="s1">&#39;anti-csrf-token&#39;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">csrf_token</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="nx">axios</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">put</span><span class="p">[</span><span class="s1">&#39;anti-csrf-token&#39;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">csrf_token</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="nx">axios</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="ow">delete</span><span class="p">[</span><span class="s1">&#39;anti-csrf-token&#39;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">csrf_token</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="nx">axios</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">patch</span><span class="p">[</span><span class="s1">&#39;anti-csrf-token&#39;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">csrf_token</span><span class="p">;</span><span class="w"></span>
 
-    <span class="c1">// Axios does not create an object for TRACE method by default, and has to be created manually.</span>
-    <span class="nx">axios</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">trace</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="nx">axios</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">trace</span><span class="p">[</span><span class="s1">&#39;anti-csrf-token&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nx">csrf_token</span>
+<span class="w">    </span><span class="c1">// Axios does not create an object for TRACE method by default, and has to be created manually.</span><span class="w"></span>
+<span class="w">    </span><span class="nx">axios</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">trace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{}</span><span class="w"></span>
+<span class="w">    </span><span class="nx">axios</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">trace</span><span class="p">[</span><span class="s1">&#39;anti-csrf-token&#39;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">csrf_token</span><span class="w"></span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
 <p>This code snippet has been tested with Axios version 0.18.0.</p>
 <h4 id="jquery">JQuery<a class="headerlink" href="#jquery" title="Permanent link">&para;</a></h4>
 <p>JQuery exposes an API called $.ajaxSetup() which can be used to add the <code>anti-csrf-token</code> header to the AJAX request. API documentation for <code>$.ajaxSetup()</code> can be found here. The function <code>csrfSafeMethod()</code> defined below will filter out the safe HTTP methods and only add the header to unsafe HTTP methods.</p>
 <p>You can configure jQuery to automatically add the token to all request headers by adopting the following code snippet. This provides a simple and convenient CSRF protection for your AJAX based applications:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
-    <span class="kd">var</span> <span class="nx">csrf_token</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;meta[name=&quot;csrf-token&quot;]&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;content&#39;</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">csrf_token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;meta[name=&quot;csrf-token&quot;]&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;content&#39;</span><span class="p">);</span><span class="w"></span>
 
-    <span class="kd">function</span> <span class="nx">csrfSafeMethod</span><span class="p">(</span><span class="nx">method</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c1">// these HTTP methods do not require CSRF protection</span>
-        <span class="k">return</span> <span class="p">(</span><span class="sr">/^(GET|HEAD|OPTIONS)$/</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">method</span><span class="p">));</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="kd">function</span><span class="w"> </span><span class="nx">csrfSafeMethod</span><span class="p">(</span><span class="nx">method</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="c1">// these HTTP methods do not require CSRF protection</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="sr">/^(GET|HEAD|OPTIONS)$/</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">method</span><span class="p">));</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="nx">$</span><span class="p">.</span><span class="nx">ajaxSetup</span><span class="p">({</span>
-        <span class="nx">beforeSend</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">xhr</span><span class="p">,</span> <span class="nx">settings</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">csrfSafeMethod</span><span class="p">(</span><span class="nx">settings</span><span class="p">.</span><span class="nx">type</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">crossDomain</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">xhr</span><span class="p">.</span><span class="nx">setRequestHeader</span><span class="p">(</span><span class="s2">&quot;anti-csrf-token&quot;</span><span class="p">,</span> <span class="nx">csrf_token</span><span class="p">);</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">});</span>
+<span class="w">    </span><span class="nx">$</span><span class="p">.</span><span class="nx">ajaxSetup</span><span class="p">({</span><span class="w"></span>
+<span class="w">        </span><span class="nx">beforeSend</span><span class="o">:</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">xhr</span><span class="p">,</span><span class="w"> </span><span class="nx">settings</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">csrfSafeMethod</span><span class="p">(</span><span class="nx">settings</span><span class="p">.</span><span class="nx">type</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">crossDomain</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="nx">xhr</span><span class="p">.</span><span class="nx">setRequestHeader</span><span class="p">(</span><span class="s2">&quot;anti-csrf-token&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">csrf_token</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">});</span><span class="w"></span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
 <p>This code snippet has been tested with jQuery version 3.3.1.</p>
@@ -2250,7 +2250,7 @@ Set-Cookie: JSESSIONID=xxxxx; SameSite=Lax
     <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.748e2769.min.js"></script>
+      <script src="../assets/javascripts/bundle.ed9748b7.min.js"></script>
       
     
   </body>

@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Clickjacking_Defense_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.11">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.13">
     
     
       
@@ -21,10 +21,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.8c5ef100.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.e411adfe.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.9647289d.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cc9b2e1e.min.css">
         
       
     
@@ -1925,39 +1925,39 @@
 <span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
 </code></pre></div>
 <p>Then, delete that style by its ID immediately after in the script:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">self</span> <span class="o">===</span> <span class="nx">top</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">antiClickjack</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;antiClickjack&quot;</span><span class="p">);</span>
-        <span class="nx">antiClickjack</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">removeChild</span><span class="p">(</span><span class="nx">antiClickjack</span><span class="p">);</span>
-    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-        <span class="nx">top</span><span class="p">.</span><span class="nx">location</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">location</span><span class="p">;</span>
-    <span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">self</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">top</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">antiClickjack</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;antiClickjack&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="nx">antiClickjack</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">removeChild</span><span class="p">(</span><span class="nx">antiClickjack</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nx">top</span><span class="p">.</span><span class="nx">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">self</span><span class="p">.</span><span class="nx">location</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
 <p>This way, everything can be in the document HEAD and you only need one method/taglib in your API.</p>
 <h2 id="windowconfirm-protection">window.confirm() Protection<a class="headerlink" href="#windowconfirm-protection" title="Permanent link">&para;</a></h2>
 <p>The use of X-Frame-Options or a frame-breaking script is a more fail-safe method of clickjacking protection. However, in scenarios where content must be frameable, then a <code>window.confirm()</code> can be used to help mitigate Clickjacking by informing the user of the action they are about to perform.</p>
 <p>Invoking <code>window.confirm()</code> will display a popup that cannot be framed. If the <code>window.confirm()</code> originates from within an iframe with a different domain than the parent, then the dialog box will display what domain the <code>window.confirm()</code> originated from. In this scenario the browser is displaying the origin of the dialog box to help mitigate Clickjacking attacks. It should be noted that Internet Explorer is the only known browser that does not display the domain that the <code>window.confirm()</code> dialog box originated from, to address this issue with Internet Explorer insure that the message within the dialog box contains contextual information about the type of action being performed. For example:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
-   <span class="kd">var</span> <span class="nx">action_confirm</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">confirm</span><span class="p">(</span><span class="s2">&quot;Are you sure you want to delete your youtube account?&quot;</span><span class="p">)</span>
-   <span class="k">if</span> <span class="p">(</span><span class="nx">action_confirm</span><span class="p">)</span> <span class="p">{</span>
-       <span class="c1">//... Perform action</span>
-   <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-       <span class="c1">//... The user does not want to perform the requested action.`</span>
-   <span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span><span class="w"></span>
+<span class="w">   </span><span class="kd">var</span><span class="w"> </span><span class="nx">action_confirm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">confirm</span><span class="p">(</span><span class="s2">&quot;Are you sure you want to delete your youtube account?&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="w">   </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">action_confirm</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">       </span><span class="c1">//... Perform action</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">       </span><span class="c1">//... The user does not want to perform the requested action.`</span><span class="w"></span>
+<span class="w">   </span><span class="p">}</span><span class="w"></span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
 <h2 id="insecure-non-working-scripts-do-not-use">Insecure Non-Working Scripts DO NOT USE<a class="headerlink" href="#insecure-non-working-scripts-do-not-use" title="Permanent link">&para;</a></h2>
 <p>Consider the following snippet which is <strong>NOT recommended</strong> for defending against clickjacking:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="k">if</span> <span class="p">(</span><span class="nx">top</span><span class="o">!=</span><span class="nx">self</span><span class="p">)</span> <span class="nx">top</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span><span class="o">=</span><span class="nx">self</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">top</span><span class="o">!=</span><span class="nx">self</span><span class="p">)</span><span class="w"> </span><span class="nx">top</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span><span class="o">=</span><span class="nx">self</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
 <p>This simple frame breaking script attempts to prevent the page from being incorporated into a frame or iframe by forcing the parent window to load the current frame's URL. Unfortunately, multiple ways of defeating this type of script have been made public. We outline some here.</p>
 <h3 id="double-framing">Double Framing<a class="headerlink" href="#double-framing" title="Permanent link">&para;</a></h3>
 <p>Some frame busting techniques navigate to the correct page by assigning a value to <code>parent.location</code>. This works well if the victim page is framed by a single page. However, if the attacker encloses the victim in one frame inside another (a double frame), then accessing <code>parent.location</code> becomes a security violation in all popular browsers, due to the <strong>descendant frame navigation policy</strong>. This security violation disables the counter-action navigation.</p>
 <p><strong>Victim frame busting code:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="p">(</span><span class="nx">top</span><span class="p">.</span><span class="nx">location</span> <span class="o">!=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">location</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">parent</span><span class="p">.</span><span class="nx">location</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">location</span><span class="p">;</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="p">(</span><span class="nx">top</span><span class="p">.</span><span class="nx">location</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nx">self</span><span class="p">.</span><span class="nx">location</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nx">parent</span><span class="p">.</span><span class="nx">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">self</span><span class="p">.</span><span class="nx">location</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div>
 <p><strong>Attacker top frame:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;attacker2.html&quot;</span><span class="p">&gt;</span>
@@ -1969,10 +1969,10 @@
 <p>A user can manually cancel any navigation request submitted by a framed page. To exploit this, the framing page registers an <code>onBeforeUnload</code> handler which is called whenever the framing page is about to be unloaded due to navigation. The handler function returns a string that becomes part of a prompt displayed to the user.</p>
 <p>Say the attacker wants to frame PayPal. He registers an unload handler function that returns the string "Do you want to exit PayPal?". When this string is displayed to the user is likely to cancel the navigation, defeating PayPal's frame busting attempt.</p>
 <p>The attacker mounts this attack by registering an unload event on the top page using the following code:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-    <span class="nb">window</span><span class="p">.</span><span class="nx">onbeforeunload</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
-        <span class="k">return</span> <span class="s2">&quot;Asking the user nicely&quot;</span><span class="p">;</span>
-    <span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="nb">window</span><span class="p">.</span><span class="nx">onbeforeunload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="p">(){</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;Asking the user nicely&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 
 <span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;http://www.paypal.com&quot;</span><span class="p">&gt;</span>
@@ -1981,24 +1981,24 @@
 <h3 id="no-content-flushing">No-Content Flushing<a class="headerlink" href="#no-content-flushing" title="Permanent link">&para;</a></h3>
 <p>While the previous attack requires user interaction, the same attack can be done without prompting the user. Most browsers (IE7, IE8, Google Chrome, and Firefox) enable an attacker to automatically cancel the incoming navigation request in an <code>onBeforeUnload</code> event handler by repeatedly submitting a navigation request to a site responding with "<em>204 - No Content</em>".</p>
 <p>Navigating to a No Content site is effectively a NOP, but flushes the request pipeline, thus canceling the original navigation request. Here is sample code to do this:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">var</span> <span class="nx">preventbust</span> <span class="o">=</span> <span class="mf">0</span>
-<span class="nb">window</span><span class="p">.</span><span class="nx">onbeforeunload</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="nx">killbust</span><span class="o">++</span> <span class="p">}</span>
-<span class="nx">setInterval</span><span class="p">(</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">if</span><span class="p">(</span><span class="nx">killbust</span> <span class="o">&gt;</span> <span class="mf">0</span><span class="p">){</span>
-    <span class="nx">killbust</span> <span class="o">=</span> <span class="mf">2</span><span class="p">;</span>
-    <span class="nb">window</span><span class="p">.</span><span class="nx">top</span><span class="p">.</span><span class="nx">location</span> <span class="o">=</span> <span class="s1">&#39;http://nocontent204.com&#39;</span>
-    <span class="p">}</span>
-<span class="p">},</span> <span class="mf">1</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">preventbust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="w"></span>
+<span class="nb">window</span><span class="p">.</span><span class="nx">onbeforeunload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">killbust</span><span class="o">++</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="nx">setInterval</span><span class="p">(</span><span class="w"> </span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="nx">killbust</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0</span><span class="p">){</span><span class="w"></span>
+<span class="w">    </span><span class="nx">killbust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="nb">window</span><span class="p">.</span><span class="nx">top</span><span class="p">.</span><span class="nx">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;http://nocontent204.com&#39;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">},</span><span class="w"> </span><span class="mf">1</span><span class="p">);</span><span class="w"></span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;http://www.victim.com&quot;</span><span class="p">&gt;</span>
 </code></pre></div>
 <h3 id="exploiting-xss-filters">Exploiting XSS filters<a class="headerlink" href="#exploiting-xss-filters" title="Permanent link">&para;</a></h3>
 <p>IE8 and Google Chrome introduced reflective XSS filters that help protect web pages from certain types of XSS attacks. Nava and Lindsay (at Blackhat) observed that these filters can be used to circumvent frame busting code. The IE8 XSS filter compares given request parameters to a set of regular expressions in order to look for obvious attempts at cross-site scripting. Using "induced false positives", the filter can be used to disable selected scripts. By matching the beginning of any script tag in the request parameters, the XSS filter will disable all inline scripts within the page, including frame busting scripts. External scripts can also be targeted by matching an external include, effectively disabling all external scripts. Since subsets of the JavaScript loaded is still functional (inline or external) and cookies are still available, this attack is effective for clickjacking.</p>
 <p><strong>Victim frame busting code:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-    <span class="k">if</span><span class="p">(</span><span class="nx">top</span> <span class="o">!=</span> <span class="nx">self</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">top</span><span class="p">.</span><span class="nx">location</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">location</span><span class="p">;</span>
-    <span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="nx">top</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nx">self</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nx">top</span><span class="p">.</span><span class="nx">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">self</span><span class="p">.</span><span class="nx">location</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
 <p><strong>Attacker:</strong></p>
@@ -2009,19 +2009,19 @@
 <p>Several modern browsers treat the location variable as a special immutable attribute across all contexts. However, this is not the case in IE7 and Safari 4.0.4 where the location variable can be redefined.</p>
 <p><strong>IE7</strong>: Once the framing page redefines location, any frame busting code in a subframe that tries to read <code>top.location</code> will commit a security violation by trying to read a local variable in another domain. Similarly, any attempt to navigate by assigning <code>top.location</code> will fail.</p>
 <p><strong>Victim frame busting code:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="p">(</span><span class="nx">top</span><span class="p">.</span><span class="nx">location</span> <span class="o">!=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">location</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">top</span><span class="p">.</span><span class="nx">location</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">location</span><span class="p">;</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="p">(</span><span class="nx">top</span><span class="p">.</span><span class="nx">location</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nx">self</span><span class="p">.</span><span class="nx">location</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nx">top</span><span class="p">.</span><span class="nx">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">self</span><span class="p">.</span><span class="nx">location</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div>
 <p><strong>Attacker:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="kd">var</span> <span class="nx">location</span> <span class="o">=</span> <span class="s2">&quot;clobbered&quot;</span><span class="p">;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="kd">var</span><span class="w"> </span><span class="nx">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;clobbered&quot;</span><span class="p">;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;http://www.victim.com&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">iframe</span><span class="p">&gt;</span>
 </code></pre></div>
 <p><strong>Safari 4.0.4:</strong></p>
 <p>We observed that although location is kept immutable in most circumstances, when a custom location setter is defined via <code>defineSetter</code> (through window) the object location becomes undefined.</p>
 <p>The framing page simply does:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-    <span class="nb">window</span><span class="p">.</span><span class="nx">defineSetter</span><span class="p">(</span><span class="s2">&quot;location&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){});</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="w"></span>
+<span class="w">    </span><span class="nb">window</span><span class="p">.</span><span class="nx">defineSetter</span><span class="p">(</span><span class="s2">&quot;location&quot;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">(){});</span><span class="w"></span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
 <p>Now any attempt to read or navigate the top frame's location will fail.</p>
@@ -2035,7 +2035,7 @@
 </code></pre></div>
 <p><strong>Firefox and IE:</strong></p>
 <p>Activate <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/designMode">designMode</a> in parent page.</p>
-<div class="highlight"><pre><span></span><code><span class="nb">document</span><span class="p">.</span><span class="nx">designMode</span> <span class="o">=</span> <span class="s2">&quot;on&quot;</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="nb">document</span><span class="p">.</span><span class="nx">designMode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;on&quot;</span><span class="p">;</span><span class="w"></span>
 </code></pre></div>
 
               
@@ -2109,7 +2109,7 @@
     <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.748e2769.min.js"></script>
+      <script src="../assets/javascripts/bundle.ed9748b7.min.js"></script>
       
     
   </body>

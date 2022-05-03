@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Vulnerable_Dependency_Management_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.11">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.13">
     
     
       
@@ -21,10 +21,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.8c5ef100.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.e411adfe.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.9647289d.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cc9b2e1e.min.css">
         
       
     
@@ -1971,17 +1971,17 @@
 <p>If the provider has given the team a list of the impacted functions, protective code must wrap the calls to these functions to ensure that the input and the output data is safe.</p>
 <p>Moreover, security devices, such as the Web Application Firewall (WAF), can handle such issues by protecting the internal applications through parameter validation and by generating detection rules for those specific libraries. Yet, in this cheat sheet, the focus is set on the application level in order to patch the vulnerability as close as possible to the source.</p>
 <p><em>Example using java code in which the impacted function suffers from a <a href="https://www.netsparker.com/blog/web-security/remote-code-evaluation-execution/">Remote Code Execution</a> issue:</em></p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span> <span class="kt">void</span> <span class="nf">callFunctionWithRCEIssue</span><span class="p">(</span><span class="n">String</span> <span class="n">externalInput</span><span class="p">){</span>
-    <span class="c1">//Apply input validation on the external input using regex</span>
-    <span class="k">if</span><span class="p">(</span><span class="n">Pattern</span><span class="p">.</span><span class="na">matches</span><span class="p">(</span><span class="s">&quot;[a-zA-Z0-9]{1,50}&quot;</span><span class="p">,</span> <span class="n">externalInput</span><span class="p">)){</span>
-        <span class="c1">//Call the flawed function using safe input</span>
-        <span class="n">functionWithRCEIssue</span><span class="p">(</span><span class="n">externalInput</span><span class="p">);</span>
-    <span class="p">}</span><span class="k">else</span><span class="p">{</span>
-        <span class="c1">//Log the detection of exploitation</span>
-        <span class="n">SecurityLogger</span><span class="p">.</span><span class="na">warn</span><span class="p">(</span><span class="s">&quot;Exploitation of the RCE issue XXXXX detected !&quot;</span><span class="p">);</span>
-        <span class="c1">//Raise an exception leading to a generic error send to the client...</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">callFunctionWithRCEIssue</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">externalInput</span><span class="p">){</span><span class="w"></span>
+<span class="w">    </span><span class="c1">//Apply input validation on the external input using regex</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">Pattern</span><span class="p">.</span><span class="na">matches</span><span class="p">(</span><span class="s">&quot;[a-zA-Z0-9]{1,50}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">externalInput</span><span class="p">)){</span><span class="w"></span>
+<span class="w">        </span><span class="c1">//Call the flawed function using safe input</span><span class="w"></span>
+<span class="w">        </span><span class="n">functionWithRCEIssue</span><span class="p">(</span><span class="n">externalInput</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="k">else</span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="c1">//Log the detection of exploitation</span><span class="w"></span>
+<span class="w">        </span><span class="n">SecurityLogger</span><span class="p">.</span><span class="na">warn</span><span class="p">(</span><span class="s">&quot;Exploitation of the RCE issue XXXXX detected !&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="c1">//Raise an exception leading to a generic error send to the client...</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div>
 <p>If the provider has provided nothing about the vulnerability, <a href="#-case-3">Case 3</a> can be applied skipping the <em>step 2</em> of this case. We assume here that, at least, the <a href="https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures">CVE</a> has been provided.</p>
 <p><strong>Step 2:</strong></p>
@@ -2158,7 +2158,7 @@
     <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.748e2769.min.js"></script>
+      <script src="../assets/javascripts/bundle.ed9748b7.min.js"></script>
       
     
   </body>

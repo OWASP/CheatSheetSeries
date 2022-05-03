@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.11">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.13">
     
     
       
@@ -21,10 +21,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.8c5ef100.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.e411adfe.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.9647289d.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cc9b2e1e.min.css">
         
       
     
@@ -1606,24 +1606,24 @@ EMP-00002
 <li>Makes creation of a collection a enumeration values more difficult to achieve because, even if attacker can guess the hash algorithm from the ID size, it cannot reproduce value due to the salt that is not tied to the hidden value.</li>
 </ul>
 <p>This is the implementation of the utility class that generate the identifier to use for exchange with the front end side:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">javax.xml.bind.DatatypeConverter</span><span class="p">;</span>
-<span class="kn">import</span> <span class="nn">java.io.UnsupportedEncodingException</span><span class="p">;</span>
-<span class="kn">import</span> <span class="nn">java.security.MessageDigest</span><span class="p">;</span>
-<span class="kn">import</span> <span class="nn">java.security.NoSuchAlgorithmException</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">javax.xml.bind.DatatypeConverter</span><span class="p">;</span><span class="w"></span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">java.io.UnsupportedEncodingException</span><span class="p">;</span><span class="w"></span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">java.security.MessageDigest</span><span class="p">;</span><span class="w"></span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">java.security.NoSuchAlgorithmException</span><span class="p">;</span><span class="w"></span>
 
 <span class="cm">/**</span>
 <span class="cm"> * Handle the creation of ID that will be send to front end side</span>
 <span class="cm"> * in order to prevent IDOR</span>
-<span class="cm"> */</span>
+<span class="cm"> */</span><span class="w"></span>
 
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">IDORUtil</span> <span class="p">{</span>
-    <span class="cm">/**</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">IDORUtil</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="cm">/**</span>
 <span class="cm">     * SALT used for the generation of the HASH of the real item identifier</span>
 <span class="cm">     * in order to prevent to forge it on front end side.</span>
-<span class="cm">     */</span>
-    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">SALT</span> <span class="o">=</span> <span class="s">&quot;[READ_IT_FROM_APP_CONFIGURATION]&quot;</span><span class="p">;</span>
+<span class="cm">     */</span><span class="w"></span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">SALT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;[READ_IT_FROM_APP_CONFIGURATION]&quot;</span><span class="p">;</span><span class="w"></span>
 
-    <span class="cm">/**</span>
+<span class="w">    </span><span class="cm">/**</span>
 <span class="cm">     * Compute a identifier that will be send to the front end and be used as item</span>
 <span class="cm">     * unique identifier on client side.</span>
 <span class="cm">     *</span>
@@ -1633,103 +1633,103 @@ EMP-00002
 <span class="cm">     * @throws UnsupportedEncodingException If string&#39;s byte cannot be obtained</span>
 <span class="cm">     * @throws NoSuchAlgorithmException If the hashing algorithm used is not</span>
 <span class="cm">     *                                  supported is not available</span>
-<span class="cm">     */</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">computeFrontEndIdentifier</span><span class="p">(</span><span class="n">String</span> <span class="n">realItemBackendIdentifier</span><span class="p">)</span>
-     <span class="kd">throws</span> <span class="n">NoSuchAlgorithmException</span><span class="p">,</span> <span class="n">UnsupportedEncodingException</span> <span class="p">{</span>
-        <span class="n">String</span> <span class="n">frontEndId</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">realItemBackendIdentifier</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">realItemBackendIdentifier</span><span class="p">.</span><span class="na">trim</span><span class="p">().</span><span class="na">isEmpty</span><span class="p">())</span> <span class="p">{</span>
-            <span class="c1">//Prefix the value with the SALT</span>
-            <span class="n">String</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">SALT</span> <span class="o">+</span> <span class="n">realItemBackendIdentifier</span><span class="p">;</span>
-            <span class="c1">//Get and configure message digester</span>
-            <span class="c1">//We use SHA1 here for the following reason even if SHA1 have now potential collision:</span>
-            <span class="c1">//1. We do not store sensitive information, just technical ID</span>
-            <span class="c1">//2. We want that the ID stay short but not guessable</span>
-            <span class="c1">//3. We want that a maximum of backend storage support the algorithm used in order to compute it in selection query/request</span>
-            <span class="c1">//If your backend storage supports SHA256 so use it instead of SHA1</span>
-            <span class="n">MessageDigest</span> <span class="n">digester</span> <span class="o">=</span> <span class="n">MessageDigest</span><span class="p">.</span><span class="na">getInstance</span><span class="p">(</span><span class="s">&quot;sha1&quot;</span><span class="p">);</span>
-            <span class="c1">//Compute the hash</span>
-            <span class="kt">byte</span><span class="o">[]</span> <span class="n">hash</span> <span class="o">=</span> <span class="n">digester</span><span class="p">.</span><span class="na">digest</span><span class="p">(</span><span class="n">tmp</span><span class="p">.</span><span class="na">getBytes</span><span class="p">(</span><span class="s">&quot;utf-8&quot;</span><span class="p">));</span>
-            <span class="c1">//Encode is in HEX</span>
-            <span class="n">frontEndId</span> <span class="o">=</span> <span class="n">DatatypeConverter</span><span class="p">.</span><span class="na">printHexBinary</span><span class="p">(</span><span class="n">hash</span><span class="p">);</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="n">frontEndId</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+<span class="cm">     */</span><span class="w"></span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">computeFrontEndIdentifier</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">realItemBackendIdentifier</span><span class="p">)</span><span class="w"></span>
+<span class="w">     </span><span class="kd">throws</span><span class="w"> </span><span class="n">NoSuchAlgorithmException</span><span class="p">,</span><span class="w"> </span><span class="n">UnsupportedEncodingException</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">frontEndId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">realItemBackendIdentifier</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="n">realItemBackendIdentifier</span><span class="p">.</span><span class="na">trim</span><span class="p">().</span><span class="na">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="c1">//Prefix the value with the SALT</span><span class="w"></span>
+<span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">tmp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SALT</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">realItemBackendIdentifier</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="c1">//Get and configure message digester</span><span class="w"></span>
+<span class="w">            </span><span class="c1">//We use SHA1 here for the following reason even if SHA1 have now potential collision:</span><span class="w"></span>
+<span class="w">            </span><span class="c1">//1. We do not store sensitive information, just technical ID</span><span class="w"></span>
+<span class="w">            </span><span class="c1">//2. We want that the ID stay short but not guessable</span><span class="w"></span>
+<span class="w">            </span><span class="c1">//3. We want that a maximum of backend storage support the algorithm used in order to compute it in selection query/request</span><span class="w"></span>
+<span class="w">            </span><span class="c1">//If your backend storage supports SHA256 so use it instead of SHA1</span><span class="w"></span>
+<span class="w">            </span><span class="n">MessageDigest</span><span class="w"> </span><span class="n">digester</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MessageDigest</span><span class="p">.</span><span class="na">getInstance</span><span class="p">(</span><span class="s">&quot;sha1&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="c1">//Compute the hash</span><span class="w"></span>
+<span class="w">            </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">hash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">digester</span><span class="p">.</span><span class="na">digest</span><span class="p">(</span><span class="n">tmp</span><span class="p">.</span><span class="na">getBytes</span><span class="p">(</span><span class="s">&quot;utf-8&quot;</span><span class="p">));</span><span class="w"></span>
+<span class="w">            </span><span class="c1">//Encode is in HEX</span><span class="w"></span>
+<span class="w">            </span><span class="n">frontEndId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DatatypeConverter</span><span class="p">.</span><span class="na">printHexBinary</span><span class="p">(</span><span class="n">hash</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">frontEndId</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div>
 <p>This is the example of services using the front identifier:</p>
 <div class="highlight"><pre><span></span><code><span class="cm">/**</span>
 <span class="cm"> * Service to list all available movies</span>
 <span class="cm"> *</span>
 <span class="cm"> * @return The collection of movies ID and name as JSON response</span>
-<span class="cm"> */</span>
-<span class="nd">@RequestMapping</span><span class="p">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&quot;/movies&quot;</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="n">GET</span><span class="p">,</span> <span class="n">produces</span> <span class="o">=</span> <span class="p">{</span><span class="n">MediaType</span><span class="p">.</span><span class="na">APPLICATION_JSON_VALUE</span><span class="p">})</span>
-<span class="kd">public</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="nf">listAllMovies</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="cm"> */</span><span class="w"></span>
+<span class="nd">@RequestMapping</span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;/movies&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GET</span><span class="p">,</span><span class="w"> </span><span class="n">produces</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">MediaType</span><span class="p">.</span><span class="na">APPLICATION_JSON_VALUE</span><span class="p">})</span><span class="w"></span>
+<span class="kd">public</span><span class="w"> </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">listAllMovies</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w"></span>
 
-    <span class="k">try</span> <span class="p">{</span>
-        <span class="k">this</span><span class="p">.</span><span class="na">movies</span><span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="n">m</span> <span class="o">-&gt;</span> <span class="p">{</span>
-            <span class="k">try</span> <span class="p">{</span>
-                <span class="c1">//Compute the front end ID for the current element</span>
-                <span class="n">String</span> <span class="n">frontEndId</span> <span class="o">=</span> <span class="n">IDORUtil</span><span class="p">.</span><span class="na">computeFrontEndIdentifier</span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="na">getBackendIdentifier</span><span class="p">());</span>
-                <span class="c1">//Add the computed ID and the associated item name to the result map</span>
-                <span class="n">result</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">frontEndId</span><span class="p">,</span> <span class="n">m</span><span class="p">.</span><span class="na">getName</span><span class="p">());</span>
-            <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
-                <span class="n">LOGGER</span><span class="p">.</span><span class="na">error</span><span class="p">(</span><span class="s">&quot;Error during ID generation for real ID {}: {}&quot;</span><span class="p">,</span> <span class="n">m</span><span class="p">.</span><span class="na">getBackendIdentifier</span><span class="p">(),</span>
-                             <span class="n">e</span><span class="p">.</span><span class="na">getMessage</span><span class="p">());</span>
-            <span class="p">}</span>
-        <span class="p">});</span>
-    <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c1">//Ensure that in case of error no item is returned</span>
-        <span class="n">result</span><span class="p">.</span><span class="na">clear</span><span class="p">();</span>
-        <span class="n">LOGGER</span><span class="p">.</span><span class="na">error</span><span class="p">(</span><span class="s">&quot;Error during processing&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">);</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">movies</span><span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="n">m</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="c1">//Compute the front end ID for the current element</span><span class="w"></span>
+<span class="w">                </span><span class="n">String</span><span class="w"> </span><span class="n">frontEndId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">IDORUtil</span><span class="p">.</span><span class="na">computeFrontEndIdentifier</span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="na">getBackendIdentifier</span><span class="p">());</span><span class="w"></span>
+<span class="w">                </span><span class="c1">//Add the computed ID and the associated item name to the result map</span><span class="w"></span>
+<span class="w">                </span><span class="n">result</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">frontEndId</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="p">.</span><span class="na">getName</span><span class="p">());</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="n">LOGGER</span><span class="p">.</span><span class="na">error</span><span class="p">(</span><span class="s">&quot;Error during ID generation for real ID {}: {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="p">.</span><span class="na">getBackendIdentifier</span><span class="p">(),</span><span class="w"></span>
+<span class="w">                             </span><span class="n">e</span><span class="p">.</span><span class="na">getMessage</span><span class="p">());</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="p">});</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="c1">//Ensure that in case of error no item is returned</span><span class="w"></span>
+<span class="w">        </span><span class="n">result</span><span class="p">.</span><span class="na">clear</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="n">LOGGER</span><span class="p">.</span><span class="na">error</span><span class="p">(</span><span class="s">&quot;Error during processing&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
 
-    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
-<span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">result</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 
 <span class="cm">/**</span>
 <span class="cm"> * Service to obtain the information on a specific movie</span>
 <span class="cm"> *</span>
 <span class="cm"> * @param id Movie identifier from a front end point of view</span>
 <span class="cm"> * @return The movie object as JSON response</span>
-<span class="cm"> */</span>
-<span class="nd">@RequestMapping</span><span class="p">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&quot;/movies/{id}&quot;</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="n">GET</span><span class="p">,</span> <span class="n">produces</span> <span class="o">=</span> <span class="p">{</span><span class="n">MediaType</span><span class="p">.</span><span class="na">APPLICATION_JSON_VALUE</span><span class="p">})</span>
-<span class="kd">public</span> <span class="n">Movie</span> <span class="nf">obtainMovieName</span><span class="p">(</span><span class="nd">@PathVariable</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">)</span> <span class="n">String</span> <span class="n">id</span><span class="p">)</span> <span class="p">{</span>
+<span class="cm"> */</span><span class="w"></span>
+<span class="nd">@RequestMapping</span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;/movies/{id}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GET</span><span class="p">,</span><span class="w"> </span><span class="n">produces</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">MediaType</span><span class="p">.</span><span class="na">APPLICATION_JSON_VALUE</span><span class="p">})</span><span class="w"></span>
+<span class="kd">public</span><span class="w"> </span><span class="n">Movie</span><span class="w"> </span><span class="nf">obtainMovieName</span><span class="p">(</span><span class="nd">@PathVariable</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 
-    <span class="c1">//Search for the wanted movie information using Front End Identifier</span>
-    <span class="n">Optional</span><span class="o">&lt;</span><span class="n">Movie</span><span class="o">&gt;</span> <span class="n">movie</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="na">movies</span><span class="p">.</span><span class="na">stream</span><span class="p">().</span><span class="na">filter</span><span class="p">(</span><span class="n">m</span> <span class="o">-&gt;</span> <span class="p">{</span>
-        <span class="kt">boolean</span> <span class="n">match</span><span class="p">;</span>
-        <span class="k">try</span> <span class="p">{</span>
-            <span class="c1">//Compute the front end ID for the current element</span>
-            <span class="n">String</span> <span class="n">frontEndId</span> <span class="o">=</span> <span class="n">IDORUtil</span><span class="p">.</span><span class="na">computeFrontEndIdentifier</span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="na">getBackendIdentifier</span><span class="p">());</span>
-            <span class="c1">//Check if the computed ID match the one provided</span>
-            <span class="n">match</span> <span class="o">=</span> <span class="n">frontEndId</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
-        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
-            <span class="c1">//Ensure that in case of error no item is returned</span>
-            <span class="n">match</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
-            <span class="n">LOGGER</span><span class="p">.</span><span class="na">error</span><span class="p">(</span><span class="s">&quot;Error during processing&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">);</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="n">match</span><span class="p">;</span>
-    <span class="p">}).</span><span class="na">findFirst</span><span class="p">();</span>
+<span class="w">    </span><span class="c1">//Search for the wanted movie information using Front End Identifier</span><span class="w"></span>
+<span class="w">    </span><span class="n">Optional</span><span class="o">&lt;</span><span class="n">Movie</span><span class="o">&gt;</span><span class="w"> </span><span class="n">movie</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">movies</span><span class="p">.</span><span class="na">stream</span><span class="p">().</span><span class="na">filter</span><span class="p">(</span><span class="n">m</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kt">boolean</span><span class="w"> </span><span class="n">match</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="c1">//Compute the front end ID for the current element</span><span class="w"></span>
+<span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">frontEndId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">IDORUtil</span><span class="p">.</span><span class="na">computeFrontEndIdentifier</span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="na">getBackendIdentifier</span><span class="p">());</span><span class="w"></span>
+<span class="w">            </span><span class="c1">//Check if the computed ID match the one provided</span><span class="w"></span>
+<span class="w">            </span><span class="n">match</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">frontEndId</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">id</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="c1">//Ensure that in case of error no item is returned</span><span class="w"></span>
+<span class="w">            </span><span class="n">match</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="n">LOGGER</span><span class="p">.</span><span class="na">error</span><span class="p">(</span><span class="s">&quot;Error during processing&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">match</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}).</span><span class="na">findFirst</span><span class="p">();</span><span class="w"></span>
 
-    <span class="c1">//We have marked the Backend Identifier class field as excluded</span>
-    <span class="c1">//from the serialization</span>
-    <span class="c1">//So we can send the object to front end through the serializer</span>
-    <span class="k">return</span> <span class="n">movie</span><span class="p">.</span><span class="na">get</span><span class="p">();</span>
-<span class="p">}</span>
+<span class="w">    </span><span class="c1">//We have marked the Backend Identifier class field as excluded</span><span class="w"></span>
+<span class="w">    </span><span class="c1">//from the serialization</span><span class="w"></span>
+<span class="w">    </span><span class="c1">//So we can send the object to front end through the serializer</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">movie</span><span class="p">.</span><span class="na">get</span><span class="p">();</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div>
 <p>This is the value object used:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Movie</span> <span class="p">{</span>
-    <span class="cm">/**</span>
+<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Movie</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="cm">/**</span>
 <span class="cm">     * We indicate to serializer that this field must never be serialized</span>
 <span class="cm">     *</span>
 <span class="cm">     * @see &quot;https://fasterxml.github.io/jackson-annotations/javadoc/2.5/com/fasterxml/</span>
 <span class="cm">     *       jackson/annotation/JsonIgnore.html&quot;</span>
-<span class="cm">     */</span>
-    <span class="nd">@JsonIgnore</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">backendIdentifier</span><span class="p">;</span>
-<span class="p">...</span>
-<span class="p">}</span>
+<span class="cm">     */</span><span class="w"></span>
+<span class="w">    </span><span class="nd">@JsonIgnore</span><span class="w"></span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">backendIdentifier</span><span class="p">;</span><span class="w"></span>
+<span class="p">...</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div>
 <h2 id="sources-of-the-prototype">Sources of the prototype<a class="headerlink" href="#sources-of-the-prototype" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/righettod/poc-idor">GitHub repository</a>.</p>
@@ -1805,7 +1805,7 @@ EMP-00002
     <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.748e2769.min.js"></script>
+      <script src="../assets/javascripts/bundle.ed9748b7.min.js"></script>
       
     
   </body>

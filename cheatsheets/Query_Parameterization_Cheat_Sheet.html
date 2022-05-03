@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Query_Parameterization_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.11">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.13">
     
     
       
@@ -21,10 +21,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.8c5ef100.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.e411adfe.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.9647289d.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cc9b2e1e.min.css">
         
       
     
@@ -1838,39 +1838,39 @@
 <p>Please note, many client side frameworks and libraries offer client side query parameterization. These libraries often just build queries with string concatenation before sending raw queries to a server. Please ensure that query parameterization is done server-side!</p>
 <h3 id="prepared-statement-examples">Prepared Statement Examples<a class="headerlink" href="#prepared-statement-examples" title="Permanent link">&para;</a></h3>
 <h4 id="using-java-built-in-feature">Using Java built-in feature<a class="headerlink" href="#using-java-built-in-feature" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="n">String</span> <span class="n">custname</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;customerName&quot;</span><span class="p">);</span>
-<span class="n">String</span> <span class="n">query</span> <span class="o">=</span> <span class="s">&quot;SELECT account_balance FROM user_data WHERE user_name = ? &quot;</span><span class="p">;</span>  
-<span class="n">PreparedStatement</span> <span class="n">pstmt</span> <span class="o">=</span> <span class="n">connection</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span> <span class="n">query</span> <span class="p">);</span>
-<span class="n">pstmt</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span> <span class="mi">1</span><span class="p">,</span> <span class="n">custname</span><span class="p">);</span>
-<span class="n">ResultSet</span> <span class="n">results</span> <span class="o">=</span> <span class="n">pstmt</span><span class="p">.</span><span class="na">executeQuery</span><span class="p">(</span> <span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="n">String</span><span class="w"> </span><span class="n">custname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;customerName&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;SELECT account_balance FROM user_data WHERE user_name = ? &quot;</span><span class="p">;</span><span class="w">  </span>
+<span class="n">PreparedStatement</span><span class="w"> </span><span class="n">pstmt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">connection</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">pstmt</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">custname</span><span class="p">);</span><span class="w"></span>
+<span class="n">ResultSet</span><span class="w"> </span><span class="n">results</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pstmt</span><span class="p">.</span><span class="na">executeQuery</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </code></pre></div>
 <h4 id="using-java-with-hibernate">Using Java with Hibernate<a class="headerlink" href="#using-java-with-hibernate" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="c1">//HQL</span>
-<span class="nd">@Entity</span> <span class="c1">// declare as entity;</span>
-<span class="nd">@NamedQuery</span><span class="p">(</span>
- <span class="n">name</span><span class="o">=</span><span class="s">&quot;findByDescription&quot;</span><span class="p">,</span>
- <span class="n">query</span><span class="o">=</span><span class="s">&quot;FROM Inventory i WHERE i.productDescription = :productDescription&quot;</span>
-<span class="p">)</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Inventory</span> <span class="kd">implements</span> <span class="n">Serializable</span> <span class="p">{</span>
- <span class="nd">@Id</span>
- <span class="kd">private</span> <span class="kt">long</span> <span class="n">id</span><span class="p">;</span>
- <span class="kd">private</span> <span class="n">String</span> <span class="n">productDescription</span><span class="p">;</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="c1">//HQL</span><span class="w"></span>
+<span class="nd">@Entity</span><span class="w"> </span><span class="c1">// declare as entity;</span><span class="w"></span>
+<span class="nd">@NamedQuery</span><span class="p">(</span><span class="w"></span>
+<span class="w"> </span><span class="n">name</span><span class="o">=</span><span class="s">&quot;findByDescription&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w"> </span><span class="n">query</span><span class="o">=</span><span class="s">&quot;FROM Inventory i WHERE i.productDescription = :productDescription&quot;</span><span class="w"></span>
+<span class="p">)</span><span class="w"></span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Inventory</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Serializable</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w"> </span><span class="nd">@Id</span><span class="w"></span>
+<span class="w"> </span><span class="kd">private</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">id</span><span class="p">;</span><span class="w"></span>
+<span class="w"> </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">productDescription</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 
-<span class="c1">// use case</span>
-<span class="c1">// This should REALLY be validated too</span>
-<span class="n">String</span> <span class="n">userSuppliedParameter</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;Product-Description&quot;</span><span class="p">);</span>
-<span class="c1">// perform input validation to detect attacks</span>
-<span class="n">List</span><span class="o">&lt;</span><span class="n">Inventory</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span>
- <span class="n">session</span><span class="p">.</span><span class="na">getNamedQuery</span><span class="p">(</span><span class="s">&quot;findByDescription&quot;</span><span class="p">)</span>
- <span class="p">.</span><span class="na">setParameter</span><span class="p">(</span><span class="s">&quot;productDescription&quot;</span><span class="p">,</span> <span class="n">userSuppliedParameter</span><span class="p">).</span><span class="na">list</span><span class="p">();</span>
+<span class="c1">// use case</span><span class="w"></span>
+<span class="c1">// This should REALLY be validated too</span><span class="w"></span>
+<span class="n">String</span><span class="w"> </span><span class="n">userSuppliedParameter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;Product-Description&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="c1">// perform input validation to detect attacks</span><span class="w"></span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">Inventory</span><span class="o">&gt;</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
+<span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">getNamedQuery</span><span class="p">(</span><span class="s">&quot;findByDescription&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="w"> </span><span class="p">.</span><span class="na">setParameter</span><span class="p">(</span><span class="s">&quot;productDescription&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">userSuppliedParameter</span><span class="p">).</span><span class="na">list</span><span class="p">();</span><span class="w"></span>
 
-<span class="c1">//Criteria API</span>
-<span class="c1">// This should REALLY be validated too</span>
-<span class="n">String</span> <span class="n">userSuppliedParameter</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;Product-Description&quot;</span><span class="p">);</span>
-<span class="c1">// perform input validation to detect attacks</span>
-<span class="n">Inventory</span> <span class="n">inv</span> <span class="o">=</span> <span class="p">(</span><span class="n">Inventory</span><span class="p">)</span> <span class="n">session</span><span class="p">.</span><span class="na">createCriteria</span><span class="p">(</span><span class="n">Inventory</span><span class="p">.</span><span class="na">class</span><span class="p">).</span><span class="na">add</span>
-<span class="p">(</span><span class="n">Restrictions</span><span class="p">.</span><span class="na">eq</span><span class="p">(</span><span class="s">&quot;productDescription&quot;</span><span class="p">,</span> <span class="n">userSuppliedParameter</span><span class="p">)).</span><span class="na">uniqueResult</span><span class="p">();</span>
+<span class="c1">//Criteria API</span><span class="w"></span>
+<span class="c1">// This should REALLY be validated too</span><span class="w"></span>
+<span class="n">String</span><span class="w"> </span><span class="n">userSuppliedParameter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;Product-Description&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="c1">// perform input validation to detect attacks</span><span class="w"></span>
+<span class="n">Inventory</span><span class="w"> </span><span class="n">inv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Inventory</span><span class="p">)</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">createCriteria</span><span class="p">(</span><span class="n">Inventory</span><span class="p">.</span><span class="na">class</span><span class="p">).</span><span class="na">add</span><span class="w"></span>
+<span class="p">(</span><span class="n">Restrictions</span><span class="p">.</span><span class="na">eq</span><span class="p">(</span><span class="s">&quot;productDescription&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">userSuppliedParameter</span><span class="p">)).</span><span class="na">uniqueResult</span><span class="p">();</span><span class="w"></span>
 </code></pre></div>
 <h4 id="using-net-built-in-feature">Using .NET built-in feature<a class="headerlink" href="#using-net-built-in-feature" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;SELECT account_balance FROM user_data WHERE user_name = ?&quot;</span><span class="p">;</span><span class="w"></span>
@@ -2038,7 +2038,7 @@
     <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.748e2769.min.js"></script>
+      <script src="../assets/javascripts/bundle.ed9748b7.min.js"></script>
       
     
   </body>

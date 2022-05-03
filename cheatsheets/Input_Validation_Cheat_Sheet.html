@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.11">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.13">
     
     
       
@@ -21,10 +21,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.8c5ef100.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.e411adfe.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.9647289d.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cc9b2e1e.min.css">
         
       
     
@@ -1907,19 +1907,19 @@ TX|UT|VT|VI|VA|WA|WV|WI|WY)$
 </code></pre></div>
 <p><strong>Java Regex Usage Example:</strong></p>
 <p>Example validating the parameter "zip" using a regular expression.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Pattern</span> <span class="n">zipPattern</span> <span class="o">=</span> <span class="n">Pattern</span><span class="p">.</span><span class="na">compile</span><span class="p">(</span><span class="s">&quot;^\d{5}(-\d{4})?$&quot;</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Pattern</span><span class="w"> </span><span class="n">zipPattern</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Pattern</span><span class="p">.</span><span class="na">compile</span><span class="p">(</span><span class="s">&quot;^\d{5}(-\d{4})?$&quot;</span><span class="p">);</span><span class="w"></span>
 
-<span class="kd">public</span> <span class="kt">void</span> <span class="nf">doPost</span><span class="p">(</span> <span class="n">HttpServletRequest</span> <span class="n">request</span><span class="p">,</span> <span class="n">HttpServletResponse</span> <span class="n">response</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">try</span> <span class="p">{</span>
-      <span class="n">String</span> <span class="n">zipCode</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span> <span class="s">&quot;zip&quot;</span> <span class="p">);</span>
-      <span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="n">zipPattern</span><span class="p">.</span><span class="na">matcher</span><span class="p">(</span> <span class="n">zipCode</span> <span class="p">).</span><span class="na">matches</span><span class="p">()</span>  <span class="p">{</span>
-          <span class="k">throw</span> <span class="k">new</span> <span class="n">YourValidationException</span><span class="p">(</span> <span class="s">&quot;Improper zipcode format.&quot;</span> <span class="p">);</span>
-      <span class="p">}</span>
-      <span class="c1">// do what you want here, after its been validated ..</span>
-  <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="n">YourValidationException</span> <span class="n">e</span> <span class="p">)</span> <span class="p">{</span>
-      <span class="n">response</span><span class="p">.</span><span class="na">sendError</span><span class="p">(</span> <span class="n">response</span><span class="p">.</span><span class="na">SC_BAD_REQUEST</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="na">getMessage</span><span class="p">()</span> <span class="p">);</span>
-  <span class="p">}</span>
-<span class="p">}</span>
+<span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">doPost</span><span class="p">(</span><span class="w"> </span><span class="n">HttpServletRequest</span><span class="w"> </span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="n">HttpServletResponse</span><span class="w"> </span><span class="n">response</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">String</span><span class="w"> </span><span class="n">zipCode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;zip&quot;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="o">!</span><span class="n">zipPattern</span><span class="p">.</span><span class="na">matcher</span><span class="p">(</span><span class="w"> </span><span class="n">zipCode</span><span class="w"> </span><span class="p">).</span><span class="na">matches</span><span class="p">()</span><span class="w">  </span><span class="p">{</span><span class="w"></span>
+<span class="w">          </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">YourValidationException</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;Improper zipcode format.&quot;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// do what you want here, after its been validated ..</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="p">(</span><span class="n">YourValidationException</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="n">response</span><span class="p">.</span><span class="na">sendError</span><span class="p">(</span><span class="w"> </span><span class="n">response</span><span class="p">.</span><span class="na">SC_BAD_REQUEST</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">getMessage</span><span class="p">()</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div>
 <p>Some Allow list validators have also been predefined in various open source packages that you can leverage. For example:</p>
 <ul>
@@ -2093,7 +2093,7 @@ TX|UT|VT|VI|VA|WA|WV|WI|WY)$
     <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.748e2769.min.js"></script>
+      <script src="../assets/javascripts/bundle.ed9748b7.min.js"></script>
       
     
   </body>

@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.11">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.13">
     
     
       
@@ -21,10 +21,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.8c5ef100.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.e411adfe.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.9647289d.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cc9b2e1e.min.css">
         
       
     
@@ -1921,12 +1921,12 @@ The user leverages the web application as a proxy to the HR system.</p>
 <p>A <a href="https://www.regular-expressions.info/">regex</a> can be used to ensure that data received is valid from a security point of view if the input data have a simple format (<em>e.g.</em> token, zip code, etc.). Otherwise, validation should be conducted using the libraries available from the <code>string</code> object because regex for complex formats are difficult to maintain and are highly error-prone.</p>
 <p>User input is assumed to be non-network related and consists of the user's personal information.</p>
 <p>Example:</p>
-<div class="highlight"><pre><span></span><code><span class="c1">//Regex validation for a data having a simple format</span>
-<span class="k">if</span><span class="p">(</span><span class="n">Pattern</span><span class="p">.</span><span class="na">matches</span><span class="p">(</span><span class="s">&quot;[a-zA-Z0-9\\s\\-]{1,50}&quot;</span><span class="p">,</span> <span class="n">userInput</span><span class="p">)){</span>
-    <span class="c1">//Continue the processing because the input data is valid</span>
-<span class="p">}</span><span class="k">else</span><span class="p">{</span>
-    <span class="c1">//Stop the processing and reject the request</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="c1">//Regex validation for a data having a simple format</span><span class="w"></span>
+<span class="k">if</span><span class="p">(</span><span class="n">Pattern</span><span class="p">.</span><span class="na">matches</span><span class="p">(</span><span class="s">&quot;[a-zA-Z0-9\\s\\-]{1,50}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">userInput</span><span class="p">)){</span><span class="w"></span>
+<span class="w">    </span><span class="c1">//Continue the processing because the input data is valid</span><span class="w"></span>
+<span class="p">}</span><span class="k">else</span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">//Stop the processing and reject the request</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div>
 <h6 id="ip-address">IP address<a class="headerlink" href="#ip-address" title="Permanent link">&para;</a></h6>
 <p>In the context of SSRF, there are 2 possible validations to perform:</p>
@@ -2299,7 +2299,7 @@ Checkout the Semgrep rule for SSRF to identify/investigate for SSRF vulnerabilit
     <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.748e2769.min.js"></script>
+      <script src="../assets/javascripts/bundle.ed9748b7.min.js"></script>
       
     
   </body>
