@@ -347,7 +347,7 @@ Care should be taken when using user input to determine which view to render. If
 
 ### Cross Origin Resource Sharing
 
-Occasionally, a need arises to share resources with another domain. For example, a file-upload function that sends data via an AJAX request to another domain. In these cases, the same-origin rules followed by web browsers must be bent. Modern browsers, in compliance with HTML5 standards, will allow this to occur but in order to do this; a couple precautions must be taken.
+Occasionally, a need arises to share resources with another domain. For example, a file-upload function that sends data via an AJAX request to another domain. In these cases, the same-origin rules followed by web browsers must be sent. Modern browsers, in compliance with HTML5 standards, will allow this to occur but in order to do this; a couple precautions must be taken.
 
 When using a nonstandard HTTP construct, such as an atypical Content-Type header, for example, the following applies:
 
