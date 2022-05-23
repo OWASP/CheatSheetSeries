@@ -77,7 +77,7 @@ If you're using JavaScript for writing to HTML, look at the `.textContent` attri
 
 It’s critical to use quotation marks like `"` or `'` to surround your variables. Quoting makes it difficult to change the context a variable operates in, which helps prevent XSS. Quoting also significantly reduces the characterset that you need to encode, making your application more reliable and the encoding easier to implement.
 
-If you're using JavaScript for writing to a HTML Attribute, look at the `.setAttribute` and `[attribute]` methods as they are **Safe Sinks** and will automatically HTML Attribute Encode.
+If you're using JavaScript for writing to a HTML Attribute, look at the `.setAttribute` and `[attribute]` methods which will automatically HTML Attribute Encode. Those are **Safe Sinks** as long as the attribute name is hardcoded and innocuous, like `id` or `class`. Generally, attributes that accept JavaScript, such as `onClick`, are **NOT safe** to use with untrusted attribute values.
 
 ### Output Encoding for “JavaScript Contexts”
 
