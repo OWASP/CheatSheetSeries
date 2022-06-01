@@ -2,7 +2,7 @@
 
 ## Introduction
 
-HTTP Headers are a great booster for web security with easy implementation. Proper HTTP response eaders can help prevent security vulnerabilities like Cross-Site Scripting, Clickjacking, Information disclosure and more.
+HTTP Headers are a great booster for web security with easy implementation. Proper HTTP response headers can help prevent security vulnerabilities like Cross-Site Scripting, Clickjacking, Information disclosure and more.
 
 In this cheat sheet, we will review all security-related HTTP headers, recommended configurations, and reference other sources for complicated headers.
 
