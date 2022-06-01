@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Clickjacking_Defense_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.15">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.16">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.c382b1dc.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.1c3799f8.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.cc9b2e1e.min.css">
@@ -524,6 +524,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#browser-support" class="md-nav__link">
+    Browser Support
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -545,7 +552,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#browser-support" class="md-nav__link">
+  <a href="#browser-support_1" class="md-nav__link">
     Browser Support
   </a>
   
@@ -1674,6 +1681,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#browser-support" class="md-nav__link">
+    Browser Support
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1695,7 +1709,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#browser-support" class="md-nav__link">
+  <a href="#browser-support_1" class="md-nav__link">
     Browser Support
   </a>
   
@@ -1870,6 +1884,12 @@
 <li><strong>Browser support:</strong> CSP frame-ancestors is not supported by all the major browsers yet.</li>
 <li><strong>X-Frame-Options takes priority:</strong> <a href="https://w3c.github.io/webappsec/specs/content-security-policy/#frame-ancestors-and-frame-options">Section "Relation to X-Frame-Options" of the CSP Spec</a> says: "<em>If a resource is delivered with an policy that includes a directive named frame-ancestors and whose disposition is "enforce", then the X-Frame-Options header MUST be ignored</em>", but Chrome 40 &amp; Firefox 35 ignore the frame-ancestors directive and follow the X-Frame-Options header instead.</li>
 </ul>
+<h3 id="browser-support">Browser Support<a class="headerlink" href="#browser-support" title="Permanent link">&para;</a></h3>
+<p>The following <a href="https://caniuse.com/?search=frame-ancestors">browsers</a> support CSP frame-ancestors.</p>
+<p>References:</p>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors#browser_compatibility">Mozilla Developer Network</a></li>
+</ul>
 <h2 id="defending-with-x-frame-options-response-headers">Defending with X-Frame-Options Response Headers<a class="headerlink" href="#defending-with-x-frame-options-response-headers" title="Permanent link">&para;</a></h2>
 <p>The <code>X-Frame-Options</code> HTTP response header can be used to indicate whether or not a browser should be allowed to render a page in a <code>&lt;frame&gt;</code> or <code>&lt;iframe&gt;</code>. Sites can use this to avoid Clickjacking attacks, by ensuring that their content is not embedded into other sites. Set the X-Frame-Options header for all responses containing HTML content. The possible values are "DENY", "SAMEORIGIN", or "ALLOW-FROM uri"</p>
 <h3 id="x-frame-options-header-types">X-Frame-Options Header Types<a class="headerlink" href="#x-frame-options-header-types" title="Permanent link">&para;</a></h3>
@@ -1883,11 +1903,11 @@
 </ul>
 </li>
 </ul>
-<h3 id="browser-support">Browser Support<a class="headerlink" href="#browser-support" title="Permanent link">&para;</a></h3>
+<h3 id="browser-support_1">Browser Support<a class="headerlink" href="#browser-support_1" title="Permanent link">&para;</a></h3>
 <p>The following <a href="https://caniuse.com/#search=X-Frame-Options">browsers</a> support X-Frame-Options headers.</p>
 <p>References:</p>
 <ul>
-<li><a href="https://developer.mozilla.org/en-US/docs/HTTP/X-Frame-Options">Mozilla Developer Network</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/web/http/headers/x-frame-options#browser_compatibility">Mozilla Developer Network</a></li>
 <li><a href="http://datatracker.ietf.org/doc/draft-ietf-websec-x-frame-options/">IETF Draft</a></li>
 <li><a href="https://erlend.oftedal.no/blog/tools/xframeoptions/">X-Frame-Options Compatibility Test</a> - Check this for the LATEST browser support info for the X-Frame-Options header</li>
 </ul>
@@ -1905,7 +1925,7 @@
 </ul>
 <p><img alt="NestedFrames" src="../assets/Clickjacking_Defense_Cheat_Sheet_NestedFrames.png" /></p>
 <ul>
-<li><strong>X-Frame-Options Deprecated</strong> While the X-Frame-Options header is supported by the major browsers, it was never standardized and has been deprecated in favour of the frame-ancestors directive from the CSP Level 2 specification.</li>
+<li><strong>X-Frame-Options Deprecated</strong> While the X-Frame-Options header is supported by the major browsers, it has been obsoleted in favour of the frame-ancestors directive from the CSP Level 2 specification.</li>
 <li><strong>Proxies</strong> Web proxies are notorious for adding and stripping headers. If a web proxy strips the X-Frame-Options header then the site loses its framing protection.</li>
 </ul>
 <h2 id="defending-with-samesite-cookies">Defending with SameSite Cookies<a class="headerlink" href="#defending-with-samesite-cookies" title="Permanent link">&para;</a></h2>
@@ -2109,7 +2129,7 @@
     <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.a6c66575.min.js"></script>
+      <script src="../assets/javascripts/bundle.3a4b43e5.min.js"></script>
       
     
   </body>
