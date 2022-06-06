@@ -482,6 +482,12 @@ Always encrypt your backups using a well reviewed backup and encryption solution
 
 Kubernetes supports encryption at rest, a feature introduced in 1.7, and beta since 1.13. This will encrypt Secret resources in etcd, preventing parties that gain access to your etcd backups from viewing the content of those secrets. While this feature is currently beta, it offers an additional level of defense when backups are not encrypted or an attacker gains read access to etcd.
 
+#### Finding exposed secrets
+
+Open-source tools such as [SecretScanner](https://github.com/deepfence/SecretScanner) and [ThreatMapper](https://github.com/deepfence/ThreatMapper) can scan container filesystems for sensitive resources, such as API tokens, passwords, and keys. Such resources would be accessible to any user who had access to the unencrypted container filesystem, whether during build, at rest in a registry or backup, or running.
+
+Review the secret material present on the container against the principle of 'least priviledge', and to assess the risk posed by a compromise.
+
 ## Kubernetes Security Best Practices: Runtime Phase
 
 The runtime phase exposes containerized applications to a slew of new security challenges. Your goal here is to both gain visibility into your running environment and detect and respond to threats as they arise.
