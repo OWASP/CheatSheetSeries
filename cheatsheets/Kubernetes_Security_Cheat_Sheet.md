@@ -565,7 +565,7 @@ Observe your active network traffic and compare that traffic to what is allowed 
 
 At the same time, comparing the active traffic with what’s allowed gives you valuable information about what isn’t happening but is allowed. With that information, you can further tighten your allowed network policies so that it removes superfluous connections and decreases your attack surface.
 
-Open source projects like <https://github.com/kinvolk/inspektor-gadget> may help with this, and commercial security solutions provide varying degrees of container network traffic analysis.
+Open source projects like <https://github.com/kinvolk/inspektor-gadget> or <https://github.com/deepfence/PacketStreamer> may help with this, and commercial security solutions provide varying degrees of container network traffic analysis.
 
 ### If breached, scale suspicious pods to zero
 
