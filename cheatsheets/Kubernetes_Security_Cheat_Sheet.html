@@ -1251,6 +1251,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#finding-exposed-secrets" class="md-nav__link">
+    Finding exposed secrets
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2437,6 +2444,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#finding-exposed-secrets" class="md-nav__link">
+    Finding exposed secrets
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3097,6 +3111,9 @@ You must ensure that secrets are not being passed as environment variables but a
 <p>The etcd database in general contains any information accessible via the Kubernetes API and may grant an attacker significant visibility into the state of your cluster.</p>
 <p>Always encrypt your backups using a well reviewed backup and encryption solution, and consider using full disk encryption where possible.</p>
 <p>Kubernetes supports encryption at rest, a feature introduced in 1.7, and beta since 1.13. This will encrypt Secret resources in etcd, preventing parties that gain access to your etcd backups from viewing the content of those secrets. While this feature is currently beta, it offers an additional level of defense when backups are not encrypted or an attacker gains read access to etcd.</p>
+<h4 id="finding-exposed-secrets">Finding exposed secrets<a class="headerlink" href="#finding-exposed-secrets" title="Permanent link">&para;</a></h4>
+<p>Open-source tools such as <a href="https://github.com/deepfence/SecretScanner">SecretScanner</a> and <a href="https://github.com/deepfence/ThreatMapper">ThreatMapper</a> can scan container filesystems for sensitive resources, such as API tokens, passwords, and keys. Such resources would be accessible to any user who had access to the unencrypted container filesystem, whether during build, at rest in a registry or backup, or running.</p>
+<p>Review the secret material present on the container against the principle of 'least priviledge', and to assess the risk posed by a compromise.</p>
 <h2 id="kubernetes-security-best-practices-runtime-phase">Kubernetes Security Best Practices: Runtime Phase<a class="headerlink" href="#kubernetes-security-best-practices-runtime-phase" title="Permanent link">&para;</a></h2>
 <p>The runtime phase exposes containerized applications to a slew of new security challenges. Your goal here is to both gain visibility into your running environment and detect and respond to threats as they arise.</p>
 <p>Proactively securing your containers and Kubernetes deployments at the build and deploy phases can greatly reduce the likelihood of security incidents at runtime and the subsequent effort needed to respond to them.</p>
@@ -3154,7 +3171,7 @@ blacklist sctp
 <h3 id="monitor-network-traffic-to-limit-unnecessary-or-insecure-communication">Monitor network traffic to limit unnecessary or insecure communication<a class="headerlink" href="#monitor-network-traffic-to-limit-unnecessary-or-insecure-communication" title="Permanent link">&para;</a></h3>
 <p>Observe your active network traffic and compare that traffic to what is allowed based on your Kubernetes network policies. Containerized applications typically make extensive use of cluster networking, and observing active networking traffic is a good way to understand how applications interact with each other and identify unexpected communication.</p>
 <p>At the same time, comparing the active traffic with what’s allowed gives you valuable information about what isn’t happening but is allowed. With that information, you can further tighten your allowed network policies so that it removes superfluous connections and decreases your attack surface.</p>
-<p>Open source projects like <a href="https://github.com/kinvolk/inspektor-gadget">https://github.com/kinvolk/inspektor-gadget</a> may help with this, and commercial security solutions provide varying degrees of container network traffic analysis.</p>
+<p>Open source projects like <a href="https://github.com/kinvolk/inspektor-gadget">https://github.com/kinvolk/inspektor-gadget</a> or <a href="https://github.com/deepfence/PacketStreamer">https://github.com/deepfence/PacketStreamer</a> may help with this, and commercial security solutions provide varying degrees of container network traffic analysis.</p>
 <h3 id="if-breached-scale-suspicious-pods-to-zero">If breached, scale suspicious pods to zero<a class="headerlink" href="#if-breached-scale-suspicious-pods-to-zero" title="Permanent link">&para;</a></h3>
 <p>Use Kubernetes native controls to contain a successful breach by automatically instructing Kubernetes to scale suspicious pods to zero or kill then restart instances of breached applications.</p>
 <h3 id="rotate-infrastructure-credentials-frequently">Rotate infrastructure credentials frequently<a class="headerlink" href="#rotate-infrastructure-credentials-frequently" title="Permanent link">&para;</a></h3>
