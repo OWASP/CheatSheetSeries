@@ -102,8 +102,6 @@ The first layer of validation can be applied using libraries that ensure the sec
     - As allow listing is used here, any bypass tentative will be blocked during the comparison against the allowed list of IP addresses.
 - **JavaScript**: Library [ip-address](https://www.npmjs.com/package/ip-address).
     - **It is NOT exposed** to bypass using Hex, Octal, Dword, URL and Mixed encoding.
-- **Python**: Module [ipaddress](https://docs.python.org/3/library/ipaddress.html) from the SDK.
-    - **It is NOT exposed** to bypass using Hex, Octal, Dword, URL and Mixed encoding.
 - **Ruby**: Class [IPAddr](https://ruby-doc.org/stdlib-2.0.0/libdoc/ipaddr/rdoc/IPAddr.html) from the SDK.
     - **It is NOT exposed** to bypass using Hex, Octal, Dword, URL and Mixed encoding.
 
