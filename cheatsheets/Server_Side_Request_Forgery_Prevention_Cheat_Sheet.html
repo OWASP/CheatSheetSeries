@@ -1953,10 +1953,6 @@ The user leverages the web application as a proxy to the HR system.</p>
 <li><strong>It is NOT exposed</strong> to bypass using Hex, Octal, Dword, URL and Mixed encoding.</li>
 </ul>
 </li>
-<li><strong>Python</strong>: Module <a href="https://docs.python.org/3/library/ipaddress.html">ipaddress</a> from the SDK.<ul>
-<li><strong>It is NOT exposed</strong> to bypass using Hex, Octal, Dword, URL and Mixed encoding.</li>
-</ul>
-</li>
 <li><strong>Ruby</strong>: Class <a href="https://ruby-doc.org/stdlib-2.0.0/libdoc/ipaddr/rdoc/IPAddr.html">IPAddr</a> from the SDK.<ul>
 <li><strong>It is NOT exposed</strong> to bypass using Hex, Octal, Dword, URL and Mixed encoding.</li>
 </ul>
@@ -2139,62 +2135,6 @@ The user leverages the web application as a proxy to the HR system.</p>
 <li>The application will receive and validate (from a security point of view) any business data needed to perform a valid call.</li>
 <li>The application will build the HTTP POST request <strong>using only validated information</strong> and will send it (<em>don't forget to disable the support for <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections">redirection</a> in the web client used</em>).</li>
 </ol>
-<p><strong>Hints for the step 2 regarding the verification on an IP address:</strong></p>
-<p>As mentioned above, not every SDK provide a built-in feature to verify if an IP (V4 + V6) is private/public. So, the following approach can be used based on a block list composed of the private IP ranges (<em>example is given in python in order to be easy to understand and portable to others technologies</em>) :</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">is_private_ip</span><span class="p">(</span><span class="n">ip_address</span><span class="p">):</span>
-    <span class="n">is_private</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Determine if a IP address provided is a private one.</span>
-<span class="sd">    Return TRUE if it&#39;s the case, FALSE otherwise.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># Build the list of IP prefix for V4 and V6 addresses</span>
-    <span class="n">ip_prefix</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="c1"># Add prefix for loopback addresses</span>
-    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;127.&quot;</span><span class="p">)</span>
-    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;0.&quot;</span><span class="p">)</span>
-    <span class="c1"># Add IP V4 prefix for private addresses</span>
-    <span class="c1"># See https://en.wikipedia.org/wiki/Private_network</span>
-    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;10.&quot;</span><span class="p">)</span>
-    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;172.16.&quot;</span><span class="p">)</span>
-    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;172.17.&quot;</span><span class="p">)</span>
-    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;172.18.&quot;</span><span class="p">)</span>
-    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;172.19.&quot;</span><span class="p">)</span>
-    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;172.20.&quot;</span><span class="p">)</span>
-    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;172.21.&quot;</span><span class="p">)</span>
-    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;172.22.&quot;</span><span class="p">)</span>
-    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;172.23.&quot;</span><span class="p">)</span>
-    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;172.24.&quot;</span><span class="p">)</span>
-    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;172.25.&quot;</span><span class="p">)</span>
-    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;172.26.&quot;</span><span class="p">)</span>
-    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;172.27.&quot;</span><span class="p">)</span>
-    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;172.28.&quot;</span><span class="p">)</span>
-    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;172.29.&quot;</span><span class="p">)</span>
-    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;172.30.&quot;</span><span class="p">)</span>
-    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;172.31.&quot;</span><span class="p">)</span>
-    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;192.168.&quot;</span><span class="p">)</span>
-    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;169.254.&quot;</span><span class="p">)</span>
-    <span class="c1"># Add IP V6 prefix for private addresses</span>
-    <span class="c1"># See https://en.wikipedia.org/wiki/Unique_local_address</span>
-    <span class="c1"># See https://en.wikipedia.org/wiki/Private_network</span>
-    <span class="c1"># See https://simpledns.com/private-ipv6</span>
-    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;fc&quot;</span><span class="p">)</span>
-    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;fd&quot;</span><span class="p">)</span>
-    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;fe&quot;</span><span class="p">)</span>
-    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;ff&quot;</span><span class="p">)</span>
-    <span class="n">ip_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;::1&quot;</span><span class="p">)</span>
-    <span class="c1"># Verify the provided IP address</span>
-    <span class="c1"># Remove whitespace characters from the beginning/end of the string</span>
-    <span class="c1"># and convert it to lower case</span>
-    <span class="c1"># Lower case is for preventing any IPV6 case bypass using mixed case</span>
-    <span class="c1"># depending on the source used to get the IP address</span>
-    <span class="n">ip_to_verify</span> <span class="o">=</span> <span class="n">ip_address</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-    <span class="c1"># Perform the check against the list of prefix</span>
-    <span class="k">for</span> <span class="n">prefix</span> <span class="ow">in</span> <span class="n">ip_prefix</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">ip_to_verify</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">prefix</span><span class="p">):</span>
-            <span class="n">is_private</span> <span class="o">=</span> <span class="kc">True</span>
-            <span class="k">break</span>
-    <span class="k">return</span> <span class="n">is_private</span>
-</code></pre></div>
 <h5 id="network-layer_1">Network layer<a class="headerlink" href="#network-layer_1" title="Permanent link">&para;</a></h5>
 <p>Similar to the following <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html#network-layer">section</a>.</p>
 <h2 id="imdsv2-in-aws">IMDSv2 in AWS<a class="headerlink" href="#imdsv2-in-aws" title="Permanent link">&para;</a></h2>
