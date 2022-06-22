@@ -9,7 +9,7 @@ This Cheat Sheet provides guidance on the various areas that need to be consider
 - Apply proper [input validation](Input_Validation_Cheat_Sheet.md) checks on all incoming data.
 - Expensive queries will lead to [Denial of Service (DoS)](Denial_of_Service_Cheat_Sheet.md), so add checks to limit or prevent queries that are too expensive.
 - Ensure that the API has proper [access control](Access_Control_Cheat_Sheet.md) checks.
-- Disable insecure default configurations (_e.g._ introspection, GraphiQL, excessive errors, etc.).
+- Disable insecure default configurations (_e.g._ excessive errors, introspection, GraphiQL, etc.).
 
 ## Common Attacks
 
@@ -272,8 +272,9 @@ Limiting the number of operations that can be batched and run at once is another
 
 By default, most GraphQL implementations have some insecure default configurations which should be changed:
 
-- Disable or restrict Introspection and GraphiQL based on your needs; these should only be used for development purposes.
 - Don't return excessive error messages (_e.g._ disable stack traces and debug mode).
+- Disable or restrict Introspection and GraphiQL based on your needs.
+- Suggestion of mis-typed fields if the introspection is disabled
 
 #### Introspection + GraphiQL
 
