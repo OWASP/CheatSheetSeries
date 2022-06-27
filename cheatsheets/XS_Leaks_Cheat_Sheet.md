@@ -188,7 +188,7 @@ app.get('/api/users/:id', authorization, (req, res) => {
 
 #### Cross-Origin-Resource-Policy (CORP)
 
-If the server returns this header with the appropriate value, the the browser will not load resources from our site or origin (even static images) in another application. Possible values:
+If the server returns this header with the appropriate value, the browser will not load resources from our site or origin (even static images) in another application. Possible values:
 
 - `same-site`
 - `same-origin`
