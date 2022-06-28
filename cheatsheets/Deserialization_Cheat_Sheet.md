@@ -123,7 +123,7 @@ The general idea is to override [`ObjectInputStream.html#resolveClass()`](http:/
 
 Because this call happens before a `readObject()` is called, you can be sure that no deserialization activity will occur unless the type is one that you wish to allow.
 
-A simple example of this shown here, where the the `LookAheadObjectInputStream` class is guaranteed not to deserialize any other type besides the `Bicycle` class:
+A simple example of this shown here, where the `LookAheadObjectInputStream` class is guaranteed not to deserialize any other type besides the `Bicycle` class:
 
 ```java
 public class LookAheadObjectInputStream extends ObjectInputStream {

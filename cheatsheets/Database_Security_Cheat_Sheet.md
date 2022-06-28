@@ -57,7 +57,7 @@ Where possible, these credentials should also be encrypted or otherwise protecte
 
 ## Permissions
 
-The permissions assigned to database user accounts should be based on the principle of least privilege (i.e, the accounts should only have the minimal permissions required for the application to function). This can be applied at a number of increasingly granular levels levels depending on the functionality available in the database. The following steps should be applicable to all environments:
+The permissions assigned to database user accounts should be based on the principle of least privilege (i.e, the accounts should only have the minimal permissions required for the application to function). This can be applied at a number of increasingly granular levels depending on the functionality available in the database. The following steps should be applicable to all environments:
 
 - Do not use the built-in `root`, `sa` or `SYS` accounts.
 - Do not grant the account administrative rights over the database instance.

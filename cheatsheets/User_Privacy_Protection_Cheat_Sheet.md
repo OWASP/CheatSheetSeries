@@ -48,7 +48,7 @@ For details regarding certificate pinning, please refer to the following:
 
 1. [OWASP Certificate Pinning Cheat Sheet](Pinning_Cheat_Sheet.md).
 2. [Public Key Pinning Extension for HTTP RFC](https://tools.ietf.org/html/rfc7469).
-3. [Securing the SSL channel against man-in-the-middle attacks: Future technologies - HTTP Strict Transport Security and and Pinning of Certs, by Tobias Gondrom](https://owasp.org/www-pdf-archive/OWASP_defending-MITMA_APAC2012.pdf).
+3. [Securing the SSL channel against man-in-the-middle attacks: Future technologies - HTTP Strict Transport Security and Pinning of Certs, by Tobias Gondrom](https://owasp.org/www-pdf-archive/OWASP_defending-MITMA_APAC2012.pdf).
 
 ### Panic Modes
 
