@@ -1959,7 +1959,7 @@
 <li>Apply proper <a href="Input_Validation_Cheat_Sheet.html">input validation</a> checks on all incoming data.</li>
 <li>Expensive queries will lead to <a href="Denial_of_Service_Cheat_Sheet.html">Denial of Service (DoS)</a>, so add checks to limit or prevent queries that are too expensive.</li>
 <li>Ensure that the API has proper <a href="Access_Control_Cheat_Sheet.html">access control</a> checks.</li>
-<li>Disable insecure default configurations (<em>e.g.</em> introspection, GraphiQL, excessive errors, etc.).</li>
+<li>Disable insecure default configurations (<em>e.g.</em> excessive errors, introspection, GraphiQL, etc.).</li>
 </ul>
 <h2 id="common-attacks">Common Attacks<a class="headerlink" href="#common-attacks" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2169,8 +2169,9 @@
 <h3 id="secure-configurations">Secure Configurations<a class="headerlink" href="#secure-configurations" title="Permanent link">&para;</a></h3>
 <p>By default, most GraphQL implementations have some insecure default configurations which should be changed:</p>
 <ul>
-<li>Disable or restrict Introspection and GraphiQL based on your needs; these should only be used for development purposes.</li>
 <li>Don't return excessive error messages (<em>e.g.</em> disable stack traces and debug mode).</li>
+<li>Disable or restrict Introspection and GraphiQL based on your needs.</li>
+<li>Suggestion of mis-typed fields if the introspection is disabled</li>
 </ul>
 <h4 id="introspection-graphiql">Introspection + GraphiQL<a class="headerlink" href="#introspection-graphiql" title="Permanent link">&para;</a></h4>
 <p>GraphQL Often comes by default with introspection and/or GraphiQL enabled and not requiring authentication. This allows the consumer of your API to learn everything about your API, schemas, mutations, deprecated fields and sometimes unwanted "private fields".</p>
