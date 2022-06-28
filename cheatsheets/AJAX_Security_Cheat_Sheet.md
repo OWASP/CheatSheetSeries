@@ -28,7 +28,7 @@ Least ye have forgotten the user controls the client side logic. I can use a num
 
 #### Don't rely on client business logic
 
-Just like the security one, make sure any interesting business rules/logic is duplicated on the server side less a user bypass needed logic and do something silly, or worse, costly.
+Just like the security one, make sure any interesting business rules/logic is duplicated on the server side lest a user bypasses needed logic and does something silly, or worse, costly.
 
 #### Avoid writing serialization code
 
@@ -38,7 +38,7 @@ Take a look at the [JSON page](http://www.json.org/) for links.
 
 #### Avoid building XML or JSON dynamically
 
-Just like building HTML or SQL you will cause XML injection bugs, so stay way from this or at least use an encoding library or safe JSON or XML library to make attributes and element data safe.
+Just like building HTML or SQL you will cause XML injection bugs, so stay away from this or at least use an encoding library or safe JSON or XML library to make attributes and element data safe.
 
 - [XSS (Cross Site Scripting) Prevention](Cross_Site_Scripting_Prevention_Cheat_Sheet.md)
 - [SQL Injection Prevention](SQL_Injection_Prevention_Cheat_Sheet.md)

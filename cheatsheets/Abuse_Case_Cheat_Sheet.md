@@ -15,7 +15,7 @@ In order to build a secure application, from a pragmatic point of view, it is im
 
 ### Objective
 
-The objective of this cheat sheet is to provide an explanation of about what an **Abuse Case** is, why abuse cases are important when considering the security of an application, and further finally, to provide a proposal for a pragmatic approach to building  a list of abuse cases and tracking them for every feature planned for implementation as part of an application. The cheat sheet may be used for this purpose regardless of the project methodology used (waterfall or agile).
+The objective of this cheat sheet is to provide an explanation of what an **Abuse Case** is, why abuse cases are important when considering the security of an application, and finally to provide a proposal for a pragmatic approach to building  a list of abuse cases and tracking them for every feature planned for implementation as part of an application. The cheat sheet may be used for this purpose regardless of the project methodology used (waterfall or agile).
 
 **Important note about this Cheat Sheet:**
 
@@ -50,7 +50,7 @@ allowing an attacker to influence the feature or outcome of use of
 the feature based on the attacker action (or input).
 ```
 
-Synopsys define an **Abuse Case** like this:
+Synopsys defines an **Abuse Case** like this:
 
 ```text
 Misuse and abuse cases describe how users misuse or exploit the weaknesses
@@ -101,9 +101,9 @@ It is important to take into account **Technical** and **Business** kind of abus
 
 #### When to define the list of Abuse Cases
 
-On agile project, the definition workshop must be made after the meeting in which User Stories are included in a Sprint.
+In agile projects, the definition workshop must be made after the meeting in which User Stories are included in a Sprint.
 
-In waterfall projects, the definition workshop must be made when the business feature to implements are identified and known by the business.
+In waterfall projects, the definition workshop must be made when the business features to implement are identified and known by the business.
 
 Whatever the mode of project used (agile or waterfall), the abuse cases selected to be addressed must become security requirements in each feature specification section (waterfall) or User Story acceptance criteria (agile) in order to allow additional cost/effort evaluation, identification and implementation of the countermeasures.
 
