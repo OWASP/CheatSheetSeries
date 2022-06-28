@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.3.7">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.3.8">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.4a0965b7.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.1d29e8d0.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
@@ -2512,9 +2512,9 @@
 <p>Session management mechanisms based on cookies can make use of two types of cookies, non-persistent (or session) cookies, and persistent cookies. If a cookie presents the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Directives"><code>Max-Age</code></a> (that has preference over <code>Expires</code>) or <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Directives"><code>Expires</code></a> attributes, it will be considered a persistent cookie and will be stored on disk by the web browser based until the expiration time.</p>
 <p>Typically, session management capabilities to track users after authentication make use of non-persistent cookies. This forces the session to disappear from the client if the current web browser instance is closed. Therefore, it is highly recommended to use non-persistent cookies for session management purposes, so that the session ID does not remain on the web client cache for long periods of time, from where an attacker can obtain it.</p>
 <ul>
-<li>Ensure that sensitive information is not comprised, by ensuring that sensitive information is not persistent / encrypting / stored on a need basis for the duration of the need</li>
+<li>Ensure that sensitive information is not compromised by ensuring that it is not persistent, encrypting it, and storing it only for the duration of the need</li>
 <li>Ensure that unauthorized activities cannot take place via cookie manipulation</li>
-<li>Ensure secure flag is set to prevent accidental transmission over "the wire" in a non-secure manner</li>
+<li>Ensure secure flag is set to prevent accidental transmission over the wire in a non-secure manner</li>
 <li>Determine if all state transitions in the application code properly check for the cookies and enforce their use</li>
 <li>Ensure entire cookie should be encrypted if sensitive data is persisted in the cookie</li>
 <li>Define all cookies being used by the application, their name and why they are needed</li>

@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Deserialization_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.3.7">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.3.8">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.4a0965b7.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.1d29e8d0.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
@@ -2007,7 +2007,7 @@
 </ul>
 <p>The general idea is to override <a href="http://docs.oracle.com/javase/7/docs/api/java/io/ObjectInputStream.html#resolveClass(java.io.ObjectStreamClass)"><code>ObjectInputStream.html#resolveClass()</code></a> in order to restrict which classes are allowed to be deserialized.</p>
 <p>Because this call happens before a <code>readObject()</code> is called, you can be sure that no deserialization activity will occur unless the type is one that you wish to allow.</p>
-<p>A simple example of this shown here, where the the <code>LookAheadObjectInputStream</code> class is guaranteed not to deserialize any other type besides the <code>Bicycle</code> class:</p>
+<p>A simple example of this shown here, where the <code>LookAheadObjectInputStream</code> class is guaranteed not to deserialize any other type besides the <code>Bicycle</code> class:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">LookAheadObjectInputStream</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">ObjectInputStream</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 
 <span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">LookAheadObjectInputStream</span><span class="p">(</span><span class="n">InputStream</span><span class="w"> </span><span class="n">inputStream</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">IOException</span><span class="w"> </span><span class="p">{</span><span class="w"></span>

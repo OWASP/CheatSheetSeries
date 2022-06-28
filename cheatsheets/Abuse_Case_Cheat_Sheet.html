@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Abuse_Case_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.3.7">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.3.8">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.4a0965b7.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.1d29e8d0.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
@@ -1899,7 +1899,7 @@
 <p>These security requirements are too generic, and thus useless for a development team...</p>
 <p>In order to build a secure application, from a pragmatic point of view, it is important to identify the attacks which the application must defend against, according to its business and technical context.</p>
 <h3 id="objective">Objective<a class="headerlink" href="#objective" title="Permanent link">&para;</a></h3>
-<p>The objective of this cheat sheet is to provide an explanation of about what an <strong>Abuse Case</strong> is, why abuse cases are important when considering the security of an application, and further finally, to provide a proposal for a pragmatic approach to building  a list of abuse cases and tracking them for every feature planned for implementation as part of an application. The cheat sheet may be used for this purpose regardless of the project methodology used (waterfall or agile).</p>
+<p>The objective of this cheat sheet is to provide an explanation of what an <strong>Abuse Case</strong> is, why abuse cases are important when considering the security of an application, and finally to provide a proposal for a pragmatic approach to building  a list of abuse cases and tracking them for every feature planned for implementation as part of an application. The cheat sheet may be used for this purpose regardless of the project methodology used (waterfall or agile).</p>
 <p><strong>Important note about this Cheat Sheet:</strong></p>
 <div class="highlight"><pre><span></span><code>The main objective is to provide a pragmatic approach in order to allow a company or a project team
 to start building and handling the list of abuse cases and then customize the elements
@@ -1923,7 +1923,7 @@ This cheat sheet can be seen as a getting-started tutorial.
 allowing an attacker to influence the feature or outcome of use of
 the feature based on the attacker action (or input).
 </code></pre></div>
-<p>Synopsys define an <strong>Abuse Case</strong> like this:</p>
+<p>Synopsys defines an <strong>Abuse Case</strong> like this:</p>
 <div class="highlight"><pre><span></span><code>Misuse and abuse cases describe how users misuse or exploit the weaknesses
 of controls in software features to attack an application.
 
@@ -1960,8 +1960,8 @@ Abuse of functionality, sometimes referred to as a “business logic attack”, 
 <li>Business flagged abuse case: Ability to modify arbitrary the price of an article in an online shop prior to pass an order causing the user to pay a lower amount for the wanted article.</li>
 </ul>
 <h4 id="when-to-define-the-list-of-abuse-cases">When to define the list of Abuse Cases<a class="headerlink" href="#when-to-define-the-list-of-abuse-cases" title="Permanent link">&para;</a></h4>
-<p>On agile project, the definition workshop must be made after the meeting in which User Stories are included in a Sprint.</p>
-<p>In waterfall projects, the definition workshop must be made when the business feature to implements are identified and known by the business.</p>
+<p>In agile projects, the definition workshop must be made after the meeting in which User Stories are included in a Sprint.</p>
+<p>In waterfall projects, the definition workshop must be made when the business features to implement are identified and known by the business.</p>
 <p>Whatever the mode of project used (agile or waterfall), the abuse cases selected to be addressed must become security requirements in each feature specification section (waterfall) or User Story acceptance criteria (agile) in order to allow additional cost/effort evaluation, identification and implementation of the countermeasures.</p>
 <p>Each abuse case must have a unique identifier in order to allow tracking throughout the whole project/sprint (details about this point will be given in the proposal section).</p>
 <p>An example of unique ID format can be <strong>ABUSE_CASE_001</strong>.</p>
