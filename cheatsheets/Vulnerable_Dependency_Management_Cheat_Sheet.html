@@ -2010,7 +2010,7 @@
 </ul>
 <p>In all cases, here, we need to handle the vulnerability right now.</p>
 <p><strong>Step 2:</strong></p>
-<p>As we know the vulnerable dependency, we know where it is used in the application (if it's a transitive dependency then we can identify the first level dependency using it using the <a href="https://en.wikipedia.org/wiki/Integrated_development_environment">IDE</a> built-in feature or the dependency management system used (Maven, Gradle, Nuget, npm, etc.). Note that IDE is also used to identify the calls to the dependency.</p>
+<p>As we know the vulnerable dependency, we know where it is used in the application (if it's a transitive dependency then we can identify the first level dependency using it using the <a href="https://en.wikipedia.org/wiki/Integrated_development_environment">IDE</a> built-in feature or the dependency management system used (Maven, Gradle, NuGet, npm, etc.). Note that IDE is also used to identify the calls to the dependency.</p>
 <p>Identifying calls to this dependency is fine but it is the first step. The team still lacks information on what kind of patching needs to be performed.</p>
 <p>To obtain these information, the team uses the CVE content to know which kind of vulnerability affects the dependency. The <code>description</code> property provides the answer: SQL injection, Remote Code Execution, Cross-Site Scripting, Cross-Site Request Forgery, etc.</p>
 <p>After identifying the above 2 points, the team is aware of the type of patching that needs to be taken (<a href="#case-2">Case 2</a> with the protective code) and where to add it.</p>
