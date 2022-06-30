@@ -175,7 +175,7 @@ In all cases, here, we need to handle the vulnerability right now.
 
 **Step 2:**
 
-As we know the vulnerable dependency, we know where it is used in the application (if it's a transitive dependency then we can identify the first level dependency using it using the [IDE](https://en.wikipedia.org/wiki/Integrated_development_environment) built-in feature or the dependency management system used (Maven, Gradle, Nuget, npm, etc.). Note that IDE is also used to identify the calls to the dependency.
+As we know the vulnerable dependency, we know where it is used in the application (if it's a transitive dependency then we can identify the first level dependency using it using the [IDE](https://en.wikipedia.org/wiki/Integrated_development_environment) built-in feature or the dependency management system used (Maven, Gradle, NuGet, npm, etc.). Note that IDE is also used to identify the calls to the dependency.
 
 Identifying calls to this dependency is fine but it is the first step. The team still lacks information on what kind of patching needs to be performed.
 
