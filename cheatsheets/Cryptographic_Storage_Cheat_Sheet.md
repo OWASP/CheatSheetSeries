@@ -92,6 +92,7 @@ The table below shows the recommended algorithms for each language, as well as i
 | Ruby     | `Random` | [SecureRandom](https://ruby-doc.org/stdlib-2.5.1/libdoc/securerandom/rdoc/SecureRandom.html) |
 | Go       | `rand` using `math/rand` package | [crypto.rand](https://golang.org/pkg/crypto/rand/) package |
 | Rust     | `rand::prng::XorShiftRng` | [rand::prng::chacha::ChaChaRng](https://docs.rs/rand/0.5.0/rand/prng/chacha/struct.ChaChaRng.html) and the rest of the Rust library [CSPRNGs.](https://docs.rs/rand/0.5.0/rand/prng/index.html#cryptographically-secure-pseudo-random-number-generators-csprngs) |
+| Node.js     | `Math.random()`                                   | [crypto.randomBytes](https://nodejs.org/api/crypto.html#cryptorandombytessize-callback), [crypto.randomInt](https://nodejs.org/api/crypto.html#cryptorandomintmin-max-callback), [crypto.randomUUID](https://nodejs.org/api/crypto.html#cryptorandomuuidoptions)              |                                                                                                                                                                                     |
 
 #### UUIDs and GUIDs
 
