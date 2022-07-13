@@ -94,7 +94,6 @@ The table below shows the recommended algorithms for each language, as well as i
 | Rust     | `rand::prng::XorShiftRng` | [rand::prng::chacha::ChaChaRng](https://docs.rs/rand/0.5.0/rand/prng/chacha/struct.ChaChaRng.html) and the rest of the Rust library [CSPRNGs.](https://docs.rs/rand/0.5.0/rand/prng/index.html#cryptographically-secure-pseudo-random-number-generators-csprngs) |
 | Node.js     | `Math.random()`                                   | [crypto.randomBytes](https://nodejs.org/api/crypto.html#cryptorandombytessize-callback), [crypto.randomInt](https://nodejs.org/api/crypto.html#cryptorandomintmin-max-callback), [crypto.randomUUID](https://nodejs.org/api/crypto.html#cryptorandomuuidoptions)              |                                                                                                                                                                                     |
 
-
 #### UUIDs and GUIDs
 
 Universally unique identifiers (UUIDs or GUIDs) are sometimes used as a quick way to generate random strings. Although they can provide a reasonable source of randomness, this will depend on the [type or version](https://en.wikipedia.org/wiki/Universally_unique_identifier#Versions) of the UUID that is created.
