@@ -31,86 +31,6 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://cheatsheetseries.owasp.org/cheatsheets/5.1%20-%20Authorization_Cheat_Sheet.html</loc>
-         <lastmod>2022-07-19</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://cheatsheetseries.owasp.org/cheatsheets/5.10%20-%20Database_Security_Cheat_Sheet.html</loc>
-         <lastmod>2022-07-19</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://cheatsheetseries.owasp.org/cheatsheets/5.10.1%2C%205.10.2%20-%20Injection_Prevention_Cheat_Sheet.html</loc>
-         <lastmod>2022-07-19</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://cheatsheetseries.owasp.org/cheatsheets/5.11%20-%20File_Upload_Cheat_Sheet.html</loc>
-         <lastmod>2022-07-19</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://cheatsheetseries.owasp.org/cheatsheets/5.12%20-%20REST_Security_Cheat_Sheet.html</loc>
-         <lastmod>2022-07-19</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://cheatsheetseries.owasp.org/cheatsheets/5.12.1%20-%20Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html</loc>
-         <lastmod>2022-07-19</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://cheatsheetseries.owasp.org/cheatsheets/5.13%20-%20Infrastructure_as_Code_Security_Cheat_Sheet.html</loc>
-         <lastmod>2022-07-19</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://cheatsheetseries.owasp.org/cheatsheets/5.14%20-%20C-Based_Toolchain_Hardening_Cheat_Sheet.html</loc>
-         <lastmod>2022-07-19</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://cheatsheetseries.owasp.org/cheatsheets/5.2%20-%20Authentication_Cheat_Sheet.html</loc>
-         <lastmod>2022-07-19</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://cheatsheetseries.owasp.org/cheatsheets/5.4%20-%20Session_Management_Cheat_Sheet.html</loc>
-         <lastmod>2022-07-19</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://cheatsheetseries.owasp.org/cheatsheets/5.4.4%20-%20Cross_Site_Scripting_Prevention_Cheat_Sheet.html</loc>
-         <lastmod>2022-07-19</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://cheatsheetseries.owasp.org/cheatsheets/5.5.2%20-%20Deserialization_Cheat_Sheet.html</loc>
-         <lastmod>2022-07-19</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://cheatsheetseries.owasp.org/cheatsheets/5.6%20-%20Secrets_Management_CheatSheet.html</loc>
-         <lastmod>2022-07-19</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://cheatsheetseries.owasp.org/cheatsheets/5.7%20-%20Error_Handling_Cheat_Sheet.html</loc>
-         <lastmod>2022-07-19</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://cheatsheetseries.owasp.org/cheatsheets/5.9%20-%20Transport_Layer_Protection_Cheat_Sheet.html</loc>
-         <lastmod>2022-07-19</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://cheatsheetseries.owasp.org/cheatsheets/5.9.1%2C%205.9.4%2C%205.9.5%20-%20HTTP_Strict_Transport_Security_Cheat_Sheet.html</loc>
-         <lastmod>2022-07-19</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
          <loc>https://cheatsheetseries.owasp.org/cheatsheets/AJAX_Security_Cheat_Sheet.html</loc>
          <lastmod>2022-07-19</lastmod>
          <changefreq>daily</changefreq>
@@ -131,12 +51,27 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html</loc>
+         <lastmod>2022-07-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html</loc>
+         <lastmod>2022-07-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Testing_Automation_Cheat_Sheet.html</loc>
          <lastmod>2022-07-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://cheatsheetseries.owasp.org/cheatsheets/Bean_Validation_Cheat_Sheet.html</loc>
+         <lastmod>2022-07-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://cheatsheetseries.owasp.org/cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.html</loc>
          <lastmod>2022-07-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
@@ -166,6 +101,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html</loc>
+         <lastmod>2022-07-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html</loc>
          <lastmod>2022-07-19</lastmod>
          <changefreq>daily</changefreq>
@@ -176,7 +116,17 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://cheatsheetseries.owasp.org/cheatsheets/Database_Security_Cheat_Sheet.html</loc>
+         <lastmod>2022-07-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://cheatsheetseries.owasp.org/cheatsheets/Denial_of_Service_Cheat_Sheet.html</loc>
+         <lastmod>2022-07-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://cheatsheetseries.owasp.org/cheatsheets/Deserialization_Cheat_Sheet.html</loc>
          <lastmod>2022-07-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
@@ -187,6 +137,16 @@
     </url>
     <url>
          <loc>https://cheatsheetseries.owasp.org/cheatsheets/DotNet_Security_Cheat_Sheet.html</loc>
+         <lastmod>2022-07-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://cheatsheetseries.owasp.org/cheatsheets/Error_Handling_Cheat_Sheet.html</loc>
+         <lastmod>2022-07-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html</loc>
          <lastmod>2022-07-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
@@ -207,6 +167,21 @@
     </url>
     <url>
          <loc>https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html</loc>
+         <lastmod>2022-07-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html</loc>
+         <lastmod>2022-07-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://cheatsheetseries.owasp.org/cheatsheets/Infrastructure_as_Code_Security_Cheat_Sheet.html</loc>
+         <lastmod>2022-07-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://cheatsheetseries.owasp.org/cheatsheets/Injection_Prevention_Cheat_Sheet.html</loc>
          <lastmod>2022-07-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
@@ -331,6 +306,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html</loc>
+         <lastmod>2022-07-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://cheatsheetseries.owasp.org/cheatsheets/Ruby_on_Rails_Cheat_Sheet.html</loc>
          <lastmod>2022-07-19</lastmod>
          <changefreq>daily</changefreq>
@@ -346,7 +326,22 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_CheatSheet.html</loc>
+         <lastmod>2022-07-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://cheatsheetseries.owasp.org/cheatsheets/Securing_Cascading_Style_Sheets_Cheat_Sheet.html</loc>
+         <lastmod>2022-07-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html</loc>
+         <lastmod>2022-07-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html</loc>
          <lastmod>2022-07-19</lastmod>
          <changefreq>daily</changefreq>
     </url>
@@ -367,6 +362,11 @@
     </url>
     <url>
          <loc>https://cheatsheetseries.owasp.org/cheatsheets/Transaction_Authorization_Cheat_Sheet.html</loc>
+         <lastmod>2022-07-19</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://cheatsheetseries.owasp.org/cheatsheets/Transport_Layer_Protection_Cheat_Sheet.html</loc>
          <lastmod>2022-07-19</lastmod>
          <changefreq>daily</changefreq>
     </url>

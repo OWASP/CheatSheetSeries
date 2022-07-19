@@ -10,14 +10,14 @@
       
       
       
-        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/5.12%20-%20REST_Security_Cheat_Sheet.html">
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
       <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
     
     
       
-        <title>5.12 - REST Security - OWASP Cheat Sheet Series</title>
+        <title>REST Security - OWASP Cheat Sheet Series</title>
       
     
     
@@ -96,7 +96,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              5.12 - REST Security
+              REST Security
             
           </span>
         </div>
@@ -323,389 +323,6 @@
   
   
     <li class="md-nav__item">
-      <a href="5.1%20-%20Authorization_Cheat_Sheet.html" class="md-nav__link">
-        5.1 - Authorization
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="5.10%20-%20Database_Security_Cheat_Sheet.html" class="md-nav__link">
-        5.10 - Database Security
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="5.10.1%2C%205.10.2%20-%20Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
-        5.10.1, 5.10.2 - Injection Prevention
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="5.11%20-%20File_Upload_Cheat_Sheet.html" class="md-nav__link">
-        5.11 - File Upload
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-    
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          5.12 - REST Security
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="5.12%20-%20REST_Security_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
-        5.12 - REST Security
-      </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    Introduction
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#https" class="md-nav__link">
-    HTTPS
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#access-control" class="md-nav__link">
-    Access Control
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#jwt" class="md-nav__link">
-    JWT
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#api-keys" class="md-nav__link">
-    API Keys
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#restrict-http-methods-5124" class="md-nav__link">
-    Restrict HTTP methods - 5.12.4
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#input-validation-5124" class="md-nav__link">
-    Input validation - 5.12.4
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#validate-content-types" class="md-nav__link">
-    Validate content types
-  </a>
-  
-    <nav class="md-nav" aria-label="Validate content types">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#validate-request-content-types-5124" class="md-nav__link">
-    Validate request content types - 5.12.4
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#send-safe-response-content-types-5124" class="md-nav__link">
-    Send safe response content types - 5.12.4
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#management-endpoints" class="md-nav__link">
-    Management endpoints
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#error-handling" class="md-nav__link">
-    Error handling
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#audit-logs" class="md-nav__link">
-    Audit logs
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#security-headers" class="md-nav__link">
-    Security Headers
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#cors" class="md-nav__link">
-    CORS
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sensitive-information-in-http-requests-5123" class="md-nav__link">
-    Sensitive information in HTTP requests - 5.12.3
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#http-return-code-5124" class="md-nav__link">
-    HTTP Return Code - 5.12.4
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="5.12.1%20-%20Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-nav__link">
-        5.12.1 - Server Side Request Forgery Prevention
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="5.13%20-%20Infrastructure_as_Code_Security_Cheat_Sheet.html" class="md-nav__link">
-        5.13 - Infrastructure as Code Security
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="5.14%20-%20C-Based_Toolchain_Hardening_Cheat_Sheet.html" class="md-nav__link">
-        5.14 - C-Based Toolchain Hardening
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="5.2%20-%20Authentication_Cheat_Sheet.html" class="md-nav__link">
-        5.2 - Authentication
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="5.4%20-%20Session_Management_Cheat_Sheet.html" class="md-nav__link">
-        5.4 - Session Management
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="5.4.4%20-%20Cross_Site_Scripting_Prevention_Cheat_Sheet.html" class="md-nav__link">
-        5.4.4 - Cross Site Scripting Prevention
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="5.5.2%20-%20Deserialization_Cheat_Sheet.html" class="md-nav__link">
-        5.5.2 - Deserialization
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="5.6%20-%20Secrets_Management_CheatSheet.html" class="md-nav__link">
-        5.6 - Secrets Management CheatSheet.md
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="5.7%20-%20Error_Handling_Cheat_Sheet.html" class="md-nav__link">
-        5.7 - Error Handling
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="5.9%20-%20Transport_Layer_Protection_Cheat_Sheet.html" class="md-nav__link">
-        5.9 - Transport Layer Protection
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="5.9.1%2C%205.9.4%2C%205.9.5%20-%20HTTP_Strict_Transport_Security_Cheat_Sheet.html" class="md-nav__link">
-        5.9.1, 5.9.4, 5.9.5 - HTTP Strict Transport Security
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
       <a href="AJAX_Security_Cheat_Sheet.html" class="md-nav__link">
         AJAX Security
       </a>
@@ -762,6 +379,34 @@
   
   
     <li class="md-nav__item">
+      <a href="Authentication_Cheat_Sheet.html" class="md-nav__link">
+        Authentication
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Authorization_Cheat_Sheet.html" class="md-nav__link">
+        Authorization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="Authorization_Testing_Automation_Cheat_Sheet.html" class="md-nav__link">
         Authorization Testing Automation
       </a>
@@ -778,6 +423,20 @@
     <li class="md-nav__item">
       <a href="Bean_Validation_Cheat_Sheet.html" class="md-nav__link">
         Bean Validation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html" class="md-nav__link">
+        C-Based Toolchain Hardening
       </a>
     </li>
   
@@ -860,6 +519,20 @@
   
   
     <li class="md-nav__item">
+      <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Cross Site Scripting Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="Cryptographic_Storage_Cheat_Sheet.html" class="md-nav__link">
         Cryptographic Storage
       </a>
@@ -888,8 +561,36 @@
   
   
     <li class="md-nav__item">
+      <a href="Database_Security_Cheat_Sheet.html" class="md-nav__link">
+        Database Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="Denial_of_Service_Cheat_Sheet.html" class="md-nav__link">
         Denial of Service
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Deserialization_Cheat_Sheet.html" class="md-nav__link">
+        Deserialization
       </a>
     </li>
   
@@ -918,6 +619,34 @@
     <li class="md-nav__item">
       <a href="DotNet_Security_Cheat_Sheet.html" class="md-nav__link">
         DotNet Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Error_Handling_Cheat_Sheet.html" class="md-nav__link">
+        Error Handling
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="File_Upload_Cheat_Sheet.html" class="md-nav__link">
+        File Upload
       </a>
     </li>
   
@@ -974,6 +703,48 @@
     <li class="md-nav__item">
       <a href="HTTP_Headers_Cheat_Sheet.html" class="md-nav__link">
         HTTP Headers
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html" class="md-nav__link">
+        HTTP Strict Transport Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Infrastructure_as_Code_Security_Cheat_Sheet.html" class="md-nav__link">
+        Infrastructure as Code Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Injection Prevention
       </a>
     </li>
   
@@ -1320,6 +1091,179 @@
               
   
   
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          REST Security
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="REST_Security_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+        REST Security
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#https" class="md-nav__link">
+    HTTPS
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#access-control" class="md-nav__link">
+    Access Control
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jwt" class="md-nav__link">
+    JWT
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-keys" class="md-nav__link">
+    API Keys
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#restrict-http-methods" class="md-nav__link">
+    Restrict HTTP methods
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#input-validation" class="md-nav__link">
+    Input validation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validate-content-types" class="md-nav__link">
+    Validate content types
+  </a>
+  
+    <nav class="md-nav" aria-label="Validate content types">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#validate-request-content-types" class="md-nav__link">
+    Validate request content types
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#send-safe-response-content-types" class="md-nav__link">
+    Send safe response content types
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#management-endpoints" class="md-nav__link">
+    Management endpoints
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-handling" class="md-nav__link">
+    Error handling
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#audit-logs" class="md-nav__link">
+    Audit logs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security-headers" class="md-nav__link">
+    Security Headers
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cors" class="md-nav__link">
+    CORS
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sensitive-information-in-http-requests" class="md-nav__link">
+    Sensitive information in HTTP requests
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#http-return-code" class="md-nav__link">
+    HTTP Return Code
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
   
     <li class="md-nav__item">
       <a href="Ruby_on_Rails_Cheat_Sheet.html" class="md-nav__link">
@@ -1364,8 +1308,50 @@
   
   
     <li class="md-nav__item">
+      <a href="Secrets_Management_CheatSheet.html" class="md-nav__link">
+        Secrets Management CheatSheet.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html" class="md-nav__link">
         Securing Cascading Style Sheets
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Server Side Request Forgery Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Session_Management_Cheat_Sheet.html" class="md-nav__link">
+        Session Management
       </a>
     </li>
   
@@ -1422,6 +1408,20 @@
     <li class="md-nav__item">
       <a href="Transaction_Authorization_Cheat_Sheet.html" class="md-nav__link">
         Transaction Authorization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Transport_Layer_Protection_Cheat_Sheet.html" class="md-nav__link">
+        Transport Layer Protection
       </a>
     </li>
   
@@ -1636,15 +1636,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#restrict-http-methods-5124" class="md-nav__link">
-    Restrict HTTP methods - 5.12.4
+  <a href="#restrict-http-methods" class="md-nav__link">
+    Restrict HTTP methods
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#input-validation-5124" class="md-nav__link">
-    Input validation - 5.12.4
+  <a href="#input-validation" class="md-nav__link">
+    Input validation
   </a>
   
 </li>
@@ -1658,15 +1658,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#validate-request-content-types-5124" class="md-nav__link">
-    Validate request content types - 5.12.4
+  <a href="#validate-request-content-types" class="md-nav__link">
+    Validate request content types
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#send-safe-response-content-types-5124" class="md-nav__link">
-    Send safe response content types - 5.12.4
+  <a href="#send-safe-response-content-types" class="md-nav__link">
+    Send safe response content types
   </a>
   
 </li>
@@ -1712,15 +1712,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#sensitive-information-in-http-requests-5123" class="md-nav__link">
-    Sensitive information in HTTP requests - 5.12.3
+  <a href="#sensitive-information-in-http-requests" class="md-nav__link">
+    Sensitive information in HTTP requests
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#http-return-code-5124" class="md-nav__link">
-    HTTP Return Code - 5.12.4
+  <a href="#http-return-code" class="md-nav__link">
+    HTTP Return Code
   </a>
   
 </li>
@@ -1752,7 +1752,7 @@
 <p>Another key feature of REST applications is the use of <a href="https://en.wikipedia.org/wiki/HATEOAS">HATEOAS or Hypermedia As The Engine of Application State</a>. This provides REST applications a self-documenting nature making it easier for developers to interact with a REST service without prior knowledge.</p>
 <h2 id="https">HTTPS<a class="headerlink" href="#https" title="Permanent link">&para;</a></h2>
 <p>Secure REST services must only provide HTTPS endpoints. This protects authentication credentials in transit, for example passwords, API keys or JSON Web Tokens. It also allows clients to authenticate the service and guarantees integrity of the transmitted data.</p>
-<p>See the <a href="Transport_Layer_Protection_Cheat_Sheet.md">Transport Layer Protection Cheat Sheet</a> for additional information.</p>
+<p>See the <a href="Transport_Layer_Protection_Cheat_Sheet.html">Transport Layer Protection Cheat Sheet</a> for additional information.</p>
 <p>Consider the use of mutually authenticated client-side certificates to provide additional protection for highly privileged web services.</p>
 <h2 id="access-control">Access Control<a class="headerlink" href="#access-control" title="Permanent link">&para;</a></h2>
 <p>Non-public REST services must perform access control at each API endpoint. Web services in monolithic applications implement this by means of user authentication, authorization logic and session management. This has several drawbacks for modern architectures which compose multiple microservices following the RESTful style.</p>
@@ -1791,14 +1791,14 @@
 <li>Revoke the API key if the client violates the usage agreement.</li>
 <li>Do not rely exclusively on API keys to protect sensitive, critical or high-value resources.</li>
 </ul>
-<h2 id="restrict-http-methods-5124">Restrict HTTP methods - 5.12.4<a class="headerlink" href="#restrict-http-methods-5124" title="Permanent link">&para;</a></h2>
+<h2 id="restrict-http-methods">Restrict HTTP methods<a class="headerlink" href="#restrict-http-methods" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Apply an allow list of permitted HTTP Methods e.g. <code>GET</code>, <code>POST</code>, <code>PUT</code>.</li>
 <li>Reject all requests not matching the allow list with HTTP response code <code>405 Method not allowed</code>.</li>
 <li>Make sure the caller is authorised to use the incoming HTTP method on the resource collection, action, and record</li>
 </ul>
 <p>In Java EE in particular, this can be difficult to implement properly. See <a href="../assets/REST_Security_Cheat_Sheet_Bypassing_VBAAC_with_HTTP_Verb_Tampering.pdf">Bypassing Web Authentication and Authorization with HTTP Verb Tampering</a> for an explanation of this common misconfiguration.</p>
-<h2 id="input-validation-5124">Input validation - 5.12.4<a class="headerlink" href="#input-validation-5124" title="Permanent link">&para;</a></h2>
+<h2 id="input-validation">Input validation<a class="headerlink" href="#input-validation" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Do not trust input parameters/objects.</li>
 <li>Validate input: length / range / format and type.</li>
@@ -1816,13 +1816,13 @@
 <ul>
 <li>Document all supported content types in your API.</li>
 </ul>
-<h3 id="validate-request-content-types-5124">Validate request content types - 5.12.4<a class="headerlink" href="#validate-request-content-types-5124" title="Permanent link">&para;</a></h3>
+<h3 id="validate-request-content-types">Validate request content types<a class="headerlink" href="#validate-request-content-types" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Reject requests containing unexpected or missing content type headers with HTTP response status <code>406 Unacceptable</code> or <code>415 Unsupported Media Type</code>.</li>
 <li>For XML content types ensure appropriate XML parser hardening, see the <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">XXE cheat sheet</a>.</li>
 <li>Avoid accidentally exposing unintended content types by explicitly defining content types e.g. <a href="https://jersey.github.io/">Jersey</a> (Java) <code>@consumes("application/json"); @produces("application/json")</code>. This avoids <a href="https://owasp.org/www-community/vulnerabilities/XML_External_Entity_%28XXE%29_Processing">XXE-attack</a> vectors for example.</li>
 </ul>
-<h3 id="send-safe-response-content-types-5124">Send safe response content types - 5.12.4<a class="headerlink" href="#send-safe-response-content-types-5124" title="Permanent link">&para;</a></h3>
+<h3 id="send-safe-response-content-types">Send safe response content types<a class="headerlink" href="#send-safe-response-content-types" title="Permanent link">&para;</a></h3>
 <p>It is common for REST services to allow multiple response types (e.g. <code>application/xml</code> or <code>application/json</code>, and the client specifies the preferred order of response types by the Accept header in the request.</p>
 <ul>
 <li><strong>Do NOT</strong> simply copy the <code>Accept</code> header to the <code>Content-type</code> header of the response.</li>
@@ -1916,7 +1916,7 @@
 <li>Disable CORS headers if cross-domain calls are not supported/expected.</li>
 <li>Be as specific as possible and as general as necessary when setting the origins of cross-domain calls.</li>
 </ul>
-<h2 id="sensitive-information-in-http-requests-5123">Sensitive information in HTTP requests - 5.12.3<a class="headerlink" href="#sensitive-information-in-http-requests-5123" title="Permanent link">&para;</a></h2>
+<h2 id="sensitive-information-in-http-requests">Sensitive information in HTTP requests<a class="headerlink" href="#sensitive-information-in-http-requests" title="Permanent link">&para;</a></h2>
 <p>RESTful web services should be careful to prevent leaking credentials. Passwords, security tokens, and API keys should not appear in the URL, as this can be captured in web server logs, which makes them intrinsically valuable.</p>
 <ul>
 <li>In <code>POST</code>/<code>PUT</code> requests sensitive data should be transferred in the request body or request headers.</li>
@@ -1927,7 +1927,7 @@
 <p><code>https://twitter.com/vanderaj/lists</code></p>
 <p><strong>NOT OK:</strong></p>
 <p><code>https://example.com/controller/123/action?apiKey=a53f435643de32</code> because API Key is into the URL.</p>
-<h2 id="http-return-code-5124">HTTP Return Code - 5.12.4<a class="headerlink" href="#http-return-code-5124" title="Permanent link">&para;</a></h2>
+<h2 id="http-return-code">HTTP Return Code<a class="headerlink" href="#http-return-code" title="Permanent link">&para;</a></h2>
 <p>HTTP defines <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes">status code</a>. When designing REST API, don't just use <code>200</code> for success or <code>404</code> for error. Always use the semantically appropriate status code for the response.</p>
 <p>Here is a non-exhaustive selection of security related REST API <strong>status codes</strong>. Use it to ensure you return the correct code.</p>
 <table>
@@ -2047,7 +2047,7 @@
     <nav class="md-footer__inner md-grid" aria-label="Footer" >
       
         
-        <a href="5.11%20-%20File_Upload_Cheat_Sheet.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 5.11 - File Upload" rel="prev">
+        <a href="REST_Assessment_Cheat_Sheet.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: REST Assessment" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
           </div>
@@ -2056,20 +2056,20 @@
               <span class="md-footer__direction">
                 Previous
               </span>
-              5.11 - File Upload
+              REST Assessment
             </div>
           </div>
         </a>
       
       
         
-        <a href="5.12.1%20-%20Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-footer__link md-footer__link--next" aria-label="Next: 5.12.1 - Server Side Request Forgery Prevention" rel="next">
+        <a href="Ruby_on_Rails_Cheat_Sheet.html" class="md-footer__link md-footer__link--next" aria-label="Next: Ruby on Rails" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              5.12.1 - Server Side Request Forgery Prevention
+              Ruby on Rails
             </div>
           </div>
           <div class="md-footer__button md-icon">

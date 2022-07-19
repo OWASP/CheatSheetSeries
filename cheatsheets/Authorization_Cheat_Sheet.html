@@ -10,14 +10,14 @@
       
       
       
-        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/5.1%20-%20Authorization_Cheat_Sheet.html">
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
       <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
     
     
       
-        <title>5.1 - Authorization - OWASP Cheat Sheet Series</title>
+        <title>Authorization - OWASP Cheat Sheet Series</title>
       
     
     
@@ -96,7 +96,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              5.1 - Authorization
+              Authorization
             
           </span>
         </div>
@@ -321,6 +321,76 @@
               
   
   
+  
+    <li class="md-nav__item">
+      <a href="AJAX_Security_Cheat_Sheet.html" class="md-nav__link">
+        AJAX Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Abuse_Case_Cheat_Sheet.html" class="md-nav__link">
+        Abuse Case
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Access_Control_Cheat_Sheet.html" class="md-nav__link">
+        Access Control
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Attack_Surface_Analysis_Cheat_Sheet.html" class="md-nav__link">
+        Attack Surface Analysis
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Authentication_Cheat_Sheet.html" class="md-nav__link">
+        Authentication
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
     
   
   
@@ -333,12 +403,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          5.1 - Authorization
+          Authorization
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <a href="5.1%20-%20Authorization_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
-        5.1 - Authorization
+      <a href="Authorization_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+        Authorization
       </a>
       
         
@@ -357,8 +427,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#introduction-533-5122" class="md-nav__link">
-    Introduction 5.3.3, 5.12.2
+  <a href="#introduction" class="md-nav__link">
+    Introduction
   </a>
   
 </li>
@@ -372,15 +442,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#enforce-least-privileges-536" class="md-nav__link">
-    Enforce Least Privileges - 5.3.6
+  <a href="#enforce-least-privileges" class="md-nav__link">
+    Enforce Least Privileges
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#deny-by-default-518" class="md-nav__link">
-    Deny by Default - 5.1.8
+  <a href="#deny-by-default" class="md-nav__link">
+    Deny by Default
   </a>
   
 </li>
@@ -400,8 +470,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#prefer-attribute-and-relationship-based-access-control-over-rbac-519" class="md-nav__link">
-    Prefer Attribute and Relationship Based Access Control over RBAC - 5.1.9
+  <a href="#prefer-attribute-and-relationship-based-access-control-over-rbac" class="md-nav__link">
+    Prefer Attribute and Relationship Based Access Control over RBAC
   </a>
   
 </li>
@@ -421,22 +491,22 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#verify-that-authorization-checks-are-performed-in-the-right-location-531" class="md-nav__link">
-    Verify that Authorization Checks are Performed in the Right Location - 5.3.1
+  <a href="#verify-that-authorization-checks-are-performed-in-the-right-location" class="md-nav__link">
+    Verify that Authorization Checks are Performed in the Right Location
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#exit-safely-when-authorization-checks-fail-532" class="md-nav__link">
-    Exit Safely when Authorization Checks Fail 5.3.2
+  <a href="#exit-safely-when-authorization-checks-fail" class="md-nav__link">
+    Exit Safely when Authorization Checks Fail
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#implement-appropriate-logging-517" class="md-nav__link">
-    Implement Appropriate Logging - 5.1.7
+  <a href="#implement-appropriate-logging" class="md-nav__link">
+    Implement Appropriate Logging
   </a>
   
 </li>
@@ -516,272 +586,6 @@
   
   
     <li class="md-nav__item">
-      <a href="5.10%20-%20Database_Security_Cheat_Sheet.html" class="md-nav__link">
-        5.10 - Database Security
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="5.10.1%2C%205.10.2%20-%20Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
-        5.10.1, 5.10.2 - Injection Prevention
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="5.11%20-%20File_Upload_Cheat_Sheet.html" class="md-nav__link">
-        5.11 - File Upload
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="5.12%20-%20REST_Security_Cheat_Sheet.html" class="md-nav__link">
-        5.12 - REST Security
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="5.12.1%20-%20Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-nav__link">
-        5.12.1 - Server Side Request Forgery Prevention
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="5.13%20-%20Infrastructure_as_Code_Security_Cheat_Sheet.html" class="md-nav__link">
-        5.13 - Infrastructure as Code Security
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="5.14%20-%20C-Based_Toolchain_Hardening_Cheat_Sheet.html" class="md-nav__link">
-        5.14 - C-Based Toolchain Hardening
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="5.2%20-%20Authentication_Cheat_Sheet.html" class="md-nav__link">
-        5.2 - Authentication
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="5.4%20-%20Session_Management_Cheat_Sheet.html" class="md-nav__link">
-        5.4 - Session Management
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="5.4.4%20-%20Cross_Site_Scripting_Prevention_Cheat_Sheet.html" class="md-nav__link">
-        5.4.4 - Cross Site Scripting Prevention
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="5.5.2%20-%20Deserialization_Cheat_Sheet.html" class="md-nav__link">
-        5.5.2 - Deserialization
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="5.6%20-%20Secrets_Management_CheatSheet.html" class="md-nav__link">
-        5.6 - Secrets Management CheatSheet.md
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="5.7%20-%20Error_Handling_Cheat_Sheet.html" class="md-nav__link">
-        5.7 - Error Handling
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="5.9%20-%20Transport_Layer_Protection_Cheat_Sheet.html" class="md-nav__link">
-        5.9 - Transport Layer Protection
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="5.9.1%2C%205.9.4%2C%205.9.5%20-%20HTTP_Strict_Transport_Security_Cheat_Sheet.html" class="md-nav__link">
-        5.9.1, 5.9.4, 5.9.5 - HTTP Strict Transport Security
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="AJAX_Security_Cheat_Sheet.html" class="md-nav__link">
-        AJAX Security
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="Abuse_Case_Cheat_Sheet.html" class="md-nav__link">
-        Abuse Case
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="Access_Control_Cheat_Sheet.html" class="md-nav__link">
-        Access Control
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="Attack_Surface_Analysis_Cheat_Sheet.html" class="md-nav__link">
-        Attack Surface Analysis
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
       <a href="Authorization_Testing_Automation_Cheat_Sheet.html" class="md-nav__link">
         Authorization Testing Automation
       </a>
@@ -798,6 +602,20 @@
     <li class="md-nav__item">
       <a href="Bean_Validation_Cheat_Sheet.html" class="md-nav__link">
         Bean Validation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html" class="md-nav__link">
+        C-Based Toolchain Hardening
       </a>
     </li>
   
@@ -880,6 +698,20 @@
   
   
     <li class="md-nav__item">
+      <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Cross Site Scripting Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="Cryptographic_Storage_Cheat_Sheet.html" class="md-nav__link">
         Cryptographic Storage
       </a>
@@ -908,8 +740,36 @@
   
   
     <li class="md-nav__item">
+      <a href="Database_Security_Cheat_Sheet.html" class="md-nav__link">
+        Database Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="Denial_of_Service_Cheat_Sheet.html" class="md-nav__link">
         Denial of Service
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Deserialization_Cheat_Sheet.html" class="md-nav__link">
+        Deserialization
       </a>
     </li>
   
@@ -938,6 +798,34 @@
     <li class="md-nav__item">
       <a href="DotNet_Security_Cheat_Sheet.html" class="md-nav__link">
         DotNet Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Error_Handling_Cheat_Sheet.html" class="md-nav__link">
+        Error Handling
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="File_Upload_Cheat_Sheet.html" class="md-nav__link">
+        File Upload
       </a>
     </li>
   
@@ -994,6 +882,48 @@
     <li class="md-nav__item">
       <a href="HTTP_Headers_Cheat_Sheet.html" class="md-nav__link">
         HTTP Headers
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html" class="md-nav__link">
+        HTTP Strict Transport Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Infrastructure_as_Code_Security_Cheat_Sheet.html" class="md-nav__link">
+        Infrastructure as Code Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Injection Prevention
       </a>
     </li>
   
@@ -1342,6 +1272,20 @@
   
   
     <li class="md-nav__item">
+      <a href="REST_Security_Cheat_Sheet.html" class="md-nav__link">
+        REST Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="Ruby_on_Rails_Cheat_Sheet.html" class="md-nav__link">
         Ruby on Rails
       </a>
@@ -1384,8 +1328,50 @@
   
   
     <li class="md-nav__item">
+      <a href="Secrets_Management_CheatSheet.html" class="md-nav__link">
+        Secrets Management CheatSheet.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html" class="md-nav__link">
         Securing Cascading Style Sheets
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Server Side Request Forgery Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Session_Management_Cheat_Sheet.html" class="md-nav__link">
+        Session Management
       </a>
     </li>
   
@@ -1442,6 +1428,20 @@
     <li class="md-nav__item">
       <a href="Transaction_Authorization_Cheat_Sheet.html" class="md-nav__link">
         Transaction Authorization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Transport_Layer_Protection_Cheat_Sheet.html" class="md-nav__link">
+        Transport Layer Protection
       </a>
     </li>
   
@@ -1621,8 +1621,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#introduction-533-5122" class="md-nav__link">
-    Introduction 5.3.3, 5.12.2
+  <a href="#introduction" class="md-nav__link">
+    Introduction
   </a>
   
 </li>
@@ -1636,15 +1636,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#enforce-least-privileges-536" class="md-nav__link">
-    Enforce Least Privileges - 5.3.6
+  <a href="#enforce-least-privileges" class="md-nav__link">
+    Enforce Least Privileges
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#deny-by-default-518" class="md-nav__link">
-    Deny by Default - 5.1.8
+  <a href="#deny-by-default" class="md-nav__link">
+    Deny by Default
   </a>
   
 </li>
@@ -1664,8 +1664,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#prefer-attribute-and-relationship-based-access-control-over-rbac-519" class="md-nav__link">
-    Prefer Attribute and Relationship Based Access Control over RBAC - 5.1.9
+  <a href="#prefer-attribute-and-relationship-based-access-control-over-rbac" class="md-nav__link">
+    Prefer Attribute and Relationship Based Access Control over RBAC
   </a>
   
 </li>
@@ -1685,22 +1685,22 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#verify-that-authorization-checks-are-performed-in-the-right-location-531" class="md-nav__link">
-    Verify that Authorization Checks are Performed in the Right Location - 5.3.1
+  <a href="#verify-that-authorization-checks-are-performed-in-the-right-location" class="md-nav__link">
+    Verify that Authorization Checks are Performed in the Right Location
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#exit-safely-when-authorization-checks-fail-532" class="md-nav__link">
-    Exit Safely when Authorization Checks Fail 5.3.2
+  <a href="#exit-safely-when-authorization-checks-fail" class="md-nav__link">
+    Exit Safely when Authorization Checks Fail
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#implement-appropriate-logging-517" class="md-nav__link">
-    Implement Appropriate Logging - 5.1.7
+  <a href="#implement-appropriate-logging" class="md-nav__link">
+    Implement Appropriate Logging
   </a>
   
 </li>
@@ -1780,14 +1780,14 @@
 
 
 <h1 id="authorization-cheat-sheet">Authorization Cheat Sheet<a class="headerlink" href="#authorization-cheat-sheet" title="Permanent link">&para;</a></h1>
-<h2 id="introduction-533-5122">Introduction 5.3.3, 5.12.2<a class="headerlink" href="#introduction-533-5122" title="Permanent link">&para;</a></h2>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>Authorization may be defined as "the process of verifying that a requested action or service is approved for a specific entity" (<a href="https://csrc.nist.gov/glossary/term/authorization">NIST</a>). Authorization is distinct from authentication which is the process of verifying an entity's identity. When designing and developing a software solution, it is important to keep these distinctions in mind. A user who has been authenticated (perhaps by providing a username and password) is often not authorized to access every resource and perform every action that is technically possible through a system. For example, a web app may have both regular users and admins, with the admins being able to perform actions the average user is not privileged to do so, even though they have been authenticated. Additionally, authentication is not always required for accessing resources; an unauthenticated user may be authorized to access certain public resources, such as an image or login page, or even an entire web app.</p>
 <p>The objective of this cheat sheet is to assist developers in implementing authorization logic that is robust, appropriate to the app's business context, maintainable, and scalable. The guidance provided in this cheat sheet should be applicable to all phases of the development lifecycle and flexible enough to meet the needs of diverse development environments.</p>
 <p>Flaws related to authorization logic are a notable concern for web apps. Broken Access Control was ranked as the most concerning web security vulnerability in <a href="https://owasp.org/Top10/A01_2021-Broken_Access_Control/">OWASP's 2021 Top 10</a> and asserted to have a "High" likelihood of exploit by <a href="https://cwe.mitre.org/data/definitions/285.html">MITRE's CWE program</a>. Furthermore, according to <a href="https://www.veracode.com/sites/default/files/pdf/resources/sossreports/state-of-software-security-volume-10-veracode-report.pdf">Veracode's State of Software Vol. 10</a>, Access Control was among the more common of OWASP's Top 10 risks to be involved in exploits and security incidents despite being among the least prevalent of those examined.</p>
 <p>The potential impact resulting from exploitation of authorization flaws is highly variable, both in form and severity. Attackers may be able read, create, modify, or delete resources that were meant to be protected (thus jeopardizing their confidentiality, integrity, and/or availability); however, the actual impact of such actions is necessarily linked to the criticality and sensitivity of the compromised resources. Thus, the business cost of a successfully exploited authorization flaw can range from very low to extremely high.</p>
 <p>Both entirely unauthenticated outsiders and authenticated (but not necessarily authorized) users can take advantage of authorization weaknesses.  Although honest mistakes or carelessness on the part of non-malicious entities may enable authorization bypasses, malicious intent is typically required for access control threats to be fully realized.  Horizontal privilege elevation (i.e. being able to access another user's resources) is an especially common weakness that an authenticated user may be able to take advantage of. Faults related to authorization control can allow malicious insiders and outsiders alike to view, modify, or delete sensitive resources of all forms (databases records, static files, personally identifiable information (PII), etc.) or perform actions, such as creating a new account or initiating a costly order, that they should not be privileged to do. Furthermore, if logging related to access control is not properly set-up, such authorization violations may go undetected or a least remain unattributable to a particular individual or group.</p>
 <h2 id="recommendations">Recommendations<a class="headerlink" href="#recommendations" title="Permanent link">&para;</a></h2>
-<h3 id="enforce-least-privileges-536">Enforce Least Privileges - 5.3.6<a class="headerlink" href="#enforce-least-privileges-536" title="Permanent link">&para;</a></h3>
+<h3 id="enforce-least-privileges">Enforce Least Privileges<a class="headerlink" href="#enforce-least-privileges" title="Permanent link">&para;</a></h3>
 <p>As a security concept, Least Privileges refers to the principle of assigning users only the minimum privileges necessary to complete their job. Although perhaps most commonly applied in system administration, this principle has relevance to the software developer as well. Least Privileges must be applied both horizontally and vertically. For example, even though both an accountant and sales representative may occupy the same level in an organization's hierarchy, both require access to different resources to perform their jobs. The accountant should likely not be granted access to a customer database and the sales representative should not be able to access payroll data. Similarly, the head of the sales department is likely to need more privileged access than their subordinates.</p>
 <p>Failure to enforce least privileges in an application can jeopardize the confidentiality of sensitive resources. Mitigation strategies are applied primarily during the Architecture and Design phase (see <a href="https://cwe.mitre.org/data/definitions/272.html">CWE-272</a>); however, the principle must be addressed throughout the SDLC.</p>
 <p>Consider the following points and best practices:</p>
@@ -1797,7 +1797,7 @@
 <li>After the app has been deployed, periodically review permissions in the system for "privilege creep"; that is, ensure the privileges of users in the current environment do not exceed those defined during the design phase (plus or minus any formally approved changes).</li>
 <li>Remember, it is easier to grant users additional permissions rather than to take away some they previously enjoyed. Careful planning and implementation of Least Privileges early in the SDLC can help reduce the risk of needing to revoke permissions that are later deemed overly broad.</li>
 </ul>
-<h3 id="deny-by-default-518">Deny by Default - 5.1.8<a class="headerlink" href="#deny-by-default-518" title="Permanent link">&para;</a></h3>
+<h3 id="deny-by-default">Deny by Default<a class="headerlink" href="#deny-by-default" title="Permanent link">&para;</a></h3>
 <p>Even when no access control rules are explicitly matched, the application cannot remain neutral when an entity is requesting access to a particular resource. The application must always make a decision, whether implicitly or explicitly, to either deny or permit the requested access. Logic errors and other mistakes relating to access control may happen, especially when access requirements are complex; consequently, one should not rely entirely on explicitly defined rules for matching all possible requests. For security purposes an application should be configured to deny access by default.</p>
 <p>Consider the following points and best practices:</p>
 <ul>
@@ -1827,7 +1827,7 @@
 <li>Do not rely on default configurations.</li>
 <li>Test configuration. Do not just assume any configuration performed on a third-party component will work exactly as intended in your particular environment. Documentation can be misunderstood, vague, outdated, or simply inaccurate.</li>
 </ul>
-<h3 id="prefer-attribute-and-relationship-based-access-control-over-rbac-519">Prefer Attribute and Relationship Based Access Control over RBAC - 5.1.9<a class="headerlink" href="#prefer-attribute-and-relationship-based-access-control-over-rbac-519" title="Permanent link">&para;</a></h3>
+<h3 id="prefer-attribute-and-relationship-based-access-control-over-rbac">Prefer Attribute and Relationship Based Access Control over RBAC<a class="headerlink" href="#prefer-attribute-and-relationship-based-access-control-over-rbac" title="Permanent link">&para;</a></h3>
 <p>In software engineering, two basic forms of access control are widely utilized: Role-Based Access Control (RBAC) and Attribute-Based Access Control (ABAC). There is a third, more recent, model which has gained popularity: Relationship-Based Access Control (ReBAC). The decision between the models has significant implications for the entire SDLC and should be made as early as possible.</p>
 <ul>
 <li>
@@ -1873,16 +1873,16 @@
 <li>Ensure any cloud based services used to store static resources are secured using the configuration options and tools provided by the vendor. Review the cloud provider's documentation (see guidance from <a href="https://aws.amazon.com/premiumsupport/knowledge-center/secure-s3-resources/">AWS</a>, <a href="https://cloud.google.com/storage/docs/best-practices#security">Google Cloud</a> and <a href="https://docs.microsoft.com/en-us/azure/storage/blobs/security-recommendations">Azure</a> for specific implementations details).</li>
 <li>When possible, protect static resources using the same access control logic and mechanisms that are used to secure other application resources and functionality.</li>
 </ul>
-<h3 id="verify-that-authorization-checks-are-performed-in-the-right-location-531">Verify that Authorization Checks are Performed in the Right Location - 5.3.1<a class="headerlink" href="#verify-that-authorization-checks-are-performed-in-the-right-location-531" title="Permanent link">&para;</a></h3>
+<h3 id="verify-that-authorization-checks-are-performed-in-the-right-location">Verify that Authorization Checks are Performed in the Right Location<a class="headerlink" href="#verify-that-authorization-checks-are-performed-in-the-right-location" title="Permanent link">&para;</a></h3>
 <p>Developers must never rely on client-side access control checks. While such checks may be permissible for improving the user experience, they should never be the decisive factor in granting or denying access to a resource; client-side logic is often easy to bypass. Access control checks must be performed server-side, at the gateway, or using serverless function (see <a href="https://raw.githubusercontent.com/OWASP/ASVS/v4.0.3/4.0/OWASP%20Application%20Security%20Verification%20Standard%204.0.3-en.pdf">OWASP ASVS 4.0.3, V1.4.1 and V4.1.1</a>)</p>
-<h3 id="exit-safely-when-authorization-checks-fail-532">Exit Safely when Authorization Checks Fail 5.3.2<a class="headerlink" href="#exit-safely-when-authorization-checks-fail-532" title="Permanent link">&para;</a></h3>
+<h3 id="exit-safely-when-authorization-checks-fail">Exit Safely when Authorization Checks Fail<a class="headerlink" href="#exit-safely-when-authorization-checks-fail" title="Permanent link">&para;</a></h3>
 <p>Failed access control checks are a normal occurrence in a secured application; consequently, developers must plan for such failures and handle them securely. Improper handling of such failures can lead to the application being left in an unpredictable state (<a href="https://cwe.mitre.org/data/definitions/280.html">CWE-280: Improper Handling of Insufficient Permissions or Privileges</a>). Specific recommendations include the following:</p>
 <ul>
 <li>Ensure all exception and failed access control checks are handled no matter how unlikely they seem (<a href="https://owasp.org/www-project-proactive-controls/v3/en/c10-errors-exceptions.html">OWASP Top Ten Proactive Controls C10: Handle all errors and exceptions</a>). This does not mean that an application should always try to "correct" for a failed check; oftentimes a simple message or HTTP status code is all that is required.</li>
 <li>Centralize the logic for handling failed access control checks.</li>
 <li>Verify the handling of exception and authorization failures. Ensure that such failures, no matter how unlikely, do not put the software into an unstable state that could lead to authorization bypass.</li>
 </ul>
-<h3 id="implement-appropriate-logging-517">Implement Appropriate Logging - 5.1.7<a class="headerlink" href="#implement-appropriate-logging-517" title="Permanent link">&para;</a></h3>
+<h3 id="implement-appropriate-logging">Implement Appropriate Logging<a class="headerlink" href="#implement-appropriate-logging" title="Permanent link">&para;</a></h3>
 <p>Logging is one of the most important detective controls in application security; insufficient logging and monitoring is recognized as among  the most critical security risks in <a href="https://raw.githubusercontent.com/OWASP/Top10/master/2017/OWASP%20Top%2010-2017%20(en).pdf">OWASP's Top Ten 2017</a>. Appropriate logs can not only detect malicious activity, but are also invaluable resources in post-incident investigations, can be used to troubleshoot access control and other security related problems, and are useful in security auditing. Though easy to overlook during the initial design and requirements phase, logging is an important component of wholistic application security and must be incorporated into all phases of the SDLC. Recommendations for logging include the following:</p>
 <ul>
 <li>Log using consistent, well-defined formats that can be readily parsed for analysis. According to <a href="https://owasp.org/www-project-proactive-controls/v3/en/c9-security-logging.html">OWASP Top Ten Proactive Controls C9</a>, <a href="https://logging.apache.org/">Apache Logging Services</a> is one example of a project that provides support for numerous languages and platforms</li>
@@ -1949,7 +1949,7 @@
     <nav class="md-footer__inner md-grid" aria-label="Footer" >
       
         
-        <a href="../IndexTopTen.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Index Top 10" rel="prev">
+        <a href="Authentication_Cheat_Sheet.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Authentication" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
           </div>
@@ -1958,20 +1958,20 @@
               <span class="md-footer__direction">
                 Previous
               </span>
-              Index Top 10
+              Authentication
             </div>
           </div>
         </a>
       
       
         
-        <a href="5.10%20-%20Database_Security_Cheat_Sheet.html" class="md-footer__link md-footer__link--next" aria-label="Next: 5.10 - Database Security" rel="next">
+        <a href="Authorization_Testing_Automation_Cheat_Sheet.html" class="md-footer__link md-footer__link--next" aria-label="Next: Authorization Testing Automation" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              5.10 - Database Security
+              Authorization Testing Automation
             </div>
           </div>
           <div class="md-footer__button md-icon">
