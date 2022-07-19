@@ -215,7 +215,7 @@ For more information, refer to <https://hub.docker.com/_/scratch>
 
 Ensure your images (and any third-party tools you include) are up to date and utilizing the latest versions of their components.
 
-## Kubernetes Security Best Practices: Deploy Phase - 5.13
+## Kubernetes Security Best Practices: Deploy Phase
 
 Kubernetes infrastructure should be configured securely prior to workloads being deployed. From a security perspective, you first need visibility into what you’re deploying – and how. Then you can identify and respond to security policy violations. At a minimum, you need to know:
 

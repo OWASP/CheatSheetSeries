@@ -69,7 +69,7 @@ API keys can reduce the impact of denial-of-service attacks. However, when they 
 - Revoke the API key if the client violates the usage agreement.
 - Do not rely exclusively on API keys to protect sensitive, critical or high-value resources.
 
-## Restrict HTTP methods - 5.12.4
+## Restrict HTTP methods
 
 - Apply an allow list of permitted HTTP Methods e.g. `GET`, `POST`, `PUT`.
 - Reject all requests not matching the allow list with HTTP response code `405 Method not allowed`.
@@ -77,7 +77,7 @@ API keys can reduce the impact of denial-of-service attacks. However, when they 
 
 In Java EE in particular, this can be difficult to implement properly. See [Bypassing Web Authentication and Authorization with HTTP Verb Tampering](../assets/REST_Security_Cheat_Sheet_Bypassing_VBAAC_with_HTTP_Verb_Tampering.pdf) for an explanation of this common misconfiguration.
 
-## Input validation - 5.12.4
+## Input validation
 
 - Do not trust input parameters/objects.
 - Validate input: length / range / format and type.
@@ -96,13 +96,13 @@ A REST request or response body should match the intended content type in the he
 
 - Document all supported content types in your API.
 
-### Validate request content types - 5.12.4
+### Validate request content types
 
 - Reject requests containing unexpected or missing content type headers with HTTP response status `406 Unacceptable` or `415 Unsupported Media Type`.
 - For XML content types ensure appropriate XML parser hardening, see the [XXE cheat sheet](XML_External_Entity_Prevention_Cheat_Sheet.md).
 - Avoid accidentally exposing unintended content types by explicitly defining content types e.g. [Jersey](https://jersey.github.io/) (Java) `@consumes("application/json"); @produces("application/json")`. This avoids [XXE-attack](https://owasp.org/www-community/vulnerabilities/XML_External_Entity_%28XXE%29_Processing) vectors for example.
 
-### Send safe response content types - 5.12.4
+### Send safe response content types
 
 It is common for REST services to allow multiple response types (e.g. `application/xml` or `application/json`, and the client specifies the preferred order of response types by the Accept header in the request.
 
@@ -161,7 +161,7 @@ Cross-Origin Resource Sharing (CORS) is a W3C standard to flexibly specify what 
 - Disable CORS headers if cross-domain calls are not supported/expected.
 - Be as specific as possible and as general as necessary when setting the origins of cross-domain calls.
 
-## Sensitive information in HTTP requests - 5.12.3
+## Sensitive information in HTTP requests
 
 RESTful web services should be careful to prevent leaking credentials. Passwords, security tokens, and API keys should not appear in the URL, as this can be captured in web server logs, which makes them intrinsically valuable.
 
@@ -178,7 +178,7 @@ RESTful web services should be careful to prevent leaking credentials. Passwords
 
 `https://example.com/controller/123/action?apiKey=a53f435643de32` because API Key is into the URL.
 
-## HTTP Return Code - 5.12.4
+## HTTP Return Code
 
 HTTP defines [status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes). When designing REST API, don't just use `200` for success or `404` for error. Always use the semantically appropriate status code for the response.
 

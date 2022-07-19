@@ -23,7 +23,7 @@ In short, the following principles should be followed to reach a secure file upl
 
 In order to assess and know exactly what controls to implement, knowing what you're facing is essential to protect your assets. The following sections will hopefully showcase the risks accompanying the file upload functionality.
 
-### Malicious Files - 5.11.1, 5.11.3
+### Malicious Files
 
 The attacker delivers a file for malicious intent, such as:
 
@@ -95,7 +95,7 @@ In order to avoid the above mentioned threat, creating a **random string** as a 
 - Restrict characters to an allowed subset specifically, such as alphanumeric characters, hyphen, spaces, and periods
     - If this is not possible, block-list dangerous characters that could endanger the framework and system that is storing and using the files.
 
-### File Content Validation - 5.11.5
+### File Content Validation
 
 As mentioned in the [Public File Retrieval](#public-file-retrieval) section, file content can contain malicious, inappropriate, or illegal data.
 
@@ -111,7 +111,7 @@ If there are enough resources, manual file review should be conducted in a sandb
 
 Adding some automation to the review could be helpful, which is a harsh process and should be well studied before its usage. Some services (_e.g._ Virus Total) provide APIs to scan files against well known malicious file hashes. Some frameworks can check and validate the raw content type and validating it against predefined file types, such as in [ASP.NET Drawing Library](https://docs.microsoft.com/en-us/dotnet/api/system.drawing.imaging.imageformat). Beware of data leakage threats and information gathering by public services.
 
-### File Storage Location - 5.11.4
+### File Storage Location
 
 The location where the files should be stored must be chosen based on security and business requirements. The following points are set by security priority, and are inclusive:
 

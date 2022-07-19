@@ -21,7 +21,7 @@ The terms "SSL", "SSL/TLS" and "TLS" are frequently used interchangeably, and in
 
 ## Server Configuration
 
-### Only Support Strong Protocols - 5.9.6
+### Only Support Strong Protocols
 
 The SSL protocols have a large number of weaknesses, and should not be used in any circumstances. General purpose web applications should default to TLS 1.3 (support TLS 1.2 if necessary) with all other protocols disabled. Where it is known that a web server must support legacy clients with unsupported an insecure browsers (such as Internet Explorer 10), it may be necessary to enable TLS 1.0 to provide support.
 
@@ -99,7 +99,7 @@ The private key should also be protected from unauthorized access using filesyst
 
 Certificates should use SHA-256 for the hashing algorithm, rather than the older MD5 and SHA-1 algorithms. These have a number of cryptographic weaknesses, and are not trusted by modern browsers.
 
-### Use Correct Domain Names - 5.9.2
+### Use Correct Domain Names
 
 The domain name (or subject) of the certificate must match the fully qualified name of the server that presents the certificate. Historically this was stored in the `commonName` (CN) attribute of the certificate. However, modern versions of Chrome ignore the CN attribute, and require that the FQDN is in the `subjectAlternativeName` (SAN) attribute. For compatibility reasons, certificates should have the primary FQDN in the CN, and the full list of FQDNs in the SAN.
 
