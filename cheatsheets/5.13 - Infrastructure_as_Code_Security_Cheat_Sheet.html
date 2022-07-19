@@ -10,14 +10,14 @@
       
       
       
-        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html">
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/5.13%20-%20Infrastructure_as_Code_Security_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.3.9">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
     
     
       
-        <title>File Upload - OWASP Cheat Sheet Series</title>
+        <title>5.13 - Infrastructure as Code Security - OWASP Cheat Sheet Series</title>
       
     
     
@@ -64,7 +64,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#file-upload-cheat-sheet" class="md-skip">
+        <a href="#infrastructure-as-code-security-cheatsheet" class="md-skip">
           Skip to content
         </a>
       
@@ -96,7 +96,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              File Upload
+              5.13 - Infrastructure as Code Security
             
           </span>
         </div>
@@ -323,6 +323,305 @@
   
   
     <li class="md-nav__item">
+      <a href="5.1%20-%20Authorization_Cheat_Sheet.html" class="md-nav__link">
+        5.1 - Authorization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.10%20-%20Database_Security_Cheat_Sheet.html" class="md-nav__link">
+        5.10 - Database Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.10.1%2C%205.10.2%20-%20Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        5.10.1, 5.10.2 - Injection Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.11%20-%20File_Upload_Cheat_Sheet.html" class="md-nav__link">
+        5.11 - File Upload
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.12%20-%20REST_Security_Cheat_Sheet.html" class="md-nav__link">
+        5.12 - REST Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.12.1%20-%20Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        5.12.1 - Server Side Request Forgery Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          5.13 - Infrastructure as Code Security
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="5.13%20-%20Infrastructure_as_Code_Security_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+        5.13 - Infrastructure as Code Security
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+    <nav class="md-nav" aria-label="Introduction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#develop-and-distribute" class="md-nav__link">
+    Develop and Distribute
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy" class="md-nav__link">
+    Deploy
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#runtime" class="md-nav__link">
+    Runtime
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.14%20-%20C-Based_Toolchain_Hardening_Cheat_Sheet.html" class="md-nav__link">
+        5.14 - C-Based Toolchain Hardening
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.2%20-%20Authentication_Cheat_Sheet.html" class="md-nav__link">
+        5.2 - Authentication
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.4%20-%20Session_Management_Cheat_Sheet.html" class="md-nav__link">
+        5.4 - Session Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.4.4%20-%20Cross_Site_Scripting_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        5.4.4 - Cross Site Scripting Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.5.2%20-%20Deserialization_Cheat_Sheet.html" class="md-nav__link">
+        5.5.2 - Deserialization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.6%20-%20Secrets_Management_CheatSheet.html" class="md-nav__link">
+        5.6 - Secrets Management CheatSheet.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.7%20-%20Error_Handling_Cheat_Sheet.html" class="md-nav__link">
+        5.7 - Error Handling
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.9%20-%20Transport_Layer_Protection_Cheat_Sheet.html" class="md-nav__link">
+        5.9 - Transport Layer Protection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.9.1%2C%205.9.4%2C%205.9.5%20-%20HTTP_Strict_Transport_Security_Cheat_Sheet.html" class="md-nav__link">
+        5.9.1, 5.9.4, 5.9.5 - HTTP Strict Transport Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="AJAX_Security_Cheat_Sheet.html" class="md-nav__link">
         AJAX Security
       </a>
@@ -379,34 +678,6 @@
   
   
     <li class="md-nav__item">
-      <a href="Authentication_Cheat_Sheet.html" class="md-nav__link">
-        Authentication
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="Authorization_Cheat_Sheet.html" class="md-nav__link">
-        Authorization
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
       <a href="Authorization_Testing_Automation_Cheat_Sheet.html" class="md-nav__link">
         Authorization Testing Automation
       </a>
@@ -423,20 +694,6 @@
     <li class="md-nav__item">
       <a href="Bean_Validation_Cheat_Sheet.html" class="md-nav__link">
         Bean Validation
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html" class="md-nav__link">
-        C-Based Toolchain Hardening
       </a>
     </li>
   
@@ -519,20 +776,6 @@
   
   
     <li class="md-nav__item">
-      <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html" class="md-nav__link">
-        Cross Site Scripting Prevention
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
       <a href="Cryptographic_Storage_Cheat_Sheet.html" class="md-nav__link">
         Cryptographic Storage
       </a>
@@ -561,36 +804,8 @@
   
   
     <li class="md-nav__item">
-      <a href="Database_Security_Cheat_Sheet.html" class="md-nav__link">
-        Database Security
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
       <a href="Denial_of_Service_Cheat_Sheet.html" class="md-nav__link">
         Denial of Service
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="Deserialization_Cheat_Sheet.html" class="md-nav__link">
-        Deserialization
       </a>
     </li>
   
@@ -620,205 +835,6 @@
       <a href="DotNet_Security_Cheat_Sheet.html" class="md-nav__link">
         DotNet Security
       </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="Error_Handling_Cheat_Sheet.html" class="md-nav__link">
-        Error Handling
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-    
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          File Upload
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="File_Upload_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
-        File Upload
-      </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    Introduction
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#file-upload-threats" class="md-nav__link">
-    File Upload Threats
-  </a>
-  
-    <nav class="md-nav" aria-label="File Upload Threats">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#malicious-files" class="md-nav__link">
-    Malicious Files
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#public-file-retrieval" class="md-nav__link">
-    Public File Retrieval
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#file-upload-protection" class="md-nav__link">
-    File Upload Protection
-  </a>
-  
-    <nav class="md-nav" aria-label="File Upload Protection">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#extension-validation" class="md-nav__link">
-    Extension Validation
-  </a>
-  
-    <nav class="md-nav" aria-label="Extension Validation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#list-allowed-extensions" class="md-nav__link">
-    List Allowed Extensions
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#block-extensions" class="md-nav__link">
-    Block Extensions
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#content-type-validation" class="md-nav__link">
-    Content-Type Validation
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#file-signature-validation" class="md-nav__link">
-    File Signature Validation
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#filename-sanitization" class="md-nav__link">
-    Filename Sanitization
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#file-content-validation" class="md-nav__link">
-    File Content Validation
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#file-storage-location" class="md-nav__link">
-    File Storage Location
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#user-permissions" class="md-nav__link">
-    User Permissions
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#filesystem-permissions" class="md-nav__link">
-    Filesystem Permissions
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#upload-and-download-limits" class="md-nav__link">
-    Upload and Download Limits
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#java-code-snippets" class="md-nav__link">
-    Java Code Snippets
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -874,48 +890,6 @@
     <li class="md-nav__item">
       <a href="HTTP_Headers_Cheat_Sheet.html" class="md-nav__link">
         HTTP Headers
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html" class="md-nav__link">
-        HTTP Strict Transport Security
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="Infrastructure_as_Code_Security_Cheat_Sheet.html" class="md-nav__link">
-        Infrastructure as Code Security
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
-        Injection Prevention
       </a>
     </li>
   
@@ -1264,20 +1238,6 @@
   
   
     <li class="md-nav__item">
-      <a href="REST_Security_Cheat_Sheet.html" class="md-nav__link">
-        REST Security
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
       <a href="Ruby_on_Rails_Cheat_Sheet.html" class="md-nav__link">
         Ruby on Rails
       </a>
@@ -1320,50 +1280,8 @@
   
   
     <li class="md-nav__item">
-      <a href="Secrets_Management_CheatSheet.html" class="md-nav__link">
-        Secrets Management CheatSheet.md
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
       <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html" class="md-nav__link">
         Securing Cascading Style Sheets
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-nav__link">
-        Server Side Request Forgery Prevention
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="Session_Management_Cheat_Sheet.html" class="md-nav__link">
-        Session Management
       </a>
     </li>
   
@@ -1420,20 +1338,6 @@
     <li class="md-nav__item">
       <a href="Transaction_Authorization_Cheat_Sheet.html" class="md-nav__link">
         Transaction Authorization
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="Transport_Layer_Protection_Cheat_Sheet.html" class="md-nav__link">
-        Transport Layer Protection
       </a>
     </li>
   
@@ -1617,26 +1521,26 @@
     Introduction
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#file-upload-threats" class="md-nav__link">
-    File Upload Threats
-  </a>
-  
-    <nav class="md-nav" aria-label="File Upload Threats">
+    <nav class="md-nav" aria-label="Introduction">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#malicious-files" class="md-nav__link">
-    Malicious Files
+  <a href="#develop-and-distribute" class="md-nav__link">
+    Develop and Distribute
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#public-file-retrieval" class="md-nav__link">
-    Public File Retrieval
+  <a href="#deploy" class="md-nav__link">
+    Deploy
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#runtime" class="md-nav__link">
+    Runtime
   </a>
   
 </li>
@@ -1647,104 +1551,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#file-upload-protection" class="md-nav__link">
-    File Upload Protection
-  </a>
-  
-    <nav class="md-nav" aria-label="File Upload Protection">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#extension-validation" class="md-nav__link">
-    Extension Validation
-  </a>
-  
-    <nav class="md-nav" aria-label="Extension Validation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#list-allowed-extensions" class="md-nav__link">
-    List Allowed Extensions
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#block-extensions" class="md-nav__link">
-    Block Extensions
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#content-type-validation" class="md-nav__link">
-    Content-Type Validation
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#file-signature-validation" class="md-nav__link">
-    File Signature Validation
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#filename-sanitization" class="md-nav__link">
-    Filename Sanitization
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#file-content-validation" class="md-nav__link">
-    File Content Validation
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#file-storage-location" class="md-nav__link">
-    File Storage Location
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#user-permissions" class="md-nav__link">
-    User Permissions
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#filesystem-permissions" class="md-nav__link">
-    Filesystem Permissions
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#upload-and-download-limits" class="md-nav__link">
-    Upload and Download Limits
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#java-code-snippets" class="md-nav__link">
-    Java Code Snippets
+  <a href="#references" class="md-nav__link">
+    References
   </a>
   
 </li>
@@ -1763,138 +1571,55 @@
                 
 
 
-<h1 id="file-upload-cheat-sheet">File Upload Cheat Sheet<a class="headerlink" href="#file-upload-cheat-sheet" title="Permanent link">&para;</a></h1>
+<!---
+Copyright 2021 Nokia
+Licensed under the Creative Commons Attribution-ShareAlike 3.0 Unported License
+SPDX-License-Identifier: CC-BY-SA-3.0
+--->
+
+<h1 id="infrastructure-as-code-security-cheatsheet">Infrastructure as Code Security Cheatsheet<a class="headerlink" href="#infrastructure-as-code-security-cheatsheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>File upload is becoming a more and more essential part of any application, where the user is able to upload their photo, their CV, or a video showcasing a project they are working on. The application should be able to fend off bogus and malicious files in a way to keep the application and the users safe.</p>
-<p>In short, the following principles should be followed to reach a secure file upload implementation:</p>
+<p>Infrastructure as code (IaC) also known as software-defined infrastructure, allows the configuration and deployment of infrastructure components faster with consistency by allowing them to be defined as a code and also enables repeatable deployments across environments.</p>
+<p>Security best practices</p>
+<p>Here are some of the security best practices for IaC that can be easily integrated to the Software Development Lifecycle:</p>
+<h3 id="develop-and-distribute">Develop and Distribute<a class="headerlink" href="#develop-and-distribute" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>List allowed extensions. Only allow safe and critical extensions for business functionality</strong><ul>
-<li><strong>Ensure that <a href="Input_Validation_Cheat_Sheet.html#validating-free-form-unicode-text">input validation</a> is applied before validating the extensions.</strong></li>
+<li>IDE plugins - Leverage standard security plug-ins in the integrated development environment (IDE) which helps in the early detection of potential risks and drastically reduces the time to address any issues later in the development cycle. Plugins such as TFLint, Checkov, Docker Linter, docker-vulnerability-extension, Security Scan, Contrast Security etc, help in the security assessment of the IaC</li>
+<li>Threat modelling - Build the threat modelling landscape earlier in the development cycle to ensure there is enough visibility of the high-risk, high-volume aspects of the code and flexibility to include security throughout to ensure the assets are safely managed</li>
+<li>Managing secrets -  The secrets usually are confidential data and information such as application tokens required for authentication, passwords, and SSH (Secure Shell Keys). The problem is not the secrets, but where you store them. If you are using a simple text or word file or SCMs like Git, then the secrets can be easily exposed. Use vaults for storing all your secrets and refer them inside configuration files instead of the secrets. Open-source tools such as truffleHog, git-secrets, GitGuardian and similar can be utilized to detect such vulnerable management of secrets</li>
+<li>Version control - Version control is the practice of tracking and managing changes to software code. Ensure all the changes to the IaC is tracked with the right set of information that helps in any revert operation. The important part is that you’re checking in those changes alongside the features they support and not separately. A feature’s infrastructure requirements should be a part of a feature’s branch or merge request. Open-source tools such as Git, GitHub, Bitbucket etc. can be used as the source code version control system</li>
+<li>Principle of least privilege - define the access management policies based on the principle of least privilege with the following priority items:
+Defining who is and is not authorized to create/update/run/delete the scripts and inventory.</li>
+<li>Limiting the permissions of authorized IaC users to what is necessary to perform their tasks. The IaC scripts should ensure that the permissions granted to the various resources it creates are limited to what is required for them to perform their work.</li>
+<li>Static analysis - Analyzes code in isolation, identifying risks, misconfigurations, and compliance faults only relevant to the IaC itself. Tools such as kubescan, Snyk, Coverity etc, can be leveraged for static analysis of IaC</li>
+<li>Open Source dependency check - Analyzes the open source dependencies such as OS packages, libraries etc to identify potential risks. Tools such as BlackDuck, Snyk, WhiteSource Bolt for GitHub, and similar can be leveraged for open source dependency analysis of IaC</li>
+<li>Container image scan - Image scanning refers to the process of analyzing the contents and the build process of a container image in order to detect security issues, vulnerabilities or potential risks. Open-source tools such as Dagda, Clair, Trivy, Anchore etc can be leveraged for container image analysis
+CI/CD pipeline and Consolidated reporting - enabling the security checks to be made available in the CI/CD pipeline enables the analysis of each of the code changes, excludes the need for manual intervention, enables maintaining the history of compliance. Along with consolidated reporting, these integrations enhance the speed of development of a secure IaC codebase. Open-source tools such as Jenkins etc can be leveraged to build the CI/CD pipelines and defect dojo, glue can help in tying the checks together and visualizing the check results in a single dashboard</li>
+<li>Artifact signing - Digital signing of artifacts at build time and validation of the signed data before use protects that artifacts from tampering between build and runtime, thus ensuring the integrity and provenance of an artifact. Open-source tools such as TUF helps in the digital signing of artifacts</li>
+</ul>
+<h3 id="deploy">Deploy<a class="headerlink" href="#deploy" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Inventory management:<ul>
+<li>Commissioning - whenever a resource is deployed, ensure the resource is labeled, tracked and logged as part of the inventory management</li>
+<li>Decommissioning - whenever a resource deletion is initiated, ensure the underlying configurations are erased, data is securely deleted and resource is completely removed from the runtime as well as from the inventory management</li>
+<li>Tagging - It is essential to tag cloud assets properly. During IaC operations, untagged assets are most likely to result in the ghost resources that make it difficult to detect, visualize, and gain observability within the cloud environment and can affect the posture causing a drift. These ghost resources can add to the billing, make it difficult to maintain, and affect the reliability. The only solution to this is careful tagging and monitoring for untagged resources.</li>
 </ul>
 </li>
-<li><strong>Validate the file type, don't trust the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type">Content-Type header</a> as it can be spoofed</strong></li>
-<li><strong>Change the filename to something generated by the application</strong></li>
-<li><strong>Set a filename length limit. Restrict the allowed characters if possible</strong></li>
-<li><strong>Set a file size limit</strong></li>
-<li><strong>Only allow authorized users to upload files</strong></li>
-<li><strong>Store the files on a different server. If that's not possible, store them outside of the webroot</strong><ul>
-<li><strong>In the case of public access to the files, use a handler that gets mapped to filenames inside the application (someid -&gt; file.ext)</strong></li>
+<li>Dynamic analysis - Dynamic analysis helps in evaluating any existing environments and services that it will interoperate with or run on. This helps in uncovering potential risks due to the interoperability. Open-source tools such as ZAP, Burp, GVM etc, can be leveraged for dynamic analysis</li>
 </ul>
-</li>
-<li><strong>Run the file through an antivirus or a sandbox if available to validate that it doesn't contain malicious data</strong></li>
-<li><strong>Ensure that any libraries used are securely configured and kept up to date</strong></li>
-<li><strong>Protect the file upload from <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">CSRF</a> attacks</strong></li>
-</ul>
-<h2 id="file-upload-threats">File Upload Threats<a class="headerlink" href="#file-upload-threats" title="Permanent link">&para;</a></h2>
-<p>In order to assess and know exactly what controls to implement, knowing what you're facing is essential to protect your assets. The following sections will hopefully showcase the risks accompanying the file upload functionality.</p>
-<h3 id="malicious-files">Malicious Files<a class="headerlink" href="#malicious-files" title="Permanent link">&para;</a></h3>
-<p>The attacker delivers a file for malicious intent, such as:</p>
-<ol>
-<li>Exploit vulnerabilities in the file parser or processing module (<em>e.g.</em> <a href="https://imagetragick.com/">ImageTrick Exploit</a>, <a href="https://owasp.org/www-community/vulnerabilities/XML_External_Entity_%28XXE%29_Processing">XXE</a>)</li>
-<li>Use the file for phishing (<em>e.g.</em> careers form)</li>
-<li>Send ZIP bombs, XML bombs (otherwise known as billion laughs attack), or simply huge files in a way to fill the server storage which hinders and damages the server's availability</li>
-<li>Overwrite an existing file on the system</li>
-<li>Client-side active content (XSS, CSRF, etc.) that could endanger other users if the files are publicly retrievable.</li>
-</ol>
-<h3 id="public-file-retrieval">Public File Retrieval<a class="headerlink" href="#public-file-retrieval" title="Permanent link">&para;</a></h3>
-<p>If the file uploaded is publicly retrievable, additional threats can be addressed:</p>
-<ol>
-<li>Public disclosure of other files</li>
-<li>Initiate a DoS attack by requesting lots of files. Requests are small, yet responses are much larger</li>
-<li>File content that could be deemed as illegal, offensive, or dangerous (<em>e.g.</em> personal data, copyrighted data, etc.) which will make you a host for such malicious files.</li>
-</ol>
-<h2 id="file-upload-protection">File Upload Protection<a class="headerlink" href="#file-upload-protection" title="Permanent link">&para;</a></h2>
-<p>There is no silver bullet in validating user content. Implementing a defense in depth approach is key to make the upload process harder and more locked down to the needs and requirements for the service. Implementing multiple techniques is key and recommended, as no one technique is enough to secure the service.</p>
-<h3 id="extension-validation">Extension Validation<a class="headerlink" href="#extension-validation" title="Permanent link">&para;</a></h3>
-<p>Ensure that the validation occurs after decoding the file name, and that a proper filter is set in place in order to avoid certain known bypasses, such as the following:</p>
+<h3 id="runtime">Runtime<a class="headerlink" href="#runtime" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Double extensions, <em>e.g.</em> <code>.jpg.php</code>, where it circumvents easily the regex <code>\.jpg</code></li>
-<li>Null bytes, <em>e.g.</em> <code>.php%00.jpg</code>, where <code>.jpg</code> gets truncated and <code>.php</code> becomes the new extension</li>
-<li>Generic bad regex that isn't properly tested and well reviewed. Refrain from building your own logic unless you have enough knowledge on this topic.</li>
+<li>Immutability of infrastructure - The idea behind immutable infrastructure is to build the infrastructure components to an exact set of specifications. No deviation, no changes. If a change to a specification is required, then a whole new set of infrastructure is provisioned based on the updated requirements, and the previous infrastructure is taken out of service as it is obsolete.</li>
+<li>Logging - Keeping a record is a critical aspect to keep an eye on risks. You should enable the logging - both security logs and audit logs while provisioning infrastructure as they help assess the security risks related to the sensitive assets. It also assists in analyzing the root cause of the incidents. It also helps in identifying potential threats. Open-source tools such as ELK etc, can be leveraged for static analysis of IaC</li>
+<li>Monitoring - Continuous monitoring assists in looking out for any security and compliance violations, helps in identifying attacks and also provides alerts upon such incidents. Certain solutions also incorporate new technologies like AI to identify potential threats early. Open-source tools such as Prometheus, Grafana etc. can be leveraged for static analysis of IaC</li>
+<li>Runtime threat detection: Implementing a runtime threat detection solution helps in recognizing unexpected application behavior and alerts on threats at runtime. Open-source tools such as Falco etc. can be leveraged for runtime threat detection. Certain application such as Contrast (contrast-community-edition) can also detect OWASP Top 10 attacks on the application during runtime and help block them in order to protect and secure the application.</li>
 </ul>
-<p>Refer to the <a href="Input_Validation_Cheat_Sheet.html">Input Validation CS</a> to properly parse and process the extension.</p>
-<h4 id="list-allowed-extensions">List Allowed Extensions<a class="headerlink" href="#list-allowed-extensions" title="Permanent link">&para;</a></h4>
-<p>Ensure the usage of <em>business-critical</em> extensions only, without allowing any type of <em>non-required</em> extensions. For example if the system requires:</p>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
-<li>image upload, allow one type that is agreed upon to fit the business requirement;</li>
-<li>cv upload, allow <code>docx</code> and <code>pdf</code> extensions.</li>
+<li>Securing Infrastructure as code: <a href="https://www.opcito.com/blogs/securing-infrastructure-as-code">https://www.opcito.com/blogs/securing-infrastructure-as-code</a></li>
+<li>Infrastructure as code security: <a href="https://dzone.com/articles/infrastructure-as-code-security">https://dzone.com/articles/infrastructure-as-code-security</a></li>
+<li>Shifting cloud security left with infrastructure as code: <a href="https://securityboulevard.com/2020/04/shifting-cloud-security-left-with-infrastructure-as-code/">https://securityboulevard.com/2020/04/shifting-cloud-security-left-with-infrastructure-as-code/</a></li>
 </ul>
-<p>Based on the needs of the application, ensure the <strong>least harmful</strong> and the <strong>lowest risk</strong> file types to be used.</p>
-<h4 id="block-extensions">Block Extensions<a class="headerlink" href="#block-extensions" title="Permanent link">&para;</a></h4>
-<p>Identify potentially harmful file types and block extensions that you regard harmful to your service.</p>
-<p>Please be aware that blocking specific extensions is a weak protection method on its own. The <a href="https://owasp.org/www-community/vulnerabilities/Unrestricted_File_Upload">Unrestricted File Upload vulnerability</a> article describes how attackers may attempt
-to bypass such a check.</p>
-<h3 id="content-type-validation">Content-Type Validation<a class="headerlink" href="#content-type-validation" title="Permanent link">&para;</a></h3>
-<p><em>The Content-Type for uploaded files is provided by the user, and as such cannot be trusted, as it is trivial to spoof. Although it should not be relied upon for security, it provides a quick check to prevent users from unintentionally uploading files with the incorrect type.</em></p>
-<p>Other than defining the extension of the uploaded file, its MIME-type can be checked for a quick protection against simple file upload attacks.</p>
-<p>This can be done preferably in an allow list approach; otherwise, this can be done in a block list approach.</p>
-<h3 id="file-signature-validation">File Signature Validation<a class="headerlink" href="#file-signature-validation" title="Permanent link">&para;</a></h3>
-<p>In conjunction with <a href="#content-type-validation">content-type validation</a>, validating the file's signature can be checked and verified against the expected file that should be received.</p>
-<blockquote>
-<p>This should not be used on its own, as bypassing it is pretty common and easy.</p>
-</blockquote>
-<h3 id="filename-sanitization">Filename Sanitization<a class="headerlink" href="#filename-sanitization" title="Permanent link">&para;</a></h3>
-<p>Filenames can endanger the system in multiple ways, either by using non acceptable characters, or by using special and restricted filenames. For Windows, refer to the following <a href="https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file?redirectedfrom=MSDN#naming-conventions">MSDN guide</a>. For a wider overview on different filesystems and how they treat files, refer to <a href="https://en.wikipedia.org/wiki/Filename">Wikipedia's Filename page</a>.</p>
-<p>In order to avoid the above mentioned threat, creating a <strong>random string</strong> as a file-name, such as generating a UUID/GUID, is essential. If the filename is required by the business needs, proper input validation should be done for client-side (<em>e.g.</em> active content that results in XSS and CSRF attacks) and back-end side (<em>e.g.</em> special files overwrite or creation) attack vectors. Filename length limits should be taken into consideration based on the system storing the files, as each system has its own filename length limit. If user filenames are required, consider implementing the following:</p>
-<ul>
-<li>Implement a maximum length</li>
-<li>Restrict characters to an allowed subset specifically, such as alphanumeric characters, hyphen, spaces, and periods<ul>
-<li>If this is not possible, block-list dangerous characters that could endanger the framework and system that is storing and using the files.</li>
-</ul>
-</li>
-</ul>
-<h3 id="file-content-validation">File Content Validation<a class="headerlink" href="#file-content-validation" title="Permanent link">&para;</a></h3>
-<p>As mentioned in the <a href="#public-file-retrieval">Public File Retrieval</a> section, file content can contain malicious, inappropriate, or illegal data.</p>
-<p>Based on the expected type, special file content validation can be applied:</p>
-<ul>
-<li>For <strong>images</strong>, applying image rewriting techniques destroys any kind of malicious content injected in an image; this could be done through <a href="https://security.stackexchange.com/a/8625/118367">randomization</a>.</li>
-<li>For <strong>Microsoft documents</strong>, the usage of <a href="https://poi.apache.org/">Apache POI</a> helps validating the uploaded documents.</li>
-<li><strong>ZIP files</strong> are not recommended since they can contain all types of files, and the attack vectors pertaining to them are numerous.</li>
-</ul>
-<p>The File Upload service should allow users to report illegal content, and copyright owners to report abuse.</p>
-<p>If there are enough resources, manual file review should be conducted in a sandboxed environment before releasing the files to the public.</p>
-<p>Adding some automation to the review could be helpful, which is a harsh process and should be well studied before its usage. Some services (<em>e.g.</em> Virus Total) provide APIs to scan files against well known malicious file hashes. Some frameworks can check and validate the raw content type and validating it against predefined file types, such as in <a href="https://docs.microsoft.com/en-us/dotnet/api/system.drawing.imaging.imageformat">ASP.NET Drawing Library</a>. Beware of data leakage threats and information gathering by public services.</p>
-<h3 id="file-storage-location">File Storage Location<a class="headerlink" href="#file-storage-location" title="Permanent link">&para;</a></h3>
-<p>The location where the files should be stored must be chosen based on security and business requirements. The following points are set by security priority, and are inclusive:</p>
-<ol>
-<li>Store the files on a <strong>different host</strong>, which allows for complete segregation of duties between the application serving the user, and the host handling file uploads and their storage.</li>
-<li>Store the files <strong>outside the webroot</strong>, where only administrative access is allowed.</li>
-<li>Store the files <strong>inside the webroot</strong>, and set them in write permissions only.</li>
-<li>If read access is required, setting proper controls is a must (<em>e.g.</em> internal IP, authorized user, etc.)</li>
-</ol>
-<p>Storing files in a studied manner in databases is one additional technique. This is sometimes used for automatic backup processes, non file-system attacks, and permissions issues. In return, this opens up the door to performance issues (in some cases), storage considerations for the database and its backups, and this opens up the door to SQLi attack. This is advised only when a DBA is on the team and that this process shows to be an improvement on storing them on the file-system.</p>
-<blockquote>
-<p>Some files are emailed or processed once they are uploaded, and are not stored on the server. It is essential to conduct the security measures discussed in this sheet before doing any actions on them.</p>
-</blockquote>
-<h3 id="user-permissions">User Permissions<a class="headerlink" href="#user-permissions" title="Permanent link">&para;</a></h3>
-<p>Before any file upload service is accessed, proper validation should occur on two levels for the user uploading a file:</p>
-<ul>
-<li>Authentication level<ul>
-<li>The user should be a registered user, or an identifiable user, in order to set restrictions and limitations for their upload capabilities</li>
-</ul>
-</li>
-<li>Authorization level<ul>
-<li>The user should have appropriate permissions to access or modify the files</li>
-</ul>
-</li>
-</ul>
-<h3 id="filesystem-permissions">Filesystem Permissions<a class="headerlink" href="#filesystem-permissions" title="Permanent link">&para;</a></h3>
-<blockquote>
-<p>Set the files permissions on the principle of least privilege.</p>
-</blockquote>
-<p>Files should be stored in a way that ensures:</p>
-<ul>
-<li>Allowed system users are the only ones capable of reading the files</li>
-<li>Required modes only are set for the file<ul>
-<li>If execution is required, scanning the file before running it is required as a security best practice, to ensure that no macros or hidden scripts are available.</li>
-</ul>
-</li>
-</ul>
-<h3 id="upload-and-download-limits">Upload and Download Limits<a class="headerlink" href="#upload-and-download-limits" title="Permanent link">&para;</a></h3>
-<p>The application should set proper size limits for the upload service in order to protect the file storage capacity. If the system is going to extract the files or process them, the file size limit should be considered after file decompression is conducted and by using secure methods to calculate zip files size. For more on this, see how to <a href="https://wiki.sei.cmu.edu/confluence/display/java/IDS04-J.+Safely+extract+files+from+ZipInputStream">Safely extract files from ZipInputStream</a>, Java's input stream to handle ZIP files.</p>
-<p>The application should set proper request limits as well for the download service if available to protect the server from DoS attacks.</p>
-<h2 id="java-code-snippets">Java Code Snippets<a class="headerlink" href="#java-code-snippets" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/righettod/document-upload-protection">Document Upload Protection</a> repository written by Dominique for certain document types in Java.</p>
 
               
             </article>
@@ -1910,7 +1635,7 @@ to bypass such a check.</p>
     <nav class="md-footer__inner md-grid" aria-label="Footer" >
       
         
-        <a href="Error_Handling_Cheat_Sheet.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Error Handling" rel="prev">
+        <a href="5.12.1%20-%20Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 5.12.1 - Server Side Request Forgery Prevention" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
           </div>
@@ -1919,20 +1644,20 @@ to bypass such a check.</p>
               <span class="md-footer__direction">
                 Previous
               </span>
-              Error Handling
+              5.12.1 - Server Side Request Forgery Prevention
             </div>
           </div>
         </a>
       
       
         
-        <a href="Forgot_Password_Cheat_Sheet.html" class="md-footer__link md-footer__link--next" aria-label="Next: Forgot Password" rel="next">
+        <a href="5.14%20-%20C-Based_Toolchain_Hardening_Cheat_Sheet.html" class="md-footer__link md-footer__link--next" aria-label="Next: 5.14 - C-Based Toolchain Hardening" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Forgot Password
+              5.14 - C-Based Toolchain Hardening
             </div>
           </div>
           <div class="md-footer__button md-icon">

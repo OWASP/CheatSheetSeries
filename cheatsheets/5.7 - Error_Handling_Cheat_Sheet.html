@@ -10,14 +10,14 @@
       
       
       
-        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Error_Handling_Cheat_Sheet.html">
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/5.7%20-%20Error_Handling_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.3.9">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
     
     
       
-        <title>Error Handling - OWASP Cheat Sheet Series</title>
+        <title>5.7 - Error Handling - OWASP Cheat Sheet Series</title>
       
     
     
@@ -96,7 +96,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Error Handling
+              5.7 - Error Handling
             
           </span>
         </div>
@@ -323,6 +323,340 @@
   
   
     <li class="md-nav__item">
+      <a href="5.1%20-%20Authorization_Cheat_Sheet.html" class="md-nav__link">
+        5.1 - Authorization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.10%20-%20Database_Security_Cheat_Sheet.html" class="md-nav__link">
+        5.10 - Database Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.10.1%2C%205.10.2%20-%20Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        5.10.1, 5.10.2 - Injection Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.11%20-%20File_Upload_Cheat_Sheet.html" class="md-nav__link">
+        5.11 - File Upload
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.12%20-%20REST_Security_Cheat_Sheet.html" class="md-nav__link">
+        5.12 - REST Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.12.1%20-%20Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        5.12.1 - Server Side Request Forgery Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.13%20-%20Infrastructure_as_Code_Security_Cheat_Sheet.html" class="md-nav__link">
+        5.13 - Infrastructure as Code Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.14%20-%20C-Based_Toolchain_Hardening_Cheat_Sheet.html" class="md-nav__link">
+        5.14 - C-Based Toolchain Hardening
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.2%20-%20Authentication_Cheat_Sheet.html" class="md-nav__link">
+        5.2 - Authentication
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.4%20-%20Session_Management_Cheat_Sheet.html" class="md-nav__link">
+        5.4 - Session Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.4.4%20-%20Cross_Site_Scripting_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        5.4.4 - Cross Site Scripting Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.5.2%20-%20Deserialization_Cheat_Sheet.html" class="md-nav__link">
+        5.5.2 - Deserialization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.6%20-%20Secrets_Management_CheatSheet.html" class="md-nav__link">
+        5.6 - Secrets Management CheatSheet.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          5.7 - Error Handling
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="5.7%20-%20Error_Handling_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+        5.7 - Error Handling
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#context" class="md-nav__link">
+    Context
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#objective-571" class="md-nav__link">
+    Objective - 5.7.1
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#proposition" class="md-nav__link">
+    Proposition
+  </a>
+  
+    <nav class="md-nav" aria-label="Proposition">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#standard-java-web-application" class="md-nav__link">
+    Standard Java Web Application
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#java-springmvcspringboot-web-application" class="md-nav__link">
+    Java SpringMVC/SpringBoot web application
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asp-net-core-web-application" class="md-nav__link">
+    ASP NET Core web application
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asp-net-web-api-web-application" class="md-nav__link">
+    ASP NET Web API web application
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sources-of-the-prototype" class="md-nav__link">
+    Sources of the prototype
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix-http-errors" class="md-nav__link">
+    Appendix HTTP Errors
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.9%20-%20Transport_Layer_Protection_Cheat_Sheet.html" class="md-nav__link">
+        5.9 - Transport Layer Protection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.9.1%2C%205.9.4%2C%205.9.5%20-%20HTTP_Strict_Transport_Security_Cheat_Sheet.html" class="md-nav__link">
+        5.9.1, 5.9.4, 5.9.5 - HTTP Strict Transport Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="AJAX_Security_Cheat_Sheet.html" class="md-nav__link">
         AJAX Security
       </a>
@@ -379,34 +713,6 @@
   
   
     <li class="md-nav__item">
-      <a href="Authentication_Cheat_Sheet.html" class="md-nav__link">
-        Authentication
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="Authorization_Cheat_Sheet.html" class="md-nav__link">
-        Authorization
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
       <a href="Authorization_Testing_Automation_Cheat_Sheet.html" class="md-nav__link">
         Authorization Testing Automation
       </a>
@@ -423,20 +729,6 @@
     <li class="md-nav__item">
       <a href="Bean_Validation_Cheat_Sheet.html" class="md-nav__link">
         Bean Validation
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html" class="md-nav__link">
-        C-Based Toolchain Hardening
       </a>
     </li>
   
@@ -519,20 +811,6 @@
   
   
     <li class="md-nav__item">
-      <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html" class="md-nav__link">
-        Cross Site Scripting Prevention
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
       <a href="Cryptographic_Storage_Cheat_Sheet.html" class="md-nav__link">
         Cryptographic Storage
       </a>
@@ -561,36 +839,8 @@
   
   
     <li class="md-nav__item">
-      <a href="Database_Security_Cheat_Sheet.html" class="md-nav__link">
-        Database Security
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
       <a href="Denial_of_Service_Cheat_Sheet.html" class="md-nav__link">
         Denial of Service
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="Deserialization_Cheat_Sheet.html" class="md-nav__link">
-        Deserialization
       </a>
     </li>
   
@@ -619,144 +869,6 @@
     <li class="md-nav__item">
       <a href="DotNet_Security_Cheat_Sheet.html" class="md-nav__link">
         DotNet Security
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-    
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Error Handling
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="Error_Handling_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
-        Error Handling
-      </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    Introduction
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#context" class="md-nav__link">
-    Context
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#objective" class="md-nav__link">
-    Objective
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#proposition" class="md-nav__link">
-    Proposition
-  </a>
-  
-    <nav class="md-nav" aria-label="Proposition">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#standard-java-web-application" class="md-nav__link">
-    Standard Java Web Application
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#java-springmvcspringboot-web-application" class="md-nav__link">
-    Java SpringMVC/SpringBoot web application
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#asp-net-core-web-application" class="md-nav__link">
-    ASP NET Core web application
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#asp-net-web-api-web-application" class="md-nav__link">
-    ASP NET Web API web application
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sources-of-the-prototype" class="md-nav__link">
-    Sources of the prototype
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#appendix-http-errors" class="md-nav__link">
-    Appendix HTTP Errors
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="File_Upload_Cheat_Sheet.html" class="md-nav__link">
-        File Upload
       </a>
     </li>
   
@@ -813,48 +925,6 @@
     <li class="md-nav__item">
       <a href="HTTP_Headers_Cheat_Sheet.html" class="md-nav__link">
         HTTP Headers
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html" class="md-nav__link">
-        HTTP Strict Transport Security
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="Infrastructure_as_Code_Security_Cheat_Sheet.html" class="md-nav__link">
-        Infrastructure as Code Security
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
-        Injection Prevention
       </a>
     </li>
   
@@ -1203,20 +1273,6 @@
   
   
     <li class="md-nav__item">
-      <a href="REST_Security_Cheat_Sheet.html" class="md-nav__link">
-        REST Security
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
       <a href="Ruby_on_Rails_Cheat_Sheet.html" class="md-nav__link">
         Ruby on Rails
       </a>
@@ -1259,50 +1315,8 @@
   
   
     <li class="md-nav__item">
-      <a href="Secrets_Management_CheatSheet.html" class="md-nav__link">
-        Secrets Management CheatSheet.md
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
       <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html" class="md-nav__link">
         Securing Cascading Style Sheets
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-nav__link">
-        Server Side Request Forgery Prevention
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="Session_Management_Cheat_Sheet.html" class="md-nav__link">
-        Session Management
       </a>
     </li>
   
@@ -1359,20 +1373,6 @@
     <li class="md-nav__item">
       <a href="Transaction_Authorization_Cheat_Sheet.html" class="md-nav__link">
         Transaction Authorization
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="Transport_Layer_Protection_Cheat_Sheet.html" class="md-nav__link">
-        Transport Layer Protection
       </a>
     </li>
   
@@ -1566,8 +1566,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#objective" class="md-nav__link">
-    Objective
+  <a href="#objective-571" class="md-nav__link">
+    Objective - 5.7.1
   </a>
   
 </li>
@@ -1681,7 +1681,7 @@ note: The full stack trace of the root cause is available in the Apache Tomcat/7
 in D:\app\index_new.php on line 188
 </code></pre></div>
 <p>The <a href="https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/01-Information_Gathering/">OWASP Testing Guide</a> provides different techniques to obtain technical information from an application.</p>
-<h2 id="objective">Objective<a class="headerlink" href="#objective" title="Permanent link">&para;</a></h2>
+<h2 id="objective-571">Objective - 5.7.1<a class="headerlink" href="#objective-571" title="Permanent link">&para;</a></h2>
 <p>The article shows how to configure a global error handler as part of your application's runtime configuration. In some cases, it may be more efficient to define this error handler as part of your code. The outcome being that when an unexpected error occurs then a generic response is returned by the application but the error details are logged server side for investigation, and not returned to the user.</p>
 <p>The following schema shows the target approach:</p>
 <p><img alt="Overview" src="../assets/Error_Handling_Cheat_Sheet_Overview.png" /></p>
@@ -2005,7 +2005,7 @@ in D:\app\index_new.php on line 188
     <nav class="md-footer__inner md-grid" aria-label="Footer" >
       
         
-        <a href="DotNet_Security_Cheat_Sheet.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: DotNet Security" rel="prev">
+        <a href="5.6%20-%20Secrets_Management_CheatSheet.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 5.6 - Secrets Management CheatSheet.md" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
           </div>
@@ -2014,20 +2014,20 @@ in D:\app\index_new.php on line 188
               <span class="md-footer__direction">
                 Previous
               </span>
-              DotNet Security
+              5.6 - Secrets Management CheatSheet.md
             </div>
           </div>
         </a>
       
       
         
-        <a href="File_Upload_Cheat_Sheet.html" class="md-footer__link md-footer__link--next" aria-label="Next: File Upload" rel="next">
+        <a href="5.9%20-%20Transport_Layer_Protection_Cheat_Sheet.html" class="md-footer__link md-footer__link--next" aria-label="Next: 5.9 - Transport Layer Protection" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              File Upload
+              5.9 - Transport Layer Protection
             </div>
           </div>
           <div class="md-footer__button md-icon">

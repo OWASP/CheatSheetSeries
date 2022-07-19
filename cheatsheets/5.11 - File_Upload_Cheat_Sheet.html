@@ -10,14 +10,14 @@
       
       
       
-        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Database_Security_Cheat_Sheet.html">
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/5.11%20-%20File_Upload_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.3.9">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
     
     
       
-        <title>Database Security - OWASP Cheat Sheet Series</title>
+        <title>5.11 - File Upload - OWASP Cheat Sheet Series</title>
       
     
     
@@ -64,7 +64,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#database-security-cheat-sheet" class="md-skip">
+        <a href="#file-upload-cheat-sheet" class="md-skip">
           Skip to content
         </a>
       
@@ -96,7 +96,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Database Security
+              5.11 - File Upload
             
           </span>
         </div>
@@ -323,6 +323,401 @@
   
   
     <li class="md-nav__item">
+      <a href="5.1%20-%20Authorization_Cheat_Sheet.html" class="md-nav__link">
+        5.1 - Authorization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.10%20-%20Database_Security_Cheat_Sheet.html" class="md-nav__link">
+        5.10 - Database Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.10.1%2C%205.10.2%20-%20Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        5.10.1, 5.10.2 - Injection Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          5.11 - File Upload
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="5.11%20-%20File_Upload_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+        5.11 - File Upload
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file-upload-threats" class="md-nav__link">
+    File Upload Threats
+  </a>
+  
+    <nav class="md-nav" aria-label="File Upload Threats">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#malicious-files-5111-5113" class="md-nav__link">
+    Malicious Files - 5.11.1, 5.11.3
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#public-file-retrieval" class="md-nav__link">
+    Public File Retrieval
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file-upload-protection" class="md-nav__link">
+    File Upload Protection
+  </a>
+  
+    <nav class="md-nav" aria-label="File Upload Protection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#extension-validation" class="md-nav__link">
+    Extension Validation
+  </a>
+  
+    <nav class="md-nav" aria-label="Extension Validation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#list-allowed-extensions" class="md-nav__link">
+    List Allowed Extensions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#block-extensions" class="md-nav__link">
+    Block Extensions
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#content-type-validation" class="md-nav__link">
+    Content-Type Validation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#file-signature-validation" class="md-nav__link">
+    File Signature Validation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filename-sanitization" class="md-nav__link">
+    Filename Sanitization
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#file-content-validation-5115" class="md-nav__link">
+    File Content Validation - 5.11.5
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#file-storage-location-5114" class="md-nav__link">
+    File Storage Location - 5.11.4
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#user-permissions" class="md-nav__link">
+    User Permissions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filesystem-permissions" class="md-nav__link">
+    Filesystem Permissions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upload-and-download-limits" class="md-nav__link">
+    Upload and Download Limits
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#java-code-snippets" class="md-nav__link">
+    Java Code Snippets
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.12%20-%20REST_Security_Cheat_Sheet.html" class="md-nav__link">
+        5.12 - REST Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.12.1%20-%20Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        5.12.1 - Server Side Request Forgery Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.13%20-%20Infrastructure_as_Code_Security_Cheat_Sheet.html" class="md-nav__link">
+        5.13 - Infrastructure as Code Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.14%20-%20C-Based_Toolchain_Hardening_Cheat_Sheet.html" class="md-nav__link">
+        5.14 - C-Based Toolchain Hardening
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.2%20-%20Authentication_Cheat_Sheet.html" class="md-nav__link">
+        5.2 - Authentication
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.4%20-%20Session_Management_Cheat_Sheet.html" class="md-nav__link">
+        5.4 - Session Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.4.4%20-%20Cross_Site_Scripting_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        5.4.4 - Cross Site Scripting Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.5.2%20-%20Deserialization_Cheat_Sheet.html" class="md-nav__link">
+        5.5.2 - Deserialization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.6%20-%20Secrets_Management_CheatSheet.html" class="md-nav__link">
+        5.6 - Secrets Management CheatSheet.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.7%20-%20Error_Handling_Cheat_Sheet.html" class="md-nav__link">
+        5.7 - Error Handling
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.9%20-%20Transport_Layer_Protection_Cheat_Sheet.html" class="md-nav__link">
+        5.9 - Transport Layer Protection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.9.1%2C%205.9.4%2C%205.9.5%20-%20HTTP_Strict_Transport_Security_Cheat_Sheet.html" class="md-nav__link">
+        5.9.1, 5.9.4, 5.9.5 - HTTP Strict Transport Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="AJAX_Security_Cheat_Sheet.html" class="md-nav__link">
         AJAX Security
       </a>
@@ -379,34 +774,6 @@
   
   
     <li class="md-nav__item">
-      <a href="Authentication_Cheat_Sheet.html" class="md-nav__link">
-        Authentication
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="Authorization_Cheat_Sheet.html" class="md-nav__link">
-        Authorization
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
       <a href="Authorization_Testing_Automation_Cheat_Sheet.html" class="md-nav__link">
         Authorization Testing Automation
       </a>
@@ -423,20 +790,6 @@
     <li class="md-nav__item">
       <a href="Bean_Validation_Cheat_Sheet.html" class="md-nav__link">
         Bean Validation
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html" class="md-nav__link">
-        C-Based Toolchain Hardening
       </a>
     </li>
   
@@ -519,20 +872,6 @@
   
   
     <li class="md-nav__item">
-      <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html" class="md-nav__link">
-        Cross Site Scripting Prevention
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
       <a href="Cryptographic_Storage_Cheat_Sheet.html" class="md-nav__link">
         Cryptographic Storage
       </a>
@@ -559,174 +898,10 @@
               
   
   
-    
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Database Security
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="Database_Security_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
-        Database Security
-      </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    Introduction
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#connecting-to-the-database" class="md-nav__link">
-    Connecting to the Database
-  </a>
-  
-    <nav class="md-nav" aria-label="Connecting to the Database">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#transport-layer-protection" class="md-nav__link">
-    Transport Layer Protection
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#authentication" class="md-nav__link">
-    Authentication
-  </a>
-  
-    <nav class="md-nav" aria-label="Authentication">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#storing-database-credentials" class="md-nav__link">
-    Storing Database Credentials
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#permissions" class="md-nav__link">
-    Permissions
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#database-configuration-and-hardening" class="md-nav__link">
-    Database Configuration and Hardening
-  </a>
-  
-    <nav class="md-nav" aria-label="Database Configuration and Hardening">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#microsoft-sql-server" class="md-nav__link">
-    Microsoft SQL Server
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mysql-and-mariadb" class="md-nav__link">
-    MySQL and MariaDB
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#postgresql" class="md-nav__link">
-    PostgreSQL
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mongodb" class="md-nav__link">
-    MongoDB
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#redis" class="md-nav__link">
-    Redis
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
   
     <li class="md-nav__item">
       <a href="Denial_of_Service_Cheat_Sheet.html" class="md-nav__link">
         Denial of Service
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="Deserialization_Cheat_Sheet.html" class="md-nav__link">
-        Deserialization
       </a>
     </li>
   
@@ -755,34 +930,6 @@
     <li class="md-nav__item">
       <a href="DotNet_Security_Cheat_Sheet.html" class="md-nav__link">
         DotNet Security
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="Error_Handling_Cheat_Sheet.html" class="md-nav__link">
-        Error Handling
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="File_Upload_Cheat_Sheet.html" class="md-nav__link">
-        File Upload
       </a>
     </li>
   
@@ -839,48 +986,6 @@
     <li class="md-nav__item">
       <a href="HTTP_Headers_Cheat_Sheet.html" class="md-nav__link">
         HTTP Headers
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html" class="md-nav__link">
-        HTTP Strict Transport Security
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="Infrastructure_as_Code_Security_Cheat_Sheet.html" class="md-nav__link">
-        Infrastructure as Code Security
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
-        Injection Prevention
       </a>
     </li>
   
@@ -1229,20 +1334,6 @@
   
   
     <li class="md-nav__item">
-      <a href="REST_Security_Cheat_Sheet.html" class="md-nav__link">
-        REST Security
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
       <a href="Ruby_on_Rails_Cheat_Sheet.html" class="md-nav__link">
         Ruby on Rails
       </a>
@@ -1285,50 +1376,8 @@
   
   
     <li class="md-nav__item">
-      <a href="Secrets_Management_CheatSheet.html" class="md-nav__link">
-        Secrets Management CheatSheet.md
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
       <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html" class="md-nav__link">
         Securing Cascading Style Sheets
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-nav__link">
-        Server Side Request Forgery Prevention
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="Session_Management_Cheat_Sheet.html" class="md-nav__link">
-        Session Management
       </a>
     </li>
   
@@ -1385,20 +1434,6 @@
     <li class="md-nav__item">
       <a href="Transaction_Authorization_Cheat_Sheet.html" class="md-nav__link">
         Transaction Authorization
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="Transport_Layer_Protection_Cheat_Sheet.html" class="md-nav__link">
-        Transport Layer Protection
       </a>
     </li>
   
@@ -1585,16 +1620,23 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#connecting-to-the-database" class="md-nav__link">
-    Connecting to the Database
+  <a href="#file-upload-threats" class="md-nav__link">
+    File Upload Threats
   </a>
   
-    <nav class="md-nav" aria-label="Connecting to the Database">
+    <nav class="md-nav" aria-label="File Upload Threats">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#transport-layer-protection" class="md-nav__link">
-    Transport Layer Protection
+  <a href="#malicious-files-5111-5113" class="md-nav__link">
+    Malicious Files - 5.11.1, 5.11.3
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#public-file-retrieval" class="md-nav__link">
+    Public File Retrieval
   </a>
   
 </li>
@@ -1605,16 +1647,92 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#authentication" class="md-nav__link">
-    Authentication
+  <a href="#file-upload-protection" class="md-nav__link">
+    File Upload Protection
   </a>
   
-    <nav class="md-nav" aria-label="Authentication">
+    <nav class="md-nav" aria-label="File Upload Protection">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#storing-database-credentials" class="md-nav__link">
-    Storing Database Credentials
+  <a href="#extension-validation" class="md-nav__link">
+    Extension Validation
+  </a>
+  
+    <nav class="md-nav" aria-label="Extension Validation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#list-allowed-extensions" class="md-nav__link">
+    List Allowed Extensions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#block-extensions" class="md-nav__link">
+    Block Extensions
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#content-type-validation" class="md-nav__link">
+    Content-Type Validation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#file-signature-validation" class="md-nav__link">
+    File Signature Validation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filename-sanitization" class="md-nav__link">
+    Filename Sanitization
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#file-content-validation-5115" class="md-nav__link">
+    File Content Validation - 5.11.5
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#file-storage-location-5114" class="md-nav__link">
+    File Storage Location - 5.11.4
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#user-permissions" class="md-nav__link">
+    User Permissions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filesystem-permissions" class="md-nav__link">
+    Filesystem Permissions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upload-and-download-limits" class="md-nav__link">
+    Upload and Download Limits
   </a>
   
 </li>
@@ -1625,57 +1743,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#permissions" class="md-nav__link">
-    Permissions
+  <a href="#java-code-snippets" class="md-nav__link">
+    Java Code Snippets
   </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#database-configuration-and-hardening" class="md-nav__link">
-    Database Configuration and Hardening
-  </a>
-  
-    <nav class="md-nav" aria-label="Database Configuration and Hardening">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#microsoft-sql-server" class="md-nav__link">
-    Microsoft SQL Server
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mysql-and-mariadb" class="md-nav__link">
-    MySQL and MariaDB
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#postgresql" class="md-nav__link">
-    PostgreSQL
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mongodb" class="md-nav__link">
-    MongoDB
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#redis" class="md-nav__link">
-    Redis
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1693,122 +1763,138 @@
                 
 
 
-<h1 id="database-security-cheat-sheet">Database Security Cheat Sheet<a class="headerlink" href="#database-security-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h1 id="file-upload-cheat-sheet">File Upload Cheat Sheet<a class="headerlink" href="#file-upload-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>This cheat sheet provides guidance on securely configuring and using the SQL and NoSQL databases. It is intended to be used by application developers when they are responsible for managing the databases, in the absence of a dedicated database administrator (DBA). For details about protecting against SQL Injection attacks, see the <a href="SQL_Injection_Prevention_Cheat_Sheet.html">SQL Injection Prevention Cheat Sheet</a>.</p>
-<h2 id="connecting-to-the-database">Connecting to the Database<a class="headerlink" href="#connecting-to-the-database" title="Permanent link">&para;</a></h2>
-<p>The backend database used by the application should be isolated as much as possible, in order to prevent malicious or undesirable users from being able to connect to it. Exactly how this is achieved will depend on the system and network architecture. The following options could be used to protect it:</p>
+<p>File upload is becoming a more and more essential part of any application, where the user is able to upload their photo, their CV, or a video showcasing a project they are working on. The application should be able to fend off bogus and malicious files in a way to keep the application and the users safe.</p>
+<p>In short, the following principles should be followed to reach a secure file upload implementation:</p>
 <ul>
-<li>Disabling network (TCP) access and requiring all access is over a local socket file or named pipe.</li>
-<li>Configuring the database to only bind on localhost.</li>
-<li>Restricting access to the network port to specific hosts with firewall rules.</li>
-<li>Placing the database server in a separate DMZ isolated from the application server.</li>
-</ul>
-<p>Similar protection should be implemented to protect any web-based management tools used with the database, such as phpMyAdmin.</p>
-<p>When an application is running on an untrusted system (such as a thick-client), it should always connect to the backend through an API that can enforce appropriate access control and restrictions. Direct connections should <strong>never</strong> be made from a thick client to the backend database.</p>
-<h3 id="transport-layer-protection">Transport Layer Protection<a class="headerlink" href="#transport-layer-protection" title="Permanent link">&para;</a></h3>
-<p>Most databases will allow unencrypted network connections in their default configurations. Although some will encrypt the initial authentication (such as Microsoft SQL Server), the rest of the traffic will be unencrypted, meaning that all kinds of sensitive information will be sent across the network in clear text. The following steps should be taken to prevent unencrypted traffic:</p>
-<ul>
-<li>Configure the database to only allow encrypted connections.</li>
-<li>Install a trusted digital certificate on the server.</li>
-<li>Configure the client application to connect using TLSv1.2+ with modern ciphers (e.g, AES-GCM or ChaCha20).</li>
-<li>Configure the client application to verify that the digital certificate is correct.</li>
-</ul>
-<p>The <a href="Transport_Layer_Protection_Cheat_Sheet.html">Transport Layer Protection</a> and <a href="TLS_Cipher_String_Cheat_Sheet.html">TLS Cipher String</a> Cheat Sheets contain further guidance on securely configuring TLS.</p>
-<h2 id="authentication">Authentication<a class="headerlink" href="#authentication" title="Permanent link">&para;</a></h2>
-<p>The database should be configured to always require authentication, including connections from the local server. Database accounts should be:</p>
-<ul>
-<li>Protected with strong and unique passwords.</li>
-<li>Used by a single application or service.</li>
-<li>Configured with the minimum permissions required as discussed in the <a href="#permissions">permissions section below</a>.</li>
-</ul>
-<p>As with any system that has its own user accounts, the usual account management processes should be followed, including:</p>
-<ul>
-<li>Regular reviews of the accounts to ensure that they are still required.</li>
-<li>Regular reviews of permissions.</li>
-<li>Removing user accounts when an application is decommissioned.</li>
-<li>Changing the passwords when staff leave, or there is reason to believe that they may have been compromised.</li>
-</ul>
-<p>For Microsoft SQL Server, consider the use of <a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/authentication-in-sql-server">Windows or Integrated-Authentication</a>, which uses existing Windows accounts rather than SQL Server accounts. This also removes the requirement to store credentials in the application, as it will connect using the credentials of the Windows user it is running under. The <a href="https://dev.mysql.com/doc/connector-net/en/connector-net-programming-authentication-windows-native.html">Windows Native Authentication Plugins</a> provides similar functionality for MySQL.</p>
-<h3 id="storing-database-credentials">Storing Database Credentials<a class="headerlink" href="#storing-database-credentials" title="Permanent link">&para;</a></h3>
-<p>Database credentials should never be stored in the application source code, especially if they are unencrypted. Instead, they should be stored in a configuration file that:</p>
-<ul>
-<li>Is outside of the webroot.</li>
-<li>Has appropriate permissions so that it can only be read by the required user(s).</li>
-<li>Is not checked into source code repositories.</li>
-</ul>
-<p>Where possible, these credentials should also be encrypted or otherwise protected using built-in functionality, such as the <code>web.config</code> encryption available in <a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/connection-strings-and-configuration-files#encrypting-configuration-file-sections-using-protected-configuration">ASP.NET</a>.</p>
-<h2 id="permissions">Permissions<a class="headerlink" href="#permissions" title="Permanent link">&para;</a></h2>
-<p>The permissions assigned to database user accounts should be based on the principle of least privilege (i.e, the accounts should only have the minimal permissions required for the application to function). This can be applied at a number of increasingly granular levels depending on the functionality available in the database. The following steps should be applicable to all environments:</p>
-<ul>
-<li>Do not use the built-in <code>root</code>, <code>sa</code> or <code>SYS</code> accounts.</li>
-<li>Do not grant the account administrative rights over the database instance.</li>
-<li>Only allow the account to connect from allowed hosts.<ul>
-<li>This would often be <code>localhost</code> or the address of the application server.</li>
+<li><strong>List allowed extensions. Only allow safe and critical extensions for business functionality</strong><ul>
+<li><strong>Ensure that <a href="Input_Validation_Cheat_Sheet.html#validating-free-form-unicode-text">input validation</a> is applied before validating the extensions.</strong></li>
 </ul>
 </li>
-<li>Only grant the account access to the specific databases it needs.<ul>
-<li>Development, UAT and Production environments should all use separate databases and accounts.</li>
+<li><strong>Validate the file type, don't trust the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type">Content-Type header</a> as it can be spoofed</strong></li>
+<li><strong>Change the filename to something generated by the application</strong></li>
+<li><strong>Set a filename length limit. Restrict the allowed characters if possible</strong></li>
+<li><strong>Set a file size limit</strong></li>
+<li><strong>Only allow authorized users to upload files</strong></li>
+<li><strong>Store the files on a different server. If that's not possible, store them outside of the webroot</strong><ul>
+<li><strong>In the case of public access to the files, use a handler that gets mapped to filenames inside the application (someid -&gt; file.ext)</strong></li>
 </ul>
 </li>
-<li>Only grant the required permissions on the databases.<ul>
-<li>Most applications would only need <code>SELECT</code>, <code>UPDATE</code> and <code>DELETE</code> permissions.</li>
-<li>The account should not be the owner of the database as this can lead to privilege escalation vulnerabilities.</li>
+<li><strong>Run the file through an antivirus or a sandbox if available to validate that it doesn't contain malicious data</strong></li>
+<li><strong>Ensure that any libraries used are securely configured and kept up to date</strong></li>
+<li><strong>Protect the file upload from <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">CSRF</a> attacks</strong></li>
 </ul>
-</li>
-<li>Avoid using database links or linked servers.<ul>
-<li>Where they are required, use an account that has been granted access to only the minimum databases, tables, and system privileges required.</li>
-</ul>
-</li>
-</ul>
-<p>For more security-critical applications, it is possible to apply permissions at more granular levels, including:</p>
+<h2 id="file-upload-threats">File Upload Threats<a class="headerlink" href="#file-upload-threats" title="Permanent link">&para;</a></h2>
+<p>In order to assess and know exactly what controls to implement, knowing what you're facing is essential to protect your assets. The following sections will hopefully showcase the risks accompanying the file upload functionality.</p>
+<h3 id="malicious-files-5111-5113">Malicious Files - 5.11.1, 5.11.3<a class="headerlink" href="#malicious-files-5111-5113" title="Permanent link">&para;</a></h3>
+<p>The attacker delivers a file for malicious intent, such as:</p>
+<ol>
+<li>Exploit vulnerabilities in the file parser or processing module (<em>e.g.</em> <a href="https://imagetragick.com/">ImageTrick Exploit</a>, <a href="https://owasp.org/www-community/vulnerabilities/XML_External_Entity_%28XXE%29_Processing">XXE</a>)</li>
+<li>Use the file for phishing (<em>e.g.</em> careers form)</li>
+<li>Send ZIP bombs, XML bombs (otherwise known as billion laughs attack), or simply huge files in a way to fill the server storage which hinders and damages the server's availability</li>
+<li>Overwrite an existing file on the system</li>
+<li>Client-side active content (XSS, CSRF, etc.) that could endanger other users if the files are publicly retrievable.</li>
+</ol>
+<h3 id="public-file-retrieval">Public File Retrieval<a class="headerlink" href="#public-file-retrieval" title="Permanent link">&para;</a></h3>
+<p>If the file uploaded is publicly retrievable, additional threats can be addressed:</p>
+<ol>
+<li>Public disclosure of other files</li>
+<li>Initiate a DoS attack by requesting lots of files. Requests are small, yet responses are much larger</li>
+<li>File content that could be deemed as illegal, offensive, or dangerous (<em>e.g.</em> personal data, copyrighted data, etc.) which will make you a host for such malicious files.</li>
+</ol>
+<h2 id="file-upload-protection">File Upload Protection<a class="headerlink" href="#file-upload-protection" title="Permanent link">&para;</a></h2>
+<p>There is no silver bullet in validating user content. Implementing a defense in depth approach is key to make the upload process harder and more locked down to the needs and requirements for the service. Implementing multiple techniques is key and recommended, as no one technique is enough to secure the service.</p>
+<h3 id="extension-validation">Extension Validation<a class="headerlink" href="#extension-validation" title="Permanent link">&para;</a></h3>
+<p>Ensure that the validation occurs after decoding the file name, and that a proper filter is set in place in order to avoid certain known bypasses, such as the following:</p>
 <ul>
-<li>Table-level permissions.</li>
-<li>Column-level permissions.</li>
-<li>Row-level permissions</li>
-<li>Blocking access to the underlying tables, and requiring all access through restricted <a href="https://en.wikipedia.org/wiki/View_(SQL)">views</a>.</li>
+<li>Double extensions, <em>e.g.</em> <code>.jpg.php</code>, where it circumvents easily the regex <code>\.jpg</code></li>
+<li>Null bytes, <em>e.g.</em> <code>.php%00.jpg</code>, where <code>.jpg</code> gets truncated and <code>.php</code> becomes the new extension</li>
+<li>Generic bad regex that isn't properly tested and well reviewed. Refrain from building your own logic unless you have enough knowledge on this topic.</li>
 </ul>
-<h2 id="database-configuration-and-hardening">Database Configuration and Hardening<a class="headerlink" href="#database-configuration-and-hardening" title="Permanent link">&para;</a></h2>
-<p>The underlying operating system for the database server should be hardened in the same way as any other server, based on a secure baseline such as the <a href="https://www.cisecurity.org/cis-benchmarks/">CIS Benchmarks</a> or the <a href="https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-security-baselines">Microsoft Security Baselines</a>.</p>
-<p>The database application should also be properly configured and hardened. The following principles should apply to any database application and platform:</p>
+<p>Refer to the <a href="Input_Validation_Cheat_Sheet.html">Input Validation CS</a> to properly parse and process the extension.</p>
+<h4 id="list-allowed-extensions">List Allowed Extensions<a class="headerlink" href="#list-allowed-extensions" title="Permanent link">&para;</a></h4>
+<p>Ensure the usage of <em>business-critical</em> extensions only, without allowing any type of <em>non-required</em> extensions. For example if the system requires:</p>
 <ul>
-<li>Install any required security updates and patches.</li>
-<li>Configure the database services to run under a low privileged user account.</li>
-<li>Remove any default accounts and databases.</li>
-<li>Store <a href="https://en.wikipedia.org/wiki/Transaction_log">transaction logs</a> on a separate disk to the main database files.</li>
-<li>Configure a regular backup of the database.<ul>
-<li>Ensure that the backups are protected with appropriate permissions, and ideally encrypted.</li>
+<li>image upload, allow one type that is agreed upon to fit the business requirement;</li>
+<li>cv upload, allow <code>docx</code> and <code>pdf</code> extensions.</li>
+</ul>
+<p>Based on the needs of the application, ensure the <strong>least harmful</strong> and the <strong>lowest risk</strong> file types to be used.</p>
+<h4 id="block-extensions">Block Extensions<a class="headerlink" href="#block-extensions" title="Permanent link">&para;</a></h4>
+<p>Identify potentially harmful file types and block extensions that you regard harmful to your service.</p>
+<p>Please be aware that blocking specific extensions is a weak protection method on its own. The <a href="https://owasp.org/www-community/vulnerabilities/Unrestricted_File_Upload">Unrestricted File Upload vulnerability</a> article describes how attackers may attempt
+to bypass such a check.</p>
+<h3 id="content-type-validation">Content-Type Validation<a class="headerlink" href="#content-type-validation" title="Permanent link">&para;</a></h3>
+<p><em>The Content-Type for uploaded files is provided by the user, and as such cannot be trusted, as it is trivial to spoof. Although it should not be relied upon for security, it provides a quick check to prevent users from unintentionally uploading files with the incorrect type.</em></p>
+<p>Other than defining the extension of the uploaded file, its MIME-type can be checked for a quick protection against simple file upload attacks.</p>
+<p>This can be done preferably in an allow list approach; otherwise, this can be done in a block list approach.</p>
+<h3 id="file-signature-validation">File Signature Validation<a class="headerlink" href="#file-signature-validation" title="Permanent link">&para;</a></h3>
+<p>In conjunction with <a href="#content-type-validation">content-type validation</a>, validating the file's signature can be checked and verified against the expected file that should be received.</p>
+<blockquote>
+<p>This should not be used on its own, as bypassing it is pretty common and easy.</p>
+</blockquote>
+<h3 id="filename-sanitization">Filename Sanitization<a class="headerlink" href="#filename-sanitization" title="Permanent link">&para;</a></h3>
+<p>Filenames can endanger the system in multiple ways, either by using non acceptable characters, or by using special and restricted filenames. For Windows, refer to the following <a href="https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file?redirectedfrom=MSDN#naming-conventions">MSDN guide</a>. For a wider overview on different filesystems and how they treat files, refer to <a href="https://en.wikipedia.org/wiki/Filename">Wikipedia's Filename page</a>.</p>
+<p>In order to avoid the above mentioned threat, creating a <strong>random string</strong> as a file-name, such as generating a UUID/GUID, is essential. If the filename is required by the business needs, proper input validation should be done for client-side (<em>e.g.</em> active content that results in XSS and CSRF attacks) and back-end side (<em>e.g.</em> special files overwrite or creation) attack vectors. Filename length limits should be taken into consideration based on the system storing the files, as each system has its own filename length limit. If user filenames are required, consider implementing the following:</p>
+<ul>
+<li>Implement a maximum length</li>
+<li>Restrict characters to an allowed subset specifically, such as alphanumeric characters, hyphen, spaces, and periods<ul>
+<li>If this is not possible, block-list dangerous characters that could endanger the framework and system that is storing and using the files.</li>
 </ul>
 </li>
 </ul>
-<p>The following sections gives some further recommendations for specific database software, in addition to the more general recommendations given above.</p>
-<h3 id="microsoft-sql-server">Microsoft SQL Server<a class="headerlink" href="#microsoft-sql-server" title="Permanent link">&para;</a></h3>
+<h3 id="file-content-validation-5115">File Content Validation - 5.11.5<a class="headerlink" href="#file-content-validation-5115" title="Permanent link">&para;</a></h3>
+<p>As mentioned in the <a href="#public-file-retrieval">Public File Retrieval</a> section, file content can contain malicious, inappropriate, or illegal data.</p>
+<p>Based on the expected type, special file content validation can be applied:</p>
 <ul>
-<li>Disable <code>xp_cmdshell</code>, <code>xp_dirtree</code> and other stored procedures that are not required.</li>
-<li>Disable Common Language Runtime (CLR) execution.</li>
-<li>Disable the SQL Browser service.</li>
-<li>Disable <a href="https://docs.microsoft.com/en-us/sql/relational-databases/security/choose-an-authentication-mode?view=sql-server-ver15">Mixed Mode Authentication</a> unless it is required.</li>
-<li>Ensure that the sample <a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/linq/downloading-sample-databases">Northwind and AdventureWorks databases</a> have been removed.</li>
-<li>See Microsoft's articles on <a href="https://docs.microsoft.com/en-us/sql/relational-databases/security/securing-sql-server">securing SQL Server</a>.</li>
+<li>For <strong>images</strong>, applying image rewriting techniques destroys any kind of malicious content injected in an image; this could be done through <a href="https://security.stackexchange.com/a/8625/118367">randomization</a>.</li>
+<li>For <strong>Microsoft documents</strong>, the usage of <a href="https://poi.apache.org/">Apache POI</a> helps validating the uploaded documents.</li>
+<li><strong>ZIP files</strong> are not recommended since they can contain all types of files, and the attack vectors pertaining to them are numerous.</li>
 </ul>
-<h3 id="mysql-and-mariadb">MySQL and MariaDB<a class="headerlink" href="#mysql-and-mariadb" title="Permanent link">&para;</a></h3>
+<p>The File Upload service should allow users to report illegal content, and copyright owners to report abuse.</p>
+<p>If there are enough resources, manual file review should be conducted in a sandboxed environment before releasing the files to the public.</p>
+<p>Adding some automation to the review could be helpful, which is a harsh process and should be well studied before its usage. Some services (<em>e.g.</em> Virus Total) provide APIs to scan files against well known malicious file hashes. Some frameworks can check and validate the raw content type and validating it against predefined file types, such as in <a href="https://docs.microsoft.com/en-us/dotnet/api/system.drawing.imaging.imageformat">ASP.NET Drawing Library</a>. Beware of data leakage threats and information gathering by public services.</p>
+<h3 id="file-storage-location-5114">File Storage Location - 5.11.4<a class="headerlink" href="#file-storage-location-5114" title="Permanent link">&para;</a></h3>
+<p>The location where the files should be stored must be chosen based on security and business requirements. The following points are set by security priority, and are inclusive:</p>
+<ol>
+<li>Store the files on a <strong>different host</strong>, which allows for complete segregation of duties between the application serving the user, and the host handling file uploads and their storage.</li>
+<li>Store the files <strong>outside the webroot</strong>, where only administrative access is allowed.</li>
+<li>Store the files <strong>inside the webroot</strong>, and set them in write permissions only.</li>
+<li>If read access is required, setting proper controls is a must (<em>e.g.</em> internal IP, authorized user, etc.)</li>
+</ol>
+<p>Storing files in a studied manner in databases is one additional technique. This is sometimes used for automatic backup processes, non file-system attacks, and permissions issues. In return, this opens up the door to performance issues (in some cases), storage considerations for the database and its backups, and this opens up the door to SQLi attack. This is advised only when a DBA is on the team and that this process shows to be an improvement on storing them on the file-system.</p>
+<blockquote>
+<p>Some files are emailed or processed once they are uploaded, and are not stored on the server. It is essential to conduct the security measures discussed in this sheet before doing any actions on them.</p>
+</blockquote>
+<h3 id="user-permissions">User Permissions<a class="headerlink" href="#user-permissions" title="Permanent link">&para;</a></h3>
+<p>Before any file upload service is accessed, proper validation should occur on two levels for the user uploading a file:</p>
 <ul>
-<li>Run the <code>mysql_secure_installation</code> script to remove the default databases and accounts.</li>
-<li>Disable the <a href="https://dev.mysql.com/doc/refman/8.0/en/privileges-provided.html#priv_file">FILE</a> privilege for all users to prevent them reading or writing files.</li>
-<li>See the <a href="https://dev.mysql.com/doc/refman/8.0/en/security-guidelines.html">Oracle MySQL</a> and <a href="https://mariadb.com/kb/en/library/securing-mariadb/">MariaDB</a> hardening guides.</li>
+<li>Authentication level<ul>
+<li>The user should be a registered user, or an identifiable user, in order to set restrictions and limitations for their upload capabilities</li>
 </ul>
-<h3 id="postgresql">PostgreSQL<a class="headerlink" href="#postgresql" title="Permanent link">&para;</a></h3>
+</li>
+<li>Authorization level<ul>
+<li>The user should have appropriate permissions to access or modify the files</li>
+</ul>
+</li>
+</ul>
+<h3 id="filesystem-permissions">Filesystem Permissions<a class="headerlink" href="#filesystem-permissions" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>Set the files permissions on the principle of least privilege.</p>
+</blockquote>
+<p>Files should be stored in a way that ensures:</p>
 <ul>
-<li>See the <a href="https://www.postgresql.org/docs/12/runtime.html">PostgreSQL Server Setup and Operation documentation</a> and the older <a href="https://www.postgresql.org/docs/7.0/security.htm">Security documentation</a>.</li>
+<li>Allowed system users are the only ones capable of reading the files</li>
+<li>Required modes only are set for the file<ul>
+<li>If execution is required, scanning the file before running it is required as a security best practice, to ensure that no macros or hidden scripts are available.</li>
 </ul>
-<h3 id="mongodb">MongoDB<a class="headerlink" href="#mongodb" title="Permanent link">&para;</a></h3>
-<ul>
-<li>See the <a href="https://docs.mongodb.com/manual/administration/security-checklist/">MongoDB security checklist</a>.</li>
+</li>
 </ul>
-<h3 id="redis">Redis<a class="headerlink" href="#redis" title="Permanent link">&para;</a></h3>
-<ul>
-<li>See the <a href="https://redis.io/topics/security">Redis security guide</a>.</li>
-</ul>
+<h3 id="upload-and-download-limits">Upload and Download Limits<a class="headerlink" href="#upload-and-download-limits" title="Permanent link">&para;</a></h3>
+<p>The application should set proper size limits for the upload service in order to protect the file storage capacity. If the system is going to extract the files or process them, the file size limit should be considered after file decompression is conducted and by using secure methods to calculate zip files size. For more on this, see how to <a href="https://wiki.sei.cmu.edu/confluence/display/java/IDS04-J.+Safely+extract+files+from+ZipInputStream">Safely extract files from ZipInputStream</a>, Java's input stream to handle ZIP files.</p>
+<p>The application should set proper request limits as well for the download service if available to protect the server from DoS attacks.</p>
+<h2 id="java-code-snippets">Java Code Snippets<a class="headerlink" href="#java-code-snippets" title="Permanent link">&para;</a></h2>
+<p><a href="https://github.com/righettod/document-upload-protection">Document Upload Protection</a> repository written by Dominique for certain document types in Java.</p>
 
               
             </article>
@@ -1824,7 +1910,7 @@
     <nav class="md-footer__inner md-grid" aria-label="Footer" >
       
         
-        <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: DOM based XSS Prevention" rel="prev">
+        <a href="5.10.1%2C%205.10.2%20-%20Injection_Prevention_Cheat_Sheet.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 5.10.1, 5.10.2 - Injection Prevention" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
           </div>
@@ -1833,20 +1919,20 @@
               <span class="md-footer__direction">
                 Previous
               </span>
-              DOM based XSS Prevention
+              5.10.1, 5.10.2 - Injection Prevention
             </div>
           </div>
         </a>
       
       
         
-        <a href="Denial_of_Service_Cheat_Sheet.html" class="md-footer__link md-footer__link--next" aria-label="Next: Denial of Service" rel="next">
+        <a href="5.12%20-%20REST_Security_Cheat_Sheet.html" class="md-footer__link md-footer__link--next" aria-label="Next: 5.12 - REST Security" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Denial of Service
+              5.12 - REST Security
             </div>
           </div>
           <div class="md-footer__button md-icon">

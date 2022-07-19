@@ -10,14 +10,14 @@
       
       
       
-        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html">
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/5.12.1%20-%20Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.3.9">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.3.9">
     
     
       
-        <title>Server Side Request Forgery Prevention - OWASP Cheat Sheet Series</title>
+        <title>5.12.1 - Server Side Request Forgery Prevention - OWASP Cheat Sheet Series</title>
       
     
     
@@ -96,7 +96,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Server Side Request Forgery Prevention
+              5.12.1 - Server Side Request Forgery Prevention
             
           </span>
         </div>
@@ -323,6 +323,454 @@
   
   
     <li class="md-nav__item">
+      <a href="5.1%20-%20Authorization_Cheat_Sheet.html" class="md-nav__link">
+        5.1 - Authorization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.10%20-%20Database_Security_Cheat_Sheet.html" class="md-nav__link">
+        5.10 - Database Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.10.1%2C%205.10.2%20-%20Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        5.10.1, 5.10.2 - Injection Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.11%20-%20File_Upload_Cheat_Sheet.html" class="md-nav__link">
+        5.11 - File Upload
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.12%20-%20REST_Security_Cheat_Sheet.html" class="md-nav__link">
+        5.12 - REST Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          5.12.1 - Server Side Request Forgery Prevention
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="5.12.1%20-%20Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+        5.12.1 - Server Side Request Forgery Prevention
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#context" class="md-nav__link">
+    Context
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overview-of-a-ssrf-common-flow" class="md-nav__link">
+    Overview of a SSRF common flow
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cases" class="md-nav__link">
+    Cases
+  </a>
+  
+    <nav class="md-nav" aria-label="Cases">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#case-1-application-can-send-request-only-to-identified-and-trusted-applications" class="md-nav__link">
+    Case 1 - Application can send request only to identified and trusted applications
+  </a>
+  
+    <nav class="md-nav" aria-label="Case 1 - Application can send request only to identified and trusted applications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#available-protections" class="md-nav__link">
+    Available protections
+  </a>
+  
+    <nav class="md-nav" aria-label="Available protections">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#application-layer" class="md-nav__link">
+    Application layer
+  </a>
+  
+    <nav class="md-nav" aria-label="Application layer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#string" class="md-nav__link">
+    String
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ip-address" class="md-nav__link">
+    IP address
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#domain-name" class="md-nav__link">
+    Domain name
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#url" class="md-nav__link">
+    URL
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-layer" class="md-nav__link">
+    Network layer
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#case-2-application-can-send-requests-to-any-external-ip-address-or-domain-name" class="md-nav__link">
+    Case 2 - Application can send requests to ANY external IP address or domain name
+  </a>
+  
+    <nav class="md-nav" aria-label="Case 2 - Application can send requests to ANY external IP address or domain name">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#challenges-in-blocking-urls-at-application-layer" class="md-nav__link">
+    Challenges in blocking URLs at application layer
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#available-protections_1" class="md-nav__link">
+    Available protections
+  </a>
+  
+    <nav class="md-nav" aria-label="Available protections">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#application-layer_1" class="md-nav__link">
+    Application layer
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-layer_1" class="md-nav__link">
+    Network layer
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#imdsv2-in-aws" class="md-nav__link">
+    IMDSv2 in AWS
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#semgrep-rules" class="md-nav__link">
+    Semgrep Rules
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tools-and-code-used-for-schemas" class="md-nav__link">
+    Tools and code used for schemas
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.13%20-%20Infrastructure_as_Code_Security_Cheat_Sheet.html" class="md-nav__link">
+        5.13 - Infrastructure as Code Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.14%20-%20C-Based_Toolchain_Hardening_Cheat_Sheet.html" class="md-nav__link">
+        5.14 - C-Based Toolchain Hardening
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.2%20-%20Authentication_Cheat_Sheet.html" class="md-nav__link">
+        5.2 - Authentication
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.4%20-%20Session_Management_Cheat_Sheet.html" class="md-nav__link">
+        5.4 - Session Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.4.4%20-%20Cross_Site_Scripting_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        5.4.4 - Cross Site Scripting Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.5.2%20-%20Deserialization_Cheat_Sheet.html" class="md-nav__link">
+        5.5.2 - Deserialization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.6%20-%20Secrets_Management_CheatSheet.html" class="md-nav__link">
+        5.6 - Secrets Management CheatSheet.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.7%20-%20Error_Handling_Cheat_Sheet.html" class="md-nav__link">
+        5.7 - Error Handling
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.9%20-%20Transport_Layer_Protection_Cheat_Sheet.html" class="md-nav__link">
+        5.9 - Transport Layer Protection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="5.9.1%2C%205.9.4%2C%205.9.5%20-%20HTTP_Strict_Transport_Security_Cheat_Sheet.html" class="md-nav__link">
+        5.9.1, 5.9.4, 5.9.5 - HTTP Strict Transport Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="AJAX_Security_Cheat_Sheet.html" class="md-nav__link">
         AJAX Security
       </a>
@@ -379,34 +827,6 @@
   
   
     <li class="md-nav__item">
-      <a href="Authentication_Cheat_Sheet.html" class="md-nav__link">
-        Authentication
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="Authorization_Cheat_Sheet.html" class="md-nav__link">
-        Authorization
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
       <a href="Authorization_Testing_Automation_Cheat_Sheet.html" class="md-nav__link">
         Authorization Testing Automation
       </a>
@@ -423,20 +843,6 @@
     <li class="md-nav__item">
       <a href="Bean_Validation_Cheat_Sheet.html" class="md-nav__link">
         Bean Validation
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html" class="md-nav__link">
-        C-Based Toolchain Hardening
       </a>
     </li>
   
@@ -519,20 +925,6 @@
   
   
     <li class="md-nav__item">
-      <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html" class="md-nav__link">
-        Cross Site Scripting Prevention
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
       <a href="Cryptographic_Storage_Cheat_Sheet.html" class="md-nav__link">
         Cryptographic Storage
       </a>
@@ -561,36 +953,8 @@
   
   
     <li class="md-nav__item">
-      <a href="Database_Security_Cheat_Sheet.html" class="md-nav__link">
-        Database Security
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
       <a href="Denial_of_Service_Cheat_Sheet.html" class="md-nav__link">
         Denial of Service
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="Deserialization_Cheat_Sheet.html" class="md-nav__link">
-        Deserialization
       </a>
     </li>
   
@@ -619,34 +983,6 @@
     <li class="md-nav__item">
       <a href="DotNet_Security_Cheat_Sheet.html" class="md-nav__link">
         DotNet Security
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="Error_Handling_Cheat_Sheet.html" class="md-nav__link">
-        Error Handling
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="File_Upload_Cheat_Sheet.html" class="md-nav__link">
-        File Upload
       </a>
     </li>
   
@@ -703,48 +1039,6 @@
     <li class="md-nav__item">
       <a href="HTTP_Headers_Cheat_Sheet.html" class="md-nav__link">
         HTTP Headers
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html" class="md-nav__link">
-        HTTP Strict Transport Security
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="Infrastructure_as_Code_Security_Cheat_Sheet.html" class="md-nav__link">
-        Infrastructure as Code Security
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
-        Injection Prevention
       </a>
     </li>
   
@@ -1093,20 +1387,6 @@
   
   
     <li class="md-nav__item">
-      <a href="REST_Security_Cheat_Sheet.html" class="md-nav__link">
-        REST Security
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
       <a href="Ruby_on_Rails_Cheat_Sheet.html" class="md-nav__link">
         Ruby on Rails
       </a>
@@ -1149,274 +1429,8 @@
   
   
     <li class="md-nav__item">
-      <a href="Secrets_Management_CheatSheet.html" class="md-nav__link">
-        Secrets Management CheatSheet.md
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
       <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html" class="md-nav__link">
         Securing Cascading Style Sheets
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-    
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Server Side Request Forgery Prevention
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
-        Server Side Request Forgery Prevention
-      </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    Introduction
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#context" class="md-nav__link">
-    Context
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#overview-of-a-ssrf-common-flow" class="md-nav__link">
-    Overview of a SSRF common flow
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#cases" class="md-nav__link">
-    Cases
-  </a>
-  
-    <nav class="md-nav" aria-label="Cases">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#case-1-application-can-send-request-only-to-identified-and-trusted-applications" class="md-nav__link">
-    Case 1 - Application can send request only to identified and trusted applications
-  </a>
-  
-    <nav class="md-nav" aria-label="Case 1 - Application can send request only to identified and trusted applications">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#example" class="md-nav__link">
-    Example
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#available-protections" class="md-nav__link">
-    Available protections
-  </a>
-  
-    <nav class="md-nav" aria-label="Available protections">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#application-layer" class="md-nav__link">
-    Application layer
-  </a>
-  
-    <nav class="md-nav" aria-label="Application layer">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#string" class="md-nav__link">
-    String
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#ip-address" class="md-nav__link">
-    IP address
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#domain-name" class="md-nav__link">
-    Domain name
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#url" class="md-nav__link">
-    URL
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#network-layer" class="md-nav__link">
-    Network layer
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#case-2-application-can-send-requests-to-any-external-ip-address-or-domain-name" class="md-nav__link">
-    Case 2 - Application can send requests to ANY external IP address or domain name
-  </a>
-  
-    <nav class="md-nav" aria-label="Case 2 - Application can send requests to ANY external IP address or domain name">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#challenges-in-blocking-urls-at-application-layer" class="md-nav__link">
-    Challenges in blocking URLs at application layer
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#available-protections_1" class="md-nav__link">
-    Available protections
-  </a>
-  
-    <nav class="md-nav" aria-label="Available protections">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#application-layer_1" class="md-nav__link">
-    Application layer
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#network-layer_1" class="md-nav__link">
-    Network layer
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#imdsv2-in-aws" class="md-nav__link">
-    IMDSv2 in AWS
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#semgrep-rules" class="md-nav__link">
-    Semgrep Rules
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#references" class="md-nav__link">
-    References
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#tools-and-code-used-for-schemas" class="md-nav__link">
-    Tools and code used for schemas
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="Session_Management_Cheat_Sheet.html" class="md-nav__link">
-        Session Management
       </a>
     </li>
   
@@ -1473,20 +1487,6 @@
     <li class="md-nav__item">
       <a href="Transaction_Authorization_Cheat_Sheet.html" class="md-nav__link">
         Transaction Authorization
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="Transport_Layer_Protection_Cheat_Sheet.html" class="md-nav__link">
-        Transport Layer Protection
       </a>
     </li>
   
@@ -2111,16 +2111,16 @@ The user leverages the web application as a proxy to the HR system.</p>
 <li>Same remark for domain name: The company must maintain a list of all internal domain names and provide a centralized service to allow an application to verify if a provided domain name is an internal one. For this verification, an internal DNS resolver can be queried by the application but this internal DNS resolver must not resolve external domain names.</li>
 </ul>
 <h4 id="available-protections_1">Available protections<a class="headerlink" href="#available-protections_1" title="Permanent link">&para;</a></h4>
-<p>Taking into consideration the same assumption in the following <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html#example">example</a> for the following sections.</p>
+<p>Taking into consideration the same assumption in the following <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md#example">example</a> for the following sections.</p>
 <h5 id="application-layer_1">Application layer<a class="headerlink" href="#application-layer_1" title="Permanent link">&para;</a></h5>
-<p>Like for the case <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html#case-1-application-can-send-request-only-to-identified-and-trusted-applications">n°1</a>, it is assumed that the <code>IP Address</code> or <code>domain name</code> is required to create the request that will be sent to the <em>TargetApplication</em>.</p>
-<p>The first validation on the input data presented in the case <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html#application-layer">n°1</a> on the 3 types of data will be the same for this case <strong>BUT the second validation will differ</strong>. Indeed, here we must use the block-list approach.</p>
+<p>Like for the case <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md#case-1-application-can-send-request-only-to-identified-and-trusted-applications">n°1</a>, it is assumed that the <code>IP Address</code> or <code>domain name</code> is required to create the request that will be sent to the <em>TargetApplication</em>.</p>
+<p>The first validation on the input data presented in the case <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md#application-layer">n°1</a> on the 3 types of data will be the same for this case <strong>BUT the second validation will differ</strong>. Indeed, here we must use the block-list approach.</p>
 <blockquote>
 <p><strong>Regarding the proof of legitimacy of the request</strong>: The <em>TargetedApplication</em> that will receive the request must generate a random token (ex: alphanumeric of 20 characters) that is expected to be passed by the caller (in body via a parameter for which the name is also defined by the application itself and only allow characters set <code>[a-z]{1,10}</code>) to perform a valid request. The receiving endpoint must only accept HTTP POST requests.</p>
 </blockquote>
 <p><strong>Validation flow (if one the validation steps fail then the request is rejected):</strong></p>
 <ol>
-<li>The application will receive the IP address or domain name of the <em>TargetedApplication</em> and it will apply the first validation on the input data using the libraries/regex mentioned in this <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html#application-layer">section</a>.</li>
+<li>The application will receive the IP address or domain name of the <em>TargetedApplication</em> and it will apply the first validation on the input data using the libraries/regex mentioned in this <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md#application-layer">section</a>.</li>
 <li>The second validation will be applied against the IP address or domain name of the <em>TargetedApplication</em> using the following block-list approach:</li>
 <li>For IP address:<ul>
 <li>The application will verify that it is a public one (see the hint provided in the next paragraph with the python code sample).</li>
@@ -2136,7 +2136,7 @@ The user leverages the web application as a proxy to the HR system.</p>
 <li>The application will build the HTTP POST request <strong>using only validated information</strong> and will send it (<em>don't forget to disable the support for <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections">redirection</a> in the web client used</em>).</li>
 </ol>
 <h5 id="network-layer_1">Network layer<a class="headerlink" href="#network-layer_1" title="Permanent link">&para;</a></h5>
-<p>Similar to the following <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html#network-layer">section</a>.</p>
+<p>Similar to the following <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md#network-layer">section</a>.</p>
 <h2 id="imdsv2-in-aws">IMDSv2 in AWS<a class="headerlink" href="#imdsv2-in-aws" title="Permanent link">&para;</a></h2>
 <p>In cloud environments SSRF is often used to access and steal credentials and access tokens from metadata services (e.g. AWS Instance Metadata Service, Azure Instance Metadata Service, GCP metadata server).</p>
 <p><a href="https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service/">IMDSv2</a> is an additional defence-in-depth mechanism for AWS that mitigates some of the instances of SSRF.</p>
@@ -2183,7 +2183,7 @@ Checkout the Semgrep rule for SSRF to identify/investigate for SSRF vulnerabilit
     <nav class="md-footer__inner md-grid" aria-label="Footer" >
       
         
-        <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Securing Cascading Style Sheets" rel="prev">
+        <a href="5.12%20-%20REST_Security_Cheat_Sheet.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 5.12 - REST Security" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
           </div>
@@ -2192,20 +2192,20 @@ Checkout the Semgrep rule for SSRF to identify/investigate for SSRF vulnerabilit
               <span class="md-footer__direction">
                 Previous
               </span>
-              Securing Cascading Style Sheets
+              5.12 - REST Security
             </div>
           </div>
         </a>
       
       
         
-        <a href="Session_Management_Cheat_Sheet.html" class="md-footer__link md-footer__link--next" aria-label="Next: Session Management" rel="next">
+        <a href="5.13%20-%20Infrastructure_as_Code_Security_Cheat_Sheet.html" class="md-footer__link md-footer__link--next" aria-label="Next: 5.13 - Infrastructure as Code Security" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Session Management
+              5.13 - Infrastructure as Code Security
             </div>
           </div>
           <div class="md-footer__button md-icon">
