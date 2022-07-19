@@ -22,7 +22,7 @@ Input validation should be applied on both **syntactical** and **Semantic** leve
 
 It is always recommended to prevent attacks as early as possible in the processing of the user's (attacker's) request. Input validation can be used to detect unauthorized input before it is processed by the application.
 
-## Implementing input validation - 5.5.1
+## Implementing input validation
 
 Input validation can be implemented using any programming technique that allows effective enforcement of syntactic and semantic correctness, for example:
 
@@ -116,7 +116,7 @@ Some Allow list validators have also been predefined in various open source pack
 
 - [Apache Commons Validator](http://commons.apache.org/proper/commons-validator/)
 
-## Client Side vs Server Side Validation - 5.1.2, 5.3.5, 5.5.3
+## Client Side vs Server Side Validation
 
 Be aware that any JavaScript input validation performed on the client can be bypassed by an attacker that disables JavaScript or uses a Web Proxy. Ensure that any input validation performed on the client is also performed on the server.
 

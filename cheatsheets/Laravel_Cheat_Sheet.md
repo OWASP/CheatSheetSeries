@@ -277,7 +277,7 @@ For other information on XSS prevention that is not specific to Laravel, you may
 
 Unrestricted file upload attacks entail attackers uploading malicious files to compromise web applications. This section describes how to protect against such attacks while building Laravel applications. You may also refer the [File Upload Cheatsheet](File_Upload_Cheat_Sheet.md) to learn more.
 
-### Always Validate File Type and Size - 5.11.2
+### Always Validate File Type and Size
 
 Always validate the file type (extension or MIME type) and file size to avoid storage DOS attacks and remote code execution:
 

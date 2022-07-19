@@ -43,7 +43,7 @@ In addition to the above terminologies, it is important to be familiar with the 
 
 Before starting the threat modeling process it is important to identify business objectives of the applications you are assessing, and to identify security and compliance requirements that may be necessary due to business or government regulation. Having these objectives and requirements in mind before the threat assessment begins will help you to evaluate the impact of any threat you find during the risk analysis process.
 
-### Identify application design - 5.8.1
+### Identify application design
 
 Early in the threat modeling process, you will need to draw a data flow diagram of the entire system that is being assessed, including its trust boundaries. Thus, understanding the design of the application is key to performing threat modeling. Even if you are very familiar with the application design, you may identify additional data flows and trust boundaries throughout the threat modeling process.
 
@@ -171,7 +171,7 @@ Define Data Flows over the organization Data Flow Diagram.
 
 Define any distinct boundaries (External boundaries and Internal boundaries) within which a system trusts all sub-systems (including data).
 
-### Define applications user roles and trust levels - 5.8.3
+### Define applications user roles and trust levels
 
 Define access rights that the application will grant to external entities and internal entities.
 

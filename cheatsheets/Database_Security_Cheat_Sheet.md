@@ -28,7 +28,7 @@ Most databases will allow unencrypted network connections in their default confi
 
 The [Transport Layer Protection](Transport_Layer_Protection_Cheat_Sheet.md) and [TLS Cipher String](TLS_Cipher_String_Cheat_Sheet.md) Cheat Sheets contain further guidance on securely configuring TLS.
 
-## Authentication - 5.10.5
+## Authentication
 
 The database should be configured to always require authentication, including connections from the local server. Database accounts should be:
 
@@ -55,7 +55,7 @@ Database credentials should never be stored in the application source code, espe
 
 Where possible, these credentials should also be encrypted or otherwise protected using built-in functionality, such as the `web.config` encryption available in [ASP.NET](https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/connection-strings-and-configuration-files#encrypting-configuration-file-sections-using-protected-configuration).
 
-## Permissions - 5.10.3
+## Permissions
 
 The permissions assigned to database user accounts should be based on the principle of least privilege (i.e, the accounts should only have the minimal permissions required for the application to function). This can be applied at a number of increasingly granular levels depending on the functionality available in the database. The following steps should be applicable to all environments:
 

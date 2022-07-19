@@ -6,7 +6,7 @@ This OWASP Cheat Sheet introduces mitigation methods that web developers may uti
 
 ## Guidelines
 
-### Strong Cryptography - 5.8.2
+### Strong Cryptography
 
 Any online platform that handles user identities, private information or communications must be secured with the use of strong cryptography. User communications must be encrypted in transit and storage. User secrets such as passwords must also be protected using strong, collision-resistant hashing algorithms with increasing work factors, in order to greatly mitigate the risks of exposed credentials as well as proper integrity control.
 
