@@ -2582,62 +2582,89 @@
 <h4 id="castor">Castor<a class="headerlink" href="#castor" title="Permanent link">&para;</a></h4>
 <p>Castor is a data binding framework for Java. It allows conversion between Java objects, XML, and relational tables. The XML features in Castor <strong>prior to version 1.3.3</strong> are vulnerable to XXE, and should be upgraded to the latest version. For additional information, check the official <a href="https://castor-data-binding.github.io/castor/reference-guide/reference/xml/xml-properties.html">XML configuration file</a></p>
 <h2 id="net">.NET<a class="headerlink" href="#net" title="Permanent link">&para;</a></h2>
-<p>The following information for XXE injection in .NET is directly from this <a href="https://github.com/deanf1/dotnet-security-unit-tests">web application of unit tests by Dean Fleming</a>.</p>
-<p>This web application covers all currently supported .NET XML parsers, and has test cases for each demonstrating when they are safe from XXE injection and when they are not, but tests are only with injection from file and not direct DTD (used by DoS attacks).</p>
-<p>Previously, this information was based on <a href="https://www.jardinesoftware.net/2016/05/26/xxe-and-net/">James Jardine's excellent .NET XXE article</a>.</p>
-<p>It originally provided more recent and more detailed information than the older article from <a href="http://msdn.microsoft.com/en-us/magazine/ee335713.aspx">Microsoft on how to prevent XXE and XML Denial of Service in .NET</a>, however, it has some inaccuracies that the web application covers.</p>
-<p>The following table lists all supported .NET XML parsers and their default safety levels:</p>
+<p>The following, up to date information for XXE injection in .NET is directly from this <a href="https://github.com/deanf1/dotnet-security-unit-tests">web application of unit tests by Dean Fleming</a>. This web application covers all currently supported .NET XML parsers, and has test cases for each demonstrating when they are safe from XXE injection and when they are not, but tests are only with injection from file and not direct DTD (used by DoS attacks).</p>
+<p>For DoS attacks using a direct DTD (such as the <a href="https://en.wikipedia.org/wiki/Billion_laughs_attack">Billion laughs attack</a>), a <a href="https://github.com/BounceSecurity/BillionLaughsTester">separate testing application from Josh Grossman at Bounce Security</a> has been created to verify that .NET &gt;=4.5.2 is safe from these attacks.</p>
+<p>Previously, this information was based on some older articles which may not be 100% accurate including:</p>
+<ul>
+<li><a href="https://www.jardinesoftware.net/2016/05/26/xxe-and-net/">James Jardine's excellent .NET XXE article</a>.</li>
+<li><a href="http://msdn.microsoft.com/en-us/magazine/ee335713.aspx">Guidance from Microsoft on how to prevent XXE and XML Denial of Service in .NET</a>.</li>
+</ul>
+<p>The following table lists all supported .NET XML parsers and their default safety levels. Note that in .NET Framework ≥4.5.2 <strong>in all cases</strong> if a DoS attempt is performed, an exception is thrown due to the expanded XML being too many characters.</p>
+<p>Table explanation:</p>
+<ul>
+<li>✅ = Not Vulnerable</li>
+<li>❌ = Vulnerable</li>
+<li>❓ = Not clear</li>
+</ul>
 <table>
 <thead>
 <tr>
 <th>Attack Type</th>
-<th>LINQ to XML</th>
-<th>XmlDictionaryReader</th>
-<th>XmlDocument (4.5.2-)</th>
-<th>XmlDocument (4.5.2+)</th>
-<th>XmlNodeReader</th>
-<th>XmlReader</th>
-<th>XmlTextReader(4.5.2-)</th>
-<th>XmlTextReader(4.5.2+)</th>
-<th>XPathNavigator(4.5.2-)</th>
-<th>XPathNavigator(4.5.2+)</th>
-<th>XslCompiledTransform</th>
+<th>.NET Framework Version</th>
+<th align="center">XDocument (Linq to XML)</th>
+<th align="center">XmlDictionaryReader</th>
+<th align="center">XmlDocument</th>
+<th align="center">XmlNodeReader</th>
+<th align="center">XmlReader</th>
+<th align="center">XmlTextReader</th>
+<th align="center">XPathNavigator</th>
+<th align="center">XslCompiledTransform</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>External entity Attacks</td>
-<td>Safe</td>
-<td>Safe</td>
-<td>Vulnerable</td>
-<td>Safe</td>
-<td>Safe</td>
-<td>Safe</td>
-<td>Vulnerable</td>
-<td>Safe</td>
-<td>Vulnerable</td>
-<td>Safe</td>
-<td>Safe</td>
+<td><strong>External entity Attacks</strong></td>
+<td>&lt;4.5.2</td>
+<td align="center">✅</td>
+<td align="center">✅</td>
+<td align="center">❌</td>
+<td align="center">✅</td>
+<td align="center">✅</td>
+<td align="center">❌</td>
+<td align="center">❌</td>
+<td align="center">✅</td>
 </tr>
 <tr>
-<td>Billion Laughs</td>
-<td>Vulnerable</td>
-<td>N.a.</td>
-<td>Vulnerable</td>
-<td>Vulnerable</td>
-<td>Safe</td>
-<td>Safe</td>
-<td>Vulnerable</td>
-<td>Vulnerable</td>
-<td>Vulnerable</td>
-<td>Vulnerable</td>
-<td>Safe</td>
+<td></td>
+<td>≥4.5.2</td>
+<td align="center">✅</td>
+<td align="center">✅</td>
+<td align="center">✅</td>
+<td align="center">✅</td>
+<td align="center">✅</td>
+<td align="center">✅</td>
+<td align="center">✅</td>
+<td align="center">✅</td>
+</tr>
+<tr>
+<td><strong>Billion Laughs</strong></td>
+<td>&lt;4.5.2</td>
+<td align="center">❓</td>
+<td align="center">✅</td>
+<td align="center">❌</td>
+<td align="center">✅</td>
+<td align="center">✅</td>
+<td align="center">❌</td>
+<td align="center">❌</td>
+<td align="center">✅</td>
+</tr>
+<tr>
+<td></td>
+<td>≥4.5.2</td>
+<td align="center">✅</td>
+<td align="center">✅*</td>
+<td align="center">✅</td>
+<td align="center">✅*</td>
+<td align="center">✅*</td>
+<td align="center">✅</td>
+<td align="center">✅</td>
+<td align="center">✅</td>
 </tr>
 </tbody>
 </table>
+<p>* For .NET Framework Versions ≥4.5.2, these libraries won't even process the in-line DTD by default. Even if you change the default to allow processing a DTD, if a DoS attempt is performed an exception will still be thrown as documented above.</p>
 <h3 id="linq-to-xml">LINQ to XML<a class="headerlink" href="#linq-to-xml" title="Permanent link">&para;</a></h3>
-<p>Both the <code>XElement</code> and <code>XDocument</code> objects in the <code>System.Xml.Linq</code> library are safe from XXE injection drom external file by default, but not for DoS attack. <code>XElement</code> parses only the elements within the XML file, so DTDs are ignored altogether. <code>XDocument</code> has XmlResolver <a href="https://docs.microsoft.com/en-us/dotnet/standard/linq/linq-xml-security">disabled by default</a>, but DTDs <a href="https://referencesource.microsoft.com/#System.Xml.Linq/System/Xml/Linq/XLinq.cs,71f4626a3d6f9bad">enable by default</a>. so it's safe from SSRF but <strong>not</strong> <a href="https://en.wikipedia.org/wiki/Billion_laughs_attack">Billion laughs attack</a>.
-For made safe from between attack types follow <a href="http://msdn.microsoft.com/en-us/magazine/ee335713.aspx">Microsoft on how to prevent XXE and XML Denial of Service in .NET</a></p>
+<p>Both the <code>XElement</code> and <code>XDocument</code> objects in the <code>System.Xml.Linq</code> library are safe from XXE injection from external file and DoS attack by default. <code>XElement</code> parses only the elements within the XML file, so DTDs are ignored altogether. <code>XDocument</code> has XmlResolver <a href="https://docs.microsoft.com/en-us/dotnet/standard/linq/linq-xml-security">disabled by default</a> so it's safe from SSRF. Whilst DTDs are <a href="https://referencesource.microsoft.com/#System.Xml.Linq/System/Xml/Linq/XLinq.cs,71f4626a3d6f9bad">enabled by default</a>, from Framework versions ≥4.5.2, it is <strong>not</strong> vulnerable to DoS as noted but it may be vulnerable in earlier Framework versions. For more information, see <a href="http://msdn.microsoft.com/en-us/magazine/ee335713.aspx">Microsoft's guidance on how to prevent XXE and XML Denial of Service in .NET</a></p>
 <h3 id="xmldictionaryreader">XmlDictionaryReader<a class="headerlink" href="#xmldictionaryreader" title="Permanent link">&para;</a></h3>
 <p><code>System.Xml.XmlDictionaryReader</code> is safe by default, as when it attempts to parse the DTD, the compiler throws an exception saying that "CData elements not valid at top level of an XML document". It becomes unsafe if constructed with a different unsafe XML parser.</p>
 <h3 id="xmldocument">XmlDocument<a class="headerlink" href="#xmldocument" title="Permanent link">&para;</a></h3>
