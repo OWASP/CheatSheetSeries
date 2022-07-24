@@ -412,25 +412,26 @@ The following, up to date information for XXE injection in .NET is directly from
 For DoS attacks using a direct DTD (such as the [Billion laughs attack](https://en.wikipedia.org/wiki/Billion_laughs_attack)), a [separate testing application from Josh Grossman at Bounce Security](https://github.com/BounceSecurity/BillionLaughsTester) has been created to verify that .NET >=4.5.2 is safe from these attacks.
 
 Previously, this information was based on some older articles which may not be 100% accurate including:
-* [James Jardine's excellent .NET XXE article](https://www.jardinesoftware.net/2016/05/26/xxe-and-net/).
-* [Guidance from Microsoft on how to prevent XXE and XML Denial of Service in .NET](http://msdn.microsoft.com/en-us/magazine/ee335713.aspx).
+
+- [James Jardine's excellent .NET XXE article](https://www.jardinesoftware.net/2016/05/26/xxe-and-net/).
+- [Guidance from Microsoft on how to prevent XXE and XML Denial of Service in .NET](http://msdn.microsoft.com/en-us/magazine/ee335713.aspx).
 
 The following table lists all supported .NET XML parsers and their default safety levels. Note that in .NET Framework ≥4.5.2 **in all cases** if a DoS attempt is performed, an exception is thrown due to the expanded XML being too many characters.
 
-Table explanation: 
-* ✅ = Not Vulnerable
-* ❌ = Vulnerable 
-* ❓ = Not
+Table explanation:
+
+- ✅ = Not Vulnerable
+- ❌ = Vulnerable
+- ❓ = Not clear
 
 | Attack Type             | .NET Framework Version | XDocument (Linq to XML)    | XmlDictionaryReader   | XmlDocument | XmlNodeReader    | XmlReader  | XmlTextReader | XPathNavigator | XslCompiledTransform  |
 |-|-|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 | **External entity Attacks** | <4.5.2 | ✅ | ✅  | ❌ | ✅  | ✅  | ❌ | ❌ | ✅ |
 |                             | ≥4.5.2 | ✅ | ✅  | ✅ | ✅  | ✅  | ✅ | ✅ | ✅ |
 | **Billion Laughs**          | <4.5.2 | ❓ | ✅  | ❌ | ✅  | ✅  | ❌ | ❌ | ✅ |
-|                             | ≥4.5.2 | ✅ | ✅* | ✅ | ✅* | ✅* | ✅ | ✅ | ✅ |
+|                             | ≥4.5.2 | ✅ | ✅\* | ✅ | ✅\* | ✅\* | ✅ | ✅ | ✅ |
 
 \* For .NET Framework Versions ≥4.5.2, these libraries won't even process the in-line DTD by default. Even if you change the default to allow processing a DTD, if a DoS attempt is performed an exception will still be thrown as documented above.
-
 
 ### LINQ to XML
 
