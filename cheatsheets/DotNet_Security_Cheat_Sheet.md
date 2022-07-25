@@ -432,11 +432,11 @@ For more information about headers can be found [here](https://owasp.org/www-pro
 
 ### A4 XML External Entities (XXE)
 
-Please refer to the XXE cheat sheet so more detailed information, which can be found [here](XML_External_Entity_Prevention_Cheat_Sheet.md#net).
-
 XXE attacks occur when an XML parse does not properly process user input that contains external entity declaration in the doctype of an XML payload.
 
-Below are the three most common [XML Processing Options](https://docs.microsoft.com/en-us/dotnet/standard/data/xml/xml-processing-options) for .NET.
+[This article](https://docs.microsoft.com/en-us/dotnet/standard/data/xml/xml-processing-options) discusses the most common XML Processing Options for .NET.
+
+Please refer to the [XXE cheat sheet](XML_External_Entity_Prevention_Cheat_Sheet.md#net) for more detailed information on preventing XXE and other XML Denial of Service attacks.
 
 ### A5 Broken Access Control
 
