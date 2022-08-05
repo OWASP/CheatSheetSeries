@@ -424,7 +424,7 @@ Table explanation:
 - ❌ = Vulnerable
 - ❓ = Not clear
 
-| Attack Type             | .NET Framework Version | XDocument (Linq to XML)    | XmlDictionaryReader   | XmlDocument | XmlNodeReader    | XmlReader  | XmlTextReader | XPathNavigator | XslCompiledTransform  |
+| Attack Type             | .NET Framework Version | [XDocument (Linq to XML)](#linq-to-xml)    | [XmlDictionaryReader](#xmldictionaryreader)   | [XmlDocument](#xmldocument) | [XmlNodeReader](#xmlnodereader)    | [XmlReader](#xmlreader)  | [XmlTextReader](#xmltextreader) | [XPathNavigator](#xpathnavigator) | [XslCompiledTransform](#xslcompiledtransform)  |
 |-|-|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 | **External entity Attacks** | <4.5.2 | ✅ | ✅  | ❌ | ✅  | ✅  | ❌ | ❌ | ✅ |
 |                             | ≥4.5.2 | ✅ | ✅  | ✅ | ✅  | ✅  | ✅ | ✅ | ✅ |
@@ -462,6 +462,8 @@ The following example shows how it is made safe:
    Console.ReadLine();
  }
 ```
+
+For .NET Framework version ≥4.5.2, this is **safe by default**.
 
 `XmlDocument` can become unsafe if you create your own nonnull `XmlResolver` with default or unsafe settings. If you need to enable DTD processing, instructions on how to do so safely are described in detail in the [referenced MSDN article](https://msdn.microsoft.com/en-us/magazine/ee335713.aspx).
 
@@ -533,6 +535,8 @@ XPathDocument doc = new XPathDocument(reader);
 XPathNavigator nav = doc.CreateNavigator();
 string xml = nav.InnerXml.ToString();
 ```
+
+For .NET Framework version ≥4.5.2, XPathNavigator is **safe by default**.
 
 ### XslCompiledTransform
 
