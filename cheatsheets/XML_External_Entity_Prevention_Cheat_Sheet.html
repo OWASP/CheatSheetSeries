@@ -2601,14 +2601,14 @@
 <tr>
 <th>Attack Type</th>
 <th>.NET Framework Version</th>
-<th align="center">XDocument (Linq to XML)</th>
-<th align="center">XmlDictionaryReader</th>
-<th align="center">XmlDocument</th>
-<th align="center">XmlNodeReader</th>
-<th align="center">XmlReader</th>
-<th align="center">XmlTextReader</th>
-<th align="center">XPathNavigator</th>
-<th align="center">XslCompiledTransform</th>
+<th align="center"><a href="#linq-to-xml">XDocument (Linq to XML)</a></th>
+<th align="center"><a href="#xmldictionaryreader">XmlDictionaryReader</a></th>
+<th align="center"><a href="#xmldocument">XmlDocument</a></th>
+<th align="center"><a href="#xmlnodereader">XmlNodeReader</a></th>
+<th align="center"><a href="#xmlreader">XmlReader</a></th>
+<th align="center"><a href="#xmltextreader">XmlTextReader</a></th>
+<th align="center"><a href="#xpathnavigator">XPathNavigator</a></th>
+<th align="center"><a href="#xslcompiledtransform">XslCompiledTransform</a></th>
 </tr>
 </thead>
 <tbody>
@@ -2684,6 +2684,7 @@
 <span class="w">   </span><span class="n">Console</span><span class="p">.</span><span class="n">ReadLine</span><span class="p">();</span><span class="w"></span>
 <span class="w"> </span><span class="p">}</span><span class="w"></span>
 </code></pre></div>
+<p>For .NET Framework version ≥4.5.2, this is <strong>safe by default</strong>.</p>
 <p><code>XmlDocument</code> can become unsafe if you create your own nonnull <code>XmlResolver</code> with default or unsafe settings. If you need to enable DTD processing, instructions on how to do so safely are described in detail in the <a href="https://msdn.microsoft.com/en-us/magazine/ee335713.aspx">referenced MSDN article</a>.</p>
 <h3 id="xmlnodereader">XmlNodeReader<a class="headerlink" href="#xmlnodereader" title="Permanent link">&para;</a></h3>
 <p><code>System.Xml.XmlNodeReader</code> objects are safe by default and will ignore DTDs even when constructed with an unsafe parser or wrapped in another unsafe parser.</p>
@@ -2723,6 +2724,7 @@
 <span class="n">XPathNavigator</span><span class="w"> </span><span class="n">nav</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">doc</span><span class="p">.</span><span class="n">CreateNavigator</span><span class="p">();</span><span class="w"></span>
 <span class="kt">string</span><span class="w"> </span><span class="n">xml</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">nav</span><span class="p">.</span><span class="n">InnerXml</span><span class="p">.</span><span class="n">ToString</span><span class="p">();</span><span class="w"></span>
 </code></pre></div>
+<p>For .NET Framework version ≥4.5.2, XPathNavigator is <strong>safe by default</strong>.</p>
 <h3 id="xslcompiledtransform">XslCompiledTransform<a class="headerlink" href="#xslcompiledtransform" title="Permanent link">&para;</a></h3>
 <p><code>System.Xml.Xsl.XslCompiledTransform</code> (an XML transformer) is safe by default as long as the parser it's given is safe.</p>
 <p>It is safe by default because the default parser of the <code>Transform()</code> methods is an <code>XmlReader</code>, which is safe by default (per above).</p>

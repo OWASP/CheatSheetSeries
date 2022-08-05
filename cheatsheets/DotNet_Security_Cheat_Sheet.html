@@ -2538,9 +2538,9 @@ e.g Web.config</p>
 </code></pre></div>
 <p>For more information about headers can be found <a href="https://owasp.org/www-project-secure-headers/">here</a>.</p>
 <h3 id="a4-xml-external-entities-xxe">A4 XML External Entities (XXE)<a class="headerlink" href="#a4-xml-external-entities-xxe" title="Permanent link">&para;</a></h3>
-<p>Please refer to the XXE cheat sheet so more detailed information, which can be found <a href="XML_External_Entity_Prevention_Cheat_Sheet.html#net">here</a>.</p>
 <p>XXE attacks occur when an XML parse does not properly process user input that contains external entity declaration in the doctype of an XML payload.</p>
-<p>Below are the three most common <a href="https://docs.microsoft.com/en-us/dotnet/standard/data/xml/xml-processing-options">XML Processing Options</a> for .NET.</p>
+<p><a href="https://docs.microsoft.com/en-us/dotnet/standard/data/xml/xml-processing-options">This article</a> discusses the most common XML Processing Options for .NET.</p>
+<p>Please refer to the <a href="XML_External_Entity_Prevention_Cheat_Sheet.html#net">XXE cheat sheet</a> for more detailed information on preventing XXE and other XML Denial of Service attacks.</p>
 <h3 id="a5-broken-access-control">A5 Broken Access Control<a class="headerlink" href="#a5-broken-access-control" title="Permanent link">&para;</a></h3>
 <h4 id="weak-account-management">Weak Account management<a class="headerlink" href="#weak-account-management" title="Permanent link">&para;</a></h4>
 <p>Ensure cookies are sent via httpOnly:</p>
