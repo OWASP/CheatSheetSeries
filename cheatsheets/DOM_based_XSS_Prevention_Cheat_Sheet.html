@@ -2347,6 +2347,14 @@ Another option provided by Gaz (Gareth) was to use a specific code construct to 
 </code></pre></div>
 <h3 id="guideline-9-run-your-javascript-in-a-ecmascript-5-canopy-or-sandbox">GUIDELINE #9 - Run your JavaScript in a ECMAScript 5 canopy or sandbox<a class="headerlink" href="#guideline-9-run-your-javascript-in-a-ecmascript-5-canopy-or-sandbox" title="Permanent link">&para;</a></h3>
 <p>Run your JavaScript in a ECMAScript 5 <a href="https://github.com/jcoglan/canopy">canopy</a> or sandbox to make it harder for your JavaScript API to be compromised (Gareth Heyes and John Stevens).</p>
+<p>Examples of some JavaScript sandbox / sanitizers:</p>
+<ul>
+<li><a href="https://github.com/leizongmin/js-xss">js-xss</a></li>
+<li><a href="https://github.com/apostrophecms/sanitize-html">sanitize-html</a></li>
+<li><a href="https://github.com/cure53/DOMPurify">DOMPurify</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTML_Sanitizer_API">MDN - HTML Sanitizer API</a></li>
+<li><a href="https://owasp.org/www-pdf-archive/OWASPSummit2011DOMSandboxingBrowserSecurityTrack.pdf">OWASP Summit 2011 - DOM Sandboxing</a></li>
+</ul>
 <h3 id="guideline-10-dont-eval-json-to-convert-it-to-native-javascript-objects">GUIDELINE #10 - Don't eval() JSON to convert it to native JavaScript objects<a class="headerlink" href="#guideline-10-dont-eval-json-to-convert-it-to-native-javascript-objects" title="Permanent link">&para;</a></h3>
 <p>Don't <code>eval()</code> JSON to convert it to native JavaScript objects. Instead use <code>JSON.toJSON()</code> and <code>JSON.parse()</code> (Chris Schmidt).</p>
 <h2 id="common-problems-associated-with-mitigating-dom-based-xss">Common Problems Associated with Mitigating DOM Based XSS<a class="headerlink" href="#common-problems-associated-with-mitigating-dom-based-xss" title="Permanent link">&para;</a></h2>
