@@ -454,6 +454,14 @@ if (untrustedData === 'location') {
 
 Run your JavaScript in a ECMAScript 5 [canopy](https://github.com/jcoglan/canopy) or sandbox to make it harder for your JavaScript API to be compromised (Gareth Heyes and John Stevens).
 
+Examples of some JavaScript sandbox / sanitizers:
+
+- [js-xss](https://github.com/leizongmin/js-xss)
+- [sanitize-html](https://github.com/apostrophecms/sanitize-html)
+- [DOMPurify](https://github.com/cure53/DOMPurify)
+- [MDN - HTML Sanitizer API](https://developer.mozilla.org/en-US/docs/Web/API/HTML_Sanitizer_API)
+- [OWASP Summit 2011 - DOM Sandboxing](https://owasp.org/www-pdf-archive/OWASPSummit2011DOMSandboxingBrowserSecurityTrack.pdf)
+
 ### GUIDELINE \#10 - Don't eval() JSON to convert it to native JavaScript objects
 
 Don't `eval()` JSON to convert it to native JavaScript objects. Instead use `JSON.toJSON()` and `JSON.parse()` (Chris Schmidt).
