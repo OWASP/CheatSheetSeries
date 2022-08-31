@@ -14,7 +14,7 @@ Make sure your usernames/user IDs are case-insensitive. User 'smith' and user 'S
 
 #### Email address as a User ID
 
-For information on validating email addresses, please visit the [input validation cheatsheet email discussion](Input_Validation_Cheat_Sheet.md#Email_Address_Validation).
+For information on validating email addresses, please visit the [input validation cheatsheet email discussion](Input_Validation_Cheat_Sheet.md#email-address-validation).
 
 ### Authentication Solution and Sensitive Accounts
 
