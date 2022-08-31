@@ -97,7 +97,7 @@ Cut the back link between the parent and the child pages:
 
 As the behavior using the elements above is different between the browsers, either use an HTML link or JavaScript to open a window (or tab), then use this configuration to maximize the cross supports:
 
-- For HTML links, add the attribute `rel="noopener noreferrer"` to every link.
+- For [HTML links](https://www.scaler.com/topics/html/html-links/), add the attribute `rel="noopener noreferrer"` to every link.
 - For JavaScript, use this function to open a window (or tab):
 
 ``` javascript
