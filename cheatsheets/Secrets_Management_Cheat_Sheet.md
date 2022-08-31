@@ -1,15 +1,5 @@
 # Secrets Management Cheat Sheet
 
-1. [Introduction](#1-Introduction)
-2. [General Secrets Management](#2-General-Secrets-Management)
-3. [Continuous Integration (CI) and Continuous Deployment (CD)](#3-Continuous-Integration-(CI)-and-Continuous-Deployment-(CD))
-4. [Cloud Providers](#4-Cloud-Providers)
-5. [Containers and Orchestration](#5-Containers-&-Orchestrators)
-6. [Implementation Guidance](#6-Implementation-Guidance)
-7. [Encryption](#7-Encryption)
-8. [Secret detection](#8-Detection)
-9. [Incident Response](#9-Incident-Response)
-
 ## 1 Introduction
 
 Secrets are being used everywhere nowadays, especially with the popularity of the DevOps movement. Application Programming Interface (API) keys, database credentials, Identity and Access Management (IAM) permissions, Secure Shell (SSH) keys, certificates, etc. Many organizations have them hardcoded within the source code in plaintext, littered throughout configuration files and configuration management tools.
