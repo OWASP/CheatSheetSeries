@@ -67,7 +67,7 @@ Be aware of the following Java API uses for potential serialization vulnerabilit
 
 1. `XMLdecoder` with external user defined parameters
 
-2. `XStream` with `fromXML` method (xstream version <= v1.46 is vulnerable to the serialization issue)
+2. `XStream` with `fromXML` method (xstream version <= v1.4.6 is vulnerable to the serialization issue)
 
 3. `ObjectInputStream` with `readObject`
 
