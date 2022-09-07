@@ -98,6 +98,14 @@ From this image follows:
 Forbidden accesses are indicated by red arrows in the image below:
 ![Prohibited Interservice Communication](https://github.com/OWASP/CheatSheetSeries/blob/master/assets/Network_Segmentation_Cheat_Sheet_interservice_deny.drawio.png)
 
+### Many applications on the same network
+If you prefer to have fewer networks in your organization and host more applications on each network, it is acceptable to host the load balancer on those networks. This balancer will balance traffic to applications on the network.
+In this case, it will be necessary to open one port to such a network, and balancing will be performed, for example, based on the HTTP request parameters.
+An example of such segmentation:
+![Interservice Communication with balancing](https://github.com/OWASP/CheatSheetSeries/blob/master/assets/Network_Segmentation_Cheat_Sheet_interservice_balancer.drawio.png)
+
+As you can see, there is only one incoming access to each network, access is opened up to the balancer in the network. However, in this case, segmentation no longer works, access control between applications from different network segments is performed at the 7th level of the OSI model using a balancer.
+
 ## Network security policy
 The organization must define a "paper" policy that describes firewall rules and basic allowed network access.
 This policy is at least useful:
