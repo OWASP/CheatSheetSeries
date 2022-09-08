@@ -83,8 +83,8 @@ redirect_to params[:url]
 
 Rust actix web
 
-```Rust actix web      
-    Ok(HttpResponse::Found()
+```Rust actix web
+  Ok(HttpResponse::Found()
         .insert_header((header::LOCATION, query_string.path.as_str()))
         .finish())
 ```
