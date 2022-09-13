@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.4.3">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.4.4">
     
     
       
@@ -2668,6 +2668,7 @@ This provides similar access to this data as would be achieved by using the <cod
 <p>Web Application Firewalls offer detection and protection capabilities against session based attacks. On the one hand, it is trivial for WAFs to enforce the usage of security attributes on cookies, such as the <code>Secure</code> and <code>HttpOnly</code> flags, applying basic rewriting rules on the <code>Set-Cookie</code> header for all the web application responses that set a new cookie.</p>
 <p>On the other hand, more advanced capabilities can be implemented to allow the WAF to keep track of sessions, and the corresponding session IDs, and apply all kind of protections against session fixation (by renewing the session ID on the client-side when privilege changes are detected), enforcing sticky sessions (by verifying the relationship between the session ID and other client properties, like the IP address or User-Agent), or managing session expiration (by forcing both the client and the web application to finalize the session).</p>
 <p>The open-source ModSecurity WAF, plus the OWASP <a href="https://owasp.org/www-project-modsecurity-core-rule-set/">Core Rule Set</a>, provide capabilities to detect and apply security cookie attributes, countermeasures against session fixation attacks, and session tracking features to enforce sticky sessions.</p>
+
 
 
 

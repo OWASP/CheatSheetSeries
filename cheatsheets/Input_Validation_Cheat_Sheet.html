@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.4.3">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.4.4">
     
     
       
@@ -2053,6 +2053,7 @@ TX|UT|VT|VI|VA|WA|WV|WI|WY)$
 <p>Many mail providers (such as Microsoft Exchange) do not support sub-addressing. The most notable provider who does is Gmail, although there are many others that also do.</p>
 <p>Some users will use a different <em>tag</em> for each website they register on, so that if they start receiving spam to one of the sub-addresses they can identify which website leaked or sold their email address.</p>
 <p>Because it could allow users to register multiple accounts with a single email address, some sites may wish to block sub-addressing by stripping out everything between the <code>+</code> and <code>@</code> signs. This is not generally recommended, as it suggests that the website owner is either unaware of sub-addressing or wishes to prevent users from identifying them when they leak or sell email addresses. Additionally, it can be trivially bypassed by using <a href="#disposable-email-addresses">disposable email addresses</a>, or simply registering multiple email accounts with a trusted provider.</p>
+
 
 
 

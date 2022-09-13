@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.4.3">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.4.4">
     
     
       
@@ -1346,22 +1346,8 @@
     Safe URL Redirects
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#dangerous-url-redirects" class="md-nav__link">
-    Dangerous URL Redirects
-  </a>
-  
-    <nav class="md-nav" aria-label="Dangerous URL Redirects">
+    <nav class="md-nav" aria-label="Safe URL Redirects">
       <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#dangerous-url-redirect-example-1" class="md-nav__link">
-    Dangerous URL Redirect Example 1
-  </a>
-  
-</li>
         
           <li class="md-nav__item">
   <a href="#dangerous-url-redirect-example-2" class="md-nav__link">
@@ -1588,22 +1574,8 @@
     Safe URL Redirects
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#dangerous-url-redirects" class="md-nav__link">
-    Dangerous URL Redirects
-  </a>
-  
-    <nav class="md-nav" aria-label="Dangerous URL Redirects">
+    <nav class="md-nav" aria-label="Safe URL Redirects">
       <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#dangerous-url-redirect-example-1" class="md-nav__link">
-    Dangerous URL Redirect Example 1
-  </a>
-  
-</li>
         
           <li class="md-nav__item">
   <a href="#dangerous-url-redirect-example-2" class="md-nav__link">
@@ -1693,13 +1665,24 @@
 <p>Rails</p>
 <div class="highlight"><pre><span></span><code><span class="n">redirect_to</span> <span class="n">login_path</span>
 </code></pre></div>
-<p>In the examples above, the URL is being explicitly declared in the code and cannot be manipulated by an attacker.</p>
-<h2 id="dangerous-url-redirects">Dangerous URL Redirects<a class="headerlink" href="#dangerous-url-redirects" title="Permanent link">&para;</a></h2>
-<p>The following examples demonstrate unsafe redirect and forward code.</p>
-<h3 id="dangerous-url-redirect-example-1">Dangerous URL Redirect Example 1<a class="headerlink" href="#dangerous-url-redirect-example-1" title="Permanent link">&para;</a></h3>
-<p>The following Java code receives the URL from the parameter named <code>url</code> (<a href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequest.html#getParameter-java.lang.String-">GET or POST</a>) and redirects to that URL:</p>
-<div class="highlight"><pre><span></span><code><span class="n">response</span><span class="p">.</span><span class="na">sendRedirect</span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;url&quot;</span><span class="p">));</span><span class="w"></span>
-</code></pre></div>
+<p>Rust actix web</p>
+<p>```Rust actix web
+  Ok(HttpResponse::Found()
+        .insert_header((header::LOCATION, "https://mysite.com/"))
+        .finish())
+<div class="highlight"><pre><span></span><code>In the examples above, the URL is being explicitly declared in the code and cannot be manipulated by an attacker.
+
+## Dangerous URL Redirects
+
+The following examples demonstrate unsafe redirect and forward code.
+
+### Dangerous URL Redirect Example 1
+
+The following Java code receives the URL from the parameter named `url` ([GET or POST](https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequest.html#getParameter-java.lang.String-)) and redirects to that URL:
+
+```java
+response.sendRedirect(request.getParameter(&quot;url&quot;));
+</code></pre></div></p>
 <p>The following PHP code obtains a URL from the query string (via the parameter named <code>url</code>) and then redirects the user to that URL. Additionally, the PHP code after this <code>header()</code> function will continue to execute, so if the user configures their browser to ignore the redirect, they may be able to access the rest of the page.</p>
 <div class="highlight"><pre><span></span><code><span class="x">$redirect_url = $_GET[&#39;url&#39;];</span>
 <span class="x">header(&quot;Location: &quot; . $redirect_url);</span>
@@ -1711,10 +1694,18 @@
 <p>And in Rails:</p>
 <div class="highlight"><pre><span></span><code><span class="n">redirect_to</span> <span class="n">params</span><span class="o">[</span><span class="ss">:url</span><span class="o">]</span>
 </code></pre></div>
-<p>The above code is vulnerable to an attack if no validation or extra method controls are applied to verify the certainty of the URL. This vulnerability could be used as part of a phishing scam by redirecting users to a malicious site.</p>
-<p>If no validation is applied, a malicious user could create a hyperlink to redirect your users to an unvalidated malicious website, for example:</p>
-<div class="highlight"><pre><span></span><code> http://example.com/example.php?url=http://malicious.example.com
-</code></pre></div>
+<p>Rust actix web</p>
+<p>```Rust actix web
+  Ok(HttpResponse::Found()
+        .insert_header((header::LOCATION, query_string.path.as_str()))
+        .finish())
+<div class="highlight"><pre><span></span><code>The above code is vulnerable to an attack if no validation or extra method controls are applied to verify the certainty of the URL. This vulnerability could be used as part of a phishing scam by redirecting users to a malicious site.
+
+If no validation is applied, a malicious user could create a hyperlink to redirect your users to an unvalidated malicious website, for example:
+
+```text
+ http://example.com/example.php?url=http://malicious.example.com
+</code></pre></div></p>
 <p>The user sees the link directing to the original trusted site (<code>example.com</code>) and does not realize the redirection that could take place</p>
 <h3 id="dangerous-url-redirect-example-2">Dangerous URL Redirect Example 2<a class="headerlink" href="#dangerous-url-redirect-example-2" title="Permanent link">&para;</a></h3>
 <p><a href="https://docs.microsoft.com/en-us/aspnet/mvc/overview/security/preventing-open-redirection-attacks">ASP .NET MVC 1 &amp; 2 websites</a> are particularly vulnerable to open redirection attacks. In order to avoid this vulnerability, you need to apply MVC 3.</p>
@@ -1800,6 +1791,7 @@
 <li><a href="http://googlewebmastercentral.blogspot.com/2009/01/open-redirect-urls-is-your-site-being.html">Google blog article on the dangers of open redirects</a>.</li>
 <li><a href="http://www.asp.net/mvc/tutorials/security/preventing-open-redirection-attacks">Preventing Open Redirection Attacks (C#)</a>.</li>
 </ul>
+
 
 
 
