@@ -39,6 +39,14 @@ Rails
 redirect_to login_path
 ```
 
+Rust actix web
+
+```Rust actix web
+  Ok(HttpResponse::Found()
+        .insert_header((header::LOCATION, "https://mysite.com/"))
+        .finish())
+```
+
 In the examples above, the URL is being explicitly declared in the code and cannot be manipulated by an attacker.
 
 ## Dangerous URL Redirects
@@ -71,6 +79,14 @@ And in Rails:
 
 ```ruby
 redirect_to params[:url]
+```
+
+Rust actix web
+
+```Rust actix web
+  Ok(HttpResponse::Found()
+        .insert_header((header::LOCATION, query_string.path.as_str()))
+        .finish())
 ```
 
 The above code is vulnerable to an attack if no validation or extra method controls are applied to verify the certainty of the URL. This vulnerability could be used as part of a phishing scam by redirecting users to a malicious site.
