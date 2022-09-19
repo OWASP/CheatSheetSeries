@@ -429,6 +429,8 @@ Assign a resource quota to namespace:
 kubectl create -f ./compute-resources.yaml --namespace=myspace
 ```
 
+For more information on configuring resource quotas, refer to the Kubernetes documentation at <https://kubernetes.io/docs/concepts/policy/resource-quotas/>.
+
 ### Use Kubernetes network policies to control traffic between pods and clusters
 
 Running different applications on the same Kubernetes cluster creates a risk of one compromised application attacking a neighboring application. Network segmentation is important to ensure that containers can communicate only with those they are supposed to.
