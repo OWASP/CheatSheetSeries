@@ -41,7 +41,7 @@ redirect_to login_path
 
 Rust actix web
 
-```Rust actix web
+```rust
   Ok(HttpResponse::Found()
         .insert_header((header::LOCATION, "https://mysite.com/"))
         .finish())
