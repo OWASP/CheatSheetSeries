@@ -44,9 +44,9 @@ CSRF tokens should be:
 
 CSRF tokens prevent CSRF because without token, attacker cannot create a valid requests to the backend server.
 
-**CSRF tokens should not be transmitted using cookies.**
+**For the Synchronised Token Pattern, CSRF tokens should not be transmitted using cookies.**
 
-The CSRF token can be added through hidden fields, headers, and can be used with forms, and AJAX calls. Make sure that the token is not leaked in the server logs, or in the URL. CSRF tokens in GET requests are potentially leaked at several locations, such as the browser history, log files, network appliances that log the first line of an HTTP request, and Referer headers if the protected site links to an external site.
+The CSRF token can be transmitted to the client as part of a response payload, such as a HTML or JSON response. It can then be transmitted back to the server as a hidden field on a form submission, or via an AJAX request as a custom header value or part of a JSON payload. Make sure that the token is not leaked in the server logs, or in the URL. CSRF tokens in GET requests are potentially leaked at several locations, such as the browser history, log files, network appliances that log the first line of an HTTP request, and Referer headers if the protected site links to an external site.
 
 For example:
 
@@ -284,7 +284,7 @@ This code snippet has been tested with Axios version 0.18.0.
 
 #### JQuery
 
-JQuery exposes an API called $.ajaxSetup() which can be used to add the `anti-csrf-token` header to the AJAX request. API documentation for `$.ajaxSetup()` can be found here. The function `csrfSafeMethod()` defined below will filter out the safe HTTP methods and only add the header to unsafe HTTP methods.
+JQuery exposes an API called `$.ajaxSetup()` which can be used to add the `anti-csrf-token` header to the AJAX request. API documentation for `$.ajaxSetup()` can be found here. The function `csrfSafeMethod()` defined below will filter out the safe HTTP methods and only add the header to unsafe HTTP methods.
 
 You can configure jQuery to automatically add the token to all request headers by adopting the following code snippet. This provides a simple and convenient CSRF protection for your AJAX based applications:
 
