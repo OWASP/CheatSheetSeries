@@ -120,7 +120,7 @@ These configuration settings are equivalent in the defense they provide. The onl
 
 The [bcrypt](https://en.wikipedia.org/wiki/bcrypt) password hashing function should be the second choice for password storage if Argon2id is not available or PBKDF2 is required to achieve FIPS-140 compliance.
 
-The minimum work factor for bcrypt should be 10.
+The work factor should be as large as verification server performance will allow, with a minimum of 10.
 
 #### Input Limits
 
