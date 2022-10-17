@@ -10,9 +10,15 @@ In this cheat sheet, we will review all security-related HTTP headers, recommend
 
 ### X-Frame-Options
 
-The `X-Frame-Options` HTTP response header can be used to indicate whether or not a browser should be allowed to render a page in a `<frame>`, `<iframe>`, `<embed>` or `<object>`. Sites can use this to avoid clickjacking attacks, by ensuring that their content is not embedded into other sites.
+The `X-Frame-Options` HTTP response header can be used to indicate whether or not a browser should be allowed to render a page in a `<frame>`, `<iframe>`, `<embed>` or `<object>`. Sites can use this to avoid [clickjacking](https://owasp.org/www-community/attacks/Clickjacking) attacks, by ensuring that their content is not embedded into other sites.
+
+Content Security Policy (CSP) frame-ancestors directive obsoletes X-Frame-Options for supporting browsers [source](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options).
+
+X-Frame-Options header is only useful when the HTTP response where it is included has something to interact with (e.g. links, buttons). If the HTTP response is a redirect or an API returning JSON data, X-Frame-Options does not provide any security.
 
 #### Recommendation
+
+Use Content Security Policy (CSP) frame-ancestors directive if possible.
 
 Do not allow displaying of the page in a frame.
 > `X-Frame-Options: DENY`
@@ -21,7 +27,11 @@ Do not allow displaying of the page in a frame.
 
 The HTTP `X-XSS-Protection` response header is a feature of Internet Explorer, Chrome, and Safari that stops pages from loading when they detect reflected cross-site scripting (XSS) attacks.
 
+WARNING: Even though this header can protect users of older web browsers that don't yet support CSP, in some cases, this header can create XSS vulnerabilities in otherwise safe websites [source](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection).
+
 #### Recommendation
+
+Use a Content Security Policy (CSP) that disables the use of inline JavaScript ('unsafe-inline').
 
 Do not set this header or explicitly turn it off.
 > `X-XSS-Protection: 0`
@@ -30,11 +40,13 @@ Please see [Mozilla X-XSS-Protection](https://developer.mozilla.org/en-US/docs/W
 
 ### X-Content-Type-Options
 
-The `X-Content-Type-Options` response HTTP header is used by the server to prevent browsers from guessing the media type ( MIME type).
-This is known as **MIME sniffing** in which the browser guesses the correct MIME type by looking at the contents of the resource.
-The absence of this header might cause browsers to transform non-executable content into executable content.
+The `X-Content-Type-Options` response HTTP header is used by the server to indicate to the browsers that the MIME types advertised in the Content-Type headers should be followed and not guessed.
+
+This header is used to block browsers [MIME type sniffing](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types#mime_sniffing), which can transform non-executable MIME types into executable MIME types ([MIME Confusion Attacks](https://blog.mozilla.org/security/2016/08/26/mitigating-mime-confusion-attacks-in-firefox/)).
 
 #### Recommendation
+
+Set the Content-Type header correctly through the site.
 
 > `X-Content-Type-Options: nosniff`
 
