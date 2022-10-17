@@ -31,7 +31,7 @@ When a user uses the forgot password service and inputs their username or email,
 
 - Return a consistent message for both existent and non-existent accounts.
 - Ensure that responses return in a consistent amount of time to prevent an attacker enumerating which accounts exist. This could be achieved by using asynchronous calls or by making sure that the same logic is followed, instead of using a quick exit method.
-- Implement protections against automated submissions such as CAPTCHA, rate-limiting or other controls.
+- Implement protections against excessive automated submissions such as rate-limiting on a per-account basis, requiring a CAPTCHA, or other controls. Otherwise an attacker could make thousands of password reset requests per hour for a given account, flooding the user's intake system (e.g., email inbox or SMS) with useless requests.
 - Employ normal security measures, such as [SQL Injection Prevention methods](SQL_Injection_Prevention_Cheat_Sheet.md) and [Input Validation](Input_Validation_Cheat_Sheet.md).
 
 ### User Resets Password
