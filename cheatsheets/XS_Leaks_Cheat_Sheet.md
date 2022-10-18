@@ -45,8 +45,6 @@ It is worth mentioning here the attitude of Chromium based browsers in which coo
 
 SameSite cookies are a strong **defense-in-depth** mechanism against **some** classes of XS Leaks and [CSRF attacks](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html), which can significantly reduce the attack surface, but may not completely cut them (see, e.g., [window-based XS Leak](https://soheilkhodayari.github.io/same-site-wiki/docs/attacks/xs-leaks.html) attacks like [frame counting](https://xsleaks.dev/docs/attacks/frame-counting/) and [navigation](https://xsleaks.dev/docs/attacks/navigations/)).
 
-
-
 ### How do we know that two sites are SameSite?
 
 ![XS Leaks eTLD explanation](../assets/XS_Leaks_eTLD.png)
