@@ -1720,17 +1720,14 @@
 <div class="highlight"><pre><span></span><code><span class="n">redirect_to</span> <span class="n">params</span><span class="o">[</span><span class="ss">:url</span><span class="o">]</span>
 </code></pre></div>
 <p>Rust actix web</p>
-<p>```Rust actix web
-  Ok(HttpResponse::Found()
-        .insert_header((header::LOCATION, query_string.path.as_str()))
-        .finish())
-<div class="highlight"><pre><span></span><code>The above code is vulnerable to an attack if no validation or extra method controls are applied to verify the certainty of the URL. This vulnerability could be used as part of a phishing scam by redirecting users to a malicious site.
-
-If no validation is applied, a malicious user could create a hyperlink to redirect your users to an unvalidated malicious website, for example:
-
-```text
- http://example.com/example.php?url=http://malicious.example.com
-</code></pre></div></p>
+<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="nb">Ok</span><span class="p">(</span><span class="n">HttpResponse</span>::<span class="n">Found</span><span class="p">()</span><span class="w"></span>
+<span class="w">        </span><span class="p">.</span><span class="n">insert_header</span><span class="p">((</span><span class="n">header</span>::<span class="n">LOCATION</span><span class="p">,</span><span class="w"> </span><span class="n">query_string</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">as_str</span><span class="p">()))</span><span class="w"></span>
+<span class="w">        </span><span class="p">.</span><span class="n">finish</span><span class="p">())</span><span class="w"></span>
+</code></pre></div>
+<p>The above code is vulnerable to an attack if no validation or extra method controls are applied to verify the certainty of the URL. This vulnerability could be used as part of a phishing scam by redirecting users to a malicious site.</p>
+<p>If no validation is applied, a malicious user could create a hyperlink to redirect your users to an unvalidated malicious website, for example:</p>
+<div class="highlight"><pre><span></span><code> http://example.com/example.php?url=http://malicious.example.com
+</code></pre></div>
 <p>The user sees the link directing to the original trusted site (<code>example.com</code>) and does not realize the redirection that could take place</p>
 <h3 id="dangerous-url-redirect-example-2">Dangerous URL Redirect Example 2<a class="headerlink" href="#dangerous-url-redirect-example-2" title="Permanent link">&para;</a></h3>
 <p><a href="https://docs.microsoft.com/en-us/aspnet/mvc/overview/security/preventing-open-redirection-attacks">ASP .NET MVC 1 &amp; 2 websites</a> are particularly vulnerable to open redirection attacks. In order to avoid this vulnerability, you need to apply MVC 3.</p>
