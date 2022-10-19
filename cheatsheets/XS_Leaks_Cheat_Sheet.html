@@ -2154,7 +2154,7 @@
 <li><code>Strict</code> - the cookie will never be sent from another site</li>
 </ul>
 <p>It is worth mentioning here the attitude of Chromium based browsers in which cookies without SameSite attribute set by default are treated as Lax.</p>
-<p>Cookies with the appropriate SameSite attribute provide a <strong>strong defense</strong> against both XS Leaks and also <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">CSRF attacks</a>.</p>
+<p>SameSite cookies are a strong <strong>defense-in-depth</strong> mechanism against <strong>some</strong> classes of XS Leaks and <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">CSRF attacks</a>, which can significantly reduce the attack surface, but may not completely cut them (see, e.g., <a href="https://soheilkhodayari.github.io/same-site-wiki/docs/attacks/xs-leaks.html">window-based XS Leak</a> attacks like <a href="https://xsleaks.dev/docs/attacks/frame-counting/">frame counting</a> and <a href="https://xsleaks.dev/docs/attacks/navigations/">navigation</a>).</p>
 <h3 id="how-do-we-know-that-two-sites-are-samesite">How do we know that two sites are SameSite?<a class="headerlink" href="#how-do-we-know-that-two-sites-are-samesite" title="Permanent link">&para;</a></h3>
 <p><img alt="XS Leaks eTLD explanation" src="../assets/XS_Leaks_eTLD.png" /></p>
 <p>In the context of the SameSite attribute, we consider the site to be the combination of the TLD (top-level domain) and the domain name before it. For example:</p>
