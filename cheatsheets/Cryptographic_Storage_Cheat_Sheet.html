@@ -1841,7 +1841,7 @@
 <p>Passwords should not be stored using reversible encryption - secure password hashing algorithms should be used instead. The <a href="Password_Storage_Cheat_Sheet.html">Password Storage Cheat Sheet</a> contains further guidance on storing passwords.</p>
 <h2 id="architectural-design">Architectural Design<a class="headerlink" href="#architectural-design" title="Permanent link">&para;</a></h2>
 <p>The first step in designing any application is to consider the overall architecture of the system, as this will have a huge impact on the technical implementation.</p>
-<p>This process should begin with considering the <a href="Threat_Modeling_Cheat_Sheet.html">threat model</a> of the application (i.e, who you trying to protect that data against).</p>
+<p>This process should begin with considering the <a href="Threat_Modeling_Cheat_Sheet.html">threat model</a> of the application (i.e, who you are trying to protect that data against).</p>
 <p>The use of dedicated secret or key management systems can provide an additional layer of security protection, as well as making the management of secrets significantly easier - however it comes at the cost of additional complexity and administrative overhead - so may not be feasible for all applications. Note that many cloud environments provide these services, so these should be taken advantage of where possible.</p>
 <h3 id="where-to-perform-encryption">Where to Perform Encryption<a class="headerlink" href="#where-to-perform-encryption" title="Permanent link">&para;</a></h3>
 <p>Encryption can be performed on a number of levels in the application stack, such as:</p>
