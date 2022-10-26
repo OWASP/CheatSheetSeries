@@ -10,7 +10,7 @@ Passwords should not be stored using reversible encryption - secure password has
 
 The first step in designing any application is to consider the overall architecture of the system, as this will have a huge impact on the technical implementation.
 
-This process should begin with considering the [threat model](Threat_Modeling_Cheat_Sheet.md) of the application (i.e, who you trying to protect that data against).
+This process should begin with considering the [threat model](Threat_Modeling_Cheat_Sheet.md) of the application (i.e, who you are trying to protect that data against).
 
 The use of dedicated secret or key management systems can provide an additional layer of security protection, as well as making the management of secrets significantly easier - however it comes at the cost of additional complexity and administrative overhead - so may not be feasible for all applications. Note that many cloud environments provide these services, so these should be taken advantage of where possible.
 
