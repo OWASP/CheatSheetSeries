@@ -471,10 +471,10 @@ For more information on configuring network policies, refer to the Kubernetes do
 
 ### Securing data
 
-#### Keeps secrets as secrets
+#### Keep secrets as secrets
 
-In Kubernetes, a Secret is a small object that contains sensitive data, like a password or token. It is necessary to access how sensitive data such as credentials and keys are stored and accessed. Even though a pod is not able to access the secrets of another pod, it is crucial to keep the secret separate from an image or pod. Otherwise, anyone with access to the image would have access to the secret as well. Complex applications that handle multiple processes and have public access are especially vulnerable in this regard.
-You must ensure that secrets are not being passed as environment variables but are instead mounted into read-only volumes in your containers, for example.
+In Kubernetes, a Secret is a small object that contains sensitive data, like a password or token. It is important to understand how sensitive data such as credentials and keys are stored and accessed. Even though a pod is not able to access the secrets of another pod, it is crucial to keep the secret separate from an image or pod. Otherwise, anyone with access to the image would have access to the secret as well. Complex applications that handle multiple processes and have public access are especially vulnerable in this regard.
+It is best for secrets to be mounted into read-only volumes in your containers, rather than exposing them as environment variables.
 
 #### Encrypt secrets at rest
 
@@ -482,7 +482,15 @@ The etcd database in general contains any information accessible via the Kuberne
 
 Always encrypt your backups using a well reviewed backup and encryption solution, and consider using full disk encryption where possible.
 
-Kubernetes supports encryption at rest, a feature introduced in 1.7, and beta since 1.13. This will encrypt Secret resources in etcd, preventing parties that gain access to your etcd backups from viewing the content of those secrets. While this feature is currently beta, it offers an additional level of defense when backups are not encrypted or an attacker gains read access to etcd.
+Kubernetes supports encryption at rest, a feature introduced in 1.7, and v1 beta since 1.13. This will encrypt Secret resources in etcd, preventing parties that gain access to your etcd backups from viewing the content of those secrets. While this feature is currently beta, it offers an additional level of defense when backups are not encrypted or an attacker gains read access to etcd.
+
+#### Alternatives to Kubernetes Secret resources
+
+You may want to consider using an external secrets manager to store and manage your secrets rather than storing them in Kubernetes Secrets. This
+provides a number of benefits over using Kubernetes Secrets, including the ability to manage secrets across multiple clusters (or clouds), and
+the ability to manage and rotate secrets centrally.
+
+For more information on Secrets and their alternatives, refer to the documentation at <https://kubernetes.io/docs/concepts/configuration/secret/>.
 
 #### Finding exposed secrets
 
