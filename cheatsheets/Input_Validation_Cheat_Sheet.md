@@ -60,6 +60,9 @@ The primary means of input validation for free-form text input should be:
 References:
 
 - [Input validation of free-form Unicode text in Python](https://web.archive.org/web/20170717174432/https://ipsec.pl/python/2017/input-validation-free-form-unicode-text-python.html/)
+- [UAX 31: Unicode Identifier and Pattern Syntax](https://unicode.org/reports/tr31/)
+- [UAX 15: Unicode Normalization Forms](https://www.unicode.org/reports/tr15/)
+- [UAX 24: Unicode Script Property](https://unicode.org/reports/tr24/)
 
 ### Regular expressions
 
