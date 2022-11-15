@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Kubernetes_Security_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.4.1, mkdocs-material-8.5.7">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
     
     
       
@@ -21,10 +21,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.20d9efc8.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.472b142f.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.08040f6c.min.css">
         
       
       
@@ -113,6 +113,7 @@
         
           
           
+          
           <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
           
             <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
@@ -120,6 +121,7 @@
             </label>
           
         
+          
           
           
           <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
@@ -1266,8 +1268,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#keeps-secrets-as-secrets" class="md-nav__link">
-    Keeps secrets as secrets
+  <a href="#keep-secrets-as-secrets" class="md-nav__link">
+    Keep secrets as secrets
   </a>
   
 </li>
@@ -1275,6 +1277,13 @@
           <li class="md-nav__item">
   <a href="#encrypt-secrets-at-rest" class="md-nav__link">
     Encrypt secrets at rest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alternatives-to-kubernetes-secret-resources" class="md-nav__link">
+    Alternatives to Kubernetes Secret resources
   </a>
   
 </li>
@@ -2459,8 +2468,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#keeps-secrets-as-secrets" class="md-nav__link">
-    Keeps secrets as secrets
+  <a href="#keep-secrets-as-secrets" class="md-nav__link">
+    Keep secrets as secrets
   </a>
   
 </li>
@@ -2468,6 +2477,13 @@
           <li class="md-nav__item">
   <a href="#encrypt-secrets-at-rest" class="md-nav__link">
     Encrypt secrets at rest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alternatives-to-kubernetes-secret-resources" class="md-nav__link">
+    Alternatives to Kubernetes Secret resources
   </a>
   
 </li>
@@ -3139,13 +3155,18 @@ Service mesh adds a layer of security that allows you to monitor and address com
 </code></pre></div>
 <p>For more information on configuring network policies, refer to the Kubernetes documentation at <a href="https://kubernetes.io/docs/concepts/services-networking/network-policies">https://kubernetes.io/docs/concepts/services-networking/network-policies</a>.</p>
 <h3 id="securing-data">Securing data<a class="headerlink" href="#securing-data" title="Permanent link">&para;</a></h3>
-<h4 id="keeps-secrets-as-secrets">Keeps secrets as secrets<a class="headerlink" href="#keeps-secrets-as-secrets" title="Permanent link">&para;</a></h4>
-<p>In Kubernetes, a Secret is a small object that contains sensitive data, like a password or token. It is necessary to access how sensitive data such as credentials and keys are stored and accessed. Even though a pod is not able to access the secrets of another pod, it is crucial to keep the secret separate from an image or pod. Otherwise, anyone with access to the image would have access to the secret as well. Complex applications that handle multiple processes and have public access are especially vulnerable in this regard.
-You must ensure that secrets are not being passed as environment variables but are instead mounted into read-only volumes in your containers, for example.</p>
+<h4 id="keep-secrets-as-secrets">Keep secrets as secrets<a class="headerlink" href="#keep-secrets-as-secrets" title="Permanent link">&para;</a></h4>
+<p>In Kubernetes, a Secret is a small object that contains sensitive data, like a password or token. It is important to understand how sensitive data such as credentials and keys are stored and accessed. Even though a pod is not able to access the secrets of another pod, it is crucial to keep the secret separate from an image or pod. Otherwise, anyone with access to the image would have access to the secret as well. Complex applications that handle multiple processes and have public access are especially vulnerable in this regard.
+It is best for secrets to be mounted into read-only volumes in your containers, rather than exposing them as environment variables.</p>
 <h4 id="encrypt-secrets-at-rest">Encrypt secrets at rest<a class="headerlink" href="#encrypt-secrets-at-rest" title="Permanent link">&para;</a></h4>
 <p>The etcd database in general contains any information accessible via the Kubernetes API and may grant an attacker significant visibility into the state of your cluster.</p>
 <p>Always encrypt your backups using a well reviewed backup and encryption solution, and consider using full disk encryption where possible.</p>
-<p>Kubernetes supports encryption at rest, a feature introduced in 1.7, and beta since 1.13. This will encrypt Secret resources in etcd, preventing parties that gain access to your etcd backups from viewing the content of those secrets. While this feature is currently beta, it offers an additional level of defense when backups are not encrypted or an attacker gains read access to etcd.</p>
+<p>Kubernetes supports encryption at rest, a feature introduced in 1.7, and v1 beta since 1.13. This will encrypt Secret resources in etcd, preventing parties that gain access to your etcd backups from viewing the content of those secrets. While this feature is currently beta, it offers an additional level of defense when backups are not encrypted or an attacker gains read access to etcd.</p>
+<h4 id="alternatives-to-kubernetes-secret-resources">Alternatives to Kubernetes Secret resources<a class="headerlink" href="#alternatives-to-kubernetes-secret-resources" title="Permanent link">&para;</a></h4>
+<p>You may want to consider using an external secrets manager to store and manage your secrets rather than storing them in Kubernetes Secrets. This
+provides a number of benefits over using Kubernetes Secrets, including the ability to manage secrets across multiple clusters (or clouds), and
+the ability to manage and rotate secrets centrally.</p>
+<p>For more information on Secrets and their alternatives, refer to the documentation at <a href="https://kubernetes.io/docs/concepts/configuration/secret/">https://kubernetes.io/docs/concepts/configuration/secret/</a>.</p>
 <h4 id="finding-exposed-secrets">Finding exposed secrets<a class="headerlink" href="#finding-exposed-secrets" title="Permanent link">&para;</a></h4>
 <p>Open-source tools such as <a href="https://github.com/deepfence/SecretScanner">SecretScanner</a> and <a href="https://github.com/deepfence/ThreatMapper">ThreatMapper</a> can scan container filesystems for sensitive resources, such as API tokens, passwords, and keys. Such resources would be accessible to any user who had access to the unencrypted container filesystem, whether during build, at rest in a registry or backup, or running.</p>
 <p>Review the secret material present on the container against the principle of 'least priviledge', and to assess the risk posed by a compromise.</p>
@@ -3460,7 +3481,7 @@ Events:
     <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.8492ddcf.min.js"></script>
+      <script src="../assets/javascripts/bundle.d6c3db9e.min.js"></script>
       
     
   </body>
