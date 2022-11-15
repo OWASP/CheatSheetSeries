@@ -49,6 +49,8 @@ Hash functions can be found in digital signature algorithms (`FIPS186`), Keyed-H
 
 `NIST SP 800-57 Part 1` recognizes three basic classes of approved cryptographic algorithms: hash functions, symmetric- key algorithms and asymmetric-key algorithms. The classes are defined by the number of cryptographic keys that are used in conjunction with the algorithm.
 
+The NSA released a report, [Commercial National Security Algorithm Suite 2.0](https://media.defense.gov/2022/Sep/07/2003071834/-1/-1/0/CSA_CNSA_2.0_ALGORITHMS_.PDF) which lists the cryptographic algorithms that are expected to be remain strong even with advances in quantum computing.
+
 #### Cryptographic hash functions
 
 Cryptographic hash functions do not require keys. Hash functions generate a relatively small digest (hash value) from a (possibly) large input in a way that is fundamentally difficult to reverse (i.e., it is hard to find an input that will produce a given output). Hash functions are used as building blocks for key management, for example,
@@ -246,7 +248,7 @@ The compromise-recovery plan should contain:
 
 ## Cryptographic Key Management Libraries
 
-Use only reputable crypto libraries that are well maintained and updated, as well as tested and validated by third-party organizations (e.g., `NIST`/`FIPS`)
+Use only reputable crypto libraries that are well maintained and updated, as well as tested and validated by third-party organizations (e.g., `NIST`/`FIPS`).
 
 ## Documentation
 
