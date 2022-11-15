@@ -173,6 +173,66 @@ For example, if an attacker uses CSRF to assume an authenticated identity of a t
 
 Login CSRF can be mitigated by creating pre-sessions (sessions before a user is authenticated) and including tokens in login form. You can use any of the techniques mentioned above to generate tokens. Remember that pre-sessions cannot be transitioned to real sessions once the user is authenticated - the session should be destroyed and a new one should be made to avoid [session fixation attacks](http://www.acrossecurity.com/papers/session_fixation.pdf). This technique is described in [Robust Defenses for Cross-Site Request Forgery section 4.1](https://seclab.stanford.edu/websec/csrf/csrf.pdf).
 
+## Client-side CSRF
+
+[Client-side CSRF](https://soheilkhodayari.github.io/same-site-wiki/docs/attacks/csrf.html#client-side-csrf) is a new variant of CSRF attacks where the attacker tricks the client-side JavaScript code to send a forged HTTP request to a vulnerable target site by manipulating the program’s input parameters. Client-side CSRF originates when the JavaScript program uses attacker-controlled inputs, such as the URL, for the generation of asynchronous HTTP requests.
+
+**Note:** These variants of CSRF are particularly important as they can bypass some of the common anti-CSRF countermeasures like [token-based mitigations](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#token-based-mitigation) and [SameSite cookies](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#samesite-cookie-attribute). For example, when [synchronizer tokens](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#synchronizer-token-pattern) or [custom HTTP request headers](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#use-of-custom-request-headers) are used, the JavaScript program will include them in the asynchronous requests. Also, web browsers will include cookies in same-site request contexts initiated by JavaScript programs, circumventing the [SameSite cookie policies](https://soheilkhodayari.github.io/same-site-wiki/docs/policies/overview.html).
+
+**Client-side vs. Classical CSRF:** In the classical CSRF, the vulnerable component is the server-side program, which cannot distinguish whether the incoming authenticated request was performed **intentionally**, also known as the confused deputy problem. In the client-side CSRF, the vulnerable component is the client-side JavaScript program instead, which allows an attacker to generate arbitrary asynchronous requests, e.g., by manipulating the request endpoint and/or its parameters. Client-side CSRF is an input validation problem, that when exploited, reintroduces the confused deputy flaw, that is, the server-side won't, again, be able to distinguish if the request was performed intentionally or not.
+
+For more information about client-side CSRF vulnerabilities, see Sections 2 and 5 of this [paper](https://www.usenix.org/system/files/sec21-khodayari.pdf), the [CSRF chapter](https://soheilkhodayari.github.io/same-site-wiki/docs/attacks/csrf.html) of the [SameSite wiki](https://soheilkhodayari.github.io/same-site-wiki), and [this post](https://www.facebook.com/notes/facebook-bug-bounty/client-side-csrf/2056804174333798/) by the [Facebook Whitehat program](https://www.facebook.com/whitehat).
+
+### Client-side CSRF Example
+
+The following code snippet demonstrates a simple example of a client-side CSRF vulnerability.
+
+```html
+<script type="text/javascript">
+    var csrf_token = document.querySelector("meta[name='csrf-token']").getAttribute("content");
+    function ajaxLoad(){
+        // process the URL hash fragment
+        let hash_fragment = window.location.hash.slice(1);  
+
+        // hash fragment should be of the format: /^(get|post);(.*)$/
+        // e.g., https://site.com/index/#post;/profile
+        if(hash_fragment.length > 0 && hash_fragment.indexOf(';') > 0 ){
+
+            let params = hash_fragment.match(/^(get|post);(.*)$/);
+            if(params && params.length){
+                let request_method = params[1];   
+                let request_endpoint = params[3];
+
+                fetch(request_endpoint, {
+                    method: request_method,
+                    headers: {
+                        'XSRF-TOKEN': csrf_token,
+                        // [...]
+                    },
+                    // [...]
+                }).then(response => { /* [...] */ }); 
+            }
+        }
+    }
+    // trigger the async request on page load
+    window.onload = ajaxLoad();
+ </script>
+```
+
+**Vulnerability:** In this snippet, the program invokes a function `ajaxLoad()` upon the page load, which is reponsible for loading various webpage elements. The function reads the value of the [URL hash fragment](https://developer.mozilla.org/en-US/docs/Web/API/Location/hash) (line 4), and extracts two pieces of information from it (i.e., request method and enpoint) to generate an asynchronous HTTP request (lines 11-13). The vulnerability occurs in lines 15-22, when the JavaScript program uses URL fragments to obtain the server-side endpoint for the asynchronous HTTP request (line 15) and the request method. However, both inputs can be controlled by web attackers, who can pick the value of their choosing, and craft a malicious URL containing the attack payload.
+
+**Attack:** For exploitation, attackers can share the malicious URL with the victim (e.g.,  spear-phishing emails) and convince them to click on it, because such URL belongs to the origin of an honest, reputable but vulnerable website. Alternatively, they can use it as a part of an attack page they control and abuse browser APIs (e.g., the [`window.open()`](https://developer.mozilla.org/en-US/docs/Web/API/Window/open) API) to trick the vulnerable JavaScript of the target page to send the HTTP request, which closely resemles the attack model of the classical CSRF attacks.
+
+For more examples of client-side CSRF, see [this post](https://www.facebook.com/notes/facebook-bug-bounty/client-side-csrf/2056804174333798/) by the [Facebook Whitehat program](https://www.facebook.com/whitehat) and this USENIX Security [paper](https://www.usenix.org/system/files/sec21-khodayari.pdf).
+
+### Client-side CSRF Mitigation Techniques
+
+**Independent Requests:** Client-side CSRF can be prevented if asynchronous requests are not generated via attacker controllable inputs, such as the [URL](https://developer.mozilla.org/en-US/docs/Web/API/Window/location), [window name](https://developer.mozilla.org/en-US/docs/Web/API/Window/name), [document referrer](https://developer.mozilla.org/en-US/docs/Web/API/Document/referrer), and [postMessages](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage), to name only a few examples.
+
+**Input Validation:** Achieving complete isolaion between inputs and request parameters may not always be possible depending on the context and functionality. In these cases, input validation checks has to be implemented. These checks should strictly assess the format and choice of the values of the request parameters and decide whether they can only be used in non-state-changing operations (e.g., only allow GET requests and endpoints starting with a predefined prefix).
+
+**Predefined Request Data:** Another mitigation technique is to store a list of predefined, safe request data in the JavaScript code (e.g., combinations of endpoints, request methods and other parameters that are safe to be replayed). The program can then use a switch parameter in the URL fragment to decide which entry of the list should each JavaScript function use.
+
 ## Java Reference Example
 
 The following [JEE web filter](https://github.com/righettod/poc-csrf/blob/master/src/main/java/eu/righettod/poccsrf/filter/CSRFValidationFilter.java) provides an example reference for some of the concepts described in this cheatsheet. It implements the following stateless mitigations ([OWASP CSRFGuard](https://github.com/aramrami/OWASP-CSRFGuard), cover a stateful approach).
