@@ -1948,6 +1948,7 @@
 <p>According to <code>NIST SP 800-57 Part 1</code>, many algorithms and schemes that provide a security service use a <a href="https://en.wikipedia.org/wiki/Hash_function">hash function</a> as a component of the algorithm.</p>
 <p>Hash functions can be found in digital signature algorithms (<code>FIPS186</code>), Keyed-Hash Message Authentication Codes (HMAC) (<code>FIPS198</code>), key-derivation functions/methods (<code>NIST Special Publications (SP) 800-56A, 800-56B, 800-56C and 800-108</code>), and random number generators (<code>NIST SP 800-90A</code>). Approved hash functions are defined in <code>FIPS180</code>.</p>
 <p><code>NIST SP 800-57 Part 1</code> recognizes three basic classes of approved cryptographic algorithms: hash functions, symmetric- key algorithms and asymmetric-key algorithms. The classes are defined by the number of cryptographic keys that are used in conjunction with the algorithm.</p>
+<p>The NSA released a report, <a href="https://media.defense.gov/2022/Sep/07/2003071834/-1/-1/0/CSA_CNSA_2.0_ALGORITHMS_.PDF">Commercial National Security Algorithm Suite 2.0</a> which lists the cryptographic algorithms that are expected to be remain strong even with advances in quantum computing.</p>
 <h4 id="cryptographic-hash-functions">Cryptographic hash functions<a class="headerlink" href="#cryptographic-hash-functions" title="Permanent link">&para;</a></h4>
 <p>Cryptographic hash functions do not require keys. Hash functions generate a relatively small digest (hash value) from a (possibly) large input in a way that is fundamentally difficult to reverse (i.e., it is hard to find an input that will produce a given output). Hash functions are used as building blocks for key management, for example,</p>
 <ol>
@@ -2102,7 +2103,7 @@
 <li>Implement a secure process for updating the trust store.</li>
 </ol>
 <h2 id="cryptographic-key-management-libraries">Cryptographic Key Management Libraries<a class="headerlink" href="#cryptographic-key-management-libraries" title="Permanent link">&para;</a></h2>
-<p>Use only reputable crypto libraries that are well maintained and updated, as well as tested and validated by third-party organizations (e.g., <code>NIST</code>/<code>FIPS</code>)</p>
+<p>Use only reputable crypto libraries that are well maintained and updated, as well as tested and validated by third-party organizations (e.g., <code>NIST</code>/<code>FIPS</code>).</p>
 <h2 id="documentation">Documentation<a class="headerlink" href="#documentation" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://info.townsendsecurity.com/definitive-guide-to-encryption-key-management-fundamentals">The definitive guide to encryption key management fundamentals</a>.</li>
