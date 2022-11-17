@@ -323,24 +323,7 @@ app.get('/captcha', function (req, res) {
 
 #### Use Anti-CSRF tokens
 
-[Cross-Site Request Forgery (CSRF)](https://owasp.org/www-community/attacks/csrf) aims to perform authorized actions on behalf of an authenticated user, while the user is unaware of this action. CSRF attacks are generally performed for state-changing requests like changing a password, adding users or placing orders. [Csurf](https://www.npmjs.com/package/csurf) is an express middleware that can be used to mitigate CSRF attacks. It can be used as follows:
-
-```JavaScript
-const csrf = require('csurf');
-csrfProtection = csrf({ cookie: true });
-app.get('/form', csrfProtection, function(req, res) {
-    res.render('send', { csrfToken: req.csrfToken() })
-})
-app.post('/process', parseForm, csrfProtection, function(req, res) {
-    res.send('data is being processed');
-});
-```
-
-After writing this code, you also need to add `csrfToken` to your HTML form, which can be easily done as follows:
-
-```HTML
-<input type="hidden" name="_csrf" value="{{ csrfToken }}">
-```
+[Cross-Site Request Forgery (CSRF)](https://owasp.org/www-community/attacks/csrf) aims to perform authorized actions on behalf of an authenticated user, while the user is unaware of this action. CSRF attacks are generally performed for state-changing requests like changing a password, adding users or placing orders. [Csurf](https://www.npmjs.com/package/csurf) is an express middleware that has been used to mitigate CSRF attacks. But a security hole in this package has been recently discovered. The team behind the package has not fixed the discovered vulnerability and they have marked the package as deprecated, recommending to use any other csrf protection package.
 
 For detailed information on cross-site request forgery (CSRF) attacks and prevention methods, you can refer to [Cross-Site Request Forgery Prevention](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html).
 
