@@ -90,11 +90,14 @@ The features can either be set on the factory or the underlying `XMLReader` [set
 
 Each XML processor implementation has its own features that govern how DTDs and external entities are processed.
 
+Since the JDK 6, the flag [FEATURE_SECURE_PROCESSING](https://docs.oracle.com/javase/6/docs/api/javax/xml/XMLConstants.html#FEATURE_SECURE_PROCESSING) can be used **to instruct the implementation of the parser to process XML securely**. More details on this flag can be found [here](https://docs.oracle.com/en/java/javase/13/security/java-api-xml-processing-jaxp-security-guide.html#GUID-88B04BE2-35EF-4F61-B4FA-57A0E9102342).
+
 For a syntax highlighted example code snippet using `SAXParserFactory`, look [here](https://gist.github.com/asudhakar02/45e2e6fd8bcdfb4bc3b2).
 
 ``` java
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException; // catching unsupported features
+import javax.xml.XMLConstants;
 
 ...
 
@@ -106,6 +109,12 @@ try {
     // Xerces 2 only - http://xerces.apache.org/xerces2-j/features.html#disallow-doctype-decl
     FEATURE = "http://apache.org/xml/features/disallow-doctype-decl";
     dbf.setFeature(FEATURE, true);
+    
+    // As stated in the documentation "Feature for Secure Processing (FSP)" is the central mechanism to 
+    // help safeguard XML processing. It instructs XML processors, such as parsers, validators, 
+    // and transformers, to try and process XML securely. 
+    // Exists from JDK6.
+    dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
 
     // If you can't completely disable DTDs, then at least do the following:
     // Xerces 1 - http://xerces.apache.org/xerces-j/features.html#external-general-entities
