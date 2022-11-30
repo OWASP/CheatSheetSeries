@@ -2165,7 +2165,7 @@ TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
 <h4 id="how-to-prevent_1">How to Prevent<a class="headerlink" href="#how-to-prevent_1" title="Permanent link">&para;</a></h4>
 <p>A way to prevent it is to add a "user context" in the token. A user context will be composed of the following information:</p>
 <ul>
-<li>A random string that will be generated during the authentication phase. It will be sent to the client as an hardened cookie (flags: <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#Secure_and_HttpOnly_cookies">HttpOnly + Secure</a> + <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#SameSite_cookies">SameSite</a> + <a href="https://googlechrome.github.io/samples/cookie-prefixes/">cookie prefixes</a>).</li>
+<li>A random string that will be generated during the authentication phase. It will be sent to the client as an hardened cookie (flags: <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#Secure_and_HttpOnly_cookies">HttpOnly + Secure</a> + <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#SameSite_cookies">SameSite</a> + <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie">Max-Age</a> + <a href="https://googlechrome.github.io/samples/cookie-prefixes/">cookie prefixes</a>). Avoid setting <em>expires</em> header so that the cookie is cleared when the browser is closed. Set <em>Max-Age</em> to a value smaller or equal to the value of JWT token expiry, but never more.</li>
 <li>A SHA256 hash of the random string will be stored in the token (instead of the raw value) in order to prevent any XSS issues allowing the attacker to read the random string value and setting the expected cookie.</li>
 </ul>
 <p>IP addresses should not be used because there are some legitimate situations in which the IP address can change during the same session. For example, when an user accesses an application through their mobile device and the mobile operator changes during the exchange, then the IP address may (often) change. Moreover, using the IP address can potentially cause issues with <a href="http://www.eugdpr.org/">European GDPR</a> compliance.</p>
@@ -2250,7 +2250,8 @@ TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
 <h4 id="symptom_2">Symptom<a class="headerlink" href="#symptom_2" title="Permanent link">&para;</a></h4>
 <p>This problem is inherent to JWT because a token only becomes invalid when it expires. The user has no built-in feature to explicitly revoke the validity of a token. This means that if it is stolen, a user cannot revoke the token itself thereby blocking the attacker.</p>
 <h4 id="how-to-prevent_2">How to Prevent<a class="headerlink" href="#how-to-prevent_2" title="Permanent link">&para;</a></h4>
-<p>A way to protect against this is to implement a token block list that will be used to mimic the "logout" feature that exists with traditional session management system.</p>
+<p>Since JWT tokens are stateless, There is no session maintained on the server(s) serving client requests. As such, there is no session to invalidate on the server side. A well implemented Token Sidejacking solution (as explained above) should alleviate the need for maintaining block list on server side. This is because a hardened cookie used in the Token Sidejacking can be considered as secure a session ID used in the traditional session system, and unless both the cookie and the JWT token are intercepted/stolen, the JWT is unusable. A logout can thus be 'simulated' by clearing the JWT from session storage. If the user chooses to close the browser instead, then both the cookie and sessionStorage are cleared automatically.</p>
+<p>Another way to protect against this is to implement a token block list that will be used to mimic the "logout" feature that exists with traditional session management system.</p>
 <p>The block list will keep a digest (SHA-256 encoded in HEX) of the token with a revocation date. This entry must endure at least until the expiration of the token.</p>
 <p>When the user wants to "logout" then it call a dedicated service that will add the provided user token to the block list resulting in an immediate invalidation of the token for further usage in the application.</p>
 <h4 id="implementation-example_2">Implementation Example<a class="headerlink" href="#implementation-example_2" title="Permanent link">&para;</a></h4>
@@ -2470,11 +2471,12 @@ See RFC5116: https://tools.ietf.org/html/rfc5116
 </ul>
 <h4 id="how-to-prevent_4">How to Prevent<a class="headerlink" href="#how-to-prevent_4" title="Permanent link">&para;</a></h4>
 <ol>
-<li>Store the token using the browser <em>sessionStorage</em> container.</li>
+<li>Store the token using the browser <em>sessionStorage</em> container, or use JavaScript <em>closures</em> with <em>private</em> variables</li>
 <li>Add it as a <em>Bearer</em> HTTP <code>Authentication</code> header with JavaScript when calling services.</li>
 <li>Add <a href="JSON_Web_Token_for_Java_Cheat_Sheet.html#token-sidejacking">fingerprint</a> information to the token.</li>
 </ol>
 <p>By storing the token in browser <em>sessionStorage</em> container it exposes the token to being stolen through a XSS attack. However, fingerprints added to the token prevent reuse of the stolen token by the attacker on their machine. To close a maximum of exploitation surfaces for an attacker, add a browser <a href="https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html">Content Security Policy</a> to harden the execution context.</p>
+<p>An alternative to storing token in browser <em>sessionStorage</em> is to use JavaScript private variable or Closures. In this, access to all web requests are routed through a JavaScript module that encapsulates the token in a private variable which can not be accessed other than from within the module.</p>
 <p><em>Note:</em></p>
 <ul>
 <li>The remaining case is when an attacker uses the user's browsing context as a proxy to use the target application through the legitimate user but the Content Security Policy can prevent communication with non expected domains.</li>
@@ -2528,6 +2530,64 @@ See RFC5116: https://tools.ietf.org/html/rfc5116
 <span class="w">            </span><span class="p">...</span><span class="w"></span>
 <span class="w">        </span><span class="p">},</span><span class="w"></span>
 <span class="w">    </span><span class="p">});</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</code></pre></div>
+<p>JavaScript code to implement closures with private variables:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">myFetchModule</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Protect the original &#39;fetch&#39; from getting overwritten via XSS</span><span class="w"></span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">fetch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">fetch</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">authOrigins</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;https://yourorigin&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;http://localhost&quot;</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">setToken</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">value</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nx">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">value</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">fetch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">resource</span><span class="p">,</span><span class="w"> </span><span class="nx">options</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">req</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Request</span><span class="p">(</span><span class="nx">resource</span><span class="p">,</span><span class="w"> </span><span class="nx">options</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="nx">destOrigin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">URL</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">url</span><span class="p">).</span><span class="nx">origin</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">token</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">authOrigins</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="nx">destOrigin</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;Authorization&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">token</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="nx">req</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="p">...</span><span class="w"></span>
+
+<span class="c1">// usage:</span><span class="w"></span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">myFetch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">myFetchModule</span><span class="p">()</span><span class="w"></span>
+
+<span class="kd">function</span><span class="w"> </span><span class="nx">login</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nx">fetch</span><span class="p">(</span><span class="s2">&quot;/api/login&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">          </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mf">200</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">              </span><span class="k">return</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">()</span><span class="w"></span>
+<span class="w">          </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">              </span><span class="k">throw</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">statusText</span><span class="p">)</span><span class="w"></span>
+<span class="w">          </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="p">})</span><span class="w"></span>
+<span class="w">      </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">          </span><span class="nx">myFetch</span><span class="p">.</span><span class="nx">setToken</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">token</span><span class="p">)</span><span class="w"></span>
+<span class="w">          </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Token received and stored.&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">})</span><span class="w"></span>
+<span class="w">      </span><span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">)</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="p">...</span><span class="w"></span>
+
+<span class="c1">// after login, subsequent api calls:</span><span class="w"></span>
+<span class="kd">function</span><span class="w"> </span><span class="nx">makeRequest</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nx">myFetch</span><span class="p">.</span><span class="nx">fetch</span><span class="p">(</span><span class="s2">&quot;/api/hello&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="s2">&quot;MyHeader&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;foobar&quot;</span><span class="p">}})</span><span class="w"></span>
+<span class="w">        </span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mf">200</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">text</span><span class="p">()</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="k">throw</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">statusText</span><span class="p">)</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="nx">responseText</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;helloResponse&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">responseText</span><span class="p">))</span><span class="w"></span>
+<span class="w">        </span><span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">)</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 </code></pre></div>
 <h3 id="weak-token-secret">Weak Token Secret<a class="headerlink" href="#weak-token-secret" title="Permanent link">&para;</a></h3>
