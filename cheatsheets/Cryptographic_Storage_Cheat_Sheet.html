@@ -1876,7 +1876,6 @@
 <p>There are various <a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation">modes</a> that can be used to allow block ciphers (such as AES) to encrypt arbitrary amounts of data, in the same way that a stream cipher would. These modes have different security and performance characteristics, and a full discussion of them is outside the scope of this cheat sheet. Some of the modes have requirements to generate secure initialisation vectors (IVs) and other attributes, but these should be handled automatically by the library.</p>
 <p>Where available, authenticated modes should always be used. These provide guarantees of the integrity and authenticity of the data, as well as confidentiality. The most commonly used authenticated modes are <strong><a href="https://en.wikipedia.org/wiki/Galois/Counter_Mode">GCM</a></strong> and <strong><a href="https://en.wikipedia.org/wiki/CCM_mode">CCM</a></strong>, which should be used as a first preference.</p>
 <p>If GCM or CCM are not available, then <a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_%28CTR%29">CTR</a> mode or <a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Cipher_Block_Chaining_%28CBC%29">CBC</a> mode should be used. As these do not provide any guarantees about the authenticity of the data, separate authentication should be implemented, such as using the <a href="https://en.wikipedia.org/wiki/Authenticated_encryption#Encrypt-then-MAC_%28EtM%29">Encrypt-then-MAC</a> technique. Care needs to be taken when using this method with <a href="https://en.wikipedia.org/wiki/CBC-MAC#Security_with_fixed_and_variable-length_messages">variable length messages</a></p>
-<p>If random access to the encrypted data is required then <a href="https://en.wikipedia.org/wiki/Disk_encryption_theory#XTS">XTS</a> mode should be used. This is typically used for disk encryption, so it unlikely to be used by a web application.</p>
 <p><a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#ECB">ECB</a> should not be used outside of very specific circumstances.</p>
 <h3 id="random-padding">Random Padding<a class="headerlink" href="#random-padding" title="Permanent link">&para;</a></h3>
 <p>For RSA, it is essential to enable Random Padding. Random Padding is also known as OAEP or Optimal Asymmetric Encryption Padding. This class of defense protects against Known Plain Text Attacks by adding randomness at the beginning of the payload.</p>
@@ -1914,7 +1913,7 @@
 <tr>
 <td>.NET/C#</td>
 <td><code>Random()</code></td>
-<td><a href="https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.rngcryptoserviceprovider?view=netframework-4.8">RNGCryptoServiceProvider</a></td>
+<td><a href="https://learn.microsoft.com/en-us/dotnet/api/system.security.cryptography.randomnumbergenerator?view=net-6.0">RandomNumberGenerator</a></td>
 </tr>
 <tr>
 <td>Objective-C</td>
