@@ -2379,9 +2379,11 @@
 <p>Only the <code>DocumentBuilderFactory</code> example is presented here. The JAXP <code>DocumentBuilderFactory</code> <a href="https://docs.oracle.com/javase/7/docs/api/javax/xml/parsers/DocumentBuilderFactory.html#setFeature(java.lang.String,%20boolean)">setFeature</a> method allows a developer to control which implementation-specific XML processor features are enabled or disabled.</p>
 <p>The features can either be set on the factory or the underlying <code>XMLReader</code> <a href="https://docs.oracle.com/javase/7/docs/api/org/xml/sax/XMLReader.html#setFeature%28java.lang.String,%20boolean%29">setFeature</a> method.</p>
 <p>Each XML processor implementation has its own features that govern how DTDs and external entities are processed.</p>
+<p>Since the JDK 6, the flag <a href="https://docs.oracle.com/javase/6/docs/api/javax/xml/XMLConstants.html#FEATURE_SECURE_PROCESSING">FEATURE_SECURE_PROCESSING</a> can be used <strong>to instruct the implementation of the parser to process XML securely</strong>. More details on this flag can be found <a href="https://docs.oracle.com/en/java/javase/13/security/java-api-xml-processing-jaxp-security-guide.html#GUID-88B04BE2-35EF-4F61-B4FA-57A0E9102342">here</a>.</p>
 <p>For a syntax highlighted example code snippet using <code>SAXParserFactory</code>, look <a href="https://gist.github.com/asudhakar02/45e2e6fd8bcdfb4bc3b2">here</a>.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">javax.xml.parsers.DocumentBuilderFactory</span><span class="p">;</span><span class="w"></span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">javax.xml.parsers.ParserConfigurationException</span><span class="p">;</span><span class="w"> </span><span class="c1">// catching unsupported features</span><span class="w"></span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">javax.xml.XMLConstants</span><span class="p">;</span><span class="w"></span>
 
 <span class="p">...</span><span class="w"></span>
 
@@ -2393,6 +2395,12 @@
 <span class="w">    </span><span class="c1">// Xerces 2 only - http://xerces.apache.org/xerces2-j/features.html#disallow-doctype-decl</span><span class="w"></span>
 <span class="w">    </span><span class="n">FEATURE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;http://apache.org/xml/features/disallow-doctype-decl&quot;</span><span class="p">;</span><span class="w"></span>
 <span class="w">    </span><span class="n">dbf</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="n">FEATURE</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// As stated in the documentation &quot;Feature for Secure Processing (FSP)&quot; is the central mechanism to </span><span class="w"></span>
+<span class="w">    </span><span class="c1">// help safeguard XML processing. It instructs XML processors, such as parsers, validators, </span><span class="w"></span>
+<span class="w">    </span><span class="c1">// and transformers, to try and process XML securely. </span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Exists from JDK6.</span><span class="w"></span>
+<span class="w">    </span><span class="n">dbf</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">FEATURE_SECURE_PROCESSING</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span><span class="w"></span>
 
 <span class="w">    </span><span class="c1">// If you can&#39;t completely disable DTDs, then at least do the following:</span><span class="w"></span>
 <span class="w">    </span><span class="c1">// Xerces 1 - http://xerces.apache.org/xerces-j/features.html#external-general-entities</span><span class="w"></span>
