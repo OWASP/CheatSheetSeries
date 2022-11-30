@@ -105,7 +105,7 @@ This attack occurs when a token has been intercepted/stolen by an attacker and t
 
 A way to prevent it is to add a "user context" in the token. A user context will be composed of the following information:
 
-- A random string that will be generated during the authentication phase. It will be sent to the client as an hardened cookie (flags: [HttpOnly + Secure](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#Secure_and_HttpOnly_cookies) + [SameSite](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#SameSite_cookies) + [cookie prefixes](https://googlechrome.github.io/samples/cookie-prefixes/)).
+- A random string that will be generated during the authentication phase. It will be sent to the client as an hardened cookie (flags: [HttpOnly + Secure](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#Secure_and_HttpOnly_cookies) + [SameSite](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#SameSite_cookies) + [Max-Age](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie) + [cookie prefixes](https://googlechrome.github.io/samples/cookie-prefixes/)). Avoid setting *expires* header so that the cookie is cleared when the browser is closed. Set *Max-Age* to a value smaller or equal to the value of JWT token expiry, but never more.
 - A SHA256 hash of the random string will be stored in the token (instead of the raw value) in order to prevent any XSS issues allowing the attacker to read the random string value and setting the expected cookie.
 
 IP addresses should not be used because there are some legitimate situations in which the IP address can change during the same session. For example, when an user accesses an application through their mobile device and the mobile operator changes during the exchange, then the IP address may (often) change. Moreover, using the IP address can potentially cause issues with [European GDPR](http://www.eugdpr.org/) compliance.
@@ -203,7 +203,9 @@ This problem is inherent to JWT because a token only becomes invalid when it exp
 
 #### How to Prevent
 
-A way to protect against this is to implement a token block list that will be used to mimic the "logout" feature that exists with traditional session management system.
+Since JWT tokens are stateless, There is no session maintained on the server(s) serving client requests. As such, there is no session to invalidate on the server side. A well implemented Token Sidejacking solution (as explained above) should alleviate the need for maintaining block list on server side. This is because a hardened cookie used in the Token Sidejacking can be considered as secure a session ID used in the traditional session system, and unless both the cookie and the JWT token are intercepted/stolen, the JWT is unusable. A logout can thus be 'simulated' by clearing the JWT from session storage. If the user chooses to close the browser instead, then both the cookie and sessionStorage are cleared automatically.
+
+Another way to protect against this is to implement a token block list that will be used to mimic the "logout" feature that exists with traditional session management system.
 
 The block list will keep a digest (SHA-256 encoded in HEX) of the token with a revocation date. This entry must endure at least until the expiration of the token.
 
@@ -465,11 +467,13 @@ This occurs when an application stores the token in a manner exhibiting the foll
 
 #### How to Prevent
 
-1. Store the token using the browser *sessionStorage* container.
+1. Store the token using the browser *sessionStorage* container, or use JavaScript *closures* with *private* variables
 1. Add it as a *Bearer* HTTP `Authentication` header with JavaScript when calling services.
 1. Add [fingerprint](JSON_Web_Token_for_Java_Cheat_Sheet.md#token-sidejacking) information to the token.
 
 By storing the token in browser *sessionStorage* container it exposes the token to being stolen through a XSS attack. However, fingerprints added to the token prevent reuse of the stolen token by the attacker on their machine. To close a maximum of exploitation surfaces for an attacker, add a browser [Content Security Policy](https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html) to harden the execution context.
+
+An alternative to storing token in browser *sessionStorage* is to use JavaScript private variable or Closures. In this, access to all web requests are routed through a JavaScript module that encapsulates the token in a private variable which can not be accessed other than from within the module.
 
 *Note:*
 
@@ -530,6 +534,67 @@ function validateToken() {
             ...
         },
     });
+}
+```
+
+JavaScript code to implement closures with private variables:
+
+``` javascript
+function myFetchModule() {
+    // Protect the original 'fetch' from getting overwritten via XSS
+    const fetch = window.fetch;
+
+    const authOrigins = ["https://yourorigin", "http://localhost"];
+    let token = '';
+
+    this.setToken = (value) => {
+        token = value
+    }
+
+    this.fetch = (resource, options) => {
+        let req = new Request(resource, options);
+        destOrigin = new URL(req.url).origin;
+        if (token && authOrigins.includes(destOrigin)) {
+            req.headers.set('Authorization', token);
+        }
+        return fetch(req)
+    }
+}
+    
+...
+ 
+// usage:
+const myFetch = new myFetchModule()
+
+function login() {
+  fetch("/api/login")
+      .then((res) => {
+          if (res.status == 200) {
+              return res.json()
+          } else {
+              throw Error(res.statusText)
+          }
+      })
+      .then(data => {
+          myFetch.setToken(data.token)
+          console.log("Token received and stored.")
+      })
+      .catch(console.error)
+}
+
+...
+
+// after login, subsequent api calls:
+function makeRequest() {
+    myFetch.fetch("/api/hello", {headers: {"MyHeader": "foobar"}})
+        .then((res) => {
+            if (res.status == 200) {
+                return res.text()
+            } else {
+                throw Error(res.statusText)
+            }
+        }).then(responseText => console.log("helloResponse", responseText))
+        .catch(console.error)
 }
 ```
 
