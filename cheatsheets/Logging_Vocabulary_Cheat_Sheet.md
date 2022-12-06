@@ -203,28 +203,6 @@ WARN
 
 ---
 
-### authn_token_delete[:appid]
-
-**Description**
-When a token is deleted it should be recorded
-
-**Level:**: WARN
-
-**Example:**
-
-```
-{
-    "datetime": "2019-01-01 00:00:00,000",
-    "appid": "foobar.netportal_auth",
-    "event": "authn_token_delete:foobarapi",
-    "level": "WARN",
-    "description": "The token for foobarapi has been deleted",
-    ...
-}
-```
-
----
-
 ### authn_password_change[:userid]
 
 **Description**
@@ -353,6 +331,28 @@ A previously revoked token was attempted to be reused.
     "event": "authn_token_reuse:app.foobarapi.prod,xyz-abc-123-gfk",
     "level": "CRITICAL",
     "description": "User app.foobarapi.prod attempted to use token ID: xyz-abc-123-gfk which was previously revoked",
+    ...
+}
+```
+
+---
+
+### authn_token_delete[:appid]
+
+**Description**
+When a token is deleted it should be recorded
+
+**Level:**: WARN
+
+**Example:**
+
+```
+{
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "authn_token_delete:foobarapi",
+    "level": "WARN",
+    "description": "The token for foobarapi has been deleted",
     ...
 }
 ```
