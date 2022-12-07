@@ -10,7 +10,7 @@ Application logging should be consistent within the application, consistent acro
 
 ## Purpose
 
-Application logging should be always be included for security events. Application logs are invaluable data for:
+Application logging should always be included for security events. Application logs are invaluable data for:
 
 - Identifying security incidents
 - Monitoring policy violations
@@ -165,7 +165,7 @@ Never log data unless it is legally sanctioned. For example intercepting some co
 
 Never exclude any events from "known" users such as other internal systems, "trusted" third parties, search engine robots, uptime/process and other remote monitoring systems, pen testers, auditors. However, you may want to include a classification flag for each of these in the recorded data.
 
-The following should not usually be recorded directly in the logs, but instead should be removed, masked, sanitized, hashed or encrypted:
+The following should usually not be recorded directly in the logs, but instead should be removed, masked, sanitized, hashed or encrypted:
 
 - Application source code
 - Session identification values (consider replacing with a hashed value if needed to track session specific events)
