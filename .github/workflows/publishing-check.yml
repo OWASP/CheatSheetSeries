@@ -5,7 +5,7 @@ on: [push, pull_request]
 jobs:
   build:
     name: Build website
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04 #ubuntu-latest
     env:
       CI: true
     steps:
