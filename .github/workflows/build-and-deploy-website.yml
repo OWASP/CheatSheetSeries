@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     name: Build offline website
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04 #ubuntu-latest ubuntu lastes have some bug, we need to use older one 
     env:
       CI: true
       WORKFLOW_GOOGLE_ANALYTICS_KEY: ${{ secrets.GOOGLE_ANALYTICS_KEY }}
