@@ -29,7 +29,7 @@ ResultSet results = pstmt.executeQuery( );
 #### Using Java with Hibernate
 
 ```java
-//HQL
+// HQL
 @Entity // declare as entity;
 @NamedQuery(
  name="findByDescription",
@@ -41,18 +41,18 @@ public class Inventory implements Serializable {
  private String productDescription;
 }
 
-// use case
+// Use case
 // This should REALLY be validated too
 String userSuppliedParameter = request.getParameter("Product-Description");
-// perform input validation to detect attacks
+// Perform input validation to detect attacks
 List<Inventory> list =
  session.getNamedQuery("findByDescription")
  .setParameter("productDescription", userSuppliedParameter).list();
 
-//Criteria API
+// Criteria API
 // This should REALLY be validated too
 String userSuppliedParameter = request.getParameter("Product-Description");
-// perform input validation to detect attacks
+// Perform input validation to detect attacks
 Inventory inv = (Inventory) session.createCriteria(Inventory.class).add
 (Restrictions.eq("productDescription", userSuppliedParameter)).uniqueResult();
 ```
