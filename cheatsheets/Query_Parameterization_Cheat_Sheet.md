@@ -131,7 +131,7 @@ $sth->execute( $bar, $baz );
 
 The SQL you write in your web application isn't the only place that SQL injection vulnerabilities can be introduced. If you are using Stored Procedures, and you are dynamically constructing SQL inside them, you can also introduce SQL injection vulnerabilities.
 
-To ensure this dynamic SQL is secure, you can parameterize this dynamic SQL too using bind variables.
+Dynamic SQL can be parameterized using bind variables, to ensure the dynamically constructed SQL is secure.
 
 Here are some examples of using bind variables in stored procedures in different databases.
 
