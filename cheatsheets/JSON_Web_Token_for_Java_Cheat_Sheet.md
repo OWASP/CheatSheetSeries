@@ -71,7 +71,7 @@ If your application does not need to be fully stateless, you can consider using 
 
 #### Symptom
 
-This attack, described [here](https://auth0.com/blog/critical-vulnerabilities-in-json-web-token-libraries/) occurs when an attacker alters the token and changes the hashing algorithm to indicate, through, the *none* keyword, that the integrity of the token has already been verified. As explained in the link above *some libraries treated tokens signed with the none algorithm as a valid token with a verified signature*, so an attacker can alter the token claims and token will be trusted by the application.
+This attack, described [here](https://auth0.com/blog/critical-vulnerabilities-in-json-web-token-libraries/), occurs when an attacker alters the token and changes the hashing algorithm to indicate, through the *none* keyword, that the integrity of the token has already been verified. As explained in the link above *some libraries treated tokens signed with the none algorithm as a valid token with a verified signature*, so an attacker can alter the token claims and the modified token will still be trusted by the application.
 
 #### How to Prevent
 
@@ -203,7 +203,7 @@ This problem is inherent to JWT because a token only becomes invalid when it exp
 
 #### How to Prevent
 
-Since JWT tokens are stateless, There is no session maintained on the server(s) serving client requests. As such, there is no session to invalidate on the server side. A well implemented Token Sidejacking solution (as explained above) should alleviate the need for maintaining block list on server side. This is because a hardened cookie used in the Token Sidejacking can be considered as secure a session ID used in the traditional session system, and unless both the cookie and the JWT token are intercepted/stolen, the JWT is unusable. A logout can thus be 'simulated' by clearing the JWT from session storage. If the user chooses to close the browser instead, then both the cookie and sessionStorage are cleared automatically.
+Since JWT tokens are stateless, There is no session maintained on the server(s) serving client requests. As such, there is no session to invalidate on the server side. A well implemented Token Sidejacking solution (as explained above) should alleviate the need for maintaining block list on server side. This is because a hardened cookie used in the Token Sidejacking can be considered as secure as a session ID used in the traditional session system, and unless both the cookie and the JWT token are intercepted/stolen, the JWT is unusable. A logout can thus be 'simulated' by clearing the JWT from session storage. If the user chooses to close the browser instead, then both the cookie and sessionStorage are cleared automatically.
 
 Another way to protect against this is to implement a token block list that will be used to mimic the "logout" feature that exists with traditional session management system.
 
