@@ -80,16 +80,15 @@ Enable HTTPS-only access for the site and sub domains.
 
 Please checkout [HTTP Strict Transport Security Cheat Sheet](HTTP_Strict_Transport_Security_Cheat_Sheet.md) for more information.
 
-### Expect-CT
+### Expect-CT ❌
 
 The `Expect-CT` header lets sites opt-in to reporting of Certificate Transparency (CT) requirements. Given that mainstream clients now require CT qualification, the only remaining value is reporting such occurrences to the nominated report-uri value in the header. The header is now less about enforcement and more about detection/reporting.
 
-Please note Mozilla states that [this header will be obsolete](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Expect-CT) in June 2021.
+Please note that according to Mozilla, [this header is deprecated](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Expect-CT) since June 2021.
 
 #### Recommendation
 
-Set Certificate Transparency so user agents report Expect-CT failures.
-> `Expect-CT: max-age=604800, report-uri="https://foo.example/report"`
+Avoid using this header and update existing code by removing it.
 
 ### Content-Security-Policy
 
@@ -203,7 +202,7 @@ The HTTP `Public-Key-Pins` response header is used to associate a specific crypt
 
 #### Recommendation
 
-This header is deprecated. Use `Expect-CT` instead.
+This header is deprecated and should not be used anymore.
 
 ## Adding HTTP Headers in Different Technologies
 
