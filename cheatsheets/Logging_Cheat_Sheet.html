@@ -1889,7 +1889,7 @@
 <p>Many systems enable network device, operating system, web server, mail server and database server logging, but often custom application event logging is missing, disabled or poorly configured. It provides much greater insight than infrastructure logging alone. Web application (e.g. web site or web service) logging is much more than having web server logs enabled (e.g. using Extended Log File Format).</p>
 <p>Application logging should be consistent within the application, consistent across an organization's application portfolio and use industry standards where relevant, so the logged event data can be consumed, correlated, analyzed and managed by a wide variety of systems.</p>
 <h2 id="purpose">Purpose<a class="headerlink" href="#purpose" title="Permanent link">&para;</a></h2>
-<p>Application logging should be always be included for security events. Application logs are invaluable data for:</p>
+<p>Application logging should always be included for security events. Application logs are invaluable data for:</p>
 <ul>
 <li>Identifying security incidents</li>
 <li>Monitoring policy violations</li>
@@ -2028,7 +2028,7 @@
 <h3 id="data-to-exclude">Data to exclude<a class="headerlink" href="#data-to-exclude" title="Permanent link">&para;</a></h3>
 <p>Never log data unless it is legally sanctioned. For example intercepting some communications, monitoring employees, and collecting some data without consent may all be illegal.</p>
 <p>Never exclude any events from "known" users such as other internal systems, "trusted" third parties, search engine robots, uptime/process and other remote monitoring systems, pen testers, auditors. However, you may want to include a classification flag for each of these in the recorded data.</p>
-<p>The following should not usually be recorded directly in the logs, but instead should be removed, masked, sanitized, hashed or encrypted:</p>
+<p>The following should usually not be recorded directly in the logs, but instead should be removed, masked, sanitized, hashed or encrypted:</p>
 <ul>
 <li>Application source code</li>
 <li>Session identification values (consider replacing with a hashed value if needed to track session specific events)</li>
