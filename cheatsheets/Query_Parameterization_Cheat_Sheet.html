@@ -1867,7 +1867,7 @@
 
 <h1 id="query-parameterization-cheat-sheet">Query Parameterization Cheat Sheet<a class="headerlink" href="#query-parameterization-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p><a href="https://owasp.org/www-community/attacks/SQL_Injection">SQL Injection</a> is one of the most dangerous web vulnerabilities. So much so that it's the <a href="https://wiki.owasp.org/index.php/Top_10_2013-A1-Injection">#1 item in the OWASP Top 10</a>.</p>
+<p><a href="https://owasp.org/www-community/attacks/SQL_Injection">SQL Injection</a> is one of the most dangerous web vulnerabilities. So much so that it was the #1 item in both the OWASP Top 10 <a href="https://wiki.owasp.org/index.php/Top_10_2013-A1-Injection">2013 version</a>, and <a href="https://owasp.org/www-project-top-ten/2017/A1_2017-Injection.html">2017 version</a>. As of 2021, it sits at #3 on the <a href="https://owasp.org/Top10/A03_2021-Injection/">OWASP Top 10</a>.</p>
 <p>It represents a serious threat because SQL Injection allows evil attacker code to change the structure of a web application's SQL statement in a way that can steal data, modify data, or potentially facilitate command injection to the underlying OS.</p>
 <p>This cheat sheet is a derivative work of the <a href="SQL_Injection_Prevention_Cheat_Sheet.html">SQL Injection Prevention Cheat Sheet</a>.</p>
 <h2 id="parameterized-query-examples">Parameterized Query Examples<a class="headerlink" href="#parameterized-query-examples" title="Permanent link">&para;</a></h2>
@@ -1882,7 +1882,7 @@
 <span class="n">ResultSet</span><span class="w"> </span><span class="n">results</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pstmt</span><span class="p">.</span><span class="na">executeQuery</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
 </code></pre></div>
 <h4 id="using-java-with-hibernate">Using Java with Hibernate<a class="headerlink" href="#using-java-with-hibernate" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="c1">//HQL</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="c1">// HQL</span><span class="w"></span>
 <span class="nd">@Entity</span><span class="w"> </span><span class="c1">// declare as entity;</span><span class="w"></span>
 <span class="nd">@NamedQuery</span><span class="p">(</span><span class="w"></span>
 <span class="w"> </span><span class="n">name</span><span class="o">=</span><span class="s">&quot;findByDescription&quot;</span><span class="p">,</span><span class="w"></span>
@@ -1894,18 +1894,18 @@
 <span class="w"> </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">productDescription</span><span class="p">;</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 
-<span class="c1">// use case</span><span class="w"></span>
+<span class="c1">// Use case</span><span class="w"></span>
 <span class="c1">// This should REALLY be validated too</span><span class="w"></span>
 <span class="n">String</span><span class="w"> </span><span class="n">userSuppliedParameter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;Product-Description&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="c1">// perform input validation to detect attacks</span><span class="w"></span>
+<span class="c1">// Perform input validation to detect attacks</span><span class="w"></span>
 <span class="n">List</span><span class="o">&lt;</span><span class="n">Inventory</span><span class="o">&gt;</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
 <span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">getNamedQuery</span><span class="p">(</span><span class="s">&quot;findByDescription&quot;</span><span class="p">)</span><span class="w"></span>
 <span class="w"> </span><span class="p">.</span><span class="na">setParameter</span><span class="p">(</span><span class="s">&quot;productDescription&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">userSuppliedParameter</span><span class="p">).</span><span class="na">list</span><span class="p">();</span><span class="w"></span>
 
-<span class="c1">//Criteria API</span><span class="w"></span>
+<span class="c1">// Criteria API</span><span class="w"></span>
 <span class="c1">// This should REALLY be validated too</span><span class="w"></span>
 <span class="n">String</span><span class="w"> </span><span class="n">userSuppliedParameter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;Product-Description&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="c1">// perform input validation to detect attacks</span><span class="w"></span>
+<span class="c1">// Perform input validation to detect attacks</span><span class="w"></span>
 <span class="n">Inventory</span><span class="w"> </span><span class="n">inv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Inventory</span><span class="p">)</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">createCriteria</span><span class="p">(</span><span class="n">Inventory</span><span class="p">.</span><span class="na">class</span><span class="p">).</span><span class="na">add</span><span class="w"></span>
 <span class="p">(</span><span class="n">Restrictions</span><span class="p">.</span><span class="na">eq</span><span class="p">(</span><span class="s">&quot;productDescription&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">userSuppliedParameter</span><span class="p">)).</span><span class="na">uniqueResult</span><span class="p">();</span><span class="w"></span>
 </code></pre></div>
@@ -1960,7 +1960,7 @@
 </code></pre></div>
 <h3 id="stored-procedure-examples">Stored Procedure Examples<a class="headerlink" href="#stored-procedure-examples" title="Permanent link">&para;</a></h3>
 <p>The SQL you write in your web application isn't the only place that SQL injection vulnerabilities can be introduced. If you are using Stored Procedures, and you are dynamically constructing SQL inside them, you can also introduce SQL injection vulnerabilities.</p>
-<p>To ensure this dynamic SQL is secure, you can parameterize this dynamic SQL too using bind variables.</p>
+<p>Dynamic SQL can be parameterized using bind variables, to ensure the dynamically constructed SQL is secure.</p>
 <p>Here are some examples of using bind variables in stored procedures in different databases.</p>
 <h4 id="oracle-using-plsql">Oracle using PL/SQL<a class="headerlink" href="#oracle-using-plsql" title="Permanent link">&para;</a></h4>
 <h5 id="normal-stored-procedure">Normal Stored Procedure<a class="headerlink" href="#normal-stored-procedure" title="Permanent link">&para;</a></h5>
