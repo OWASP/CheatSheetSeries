@@ -2,7 +2,7 @@
 
 ## Introduction
 
-[SQL Injection](https://owasp.org/www-community/attacks/SQL_Injection) is one of the most dangerous web vulnerabilities. So much so that it's the [\#1 item in the OWASP Top 10](https://wiki.owasp.org/index.php/Top_10_2013-A1-Injection).
+[SQL Injection](https://owasp.org/www-community/attacks/SQL_Injection) is one of the most dangerous web vulnerabilities. So much so that it was the #1 item in both the OWASP Top 10 [2013 version](https://wiki.owasp.org/index.php/Top_10_2013-A1-Injection), and [2017 version](https://owasp.org/www-project-top-ten/2017/A1_2017-Injection.html). As of 2021, it sits at #3 on the [OWASP Top 10](https://owasp.org/Top10/A03_2021-Injection/).
 
 It represents a serious threat because SQL Injection allows evil attacker code to change the structure of a web application's SQL statement in a way that can steal data, modify data, or potentially facilitate command injection to the underlying OS.
 
@@ -29,7 +29,7 @@ ResultSet results = pstmt.executeQuery( );
 #### Using Java with Hibernate
 
 ```java
-//HQL
+// HQL
 @Entity // declare as entity;
 @NamedQuery(
  name="findByDescription",
@@ -41,18 +41,18 @@ public class Inventory implements Serializable {
  private String productDescription;
 }
 
-// use case
+// Use case
 // This should REALLY be validated too
 String userSuppliedParameter = request.getParameter("Product-Description");
-// perform input validation to detect attacks
+// Perform input validation to detect attacks
 List<Inventory> list =
  session.getNamedQuery("findByDescription")
  .setParameter("productDescription", userSuppliedParameter).list();
 
-//Criteria API
+// Criteria API
 // This should REALLY be validated too
 String userSuppliedParameter = request.getParameter("Product-Description");
-// perform input validation to detect attacks
+// Perform input validation to detect attacks
 Inventory inv = (Inventory) session.createCriteria(Inventory.class).add
 (Restrictions.eq("productDescription", userSuppliedParameter)).uniqueResult();
 ```
@@ -131,7 +131,7 @@ $sth->execute( $bar, $baz );
 
 The SQL you write in your web application isn't the only place that SQL injection vulnerabilities can be introduced. If you are using Stored Procedures, and you are dynamically constructing SQL inside them, you can also introduce SQL injection vulnerabilities.
 
-To ensure this dynamic SQL is secure, you can parameterize this dynamic SQL too using bind variables.
+Dynamic SQL can be parameterized using bind variables, to ensure the dynamically constructed SQL is secure.
 
 Here are some examples of using bind variables in stored procedures in different databases.
 
