@@ -41,7 +41,7 @@ Let's say, Santhosh has this habit of writing the descriptive selector names lik
 
 ## Defensive Mechanisms to Mitigate Attacker's Motivation
 
-### Defense Mechanism
+### Defense Mechanism \#1
 
 As a CSS Coder / Programmer, always keep the CSS isolated by access control level. By this, it means **Student** will have a different CSS file called as `StudentStyling.CSS` while **Administrator** has `AdministratorStyling.CSS` and so on. Make sure these `*.CSS` files are accessed only for a user with the proper access control level. Only users with the proper access control level should be able to access their `*.CSS` file.
 
@@ -49,14 +49,17 @@ If an authenticated user with the **Student** Role tries to access `Administrato
 
 ### Defense Mechanism \#2
 
-Being a programmer or a tester, take care of the naming conventions of your CSS (Cascading Style Sheet) Selectors. Obfuscate the selector names in such a fashion that attackers are not informed what a specific selector is linking to.
+Another option is to modify your CSS files to remove any identifying information. As a general rule, it's recommended that your website have a consistent style between pages, and it's best to write your general CSS rules in such a way that they apply across mutliple pages. This reduces the need for specific selectors in the first place. Furthermore, it's often possible to create CSS selectors that target specific HTML elements without using IDs or class names. For example, `#UserPage .Toolbar .addUserButton` could be rewritten to something more obscure such as `#page_u header button:first-of-type`.
 
-Example: CSS Selectors for `addUser,` `addAdmin,` `profileSettings,` `changePassword` could be named `aHj879JK,` `bHjsU,` `ahkrrE,` `lOiksn` respectively. These names could be randomly generated per user as well.
+Build-time and runtime tools also exist, which can be integrated to obfuscate your class names. This can reduce the chance of an attacker guessing the features of your application. Some examples:
 
-This [NPM package](https://www.npmjs.com/package/rename-css-selectors) can be used to perform the renaming of the CSS selector.
+* [JSS](https://cssinjs.org) (CSS in JS) has a `minify` option which would generate class names such as `.c001`, `.c002`.
+* [CSS Modules](https://github.com/css-modules/css-modules) has a `modules` and `localIdentName` option, which functions similarly to JSS, but allows importing any .css file without major structural changes to your application.
+* [.Net Blazor CSS Isolation](https://learn.microsoft.com/en-us/aspnet/core/blazor/components/css-isolation) can be used to scope your CSS to the component it's used in, and results in selectors like `button.add[b-3xxtam6d07]`.
+* CSS libraries such as [Bootstrap](https://getbootstrap.com) and [Tailwind](https://tailwindcss.com) can reduce the need for specific CSS selectors as they provide a strong base theme to work from.
 
 ### Defense Mechanism \#3
 
 Web applications that allow users to author content via HTML input could be vulnerable to malicious use of CSS. Uploaded HTML could use styles that are allowed by the web application but could be used for purposes other than intended which could lead to security risks.
 
-Example: You can read about how [LinkedIn](https://www.scmagazineuk.com/style-sheet-vulnerability-allowed-attacker-hijack-linkedin-pages/article/1479529) had a vulnerability which allowed malicious use of CSS that lead to the authoring of a page where the entire page was clickable including overwriting LinkedIn's standard navigation elements.
+Example: You can read about how [LinkedIn](https://www.scmagazine.com/news/vulnerability-management/style-sheet-vulnerability-allowed-attacker-to-hijack-linkedin-pages) had a vulnerability which allowed malicious use of CSS to execute a [Clickjacking](https://owasp.org/www-community/attacks/Clickjacking) attack. This caused the document to enter a state where clicking anywhere on the page would result in loading a potentially malicious website. You can read more about mitigating clickjacking attacks [here](Clickjacking_Defense_Cheat_Sheet.md).
