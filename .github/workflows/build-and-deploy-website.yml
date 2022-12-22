@@ -8,19 +8,19 @@ on:
 jobs:
   build:
     name: Build offline website
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-20.04 #ubuntu-latest ubuntu lastes have some bug, we need to use older one 
     env:
       CI: true
       WORKFLOW_GOOGLE_ANALYTICS_KEY: ${{ secrets.GOOGLE_ANALYTICS_KEY }}
     steps:
     - name: Setup Action
-      uses: actions/checkout@v3
+      uses: actions/checkout@v1
     - name: Setup Node
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v2.1.5
       with:
         node-version: 12.x
     - name: Setup Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v2.2.1
       with:
         python-version: '3.x'
     - name: Install Python dependencies
@@ -34,19 +34,19 @@ jobs:
     - name: Test bundle
       run: zip -T bundle.zip
     - name: Upload bundle as artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v2.2.2
       with:
         name: Bundle
         path: bundle.zip
   deploy:
     name: Deploy offline website
     needs: build
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     env:
       CI: true
     steps:
     - name: Setup Action
-      uses: actions/checkout@v3
+      uses: actions/checkout@v1
     - name: Install dependencies
       run: sudo apt-get install -y unzip zip
     - name: Switch to offline website (gh-pages) branch
@@ -56,7 +56,7 @@ jobs:
         shopt -s extglob
         rm -rdfv !("CNAME"|"robots.txt"|"_config.yml")
     - name: Download new build from artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v1
       with:
         name: Bundle
     - name: Replace bundle with new build
