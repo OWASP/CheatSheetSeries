@@ -64,7 +64,9 @@ Referrer policy has been supported by browsers since 2014. Today, the default be
 
 ### Content-Type
 
-The `Content-Type` representation header is used to indicate the original media type of the resource (before any content encoding is applied for sending).
+The `Content-Type` representation header is used to indicate the original media type of the resource (before any content encoding is applied for sending). If not set correctly, the resource (e.g. an image) may be interpreted as HTML, making XSS vulnerabilities possible.
+
+Although it is recommended to always set the `Content-Type` header correctly, it would constitute a vulnerability only if the content is intended to be rendered by the client and the resource is untrusted (provided or modified by a user).
 
 #### Recommendation
 
@@ -77,18 +79,21 @@ The `Content-Type` representation header is used to indicate the original media 
 
 The `Set-Cookie` HTTP response header is used to send a cookie from the server to the user agent, so the user agent can send it back to the server later. To send multiple cookies, multiple Set-Cookie headers should be sent in the same response.
 
+This is not a security header per se, but its security attributes are crucial.
+
 #### Recommendation
 
 - Please read [Session Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#cookies) for a detailed explanation on cookie configuration options.
 
-### Strict-Transport-Security
+### Strict-Transport-Security (HSTS)
 
 The HTTP `Strict-Transport-Security` response header (often abbreviated as HSTS) lets a website tell browsers that it should only be accessed using HTTPS, instead of using HTTP.
 
 #### Recommendation
 
-Enable HTTPS-only access for the site and sub domains.
 > `Strict-Transport-Security: max-age=63072000; includeSubDomains; preload`
+
+- *NOTE*: Read carefully how this header works before using it. If the HSTS header is misconfigured or if there is a problem with the SSL/TLS certificate being used, legitimate users might be unable to access the website. For example, if the HSTS header is set to a very long duration and the SSL/TLS certificate expires or is revoked, legitimate users might be unable to access the website until the HSTS header duration has expired.
 
 Please checkout [HTTP Strict Transport Security Cheat Sheet](HTTP_Strict_Transport_Security_Cheat_Sheet.md) for more information.
 
@@ -96,40 +101,63 @@ Please checkout [HTTP Strict Transport Security Cheat Sheet](HTTP_Strict_Transpo
 
 The `Expect-CT` header lets sites opt-in to reporting of Certificate Transparency (CT) requirements. Given that mainstream clients now require CT qualification, the only remaining value is reporting such occurrences to the nominated report-uri value in the header. The header is now less about enforcement and more about detection/reporting.
 
-Please note Mozilla states that [this header will be obsolete](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Expect-CT) in June 2021.
+#### Recommendation
+
+Not use it. Mozilla [recommends](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Expect-CT) avoiding it, and removing it from existing code if possible.
+
+### Content-Security-Policy (CSP)
+
+Content Security Policy (CSP) is a security feature that is used to specify the origin of content that is allowed to be loaded on a website or in a web applicationis. It is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross-Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement to distribution of malware.
+
+- *NOTE*: This header is relevant to be applied in pages which can load and intepret scripts and code, but might be meaningless in the response of a REST API that returns content that is not going to be rendered.
 
 #### Recommendation
 
-Set Certificate Transparency so user agents report Expect-CT failures.
-> `Expect-CT: max-age=604800, report-uri="https://foo.example/report"`
-
-### Content-Security-Policy
-
-Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross-Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement to distribution of malware.
-
-#### Recommendation
-
-Content Security Policy is very complex to configure and maintain. For an explanation on customization options, please read [Content Security Policy Cheat Sheet](Content_Security_Policy_Cheat_Sheet.md)
+Content Security Policy is complex to configure and maintain. For an explanation on customization options, please read [Content Security Policy Cheat Sheet](Content_Security_Policy_Cheat_Sheet.md)
 
 ### Access-Control-Allow-Origin
 
-The `Access-Control-Allow-Origin` response header indicates whether the response can be shared with requesting code from the given origin.
+If you don't use this header, your site is protected by default by the Same Origin Policy (SOP). What this header does is relaxing this control in specified circumstances.
+
+The `Access-Control-Allow-Origin` is a CORS (cross-origin resource sharing) header. This header indicates whether the response it is related to can be shared with requesting code from the given origin. In other words, if siteA requests a resource from siteB, siteB should indicate in its `Access-Control-Allow-Origin` header that siteA is allowed to fetch that resource, if not, the access is blocked due to Same Origin Policy (SOP).
 
 #### Recommendation
 
-Prefer using specific [origin](https://developer.mozilla.org/en-US/docs/Glossary/Origin) instead of `*`. Checkout [Access-Control-Allow-Origin](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin) for details.
+If you use it, set specific [origins](https://developer.mozilla.org/en-US/docs/Glossary/Origin) instead of `*`. Checkout [Access-Control-Allow-Origin](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin) for details.
 > `Access-Control-Allow-Origin: https://yoursite.com`
 
-### Cross-Origin-Opener-Policy
+- *NOTE*: The use '*' might be necessary depending on your needs. For example, for a public API that should be accessible from any origin, it might be necessary to allow '*'.
+
+### Cross-Origin-Opener-Policy (COOP)
 
 The HTTP `Cross-Origin-Opener-Policy` (COOP) response header allows you to ensure a top-level document does not share a browsing context group with cross-origin documents.
+
+This header works together with Cross-Origin-Embedder-Policy (COEP) and Cross-Origin-Resource-Policy (CORP) explained below.
+
+This mechanism protects against attacks like Spectre which can cross the security boundary established by Same Origin Policy (SOP) for resources in the same browsing context group.
+
+As this headers are very related to browsers, it may not make sense to be applied to REST APIs or clients that are not browsers.
 
 #### Recommendation
 
 Isolates the browsing context exclusively to same-origin documents.
 > `HTTP Cross-Origin-Opener-Policy: same-origin`
 
-### Cross-Origin-Resource-Policy
+### Cross-Origin-Embedder-Policy (COEP)
+
+The HTTP `Cross-Origin-Embedder-Policy` (COEP) response header prevents a document from loading any cross-origin resources that don't explicitly grant the document permission (using [CORP](#cross-origin-resource-policy) or CORS).
+
+- *NOTE*: Enabling this will block cross-origin resources not configured correctly from loading.
+
+#### Recommendation
+
+A document can only load resources from the same origin, or resources explicitly marked as loadable from another origin.
+> `Cross-Origin-Embedder-Policy: require-corp`
+
+- *NOTE*: you can bypass it for specific resources by adding the `crossorigin` attribute:
+- `<img src="https://thirdparty.com/img.png" crossorigin>`
+
+### Cross-Origin-Resource-Policy (CORP)
 
 The `Cross-Origin-Resource-Policy` (CORP) header allows you to control the set of origins that are empowered to include a resource. It is a robust defense against attacks like [Spectre](https://meltdownattack.com/), as it allows browsers to block a given response before it enters an attacker's process.
 
@@ -138,17 +166,18 @@ The `Cross-Origin-Resource-Policy` (CORP) header allows you to control the set o
 Limit current resource loading to the site and sub-domains only.
 > `Cross-Origin-Resource-Policy: same-site`
 
-### Cross-Origin-Embedder-Policy
+### Permissions-Policy (formerly Feature-Policy)
 
-The HTTP `Cross-Origin-Embedder-Policy` (COEP) response header prevents a document from loading any cross-origin resources that don't explicitly grant the document permission (using [CORP](#cross-origin-resource-policy) or CORS).
+Permissions-Policy allows you to control which origins can use which browser features, both in the top-level page and in embedded frames. For every feature controlled by Feature Policy, the feature is only enabled in the current document or frame if its origin matches the allowed list of origins. This means that you can configure your site to never allow the camera or microphone to be activated. This prevents that an injection, for example an XSS, enables the camera, the microphone, or other browser feature.
+
+More information here: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Permissions-Policy
 
 #### Recommendation
 
-A document can only load resources from the same origin, or resources explicitly marked as loadable from another origin.
-> `Cross-Origin-Embedder-Policy: require-corp`
+Set it and disable all the features that your site does not need or allow them only to the authorized domains:
+> `Permissions-Policy: geolocation=() camera=(), microphone=()`
 
-- *NOTE*: you can bypass it by adding the `crossorigin` attribute like below:
-- `<img src="https://thirdparty.com/img.png" crossorigin>`
+- *NOTE*: This example is disabling geolocation, camera, and microphone for all domains.
 
 ### FLoC (Federated Learning of Cohorts)
 
@@ -163,10 +192,14 @@ A site can declare that it does not want to be included in the user's list of si
 
 The `Server` header describes the software used by the origin server that handled the request — that is, the server that generated the response.
 
+This is not a security header, but how it is used is relevant for security.
+
 #### Recommendation
 
 Remove this header or set non-informative values.
 > `Server: webserver`
+
+- *NOTE*: Remember that attackers have other means of fingerprinting the server technology.
 
 ### X-Powered-By
 
@@ -175,6 +208,8 @@ The `X-Powered-By` header describes the technologies used by the webserver. This
 #### Recommendation
 
 Remove all `X-Powered-By` headers.
+
+- *NOTE*: Remember that attackers have other means of fingerprinting your tech stack.
 
 ### X-AspNet-Version
 
@@ -188,6 +223,8 @@ Disable sending this header. Add the following line in your `web.config` in the 
 <httpRuntime enableVersionHeader="false" />
 ```
 
+- *NOTE*: Remember that attackers have other means of fingerprinting your tech stack.
+
 ### X-AspNetMvc-Version
 
 Provides information about the .NET version.
@@ -200,6 +237,8 @@ Disable sending this header. To remove the `X-AspNetMvc-Version` header, add the
 MvcHandler.DisableMvcResponseHeader = true;
 ```
 
+- *NOTE*: Remember that attackers have other means of fingerprinting your tech stack.
+
 ### X-DNS-Prefetch-Control
 
 The `X-DNS-Prefetch-Control` HTTP response header controls DNS prefetching, a feature by which browsers proactively perform domain name resolution on both links that the user may choose to follow as well as URLs for items referenced by the document, including images, CSS, JavaScript, and so forth.
@@ -209,13 +248,17 @@ The `X-DNS-Prefetch-Control` HTTP response header controls DNS prefetching, a fe
 The default behavior of browsers is to perform DNS caching which is good for most websites.
 If you do not control links on your website, you might want to set `off` as a value to disable DNS prefetch to avoid leaking information to those domains.
 
-### Public-Key-Pins ❌
+> `X-DNS-Prefetch-Control: off`
+
+- *NOTE*: Do not rely in this functionality for anything production sensitive: it is not standard or fully supported and implementation may vary among browsers.
+
+### Public-Key-Pins (HPKP)
 
 The HTTP `Public-Key-Pins` response header is used to associate a specific cryptographic public key with a certain web server to decrease the risk of MITM attacks with forged certificates.
 
 #### Recommendation
 
-This header is deprecated. Use `Expect-CT` instead.
+This header is [obsolete](https://developer.mozilla.org/en-US/docs/Glossary/HPKP). Don't use it.
 
 ## Adding HTTP Headers in Different Technologies
 
