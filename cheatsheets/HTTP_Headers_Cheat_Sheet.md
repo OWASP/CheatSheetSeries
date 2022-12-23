@@ -12,7 +12,7 @@ In this cheat sheet, we will review all security-related HTTP headers, recommend
 
 The `X-Frame-Options` HTTP response header can be used to indicate whether or not a browser should be allowed to render a page in a `<frame>`, `<iframe>`, `<embed>` or `<object>`. Sites can use this to avoid [clickjacking](https://owasp.org/www-community/attacks/Clickjacking) attacks, by ensuring that their content is not embedded into other sites.
 
-Content Security Policy (CSP) frame-ancestors directive obsoletes X-Frame-Options for supporting browsers [source](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options).
+Content Security Policy (CSP) frame-ancestors directive obsoletes X-Frame-Options for supporting browsers ([source](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options)).
 
 X-Frame-Options header is only useful when the HTTP response where it is included has something to interact with (e.g. links, buttons). If the HTTP response is a redirect or an API returning JSON data, X-Frame-Options does not provide any security.
 
