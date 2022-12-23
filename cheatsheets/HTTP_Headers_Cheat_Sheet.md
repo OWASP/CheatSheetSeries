@@ -117,7 +117,7 @@ Content Security Policy is complex to configure and maintain. For an explanation
 
 ### Access-Control-Allow-Origin
 
-If you don't use this header, your site is protected by default by the Same Origin Policy (SOP). What this header does is relaxing this control in specified circumstances.
+If you don't use this header, your site is protected by default by the Same Origin Policy (SOP). What this header does is relax this control in specified circumstances.
 
 The `Access-Control-Allow-Origin` is a CORS (cross-origin resource sharing) header. This header indicates whether the response it is related to can be shared with requesting code from the given origin. In other words, if siteA requests a resource from siteB, siteB should indicate in its `Access-Control-Allow-Origin` header that siteA is allowed to fetch that resource, if not, the access is blocked due to Same Origin Policy (SOP).
 
