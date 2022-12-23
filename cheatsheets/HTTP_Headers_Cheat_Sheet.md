@@ -107,7 +107,7 @@ Do not use it. Mozilla [recommends](https://developer.mozilla.org/en-US/docs/Web
 
 ### Content-Security-Policy (CSP)
 
-Content Security Policy (CSP) is a security feature that is used to specify the origin of content that is allowed to be loaded on a website or in a web applicationis. It is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross-Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement to distribution of malware.
+Content Security Policy (CSP) is a security feature that is used to specify the origin of content that is allowed to be loaded on a website or in a web applications. It is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross-Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement to distribution of malware.
 
 - *NOTE*: This header is relevant to be applied in pages which can load and intepret scripts and code, but might be meaningless in the response of a REST API that returns content that is not going to be rendered.
 
