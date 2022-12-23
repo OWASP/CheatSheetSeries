@@ -103,7 +103,7 @@ The `Expect-CT` header lets sites opt-in to reporting of Certificate Transparenc
 
 #### Recommendation
 
-Not use it. Mozilla [recommends](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Expect-CT) avoiding it, and removing it from existing code if possible.
+Do not use it. Mozilla [recommends](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Expect-CT) avoiding it, and removing it from existing code if possible.
 
 ### Content-Security-Policy (CSP)
 
