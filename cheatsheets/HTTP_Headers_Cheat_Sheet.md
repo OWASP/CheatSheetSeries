@@ -46,7 +46,7 @@ This header is used to block browsers' [MIME type sniffing](https://developer.mo
 
 #### Recommendation
 
-Set the Content-Type header correctly through the site.
+Set the Content-Type header correctly throughout the site.
 
 > `X-Content-Type-Options: nosniff`
 
