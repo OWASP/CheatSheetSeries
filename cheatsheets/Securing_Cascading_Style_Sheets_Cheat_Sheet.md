@@ -53,10 +53,10 @@ Another option is to modify your CSS files to remove any identifying information
 
 Build-time and runtime tools also exist, which can be integrated to obfuscate your class names. This can reduce the chance of an attacker guessing the features of your application. Some examples:
 
-* [JSS](https://cssinjs.org) (CSS in JS) has a `minify` option which would generate class names such as `.c001`, `.c002`.
-* [CSS Modules](https://github.com/css-modules/css-modules) has a `modules` and `localIdentName` option, which functions similarly to JSS, but allows importing any .css file without major structural changes to your application.
-* [.Net Blazor CSS Isolation](https://learn.microsoft.com/en-us/aspnet/core/blazor/components/css-isolation) can be used to scope your CSS to the component it's used in, and results in selectors like `button.add[b-3xxtam6d07]`.
-* CSS libraries such as [Bootstrap](https://getbootstrap.com) and [Tailwind](https://tailwindcss.com) can reduce the need for specific CSS selectors as they provide a strong base theme to work from.
+- [JSS](https://cssinjs.org) (CSS in JS) has a `minify` option which would generate class names such as `.c001`, `.c002`.
+- [CSS Modules](https://github.com/css-modules/css-modules) has a `modules` and `localIdentName` option, which functions similarly to JSS, but allows importing any .css file without major structural changes to your application.
+- [.Net Blazor CSS Isolation](https://learn.microsoft.com/en-us/aspnet/core/blazor/components/css-isolation) can be used to scope your CSS to the component it's used in, and results in selectors like `button.add[b-3xxtam6d07]`.
+- CSS libraries such as [Bootstrap](https://getbootstrap.com) and [Tailwind](https://tailwindcss.com) can reduce the need for specific CSS selectors as they provide a strong base theme to work from.
 
 ### Defense Mechanism \#3
 
