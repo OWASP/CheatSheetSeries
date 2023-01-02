@@ -922,10 +922,10 @@
         
           <li class="md-nav__item">
   <a href="#expect-ct" class="md-nav__link">
-    Expect-CT
+    Expect-CT ❌
   </a>
   
-    <nav class="md-nav" aria-label="Expect-CT">
+    <nav class="md-nav" aria-label="Expect-CT ❌">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2172,10 +2172,10 @@
         
           <li class="md-nav__item">
   <a href="#expect-ct" class="md-nav__link">
-    Expect-CT
+    Expect-CT ❌
   </a>
   
-    <nav class="md-nav" aria-label="Expect-CT">
+    <nav class="md-nav" aria-label="Expect-CT ❌">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2605,14 +2605,11 @@ The absence of this header might cause browsers to transform non-executable cont
 <p><code>Strict-Transport-Security: max-age=63072000; includeSubDomains; preload</code></p>
 </blockquote>
 <p>Please checkout <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html">HTTP Strict Transport Security Cheat Sheet</a> for more information.</p>
-<h3 id="expect-ct">Expect-CT<a class="headerlink" href="#expect-ct" title="Permanent link">&para;</a></h3>
+<h3 id="expect-ct">Expect-CT ❌<a class="headerlink" href="#expect-ct" title="Permanent link">&para;</a></h3>
 <p>The <code>Expect-CT</code> header lets sites opt-in to reporting of Certificate Transparency (CT) requirements. Given that mainstream clients now require CT qualification, the only remaining value is reporting such occurrences to the nominated report-uri value in the header. The header is now less about enforcement and more about detection/reporting.</p>
-<p>Please note Mozilla states that <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Expect-CT">this header will be obsolete</a> in June 2021.</p>
+<p>Please note that according to Mozilla, <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Expect-CT">this header is deprecated</a> since June 2021.</p>
 <h4 id="recommendation_7">Recommendation<a class="headerlink" href="#recommendation_7" title="Permanent link">&para;</a></h4>
-<p>Set Certificate Transparency so user agents report Expect-CT failures.</p>
-<blockquote>
-<p><code>Expect-CT: max-age=604800, report-uri="https://foo.example/report"</code></p>
-</blockquote>
+<p>Avoid using this header and update existing code by removing it.</p>
 <h3 id="content-security-policy">Content-Security-Policy<a class="headerlink" href="#content-security-policy" title="Permanent link">&para;</a></h3>
 <p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross-Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement to distribution of malware.</p>
 <h4 id="recommendation_8">Recommendation<a class="headerlink" href="#recommendation_8" title="Permanent link">&para;</a></h4>
@@ -2687,7 +2684,7 @@ If you do not control links on your website, you might want to set <code>off</co
 <h3 id="public-key-pins">Public-Key-Pins ❌<a class="headerlink" href="#public-key-pins" title="Permanent link">&para;</a></h3>
 <p>The HTTP <code>Public-Key-Pins</code> response header is used to associate a specific cryptographic public key with a certain web server to decrease the risk of MITM attacks with forged certificates.</p>
 <h4 id="recommendation_19">Recommendation<a class="headerlink" href="#recommendation_19" title="Permanent link">&para;</a></h4>
-<p>This header is deprecated. Use <code>Expect-CT</code> instead.</p>
+<p>This header is deprecated and should not be used anymore.</p>
 <h2 id="adding-http-headers-in-different-technologies">Adding HTTP Headers in Different Technologies<a class="headerlink" href="#adding-http-headers-in-different-technologies" title="Permanent link">&para;</a></h2>
 <h3 id="php">PHP<a class="headerlink" href="#php" title="Permanent link">&para;</a></h3>
 <p>The sample code below sets the <code>X-Frame-Options</code> header in PHP.</p>
