@@ -60,8 +60,7 @@ The following schema shows the target approach:
 
 ![Overview](../assets/Error_Handling_Cheat_Sheet_Overview.png)
 
-As most recent application topologies are *API based*, we assume in this article that the backend exposes only a REST API and does not contain any user interface content. The application should try and exhaustively cover all possible failure modes and use 5xx errors only to indicate responses to requests that it cannot fulfill, but not provide any content as part of the response that would reveal implementation details.
-
+As most recent application topologies are *API based*, we assume in this article that the backend exposes only a REST API and does not contain any user interface content. The application should try and exhaustively cover all possible failure modes and use 5xx errors only to indicate responses to requests that it cannot fulfill, but not provide any content as part of the response that would reveal implementation details. For that, [RFC 7807 - Problem Details for HTTP APIs](https://www.rfc-editor.org/rfc/rfc7807) defines a document format.  
 For the error logging operation itself, the [logging cheat sheet](Logging_Cheat_Sheet.md) should be used. This article focuses on the error handling part.
 
 ## Proposition
@@ -113,42 +112,32 @@ response.setStatus(500);
 
 ### Java SpringMVC/SpringBoot web application
 
-With [SpringMVC](https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html) or [SpringBoot](https://spring.io/projects/spring-boot), you can define a global error handler by implementing the following class in your project.
+With [SpringMVC](https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html) or [SpringBoot](https://spring.io/projects/spring-boot), you can define a global error handler by implementing the following class in your project. Spring Framework 6 introduced [the problem details based on RFC 7807](https://github.com/spring-projects/spring-framework/issues/27052).
 
-We indicate to the handler, via the annotation [@ExceptionHandler](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/ExceptionHandler.html), to act when any exception extending the class *java.lang.Exception* is thrown by the application.
+We indicate to the handler, via the annotation [@ExceptionHandler](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/ExceptionHandler.html), to act when any exception extending the class *java.lang.Exception* is thrown by the application. We also use the [ProblemDetail class](https://docs.spring.io/spring-framework/docs/6.0.0/javadoc-api/org/springframework/http/ProblemDetail.html) to create the response object.
 
 ``` java
-import net.minidev.json.JSONObject;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 /**
  * Global error handler in charge of returning a generic response in case of unexpected error situation.
  */
-@ControllerAdvice
-public class RestResponseEntityExceptionHandler {
+@RestControllerAdvice
+public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = {Exception.class})
-    public ResponseEntity<Object> handleGlobalError(RuntimeException exception, WebRequest request) {
+    public ProblemDetail handleGlobalError(RuntimeException exception, WebRequest request) {
         //Log the exception via the content of the parameter named "exception"
         //...
-        //We build a generic response with a JSON format because we are in a REST API app context
-        //We also add an HTTP response header to indicate to the client app that the response is an error
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.setContentType(MediaType.APPLICATION_JSON);
-        responseHeaders.set("X-ERROR", "true");
-        JSONObject responseBody = new JSONObject();
-        responseBody.put("message", "An error occur, please retry");
         //Note that we're using an internal server error response
         //In some cases it may be prudent to return 4xx error codes, if we have misbehaving clients
-        ResponseEntity<JSONObject> response = new ResponseEntity<>(responseBody, responseHeaders,
-                                                                   HttpStatus.INTERNAL_SERVER_ERROR);
-        return (ResponseEntity) response;
+        //By specification, the content-type can be "application/problem+json" or "application/problem+xml"
+        return ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, "An error occur, please retry");
     }
 }
 ```

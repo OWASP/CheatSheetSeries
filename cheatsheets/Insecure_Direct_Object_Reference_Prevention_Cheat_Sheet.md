@@ -2,19 +2,19 @@
 
 ## Introduction
 
-**I**nsecure **D**irect **O**bject **R**eference (called **IDOR** from here) occurs when a application exposes a reference to an internal implementation object. Using this way, it reveals the real identifier and format/pattern used of the element in the storage backend side. The most common example of it (although is not limited to this one) is a record identifier in a storage system (database, filesystem and so on).
+**I**nsecure **D**irect **O**bject **R**eference (called **IDOR** from here) occurs when a application exposes a reference to an internal implementation object. Using this method, an IDOR reveals the real identifier and format or pattern used of the element in the storage backend. The most common example is of a record identifier in a storage system such as a database or filesystem, though these are not the only examples. 
 
-IDOR is referenced in element [A4](https://wiki.owasp.org/index.php/Top_10_2013-A4-Insecure_Direct_Object_References) of the OWASP Top 10 in the 2013 edition.
+IDOR is referenced in element [A4](https://wiki.owasp.org/index.php/Top_10_2013-A4-Insecure_Direct_Object_References) of the OWASP Top 10, in the 2013 edition.
 
 ## Context
 
-IDOR do not bring a direct security issue because, by itself, it reveals only the format/pattern used for the object identifier. IDOR bring, depending on the format/pattern in place, a capacity for the attacker to mount a enumeration attack in order to try to probe access to the associated objects.
+IDOR does not create a direct security issue itself because, by itself, it reveals only the format or pattern used for the object identifier. However, IDOR brings, depending on the format or pattern in place, a capacity for the attacker to mount an enumeration attack, allowing the attacker to try to probe access to the associated objects.
 
-Enumeration attack can be described in the way in which the attacker build a collection of valid identifiers using the discovered format/pattern and test them against the application.
+Enumeration attacks can be described in the way in which the attacker builds a collection of valid identifiers using the discovered format or pattern, and tests them against the application.
 
 **For example:**
 
-Imagine an HR application exposing a service accepting employee ID in order to return the employee information and for which the format/pattern of the employee ID is the following:
+Imagine an HR application exposing a service accepting employee IDs in order to return employee information, and for which the format or pattern of the employee ID is the following:
 
 ```text
 EMP-00000
@@ -23,9 +23,9 @@ EMP-00002
 ...
 ```
 
-Based on this, an attacker can build a collection of valid ID from *EMP-00000* to *EMP-99999*.
+Based on this, an attacker can build a collection of valid IDs from *EMP-00000* to *EMP-99999*.
 
-To be exploited, an IDOR issue must be combined with an [Access Control](Access_Control_Cheat_Sheet.md) issue because it's the Access Control issue that "allows" the attacker to access the object for which they have guessed the identifier through the enumeration attack.
+To be exploited, an IDOR issue must be combined with an [Access Control](Access_Control_Cheat_Sheet.md) issue, because it's the Access Control issue that "allows" the attacker to access the object for which they have guessed the identifier through the enumeration attack.
 
 ## Additional remarks
 
@@ -45,18 +45,18 @@ But, suppose a user has a list of accounts, like a bank where database ID 23456 
 
 ## Objective
 
-This article propose an idea to prevent the exposure of real identifier in a simple, portable and stateless way because the proposal need to handle Session and Session-less application topologies.
+This article proposes an idea to prevent the exposure of real identifiers in a simple, portable, and stateless way because the proposal needs to handle session and session-less application topologies.
 
 ## Proposition
 
-The proposal use a hash to replace the direct identifier. This hash is salted with a value defined at application level in order support topology in which the application is deployed in multi-instances mode (case for production).
+The proposal uses a hash to replace the direct identifier. This hash is salted with a value defined at the application level to support topologies in which the application is deployed in multi-instance mode, such as in production environments.
 
-Using a hash allow the following properties:
+Using a hash enables the following properties:
 
-- Do not require to maintain a mapping table (real ID vs front end ID) in user session or application level cache.
-- Makes creation of a collection a enumeration values more difficult to achieve because, even if attacker can guess the hash algorithm from the ID size, it cannot reproduce value due to the salt that is not tied to the hidden value.
+- Allows the absence of a mapping table—-real ID vs front-end ID—-in user session or application level caches.
+- Makes creation of the collection of enumeration values more difficult to achieve because, even if an attacker guesses the hash algorithm from the ID size, he cannot reproduce value, thanks to the salt.
 
-This is the implementation of the utility class that generate the identifier to use for exchange with the front end side:
+This is the implementation of the utility class that generates the the identifier to use for an exchange with the front-end:
 
 ``` java
 import javax.xml.bind.DatatypeConverter;

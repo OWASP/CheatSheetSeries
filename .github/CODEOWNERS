@@ -1,5 +1,29 @@
 # See https://help.github.com/en/articles/about-code-owners
+
 # These owners will be the default owners for everything in the repo.
 *       @mackowski @jmanico
+
 # commjoen have full access to Secrets_Management_CheatSheet
 * /cheatsheets_draft/Secrets_Management_CheatSheet.md @commjoen 
+
+# Kevin W. Wall (kwwall) 
+/cheatsheets/Authentication_Cheat_Sheet.md kevin.w.wall@gmail.com @mackowski @jmanico
+/cheatsheets/Authorization_Cheat_Sheet.md @kwwall @mackowski @jmanico
+/cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.md @kwwall @mackowski @jmanico
+/cheatsheets/Choosing_and_Using_Security_Questions_Cheat_Sheet.md @kwwall @mackowski @jmanico
+/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md @kwwall @mackowski @jmanico
+/cheatsheets/Clickjacking_Defense_Cheat_Sheet.md @kwwall @mackowski @jmanico
+/cheatsheets/Cryptographic_Storage_Cheat_Sheet.md @kwwall @mackowski @jmanico
+/cheatsheets/Deserialization_Cheat_Sheet.md @kwwall @mackowski @jmanico
+/cheatsheets/Forgot_Password_Cheat_Sheet.md @kwwall @mackowski @jmanico
+/cheatsheets/JAAS_Cheat_Sheet.md @kwwall @mackowski @jmanico
+/cheatsheets/Key_Management_Cheat_Sheet.md @kwwall @mackowski @jmanico
+/cheatsheets/Logging_Cheat_Sheet.md @kwwall @mackowski @jmanico
+/cheatsheets/Mass_Assignment_Cheat_Sheet.md @kwwall @mackowski @jmanico
+/cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.md @kwwall @mackowski @jmanico
+/cheatsheets/Password_Storage_Cheat_Sheet.md @kwwall @mackowski @jmanico
+/cheatsheets/Pinning_Cheat_Sheet.md @kwwall @mackowski @jmanico
+/cheatsheets/Session_Management_Cheat_Sheet.md @kwwall @mackowski @jmanico
+/cheatsheets/SAML_Security_Cheat_Sheet.md @kwwall @mackowski @jmanico
+/cheatsheets/Secrets_Management_Cheat_Sheet.md @kwwall @mackowski @jmanico
+/cheatsheets/TLS_Cipher_String_Cheat_Sheet.md @kwwall @mackowski @jmanico

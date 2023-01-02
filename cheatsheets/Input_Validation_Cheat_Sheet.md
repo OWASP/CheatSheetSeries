@@ -60,6 +60,9 @@ The primary means of input validation for free-form text input should be:
 References:
 
 - [Input validation of free-form Unicode text in Python](https://web.archive.org/web/20170717174432/https://ipsec.pl/python/2017/input-validation-free-form-unicode-text-python.html/)
+- [UAX 31: Unicode Identifier and Pattern Syntax](https://unicode.org/reports/tr31/)
+- [UAX 15: Unicode Normalization Forms](https://www.unicode.org/reports/tr15/)
+- [UAX 24: Unicode Script Property](https://unicode.org/reports/tr24/)
 
 ### Regular expressions
 
@@ -147,7 +150,7 @@ Check the [File Upload Cheat Sheet](File_Upload_Cheat_Sheet.md).
 ### Upload Storage
 
 - Use a new filename to store the file on the OS. Do not use any user controlled text for this filename or for the temporary filename.
-- When the file is uploaded to web, it's suggested to rename the file on storage. For example, the uploaded filename is *test.JPG*, rename it to *JAI1287uaisdjhf.JPG* with a random filename. The purpose of doing it to prevent the risks of direct file access and ambiguous filename to evalide the filter, such as `test.jpg;.asp or /../../../../../test.jpg`.
+- When the file is uploaded to web, it's suggested to rename the file on storage. For example, the uploaded filename is *test.JPG*, rename it to *JAI1287uaisdjhf.JPG* with a random filename. The purpose of doing it to prevent the risks of direct file access and ambiguous filename to evade the filter, such as `test.jpg;.asp or /../../../../../test.jpg`.
 - Uploaded files should be analyzed for malicious content (anti-malware, static analysis, etc).
 - The file path should not be able to specify by client side. It's decided by server side.
 

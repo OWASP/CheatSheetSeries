@@ -110,7 +110,7 @@ The following sections gives some further recommendations for specific database 
 
 ### PostgreSQL
 
-- See the [PostgreSQL Server Setup and Operation documentation](https://www.postgresql.org/docs/12/runtime.html) and the older [Security documentation](https://www.postgresql.org/docs/7.0/security.htm).
+- See the [PostgreSQL Server Setup and Operation documentation](https://www.postgresql.org/docs/current/runtime.html) and the older [Security documentation](https://www.postgresql.org/docs/7.0/security.htm).
 
 ### MongoDB
 

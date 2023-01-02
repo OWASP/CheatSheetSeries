@@ -7,9 +7,9 @@
 
 To propose changes to the existing cheat sheets or the creation of a new one, the process is as follows:
 
-1. Create an new [issue](https://github.com/OWASP/CheatSheetSeries/issues/new/choose) using either:
+1. Create a new [issue](https://github.com/OWASP/CheatSheetSeries/issues/new/choose) using either:
    - The `new_cheatsheet_proposal` template if you want to propose a new cheat sheet.
-   - The `update_cheatsheet_proposal` template if you want to modify a existing cheat sheet.
+   - The `update_cheatsheet_proposal` template if you want to modify an existing cheat sheet.
 2. Once the issue has been discussed and approved:
     1. Fork and clone this repository.
     2. Either:

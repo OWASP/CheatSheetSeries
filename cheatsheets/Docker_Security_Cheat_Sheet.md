@@ -225,7 +225,6 @@ To detect containers with known vulnerabilities - scan images using static analy
 - Commercial
     - [Snyk](https://snyk.io/) **(open source and free option available)**
     - [anchore](https://anchore.com/opensource/) **(open source and free option available)**
-    - [Aqua Security's MicroScanner](https://github.com/aquasecurity/microscanner) **(free option available for rate-limited number of scans)**
     - [JFrog XRay](https://jfrog.com/xray/)
     - [Qualys](https://www.qualys.com/apps/container-security/)
 

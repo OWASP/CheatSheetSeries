@@ -8,14 +8,14 @@ on:
 
 jobs:
   lint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     env:
       CI: true
     steps:
     - name: Setup Action
-      uses: actions/checkout@v2.3.4
+      uses: actions/checkout@v3
     - name: Setup Node
-      uses: actions/setup-node@v2.1.5
+      uses: actions/setup-node@v3
       with:
         node-version: 12.x
     - name: Install dependencies

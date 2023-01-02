@@ -97,7 +97,7 @@ The HTTP `Strict-Transport-Security` response header (often abbreviated as HSTS)
 
 Please checkout [HTTP Strict Transport Security Cheat Sheet](HTTP_Strict_Transport_Security_Cheat_Sheet.md) for more information.
 
-### Expect-CT
+### Expect-CT ❌
 
 The `Expect-CT` header lets sites opt-in to reporting of Certificate Transparency (CT) requirements. Given that mainstream clients now require CT qualification, the only remaining value is reporting such occurrences to the nominated report-uri value in the header. The header is now less about enforcement and more about detection/reporting.
 
@@ -258,7 +258,7 @@ The HTTP `Public-Key-Pins` response header is used to associate a specific crypt
 
 #### Recommendation
 
-This header is [obsolete](https://developer.mozilla.org/en-US/docs/Glossary/HPKP). Don't use it.
+This header is deprecated and should not be used anymore.
 
 ## Adding HTTP Headers in Different Technologies
 
