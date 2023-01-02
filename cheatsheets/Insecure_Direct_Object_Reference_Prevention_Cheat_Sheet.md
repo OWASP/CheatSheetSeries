@@ -2,7 +2,7 @@
 
 ## Introduction
 
-**I**nsecure **D**irect **O**bject **R**eference (called **IDOR** from here) occurs when a application exposes a reference to an internal implementation object. Using this method, an IDOR reveals the real identifier and format or pattern used of the element in the storage backend. The most common example is of a record identifier in a storage system such as a database or filesystem, though these are not the only examples. 
+**I**nsecure **D**irect **O**bject **R**eference (called **IDOR** from here) occurs when a application exposes a reference to an internal implementation object. Using this method, an IDOR reveals the real identifier and format or pattern used of the element in the storage backend. The most common example is of a record identifier in a storage system such as a database or filesystem, though these are not the only examples.
 
 IDOR is referenced in element [A4](https://wiki.owasp.org/index.php/Top_10_2013-A4-Insecure_Direct_Object_References) of the OWASP Top 10, in the 2013 edition.
 
