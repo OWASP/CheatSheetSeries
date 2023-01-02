@@ -236,6 +236,32 @@ Logging functionality and systems must be included in code review, application t
 - Verify access controls on the event log data
 - If log data is utilized in any action against users (e.g. blocking access, account lock-out), ensure this cannot be used to cause denial of service (DoS) of other users
 
+### Network architecture
+
+As an example, the diagram below shows a service that provides business functionality to customers. We recommend creating a centralized system for collecting logs. There may be many such services, but all of them must securely collect logs in a centralized system.
+
+Applications of this business service are located in network segments:
+- 'FRONTEND 1' aka DMZ (UI)
+- 'MIDDLEWARE 1' (business application - service core)
+- 'BACKEND 1' (service database)
+
+The service responsible for collecting IT events, including security events, is located in the following segments:
+- 'BACKEND 2' (log storage)
+- 'MIDDLEWARE 3' - 2 applications:
+     - log loader application that download log from storage, pre-processes and transver to UI
+     - log collector that accepts logs from business applications, other infrastructure, cloud applications and saves in log storage
+- 'FRONTEND 2' (UI for viewing business service event logs)
+- 'FRONTEND 3' (applications that receive logs from cloud applications and transfer logs to log collector)
+    - It is allowed to combine the functionality of two applications in one
+
+For example, all external requests from users go through the API management service, see application in 'MIDDLEWARE 2' segment.
+
+![MIDDLEWARE](https://github.com/OWASP/CheatSheetSeries/blob/master/assets/Logging_Cheat_Sheet.drawio.png)
+
+As you can see in the image above, at the network level, the processes of saving and downloading logs require opening different network accesses (ports), arrows are highlighted in different colors. Also, saving and downloading are performed by different applications.
+
+Full network segmentation cheat sheet by [sergiomarotco](https://github.com/sergiomarotco): [link](https://github.com/sergiomarotco/Network-segmentation-cheat-sheet)
+
 ## Deployment and operation
 
 ### Release
