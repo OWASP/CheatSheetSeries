@@ -241,11 +241,13 @@ Logging functionality and systems must be included in code review, application t
 As an example, the diagram below shows a service that provides business functionality to customers. We recommend creating a centralized system for collecting logs. There may be many such services, but all of them must securely collect logs in a centralized system.
 
 Applications of this business service are located in network segments:
+
 - 'FRONTEND 1' aka DMZ (UI)
 - 'MIDDLEWARE 1' (business application - service core)
 - 'BACKEND 1' (service database)
 
 The service responsible for collecting IT events, including security events, is located in the following segments:
+
 - 'BACKEND 2' (log storage)
 - 'MIDDLEWARE 3' - 2 applications:
      - log loader application that download log from storage, pre-processes and transver to UI
