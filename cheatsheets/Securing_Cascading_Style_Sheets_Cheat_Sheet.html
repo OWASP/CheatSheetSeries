@@ -1263,8 +1263,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#defense-mechanism" class="md-nav__link">
-    Defense Mechanism
+  <a href="#defense-mechanism-1" class="md-nav__link">
+    Defense Mechanism #1
   </a>
   
 </li>
@@ -1603,8 +1603,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#defense-mechanism" class="md-nav__link">
-    Defense Mechanism
+  <a href="#defense-mechanism-1" class="md-nav__link">
+    Defense Mechanism #1
   </a>
   
 </li>
@@ -1675,16 +1675,21 @@
 <h3 id="risk-2">Risk #2<a class="headerlink" href="#risk-2" title="Permanent link">&para;</a></h3>
 <p>Let's say, Santhosh has this habit of writing the descriptive selector names like <code>.profileSettings,</code> <code>exportUserData,</code> <code>.changePassword,</code> <code>.oldPassword,</code> <code>.newPassword,</code> <code>.confirmNewPassword</code> etc. Good programmers like to keep code readable and usable by other Code Reviewers of the team. The risk is that attackers could map these selectors to actual features of a web application.</p>
 <h2 id="defensive-mechanisms-to-mitigate-attackers-motivation">Defensive Mechanisms to Mitigate Attacker's Motivation<a class="headerlink" href="#defensive-mechanisms-to-mitigate-attackers-motivation" title="Permanent link">&para;</a></h2>
-<h3 id="defense-mechanism">Defense Mechanism<a class="headerlink" href="#defense-mechanism" title="Permanent link">&para;</a></h3>
+<h3 id="defense-mechanism-1">Defense Mechanism #1<a class="headerlink" href="#defense-mechanism-1" title="Permanent link">&para;</a></h3>
 <p>As a CSS Coder / Programmer, always keep the CSS isolated by access control level. By this, it means <strong>Student</strong> will have a different CSS file called as <code>StudentStyling.CSS</code> while <strong>Administrator</strong> has <code>AdministratorStyling.CSS</code> and so on. Make sure these <code>*.CSS</code> files are accessed only for a user with the proper access control level. Only users with the proper access control level should be able to access their <code>*.CSS</code> file.</p>
 <p>If an authenticated user with the <strong>Student</strong> Role tries to access <code>AdministratorStyling.CSS</code> through forced browsing, an alert that an intrusion is occurring should be recorded.</p>
 <h3 id="defense-mechanism-2">Defense Mechanism #2<a class="headerlink" href="#defense-mechanism-2" title="Permanent link">&para;</a></h3>
-<p>Being a programmer or a tester, take care of the naming conventions of your CSS (Cascading Style Sheet) Selectors. Obfuscate the selector names in such a fashion that attackers are not informed what a specific selector is linking to.</p>
-<p>Example: CSS Selectors for <code>addUser,</code> <code>addAdmin,</code> <code>profileSettings,</code> <code>changePassword</code> could be named <code>aHj879JK,</code> <code>bHjsU,</code> <code>ahkrrE,</code> <code>lOiksn</code> respectively. These names could be randomly generated per user as well.</p>
-<p>This <a href="https://www.npmjs.com/package/rename-css-selectors">NPM package</a> can be used to perform the renaming of the CSS selector.</p>
+<p>Another option is to modify your CSS files to remove any identifying information. As a general rule, it's recommended that your website have a consistent style between pages, and it's best to write your general CSS rules in such a way that they apply across mutliple pages. This reduces the need for specific selectors in the first place. Furthermore, it's often possible to create CSS selectors that target specific HTML elements without using IDs or class names. For example, <code>#UserPage .Toolbar .addUserButton</code> could be rewritten to something more obscure such as <code>#page_u header button:first-of-type</code>.</p>
+<p>Build-time and runtime tools also exist, which can be integrated to obfuscate your class names. This can reduce the chance of an attacker guessing the features of your application. Some examples:</p>
+<ul>
+<li><a href="https://cssinjs.org">JSS</a> (CSS in JS) has a <code>minify</code> option which would generate class names such as <code>.c001</code>, <code>.c002</code>.</li>
+<li><a href="https://github.com/css-modules/css-modules">CSS Modules</a> has a <code>modules</code> and <code>localIdentName</code> option, which functions similarly to JSS, but allows importing any .css file without major structural changes to your application.</li>
+<li><a href="https://learn.microsoft.com/en-us/aspnet/core/blazor/components/css-isolation">.Net Blazor CSS Isolation</a> can be used to scope your CSS to the component it's used in, and results in selectors like <code>button.add[b-3xxtam6d07]</code>.</li>
+<li>CSS libraries such as <a href="https://getbootstrap.com">Bootstrap</a> and <a href="https://tailwindcss.com">Tailwind</a> can reduce the need for specific CSS selectors as they provide a strong base theme to work from.</li>
+</ul>
 <h3 id="defense-mechanism-3">Defense Mechanism #3<a class="headerlink" href="#defense-mechanism-3" title="Permanent link">&para;</a></h3>
 <p>Web applications that allow users to author content via HTML input could be vulnerable to malicious use of CSS. Uploaded HTML could use styles that are allowed by the web application but could be used for purposes other than intended which could lead to security risks.</p>
-<p>Example: You can read about how <a href="https://www.scmagazineuk.com/style-sheet-vulnerability-allowed-attacker-hijack-linkedin-pages/article/1479529">LinkedIn</a> had a vulnerability which allowed malicious use of CSS that lead to the authoring of a page where the entire page was clickable including overwriting LinkedIn's standard navigation elements.</p>
+<p>Example: You can read about how <a href="https://www.scmagazine.com/news/vulnerability-management/style-sheet-vulnerability-allowed-attacker-to-hijack-linkedin-pages">LinkedIn</a> had a vulnerability which allowed malicious use of CSS to execute a <a href="https://owasp.org/www-community/attacks/Clickjacking">Clickjacking</a> attack. This caused the document to enter a state where clicking anywhere on the page would result in loading a potentially malicious website. You can read more about mitigating clickjacking attacks <a href="Clickjacking_Defense_Cheat_Sheet.html">here</a>.</p>
 
 
 
