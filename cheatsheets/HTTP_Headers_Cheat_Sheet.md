@@ -31,7 +31,7 @@ WARNING: Even though this header can protect users of older web browsers that do
 
 #### Recommendation
 
-Use a Content Security Policy (CSP) that disables the use of inline JavaScript ('unsafe-inline').
+Use a Content Security Policy (CSP) that disables the use of inline JavaScript.
 
 Do not set this header or explicitly turn it off.
 > `X-XSS-Protection: 0`
@@ -170,7 +170,7 @@ Limit current resource loading to the site and sub-domains only.
 
 Permissions-Policy allows you to control which origins can use which browser features, both in the top-level page and in embedded frames. For every feature controlled by Feature Policy, the feature is only enabled in the current document or frame if its origin matches the allowed list of origins. This means that you can configure your site to never allow the camera or microphone to be activated. This prevents that an injection, for example an XSS, enables the camera, the microphone, or other browser feature.
 
-More information here: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Permissions-Policy
+More information: [Permissions-Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Permissions-Policy)
 
 #### Recommendation
 
