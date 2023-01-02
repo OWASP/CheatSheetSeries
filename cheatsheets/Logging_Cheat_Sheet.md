@@ -250,8 +250,8 @@ The service responsible for collecting IT events, including security events, is 
 
 - 'BACKEND 2' (log storage)
 - 'MIDDLEWARE 3' - 2 applications:
-     - log loader application that download log from storage, pre-processes and transver to UI
-     - log collector that accepts logs from business applications, other infrastructure, cloud applications and saves in log storage
+    - log loader application that download log from storage, pre-processes and transver to UI
+    - log collector that accepts logs from business applications, other infrastructure, cloud applications and saves in log storage
 - 'FRONTEND 2' (UI for viewing business service event logs)
 - 'FRONTEND 3' (applications that receive logs from cloud applications and transfer logs to log collector)
     - It is allowed to combine the functionality of two applications in one
