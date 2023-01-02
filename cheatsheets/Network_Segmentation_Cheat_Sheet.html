@@ -10,20 +10,20 @@
       
       
       
-        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Network_Segmentation_Cheat_Sheet.html">
       
       
-        <link rel="prev" href="Input_Validation_Cheat_Sheet.html">
+        <link rel="prev" href="NPM_Security_Cheat_Sheet.html">
       
       
-        <link rel="next" href="JAAS_Cheat_Sheet.html">
+        <link rel="next" href="NodeJS_Docker_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
       <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.0">
     
     
       
-        <title>Insecure Direct Object Reference Prevention - OWASP Cheat Sheet Series</title>
+        <title>Network Segmentation - OWASP Cheat Sheet Series</title>
       
     
     
@@ -75,7 +75,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#insecure-direct-object-reference-prevention-cheat-sheet" class="md-skip">
+        <a href="#network-segmentation-cheat-sheet" class="md-skip">
           Skip to content
         </a>
       
@@ -107,7 +107,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Insecure Direct Object Reference Prevention
+              Network Segmentation
             
           </span>
         </div>
@@ -814,87 +814,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Insecure Direct Object Reference Prevention
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html" class="md-nav__link">
         Insecure Direct Object Reference Prevention
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    Introduction
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#context" class="md-nav__link">
-    Context
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#additional-remarks" class="md-nav__link">
-    Additional remarks
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#objective" class="md-nav__link">
-    Objective
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#proposition" class="md-nav__link">
-    Proposition
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sources-of-the-prototype" class="md-nav__link">
-    Sources of the prototype
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1086,11 +1010,181 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="Network_Segmentation_Cheat_Sheet.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Network Segmentation
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="Network_Segmentation_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
         Network Segmentation
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#content" class="md-nav__link">
+    Content
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#schematic-symbols" class="md-nav__link">
+    Schematic symbols
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#three-layer-network-architecture" class="md-nav__link">
+    Three-layer network architecture
+  </a>
+  
+    <nav class="md-nav" aria-label="Three-layer network architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#frontend" class="md-nav__link">
+    FRONTEND
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#middleware" class="md-nav__link">
+    MIDDLEWARE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backend" class="md-nav__link">
+    BACKEND
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-of-three-layer-network-architecture" class="md-nav__link">
+    Example of Three-layer network architecture
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interservice-interaction" class="md-nav__link">
+    Interservice interaction
+  </a>
+  
+    <nav class="md-nav" aria-label="Interservice interaction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#many-applications-on-the-same-network" class="md-nav__link">
+    Many applications on the same network
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-security-policy" class="md-nav__link">
+    Network security policy
+  </a>
+  
+    <nav class="md-nav" aria-label="Network security policy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#examples-of-individual-policy-provisions" class="md-nav__link">
+    Examples of individual policy provisions
+  </a>
+  
+    <nav class="md-nav" aria-label="Examples of individual policy provisions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#permissions-for-cicd" class="md-nav__link">
+    Permissions for CI/CD
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#secure-logging" class="md-nav__link">
+    Secure logging
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#permissions-for-monitoring-systems" class="md-nav__link">
+    Permissions for monitoring systems
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#useful-links" class="md-nav__link">
+    Useful links
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1570,36 +1664,130 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#context" class="md-nav__link">
-    Context
+  <a href="#content" class="md-nav__link">
+    Content
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#additional-remarks" class="md-nav__link">
-    Additional remarks
+  <a href="#schematic-symbols" class="md-nav__link">
+    Schematic symbols
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#objective" class="md-nav__link">
-    Objective
+  <a href="#three-layer-network-architecture" class="md-nav__link">
+    Three-layer network architecture
   </a>
+  
+    <nav class="md-nav" aria-label="Three-layer network architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#frontend" class="md-nav__link">
+    FRONTEND
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#middleware" class="md-nav__link">
+    MIDDLEWARE
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backend" class="md-nav__link">
+    BACKEND
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-of-three-layer-network-architecture" class="md-nav__link">
+    Example of Three-layer network architecture
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#proposition" class="md-nav__link">
-    Proposition
+  <a href="#interservice-interaction" class="md-nav__link">
+    Interservice interaction
   </a>
+  
+    <nav class="md-nav" aria-label="Interservice interaction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#many-applications-on-the-same-network" class="md-nav__link">
+    Many applications on the same network
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#sources-of-the-prototype" class="md-nav__link">
-    Sources of the prototype
+  <a href="#network-security-policy" class="md-nav__link">
+    Network security policy
+  </a>
+  
+    <nav class="md-nav" aria-label="Network security policy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#examples-of-individual-policy-provisions" class="md-nav__link">
+    Examples of individual policy provisions
+  </a>
+  
+    <nav class="md-nav" aria-label="Examples of individual policy provisions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#permissions-for-cicd" class="md-nav__link">
+    Permissions for CI/CD
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#secure-logging" class="md-nav__link">
+    Secure logging
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#permissions-for-monitoring-systems" class="md-nav__link">
+    Permissions for monitoring systems
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#useful-links" class="md-nav__link">
+    Useful links
   </a>
   
 </li>
@@ -1623,167 +1811,116 @@
 
 
 
-<h1 id="insecure-direct-object-reference-prevention-cheat-sheet">Insecure Direct Object Reference Prevention Cheat Sheet<a class="headerlink" href="#insecure-direct-object-reference-prevention-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h1 id="network-segmentation-cheat-sheet">Network segmentation Cheat Sheet<a class="headerlink" href="#network-segmentation-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p><strong>I</strong>nsecure <strong>D</strong>irect <strong>O</strong>bject <strong>R</strong>eference (called <strong>IDOR</strong> from here) occurs when a application exposes a reference to an internal implementation object. Using this method, an IDOR reveals the real identifier and format or pattern used of the element in the storage backend. The most common example is of a record identifier in a storage system such as a database or filesystem, though these are not the only examples.</p>
-<p>IDOR is referenced in element <a href="https://wiki.owasp.org/index.php/Top_10_2013-A4-Insecure_Direct_Object_References">A4</a> of the OWASP Top 10, in the 2013 edition.</p>
-<h2 id="context">Context<a class="headerlink" href="#context" title="Permanent link">&para;</a></h2>
-<p>IDOR does not create a direct security issue itself because, by itself, it reveals only the format or pattern used for the object identifier. However, IDOR brings, depending on the format or pattern in place, a capacity for the attacker to mount an enumeration attack, allowing the attacker to try to probe access to the associated objects.</p>
-<p>Enumeration attacks can be described in the way in which the attacker builds a collection of valid identifiers using the discovered format or pattern, and tests them against the application.</p>
-<p><strong>For example:</strong></p>
-<p>Imagine an HR application exposing a service accepting employee IDs in order to return employee information, and for which the format or pattern of the employee ID is the following:</p>
-<div class="highlight"><pre><span></span><code>EMP-00000
-EMP-00001
-EMP-00002
-...
-</code></pre></div>
-<p>Based on this, an attacker can build a collection of valid IDs from <em>EMP-00000</em> to <em>EMP-99999</em>.</p>
-<p>To be exploited, an IDOR issue must be combined with an <a href="Access_Control_Cheat_Sheet.html">Access Control</a> issue, because it's the Access Control issue that "allows" the attacker to access the object for which they have guessed the identifier through the enumeration attack.</p>
-<h2 id="additional-remarks">Additional remarks<a class="headerlink" href="#additional-remarks" title="Permanent link">&para;</a></h2>
-<p><strong>From Jeff Williams</strong>:</p>
-<p>Direct Object Reference is fundamentally a Access Control problem. We split it out to emphasize the difference between URL access control and data layer access control. You can't do anything about the data-layer problems with URL access control. And they're not really input validation problems either. But we see DOR manipulation all the time. If we list only "Messed-up from the Floor-up Access Control" then people will probably only put in SiteMinder or JEE declarative access control on URLs and call it a day. That's what we're trying to avoid.</p>
-<p><strong>From Eric Sheridan</strong>:</p>
-<p>An object reference map is first populated with a list of authorized values which are temporarily stored in the session. When the user requests a field (ex: color=654321), the application does a lookup in this map from the session to determine the appropriate column name. If the value does not exist in this limited map, the user is not authorized. Reference maps should not be global (i.e. include every possible value), they are temporary maps/dictionaries that are only ever populated with authorized values.</p>
-<p>"A direct object reference occurs when a developer exposes a reference to an internal implementation object, such as a file, directory, database record, or key, as a URL or form parameter."</p>
-<p>I'm "down" with DOR's for files, directories, etc. But not so much for ALL databases primary keys. That's just insane, like you are suggesting. I think that anytime database primary keys are exposed, an access control rule is required. There is no way to practically DOR all database primary keys in a real enterprise or post-enterprise system.</p>
-<p>But, suppose a user has a list of accounts, like a bank where database ID 23456 is their checking account. I'd DOR that in a heartbeat. You need to be prudent about this.</p>
-<h2 id="objective">Objective<a class="headerlink" href="#objective" title="Permanent link">&para;</a></h2>
-<p>This article proposes an idea to prevent the exposure of real identifiers in a simple, portable, and stateless way because the proposal needs to handle session and session-less application topologies.</p>
-<h2 id="proposition">Proposition<a class="headerlink" href="#proposition" title="Permanent link">&para;</a></h2>
-<p>The proposal uses a hash to replace the direct identifier. This hash is salted with a value defined at the application level to support topologies in which the application is deployed in multi-instance mode, such as in production environments.</p>
-<p>Using a hash enables the following properties:</p>
+<p>Network segmentation is the core of multi-layer defense in depth for modern services. Segmentation slow down an attacker if he cannot implement attacks such as:
+ - SQL-injections, see <a href="https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.md">SQL Injection Prevention Cheat Sheet</a>
+ - compromise of workstations of employees with elevated privileges
+ - compromise of another server in the perimeter of the organization
+ - compromise of the target service through the compromise of the LDAP directory, DNS server, and other corporate services and sites published on the Internet</p>
+<p>The main goal of this cheat sheet is to show the basics of network segmentation to effectively counter attacks by building a secure and maximally isolated service network architecture.</p>
+<p>Segmentation will avoid the following situations:
+- executing arbitrary commands on a public web server (NginX, Apache, Internet Information Service) prevents an attacker from gaining direct access to the database
+- having unauthorized access to the database server, an attacker cannot access CnC on the Internet</p>
+<h2 id="content">Content<a class="headerlink" href="#content" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Allows the absence of a mapping table—-real ID vs front-end ID—-in user session or application level caches.</li>
-<li>Makes creation of the collection of enumeration values more difficult to achieve because, even if an attacker guesses the hash algorithm from the ID size, he cannot reproduce value, thanks to the salt.</li>
+<li>Schematic symbols</li>
+<li>Three-layer network architecture</li>
+<li>Interservice interaction</li>
+<li>Network security policy</li>
+<li>Useful links</li>
 </ul>
-<p>This is the implementation of the utility class that generates the the identifier to use for an exchange with the front-end:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">javax.xml.bind.DatatypeConverter</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">java.io.UnsupportedEncodingException</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">java.security.MessageDigest</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">java.security.NoSuchAlgorithmException</span><span class="p">;</span>
-
-<span class="cm">/**</span>
-<span class="cm"> * Handle the creation of ID that will be send to front end side</span>
-<span class="cm"> * in order to prevent IDOR</span>
-<span class="cm"> */</span>
-
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">IDORUtil</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="cm">/**</span>
-<span class="cm">     * SALT used for the generation of the HASH of the real item identifier</span>
-<span class="cm">     * in order to prevent to forge it on front end side.</span>
-<span class="cm">     */</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">SALT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;[READ_IT_FROM_APP_CONFIGURATION]&quot;</span><span class="p">;</span>
-
-<span class="w">    </span><span class="cm">/**</span>
-<span class="cm">     * Compute a identifier that will be send to the front end and be used as item</span>
-<span class="cm">     * unique identifier on client side.</span>
-<span class="cm">     *</span>
-<span class="cm">     * @param realItemBackendIdentifier Identifier of the item on the backend storage</span>
-<span class="cm">     *                                  (real identifier)</span>
-<span class="cm">     * @return A string representing the identifier to use</span>
-<span class="cm">     * @throws UnsupportedEncodingException If string&#39;s byte cannot be obtained</span>
-<span class="cm">     * @throws NoSuchAlgorithmException If the hashing algorithm used is not</span>
-<span class="cm">     *                                  supported is not available</span>
-<span class="cm">     */</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">computeFrontEndIdentifier</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">realItemBackendIdentifier</span><span class="p">)</span>
-<span class="w">     </span><span class="kd">throws</span><span class="w"> </span><span class="n">NoSuchAlgorithmException</span><span class="p">,</span><span class="w"> </span><span class="n">UnsupportedEncodingException</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">frontEndId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">realItemBackendIdentifier</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="n">realItemBackendIdentifier</span><span class="p">.</span><span class="na">trim</span><span class="p">().</span><span class="na">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="c1">//Prefix the value with the SALT</span>
-<span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">tmp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SALT</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">realItemBackendIdentifier</span><span class="p">;</span>
-<span class="w">            </span><span class="c1">//Get and configure message digester</span>
-<span class="w">            </span><span class="c1">//We use SHA1 here for the following reason even if SHA1 have now potential collision:</span>
-<span class="w">            </span><span class="c1">//1. We do not store sensitive information, just technical ID</span>
-<span class="w">            </span><span class="c1">//2. We want that the ID stay short but not guessable</span>
-<span class="w">            </span><span class="c1">//3. We want that a maximum of backend storage support the algorithm used in order to compute it in selection query/request</span>
-<span class="w">            </span><span class="c1">//If your backend storage supports SHA256 so use it instead of SHA1</span>
-<span class="w">            </span><span class="n">MessageDigest</span><span class="w"> </span><span class="n">digester</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MessageDigest</span><span class="p">.</span><span class="na">getInstance</span><span class="p">(</span><span class="s">&quot;sha1&quot;</span><span class="p">);</span>
-<span class="w">            </span><span class="c1">//Compute the hash</span>
-<span class="w">            </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">hash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">digester</span><span class="p">.</span><span class="na">digest</span><span class="p">(</span><span class="n">tmp</span><span class="p">.</span><span class="na">getBytes</span><span class="p">(</span><span class="s">&quot;utf-8&quot;</span><span class="p">));</span>
-<span class="w">            </span><span class="c1">//Encode is in HEX</span>
-<span class="w">            </span><span class="n">frontEndId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DatatypeConverter</span><span class="p">.</span><span class="na">printHexBinary</span><span class="p">(</span><span class="n">hash</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">frontEndId</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-<p>This is the example of services using the front identifier:</p>
-<div class="highlight"><pre><span></span><code><span class="cm">/**</span>
-<span class="cm"> * Service to list all available movies</span>
-<span class="cm"> *</span>
-<span class="cm"> * @return The collection of movies ID and name as JSON response</span>
-<span class="cm"> */</span>
-<span class="nd">@RequestMapping</span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;/movies&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GET</span><span class="p">,</span><span class="w"> </span><span class="n">produces</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">MediaType</span><span class="p">.</span><span class="na">APPLICATION_JSON_VALUE</span><span class="p">})</span>
-<span class="kd">public</span><span class="w"> </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">listAllMovies</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
-
-<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">movies</span><span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="n">m</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="c1">//Compute the front end ID for the current element</span>
-<span class="w">                </span><span class="n">String</span><span class="w"> </span><span class="n">frontEndId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">IDORUtil</span><span class="p">.</span><span class="na">computeFrontEndIdentifier</span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="na">getBackendIdentifier</span><span class="p">());</span>
-<span class="w">                </span><span class="c1">//Add the computed ID and the associated item name to the result map</span>
-<span class="w">                </span><span class="n">result</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">frontEndId</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="p">.</span><span class="na">getName</span><span class="p">());</span>
-<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="n">LOGGER</span><span class="p">.</span><span class="na">error</span><span class="p">(</span><span class="s">&quot;Error during ID generation for real ID {}: {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="p">.</span><span class="na">getBackendIdentifier</span><span class="p">(),</span>
-<span class="w">                             </span><span class="n">e</span><span class="p">.</span><span class="na">getMessage</span><span class="p">());</span>
-<span class="w">            </span><span class="p">}</span>
-<span class="w">        </span><span class="p">});</span>
-<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">//Ensure that in case of error no item is returned</span>
-<span class="w">        </span><span class="n">result</span><span class="p">.</span><span class="na">clear</span><span class="p">();</span>
-<span class="w">        </span><span class="n">LOGGER</span><span class="p">.</span><span class="na">error</span><span class="p">(</span><span class="s">&quot;Error during processing&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">result</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="cm">/**</span>
-<span class="cm"> * Service to obtain the information on a specific movie</span>
-<span class="cm"> *</span>
-<span class="cm"> * @param id Movie identifier from a front end point of view</span>
-<span class="cm"> * @return The movie object as JSON response</span>
-<span class="cm"> */</span>
-<span class="nd">@RequestMapping</span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;/movies/{id}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GET</span><span class="p">,</span><span class="w"> </span><span class="n">produces</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">MediaType</span><span class="p">.</span><span class="na">APPLICATION_JSON_VALUE</span><span class="p">})</span>
-<span class="kd">public</span><span class="w"> </span><span class="n">Movie</span><span class="w"> </span><span class="nf">obtainMovieName</span><span class="p">(</span><span class="nd">@PathVariable</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-
-<span class="w">    </span><span class="c1">//Search for the wanted movie information using Front End Identifier</span>
-<span class="w">    </span><span class="n">Optional</span><span class="o">&lt;</span><span class="n">Movie</span><span class="o">&gt;</span><span class="w"> </span><span class="n">movie</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">movies</span><span class="p">.</span><span class="na">stream</span><span class="p">().</span><span class="na">filter</span><span class="p">(</span><span class="n">m</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kt">boolean</span><span class="w"> </span><span class="n">match</span><span class="p">;</span>
-<span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="c1">//Compute the front end ID for the current element</span>
-<span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">frontEndId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">IDORUtil</span><span class="p">.</span><span class="na">computeFrontEndIdentifier</span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="na">getBackendIdentifier</span><span class="p">());</span>
-<span class="w">            </span><span class="c1">//Check if the computed ID match the one provided</span>
-<span class="w">            </span><span class="n">match</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">frontEndId</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="c1">//Ensure that in case of error no item is returned</span>
-<span class="w">            </span><span class="n">match</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
-<span class="w">            </span><span class="n">LOGGER</span><span class="p">.</span><span class="na">error</span><span class="p">(</span><span class="s">&quot;Error during processing&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">match</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}).</span><span class="na">findFirst</span><span class="p">();</span>
-
-<span class="w">    </span><span class="c1">//We have marked the Backend Identifier class field as excluded</span>
-<span class="w">    </span><span class="c1">//from the serialization</span>
-<span class="w">    </span><span class="c1">//So we can send the object to front end through the serializer</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">movie</span><span class="p">.</span><span class="na">get</span><span class="p">();</span>
-<span class="p">}</span>
-</code></pre></div>
-<p>This is the value object used:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Movie</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="cm">/**</span>
-<span class="cm">     * We indicate to serializer that this field must never be serialized</span>
-<span class="cm">     *</span>
-<span class="cm">     * @see &quot;https://fasterxml.github.io/jackson-annotations/javadoc/2.5/com/fasterxml/</span>
-<span class="cm">     *       jackson/annotation/JsonIgnore.html&quot;</span>
-<span class="cm">     */</span>
-<span class="w">    </span><span class="nd">@JsonIgnore</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">backendIdentifier</span><span class="p">;</span>
-<span class="p">...</span>
-<span class="p">}</span>
-</code></pre></div>
-<h2 id="sources-of-the-prototype">Sources of the prototype<a class="headerlink" href="#sources-of-the-prototype" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/righettod/poc-idor">GitHub repository</a>.</p>
+<h2 id="schematic-symbols">Schematic symbols<a class="headerlink" href="#schematic-symbols" title="Permanent link">&para;</a></h2>
+<p>Elements used in network diagrams:</p>
+<p><img alt="Schematic symbols" src="https://github.com/OWASP/CheatSheetSeries/blob/master/assets/Network_Segmentation_Cheat_Sheet_Schematic_symbols.drawio.png" /></p>
+<p>Crossing the border of the rectangle means crossing the firewall:
+<img alt="Traffic passes through two firewalls" src="https://github.com/OWASP/CheatSheetSeries/blob/master/assets/Network_Segmentation_Cheat_Sheet_firewall_1.drawio.png" /></p>
+<p>In the image above, traffic passes through two firewalls with the names FW1 and FW2</p>
+<p><img alt="Traffic passes through one firewall" src="https://github.com/OWASP/CheatSheetSeries/blob/master/assets/Network_Segmentation_Cheat_Sheet_firewall_2.drawio.png" /></p>
+<p>In the image above, traffic passes through one firewall, behind which there are two VLANs</p>
+<p>Further, the schemes do not contain firewall icons so as not to overload the schemes</p>
+<h2 id="three-layer-network-architecture">Three-layer network architecture<a class="headerlink" href="#three-layer-network-architecture" title="Permanent link">&para;</a></h2>
+<p>By default, developed information systems should consist of at least three components (<strong>security zones</strong>):
+1. <a href="https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Network_Segmentation_Cheat_Sheet.md#FRONTEND">FRONTEND</a>
+2. <a href="https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Network_Segmentation_Cheat_Sheet.md#MIDDLEWARE">MIDDLEWARE</a>
+3. <a href="https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Network_Segmentation_Cheat_Sheet.md#BACKEND">BACKEND</a></p>
+<h3 id="frontend">FRONTEND<a class="headerlink" href="#frontend" title="Permanent link">&para;</a></h3>
+<p>FRONTEND - A frontend is a set of segments with the following network elements:
+- balancer
+- application layer firewall
+- web server
+- web cache</p>
+<p><img alt="FRONTEND" src="https://github.com/OWASP/CheatSheetSeries/blob/master/assets/Network_Segmentation_Cheat_Sheet_FRONTEND.drawio.png" /></p>
+<h3 id="middleware">MIDDLEWARE<a class="headerlink" href="#middleware" title="Permanent link">&para;</a></h3>
+<p>MIDDLEWARE - a set of segments to accommodate the following network elements:
+- web applications that implement the logic of the information system (processing requests from clients, other services of the company and external services; execution of requests)
+- authorization services
+- analytics services
+- message queues
+- stream processing platform</p>
+<p><img alt="MIDDLEWARE" src="https://github.com/OWASP/CheatSheetSeries/blob/master/assets/Network_Segmentation_Cheat_Sheet_MIDDLEWARE.drawio.png" /></p>
+<h3 id="backend">BACKEND<a class="headerlink" href="#backend" title="Permanent link">&para;</a></h3>
+<p>BACKEND - a set of network segments to accommodate the following network elements:
+- SQL database
+- LDAP directory (Domain controller)
+- storage of cryptographic keys
+- file-server</p>
+<p><img alt="BACKEND" src="https://github.com/OWASP/CheatSheetSeries/blob/master/assets/Network_Segmentation_Cheat_Sheet_BACKEND.drawio.png" /></p>
+<h3 id="example-of-three-layer-network-architecture">Example of Three-layer network architecture<a class="headerlink" href="#example-of-three-layer-network-architecture" title="Permanent link">&para;</a></h3>
+<p><img alt="BACKEND" src="https://github.com/OWASP/CheatSheetSeries/blob/master/assets/Network_Segmentation_Cheat_Sheet_TIER_Example.drawio.png" />
+The following example shows an organization's local network. The organization is called "Сontoso".</p>
+<p>The edge firewall contains 2 VLANs of <strong>FRONTED</strong> secuirity zone:
+- <em>DMZ Inbound</em> - a segment for hosting services and applications accessible from the Internet, they must be protected by WAF
+- <em>DMZ Outgoing</em> - a segment for hosting services that are inaccessible from the Internet, but have access to external networks (the firewall does not contain any rules for allowing traffic from external networks)</p>
+<p>The internal firewall contains 4 VLANs:
+- <strong>MIDDLEWARE</strong> security zone contains only one VLAN with name <em>APPLICATIONS</em> - a segment designed to host information system applications that interact with each other (interservice communication) and interact with other services
+- <strong>BACKEND</strong> security zone contains:
+   - <em>DATABASES</em> - a segment designed to delimit various databases of an automated system
+   - <em>AD SERVICES</em> - segment designed to host various Active Directory services, in the example only one server with a domain controller Contoso.com is shown
+   - <em>LOGS</em> - segment, designed to host servers with logs, servers centrally store application logs of an automated system.</p>
+<h2 id="interservice-interaction">Interservice interaction<a class="headerlink" href="#interservice-interaction" title="Permanent link">&para;</a></h2>
+<p>Usually some information systems of the company interact with each other. It is important to define a firewall policy for such interactions.
+The base allowed interactions are indicated by the green arrows in the image below:
+<img alt="Interservice interaction" src="https://github.com/OWASP/CheatSheetSeries/blob/master/assets/Network_Segmentation_Cheat_Sheet_interservice.drawio.png" />
+The image above also shows the allowed access from the FRONTEND and MIDDLEWARE segments to external networks (the Internet, for example).</p>
+<p>From this image follows:
+1. Access between FRONTEND and MIDDLEWARE segments of different information systems is prohibited;
+2. Access from the MIDDLEWARE segment to the BACKEND segment of another service is prohibited (access to a foreign database bypassing the application server is prohibited).</p>
+<p>Forbidden accesses are indicated by red arrows in the image below:
+<img alt="Prohibited Interservice Communication" src="https://github.com/OWASP/CheatSheetSeries/blob/master/assets/Network_Segmentation_Cheat_Sheet_interservice_deny.drawio.png" /></p>
+<h3 id="many-applications-on-the-same-network">Many applications on the same network<a class="headerlink" href="#many-applications-on-the-same-network" title="Permanent link">&para;</a></h3>
+<p>If you prefer to have fewer networks in your organization and host more applications on each network, it is acceptable to host the load balancer on those networks. This balancer will balance traffic to applications on the network.
+In this case, it will be necessary to open one port to such a network, and balancing will be performed, for example, based on the HTTP request parameters.
+An example of such segmentation:
+<img alt="Interservice Communication with balancing" src="https://github.com/OWASP/CheatSheetSeries/blob/master/assets/Network_Segmentation_Cheat_Sheet_interservice_balancer.drawio.png" /></p>
+<p>As you can see, there is only one incoming access to each network, access is opened up to the balancer in the network. However, in this case, segmentation no longer works, access control between applications from different network segments is performed at the 7th level of the OSI model using a balancer.</p>
+<h2 id="network-security-policy">Network security policy<a class="headerlink" href="#network-security-policy" title="Permanent link">&para;</a></h2>
+<p>The organization must define a "paper" policy that describes firewall rules and basic allowed network access.
+This policy is at least useful:
+- network administrators;
+- security representatives;
+- IT auditors;
+- architects of information systems and software;
+- developers;
+- IT administrators.</p>
+<p>It is convenient when the policy is described by similar images. The information is presented as concisely and simply as possible.</p>
+<h3 id="examples-of-individual-policy-provisions">Examples of individual policy provisions<a class="headerlink" href="#examples-of-individual-policy-provisions" title="Permanent link">&para;</a></h3>
+<p>Examples in the network policy will help colleagues quickly understand what access is potentially allowed and can be requested.</p>
+<h4 id="permissions-for-cicd">Permissions for CI/CD<a class="headerlink" href="#permissions-for-cicd" title="Permanent link">&para;</a></h4>
+<p>The network security policy may define, for example, the basic permissions allowed for the software development system. Let's look at an example of what such a policy might look like:
+<img alt="CI-CD" src="https://github.com/OWASP/CheatSheetSeries/blob/master/assets/Network_Segmentation_Cheat_Sheet_repo.drawio.png" /></p>
+<h4 id="secure-logging">Secure logging<a class="headerlink" href="#secure-logging" title="Permanent link">&para;</a></h4>
+<p>It is important that in the event of a compromise of any information system, its logs are not subsequently modified by an attacker. To do this, you can do the following: copy the logs to a separate server, for example, using the syslog protocol, which does not allow an attacker to modify the logs, syslog only allows you to add new events to the logs.
+The network security policy for this activity looks like this:
+<img alt="Logging" src="https://github.com/OWASP/CheatSheetSeries/blob/master/assets/Network_Segmentation_Cheat_Sheet_logs.drawio.png" />
+In this example, we are also talking about application logs that may contain security events, as well as potentially important events that may indicate an attack.</p>
+<h4 id="permissions-for-monitoring-systems">Permissions for monitoring systems<a class="headerlink" href="#permissions-for-monitoring-systems" title="Permanent link">&para;</a></h4>
+<p>Suppose a company uses Zabbix as an IT monitoring system. In this case, the policy might look like this:
+<img alt="Zabbix-Example" src="https://github.com/OWASP/CheatSheetSeries/blob/master/assets/Network_Segmentation_Cheat_Sheet_Monitoring.drawio.png" /></p>
+<h2 id="useful-links">Useful links<a class="headerlink" href="#useful-links" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Full network segmentation cheat sheet by <a href="https://github.com/sergiomarotco">sergiomarotco</a>: <a href="https://github.com/sergiomarotco/Network-segmentation-cheat-sheet">link</a></li>
+</ul>
 
 
 

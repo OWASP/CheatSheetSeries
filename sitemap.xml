@@ -266,6 +266,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://cheatsheetseries.owasp.org/cheatsheets/Network_Segmentation_Cheat_Sheet.html</loc>
+         <lastmod>2023-01-02</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://cheatsheetseries.owasp.org/cheatsheets/NodeJS_Docker_Cheat_Sheet.html</loc>
          <lastmod>2023-01-02</lastmod>
          <changefreq>daily</changefreq>
