@@ -12,8 +12,14 @@
       
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Kubernetes_Security_Cheat_Sheet.html">
       
+      
+        <link rel="prev" href="Key_Management_Cheat_Sheet.html">
+      
+      
+        <link rel="next" href="LDAP_Injection_Prevention_Cheat_Sheet.html">
+      
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.0">
     
     
       
@@ -21,11 +27,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.975780f9.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.f79797b0.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
-        
       
       
 
@@ -112,8 +117,6 @@
       <form class="md-header__option" data-md-component="palette">
         
           
-          
-          
           <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
           
             <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
@@ -121,8 +124,6 @@
             </label>
           
         
-          
-          
           
           <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
           
@@ -1239,8 +1240,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#implementing-open-policy-agent-opa-for-a-centralized-policy-management" class="md-nav__link">
-    Implementing Open Policy Agent (OPA) for a centralized policy management
+  <a href="#implementing-centralized-policy-management" class="md-nav__link">
+    Implementing centralized policy management
   </a>
   
 </li>
@@ -2439,8 +2440,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#implementing-open-policy-agent-opa-for-a-centralized-policy-management" class="md-nav__link">
-    Implementing Open Policy Agent (OPA) for a centralized policy management
+  <a href="#implementing-centralized-policy-management" class="md-nav__link">
+    Implementing centralized policy management
   </a>
   
 </li>
@@ -2717,10 +2718,9 @@
                 
                   
 
-  <a href="https://github.com/OWASP/CheatSheetSeries/edit/master/docs/cheatsheets/Kubernetes_Security_Cheat_Sheet.md" title="Edit this page" class="md-content__button md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
-  </a>
+  
+  
+
 
 
 <h1 id="kubernetes-security-cheat-sheet">Kubernetes Security Cheat Sheet<a class="headerlink" href="#kubernetes-security-cheat-sheet" title="Permanent link">&para;</a></h1>
@@ -2906,7 +2906,7 @@ Hence it is highly recommended to configure authentication and authorization on 
 <p>Kubernetes ships an integrated Role-Based Access Control (RBAC) component that matches an incoming user or group to a set of permissions bundled into roles. These permissions combine verbs (get, create, delete) with resources (pods, services, nodes) and can be namespace or cluster scoped. A set of out of the box roles are provided that offer reasonable default separation of responsibility depending on what actions a client might want to perform. It is recommended that you use the Node and RBAC authorizers together, in combination with the NodeRestriction admission plugin.</p>
 <p>RBAC authorization uses the rbac.authorization.k8s.io API group to drive authorization decisions, allowing you to dynamically configure policies through the Kubernetes API.
 To enable RBAC, start the API server with the --authorization-mode flag set to a comma-separated list that includes RBAC; for example:</p>
-<div class="highlight"><pre><span></span><code>kube-apiserver --authorization-mode<span class="o">=</span>Example,RBAC --other-options --more-options
+<div class="highlight"><pre><span></span><code>kube-apiserver<span class="w"> </span>--authorization-mode<span class="o">=</span>Example,RBAC<span class="w"> </span>--other-options<span class="w"> </span>--more-options
 </code></pre></div>
 <p>For detailed examples of utilizing RBAC, refer to Kubernetes documentation at <a href="https://kubernetes.io/docs/reference/access-authn-authz/rbac">https://kubernetes.io/docs/reference/access-authn-authz/rbac</a></p>
 <h3 id="restrict-access-to-etcd">Restrict access to etcd<a class="headerlink" href="#restrict-access-to-etcd" title="Permanent link">&para;</a></h3>
@@ -2965,15 +2965,15 @@ To enable RBAC, start the API server with the --authorization-mode flag set to a
 <p>Namespaces give you the ability to create logical partitions and enforce separation of your resources as well as limit the scope of user permissions.</p>
 <h4 id="setting-the-namespace-for-a-request">Setting the namespace for a request<a class="headerlink" href="#setting-the-namespace-for-a-request" title="Permanent link">&para;</a></h4>
 <p>To set the namespace for a current request, use the --namespace flag. Refer to the following examples:</p>
-<div class="highlight"><pre><span></span><code>kubectl run nginx --image<span class="o">=</span>nginx --namespace<span class="o">=</span>&lt;insert-namespace-name-here&gt;
-kubectl get pods --namespace<span class="o">=</span>&lt;insert-namespace-name-here&gt;
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>run<span class="w"> </span>nginx<span class="w"> </span>--image<span class="o">=</span>nginx<span class="w"> </span>--namespace<span class="o">=</span>&lt;insert-namespace-name-here&gt;
+kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>--namespace<span class="o">=</span>&lt;insert-namespace-name-here&gt;
 </code></pre></div>
 <h4 id="setting-the-namespace-preference">Setting the namespace preference<a class="headerlink" href="#setting-the-namespace-preference" title="Permanent link">&para;</a></h4>
 <p>You can permanently save the namespace for all subsequent kubectl commands in that context.</p>
-<div class="highlight"><pre><span></span><code>kubectl config set-context --current --namespace<span class="o">=</span>&lt;insert-namespace-name-here&gt;
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>config<span class="w"> </span>set-context<span class="w"> </span>--current<span class="w"> </span>--namespace<span class="o">=</span>&lt;insert-namespace-name-here&gt;
 </code></pre></div>
 <p>Validate it with the following command.</p>
-<div class="highlight"><pre><span></span><code>kubectl config view --minify <span class="p">|</span> grep namespace:
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>config<span class="w"> </span>view<span class="w"> </span>--minify<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>namespace:
 </code></pre></div>
 <p>Learn more about namespaces at <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces">https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces</a></p>
 <h3 id="create-policies-to-govern-image-provenance-using-the-imagepolicywebhook">Create policies to govern image provenance using the ImagePolicyWebhook<a class="headerlink" href="#create-policies-to-govern-image-provenance-using-the-imagepolicywebhook" title="Permanent link">&para;</a></h3>
@@ -3045,13 +3045,13 @@ Learn more about webhook at <a href="https://kubernetes.io/docs/reference/access
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hello-world</span><span class="w">  </span>
 <span class="nt">spec</span><span class="p">:</span><span class="w">  </span>
 <span class="w">  </span><span class="nt">containers</span><span class="p">:</span><span class="w">  </span>
-<span class="w">  </span><span class="c1"># specification of the pod’s containers  </span><span class="w"></span>
-<span class="w">  </span><span class="c1"># ...</span><span class="w"></span>
-<span class="w">  </span><span class="c1"># ...</span><span class="w"></span>
-<span class="w">  </span><span class="c1"># Security Context</span><span class="w"></span>
+<span class="w">  </span><span class="c1"># specification of the pod’s containers  </span>
+<span class="w">  </span><span class="c1"># ...</span>
+<span class="w">  </span><span class="c1"># ...</span>
+<span class="w">  </span><span class="c1"># Security Context</span>
 <span class="w">  </span><span class="nt">securityContext</span><span class="p">:</span><span class="w">  </span>
 <span class="w">    </span><span class="nt">readOnlyRootFilesystem</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">  </span>
-<span class="w">    </span><span class="nt">runAsNonRoot</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">    </span><span class="nt">runAsNonRoot</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </code></pre></div>
 <p>For more information on security context for Pods, refer to the documentation at <a href="https://kubernetes.io/docs/tasks/configure-pod-container/security-context">https://kubernetes.io/docs/tasks/configure-pod-container/security-context</a></p>
 <h3 id="implement-service-mesh">Implement Service Mesh<a class="headerlink" href="#implement-service-mesh" title="Permanent link">&para;</a></h3>
@@ -3061,17 +3061,15 @@ Learn more about webhook at <a href="https://kubernetes.io/docs/reference/access
 <h4 id="security">Security<a class="headerlink" href="#security" title="Permanent link">&para;</a></h4>
 <p>A service mesh provides security features aimed at securing the services inside your network and quickly identifying any compromising traffic entering your cluster. A service mesh can help you more easily manage security through mTLS, ingress and egress control, and more.</p>
 <ul>
-<li>
-<p>mTLS and Why it Matters
-  Securing microservices is hard. There are a multitude of tools that address microservices security, but service mesh is the most elegant solution for addressing encryption of on-the-wire traffic within the network.
-  Service mesh provides defense with mutual TLS (mTLS) encryption of the traffic between your services. The mesh can automatically encrypt and decrypt requests and responses, removing that burden from the application developer. It can also improve performance by prioritizing the reuse of existing, persistent connections, reducing the need for the computationally expensive creation of new ones. With service mesh, you can secure traffic over the wire and also make strong identity-based authentication and authorizations for each microservice.
-  We see a lot of value in this for enterprise companies. With a good service mesh, you can see whether mTLS is enabled and working between each of your services and get immediate alerts if security status changes.</p>
-</li>
-<li>
-<p>Ingress &amp; Egress Control
-Service mesh adds a layer of security that allows you to monitor and address compromising traffic as it enters the mesh. Istio integrates with Kubernetes as an ingress controller and takes care of load balancing for ingress. This allows you to add a level of security at the perimeter with ingress rules. Egress control allows you to see and manage external services and control how your services interact with them.</p>
-</li>
+<li>mTLS and Why it Matters</li>
 </ul>
+<p>Securing microservices is hard. There are a multitude of tools that address microservices security, but service mesh is the most elegant solution for addressing encryption of on-the-wire traffic within the network.</p>
+<p>Service mesh provides defense with mutual TLS (mTLS) encryption of the traffic between your services. The mesh can automatically encrypt and decrypt requests and responses, removing that burden from the application developer. It can also improve performance by prioritizing the reuse of existing, persistent connections, reducing the need for the computationally expensive creation of new ones. With service mesh, you can secure traffic over the wire and also make strong identity-based authentication and authorizations for each microservice.</p>
+<p>We see a lot of value in this for enterprise companies. With a good service mesh, you can see whether mTLS is enabled and working between each of your services and get immediate alerts if security status changes.</p>
+<ul>
+<li>Ingress &amp; Egress Control</li>
+</ul>
+<p>Service mesh adds a layer of security that allows you to monitor and address compromising traffic as it enters the mesh. Istio integrates with Kubernetes as an ingress controller and takes care of load balancing for ingress. This allows you to add a level of security at the perimeter with ingress rules. Egress control allows you to see and manage external services and control how your services interact with them.</p>
 <h4 id="operational-control">Operational Control<a class="headerlink" href="#operational-control" title="Permanent link">&para;</a></h4>
 <p>A service mesh allows security and platform teams to set the right macro controls to enforce access controls, while allowing developers to make customizations they need to move quickly within these guardrails.</p>
 <h4 id="rbac">RBAC<a class="headerlink" href="#rbac" title="Permanent link">&para;</a></h4>
@@ -3084,7 +3082,8 @@ Service mesh adds a layer of security that allows you to monitor and address com
 <li>Slowness: Service meshes are an invasive and intricate technology that can add significant slowness to an architecture.</li>
 <li>Adoption of a Platform: The invasiveness of service meshes force both developers and operators to adapt to a highly opinionated platform and conform to its rules.</li>
 </ul>
-<h3 id="implementing-open-policy-agent-opa-for-a-centralized-policy-management">Implementing Open Policy Agent (OPA) for a centralized policy management<a class="headerlink" href="#implementing-open-policy-agent-opa-for-a-centralized-policy-management" title="Permanent link">&para;</a></h3>
+<h3 id="implementing-centralized-policy-management">Implementing centralized policy management<a class="headerlink" href="#implementing-centralized-policy-management" title="Permanent link">&para;</a></h3>
+<p>There are numerous projects which are able to provide centralized policy management for a Kubernetes cluster, most predominently the <a href="https://www.openpolicyagent.org/">Open Policy Agent</a> (OPA) project, <a href="https://kyverno.io/">Kyverno</a>, or <a href="https://kubernetes.io/docs/reference/access-authn-authz/validating-admission-policy/">Validating Admission Policy</a> (a built-in, yet alpha (aka off by default) feature as of 1.26). In order to provide some depth, we will focus on OPA for the remainder of this cheat sheet.</p>
 <p>OPA is a project that started in 2016 aimed at unifying policy enforcement across different technologies and systems. It can be used to enforce policies on their platforms (like Kubernetes clusters). When it comes to Kubernetes, RBAC and Pod security policies to impose fine-grained control over the cluster. But again, this will only apply to the cluster but not outside the cluster. That’s where Open Policy Agent (OPA) comes into play. OPA was introduced to create a unified method of enforcing security policy in the stack.</p>
 <p>OPA is a general-purpose, domain-agnostic policy enforcement tool. It can be integrated with APIs, the Linux SSH daemon, an object store like CEPH, etc. OPA designers purposefully avoided basing it on any other project. Accordingly, the policy query and decision do not follow a specific format. That is, you can use any valid JSON data as request attributes as long as it provides the required data. Similarly, the policy decision coming from OPA can also be any valid JSON data. You choose what gets input and what gets output. For example, you can opt to have OPA return a True or False JSON object, a number, a string, or even a complex data object. Currently, OPA is part of CNCF as an incubating project.</p>
 <p>Most common use cases of OPA:</p>
@@ -3092,7 +3091,7 @@ Service mesh adds a layer of security that allows you to monitor and address com
 <li>Application authorization</li>
 </ul>
 <p>OPA enables you to accelerate time to market by providing pre-cooked authorization technology so you don’t have to develop it from scratch. It uses a declarative policy language purpose built for writing and enforcing rules such as, “Alice can write to this repository,” or “Bob can update this account.” It comes with a rich suite of tooling to help developers integrate those policies into their applications and even allow the application’s end users to contribute policy for their tenants as well.</p>
-<p>If you have homegrown application authorization solutions in place, you may not want to rip them out to swap in OPA. At least not yet. But if you are going to be decomposing those monolithic apps and moving to microservices to scale and improve developer efficiency, you’re going to need a distributed authorization system and OPA is the answer.</p>
+<p>If you have homegrown application authorization solutions in place, you may not want to rip them out to swap in OPA. At least not yet. But if you are going to be decomposing those monolithic apps and moving to microservices to scale and improve developer efficiency, you’re going to need a distributed authorization system and OPA (or one of the related competitors) could be the answer.</p>
 <ul>
 <li>Kubernetes admission control</li>
 </ul>
@@ -3119,10 +3118,10 @@ Service mesh adds a layer of security that allows you to monitor and address com
 <span class="w">    </span><span class="nt">requests.cpu</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="w">  </span>
 <span class="w">    </span><span class="nt">requests.memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1Gi</span><span class="w">  </span>
 <span class="w">    </span><span class="nt">limits.cpu</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2&quot;</span><span class="w">  </span>
-<span class="w">    </span><span class="nt">limits.memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2Gi</span><span class="w"></span>
+<span class="w">    </span><span class="nt">limits.memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2Gi</span>
 </code></pre></div>
 <p>Assign a resource quota to namespace:</p>
-<div class="highlight"><pre><span></span><code>kubectl create -f ./compute-resources.yaml --namespace<span class="o">=</span>myspace
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>./compute-resources.yaml<span class="w"> </span>--namespace<span class="o">=</span>myspace
 </code></pre></div>
 <p>For more information on configuring resource quotas, refer to the Kubernetes documentation at <a href="https://kubernetes.io/docs/concepts/policy/resource-quotas/">https://kubernetes.io/docs/concepts/policy/resource-quotas/</a>.</p>
 <h3 id="use-kubernetes-network-policies-to-control-traffic-between-pods-and-clusters">Use Kubernetes network policies to control traffic between pods and clusters<a class="headerlink" href="#use-kubernetes-network-policies-to-control-traffic-between-pods-and-clusters" title="Permanent link">&para;</a></h3>
@@ -3133,25 +3132,25 @@ Service mesh adds a layer of security that allows you to monitor and address com
 <p>The following is an example of a network policy that controls the network for “backend” pods, only allowing inbound network access from “frontend” pods:</p>
 <div class="highlight"><pre><span></span><code><span class="err">POST</span><span class="w"> </span><span class="err">/apis/</span><span class="kc">net</span><span class="err">.alpha.kuber</span><span class="kc">netes</span><span class="err">.io/v</span><span class="mi">1</span><span class="err">alpha</span><span class="mi">1</span><span class="err">/</span><span class="kc">na</span><span class="err">mespaces/</span><span class="kc">tenant</span><span class="mi">-</span><span class="err">a/</span><span class="kc">net</span><span class="err">workpolicys</span><span class="w">  </span>
 <span class="p">{</span><span class="w">  </span>
-<span class="w">  </span><span class="nt">&quot;kind&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;NetworkPolicy&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;metadata&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;pol1&quot;</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;spec&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;allowIncoming&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;from&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;pods&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;segment&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;frontend&quot;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
-<span class="w">      </span><span class="p">}],</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;toPorts&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;port&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">80</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nt">&quot;protocol&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TCP&quot;</span><span class="w"></span>
-<span class="w">      </span><span class="p">}]</span><span class="w"></span>
-<span class="w">    </span><span class="p">},</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;podSelector&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;segment&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;backend&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;kind&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;NetworkPolicy&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;metadata&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;pol1&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;spec&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;allowIncoming&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;from&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span>
+<span class="w">        </span><span class="nt">&quot;pods&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;segment&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;frontend&quot;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">      </span><span class="p">}],</span>
+<span class="w">      </span><span class="nt">&quot;toPorts&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span>
+<span class="w">        </span><span class="nt">&quot;port&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">80</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;protocol&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TCP&quot;</span>
+<span class="w">      </span><span class="p">}]</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;podSelector&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;segment&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;backend&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>For more information on configuring network policies, refer to the Kubernetes documentation at <a href="https://kubernetes.io/docs/concepts/services-networking/network-policies">https://kubernetes.io/docs/concepts/services-networking/network-policies</a>.</p>
 <h3 id="securing-data">Securing data<a class="headerlink" href="#securing-data" title="Permanent link">&para;</a></h3>
@@ -3243,29 +3242,29 @@ blacklist sctp
 <h5 id="audit-logs">Audit logs<a class="headerlink" href="#audit-logs" title="Permanent link">&para;</a></h5>
 <p>Audit logs can be useful for compliance as they should help you answer the questions of what happened, who did what and when. Kubernetes provides flexible auditing of kube-apiserver requests based on policies. These help you track all activities in chronological order.</p>
 <p>Here is an example of an audit log:</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;kind&quot;</span><span class="p">:</span><span class="s2">&quot;Event&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;apiVersion&quot;</span><span class="p">:</span><span class="s2">&quot;audit.k8s.io/v1beta1&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;metadata&quot;</span><span class="p">:{</span><span class="w"> </span><span class="nt">&quot;creationTimestamp&quot;</span><span class="p">:</span><span class="s2">&quot;2019-08-22T12:00:00Z&quot;</span><span class="w"> </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="s2">&quot;Metadata&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="s2">&quot;2019-08-22T12:00:00Z&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;auditID&quot;</span><span class="p">:</span><span class="s2">&quot;23bc44ds-2452-242g-fsf2-4242fe3ggfes&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;stage&quot;</span><span class="p">:</span><span class="s2">&quot;RequestReceived&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;requestURI&quot;</span><span class="p">:</span><span class="s2">&quot;/api/v1/namespaces/default/persistentvolumeclaims&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;verb&quot;</span><span class="p">:</span><span class="s2">&quot;list&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;user&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;username&quot;</span><span class="p">:</span><span class="s2">&quot;user@example.org&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;groups&quot;</span><span class="p">:[</span><span class="w"> </span><span class="s2">&quot;system:authenticated&quot;</span><span class="w"> </span><span class="p">]</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;sourceIPs&quot;</span><span class="p">:[</span><span class="w"> </span><span class="s2">&quot;172.12.56.1&quot;</span><span class="w"> </span><span class="p">],</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;objectRef&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;resource&quot;</span><span class="p">:</span><span class="s2">&quot;persistentvolumeclaims&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;namespace&quot;</span><span class="p">:</span><span class="s2">&quot;default&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;apiVersion&quot;</span><span class="p">:</span><span class="s2">&quot;v1&quot;</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;requestReceivedTimestamp&quot;</span><span class="p">:</span><span class="s2">&quot;2019-08-22T12:00:00Z&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;stageTimestamp&quot;</span><span class="p">:</span><span class="s2">&quot;2019-08-22T12:00:00Z&quot;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;kind&quot;</span><span class="p">:</span><span class="s2">&quot;Event&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;apiVersion&quot;</span><span class="p">:</span><span class="s2">&quot;audit.k8s.io/v1beta1&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;metadata&quot;</span><span class="p">:{</span><span class="w"> </span><span class="nt">&quot;creationTimestamp&quot;</span><span class="p">:</span><span class="s2">&quot;2019-08-22T12:00:00Z&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="s2">&quot;Metadata&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="s2">&quot;2019-08-22T12:00:00Z&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;auditID&quot;</span><span class="p">:</span><span class="s2">&quot;23bc44ds-2452-242g-fsf2-4242fe3ggfes&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;stage&quot;</span><span class="p">:</span><span class="s2">&quot;RequestReceived&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;requestURI&quot;</span><span class="p">:</span><span class="s2">&quot;/api/v1/namespaces/default/persistentvolumeclaims&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;verb&quot;</span><span class="p">:</span><span class="s2">&quot;list&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;user&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;username&quot;</span><span class="p">:</span><span class="s2">&quot;user@example.org&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;groups&quot;</span><span class="p">:[</span><span class="w"> </span><span class="s2">&quot;system:authenticated&quot;</span><span class="w"> </span><span class="p">]</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;sourceIPs&quot;</span><span class="p">:[</span><span class="w"> </span><span class="s2">&quot;172.12.56.1&quot;</span><span class="w"> </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;objectRef&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;resource&quot;</span><span class="p">:</span><span class="s2">&quot;persistentvolumeclaims&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;namespace&quot;</span><span class="p">:</span><span class="s2">&quot;default&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;apiVersion&quot;</span><span class="p">:</span><span class="s2">&quot;v1&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;requestReceivedTimestamp&quot;</span><span class="p">:</span><span class="s2">&quot;2019-08-22T12:00:00Z&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;stageTimestamp&quot;</span><span class="p">:</span><span class="s2">&quot;2019-08-22T12:00:00Z&quot;</span>
+<span class="p">}</span>
 </code></pre></div>
 <h4 id="define-audit-policies">Define Audit Policies<a class="headerlink" href="#define-audit-policies" title="Permanent link">&para;</a></h4>
 <p>Audit policy defines rules about what events should be recorded and what data they should include. The audit policy object structure is defined in the audit.k8s.io API group. When an event is processed, it's compared against the list of rules in order. The first matching rule sets the "audit level" of the event.</p>
@@ -3285,55 +3284,55 @@ blacklist sctp
 <li>The easiest method for logging containers is to write to the standard output (stdout) and standard error (stderr) streams.</li>
 </ul>
 <p>Manifest is as follows.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span><span class="w"></span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Pod</span><span class="w"></span>
-<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
-<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example</span><span class="w"></span>
-<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
-<span class="nt">containers</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example</span><span class="w"></span>
-<span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">busybox</span><span class="w"></span>
-<span class="nt">args</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">/bin/sh</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">-c</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;while</span><span class="nv"> </span><span class="s">true;</span><span class="nv"> </span><span class="s">do</span><span class="nv"> </span><span class="s">echo</span><span class="nv"> </span><span class="s">$(date);</span><span class="nv"> </span><span class="s">sleep</span><span class="nv"> </span><span class="s">1;</span><span class="nv"> </span><span class="s">done&#39;</span><span class="p p-Indicator">]</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Pod</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="nt">containers</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example</span>
+<span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">busybox</span>
+<span class="nt">args</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">/bin/sh</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">-c</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;while</span><span class="nv"> </span><span class="s">true;</span><span class="nv"> </span><span class="s">do</span><span class="nv"> </span><span class="s">echo</span><span class="nv"> </span><span class="s">$(date);</span><span class="nv"> </span><span class="s">sleep</span><span class="nv"> </span><span class="s">1;</span><span class="nv"> </span><span class="s">done&#39;</span><span class="p p-Indicator">]</span>
 </code></pre></div>
 <p>To apply the manifest, run:</p>
-<div class="highlight"><pre><span></span><code>kubectl apply -f example.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>example.yaml
 </code></pre></div>
 <p>To take a look the logs for this container, run:</p>
-<div class="highlight"><pre><span></span><code>kubectl log &lt;container-name&gt; command.
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>log<span class="w"> </span>&lt;container-name&gt;<span class="w"> </span>command.
 </code></pre></div>
 <ul>
 <li>For persisting container logs, the common approach is to write logs to a log file and then use a sidecar container. As shown below in the pod configuration above, a sidecar container will run in the same pod along with the application container, mounting the same volume and processing the logs separately.</li>
 </ul>
 <p>Pod Manifest is as follows:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span><span class="w"></span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Pod</span><span class="w"></span>
-<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example</span><span class="w"></span>
-<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">containers</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example</span><span class="w"></span>
-<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">busybox</span><span class="w"></span>
-<span class="w">    </span><span class="nt">args</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/bin/sh</span><span class="w"></span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-c</span><span class="w"></span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">&gt;</span><span class="w"></span>
-<span class="w">      </span><span class="no">while true;</span><span class="w"></span>
-<span class="w">      </span><span class="no">do</span><span class="w"></span>
-<span class="w">        </span><span class="no">echo &quot;$(date)\n&quot; &gt;&gt; /var/log/example.log;</span><span class="w"></span>
-<span class="w">        </span><span class="no">sleep 1;</span><span class="w"></span>
-<span class="w">      </span><span class="no">done</span><span class="w"></span>
-<span class="w">    </span><span class="nt">volumeMounts</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">varlog</span><span class="w"></span>
-<span class="w">      </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/log</span><span class="w"></span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sidecar</span><span class="w"></span>
-<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">busybox</span><span class="w"></span>
-<span class="w">    </span><span class="nt">args</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">/bin/sh</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">-c</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;tail</span><span class="nv"> </span><span class="s">-f</span><span class="nv"> </span><span class="s">/var/log/example.log&#39;</span><span class="p p-Indicator">]</span><span class="w"></span>
-<span class="w">    </span><span class="nt">volumeMounts</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">varlog</span><span class="w"></span>
-<span class="w">      </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/log</span><span class="w"></span>
-<span class="w">  </span><span class="nt">volumes</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">varlog</span><span class="w"></span>
-<span class="w">    </span><span class="nt">emptyDir</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Pod</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">containers</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">busybox</span>
+<span class="w">    </span><span class="nt">args</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/bin/sh</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-c</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">&gt;</span>
+<span class="w">      </span><span class="no">while true;</span>
+<span class="w">      </span><span class="no">do</span>
+<span class="w">        </span><span class="no">echo &quot;$(date)\n&quot; &gt;&gt; /var/log/example.log;</span>
+<span class="w">        </span><span class="no">sleep 1;</span>
+<span class="w">      </span><span class="no">done</span>
+<span class="w">    </span><span class="nt">volumeMounts</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">varlog</span>
+<span class="w">      </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/log</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sidecar</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">busybox</span>
+<span class="w">    </span><span class="nt">args</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">/bin/sh</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">-c</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;tail</span><span class="nv"> </span><span class="s">-f</span><span class="nv"> </span><span class="s">/var/log/example.log&#39;</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">volumeMounts</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">varlog</span>
+<span class="w">      </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/log</span>
+<span class="w">  </span><span class="nt">volumes</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">varlog</span>
+<span class="w">    </span><span class="nt">emptyDir</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
 </code></pre></div>
 <h5 id="node-logging">Node logging<a class="headerlink" href="#node-logging" title="Permanent link">&para;</a></h5>
 <p>When a container running on Kubernetes writes its logs to stdout or stderr streams, the container engine streams them to the logging driver configured in Kubernetes.</p>
@@ -3341,7 +3340,7 @@ blacklist sctp
 <p>Once a container is terminated or restarted, kubelet stores logs on the node. To prevent these files from consuming all of the host’s storage, the Kubernetes node implements a log rotation mechanism. When a container is evicted from the node, all containers with corresponding log files are evicted.</p>
 <p>Depending on what operating system and additional services you’re running on your host machine, you might need to take a look at additional logs.
 For example, systemd logs can be retrieved using the following command:</p>
-<div class="highlight"><pre><span></span><code>journalctl -u
+<div class="highlight"><pre><span></span><code>journalctl<span class="w"> </span>-u
 </code></pre></div>
 <h5 id="cluster-logging">Cluster logging<a class="headerlink" href="#cluster-logging" title="Permanent link">&para;</a></h5>
 <p>On the level of the Kubernetes cluster itself, there is a long list of cluster components that can be logged as well as additional data types that can be used (events, audit logs). Together, these different types of data can give you visibility into how Kubernetes is performing as a ystem.</p>
@@ -3400,6 +3399,7 @@ Events:
 <li>What service mesh provides - <a href="https://aspenmesh.io/what-service-mesh-provides">https://aspenmesh.io/what-service-mesh-provides</a></li>
 <li>Three Technical Benefits of Service Meshes and their Operational Limitations, Part 1 - <a href="https://glasnostic.com/blog/service-mesh-istio-limits-and-benefits-part-1">https://glasnostic.com/blog/service-mesh-istio-limits-and-benefits-part-1</a></li>
 <li>Open Policy Agent: What Is OPA and How It Works (Examples) - <a href="https://spacelift.io/blog/what-is-open-policy-agent-and-how-it-works">https://spacelift.io/blog/what-is-open-policy-agent-and-how-it-works</a></li>
+<li>Kubernetes Security Checklist - <a href="https://kubernetes.io/docs/concepts/security/security-checklist/">https://kubernetes.io/docs/concepts/security/security-checklist/</a></li>
 </ol>
 
 
@@ -3416,42 +3416,6 @@ Events:
       </main>
       
         <footer class="md-footer">
-  
-    
-    <nav class="md-footer__inner md-grid" aria-label="Footer" >
-      
-        
-        <a href="Key_Management_Cheat_Sheet.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Key Management" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              Key Management
-            </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="LDAP_Injection_Prevention_Cheat_Sheet.html" class="md-footer__link md-footer__link--next" aria-label="Next: LDAP Injection Prevention" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              LDAP Injection Prevention
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
@@ -3478,12 +3442,11 @@ Events:
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.12658920.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      <script src="../assets/javascripts/bundle.5cf534bf.min.js"></script>
       
-    
     
   </body>
 </html>

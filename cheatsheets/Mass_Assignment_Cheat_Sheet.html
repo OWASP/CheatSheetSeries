@@ -12,8 +12,14 @@
       
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Mass_Assignment_Cheat_Sheet.html">
       
+      
+        <link rel="prev" href="Logging_Vocabulary_Cheat_Sheet.html">
+      
+      
+        <link rel="next" href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html">
+      
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.0">
     
     
       
@@ -21,11 +27,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.975780f9.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.f79797b0.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
-        
       
       
 
@@ -112,8 +117,6 @@
       <form class="md-header__option" data-md-component="palette">
         
           
-          
-          
           <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
           
             <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
@@ -121,8 +124,6 @@
             </label>
           
         
-          
-          
           
           <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
           
@@ -1971,10 +1972,9 @@
                 
                   
 
-  <a href="https://github.com/OWASP/CheatSheetSeries/edit/master/docs/cheatsheets/Mass_Assignment_Cheat_Sheet.md" title="Edit this page" class="md-content__button md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
-  </a>
+  
+  
+
 
 
 <h1 id="mass-assignment-cheat-sheet">Mass Assignment Cheat Sheet<a class="headerlink" href="#mass-assignment-cheat-sheet" title="Permanent link">&para;</a></h1>
@@ -2000,21 +2000,21 @@
 <span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>  
 </code></pre></div>
 <p>Here is the object that the form is binding to:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">User</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">   </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">userid</span><span class="p">;</span><span class="w"></span>
-<span class="w">   </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">password</span><span class="p">;</span><span class="w"></span>
-<span class="w">   </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">email</span><span class="p">;</span><span class="w"></span>
-<span class="w">   </span><span class="kd">private</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="n">isAdmin</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">User</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">userid</span><span class="p">;</span>
+<span class="w">   </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">password</span><span class="p">;</span>
+<span class="w">   </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">email</span><span class="p">;</span>
+<span class="w">   </span><span class="kd">private</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="n">isAdmin</span><span class="p">;</span>
 
-<span class="w">   </span><span class="c1">//Getters &amp; Setters</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="c1">//Getters &amp; Setters</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>Here is the controller handling the request:</p>
-<div class="highlight"><pre><span></span><code><span class="nd">@RequestMapping</span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;/addUser&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RequestMethod</span><span class="p">.</span><span class="na">POST</span><span class="p">)</span><span class="w"></span>
-<span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">submit</span><span class="p">(</span><span class="n">User</span><span class="w"> </span><span class="n">user</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">   </span><span class="n">userService</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">user</span><span class="p">);</span><span class="w"></span>
-<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;successPage&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nd">@RequestMapping</span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;/addUser&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RequestMethod</span><span class="p">.</span><span class="na">POST</span><span class="p">)</span>
+<span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">submit</span><span class="p">(</span><span class="n">User</span><span class="w"> </span><span class="n">user</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="n">userService</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;successPage&quot;</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>Here is the typical request:</p>
 <div class="highlight"><pre><span></span><code>POST /addUser
@@ -2043,87 +2043,87 @@ userid=bobbytables&amp;password=hashedpass&amp;email=bobby@tables.com&amp;isAdmi
 </ul>
 <h2 id="general-solutions">General Solutions<a class="headerlink" href="#general-solutions" title="Permanent link">&para;</a></h2>
 <p>An architectural approach is to create Data Transfer Objects and avoid binding input directly to domain objects. Only the fields that are meant to be editable by the user are included in the DTO.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserRegistrationFormDTO</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w"> </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">userid</span><span class="p">;</span><span class="w"></span>
-<span class="w"> </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">password</span><span class="p">;</span><span class="w"></span>
-<span class="w"> </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">email</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserRegistrationFormDTO</span><span class="w"> </span><span class="p">{</span>
+<span class="w"> </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">userid</span><span class="p">;</span>
+<span class="w"> </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">password</span><span class="p">;</span>
+<span class="w"> </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">email</span><span class="p">;</span>
 
-<span class="w"> </span><span class="c1">//NOTE: isAdmin field is not present</span><span class="w"></span>
+<span class="w"> </span><span class="c1">//NOTE: isAdmin field is not present</span>
 
-<span class="w"> </span><span class="c1">//Getters &amp; Setters</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w"> </span><span class="c1">//Getters &amp; Setters</span>
+<span class="p">}</span>
 </code></pre></div>
 <h2 id="language-framework-specific-solutions">Language &amp; Framework specific solutions<a class="headerlink" href="#language-framework-specific-solutions" title="Permanent link">&para;</a></h2>
 <h3 id="spring-mvc">Spring MVC<a class="headerlink" href="#spring-mvc" title="Permanent link">&para;</a></h3>
 <h4 id="allow-listing">Allow-listing<a class="headerlink" href="#allow-listing" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="nd">@Controller</span><span class="w"></span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserController</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nd">@InitBinder</span><span class="w"></span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">initBinder</span><span class="p">(</span><span class="n">WebDataBinder</span><span class="w"> </span><span class="n">binder</span><span class="p">,</span><span class="w"> </span><span class="n">WebRequest</span><span class="w"> </span><span class="n">request</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="n">binder</span><span class="p">.</span><span class="na">setAllowedFields</span><span class="p">(</span><span class="o">[</span><span class="s">&quot;userid&quot;</span><span class="p">,</span><span class="s">&quot;password&quot;</span><span class="p">,</span><span class="s">&quot;email&quot;</span><span class="o">]</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="p">...</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nd">@Controller</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserController</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="nd">@InitBinder</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">initBinder</span><span class="p">(</span><span class="n">WebDataBinder</span><span class="w"> </span><span class="n">binder</span><span class="p">,</span><span class="w"> </span><span class="n">WebRequest</span><span class="w"> </span><span class="n">request</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">binder</span><span class="p">.</span><span class="na">setAllowedFields</span><span class="p">(</span><span class="o">[</span><span class="s">&quot;userid&quot;</span><span class="p">,</span><span class="s">&quot;password&quot;</span><span class="p">,</span><span class="s">&quot;email&quot;</span><span class="o">]</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">...</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>Take a look <a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/validation/DataBinder.html#setAllowedFields-java.lang.String...-">here</a> for the documentation.</p>
 <h4 id="block-listing">Block-listing<a class="headerlink" href="#block-listing" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="nd">@Controller</span><span class="w"></span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserController</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">   </span><span class="nd">@InitBinder</span><span class="w"></span>
-<span class="w">   </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">initBinder</span><span class="p">(</span><span class="n">WebDataBinder</span><span class="w"> </span><span class="n">binder</span><span class="p">,</span><span class="w"> </span><span class="n">WebRequest</span><span class="w"> </span><span class="n">request</span><span class="p">)</span><span class="w"></span>
-<span class="w">   </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="n">binder</span><span class="p">.</span><span class="na">setDisallowedFields</span><span class="p">(</span><span class="o">[</span><span class="s">&quot;isAdmin&quot;</span><span class="o">]</span><span class="p">);</span><span class="w"></span>
-<span class="w">   </span><span class="p">}</span><span class="w"></span>
-<span class="p">...</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nd">@Controller</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserController</span>
+<span class="p">{</span>
+<span class="w">   </span><span class="nd">@InitBinder</span>
+<span class="w">   </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">initBinder</span><span class="p">(</span><span class="n">WebDataBinder</span><span class="w"> </span><span class="n">binder</span><span class="p">,</span><span class="w"> </span><span class="n">WebRequest</span><span class="w"> </span><span class="n">request</span><span class="p">)</span>
+<span class="w">   </span><span class="p">{</span>
+<span class="w">      </span><span class="n">binder</span><span class="p">.</span><span class="na">setDisallowedFields</span><span class="p">(</span><span class="o">[</span><span class="s">&quot;isAdmin&quot;</span><span class="o">]</span><span class="p">);</span>
+<span class="w">   </span><span class="p">}</span>
+<span class="p">...</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>Take a look <a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/validation/DataBinder.html#setDisallowedFields-java.lang.String...-">here</a> for the documentation.</p>
 <h3 id="nodejs-mongoose">NodeJS + Mongoose<a class="headerlink" href="#nodejs-mongoose" title="Permanent link">&para;</a></h3>
 <h4 id="allow-listing_1">Allow-listing<a class="headerlink" href="#allow-listing_1" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">UserSchema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">({</span><span class="w"></span>
-<span class="w">    </span><span class="nx">userid</span><span class="o">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nx">password</span><span class="o">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nx">email</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nx">isAdmin</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nb">Boolean</span><span class="p">,</span><span class="w"></span>
-<span class="p">});</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">UserSchema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">({</span>
+<span class="w">    </span><span class="nx">userid</span><span class="o">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">password</span><span class="o">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">email</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">isAdmin</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nb">Boolean</span><span class="p">,</span>
+<span class="p">});</span>
 
-<span class="nx">UserSchema</span><span class="p">.</span><span class="nx">statics</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nx">User</span><span class="p">.</span><span class="nx">userCreateSafeFields</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;userid&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;password&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;email&#39;</span><span class="p">]</span><span class="w"></span>
-<span class="p">};</span><span class="w"></span>
+<span class="nx">UserSchema</span><span class="p">.</span><span class="nx">statics</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">User</span><span class="p">.</span><span class="nx">userCreateSafeFields</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;userid&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;password&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;email&#39;</span><span class="p">]</span>
+<span class="p">};</span>
 
-<span class="kd">var</span><span class="w"> </span><span class="nx">User</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="s1">&#39;User&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">UserSchema</span><span class="p">);</span><span class="w"></span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">User</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="s1">&#39;User&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">UserSchema</span><span class="p">);</span>
 
-<span class="nx">_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;underscore&#39;</span><span class="p">);</span><span class="w"></span>
-<span class="kd">var</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">User</span><span class="p">(</span><span class="nx">_</span><span class="p">.</span><span class="nx">pick</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">,</span><span class="w"> </span><span class="nx">User</span><span class="p">.</span><span class="nx">userCreateSafeFields</span><span class="p">));</span><span class="w"></span>
+<span class="nx">_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;underscore&#39;</span><span class="p">);</span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">User</span><span class="p">(</span><span class="nx">_</span><span class="p">.</span><span class="nx">pick</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">,</span><span class="w"> </span><span class="nx">User</span><span class="p">.</span><span class="nx">userCreateSafeFields</span><span class="p">));</span>
 </code></pre></div>
 <p>Take a look <a href="http://underscorejs.org/#pick">here</a> for the documentation.</p>
 <h4 id="block-listing_1">Block-listing<a class="headerlink" href="#block-listing_1" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">massAssign</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mongoose-mass-assign&#39;</span><span class="p">);</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">massAssign</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mongoose-mass-assign&#39;</span><span class="p">);</span>
 
-<span class="kd">var</span><span class="w"> </span><span class="nx">UserSchema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">({</span><span class="w"></span>
-<span class="w">    </span><span class="nx">userid</span><span class="o">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nx">password</span><span class="o">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nx">email</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nx">isAdmin</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="nb">Boolean</span><span class="p">,</span><span class="w"> </span><span class="nx">protect</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="k">default</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
-<span class="p">});</span><span class="w"></span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">UserSchema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">({</span>
+<span class="w">    </span><span class="nx">userid</span><span class="o">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">password</span><span class="o">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">email</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">isAdmin</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="nb">Boolean</span><span class="p">,</span><span class="w"> </span><span class="nx">protect</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="k">default</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">}</span>
+<span class="p">});</span>
 
-<span class="nx">UserSchema</span><span class="p">.</span><span class="nx">plugin</span><span class="p">(</span><span class="nx">massAssign</span><span class="p">);</span><span class="w"></span>
+<span class="nx">UserSchema</span><span class="p">.</span><span class="nx">plugin</span><span class="p">(</span><span class="nx">massAssign</span><span class="p">);</span>
 
-<span class="kd">var</span><span class="w"> </span><span class="nx">User</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="s1">&#39;User&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">UserSchema</span><span class="p">);</span><span class="w"></span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">User</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="s1">&#39;User&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">UserSchema</span><span class="p">);</span>
 
-<span class="cm">/** Static method, useful for creation **/</span><span class="w"></span>
-<span class="kd">var</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">User</span><span class="p">.</span><span class="nx">massAssign</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span><span class="w"></span>
+<span class="cm">/** Static method, useful for creation **/</span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">User</span><span class="p">.</span><span class="nx">massAssign</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
 
-<span class="cm">/** Instance method, useful for updating**/</span><span class="w"></span>
-<span class="kd">var</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">User</span><span class="p">;</span><span class="w"></span>
-<span class="nx">user</span><span class="p">.</span><span class="nx">massAssign</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span><span class="w"></span>
+<span class="cm">/** Instance method, useful for updating**/</span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">User</span><span class="p">;</span>
+<span class="nx">user</span><span class="p">.</span><span class="nx">massAssign</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
 
-<span class="cm">/** Static massUpdate method **/</span><span class="w"></span>
-<span class="kd">var</span><span class="w"> </span><span class="nx">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">userid</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;bhelx&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">isAdmin</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;true&#39;</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
-<span class="nx">User</span><span class="p">.</span><span class="nx">update</span><span class="p">({</span><span class="w"> </span><span class="s1">&#39;_id&#39;</span><span class="o">:</span><span class="w"> </span><span class="nx">someId</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">$set</span><span class="o">:</span><span class="w"> </span><span class="nx">User</span><span class="p">.</span><span class="nx">massUpdate</span><span class="p">(</span><span class="nx">input</span><span class="p">)</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">);</span><span class="w"></span>
+<span class="cm">/** Static massUpdate method **/</span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">userid</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;bhelx&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">isAdmin</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;true&#39;</span><span class="w"> </span><span class="p">};</span>
+<span class="nx">User</span><span class="p">.</span><span class="nx">update</span><span class="p">({</span><span class="w"> </span><span class="s1">&#39;_id&#39;</span><span class="o">:</span><span class="w"> </span><span class="nx">someId</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">$set</span><span class="o">:</span><span class="w"> </span><span class="nx">User</span><span class="p">.</span><span class="nx">massUpdate</span><span class="p">(</span><span class="nx">input</span><span class="p">)</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">);</span>
 </code></pre></div>
 <p>Take a look <a href="https://www.npmjs.com/package/mongoose-mass-assign">here</a> for the documentation.</p>
 <h3 id="ruby-on-rails">Ruby On Rails<a class="headerlink" href="#ruby-on-rails" title="Permanent link">&para;</a></h3>
@@ -2201,42 +2201,6 @@ userid=bobbytables&amp;password=hashedpass&amp;email=bobby@tables.com&amp;isAdmi
       
         <footer class="md-footer">
   
-    
-    <nav class="md-footer__inner md-grid" aria-label="Footer" >
-      
-        
-        <a href="Logging_Vocabulary_Cheat_Sheet.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Logging Vocabulary" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              Logging Vocabulary
-            </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html" class="md-footer__link md-footer__link--next" aria-label="Next: Microservices based Security Arch Doc" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              Microservices based Security Arch Doc
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
-  
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
       <div class="md-copyright">
@@ -2262,12 +2226,11 @@ userid=bobbytables&amp;password=hashedpass&amp;email=bobby@tables.com&amp;isAdmi
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.12658920.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      <script src="../assets/javascripts/bundle.5cf534bf.min.js"></script>
       
-    
     
   </body>
 </html>

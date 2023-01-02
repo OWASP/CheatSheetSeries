@@ -16,8 +16,14 @@ redirect_from: "/cheatsheets/Ruby_on_Rails_Cheatsheet.html"
       
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Ruby_on_Rails_Cheat_Sheet.html">
       
+      
+        <link rel="prev" href="REST_Security_Cheat_Sheet.html">
+      
+      
+        <link rel="next" href="SAML_Security_Cheat_Sheet.html">
+      
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.0">
     
     
       
@@ -25,11 +31,10 @@ redirect_from: "/cheatsheets/Ruby_on_Rails_Cheatsheet.html"
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.975780f9.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.f79797b0.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
-        
       
       
 
@@ -116,8 +121,6 @@ redirect_from: "/cheatsheets/Ruby_on_Rails_Cheatsheet.html"
       <form class="md-header__option" data-md-component="palette">
         
           
-          
-          
           <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
           
             <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
@@ -125,8 +128,6 @@ redirect_from: "/cheatsheets/Ruby_on_Rails_Cheatsheet.html"
             </label>
           
         
-          
-          
           
           <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
           
@@ -1841,10 +1842,9 @@ redirect_from: "/cheatsheets/Ruby_on_Rails_Cheatsheet.html"
                 
                   
 
-  <a href="https://github.com/OWASP/CheatSheetSeries/edit/master/docs/cheatsheets/Ruby_on_Rails_Cheat_Sheet.md" title="Edit this page" class="md-content__button md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
-  </a>
+  
+  
+
 
 
 <h1 id="ruby-on-rails-cheat-sheet">Ruby on Rails Cheat Sheet<a class="headerlink" href="#ruby-on-rails-cheat-sheet" title="Permanent link">&para;</a></h1>
@@ -1856,30 +1856,30 @@ redirect_from: "/cheatsheets/Ruby_on_Rails_Cheatsheet.html"
 <p>Ruby offers a function called "eval" which will dynamically build new Ruby code based on Strings. It also has a number of ways to call system commands.</p>
 <div class="highlight"><pre><span></span><code><span class="nb">eval</span><span class="p">(</span><span class="s2">&quot;ruby code here&quot;</span><span class="p">)</span>
 <span class="nb">system</span><span class="p">(</span><span class="s2">&quot;os command here&quot;</span><span class="p">)</span>
-<span class="sb">`ls -al /`</span> <span class="c1"># (backticks contain os command)</span>
+<span class="sb">`ls -al /`</span><span class="w"> </span><span class="c1"># (backticks contain os command)</span>
 <span class="nb">exec</span><span class="p">(</span><span class="s2">&quot;os command here&quot;</span><span class="p">)</span>
 <span class="n">spawn</span><span class="p">(</span><span class="s2">&quot;os command here&quot;</span><span class="p">)</span>
 <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;| os command here&quot;</span><span class="p">)</span>
 <span class="no">Process</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="s2">&quot;os command here&quot;</span><span class="p">)</span>
 <span class="no">Process</span><span class="o">.</span><span class="n">spawn</span><span class="p">(</span><span class="s2">&quot;os command here&quot;</span><span class="p">)</span>
 <span class="no">IO</span><span class="o">.</span><span class="n">binread</span><span class="p">(</span><span class="s2">&quot;| os command here&quot;</span><span class="p">)</span>
-<span class="no">IO</span><span class="o">.</span><span class="n">binwrite</span><span class="p">(</span><span class="s2">&quot;| os command here&quot;</span><span class="p">,</span> <span class="s2">&quot;foo&quot;</span><span class="p">)</span>
-<span class="no">IO</span><span class="o">.</span><span class="n">foreach</span><span class="p">(</span><span class="s2">&quot;| os command here&quot;</span><span class="p">)</span> <span class="p">{}</span>
+<span class="no">IO</span><span class="o">.</span><span class="n">binwrite</span><span class="p">(</span><span class="s2">&quot;| os command here&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
+<span class="no">IO</span><span class="o">.</span><span class="n">foreach</span><span class="p">(</span><span class="s2">&quot;| os command here&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
 <span class="no">IO</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="s2">&quot;os command here&quot;</span><span class="p">)</span>
 <span class="no">IO</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s2">&quot;| os command here&quot;</span><span class="p">)</span>
 <span class="no">IO</span><span class="o">.</span><span class="n">readlines</span><span class="p">(</span><span class="s2">&quot;| os command here&quot;</span><span class="p">)</span>
-<span class="no">IO</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;| os command here&quot;</span><span class="p">,</span> <span class="s2">&quot;foo&quot;</span><span class="p">)</span>
+<span class="no">IO</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;| os command here&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
 </code></pre></div>
 <p>While the power of these commands is quite useful, extreme care should be taken when using them in a Rails based application. Usually, its just a bad idea. If need be, an allow-list of possible values should be used and any input should be validated as thoroughly as possible.</p>
 <p>The guides from <a href="https://guides.rubyonrails.org/security.html#command-line-injection">Rails</a> and <a href="https://owasp.org/www-community/attacks/Command_Injection">OWASP</a> contain further information on command injection.</p>
 <h3 id="sql-injection">SQL Injection<a class="headerlink" href="#sql-injection" title="Permanent link">&para;</a></h3>
 <p>Ruby on Rails is often used with an ORM called ActiveRecord, though it is flexible and can be used with other data sources. Typically very simple Rails applications use methods on the Rails models to query data. Many use cases protect for SQL Injection out of the box. However, it is possible to write code that allows for SQL Injection.</p>
-<div class="highlight"><pre><span></span><code><span class="nb">name</span> <span class="o">=</span> <span class="n">params</span><span class="o">[</span><span class="ss">:name</span><span class="o">]</span>
-<span class="vi">@projects</span> <span class="o">=</span> <span class="no">Project</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="s2">&quot;name like &#39;&quot;</span> <span class="o">+</span> <span class="nb">name</span> <span class="o">+</span> <span class="s2">&quot;&#39;&quot;</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="nb">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">params</span><span class="o">[</span><span class="ss">:name</span><span class="o">]</span>
+<span class="vi">@projects</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">Project</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="s2">&quot;name like &#39;&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">name</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot;&#39;&quot;</span><span class="p">);</span>
 </code></pre></div>
 <p>The statement is injectable because the name parameter is not escaped.</p>
 <p>Here is the idiom for building this kind of statement:</p>
-<div class="highlight"><pre><span></span><code><span class="vi">@projects</span> <span class="o">=</span> <span class="no">Project</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="s2">&quot;name like ?&quot;</span><span class="p">,</span> <span class="s2">&quot;%</span><span class="si">#{</span><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">sanitize_sql_like</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:name</span><span class="o">]</span><span class="p">)</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="vi">@projects</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">Project</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="s2">&quot;name like ?&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;%</span><span class="si">#{</span><span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">sanitize_sql_like</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:name</span><span class="o">]</span><span class="p">)</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
 </code></pre></div>
 <p>Use caution not to build SQL statements based on user controlled input. A list of more realistic and detailed examples is here: <a href="https://rails-sqli.org">rails-sqli.org</a>. OWASP has extensive information about <a href="https://owasp.org/www-community/attacks/SQL_Injection">SQL Injection</a>.</p>
 <h3 id="cross-site-scripting-xss">Cross-site Scripting (XSS)<a class="headerlink" href="#cross-site-scripting-xss" title="Permanent link">&para;</a></h3>
@@ -1888,30 +1888,30 @@ redirect_from: "/cheatsheets/Ruby_on_Rails_Cheatsheet.html"
 <span class="o">&lt;</span><span class="sx">%= raw @product.name %&gt;</span>
 
 <span class="sx"># Wrong! Do not do this!</span>
-<span class="sx">&lt;%=</span><span class="o">=</span> <span class="vi">@product</span><span class="o">.</span><span class="n">name</span> <span class="sx">%&gt;</span>
+<span class="sx">&lt;%=</span><span class="o">=</span><span class="w"> </span><span class="vi">@product</span><span class="o">.</span><span class="n">name</span><span class="w"> </span><span class="sx">%&gt;</span>
 
 <span class="sx"># Wrong! Do not do this!</span>
 <span class="sx">&lt;%= @product.name.html_safe %&gt;</span>
 
 <span class="c1"># Wrong! Do not do this!</span>
-<span class="o">&lt;%=</span> <span class="n">content_tag</span> <span class="vi">@product</span><span class="o">.</span><span class="n">name</span> <span class="o">%&gt;</span>
+<span class="o">&lt;%=</span><span class="w"> </span><span class="n">content_tag</span><span class="w"> </span><span class="vi">@product</span><span class="o">.</span><span class="n">name</span><span class="w"> </span><span class="o">%&gt;</span>
 </code></pre></div>
 <p>Unfortunately, any field that uses <code>raw</code>, <code>html_safe</code>, <code>content_tag</code> or similar like this will be a potential XSS target. Note that there are also widespread misunderstandings about <code>html_safe()</code>.</p>
 <p><a href="https://stackoverflow.com/questions/4251284/raw-vs-html-safe-vs-h-to-unescape-html">This writeup</a> describes the underlying SafeBuffer mechanism in detail. Other tags that change the way strings are prepared for output can introduce similar issues, including content_tag.</p>
-<div class="highlight"><pre><span></span><code><span class="n">content_tag</span><span class="p">(</span><span class="s2">&quot;/&gt;&lt;script&gt;alert(&#39;hack!&#39;);&lt;/script&gt;&quot;</span><span class="p">)</span> <span class="c1"># XSS example</span>
+<div class="highlight"><pre><span></span><code><span class="n">content_tag</span><span class="p">(</span><span class="s2">&quot;/&gt;&lt;script&gt;alert(&#39;hack!&#39;);&lt;/script&gt;&quot;</span><span class="p">)</span><span class="w"> </span><span class="c1"># XSS example</span>
 <span class="c1"># produces: &lt;/&gt;&lt;script&gt;alert(&#39;hack!&#39;);&lt;/script&gt;&gt;&lt;//&gt;&lt;script&gt;alert(&#39;hack!&#39;);&lt;/script&gt;&gt;</span>
 </code></pre></div>
 <p>The method <code>html_safe</code> of String is somewhat confusingly named. It means that we know for sure the content of the string is safe to include in HTML without escaping. <strong>This method itself is un-safe!</strong></p>
 <p>If you must accept HTML content from users, consider a markup language for rich text in an application (Examples include: Markdown and textile) and disallow HTML tags. This helps ensures that the input accepted doesn't include HTML content that could be malicious.</p>
 <p>If you cannot restrict your users from entering HTML, consider implementing content security policy to disallow the execution of any JavaScript. And finally, consider using the <code>#sanitize</code> method that lets you list allowed tags. Be careful, this method has been shown to be flawed numerous times and will never be a complete solution.</p>
 <p>An often overlooked XSS attack vector for older versions of rails is the <code>href</code> value of a link:</p>
-<div class="highlight"><pre><span></span><code><span class="o">&lt;%=</span> <span class="n">link_to</span> <span class="s2">&quot;Personal Website&quot;</span><span class="p">,</span> <span class="vi">@user</span><span class="o">.</span><span class="n">website</span> <span class="o">%&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="o">&lt;%=</span><span class="w"> </span><span class="n">link_to</span><span class="w"> </span><span class="s2">&quot;Personal Website&quot;</span><span class="p">,</span><span class="w"> </span><span class="vi">@user</span><span class="o">.</span><span class="n">website</span><span class="w"> </span><span class="o">%&gt;</span>
 </code></pre></div>
 <p>If <code>@user.website</code> contains a link that starts with <code>javascript:</code>, the content will execute when a user clicks the generated link:</p>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;javascript:alert(&#39;Haxored&#39;)&quot;</span><span class="p">&gt;</span>Personal Website<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
 </code></pre></div>
 <p>Newer Rails versions escape such links in a better way.</p>
-<div class="highlight"><pre><span></span><code><span class="n">link_to</span> <span class="s2">&quot;Personal Website&quot;</span><span class="p">,</span> <span class="s1">&#39;javascript:alert(1);&#39;</span><span class="o">.</span><span class="n">html_safe</span><span class="p">()</span>
+<div class="highlight"><pre><span></span><code><span class="n">link_to</span><span class="w"> </span><span class="s2">&quot;Personal Website&quot;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;javascript:alert(1);&#39;</span><span class="o">.</span><span class="n">html_safe</span><span class="p">()</span>
 <span class="c1"># Will generate:</span>
 <span class="c1"># &quot;&lt;a href=&quot;javascript:alert(1);&quot;&gt;Personal Website&lt;/a&gt;&quot;</span>
 </code></pre></div>
@@ -1921,7 +1921,7 @@ redirect_from: "/cheatsheets/Ruby_on_Rails_Cheatsheet.html"
 <h3 id="sessions">Sessions<a class="headerlink" href="#sessions" title="Permanent link">&para;</a></h3>
 <p>By default, Ruby on Rails uses a Cookie based session store. What that means is that unless you change something, the session will not expire on the server. That means that some default applications may be vulnerable to replay attacks. It also means that sensitive information should never be put in the session.</p>
 <p>The best practice is to use a database based session, which thankfully is very easy with Rails:</p>
-<div class="highlight"><pre><span></span><code><span class="no">Project</span><span class="o">::</span><span class="no">Application</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">session_store</span> <span class="ss">:active_record_store</span>
+<div class="highlight"><pre><span></span><code><span class="no">Project</span><span class="o">::</span><span class="no">Application</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">session_store</span><span class="w"> </span><span class="ss">:active_record_store</span>
 </code></pre></div>
 <p>There is an <a href="Session_Management_Cheat_Sheet.html">Session Management Cheat Sheet</a>.</p>
 <h3 id="authentication">Authentication<a class="headerlink" href="#authentication" title="Permanent link">&para;</a></h3>
@@ -1929,43 +1929,43 @@ redirect_from: "/cheatsheets/Ruby_on_Rails_Cheatsheet.html"
 <div class="highlight"><pre><span></span><code><span class="c1"># config/environments/production.rb</span>
 <span class="c1"># Force all access to the app over SSL, use Strict-Transport-Security,</span>
 <span class="c1"># and use secure cookies</span>
-<span class="n">config</span><span class="o">.</span><span class="n">force_ssl</span> <span class="o">=</span> <span class="kp">true</span>
+<span class="n">config</span><span class="o">.</span><span class="n">force_ssl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kp">true</span>
 </code></pre></div>
 <p>Uncomment the line 3 as above in your configuration.</p>
 <p>Generally speaking, Rails does not provide authentication by itself. However, most developers using Rails leverage libraries such as Devise or AuthLogic to provide authentication.</p>
 <p>To enable authentication it is possible to use Devise gem.</p>
 <p>Install it using:</p>
-<div class="highlight"><pre><span></span><code>gem <span class="s1">&#39;devise&#39;</span>
+<div class="highlight"><pre><span></span><code>gem<span class="w"> </span><span class="s1">&#39;devise&#39;</span>
 </code></pre></div>
 <p>Then install it to the user model:</p>
-<div class="highlight"><pre><span></span><code>rails generate devise:install
+<div class="highlight"><pre><span></span><code>rails<span class="w"> </span>generate<span class="w"> </span>devise:install
 </code></pre></div>
 <p>Next, specify which resources (routes) require authenticated access in routes:</p>
-<div class="highlight"><pre><span></span><code><span class="no">Rails</span><span class="o">.</span><span class="n">application</span><span class="o">.</span><span class="n">routes</span><span class="o">.</span><span class="n">draw</span> <span class="k">do</span>
-  <span class="n">authenticate</span> <span class="ss">:user</span> <span class="k">do</span>
-    <span class="n">resources</span> <span class="ss">:something</span> <span class="k">do</span>  <span class="c1"># these resource require authentication</span>
-      <span class="o">...</span>
-    <span class="k">end</span>
-  <span class="k">end</span>
+<div class="highlight"><pre><span></span><code><span class="no">Rails</span><span class="o">.</span><span class="n">application</span><span class="o">.</span><span class="n">routes</span><span class="o">.</span><span class="n">draw</span><span class="w"> </span><span class="k">do</span>
+<span class="w">  </span><span class="n">authenticate</span><span class="w"> </span><span class="ss">:user</span><span class="w"> </span><span class="k">do</span>
+<span class="w">    </span><span class="n">resources</span><span class="w"> </span><span class="ss">:something</span><span class="w"> </span><span class="k">do</span><span class="w">  </span><span class="c1"># these resource require authentication</span>
+<span class="w">      </span><span class="o">...</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="w">  </span><span class="k">end</span>
 
-  <span class="n">devise_for</span> <span class="ss">:users</span> <span class="c1"># sign-up/-in/out routes</span>
+<span class="w">  </span><span class="n">devise_for</span><span class="w"> </span><span class="ss">:users</span><span class="w"> </span><span class="c1"># sign-up/-in/out routes</span>
 
-  <span class="n">root</span> <span class="ss">to</span><span class="p">:</span> <span class="s1">&#39;static#home&#39;</span> <span class="c1"># no authentication required</span>
+<span class="w">  </span><span class="n">root</span><span class="w"> </span><span class="ss">to</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;static#home&#39;</span><span class="w"> </span><span class="c1"># no authentication required</span>
 <span class="k">end</span>
 </code></pre></div>
 <p>To enforce password complexity, it is possible to use <a href="https://github.com/bitzesty/devise_zxcvbn">zxcvbn gem</a>. Configure your user model with it:</p>
-<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ApplicationRecord</span>
-  <span class="n">devise</span> <span class="ss">:database_authenticatable</span><span class="p">,</span>
-    <span class="c1"># other devise features, then</span>
-    <span class="ss">:zxcvbnable</span>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">User</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="no">ApplicationRecord</span>
+<span class="w">  </span><span class="n">devise</span><span class="w"> </span><span class="ss">:database_authenticatable</span><span class="p">,</span>
+<span class="w">    </span><span class="c1"># other devise features, then</span>
+<span class="w">    </span><span class="ss">:zxcvbnable</span>
 <span class="k">end</span>
 </code></pre></div>
 <p>And configure the required password complexity:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># in config/initializers/devise.rb</span>
-<span class="no">Devise</span><span class="o">.</span><span class="n">setup</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
-  <span class="c1"># zxcvbn score for devise</span>
-  <span class="n">config</span><span class="o">.</span><span class="n">min_password_score</span> <span class="o">=</span> <span class="mi">4</span> <span class="c1"># complexity score here.</span>
-  <span class="o">...</span>
+<span class="no">Devise</span><span class="o">.</span><span class="n">setup</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="o">|</span><span class="n">config</span><span class="o">|</span>
+<span class="w">  </span><span class="c1"># zxcvbn score for devise</span>
+<span class="w">  </span><span class="n">config</span><span class="o">.</span><span class="n">min_password_score</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="c1"># complexity score here.</span>
+<span class="w">  </span><span class="o">...</span>
 </code></pre></div>
 <p>You can try out <a href="https://github.com/qutorial/revise">this PoC</a> to learn more about it.</p>
 <p>Next, <a href="https://github.com/omniauth/omniauth">omniauth gem</a> allows for multiple strategies for authentication. Using it one can configure secure authentication with Facebook, LDAP and many other providers. Read on <a href="https://github.com/omniauth/omniauth#integrating-omniauth-into-your-application">here</a>.</p>
@@ -1975,15 +1975,15 @@ redirect_from: "/cheatsheets/Ruby_on_Rails_Cheatsheet.html"
 <p>It supports multiple front end technologies, for example angular2-token.</p>
 <p>This gem is configured similar to the devise gem itself. It also requires omniauth as a dependency.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># token-based authentication</span>
-gem <span class="s1">&#39;devise_token_auth&#39;</span>
-gem <span class="s1">&#39;omniauth&#39;</span>
+gem<span class="w"> </span><span class="s1">&#39;devise_token_auth&#39;</span>
+gem<span class="w"> </span><span class="s1">&#39;omniauth&#39;</span>
 </code></pre></div>
 <p>Then a route is defined:</p>
-<div class="highlight"><pre><span></span><code><span class="n">mount_devise_token_auth_for</span> <span class="s1">&#39;User&#39;</span><span class="p">,</span> <span class="ss">at</span><span class="p">:</span> <span class="s1">&#39;auth&#39;</span>
+<div class="highlight"><pre><span></span><code><span class="n">mount_devise_token_auth_for</span><span class="w"> </span><span class="s1">&#39;User&#39;</span><span class="p">,</span><span class="w"> </span><span class="ss">at</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;auth&#39;</span>
 </code></pre></div>
 <p>And the User model is modified accordingly.</p>
 <p>These actions can be done with one command:</p>
-<div class="highlight"><pre><span></span><code>rails g devise_token_auth:install <span class="o">[</span>USER_CLASS<span class="o">]</span> <span class="o">[</span>MOUNT_PATH<span class="o">]</span>
+<div class="highlight"><pre><span></span><code>rails<span class="w"> </span>g<span class="w"> </span>devise_token_auth:install<span class="w"> </span><span class="o">[</span>USER_CLASS<span class="o">]</span><span class="w"> </span><span class="o">[</span>MOUNT_PATH<span class="o">]</span>
 </code></pre></div>
 <p>You may need to edit the generated migration to avoid unnecessary fields and/or field duplication depending on your use case.</p>
 <p>Note: when you use only token authentication, there is no more need in <a href="https://owasp.org/www-community/attacks/csrf">CSRF</a> protection in controllers. If you use both ways: cookies and tokens, the paths where cookies are used for authentication still must be protected from forgery!</p>
@@ -1994,12 +1994,12 @@ gem <span class="s1">&#39;omniauth&#39;</span>
 <p>More general information about this class of vulnerability is in the <a href="https://wiki.owasp.org/index.php/Top_10_2010-A4-Insecure_Direct_Object_References">OWASP Top 10 Page</a>.</p>
 <h3 id="csrf-cross-site-request-forgery">CSRF (Cross Site Request Forgery)<a class="headerlink" href="#csrf-cross-site-request-forgery" title="Permanent link">&para;</a></h3>
 <p>Ruby on Rails has specific, built-in support for CSRF tokens. To enable it, or ensure that it is enabled, find the base <code>ApplicationController</code> and look for a directive such as the following:</p>
-<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>
-  <span class="n">protect_from_forgery</span>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">ApplicationController</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>
+<span class="w">  </span><span class="n">protect_from_forgery</span>
 </code></pre></div>
 <p>Note that the syntax for this type of control includes a way to add exceptions. Exceptions may be useful for APIs or other reasons - but should be reviewed and consciously included. In the example below, the Rails ProjectController will not provide <a href="https://owasp.org/www-community/attacks/csrf">CSRF</a> protection for the show method.</p>
-<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">ProjectController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
-  <span class="n">protect_from_forgery</span> <span class="ss">except</span><span class="p">:</span> <span class="ss">:show</span>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">ProjectController</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="no">ApplicationController</span>
+<span class="w">  </span><span class="n">protect_from_forgery</span><span class="w"> </span><span class="ss">except</span><span class="p">:</span><span class="w"> </span><span class="ss">:show</span>
 </code></pre></div>
 <p>Also note that by default Rails does not provide CSRF protection for any HTTP <code>GET</code> request.</p>
 <p><strong>Note:</strong> if you use token authentication only, there is no need to protect from CSRF in controllers like this. If cookie-based authentication is used on some paths, then the protections is still required on them.</p>
@@ -2013,44 +2013,44 @@ gem <span class="s1">&#39;omniauth&#39;</span>
 <p><code>http://www.example.com/redirect?url=http://badhacker.com</code></p>
 <p>The most basic, but restrictive protection is to use the <code>:only_path</code> option. Setting this to true will essentially strip out any host information. However, the <code>:only_path</code> option must be part of the first argument. If the first argument is not a hash table, then there is no way to pass in this option. In the absence of a custom helper or allow list, this is one approach that can work:</p>
 <div class="highlight"><pre><span></span><code><span class="k">begin</span>
-  <span class="k">if</span> <span class="n">path</span> <span class="o">=</span> <span class="no">URI</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:url</span><span class="o">]</span><span class="p">)</span><span class="o">.</span><span class="n">path</span>
-    <span class="n">redirect_to</span> <span class="n">path</span>
-  <span class="k">end</span>
-<span class="k">rescue</span> <span class="no">URI</span><span class="o">::</span><span class="no">InvalidURIError</span>
-  <span class="n">redirect_to</span> <span class="s1">&#39;/&#39;</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">URI</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:url</span><span class="o">]</span><span class="p">)</span><span class="o">.</span><span class="n">path</span>
+<span class="w">    </span><span class="n">redirect_to</span><span class="w"> </span><span class="n">path</span>
+<span class="w">  </span><span class="k">end</span>
+<span class="k">rescue</span><span class="w"> </span><span class="no">URI</span><span class="o">::</span><span class="no">InvalidURIError</span>
+<span class="w">  </span><span class="n">redirect_to</span><span class="w"> </span><span class="s1">&#39;/&#39;</span>
 <span class="k">end</span>
 </code></pre></div>
 <p>If matching user input against a list of approved sites or TLDs against regular expression is a must, it makes sense to leverage a library such as <code>URI.parse()</code> to obtain the host and then take the host value and match it against regular expression patterns. Those regular expressions must, at a minimum, have anchors or there is a greater chance of an attacker bypassing the validation routine.</p>
 <p>Example:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">require</span> <span class="s1">&#39;uri&#39;</span>
-<span class="n">host</span> <span class="o">=</span> <span class="no">URI</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">#{</span><span class="n">params</span><span class="o">[</span><span class="ss">:url</span><span class="o">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">host</span>
+<div class="highlight"><pre><span></span><code><span class="nb">require</span><span class="w"> </span><span class="s1">&#39;uri&#39;</span>
+<span class="n">host</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">URI</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">#{</span><span class="n">params</span><span class="o">[</span><span class="ss">:url</span><span class="o">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">host</span>
 <span class="c1"># this can be vulnerable to javascript://trusted.com/%0Aalert(0)</span>
 <span class="c1"># so check .scheme and .port too</span>
-<span class="n">validation_routine</span><span class="p">(</span><span class="n">host</span><span class="p">)</span> <span class="k">if</span> <span class="n">host</span>
-<span class="k">def</span> <span class="nf">validation_routine</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
-  <span class="c1"># Validation routine where we use  \A and \z as anchors *not* ^ and $</span>
-  <span class="c1"># you could also check the host value against an allow list</span>
+<span class="n">validation_routine</span><span class="p">(</span><span class="n">host</span><span class="p">)</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">host</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">validation_routine</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
+<span class="w">  </span><span class="c1"># Validation routine where we use  \A and \z as anchors *not* ^ and $</span>
+<span class="w">  </span><span class="c1"># you could also check the host value against an allow list</span>
 <span class="k">end</span>
 </code></pre></div>
 <p>Also blind redirecting to user input parameter can lead to XSS.</p>
 <p>Example code:</p>
-<div class="highlight"><pre><span></span><code><span class="n">redirect_to</span> <span class="n">params</span><span class="o">[</span><span class="ss">:to</span><span class="o">]</span>
+<div class="highlight"><pre><span></span><code><span class="n">redirect_to</span><span class="w"> </span><span class="n">params</span><span class="o">[</span><span class="ss">:to</span><span class="o">]</span>
 </code></pre></div>
 <p>Will give this URL:</p>
 <p><code>http://example.com/redirect?to[status]=200&amp;to[protocol]=javascript:alert(0)//</code></p>
 <p>The obvious fix for this type of vulnerability is to restrict to specific Top-Level Domains (TLDs), statically define specific sites, or map a key to it's value.</p>
 <p>Example code:</p>
-<div class="highlight"><pre><span></span><code><span class="no">ACCEPTABLE_URLS</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s1">&#39;our_app_1&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;https://www.example_commerce_site.com/checkout&quot;</span><span class="p">,</span>
-  <span class="s1">&#39;our_app_2&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;https://www.example_user_site.com/change_settings&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="no">ACCEPTABLE_URLS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="s1">&#39;our_app_1&#39;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s2">&quot;https://www.example_commerce_site.com/checkout&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s1">&#39;our_app_2&#39;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s2">&quot;https://www.example_user_site.com/change_settings&quot;</span>
 <span class="p">}</span>
 </code></pre></div>
 <p>Will give this URL:</p>
 <p><code>http://www.example.com/redirect?url=our_app_1</code></p>
 <p>Redirection handling code:</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">redirect</span>
-  <span class="n">url</span> <span class="o">=</span> <span class="no">ACCEPTABLE_URLS</span><span class="o">[</span><span class="s2">&quot;</span><span class="si">#{</span><span class="n">params</span><span class="o">[</span><span class="ss">:url</span><span class="o">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">]</span>
-  <span class="n">redirect_to</span> <span class="n">url</span> <span class="k">if</span> <span class="n">url</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">redirect</span>
+<span class="w">  </span><span class="n">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">ACCEPTABLE_URLS</span><span class="o">[</span><span class="s2">&quot;</span><span class="si">#{</span><span class="n">params</span><span class="o">[</span><span class="ss">:url</span><span class="o">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">]</span>
+<span class="w">  </span><span class="n">redirect_to</span><span class="w"> </span><span class="n">url</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">url</span>
 <span class="k">end</span>
 </code></pre></div>
 <p>There is a more general OWASP resource about <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">unvalidated redirects and forwards</a>.</p>
@@ -2065,35 +2065,35 @@ gem <span class="s1">&#39;omniauth&#39;</span>
 <p><em>The request is sent and the browser, upon receiving a response, inspects the response headers in order to determine if the response can and should be processed.</em></p>
 <p>Allow list in Rails:</p>
 <p><strong>Gemfile:</strong></p>
-<div class="highlight"><pre><span></span><code>gem <span class="s1">&#39;rack-cors&#39;</span>, :require <span class="o">=</span>&gt; <span class="s1">&#39;rack/cors&#39;</span>
+<div class="highlight"><pre><span></span><code>gem<span class="w"> </span><span class="s1">&#39;rack-cors&#39;</span>,<span class="w"> </span>:require<span class="w"> </span><span class="o">=</span>&gt;<span class="w"> </span><span class="s1">&#39;rack/cors&#39;</span>
 </code></pre></div>
 <p><strong>config/application.rb:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="k">module</span> <span class="nn">Sample</span>
-  <span class="k">class</span> <span class="nc">Application</span> <span class="o">&lt;</span> <span class="no">Rails</span><span class="o">::</span><span class="no">Application</span>
-    <span class="n">config</span><span class="o">.</span><span class="n">middleware</span><span class="o">.</span><span class="n">use</span> <span class="no">Rack</span><span class="o">::</span><span class="no">Cors</span> <span class="k">do</span>
-      <span class="n">allow</span> <span class="k">do</span>
-        <span class="n">origins</span> <span class="s1">&#39;someserver.example.com&#39;</span>
-        <span class="n">resource</span> <span class="sr">%r{/users/\d+.json}</span><span class="p">,</span>
-        <span class="ss">:headers</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="s1">&#39;Origin&#39;</span><span class="p">,</span> <span class="s1">&#39;Accept&#39;</span><span class="p">,</span> <span class="s1">&#39;Content-Type&#39;</span><span class="o">]</span><span class="p">,</span>
-        <span class="ss">:methods</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:post</span><span class="p">,</span> <span class="ss">:get</span><span class="o">]</span>
-      <span class="k">end</span>
-    <span class="k">end</span>
-  <span class="k">end</span>
+<div class="highlight"><pre><span></span><code><span class="k">module</span><span class="w"> </span><span class="nn">Sample</span>
+<span class="w">  </span><span class="k">class</span><span class="w"> </span><span class="nc">Application</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="no">Rails</span><span class="o">::</span><span class="no">Application</span>
+<span class="w">    </span><span class="n">config</span><span class="o">.</span><span class="n">middleware</span><span class="o">.</span><span class="n">use</span><span class="w"> </span><span class="no">Rack</span><span class="o">::</span><span class="no">Cors</span><span class="w"> </span><span class="k">do</span>
+<span class="w">      </span><span class="n">allow</span><span class="w"> </span><span class="k">do</span>
+<span class="w">        </span><span class="n">origins</span><span class="w"> </span><span class="s1">&#39;someserver.example.com&#39;</span>
+<span class="w">        </span><span class="n">resource</span><span class="w"> </span><span class="sr">%r{/users/\d+.json}</span><span class="p">,</span>
+<span class="w">        </span><span class="ss">:headers</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="o">[</span><span class="s1">&#39;Origin&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Accept&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Content-Type&#39;</span><span class="o">]</span><span class="p">,</span>
+<span class="w">        </span><span class="ss">:methods</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="o">[</span><span class="ss">:post</span><span class="p">,</span><span class="w"> </span><span class="ss">:get</span><span class="o">]</span>
+<span class="w">      </span><span class="k">end</span>
+<span class="w">    </span><span class="k">end</span>
+<span class="w">  </span><span class="k">end</span>
 <span class="k">end</span>
 </code></pre></div>
 <h3 id="security-related-headers">Security-related headers<a class="headerlink" href="#security-related-headers" title="Permanent link">&para;</a></h3>
 <p>To set a header value, simply access the response.headers object as a hash inside your controller (often in a before/after_filter).</p>
-<div class="highlight"><pre><span></span><code><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="o">[</span><span class="s1">&#39;X-header-name&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;value&#39;</span>
+<div class="highlight"><pre><span></span><code><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="o">[</span><span class="s1">&#39;X-header-name&#39;</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;value&#39;</span>
 </code></pre></div>
 <p>Rails provides the <code>default_headers</code> functionality that will automatically apply the values supplied. This works for most headers in almost all cases.</p>
-<div class="highlight"><pre><span></span><code><span class="no">ActionDispatch</span><span class="o">::</span><span class="no">Response</span><span class="o">.</span><span class="n">default_headers</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s1">&#39;X-Frame-Options&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;SAMEORIGIN&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;X-Content-Type-Options&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;nosniff&#39;</span><span class="p">,</span>
-  <span class="s1">&#39;X-XSS-Protection&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;0&#39;</span>
+<div class="highlight"><pre><span></span><code><span class="no">ActionDispatch</span><span class="o">::</span><span class="no">Response</span><span class="o">.</span><span class="n">default_headers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="s1">&#39;X-Frame-Options&#39;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s1">&#39;SAMEORIGIN&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="s1">&#39;X-Content-Type-Options&#39;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s1">&#39;nosniff&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="s1">&#39;X-XSS-Protection&#39;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s1">&#39;0&#39;</span>
 <span class="p">}</span>
 </code></pre></div>
 <p><a href="https://owasp.org/www-project-secure-headers/#headers-link">Strict transport security</a> is a special case, it is set in an environment file (e.g. <code>production.rb</code>)</p>
-<div class="highlight"><pre><span></span><code><span class="n">config</span><span class="o">.</span><span class="n">force_ssl</span> <span class="o">=</span> <span class="kp">true</span>
+<div class="highlight"><pre><span></span><code><span class="n">config</span><span class="o">.</span><span class="n">force_ssl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kp">true</span>
 </code></pre></div>
 <p>For those not on the edge, there is a library (<a href="https://github.com/twitter/secureheaders">secure_headers</a>) for the same behavior with content security policy abstraction provided. It will automatically apply logic based on the user agent to produce a concise set of headers.</p>
 <h3 id="business-logic-bugs">Business Logic Bugs<a class="headerlink" href="#business-logic-bugs" title="Permanent link">&para;</a></h3>
@@ -2102,7 +2102,7 @@ gem <span class="s1">&#39;omniauth&#39;</span>
 <p>Generally speaking, Rails avoids open redirect and path traversal types of vulnerabilities because of its /config/routes.rb file which dictates what URLs should be accessible and handled by which controllers. The routes file is a great place to look when thinking about the scope of the attack surface.</p>
 <p>An example might be as follows:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># this is an example of what NOT to do</span>
-<span class="n">match</span> <span class="s1">&#39;:controller(/:action(/:id(.:format)))&#39;</span>
+<span class="n">match</span><span class="w"> </span><span class="s1">&#39;:controller(/:action(/:id(.:format)))&#39;</span>
 </code></pre></div>
 <p>In this case, this route allows any public method on any controller to be called as an action. As a developer, you want to make sure that users can only reach the controller methods intended and in the way intended.</p>
 <h3 id="sensitive-files">Sensitive Files<a class="headerlink" href="#sensitive-files" title="Permanent link">&para;</a></h3>
@@ -2116,7 +2116,7 @@ gem <span class="s1">&#39;omniauth&#39;</span>
 <p>Rails uses OS encryption. Generally speaking, it is always a bad idea to write your own encryption.</p>
 <p>Devise by default uses bcrypt for password hashing, which is an appropriate solution.</p>
 <p>Typically, the following config causes the 10 stretches for production: <code>/config/initializers/devise.rb</code></p>
-<div class="highlight"><pre><span></span><code><span class="n">config</span><span class="o">.</span><span class="n">stretches</span> <span class="o">=</span> <span class="no">Rails</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">test?</span> <span class="p">?</span> <span class="mi">1</span> <span class="p">:</span> <span class="mi">10</span>
+<div class="highlight"><pre><span></span><code><span class="n">config</span><span class="o">.</span><span class="n">stretches</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">Rails</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">test?</span><span class="w"> </span><span class="p">?</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">10</span>
 </code></pre></div>
 <h2 id="updating-rails-and-having-a-process-for-updating-dependencies">Updating Rails and Having a Process for Updating Dependencies<a class="headerlink" href="#updating-rails-and-having-a-process-for-updating-dependencies" title="Permanent link">&para;</a></h2>
 <p>In early 2013, a number of critical vulnerabilities were identified in the Rails Framework. Organizations that had fallen behind current versions had more trouble updating and harder decisions along the way, including patching the source code for the framework itself.</p>
@@ -2156,42 +2156,6 @@ gem <span class="s1">&#39;omniauth&#39;</span>
       
         <footer class="md-footer">
   
-    
-    <nav class="md-footer__inner md-grid" aria-label="Footer" >
-      
-        
-        <a href="REST_Security_Cheat_Sheet.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: REST Security" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              REST Security
-            </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="SAML_Security_Cheat_Sheet.html" class="md-footer__link md-footer__link--next" aria-label="Next: SAML Security" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              SAML Security
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
-  
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
       <div class="md-copyright">
@@ -2217,12 +2181,11 @@ gem <span class="s1">&#39;omniauth&#39;</span>
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.12658920.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      <script src="../assets/javascripts/bundle.5cf534bf.min.js"></script>
       
-    
     
   </body>
 </html>

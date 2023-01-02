@@ -12,8 +12,14 @@
       
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html">
       
+      
+        <link rel="prev" href="Cryptographic_Storage_Cheat_Sheet.html">
+      
+      
+        <link rel="next" href="Database_Security_Cheat_Sheet.html">
+      
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.0">
     
     
       
@@ -21,11 +27,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.975780f9.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.f79797b0.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
-        
       
       
 
@@ -112,8 +117,6 @@
       <form class="md-header__option" data-md-component="palette">
         
           
-          
-          
           <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
           
             <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
@@ -121,8 +124,6 @@
             </label>
           
         
-          
-          
           
           <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
           
@@ -2079,10 +2080,9 @@
                 
                   
 
-  <a href="https://github.com/OWASP/CheatSheetSeries/edit/master/docs/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.md" title="Edit this page" class="md-content__button md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
-  </a>
+  
+  
+
 
 
 <h1 id="dom-based-xss-prevention-cheat-sheet">DOM based XSS Prevention Cheat Sheet<a class="headerlink" href="#dom-based-xss-prevention-cheat-sheet" title="Permanent link">&para;</a></h1>
@@ -2105,11 +2105,11 @@
 <p>For the purposes of this article, we refer to the HTML, HTML attribute, URL, and CSS contexts as subcontexts because each of these contexts can be reached and set within a JavaScript execution context.</p>
 <p>In JavaScript code, the main context is JavaScript but with the right tags and context closing characters, an attacker can try to attack the other 4 contexts using equivalent JavaScript DOM methods.</p>
 <p>The following is an example vulnerability which occurs in the JavaScript context and HTML subcontext:</p>
-<div class="highlight"><pre><span></span><code> <span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="w"></span>
-<span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&lt;%= taintedVar %&gt;&#39;</span><span class="p">;</span><span class="w"></span>
-<span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nx">d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">);</span><span class="w"></span>
-<span class="w"> </span><span class="nx">d</span><span class="p">.</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">x</span><span class="p">;</span><span class="w"></span>
-<span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">d</span><span class="p">);</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code> <span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&lt;%= taintedVar %&gt;&#39;</span><span class="p">;</span>
+<span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nx">d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">);</span>
+<span class="w"> </span><span class="nx">d</span><span class="p">.</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">x</span><span class="p">;</span>
+<span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">d</span><span class="p">);</span>
 <span class="w"> </span><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
 <p>Let's look at the individual subcontexts of the execution context in turn.</p>
@@ -2117,12 +2117,12 @@
 <p>There are several methods and attributes which can be used to directly render HTML content within JavaScript. These methods constitute the HTML Subcontext within the Execution Context. If these methods are provided with untrusted input, then an XSS vulnerability could result. For example:</p>
 <h3 id="example-dangerous-html-methods">Example Dangerous HTML Methods<a class="headerlink" href="#example-dangerous-html-methods" title="Permanent link">&para;</a></h3>
 <h4 id="attributes">Attributes<a class="headerlink" href="#attributes" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="nx">element</span><span class="p">.</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;HTML&gt; Tags and markup&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="w"> </span><span class="nx">element</span><span class="p">.</span><span class="nx">outerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;HTML&gt; Tags and markup&quot;</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="nx">element</span><span class="p">.</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;HTML&gt; Tags and markup&quot;</span><span class="p">;</span>
+<span class="w"> </span><span class="nx">element</span><span class="p">.</span><span class="nx">outerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;HTML&gt; Tags and markup&quot;</span><span class="p">;</span>
 </code></pre></div>
 <h4 id="methods">Methods<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="s2">&quot;&lt;HTML&gt; Tags and markup&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">writeln</span><span class="p">(</span><span class="s2">&quot;&lt;HTML&gt; Tags and markup&quot;</span><span class="p">);</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="s2">&quot;&lt;HTML&gt; Tags and markup&quot;</span><span class="p">);</span>
+<span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">writeln</span><span class="p">(</span><span class="s2">&quot;&lt;HTML&gt; Tags and markup&quot;</span><span class="p">);</span>
 </code></pre></div>
 <h3 id="guideline">Guideline<a class="headerlink" href="#guideline" title="Permanent link">&para;</a></h3>
 <p>To make dynamic updates to HTML in the DOM safe, we recommend:</p>
@@ -2130,49 +2130,49 @@
 <li>HTML encoding, and then</li>
 <li>JavaScript encoding all untrusted input, as shown in these examples:</li>
 </ol>
-<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nx">ESAPI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;node-esapi&#39;</span><span class="p">);</span><span class="w"></span>
-<span class="w"> </span><span class="nx">element</span><span class="p">.</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;%=ESAPI.encoder().encodeForJavascript(ESAPI.encoder().encodeForHTML(untrustedData))%&gt;&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="w"> </span><span class="nx">element</span><span class="p">.</span><span class="nx">outerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;%=ESAPI.encoder().encodeForJavascript(ESAPI.encoder().encodeForHTML(untrustedData))%&gt;&quot;</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nx">ESAPI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;node-esapi&#39;</span><span class="p">);</span>
+<span class="w"> </span><span class="nx">element</span><span class="p">.</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;%=ESAPI.encoder().encodeForJavascript(ESAPI.encoder().encodeForHTML(untrustedData))%&gt;&quot;</span><span class="p">;</span>
+<span class="w"> </span><span class="nx">element</span><span class="p">.</span><span class="nx">outerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;%=ESAPI.encoder().encodeForJavascript(ESAPI.encoder().encodeForHTML(untrustedData))%&gt;&quot;</span><span class="p">;</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nx">ESAPI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;node-esapi&#39;</span><span class="p">);</span><span class="w"></span>
-<span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="s2">&quot;&lt;%=ESAPI.encoder().encodeForJavascript(ESAPI.encoder().encodeForHTML(untrustedData))%&gt;&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">writeln</span><span class="p">(</span><span class="s2">&quot;&lt;%=ESAPI.encoder().encodeForJavascript(ESAPI.encoder().encodeForHTML(untrustedData))%&gt;&quot;</span><span class="p">);</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nx">ESAPI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;node-esapi&#39;</span><span class="p">);</span>
+<span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="s2">&quot;&lt;%=ESAPI.encoder().encodeForJavascript(ESAPI.encoder().encodeForHTML(untrustedData))%&gt;&quot;</span><span class="p">);</span>
+<span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">writeln</span><span class="p">(</span><span class="s2">&quot;&lt;%=ESAPI.encoder().encodeForJavascript(ESAPI.encoder().encodeForHTML(untrustedData))%&gt;&quot;</span><span class="p">);</span>
 </code></pre></div>
 <h2 id="rule-2-javascript-escape-before-inserting-untrusted-data-into-html-attribute-subcontext-within-the-execution-context">RULE #2 - JavaScript Escape Before Inserting Untrusted Data into HTML Attribute Subcontext within the Execution Context<a class="headerlink" href="#rule-2-javascript-escape-before-inserting-untrusted-data-into-html-attribute-subcontext-within-the-execution-context" title="Permanent link">&para;</a></h2>
 <p>The HTML attribute <em>subcontext</em> within the <em>execution</em> context is divergent from the standard encoding rules. This is because the rule to HTML attribute encode in an HTML attribute rendering context is necessary in order to mitigate attacks which try to exit out of an HTML attributes or try to add additional attributes which could lead to XSS.</p>
 <p>When you are in a DOM execution context you only need to JavaScript encode HTML attributes which do not execute code (attributes other than event handler, CSS, and URL attributes).</p>
 <p>For example, the general rule is to HTML Attribute encode untrusted data (data from the database, HTTP request, user, back-end system, etc.) placed in an HTML Attribute. This is the appropriate step to take when outputting data in a rendering context, however using HTML Attribute encoding in an execution context will break the application display of data.</p>
 <h3 id="safe-but-broken-example">SAFE but BROKEN example<a class="headerlink" href="#safe-but-broken-example" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nx">ESAPI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;node-esapi&#39;</span><span class="p">);</span><span class="w"></span>
-<span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;input&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w"> </span><span class="nx">x</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;company_name&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w"> </span><span class="c1">// In the following line of code, companyName represents untrusted user input</span><span class="w"></span>
-<span class="w"> </span><span class="c1">// The ESAPI.encoder().encodeForHTMLAttribute() is unnecessary and causes double-encoding</span><span class="w"></span>
-<span class="w"> </span><span class="nx">x</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&quot;value&quot;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&lt;%=ESAPI.encoder().encodeForJavascript(ESAPI.encoder().encodeForHTMLAttribute(companyName))%&gt;&#39;</span><span class="p">);</span><span class="w"></span>
-<span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nx">form1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">forms</span><span class="p">[</span><span class="mf">0</span><span class="p">];</span><span class="w"></span>
-<span class="w"> </span><span class="nx">form1</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nx">ESAPI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;node-esapi&#39;</span><span class="p">);</span>
+<span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;input&quot;</span><span class="p">);</span>
+<span class="w"> </span><span class="nx">x</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;company_name&quot;</span><span class="p">);</span>
+<span class="w"> </span><span class="c1">// In the following line of code, companyName represents untrusted user input</span>
+<span class="w"> </span><span class="c1">// The ESAPI.encoder().encodeForHTMLAttribute() is unnecessary and causes double-encoding</span>
+<span class="w"> </span><span class="nx">x</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&quot;value&quot;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&lt;%=ESAPI.encoder().encodeForJavascript(ESAPI.encoder().encodeForHTMLAttribute(companyName))%&gt;&#39;</span><span class="p">);</span>
+<span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nx">form1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">forms</span><span class="p">[</span><span class="mf">0</span><span class="p">];</span>
+<span class="w"> </span><span class="nx">form1</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span>
 </code></pre></div>
 <p>The problem is that if companyName had the value "Johnson &amp; Johnson". What would be displayed in the input text field would be "Johnson &#x26;amp; Johnson". The appropriate encoding to use in the above case would be only JavaScript encoding to disallow an attacker from closing out the single quotes and in-lining code, or escaping to HTML and opening a new script tag.</p>
 <h3 id="safe-and-functionally-correct-example">SAFE and FUNCTIONALLY CORRECT example<a class="headerlink" href="#safe-and-functionally-correct-example" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nx">ESAPI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;node-esapi&#39;</span><span class="p">);</span><span class="w"></span>
-<span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;input&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w"> </span><span class="nx">x</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;company_name&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w"> </span><span class="nx">x</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&quot;value&quot;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&lt;%=ESAPI.encoder().encodeForJavascript(companyName)%&gt;&#39;</span><span class="p">);</span><span class="w"></span>
-<span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nx">form1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">forms</span><span class="p">[</span><span class="mf">0</span><span class="p">];</span><span class="w"></span>
-<span class="w"> </span><span class="nx">form1</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nx">ESAPI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;node-esapi&#39;</span><span class="p">);</span>
+<span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;input&quot;</span><span class="p">);</span>
+<span class="w"> </span><span class="nx">x</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;company_name&quot;</span><span class="p">);</span>
+<span class="w"> </span><span class="nx">x</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&quot;value&quot;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&lt;%=ESAPI.encoder().encodeForJavascript(companyName)%&gt;&#39;</span><span class="p">);</span>
+<span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nx">form1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">forms</span><span class="p">[</span><span class="mf">0</span><span class="p">];</span>
+<span class="w"> </span><span class="nx">form1</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span>
 </code></pre></div>
 <p>It is important to note that when setting an HTML attribute which does not execute code, the value is set directly within the object attribute of the HTML element so there is no concerns with injecting up.</p>
 <h2 id="rule-3-be-careful-when-inserting-untrusted-data-into-the-event-handler-and-javascript-code-subcontexts-within-an-execution-context">RULE #3 - Be Careful when Inserting Untrusted Data into the Event Handler and JavaScript code Subcontexts within an Execution Context<a class="headerlink" href="#rule-3-be-careful-when-inserting-untrusted-data-into-the-event-handler-and-javascript-code-subcontexts-within-an-execution-context" title="Permanent link">&para;</a></h2>
 <p>Putting dynamic data within JavaScript code is especially dangerous because JavaScript encoding has different semantics for JavaScript encoded data when compared to other encodings. In many cases, JavaScript encoding does not stop attacks within an execution context. For example, a JavaScript encoded string will execute even though it is JavaScript encoded.</p>
 <p>Therefore, the primary recommendation is to <strong>avoid including untrusted data in this context</strong>. If you must, the following examples describe some approaches that do and do not work.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="nx">x</span><span class="p">.</span><span class="nx">href</span><span class="o">=</span><span class="s2">&quot;#&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="c1">// In the line of code below, the encoded data on the right (the second argument to setAttribute)</span><span class="w"></span>
-<span class="c1">// is an example of untrusted data that was properly JavaScript encoded but still executes.</span><span class="w"></span>
-<span class="nx">x</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&quot;onclick&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;\u0061\u006c\u0065\u0072\u0074\u0028\u0032\u0032\u0029&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="kd">var</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createTextNode</span><span class="p">(</span><span class="s2">&quot;Click To Test&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="nx">x</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">y</span><span class="p">);</span><span class="w"></span>
-<span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">);</span>
+<span class="nx">x</span><span class="p">.</span><span class="nx">href</span><span class="o">=</span><span class="s2">&quot;#&quot;</span><span class="p">;</span>
+<span class="c1">// In the line of code below, the encoded data on the right (the second argument to setAttribute)</span>
+<span class="c1">// is an example of untrusted data that was properly JavaScript encoded but still executes.</span>
+<span class="nx">x</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&quot;onclick&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;\u0061\u006c\u0065\u0072\u0074\u0028\u0032\u0032\u0029&quot;</span><span class="p">);</span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createTextNode</span><span class="p">(</span><span class="s2">&quot;Click To Test&quot;</span><span class="p">);</span>
+<span class="nx">x</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">y</span><span class="p">);</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span>
 </code></pre></div>
 <p>The <code>setAttribute(name_string,value_string)</code> method is dangerous because it implicitly coerces the <em>value_string</em> into the DOM attribute datatype of <em>name_string</em>.</p>
 <p>In the case above, the attribute name is an JavaScript event handler, so the attribute value is implicitly converted to JavaScript code and evaluated. In the case above, JavaScript encoding does not mitigate against DOM based XSS.</p>
@@ -2183,45 +2183,45 @@
 <p>An alternative to using <code>Element.setAttribute(...)</code> to set DOM attributes is to set the attribute directly. Directly setting event handler attributes will allow JavaScript encoding to mitigate against DOM based XSS. Please note, it is always dangerous design to put untrusted data directly into a command execution context.</p>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">a</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;bb&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span> Test Me<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="c1">//The following does NOT work because the event handler is being set to a string.</span><span class="w"></span>
-<span class="c1">//&quot;alert(7)&quot; is JavaScript encoded.</span><span class="w"></span>
-<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;bb&quot;</span><span class="p">).</span><span class="nx">onclick</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;\u0061\u006c\u0065\u0072\u0074\u0028\u0037\u0029&quot;</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="c1">//The following does NOT work because the event handler is being set to a string.</span>
+<span class="c1">//&quot;alert(7)&quot; is JavaScript encoded.</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;bb&quot;</span><span class="p">).</span><span class="nx">onclick</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;\u0061\u006c\u0065\u0072\u0074\u0028\u0037\u0029&quot;</span><span class="p">;</span>
 
-<span class="c1">//The following does NOT work because the event handler is being set to a string.</span><span class="w"></span>
-<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;bb&quot;</span><span class="p">).</span><span class="nx">onmouseover</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;testIt&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="c1">//The following does NOT work because the event handler is being set to a string.</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;bb&quot;</span><span class="p">).</span><span class="nx">onmouseover</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;testIt&quot;</span><span class="p">;</span>
 
-<span class="c1">//The following does NOT work because of the encoded &quot;(&quot; and &quot;)&quot;.</span><span class="w"></span>
-<span class="c1">//&quot;alert(77)&quot; is JavaScript encoded.</span><span class="w"></span>
-<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;bb&quot;</span><span class="p">).</span><span class="nx">onmouseover</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">\u0061\u006c\u0065\u0072\u0074\u0028\u0037\u0037\u0029</span><span class="p">;</span><span class="w"></span>
+<span class="c1">//The following does NOT work because of the encoded &quot;(&quot; and &quot;)&quot;.</span>
+<span class="c1">//&quot;alert(77)&quot; is JavaScript encoded.</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;bb&quot;</span><span class="p">).</span><span class="nx">onmouseover</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">\u0061\u006c\u0065\u0072\u0074\u0028\u0037\u0037\u0029</span><span class="p">;</span>
 
-<span class="c1">//The following does NOT work because of the encoded &quot;;&quot;.</span><span class="w"></span>
-<span class="c1">//&quot;testIt;testIt&quot; is JavaScript encoded.</span><span class="w"></span>
-<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;bb&quot;</span><span class="p">).</span><span class="nx">onmouseover</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">\u0074\u0065\u0073\u0074\u0049\u0074\u003b\u0074\u0065\u0073</span><span class="w"></span>
-<span class="w">                                            </span><span class="nx">\u0074\u0049\u0074</span><span class="p">;</span><span class="w"></span>
+<span class="c1">//The following does NOT work because of the encoded &quot;;&quot;.</span>
+<span class="c1">//&quot;testIt;testIt&quot; is JavaScript encoded.</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;bb&quot;</span><span class="p">).</span><span class="nx">onmouseover</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">\u0074\u0065\u0073\u0074\u0049\u0074\u003b\u0074\u0065\u0073</span>
+<span class="w">                                            </span><span class="nx">\u0074\u0049\u0074</span><span class="p">;</span>
 
-<span class="c1">//The following DOES WORK because the encoded value is a valid variable name or function reference.</span><span class="w"></span>
-<span class="c1">//&quot;testIt&quot; is JavaScript encoded</span><span class="w"></span>
-<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;bb&quot;</span><span class="p">).</span><span class="nx">onmouseover</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">\u0074\u0065\u0073\u0074\u0049\u0074</span><span class="p">;</span><span class="w"></span>
+<span class="c1">//The following DOES WORK because the encoded value is a valid variable name or function reference.</span>
+<span class="c1">//&quot;testIt&quot; is JavaScript encoded</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;bb&quot;</span><span class="p">).</span><span class="nx">onmouseover</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">\u0074\u0065\u0073\u0074\u0049\u0074</span><span class="p">;</span>
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">testIt</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">   </span><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;I was called.&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="kd">function</span><span class="w"> </span><span class="nx">testIt</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;I was called.&quot;</span><span class="p">);</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>There are other places in JavaScript where JavaScript encoding is accepted as valid executable code.</p>
-<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="k">for</span><span class="p">(</span><span class="kd">var</span><span class="w"> </span><span class="nx">\u0062</span><span class="o">=</span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">\u0062</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">10</span><span class="p">;</span><span class="w"> </span><span class="nx">\u0062</span><span class="o">++</span><span class="p">){</span><span class="w"></span>
-<span class="w">     </span><span class="nx">\u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074</span><span class="w"></span>
-<span class="w">     </span><span class="p">.</span><span class="nx">\u0077\u0072\u0069\u0074\u0065\u006c\u006e</span><span class="w"></span>
-<span class="w">     </span><span class="p">(</span><span class="s2">&quot;\u0048\u0065\u006c\u006c\u006f\u0020\u0057\u006f\u0072\u006c\u0064&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w"> </span><span class="p">}</span><span class="w"></span>
-<span class="w"> </span><span class="nx">\u0077\u0069\u006e\u0064\u006f\u0077</span><span class="w"></span>
-<span class="w"> </span><span class="p">.</span><span class="nx">\u0065\u0076\u0061\u006c</span><span class="w"></span>
-<span class="w"> </span><span class="nx">\u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074</span><span class="w"></span>
-<span class="w"> </span><span class="p">.</span><span class="nx">\u0077\u0072\u0069\u0074\u0065</span><span class="p">(</span><span class="mf">111111111</span><span class="p">);</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="k">for</span><span class="p">(</span><span class="kd">var</span><span class="w"> </span><span class="nx">\u0062</span><span class="o">=</span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">\u0062</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">10</span><span class="p">;</span><span class="w"> </span><span class="nx">\u0062</span><span class="o">++</span><span class="p">){</span>
+<span class="w">     </span><span class="nx">\u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074</span>
+<span class="w">     </span><span class="p">.</span><span class="nx">\u0077\u0072\u0069\u0074\u0065\u006c\u006e</span>
+<span class="w">     </span><span class="p">(</span><span class="s2">&quot;\u0048\u0065\u006c\u006c\u006f\u0020\u0057\u006f\u0072\u006c\u0064&quot;</span><span class="p">);</span>
+<span class="w"> </span><span class="p">}</span>
+<span class="w"> </span><span class="nx">\u0077\u0069\u006e\u0064\u006f\u0077</span>
+<span class="w"> </span><span class="p">.</span><span class="nx">\u0065\u0076\u0061\u006c</span>
+<span class="w"> </span><span class="nx">\u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074</span>
+<span class="w"> </span><span class="p">.</span><span class="nx">\u0077\u0072\u0069\u0074\u0065</span><span class="p">(</span><span class="mf">111111111</span><span class="p">);</span>
 </code></pre></div>
 <p>or</p>
-<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nx">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;\u0065\u0076\u0061\u006c&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nx">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;\u0061\u006c\u0065\u0072\u0074\u0028\u0031\u0031\u0029&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="w"> </span><span class="nb">window</span><span class="p">[</span><span class="nx">s</span><span class="p">](</span><span class="nx">t</span><span class="p">);</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nx">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;\u0065\u0076\u0061\u006c&quot;</span><span class="p">;</span>
+<span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nx">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;\u0061\u006c\u0065\u0072\u0074\u0028\u0031\u0031\u0029&quot;</span><span class="p">;</span>
+<span class="w"> </span><span class="nb">window</span><span class="p">[</span><span class="nx">s</span><span class="p">](</span><span class="nx">t</span><span class="p">);</span>
 </code></pre></div>
 <p>Because JavaScript is based on an international standard (ECMAScript), JavaScript encoding enables the support of international characters in programming constructs and variables in addition to alternate string representations (string escapes).</p>
 <p>However the opposite is the case with HTML encoding. HTML tag elements are well defined and do not support alternate representations of the same tag. So HTML encoding cannot be used to allow the developer to have alternate representations of the <code>&lt;a&gt;</code> tag for example.</p>
@@ -2239,24 +2239,24 @@
 <h2 id="rule-4-javascript-escape-before-inserting-untrusted-data-into-the-css-attribute-subcontext-within-the-execution-context">RULE #4 - JavaScript Escape Before Inserting Untrusted Data into the CSS Attribute Subcontext within the Execution Context<a class="headerlink" href="#rule-4-javascript-escape-before-inserting-untrusted-data-into-the-css-attribute-subcontext-within-the-execution-context" title="Permanent link">&para;</a></h2>
 <p>Normally executing JavaScript from a CSS context required either passing <code>javascript:attackCode()</code> to the CSS <code>url()</code> method or invoking the CSS <code>expression()</code> method passing JavaScript code to be directly executed.</p>
 <p>From my experience, calling the <code>expression()</code> function from an execution context (JavaScript) has been disabled. In order to mitigate against the CSS <code>url()</code> method, ensure that you are URL encoding the data passed to the CSS <code>url()</code> method.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">ESAPI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;node-esapi&#39;</span><span class="p">);</span><span class="w"></span>
-<span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">backgroundImage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;url(&lt;%=ESAPI.encoder().encodeForJavascript(ESAPI.encoder().encodeForURL(companyName))%&gt;)&quot;</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">ESAPI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;node-esapi&#39;</span><span class="p">);</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">backgroundImage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;url(&lt;%=ESAPI.encoder().encodeForJavascript(ESAPI.encoder().encodeForURL(companyName))%&gt;)&quot;</span><span class="p">;</span>
 </code></pre></div>
 <h2 id="rule-5-url-escape-then-javascript-escape-before-inserting-untrusted-data-into-url-attribute-subcontext-within-the-execution-context">RULE #5 - URL Escape then JavaScript Escape Before Inserting Untrusted Data into URL Attribute Subcontext within the Execution Context<a class="headerlink" href="#rule-5-url-escape-then-javascript-escape-before-inserting-untrusted-data-into-url-attribute-subcontext-within-the-execution-context" title="Permanent link">&para;</a></h2>
 <p>The logic which parses URLs in both execution and rendering contexts looks to be the same. Therefore there is little change in the encoding rules for URL attributes in an execution (DOM) context.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">ESAPI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;node-esapi&#39;</span><span class="p">);</span><span class="w"></span>
-<span class="kd">var</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="nx">x</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&quot;href&quot;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&lt;%=ESAPI.encoder().encodeForJavascript(ESAPI.encoder().encodeForURL(userRelativePath))%&gt;&#39;</span><span class="p">);</span><span class="w"></span>
-<span class="kd">var</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createTextElement</span><span class="p">(</span><span class="s2">&quot;Click Me To Test&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="nx">x</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">y</span><span class="p">);</span><span class="w"></span>
-<span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">ESAPI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;node-esapi&#39;</span><span class="p">);</span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">);</span>
+<span class="nx">x</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&quot;href&quot;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;&lt;%=ESAPI.encoder().encodeForJavascript(ESAPI.encoder().encodeForURL(userRelativePath))%&gt;&#39;</span><span class="p">);</span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createTextElement</span><span class="p">(</span><span class="s2">&quot;Click Me To Test&quot;</span><span class="p">);</span>
+<span class="nx">x</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">y</span><span class="p">);</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span>
 </code></pre></div>
 <p>If you utilize fully qualified URLs then this will break the links as the colon in the protocol identifier (<code>http:</code> or <code>javascript:</code>) will be URL encoded preventing the <code>http</code> and <code>javascript</code> protocols from being invoked.</p>
 <h2 id="rule-6-populate-the-dom-using-safe-javascript-functions-or-properties">RULE #6 - Populate the DOM using safe JavaScript functions or properties<a class="headerlink" href="#rule-6-populate-the-dom-using-safe-javascript-functions-or-properties" title="Permanent link">&para;</a></h2>
 <p>The most fundamental safe way to populate the DOM with untrusted data is to use the safe assignment property <code>textContent</code>.</p>
 <p>Here is an example of safe usage.</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="w"></span>
-<span class="nx">element</span><span class="p">.</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">untrustedData</span><span class="p">;</span><span class="w">  </span><span class="c1">//does not execute code</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="nx">element</span><span class="p">.</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">untrustedData</span><span class="p">;</span><span class="w">  </span><span class="c1">//does not execute code</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
 <h2 id="rule-7-fixing-dom-cross-site-scripting-vulnerabilities">RULE #7 - Fixing DOM Cross-site Scripting Vulnerabilities<a class="headerlink" href="#rule-7-fixing-dom-cross-site-scripting-vulnerabilities" title="Permanent link">&para;</a></h2>
@@ -2265,8 +2265,8 @@
 <p>Finally, to fix the problem in our initial code, instead of trying to encode the output correctly which is a hassle and can easily go wrong we would simply use <code>element.textContent</code> to write it in a content like this:</p>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">b</span><span class="p">&gt;</span>Current URL:<span class="p">&lt;/</span><span class="nt">b</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nt">span</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;contentholder&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
 ...
-<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="w"></span>
-<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;contentholder&quot;</span><span class="p">).</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">baseURI</span><span class="p">;</span><span class="w"></span>
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;contentholder&quot;</span><span class="p">).</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">baseURI</span><span class="p">;</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
 <p>It does the same thing but this time it is not vulnerable to DOM based cross-site scripting vulnerabilities.</p>
@@ -2277,7 +2277,7 @@
 <p>Avoid treating untrusted data as code or markup within JavaScript code.</p>
 <h3 id="guideline-2-always-javascript-encode-and-delimit-untrusted-data-as-quoted-strings-when-entering-the-application-when-building-templated-javascript">GUIDELINE #2 - Always JavaScript encode and delimit untrusted data as quoted strings when entering the application when building templated JavaScript<a class="headerlink" href="#guideline-2-always-javascript-encode-and-delimit-untrusted-data-as-quoted-strings-when-entering-the-application-when-building-templated-javascript" title="Permanent link">&para;</a></h3>
 <p>Always JavaScript encode and delimit untrusted data as quoted strings when entering the application as illustrated in the following example.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;%= Encode.forJavaScript(untrustedData) %&gt;&quot;</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;%= Encode.forJavaScript(untrustedData) %&gt;&quot;</span><span class="p">;</span>
 </code></pre></div>
 <h3 id="guideline-3-use-documentcreateelement-elementsetattributevalue-elementappendchild-and-similar-to-build-dynamic-interfaces">GUIDELINE #3 - Use document.createElement("..."), element.setAttribute("...","value"), element.appendChild(...) and similar to build dynamic interfaces<a class="headerlink" href="#guideline-3-use-documentcreateelement-elementsetattributevalue-elementappendchild-and-similar-to-build-dynamic-interfaces" title="Permanent link">&para;</a></h3>
 <p><code>document.createElement("...")</code>, <code>element.setAttribute("...","value")</code>, <code>element.appendChild(...)</code> and similar are safe ways to build dynamic interfaces.</p>
@@ -2303,68 +2303,68 @@
 <p>Ensure to follow step 3 above to make sure that the untrusted data is not sent to dangerous methods within the custom function or handle it by adding an extra layer of encoding.</p>
 <h4 id="utilizing-an-enclosure-as-suggested-by-gaz">Utilizing an Enclosure (as suggested by Gaz)<a class="headerlink" href="#utilizing-an-enclosure-as-suggested-by-gaz" title="Permanent link">&para;</a></h4>
 <p>The example that follows illustrates using closures to avoid double JavaScript encoding.</p>
-<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nx">ESAPI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;node-esapi&#39;</span><span class="p">);</span><span class="w"></span>
-<span class="w"> </span><span class="nx">setTimeout</span><span class="p">((</span><span class="kd">function</span><span class="p">(</span><span class="nx">param</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">          </span><span class="nx">customFunction</span><span class="p">(</span><span class="nx">param</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="p">}</span><span class="w"></span>
-<span class="w"> </span><span class="p">})(</span><span class="s2">&quot;&lt;%=ESAPI.encoder().encodeForJavascript(untrustedData)%&gt;&quot;</span><span class="p">),</span><span class="w"> </span><span class="nx">y</span><span class="p">);</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nx">ESAPI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;node-esapi&#39;</span><span class="p">);</span>
+<span class="w"> </span><span class="nx">setTimeout</span><span class="p">((</span><span class="kd">function</span><span class="p">(</span><span class="nx">param</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nx">customFunction</span><span class="p">(</span><span class="nx">param</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w"> </span><span class="p">})(</span><span class="s2">&quot;&lt;%=ESAPI.encoder().encodeForJavascript(untrustedData)%&gt;&quot;</span><span class="p">),</span><span class="w"> </span><span class="nx">y</span><span class="p">);</span>
 </code></pre></div>
 <p>The other alternative is using N-levels of encoding.</p>
 <h4 id="n-levels-of-encoding">N-Levels of Encoding<a class="headerlink" href="#n-levels-of-encoding" title="Permanent link">&para;</a></h4>
 <p>If your code looked like the following, you would need to only double JavaScript encode input data.</p>
-<div class="highlight"><pre><span></span><code><span class="nx">setTimeout</span><span class="p">(</span><span class="s2">&quot;customFunction(&#39;&lt;%=doubleJavaScriptEncodedData%&gt;&#39;, y)&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">customFunction</span><span class="w"> </span><span class="p">(</span><span class="nx">firstName</span><span class="p">,</span><span class="w"> </span><span class="nx">lastName</span><span class="p">)</span><span class="w"></span>
-<span class="w">     </span><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">firstName</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">lastNam</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nx">setTimeout</span><span class="p">(</span><span class="s2">&quot;customFunction(&#39;&lt;%=doubleJavaScriptEncodedData%&gt;&#39;, y)&quot;</span><span class="p">);</span>
+<span class="kd">function</span><span class="w"> </span><span class="nx">customFunction</span><span class="w"> </span><span class="p">(</span><span class="nx">firstName</span><span class="p">,</span><span class="w"> </span><span class="nx">lastName</span><span class="p">)</span>
+<span class="w">     </span><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">firstName</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">lastNam</span><span class="p">);</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>The <code>doubleJavaScriptEncodedData</code> has its first layer of JavaScript encoding reversed (upon execution) in the single quotes.</p>
 <p>Then the implicit <code>eval</code> of <code>setTimeout</code> reverses another layer of JavaScript encoding to pass the correct value to <code>customFunction</code></p>
 <p>The reason why you only need to double JavaScript encode is that the <code>customFunction</code> function did not itself pass the input to another method which implicitly or explicitly called <code>eval</code> If <em>firstName</em> was passed to another JavaScript method which implicitly or explicitly called <code>eval()</code> then <code>&lt;%=doubleJavaScriptEncodedData%&gt;</code> above would need to be changed to <code>&lt;%=tripleJavaScriptEncodedData%&gt;</code>.</p>
 <p>An important implementation note is that if the JavaScript code tries to utilize the double or triple encoded data in string comparisons, the value may be interpreted as different values based on the number of <code>evals()</code> the data has passed through before being passed to the if comparison and the number of times the value was JavaScript encoded.</p>
 <p>If <strong>A</strong> is double JavaScript encoded then the following <strong>if</strong> check will return false.</p>
-<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;doubleJavaScriptEncodedA&quot;</span><span class="p">;</span><span class="w">  </span><span class="c1">//\u005c\u0075\u0030\u0030\u0034\u0031</span><span class="w"></span>
-<span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">x</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;A&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;x is A&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">x</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;\u0041&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;This is what pops&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w"> </span><span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;doubleJavaScriptEncodedA&quot;</span><span class="p">;</span><span class="w">  </span><span class="c1">//\u005c\u0075\u0030\u0030\u0034\u0031</span>
+<span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">x</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;A&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;x is A&quot;</span><span class="p">);</span>
+<span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">x</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;\u0041&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;This is what pops&quot;</span><span class="p">);</span>
+<span class="w"> </span><span class="p">}</span>
 </code></pre></div>
 <p>This brings up an interesting design point. Ideally, the correct way to apply encoding and avoid the problem stated above is to server-side encode for the output context where data is introduced into the application.</p>
 <p>Then client-side encode (using a JavaScript encoding library such as <a href="https://github.com/ESAPI/node-esapi/">node-esapi</a>) for the individual subcontext (DOM methods) which untrusted data is passed to.</p>
 <p>Here are some examples of how they are used:</p>
-<div class="highlight"><pre><span></span><code><span class="c1">//server-side encoding</span><span class="w"></span>
-<span class="kd">var</span><span class="w"> </span><span class="nx">ESAPI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;node-esapi&#39;</span><span class="p">);</span><span class="w"></span>
-<span class="kd">var</span><span class="w"> </span><span class="nx">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;%=ESAPI.encoder().encodeForJavascript(untrustedData)%&gt;&quot;</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="c1">//server-side encoding</span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">ESAPI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;node-esapi&#39;</span><span class="p">);</span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;%=ESAPI.encoder().encodeForJavascript(untrustedData)%&gt;&quot;</span><span class="p">;</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="c1">//HTML encoding is happening in JavaScript</span><span class="w"></span>
-<span class="kd">var</span><span class="w"> </span><span class="nx">ESAPI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;node-esapi&#39;</span><span class="p">);</span><span class="w"></span>
-<span class="nb">document</span><span class="p">.</span><span class="nx">writeln</span><span class="p">(</span><span class="nx">ESAPI</span><span class="p">.</span><span class="nx">encoder</span><span class="p">().</span><span class="nx">encodeForHTML</span><span class="p">(</span><span class="nx">input</span><span class="p">));</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="c1">//HTML encoding is happening in JavaScript</span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">ESAPI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;node-esapi&#39;</span><span class="p">);</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">writeln</span><span class="p">(</span><span class="nx">ESAPI</span><span class="p">.</span><span class="nx">encoder</span><span class="p">().</span><span class="nx">encodeForHTML</span><span class="p">(</span><span class="nx">input</span><span class="p">));</span>
 </code></pre></div>
 <p>One option is utilize ECMAScript 5 immutable properties in the JavaScript library.
 Another option provided by Gaz (Gareth) was to use a specific code construct to limit mutability with anonymous closures.</p>
 <p>An example follows:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">escapeHTML</span><span class="p">(</span><span class="nx">str</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">     </span><span class="nx">str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">str</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot;&#39;&#39;&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="w">     </span><span class="kd">var</span><span class="w"> </span><span class="nx">out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&#39;&#39;&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="w">     </span><span class="k">for</span><span class="p">(</span><span class="kd">var</span><span class="w"> </span><span class="nx">i</span><span class="o">=</span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">&lt;</span><span class="nx">str</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">         </span><span class="k">if</span><span class="p">(</span><span class="nx">str</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;&lt;&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">             </span><span class="nx">out</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s1">&#39;&amp;lt;&#39;</span><span class="p">;</span><span class="w"></span>
-<span class="w">         </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="nx">str</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;&gt;&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">             </span><span class="nx">out</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s1">&#39;&amp;gt;&#39;</span><span class="p">;</span><span class="w"></span>
-<span class="w">         </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="nx">str</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">&quot;&#39;&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">             </span><span class="nx">out</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s1">&#39;&amp;#39;&#39;</span><span class="p">;</span><span class="w"></span>
-<span class="w">         </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="nx">str</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;&quot;&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">             </span><span class="nx">out</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s1">&#39;&amp;quot;&#39;</span><span class="p">;</span><span class="w"></span>
-<span class="w">         </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">             </span><span class="nx">out</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="nx">str</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span><span class="w"></span>
-<span class="w">         </span><span class="p">}</span><span class="w"></span>
-<span class="w">     </span><span class="p">}</span><span class="w"></span>
-<span class="w">     </span><span class="k">return</span><span class="w"> </span><span class="nx">out</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">escapeHTML</span><span class="p">(</span><span class="nx">str</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="nx">str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">str</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot;&#39;&#39;&quot;</span><span class="p">;</span>
+<span class="w">     </span><span class="kd">var</span><span class="w"> </span><span class="nx">out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&#39;&#39;&quot;</span><span class="p">;</span>
+<span class="w">     </span><span class="k">for</span><span class="p">(</span><span class="kd">var</span><span class="w"> </span><span class="nx">i</span><span class="o">=</span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">&lt;</span><span class="nx">str</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="k">if</span><span class="p">(</span><span class="nx">str</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;&lt;&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">             </span><span class="nx">out</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s1">&#39;&amp;lt;&#39;</span><span class="p">;</span>
+<span class="w">         </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="nx">str</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;&gt;&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">             </span><span class="nx">out</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s1">&#39;&amp;gt;&#39;</span><span class="p">;</span>
+<span class="w">         </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="nx">str</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">&quot;&#39;&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">             </span><span class="nx">out</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s1">&#39;&amp;#39;&#39;</span><span class="p">;</span>
+<span class="w">         </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="nx">str</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;&quot;&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">             </span><span class="nx">out</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s1">&#39;&amp;quot;&#39;</span><span class="p">;</span>
+<span class="w">         </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">             </span><span class="nx">out</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="nx">str</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+<span class="w">         </span><span class="p">}</span>
+<span class="w">     </span><span class="p">}</span>
+<span class="w">     </span><span class="k">return</span><span class="w"> </span><span class="nx">out</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
 <h3 id="guideline-6-use-untrusted-data-on-only-the-right-side-of-an-expression">GUIDELINE #6 - Use untrusted data on only the right side of an expression<a class="headerlink" href="#guideline-6-use-untrusted-data-on-only-the-right-side-of-an-expression" title="Permanent link">&para;</a></h3>
 <p>Use untrusted data on only the right side of an expression, especially data that looks like code and may be passed to the application (e.g., <code>location</code> and <code>eval()</code>).</p>
-<div class="highlight"><pre><span></span><code><span class="nb">window</span><span class="p">[</span><span class="nx">userDataOnLeftSide</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;userDataOnRightSide&quot;</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nb">window</span><span class="p">[</span><span class="nx">userDataOnLeftSide</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;userDataOnRightSide&quot;</span><span class="p">;</span>
 </code></pre></div>
 <p>Using untrusted user data on the left side of the expression allows an attacker to subvert internal and external attributes of the window object, whereas using user input on the right side of the expression doesn't allow direct manipulation.</p>
 <h3 id="guideline-7-when-url-encoding-in-dom-be-aware-of-character-set-issues">GUIDELINE #7 - When URL encoding in DOM be aware of character set issues<a class="headerlink" href="#guideline-7-when-url-encoding-in-dom-be-aware-of-character-set-issues" title="Permanent link">&para;</a></h3>
@@ -2372,14 +2372,14 @@ Another option provided by Gaz (Gareth) was to use a specific code construct to 
 <h3 id="guideline-8-limit-access-to-object-properties-when-using-objectx-accessors">GUIDELINE #8 - Limit access to object properties when using object[x] accessors<a class="headerlink" href="#guideline-8-limit-access-to-object-properties-when-using-objectx-accessors" title="Permanent link">&para;</a></h3>
 <p>Limit access to object properties when using <code>object[x]</code> accessors (Mike Samuel). In other words, add a level of indirection between untrusted input and specified object properties.</p>
 <p>Here is an example of the problem using map types:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">myMapType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{};</span><span class="w"></span>
-<span class="nx">myMapType</span><span class="p">[</span><span class="o">&lt;%=</span><span class="nx">untrustedData</span><span class="o">%&gt;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;moreUntrustedData&quot;</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">myMapType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{};</span>
+<span class="nx">myMapType</span><span class="p">[</span><span class="o">&lt;%=</span><span class="nx">untrustedData</span><span class="o">%&gt;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;moreUntrustedData&quot;</span><span class="p">;</span>
 </code></pre></div>
 <p>The developer writing the code above was trying to add additional keyed elements to the <code>myMapType</code> object. However, this could be used by an attacker to subvert internal and external attributes of the <code>myMapType</code> object.</p>
 <p>A better approach would be to use the following:</p>
-<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">untrustedData</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;location&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="nx">myMapType</span><span class="p">.</span><span class="nx">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;moreUntrustedData&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">untrustedData</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;location&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">myMapType</span><span class="p">.</span><span class="nx">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;moreUntrustedData&quot;</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
 <h3 id="guideline-9-run-your-javascript-in-a-ecmascript-5-canopy-or-sandbox">GUIDELINE #9 - Run your JavaScript in a ECMAScript 5 canopy or sandbox<a class="headerlink" href="#guideline-9-run-your-javascript-in-a-ecmascript-5-canopy-or-sandbox" title="Permanent link">&para;</a></h3>
 <p>Run your JavaScript in a ECMAScript 5 <a href="https://github.com/jcoglan/canopy">canopy</a> or sandbox to make it harder for your JavaScript API to be compromised (Gareth Heyes and John Stevens).</p>
@@ -2398,10 +2398,10 @@ Another option provided by Gaz (Gareth) was to use a specific code construct to 
 <p>In many cases the context isn't always straightforward to discern.</p>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;javascript:myFunction(&#39;&lt;%=untrustedData%&gt;&#39;, &#39;test&#39;);&quot;</span><span class="p">&gt;</span>Click Me<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
  ...
-<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="w"></span>
-<span class="nb">Function</span><span class="w"> </span><span class="nx">myFunction</span><span class="w"> </span><span class="p">(</span><span class="nx">url</span><span class="p">,</span><span class="nx">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">url</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="nb">Function</span><span class="w"> </span><span class="nx">myFunction</span><span class="w"> </span><span class="p">(</span><span class="nx">url</span><span class="p">,</span><span class="nx">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">url</span><span class="p">;</span>
+<span class="p">}</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
 <p>In the above example, untrusted data started in the rendering URL context (<code>href</code> attribute of an <code>a</code> tag) then changed to a JavaScript execution context (<code>javascript:</code> protocol handler) which passed the untrusted data to an execution URL subcontext (<code>window.location</code> of <code>myFunction</code>).</p>
@@ -2414,11 +2414,11 @@ Click Me<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt
 <div class="highlight"><pre><span></span><code><span class="cm">&lt;!-- server side URL encoding has been removed.  Now only JavaScript encoding on server side. --&gt;</span>
 <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;javascript:myFunction(&#39;&lt;%=ESAPI.encoder().encodeForJavascript(untrustedData)%&gt;&#39;, &#39;test&#39;);&quot;</span><span class="p">&gt;</span>Click Me<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
  ...
-<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="w"></span>
-<span class="nb">Function</span><span class="w"> </span><span class="nx">myFunction</span><span class="w"> </span><span class="p">(</span><span class="nx">url</span><span class="p">,</span><span class="nx">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">encodedURL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">ESAPI</span><span class="p">.</span><span class="nx">encoder</span><span class="p">().</span><span class="nx">encodeForURL</span><span class="p">(</span><span class="nx">url</span><span class="p">);</span><span class="w">  </span><span class="c1">//URL encoding using client-side scripts</span><span class="w"></span>
-<span class="w">    </span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">encodedURL</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="nb">Function</span><span class="w"> </span><span class="nx">myFunction</span><span class="w"> </span><span class="p">(</span><span class="nx">url</span><span class="p">,</span><span class="nx">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">encodedURL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">ESAPI</span><span class="p">.</span><span class="nx">encoder</span><span class="p">().</span><span class="nx">encodeForURL</span><span class="p">(</span><span class="nx">url</span><span class="p">);</span><span class="w">  </span><span class="c1">//URL encoding using client-side scripts</span>
+<span class="w">    </span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">encodedURL</span><span class="p">;</span>
+<span class="p">}</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
 <h3 id="inconsistencies-of-encoding-libraries">Inconsistencies of Encoding Libraries<a class="headerlink" href="#inconsistencies-of-encoding-libraries" title="Permanent link">&para;</a></h3>
@@ -2438,8 +2438,8 @@ Click Me<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt
 <p>This logically seems to be prudent advice as the JavaScript parser does not understand HTML encoding.</p>
 <p>However, if the pages returned from your web application utilize a content type of <code>text/xhtml</code> or the file type extension of <code>*.xhtml</code> then HTML encoding may not work to mitigate against XSS.</p>
 <p>For example:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="w"></span>
-<span class="o">&amp;</span><span class="err">#</span><span class="nx">x61</span><span class="p">;</span><span class="nx">lert</span><span class="p">(</span><span class="mf">1</span><span class="p">);</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="o">&amp;</span><span class="err">#</span><span class="nx">x61</span><span class="p">;</span><span class="nx">lert</span><span class="p">(</span><span class="mf">1</span><span class="p">);</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
 <p>The HTML encoded value above is still executable. If that isn't enough to keep in mind, you have to remember that encodings are lost when you retrieve them using the value attribute of a DOM element.</p>
@@ -2448,18 +2448,18 @@ Click Me<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt
   <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;lName&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;&lt;%=ESAPI.encoder().encodeForHTML(last_name)%&gt;&quot;</span><span class="p">&gt;</span>
  ...
 <span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="w"></span>
-<span class="w">  </span><span class="kd">var</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">myForm</span><span class="p">.</span><span class="nx">lName</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span><span class="w">  </span><span class="c1">//when the value is retrieved the encoding is reversed</span><span class="w"></span>
-<span class="w">  </span><span class="nb">document</span><span class="p">.</span><span class="nx">writeln</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span><span class="w">  </span><span class="c1">//any code passed into lName is now executable.</span><span class="w"></span>
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="w">  </span><span class="kd">var</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">myForm</span><span class="p">.</span><span class="nx">lName</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span><span class="w">  </span><span class="c1">//when the value is retrieved the encoding is reversed</span>
+<span class="w">  </span><span class="nb">document</span><span class="p">.</span><span class="nx">writeln</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span><span class="w">  </span><span class="c1">//any code passed into lName is now executable.</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
 <p>Finally there is the problem that certain methods in JavaScript which are usually safe can be unsafe in certain contexts.</p>
 <h3 id="usually-safe-methods">Usually Safe Methods<a class="headerlink" href="#usually-safe-methods" title="Permanent link">&para;</a></h3>
 <p>One example of an attribute which is thought to be safe is <code>innerText</code>.</p>
 <p>Some papers or guides advocate its use as an alternative to <code>innerHTML</code> to mitigate against XSS in <code>innerHTML</code>. However, depending on the tag which <code>innerText</code> is applied, code can be executed.</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="w"></span>
-<span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nx">tag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;script&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w"> </span><span class="nx">tag</span><span class="p">.</span><span class="nx">innerText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;%=untrustedData%&gt;&quot;</span><span class="p">;</span><span class="w">  </span><span class="c1">//executes code</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nx">tag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;script&quot;</span><span class="p">);</span>
+<span class="w"> </span><span class="nx">tag</span><span class="p">.</span><span class="nx">innerText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;%=untrustedData%&gt;&quot;</span><span class="p">;</span><span class="w">  </span><span class="c1">//executes code</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
 <p>The <code>innerText</code> feature was originally introduced by Internet Explorer, and was formally specified in the HTML standard in 2016 after being adopted by all major browser vendors.</p>
@@ -2487,42 +2487,6 @@ document.write(x);
       
         <footer class="md-footer">
   
-    
-    <nav class="md-footer__inner md-grid" aria-label="Footer" >
-      
-        
-        <a href="Cryptographic_Storage_Cheat_Sheet.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Cryptographic Storage" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              Cryptographic Storage
-            </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="Database_Security_Cheat_Sheet.html" class="md-footer__link md-footer__link--next" aria-label="Next: Database Security" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              Database Security
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
-  
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
       <div class="md-copyright">
@@ -2548,12 +2512,11 @@ document.write(x);
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.12658920.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      <script src="../assets/javascripts/bundle.5cf534bf.min.js"></script>
       
-    
     
   </body>
 </html>

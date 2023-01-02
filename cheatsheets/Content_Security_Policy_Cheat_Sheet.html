@@ -12,8 +12,14 @@
       
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html">
       
+      
+        <link rel="prev" href="Clickjacking_Defense_Cheat_Sheet.html">
+      
+      
+        <link rel="next" href="Credential_Stuffing_Prevention_Cheat_Sheet.html">
+      
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.0">
     
     
       
@@ -21,11 +27,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.975780f9.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.f79797b0.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
-        
       
       
 
@@ -112,8 +117,6 @@
       <form class="md-header__option" data-md-component="palette">
         
           
-          
-          
           <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
           
             <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
@@ -121,8 +124,6 @@
             </label>
           
         
-          
-          
           
           <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
           
@@ -2079,10 +2080,9 @@
                 
                   
 
-  <a href="https://github.com/OWASP/CheatSheetSeries/edit/master/docs/cheatsheets/Content_Security_Policy_Cheat_Sheet.md" title="Edit this page" class="md-content__button md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
-  </a>
+  
+  
+
 
 
 <h1 id="content-security-policy-cheat-sheet">Content Security Policy Cheat Sheet<a class="headerlink" href="#content-security-policy-cheat-sheet" title="Permanent link">&para;</a></h1>
@@ -2104,11 +2104,11 @@
 <p>will not work.</p>
 <h4 id="3-restricting-unsafe-javascript">3. Restricting Unsafe JavaScript<a class="headerlink" href="#3-restricting-unsafe-javascript" title="Permanent link">&para;</a></h4>
 <p>By preventing the page from executing text-to-JavaScript functions like <code>eval</code>, the website will be safe from vulnerabilities like the this:</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// A Simple Calculator</span><span class="w"></span>
-<span class="kd">var</span><span class="w"> </span><span class="nx">op1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">getUrlParameter</span><span class="p">(</span><span class="s2">&quot;op1&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="kd">var</span><span class="w"> </span><span class="nx">op2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">getUrlParameter</span><span class="p">(</span><span class="s2">&quot;op2&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="kd">var</span><span class="w"> </span><span class="nx">sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">eval</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">op1</span><span class="si">}</span><span class="sb"> + </span><span class="si">${</span><span class="nx">op2</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span><span class="w"></span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`The sum is: </span><span class="si">${</span><span class="nx">sum</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="c1">// A Simple Calculator</span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">op1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">getUrlParameter</span><span class="p">(</span><span class="s2">&quot;op1&quot;</span><span class="p">);</span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">op2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">getUrlParameter</span><span class="p">(</span><span class="s2">&quot;op2&quot;</span><span class="p">);</span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">sum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">eval</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">op1</span><span class="si">}</span><span class="sb"> + </span><span class="si">${</span><span class="nx">op2</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`The sum is: </span><span class="si">${</span><span class="nx">sum</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
 </code></pre></div>
 <h4 id="4-restricting-form-submissions">4. Restricting Form submissions<a class="headerlink" href="#4-restricting-form-submissions" title="Permanent link">&para;</a></h4>
 <p>By restricting where HTML forms on your website can submit their data, injecting phishing forms won't work either.</p>
@@ -2273,13 +2273,13 @@
 <p>Using hashes is generally not a very good approach. If you change <em>anything</em> inside the script tag (even whitespace) by, e.g., formatting your code, the hash will be different, and the script won't render.</p>
 <h3 id="nonces">Nonces<a class="headerlink" href="#nonces" title="Permanent link">&para;</a></h3>
 <p>Nonces are unique one-time-use random values that you generate for each HTTP response, and add to the Content-Security-Policy header, like so:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">nonce</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">uuid</span><span class="p">.</span><span class="nx">v4</span><span class="p">();</span><span class="w"></span>
-<span class="nx">scriptSrc</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="sb">` &#39;nonce-</span><span class="si">${</span><span class="nx">nonce</span><span class="si">}</span><span class="sb">&#39;`</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">nonce</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">uuid</span><span class="p">.</span><span class="nx">v4</span><span class="p">();</span>
+<span class="nx">scriptSrc</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="sb">` &#39;nonce-</span><span class="si">${</span><span class="nx">nonce</span><span class="si">}</span><span class="sb">&#39;`</span><span class="p">;</span>
 </code></pre></div>
 <p>You would then pass this nonce to your view (using nonces requires a non-static HTML) and render script tags that look something like this:</p>
-<div class="highlight"><pre><span></span><code><span class="o">&lt;</span><span class="nx">script</span><span class="w"> </span><span class="nx">nonce</span><span class="o">=</span><span class="s2">&quot;&lt;%= nonce %&gt;&quot;</span><span class="o">&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="p">...</span><span class="w"></span>
-<span class="o">&lt;</span><span class="err">/script&gt;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="o">&lt;</span><span class="nx">script</span><span class="w"> </span><span class="nx">nonce</span><span class="o">=</span><span class="s2">&quot;&lt;%= nonce %&gt;&quot;</span><span class="o">&gt;</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="o">&lt;</span><span class="err">/script&gt;</span>
 </code></pre></div>
 <h4 id="warning">Warning<a class="headerlink" href="#warning" title="Permanent link">&para;</a></h4>
 <p><strong>Don't</strong> create a middleware that replaces all script tags with "script nonce=..." because attacker-injected scripts will then get the nonces as well. You need an actual HTML templating engine to use nonces.</p>
@@ -2341,20 +2341,20 @@ object-src &#39;none&#39;; base-uri &#39;none&#39;;
 </code></pre></div>
 <h3 id="refactoring-inline-code">Refactoring inline code<a class="headerlink" href="#refactoring-inline-code" title="Permanent link">&para;</a></h3>
 <p>When <code>default-src</code> or <code>script-src*</code> directives are active, CSP by default disables any JavaScript code placed inline in the HTML source, such as this:</p>
-<div class="highlight"><pre><span></span><code><span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span><span class="w"></span>
-<span class="kd">var</span><span class="w"> </span><span class="nx">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;314&quot;</span><span class="w"></span>
-<span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">foo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;314&quot;</span>
+<span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
 </code></pre></div>
 <p>The inline code can be moved to a separate JavaScript file and the code in the page becomes:</p>
-<div class="highlight"><pre><span></span><code><span class="o">&lt;</span><span class="nx">script</span><span class="w"> </span><span class="nx">src</span><span class="o">=</span><span class="s2">&quot;app.js&quot;</span><span class="o">&gt;</span><span class="w"></span>
-<span class="o">&lt;</span><span class="err">/script&gt;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="o">&lt;</span><span class="nx">script</span><span class="w"> </span><span class="nx">src</span><span class="o">=</span><span class="s2">&quot;app.js&quot;</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="err">/script&gt;</span>
 </code></pre></div>
 <p>With <code>app.js</code> containing the <code>var foo = "314"</code> code.</p>
 <p>The inline code restriction also applies to <code>inline event handlers</code>, so that the following construct will be blocked under CSP:</p>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">button</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;button1&quot;</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&quot;doSomething()&quot;</span><span class="p">&gt;</span>
 </code></pre></div>
 <p>This should be replaced by <code>addEventListener</code> calls:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;button1&quot;</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">doSomething</span><span class="p">);</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;button1&quot;</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">doSomething</span><span class="p">);</span>
 </code></pre></div>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2386,42 +2386,6 @@ object-src &#39;none&#39;; base-uri &#39;none&#39;;
       
         <footer class="md-footer">
   
-    
-    <nav class="md-footer__inner md-grid" aria-label="Footer" >
-      
-        
-        <a href="Clickjacking_Defense_Cheat_Sheet.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Clickjacking Defense" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              Clickjacking Defense
-            </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html" class="md-footer__link md-footer__link--next" aria-label="Next: Credential Stuffing Prevention" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              Credential Stuffing Prevention
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
-  
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
       <div class="md-copyright">
@@ -2447,12 +2411,11 @@ object-src &#39;none&#39;; base-uri &#39;none&#39;;
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.12658920.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      <script src="../assets/javascripts/bundle.5cf534bf.min.js"></script>
       
-    
     
   </body>
 </html>

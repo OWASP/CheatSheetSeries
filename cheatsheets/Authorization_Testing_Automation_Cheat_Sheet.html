@@ -16,8 +16,14 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
       
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Testing_Automation_Cheat_Sheet.html">
       
+      
+        <link rel="prev" href="Authorization_Cheat_Sheet.html">
+      
+      
+        <link rel="next" href="Bean_Validation_Cheat_Sheet.html">
+      
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.0">
     
     
       
@@ -25,11 +31,10 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.975780f9.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.f79797b0.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
-        
       
       
 
@@ -116,8 +121,6 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
       <form class="md-header__option" data-md-component="palette">
         
           
-          
-          
           <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
           
             <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
@@ -125,8 +128,6 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
             </label>
           
         
-          
-          
           
           <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
           
@@ -1647,10 +1648,9 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
                 
                   
 
-  <a href="https://github.com/OWASP/CheatSheetSeries/edit/master/docs/cheatsheets/Authorization_Testing_Automation_Cheat_Sheet.md" title="Edit this page" class="md-content__button md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
-  </a>
+  
+  
+
 
 
 <h1 id="authorization-testing-automation-cheat-sheet">Authorization Testing Automation Cheat Sheet<a class="headerlink" href="#authorization-testing-automation-cheat-sheet" title="Permanent link">&para;</a></h1>
@@ -1698,8 +1698,8 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
 <blockquote>
 <p>Placeholders (values between {}) are used to mark location where test value must be placed by the integration tests if needed</p>
 </blockquote>
-<div class="highlight"><pre><span></span><code>  <span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-  <span class="cm">&lt;!--</span>
+<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="w">  </span><span class="cm">&lt;!--</span>
 <span class="cm">      This file materializes the authorization matrix for the different</span>
 <span class="cm">      services exposed by the system.</span>
 
@@ -1710,170 +1710,170 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
 
 <span class="cm">      The &quot;name&quot; attribute is used to uniquely identify a SERVICE or a ROLE.</span>
 <span class="cm">  --&gt;</span>
-  <span class="nt">&lt;authorization-matrix&gt;</span>
+<span class="w">  </span><span class="nt">&lt;authorization-matrix&gt;</span>
 
-      <span class="cm">&lt;!-- Describe the possible logical roles used in the system, is used here to</span>
+<span class="w">      </span><span class="cm">&lt;!-- Describe the possible logical roles used in the system, is used here to</span>
 <span class="cm">      provide a list+explanation</span>
 <span class="cm">      of the different roles (authorization level) --&gt;</span>
-      <span class="nt">&lt;roles&gt;</span>
-          <span class="nt">&lt;role</span> <span class="na">name=</span><span class="s">&quot;ANONYMOUS&quot;</span>
-          <span class="na">description=</span><span class="s">&quot;Indicate that no authorization is needed&quot;</span><span class="nt">/&gt;</span>
-          <span class="nt">&lt;role</span> <span class="na">name=</span><span class="s">&quot;BASIC&quot;</span>
-          <span class="na">description=</span><span class="s">&quot;Role affecting a standard user (lowest access right just above anonymous)&quot;</span><span class="nt">/&gt;</span>
-          <span class="nt">&lt;role</span> <span class="na">name=</span><span class="s">&quot;ADMIN&quot;</span>
-          <span class="na">description=</span><span class="s">&quot;Role affecting an administrator user (highest access right)&quot;</span><span class="nt">/&gt;</span>
-      <span class="nt">&lt;/roles&gt;</span>
+<span class="w">      </span><span class="nt">&lt;roles&gt;</span>
+<span class="w">          </span><span class="nt">&lt;role</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;ANONYMOUS&quot;</span>
+<span class="w">          </span><span class="na">description=</span><span class="s">&quot;Indicate that no authorization is needed&quot;</span><span class="nt">/&gt;</span>
+<span class="w">          </span><span class="nt">&lt;role</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;BASIC&quot;</span>
+<span class="w">          </span><span class="na">description=</span><span class="s">&quot;Role affecting a standard user (lowest access right just above anonymous)&quot;</span><span class="nt">/&gt;</span>
+<span class="w">          </span><span class="nt">&lt;role</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;ADMIN&quot;</span>
+<span class="w">          </span><span class="na">description=</span><span class="s">&quot;Role affecting an administrator user (highest access right)&quot;</span><span class="nt">/&gt;</span>
+<span class="w">      </span><span class="nt">&lt;/roles&gt;</span>
 
-      <span class="cm">&lt;!-- List and describe the available services exposed by the system and the associated</span>
+<span class="w">      </span><span class="cm">&lt;!-- List and describe the available services exposed by the system and the associated</span>
 <span class="cm">      logical role(s) that can call them --&gt;</span>
-      <span class="nt">&lt;services&gt;</span>
-          <span class="nt">&lt;service</span> <span class="na">name=</span><span class="s">&quot;ReadSingleMessage&quot;</span> <span class="na">uri=</span><span class="s">&quot;/{messageId}&quot;</span> <span class="na">http-method=</span><span class="s">&quot;GET&quot;</span>
-          <span class="na">http-response-code-for-access-allowed=</span><span class="s">&quot;200&quot;</span> <span class="na">http-response-code-for-access-denied=</span><span class="s">&quot;403&quot;</span><span class="nt">&gt;</span>
-              <span class="nt">&lt;role</span> <span class="na">name=</span><span class="s">&quot;ANONYMOUS&quot;</span><span class="nt">/&gt;</span>
-              <span class="nt">&lt;role</span> <span class="na">name=</span><span class="s">&quot;BASIC&quot;</span><span class="nt">/&gt;</span>
-              <span class="nt">&lt;role</span> <span class="na">name=</span><span class="s">&quot;ADMIN&quot;</span><span class="nt">/&gt;</span>
-          <span class="nt">&lt;/service&gt;</span>
-          <span class="nt">&lt;service</span> <span class="na">name=</span><span class="s">&quot;ReadAllMessages&quot;</span> <span class="na">uri=</span><span class="s">&quot;/&quot;</span> <span class="na">http-method=</span><span class="s">&quot;GET&quot;</span>
-          <span class="na">http-response-code-for-access-allowed=</span><span class="s">&quot;200&quot;</span> <span class="na">http-response-code-for-access-denied=</span><span class="s">&quot;403&quot;</span><span class="nt">&gt;</span>
-              <span class="nt">&lt;role</span> <span class="na">name=</span><span class="s">&quot;ANONYMOUS&quot;</span><span class="nt">/&gt;</span>
-              <span class="nt">&lt;role</span> <span class="na">name=</span><span class="s">&quot;BASIC&quot;</span><span class="nt">/&gt;</span>
-              <span class="nt">&lt;role</span> <span class="na">name=</span><span class="s">&quot;ADMIN&quot;</span><span class="nt">/&gt;</span>
-          <span class="nt">&lt;/service&gt;</span>
-          <span class="nt">&lt;service</span> <span class="na">name=</span><span class="s">&quot;CreateMessage&quot;</span> <span class="na">uri=</span><span class="s">&quot;/&quot;</span> <span class="na">http-method=</span><span class="s">&quot;PUT&quot;</span>
-          <span class="na">http-response-code-for-access-allowed=</span><span class="s">&quot;200&quot;</span> <span class="na">http-response-code-for-access-denied=</span><span class="s">&quot;403&quot;</span><span class="nt">&gt;</span>
-              <span class="nt">&lt;role</span> <span class="na">name=</span><span class="s">&quot;BASIC&quot;</span><span class="nt">/&gt;</span>
-              <span class="nt">&lt;role</span> <span class="na">name=</span><span class="s">&quot;ADMIN&quot;</span><span class="nt">/&gt;</span>
-          <span class="nt">&lt;/service&gt;</span>
-          <span class="nt">&lt;service</span> <span class="na">name=</span><span class="s">&quot;DeleteMessage&quot;</span> <span class="na">uri=</span><span class="s">&quot;/{messageId}&quot;</span> <span class="na">http-method=</span><span class="s">&quot;DELETE&quot;</span>
-          <span class="na">http-response-code-for-access-allowed=</span><span class="s">&quot;200&quot;</span> <span class="na">http-response-code-for-access-denied=</span><span class="s">&quot;403&quot;</span><span class="nt">&gt;</span>
-              <span class="nt">&lt;role</span> <span class="na">name=</span><span class="s">&quot;ADMIN&quot;</span><span class="nt">/&gt;</span>
-          <span class="nt">&lt;/service&gt;</span>
-      <span class="nt">&lt;/services&gt;</span>
+<span class="w">      </span><span class="nt">&lt;services&gt;</span>
+<span class="w">          </span><span class="nt">&lt;service</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;ReadSingleMessage&quot;</span><span class="w"> </span><span class="na">uri=</span><span class="s">&quot;/{messageId}&quot;</span><span class="w"> </span><span class="na">http-method=</span><span class="s">&quot;GET&quot;</span>
+<span class="w">          </span><span class="na">http-response-code-for-access-allowed=</span><span class="s">&quot;200&quot;</span><span class="w"> </span><span class="na">http-response-code-for-access-denied=</span><span class="s">&quot;403&quot;</span><span class="nt">&gt;</span>
+<span class="w">              </span><span class="nt">&lt;role</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;ANONYMOUS&quot;</span><span class="nt">/&gt;</span>
+<span class="w">              </span><span class="nt">&lt;role</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;BASIC&quot;</span><span class="nt">/&gt;</span>
+<span class="w">              </span><span class="nt">&lt;role</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;ADMIN&quot;</span><span class="nt">/&gt;</span>
+<span class="w">          </span><span class="nt">&lt;/service&gt;</span>
+<span class="w">          </span><span class="nt">&lt;service</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;ReadAllMessages&quot;</span><span class="w"> </span><span class="na">uri=</span><span class="s">&quot;/&quot;</span><span class="w"> </span><span class="na">http-method=</span><span class="s">&quot;GET&quot;</span>
+<span class="w">          </span><span class="na">http-response-code-for-access-allowed=</span><span class="s">&quot;200&quot;</span><span class="w"> </span><span class="na">http-response-code-for-access-denied=</span><span class="s">&quot;403&quot;</span><span class="nt">&gt;</span>
+<span class="w">              </span><span class="nt">&lt;role</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;ANONYMOUS&quot;</span><span class="nt">/&gt;</span>
+<span class="w">              </span><span class="nt">&lt;role</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;BASIC&quot;</span><span class="nt">/&gt;</span>
+<span class="w">              </span><span class="nt">&lt;role</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;ADMIN&quot;</span><span class="nt">/&gt;</span>
+<span class="w">          </span><span class="nt">&lt;/service&gt;</span>
+<span class="w">          </span><span class="nt">&lt;service</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;CreateMessage&quot;</span><span class="w"> </span><span class="na">uri=</span><span class="s">&quot;/&quot;</span><span class="w"> </span><span class="na">http-method=</span><span class="s">&quot;PUT&quot;</span>
+<span class="w">          </span><span class="na">http-response-code-for-access-allowed=</span><span class="s">&quot;200&quot;</span><span class="w"> </span><span class="na">http-response-code-for-access-denied=</span><span class="s">&quot;403&quot;</span><span class="nt">&gt;</span>
+<span class="w">              </span><span class="nt">&lt;role</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;BASIC&quot;</span><span class="nt">/&gt;</span>
+<span class="w">              </span><span class="nt">&lt;role</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;ADMIN&quot;</span><span class="nt">/&gt;</span>
+<span class="w">          </span><span class="nt">&lt;/service&gt;</span>
+<span class="w">          </span><span class="nt">&lt;service</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;DeleteMessage&quot;</span><span class="w"> </span><span class="na">uri=</span><span class="s">&quot;/{messageId}&quot;</span><span class="w"> </span><span class="na">http-method=</span><span class="s">&quot;DELETE&quot;</span>
+<span class="w">          </span><span class="na">http-response-code-for-access-allowed=</span><span class="s">&quot;200&quot;</span><span class="w"> </span><span class="na">http-response-code-for-access-denied=</span><span class="s">&quot;403&quot;</span><span class="nt">&gt;</span>
+<span class="w">              </span><span class="nt">&lt;role</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;ADMIN&quot;</span><span class="nt">/&gt;</span>
+<span class="w">          </span><span class="nt">&lt;/service&gt;</span>
+<span class="w">      </span><span class="nt">&lt;/services&gt;</span>
 
-      <span class="cm">&lt;!-- Provide a test payload for each service if needed --&gt;</span>
-      <span class="nt">&lt;services-testing&gt;</span>
-          <span class="nt">&lt;service</span> <span class="na">name=</span><span class="s">&quot;ReadSingleMessage&quot;</span><span class="nt">&gt;</span>
-              <span class="nt">&lt;payload/&gt;</span>
-          <span class="nt">&lt;/service&gt;</span>
-          <span class="nt">&lt;service</span> <span class="na">name=</span><span class="s">&quot;ReadAllMessages&quot;</span><span class="nt">&gt;</span>
-              <span class="nt">&lt;payload/&gt;</span>
-          <span class="nt">&lt;/service&gt;</span>
-          <span class="nt">&lt;service</span> <span class="na">name=</span><span class="s">&quot;CreateMessage&quot;</span><span class="nt">&gt;</span>
-              <span class="nt">&lt;payload</span> <span class="na">content-type=</span><span class="s">&quot;application/json&quot;</span><span class="nt">&gt;</span>
-                  {&quot;content&quot;:&quot;test&quot;}
-              <span class="nt">&lt;/payload&gt;</span>
-          <span class="nt">&lt;/service&gt;</span>
-          <span class="nt">&lt;service</span> <span class="na">name=</span><span class="s">&quot;DeleteMessage&quot;</span><span class="nt">&gt;</span>
-              <span class="nt">&lt;payload/&gt;</span>
-          <span class="nt">&lt;/service&gt;</span>
-      <span class="nt">&lt;/services-testing&gt;</span>
+<span class="w">      </span><span class="cm">&lt;!-- Provide a test payload for each service if needed --&gt;</span>
+<span class="w">      </span><span class="nt">&lt;services-testing&gt;</span>
+<span class="w">          </span><span class="nt">&lt;service</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;ReadSingleMessage&quot;</span><span class="nt">&gt;</span>
+<span class="w">              </span><span class="nt">&lt;payload/&gt;</span>
+<span class="w">          </span><span class="nt">&lt;/service&gt;</span>
+<span class="w">          </span><span class="nt">&lt;service</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;ReadAllMessages&quot;</span><span class="nt">&gt;</span>
+<span class="w">              </span><span class="nt">&lt;payload/&gt;</span>
+<span class="w">          </span><span class="nt">&lt;/service&gt;</span>
+<span class="w">          </span><span class="nt">&lt;service</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;CreateMessage&quot;</span><span class="nt">&gt;</span>
+<span class="w">              </span><span class="nt">&lt;payload</span><span class="w"> </span><span class="na">content-type=</span><span class="s">&quot;application/json&quot;</span><span class="nt">&gt;</span>
+<span class="w">                  </span>{&quot;content&quot;:&quot;test&quot;}
+<span class="w">              </span><span class="nt">&lt;/payload&gt;</span>
+<span class="w">          </span><span class="nt">&lt;/service&gt;</span>
+<span class="w">          </span><span class="nt">&lt;service</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;DeleteMessage&quot;</span><span class="nt">&gt;</span>
+<span class="w">              </span><span class="nt">&lt;payload/&gt;</span>
+<span class="w">          </span><span class="nt">&lt;/service&gt;</span>
+<span class="w">      </span><span class="nt">&lt;/services-testing&gt;</span>
 
-  <span class="nt">&lt;/authorization-matrix&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/authorization-matrix&gt;</span>
 </code></pre></div>
 <h3 id="integration-tests">Integration tests<a class="headerlink" href="#integration-tests" title="Permanent link">&para;</a></h3>
 <p>Integration tests are implemented using a maximum of factorized code and one test case by <strong>Point Of View (POV)</strong> has been created in order to group the verifications by profile of access level (logical role) and facilitate the rendering/identification of the errors.</p>
 <p>Parsing, object mapping and access to the authorization matrix information has been implemented using XML marshalling/unmarshalling built-in features provided by the technology used to implement the tests (JAXB here) in order to limit the code to the one in charge of performing the tests.</p>
 <p>This is the implementation of the integration tests case class:</p>
-<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">org.owasp.pocauthztesting.enumeration.SecurityRole</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">org.owasp.pocauthztesting.service.AuthService</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">org.owasp.pocauthztesting.vo.AuthorizationMatrix</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.http.client.methods.CloseableHttpResponse</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.http.client.methods.HttpDelete</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.http.client.methods.HttpGet</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.http.client.methods.HttpPut</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.http.client.methods.HttpRequestBase</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.http.entity.StringEntity</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.http.impl.client.CloseableHttpClient</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.http.impl.client.HttpClients</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.Assert</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.BeforeClass</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.Test</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">org.xml.sax.InputSource</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">javax.xml.bind.JAXBContext</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">javax.xml.parsers.SAXParserFactory</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">javax.xml.transform.Source</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">javax.xml.transform.sax.SAXSource</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.File</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.FileInputStream</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.ArrayList</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.List</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Optional</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">org.owasp.pocauthztesting.enumeration.SecurityRole</span><span class="p">;</span>
+<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">org.owasp.pocauthztesting.service.AuthService</span><span class="p">;</span>
+<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">org.owasp.pocauthztesting.vo.AuthorizationMatrix</span><span class="p">;</span>
+<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.http.client.methods.CloseableHttpResponse</span><span class="p">;</span>
+<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.http.client.methods.HttpDelete</span><span class="p">;</span>
+<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.http.client.methods.HttpGet</span><span class="p">;</span>
+<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.http.client.methods.HttpPut</span><span class="p">;</span>
+<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.http.client.methods.HttpRequestBase</span><span class="p">;</span>
+<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.http.entity.StringEntity</span><span class="p">;</span>
+<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.http.impl.client.CloseableHttpClient</span><span class="p">;</span>
+<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.http.impl.client.HttpClients</span><span class="p">;</span>
+<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.Assert</span><span class="p">;</span>
+<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.BeforeClass</span><span class="p">;</span>
+<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.Test</span><span class="p">;</span>
+<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">org.xml.sax.InputSource</span><span class="p">;</span>
+<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">javax.xml.bind.JAXBContext</span><span class="p">;</span>
+<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">javax.xml.parsers.SAXParserFactory</span><span class="p">;</span>
+<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">javax.xml.transform.Source</span><span class="p">;</span>
+<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">javax.xml.transform.sax.SAXSource</span><span class="p">;</span>
+<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.File</span><span class="p">;</span>
+<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.FileInputStream</span><span class="p">;</span>
+<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.ArrayList</span><span class="p">;</span>
+<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.List</span><span class="p">;</span>
+<span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Optional</span><span class="p">;</span>
 
 <span class="w">  </span><span class="cm">/**</span>
 <span class="cm">   * Integration Test cases in charge of validate the correct implementation of the authorization matrix.</span>
 <span class="cm">   * Create on test case by logical role that will test access on all services exposed by the system.</span>
 <span class="cm">   * Implements here focus on readability</span>
-<span class="cm">   */</span><span class="w"></span>
-<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">AuthorizationMatrixIT</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="cm">   */</span>
+<span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">AuthorizationMatrixIT</span><span class="w"> </span><span class="p">{</span>
 
 <span class="w">      </span><span class="cm">/**</span>
 <span class="cm">       * Object representation of the authorization matrix</span>
-<span class="cm">       */</span><span class="w"></span>
-<span class="w">      </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">AuthorizationMatrix</span><span class="w"> </span><span class="n">AUTHZ_MATRIX</span><span class="p">;</span><span class="w"></span>
+<span class="cm">       */</span>
+<span class="w">      </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">AuthorizationMatrix</span><span class="w"> </span><span class="n">AUTHZ_MATRIX</span><span class="p">;</span>
 
-<span class="w">      </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">BASE_URL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;http://localhost:8080&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">      </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">BASE_URL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;http://localhost:8080&quot;</span><span class="p">;</span>
 
 
 <span class="w">      </span><span class="cm">/**</span>
 <span class="cm">       * Load the authorization matrix in objects tree</span>
 <span class="cm">       *</span>
 <span class="cm">       * @throws Exception If any error occurs</span>
-<span class="cm">       */</span><span class="w"></span>
-<span class="w">      </span><span class="nd">@BeforeClass</span><span class="w"></span>
-<span class="w">      </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">globalInit</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">          </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">FileInputStream</span><span class="w"> </span><span class="n">fis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">FileInputStream</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="s">&quot;authorization-matrix.xml&quot;</span><span class="p">)))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">              </span><span class="n">SAXParserFactory</span><span class="w"> </span><span class="n">spf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SAXParserFactory</span><span class="p">.</span><span class="na">newInstance</span><span class="p">();</span><span class="w"></span>
-<span class="w">              </span><span class="n">spf</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://xml.org/sax/features/external-general-entities&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span><span class="w"></span>
-<span class="w">              </span><span class="n">spf</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://xml.org/sax/features/external-parameter-entities&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span><span class="w"></span>
-<span class="w">              </span><span class="n">spf</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://apache.org/xml/features/nonvalidating/load-external-dtd&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span><span class="w"></span>
-<span class="w">              </span><span class="n">Source</span><span class="w"> </span><span class="n">xmlSource</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SAXSource</span><span class="p">(</span><span class="n">spf</span><span class="p">.</span><span class="na">newSAXParser</span><span class="p">().</span><span class="na">getXMLReader</span><span class="p">(),</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">InputSource</span><span class="p">(</span><span class="n">fis</span><span class="p">));</span><span class="w"></span>
-<span class="w">              </span><span class="n">JAXBContext</span><span class="w"> </span><span class="n">jc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">JAXBContext</span><span class="p">.</span><span class="na">newInstance</span><span class="p">(</span><span class="n">AuthorizationMatrix</span><span class="p">.</span><span class="na">class</span><span class="p">);</span><span class="w"></span>
-<span class="w">              </span><span class="n">AUTHZ_MATRIX</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">AuthorizationMatrix</span><span class="p">)</span><span class="w"> </span><span class="n">jc</span><span class="p">.</span><span class="na">createUnmarshaller</span><span class="p">().</span><span class="na">unmarshal</span><span class="p">(</span><span class="n">xmlSource</span><span class="p">);</span><span class="w"></span>
-<span class="w">          </span><span class="p">}</span><span class="w"></span>
-<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="cm">       */</span>
+<span class="w">      </span><span class="nd">@BeforeClass</span>
+<span class="w">      </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">globalInit</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">FileInputStream</span><span class="w"> </span><span class="n">fis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">FileInputStream</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="s">&quot;authorization-matrix.xml&quot;</span><span class="p">)))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">              </span><span class="n">SAXParserFactory</span><span class="w"> </span><span class="n">spf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SAXParserFactory</span><span class="p">.</span><span class="na">newInstance</span><span class="p">();</span>
+<span class="w">              </span><span class="n">spf</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://xml.org/sax/features/external-general-entities&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
+<span class="w">              </span><span class="n">spf</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://xml.org/sax/features/external-parameter-entities&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
+<span class="w">              </span><span class="n">spf</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://apache.org/xml/features/nonvalidating/load-external-dtd&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
+<span class="w">              </span><span class="n">Source</span><span class="w"> </span><span class="n">xmlSource</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SAXSource</span><span class="p">(</span><span class="n">spf</span><span class="p">.</span><span class="na">newSAXParser</span><span class="p">().</span><span class="na">getXMLReader</span><span class="p">(),</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">InputSource</span><span class="p">(</span><span class="n">fis</span><span class="p">));</span>
+<span class="w">              </span><span class="n">JAXBContext</span><span class="w"> </span><span class="n">jc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">JAXBContext</span><span class="p">.</span><span class="na">newInstance</span><span class="p">(</span><span class="n">AuthorizationMatrix</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+<span class="w">              </span><span class="n">AUTHZ_MATRIX</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">AuthorizationMatrix</span><span class="p">)</span><span class="w"> </span><span class="n">jc</span><span class="p">.</span><span class="na">createUnmarshaller</span><span class="p">().</span><span class="na">unmarshal</span><span class="p">(</span><span class="n">xmlSource</span><span class="p">);</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">      </span><span class="p">}</span>
 
 <span class="w">      </span><span class="cm">/**</span>
 <span class="cm">       * Test access to the services from a anonymous user.</span>
 <span class="cm">       *</span>
 <span class="cm">       * @throws Exception</span>
-<span class="cm">       */</span><span class="w"></span>
-<span class="w">      </span><span class="nd">@Test</span><span class="w"></span>
-<span class="w">      </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">testAccessUsingAnonymousUserPointOfView</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">          </span><span class="c1">//Run the tests - No access token here</span><span class="w"></span>
-<span class="w">          </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">errors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">executeTestWithPointOfView</span><span class="p">(</span><span class="n">SecurityRole</span><span class="p">.</span><span class="na">ANONYMOUS</span><span class="p">,</span><span class="w"> </span><span class="kc">null</span><span class="p">);</span><span class="w"></span>
-<span class="w">          </span><span class="c1">//Verify the test results</span><span class="w"></span>
-<span class="w">          </span><span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="s">&quot;Access issues detected using the ANONYMOUS USER point of view:\n&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">formatErrorsList</span><span class="p">(</span><span class="n">errors</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">errors</span><span class="p">.</span><span class="na">size</span><span class="p">());</span><span class="w"></span>
-<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="cm">       */</span>
+<span class="w">      </span><span class="nd">@Test</span>
+<span class="w">      </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">testAccessUsingAnonymousUserPointOfView</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="c1">//Run the tests - No access token here</span>
+<span class="w">          </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">errors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">executeTestWithPointOfView</span><span class="p">(</span><span class="n">SecurityRole</span><span class="p">.</span><span class="na">ANONYMOUS</span><span class="p">,</span><span class="w"> </span><span class="kc">null</span><span class="p">);</span>
+<span class="w">          </span><span class="c1">//Verify the test results</span>
+<span class="w">          </span><span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="s">&quot;Access issues detected using the ANONYMOUS USER point of view:\n&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">formatErrorsList</span><span class="p">(</span><span class="n">errors</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">errors</span><span class="p">.</span><span class="na">size</span><span class="p">());</span>
+<span class="w">      </span><span class="p">}</span>
 
 <span class="w">      </span><span class="cm">/**</span>
 <span class="cm">       * Test access to the services from a basic user.</span>
 <span class="cm">       *</span>
 <span class="cm">       * @throws Exception</span>
-<span class="cm">       */</span><span class="w"></span>
-<span class="w">      </span><span class="nd">@Test</span><span class="w"></span>
-<span class="w">      </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">testAccessUsingBasicUserPointOfView</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">          </span><span class="c1">//Get access token representing the authorization for the associated point of view</span><span class="w"></span>
-<span class="w">          </span><span class="n">String</span><span class="w"> </span><span class="n">accessToken</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">generateTestCaseAccessToken</span><span class="p">(</span><span class="s">&quot;basic&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">SecurityRole</span><span class="p">.</span><span class="na">BASIC</span><span class="p">);</span><span class="w"></span>
-<span class="w">          </span><span class="c1">//Run the tests</span><span class="w"></span>
-<span class="w">          </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">errors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">executeTestWithPointOfView</span><span class="p">(</span><span class="n">SecurityRole</span><span class="p">.</span><span class="na">BASIC</span><span class="p">,</span><span class="w"> </span><span class="n">accessToken</span><span class="p">);</span><span class="w"></span>
-<span class="w">          </span><span class="c1">//Verify the test results</span><span class="w"></span>
-<span class="w">          </span><span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="s">&quot;Access issues detected using the BASIC USER point of view:\n &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">formatErrorsList</span><span class="p">(</span><span class="n">errors</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">errors</span><span class="p">.</span><span class="na">size</span><span class="p">());</span><span class="w"></span>
-<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="cm">       */</span>
+<span class="w">      </span><span class="nd">@Test</span>
+<span class="w">      </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">testAccessUsingBasicUserPointOfView</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="c1">//Get access token representing the authorization for the associated point of view</span>
+<span class="w">          </span><span class="n">String</span><span class="w"> </span><span class="n">accessToken</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">generateTestCaseAccessToken</span><span class="p">(</span><span class="s">&quot;basic&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">SecurityRole</span><span class="p">.</span><span class="na">BASIC</span><span class="p">);</span>
+<span class="w">          </span><span class="c1">//Run the tests</span>
+<span class="w">          </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">errors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">executeTestWithPointOfView</span><span class="p">(</span><span class="n">SecurityRole</span><span class="p">.</span><span class="na">BASIC</span><span class="p">,</span><span class="w"> </span><span class="n">accessToken</span><span class="p">);</span>
+<span class="w">          </span><span class="c1">//Verify the test results</span>
+<span class="w">          </span><span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="s">&quot;Access issues detected using the BASIC USER point of view:\n &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">formatErrorsList</span><span class="p">(</span><span class="n">errors</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">errors</span><span class="p">.</span><span class="na">size</span><span class="p">());</span>
+<span class="w">      </span><span class="p">}</span>
 
 <span class="w">      </span><span class="cm">/**</span>
 <span class="cm">       * Test access to the services from a administrator user.</span>
 <span class="cm">       *</span>
 <span class="cm">       * @throws Exception</span>
-<span class="cm">       */</span><span class="w"></span>
-<span class="w">      </span><span class="nd">@Test</span><span class="w"></span>
-<span class="w">      </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">testAccessUsingAdministratorUserPointOfView</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">          </span><span class="c1">//Get access token representing the authorization for the associated point of view</span><span class="w"></span>
-<span class="w">          </span><span class="n">String</span><span class="w"> </span><span class="n">accessToken</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">generateTestCaseAccessToken</span><span class="p">(</span><span class="s">&quot;admin&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">SecurityRole</span><span class="p">.</span><span class="na">ADMIN</span><span class="p">);</span><span class="w"></span>
-<span class="w">          </span><span class="c1">//Run the tests</span><span class="w"></span>
-<span class="w">          </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">errors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">executeTestWithPointOfView</span><span class="p">(</span><span class="n">SecurityRole</span><span class="p">.</span><span class="na">ADMIN</span><span class="p">,</span><span class="w"> </span><span class="n">accessToken</span><span class="p">);</span><span class="w"></span>
-<span class="w">          </span><span class="c1">//Verify the test results</span><span class="w"></span>
-<span class="w">          </span><span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="s">&quot;Access issues detected using the ADMIN USER point of view:\n&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">formatErrorsList</span><span class="p">(</span><span class="n">errors</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">errors</span><span class="p">.</span><span class="na">size</span><span class="p">());</span><span class="w"></span>
-<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="cm">       */</span>
+<span class="w">      </span><span class="nd">@Test</span>
+<span class="w">      </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">testAccessUsingAdministratorUserPointOfView</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="c1">//Get access token representing the authorization for the associated point of view</span>
+<span class="w">          </span><span class="n">String</span><span class="w"> </span><span class="n">accessToken</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">generateTestCaseAccessToken</span><span class="p">(</span><span class="s">&quot;admin&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">SecurityRole</span><span class="p">.</span><span class="na">ADMIN</span><span class="p">);</span>
+<span class="w">          </span><span class="c1">//Run the tests</span>
+<span class="w">          </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">errors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">executeTestWithPointOfView</span><span class="p">(</span><span class="n">SecurityRole</span><span class="p">.</span><span class="na">ADMIN</span><span class="p">,</span><span class="w"> </span><span class="n">accessToken</span><span class="p">);</span>
+<span class="w">          </span><span class="c1">//Verify the test results</span>
+<span class="w">          </span><span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="s">&quot;Access issues detected using the ADMIN USER point of view:\n&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">formatErrorsList</span><span class="p">(</span><span class="n">errors</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">errors</span><span class="p">.</span><span class="na">size</span><span class="p">());</span>
+<span class="w">      </span><span class="p">}</span>
 
 <span class="w">      </span><span class="cm">/**</span>
 <span class="cm">       * Evaluate the access to all service using the point of view (POV) specified.</span>
@@ -1882,61 +1882,61 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
 <span class="cm">       * @param accessToken Access token that is linked to the point of view in terms of authorization.</span>
 <span class="cm">       * @return List of errors detected</span>
 <span class="cm">       * @throws Exception If any error occurs</span>
-<span class="cm">       */</span><span class="w"></span>
-<span class="w">      </span><span class="kd">private</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">executeTestWithPointOfView</span><span class="p">(</span><span class="n">SecurityRole</span><span class="w"> </span><span class="n">pointOfView</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">accessToken</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">          </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">errors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w"></span>
-<span class="w">          </span><span class="n">String</span><span class="w"> </span><span class="n">errorMessageTplForUnexpectedReturnCode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;The service &#39;%s&#39; when called with POV &#39;%s&#39; return a response code %s that is not the expected one in allowed or denied case.&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="w">          </span><span class="n">String</span><span class="w"> </span><span class="n">errorMessageTplForIncorrectReturnCode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;The service &#39;%s&#39; when called with POV &#39;%s&#39; return a response code %s that is not the expected one (%s expected).&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="w">          </span><span class="n">String</span><span class="w"> </span><span class="n">fatalErrorMessageTpl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;The service &#39;%s&#39; when called with POV %s meet the error: %s&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="cm">       */</span>
+<span class="w">      </span><span class="kd">private</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">executeTestWithPointOfView</span><span class="p">(</span><span class="n">SecurityRole</span><span class="w"> </span><span class="n">pointOfView</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">accessToken</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">errors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="w">          </span><span class="n">String</span><span class="w"> </span><span class="n">errorMessageTplForUnexpectedReturnCode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;The service &#39;%s&#39; when called with POV &#39;%s&#39; return a response code %s that is not the expected one in allowed or denied case.&quot;</span><span class="p">;</span>
+<span class="w">          </span><span class="n">String</span><span class="w"> </span><span class="n">errorMessageTplForIncorrectReturnCode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;The service &#39;%s&#39; when called with POV &#39;%s&#39; return a response code %s that is not the expected one (%s expected).&quot;</span><span class="p">;</span>
+<span class="w">          </span><span class="n">String</span><span class="w"> </span><span class="n">fatalErrorMessageTpl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;The service &#39;%s&#39; when called with POV %s meet the error: %s&quot;</span><span class="p">;</span>
 
-<span class="w">          </span><span class="c1">//Get the list of services to call</span><span class="w"></span>
-<span class="w">          </span><span class="n">List</span><span class="o">&lt;</span><span class="n">AuthorizationMatrix</span><span class="p">.</span><span class="na">Services</span><span class="p">.</span><span class="na">Service</span><span class="o">&gt;</span><span class="w"> </span><span class="n">services</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AUTHZ_MATRIX</span><span class="p">.</span><span class="na">getServices</span><span class="p">().</span><span class="na">getService</span><span class="p">();</span><span class="w"></span>
+<span class="w">          </span><span class="c1">//Get the list of services to call</span>
+<span class="w">          </span><span class="n">List</span><span class="o">&lt;</span><span class="n">AuthorizationMatrix</span><span class="p">.</span><span class="na">Services</span><span class="p">.</span><span class="na">Service</span><span class="o">&gt;</span><span class="w"> </span><span class="n">services</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AUTHZ_MATRIX</span><span class="p">.</span><span class="na">getServices</span><span class="p">().</span><span class="na">getService</span><span class="p">();</span>
 
-<span class="w">          </span><span class="c1">//Get the list of services test payload to use</span><span class="w"></span>
-<span class="w">          </span><span class="n">List</span><span class="o">&lt;</span><span class="n">AuthorizationMatrix</span><span class="p">.</span><span class="na">ServicesTesting</span><span class="p">.</span><span class="na">Service</span><span class="o">&gt;</span><span class="w"> </span><span class="n">servicesTestPayload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AUTHZ_MATRIX</span><span class="p">.</span><span class="na">getServicesTesting</span><span class="p">().</span><span class="na">getService</span><span class="p">();</span><span class="w"></span>
+<span class="w">          </span><span class="c1">//Get the list of services test payload to use</span>
+<span class="w">          </span><span class="n">List</span><span class="o">&lt;</span><span class="n">AuthorizationMatrix</span><span class="p">.</span><span class="na">ServicesTesting</span><span class="p">.</span><span class="na">Service</span><span class="o">&gt;</span><span class="w"> </span><span class="n">servicesTestPayload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AUTHZ_MATRIX</span><span class="p">.</span><span class="na">getServicesTesting</span><span class="p">().</span><span class="na">getService</span><span class="p">();</span>
 
-<span class="w">          </span><span class="c1">//Call all services sequentially (no special focus on performance here)</span><span class="w"></span>
-<span class="w">          </span><span class="n">services</span><span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="n">service</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">              </span><span class="c1">//Get the service test payload for the current service</span><span class="w"></span>
-<span class="w">              </span><span class="n">String</span><span class="w"> </span><span class="n">payload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w"></span>
-<span class="w">              </span><span class="n">String</span><span class="w"> </span><span class="n">payloadContentType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w"></span>
-<span class="w">              </span><span class="n">Optional</span><span class="o">&lt;</span><span class="n">AuthorizationMatrix</span><span class="p">.</span><span class="na">ServicesTesting</span><span class="p">.</span><span class="na">Service</span><span class="o">&gt;</span><span class="w"> </span><span class="n">serviceTesting</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">servicesTestPayload</span><span class="p">.</span><span class="na">stream</span><span class="p">().</span><span class="na">filter</span><span class="p">(</span><span class="n">srvPld</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">srvPld</span><span class="p">.</span><span class="na">getName</span><span class="p">().</span><span class="na">equals</span><span class="p">(</span><span class="n">service</span><span class="p">.</span><span class="na">getName</span><span class="p">())).</span><span class="na">findFirst</span><span class="p">();</span><span class="w"></span>
-<span class="w">              </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">serviceTesting</span><span class="p">.</span><span class="na">isPresent</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">                  </span><span class="n">payload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">serviceTesting</span><span class="p">.</span><span class="na">get</span><span class="p">().</span><span class="na">getPayload</span><span class="p">().</span><span class="na">getValue</span><span class="p">();</span><span class="w"></span>
-<span class="w">                  </span><span class="n">payloadContentType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">serviceTesting</span><span class="p">.</span><span class="na">get</span><span class="p">().</span><span class="na">getPayload</span><span class="p">().</span><span class="na">getContentType</span><span class="p">();</span><span class="w"></span>
-<span class="w">              </span><span class="p">}</span><span class="w"></span>
-<span class="w">              </span><span class="c1">//Call the service and verify if the response is consistent</span><span class="w"></span>
-<span class="w">              </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">                  </span><span class="c1">//Call the service</span><span class="w"></span>
-<span class="w">                  </span><span class="kt">int</span><span class="w"> </span><span class="n">serviceResponseCode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">callService</span><span class="p">(</span><span class="n">service</span><span class="p">.</span><span class="na">getUri</span><span class="p">(),</span><span class="w"> </span><span class="n">payload</span><span class="p">,</span><span class="w"> </span><span class="n">payloadContentType</span><span class="p">,</span><span class="w"> </span><span class="n">service</span><span class="p">.</span><span class="na">getHttpMethod</span><span class="p">(),</span><span class="w"> </span><span class="n">accessToken</span><span class="p">);</span><span class="w"></span>
-<span class="w">                  </span><span class="c1">//Check if the role represented by the specified point of view is defined for the current service</span><span class="w"></span>
-<span class="w">                  </span><span class="n">Optional</span><span class="o">&lt;</span><span class="n">AuthorizationMatrix</span><span class="p">.</span><span class="na">Services</span><span class="p">.</span><span class="na">Service</span><span class="p">.</span><span class="na">Role</span><span class="o">&gt;</span><span class="w"> </span><span class="n">role</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">service</span><span class="p">.</span><span class="na">getRole</span><span class="p">().</span><span class="na">stream</span><span class="p">().</span><span class="na">filter</span><span class="p">(</span><span class="n">r</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="na">getName</span><span class="p">().</span><span class="na">equals</span><span class="p">(</span><span class="n">pointOfView</span><span class="p">.</span><span class="na">name</span><span class="p">())).</span><span class="na">findFirst</span><span class="p">();</span><span class="w"></span>
-<span class="w">                  </span><span class="kt">boolean</span><span class="w"> </span><span class="n">accessIsGrantedInAuthorizationMatrix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">role</span><span class="p">.</span><span class="na">isPresent</span><span class="p">();</span><span class="w"></span>
-<span class="w">                  </span><span class="c1">//Verify behavior consistency according to the response code returned and the authorization configured in the matrix</span><span class="w"></span>
-<span class="w">                  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">serviceResponseCode</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">service</span><span class="p">.</span><span class="na">getHttpResponseCodeForAccessAllowed</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">                      </span><span class="c1">//Roles is not in the list of role allowed to access to the service so it&#39;s an error</span><span class="w"></span>
-<span class="w">                      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">accessIsGrantedInAuthorizationMatrix</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">                          </span><span class="n">errors</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="n">errorMessageTplForIncorrectReturnCode</span><span class="p">,</span><span class="w"> </span><span class="n">service</span><span class="p">.</span><span class="na">getName</span><span class="p">(),</span><span class="w"> </span><span class="n">pointOfView</span><span class="p">.</span><span class="na">name</span><span class="p">(),</span><span class="w"> </span><span class="n">serviceResponseCode</span><span class="p">,</span><span class="w"></span>
-<span class="w">                           </span><span class="n">service</span><span class="p">.</span><span class="na">getHttpResponseCodeForAccessDenied</span><span class="p">()));</span><span class="w"></span>
-<span class="w">                      </span><span class="p">}</span><span class="w"></span>
-<span class="w">                  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">serviceResponseCode</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">service</span><span class="p">.</span><span class="na">getHttpResponseCodeForAccessDenied</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">                      </span><span class="c1">//Roles is in the list of role allowed to access to the service so it&#39;s an error</span><span class="w"></span>
-<span class="w">                      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">accessIsGrantedInAuthorizationMatrix</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">                          </span><span class="n">errors</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="n">errorMessageTplForIncorrectReturnCode</span><span class="p">,</span><span class="w"> </span><span class="n">service</span><span class="p">.</span><span class="na">getName</span><span class="p">(),</span><span class="w"> </span><span class="n">pointOfView</span><span class="p">.</span><span class="na">name</span><span class="p">(),</span><span class="w"> </span><span class="n">serviceResponseCode</span><span class="p">,</span><span class="w"></span>
-<span class="w">                           </span><span class="n">service</span><span class="p">.</span><span class="na">getHttpResponseCodeForAccessAllowed</span><span class="p">()));</span><span class="w"></span>
-<span class="w">                      </span><span class="p">}</span><span class="w"></span>
-<span class="w">                  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">                      </span><span class="n">errors</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="n">errorMessageTplForUnexpectedReturnCode</span><span class="p">,</span><span class="w"> </span><span class="n">service</span><span class="p">.</span><span class="na">getName</span><span class="p">(),</span><span class="w"> </span><span class="n">pointOfView</span><span class="p">.</span><span class="na">name</span><span class="p">(),</span><span class="w"> </span><span class="n">serviceResponseCode</span><span class="p">));</span><span class="w"></span>
-<span class="w">                  </span><span class="p">}</span><span class="w"></span>
-<span class="w">              </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">                  </span><span class="n">errors</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="n">fatalErrorMessageTpl</span><span class="p">,</span><span class="w"> </span><span class="n">service</span><span class="p">.</span><span class="na">getName</span><span class="p">(),</span><span class="w"> </span><span class="n">pointOfView</span><span class="p">.</span><span class="na">name</span><span class="p">(),</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">getMessage</span><span class="p">()));</span><span class="w"></span>
-<span class="w">              </span><span class="p">}</span><span class="w"></span>
+<span class="w">          </span><span class="c1">//Call all services sequentially (no special focus on performance here)</span>
+<span class="w">          </span><span class="n">services</span><span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="n">service</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">              </span><span class="c1">//Get the service test payload for the current service</span>
+<span class="w">              </span><span class="n">String</span><span class="w"> </span><span class="n">payload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="w">              </span><span class="n">String</span><span class="w"> </span><span class="n">payloadContentType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="w">              </span><span class="n">Optional</span><span class="o">&lt;</span><span class="n">AuthorizationMatrix</span><span class="p">.</span><span class="na">ServicesTesting</span><span class="p">.</span><span class="na">Service</span><span class="o">&gt;</span><span class="w"> </span><span class="n">serviceTesting</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">servicesTestPayload</span><span class="p">.</span><span class="na">stream</span><span class="p">().</span><span class="na">filter</span><span class="p">(</span><span class="n">srvPld</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">srvPld</span><span class="p">.</span><span class="na">getName</span><span class="p">().</span><span class="na">equals</span><span class="p">(</span><span class="n">service</span><span class="p">.</span><span class="na">getName</span><span class="p">())).</span><span class="na">findFirst</span><span class="p">();</span>
+<span class="w">              </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">serviceTesting</span><span class="p">.</span><span class="na">isPresent</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                  </span><span class="n">payload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">serviceTesting</span><span class="p">.</span><span class="na">get</span><span class="p">().</span><span class="na">getPayload</span><span class="p">().</span><span class="na">getValue</span><span class="p">();</span>
+<span class="w">                  </span><span class="n">payloadContentType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">serviceTesting</span><span class="p">.</span><span class="na">get</span><span class="p">().</span><span class="na">getPayload</span><span class="p">().</span><span class="na">getContentType</span><span class="p">();</span>
+<span class="w">              </span><span class="p">}</span>
+<span class="w">              </span><span class="c1">//Call the service and verify if the response is consistent</span>
+<span class="w">              </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                  </span><span class="c1">//Call the service</span>
+<span class="w">                  </span><span class="kt">int</span><span class="w"> </span><span class="n">serviceResponseCode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">callService</span><span class="p">(</span><span class="n">service</span><span class="p">.</span><span class="na">getUri</span><span class="p">(),</span><span class="w"> </span><span class="n">payload</span><span class="p">,</span><span class="w"> </span><span class="n">payloadContentType</span><span class="p">,</span><span class="w"> </span><span class="n">service</span><span class="p">.</span><span class="na">getHttpMethod</span><span class="p">(),</span><span class="w"> </span><span class="n">accessToken</span><span class="p">);</span>
+<span class="w">                  </span><span class="c1">//Check if the role represented by the specified point of view is defined for the current service</span>
+<span class="w">                  </span><span class="n">Optional</span><span class="o">&lt;</span><span class="n">AuthorizationMatrix</span><span class="p">.</span><span class="na">Services</span><span class="p">.</span><span class="na">Service</span><span class="p">.</span><span class="na">Role</span><span class="o">&gt;</span><span class="w"> </span><span class="n">role</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">service</span><span class="p">.</span><span class="na">getRole</span><span class="p">().</span><span class="na">stream</span><span class="p">().</span><span class="na">filter</span><span class="p">(</span><span class="n">r</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="na">getName</span><span class="p">().</span><span class="na">equals</span><span class="p">(</span><span class="n">pointOfView</span><span class="p">.</span><span class="na">name</span><span class="p">())).</span><span class="na">findFirst</span><span class="p">();</span>
+<span class="w">                  </span><span class="kt">boolean</span><span class="w"> </span><span class="n">accessIsGrantedInAuthorizationMatrix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">role</span><span class="p">.</span><span class="na">isPresent</span><span class="p">();</span>
+<span class="w">                  </span><span class="c1">//Verify behavior consistency according to the response code returned and the authorization configured in the matrix</span>
+<span class="w">                  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">serviceResponseCode</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">service</span><span class="p">.</span><span class="na">getHttpResponseCodeForAccessAllowed</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                      </span><span class="c1">//Roles is not in the list of role allowed to access to the service so it&#39;s an error</span>
+<span class="w">                      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">accessIsGrantedInAuthorizationMatrix</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                          </span><span class="n">errors</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="n">errorMessageTplForIncorrectReturnCode</span><span class="p">,</span><span class="w"> </span><span class="n">service</span><span class="p">.</span><span class="na">getName</span><span class="p">(),</span><span class="w"> </span><span class="n">pointOfView</span><span class="p">.</span><span class="na">name</span><span class="p">(),</span><span class="w"> </span><span class="n">serviceResponseCode</span><span class="p">,</span>
+<span class="w">                           </span><span class="n">service</span><span class="p">.</span><span class="na">getHttpResponseCodeForAccessDenied</span><span class="p">()));</span>
+<span class="w">                      </span><span class="p">}</span>
+<span class="w">                  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">serviceResponseCode</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">service</span><span class="p">.</span><span class="na">getHttpResponseCodeForAccessDenied</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                      </span><span class="c1">//Roles is in the list of role allowed to access to the service so it&#39;s an error</span>
+<span class="w">                      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">accessIsGrantedInAuthorizationMatrix</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                          </span><span class="n">errors</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="n">errorMessageTplForIncorrectReturnCode</span><span class="p">,</span><span class="w"> </span><span class="n">service</span><span class="p">.</span><span class="na">getName</span><span class="p">(),</span><span class="w"> </span><span class="n">pointOfView</span><span class="p">.</span><span class="na">name</span><span class="p">(),</span><span class="w"> </span><span class="n">serviceResponseCode</span><span class="p">,</span>
+<span class="w">                           </span><span class="n">service</span><span class="p">.</span><span class="na">getHttpResponseCodeForAccessAllowed</span><span class="p">()));</span>
+<span class="w">                      </span><span class="p">}</span>
+<span class="w">                  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                      </span><span class="n">errors</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="n">errorMessageTplForUnexpectedReturnCode</span><span class="p">,</span><span class="w"> </span><span class="n">service</span><span class="p">.</span><span class="na">getName</span><span class="p">(),</span><span class="w"> </span><span class="n">pointOfView</span><span class="p">.</span><span class="na">name</span><span class="p">(),</span><span class="w"> </span><span class="n">serviceResponseCode</span><span class="p">));</span>
+<span class="w">                  </span><span class="p">}</span>
+<span class="w">              </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                  </span><span class="n">errors</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="n">fatalErrorMessageTpl</span><span class="p">,</span><span class="w"> </span><span class="n">service</span><span class="p">.</span><span class="na">getName</span><span class="p">(),</span><span class="w"> </span><span class="n">pointOfView</span><span class="p">.</span><span class="na">name</span><span class="p">(),</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">getMessage</span><span class="p">()));</span>
+<span class="w">              </span><span class="p">}</span>
 
 
-<span class="w">          </span><span class="p">});</span><span class="w"></span>
+<span class="w">          </span><span class="p">});</span>
 
-<span class="w">          </span><span class="k">return</span><span class="w"> </span><span class="n">errors</span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">          </span><span class="k">return</span><span class="w"> </span><span class="n">errors</span><span class="p">;</span>
+<span class="w">      </span><span class="p">}</span>
 
 <span class="w">      </span><span class="cm">/**</span>
 <span class="cm">       * Call a service with a specific payload and return the HTTP response code received.</span>
@@ -1949,43 +1949,43 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
 <span class="cm">       * @param accessToken        Access token to specify to represent the identity of the caller</span>
 <span class="cm">       * @return The HTTP response code received</span>
 <span class="cm">       * @throws Exception If any error occurs</span>
-<span class="cm">       */</span><span class="w"></span>
-<span class="w">      </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">callService</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">uri</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">payload</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">payloadContentType</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">httpMethod</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">accessToken</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">          </span><span class="kt">int</span><span class="w"> </span><span class="n">rc</span><span class="p">;</span><span class="w"></span>
+<span class="cm">       */</span>
+<span class="w">      </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">callService</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">uri</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">payload</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">payloadContentType</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">httpMethod</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">accessToken</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="kt">int</span><span class="w"> </span><span class="n">rc</span><span class="p">;</span>
 
-<span class="w">          </span><span class="c1">//Build the request - Use Apache HTTP Client in order to be more flexible in the combination</span><span class="w"></span>
-<span class="w">          </span><span class="n">HttpRequestBase</span><span class="w"> </span><span class="n">request</span><span class="p">;</span><span class="w"></span>
-<span class="w">          </span><span class="n">String</span><span class="w"> </span><span class="n">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">BASE_URL</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">uri</span><span class="p">).</span><span class="na">replaceAll</span><span class="p">(</span><span class="s">&quot;\\{messageId\\}&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">          </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">httpMethod</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">              </span><span class="k">case</span><span class="w"> </span><span class="s">&quot;GET&quot;</span><span class="p">:</span><span class="w"></span>
-<span class="w">                  </span><span class="n">request</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HttpGet</span><span class="p">(</span><span class="n">url</span><span class="p">);</span><span class="w"></span>
-<span class="w">                  </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
-<span class="w">              </span><span class="k">case</span><span class="w"> </span><span class="s">&quot;DELETE&quot;</span><span class="p">:</span><span class="w"></span>
-<span class="w">                  </span><span class="n">request</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HttpDelete</span><span class="p">(</span><span class="n">url</span><span class="p">);</span><span class="w"></span>
-<span class="w">                  </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
-<span class="w">              </span><span class="k">case</span><span class="w"> </span><span class="s">&quot;PUT&quot;</span><span class="p">:</span><span class="w"></span>
-<span class="w">                  </span><span class="n">request</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HttpPut</span><span class="p">(</span><span class="n">url</span><span class="p">);</span><span class="w"></span>
-<span class="w">                  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">payload</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">                      </span><span class="n">request</span><span class="p">.</span><span class="na">setHeader</span><span class="p">(</span><span class="s">&quot;Content-Type&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">payloadContentType</span><span class="p">);</span><span class="w"></span>
-<span class="w">                      </span><span class="p">((</span><span class="n">HttpPut</span><span class="p">)</span><span class="w"> </span><span class="n">request</span><span class="p">).</span><span class="na">setEntity</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">StringEntity</span><span class="p">(</span><span class="n">payload</span><span class="p">.</span><span class="na">trim</span><span class="p">()));</span><span class="w"></span>
-<span class="w">                  </span><span class="p">}</span><span class="w"></span>
-<span class="w">                  </span><span class="k">break</span><span class="p">;</span><span class="w"></span>
-<span class="w">              </span><span class="k">default</span><span class="p">:</span><span class="w"></span>
-<span class="w">                  </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">UnsupportedOperationException</span><span class="p">(</span><span class="n">httpMethod</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot; not supported !&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">          </span><span class="p">}</span><span class="w"></span>
-<span class="w">          </span><span class="n">request</span><span class="p">.</span><span class="na">setHeader</span><span class="p">(</span><span class="s">&quot;Authorization&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">accessToken</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">accessToken</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">          </span><span class="c1">//Build the request - Use Apache HTTP Client in order to be more flexible in the combination</span>
+<span class="w">          </span><span class="n">HttpRequestBase</span><span class="w"> </span><span class="n">request</span><span class="p">;</span>
+<span class="w">          </span><span class="n">String</span><span class="w"> </span><span class="n">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">BASE_URL</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">uri</span><span class="p">).</span><span class="na">replaceAll</span><span class="p">(</span><span class="s">&quot;\\{messageId\\}&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="p">);</span>
+<span class="w">          </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">httpMethod</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">              </span><span class="k">case</span><span class="w"> </span><span class="s">&quot;GET&quot;</span><span class="p">:</span>
+<span class="w">                  </span><span class="n">request</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HttpGet</span><span class="p">(</span><span class="n">url</span><span class="p">);</span>
+<span class="w">                  </span><span class="k">break</span><span class="p">;</span>
+<span class="w">              </span><span class="k">case</span><span class="w"> </span><span class="s">&quot;DELETE&quot;</span><span class="p">:</span>
+<span class="w">                  </span><span class="n">request</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HttpDelete</span><span class="p">(</span><span class="n">url</span><span class="p">);</span>
+<span class="w">                  </span><span class="k">break</span><span class="p">;</span>
+<span class="w">              </span><span class="k">case</span><span class="w"> </span><span class="s">&quot;PUT&quot;</span><span class="p">:</span>
+<span class="w">                  </span><span class="n">request</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HttpPut</span><span class="p">(</span><span class="n">url</span><span class="p">);</span>
+<span class="w">                  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">payload</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                      </span><span class="n">request</span><span class="p">.</span><span class="na">setHeader</span><span class="p">(</span><span class="s">&quot;Content-Type&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">payloadContentType</span><span class="p">);</span>
+<span class="w">                      </span><span class="p">((</span><span class="n">HttpPut</span><span class="p">)</span><span class="w"> </span><span class="n">request</span><span class="p">).</span><span class="na">setEntity</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">StringEntity</span><span class="p">(</span><span class="n">payload</span><span class="p">.</span><span class="na">trim</span><span class="p">()));</span>
+<span class="w">                  </span><span class="p">}</span>
+<span class="w">                  </span><span class="k">break</span><span class="p">;</span>
+<span class="w">              </span><span class="k">default</span><span class="p">:</span>
+<span class="w">                  </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">UnsupportedOperationException</span><span class="p">(</span><span class="n">httpMethod</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot; not supported !&quot;</span><span class="p">);</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">          </span><span class="n">request</span><span class="p">.</span><span class="na">setHeader</span><span class="p">(</span><span class="s">&quot;Authorization&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">accessToken</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">accessToken</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span>
 
 
-<span class="w">          </span><span class="c1">//Send the request and get the HTTP response code</span><span class="w"></span>
-<span class="w">          </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">CloseableHttpClient</span><span class="w"> </span><span class="n">httpClient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HttpClients</span><span class="p">.</span><span class="na">createDefault</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">              </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">CloseableHttpResponse</span><span class="w"> </span><span class="n">httpResponse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">httpClient</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="n">request</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">                  </span><span class="c1">//Don&#39;t care here about the response content...</span><span class="w"></span>
-<span class="w">                  </span><span class="n">rc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">httpResponse</span><span class="p">.</span><span class="na">getStatusLine</span><span class="p">().</span><span class="na">getStatusCode</span><span class="p">();</span><span class="w"></span>
-<span class="w">              </span><span class="p">}</span><span class="w"></span>
-<span class="w">          </span><span class="p">}</span><span class="w"></span>
+<span class="w">          </span><span class="c1">//Send the request and get the HTTP response code</span>
+<span class="w">          </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">CloseableHttpClient</span><span class="w"> </span><span class="n">httpClient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HttpClients</span><span class="p">.</span><span class="na">createDefault</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">              </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">CloseableHttpResponse</span><span class="w"> </span><span class="n">httpResponse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">httpClient</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="n">request</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                  </span><span class="c1">//Don&#39;t care here about the response content...</span>
+<span class="w">                  </span><span class="n">rc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">httpResponse</span><span class="p">.</span><span class="na">getStatusLine</span><span class="p">().</span><span class="na">getStatusCode</span><span class="p">();</span>
+<span class="w">              </span><span class="p">}</span>
+<span class="w">          </span><span class="p">}</span>
 
-<span class="w">          </span><span class="k">return</span><span class="w"> </span><span class="n">rc</span><span class="p">;</span><span class="w"></span>
-<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">          </span><span class="k">return</span><span class="w"> </span><span class="n">rc</span><span class="p">;</span>
+<span class="w">      </span><span class="p">}</span>
 
 <span class="w">      </span><span class="cm">/**</span>
 <span class="cm">       * Generate a JWT token the user and role specified.</span>
@@ -1994,10 +1994,10 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
 <span class="cm">       * @param role  Authorization logical role</span>
 <span class="cm">       * @return The JWT token</span>
 <span class="cm">       * @throws Exception If any error occurs during the creation</span>
-<span class="cm">       */</span><span class="w"></span>
-<span class="w">      </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">generateTestCaseAccessToken</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">login</span><span class="p">,</span><span class="w"> </span><span class="n">SecurityRole</span><span class="w"> </span><span class="n">role</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">          </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AuthService</span><span class="p">().</span><span class="na">issueAccessToken</span><span class="p">(</span><span class="n">login</span><span class="p">,</span><span class="w"> </span><span class="n">role</span><span class="p">);</span><span class="w"></span>
-<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="cm">       */</span>
+<span class="w">      </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">generateTestCaseAccessToken</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">login</span><span class="p">,</span><span class="w"> </span><span class="n">SecurityRole</span><span class="w"> </span><span class="n">role</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AuthService</span><span class="p">().</span><span class="na">issueAccessToken</span><span class="p">(</span><span class="n">login</span><span class="p">,</span><span class="w"> </span><span class="n">role</span><span class="p">);</span>
+<span class="w">      </span><span class="p">}</span>
 
 
 <span class="w">      </span><span class="cm">/**</span>
@@ -2005,135 +2005,135 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
 <span class="cm">       *</span>
 <span class="cm">       * @param errors Error list</span>
 <span class="cm">       * @return Printable string</span>
-<span class="cm">       */</span><span class="w"></span>
-<span class="w">      </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">formatErrorsList</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">errors</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">          </span><span class="n">StringBuilder</span><span class="w"> </span><span class="n">buffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">StringBuilder</span><span class="p">();</span><span class="w"></span>
-<span class="w">          </span><span class="n">errors</span><span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="n">e</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">buffer</span><span class="p">.</span><span class="na">append</span><span class="p">(</span><span class="n">e</span><span class="p">).</span><span class="na">append</span><span class="p">(</span><span class="s">&quot;\n&quot;</span><span class="p">));</span><span class="w"></span>
-<span class="w">          </span><span class="k">return</span><span class="w"> </span><span class="n">buffer</span><span class="p">.</span><span class="na">toString</span><span class="p">();</span><span class="w"></span>
-<span class="w">      </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="cm">       */</span>
+<span class="w">      </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">formatErrorsList</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">errors</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="n">StringBuilder</span><span class="w"> </span><span class="n">buffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">StringBuilder</span><span class="p">();</span>
+<span class="w">          </span><span class="n">errors</span><span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="n">e</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">buffer</span><span class="p">.</span><span class="na">append</span><span class="p">(</span><span class="n">e</span><span class="p">).</span><span class="na">append</span><span class="p">(</span><span class="s">&quot;\n&quot;</span><span class="p">));</span>
+<span class="w">          </span><span class="k">return</span><span class="w"> </span><span class="n">buffer</span><span class="p">.</span><span class="na">toString</span><span class="p">();</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
 </code></pre></div>
 <p>In case of detecting an authorization issue(s) the output is the following:</p>
-<div class="highlight"><pre><span></span><code><span class="n">testAccessUsingAnonymousUserPointOfView</span><span class="p">(</span><span class="n">org</span><span class="p">.</span><span class="na">owasp</span><span class="p">.</span><span class="na">pocauthztesting</span><span class="p">.</span><span class="na">AuthorizationMatrixIT</span><span class="p">)</span><span class="w"></span>
-<span class="n">Time</span><span class="w"> </span><span class="n">elapsed</span><span class="p">:</span><span class="w"> </span><span class="mf">1.009</span><span class="w"> </span><span class="n">s</span><span class="w">  </span><span class="err">###</span><span class="w"> </span><span class="n">FAILURE</span><span class="w"></span>
-<span class="n">java</span><span class="p">.</span><span class="na">lang</span><span class="p">.</span><span class="na">AssertionError</span><span class="p">:</span><span class="w"></span>
-<span class="n">Access</span><span class="w"> </span><span class="n">issues</span><span class="w"> </span><span class="n">detected</span><span class="w"> </span><span class="n">using</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">ANONYMOUS</span><span class="w"> </span><span class="n">USER</span><span class="w"> </span><span class="n">point</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">view</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="n">The</span><span class="w"> </span><span class="n">service</span><span class="w"> </span><span class="err">&#39;</span><span class="n">DeleteMessage</span><span class="err">&#39;</span><span class="w"> </span><span class="n">when</span><span class="w"> </span><span class="n">called</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">POV</span><span class="w"> </span><span class="err">&#39;</span><span class="n">ANONYMOUS</span><span class="err">&#39;</span><span class="w"> </span><span class="k">return</span><span class="w"></span>
-<span class="w">    </span><span class="n">a</span><span class="w"> </span><span class="n">response</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="mi">200</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">not</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">expected</span><span class="w"> </span><span class="nf">one</span><span class="w"> </span><span class="p">(</span><span class="mi">403</span><span class="w"> </span><span class="n">expected</span><span class="p">).</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="n">testAccessUsingAnonymousUserPointOfView</span><span class="p">(</span><span class="n">org</span><span class="p">.</span><span class="na">owasp</span><span class="p">.</span><span class="na">pocauthztesting</span><span class="p">.</span><span class="na">AuthorizationMatrixIT</span><span class="p">)</span>
+<span class="n">Time</span><span class="w"> </span><span class="n">elapsed</span><span class="p">:</span><span class="w"> </span><span class="mf">1.009</span><span class="w"> </span><span class="n">s</span><span class="w">  </span><span class="err">###</span><span class="w"> </span><span class="n">FAILURE</span>
+<span class="n">java</span><span class="p">.</span><span class="na">lang</span><span class="p">.</span><span class="na">AssertionError</span><span class="p">:</span>
+<span class="n">Access</span><span class="w"> </span><span class="n">issues</span><span class="w"> </span><span class="n">detected</span><span class="w"> </span><span class="n">using</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">ANONYMOUS</span><span class="w"> </span><span class="n">USER</span><span class="w"> </span><span class="n">point</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">view</span><span class="p">:</span>
+<span class="w">    </span><span class="n">The</span><span class="w"> </span><span class="n">service</span><span class="w"> </span><span class="err">&#39;</span><span class="n">DeleteMessage</span><span class="err">&#39;</span><span class="w"> </span><span class="n">when</span><span class="w"> </span><span class="n">called</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">POV</span><span class="w"> </span><span class="err">&#39;</span><span class="n">ANONYMOUS</span><span class="err">&#39;</span><span class="w"> </span><span class="k">return</span>
+<span class="w">    </span><span class="n">a</span><span class="w"> </span><span class="n">response</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="mi">200</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">not</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">expected</span><span class="w"> </span><span class="nf">one</span><span class="w"> </span><span class="p">(</span><span class="mi">403</span><span class="w"> </span><span class="n">expected</span><span class="p">).</span>
 
-<span class="w">    </span><span class="n">The</span><span class="w"> </span><span class="n">service</span><span class="w"> </span><span class="err">&#39;</span><span class="n">CreateMessage</span><span class="err">&#39;</span><span class="w"> </span><span class="n">when</span><span class="w"> </span><span class="n">called</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">POV</span><span class="w"> </span><span class="err">&#39;</span><span class="n">ANONYMOUS</span><span class="err">&#39;</span><span class="w"> </span><span class="k">return</span><span class="w"></span>
-<span class="w">    </span><span class="n">a</span><span class="w"> </span><span class="n">response</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="mi">200</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">not</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">expected</span><span class="w"> </span><span class="nf">one</span><span class="w"> </span><span class="p">(</span><span class="mi">403</span><span class="w"> </span><span class="n">expected</span><span class="p">).</span><span class="w"></span>
+<span class="w">    </span><span class="n">The</span><span class="w"> </span><span class="n">service</span><span class="w"> </span><span class="err">&#39;</span><span class="n">CreateMessage</span><span class="err">&#39;</span><span class="w"> </span><span class="n">when</span><span class="w"> </span><span class="n">called</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">POV</span><span class="w"> </span><span class="err">&#39;</span><span class="n">ANONYMOUS</span><span class="err">&#39;</span><span class="w"> </span><span class="k">return</span>
+<span class="w">    </span><span class="n">a</span><span class="w"> </span><span class="n">response</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="mi">200</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">not</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">expected</span><span class="w"> </span><span class="nf">one</span><span class="w"> </span><span class="p">(</span><span class="mi">403</span><span class="w"> </span><span class="n">expected</span><span class="p">).</span>
 
-<span class="n">testAccessUsingBasicUserPointOfView</span><span class="p">(</span><span class="n">org</span><span class="p">.</span><span class="na">owasp</span><span class="p">.</span><span class="na">pocauthztesting</span><span class="p">.</span><span class="na">AuthorizationMatrixIT</span><span class="p">)</span><span class="w"></span>
-<span class="n">Time</span><span class="w"> </span><span class="n">elapsed</span><span class="p">:</span><span class="w"> </span><span class="mf">0.05</span><span class="w"> </span><span class="n">s</span><span class="w">  </span><span class="err">###</span><span class="w"> </span><span class="n">FAILURE</span><span class="o">!</span><span class="w"></span>
-<span class="n">java</span><span class="p">.</span><span class="na">lang</span><span class="p">.</span><span class="na">AssertionError</span><span class="p">:</span><span class="w"></span>
-<span class="n">Access</span><span class="w"> </span><span class="n">issues</span><span class="w"> </span><span class="n">detected</span><span class="w"> </span><span class="n">using</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">BASIC</span><span class="w"> </span><span class="n">USER</span><span class="w"> </span><span class="n">point</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">view</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="n">The</span><span class="w"> </span><span class="n">service</span><span class="w"> </span><span class="err">&#39;</span><span class="n">DeleteMessage</span><span class="err">&#39;</span><span class="w"> </span><span class="n">when</span><span class="w"> </span><span class="n">called</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">POV</span><span class="w"> </span><span class="err">&#39;</span><span class="n">BASIC</span><span class="err">&#39;</span><span class="w"> </span><span class="k">return</span><span class="w"></span>
-<span class="w">    </span><span class="n">a</span><span class="w"> </span><span class="n">response</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="mi">200</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">not</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">expected</span><span class="w"> </span><span class="nf">one</span><span class="w"> </span><span class="p">(</span><span class="mi">403</span><span class="w"> </span><span class="n">expected</span><span class="p">).</span><span class="w"></span>
+<span class="n">testAccessUsingBasicUserPointOfView</span><span class="p">(</span><span class="n">org</span><span class="p">.</span><span class="na">owasp</span><span class="p">.</span><span class="na">pocauthztesting</span><span class="p">.</span><span class="na">AuthorizationMatrixIT</span><span class="p">)</span>
+<span class="n">Time</span><span class="w"> </span><span class="n">elapsed</span><span class="p">:</span><span class="w"> </span><span class="mf">0.05</span><span class="w"> </span><span class="n">s</span><span class="w">  </span><span class="err">###</span><span class="w"> </span><span class="n">FAILURE</span><span class="o">!</span>
+<span class="n">java</span><span class="p">.</span><span class="na">lang</span><span class="p">.</span><span class="na">AssertionError</span><span class="p">:</span>
+<span class="n">Access</span><span class="w"> </span><span class="n">issues</span><span class="w"> </span><span class="n">detected</span><span class="w"> </span><span class="n">using</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">BASIC</span><span class="w"> </span><span class="n">USER</span><span class="w"> </span><span class="n">point</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">view</span><span class="p">:</span>
+<span class="w">    </span><span class="n">The</span><span class="w"> </span><span class="n">service</span><span class="w"> </span><span class="err">&#39;</span><span class="n">DeleteMessage</span><span class="err">&#39;</span><span class="w"> </span><span class="n">when</span><span class="w"> </span><span class="n">called</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">POV</span><span class="w"> </span><span class="err">&#39;</span><span class="n">BASIC</span><span class="err">&#39;</span><span class="w"> </span><span class="k">return</span>
+<span class="w">    </span><span class="n">a</span><span class="w"> </span><span class="n">response</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="mi">200</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">not</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">expected</span><span class="w"> </span><span class="nf">one</span><span class="w"> </span><span class="p">(</span><span class="mi">403</span><span class="w"> </span><span class="n">expected</span><span class="p">).</span>
 </code></pre></div>
 <h2 id="rendering-of-the-authorization-matrix-for-an-audit-review">Rendering of the authorization matrix for an audit / review<a class="headerlink" href="#rendering-of-the-authorization-matrix-for-an-audit-review" title="Permanent link">&para;</a></h2>
 <p>Even if the authorization matrix is stored in a human-readable format (XML), it can be interesting to provide an on-the-fly rendering representation of the XML file in order to facilitate the review, audit and discussion about the authorization matrix in order to spot potential inconsistencies.</p>
 <p>The Following XSL stylesheet can be used:</p>
 <div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="k">&lt;xsl:stylesheet</span> <span class="na">xmlns:xsl=</span><span class="s">&quot;http://www.w3.org/1999/XSL/Transform&quot;</span> <span class="na">version=</span><span class="s">&quot;1.0&quot;</span><span class="nt">&gt;</span>
-  <span class="k">&lt;xsl:template</span> <span class="na">match=</span><span class="s">&quot;/&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;html&gt;</span>
-      <span class="nt">&lt;head&gt;</span>
-        <span class="nt">&lt;title&gt;</span>Authorization Matrix<span class="nt">&lt;/title&gt;</span>
-        <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span>
-        <span class="na">href=</span><span class="s">&quot;https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css&quot;</span>
-        <span class="na">integrity=</span><span class="s">&quot;sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ&quot;</span>
-        <span class="na">crossorigin=</span><span class="s">&quot;anonymous&quot;</span> <span class="nt">/&gt;</span>
-      <span class="nt">&lt;/head&gt;</span>
-      <span class="nt">&lt;body&gt;</span>
-        <span class="nt">&lt;h3&gt;</span>Roles<span class="nt">&lt;/h3&gt;</span>
-        <span class="nt">&lt;ul&gt;</span>
-          <span class="k">&lt;xsl:for-each</span> <span class="na">select=</span><span class="s">&quot;authorization-matrix/roles/role&quot;</span><span class="nt">&gt;</span>
-            <span class="k">&lt;xsl:choose</span><span class="nt">&gt;</span>
-              <span class="k">&lt;xsl:when</span> <span class="na">test=</span><span class="s">&quot;@name = &#39;ADMIN&#39;&quot;</span><span class="nt">&gt;</span>
-                <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;alert alert-warning&quot;</span> <span class="na">role=</span><span class="s">&quot;alert&quot;</span><span class="nt">&gt;</span>
-                  <span class="nt">&lt;strong&gt;</span>
-                    <span class="k">&lt;xsl:value-of</span> <span class="na">select=</span><span class="s">&quot;@name&quot;</span> <span class="nt">/&gt;</span>
-                  <span class="nt">&lt;/strong&gt;</span>
-                  :
-                  <span class="k">&lt;xsl:value-of</span> <span class="na">select=</span><span class="s">&quot;@description&quot;</span> <span class="nt">/&gt;</span>
-                <span class="nt">&lt;/div&gt;</span>
-              <span class="k">&lt;/xsl:when&gt;</span>
-              <span class="k">&lt;xsl:when</span> <span class="na">test=</span><span class="s">&quot;@name = &#39;BASIC&#39;&quot;</span><span class="nt">&gt;</span>
-                <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;alert alert-info&quot;</span> <span class="na">role=</span><span class="s">&quot;alert&quot;</span><span class="nt">&gt;</span>
-                  <span class="nt">&lt;strong&gt;</span>
-                    <span class="k">&lt;xsl:value-of</span> <span class="na">select=</span><span class="s">&quot;@name&quot;</span> <span class="nt">/&gt;</span>
-                  <span class="nt">&lt;/strong&gt;</span>
-                  :
-                  <span class="k">&lt;xsl:value-of</span> <span class="na">select=</span><span class="s">&quot;@description&quot;</span> <span class="nt">/&gt;</span>
-                <span class="nt">&lt;/div&gt;</span>
-              <span class="k">&lt;/xsl:when&gt;</span>
-              <span class="k">&lt;xsl:otherwise</span><span class="nt">&gt;</span>
-                <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;alert alert-danger&quot;</span> <span class="na">role=</span><span class="s">&quot;alert&quot;</span><span class="nt">&gt;</span>
-                  <span class="nt">&lt;strong&gt;</span>
-                    <span class="k">&lt;xsl:value-of</span> <span class="na">select=</span><span class="s">&quot;@name&quot;</span> <span class="nt">/&gt;</span>
-                  <span class="nt">&lt;/strong&gt;</span>
-                  :
-                  <span class="k">&lt;xsl:value-of</span> <span class="na">select=</span><span class="s">&quot;@description&quot;</span> <span class="nt">/&gt;</span>
-                <span class="nt">&lt;/div&gt;</span>
-              <span class="k">&lt;/xsl:otherwise&gt;</span>
-            <span class="k">&lt;/xsl:choose&gt;</span>
-          <span class="k">&lt;/xsl:for-each&gt;</span>
-        <span class="nt">&lt;/ul&gt;</span>
-        <span class="nt">&lt;h3&gt;</span>Authorizations<span class="nt">&lt;/h3&gt;</span>
-        <span class="nt">&lt;table</span> <span class="na">class=</span><span class="s">&quot;table table-hover table-sm&quot;</span><span class="nt">&gt;</span>
-          <span class="nt">&lt;thead</span> <span class="na">class=</span><span class="s">&quot;thead-inverse&quot;</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;tr&gt;</span>
-              <span class="nt">&lt;th&gt;</span>Service<span class="nt">&lt;/th&gt;</span>
-              <span class="nt">&lt;th&gt;</span>URI<span class="nt">&lt;/th&gt;</span>
-              <span class="nt">&lt;th&gt;</span>Method<span class="nt">&lt;/th&gt;</span>
-              <span class="nt">&lt;th&gt;</span>Role<span class="nt">&lt;/th&gt;</span>
-            <span class="nt">&lt;/tr&gt;</span>
-          <span class="nt">&lt;/thead&gt;</span>
-          <span class="nt">&lt;tbody&gt;</span>
-            <span class="k">&lt;xsl:for-each</span> <span class="na">select=</span><span class="s">&quot;authorization-matrix/services/service&quot;</span><span class="nt">&gt;</span>
-              <span class="k">&lt;xsl:variable</span> <span class="na">name=</span><span class="s">&quot;service-name&quot;</span> <span class="na">select=</span><span class="s">&quot;@name&quot;</span> <span class="nt">/&gt;</span>
-              <span class="k">&lt;xsl:variable</span> <span class="na">name=</span><span class="s">&quot;service-uri&quot;</span> <span class="na">select=</span><span class="s">&quot;@uri&quot;</span> <span class="nt">/&gt;</span>
-              <span class="k">&lt;xsl:variable</span> <span class="na">name=</span><span class="s">&quot;service-method&quot;</span> <span class="na">select=</span><span class="s">&quot;@http-method&quot;</span> <span class="nt">/&gt;</span>
-              <span class="k">&lt;xsl:for-each</span> <span class="na">select=</span><span class="s">&quot;role&quot;</span><span class="nt">&gt;</span>
-                <span class="nt">&lt;tr&gt;</span>
-                  <span class="nt">&lt;td</span> <span class="na">scope=</span><span class="s">&quot;row&quot;</span><span class="nt">&gt;</span>
-                    <span class="k">&lt;xsl:value-of</span> <span class="na">select=</span><span class="s">&quot;$service-name&quot;</span> <span class="nt">/&gt;</span>
-                  <span class="nt">&lt;/td&gt;</span>
-                  <span class="nt">&lt;td&gt;</span>
-                    <span class="k">&lt;xsl:value-of</span> <span class="na">select=</span><span class="s">&quot;$service-uri&quot;</span> <span class="nt">/&gt;</span>
-                  <span class="nt">&lt;/td&gt;</span>
-                  <span class="nt">&lt;td&gt;</span>
-                    <span class="k">&lt;xsl:value-of</span> <span class="na">select=</span><span class="s">&quot;$service-method&quot;</span> <span class="nt">/&gt;</span>
-                  <span class="nt">&lt;/td&gt;</span>
-                  <span class="nt">&lt;td&gt;</span>
-                    <span class="k">&lt;xsl:variable</span> <span class="na">name=</span><span class="s">&quot;service-role-name&quot;</span> <span class="na">select=</span><span class="s">&quot;@name&quot;</span> <span class="nt">/&gt;</span>
-                    <span class="k">&lt;xsl:choose</span><span class="nt">&gt;</span>
-                      <span class="k">&lt;xsl:when</span> <span class="na">test=</span><span class="s">&quot;@name = &#39;ADMIN&#39;&quot;</span><span class="nt">&gt;</span>
-                        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;alert alert-warning&quot;</span> <span class="na">role=</span><span class="s">&quot;alert&quot;</span><span class="nt">&gt;</span>
-                          <span class="k">&lt;xsl:value-of</span> <span class="na">select=</span><span class="s">&quot;@name&quot;</span> <span class="nt">/&gt;</span>
-                        <span class="nt">&lt;/div&gt;</span>
-                      <span class="k">&lt;/xsl:when&gt;</span>
-                      <span class="k">&lt;xsl:when</span> <span class="na">test=</span><span class="s">&quot;@name = &#39;BASIC&#39;&quot;</span><span class="nt">&gt;</span>
-                        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;alert alert-info&quot;</span> <span class="na">role=</span><span class="s">&quot;alert&quot;</span><span class="nt">&gt;</span>
-                          <span class="k">&lt;xsl:value-of</span> <span class="na">select=</span><span class="s">&quot;@name&quot;</span> <span class="nt">/&gt;</span>
-                        <span class="nt">&lt;/div&gt;</span>
-                      <span class="k">&lt;/xsl:when&gt;</span>
-                      <span class="k">&lt;xsl:otherwise</span><span class="nt">&gt;</span>
-                        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;alert alert-danger&quot;</span> <span class="na">role=</span><span class="s">&quot;alert&quot;</span><span class="nt">&gt;</span>
-                          <span class="k">&lt;xsl:value-of</span> <span class="na">select=</span><span class="s">&quot;@name&quot;</span> <span class="nt">/&gt;</span>
-                        <span class="nt">&lt;/div&gt;</span>
-                      <span class="k">&lt;/xsl:otherwise&gt;</span>
-                    <span class="k">&lt;/xsl:choose&gt;</span>
-                  <span class="nt">&lt;/td&gt;</span>
-                <span class="nt">&lt;/tr&gt;</span>
-              <span class="k">&lt;/xsl:for-each&gt;</span>
-            <span class="k">&lt;/xsl:for-each&gt;</span>
-          <span class="nt">&lt;/tbody&gt;</span>
-        <span class="nt">&lt;/table&gt;</span>
-      <span class="nt">&lt;/body&gt;</span>
-    <span class="nt">&lt;/html&gt;</span>
-  <span class="k">&lt;/xsl:template&gt;</span>
+<span class="k">&lt;xsl:stylesheet</span><span class="w"> </span><span class="na">xmlns:xsl=</span><span class="s">&quot;http://www.w3.org/1999/XSL/Transform&quot;</span><span class="w"> </span><span class="na">version=</span><span class="s">&quot;1.0&quot;</span><span class="nt">&gt;</span>
+<span class="w">  </span><span class="k">&lt;xsl:template</span><span class="w"> </span><span class="na">match=</span><span class="s">&quot;/&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;html&gt;</span>
+<span class="w">      </span><span class="nt">&lt;head&gt;</span>
+<span class="w">        </span><span class="nt">&lt;title&gt;</span>Authorization<span class="w"> </span>Matrix<span class="nt">&lt;/title&gt;</span>
+<span class="w">        </span><span class="nt">&lt;link</span><span class="w"> </span><span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span>
+<span class="w">        </span><span class="na">href=</span><span class="s">&quot;https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css&quot;</span>
+<span class="w">        </span><span class="na">integrity=</span><span class="s">&quot;sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ&quot;</span>
+<span class="w">        </span><span class="na">crossorigin=</span><span class="s">&quot;anonymous&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">      </span><span class="nt">&lt;/head&gt;</span>
+<span class="w">      </span><span class="nt">&lt;body&gt;</span>
+<span class="w">        </span><span class="nt">&lt;h3&gt;</span>Roles<span class="nt">&lt;/h3&gt;</span>
+<span class="w">        </span><span class="nt">&lt;ul&gt;</span>
+<span class="w">          </span><span class="k">&lt;xsl:for-each</span><span class="w"> </span><span class="na">select=</span><span class="s">&quot;authorization-matrix/roles/role&quot;</span><span class="nt">&gt;</span>
+<span class="w">            </span><span class="k">&lt;xsl:choose</span><span class="nt">&gt;</span>
+<span class="w">              </span><span class="k">&lt;xsl:when</span><span class="w"> </span><span class="na">test=</span><span class="s">&quot;@name = &#39;ADMIN&#39;&quot;</span><span class="nt">&gt;</span>
+<span class="w">                </span><span class="nt">&lt;div</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;alert alert-warning&quot;</span><span class="w"> </span><span class="na">role=</span><span class="s">&quot;alert&quot;</span><span class="nt">&gt;</span>
+<span class="w">                  </span><span class="nt">&lt;strong&gt;</span>
+<span class="w">                    </span><span class="k">&lt;xsl:value-of</span><span class="w"> </span><span class="na">select=</span><span class="s">&quot;@name&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">                  </span><span class="nt">&lt;/strong&gt;</span>
+<span class="w">                  </span>:
+<span class="w">                  </span><span class="k">&lt;xsl:value-of</span><span class="w"> </span><span class="na">select=</span><span class="s">&quot;@description&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">                </span><span class="nt">&lt;/div&gt;</span>
+<span class="w">              </span><span class="k">&lt;/xsl:when&gt;</span>
+<span class="w">              </span><span class="k">&lt;xsl:when</span><span class="w"> </span><span class="na">test=</span><span class="s">&quot;@name = &#39;BASIC&#39;&quot;</span><span class="nt">&gt;</span>
+<span class="w">                </span><span class="nt">&lt;div</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;alert alert-info&quot;</span><span class="w"> </span><span class="na">role=</span><span class="s">&quot;alert&quot;</span><span class="nt">&gt;</span>
+<span class="w">                  </span><span class="nt">&lt;strong&gt;</span>
+<span class="w">                    </span><span class="k">&lt;xsl:value-of</span><span class="w"> </span><span class="na">select=</span><span class="s">&quot;@name&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">                  </span><span class="nt">&lt;/strong&gt;</span>
+<span class="w">                  </span>:
+<span class="w">                  </span><span class="k">&lt;xsl:value-of</span><span class="w"> </span><span class="na">select=</span><span class="s">&quot;@description&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">                </span><span class="nt">&lt;/div&gt;</span>
+<span class="w">              </span><span class="k">&lt;/xsl:when&gt;</span>
+<span class="w">              </span><span class="k">&lt;xsl:otherwise</span><span class="nt">&gt;</span>
+<span class="w">                </span><span class="nt">&lt;div</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;alert alert-danger&quot;</span><span class="w"> </span><span class="na">role=</span><span class="s">&quot;alert&quot;</span><span class="nt">&gt;</span>
+<span class="w">                  </span><span class="nt">&lt;strong&gt;</span>
+<span class="w">                    </span><span class="k">&lt;xsl:value-of</span><span class="w"> </span><span class="na">select=</span><span class="s">&quot;@name&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">                  </span><span class="nt">&lt;/strong&gt;</span>
+<span class="w">                  </span>:
+<span class="w">                  </span><span class="k">&lt;xsl:value-of</span><span class="w"> </span><span class="na">select=</span><span class="s">&quot;@description&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">                </span><span class="nt">&lt;/div&gt;</span>
+<span class="w">              </span><span class="k">&lt;/xsl:otherwise&gt;</span>
+<span class="w">            </span><span class="k">&lt;/xsl:choose&gt;</span>
+<span class="w">          </span><span class="k">&lt;/xsl:for-each&gt;</span>
+<span class="w">        </span><span class="nt">&lt;/ul&gt;</span>
+<span class="w">        </span><span class="nt">&lt;h3&gt;</span>Authorizations<span class="nt">&lt;/h3&gt;</span>
+<span class="w">        </span><span class="nt">&lt;table</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;table table-hover table-sm&quot;</span><span class="nt">&gt;</span>
+<span class="w">          </span><span class="nt">&lt;thead</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;thead-inverse&quot;</span><span class="nt">&gt;</span>
+<span class="w">            </span><span class="nt">&lt;tr&gt;</span>
+<span class="w">              </span><span class="nt">&lt;th&gt;</span>Service<span class="nt">&lt;/th&gt;</span>
+<span class="w">              </span><span class="nt">&lt;th&gt;</span>URI<span class="nt">&lt;/th&gt;</span>
+<span class="w">              </span><span class="nt">&lt;th&gt;</span>Method<span class="nt">&lt;/th&gt;</span>
+<span class="w">              </span><span class="nt">&lt;th&gt;</span>Role<span class="nt">&lt;/th&gt;</span>
+<span class="w">            </span><span class="nt">&lt;/tr&gt;</span>
+<span class="w">          </span><span class="nt">&lt;/thead&gt;</span>
+<span class="w">          </span><span class="nt">&lt;tbody&gt;</span>
+<span class="w">            </span><span class="k">&lt;xsl:for-each</span><span class="w"> </span><span class="na">select=</span><span class="s">&quot;authorization-matrix/services/service&quot;</span><span class="nt">&gt;</span>
+<span class="w">              </span><span class="k">&lt;xsl:variable</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;service-name&quot;</span><span class="w"> </span><span class="na">select=</span><span class="s">&quot;@name&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">              </span><span class="k">&lt;xsl:variable</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;service-uri&quot;</span><span class="w"> </span><span class="na">select=</span><span class="s">&quot;@uri&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">              </span><span class="k">&lt;xsl:variable</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;service-method&quot;</span><span class="w"> </span><span class="na">select=</span><span class="s">&quot;@http-method&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">              </span><span class="k">&lt;xsl:for-each</span><span class="w"> </span><span class="na">select=</span><span class="s">&quot;role&quot;</span><span class="nt">&gt;</span>
+<span class="w">                </span><span class="nt">&lt;tr&gt;</span>
+<span class="w">                  </span><span class="nt">&lt;td</span><span class="w"> </span><span class="na">scope=</span><span class="s">&quot;row&quot;</span><span class="nt">&gt;</span>
+<span class="w">                    </span><span class="k">&lt;xsl:value-of</span><span class="w"> </span><span class="na">select=</span><span class="s">&quot;$service-name&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">                  </span><span class="nt">&lt;/td&gt;</span>
+<span class="w">                  </span><span class="nt">&lt;td&gt;</span>
+<span class="w">                    </span><span class="k">&lt;xsl:value-of</span><span class="w"> </span><span class="na">select=</span><span class="s">&quot;$service-uri&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">                  </span><span class="nt">&lt;/td&gt;</span>
+<span class="w">                  </span><span class="nt">&lt;td&gt;</span>
+<span class="w">                    </span><span class="k">&lt;xsl:value-of</span><span class="w"> </span><span class="na">select=</span><span class="s">&quot;$service-method&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">                  </span><span class="nt">&lt;/td&gt;</span>
+<span class="w">                  </span><span class="nt">&lt;td&gt;</span>
+<span class="w">                    </span><span class="k">&lt;xsl:variable</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;service-role-name&quot;</span><span class="w"> </span><span class="na">select=</span><span class="s">&quot;@name&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">                    </span><span class="k">&lt;xsl:choose</span><span class="nt">&gt;</span>
+<span class="w">                      </span><span class="k">&lt;xsl:when</span><span class="w"> </span><span class="na">test=</span><span class="s">&quot;@name = &#39;ADMIN&#39;&quot;</span><span class="nt">&gt;</span>
+<span class="w">                        </span><span class="nt">&lt;div</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;alert alert-warning&quot;</span><span class="w"> </span><span class="na">role=</span><span class="s">&quot;alert&quot;</span><span class="nt">&gt;</span>
+<span class="w">                          </span><span class="k">&lt;xsl:value-of</span><span class="w"> </span><span class="na">select=</span><span class="s">&quot;@name&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">                        </span><span class="nt">&lt;/div&gt;</span>
+<span class="w">                      </span><span class="k">&lt;/xsl:when&gt;</span>
+<span class="w">                      </span><span class="k">&lt;xsl:when</span><span class="w"> </span><span class="na">test=</span><span class="s">&quot;@name = &#39;BASIC&#39;&quot;</span><span class="nt">&gt;</span>
+<span class="w">                        </span><span class="nt">&lt;div</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;alert alert-info&quot;</span><span class="w"> </span><span class="na">role=</span><span class="s">&quot;alert&quot;</span><span class="nt">&gt;</span>
+<span class="w">                          </span><span class="k">&lt;xsl:value-of</span><span class="w"> </span><span class="na">select=</span><span class="s">&quot;@name&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">                        </span><span class="nt">&lt;/div&gt;</span>
+<span class="w">                      </span><span class="k">&lt;/xsl:when&gt;</span>
+<span class="w">                      </span><span class="k">&lt;xsl:otherwise</span><span class="nt">&gt;</span>
+<span class="w">                        </span><span class="nt">&lt;div</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;alert alert-danger&quot;</span><span class="w"> </span><span class="na">role=</span><span class="s">&quot;alert&quot;</span><span class="nt">&gt;</span>
+<span class="w">                          </span><span class="k">&lt;xsl:value-of</span><span class="w"> </span><span class="na">select=</span><span class="s">&quot;@name&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">                        </span><span class="nt">&lt;/div&gt;</span>
+<span class="w">                      </span><span class="k">&lt;/xsl:otherwise&gt;</span>
+<span class="w">                    </span><span class="k">&lt;/xsl:choose&gt;</span>
+<span class="w">                  </span><span class="nt">&lt;/td&gt;</span>
+<span class="w">                </span><span class="nt">&lt;/tr&gt;</span>
+<span class="w">              </span><span class="k">&lt;/xsl:for-each&gt;</span>
+<span class="w">            </span><span class="k">&lt;/xsl:for-each&gt;</span>
+<span class="w">          </span><span class="nt">&lt;/tbody&gt;</span>
+<span class="w">        </span><span class="nt">&lt;/table&gt;</span>
+<span class="w">      </span><span class="nt">&lt;/body&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/html&gt;</span>
+<span class="w">  </span><span class="k">&lt;/xsl:template&gt;</span>
 <span class="k">&lt;/xsl:stylesheet&gt;</span>
 </code></pre></div>
 <p>Example of the rendering:</p>
@@ -2155,42 +2155,6 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
       </main>
       
         <footer class="md-footer">
-  
-    
-    <nav class="md-footer__inner md-grid" aria-label="Footer" >
-      
-        
-        <a href="Authorization_Cheat_Sheet.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Authorization" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              Authorization
-            </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="Bean_Validation_Cheat_Sheet.html" class="md-footer__link md-footer__link--next" aria-label="Next: Bean Validation" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              Bean Validation
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
@@ -2217,12 +2181,11 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.12658920.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      <script src="../assets/javascripts/bundle.5cf534bf.min.js"></script>
       
-    
     
   </body>
 </html>

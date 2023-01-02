@@ -12,8 +12,14 @@
       
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html">
       
+      
+        <link rel="prev" href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html">
+      
+      
+        <link rel="next" href="Session_Management_Cheat_Sheet.html">
+      
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.0">
     
     
       
@@ -21,11 +27,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.975780f9.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.f79797b0.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
-        
       
       
 
@@ -112,8 +117,6 @@
       <form class="md-header__option" data-md-component="palette">
         
           
-          
-          
           <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
           
             <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
@@ -121,8 +124,6 @@
             </label>
           
         
-          
-          
           
           <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
           
@@ -1899,10 +1900,9 @@
                 
                   
 
-  <a href="https://github.com/OWASP/CheatSheetSeries/edit/master/docs/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md" title="Edit this page" class="md-content__button md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
-  </a>
+  
+  
+
 
 
 <h1 id="server-side-request-forgery-prevention-cheat-sheet">Server-Side Request Forgery Prevention Cheat Sheet<a class="headerlink" href="#server-side-request-forgery-prevention-cheat-sheet" title="Permanent link">&para;</a></h1>
@@ -1958,12 +1958,12 @@ The user leverages the web application as a proxy to the HR system.</p>
 <p>A <a href="https://www.regular-expressions.info/">regex</a> can be used to ensure that data received is valid from a security point of view if the input data have a simple format (<em>e.g.</em> token, zip code, etc.). Otherwise, validation should be conducted using the libraries available from the <code>string</code> object because regex for complex formats are difficult to maintain and are highly error-prone.</p>
 <p>User input is assumed to be non-network related and consists of the user's personal information.</p>
 <p>Example:</p>
-<div class="highlight"><pre><span></span><code><span class="c1">//Regex validation for a data having a simple format</span><span class="w"></span>
-<span class="k">if</span><span class="p">(</span><span class="n">Pattern</span><span class="p">.</span><span class="na">matches</span><span class="p">(</span><span class="s">&quot;[a-zA-Z0-9\\s\\-]{1,50}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">userInput</span><span class="p">)){</span><span class="w"></span>
-<span class="w">    </span><span class="c1">//Continue the processing because the input data is valid</span><span class="w"></span>
-<span class="p">}</span><span class="k">else</span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="c1">//Stop the processing and reject the request</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="c1">//Regex validation for a data having a simple format</span>
+<span class="k">if</span><span class="p">(</span><span class="n">Pattern</span><span class="p">.</span><span class="na">matches</span><span class="p">(</span><span class="s">&quot;[a-zA-Z0-9\\s\\-]{1,50}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">userInput</span><span class="p">)){</span>
+<span class="w">    </span><span class="c1">//Continue the processing because the input data is valid</span>
+<span class="p">}</span><span class="k">else</span><span class="p">{</span>
+<span class="w">    </span><span class="c1">//Stop the processing and reject the request</span>
+<span class="p">}</span>
 </code></pre></div>
 <h6 id="ip-address">IP address<a class="headerlink" href="#ip-address" title="Permanent link">&para;</a></h6>
 <p>In the context of SSRF, there are 2 possible validations to perform:</p>
@@ -2026,23 +2026,23 @@ The user leverages the web application as a proxy to the HR system.</p>
 </li>
 </ul>
 <p>Example of execution of the proposed regex for Ruby:</p>
-<div class="highlight"><pre><span></span><code><span class="n">domain_names</span> <span class="o">=</span> <span class="o">[</span><span class="s2">&quot;owasp.org&quot;</span><span class="p">,</span><span class="s2">&quot;owasp-test.org&quot;</span><span class="p">,</span><span class="s2">&quot;doc-test.owasp.org&quot;</span><span class="p">,</span><span class="s2">&quot;doc.owasp.org&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;&lt;script&gt;alert(1)&lt;/script&gt;&quot;</span><span class="p">,</span><span class="s2">&quot;&lt;script&gt;alert(1)&lt;/script&gt;.owasp.org&quot;</span><span class="o">]</span>
-<span class="n">domain_names</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span> <span class="o">|</span><span class="n">domain_name</span><span class="o">|</span>
-    <span class="k">if</span> <span class="p">(</span> <span class="n">domain_name</span> <span class="o">=~</span> <span class="sr">/^(((?!-))(xn--|_{1,1})?[a-z0-9-]{0,61}[a-z0-9]{1,1}\.)*(xn--)?([a-z0-9][a-z0-9\-]{0,60}|[a-z0-9-]{1,30}\.[a-z]{2,})$/</span> <span class="p">)</span>
-        <span class="nb">puts</span> <span class="s2">&quot;[i] </span><span class="si">#{</span><span class="n">domain_name</span><span class="si">}</span><span class="s2"> is VALID&quot;</span>
-    <span class="k">else</span>
-        <span class="nb">puts</span> <span class="s2">&quot;[!] </span><span class="si">#{</span><span class="n">domain_name</span><span class="si">}</span><span class="s2"> is INVALID&quot;</span>
-    <span class="k">end</span>
+<div class="highlight"><pre><span></span><code><span class="n">domain_names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="s2">&quot;owasp.org&quot;</span><span class="p">,</span><span class="s2">&quot;owasp-test.org&quot;</span><span class="p">,</span><span class="s2">&quot;doc-test.owasp.org&quot;</span><span class="p">,</span><span class="s2">&quot;doc.owasp.org&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;&lt;script&gt;alert(1)&lt;/script&gt;&quot;</span><span class="p">,</span><span class="s2">&quot;&lt;script&gt;alert(1)&lt;/script&gt;.owasp.org&quot;</span><span class="o">]</span>
+<span class="n">domain_names</span><span class="o">.</span><span class="n">each</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">|</span><span class="n">domain_name</span><span class="o">|</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">domain_name</span><span class="w"> </span><span class="o">=~</span> <span class="sr">/^(((?!-))(xn--|_{1,1})?[a-z0-9-]{0,61}[a-z0-9]{1,1}\.)*(xn--)?([a-z0-9][a-z0-9\-]{0,60}|[a-z0-9-]{1,30}\.[a-z]{2,})$/</span><span class="w"> </span><span class="p">)</span>
+<span class="w">        </span><span class="nb">puts</span><span class="w"> </span><span class="s2">&quot;[i] </span><span class="si">#{</span><span class="n">domain_name</span><span class="si">}</span><span class="s2"> is VALID&quot;</span>
+<span class="w">    </span><span class="k">else</span>
+<span class="w">        </span><span class="nb">puts</span><span class="w"> </span><span class="s2">&quot;[!] </span><span class="si">#{</span><span class="n">domain_name</span><span class="si">}</span><span class="s2"> is INVALID&quot;</span>
+<span class="w">    </span><span class="k">end</span>
 <span class="p">}</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>$ ruby test.rb
-<span class="o">[</span>i<span class="o">]</span> owasp.org is VALID
-<span class="o">[</span>i<span class="o">]</span> owasp-test.org is VALID
-<span class="o">[</span>i<span class="o">]</span> doc-test.owasp.org is VALID
-<span class="o">[</span>i<span class="o">]</span> doc.owasp.org is VALID
-<span class="o">[</span>!<span class="o">]</span> &lt;script&gt;alert<span class="o">(</span><span class="m">1</span><span class="o">)</span>&lt;/script&gt; is INVALID
-<span class="o">[</span>!<span class="o">]</span> &lt;script&gt;alert<span class="o">(</span><span class="m">1</span><span class="o">)</span>&lt;/script&gt;.owasp.org is INVALID
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>ruby<span class="w"> </span>test.rb
+<span class="o">[</span>i<span class="o">]</span><span class="w"> </span>owasp.org<span class="w"> </span>is<span class="w"> </span>VALID
+<span class="o">[</span>i<span class="o">]</span><span class="w"> </span>owasp-test.org<span class="w"> </span>is<span class="w"> </span>VALID
+<span class="o">[</span>i<span class="o">]</span><span class="w"> </span>doc-test.owasp.org<span class="w"> </span>is<span class="w"> </span>VALID
+<span class="o">[</span>i<span class="o">]</span><span class="w"> </span>doc.owasp.org<span class="w"> </span>is<span class="w"> </span>VALID
+<span class="o">[</span>!<span class="o">]</span><span class="w"> </span>&lt;script&gt;alert<span class="o">(</span><span class="m">1</span><span class="o">)</span>&lt;/script&gt;<span class="w"> </span>is<span class="w"> </span>INVALID
+<span class="o">[</span>!<span class="o">]</span><span class="w"> </span>&lt;script&gt;alert<span class="o">(</span><span class="m">1</span><span class="o">)</span>&lt;/script&gt;.owasp.org<span class="w"> </span>is<span class="w"> </span>INVALID
 </code></pre></div>
 <p>After ensuring the validity of the incoming domain name, the second layer of validation is applied:</p>
 <ol>
@@ -2069,7 +2069,7 @@ The user leverages the web application as a proxy to the HR system.</p>
 <span class="n">DNS_RESOLVER</span><span class="o">.</span><span class="n">nameservers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;1.1.1.1&quot;</span><span class="p">]</span>
 
 <span class="k">def</span> <span class="nf">verify_dns_records</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">records</span><span class="p">,</span> <span class="nb">type</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Verify if one of the DNS records resolve to a non public IP address.</span>
 <span class="sd">    Return a boolean indicating if any error has been detected.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -2090,7 +2090,7 @@ The user leverages the web application as a proxy to the HR system.</p>
     <span class="k">return</span> <span class="n">error_detected</span>
 
 <span class="k">def</span> <span class="nf">check</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Perform the check of the allow list of domains.</span>
 <span class="sd">    Return a boolean indicating if any error has been detected.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -2220,42 +2220,6 @@ Checkout the Semgrep rule for SSRF to identify/investigate for SSRF vulnerabilit
       
         <footer class="md-footer">
   
-    
-    <nav class="md-footer__inner md-grid" aria-label="Footer" >
-      
-        
-        <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Securing Cascading Style Sheets" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              Securing Cascading Style Sheets
-            </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="Session_Management_Cheat_Sheet.html" class="md-footer__link md-footer__link--next" aria-label="Next: Session Management" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              Session Management
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
-  
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
       <div class="md-copyright">
@@ -2281,12 +2245,11 @@ Checkout the Semgrep rule for SSRF to identify/investigate for SSRF vulnerabilit
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.12658920.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      <script src="../assets/javascripts/bundle.5cf534bf.min.js"></script>
       
-    
     
   </body>
 </html>

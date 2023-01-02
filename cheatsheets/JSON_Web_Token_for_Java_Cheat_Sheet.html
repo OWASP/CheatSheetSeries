@@ -16,8 +16,14 @@ redirect_from: "/cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.html"
       
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html">
       
+      
+        <link rel="prev" href="JAAS_Cheat_Sheet.html">
+      
+      
+        <link rel="next" href="Key_Management_Cheat_Sheet.html">
+      
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.0">
     
     
       
@@ -25,11 +31,10 @@ redirect_from: "/cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.html"
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.975780f9.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.f79797b0.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
-        
       
       
 
@@ -116,8 +121,6 @@ redirect_from: "/cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.html"
       <form class="md-header__option" data-md-component="palette">
         
           
-          
-          
           <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
           
             <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
@@ -125,8 +128,6 @@ redirect_from: "/cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.html"
             </label>
           
         
-          
-          
           
           <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
           
@@ -2093,10 +2094,9 @@ redirect_from: "/cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.html"
                 
                   
 
-  <a href="https://github.com/OWASP/CheatSheetSeries/edit/master/docs/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.md" title="Edit this page" class="md-content__button md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
-  </a>
+  
+  
+
 
 
 <h1 id="json-web-token-cheat-sheet-for-java">JSON Web Token Cheat Sheet for Java<a class="headerlink" href="#json-web-token-cheat-sheet-for-java" title="Permanent link">&para;</a></h1>
@@ -2116,20 +2116,20 @@ eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.
 TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
 </code></pre></div>
 <p>Chunk 1: <strong>Header</strong></p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;alg&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;HS256&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;typ&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;JWT&quot;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;alg&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;HS256&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;typ&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;JWT&quot;</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>Chunk 2: <strong>Payload</strong></p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;sub&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1234567890&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;John Doe&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;admin&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;sub&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1234567890&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;John Doe&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;admin&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>Chunk 3: <strong>Signature</strong></p>
-<div class="highlight"><pre><span></span><code><span class="nx">HMACSHA256</span><span class="p">(</span><span class="w"> </span><span class="nx">base64UrlEncode</span><span class="p">(</span><span class="nx">header</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot;.&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">base64UrlEncode</span><span class="p">(</span><span class="nx">payload</span><span class="p">),</span><span class="w"> </span><span class="nx">KEY</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nx">HMACSHA256</span><span class="p">(</span><span class="w"> </span><span class="nx">base64UrlEncode</span><span class="p">(</span><span class="nx">header</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot;.&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">base64UrlEncode</span><span class="p">(</span><span class="nx">payload</span><span class="p">),</span><span class="w"> </span><span class="nx">KEY</span><span class="w"> </span><span class="p">)</span>
 </code></pre></div>
 <h2 id="objective">Objective<a class="headerlink" href="#objective" title="Permanent link">&para;</a></h2>
 <p>This cheatsheet provides tips to prevent common security issues when using JSON Web Tokens (JWT) with Java.</p>
@@ -2147,17 +2147,17 @@ TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
 <p>First, use a JWT library that is not exposed to this vulnerability.</p>
 <p>Last, during token validation, explicitly request that the expected algorithm was used.</p>
 <h4 id="implementation-example">Implementation Example<a class="headerlink" href="#implementation-example" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="c1">// HMAC key - Block serialization and storage as String in JVM memory</span><span class="w"></span>
-<span class="kd">private</span><span class="w"> </span><span class="kd">transient</span><span class="w"> </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">keyHMAC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">...;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="c1">// HMAC key - Block serialization and storage as String in JVM memory</span>
+<span class="kd">private</span><span class="w"> </span><span class="kd">transient</span><span class="w"> </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">keyHMAC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">...;</span>
 
-<span class="p">...</span><span class="w"></span>
+<span class="p">...</span>
 
-<span class="c1">//Create a verification context for the token requesting</span><span class="w"></span>
-<span class="c1">//explicitly the use of the HMAC-256 hashing algorithm</span><span class="w"></span>
-<span class="n">JWTVerifier</span><span class="w"> </span><span class="n">verifier</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">JWT</span><span class="p">.</span><span class="na">require</span><span class="p">(</span><span class="n">Algorithm</span><span class="p">.</span><span class="na">HMAC256</span><span class="p">(</span><span class="n">keyHMAC</span><span class="p">)).</span><span class="na">build</span><span class="p">();</span><span class="w"></span>
+<span class="c1">//Create a verification context for the token requesting</span>
+<span class="c1">//explicitly the use of the HMAC-256 hashing algorithm</span>
+<span class="n">JWTVerifier</span><span class="w"> </span><span class="n">verifier</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">JWT</span><span class="p">.</span><span class="na">require</span><span class="p">(</span><span class="n">Algorithm</span><span class="p">.</span><span class="na">HMAC256</span><span class="p">(</span><span class="n">keyHMAC</span><span class="p">)).</span><span class="na">build</span><span class="p">();</span>
 
-<span class="c1">//Verify the token, if the verification fail then a exception is thrown</span><span class="w"></span>
-<span class="n">DecodedJWT</span><span class="w"> </span><span class="n">decodedToken</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">verifier</span><span class="p">.</span><span class="na">verify</span><span class="p">(</span><span class="n">token</span><span class="p">);</span><span class="w"></span>
+<span class="c1">//Verify the token, if the verification fail then a exception is thrown</span>
+<span class="n">DecodedJWT</span><span class="w"> </span><span class="n">decodedToken</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">verifier</span><span class="p">.</span><span class="na">verify</span><span class="p">(</span><span class="n">token</span><span class="p">);</span>
 </code></pre></div>
 <h3 id="token-sidejacking">Token Sidejacking<a class="headerlink" href="#token-sidejacking" title="Permanent link">&para;</a></h3>
 <h4 id="symptom_1">Symptom<a class="headerlink" href="#symptom_1" title="Permanent link">&para;</a></h4>
@@ -2172,79 +2172,79 @@ TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
 <p>During token validation, if the received token does not contain the right context (for example, if it has been replayed), then it must be rejected.</p>
 <h4 id="implementation-example_1">Implementation example<a class="headerlink" href="#implementation-example_1" title="Permanent link">&para;</a></h4>
 <p>Code to create the token after successful authentication.</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// HMAC key - Block serialization and storage as String in JVM memory</span><span class="w"></span>
-<span class="kd">private</span><span class="w"> </span><span class="kd">transient</span><span class="w"> </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">keyHMAC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">...;</span><span class="w"></span>
-<span class="c1">// Random data generator</span><span class="w"></span>
-<span class="kd">private</span><span class="w"> </span><span class="n">SecureRandom</span><span class="w"> </span><span class="n">secureRandom</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SecureRandom</span><span class="p">();</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="c1">// HMAC key - Block serialization and storage as String in JVM memory</span>
+<span class="kd">private</span><span class="w"> </span><span class="kd">transient</span><span class="w"> </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">keyHMAC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">...;</span>
+<span class="c1">// Random data generator</span>
+<span class="kd">private</span><span class="w"> </span><span class="n">SecureRandom</span><span class="w"> </span><span class="n">secureRandom</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SecureRandom</span><span class="p">();</span>
 
-<span class="p">...</span><span class="w"></span>
+<span class="p">...</span>
 
-<span class="c1">//Generate a random string that will constitute the fingerprint for this user</span><span class="w"></span>
-<span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">randomFgp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">byte</span><span class="o">[</span><span class="mi">50</span><span class="o">]</span><span class="p">;</span><span class="w"></span>
-<span class="n">secureRandom</span><span class="p">.</span><span class="na">nextBytes</span><span class="p">(</span><span class="n">randomFgp</span><span class="p">);</span><span class="w"></span>
-<span class="n">String</span><span class="w"> </span><span class="n">userFingerprint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DatatypeConverter</span><span class="p">.</span><span class="na">printHexBinary</span><span class="p">(</span><span class="n">randomFgp</span><span class="p">);</span><span class="w"></span>
+<span class="c1">//Generate a random string that will constitute the fingerprint for this user</span>
+<span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">randomFgp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">byte</span><span class="o">[</span><span class="mi">50</span><span class="o">]</span><span class="p">;</span>
+<span class="n">secureRandom</span><span class="p">.</span><span class="na">nextBytes</span><span class="p">(</span><span class="n">randomFgp</span><span class="p">);</span>
+<span class="n">String</span><span class="w"> </span><span class="n">userFingerprint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DatatypeConverter</span><span class="p">.</span><span class="na">printHexBinary</span><span class="p">(</span><span class="n">randomFgp</span><span class="p">);</span>
 
-<span class="c1">//Add the fingerprint in a hardened cookie - Add cookie manually because</span><span class="w"></span>
-<span class="c1">//SameSite attribute is not supported by javax.servlet.http.Cookie class</span><span class="w"></span>
-<span class="n">String</span><span class="w"> </span><span class="n">fingerprintCookie</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;__Secure-Fgp=&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">userFingerprint</span><span class="w"></span>
-<span class="w">                           </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;; SameSite=Strict; HttpOnly; Secure&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="n">response</span><span class="p">.</span><span class="na">addHeader</span><span class="p">(</span><span class="s">&quot;Set-Cookie&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">fingerprintCookie</span><span class="p">);</span><span class="w"></span>
+<span class="c1">//Add the fingerprint in a hardened cookie - Add cookie manually because</span>
+<span class="c1">//SameSite attribute is not supported by javax.servlet.http.Cookie class</span>
+<span class="n">String</span><span class="w"> </span><span class="n">fingerprintCookie</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;__Secure-Fgp=&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">userFingerprint</span>
+<span class="w">                           </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;; SameSite=Strict; HttpOnly; Secure&quot;</span><span class="p">;</span>
+<span class="n">response</span><span class="p">.</span><span class="na">addHeader</span><span class="p">(</span><span class="s">&quot;Set-Cookie&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">fingerprintCookie</span><span class="p">);</span>
 
-<span class="c1">//Compute a SHA256 hash of the fingerprint in order to store the</span><span class="w"></span>
-<span class="c1">//fingerprint hash (instead of the raw value) in the token</span><span class="w"></span>
-<span class="c1">//to prevent an XSS to be able to read the fingerprint and</span><span class="w"></span>
-<span class="c1">//set the expected cookie itself</span><span class="w"></span>
-<span class="n">MessageDigest</span><span class="w"> </span><span class="n">digest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MessageDigest</span><span class="p">.</span><span class="na">getInstance</span><span class="p">(</span><span class="s">&quot;SHA-256&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">userFingerprintDigest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">digest</span><span class="p">.</span><span class="na">digest</span><span class="p">(</span><span class="n">userFingerprint</span><span class="p">.</span><span class="na">getBytes</span><span class="p">(</span><span class="s">&quot;utf-8&quot;</span><span class="p">));</span><span class="w"></span>
-<span class="n">String</span><span class="w"> </span><span class="n">userFingerprintHash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DatatypeConverter</span><span class="p">.</span><span class="na">printHexBinary</span><span class="p">(</span><span class="n">userFingerprintDigest</span><span class="p">);</span><span class="w"></span>
+<span class="c1">//Compute a SHA256 hash of the fingerprint in order to store the</span>
+<span class="c1">//fingerprint hash (instead of the raw value) in the token</span>
+<span class="c1">//to prevent an XSS to be able to read the fingerprint and</span>
+<span class="c1">//set the expected cookie itself</span>
+<span class="n">MessageDigest</span><span class="w"> </span><span class="n">digest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MessageDigest</span><span class="p">.</span><span class="na">getInstance</span><span class="p">(</span><span class="s">&quot;SHA-256&quot;</span><span class="p">);</span>
+<span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">userFingerprintDigest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">digest</span><span class="p">.</span><span class="na">digest</span><span class="p">(</span><span class="n">userFingerprint</span><span class="p">.</span><span class="na">getBytes</span><span class="p">(</span><span class="s">&quot;utf-8&quot;</span><span class="p">));</span>
+<span class="n">String</span><span class="w"> </span><span class="n">userFingerprintHash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DatatypeConverter</span><span class="p">.</span><span class="na">printHexBinary</span><span class="p">(</span><span class="n">userFingerprintDigest</span><span class="p">);</span>
 
-<span class="c1">//Create the token with a validity of 15 minutes and client context (fingerprint) information</span><span class="w"></span>
-<span class="n">Calendar</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Calendar</span><span class="p">.</span><span class="na">getInstance</span><span class="p">();</span><span class="w"></span>
-<span class="n">Date</span><span class="w"> </span><span class="n">now</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="na">getTime</span><span class="p">();</span><span class="w"></span>
-<span class="n">c</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">Calendar</span><span class="p">.</span><span class="na">MINUTE</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="p">);</span><span class="w"></span>
-<span class="n">Date</span><span class="w"> </span><span class="n">expirationDate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="na">getTime</span><span class="p">();</span><span class="w"></span>
-<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="o">&gt;</span><span class="w"> </span><span class="n">headerClaims</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w"></span>
-<span class="n">headerClaims</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;typ&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;JWT&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="n">String</span><span class="w"> </span><span class="n">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">JWT</span><span class="p">.</span><span class="na">create</span><span class="p">().</span><span class="na">withSubject</span><span class="p">(</span><span class="n">login</span><span class="p">)</span><span class="w"></span>
-<span class="w">   </span><span class="p">.</span><span class="na">withExpiresAt</span><span class="p">(</span><span class="n">expirationDate</span><span class="p">)</span><span class="w"></span>
-<span class="w">   </span><span class="p">.</span><span class="na">withIssuer</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="na">issuerID</span><span class="p">)</span><span class="w"></span>
-<span class="w">   </span><span class="p">.</span><span class="na">withIssuedAt</span><span class="p">(</span><span class="n">now</span><span class="p">)</span><span class="w"></span>
-<span class="w">   </span><span class="p">.</span><span class="na">withNotBefore</span><span class="p">(</span><span class="n">now</span><span class="p">)</span><span class="w"></span>
-<span class="w">   </span><span class="p">.</span><span class="na">withClaim</span><span class="p">(</span><span class="s">&quot;userFingerprint&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">userFingerprintHash</span><span class="p">)</span><span class="w"></span>
-<span class="w">   </span><span class="p">.</span><span class="na">withHeader</span><span class="p">(</span><span class="n">headerClaims</span><span class="p">)</span><span class="w"></span>
-<span class="w">   </span><span class="p">.</span><span class="na">sign</span><span class="p">(</span><span class="n">Algorithm</span><span class="p">.</span><span class="na">HMAC256</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="na">keyHMAC</span><span class="p">));</span><span class="w"></span>
+<span class="c1">//Create the token with a validity of 15 minutes and client context (fingerprint) information</span>
+<span class="n">Calendar</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Calendar</span><span class="p">.</span><span class="na">getInstance</span><span class="p">();</span>
+<span class="n">Date</span><span class="w"> </span><span class="n">now</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="na">getTime</span><span class="p">();</span>
+<span class="n">c</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">Calendar</span><span class="p">.</span><span class="na">MINUTE</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="p">);</span>
+<span class="n">Date</span><span class="w"> </span><span class="n">expirationDate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="na">getTime</span><span class="p">();</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="o">&gt;</span><span class="w"> </span><span class="n">headerClaims</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="n">headerClaims</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;typ&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;JWT&quot;</span><span class="p">);</span>
+<span class="n">String</span><span class="w"> </span><span class="n">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">JWT</span><span class="p">.</span><span class="na">create</span><span class="p">().</span><span class="na">withSubject</span><span class="p">(</span><span class="n">login</span><span class="p">)</span>
+<span class="w">   </span><span class="p">.</span><span class="na">withExpiresAt</span><span class="p">(</span><span class="n">expirationDate</span><span class="p">)</span>
+<span class="w">   </span><span class="p">.</span><span class="na">withIssuer</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="na">issuerID</span><span class="p">)</span>
+<span class="w">   </span><span class="p">.</span><span class="na">withIssuedAt</span><span class="p">(</span><span class="n">now</span><span class="p">)</span>
+<span class="w">   </span><span class="p">.</span><span class="na">withNotBefore</span><span class="p">(</span><span class="n">now</span><span class="p">)</span>
+<span class="w">   </span><span class="p">.</span><span class="na">withClaim</span><span class="p">(</span><span class="s">&quot;userFingerprint&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">userFingerprintHash</span><span class="p">)</span>
+<span class="w">   </span><span class="p">.</span><span class="na">withHeader</span><span class="p">(</span><span class="n">headerClaims</span><span class="p">)</span>
+<span class="w">   </span><span class="p">.</span><span class="na">sign</span><span class="p">(</span><span class="n">Algorithm</span><span class="p">.</span><span class="na">HMAC256</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="na">keyHMAC</span><span class="p">));</span>
 </code></pre></div>
 <p>Code to validate the token.</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// HMAC key - Block serialization and storage as String in JVM memory</span><span class="w"></span>
-<span class="kd">private</span><span class="w"> </span><span class="kd">transient</span><span class="w"> </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">keyHMAC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">...;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="c1">// HMAC key - Block serialization and storage as String in JVM memory</span>
+<span class="kd">private</span><span class="w"> </span><span class="kd">transient</span><span class="w"> </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">keyHMAC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">...;</span>
 
-<span class="p">...</span><span class="w"></span>
+<span class="p">...</span>
 
-<span class="c1">//Retrieve the user fingerprint from the dedicated cookie</span><span class="w"></span>
-<span class="n">String</span><span class="w"> </span><span class="n">userFingerprint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w"></span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="na">getCookies</span><span class="p">()</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getCookies</span><span class="p">().</span><span class="na">length</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Cookie</span><span class="o">&gt;</span><span class="w"> </span><span class="n">cookies</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Arrays</span><span class="p">.</span><span class="na">stream</span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="na">getCookies</span><span class="p">()).</span><span class="na">collect</span><span class="p">(</span><span class="n">Collectors</span><span class="p">.</span><span class="na">toList</span><span class="p">());</span><span class="w"></span>
-<span class="w"> </span><span class="n">Optional</span><span class="o">&lt;</span><span class="n">Cookie</span><span class="o">&gt;</span><span class="w"> </span><span class="n">cookie</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cookies</span><span class="p">.</span><span class="na">stream</span><span class="p">().</span><span class="na">filter</span><span class="p">(</span><span class="n">c</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="s">&quot;__Secure-Fgp&quot;</span><span class="w"></span>
-<span class="w">                                            </span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">c</span><span class="p">.</span><span class="na">getName</span><span class="p">())).</span><span class="na">findFirst</span><span class="p">();</span><span class="w"></span>
-<span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">cookie</span><span class="p">.</span><span class="na">isPresent</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">   </span><span class="n">userFingerprint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cookie</span><span class="p">.</span><span class="na">get</span><span class="p">().</span><span class="na">getValue</span><span class="p">();</span><span class="w"></span>
-<span class="w"> </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="c1">//Retrieve the user fingerprint from the dedicated cookie</span>
+<span class="n">String</span><span class="w"> </span><span class="n">userFingerprint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="na">getCookies</span><span class="p">()</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getCookies</span><span class="p">().</span><span class="na">length</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Cookie</span><span class="o">&gt;</span><span class="w"> </span><span class="n">cookies</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Arrays</span><span class="p">.</span><span class="na">stream</span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="na">getCookies</span><span class="p">()).</span><span class="na">collect</span><span class="p">(</span><span class="n">Collectors</span><span class="p">.</span><span class="na">toList</span><span class="p">());</span>
+<span class="w"> </span><span class="n">Optional</span><span class="o">&lt;</span><span class="n">Cookie</span><span class="o">&gt;</span><span class="w"> </span><span class="n">cookie</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cookies</span><span class="p">.</span><span class="na">stream</span><span class="p">().</span><span class="na">filter</span><span class="p">(</span><span class="n">c</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="s">&quot;__Secure-Fgp&quot;</span>
+<span class="w">                                            </span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">c</span><span class="p">.</span><span class="na">getName</span><span class="p">())).</span><span class="na">findFirst</span><span class="p">();</span>
+<span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">cookie</span><span class="p">.</span><span class="na">isPresent</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="n">userFingerprint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cookie</span><span class="p">.</span><span class="na">get</span><span class="p">().</span><span class="na">getValue</span><span class="p">();</span>
+<span class="w"> </span><span class="p">}</span>
+<span class="p">}</span>
 
-<span class="c1">//Compute a SHA256 hash of the received fingerprint in cookie in order to compare</span><span class="w"></span>
-<span class="c1">//it to the fingerprint hash stored in the token</span><span class="w"></span>
-<span class="n">MessageDigest</span><span class="w"> </span><span class="n">digest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MessageDigest</span><span class="p">.</span><span class="na">getInstance</span><span class="p">(</span><span class="s">&quot;SHA-256&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">userFingerprintDigest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">digest</span><span class="p">.</span><span class="na">digest</span><span class="p">(</span><span class="n">userFingerprint</span><span class="p">.</span><span class="na">getBytes</span><span class="p">(</span><span class="s">&quot;utf-8&quot;</span><span class="p">));</span><span class="w"></span>
-<span class="n">String</span><span class="w"> </span><span class="n">userFingerprintHash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DatatypeConverter</span><span class="p">.</span><span class="na">printHexBinary</span><span class="p">(</span><span class="n">userFingerprintDigest</span><span class="p">);</span><span class="w"></span>
+<span class="c1">//Compute a SHA256 hash of the received fingerprint in cookie in order to compare</span>
+<span class="c1">//it to the fingerprint hash stored in the token</span>
+<span class="n">MessageDigest</span><span class="w"> </span><span class="n">digest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MessageDigest</span><span class="p">.</span><span class="na">getInstance</span><span class="p">(</span><span class="s">&quot;SHA-256&quot;</span><span class="p">);</span>
+<span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">userFingerprintDigest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">digest</span><span class="p">.</span><span class="na">digest</span><span class="p">(</span><span class="n">userFingerprint</span><span class="p">.</span><span class="na">getBytes</span><span class="p">(</span><span class="s">&quot;utf-8&quot;</span><span class="p">));</span>
+<span class="n">String</span><span class="w"> </span><span class="n">userFingerprintHash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DatatypeConverter</span><span class="p">.</span><span class="na">printHexBinary</span><span class="p">(</span><span class="n">userFingerprintDigest</span><span class="p">);</span>
 
-<span class="c1">//Create a verification context for the token</span><span class="w"></span>
-<span class="n">JWTVerifier</span><span class="w"> </span><span class="n">verifier</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">JWT</span><span class="p">.</span><span class="na">require</span><span class="p">(</span><span class="n">Algorithm</span><span class="p">.</span><span class="na">HMAC256</span><span class="p">(</span><span class="n">keyHMAC</span><span class="p">))</span><span class="w"></span>
-<span class="w">                              </span><span class="p">.</span><span class="na">withIssuer</span><span class="p">(</span><span class="n">issuerID</span><span class="p">)</span><span class="w"></span>
-<span class="w">                              </span><span class="p">.</span><span class="na">withClaim</span><span class="p">(</span><span class="s">&quot;userFingerprint&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">userFingerprintHash</span><span class="p">)</span><span class="w"></span>
-<span class="w">                              </span><span class="p">.</span><span class="na">build</span><span class="p">();</span><span class="w"></span>
+<span class="c1">//Create a verification context for the token</span>
+<span class="n">JWTVerifier</span><span class="w"> </span><span class="n">verifier</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">JWT</span><span class="p">.</span><span class="na">require</span><span class="p">(</span><span class="n">Algorithm</span><span class="p">.</span><span class="na">HMAC256</span><span class="p">(</span><span class="n">keyHMAC</span><span class="p">))</span>
+<span class="w">                              </span><span class="p">.</span><span class="na">withIssuer</span><span class="p">(</span><span class="n">issuerID</span><span class="p">)</span>
+<span class="w">                              </span><span class="p">.</span><span class="na">withClaim</span><span class="p">(</span><span class="s">&quot;userFingerprint&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">userFingerprintHash</span><span class="p">)</span>
+<span class="w">                              </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
 
-<span class="c1">//Verify the token, if the verification fail then an exception is thrown</span><span class="w"></span>
-<span class="n">DecodedJWT</span><span class="w"> </span><span class="n">decodedToken</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">verifier</span><span class="p">.</span><span class="na">verify</span><span class="p">(</span><span class="n">token</span><span class="p">);</span><span class="w"></span>
+<span class="c1">//Verify the token, if the verification fail then an exception is thrown</span>
+<span class="n">DecodedJWT</span><span class="w"> </span><span class="n">decodedToken</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">verifier</span><span class="p">.</span><span class="na">verify</span><span class="p">(</span><span class="n">token</span><span class="p">);</span>
 </code></pre></div>
 <h3 id="no-built-in-token-revocation-by-the-user">No Built-In Token Revocation by the User<a class="headerlink" href="#no-built-in-token-revocation-by-the-user" title="Permanent link">&para;</a></h3>
 <h4 id="symptom_2">Symptom<a class="headerlink" href="#symptom_2" title="Permanent link">&para;</a></h4>
@@ -2257,8 +2257,8 @@ TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
 <h4 id="implementation-example_2">Implementation Example<a class="headerlink" href="#implementation-example_2" title="Permanent link">&para;</a></h4>
 <h5 id="block-list-storage">Block List Storage<a class="headerlink" href="#block-list-storage" title="Permanent link">&para;</a></h5>
 <p>A database table with the following structure will be used as the central block list storage.</p>
-<div class="highlight"><pre><span></span><code><span class="k">create</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">exists</span><span class="w"> </span><span class="n">revoked_token</span><span class="p">(</span><span class="n">jwt_token_digest</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span><span class="w"> </span><span class="k">primary</span><span class="w"> </span><span class="k">key</span><span class="p">,</span><span class="w"></span>
-<span class="n">revocation_date</span><span class="w"> </span><span class="k">timestamp</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="n">now</span><span class="p">());</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">create</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">exists</span><span class="w"> </span><span class="n">revoked_token</span><span class="p">(</span><span class="n">jwt_token_digest</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span><span class="w"> </span><span class="k">primary</span><span class="w"> </span><span class="k">key</span><span class="p">,</span>
+<span class="n">revocation_date</span><span class="w"> </span><span class="k">timestamp</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="n">now</span><span class="p">());</span>
 </code></pre></div>
 <h5 id="token-revocation-management">Token Revocation Management<a class="headerlink" href="#token-revocation-management" title="Permanent link">&para;</a></h5>
 <p>Code in charge of adding a token to the block list and checking if a token is revoked.</p>
@@ -2266,12 +2266,12 @@ TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
 <span class="cm">* Handle the revocation of the token (logout).</span>
 <span class="cm">* Use a DB in order to allow multiple instances to check for revoked token</span>
 <span class="cm">* and allow cleanup at centralized DB level.</span>
-<span class="cm">*/</span><span class="w"></span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">TokenRevoker</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="cm">*/</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">TokenRevoker</span><span class="w"> </span><span class="p">{</span>
 
-<span class="w"> </span><span class="cm">/** DB Connection */</span><span class="w"></span>
-<span class="w"> </span><span class="nd">@Resource</span><span class="p">(</span><span class="s">&quot;jdbc/storeDS&quot;</span><span class="p">)</span><span class="w"></span>
-<span class="w"> </span><span class="kd">private</span><span class="w"> </span><span class="n">DataSource</span><span class="w"> </span><span class="n">storeDS</span><span class="p">;</span><span class="w"></span>
+<span class="w"> </span><span class="cm">/** DB Connection */</span>
+<span class="w"> </span><span class="nd">@Resource</span><span class="p">(</span><span class="s">&quot;jdbc/storeDS&quot;</span><span class="p">)</span>
+<span class="w"> </span><span class="kd">private</span><span class="w"> </span><span class="n">DataSource</span><span class="w"> </span><span class="n">storeDS</span><span class="p">;</span>
 
 <span class="w"> </span><span class="cm">/**</span>
 <span class="cm">  * Verify if a digest encoded in HEX of the ciphered token is present</span>
@@ -2280,32 +2280,32 @@ TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
 <span class="cm">  * @param jwtInHex Token encoded in HEX</span>
 <span class="cm">  * @return Presence flag</span>
 <span class="cm">  * @throws Exception If any issue occur during communication with DB</span>
-<span class="cm">  */</span><span class="w"></span>
-<span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">isTokenRevoked</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">jwtInHex</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">     </span><span class="kt">boolean</span><span class="w"> </span><span class="n">tokenIsPresent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w"></span>
-<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">jwtInHex</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="n">jwtInHex</span><span class="p">.</span><span class="na">trim</span><span class="p">().</span><span class="na">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">         </span><span class="c1">//Decode the ciphered token</span><span class="w"></span>
-<span class="w">         </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">cipheredToken</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DatatypeConverter</span><span class="p">.</span><span class="na">parseHexBinary</span><span class="p">(</span><span class="n">jwtInHex</span><span class="p">);</span><span class="w"></span>
+<span class="cm">  */</span>
+<span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">isTokenRevoked</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">jwtInHex</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="kt">boolean</span><span class="w"> </span><span class="n">tokenIsPresent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">jwtInHex</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="n">jwtInHex</span><span class="p">.</span><span class="na">trim</span><span class="p">().</span><span class="na">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="c1">//Decode the ciphered token</span>
+<span class="w">         </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">cipheredToken</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DatatypeConverter</span><span class="p">.</span><span class="na">parseHexBinary</span><span class="p">(</span><span class="n">jwtInHex</span><span class="p">);</span>
 
-<span class="w">         </span><span class="c1">//Compute a SHA256 of the ciphered token</span><span class="w"></span>
-<span class="w">         </span><span class="n">MessageDigest</span><span class="w"> </span><span class="n">digest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MessageDigest</span><span class="p">.</span><span class="na">getInstance</span><span class="p">(</span><span class="s">&quot;SHA-256&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">         </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">cipheredTokenDigest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">digest</span><span class="p">.</span><span class="na">digest</span><span class="p">(</span><span class="n">cipheredToken</span><span class="p">);</span><span class="w"></span>
-<span class="w">         </span><span class="n">String</span><span class="w"> </span><span class="n">jwtTokenDigestInHex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DatatypeConverter</span><span class="p">.</span><span class="na">printHexBinary</span><span class="p">(</span><span class="n">cipheredTokenDigest</span><span class="p">);</span><span class="w"></span>
+<span class="w">         </span><span class="c1">//Compute a SHA256 of the ciphered token</span>
+<span class="w">         </span><span class="n">MessageDigest</span><span class="w"> </span><span class="n">digest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MessageDigest</span><span class="p">.</span><span class="na">getInstance</span><span class="p">(</span><span class="s">&quot;SHA-256&quot;</span><span class="p">);</span>
+<span class="w">         </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">cipheredTokenDigest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">digest</span><span class="p">.</span><span class="na">digest</span><span class="p">(</span><span class="n">cipheredToken</span><span class="p">);</span>
+<span class="w">         </span><span class="n">String</span><span class="w"> </span><span class="n">jwtTokenDigestInHex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DatatypeConverter</span><span class="p">.</span><span class="na">printHexBinary</span><span class="p">(</span><span class="n">cipheredTokenDigest</span><span class="p">);</span>
 
-<span class="w">         </span><span class="c1">//Search token digest in HEX in DB</span><span class="w"></span>
-<span class="w">         </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">Connection</span><span class="w"> </span><span class="n">con</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">storeDS</span><span class="p">.</span><span class="na">getConnection</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">             </span><span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;select jwt_token_digest from revoked_token where jwt_token_digest = ?&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="w">             </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">PreparedStatement</span><span class="w"> </span><span class="n">pStatement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">con</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="n">query</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">                 </span><span class="n">pStatement</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">jwtTokenDigestInHex</span><span class="p">);</span><span class="w"></span>
-<span class="w">                 </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ResultSet</span><span class="w"> </span><span class="n">rSet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pStatement</span><span class="p">.</span><span class="na">executeQuery</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">                     </span><span class="n">tokenIsPresent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rSet</span><span class="p">.</span><span class="na">next</span><span class="p">();</span><span class="w"></span>
-<span class="w">                 </span><span class="p">}</span><span class="w"></span>
-<span class="w">             </span><span class="p">}</span><span class="w"></span>
-<span class="w">         </span><span class="p">}</span><span class="w"></span>
-<span class="w">     </span><span class="p">}</span><span class="w"></span>
+<span class="w">         </span><span class="c1">//Search token digest in HEX in DB</span>
+<span class="w">         </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">Connection</span><span class="w"> </span><span class="n">con</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">storeDS</span><span class="p">.</span><span class="na">getConnection</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">             </span><span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;select jwt_token_digest from revoked_token where jwt_token_digest = ?&quot;</span><span class="p">;</span>
+<span class="w">             </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">PreparedStatement</span><span class="w"> </span><span class="n">pStatement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">con</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="n">query</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                 </span><span class="n">pStatement</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">jwtTokenDigestInHex</span><span class="p">);</span>
+<span class="w">                 </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ResultSet</span><span class="w"> </span><span class="n">rSet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pStatement</span><span class="p">.</span><span class="na">executeQuery</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                     </span><span class="n">tokenIsPresent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rSet</span><span class="p">.</span><span class="na">next</span><span class="p">();</span>
+<span class="w">                 </span><span class="p">}</span>
+<span class="w">             </span><span class="p">}</span>
+<span class="w">         </span><span class="p">}</span>
+<span class="w">     </span><span class="p">}</span>
 
-<span class="w">     </span><span class="k">return</span><span class="w"> </span><span class="n">tokenIsPresent</span><span class="p">;</span><span class="w"></span>
-<span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">     </span><span class="k">return</span><span class="w"> </span><span class="n">tokenIsPresent</span><span class="p">;</span>
+<span class="w"> </span><span class="p">}</span>
 
 
 <span class="w"> </span><span class="cm">/**</span>
@@ -2313,35 +2313,35 @@ TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
 <span class="cm">  *</span>
 <span class="cm">  * @param jwtInHex Token encoded in HEX</span>
 <span class="cm">  * @throws Exception If any issue occur during communication with DB</span>
-<span class="cm">  */</span><span class="w"></span>
-<span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">revokeToken</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">jwtInHex</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">jwtInHex</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="n">jwtInHex</span><span class="p">.</span><span class="na">trim</span><span class="p">().</span><span class="na">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">         </span><span class="c1">//Decode the ciphered token</span><span class="w"></span>
-<span class="w">         </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">cipheredToken</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DatatypeConverter</span><span class="p">.</span><span class="na">parseHexBinary</span><span class="p">(</span><span class="n">jwtInHex</span><span class="p">);</span><span class="w"></span>
+<span class="cm">  */</span>
+<span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">revokeToken</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">jwtInHex</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">jwtInHex</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="n">jwtInHex</span><span class="p">.</span><span class="na">trim</span><span class="p">().</span><span class="na">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="c1">//Decode the ciphered token</span>
+<span class="w">         </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">cipheredToken</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DatatypeConverter</span><span class="p">.</span><span class="na">parseHexBinary</span><span class="p">(</span><span class="n">jwtInHex</span><span class="p">);</span>
 
-<span class="w">         </span><span class="c1">//Compute a SHA256 of the ciphered token</span><span class="w"></span>
-<span class="w">         </span><span class="n">MessageDigest</span><span class="w"> </span><span class="n">digest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MessageDigest</span><span class="p">.</span><span class="na">getInstance</span><span class="p">(</span><span class="s">&quot;SHA-256&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">         </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">cipheredTokenDigest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">digest</span><span class="p">.</span><span class="na">digest</span><span class="p">(</span><span class="n">cipheredToken</span><span class="p">);</span><span class="w"></span>
-<span class="w">         </span><span class="n">String</span><span class="w"> </span><span class="n">jwtTokenDigestInHex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DatatypeConverter</span><span class="p">.</span><span class="na">printHexBinary</span><span class="p">(</span><span class="n">cipheredTokenDigest</span><span class="p">);</span><span class="w"></span>
+<span class="w">         </span><span class="c1">//Compute a SHA256 of the ciphered token</span>
+<span class="w">         </span><span class="n">MessageDigest</span><span class="w"> </span><span class="n">digest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MessageDigest</span><span class="p">.</span><span class="na">getInstance</span><span class="p">(</span><span class="s">&quot;SHA-256&quot;</span><span class="p">);</span>
+<span class="w">         </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">cipheredTokenDigest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">digest</span><span class="p">.</span><span class="na">digest</span><span class="p">(</span><span class="n">cipheredToken</span><span class="p">);</span>
+<span class="w">         </span><span class="n">String</span><span class="w"> </span><span class="n">jwtTokenDigestInHex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DatatypeConverter</span><span class="p">.</span><span class="na">printHexBinary</span><span class="p">(</span><span class="n">cipheredTokenDigest</span><span class="p">);</span>
 
-<span class="w">         </span><span class="c1">//Check if the token digest in HEX is already in the DB and add it if it is absent</span><span class="w"></span>
-<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="na">isTokenRevoked</span><span class="p">(</span><span class="n">jwtInHex</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">             </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">Connection</span><span class="w"> </span><span class="n">con</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">storeDS</span><span class="p">.</span><span class="na">getConnection</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">                 </span><span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;insert into revoked_token(jwt_token_digest) values(?)&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="w">                 </span><span class="kt">int</span><span class="w"> </span><span class="n">insertedRecordCount</span><span class="p">;</span><span class="w"></span>
-<span class="w">                 </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">PreparedStatement</span><span class="w"> </span><span class="n">pStatement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">con</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="n">query</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">                     </span><span class="n">pStatement</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">jwtTokenDigestInHex</span><span class="p">);</span><span class="w"></span>
-<span class="w">                     </span><span class="n">insertedRecordCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pStatement</span><span class="p">.</span><span class="na">executeUpdate</span><span class="p">();</span><span class="w"></span>
-<span class="w">                 </span><span class="p">}</span><span class="w"></span>
-<span class="w">                 </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">insertedRecordCount</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">                     </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalStateException</span><span class="p">(</span><span class="s">&quot;Number of inserted record is invalid,&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"></span>
-<span class="w">                     </span><span class="s">&quot; 1 expected but is &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">insertedRecordCount</span><span class="p">);</span><span class="w"></span>
-<span class="w">                 </span><span class="p">}</span><span class="w"></span>
-<span class="w">             </span><span class="p">}</span><span class="w"></span>
-<span class="w">         </span><span class="p">}</span><span class="w"></span>
+<span class="w">         </span><span class="c1">//Check if the token digest in HEX is already in the DB and add it if it is absent</span>
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="na">isTokenRevoked</span><span class="p">(</span><span class="n">jwtInHex</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">             </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">Connection</span><span class="w"> </span><span class="n">con</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">storeDS</span><span class="p">.</span><span class="na">getConnection</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                 </span><span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;insert into revoked_token(jwt_token_digest) values(?)&quot;</span><span class="p">;</span>
+<span class="w">                 </span><span class="kt">int</span><span class="w"> </span><span class="n">insertedRecordCount</span><span class="p">;</span>
+<span class="w">                 </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">PreparedStatement</span><span class="w"> </span><span class="n">pStatement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">con</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="n">query</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                     </span><span class="n">pStatement</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">jwtTokenDigestInHex</span><span class="p">);</span>
+<span class="w">                     </span><span class="n">insertedRecordCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pStatement</span><span class="p">.</span><span class="na">executeUpdate</span><span class="p">();</span>
+<span class="w">                 </span><span class="p">}</span>
+<span class="w">                 </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">insertedRecordCount</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                     </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalStateException</span><span class="p">(</span><span class="s">&quot;Number of inserted record is invalid,&quot;</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                     </span><span class="s">&quot; 1 expected but is &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">insertedRecordCount</span><span class="p">);</span>
+<span class="w">                 </span><span class="p">}</span>
+<span class="w">             </span><span class="p">}</span>
+<span class="w">         </span><span class="p">}</span>
 
-<span class="w">     </span><span class="p">}</span><span class="w"></span>
-<span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">     </span><span class="p">}</span>
+<span class="w"> </span><span class="p">}</span>
 </code></pre></div>
 <h3 id="token-information-disclosure">Token Information Disclosure<a class="headerlink" href="#token-information-disclosure" title="Permanent link">&para;</a></h3>
 <h4 id="symptom_3">Symptom<a class="headerlink" href="#symptom_3" title="Permanent link">&para;</a></h4>
@@ -2373,17 +2373,17 @@ See RFC5116: https://tools.ietf.org/html/rfc5116
 <span class="cm"> * Handle ciphering and deciphering of the token using AES-GCM.</span>
 <span class="cm"> *</span>
 <span class="cm"> * @see &quot;https://github.com/google/tink/blob/master/docs/JAVA-HOWTO.md&quot;</span>
-<span class="cm"> */</span><span class="w"></span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">TokenCipher</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="cm"> */</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">TokenCipher</span><span class="w"> </span><span class="p">{</span>
 
 <span class="w">    </span><span class="cm">/**</span>
 <span class="cm">     * Constructor - Register AEAD configuration</span>
 <span class="cm">     *</span>
 <span class="cm">     * @throws Exception If any issue occur during AEAD configuration registration</span>
-<span class="cm">     */</span><span class="w"></span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">TokenCipher</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="n">AeadConfig</span><span class="p">.</span><span class="na">register</span><span class="p">();</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="cm">     */</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">TokenCipher</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">AeadConfig</span><span class="p">.</span><span class="na">register</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
 
 <span class="w">    </span><span class="cm">/**</span>
 <span class="cm">     * Cipher a JWT</span>
@@ -2392,21 +2392,21 @@ See RFC5116: https://tools.ietf.org/html/rfc5116
 <span class="cm">     * @param keysetHandle Pointer to the keyset handle</span>
 <span class="cm">     * @return The ciphered version of the token encoded in HEX</span>
 <span class="cm">     * @throws Exception If any issue occur during token ciphering operation</span>
-<span class="cm">     */</span><span class="w"></span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">cipherToken</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">jwt</span><span class="p">,</span><span class="w"> </span><span class="n">KeysetHandle</span><span class="w"> </span><span class="n">keysetHandle</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="c1">//Verify parameters</span><span class="w"></span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">jwt</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">jwt</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">()</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">keysetHandle</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalArgumentException</span><span class="p">(</span><span class="s">&quot;Both parameters must be specified!&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="cm">     */</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">cipherToken</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">jwt</span><span class="p">,</span><span class="w"> </span><span class="n">KeysetHandle</span><span class="w"> </span><span class="n">keysetHandle</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">//Verify parameters</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">jwt</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">jwt</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">()</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">keysetHandle</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalArgumentException</span><span class="p">(</span><span class="s">&quot;Both parameters must be specified!&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
 
-<span class="w">        </span><span class="c1">//Get the primitive</span><span class="w"></span>
-<span class="w">        </span><span class="n">Aead</span><span class="w"> </span><span class="n">aead</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AeadFactory</span><span class="p">.</span><span class="na">getPrimitive</span><span class="p">(</span><span class="n">keysetHandle</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="c1">//Get the primitive</span>
+<span class="w">        </span><span class="n">Aead</span><span class="w"> </span><span class="n">aead</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AeadFactory</span><span class="p">.</span><span class="na">getPrimitive</span><span class="p">(</span><span class="n">keysetHandle</span><span class="p">);</span>
 
-<span class="w">        </span><span class="c1">//Cipher the token</span><span class="w"></span>
-<span class="w">        </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">cipheredToken</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aead</span><span class="p">.</span><span class="na">encrypt</span><span class="p">(</span><span class="n">jwt</span><span class="p">.</span><span class="na">getBytes</span><span class="p">(),</span><span class="w"> </span><span class="kc">null</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="c1">//Cipher the token</span>
+<span class="w">        </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">cipheredToken</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aead</span><span class="p">.</span><span class="na">encrypt</span><span class="p">(</span><span class="n">jwt</span><span class="p">.</span><span class="na">getBytes</span><span class="p">(),</span><span class="w"> </span><span class="kc">null</span><span class="p">);</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">DatatypeConverter</span><span class="p">.</span><span class="na">printHexBinary</span><span class="p">(</span><span class="n">cipheredToken</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">DatatypeConverter</span><span class="p">.</span><span class="na">printHexBinary</span><span class="p">(</span><span class="n">cipheredToken</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 
 <span class="w">    </span><span class="cm">/**</span>
 <span class="cm">     * Decipher a JWT</span>
@@ -2415,51 +2415,51 @@ See RFC5116: https://tools.ietf.org/html/rfc5116
 <span class="cm">     * @param keysetHandle Pointer to the keyset handle</span>
 <span class="cm">     * @return The token in clear text</span>
 <span class="cm">     * @throws Exception If any issue occur during token deciphering operation</span>
-<span class="cm">     */</span><span class="w"></span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">decipherToken</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">jwtInHex</span><span class="p">,</span><span class="w"> </span><span class="n">KeysetHandle</span><span class="w"> </span><span class="n">keysetHandle</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="c1">//Verify parameters</span><span class="w"></span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">jwtInHex</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">jwtInHex</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">()</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">keysetHandle</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalArgumentException</span><span class="p">(</span><span class="s">&quot;Both parameters must be specified !&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="cm">     */</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">decipherToken</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">jwtInHex</span><span class="p">,</span><span class="w"> </span><span class="n">KeysetHandle</span><span class="w"> </span><span class="n">keysetHandle</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">//Verify parameters</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">jwtInHex</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">jwtInHex</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">()</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">keysetHandle</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalArgumentException</span><span class="p">(</span><span class="s">&quot;Both parameters must be specified !&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
 
-<span class="w">        </span><span class="c1">//Decode the ciphered token</span><span class="w"></span>
-<span class="w">        </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">cipheredToken</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DatatypeConverter</span><span class="p">.</span><span class="na">parseHexBinary</span><span class="p">(</span><span class="n">jwtInHex</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="c1">//Decode the ciphered token</span>
+<span class="w">        </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">cipheredToken</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DatatypeConverter</span><span class="p">.</span><span class="na">parseHexBinary</span><span class="p">(</span><span class="n">jwtInHex</span><span class="p">);</span>
 
-<span class="w">        </span><span class="c1">//Get the primitive</span><span class="w"></span>
-<span class="w">        </span><span class="n">Aead</span><span class="w"> </span><span class="n">aead</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AeadFactory</span><span class="p">.</span><span class="na">getPrimitive</span><span class="p">(</span><span class="n">keysetHandle</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="c1">//Get the primitive</span>
+<span class="w">        </span><span class="n">Aead</span><span class="w"> </span><span class="n">aead</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AeadFactory</span><span class="p">.</span><span class="na">getPrimitive</span><span class="p">(</span><span class="n">keysetHandle</span><span class="p">);</span>
 
-<span class="w">        </span><span class="c1">//Decipher the token</span><span class="w"></span>
-<span class="w">        </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">decipheredToken</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aead</span><span class="p">.</span><span class="na">decrypt</span><span class="p">(</span><span class="n">cipheredToken</span><span class="p">,</span><span class="w"> </span><span class="kc">null</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="c1">//Decipher the token</span>
+<span class="w">        </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">decipheredToken</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">aead</span><span class="p">.</span><span class="na">decrypt</span><span class="p">(</span><span class="n">cipheredToken</span><span class="p">,</span><span class="w"> </span><span class="kc">null</span><span class="p">);</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">String</span><span class="p">(</span><span class="n">decipheredToken</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">String</span><span class="p">(</span><span class="n">decipheredToken</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 <h5 id="creation-validation-of-the-token">Creation / Validation of the Token<a class="headerlink" href="#creation-validation-of-the-token" title="Permanent link">&para;</a></h5>
 <p>Use the token ciphering handler during the creation and the validation of the token.</p>
 <p>Load keys (ciphering key was generated and stored using <a href="https://github.com/google/tink/blob/master/docs/JAVA-HOWTO.md#generating-new-keysets">Google Tink</a>) and setup cipher.</p>
-<div class="highlight"><pre><span></span><code><span class="c1">//Load keys from configuration text/json files in order to avoid to storing keys as a String in JVM memory</span><span class="w"></span>
-<span class="kd">private</span><span class="w"> </span><span class="kd">transient</span><span class="w"> </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">keyHMAC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Files</span><span class="p">.</span><span class="na">readAllBytes</span><span class="p">(</span><span class="n">Paths</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;src&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;main&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;conf&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;key-hmac.txt&quot;</span><span class="p">));</span><span class="w"></span>
-<span class="kd">private</span><span class="w"> </span><span class="kd">transient</span><span class="w"> </span><span class="n">KeysetHandle</span><span class="w"> </span><span class="n">keyCiphering</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CleartextKeysetHandle</span><span class="p">.</span><span class="na">read</span><span class="p">(</span><span class="n">JsonKeysetReader</span><span class="p">.</span><span class="na">withFile</span><span class="p">(</span><span class="w"></span>
-<span class="n">Paths</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;src&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;main&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;conf&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;key-ciphering.json&quot;</span><span class="p">).</span><span class="na">toFile</span><span class="p">()));</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="c1">//Load keys from configuration text/json files in order to avoid to storing keys as a String in JVM memory</span>
+<span class="kd">private</span><span class="w"> </span><span class="kd">transient</span><span class="w"> </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">keyHMAC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Files</span><span class="p">.</span><span class="na">readAllBytes</span><span class="p">(</span><span class="n">Paths</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;src&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;main&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;conf&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;key-hmac.txt&quot;</span><span class="p">));</span>
+<span class="kd">private</span><span class="w"> </span><span class="kd">transient</span><span class="w"> </span><span class="n">KeysetHandle</span><span class="w"> </span><span class="n">keyCiphering</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CleartextKeysetHandle</span><span class="p">.</span><span class="na">read</span><span class="p">(</span><span class="n">JsonKeysetReader</span><span class="p">.</span><span class="na">withFile</span><span class="p">(</span>
+<span class="n">Paths</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;src&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;main&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;conf&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;key-ciphering.json&quot;</span><span class="p">).</span><span class="na">toFile</span><span class="p">()));</span>
 
-<span class="p">...</span><span class="w"></span>
+<span class="p">...</span>
 
-<span class="c1">//Init token ciphering handler</span><span class="w"></span>
-<span class="n">TokenCipher</span><span class="w"> </span><span class="n">tokenCipher</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TokenCipher</span><span class="p">();</span><span class="w"></span>
+<span class="c1">//Init token ciphering handler</span>
+<span class="n">TokenCipher</span><span class="w"> </span><span class="n">tokenCipher</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TokenCipher</span><span class="p">();</span>
 </code></pre></div>
 <p>Token creation.</p>
-<div class="highlight"><pre><span></span><code><span class="c1">//Generate the JWT token using the JWT API...</span><span class="w"></span>
-<span class="c1">//Cipher the token (String JSON representation)</span><span class="w"></span>
-<span class="n">String</span><span class="w"> </span><span class="n">cipheredToken</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tokenCipher</span><span class="p">.</span><span class="na">cipherToken</span><span class="p">(</span><span class="n">token</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">keyCiphering</span><span class="p">);</span><span class="w"></span>
-<span class="c1">//Send the ciphered token encoded in HEX to the client in HTTP response...</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="c1">//Generate the JWT token using the JWT API...</span>
+<span class="c1">//Cipher the token (String JSON representation)</span>
+<span class="n">String</span><span class="w"> </span><span class="n">cipheredToken</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tokenCipher</span><span class="p">.</span><span class="na">cipherToken</span><span class="p">(</span><span class="n">token</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">keyCiphering</span><span class="p">);</span>
+<span class="c1">//Send the ciphered token encoded in HEX to the client in HTTP response...</span>
 </code></pre></div>
 <p>Token validation.</p>
-<div class="highlight"><pre><span></span><code><span class="c1">//Retrieve the ciphered token encoded in HEX from the HTTP request...</span><span class="w"></span>
-<span class="c1">//Decipher the token</span><span class="w"></span>
-<span class="n">String</span><span class="w"> </span><span class="n">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tokenCipher</span><span class="p">.</span><span class="na">decipherToken</span><span class="p">(</span><span class="n">cipheredToken</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">keyCiphering</span><span class="p">);</span><span class="w"></span>
-<span class="c1">//Verify the token using the JWT API...</span><span class="w"></span>
-<span class="c1">//Verify access...</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="c1">//Retrieve the ciphered token encoded in HEX from the HTTP request...</span>
+<span class="c1">//Decipher the token</span>
+<span class="n">String</span><span class="w"> </span><span class="n">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tokenCipher</span><span class="p">.</span><span class="na">decipherToken</span><span class="p">(</span><span class="n">cipheredToken</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">keyCiphering</span><span class="p">);</span>
+<span class="c1">//Verify the token using the JWT API...</span>
+<span class="c1">//Verify access...</span>
 </code></pre></div>
 <h3 id="token-storage-on-client-side">Token Storage on Client Side<a class="headerlink" href="#token-storage-on-client-side" title="Permanent link">&para;</a></h3>
 <h4 id="symptom_4">Symptom<a class="headerlink" href="#symptom_4" title="Permanent link">&para;</a></h4>
@@ -2484,111 +2484,111 @@ See RFC5116: https://tools.ietf.org/html/rfc5116
 </ul>
 <h4 id="implementation-example_4">Implementation Example<a class="headerlink" href="#implementation-example_4" title="Permanent link">&para;</a></h4>
 <p>JavaScript code to store the token after authentication.</p>
-<div class="highlight"><pre><span></span><code><span class="cm">/* Handle request for JWT token and local storage*/</span><span class="w"></span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">authenticate</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">login</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#login&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">();</span><span class="w"></span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">postData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;login=&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">encodeURIComponent</span><span class="p">(</span><span class="nx">login</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot;&amp;password=test&quot;</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="cm">/* Handle request for JWT token and local storage*/</span>
+<span class="kd">function</span><span class="w"> </span><span class="nx">authenticate</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">login</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#login&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">();</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">postData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;login=&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">encodeURIComponent</span><span class="p">(</span><span class="nx">login</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot;&amp;password=test&quot;</span><span class="p">;</span>
 
-<span class="w">    </span><span class="nx">$</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s2">&quot;/services/authenticate&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">postData</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">status</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;Authentication successful!&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">            </span><span class="p">...</span><span class="w"></span>
-<span class="w">            </span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="s2">&quot;token&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">.</span><span class="nx">token</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="p">}</span><span class="w"></span>
-<span class="w">        </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">            </span><span class="p">...</span><span class="w"></span>
-<span class="w">            </span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">removeItem</span><span class="p">(</span><span class="s2">&quot;token&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="p">}</span><span class="w"></span>
-<span class="w">    </span><span class="p">})</span><span class="w"></span>
-<span class="w">    </span><span class="p">.</span><span class="nx">fail</span><span class="p">(</span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">jqXHR</span><span class="p">,</span><span class="w"> </span><span class="nx">textStatus</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="p">...</span><span class="w"></span>
-<span class="w">        </span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">removeItem</span><span class="p">(</span><span class="s2">&quot;token&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">});</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="nx">$</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s2">&quot;/services/authenticate&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">postData</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">status</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;Authentication successful!&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="p">...</span>
+<span class="w">            </span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="s2">&quot;token&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">.</span><span class="nx">token</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="p">...</span>
+<span class="w">            </span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">removeItem</span><span class="p">(</span><span class="s2">&quot;token&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">})</span>
+<span class="w">    </span><span class="p">.</span><span class="nx">fail</span><span class="p">(</span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">jqXHR</span><span class="p">,</span><span class="w"> </span><span class="nx">textStatus</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="p">...</span>
+<span class="w">        </span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">removeItem</span><span class="p">(</span><span class="s2">&quot;token&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">});</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>JavaScript code to add the token as a <em>Bearer</em> HTTP Authentication header when calling a service, for example a service to validate token here.</p>
-<div class="highlight"><pre><span></span><code><span class="cm">/* Handle request for JWT token validation */</span><span class="w"></span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">validateToken</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">getItem</span><span class="p">(</span><span class="s2">&quot;token&quot;</span><span class="p">);</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="cm">/* Handle request for JWT token validation */</span>
+<span class="kd">function</span><span class="w"> </span><span class="nx">validateToken</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">sessionStorage</span><span class="p">.</span><span class="nx">getItem</span><span class="p">(</span><span class="s2">&quot;token&quot;</span><span class="p">);</span>
 
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">token</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">undefined</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">token</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#infoZone&quot;</span><span class="p">).</span><span class="nx">removeClass</span><span class="p">();</span><span class="w"></span>
-<span class="w">        </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#infoZone&quot;</span><span class="p">).</span><span class="nx">addClass</span><span class="p">(</span><span class="s2">&quot;alert alert-warning&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#infoZone&quot;</span><span class="p">).</span><span class="nx">text</span><span class="p">(</span><span class="s2">&quot;Obtain a JWT token first :)&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">token</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">undefined</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">token</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#infoZone&quot;</span><span class="p">).</span><span class="nx">removeClass</span><span class="p">();</span>
+<span class="w">        </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#infoZone&quot;</span><span class="p">).</span><span class="nx">addClass</span><span class="p">(</span><span class="s2">&quot;alert alert-warning&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#infoZone&quot;</span><span class="p">).</span><span class="nx">text</span><span class="p">(</span><span class="s2">&quot;Obtain a JWT token first :)&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 
-<span class="w">    </span><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span><span class="w"></span>
-<span class="w">        </span><span class="nx">url</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;/services/validate&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;POST&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="nx">beforeSend</span><span class="o">:</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">xhr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">            </span><span class="nx">xhr</span><span class="p">.</span><span class="nx">setRequestHeader</span><span class="p">(</span><span class="s2">&quot;Authorization&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;bearer &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">token</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="p">},</span><span class="w"></span>
-<span class="w">        </span><span class="nx">success</span><span class="o">:</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">            </span><span class="p">...</span><span class="w"></span>
-<span class="w">        </span><span class="p">},</span><span class="w"></span>
-<span class="w">        </span><span class="nx">error</span><span class="o">:</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">jqXHR</span><span class="p">,</span><span class="w"> </span><span class="nx">textStatus</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">            </span><span class="p">...</span><span class="w"></span>
-<span class="w">        </span><span class="p">},</span><span class="w"></span>
-<span class="w">    </span><span class="p">});</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+<span class="w">        </span><span class="nx">url</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;/services/validate&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;POST&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">beforeSend</span><span class="o">:</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">xhr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">xhr</span><span class="p">.</span><span class="nx">setRequestHeader</span><span class="p">(</span><span class="s2">&quot;Authorization&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;bearer &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">token</span><span class="p">);</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nx">success</span><span class="o">:</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="p">...</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nx">error</span><span class="o">:</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">jqXHR</span><span class="p">,</span><span class="w"> </span><span class="nx">textStatus</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="p">...</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">    </span><span class="p">});</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>JavaScript code to implement closures with private variables:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">myFetchModule</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="c1">// Protect the original &#39;fetch&#39; from getting overwritten via XSS</span><span class="w"></span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">fetch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">fetch</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">myFetchModule</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Protect the original &#39;fetch&#39; from getting overwritten via XSS</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">fetch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">fetch</span><span class="p">;</span>
 
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">authOrigins</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;https://yourorigin&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;http://localhost&quot;</span><span class="p">];</span><span class="w"></span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">authOrigins</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;https://yourorigin&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;http://localhost&quot;</span><span class="p">];</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">;</span>
 
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">setToken</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">value</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="nx">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">value</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">setToken</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">value</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">value</span>
+<span class="w">    </span><span class="p">}</span>
 
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">fetch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">resource</span><span class="p">,</span><span class="w"> </span><span class="nx">options</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">req</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Request</span><span class="p">(</span><span class="nx">resource</span><span class="p">,</span><span class="w"> </span><span class="nx">options</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="nx">destOrigin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">URL</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">url</span><span class="p">).</span><span class="nx">origin</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">token</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">authOrigins</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="nx">destOrigin</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">            </span><span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;Authorization&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">token</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="p">}</span><span class="w"></span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="nx">req</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">fetch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">resource</span><span class="p">,</span><span class="w"> </span><span class="nx">options</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">req</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Request</span><span class="p">(</span><span class="nx">resource</span><span class="p">,</span><span class="w"> </span><span class="nx">options</span><span class="p">);</span>
+<span class="w">        </span><span class="nx">destOrigin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">URL</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">url</span><span class="p">).</span><span class="nx">origin</span><span class="p">;</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">token</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">authOrigins</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="nx">destOrigin</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;Authorization&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">token</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="nx">req</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 
-<span class="p">...</span><span class="w"></span>
+<span class="p">...</span>
 
-<span class="c1">// usage:</span><span class="w"></span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">myFetch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">myFetchModule</span><span class="p">()</span><span class="w"></span>
+<span class="c1">// usage:</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">myFetch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">myFetchModule</span><span class="p">()</span>
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">login</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="nx">fetch</span><span class="p">(</span><span class="s2">&quot;/api/login&quot;</span><span class="p">)</span><span class="w"></span>
-<span class="w">      </span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">          </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mf">200</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">              </span><span class="k">return</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">()</span><span class="w"></span>
-<span class="w">          </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">              </span><span class="k">throw</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">statusText</span><span class="p">)</span><span class="w"></span>
-<span class="w">          </span><span class="p">}</span><span class="w"></span>
-<span class="w">      </span><span class="p">})</span><span class="w"></span>
-<span class="w">      </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">          </span><span class="nx">myFetch</span><span class="p">.</span><span class="nx">setToken</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">token</span><span class="p">)</span><span class="w"></span>
-<span class="w">          </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Token received and stored.&quot;</span><span class="p">)</span><span class="w"></span>
-<span class="w">      </span><span class="p">})</span><span class="w"></span>
-<span class="w">      </span><span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">)</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="kd">function</span><span class="w"> </span><span class="nx">login</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">fetch</span><span class="p">(</span><span class="s2">&quot;/api/login&quot;</span><span class="p">)</span>
+<span class="w">      </span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mf">200</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">              </span><span class="k">return</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">()</span>
+<span class="w">          </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">              </span><span class="k">throw</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">statusText</span><span class="p">)</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">      </span><span class="p">})</span>
+<span class="w">      </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nx">myFetch</span><span class="p">.</span><span class="nx">setToken</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">token</span><span class="p">)</span>
+<span class="w">          </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Token received and stored.&quot;</span><span class="p">)</span>
+<span class="w">      </span><span class="p">})</span>
+<span class="w">      </span><span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">)</span>
+<span class="p">}</span>
 
-<span class="p">...</span><span class="w"></span>
+<span class="p">...</span>
 
-<span class="c1">// after login, subsequent api calls:</span><span class="w"></span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">makeRequest</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nx">myFetch</span><span class="p">.</span><span class="nx">fetch</span><span class="p">(</span><span class="s2">&quot;/api/hello&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="s2">&quot;MyHeader&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;foobar&quot;</span><span class="p">}})</span><span class="w"></span>
-<span class="w">        </span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mf">200</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">text</span><span class="p">()</span><span class="w"></span>
-<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">                </span><span class="k">throw</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">statusText</span><span class="p">)</span><span class="w"></span>
-<span class="w">            </span><span class="p">}</span><span class="w"></span>
-<span class="w">        </span><span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="nx">responseText</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;helloResponse&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">responseText</span><span class="p">))</span><span class="w"></span>
-<span class="w">        </span><span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">)</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="c1">// after login, subsequent api calls:</span>
+<span class="kd">function</span><span class="w"> </span><span class="nx">makeRequest</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">myFetch</span><span class="p">.</span><span class="nx">fetch</span><span class="p">(</span><span class="s2">&quot;/api/hello&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="s2">&quot;MyHeader&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;foobar&quot;</span><span class="p">}})</span>
+<span class="w">        </span><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mf">200</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">return</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">text</span><span class="p">()</span>
+<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">throw</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">statusText</span><span class="p">)</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="nx">responseText</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;helloResponse&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">responseText</span><span class="p">))</span>
+<span class="w">        </span><span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">)</span>
+<span class="p">}</span>
 </code></pre></div>
 <h3 id="weak-token-secret">Weak Token Secret<a class="headerlink" href="#weak-token-secret" title="Permanent link">&para;</a></h3>
 <h4 id="symptom_5">Symptom<a class="headerlink" href="#symptom_5" title="Permanent link">&para;</a></h4>
@@ -2619,42 +2619,6 @@ See RFC5116: https://tools.ietf.org/html/rfc5116
       
         <footer class="md-footer">
   
-    
-    <nav class="md-footer__inner md-grid" aria-label="Footer" >
-      
-        
-        <a href="JAAS_Cheat_Sheet.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: JAAS" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              JAAS
-            </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="Key_Management_Cheat_Sheet.html" class="md-footer__link md-footer__link--next" aria-label="Next: Key Management" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              Key Management
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
-  
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
       <div class="md-copyright">
@@ -2680,12 +2644,11 @@ See RFC5116: https://tools.ietf.org/html/rfc5116
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.12658920.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      <script src="../assets/javascripts/bundle.5cf534bf.min.js"></script>
       
-    
     
   </body>
 </html>

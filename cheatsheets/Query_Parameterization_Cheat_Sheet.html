@@ -12,8 +12,14 @@
       
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Query_Parameterization_Cheat_Sheet.html">
       
+      
+        <link rel="prev" href="Pinning_Cheat_Sheet.html">
+      
+      
+        <link rel="next" href="REST_Assessment_Cheat_Sheet.html">
+      
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.0">
     
     
       
@@ -21,11 +27,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.975780f9.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.f79797b0.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
-        
       
       
 
@@ -112,8 +117,6 @@
       <form class="md-header__option" data-md-component="palette">
         
           
-          
-          
           <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
           
             <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
@@ -121,8 +124,6 @@
             </label>
           
         
-          
-          
           
           <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
           
@@ -1859,10 +1860,9 @@
                 
                   
 
-  <a href="https://github.com/OWASP/CheatSheetSeries/edit/master/docs/cheatsheets/Query_Parameterization_Cheat_Sheet.md" title="Edit this page" class="md-content__button md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
-  </a>
+  
+  
+
 
 
 <h1 id="query-parameterization-cheat-sheet">Query Parameterization Cheat Sheet<a class="headerlink" href="#query-parameterization-cheat-sheet" title="Permanent link">&para;</a></h1>
@@ -1875,72 +1875,72 @@
 <p>Please note, many client side frameworks and libraries offer client side query parameterization. These libraries often just build queries with string concatenation before sending raw queries to a server. Please ensure that query parameterization is done server-side!</p>
 <h3 id="prepared-statement-examples">Prepared Statement Examples<a class="headerlink" href="#prepared-statement-examples" title="Permanent link">&para;</a></h3>
 <h4 id="using-java-built-in-feature">Using Java built-in feature<a class="headerlink" href="#using-java-built-in-feature" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="n">String</span><span class="w"> </span><span class="n">custname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;customerName&quot;</span><span class="p">);</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="n">String</span><span class="w"> </span><span class="n">custname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;customerName&quot;</span><span class="p">);</span>
 <span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;SELECT account_balance FROM user_data WHERE user_name = ? &quot;</span><span class="p">;</span><span class="w">  </span>
-<span class="n">PreparedStatement</span><span class="w"> </span><span class="n">pstmt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">connection</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
-<span class="n">pstmt</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">custname</span><span class="p">);</span><span class="w"></span>
-<span class="n">ResultSet</span><span class="w"> </span><span class="n">results</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pstmt</span><span class="p">.</span><span class="na">executeQuery</span><span class="p">(</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">PreparedStatement</span><span class="w"> </span><span class="n">pstmt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">connection</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="p">);</span>
+<span class="n">pstmt</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">custname</span><span class="p">);</span>
+<span class="n">ResultSet</span><span class="w"> </span><span class="n">results</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pstmt</span><span class="p">.</span><span class="na">executeQuery</span><span class="p">(</span><span class="w"> </span><span class="p">);</span>
 </code></pre></div>
 <h4 id="using-java-with-hibernate">Using Java with Hibernate<a class="headerlink" href="#using-java-with-hibernate" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="c1">// HQL</span><span class="w"></span>
-<span class="nd">@Entity</span><span class="w"> </span><span class="c1">// declare as entity;</span><span class="w"></span>
-<span class="nd">@NamedQuery</span><span class="p">(</span><span class="w"></span>
-<span class="w"> </span><span class="n">name</span><span class="o">=</span><span class="s">&quot;findByDescription&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w"> </span><span class="n">query</span><span class="o">=</span><span class="s">&quot;FROM Inventory i WHERE i.productDescription = :productDescription&quot;</span><span class="w"></span>
-<span class="p">)</span><span class="w"></span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Inventory</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Serializable</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w"> </span><span class="nd">@Id</span><span class="w"></span>
-<span class="w"> </span><span class="kd">private</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">id</span><span class="p">;</span><span class="w"></span>
-<span class="w"> </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">productDescription</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="c1">// HQL</span>
+<span class="nd">@Entity</span><span class="w"> </span><span class="c1">// declare as entity;</span>
+<span class="nd">@NamedQuery</span><span class="p">(</span>
+<span class="w"> </span><span class="n">name</span><span class="o">=</span><span class="s">&quot;findByDescription&quot;</span><span class="p">,</span>
+<span class="w"> </span><span class="n">query</span><span class="o">=</span><span class="s">&quot;FROM Inventory i WHERE i.productDescription = :productDescription&quot;</span>
+<span class="p">)</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Inventory</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Serializable</span><span class="w"> </span><span class="p">{</span>
+<span class="w"> </span><span class="nd">@Id</span>
+<span class="w"> </span><span class="kd">private</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">id</span><span class="p">;</span>
+<span class="w"> </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">productDescription</span><span class="p">;</span>
+<span class="p">}</span>
 
-<span class="c1">// Use case</span><span class="w"></span>
-<span class="c1">// This should REALLY be validated too</span><span class="w"></span>
-<span class="n">String</span><span class="w"> </span><span class="n">userSuppliedParameter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;Product-Description&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="c1">// Perform input validation to detect attacks</span><span class="w"></span>
-<span class="n">List</span><span class="o">&lt;</span><span class="n">Inventory</span><span class="o">&gt;</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="o">=</span><span class="w"></span>
-<span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">getNamedQuery</span><span class="p">(</span><span class="s">&quot;findByDescription&quot;</span><span class="p">)</span><span class="w"></span>
-<span class="w"> </span><span class="p">.</span><span class="na">setParameter</span><span class="p">(</span><span class="s">&quot;productDescription&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">userSuppliedParameter</span><span class="p">).</span><span class="na">list</span><span class="p">();</span><span class="w"></span>
+<span class="c1">// Use case</span>
+<span class="c1">// This should REALLY be validated too</span>
+<span class="n">String</span><span class="w"> </span><span class="n">userSuppliedParameter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;Product-Description&quot;</span><span class="p">);</span>
+<span class="c1">// Perform input validation to detect attacks</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">Inventory</span><span class="o">&gt;</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="o">=</span>
+<span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">getNamedQuery</span><span class="p">(</span><span class="s">&quot;findByDescription&quot;</span><span class="p">)</span>
+<span class="w"> </span><span class="p">.</span><span class="na">setParameter</span><span class="p">(</span><span class="s">&quot;productDescription&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">userSuppliedParameter</span><span class="p">).</span><span class="na">list</span><span class="p">();</span>
 
-<span class="c1">// Criteria API</span><span class="w"></span>
-<span class="c1">// This should REALLY be validated too</span><span class="w"></span>
-<span class="n">String</span><span class="w"> </span><span class="n">userSuppliedParameter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;Product-Description&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="c1">// Perform input validation to detect attacks</span><span class="w"></span>
-<span class="n">Inventory</span><span class="w"> </span><span class="n">inv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Inventory</span><span class="p">)</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">createCriteria</span><span class="p">(</span><span class="n">Inventory</span><span class="p">.</span><span class="na">class</span><span class="p">).</span><span class="na">add</span><span class="w"></span>
-<span class="p">(</span><span class="n">Restrictions</span><span class="p">.</span><span class="na">eq</span><span class="p">(</span><span class="s">&quot;productDescription&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">userSuppliedParameter</span><span class="p">)).</span><span class="na">uniqueResult</span><span class="p">();</span><span class="w"></span>
+<span class="c1">// Criteria API</span>
+<span class="c1">// This should REALLY be validated too</span>
+<span class="n">String</span><span class="w"> </span><span class="n">userSuppliedParameter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;Product-Description&quot;</span><span class="p">);</span>
+<span class="c1">// Perform input validation to detect attacks</span>
+<span class="n">Inventory</span><span class="w"> </span><span class="n">inv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Inventory</span><span class="p">)</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">createCriteria</span><span class="p">(</span><span class="n">Inventory</span><span class="p">.</span><span class="na">class</span><span class="p">).</span><span class="na">add</span>
+<span class="p">(</span><span class="n">Restrictions</span><span class="p">.</span><span class="na">eq</span><span class="p">(</span><span class="s">&quot;productDescription&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">userSuppliedParameter</span><span class="p">)).</span><span class="na">uniqueResult</span><span class="p">();</span>
 </code></pre></div>
 <h4 id="using-net-built-in-feature">Using .NET built-in feature<a class="headerlink" href="#using-net-built-in-feature" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;SELECT account_balance FROM user_data WHERE user_name = ?&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">   </span><span class="n">OleDbCommand</span><span class="w"> </span><span class="n">command</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">OleDbCommand</span><span class="p">(</span><span class="n">query</span><span class="p">,</span><span class="w"> </span><span class="n">connection</span><span class="p">);</span><span class="w"></span>
-<span class="w">   </span><span class="n">command</span><span class="p">.</span><span class="n">Parameters</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">OleDbParameter</span><span class="p">(</span><span class="s">&quot;customerName&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">CustomerName</span><span class="w"> </span><span class="n">Name</span><span class="p">.</span><span class="n">Text</span><span class="p">));</span><span class="w"></span>
-<span class="w">   </span><span class="n">OleDbDataReader</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">command</span><span class="p">.</span><span class="n">ExecuteReader</span><span class="p">();</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;SELECT account_balance FROM user_data WHERE user_name = ?&quot;</span><span class="p">;</span>
+<span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="n">OleDbCommand</span><span class="w"> </span><span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">OleDbCommand</span><span class="p">(</span><span class="n">query</span><span class="p">,</span><span class="w"> </span><span class="n">connection</span><span class="p">);</span>
+<span class="w">   </span><span class="n">command</span><span class="p">.</span><span class="n">Parameters</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">OleDbParameter</span><span class="p">(</span><span class="s">&quot;customerName&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">CustomerName</span><span class="w"> </span><span class="n">Name</span><span class="p">.</span><span class="n">Text</span><span class="p">));</span>
+<span class="w">   </span><span class="n">OleDbDataReader</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">command</span><span class="p">.</span><span class="n">ExecuteReader</span><span class="p">();</span>
 <span class="w">   </span><span class="c1">// …</span>
-<span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">OleDbException</span><span class="w"> </span><span class="n">se</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">OleDbException</span><span class="w"> </span><span class="n">se</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">   </span><span class="c1">// error handling</span>
-<span class="p">}</span><span class="w"></span>
+<span class="p">}</span>
 </code></pre></div>
 <h4 id="using-asp-net-built-in-feature">Using ASP .NET built-in feature<a class="headerlink" href="#using-asp-net-built-in-feature" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="kt">string</span><span class="w"> </span><span class="n">sql</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;SELECT * FROM Customers WHERE CustomerId = @CustomerId&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="n">SqlCommand</span><span class="w"> </span><span class="n">command</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SqlCommand</span><span class="p">(</span><span class="n">sql</span><span class="p">);</span><span class="w"></span>
-<span class="n">command</span><span class="p">.</span><span class="n">Parameters</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">SqlParameter</span><span class="p">(</span><span class="s">&quot;@CustomerId&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Data</span><span class="p">.</span><span class="n">SqlDbType</span><span class="p">.</span><span class="n">Int</span><span class="p">));</span><span class="w"></span>
-<span class="n">command</span><span class="p">.</span><span class="n">Parameters</span><span class="p">[</span><span class="s">&quot;@CustomerId&quot;</span><span class="p">].</span><span class="n">Value</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="m">1</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kt">string</span><span class="w"> </span><span class="n">sql</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;SELECT * FROM Customers WHERE CustomerId = @CustomerId&quot;</span><span class="p">;</span>
+<span class="n">SqlCommand</span><span class="w"> </span><span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SqlCommand</span><span class="p">(</span><span class="n">sql</span><span class="p">);</span>
+<span class="n">command</span><span class="p">.</span><span class="n">Parameters</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">SqlParameter</span><span class="p">(</span><span class="s">&quot;@CustomerId&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Data</span><span class="p">.</span><span class="n">SqlDbType</span><span class="p">.</span><span class="n">Int</span><span class="p">));</span>
+<span class="n">command</span><span class="p">.</span><span class="n">Parameters</span><span class="p">[</span><span class="s">&quot;@CustomerId&quot;</span><span class="p">].</span><span class="n">Value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">;</span>
 </code></pre></div>
 <h4 id="using-ruby-with-activerecord">Using Ruby with ActiveRecord<a class="headerlink" href="#using-ruby-with-activerecord" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="c1">## Create</span>
-<span class="no">Project</span><span class="o">.</span><span class="n">create!</span><span class="p">(</span><span class="ss">:name</span> <span class="o">=&gt;</span> <span class="s1">&#39;owasp&#39;</span><span class="p">)</span>
+<span class="no">Project</span><span class="o">.</span><span class="n">create!</span><span class="p">(</span><span class="ss">:name</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s1">&#39;owasp&#39;</span><span class="p">)</span>
 <span class="c1">## Read</span>
-<span class="no">Project</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="ss">:conditions</span> <span class="o">=&gt;</span> <span class="s2">&quot;name = ?&quot;</span><span class="p">,</span> <span class="nb">name</span><span class="p">)</span>
-<span class="no">Project</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="ss">:conditions</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:name</span> <span class="o">=&gt;</span> <span class="nb">name</span> <span class="p">})</span>
-<span class="no">Project</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="s2">&quot;name = :name&quot;</span><span class="p">,</span> <span class="ss">:name</span> <span class="o">=&gt;</span> <span class="nb">name</span><span class="p">)</span>
+<span class="no">Project</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="ss">:conditions</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s2">&quot;name = ?&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">name</span><span class="p">)</span>
+<span class="no">Project</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="ss">:conditions</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="ss">:name</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">name</span><span class="w"> </span><span class="p">})</span>
+<span class="no">Project</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="s2">&quot;name = :name&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">:name</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">name</span><span class="p">)</span>
 <span class="c1">## Update</span>
-<span class="n">project</span><span class="o">.</span><span class="n">update_attributes</span><span class="p">(</span><span class="ss">:name</span> <span class="o">=&gt;</span> <span class="s1">&#39;owasp&#39;</span><span class="p">)</span>
+<span class="n">project</span><span class="o">.</span><span class="n">update_attributes</span><span class="p">(</span><span class="ss">:name</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s1">&#39;owasp&#39;</span><span class="p">)</span>
 <span class="c1">## Delete</span>
-<span class="no">Project</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="ss">:name</span> <span class="o">=&gt;</span> <span class="s1">&#39;name&#39;</span><span class="p">)</span>
+<span class="no">Project</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="ss">:name</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s1">&#39;name&#39;</span><span class="p">)</span>
 </code></pre></div>
 <h4 id="using-ruby-built-in-feature">Using Ruby built-in feature<a class="headerlink" href="#using-ruby-built-in-feature" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="n">insert_new_user</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">prepare</span> <span class="s2">&quot;INSERT INTO users (name, age, gender) VALUES (?, ? ,?)&quot;</span>
-<span class="n">insert_new_user</span><span class="o">.</span><span class="n">execute</span> <span class="s1">&#39;aizatto&#39;</span><span class="p">,</span> <span class="s1">&#39;20&#39;</span><span class="p">,</span> <span class="s1">&#39;male&#39;</span>
+<div class="highlight"><pre><span></span><code><span class="n">insert_new_user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">db</span><span class="o">.</span><span class="n">prepare</span><span class="w"> </span><span class="s2">&quot;INSERT INTO users (name, age, gender) VALUES (?, ? ,?)&quot;</span>
+<span class="n">insert_new_user</span><span class="o">.</span><span class="n">execute</span><span class="w"> </span><span class="s1">&#39;aizatto&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;20&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;male&#39;</span>
 </code></pre></div>
 <h4 id="using-php-with-php-data-objects">Using PHP with PHP Data Objects<a class="headerlink" href="#using-php-with-php-data-objects" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="x">$stmt = $dbh-&gt;prepare(&quot;INSERT INTO REGISTRY (name, value) VALUES (:name, :value)&quot;);</span>
@@ -1954,9 +1954,9 @@
 &lt;/cfquery&gt;
 </code></pre></div>
 <h4 id="using-perl-with-database-independent-interface">Using PERL with Database Independent Interface<a class="headerlink" href="#using-perl-with-database-independent-interface" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="k">my</span> <span class="nv">$sql</span> <span class="o">=</span> <span class="s">&quot;INSERT INTO foo (bar, baz) VALUES ( ?, ? )&quot;</span><span class="p">;</span>
-<span class="k">my</span> <span class="nv">$sth</span> <span class="o">=</span> <span class="nv">$dbh</span><span class="o">-&gt;</span><span class="n">prepare</span><span class="p">(</span> <span class="nv">$sql</span> <span class="p">);</span>
-<span class="nv">$sth</span><span class="o">-&gt;</span><span class="n">execute</span><span class="p">(</span> <span class="nv">$bar</span><span class="p">,</span> <span class="nv">$baz</span> <span class="p">);</span>
+<div class="highlight"><pre><span></span><code><span class="k">my</span><span class="w"> </span><span class="nv">$sql</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;INSERT INTO foo (bar, baz) VALUES ( ?, ? )&quot;</span><span class="p">;</span>
+<span class="k">my</span><span class="w"> </span><span class="nv">$sth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$dbh</span><span class="o">-&gt;</span><span class="n">prepare</span><span class="p">(</span><span class="w"> </span><span class="nv">$sql</span><span class="w"> </span><span class="p">);</span>
+<span class="nv">$sth</span><span class="o">-&gt;</span><span class="n">execute</span><span class="p">(</span><span class="w"> </span><span class="nv">$bar</span><span class="p">,</span><span class="w"> </span><span class="nv">$baz</span><span class="w"> </span><span class="p">);</span>
 </code></pre></div>
 <h3 id="stored-procedure-examples">Stored Procedure Examples<a class="headerlink" href="#stored-procedure-examples" title="Permanent link">&para;</a></h3>
 <p>The SQL you write in your web application isn't the only place that SQL injection vulnerabilities can be introduced. If you are using Stored Procedures, and you are dynamically constructing SQL inside them, you can also introduce SQL injection vulnerabilities.</p>
@@ -1965,38 +1965,38 @@
 <h4 id="oracle-using-plsql">Oracle using PL/SQL<a class="headerlink" href="#oracle-using-plsql" title="Permanent link">&para;</a></h4>
 <h5 id="normal-stored-procedure">Normal Stored Procedure<a class="headerlink" href="#normal-stored-procedure" title="Permanent link">&para;</a></h5>
 <p>No dynamic SQL being created. Parameters passed in to stored procedures are naturally bound to their location within the query without anything special being required:</p>
-<div class="highlight"><pre><span></span><code><span class="k">PROCEDURE</span><span class="w"> </span><span class="n">SafeGetBalanceQuery</span><span class="p">(</span><span class="n">UserID</span><span class="w"> </span><span class="nb">varchar</span><span class="p">,</span><span class="w"> </span><span class="n">Dept</span><span class="w"> </span><span class="nb">varchar</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">BEGIN</span><span class="w"></span>
-<span class="w">   </span><span class="k">SELECT</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">accounts_table</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_ID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UserID</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">department</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dept</span><span class="p">;</span><span class="w"></span>
-<span class="k">END</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">PROCEDURE</span><span class="w"> </span><span class="n">SafeGetBalanceQuery</span><span class="p">(</span><span class="n">UserID</span><span class="w"> </span><span class="nb">varchar</span><span class="p">,</span><span class="w"> </span><span class="n">Dept</span><span class="w"> </span><span class="nb">varchar</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">BEGIN</span>
+<span class="w">   </span><span class="k">SELECT</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">accounts_table</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_ID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UserID</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">department</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dept</span><span class="p">;</span>
+<span class="k">END</span><span class="p">;</span>
 </code></pre></div>
 <h5 id="stored-procedure-using-bind-variables-in-sql-run-with-execute">Stored Procedure Using Bind Variables in SQL Run with EXECUTE<a class="headerlink" href="#stored-procedure-using-bind-variables-in-sql-run-with-execute" title="Permanent link">&para;</a></h5>
 <p>Bind variables are used to tell the database that the inputs to this dynamic SQL are 'data' and not possibly code:</p>
-<div class="highlight"><pre><span></span><code><span class="k">PROCEDURE</span><span class="w"> </span><span class="n">AnotherSafeGetBalanceQuery</span><span class="p">(</span><span class="n">UserID</span><span class="w"> </span><span class="nb">varchar</span><span class="p">,</span><span class="w"> </span><span class="n">Dept</span><span class="w"> </span><span class="nb">varchar</span><span class="p">)</span><span class="w"></span>
-<span class="w">          </span><span class="k">AS</span><span class="w"> </span><span class="n">stmt</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">400</span><span class="p">);</span><span class="w"> </span><span class="k">result</span><span class="w"> </span><span class="nb">NUMBER</span><span class="p">;</span><span class="w"></span>
-<span class="k">BEGIN</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">PROCEDURE</span><span class="w"> </span><span class="n">AnotherSafeGetBalanceQuery</span><span class="p">(</span><span class="n">UserID</span><span class="w"> </span><span class="nb">varchar</span><span class="p">,</span><span class="w"> </span><span class="n">Dept</span><span class="w"> </span><span class="nb">varchar</span><span class="p">)</span>
+<span class="w">          </span><span class="k">AS</span><span class="w"> </span><span class="n">stmt</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">400</span><span class="p">);</span><span class="w"> </span><span class="k">result</span><span class="w"> </span><span class="nb">NUMBER</span><span class="p">;</span>
+<span class="k">BEGIN</span>
 <span class="w">   </span><span class="n">stmt</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;SELECT balance FROM accounts_table WHERE user_ID = :1</span>
-<span class="s1">            AND department = :2&#39;</span><span class="p">;</span><span class="w"></span>
-<span class="w">   </span><span class="k">EXECUTE</span><span class="w"> </span><span class="k">IMMEDIATE</span><span class="w"> </span><span class="n">stmt</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="k">result</span><span class="w"> </span><span class="k">USING</span><span class="w"> </span><span class="n">UserID</span><span class="p">,</span><span class="w"> </span><span class="n">Dept</span><span class="p">;</span><span class="w"></span>
-<span class="w">   </span><span class="k">RETURN</span><span class="w"> </span><span class="k">result</span><span class="p">;</span><span class="w"></span>
-<span class="k">END</span><span class="p">;</span><span class="w"></span>
+<span class="s1">            AND department = :2&#39;</span><span class="p">;</span>
+<span class="w">   </span><span class="k">EXECUTE</span><span class="w"> </span><span class="k">IMMEDIATE</span><span class="w"> </span><span class="n">stmt</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="k">result</span><span class="w"> </span><span class="k">USING</span><span class="w"> </span><span class="n">UserID</span><span class="p">,</span><span class="w"> </span><span class="n">Dept</span><span class="p">;</span>
+<span class="w">   </span><span class="k">RETURN</span><span class="w"> </span><span class="k">result</span><span class="p">;</span>
+<span class="k">END</span><span class="p">;</span>
 </code></pre></div>
 <h4 id="sql-server-using-transact-sql">SQL Server using Transact-SQL<a class="headerlink" href="#sql-server-using-transact-sql" title="Permanent link">&para;</a></h4>
 <h5 id="normal-stored-procedure_1">Normal Stored Procedure<a class="headerlink" href="#normal-stored-procedure_1" title="Permanent link">&para;</a></h5>
 <p>No dynamic SQL being created. Parameters passed in to stored procedures are naturally bound to their location within the query without anything special being required:</p>
-<div class="highlight"><pre><span></span><code><span class="k">PROCEDURE</span><span class="w"> </span><span class="n">SafeGetBalanceQuery</span><span class="p">(</span><span class="o">@</span><span class="n">UserID</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span><span class="w"> </span><span class="o">@</span><span class="n">Dept</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">BEGIN</span><span class="w"></span>
-<span class="w">   </span><span class="k">SELECT</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">accounts_table</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_ID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">@</span><span class="n">UserID</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">department</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">@</span><span class="n">Dept</span><span class="w"></span>
-<span class="k">END</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">PROCEDURE</span><span class="w"> </span><span class="n">SafeGetBalanceQuery</span><span class="p">(</span><span class="o">@</span><span class="n">UserID</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span><span class="w"> </span><span class="o">@</span><span class="n">Dept</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">BEGIN</span>
+<span class="w">   </span><span class="k">SELECT</span><span class="w"> </span><span class="n">balance</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">accounts_table</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_ID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">@</span><span class="n">UserID</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">department</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">@</span><span class="n">Dept</span>
+<span class="k">END</span>
 </code></pre></div>
 <h5 id="stored-procedure-using-bind-variables-in-sql-run-with-exec">Stored Procedure Using Bind Variables in SQL Run with EXEC<a class="headerlink" href="#stored-procedure-using-bind-variables-in-sql-run-with-exec" title="Permanent link">&para;</a></h5>
 <p>Bind variables are used to tell the database that the inputs to this dynamic SQL are 'data' and not possibly code:</p>
-<div class="highlight"><pre><span></span><code><span class="k">PROCEDURE</span><span class="w"> </span><span class="n">SafeGetBalanceQuery</span><span class="p">(</span><span class="o">@</span><span class="n">UserID</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span><span class="w"> </span><span class="o">@</span><span class="n">Dept</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">BEGIN</span><span class="w"></span>
-<span class="w">   </span><span class="k">DECLARE</span><span class="w"> </span><span class="o">@</span><span class="k">sql</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span><span class="w"></span>
-<span class="w">   </span><span class="k">SELECT</span><span class="w"> </span><span class="o">@</span><span class="k">sql</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;SELECT balance FROM accounts_table WHERE &#39;</span><span class="w"></span>
-<span class="w">                 </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;user_ID = @UID AND department = @DPT&#39;</span><span class="w"></span>
-<span class="w">   </span><span class="k">EXEC</span><span class="w"> </span><span class="n">sp_executesql</span><span class="w"> </span><span class="o">@</span><span class="k">sql</span><span class="p">,</span><span class="w"></span>
-<span class="w">                      </span><span class="s1">&#39;@UID VARCHAR(20), @DPT VARCHAR(10)&#39;</span><span class="p">,</span><span class="w"></span>
-<span class="w">                      </span><span class="o">@</span><span class="n">UID</span><span class="o">=@</span><span class="n">UserID</span><span class="p">,</span><span class="w"> </span><span class="o">@</span><span class="n">DPT</span><span class="o">=@</span><span class="n">Dept</span><span class="w"></span>
-<span class="k">END</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">PROCEDURE</span><span class="w"> </span><span class="n">SafeGetBalanceQuery</span><span class="p">(</span><span class="o">@</span><span class="n">UserID</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span><span class="w"> </span><span class="o">@</span><span class="n">Dept</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">BEGIN</span>
+<span class="w">   </span><span class="k">DECLARE</span><span class="w"> </span><span class="o">@</span><span class="k">sql</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
+<span class="w">   </span><span class="k">SELECT</span><span class="w"> </span><span class="o">@</span><span class="k">sql</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;SELECT balance FROM accounts_table WHERE &#39;</span>
+<span class="w">                 </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;user_ID = @UID AND department = @DPT&#39;</span>
+<span class="w">   </span><span class="k">EXEC</span><span class="w"> </span><span class="n">sp_executesql</span><span class="w"> </span><span class="o">@</span><span class="k">sql</span><span class="p">,</span>
+<span class="w">                      </span><span class="s1">&#39;@UID VARCHAR(20), @DPT VARCHAR(10)&#39;</span><span class="p">,</span>
+<span class="w">                      </span><span class="o">@</span><span class="n">UID</span><span class="o">=@</span><span class="n">UserID</span><span class="p">,</span><span class="w"> </span><span class="o">@</span><span class="n">DPT</span><span class="o">=@</span><span class="n">Dept</span>
+<span class="k">END</span>
 </code></pre></div>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2018,42 +2018,6 @@
       </main>
       
         <footer class="md-footer">
-  
-    
-    <nav class="md-footer__inner md-grid" aria-label="Footer" >
-      
-        
-        <a href="Pinning_Cheat_Sheet.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Pinning" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              Pinning
-            </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="REST_Assessment_Cheat_Sheet.html" class="md-footer__link md-footer__link--next" aria-label="Next: REST Assessment" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              REST Assessment
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
@@ -2080,12 +2044,11 @@
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.12658920.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      <script src="../assets/javascripts/bundle.5cf534bf.min.js"></script>
       
-    
     
   </body>
 </html>

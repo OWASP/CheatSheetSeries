@@ -12,8 +12,14 @@
       
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Injection_Prevention_Cheat_Sheet.html">
       
+      
+        <link rel="prev" href="Infrastructure_as_Code_Security_Cheat_Sheet.html">
+      
+      
+        <link rel="next" href="Injection_Prevention_in_Java_Cheat_Sheet.html">
+      
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.0">
     
     
       
@@ -21,11 +27,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.975780f9.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.f79797b0.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
-        
       
       
 
@@ -112,8 +117,6 @@
       <form class="md-header__option" data-md-component="palette">
         
           
-          
-          
           <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
           
             <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
@@ -121,8 +124,6 @@
             </label>
           
         
-          
-          
           
           <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
           
@@ -2329,10 +2330,9 @@
                 
                   
 
-  <a href="https://github.com/OWASP/CheatSheetSeries/edit/master/docs/cheatsheets/Injection_Prevention_Cheat_Sheet.md" title="Edit this page" class="md-content__button md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
-  </a>
+  
+  
+
 
 
 <h1 id="injection-prevention-cheat-sheet">Injection Prevention Cheat Sheet<a class="headerlink" href="#injection-prevention-cheat-sheet" title="Permanent link">&para;</a></h1>
@@ -2396,27 +2396,27 @@
 <h5 id="example-code-java">Example code - Java<a class="headerlink" href="#example-code-java" title="Permanent link">&para;</a></h5>
 <h6 id="safe-java-prepared-statement-example">Safe Java Prepared Statement Example<a class="headerlink" href="#safe-java-prepared-statement-example" title="Permanent link">&para;</a></h6>
 <p>The following code example uses a <code>PreparedStatement</code>, Java's implementation of a parameterized query, to execute the same database query.</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// This should REALLY be validated too</span><span class="w"></span>
-<span class="n">String</span><span class="w"> </span><span class="n">custname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;customerName&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="c1">// Perform input validation to detect attacks</span><span class="w"></span>
-<span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;SELECT account_balance FROM user_data WHERE user_name = ?&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="n">PreparedStatement</span><span class="w"> </span><span class="n">pstmt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">connection</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="n">query</span><span class="p">);</span><span class="w"></span>
-<span class="n">pstmt</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">custname</span><span class="p">);</span><span class="w"></span>
-<span class="n">ResultSet</span><span class="w"> </span><span class="n">results</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pstmt</span><span class="p">.</span><span class="na">executeQuery</span><span class="p">();</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="c1">// This should REALLY be validated too</span>
+<span class="n">String</span><span class="w"> </span><span class="n">custname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;customerName&quot;</span><span class="p">);</span>
+<span class="c1">// Perform input validation to detect attacks</span>
+<span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;SELECT account_balance FROM user_data WHERE user_name = ?&quot;</span><span class="p">;</span>
+<span class="n">PreparedStatement</span><span class="w"> </span><span class="n">pstmt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">connection</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="n">query</span><span class="p">);</span>
+<span class="n">pstmt</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">custname</span><span class="p">);</span>
+<span class="n">ResultSet</span><span class="w"> </span><span class="n">results</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pstmt</span><span class="p">.</span><span class="na">executeQuery</span><span class="p">();</span>
 </code></pre></div>
 <p>We have shown examples in Java, but practically all other languages, including Cold Fusion, and Classic ASP, support parameterized query interfaces.</p>
 <h6 id="safe-java-stored-procedure-example">Safe Java Stored Procedure Example<a class="headerlink" href="#safe-java-stored-procedure-example" title="Permanent link">&para;</a></h6>
 <p>The following code example uses a <code>CallableStatement</code>, Java's implementation of the stored procedure interface, to execute the same database query. The <code>sp_getAccountBalance</code> stored procedure would have to be predefined in the database and implement the same functionality as the query defined above.</p>
-<div class="highlight"><pre><span></span><code><span class="c1">// This should REALLY be validated</span><span class="w"></span>
-<span class="n">String</span><span class="w"> </span><span class="n">custname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;customerName&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w"> </span><span class="n">CallableStatement</span><span class="w"> </span><span class="n">cs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">connection</span><span class="p">.</span><span class="na">prepareCall</span><span class="p">(</span><span class="s">&quot;{call sp_getAccountBalance(?)}&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w"> </span><span class="n">cs</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">custname</span><span class="p">);</span><span class="w"></span>
-<span class="w"> </span><span class="n">ResultSet</span><span class="w"> </span><span class="n">results</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cs</span><span class="p">.</span><span class="na">executeQuery</span><span class="p">();</span><span class="w"></span>
-<span class="w"> </span><span class="c1">// Result set handling...</span><span class="w"></span>
-<span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">SQLException</span><span class="w"> </span><span class="n">se</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w"> </span><span class="c1">// Logging and error handling...</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="c1">// This should REALLY be validated</span>
+<span class="n">String</span><span class="w"> </span><span class="n">custname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;customerName&quot;</span><span class="p">);</span>
+<span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w"> </span><span class="n">CallableStatement</span><span class="w"> </span><span class="n">cs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">connection</span><span class="p">.</span><span class="na">prepareCall</span><span class="p">(</span><span class="s">&quot;{call sp_getAccountBalance(?)}&quot;</span><span class="p">);</span>
+<span class="w"> </span><span class="n">cs</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">custname</span><span class="p">);</span>
+<span class="w"> </span><span class="n">ResultSet</span><span class="w"> </span><span class="n">results</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cs</span><span class="p">.</span><span class="na">executeQuery</span><span class="p">();</span>
+<span class="w"> </span><span class="c1">// Result set handling...</span>
+<span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">SQLException</span><span class="w"> </span><span class="n">se</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w"> </span><span class="c1">// Logging and error handling...</span>
+<span class="p">}</span>
 </code></pre></div>
 <h4 id="ldap-injection">LDAP Injection<a class="headerlink" href="#ldap-injection" title="Permanent link">&para;</a></h4>
 <p>LDAP Injection is an attack used to exploit web based applications that construct LDAP statements based on user input. When an application fails to properly sanitize user input, it's possible to modify LDAP statements through techniques similar to <a href="https://owasp.org/www-community/attacks/SQL_Injection">SQL Injection</a>. LDAP injection attacks could result in the granting of permissions to unauthorized queries, and content modification inside the LDAP tree. For more information on LDAP Injection attacks, visit <a href="https://owasp.org/www-community/attacks/LDAP_Injection">LDAP injection</a>.</p>
@@ -2448,35 +2448,35 @@
 <p>When building LDAP queries in application code, you MUST escape any untrusted data that is added to any LDAP query. There are two forms of LDAP escaping. Encoding for LDAP Search and Encoding for LDAP DN (distinguished name). The proper escaping depends on whether you are sanitizing input for a search filter, or you are using a DN as a username-like credential for accessing some resource.</p>
 <h5 id="example-code-java_1">Example code - Java<a class="headerlink" href="#example-code-java_1" title="Permanent link">&para;</a></h5>
 <h6 id="safe-java-for-ldap-escaping-example">Safe Java for LDAP escaping Example<a class="headerlink" href="#safe-java-for-ldap-escaping-example" title="Permanent link">&para;</a></h6>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">escapeDN</span><span class="w"> </span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w"> </span><span class="c1">//From RFC 2253 and the / character for JNDI</span><span class="w"></span>
-<span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">char</span><span class="o">[]</span><span class="w"> </span><span class="n">META_CHARS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="sc">&#39;+&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;&quot;&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;&lt;&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;&gt;&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;;&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;/&#39;</span><span class="p">};</span><span class="w"></span>
-<span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">escapedStr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">String</span><span class="p">(</span><span class="n">name</span><span class="p">);</span><span class="w"></span>
-<span class="w"> </span><span class="c1">//Backslash is both a Java and an LDAP escape character,</span><span class="w"></span>
-<span class="w"> </span><span class="c1">//so escape it first</span><span class="w"></span>
-<span class="w"> </span><span class="n">escapedStr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">escapedStr</span><span class="p">.</span><span class="na">replaceAll</span><span class="p">(</span><span class="s">&quot;\\\\\\\\&quot;</span><span class="p">,</span><span class="s">&quot;\\\\\\\\&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w"> </span><span class="c1">//Positional characters - see RFC 2253</span><span class="w"></span>
-<span class="w"> </span><span class="n">escapedStr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">escapedStr</span><span class="p">.</span><span class="na">replaceAll</span><span class="p">(</span><span class="s">&quot;\^#&quot;</span><span class="p">,</span><span class="s">&quot;\\\\\\\\#&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w"> </span><span class="n">escapedStr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">escapedStr</span><span class="p">.</span><span class="na">replaceAll</span><span class="p">(</span><span class="s">&quot;\^ | $&quot;</span><span class="p">,</span><span class="s">&quot;\\\\\\\\ &quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">META_CHARS</span><span class="p">.</span><span class="na">length</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="n">escapedStr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">escapedStr</span><span class="p">.</span><span class="na">replaceAll</span><span class="p">(</span><span class="s">&quot;\\\\&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"></span>
-<span class="w">                     </span><span class="n">META_CHARS</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">,</span><span class="s">&quot;\\\\\\\\&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">META_CHARS</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">);</span><span class="w"></span>
-<span class="w"> </span><span class="p">}</span><span class="w"></span>
-<span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">escapedStr</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">escapeDN</span><span class="w"> </span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w"> </span><span class="c1">//From RFC 2253 and the / character for JNDI</span>
+<span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">char</span><span class="o">[]</span><span class="w"> </span><span class="n">META_CHARS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="sc">&#39;+&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;&quot;&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;&lt;&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;&gt;&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;;&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;/&#39;</span><span class="p">};</span>
+<span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">escapedStr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">String</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+<span class="w"> </span><span class="c1">//Backslash is both a Java and an LDAP escape character,</span>
+<span class="w"> </span><span class="c1">//so escape it first</span>
+<span class="w"> </span><span class="n">escapedStr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">escapedStr</span><span class="p">.</span><span class="na">replaceAll</span><span class="p">(</span><span class="s">&quot;\\\\\\\\&quot;</span><span class="p">,</span><span class="s">&quot;\\\\\\\\&quot;</span><span class="p">);</span>
+<span class="w"> </span><span class="c1">//Positional characters - see RFC 2253</span>
+<span class="w"> </span><span class="n">escapedStr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">escapedStr</span><span class="p">.</span><span class="na">replaceAll</span><span class="p">(</span><span class="s">&quot;\^#&quot;</span><span class="p">,</span><span class="s">&quot;\\\\\\\\#&quot;</span><span class="p">);</span>
+<span class="w"> </span><span class="n">escapedStr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">escapedStr</span><span class="p">.</span><span class="na">replaceAll</span><span class="p">(</span><span class="s">&quot;\^ | $&quot;</span><span class="p">,</span><span class="s">&quot;\\\\\\\\ &quot;</span><span class="p">);</span>
+<span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">META_CHARS</span><span class="p">.</span><span class="na">length</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">escapedStr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">escapedStr</span><span class="p">.</span><span class="na">replaceAll</span><span class="p">(</span><span class="s">&quot;\\\\&quot;</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                     </span><span class="n">META_CHARS</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">,</span><span class="s">&quot;\\\\\\\\&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">META_CHARS</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">);</span>
+<span class="w"> </span><span class="p">}</span>
+<span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">escapedStr</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>Note, that the backslash character is a Java String literal and a regular expression escape character.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">escapeSearchFilter</span><span class="w"> </span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">filter</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w"> </span><span class="c1">//From RFC 2254</span><span class="w"></span>
-<span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">escapedStr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">String</span><span class="p">(</span><span class="n">filter</span><span class="p">);</span><span class="w"></span>
-<span class="w"> </span><span class="n">escapedStr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">escapedStr</span><span class="p">.</span><span class="na">replaceAll</span><span class="p">(</span><span class="s">&quot;\\\\\\\\&quot;</span><span class="p">,</span><span class="s">&quot;\\\\\\\\5c&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w"> </span><span class="n">escapedStr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">escapedStr</span><span class="p">.</span><span class="na">replaceAll</span><span class="p">(</span><span class="s">&quot;\\\\\*&quot;</span><span class="p">,</span><span class="s">&quot;\\\\\\\\2a&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w"> </span><span class="n">escapedStr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">escapedStr</span><span class="p">.</span><span class="na">replaceAll</span><span class="p">(</span><span class="s">&quot;\\\\(&quot;</span><span class="p">,</span><span class="s">&quot;\\\\\\\\28&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w"> </span><span class="n">escapedStr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">escapedStr</span><span class="p">.</span><span class="na">replaceAll</span><span class="p">(</span><span class="s">&quot;\\\\)&quot;</span><span class="p">,</span><span class="s">&quot;\\\\\\\\29&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w"> </span><span class="n">escapedStr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">escapedStr</span><span class="p">.</span><span class="na">replaceAll</span><span class="p">(</span><span class="s">&quot;\\\\&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"></span>
-<span class="w">               </span><span class="n">Character</span><span class="p">.</span><span class="na">toString</span><span class="p">(</span><span class="err">&#39;\\</span><span class="n">u0000</span><span class="err">&#39;</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;\\\\\\\\00&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">escapedStr</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">escapeSearchFilter</span><span class="w"> </span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">filter</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w"> </span><span class="c1">//From RFC 2254</span>
+<span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">escapedStr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">String</span><span class="p">(</span><span class="n">filter</span><span class="p">);</span>
+<span class="w"> </span><span class="n">escapedStr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">escapedStr</span><span class="p">.</span><span class="na">replaceAll</span><span class="p">(</span><span class="s">&quot;\\\\\\\\&quot;</span><span class="p">,</span><span class="s">&quot;\\\\\\\\5c&quot;</span><span class="p">);</span>
+<span class="w"> </span><span class="n">escapedStr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">escapedStr</span><span class="p">.</span><span class="na">replaceAll</span><span class="p">(</span><span class="s">&quot;\\\\\*&quot;</span><span class="p">,</span><span class="s">&quot;\\\\\\\\2a&quot;</span><span class="p">);</span>
+<span class="w"> </span><span class="n">escapedStr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">escapedStr</span><span class="p">.</span><span class="na">replaceAll</span><span class="p">(</span><span class="s">&quot;\\\\(&quot;</span><span class="p">,</span><span class="s">&quot;\\\\\\\\28&quot;</span><span class="p">);</span>
+<span class="w"> </span><span class="n">escapedStr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">escapedStr</span><span class="p">.</span><span class="na">replaceAll</span><span class="p">(</span><span class="s">&quot;\\\\)&quot;</span><span class="p">,</span><span class="s">&quot;\\\\\\\\29&quot;</span><span class="p">);</span>
+<span class="w"> </span><span class="n">escapedStr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">escapedStr</span><span class="p">.</span><span class="na">replaceAll</span><span class="p">(</span><span class="s">&quot;\\\\&quot;</span><span class="w"> </span><span class="o">+</span>
+<span class="w">               </span><span class="n">Character</span><span class="p">.</span><span class="na">toString</span><span class="p">(</span><span class="err">&#39;\\</span><span class="n">u0000</span><span class="err">&#39;</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;\\\\\\\\00&quot;</span><span class="p">);</span>
+<span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">escapedStr</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
 <h4 id="xpath-injection">XPath Injection<a class="headerlink" href="#xpath-injection" title="Permanent link">&para;</a></h4>
 <p>TODO</p>
@@ -2510,15 +2510,15 @@
 <p><code>^[a-z0-9]{3,10}$</code></p>
 <h4 id="example-code-java_2">Example code - Java<a class="headerlink" href="#example-code-java_2" title="Permanent link">&para;</a></h4>
 <h5 id="incorrect-usage">Incorrect Usage<a class="headerlink" href="#incorrect-usage" title="Permanent link">&para;</a></h5>
-<div class="highlight"><pre><span></span><code><span class="n">ProcessBuilder</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ProcessBuilder</span><span class="p">(</span><span class="s">&quot;C:\DoStuff.exe -arg1 -arg2&quot;</span><span class="p">);</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="n">ProcessBuilder</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ProcessBuilder</span><span class="p">(</span><span class="s">&quot;C:\DoStuff.exe -arg1 -arg2&quot;</span><span class="p">);</span>
 </code></pre></div>
 <p>In this example, the command together with the arguments are passed as a one string, making easy to manipulate that expression and inject malicious strings.</p>
 <h5 id="correct-usage">Correct Usage<a class="headerlink" href="#correct-usage" title="Permanent link">&para;</a></h5>
 <p>Here is an example that starts a process with a modified working directory. The command and each of the arguments are passed separately. This make it easy to validated each term and reduces the risk to insert malicious strings.</p>
-<div class="highlight"><pre><span></span><code><span class="n">ProcessBuilder</span><span class="w"> </span><span class="n">pb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ProcessBuilder</span><span class="p">(</span><span class="s">&quot;TrustedCmd&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;TrustedArg1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;TrustedArg2&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">env</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pb</span><span class="p">.</span><span class="na">environment</span><span class="p">();</span><span class="w"></span>
-<span class="n">pb</span><span class="p">.</span><span class="na">directory</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="s">&quot;TrustedDir&quot;</span><span class="p">));</span><span class="w"></span>
-<span class="n">Process</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pb</span><span class="p">.</span><span class="na">start</span><span class="p">();</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="n">ProcessBuilder</span><span class="w"> </span><span class="n">pb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ProcessBuilder</span><span class="p">(</span><span class="s">&quot;TrustedCmd&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;TrustedArg1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;TrustedArg2&quot;</span><span class="p">);</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">env</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pb</span><span class="p">.</span><span class="na">environment</span><span class="p">();</span>
+<span class="n">pb</span><span class="p">.</span><span class="na">directory</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="s">&quot;TrustedDir&quot;</span><span class="p">));</span>
+<span class="n">Process</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pb</span><span class="p">.</span><span class="na">start</span><span class="p">();</span>
 </code></pre></div>
 <h3 id="network-protocols">Network Protocols<a class="headerlink" href="#network-protocols" title="Permanent link">&para;</a></h3>
 <p>Web applications often communicate with network daemons (like SMTP, IMAP, FTP) where user input becomes part of the communication stream. Here it is possible to inject command sequences to abuse an established session.</p>
@@ -2550,42 +2550,6 @@
       
         <footer class="md-footer">
   
-    
-    <nav class="md-footer__inner md-grid" aria-label="Footer" >
-      
-        
-        <a href="Infrastructure_as_Code_Security_Cheat_Sheet.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Infrastructure as Code Security" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              Infrastructure as Code Security
-            </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="Injection_Prevention_in_Java_Cheat_Sheet.html" class="md-footer__link md-footer__link--next" aria-label="Next: Injection Prevention in Java" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              Injection Prevention in Java
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
-  
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
       <div class="md-copyright">
@@ -2611,12 +2575,11 @@
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.12658920.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      <script src="../assets/javascripts/bundle.5cf534bf.min.js"></script>
       
-    
     
   </body>
 </html>

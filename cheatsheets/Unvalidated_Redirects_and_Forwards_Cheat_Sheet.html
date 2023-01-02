@@ -12,8 +12,14 @@
       
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
       
+      
+        <link rel="prev" href="Transport_Layer_Protection_Cheat_Sheet.html">
+      
+      
+        <link rel="next" href="User_Privacy_Protection_Cheat_Sheet.html">
+      
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.0">
     
     
       
@@ -21,11 +27,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.975780f9.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.f79797b0.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
-        
       
       
 
@@ -112,8 +117,6 @@
       <form class="md-header__option" data-md-component="palette">
         
           
-          
-          
           <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
           
             <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
@@ -121,8 +124,6 @@
             </label>
           
         
-          
-          
           
           <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
           
@@ -1669,10 +1670,9 @@
                 
                   
 
-  <a href="https://github.com/OWASP/CheatSheetSeries/edit/master/docs/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md" title="Edit this page" class="md-content__button md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
-  </a>
+  
+  
+
 
 
 <h1 id="unvalidated-redirects-and-forwards-cheat-sheet">Unvalidated Redirects and Forwards Cheat Sheet<a class="headerlink" href="#unvalidated-redirects-and-forwards-cheat-sheet" title="Permanent link">&para;</a></h1>
@@ -1682,7 +1682,7 @@
 <h2 id="safe-url-redirects">Safe URL Redirects<a class="headerlink" href="#safe-url-redirects" title="Permanent link">&para;</a></h2>
 <p>When we want to redirect a user automatically to another page (without an action of the visitor such as clicking on a hyperlink) you might implement a code such as the following:</p>
 <p>Java</p>
-<div class="highlight"><pre><span></span><code><span class="n">response</span><span class="p">.</span><span class="na">sendRedirect</span><span class="p">(</span><span class="s">&quot;http://www.mysite.com&quot;</span><span class="p">);</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="n">response</span><span class="p">.</span><span class="na">sendRedirect</span><span class="p">(</span><span class="s">&quot;http://www.mysite.com&quot;</span><span class="p">);</span>
 </code></pre></div>
 <p>PHP</p>
 <div class="highlight"><pre><span></span><code><span class="cp">&lt;?php</span>
@@ -1690,41 +1690,41 @@
 <span class="nb">header</span><span class="p">(</span><span class="s2">&quot;Location: http://www.mysite.com&quot;</span><span class="p">);</span>
 <span class="cm">/* Exit to prevent the rest of the code from executing */</span>
 <span class="k">exit</span><span class="p">;</span>
-<span class="cp">?&gt;</span><span class="x"></span>
+<span class="cp">?&gt;</span>
 </code></pre></div>
 <p>ASP .NET</p>
-<div class="highlight"><pre><span></span><code><span class="n">Response</span><span class="p">.</span><span class="n">Redirect</span><span class="p">(</span><span class="s">&quot;~/folder/Login.aspx&quot;</span><span class="p">)</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="n">Response</span><span class="p">.</span><span class="n">Redirect</span><span class="p">(</span><span class="s">&quot;~/folder/Login.aspx&quot;</span><span class="p">)</span>
 </code></pre></div>
 <p>Rails</p>
-<div class="highlight"><pre><span></span><code><span class="n">redirect_to</span> <span class="n">login_path</span>
+<div class="highlight"><pre><span></span><code><span class="n">redirect_to</span><span class="w"> </span><span class="n">login_path</span>
 </code></pre></div>
 <p>Rust actix web</p>
-<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="nb">Ok</span><span class="p">(</span><span class="n">HttpResponse</span>::<span class="n">Found</span><span class="p">()</span><span class="w"></span>
-<span class="w">        </span><span class="p">.</span><span class="n">insert_header</span><span class="p">((</span><span class="n">header</span>::<span class="n">LOCATION</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;https://mysite.com/&quot;</span><span class="p">))</span><span class="w"></span>
-<span class="w">        </span><span class="p">.</span><span class="n">finish</span><span class="p">())</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="nb">Ok</span><span class="p">(</span><span class="n">HttpResponse</span>::<span class="n">Found</span><span class="p">()</span>
+<span class="w">        </span><span class="p">.</span><span class="n">insert_header</span><span class="p">((</span><span class="n">header</span>::<span class="n">LOCATION</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;https://mysite.com/&quot;</span><span class="p">))</span>
+<span class="w">        </span><span class="p">.</span><span class="n">finish</span><span class="p">())</span>
 </code></pre></div>
 <p>In the examples above, the URL is being explicitly declared in the code and cannot be manipulated by an attacker.</p>
 <h2 id="dangerous-url-redirects">Dangerous URL Redirects<a class="headerlink" href="#dangerous-url-redirects" title="Permanent link">&para;</a></h2>
 <p>The following examples demonstrate unsafe redirect and forward code.</p>
 <h3 id="dangerous-url-redirect-example-1">Dangerous URL Redirect Example 1<a class="headerlink" href="#dangerous-url-redirect-example-1" title="Permanent link">&para;</a></h3>
 <p>The following Java code receives the URL from the parameter named <code>url</code> (<a href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequest.html#getParameter-java.lang.String-">GET or POST</a>) and redirects to that URL:</p>
-<div class="highlight"><pre><span></span><code><span class="n">response</span><span class="p">.</span><span class="na">sendRedirect</span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;url&quot;</span><span class="p">));</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="n">response</span><span class="p">.</span><span class="na">sendRedirect</span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;url&quot;</span><span class="p">));</span>
 </code></pre></div>
 <p>The following PHP code obtains a URL from the query string (via the parameter named <code>url</code>) and then redirects the user to that URL. Additionally, the PHP code after this <code>header()</code> function will continue to execute, so if the user configures their browser to ignore the redirect, they may be able to access the rest of the page.</p>
 <div class="highlight"><pre><span></span><code><span class="x">$redirect_url = $_GET[&#39;url&#39;];</span>
 <span class="x">header(&quot;Location: &quot; . $redirect_url);</span>
 </code></pre></div>
 <p>A similar example of C# .NET Vulnerable Code:</p>
-<div class="highlight"><pre><span></span><code><span class="kt">string</span><span class="w"> </span><span class="n">url</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="n">QueryString</span><span class="p">[</span><span class="s">&quot;url&quot;</span><span class="p">];</span><span class="w"></span>
-<span class="n">Response</span><span class="p">.</span><span class="n">Redirect</span><span class="p">(</span><span class="n">url</span><span class="p">);</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kt">string</span><span class="w"> </span><span class="n">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="n">QueryString</span><span class="p">[</span><span class="s">&quot;url&quot;</span><span class="p">];</span>
+<span class="n">Response</span><span class="p">.</span><span class="n">Redirect</span><span class="p">(</span><span class="n">url</span><span class="p">);</span>
 </code></pre></div>
 <p>And in Rails:</p>
-<div class="highlight"><pre><span></span><code><span class="n">redirect_to</span> <span class="n">params</span><span class="o">[</span><span class="ss">:url</span><span class="o">]</span>
+<div class="highlight"><pre><span></span><code><span class="n">redirect_to</span><span class="w"> </span><span class="n">params</span><span class="o">[</span><span class="ss">:url</span><span class="o">]</span>
 </code></pre></div>
 <p>Rust actix web</p>
-<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="nb">Ok</span><span class="p">(</span><span class="n">HttpResponse</span>::<span class="n">Found</span><span class="p">()</span><span class="w"></span>
-<span class="w">        </span><span class="p">.</span><span class="n">insert_header</span><span class="p">((</span><span class="n">header</span>::<span class="n">LOCATION</span><span class="p">,</span><span class="w"> </span><span class="n">query_string</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">as_str</span><span class="p">()))</span><span class="w"></span>
-<span class="w">        </span><span class="p">.</span><span class="n">finish</span><span class="p">())</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="nb">Ok</span><span class="p">(</span><span class="n">HttpResponse</span>::<span class="n">Found</span><span class="p">()</span>
+<span class="w">        </span><span class="p">.</span><span class="n">insert_header</span><span class="p">((</span><span class="n">header</span>::<span class="n">LOCATION</span><span class="p">,</span><span class="w"> </span><span class="n">query_string</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">as_str</span><span class="p">()))</span>
+<span class="w">        </span><span class="p">.</span><span class="n">finish</span><span class="p">())</span>
 </code></pre></div>
 <p>The above code is vulnerable to an attack if no validation or extra method controls are applied to verify the certainty of the URL. This vulnerability could be used as part of a phishing scam by redirecting users to a malicious site.</p>
 <p>If no validation is applied, a malicious user could create a hyperlink to redirect your users to an unvalidated malicious website, for example:</p>
@@ -1735,32 +1735,32 @@
 <p><a href="https://docs.microsoft.com/en-us/aspnet/mvc/overview/security/preventing-open-redirection-attacks">ASP .NET MVC 1 &amp; 2 websites</a> are particularly vulnerable to open redirection attacks. In order to avoid this vulnerability, you need to apply MVC 3.</p>
 <p>The code for the LogOn action in an ASP.NET MVC 2 application is shown below. After a successful login, the controller returns a redirect to the returnUrl. You can see that no validation is being performed against the returnUrl parameter.</p>
 <p>ASP.NET MVC 2 LogOn action in <code>AccountController.cs</code> (see Microsoft Docs link provided above for the context):</p>
-<div class="highlight"><pre><span></span><code><span class="na">[HttpPost]</span><span class="w"></span>
-<span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">ActionResult</span><span class="w"> </span><span class="nf">LogOn</span><span class="p">(</span><span class="n">LogOnModel</span><span class="w"> </span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">returnUrl</span><span class="p">)</span><span class="w"></span>
-<span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">   </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ModelState</span><span class="p">.</span><span class="n">IsValid</span><span class="p">)</span><span class="w"></span>
-<span class="w">   </span><span class="p">{</span><span class="w"></span>
-<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">MembershipService</span><span class="p">.</span><span class="n">ValidateUser</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">UserName</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="n">Password</span><span class="p">))</span><span class="w"></span>
-<span class="w">     </span><span class="p">{</span><span class="w"></span>
-<span class="w">       </span><span class="n">FormsService</span><span class="p">.</span><span class="n">SignIn</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">UserName</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="n">RememberMe</span><span class="p">);</span><span class="w"></span>
-<span class="w">       </span><span class="k">if</span><span class="w"> </span><span class="p">(!</span><span class="n">String</span><span class="p">.</span><span class="n">IsNullOrEmpty</span><span class="p">(</span><span class="n">returnUrl</span><span class="p">))</span><span class="w"></span>
-<span class="w">       </span><span class="p">{</span><span class="w"></span>
-<span class="w">         </span><span class="k">return</span><span class="w"> </span><span class="nf">Redirect</span><span class="p">(</span><span class="n">returnUrl</span><span class="p">);</span><span class="w"></span>
-<span class="w">       </span><span class="p">}</span><span class="w"></span>
-<span class="w">       </span><span class="k">else</span><span class="w"></span>
-<span class="w">       </span><span class="p">{</span><span class="w"></span>
-<span class="w">         </span><span class="k">return</span><span class="w"> </span><span class="nf">RedirectToAction</span><span class="p">(</span><span class="s">&quot;Index&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Home&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">       </span><span class="p">}</span><span class="w"></span>
-<span class="w">     </span><span class="p">}</span><span class="w"></span>
-<span class="w">     </span><span class="k">else</span><span class="w"></span>
-<span class="w">     </span><span class="p">{</span><span class="w"></span>
-<span class="w">       </span><span class="n">ModelState</span><span class="p">.</span><span class="n">AddModelError</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;The user name or password provided is incorrect.&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">     </span><span class="p">}</span><span class="w"></span>
-<span class="w">   </span><span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="na">[HttpPost]</span>
+<span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">ActionResult</span><span class="w"> </span><span class="nf">LogOn</span><span class="p">(</span><span class="n">LogOnModel</span><span class="w"> </span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">returnUrl</span><span class="p">)</span>
+<span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ModelState</span><span class="p">.</span><span class="n">IsValid</span><span class="p">)</span>
+<span class="w">   </span><span class="p">{</span>
+<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">MembershipService</span><span class="p">.</span><span class="n">ValidateUser</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">UserName</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="n">Password</span><span class="p">))</span>
+<span class="w">     </span><span class="p">{</span>
+<span class="w">       </span><span class="n">FormsService</span><span class="p">.</span><span class="n">SignIn</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">UserName</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="n">RememberMe</span><span class="p">);</span>
+<span class="w">       </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">String</span><span class="p">.</span><span class="n">IsNullOrEmpty</span><span class="p">(</span><span class="n">returnUrl</span><span class="p">))</span>
+<span class="w">       </span><span class="p">{</span>
+<span class="w">         </span><span class="k">return</span><span class="w"> </span><span class="nf">Redirect</span><span class="p">(</span><span class="n">returnUrl</span><span class="p">);</span>
+<span class="w">       </span><span class="p">}</span>
+<span class="w">       </span><span class="k">else</span>
+<span class="w">       </span><span class="p">{</span>
+<span class="w">         </span><span class="k">return</span><span class="w"> </span><span class="nf">RedirectToAction</span><span class="p">(</span><span class="s">&quot;Index&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Home&quot;</span><span class="p">);</span>
+<span class="w">       </span><span class="p">}</span>
+<span class="w">     </span><span class="p">}</span>
+<span class="w">     </span><span class="k">else</span>
+<span class="w">     </span><span class="p">{</span>
+<span class="w">       </span><span class="n">ModelState</span><span class="p">.</span><span class="n">AddModelError</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;The user name or password provided is incorrect.&quot;</span><span class="p">);</span>
+<span class="w">     </span><span class="p">}</span>
+<span class="w">   </span><span class="p">}</span>
 
 <span class="w">   </span><span class="c1">// If we got this far, something failed, redisplay form</span>
-<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="nf">View</span><span class="p">(</span><span class="n">model</span><span class="p">);</span><span class="w"></span>
-<span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="nf">View</span><span class="p">(</span><span class="n">model</span><span class="p">);</span>
+<span class="w"> </span><span class="p">}</span>
 </code></pre></div>
 <h3 id="dangerous-forward-example">Dangerous Forward Example<a class="headerlink" href="#dangerous-forward-example" title="Permanent link">&para;</a></h3>
 <p>When applications allow user input to forward requests between different parts of the site, the application must check that the user is authorized to access the URL, perform the functions it provides, and it is an appropriate URL request.</p>
@@ -1769,25 +1769,25 @@
 <div class="highlight"><pre><span></span><code>http://www.example.com/function.jsp?fwd=admin.jsp
 </code></pre></div>
 <p>The following code is a Java servlet that will receive a <code>GET</code> request with a URL parameter named <code>fwd</code> in the request to forward to the address specified in the URL parameter. The servlet will retrieve the URL parameter value <a href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequest.html#getParameter-java.lang.String-">from the request</a> and complete the server-side forward processing before responding to the browser.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ForwardServlet</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">HttpServlet</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">doGet</span><span class="p">(</span><span class="n">HttpServletRequest</span><span class="w"> </span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="n">HttpServletResponse</span><span class="w"> </span><span class="n">response</span><span class="p">)</span><span class="w"></span>
-<span class="w">                    </span><span class="kd">throws</span><span class="w"> </span><span class="n">ServletException</span><span class="p">,</span><span class="w"> </span><span class="n">IOException</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getQueryString</span><span class="p">();</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">query</span><span class="p">.</span><span class="na">contains</span><span class="p">(</span><span class="s">&quot;fwd&quot;</span><span class="p">))</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="n">String</span><span class="w"> </span><span class="n">fwd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;fwd&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">      </span><span class="k">try</span><span class="w"></span>
-<span class="w">      </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="n">request</span><span class="p">.</span><span class="na">getRequestDispatcher</span><span class="p">(</span><span class="n">fwd</span><span class="p">).</span><span class="na">forward</span><span class="p">(</span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="n">response</span><span class="p">);</span><span class="w"></span>
-<span class="w">      </span><span class="p">}</span><span class="w"></span>
-<span class="w">      </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">ServletException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"></span>
-<span class="w">      </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span><span class="w"></span>
-<span class="w">      </span><span class="p">}</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ForwardServlet</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">HttpServlet</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">doGet</span><span class="p">(</span><span class="n">HttpServletRequest</span><span class="w"> </span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="n">HttpServletResponse</span><span class="w"> </span><span class="n">response</span><span class="p">)</span>
+<span class="w">                    </span><span class="kd">throws</span><span class="w"> </span><span class="n">ServletException</span><span class="p">,</span><span class="w"> </span><span class="n">IOException</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getQueryString</span><span class="p">();</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">query</span><span class="p">.</span><span class="na">contains</span><span class="p">(</span><span class="s">&quot;fwd&quot;</span><span class="p">))</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="n">String</span><span class="w"> </span><span class="n">fwd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;fwd&quot;</span><span class="p">);</span>
+<span class="w">      </span><span class="k">try</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="n">request</span><span class="p">.</span><span class="na">getRequestDispatcher</span><span class="p">(</span><span class="n">fwd</span><span class="p">).</span><span class="na">forward</span><span class="p">(</span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="n">response</span><span class="p">);</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">      </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">ServletException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 <h2 id="preventing-unvalidated-redirects-and-forwards">Preventing Unvalidated Redirects and Forwards<a class="headerlink" href="#preventing-unvalidated-redirects-and-forwards" title="Permanent link">&para;</a></h2>
 <p>Safe use of redirects and forwards can be done in a number of ways:</p>
@@ -1831,42 +1831,6 @@
       
         <footer class="md-footer">
   
-    
-    <nav class="md-footer__inner md-grid" aria-label="Footer" >
-      
-        
-        <a href="Transport_Layer_Protection_Cheat_Sheet.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Transport Layer Protection" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              Transport Layer Protection
-            </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="User_Privacy_Protection_Cheat_Sheet.html" class="md-footer__link md-footer__link--next" aria-label="Next: User Privacy Protection" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              User Privacy Protection
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
-  
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
       <div class="md-copyright">
@@ -1892,12 +1856,11 @@
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.12658920.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      <script src="../assets/javascripts/bundle.5cf534bf.min.js"></script>
       
-    
     
   </body>
 </html>

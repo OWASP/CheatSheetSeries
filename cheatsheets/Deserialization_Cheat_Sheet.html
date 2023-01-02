@@ -12,8 +12,14 @@
       
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Deserialization_Cheat_Sheet.html">
       
+      
+        <link rel="prev" href="Denial_of_Service_Cheat_Sheet.html">
+      
+      
+        <link rel="next" href="Docker_Security_Cheat_Sheet.html">
+      
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.0">
     
     
       
@@ -21,11 +27,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.975780f9.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.f79797b0.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
-        
       
       
 
@@ -112,8 +117,6 @@
       <form class="md-header__option" data-md-component="palette">
         
           
-          
-          
           <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
           
             <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
@@ -121,8 +124,6 @@
             </label>
           
         
-          
-          
           
           <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
           
@@ -1955,10 +1956,9 @@
                 
                   
 
-  <a href="https://github.com/OWASP/CheatSheetSeries/edit/master/docs/cheatsheets/Deserialization_Cheat_Sheet.md" title="Edit this page" class="md-content__button md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
-  </a>
+  
+  
+
 
 
 <h1 id="deserialization-cheat-sheet">Deserialization Cheat Sheet<a class="headerlink" href="#deserialization-cheat-sheet" title="Permanent link">&para;</a></h1>
@@ -2022,18 +2022,18 @@
 <p>If there are data members of an object that should never be controlled by end users during deserialization or exposed to users during serialization, they should be declared as <a href="https://docs.oracle.com/javase/7/docs/platform/serialization/spec/serial-arch.html#7231">the <code>transient</code> keyword</a> (section <em>Protecting Sensitive Information</em>).</p>
 <p>For a class that defined as Serializable, the sensitive information variable should be declared as <code>private transient</code>.</p>
 <p>For example, the class myAccount, the variable 'profit' and 'margin' were declared as transient to avoid to be serialized:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">myAccount</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Serializable</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">transient</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">profit</span><span class="p">;</span><span class="w"> </span><span class="c1">// declared transient</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">myAccount</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Serializable</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">transient</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">profit</span><span class="p">;</span><span class="w"> </span><span class="c1">// declared transient</span>
 
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">transient</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">margin</span><span class="p">;</span><span class="w"> </span><span class="c1">// declared transient</span><span class="w"></span>
-<span class="w">    </span><span class="p">....</span><span class="w"></span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">transient</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">margin</span><span class="p">;</span><span class="w"> </span><span class="c1">// declared transient</span>
+<span class="w">    </span><span class="p">....</span>
 </code></pre></div>
 <h4 id="prevent-deserialization-of-domain-objects">Prevent Deserialization of Domain Objects<a class="headerlink" href="#prevent-deserialization-of-domain-objects" title="Permanent link">&para;</a></h4>
 <p>Some of your application objects may be forced to implement Serializable due to their hierarchy. To guarantee that your application objects can't be deserialized, a <code>readObject()</code> method should be declared (with a <code>final</code> modifier) which always throws an exception:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">readObject</span><span class="p">(</span><span class="n">ObjectInputStream</span><span class="w"> </span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">java</span><span class="p">.</span><span class="na">io</span><span class="p">.</span><span class="na">IOException</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">java</span><span class="p">.</span><span class="na">io</span><span class="p">.</span><span class="na">IOException</span><span class="p">(</span><span class="s">&quot;Cannot be deserialized&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">readObject</span><span class="p">(</span><span class="n">ObjectInputStream</span><span class="w"> </span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">java</span><span class="p">.</span><span class="na">io</span><span class="p">.</span><span class="na">IOException</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">java</span><span class="p">.</span><span class="na">io</span><span class="p">.</span><span class="na">IOException</span><span class="p">(</span><span class="s">&quot;Cannot be deserialized&quot;</span><span class="p">);</span>
+<span class="p">}</span>
 </code></pre></div>
 <h4 id="harden-your-own-javaioobjectinputstream">Harden Your Own java.io.ObjectInputStream<a class="headerlink" href="#harden-your-own-javaioobjectinputstream" title="Permanent link">&para;</a></h4>
 <p>The <code>java.io.ObjectInputStream</code> class is used to deserialize objects. It's possible to harden its behavior by subclassing it. This is the best solution if:</p>
@@ -2044,23 +2044,23 @@
 <p>The general idea is to override <a href="http://docs.oracle.com/javase/7/docs/api/java/io/ObjectInputStream.html#resolveClass(java.io.ObjectStreamClass)"><code>ObjectInputStream.html#resolveClass()</code></a> in order to restrict which classes are allowed to be deserialized.</p>
 <p>Because this call happens before a <code>readObject()</code> is called, you can be sure that no deserialization activity will occur unless the type is one that you wish to allow.</p>
 <p>A simple example of this shown here, where the <code>LookAheadObjectInputStream</code> class is guaranteed not to deserialize any other type besides the <code>Bicycle</code> class:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">LookAheadObjectInputStream</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">ObjectInputStream</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">LookAheadObjectInputStream</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">ObjectInputStream</span><span class="w"> </span><span class="p">{</span>
 
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">LookAheadObjectInputStream</span><span class="p">(</span><span class="n">InputStream</span><span class="w"> </span><span class="n">inputStream</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">IOException</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="kd">super</span><span class="p">(</span><span class="n">inputStream</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">LookAheadObjectInputStream</span><span class="p">(</span><span class="n">InputStream</span><span class="w"> </span><span class="n">inputStream</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">IOException</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">super</span><span class="p">(</span><span class="n">inputStream</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 
 <span class="w">    </span><span class="cm">/**</span>
 <span class="cm">    * Only deserialize instances of our expected Bicycle class</span>
-<span class="cm">    */</span><span class="w"></span>
-<span class="w">    </span><span class="nd">@Override</span><span class="w"></span>
-<span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="n">Class</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">resolveClass</span><span class="p">(</span><span class="n">ObjectStreamClass</span><span class="w"> </span><span class="n">desc</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">IOException</span><span class="p">,</span><span class="w"> </span><span class="n">ClassNotFoundException</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">desc</span><span class="p">.</span><span class="na">getName</span><span class="p">().</span><span class="na">equals</span><span class="p">(</span><span class="n">Bicycle</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getName</span><span class="p">()))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">InvalidClassException</span><span class="p">(</span><span class="s">&quot;Unauthorized deserialization attempt&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">desc</span><span class="p">.</span><span class="na">getName</span><span class="p">());</span><span class="w"></span>
-<span class="w">        </span><span class="p">}</span><span class="w"></span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kd">super</span><span class="p">.</span><span class="na">resolveClass</span><span class="p">(</span><span class="n">desc</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="cm">    */</span>
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">protected</span><span class="w"> </span><span class="n">Class</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">resolveClass</span><span class="p">(</span><span class="n">ObjectStreamClass</span><span class="w"> </span><span class="n">desc</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">IOException</span><span class="p">,</span><span class="w"> </span><span class="n">ClassNotFoundException</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">desc</span><span class="p">.</span><span class="na">getName</span><span class="p">().</span><span class="na">equals</span><span class="p">(</span><span class="n">Bicycle</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getName</span><span class="p">()))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">InvalidClassException</span><span class="p">(</span><span class="s">&quot;Unauthorized deserialization attempt&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">desc</span><span class="p">.</span><span class="na">getName</span><span class="p">());</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kd">super</span><span class="p">.</span><span class="na">resolveClass</span><span class="p">(</span><span class="n">desc</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>More complete implementations of this approach have been proposed by various community members:</p>
 <ul>
@@ -2101,30 +2101,30 @@
 <p>Microsoft has stated that the <code>BinaryFormatter</code> type is dangerous and cannot be secured. As such, it should not be used. Full details are in the <a href="https://docs.microsoft.com/en-us/dotnet/standard/serialization/binaryformatter-security-guide">BinaryFormatter security guide</a>.</p>
 <p>Don't allow the datastream to define the type of object that the stream will be deserialized to. You can prevent this by for example using the <code>DataContractSerializer</code> or <code>XmlSerializer</code> if at all possible.</p>
 <p>Where <code>JSON.Net</code> is being used make sure the <code>TypeNameHandling</code> is only set to <code>None</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="n">TypeNameHandling</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">TypeNameHandling</span><span class="p">.</span><span class="n">None</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="n">TypeNameHandling</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TypeNameHandling</span><span class="p">.</span><span class="n">None</span>
 </code></pre></div>
 <p>If <code>JavaScriptSerializer</code> is to be used then do not use it with a <code>JavaScriptTypeResolver</code>.</p>
 <p>If you must deserialise data streams that define their own type, then restrict the types that are allowed to be deserialized. One should be aware that this is still risky as many native .Net types potentially dangerous in themselves. e.g.</p>
-<div class="highlight"><pre><span></span><code><span class="n">System</span><span class="p">.</span><span class="n">IO</span><span class="p">.</span><span class="n">FileInfo</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="n">System</span><span class="p">.</span><span class="n">IO</span><span class="p">.</span><span class="n">FileInfo</span>
 </code></pre></div>
 <p><code>FileInfo</code> objects that reference files actually on the server can when deserialized, change the properties of those files e.g. to read-only, creating a potential denial of service attack.</p>
 <p>Even if you have limited the types that can be deserialised remember that some types have properties that are risky. <code>System.ComponentModel.DataAnnotations.ValidationException</code>, for example has a property <code>Value</code> of type <code>Object</code>. if this type is the type allowed for deserialization then an attacker can set the <code>Value</code> property to any object type they choose.</p>
 <p>Attackers should be prevented from steering the type that will be instantiated. If this is possible then even <code>DataContractSerializer</code> or <code>XmlSerializer</code> can be subverted e.g.</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// Action below is dangerous if the attacker can change the data in the database</span>
-<span class="kt">var</span><span class="w"> </span><span class="n">typename</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">GetTransactionTypeFromDatabase</span><span class="p">();</span><span class="w"></span>
+<span class="kt">var</span><span class="w"> </span><span class="n">typename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GetTransactionTypeFromDatabase</span><span class="p">();</span>
 
-<span class="kt">var</span><span class="w"> </span><span class="n">serializer</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DataContractJsonSerializer</span><span class="p">(</span><span class="n">Type</span><span class="p">.</span><span class="n">GetType</span><span class="p">(</span><span class="n">typename</span><span class="p">));</span><span class="w"></span>
+<span class="kt">var</span><span class="w"> </span><span class="n">serializer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DataContractJsonSerializer</span><span class="p">(</span><span class="n">Type</span><span class="p">.</span><span class="n">GetType</span><span class="p">(</span><span class="n">typename</span><span class="p">));</span>
 
-<span class="kt">var</span><span class="w"> </span><span class="n">obj</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">serializer</span><span class="p">.</span><span class="n">ReadObject</span><span class="p">(</span><span class="n">ms</span><span class="p">);</span><span class="w"></span>
+<span class="kt">var</span><span class="w"> </span><span class="n">obj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">serializer</span><span class="p">.</span><span class="n">ReadObject</span><span class="p">(</span><span class="n">ms</span><span class="p">);</span>
 </code></pre></div>
 <p>Execution can occur within certain .Net types during deserialization. Creating a control such as the one shown below is ineffective.</p>
-<div class="highlight"><pre><span></span><code><span class="kt">var</span><span class="w"> </span><span class="n">suspectObject</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">myBinaryFormatter</span><span class="p">.</span><span class="n">Deserialize</span><span class="p">(</span><span class="n">untrustedData</span><span class="p">);</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kt">var</span><span class="w"> </span><span class="n">suspectObject</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">myBinaryFormatter</span><span class="p">.</span><span class="n">Deserialize</span><span class="p">(</span><span class="n">untrustedData</span><span class="p">);</span>
 
 <span class="c1">//Check below is too late! Execution may have already occurred.</span>
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">suspectObject</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">SomeDangerousObjectType</span><span class="p">)</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">suspectObject</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">SomeDangerousObjectType</span><span class="p">)</span>
+<span class="p">{</span>
 <span class="w">    </span><span class="c1">//generate warnings and dispose of suspectObject</span>
-<span class="p">}</span><span class="w"></span>
+<span class="p">}</span>
 </code></pre></div>
 <p>For <code>JSON.Net</code> it is possible to create a safer form of allow-list control using a custom <code>SerializationBinder</code>.</p>
 <p>Try to keep up-to-date on known .Net insecure deserialization gadgets and pay special attention where such types can be created by your deserialization processes. <strong>A deserializer can only instantiate types that it knows about</strong>.</p>
@@ -2221,42 +2221,6 @@
       
         <footer class="md-footer">
   
-    
-    <nav class="md-footer__inner md-grid" aria-label="Footer" >
-      
-        
-        <a href="Denial_of_Service_Cheat_Sheet.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Denial of Service" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              Denial of Service
-            </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="Docker_Security_Cheat_Sheet.html" class="md-footer__link md-footer__link--next" aria-label="Next: Docker Security" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              Docker Security
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
-  
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
       <div class="md-copyright">
@@ -2282,12 +2246,11 @@
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.12658920.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      <script src="../assets/javascripts/bundle.5cf534bf.min.js"></script>
       
-    
     
   </body>
 </html>

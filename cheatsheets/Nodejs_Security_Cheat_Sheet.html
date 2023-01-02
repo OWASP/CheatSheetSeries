@@ -16,8 +16,14 @@ redirect_from: "/cheatsheets/Nodejs_security_cheat_sheet.html"
       
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Nodejs_Security_Cheat_Sheet.html">
       
+      
+        <link rel="prev" href="NodeJS_Docker_Cheat_Sheet.html">
+      
+      
+        <link rel="next" href="OS_Command_Injection_Defense_Cheat_Sheet.html">
+      
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.0">
     
     
       
@@ -25,11 +31,10 @@ redirect_from: "/cheatsheets/Nodejs_security_cheat_sheet.html"
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.975780f9.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.f79797b0.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
-        
       
       
 
@@ -116,8 +121,6 @@ redirect_from: "/cheatsheets/Nodejs_security_cheat_sheet.html"
       <form class="md-header__option" data-md-component="palette">
         
           
-          
-          
           <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
           
             <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
@@ -125,8 +128,6 @@ redirect_from: "/cheatsheets/Nodejs_security_cheat_sheet.html"
             </label>
           
         
-          
-          
           
           <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
           
@@ -2059,10 +2060,9 @@ redirect_from: "/cheatsheets/Nodejs_security_cheat_sheet.html"
                 
                   
 
-  <a href="https://github.com/OWASP/CheatSheetSeries/edit/master/docs/cheatsheets/Nodejs_Security_Cheat_Sheet.md" title="Edit this page" class="md-content__button md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
-  </a>
+  
+  
+
 
 
 <h1 id="nodejs-security-cheat-sheet">NodeJS Security Cheat Sheet<a class="headerlink" href="#nodejs-security-cheat-sheet" title="Permanent link">&para;</a></h1>
@@ -2085,152 +2085,152 @@ redirect_from: "/cheatsheets/Nodejs_security_cheat_sheet.html"
 <p>Asynchronous callback functions are one of the strongest features of Node.js. However, increasing layers of nesting within callback functions can become a problem. Any multistage process can become nested 10 or more levels deep. This problem is referred to as a "Pyramid of Doom" or "Callback Hell". In such code, the errors and results get lost within the callback. Promises are a good way to write asynchronous code without getting into nested pyramids. Promises provide top-down execution while being asynchronous by delivering errors and results to next <code>.then</code> function.</p>
 <p>Another advantage of Promises is the way Promises handle errors. If an error occurs in a Promise class, it skips over the <code>.then</code> functions and invokes the first <code>.catch</code> function it finds. This way Promises provide a higher assurance of capturing and handling errors. As a principle, you can make all your asynchronous code (apart from emitters) return promises. It should be noted that Promise calls can also become a pyramid. In order to completely stay away from "Callback Hell", flat Promise chains should be used. If the module you are using does not support Promises, you can convert base object to a Promise by using <code>Promise.promisifyAll()</code> function.</p>
 <p>The following code snippet is an example of "Callback Hell":</p>
-<div class="highlight"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">func1</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span><span class="w"> </span><span class="nx">callback</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="c1">// operations that takes a bit of time and then calls the callback</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">func2</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span><span class="w"> </span><span class="nx">callback</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="c1">// operations that takes a bit of time and then calls the callback</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">func3</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span><span class="w"> </span><span class="nx">callback</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="c1">// operations that takes a bit of time and then calls the callback</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">func4</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span><span class="w"> </span><span class="nx">callback</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="c1">// operations that takes a bit of time and then calls the callback</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">func1</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span><span class="w"> </span><span class="nx">callback</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// operations that takes a bit of time and then calls the callback</span>
+<span class="p">}</span>
+<span class="kd">function</span><span class="w"> </span><span class="nx">func2</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span><span class="w"> </span><span class="nx">callback</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// operations that takes a bit of time and then calls the callback</span>
+<span class="p">}</span>
+<span class="kd">function</span><span class="w"> </span><span class="nx">func3</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span><span class="w"> </span><span class="nx">callback</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// operations that takes a bit of time and then calls the callback</span>
+<span class="p">}</span>
+<span class="kd">function</span><span class="w"> </span><span class="nx">func4</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span><span class="w"> </span><span class="nx">callback</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// operations that takes a bit of time and then calls the callback</span>
+<span class="p">}</span>
 
-<span class="nx">func1</span><span class="p">(</span><span class="s2">&quot;input1&quot;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">result1</span><span class="p">){</span><span class="w"></span>
-<span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">){</span><span class="w"></span>
-<span class="w">      </span><span class="c1">// error operations</span><span class="w"></span>
-<span class="w">   </span><span class="p">}</span><span class="w"></span>
-<span class="w">   </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="c1">//some operations</span><span class="w"></span>
-<span class="w">      </span><span class="nx">func2</span><span class="p">(</span><span class="s2">&quot;input2&quot;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">result2</span><span class="p">){</span><span class="w"></span>
-<span class="w">         </span><span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">){</span><span class="w"></span>
-<span class="w">            </span><span class="c1">//error operations</span><span class="w"></span>
-<span class="w">         </span><span class="p">}</span><span class="w"></span>
-<span class="w">         </span><span class="k">else</span><span class="p">{</span><span class="w"></span>
-<span class="w">            </span><span class="c1">//some operations</span><span class="w"></span>
-<span class="w">            </span><span class="nx">func3</span><span class="p">(</span><span class="s2">&quot;input3&quot;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">result3</span><span class="p">){</span><span class="w"></span>
-<span class="w">               </span><span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">){</span><span class="w"></span>
-<span class="w">                  </span><span class="c1">//error operations</span><span class="w"></span>
-<span class="w">               </span><span class="p">}</span><span class="w"></span>
-<span class="w">               </span><span class="k">else</span><span class="p">{</span><span class="w"></span>
-<span class="w">                  </span><span class="c1">// some operations</span><span class="w"></span>
-<span class="w">                  </span><span class="nx">func4</span><span class="p">(</span><span class="s2">&quot;input 4&quot;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">result4</span><span class="p">){</span><span class="w"></span>
-<span class="w">                     </span><span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">){</span><span class="w"></span>
-<span class="w">                        </span><span class="c1">// error operations</span><span class="w"></span>
-<span class="w">                     </span><span class="p">}</span><span class="w"></span>
-<span class="w">                     </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">                        </span><span class="c1">// some operations</span><span class="w"></span>
-<span class="w">                     </span><span class="p">}</span><span class="w"></span>
-<span class="w">                  </span><span class="p">});</span><span class="w"></span>
-<span class="w">               </span><span class="p">}</span><span class="w"></span>
-<span class="w">            </span><span class="p">});</span><span class="w"></span>
-<span class="w">         </span><span class="p">}</span><span class="w"></span>
-<span class="w">      </span><span class="p">});</span><span class="w"></span>
-<span class="w">   </span><span class="p">}</span><span class="w"></span>
-<span class="p">});</span><span class="w"></span>
+<span class="nx">func1</span><span class="p">(</span><span class="s2">&quot;input1&quot;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">result1</span><span class="p">){</span>
+<span class="w">   </span><span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">){</span>
+<span class="w">      </span><span class="c1">// error operations</span>
+<span class="w">   </span><span class="p">}</span>
+<span class="w">   </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="c1">//some operations</span>
+<span class="w">      </span><span class="nx">func2</span><span class="p">(</span><span class="s2">&quot;input2&quot;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">result2</span><span class="p">){</span>
+<span class="w">         </span><span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">){</span>
+<span class="w">            </span><span class="c1">//error operations</span>
+<span class="w">         </span><span class="p">}</span>
+<span class="w">         </span><span class="k">else</span><span class="p">{</span>
+<span class="w">            </span><span class="c1">//some operations</span>
+<span class="w">            </span><span class="nx">func3</span><span class="p">(</span><span class="s2">&quot;input3&quot;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">result3</span><span class="p">){</span>
+<span class="w">               </span><span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">){</span>
+<span class="w">                  </span><span class="c1">//error operations</span>
+<span class="w">               </span><span class="p">}</span>
+<span class="w">               </span><span class="k">else</span><span class="p">{</span>
+<span class="w">                  </span><span class="c1">// some operations</span>
+<span class="w">                  </span><span class="nx">func4</span><span class="p">(</span><span class="s2">&quot;input 4&quot;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">result4</span><span class="p">){</span>
+<span class="w">                     </span><span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">){</span>
+<span class="w">                        </span><span class="c1">// error operations</span>
+<span class="w">                     </span><span class="p">}</span>
+<span class="w">                     </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="c1">// some operations</span>
+<span class="w">                     </span><span class="p">}</span>
+<span class="w">                  </span><span class="p">});</span>
+<span class="w">               </span><span class="p">}</span>
+<span class="w">            </span><span class="p">});</span>
+<span class="w">         </span><span class="p">}</span>
+<span class="w">      </span><span class="p">});</span>
+<span class="w">   </span><span class="p">}</span>
+<span class="p">});</span>
 </code></pre></div>
 <p>The above code can be securely written as follows using a flat Promise chain:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">func1</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="c1">// operations that takes a bit of time and then resolves the promise</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">func2</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="c1">// operations that takes a bit of time and then resolves the promise</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">func3</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="c1">// operations that takes a bit of time and then resolves the promise</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">func4</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="c1">// operations that takes a bit of time and then resolves the promise</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">func1</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// operations that takes a bit of time and then resolves the promise</span>
+<span class="p">}</span>
+<span class="kd">function</span><span class="w"> </span><span class="nx">func2</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// operations that takes a bit of time and then resolves the promise</span>
+<span class="p">}</span>
+<span class="kd">function</span><span class="w"> </span><span class="nx">func3</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// operations that takes a bit of time and then resolves the promise</span>
+<span class="p">}</span>
+<span class="kd">function</span><span class="w"> </span><span class="nx">func4</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// operations that takes a bit of time and then resolves the promise</span>
+<span class="p">}</span>
 
-<span class="nx">func1</span><span class="p">(</span><span class="s2">&quot;input1&quot;</span><span class="p">)</span><span class="w"></span>
-<span class="w">   </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">result</span><span class="p">){</span><span class="w"></span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">func2</span><span class="p">(</span><span class="s2">&quot;input2&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">   </span><span class="p">})</span><span class="w"></span>
-<span class="w">   </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">result</span><span class="p">){</span><span class="w"></span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">func3</span><span class="p">(</span><span class="s2">&quot;input3&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">   </span><span class="p">})</span><span class="w"></span>
-<span class="w">   </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">result</span><span class="p">){</span><span class="w"></span>
-<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">func4</span><span class="p">(</span><span class="s2">&quot;input4&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">   </span><span class="p">})</span><span class="w"></span>
-<span class="w">   </span><span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="c1">// error operations</span><span class="w"></span>
-<span class="w">   </span><span class="p">});</span><span class="w"></span>
+<span class="nx">func1</span><span class="p">(</span><span class="s2">&quot;input1&quot;</span><span class="p">)</span>
+<span class="w">   </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">result</span><span class="p">){</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">func2</span><span class="p">(</span><span class="s2">&quot;input2&quot;</span><span class="p">);</span>
+<span class="w">   </span><span class="p">})</span>
+<span class="w">   </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">result</span><span class="p">){</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">func3</span><span class="p">(</span><span class="s2">&quot;input3&quot;</span><span class="p">);</span>
+<span class="w">   </span><span class="p">})</span>
+<span class="w">   </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">result</span><span class="p">){</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">func4</span><span class="p">(</span><span class="s2">&quot;input4&quot;</span><span class="p">);</span>
+<span class="w">   </span><span class="p">})</span>
+<span class="w">   </span><span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="c1">// error operations</span>
+<span class="w">   </span><span class="p">});</span>
 </code></pre></div>
 <p>And using async/await:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="nx">func1</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="c1">// operations that takes a bit of time and then resolves the promise</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-<span class="kd">function</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="nx">func2</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="c1">// operations that takes a bit of time and then resolves the promise</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-<span class="kd">function</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="nx">func3</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="c1">// operations that takes a bit of time and then resolves the promise</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-<span class="kd">function</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="nx">func4</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="c1">// operations that takes a bit of time and then resolves the promise</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="nx">func1</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// operations that takes a bit of time and then resolves the promise</span>
+<span class="p">}</span>
+<span class="kd">function</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="nx">func2</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// operations that takes a bit of time and then resolves the promise</span>
+<span class="p">}</span>
+<span class="kd">function</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="nx">func3</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// operations that takes a bit of time and then resolves the promise</span>
+<span class="p">}</span>
+<span class="kd">function</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="nx">func4</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// operations that takes a bit of time and then resolves the promise</span>
+<span class="p">}</span>
 
-<span class="p">(</span><span class="k">async</span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">res1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">func1</span><span class="p">(</span><span class="s2">&quot;input1&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">res2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">func2</span><span class="p">(</span><span class="s2">&quot;input2&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">res3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">func3</span><span class="p">(</span><span class="s2">&quot;input2&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">res4</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">func4</span><span class="p">(</span><span class="s2">&quot;input2&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="c1">// error operations</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
-<span class="p">})();</span><span class="w"></span>
+<span class="p">(</span><span class="k">async</span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">res1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">func1</span><span class="p">(</span><span class="s2">&quot;input1&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">res2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">func2</span><span class="p">(</span><span class="s2">&quot;input2&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">res3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">func3</span><span class="p">(</span><span class="s2">&quot;input2&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">res4</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">func4</span><span class="p">(</span><span class="s2">&quot;input2&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// error operations</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">})();</span>
 </code></pre></div>
 <h4 id="set-request-size-limits">Set request size limits<a class="headerlink" href="#set-request-size-limits" title="Permanent link">&para;</a></h4>
 <p>Buffering and parsing of request bodies can be a resource intensive task. If there is no limit on the size of requests, attackers can send requests with large request bodies that can exhaust server memory and/or fill disk space. You can limit the request body size for all requests using <a href="https://www.npmjs.com/package/raw-body">raw-body</a>.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">contentType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;content-type&#39;</span><span class="p">)</span><span class="w"></span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">)</span><span class="w"></span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">getRawBody</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;raw-body&#39;</span><span class="p">)</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">contentType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;content-type&#39;</span><span class="p">)</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">)</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">getRawBody</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;raw-body&#39;</span><span class="p">)</span>
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">()</span><span class="w"></span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">()</span>
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">,</span><span class="w"> </span><span class="nx">next</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;PUT&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;DELETE&#39;</span><span class="p">].</span><span class="nx">includes</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">method</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nx">next</span><span class="p">()</span><span class="w"></span>
-<span class="w">    </span><span class="k">return</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">,</span><span class="w"> </span><span class="nx">next</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;PUT&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;DELETE&#39;</span><span class="p">].</span><span class="nx">includes</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">method</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">next</span><span class="p">()</span>
+<span class="w">    </span><span class="k">return</span>
+<span class="w">  </span><span class="p">}</span>
 
-<span class="w">  </span><span class="nx">getRawBody</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nx">length</span><span class="o">:</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">[</span><span class="s1">&#39;content-length&#39;</span><span class="p">],</span><span class="w"></span>
-<span class="w">    </span><span class="nx">limit</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;1kb&#39;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nx">encoding</span><span class="o">:</span><span class="w"> </span><span class="nx">contentType</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">req</span><span class="p">).</span><span class="nx">parameters</span><span class="p">.</span><span class="nx">charset</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">string</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nx">next</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="nx">req</span><span class="p">.</span><span class="nx">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">string</span><span class="w"></span>
-<span class="w">    </span><span class="nx">next</span><span class="p">()</span><span class="w"></span>
-<span class="w">  </span><span class="p">})</span><span class="w"></span>
-<span class="p">})</span><span class="w"></span>
+<span class="w">  </span><span class="nx">getRawBody</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">length</span><span class="o">:</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">[</span><span class="s1">&#39;content-length&#39;</span><span class="p">],</span>
+<span class="w">    </span><span class="nx">limit</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;1kb&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">encoding</span><span class="o">:</span><span class="w"> </span><span class="nx">contentType</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">req</span><span class="p">).</span><span class="nx">parameters</span><span class="p">.</span><span class="nx">charset</span>
+<span class="w">  </span><span class="p">},</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">string</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nx">next</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">req</span><span class="p">.</span><span class="nx">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">string</span>
+<span class="w">    </span><span class="nx">next</span><span class="p">()</span>
+<span class="w">  </span><span class="p">})</span>
+<span class="p">})</span>
 </code></pre></div>
 <p>However, fixing a request size limit for all requests may not be the correct behavior, since some requests may have a large payload in the request body, such as when uploading a file. Also, input with a JSON type is more dangerous than a multipart input, since parsing JSON is a blocking operation. Therefore, you should set request size limits for different content types. You can accomplish this very easily with express middleware as follows:</p>
-<div class="highlight"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">express</span><span class="p">.</span><span class="nx">urlencoded</span><span class="p">({</span><span class="w"> </span><span class="nx">extended</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nx">limit</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;1kb&quot;</span><span class="w"> </span><span class="p">}));</span><span class="w"></span>
-<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">express</span><span class="p">.</span><span class="nx">json</span><span class="p">({</span><span class="w"> </span><span class="nx">limit</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;1kb&quot;</span><span class="w"> </span><span class="p">}));</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">express</span><span class="p">.</span><span class="nx">urlencoded</span><span class="p">({</span><span class="w"> </span><span class="nx">extended</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nx">limit</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;1kb&quot;</span><span class="w"> </span><span class="p">}));</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">express</span><span class="p">.</span><span class="nx">json</span><span class="p">({</span><span class="w"> </span><span class="nx">limit</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;1kb&quot;</span><span class="w"> </span><span class="p">}));</span>
 </code></pre></div>
 <p>It should be noted that attackers can change the <code>Content-Type</code> header of the request and bypass request size limits. Therefore, before processing the request, data contained in the request should be validated against the content type stated in the request headers. If content type validation for each request affects the performance severely, you can only validate specific content types or request larger than a predetermined size.</p>
 <h4 id="do-not-block-the-event-loop">Do not block the event loop<a class="headerlink" href="#do-not-block-the-event-loop" title="Permanent link">&para;</a></h4>
 <p>Node.js is very different from common application platforms that use threads. Node.js has a single-thread event-driven architecture. By means of this architecture, throughput becomes high and the programming model becomes simpler. Node.js is implemented around a non-blocking I/O event loop. With this event loop, there is no waiting on I/O or context switching. The event loop looks for events and dispatches them to handler functions. Because of this, when CPU intensive JavaScript operations are executed, the event loop waits for them to finish. This is why such operations are called "blocking". To overcome this problem, Node.js allows assigning callbacks to IO-blocked events. This way, the main application is not blocked and callbacks run asynchronously. Therefore, as a general principle, all blocking operations should be done asynchronously so that the event loop is not blocked.</p>
 <p>Even if you perform blocking operations asynchronously, your application may still not serve as expected. This happens if there is a code outside the callback that relies on the code within the callback to run first. For example, consider the following code:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">fs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;fs&#39;</span><span class="p">);</span><span class="w"></span>
-<span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="s1">&#39;/file.txt&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="c1">// perform actions on file content</span><span class="w"></span>
-<span class="p">});</span><span class="w"></span>
-<span class="nx">fs</span><span class="p">.</span><span class="nx">unlinkSync</span><span class="p">(</span><span class="s1">&#39;/file.txt&#39;</span><span class="p">);</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">fs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;fs&#39;</span><span class="p">);</span>
+<span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="s1">&#39;/file.txt&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// perform actions on file content</span>
+<span class="p">});</span>
+<span class="nx">fs</span><span class="p">.</span><span class="nx">unlinkSync</span><span class="p">(</span><span class="s1">&#39;/file.txt&#39;</span><span class="p">);</span>
 </code></pre></div>
 <p>In the above example, <code>unlinkSync</code> function may run before the callback, which will delete the file before the desired actions on the file content is done. Such race conditions can also affect the security of your application. An example would be a scenario where authentication is performed in a callback and authenticated actions are run synchronously. In order to eliminate such race conditions, you can write all operations that rely on each other in a single non-blocking function. By doing so, you can guarantee that all operations are executed in the correct order. For example, above code example can be written in a non-blocking way as follows:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">fs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;fs&#39;</span><span class="p">);</span><span class="w"></span>
-<span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="s1">&#39;/file.txt&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="c1">// perform actions on file content</span><span class="w"></span>
-<span class="w">  </span><span class="nx">fs</span><span class="p">.</span><span class="nx">unlink</span><span class="p">(</span><span class="s1">&#39;/file.txt&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="nx">err</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="p">});</span><span class="w"></span>
-<span class="p">});</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">fs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;fs&#39;</span><span class="p">);</span>
+<span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="s1">&#39;/file.txt&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// perform actions on file content</span>
+<span class="w">  </span><span class="nx">fs</span><span class="p">.</span><span class="nx">unlink</span><span class="p">(</span><span class="s1">&#39;/file.txt&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="nx">err</span><span class="p">;</span>
+<span class="w">  </span><span class="p">});</span>
+<span class="p">});</span>
 </code></pre></div>
 <p>In the above code, call to unlink the file and other file operations are within the same callback. This provides the correct order of operations.</p>
 <h4 id="perform-input-validation">Perform input validation<a class="headerlink" href="#perform-input-validation" title="Permanent link">&para;</a></h4>
@@ -2296,69 +2296,69 @@ For detailed information on input validation, please refer to <a href="https://c
 <h4 id="perform-application-activity-logging">Perform application activity logging<a class="headerlink" href="#perform-application-activity-logging" title="Permanent link">&para;</a></h4>
 <p>Logging application activity is an encouraged good practice. It makes it easier to debug any errors encountered during application runtime. It is also useful for security concerns, since it can be used during incident response. In addition, these logs can be used to feed Intrusion Detection/Prevention Systems (IDS/IPS). In Node.js, there are modules such as <a href="https://www.npmjs.com/package/winston">Winston</a>, <a href="https://www.npmjs.com/package/bunyan">Bunyan</a>, or <a href="https://www.npmjs.com/package/pino">Pino</a> to perform application activity logging. These modules enable streaming and querying logs, and they provide a way to handle uncaught exceptions.</p>
 <p>With the following code, you can log application activities in both console and a desired log file:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">logger</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="p">(</span><span class="nx">Winston</span><span class="p">.</span><span class="nx">Logger</span><span class="p">)</span><span class="w"> </span><span class="p">({</span><span class="w"></span>
-<span class="w">    </span><span class="nx">transports</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">        </span><span class="ow">new</span><span class="w"> </span><span class="p">(</span><span class="nx">winston</span><span class="p">.</span><span class="nx">transports</span><span class="p">.</span><span class="nx">Console</span><span class="p">)(),</span><span class="w"></span>
-<span class="w">        </span><span class="ow">new</span><span class="w"> </span><span class="p">(</span><span class="nx">winston</span><span class="p">.</span><span class="nx">transports</span><span class="p">.</span><span class="nx">File</span><span class="p">)({</span><span class="w"> </span><span class="nx">filename</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;application.log&#39;</span><span class="w"> </span><span class="p">})</span><span class="w"></span>
-<span class="w">    </span><span class="p">],</span><span class="w"></span>
-<span class="w">    </span><span class="nx">level</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;verbose&#39;</span><span class="w"></span>
-<span class="p">});</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">logger</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="p">(</span><span class="nx">Winston</span><span class="p">.</span><span class="nx">Logger</span><span class="p">)</span><span class="w"> </span><span class="p">({</span>
+<span class="w">    </span><span class="nx">transports</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="ow">new</span><span class="w"> </span><span class="p">(</span><span class="nx">winston</span><span class="p">.</span><span class="nx">transports</span><span class="p">.</span><span class="nx">Console</span><span class="p">)(),</span>
+<span class="w">        </span><span class="ow">new</span><span class="w"> </span><span class="p">(</span><span class="nx">winston</span><span class="p">.</span><span class="nx">transports</span><span class="p">.</span><span class="nx">File</span><span class="p">)({</span><span class="w"> </span><span class="nx">filename</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;application.log&#39;</span><span class="w"> </span><span class="p">})</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nx">level</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;verbose&#39;</span>
+<span class="p">});</span>
 </code></pre></div>
 <p>You can provide different transports so that you can save errors to a separate log file and general application logs to a different log file. Additional information on security logging can be found in <a href="https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html">Logging Cheat Sheet</a>.</p>
 <h4 id="monitor-the-event-loop">Monitor the event loop<a class="headerlink" href="#monitor-the-event-loop" title="Permanent link">&para;</a></h4>
 <p>When your application server is under heavy network traffic, it may not be able to serve its users. This is essentially a type of <a href="https://cheatsheetseries.owasp.org/cheatsheets/Denial_of_Service_Cheat_Sheet.html">Denial of Service (DoS)</a> attack. The <a href="https://www.npmjs.com/package/toobusy-js">toobusy-js</a> module allows you to monitor the event loop. It keeps track of the response time, and when it goes beyond a certain threshold, this module can indicate your server is too busy. In that case, you can stop processing incoming requests and send them <code>503 Server Too Busy</code> message so that your application stay responsive. Example use of the <a href="https://www.npmjs.com/package/toobusy-js">toobusy-js</a> module is shown here:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">toobusy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;toobusy-js&#39;</span><span class="p">);</span><span class="w"></span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span><span class="w"></span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span><span class="w"></span>
-<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">,</span><span class="w"> </span><span class="nx">next</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">toobusy</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="c1">// log if you see necessary</span><span class="w"></span>
-<span class="w">        </span><span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="mf">503</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Server Too Busy&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nx">next</span><span class="p">();</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="p">});</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">toobusy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;toobusy-js&#39;</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">express</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">,</span><span class="w"> </span><span class="nx">next</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">toobusy</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// log if you see necessary</span>
+<span class="w">        </span><span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="mf">503</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Server Too Busy&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">next</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">});</span>
 </code></pre></div>
 <h4 id="take-precautions-against-brute-forcing">Take precautions against brute-forcing<a class="headerlink" href="#take-precautions-against-brute-forcing" title="Permanent link">&para;</a></h4>
 <p><a href="https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html#protect-against-automated-attacks">Brute-forcing</a> is a common threat to all web applications. Attackers can use brute-forcing as a password guessing attack to obtain account passwords. Therefore, application developers should take precautions against brute-force attacks especially in login pages.  Node.js has several modules available for this purpose. <a href="https://libraries.io/npm/express-bouncer">Express-bouncer</a>, <a href="https://libraries.io/npm/express-brute">express-brute</a> and <a href="https://libraries.io/npm/rate-limiter">rate-limiter</a> are just some examples. Based on your needs and requirements, you should choose one or more of these modules and use accordingly. <a href="https://libraries.io/npm/express-bouncer">Express-bouncer</a> and <a href="https://libraries.io/npm/express-brute">express-brute</a> modules work very similar and they both increase the delay with each failed request. They can both be arranged for a specific route. These modules can be used as follows:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">bouncer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express-bouncer&#39;</span><span class="p">);</span><span class="w"></span>
-<span class="nx">bouncer</span><span class="p">.</span><span class="nx">whitelist</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">);</span><span class="w"> </span><span class="c1">// allow an IP address</span><span class="w"></span>
-<span class="c1">// give a custom error message</span><span class="w"></span>
-<span class="nx">bouncer</span><span class="p">.</span><span class="nx">blocked</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">,</span><span class="w"> </span><span class="nx">next</span><span class="p">,</span><span class="w"> </span><span class="nx">remaining</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="mf">429</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Too many requests have been made. Please wait &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">remaining</span><span class="o">/</span><span class="mf">1000</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot; seconds.&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="p">};</span><span class="w"></span>
-<span class="c1">// route to protect</span><span class="w"></span>
-<span class="nx">app</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s2">&quot;/login&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">bouncer</span><span class="p">.</span><span class="nx">block</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">LoginFailed</span><span class="p">){</span><span class="w">  </span><span class="p">}</span><span class="w"></span>
-<span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="nx">bouncer</span><span class="p">.</span><span class="nx">reset</span><span class="p">(</span><span class="w"> </span><span class="nx">req</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="p">});</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">bouncer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express-bouncer&#39;</span><span class="p">);</span>
+<span class="nx">bouncer</span><span class="p">.</span><span class="nx">whitelist</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">);</span><span class="w"> </span><span class="c1">// allow an IP address</span>
+<span class="c1">// give a custom error message</span>
+<span class="nx">bouncer</span><span class="p">.</span><span class="nx">blocked</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">,</span><span class="w"> </span><span class="nx">next</span><span class="p">,</span><span class="w"> </span><span class="nx">remaining</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="mf">429</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Too many requests have been made. Please wait &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">remaining</span><span class="o">/</span><span class="mf">1000</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot; seconds.&quot;</span><span class="p">);</span>
+<span class="p">};</span>
+<span class="c1">// route to protect</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s2">&quot;/login&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">bouncer</span><span class="p">.</span><span class="nx">block</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">LoginFailed</span><span class="p">){</span><span class="w">  </span><span class="p">}</span>
+<span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">bouncer</span><span class="p">.</span><span class="nx">reset</span><span class="p">(</span><span class="w"> </span><span class="nx">req</span><span class="w"> </span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">});</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">ExpressBrute</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express-brute&#39;</span><span class="p">);</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">ExpressBrute</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express-brute&#39;</span><span class="p">);</span>
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">store</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">ExpressBrute</span><span class="p">.</span><span class="nx">MemoryStore</span><span class="p">();</span><span class="w"> </span><span class="c1">// stores state locally, don&#39;t use this in production</span><span class="w"></span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">bruteforce</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">ExpressBrute</span><span class="p">(</span><span class="nx">store</span><span class="p">);</span><span class="w"></span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">store</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">ExpressBrute</span><span class="p">.</span><span class="nx">MemoryStore</span><span class="p">();</span><span class="w"> </span><span class="c1">// stores state locally, don&#39;t use this in production</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">bruteforce</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">ExpressBrute</span><span class="p">(</span><span class="nx">store</span><span class="p">);</span>
 
-<span class="nx">app</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/auth&#39;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nx">bruteforce</span><span class="p">.</span><span class="nx">prevent</span><span class="p">,</span><span class="w"> </span><span class="c1">// error 429 if we hit this route too often</span><span class="w"></span>
-<span class="w">    </span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">,</span><span class="w"> </span><span class="nx">next</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;Success!&#39;</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="p">);</span><span class="w"></span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/auth&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">bruteforce</span><span class="p">.</span><span class="nx">prevent</span><span class="p">,</span><span class="w"> </span><span class="c1">// error 429 if we hit this route too often</span>
+<span class="w">    </span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">,</span><span class="w"> </span><span class="nx">next</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;Success!&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">);</span>
 </code></pre></div>
 <p>Apart from <a href="https://libraries.io/npm/express-bouncer">express-bouncer</a> and <a href="https://libraries.io/npm/express-brute">express-brute</a>, the <a href="https://libraries.io/npm/rate-limiter">rate-limiter</a> module can also help to prevent brute-forcing attacks. It enables specifying how many requests a specific IP address can make during a specified time period.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">limiter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">RateLimiter</span><span class="p">();</span><span class="w"></span>
-<span class="nx">limiter</span><span class="p">.</span><span class="nx">addLimit</span><span class="p">(</span><span class="s1">&#39;/login&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;GET&#39;</span><span class="p">,</span><span class="w"> </span><span class="mf">5</span><span class="p">,</span><span class="w"> </span><span class="mf">500</span><span class="p">);</span><span class="w"> </span><span class="c1">// login page can be requested 5 times at max within 500 seconds</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">limiter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">RateLimiter</span><span class="p">();</span>
+<span class="nx">limiter</span><span class="p">.</span><span class="nx">addLimit</span><span class="p">(</span><span class="s1">&#39;/login&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;GET&#39;</span><span class="p">,</span><span class="w"> </span><span class="mf">5</span><span class="p">,</span><span class="w"> </span><span class="mf">500</span><span class="p">);</span><span class="w"> </span><span class="c1">// login page can be requested 5 times at max within 500 seconds</span>
 </code></pre></div>
 <p><a href="https://cheatsheetseries.owasp.org/cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.html#captcha">CAPTCHA usage</a> is also another common mechanism used against brute-forcing. There are modules developed for Node.js CAPTCHAs. A common module used in Node.js applications is <a href="https://www.npmjs.com/package/svg-captcha">svg-captcha</a>. It can be used as follows:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">svgCaptcha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;svg-captcha&#39;</span><span class="p">);</span><span class="w"></span>
-<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/captcha&#39;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">captcha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">svgCaptcha</span><span class="p">.</span><span class="nx">create</span><span class="p">();</span><span class="w"></span>
-<span class="w">    </span><span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">captcha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">captcha</span><span class="p">.</span><span class="nx">text</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">type</span><span class="p">(</span><span class="s1">&#39;svg&#39;</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">200</span><span class="p">).</span><span class="nx">send</span><span class="p">(</span><span class="nx">captcha</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span><span class="w"></span>
-<span class="p">});</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">svgCaptcha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;svg-captcha&#39;</span><span class="p">);</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/captcha&#39;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">captcha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">svgCaptcha</span><span class="p">.</span><span class="nx">create</span><span class="p">();</span>
+<span class="w">    </span><span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">captcha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">captcha</span><span class="p">.</span><span class="nx">text</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">type</span><span class="p">(</span><span class="s1">&#39;svg&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mf">200</span><span class="p">).</span><span class="nx">send</span><span class="p">(</span><span class="nx">captcha</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
 </code></pre></div>
 <p><a href="https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html#account-lockout">Account lockout</a> is a recommended solution to keep attackers away from your valid users. Account lockout is possible with many modules like <a href="https://www.npmjs.com/package/mongoose">mongoose</a>. You can refer to <a href="http://devsmash.com/blog/implementing-max-login-attempts-with-mongoose">this blog post</a> to see how account lockout is implemented in mongoose.</p>
 <h4 id="use-anti-csrf-tokens">Use Anti-CSRF tokens<a class="headerlink" href="#use-anti-csrf-tokens" title="Permanent link">&para;</a></h4>
@@ -2368,28 +2368,28 @@ For detailed information on input validation, please refer to <a href="https://c
 <p>A web application should not contain any page that is not used by users, as it may increase the attack surface of the application. Therefore, all unused API routes should be disabled in Node.js applications. This occurs especially in frameworks like <a href="https://sailsjs.com">Sails</a> and <a href="https://feathersjs.com">Feathers</a>, as they automatically generate REST API endpoints. For example, in <a href="https://sailsjs.com">Sails</a>, if a URL does not match a custom route, it may match one of the automatic routes and still generate a response. This situation may lead to results ranging from information leakage to arbitrary command execution. Therefore, before using such frameworks and modules, it is important to know the routes they automatically generate and remove or disable these routes.</p>
 <h4 id="prevent-http-parameter-pollution">Prevent HTTP Parameter Pollution<a class="headerlink" href="#prevent-http-parameter-pollution" title="Permanent link">&para;</a></h4>
 <p><a href="https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/04-Testing_for_HTTP_Parameter_Pollution.html">HTTP Parameter Pollution(HPP)</a> is an attack in which attackers send multiple HTTP parameters with the same name and this causes your application to interpret them in an unpredictable way. When multiple parameter values are sent, Express populates them in an array. In order to solve this issue, you can use <a href="https://www.npmjs.com/package/hpp">hpp</a> module. When used, this module will ignore all values submitted for a parameter in <code>req.query</code> and/or <code>req.body</code> and just select the last parameter value submitted. You can use it as follows:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">hpp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;hpp&#39;</span><span class="p">);</span><span class="w"></span>
-<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">hpp</span><span class="p">());</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">hpp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;hpp&#39;</span><span class="p">);</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">hpp</span><span class="p">());</span>
 </code></pre></div>
 <h4 id="only-return-what-is-necessary">Only return what is necessary<a class="headerlink" href="#only-return-what-is-necessary" title="Permanent link">&para;</a></h4>
 <p>Information about the users of an application is among the most critical information about the application. User tables generally include fields like id, username, full name, email address, birth date, password and in some cases social security numbers. Therefore, when querying and using user objects, you need to return only needed fields as it may be vulnerable to personal information disclosure. This is also correct for other objects stored on the database. If you just need a certain field of an object, you should only return the specific fields required. As an example, you can use a function like the following whenever you need to get information on a user. By doing so, you can only return the fields that are needed for your specific operation. In other words, if you only need to list names of the users available, you are not returning their email addresses or credit card numbers in addition to their full names.</p>
-<div class="highlight"><pre><span></span><code><span class="nx">exports</span><span class="p">.</span><span class="nx">sanitizeUser</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">user</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="nx">user</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nx">username</span><span class="o">:</span><span class="w"> </span><span class="nx">user</span><span class="p">.</span><span class="nx">username</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nx">fullName</span><span class="o">:</span><span class="w"> </span><span class="nx">user</span><span class="p">.</span><span class="nx">fullName</span><span class="w"></span>
-<span class="w">  </span><span class="p">};</span><span class="w"></span>
-<span class="p">};</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nx">exports</span><span class="p">.</span><span class="nx">sanitizeUser</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">user</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="nx">user</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">username</span><span class="o">:</span><span class="w"> </span><span class="nx">user</span><span class="p">.</span><span class="nx">username</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">fullName</span><span class="o">:</span><span class="w"> </span><span class="nx">user</span><span class="p">.</span><span class="nx">fullName</span>
+<span class="w">  </span><span class="p">};</span>
+<span class="p">};</span>
 </code></pre></div>
 <h4 id="use-object-property-descriptors">Use object property descriptors<a class="headerlink" href="#use-object-property-descriptors" title="Permanent link">&para;</a></h4>
 <p>Object properties include three hidden attributes: <code>writable</code> (if false, property value cannot be changed), <code>enumerable</code> (if false, property cannot be used in for loops) and <code>configurable</code> (if false, property cannot be deleted). When defining an object property through assignment, these three hidden attributes are set to true by default. These properties can be set as follows:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">o</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{};</span><span class="w"></span>
-<span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">(</span><span class="nx">o</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nx">writable</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nx">enumerable</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nx">configurable</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;A&quot;</span><span class="w"></span>
-<span class="p">});</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">o</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{};</span>
+<span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">(</span><span class="nx">o</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">writable</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">enumerable</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">configurable</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;A&quot;</span>
+<span class="p">});</span>
 </code></pre></div>
 <p>Apart from these, there are some special functions for object attributes. <code>Object.preventExtensions()</code> prevents new properties from being added to the object.</p>
 <h4 id="use-access-control-lists">Use access control lists<a class="headerlink" href="#use-access-control-lists" title="Permanent link">&para;</a></h4>
@@ -2397,27 +2397,27 @@ For detailed information on input validation, please refer to <a href="https://c
 <h3 id="error-exception-handling">Error &amp; Exception Handling<a class="headerlink" href="#error-exception-handling" title="Permanent link">&para;</a></h3>
 <h4 id="handle-uncaughtexception">Handle uncaughtException<a class="headerlink" href="#handle-uncaughtexception" title="Permanent link">&para;</a></h4>
 <p>Node.js behavior for uncaught exceptions is to print current stack trace and then terminate the thread. However, Node.js allows customization of this behavior. It provides a global object named process that is available to all Node.js applications. It is an EventEmitter object and in case of an uncaught exception, uncaughtException event is emitted and it is brought up to the main event loop. In order to provide a custom behavior for uncaught exceptions, you can bind to this event. However, resuming the application after such an uncaught exception can lead to further problems. Therefore, if you do not want to miss any uncaught exception, you should bind to uncaughtException event and cleanup any allocated resources like file descriptors, handles and similar before shutting down the process. Resuming the application is strongly discouraged as the application will be in an unknown state. It is important to note that when displaying error messages to the user in case of an uncaught exception, detailed information like stack traces should not be revealed to the user. Instead, custom error messages should be shown to the users in order not to cause any information leakage.</p>
-<div class="highlight"><pre><span></span><code><span class="nx">process</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;uncaughtException&quot;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="c1">// clean up allocated resources</span><span class="w"></span>
-<span class="w">    </span><span class="c1">// log necessary error details to log files</span><span class="w"></span>
-<span class="w">    </span><span class="nx">process</span><span class="p">.</span><span class="nx">exit</span><span class="p">();</span><span class="w"> </span><span class="c1">// exit the process to avoid unknown state</span><span class="w"></span>
-<span class="p">});</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nx">process</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;uncaughtException&quot;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// clean up allocated resources</span>
+<span class="w">    </span><span class="c1">// log necessary error details to log files</span>
+<span class="w">    </span><span class="nx">process</span><span class="p">.</span><span class="nx">exit</span><span class="p">();</span><span class="w"> </span><span class="c1">// exit the process to avoid unknown state</span>
+<span class="p">});</span>
 </code></pre></div>
 <h4 id="listen-to-errors-when-using-eventemitter">Listen to errors when using EventEmitter<a class="headerlink" href="#listen-to-errors-when-using-eventemitter" title="Permanent link">&para;</a></h4>
 <p>When using EventEmitter, errors can occur anywhere in the event chain. Normally, if an error occurs in an EventEmitter object, an error event that has an Error object as an argument is called. However, if there are no attached listeners to that error event, the Error object that is sent as an argument is thrown and becomes an uncaught exception. In short, if you do not handle errors within an EventEmitter object properly, these unhandled errors may crash your application. Therefore, you should always listen to error events when using EventEmitter objects.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">events</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;events&#39;</span><span class="p">);</span><span class="w"></span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">myEventEmitter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="p">(){</span><span class="w"></span>
-<span class="w">    </span><span class="nx">events</span><span class="p">.</span><span class="nx">EventEmitter</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-<span class="nx">require</span><span class="p">(</span><span class="s1">&#39;util&#39;</span><span class="p">).</span><span class="nx">inherits</span><span class="p">(</span><span class="nx">myEventEmitter</span><span class="p">,</span><span class="w"> </span><span class="nx">events</span><span class="p">.</span><span class="nx">EventEmitter</span><span class="p">);</span><span class="w"></span>
-<span class="nx">myEventEmitter</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">someFunction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">param1</span><span class="p">,</span><span class="w"> </span><span class="nx">param2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="c1">//in case of an error</span><span class="w"></span>
-<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">emitter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">myEventEmitter</span><span class="p">();</span><span class="w"></span>
-<span class="nx">emitter</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">){</span><span class="w"></span>
-<span class="w">    </span><span class="c1">//Perform necessary error handling here</span><span class="w"></span>
-<span class="p">});</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">events</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;events&#39;</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">myEventEmitter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="p">(){</span>
+<span class="w">    </span><span class="nx">events</span><span class="p">.</span><span class="nx">EventEmitter</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">require</span><span class="p">(</span><span class="s1">&#39;util&#39;</span><span class="p">).</span><span class="nx">inherits</span><span class="p">(</span><span class="nx">myEventEmitter</span><span class="p">,</span><span class="w"> </span><span class="nx">events</span><span class="p">.</span><span class="nx">EventEmitter</span><span class="p">);</span>
+<span class="nx">myEventEmitter</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">someFunction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">param1</span><span class="p">,</span><span class="w"> </span><span class="nx">param2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">//in case of an error</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">emitter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">myEventEmitter</span><span class="p">();</span>
+<span class="nx">emitter</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">){</span>
+<span class="w">    </span><span class="c1">//Perform necessary error handling here</span>
+<span class="p">});</span>
 </code></pre></div>
 <h4 id="handle-errors-in-asynchronous-calls">Handle errors in asynchronous calls<a class="headerlink" href="#handle-errors-in-asynchronous-calls" title="Permanent link">&para;</a></h4>
 <p>Errors that occur within asynchronous callbacks are easy to miss. Therefore, as a general principle first argument to the asynchronous calls should be an Error object. Also, express routes handle errors itself, but it should be always remembered that errors occurred in asynchronous calls made within express routes are not handled, unless an Error object is sent as a first argument.</p>
@@ -2425,27 +2425,27 @@ For detailed information on input validation, please refer to <a href="https://c
 <h3 id="server-security">Server Security<a class="headerlink" href="#server-security" title="Permanent link">&para;</a></h3>
 <h4 id="set-cookie-flags-appropriately">Set cookie flags appropriately<a class="headerlink" href="#set-cookie-flags-appropriately" title="Permanent link">&para;</a></h4>
 <p>Generally, session information is sent using cookies in web applications. However, improper use of HTTP cookies can render an application to several session management vulnerabilities. Some flags can be set for each cookie to prevent these kinds of attacks. <code>httpOnly</code>, <code>Secure</code> and <code>SameSite</code> flags are very important for session cookies. <code>httpOnly</code> flag prevents the cookie from being accessed by client-side JavaScript. This is an effective counter-measure for XSS attacks. <code>Secure</code> flag lets the cookie to be sent only if the communication is over HTTPS. <code>SameSite</code> flag can prevent cookies from being sent in cross-site requests that helps protect against Cross-Site Request Forgery (CSRF) attacks. Apart from these, there are other flags like domain, path and expires. Setting these flags appropriately is encouraged, but they are mostly related to cookie scope not the cookie security. Sample usage of these flags is given in the following example:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">session</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express-session&#39;</span><span class="p">);</span><span class="w"></span>
-<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">session</span><span class="p">({</span><span class="w"></span>
-<span class="w">    </span><span class="nx">secret</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;your-secret-key&#39;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nx">key</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;cookieName&#39;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nx">cookie</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">secure</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nx">httpOnly</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nx">path</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;/user&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">sameSite</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">}</span><span class="w"></span>
-<span class="p">}));</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">session</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express-session&#39;</span><span class="p">);</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">session</span><span class="p">({</span>
+<span class="w">    </span><span class="nx">secret</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;your-secret-key&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">key</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;cookieName&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">cookie</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">secure</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nx">httpOnly</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nx">path</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;/user&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">sameSite</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">}</span>
+<span class="p">}));</span>
 </code></pre></div>
 <h4 id="use-appropriate-security-headers">Use appropriate security headers<a class="headerlink" href="#use-appropriate-security-headers" title="Permanent link">&para;</a></h4>
 <p>There are several different <a href="https://owasp.org/www-project-secure-headers/">HTTP security headers</a> that can help you prevent some common attack vectors. These are listed below:</p>
 <ul>
 <li><strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security">Strict-Transport-Security</a></strong>: <a href="https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html">HTTP Strict Transport Security (HSTS)</a> dictates browsers that the application can only be accessed via HTTPS connections. In order to use it in your application, add the following codes:</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">helmet</span><span class="p">.</span><span class="nx">hsts</span><span class="p">());</span><span class="w"> </span><span class="c1">// default configuration</span><span class="w"></span>
-<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">helmet</span><span class="p">.</span><span class="nx">hsts</span><span class="p">(</span><span class="s2">&quot;&lt;max-age&gt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;&lt;includeSubdomains&gt;&quot;</span><span class="p">));</span><span class="w"> </span><span class="c1">// custom configuration</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">helmet</span><span class="p">.</span><span class="nx">hsts</span><span class="p">());</span><span class="w"> </span><span class="c1">// default configuration</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">helmet</span><span class="p">.</span><span class="nx">hsts</span><span class="p">(</span><span class="s2">&quot;&lt;max-age&gt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;&lt;includeSubdomains&gt;&quot;</span><span class="p">));</span><span class="w"> </span><span class="c1">// custom configuration</span>
 </code></pre></div>
 <ul>
 <li><strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options">X-Frame-Options</a>:</strong> determines if a page can be loaded via a <code>&lt;frame&gt;</code> or an <code>&lt;iframe&gt;</code> element. Allowing the page to be framed may result in <a href="https://owasp.org/www-community/attacks/Clickjacking">Clickjacking</a> attacks. This header can be used with <a href="https://www.npmjs.com/package/helmet">helmet</a> module as follows:</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">helmet</span><span class="p">.</span><span class="nx">xframe</span><span class="p">());</span><span class="w"> </span><span class="c1">// default behavior (DENY)</span><span class="w"></span>
-<span class="nx">helmet</span><span class="p">.</span><span class="nx">xframe</span><span class="p">(</span><span class="s1">&#39;sameorigin&#39;</span><span class="p">);</span><span class="w"> </span><span class="c1">// SAMEORIGIN</span><span class="w"></span>
-<span class="nx">helmet</span><span class="p">.</span><span class="nx">xframe</span><span class="p">(</span><span class="s1">&#39;allow-from&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;http://alloweduri.com&#39;</span><span class="p">);</span><span class="w"> </span><span class="c1">//ALLOW-FROM uri</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">helmet</span><span class="p">.</span><span class="nx">xframe</span><span class="p">());</span><span class="w"> </span><span class="c1">// default behavior (DENY)</span>
+<span class="nx">helmet</span><span class="p">.</span><span class="nx">xframe</span><span class="p">(</span><span class="s1">&#39;sameorigin&#39;</span><span class="p">);</span><span class="w"> </span><span class="c1">// SAMEORIGIN</span>
+<span class="nx">helmet</span><span class="p">.</span><span class="nx">xframe</span><span class="p">(</span><span class="s1">&#39;allow-from&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;http://alloweduri.com&#39;</span><span class="p">);</span><span class="w"> </span><span class="c1">//ALLOW-FROM uri</span>
 </code></pre></div>
 <ul>
 <li><strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection">X-XSS-Protection</a>:</strong> As described in the <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html#x-xss-protection-header">XSS Prevention Cheat Sheet</a>, this header should be set to <code>0</code> to disable the XSS Auditor.</li>
@@ -2456,68 +2456,68 @@ For detailed information on input validation, please refer to <a href="https://c
 <ul>
 <li><strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options">X-Content-Type-Options</a>:</strong> Even if the server sets a valid <code>Content-Type</code> header in the response, browsers may try to sniff the MIME type of the requested resource. This header is a way to stop this behavior and tell the browser not to change MIME types specified in <code>Content-Type</code> header. It can be configured in the following way:</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">helmet</span><span class="p">.</span><span class="nx">noSniff</span><span class="p">());</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">helmet</span><span class="p">.</span><span class="nx">noSniff</span><span class="p">());</span>
 </code></pre></div>
 <ul>
 <li><strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy">Content-Security-Policy</a>:</strong> Content Security Policy is developed to reduce the risk of attacks like <a href="https://owasp.org/www-community/attacks/xss/">Cross-Site Scripting (XSS)</a> and <a href="https://owasp.org/www-community/attacks/Clickjacking">Clickjacking</a>. It allows content from a list that you decide. It has several directives each of which prohibits loading specific type of a content. You can refer to <a href="https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html">Content Security Policy Cheat Sheet</a> for detailed explanation of each directive and how to use it. You can implement these settings in your application as follows:</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">csp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;helmet-csp&#39;</span><span class="p">)</span><span class="w"></span>
-<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">csp</span><span class="p">({</span><span class="w"></span>
-<span class="w">   </span><span class="nx">directives</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">       </span><span class="nx">defaultSrc</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;&#39;self&#39;&quot;</span><span class="p">],</span><span class="w">  </span><span class="c1">// default value for all directives that are absent</span><span class="w"></span>
-<span class="w">       </span><span class="nx">scriptSrc</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;&#39;self&#39;&quot;</span><span class="p">],</span><span class="w">   </span><span class="c1">// helps prevent XSS attacks</span><span class="w"></span>
-<span class="w">       </span><span class="nx">frameAncestors</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;&#39;none&#39;&quot;</span><span class="p">],</span><span class="w">  </span><span class="c1">// helps prevent Clickjacking attacks</span><span class="w"></span>
-<span class="w">       </span><span class="nx">imgSrc</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;&#39;self&#39;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;&#39;http://imgexample.com&#39;&quot;</span><span class="p">],</span><span class="w"></span>
-<span class="w">       </span><span class="nx">styleSrc</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;&#39;none&#39;&quot;</span><span class="p">]</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="p">}))</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">csp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;helmet-csp&#39;</span><span class="p">)</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">csp</span><span class="p">({</span>
+<span class="w">   </span><span class="nx">directives</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">       </span><span class="nx">defaultSrc</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;&#39;self&#39;&quot;</span><span class="p">],</span><span class="w">  </span><span class="c1">// default value for all directives that are absent</span>
+<span class="w">       </span><span class="nx">scriptSrc</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;&#39;self&#39;&quot;</span><span class="p">],</span><span class="w">   </span><span class="c1">// helps prevent XSS attacks</span>
+<span class="w">       </span><span class="nx">frameAncestors</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;&#39;none&#39;&quot;</span><span class="p">],</span><span class="w">  </span><span class="c1">// helps prevent Clickjacking attacks</span>
+<span class="w">       </span><span class="nx">imgSrc</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;&#39;self&#39;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;&#39;http://imgexample.com&#39;&quot;</span><span class="p">],</span>
+<span class="w">       </span><span class="nx">styleSrc</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;&#39;none&#39;&quot;</span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}))</span>
 </code></pre></div>
 <ul>
 <li><strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control">Cache-Control</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Pragma">Pragma</a>:</strong> Cache-Control header can be used to prevent browsers from caching the given responses. This should be done for pages that contain sensitive information about either the user or the application. However, disabling caching for pages that do not contain sensitive information may seriously affect the performance of the application. Therefore, caching should only be disabled for pages that return sensitive information. Appropriate caching controls and headers can be used easily by the following code:</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">helmet</span><span class="p">.</span><span class="nx">noCache</span><span class="p">());</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">helmet</span><span class="p">.</span><span class="nx">noCache</span><span class="p">());</span>
 </code></pre></div>
 <p>The above code sets Cache-Control, Surrogate-Control, Pragma and Expires headers accordingly.</p>
 <ul>
 <li><strong>X-Download-Options:</strong> This header prevents Internet Explorer from executing downloaded files in the site's context. This is achieved with noopen directive. You can do so with the following piece of code:</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">helmet</span><span class="p">.</span><span class="nx">ieNoOpen</span><span class="p">());</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">helmet</span><span class="p">.</span><span class="nx">ieNoOpen</span><span class="p">());</span>
 </code></pre></div>
 <ul>
 <li><strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Expect-CT">Expect-CT</a>:</strong> Certificate Transparency is a new mechanism developed to fix some structural problems regarding current SSL infrastructure. Expect-CT header may enforce certificate transparency requirements. It can be implemented in your application as follows:</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">expectCt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;expect-ct&#39;</span><span class="p">);</span><span class="w"></span>
-<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">expectCt</span><span class="p">({</span><span class="w"> </span><span class="nx">maxAge</span><span class="o">:</span><span class="w"> </span><span class="mf">123</span><span class="w"> </span><span class="p">}));</span><span class="w"></span>
-<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">expectCt</span><span class="p">({</span><span class="w"> </span><span class="nx">enforce</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nx">maxAge</span><span class="o">:</span><span class="w"> </span><span class="mf">123</span><span class="w"> </span><span class="p">}));</span><span class="w"></span>
-<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">expectCt</span><span class="p">({</span><span class="w"> </span><span class="nx">enforce</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nx">maxAge</span><span class="o">:</span><span class="w"> </span><span class="mf">123</span><span class="p">,</span><span class="w"> </span><span class="nx">reportUri</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;http://example.com&#39;</span><span class="p">}));</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">expectCt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;expect-ct&#39;</span><span class="p">);</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">expectCt</span><span class="p">({</span><span class="w"> </span><span class="nx">maxAge</span><span class="o">:</span><span class="w"> </span><span class="mf">123</span><span class="w"> </span><span class="p">}));</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">expectCt</span><span class="p">({</span><span class="w"> </span><span class="nx">enforce</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nx">maxAge</span><span class="o">:</span><span class="w"> </span><span class="mf">123</span><span class="w"> </span><span class="p">}));</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">expectCt</span><span class="p">({</span><span class="w"> </span><span class="nx">enforce</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nx">maxAge</span><span class="o">:</span><span class="w"> </span><span class="mf">123</span><span class="p">,</span><span class="w"> </span><span class="nx">reportUri</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;http://example.com&#39;</span><span class="p">}));</span>
 </code></pre></div>
 <ul>
 <li><strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Public-Key-Pins">Public-Key-Pins</a>:</strong> This header increases the security of HTTPS. With this header, a specific cryptographic public key is associated with a specific web server. If the server does not use the pinned keys in future, the browser regards the responses as illegitimate. It can be used as follows:</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">helmet</span><span class="p">.</span><span class="nx">hpkp</span><span class="p">({</span><span class="w"></span>
-<span class="w">    </span><span class="nx">maxAge</span><span class="o">:</span><span class="w"> </span><span class="mf">123</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nx">sha256s</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;Ab3Ef123=&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;ZyxawuV45=&#39;</span><span class="p">],</span><span class="w"></span>
-<span class="w">    </span><span class="nx">reportUri</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nx">includeSubDomains</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="w"></span>
-<span class="p">}));</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">helmet</span><span class="p">.</span><span class="nx">hpkp</span><span class="p">({</span>
+<span class="w">    </span><span class="nx">maxAge</span><span class="o">:</span><span class="w"> </span><span class="mf">123</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">sha256s</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;Ab3Ef123=&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;ZyxawuV45=&#39;</span><span class="p">],</span>
+<span class="w">    </span><span class="nx">reportUri</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">includeSubDomains</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="p">}));</span>
 </code></pre></div>
 <p>As discussed in <a href="https://cheatsheetseries.owasp.org/cheatsheets/Transport_Layer_Protection_Cheat_Sheet.html#consider-using-public-key-pinning">Transport Layer Security Cheat Sheet</a>, the decision to use public key pinning should be made with careful consideration, since it may cause locking out users for a long time if used incorrectly.</p>
 <ul>
 <li><strong>X-Powered-By:</strong> X-Powered-By header is used to inform what technology is used in the server side. This is an unnecessary header causing information leakage, so it should be removed from your application. To do so, you can use the <code>hidePoweredBy</code> as follows:</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">helmet</span><span class="p">.</span><span class="nx">hidePoweredBy</span><span class="p">());</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">helmet</span><span class="p">.</span><span class="nx">hidePoweredBy</span><span class="p">());</span>
 </code></pre></div>
 <p>Also, you can lie about the technologies used with this header. For example, even if your application does not use PHP, you can set X-Powered-By header to seem so.</p>
-<div class="highlight"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">helmet</span><span class="p">.</span><span class="nx">hidePoweredBy</span><span class="p">({</span><span class="w"> </span><span class="nx">setTo</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;PHP 4.2.0&#39;</span><span class="w"> </span><span class="p">}));</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">helmet</span><span class="p">.</span><span class="nx">hidePoweredBy</span><span class="p">({</span><span class="w"> </span><span class="nx">setTo</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;PHP 4.2.0&#39;</span><span class="w"> </span><span class="p">}));</span>
 </code></pre></div>
 <h3 id="platform-security">Platform Security<a class="headerlink" href="#platform-security" title="Permanent link">&para;</a></h3>
 <h4 id="keep-your-packages-up-to-date">Keep your packages up-to-date<a class="headerlink" href="#keep-your-packages-up-to-date" title="Permanent link">&para;</a></h4>
 <p>Security of your application depends directly on how secure the third-party packages you use in your application are. Therefore, it is important to keep your packages up-to-date. It should be noted that <a href="https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A9-Using_Components_with_Known_Vulnerabilities">Using Components with Known Vulnerabilities</a> is still in the OWASP Top 10. You can use <a href="https://jeremylong.github.io/DependencyCheck/analyzers/nodejs.html">OWASP Dependency-Check</a> to see if any of the packages used in the project has a known vulnerability. Also you can use <a href="https://github.com/retirejs/retire.js/">Retire.js</a> to check JavaScript libraries with known vulnerabilities.</p>
 <p>Starting with version 6, <code>npm</code> introduced <code>audit</code>, which will warn about vulnerable packages:</p>
-<div class="highlight"><pre><span></span><code>npm audit
+<div class="highlight"><pre><span></span><code>npm<span class="w"> </span>audit
 </code></pre></div>
 <p><code>npm</code> also introduced a simple way to upgrade the affected packages:</p>
-<div class="highlight"><pre><span></span><code>npm audit fix
+<div class="highlight"><pre><span></span><code>npm<span class="w"> </span>audit<span class="w"> </span>fix
 </code></pre></div>
 <p>There are several other tools you can use to check your dependencies. A more comprehensive list can be found in <a href="https://cheatsheetseries.owasp.org/cheatsheets/Vulnerable_Dependency_Management_Cheat_Sheet.html#tools">Vulnerable Dependency Management CS</a>.</p>
 <h4 id="do-not-use-dangerous-functions">Do not use dangerous functions<a class="headerlink" href="#do-not-use-dangerous-functions" title="Permanent link">&para;</a></h4>
@@ -2532,12 +2532,12 @@ For detailed information on input validation, please refer to <a href="https://c
 <h4 id="use-strict-mode">Use strict mode<a class="headerlink" href="#use-strict-mode" title="Permanent link">&para;</a></h4>
 <p>JavaScript has a number of unsafe and dangerous legacy features that should not be used. In order to remove these features, ES5 included a strict mode for developers. With this mode, errors that were silent previously are thrown. It also helps JavaScript engines perform optimizations. With strict mode, previously accepted bad syntax causes real errors. Because of these improvements, you should always use strict mode in your application. In order to enable strict mode, you just need to write <code>"use strict";</code> on top of your code.</p>
 <p>The following code will generate a <code>ReferenceError: Can't find variable: y</code> on the console, which will not be displayed unless strict mode is used:</p>
-<div class="highlight"><pre><span></span><code><span class="s2">&quot;use strict&quot;</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="s2">&quot;use strict&quot;</span><span class="p">;</span>
 
-<span class="nx">func</span><span class="p">();</span><span class="w"></span>
-<span class="kd">function</span><span class="w"> </span><span class="nx">func</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="nx">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3.14</span><span class="p">;</span><span class="w">   </span><span class="c1">// This will cause an error (y is not defined)</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="nx">func</span><span class="p">();</span>
+<span class="kd">function</span><span class="w"> </span><span class="nx">func</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3.14</span><span class="p">;</span><span class="w">   </span><span class="c1">// This will cause an error (y is not defined)</span>
+<span class="p">}</span>
 </code></pre></div>
 <h4 id="adhere-to-general-application-security-principles">Adhere to general application security principles<a class="headerlink" href="#adhere-to-general-application-security-principles" title="Permanent link">&para;</a></h4>
 <p>This list mainly focuses on issues that are common in Node.js applications, with recommendations and examples. In addition to these, there are general <a href="https://wiki.owasp.org/index.php/Security_by_Design_Principles">security by design principles</a> that apply to web applications regardless of technologies used in application server. You should also keep those principles in mind while developing your applications. You can always refer to <a href="https://cheatsheetseries.owasp.org/">OWASP Cheat Sheet Series</a> to learn more about web application vulnerabilities and mitigation techniques used against them.</p>
@@ -2558,42 +2558,6 @@ For detailed information on input validation, please refer to <a href="https://c
       </main>
       
         <footer class="md-footer">
-  
-    
-    <nav class="md-footer__inner md-grid" aria-label="Footer" >
-      
-        
-        <a href="NodeJS_Docker_Cheat_Sheet.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: NodeJS Docker" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              NodeJS Docker
-            </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="OS_Command_Injection_Defense_Cheat_Sheet.html" class="md-footer__link md-footer__link--next" aria-label="Next: OS Command Injection Defense" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              OS Command Injection Defense
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
@@ -2620,12 +2584,11 @@ For detailed information on input validation, please refer to <a href="https://c
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.12658920.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      <script src="../assets/javascripts/bundle.5cf534bf.min.js"></script>
       
-    
     
   </body>
 </html>

@@ -12,8 +12,14 @@
       
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html">
       
+      
+        <link rel="prev" href="Deserialization_Cheat_Sheet.html">
+      
+      
+        <link rel="next" href="DotNet_Security_Cheat_Sheet.html">
+      
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.0">
     
     
       
@@ -21,11 +27,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.975780f9.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.f79797b0.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
-        
       
       
 
@@ -112,8 +117,6 @@
       <form class="md-header__option" data-md-component="palette">
         
           
-          
-          
           <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
           
             <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
@@ -121,8 +124,6 @@
             </label>
           
         
-          
-          
           
           <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
           
@@ -1741,10 +1742,9 @@
                 
                   
 
-  <a href="https://github.com/OWASP/CheatSheetSeries/edit/master/docs/cheatsheets/Docker_Security_Cheat_Sheet.md" title="Edit this page" class="md-content__button md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
-  </a>
+  
+  
+
 
 
 <h1 id="docker-security-cheat-sheet">Docker Security Cheat Sheet<a class="headerlink" href="#docker-security-cheat-sheet" title="Permanent link">&para;</a></h1>
@@ -1760,22 +1760,22 @@
 <p><strong>Do not enable <em>tcp</em> Docker daemon socket.</strong> If you are running docker daemon with <code>-H tcp://0.0.0.0:XXX</code> or similar you are exposing un-encrypted and unauthenticated direct access to the Docker daemon, if the host is internet connected this means the docker daemon on your computer can be used by anyone from the public internet.
 If you really, <strong>really</strong> have to do this, you should secure it. Check how to do this <a href="https://docs.docker.com/engine/reference/commandline/dockerd/#daemon-socket-option">following Docker official documentation</a>.</p>
 <p><strong>Do not expose <em>/var/run/docker.sock</em> to other containers</strong>. If you are running your docker image with <code>-v /var/run/docker.sock://var/run/docker.sock</code> or similar, you should change it. Remember that mounting the socket read-only is not a solution but only makes it harder to exploit. Equivalent in the docker-compose file is something like this:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">volumes</span><span class="p">:</span><span class="w"></span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;/var/run/docker.sock:/var/run/docker.sock&quot;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">volumes</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;/var/run/docker.sock:/var/run/docker.sock&quot;</span>
 </code></pre></div>
 <h3 id="rule-2-set-a-user">RULE #2 - Set a user<a class="headerlink" href="#rule-2-set-a-user" title="Permanent link">&para;</a></h3>
 <p>Configuring the container to use an unprivileged user is the best way to prevent privilege escalation attacks. This can be accomplished in three different ways as follows:</p>
 <ol>
 <li>
 <p>During runtime using <code>-u</code> option of <code>docker run</code> command e.g.:</p>
-<div class="highlight"><pre><span></span><code>docker run -u <span class="m">4000</span> alpine
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-u<span class="w"> </span><span class="m">4000</span><span class="w"> </span>alpine
 </code></pre></div>
 </li>
 <li>
 <p>During build time. Simple add user in Dockerfile and use it. For example:</p>
 <div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="s">alpine</span>
-<span class="k">RUN</span><span class="w"> </span>groupadd -r myuser <span class="o">&amp;&amp;</span> useradd -r -g myuser myuser
-&lt;HERE DO WHAT YOU HAVE TO DO AS A ROOT USER LIKE INSTALLING PACKAGES ETC.&gt;
+<span class="k">RUN</span><span class="w"> </span>groupadd<span class="w"> </span>-r<span class="w"> </span>myuser<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>useradd<span class="w"> </span>-r<span class="w"> </span>-g<span class="w"> </span>myuser<span class="w"> </span>myuser
+&lt;HERE<span class="w"> </span>DO<span class="w"> </span>WHAT<span class="w"> </span>YOU<span class="w"> </span>HAVE<span class="w"> </span>TO<span class="w"> </span>DO<span class="w"> </span>AS<span class="w"> </span>A<span class="w"> </span>ROOT<span class="w"> </span>USER<span class="w"> </span>LIKE<span class="w"> </span>INSTALLING<span class="w"> </span>PACKAGES<span class="w"> </span>ETC.&gt;
 <span class="k">USER</span><span class="w"> </span><span class="s">myuser</span>
 </code></pre></div>
 </li>
@@ -1785,19 +1785,19 @@ If you really, <strong>really</strong> have to do this, you should secure it. Ch
 </ol>
 <p>More information about this topic can be found at <a href="https://docs.docker.com/engine/security/userns-remap/">Docker official documentation</a></p>
 <p>In kubernetes, this can be configured in <a href="https://kubernetes.io/docs/tasks/configure-pod-container/security-context/">Security Context</a> using <code>runAsNonRoot</code> field e.g.:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
-<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
-<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
-<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
-<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">containers</span><span class="p p-Indicator">:</span><span class="w"></span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
-<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">....</span><span class="w"></span>
-<span class="w">    </span><span class="nt">securityContext</span><span class="p">:</span><span class="w"></span>
-<span class="w">          </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
-<span class="w">          </span><span class="l l-Scalar l-Scalar-Plain">runAsNonRoot</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
-<span class="w">          </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">containers</span><span class="p p-Indicator">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">....</span>
+<span class="w">    </span><span class="nt">securityContext</span><span class="p">:</span>
+<span class="w">          </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="w">          </span><span class="l l-Scalar l-Scalar-Plain">runAsNonRoot</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">          </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 </code></pre></div>
 <p>As a Kubernetes cluster administrator, you can configure it using <a href="https://kubernetes.io/docs/concepts/policy/pod-security-policy/">Pod Security Policies</a>.</p>
 <h3 id="rule-3-limit-capabilities-grant-only-specific-capabilities-needed-by-a-container">RULE #3 - Limit capabilities (Grant only specific capabilities, needed by a container)<a class="headerlink" href="#rule-3-limit-capabilities-grant-only-specific-capabilities-needed-by-a-container" title="Permanent link">&para;</a></h3>
@@ -1805,45 +1805,45 @@ If you really, <strong>really</strong> have to do this, you should secure it. Ch
 You can change it and drop some capabilities (using <code>--cap-drop</code>) to harden your docker containers, or add some capabilities (using <code>--cap-add</code>) if needed.
 Remember not to run containers with the <code>--privileged</code> flag - this will add ALL Linux kernel capabilities to the container.</p>
 <p>The most secure setup is to drop all capabilities <code>--cap-drop all</code> and then add only required ones. For example:</p>
-<div class="highlight"><pre><span></span><code>docker run --cap-drop all --cap-add CHOWN alpine
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--cap-drop<span class="w"> </span>all<span class="w"> </span>--cap-add<span class="w"> </span>CHOWN<span class="w"> </span>alpine
 </code></pre></div>
 <p><strong>And remember: Do not run containers with the <em>--privileged</em> flag!!!</strong></p>
 <p>In kubernetes this can be configured in <a href="https://kubernetes.io/docs/tasks/configure-pod-container/security-context/">Security Context</a> using <code>capabilities</code> field e.g.:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
-<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
-<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
-<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
-<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">containers</span><span class="p p-Indicator">:</span><span class="w"></span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
-<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">....</span><span class="w"></span>
-<span class="w">    </span><span class="nt">securityContext</span><span class="p">:</span><span class="w"></span>
-<span class="w">          </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
-<span class="w">          </span><span class="l l-Scalar l-Scalar-Plain">capabilities</span><span class="p p-Indicator">:</span><span class="w"></span>
-<span class="w">            </span><span class="nt">drop</span><span class="p">:</span><span class="w"></span>
-<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">all</span><span class="w"></span>
-<span class="w">            </span><span class="nt">add</span><span class="p">:</span><span class="w"></span>
-<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CHOWN</span><span class="w"></span>
-<span class="w">          </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">containers</span><span class="p p-Indicator">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">....</span>
+<span class="w">    </span><span class="nt">securityContext</span><span class="p">:</span>
+<span class="w">          </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="w">          </span><span class="l l-Scalar l-Scalar-Plain">capabilities</span><span class="p p-Indicator">:</span>
+<span class="w">            </span><span class="nt">drop</span><span class="p">:</span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">all</span>
+<span class="w">            </span><span class="nt">add</span><span class="p">:</span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CHOWN</span>
+<span class="w">          </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 </code></pre></div>
 <p>As a Kubernetes cluster administrator, you can configure it using <a href="https://kubernetes.io/docs/concepts/policy/pod-security-policy/">Pod Security Policies</a>.</p>
 <h3 id="rule-4-add-no-new-privileges-flag">RULE #4 - Add –no-new-privileges flag<a class="headerlink" href="#rule-4-add-no-new-privileges-flag" title="Permanent link">&para;</a></h3>
 <p>Always run your docker images with <code>--security-opt=no-new-privileges</code> in order to prevent escalate privileges using <code>setuid</code> or <code>setgid</code> binaries.</p>
 <p>In kubernetes, this can be configured in <a href="https://kubernetes.io/docs/tasks/configure-pod-container/security-context/">Security Context</a> using <code>allowPrivilegeEscalation</code> field e.g.:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
-<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
-<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
-<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
-<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">containers</span><span class="p p-Indicator">:</span><span class="w"></span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
-<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">....</span><span class="w"></span>
-<span class="w">    </span><span class="nt">securityContext</span><span class="p">:</span><span class="w"></span>
-<span class="w">          </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
-<span class="w">          </span><span class="l l-Scalar l-Scalar-Plain">allowPrivilegeEscalation</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
-<span class="w">          </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">containers</span><span class="p p-Indicator">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">....</span>
+<span class="w">    </span><span class="nt">securityContext</span><span class="p">:</span>
+<span class="w">          </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="w">          </span><span class="l l-Scalar l-Scalar-Plain">allowPrivilegeEscalation</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">          </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 </code></pre></div>
 <p>As a Kubernetes cluster administrator, you can refer to Kubernetes documentation to configure it using <a href="https://kubernetes.io/docs/concepts/policy/pod-security-policy/">Pod Security Policies</a>.</p>
 <h3 id="rule-5-disable-inter-container-communication-iccfalse">RULE #5 - Disable inter-container communication (--icc=false)<a class="headerlink" href="#rule-5-disable-inter-container-communication-iccfalse" title="Permanent link">&para;</a></h3>
@@ -1863,39 +1863,39 @@ See more in <a href="https://docs.docker.com/v17.09/engine/userguide/networking/
 </a></p>
 <h3 id="rule-8-set-filesystem-and-volumes-to-read-only">RULE #8 - Set filesystem and volumes to read-only<a class="headerlink" href="#rule-8-set-filesystem-and-volumes-to-read-only" title="Permanent link">&para;</a></h3>
 <p><strong>Run containers with a read-only filesystem</strong> using <code>--read-only</code> flag. For example:</p>
-<div class="highlight"><pre><span></span><code>docker run --read-only alpine sh -c <span class="s1">&#39;echo &quot;whatever&quot; &gt; /tmp&#39;</span>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--read-only<span class="w"> </span>alpine<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;echo &quot;whatever&quot; &gt; /tmp&#39;</span>
 </code></pre></div>
 <p>If an application inside a container has to save something temporarily, combine <code>--read-only</code> flag with <code>--tmpfs</code> like this:</p>
-<div class="highlight"><pre><span></span><code>docker run --read-only --tmpfs /tmp alpine sh -c <span class="s1">&#39;echo &quot;whatever&quot; &gt; /tmp/file&#39;</span>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--read-only<span class="w"> </span>--tmpfs<span class="w"> </span>/tmp<span class="w"> </span>alpine<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;echo &quot;whatever&quot; &gt; /tmp/file&#39;</span>
 </code></pre></div>
 <p>Equivalent in the docker-compose file will be:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;3&quot;</span><span class="w"></span>
-<span class="nt">services</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">alpine</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">alpine</span><span class="w"></span>
-<span class="w">    </span><span class="nt">read_only</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;3&quot;</span>
+<span class="nt">services</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">alpine</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">alpine</span>
+<span class="w">    </span><span class="nt">read_only</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </code></pre></div>
 <p>Equivalent in kubernetes in <a href="https://kubernetes.io/docs/tasks/configure-pod-container/security-context/">Security Context</a> will be:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
-<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
-<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
-<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
-<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">containers</span><span class="p p-Indicator">:</span><span class="w"></span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
-<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">....</span><span class="w"></span>
-<span class="w">    </span><span class="nt">securityContext</span><span class="p">:</span><span class="w"></span>
-<span class="w">          </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
-<span class="w">          </span><span class="l l-Scalar l-Scalar-Plain">readOnlyRootFilesystem</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
-<span class="w">          </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">containers</span><span class="p p-Indicator">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">....</span>
+<span class="w">    </span><span class="nt">securityContext</span><span class="p">:</span>
+<span class="w">          </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="w">          </span><span class="l l-Scalar l-Scalar-Plain">readOnlyRootFilesystem</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">          </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 </code></pre></div>
 <p>In addition, if the volume is mounted only for reading <strong>mount them as a read-only</strong>
 It can be done by appending <code>:ro</code> to the <code>-v</code> like this:</p>
-<div class="highlight"><pre><span></span><code>docker run -v volume-name:/path/in/container:ro alpine
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-v<span class="w"> </span>volume-name:/path/in/container:ro<span class="w"> </span>alpine
 </code></pre></div>
 <p>Or by using <code>--mount</code> option:</p>
-<div class="highlight"><pre><span></span><code>docker run --mount <span class="nv">source</span><span class="o">=</span>volume-name,destination<span class="o">=</span>/path/in/container,readonly alpine
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--mount<span class="w"> </span><span class="nv">source</span><span class="o">=</span>volume-name,destination<span class="o">=</span>/path/in/container,readonly<span class="w"> </span>alpine
 </code></pre></div>
 <h3 id="rule-9-use-static-analysis-tools">RULE #9 - Use static analysis tools<a class="headerlink" href="#rule-9-use-static-analysis-tools" title="Permanent link">&para;</a></h3>
 <p>To detect containers with known vulnerabilities - scan images using static analysis tools.</p>
@@ -1934,7 +1934,7 @@ It can be done by appending <code>:ro</code> to the <code>-v</code> like this:</
 <h3 id="rule-10-set-the-logging-level-to-at-least-info">RULE #10 - Set the logging level to at least INFO<a class="headerlink" href="#rule-10-set-the-logging-level-to-at-least-info" title="Permanent link">&para;</a></h3>
 <p>By default, the Docker daemon is configured to have a base logging level of 'info', and if this is not the case: set the Docker daemon log level to 'info'. Rationale: Setting up an appropriate log level, configures the Docker daemon to log events that you would want to review later. A base log level of 'info' and above would capture all logs except the debug logs. Until and unless required, you should not run docker daemon at the 'debug' log level.</p>
 <p>To configure the log level in docker-compose:</p>
-<div class="highlight"><pre><span></span><code>docker-compose --log-level info up
+<div class="highlight"><pre><span></span><code>docker-compose<span class="w"> </span>--log-level<span class="w"> </span>info<span class="w"> </span>up
 </code></pre></div>
 <h3 id="rule-11-lint-the-dockerfile-at-build-time">Rule #11 - Lint the Dockerfile at build time<a class="headerlink" href="#rule-11-lint-the-dockerfile-at-build-time" title="Permanent link">&para;</a></h3>
 <p>Many issues can be prevented by following some best practices when writing the Dockerfile. Adding a security linter as a step in the build pipeline can go a long way in avoiding further headaches. Some issues that are worth checking are:</p>
@@ -1972,42 +1972,6 @@ It can be done by appending <code>:ro</code> to the <code>-v</code> like this:</
       
         <footer class="md-footer">
   
-    
-    <nav class="md-footer__inner md-grid" aria-label="Footer" >
-      
-        
-        <a href="Deserialization_Cheat_Sheet.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Deserialization" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              Deserialization
-            </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="DotNet_Security_Cheat_Sheet.html" class="md-footer__link md-footer__link--next" aria-label="Next: DotNet Security" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              DotNet Security
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
-  
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
       <div class="md-copyright">
@@ -2033,12 +1997,11 @@ It can be done by appending <code>:ro</code> to the <code>-v</code> like this:</
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.12658920.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      <script src="../assets/javascripts/bundle.5cf534bf.min.js"></script>
       
-    
     
   </body>
 </html>

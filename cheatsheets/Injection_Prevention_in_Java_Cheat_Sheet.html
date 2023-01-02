@@ -16,8 +16,14 @@ redirect_from: "/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html"
       
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Injection_Prevention_in_Java_Cheat_Sheet.html">
       
+      
+        <link rel="prev" href="Injection_Prevention_Cheat_Sheet.html">
+      
+      
+        <link rel="next" href="Input_Validation_Cheat_Sheet.html">
+      
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.0">
     
     
       
@@ -25,11 +31,10 @@ redirect_from: "/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html"
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.975780f9.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.f79797b0.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
-        
       
       
 
@@ -116,8 +121,6 @@ redirect_from: "/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html"
       <form class="md-header__option" data-md-component="palette">
         
           
-          
-          
           <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
           
             <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
@@ -125,8 +128,6 @@ redirect_from: "/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html"
             </label>
           
         
-          
-          
           
           <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
           
@@ -2193,10 +2194,9 @@ redirect_from: "/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html"
                 
                   
 
-  <a href="https://github.com/OWASP/CheatSheetSeries/edit/master/docs/cheatsheets/Injection_Prevention_in_Java_Cheat_Sheet.md" title="Edit this page" class="md-content__button md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
-  </a>
+  
+  
+
 
 
 <h1 id="injection-prevention-cheat-sheet-in-java">Injection Prevention Cheat Sheet in Java<a class="headerlink" href="#injection-prevention-cheat-sheet-in-java" title="Permanent link">&para;</a></h1>
@@ -2222,58 +2222,58 @@ redirect_from: "/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html"
 <p>Use <em>Query Parameterization</em> in order to prevent injection.</p>
 <h4 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="cm">/*No DB framework used here in order to show the real use of</span>
-<span class="cm">  Prepared Statement from Java API*/</span><span class="w"></span>
-<span class="cm">/*Open connection with H2 database and use it*/</span><span class="w"></span>
-<span class="n">Class</span><span class="p">.</span><span class="na">forName</span><span class="p">(</span><span class="s">&quot;org.h2.Driver&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="n">String</span><span class="w"> </span><span class="n">jdbcUrl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;jdbc:h2:file:&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">).</span><span class="na">getAbsolutePath</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;/target/db&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">Connection</span><span class="w"> </span><span class="n">con</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DriverManager</span><span class="p">.</span><span class="na">getConnection</span><span class="p">(</span><span class="n">jdbcUrl</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="cm">  Prepared Statement from Java API*/</span>
+<span class="cm">/*Open connection with H2 database and use it*/</span>
+<span class="n">Class</span><span class="p">.</span><span class="na">forName</span><span class="p">(</span><span class="s">&quot;org.h2.Driver&quot;</span><span class="p">);</span>
+<span class="n">String</span><span class="w"> </span><span class="n">jdbcUrl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;jdbc:h2:file:&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">).</span><span class="na">getAbsolutePath</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;/target/db&quot;</span><span class="p">;</span>
+<span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">Connection</span><span class="w"> </span><span class="n">con</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DriverManager</span><span class="p">.</span><span class="na">getConnection</span><span class="p">(</span><span class="n">jdbcUrl</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
 
-<span class="w">    </span><span class="cm">/* Sample A: Select data using Prepared Statement*/</span><span class="w"></span>
-<span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;select * from color where friendly_name = ?&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">colors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span><span class="w"></span>
-<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">PreparedStatement</span><span class="w"> </span><span class="n">pStatement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">con</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="n">query</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="n">pStatement</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;yellow&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ResultSet</span><span class="w"> </span><span class="n">rSet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pStatement</span><span class="p">.</span><span class="na">executeQuery</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">            </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">rSet</span><span class="p">.</span><span class="na">next</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">                </span><span class="n">colors</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">rSet</span><span class="p">.</span><span class="na">getString</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span><span class="w"></span>
-<span class="w">            </span><span class="p">}</span><span class="w"></span>
-<span class="w">        </span><span class="p">}</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">    </span><span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">colors</span><span class="p">.</span><span class="na">size</span><span class="p">());</span><span class="w"></span>
-<span class="w">    </span><span class="n">Assert</span><span class="p">.</span><span class="na">assertTrue</span><span class="p">(</span><span class="n">colors</span><span class="p">.</span><span class="na">contains</span><span class="p">(</span><span class="s">&quot;yellow&quot;</span><span class="p">));</span><span class="w"></span>
+<span class="w">    </span><span class="cm">/* Sample A: Select data using Prepared Statement*/</span>
+<span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;select * from color where friendly_name = ?&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">colors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">PreparedStatement</span><span class="w"> </span><span class="n">pStatement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">con</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="n">query</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">pStatement</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;yellow&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ResultSet</span><span class="w"> </span><span class="n">rSet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pStatement</span><span class="p">.</span><span class="na">executeQuery</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">rSet</span><span class="p">.</span><span class="na">next</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">colors</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">rSet</span><span class="p">.</span><span class="na">getString</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">colors</span><span class="p">.</span><span class="na">size</span><span class="p">());</span>
+<span class="w">    </span><span class="n">Assert</span><span class="p">.</span><span class="na">assertTrue</span><span class="p">(</span><span class="n">colors</span><span class="p">.</span><span class="na">contains</span><span class="p">(</span><span class="s">&quot;yellow&quot;</span><span class="p">));</span>
 
-<span class="w">    </span><span class="cm">/* Sample B: Insert data using Prepared Statement*/</span><span class="w"></span>
-<span class="w">    </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;insert into color(friendly_name, red, green, blue) values(?, ?, ?, ?)&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">insertedRecordCount</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">PreparedStatement</span><span class="w"> </span><span class="n">pStatement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">con</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="n">query</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="n">pStatement</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;orange&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="n">pStatement</span><span class="p">.</span><span class="na">setInt</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">239</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="n">pStatement</span><span class="p">.</span><span class="na">setInt</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">125</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="n">pStatement</span><span class="p">.</span><span class="na">setInt</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">11</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="n">insertedRecordCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pStatement</span><span class="p">.</span><span class="na">executeUpdate</span><span class="p">();</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">    </span><span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">insertedRecordCount</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="cm">/* Sample B: Insert data using Prepared Statement*/</span>
+<span class="w">    </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;insert into color(friendly_name, red, green, blue) values(?, ?, ?, ?)&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">insertedRecordCount</span><span class="p">;</span>
+<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">PreparedStatement</span><span class="w"> </span><span class="n">pStatement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">con</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="n">query</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">pStatement</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;orange&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">pStatement</span><span class="p">.</span><span class="na">setInt</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">239</span><span class="p">);</span>
+<span class="w">        </span><span class="n">pStatement</span><span class="p">.</span><span class="na">setInt</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">125</span><span class="p">);</span>
+<span class="w">        </span><span class="n">pStatement</span><span class="p">.</span><span class="na">setInt</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">11</span><span class="p">);</span>
+<span class="w">        </span><span class="n">insertedRecordCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pStatement</span><span class="p">.</span><span class="na">executeUpdate</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">insertedRecordCount</span><span class="p">);</span>
 
-<span class="w">   </span><span class="cm">/* Sample C: Update data using Prepared Statement*/</span><span class="w"></span>
-<span class="w">    </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;update color set blue = ? where friendly_name = ?&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">updatedRecordCount</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">PreparedStatement</span><span class="w"> </span><span class="n">pStatement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">con</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="n">query</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="n">pStatement</span><span class="p">.</span><span class="na">setInt</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="n">pStatement</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;orange&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="n">updatedRecordCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pStatement</span><span class="p">.</span><span class="na">executeUpdate</span><span class="p">();</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">    </span><span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">updatedRecordCount</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="cm">/* Sample C: Update data using Prepared Statement*/</span>
+<span class="w">    </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;update color set blue = ? where friendly_name = ?&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">updatedRecordCount</span><span class="p">;</span>
+<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">PreparedStatement</span><span class="w"> </span><span class="n">pStatement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">con</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="n">query</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">pStatement</span><span class="p">.</span><span class="na">setInt</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span>
+<span class="w">        </span><span class="n">pStatement</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;orange&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">updatedRecordCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pStatement</span><span class="p">.</span><span class="na">executeUpdate</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">updatedRecordCount</span><span class="p">);</span>
 
-<span class="w">   </span><span class="cm">/* Sample D: Delete data using Prepared Statement*/</span><span class="w"></span>
-<span class="w">    </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;delete from color where friendly_name = ?&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">deletedRecordCount</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">PreparedStatement</span><span class="w"> </span><span class="n">pStatement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">con</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="n">query</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="n">pStatement</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;orange&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="n">deletedRecordCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pStatement</span><span class="p">.</span><span class="na">executeUpdate</span><span class="p">();</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">    </span><span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">deletedRecordCount</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="cm">/* Sample D: Delete data using Prepared Statement*/</span>
+<span class="w">    </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;delete from color where friendly_name = ?&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">deletedRecordCount</span><span class="p">;</span>
+<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">PreparedStatement</span><span class="w"> </span><span class="n">pStatement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">con</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="n">query</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">pStatement</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;orange&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">deletedRecordCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pStatement</span><span class="p">.</span><span class="na">executeUpdate</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">deletedRecordCount</span><span class="p">);</span>
 
-<span class="p">}</span><span class="w"></span>
+<span class="p">}</span>
 </code></pre></div>
 <h4 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h4>
 <ul>
@@ -2285,29 +2285,29 @@ redirect_from: "/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html"
 <h4 id="how-to-prevent_1">How to prevent<a class="headerlink" href="#how-to-prevent_1" title="Permanent link">&para;</a></h4>
 <p>Use Java Persistence Query Language <strong>Query Parameterization</strong> in order to prevent injection.</p>
 <h4 id="example_1">Example<a class="headerlink" href="#example_1" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="n">EntityManager</span><span class="w"> </span><span class="n">entityManager</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w"></span>
-<span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="cm">/* Get a ref on EntityManager to access DB */</span><span class="w"></span>
-<span class="w">    </span><span class="n">entityManager</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Persistence</span><span class="p">.</span><span class="na">createEntityManagerFactory</span><span class="p">(</span><span class="s">&quot;testJPA&quot;</span><span class="p">).</span><span class="na">createEntityManager</span><span class="p">();</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="n">EntityManager</span><span class="w"> </span><span class="n">entityManager</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="cm">/* Get a ref on EntityManager to access DB */</span>
+<span class="w">    </span><span class="n">entityManager</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Persistence</span><span class="p">.</span><span class="na">createEntityManagerFactory</span><span class="p">(</span><span class="s">&quot;testJPA&quot;</span><span class="p">).</span><span class="na">createEntityManager</span><span class="p">();</span>
 
-<span class="w">    </span><span class="cm">/* Define parameterized query prototype using named parameter to enhance readability */</span><span class="w"></span>
-<span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">queryPrototype</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;select c from Color c where c.friendlyName = :colorName&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="cm">/* Define parameterized query prototype using named parameter to enhance readability */</span>
+<span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">queryPrototype</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;select c from Color c where c.friendlyName = :colorName&quot;</span><span class="p">;</span>
 
-<span class="w">    </span><span class="cm">/* Create the query, set the named parameter and execute the query */</span><span class="w"></span>
-<span class="w">    </span><span class="n">Query</span><span class="w"> </span><span class="n">queryObject</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">entityManager</span><span class="p">.</span><span class="na">createQuery</span><span class="p">(</span><span class="n">queryPrototype</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">Color</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Color</span><span class="p">)</span><span class="w"> </span><span class="n">queryObject</span><span class="p">.</span><span class="na">setParameter</span><span class="p">(</span><span class="s">&quot;colorName&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;yellow&quot;</span><span class="p">).</span><span class="na">getSingleResult</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="cm">/* Create the query, set the named parameter and execute the query */</span>
+<span class="w">    </span><span class="n">Query</span><span class="w"> </span><span class="n">queryObject</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">entityManager</span><span class="p">.</span><span class="na">createQuery</span><span class="p">(</span><span class="n">queryPrototype</span><span class="p">);</span>
+<span class="w">    </span><span class="n">Color</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Color</span><span class="p">)</span><span class="w"> </span><span class="n">queryObject</span><span class="p">.</span><span class="na">setParameter</span><span class="p">(</span><span class="s">&quot;colorName&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;yellow&quot;</span><span class="p">).</span><span class="na">getSingleResult</span><span class="p">();</span>
 
-<span class="w">    </span><span class="cm">/* Ensure that the object obtained is the right one */</span><span class="w"></span>
-<span class="w">    </span><span class="n">Assert</span><span class="p">.</span><span class="na">assertNotNull</span><span class="p">(</span><span class="n">c</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="n">c</span><span class="p">.</span><span class="na">getFriendlyName</span><span class="p">(),</span><span class="w"> </span><span class="s">&quot;yellow&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="n">c</span><span class="p">.</span><span class="na">getRed</span><span class="p">(),</span><span class="w"> </span><span class="mi">213</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="n">c</span><span class="p">.</span><span class="na">getGreen</span><span class="p">(),</span><span class="w"> </span><span class="mi">242</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="n">c</span><span class="p">.</span><span class="na">getBlue</span><span class="p">(),</span><span class="w"> </span><span class="mi">26</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">entityManager</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">entityManager</span><span class="p">.</span><span class="na">isOpen</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="n">entityManager</span><span class="p">.</span><span class="na">close</span><span class="p">();</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="cm">/* Ensure that the object obtained is the right one */</span>
+<span class="w">    </span><span class="n">Assert</span><span class="p">.</span><span class="na">assertNotNull</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+<span class="w">    </span><span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="n">c</span><span class="p">.</span><span class="na">getFriendlyName</span><span class="p">(),</span><span class="w"> </span><span class="s">&quot;yellow&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="n">c</span><span class="p">.</span><span class="na">getRed</span><span class="p">(),</span><span class="w"> </span><span class="mi">213</span><span class="p">);</span>
+<span class="w">    </span><span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="n">c</span><span class="p">.</span><span class="na">getGreen</span><span class="p">(),</span><span class="w"> </span><span class="mi">242</span><span class="p">);</span>
+<span class="w">    </span><span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="n">c</span><span class="p">.</span><span class="na">getBlue</span><span class="p">(),</span><span class="w"> </span><span class="mi">26</span><span class="p">);</span>
+<span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">entityManager</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">entityManager</span><span class="p">.</span><span class="na">isOpen</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">entityManager</span><span class="p">.</span><span class="na">close</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 <h4 id="references_1">References<a class="headerlink" href="#references_1" title="Permanent link">&para;</a></h4>
 <ul>
@@ -2321,9 +2321,9 @@ redirect_from: "/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html"
 <h4 id="example_2">Example<a class="headerlink" href="#example_2" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="cm">/* The context taken is, for example, to perform a PING against a computer.</span>
 <span class="cm">* The prevention is to use the feature provided by the Java API instead of building</span>
-<span class="cm">* a system command as String and execute it */</span><span class="w"></span>
-<span class="n">InetAddress</span><span class="w"> </span><span class="n">host</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">InetAddress</span><span class="p">.</span><span class="na">getByName</span><span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="n">Assert</span><span class="p">.</span><span class="na">assertTrue</span><span class="p">(</span><span class="n">host</span><span class="p">.</span><span class="na">isReachable</span><span class="p">(</span><span class="mi">5000</span><span class="p">));</span><span class="w"></span>
+<span class="cm">* a system command as String and execute it */</span>
+<span class="n">InetAddress</span><span class="w"> </span><span class="n">host</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">InetAddress</span><span class="p">.</span><span class="na">getByName</span><span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">);</span>
+<span class="n">Assert</span><span class="p">.</span><span class="na">assertTrue</span><span class="p">(</span><span class="n">host</span><span class="p">.</span><span class="na">isReachable</span><span class="p">(</span><span class="mi">5000</span><span class="p">));</span>
 </code></pre></div>
 <h4 id="references_2">References<a class="headerlink" href="#references_2" title="Permanent link">&para;</a></h4>
 <ul>
@@ -2339,60 +2339,60 @@ redirect_from: "/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html"
 <div class="highlight"><pre><span></span><code><span class="cm">/**</span>
 <span class="cm"> * Resolver in order to define parameter for XPATH expression.</span>
 <span class="cm"> *</span>
-<span class="cm"> */</span><span class="w"></span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">SimpleVariableResolver</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">XPathVariableResolver</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="cm"> */</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">SimpleVariableResolver</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">XPathVariableResolver</span><span class="w"> </span><span class="p">{</span>
 
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">QName</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="o">&gt;</span><span class="w"> </span><span class="n">vars</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="o">&lt;</span><span class="n">QName</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="o">&gt;</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">QName</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="o">&gt;</span><span class="w"> </span><span class="n">vars</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="o">&lt;</span><span class="n">QName</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="o">&gt;</span><span class="p">();</span>
 
 <span class="w">    </span><span class="cm">/**</span>
 <span class="cm">     * External methods to add parameter</span>
 <span class="cm">     *</span>
 <span class="cm">     * @param name Parameter name</span>
 <span class="cm">     * @param value Parameter value</span>
-<span class="cm">     */</span><span class="w"></span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">addVariable</span><span class="p">(</span><span class="n">QName</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="n">vars</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="cm">     */</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">addVariable</span><span class="p">(</span><span class="n">QName</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">vars</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 
 <span class="w">    </span><span class="cm">/**</span>
 <span class="cm">     * {@inheritDoc}</span>
 <span class="cm">     *</span>
 <span class="cm">     * @see javax.xml.xpath.XPathVariableResolver#resolveVariable(javax.xml.namespace.QName)</span>
-<span class="cm">     */</span><span class="w"></span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="nf">resolveVariable</span><span class="p">(</span><span class="n">QName</span><span class="w"> </span><span class="n">variableName</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">vars</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">variableName</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="cm">     */</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Object</span><span class="w"> </span><span class="nf">resolveVariable</span><span class="p">(</span><span class="n">QName</span><span class="w"> </span><span class="n">variableName</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">vars</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">variableName</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>Code using it to perform XPath query.</p>
-<div class="highlight"><pre><span></span><code><span class="cm">/*Create a XML document builder factory*/</span><span class="w"></span>
-<span class="n">DocumentBuilderFactory</span><span class="w"> </span><span class="n">dbf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DocumentBuilderFactory</span><span class="p">.</span><span class="na">newInstance</span><span class="p">();</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="cm">/*Create a XML document builder factory*/</span>
+<span class="n">DocumentBuilderFactory</span><span class="w"> </span><span class="n">dbf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DocumentBuilderFactory</span><span class="p">.</span><span class="na">newInstance</span><span class="p">();</span>
 
-<span class="cm">/*Disable External Entity resolution for different cases*/</span><span class="w"></span>
-<span class="c1">//Do not performed here in order to focus on variable resolver code</span><span class="w"></span>
-<span class="c1">//but do it for production code !</span><span class="w"></span>
+<span class="cm">/*Disable External Entity resolution for different cases*/</span>
+<span class="c1">//Do not performed here in order to focus on variable resolver code</span>
+<span class="c1">//but do it for production code !</span>
 
-<span class="cm">/*Load XML file*/</span><span class="w"></span>
-<span class="n">DocumentBuilder</span><span class="w"> </span><span class="n">builder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dbf</span><span class="p">.</span><span class="na">newDocumentBuilder</span><span class="p">();</span><span class="w"></span>
-<span class="n">Document</span><span class="w"> </span><span class="n">doc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">builder</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="s">&quot;src/test/resources/SampleXPath.xml&quot;</span><span class="p">));</span><span class="w"></span>
+<span class="cm">/*Load XML file*/</span>
+<span class="n">DocumentBuilder</span><span class="w"> </span><span class="n">builder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dbf</span><span class="p">.</span><span class="na">newDocumentBuilder</span><span class="p">();</span>
+<span class="n">Document</span><span class="w"> </span><span class="n">doc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">builder</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="s">&quot;src/test/resources/SampleXPath.xml&quot;</span><span class="p">));</span>
 
-<span class="cm">/* Create and configure parameter resolver */</span><span class="w"></span>
-<span class="n">String</span><span class="w"> </span><span class="n">bid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;bk102&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="n">SimpleVariableResolver</span><span class="w"> </span><span class="n">variableResolver</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SimpleVariableResolver</span><span class="p">();</span><span class="w"></span>
-<span class="n">variableResolver</span><span class="p">.</span><span class="na">addVariable</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">QName</span><span class="p">(</span><span class="s">&quot;bookId&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">bid</span><span class="p">);</span><span class="w"></span>
+<span class="cm">/* Create and configure parameter resolver */</span>
+<span class="n">String</span><span class="w"> </span><span class="n">bid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;bk102&quot;</span><span class="p">;</span>
+<span class="n">SimpleVariableResolver</span><span class="w"> </span><span class="n">variableResolver</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SimpleVariableResolver</span><span class="p">();</span>
+<span class="n">variableResolver</span><span class="p">.</span><span class="na">addVariable</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">QName</span><span class="p">(</span><span class="s">&quot;bookId&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">bid</span><span class="p">);</span>
 
-<span class="cm">/*Create and configure XPATH expression*/</span><span class="w"></span>
-<span class="n">XPath</span><span class="w"> </span><span class="n">xpath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XPathFactory</span><span class="p">.</span><span class="na">newInstance</span><span class="p">().</span><span class="na">newXPath</span><span class="p">();</span><span class="w"></span>
-<span class="n">xpath</span><span class="p">.</span><span class="na">setXPathVariableResolver</span><span class="p">(</span><span class="n">variableResolver</span><span class="p">);</span><span class="w"></span>
-<span class="n">XPathExpression</span><span class="w"> </span><span class="n">xPathExpression</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xpath</span><span class="p">.</span><span class="na">compile</span><span class="p">(</span><span class="s">&quot;//book[@id=$bookId]&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="cm">/*Create and configure XPATH expression*/</span>
+<span class="n">XPath</span><span class="w"> </span><span class="n">xpath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XPathFactory</span><span class="p">.</span><span class="na">newInstance</span><span class="p">().</span><span class="na">newXPath</span><span class="p">();</span>
+<span class="n">xpath</span><span class="p">.</span><span class="na">setXPathVariableResolver</span><span class="p">(</span><span class="n">variableResolver</span><span class="p">);</span>
+<span class="n">XPathExpression</span><span class="w"> </span><span class="n">xPathExpression</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xpath</span><span class="p">.</span><span class="na">compile</span><span class="p">(</span><span class="s">&quot;//book[@id=$bookId]&quot;</span><span class="p">);</span>
 
-<span class="cm">/* Apply expression on XML document */</span><span class="w"></span>
-<span class="n">Object</span><span class="w"> </span><span class="n">nodes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xPathExpression</span><span class="p">.</span><span class="na">evaluate</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span><span class="w"> </span><span class="n">XPathConstants</span><span class="p">.</span><span class="na">NODESET</span><span class="p">);</span><span class="w"></span>
-<span class="n">NodeList</span><span class="w"> </span><span class="n">nodesList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">NodeList</span><span class="p">)</span><span class="w"> </span><span class="n">nodes</span><span class="p">;</span><span class="w"></span>
-<span class="n">Assert</span><span class="p">.</span><span class="na">assertNotNull</span><span class="p">(</span><span class="n">nodesList</span><span class="p">);</span><span class="w"></span>
-<span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">nodesList</span><span class="p">.</span><span class="na">getLength</span><span class="p">());</span><span class="w"></span>
-<span class="n">Element</span><span class="w"> </span><span class="n">book</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Element</span><span class="p">)</span><span class="n">nodesList</span><span class="p">.</span><span class="na">item</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
-<span class="n">Assert</span><span class="p">.</span><span class="na">assertTrue</span><span class="p">(</span><span class="n">book</span><span class="p">.</span><span class="na">getTextContent</span><span class="p">().</span><span class="na">contains</span><span class="p">(</span><span class="s">&quot;Ralls, Kim&quot;</span><span class="p">));</span><span class="w"></span>
+<span class="cm">/* Apply expression on XML document */</span>
+<span class="n">Object</span><span class="w"> </span><span class="n">nodes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xPathExpression</span><span class="p">.</span><span class="na">evaluate</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span><span class="w"> </span><span class="n">XPathConstants</span><span class="p">.</span><span class="na">NODESET</span><span class="p">);</span>
+<span class="n">NodeList</span><span class="w"> </span><span class="n">nodesList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">NodeList</span><span class="p">)</span><span class="w"> </span><span class="n">nodes</span><span class="p">;</span>
+<span class="n">Assert</span><span class="p">.</span><span class="na">assertNotNull</span><span class="p">(</span><span class="n">nodesList</span><span class="p">);</span>
+<span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">nodesList</span><span class="p">.</span><span class="na">getLength</span><span class="p">());</span>
+<span class="n">Element</span><span class="w"> </span><span class="n">book</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Element</span><span class="p">)</span><span class="n">nodesList</span><span class="p">.</span><span class="na">item</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="n">Assert</span><span class="p">.</span><span class="na">assertTrue</span><span class="p">(</span><span class="n">book</span><span class="p">.</span><span class="na">getTextContent</span><span class="p">().</span><span class="na">contains</span><span class="p">(</span><span class="s">&quot;Ralls, Kim&quot;</span><span class="p">));</span>
 </code></pre></div>
 <h4 id="references_3">References<a class="headerlink" href="#references_3" title="Permanent link">&para;</a></h4>
 <ul>
@@ -2408,12 +2408,12 @@ redirect_from: "/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html"
 <span class="cm">INPUT WAY: Receive data from user</span>
 <span class="cm">Here it&#39;s recommended to use strict input validation using &quot;allow list&quot; approach.</span>
 <span class="cm">In fact, you ensure that only allowed characters are part of the input received.</span>
-<span class="cm">*/</span><span class="w"></span>
+<span class="cm">*/</span>
 
-<span class="n">String</span><span class="w"> </span><span class="n">userInput</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;You user login is owasp-user01&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="n">String</span><span class="w"> </span><span class="n">userInput</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;You user login is owasp-user01&quot;</span><span class="p">;</span>
 
-<span class="cm">/* First we check that the value contains only expected character*/</span><span class="w"></span>
-<span class="n">Assert</span><span class="p">.</span><span class="na">assertTrue</span><span class="p">(</span><span class="n">Pattern</span><span class="p">.</span><span class="na">matches</span><span class="p">(</span><span class="s">&quot;[a-zA-Z0-9\\s\\-]{1,50}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">userInput</span><span class="p">));</span><span class="w"></span>
+<span class="cm">/* First we check that the value contains only expected character*/</span>
+<span class="n">Assert</span><span class="p">.</span><span class="na">assertTrue</span><span class="p">(</span><span class="n">Pattern</span><span class="p">.</span><span class="na">matches</span><span class="p">(</span><span class="s">&quot;[a-zA-Z0-9\\s\\-]{1,50}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">userInput</span><span class="p">));</span>
 
 <span class="cm">/* If the first check pass then ensure that potential dangerous character</span>
 <span class="cm">that we have allowed for business requirement are not used in a dangerous way.</span>
@@ -2421,29 +2421,29 @@ redirect_from: "/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html"
 <span class="cm">be used in SQL injection so, we</span>
 <span class="cm">ensure that this character is not used is a continuous form.</span>
 <span class="cm">Use the API COMMONS LANG v3 to help in String analysis...</span>
-<span class="cm">*/</span><span class="w"></span>
-<span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">StringUtils</span><span class="p">.</span><span class="na">countMatches</span><span class="p">(</span><span class="n">userInput</span><span class="p">.</span><span class="na">replace</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;--&quot;</span><span class="p">));</span><span class="w"></span>
+<span class="cm">*/</span>
+<span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">StringUtils</span><span class="p">.</span><span class="na">countMatches</span><span class="p">(</span><span class="n">userInput</span><span class="p">.</span><span class="na">replace</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;--&quot;</span><span class="p">));</span>
 
 <span class="cm">/*</span>
 <span class="cm">OUTPUT WAY: Send data to user</span>
 <span class="cm">Here we escape + sanitize any data sent to user</span>
 <span class="cm">Use the OWASP Java HTML Sanitizer API to handle sanitizing</span>
 <span class="cm">Use the OWASP Java Encoder API to handle HTML tag encoding (escaping)</span>
-<span class="cm">*/</span><span class="w"></span>
+<span class="cm">*/</span>
 
-<span class="n">String</span><span class="w"> </span><span class="n">outputToUser</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;You &lt;p&gt;user login&lt;/p&gt; is &lt;strong&gt;owasp-user01&lt;/strong&gt;&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="n">outputToUser</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;&lt;script&gt;alert(22);&lt;/script&gt;&lt;img src=&#39;#&#39; onload=&#39;javascript:alert(23);&#39;&gt;&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="n">String</span><span class="w"> </span><span class="n">outputToUser</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;You &lt;p&gt;user login&lt;/p&gt; is &lt;strong&gt;owasp-user01&lt;/strong&gt;&quot;</span><span class="p">;</span>
+<span class="n">outputToUser</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="s">&quot;&lt;script&gt;alert(22);&lt;/script&gt;&lt;img src=&#39;#&#39; onload=&#39;javascript:alert(23);&#39;&gt;&quot;</span><span class="p">;</span>
 
-<span class="cm">/* Create a sanitizing policy that only allow tag &#39;&lt;p&gt;&#39; and &#39;&lt;strong&gt;&#39;*/</span><span class="w"></span>
-<span class="n">PolicyFactory</span><span class="w"> </span><span class="n">policy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HtmlPolicyBuilder</span><span class="p">().</span><span class="na">allowElements</span><span class="p">(</span><span class="s">&quot;p&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;strong&quot;</span><span class="p">).</span><span class="na">toFactory</span><span class="p">();</span><span class="w"></span>
+<span class="cm">/* Create a sanitizing policy that only allow tag &#39;&lt;p&gt;&#39; and &#39;&lt;strong&gt;&#39;*/</span>
+<span class="n">PolicyFactory</span><span class="w"> </span><span class="n">policy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HtmlPolicyBuilder</span><span class="p">().</span><span class="na">allowElements</span><span class="p">(</span><span class="s">&quot;p&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;strong&quot;</span><span class="p">).</span><span class="na">toFactory</span><span class="p">();</span>
 
-<span class="cm">/* Sanitize the output that will be sent to user*/</span><span class="w"></span>
-<span class="n">String</span><span class="w"> </span><span class="n">safeOutput</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">policy</span><span class="p">.</span><span class="na">sanitize</span><span class="p">(</span><span class="n">outputToUser</span><span class="p">);</span><span class="w"></span>
+<span class="cm">/* Sanitize the output that will be sent to user*/</span>
+<span class="n">String</span><span class="w"> </span><span class="n">safeOutput</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">policy</span><span class="p">.</span><span class="na">sanitize</span><span class="p">(</span><span class="n">outputToUser</span><span class="p">);</span>
 
-<span class="cm">/* Encode HTML Tag*/</span><span class="w"></span>
-<span class="n">safeOutput</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Encode</span><span class="p">.</span><span class="na">forHtml</span><span class="p">(</span><span class="n">safeOutput</span><span class="p">);</span><span class="w"></span>
-<span class="n">String</span><span class="w"> </span><span class="n">finalSafeOutputExpected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;You &lt;p&gt;user login&lt;/p&gt; is &lt;strong&gt;owasp-user01&lt;/strong&gt;&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="n">finalSafeOutputExpected</span><span class="p">,</span><span class="w"> </span><span class="n">safeOutput</span><span class="p">);</span><span class="w"></span>
+<span class="cm">/* Encode HTML Tag*/</span>
+<span class="n">safeOutput</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Encode</span><span class="p">.</span><span class="na">forHtml</span><span class="p">(</span><span class="n">safeOutput</span><span class="p">);</span>
+<span class="n">String</span><span class="w"> </span><span class="n">finalSafeOutputExpected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;You &lt;p&gt;user login&lt;/p&gt; is &lt;strong&gt;owasp-user01&lt;/strong&gt;&quot;</span><span class="p">;</span>
+<span class="n">Assert</span><span class="p">.</span><span class="na">assertEquals</span><span class="p">(</span><span class="n">finalSafeOutputExpected</span><span class="p">,</span><span class="w"> </span><span class="n">safeOutput</span><span class="p">);</span>
 </code></pre></div>
 <h4 id="references_4">References<a class="headerlink" href="#references_4" title="Permanent link">&para;</a></h4>
 <ul>
@@ -2460,46 +2460,46 @@ redirect_from: "/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html"
 <h4 id="how-to-prevent_5">How to prevent<a class="headerlink" href="#how-to-prevent_5" title="Permanent link">&para;</a></h4>
 <p>As there many NoSQL database system and each one use an API for call, it's important to ensure that user input received and used to build the API call expression does not contain any character that have a special meaning in the target API syntax. This in order to avoid that it will be used to escape the initial call expression in order to create another one based on crafted user input. It's also important to not use string concatenation to build API call expression but use the API to create the expression.</p>
 <h4 id="example-mongodb">Example - MongoDB<a class="headerlink" href="#example-mongodb" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="cm">/* Here use MongoDB as target NoSQL DB */</span><span class="w"></span>
-<span class="n">String</span><span class="w"> </span><span class="n">userInput</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Brooklyn&quot;</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="cm">/* Here use MongoDB as target NoSQL DB */</span>
+<span class="n">String</span><span class="w"> </span><span class="n">userInput</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Brooklyn&quot;</span><span class="p">;</span>
 
 <span class="cm">/* First ensure that the input do no contains any special characters</span>
 <span class="cm">for the current NoSQL DB call API,</span>
 <span class="cm">here they are: &#39; &quot; \ ; { } $</span>
-<span class="cm">*/</span><span class="w"></span>
-<span class="c1">//Avoid regexp this time in order to made validation code</span><span class="w"></span>
-<span class="c1">//more easy to read and understand...</span><span class="w"></span>
-<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">specialCharsList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">add</span><span class="p">(</span><span class="s">&quot;&#39;&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">add</span><span class="p">(</span><span class="s">&quot;\&quot;&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">add</span><span class="p">(</span><span class="s">&quot;\\&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">add</span><span class="p">(</span><span class="s">&quot;;&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">add</span><span class="p">(</span><span class="s">&quot;{&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">add</span><span class="p">(</span><span class="s">&quot;}&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">add</span><span class="p">(</span><span class="s">&quot;$&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
-<span class="n">specialCharsList</span><span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="n">specChar</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Assert</span><span class="p">.</span><span class="na">assertFalse</span><span class="p">(</span><span class="n">userInput</span><span class="p">.</span><span class="na">contains</span><span class="p">(</span><span class="n">specChar</span><span class="p">)));</span><span class="w"></span>
-<span class="c1">//Add also a check on input max size</span><span class="w"></span>
-<span class="n">Assert</span><span class="p">.</span><span class="na">assertTrue</span><span class="p">(</span><span class="n">userInput</span><span class="p">.</span><span class="na">length</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">50</span><span class="p">);</span><span class="w"></span>
+<span class="cm">*/</span>
+<span class="c1">//Avoid regexp this time in order to made validation code</span>
+<span class="c1">//more easy to read and understand...</span>
+<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">specialCharsList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">add</span><span class="p">(</span><span class="s">&quot;&#39;&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">add</span><span class="p">(</span><span class="s">&quot;\&quot;&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">add</span><span class="p">(</span><span class="s">&quot;\\&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">add</span><span class="p">(</span><span class="s">&quot;;&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">add</span><span class="p">(</span><span class="s">&quot;{&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">add</span><span class="p">(</span><span class="s">&quot;}&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">add</span><span class="p">(</span><span class="s">&quot;$&quot;</span><span class="p">);</span>
+<span class="p">}</span><span class="w"> </span><span class="p">};</span>
+<span class="n">specialCharsList</span><span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="n">specChar</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Assert</span><span class="p">.</span><span class="na">assertFalse</span><span class="p">(</span><span class="n">userInput</span><span class="p">.</span><span class="na">contains</span><span class="p">(</span><span class="n">specChar</span><span class="p">)));</span>
+<span class="c1">//Add also a check on input max size</span>
+<span class="n">Assert</span><span class="p">.</span><span class="na">assertTrue</span><span class="p">(</span><span class="n">userInput</span><span class="p">.</span><span class="na">length</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">50</span><span class="p">);</span>
 
-<span class="cm">/* Then perform query on database using API to build expression */</span><span class="w"></span>
-<span class="c1">//Connect to the local MongoDB instance</span><span class="w"></span>
-<span class="k">try</span><span class="p">(</span><span class="n">MongoClient</span><span class="w"> </span><span class="n">mongoClient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MongoClient</span><span class="p">()){</span><span class="w"></span>
-<span class="w">    </span><span class="n">MongoDatabase</span><span class="w"> </span><span class="n">db</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mongoClient</span><span class="p">.</span><span class="na">getDatabase</span><span class="p">(</span><span class="s">&quot;test&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="c1">//Use API query builder to create call expression</span><span class="w"></span>
-<span class="w">    </span><span class="c1">//Create expression</span><span class="w"></span>
-<span class="w">    </span><span class="n">Bson</span><span class="w"> </span><span class="n">expression</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">eq</span><span class="p">(</span><span class="s">&quot;borough&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">userInput</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="c1">//Perform call</span><span class="w"></span>
-<span class="w">    </span><span class="n">FindIterable</span><span class="o">&lt;</span><span class="n">org</span><span class="p">.</span><span class="na">bson</span><span class="p">.</span><span class="na">Document</span><span class="o">&gt;</span><span class="w"> </span><span class="n">restaurants</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">db</span><span class="p">.</span><span class="na">getCollection</span><span class="p">(</span><span class="s">&quot;restaurants&quot;</span><span class="p">).</span><span class="na">find</span><span class="p">(</span><span class="n">expression</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="c1">//Verify result consistency</span><span class="w"></span>
-<span class="w">    </span><span class="n">restaurants</span><span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Block</span><span class="o">&lt;</span><span class="n">org</span><span class="p">.</span><span class="na">bson</span><span class="p">.</span><span class="na">Document</span><span class="o">&gt;</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="nd">@Override</span><span class="w"></span>
-<span class="w">        </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">apply</span><span class="p">(</span><span class="kd">final</span><span class="w"> </span><span class="n">org</span><span class="p">.</span><span class="na">bson</span><span class="p">.</span><span class="na">Document</span><span class="w"> </span><span class="n">doc</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">restBorough</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">String</span><span class="p">)</span><span class="n">doc</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;borough&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">            </span><span class="n">Assert</span><span class="p">.</span><span class="na">assertTrue</span><span class="p">(</span><span class="s">&quot;Brooklyn&quot;</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">restBorough</span><span class="p">));</span><span class="w"></span>
-<span class="w">        </span><span class="p">}</span><span class="w"></span>
-<span class="w">    </span><span class="p">});</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="cm">/* Then perform query on database using API to build expression */</span>
+<span class="c1">//Connect to the local MongoDB instance</span>
+<span class="k">try</span><span class="p">(</span><span class="n">MongoClient</span><span class="w"> </span><span class="n">mongoClient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MongoClient</span><span class="p">()){</span>
+<span class="w">    </span><span class="n">MongoDatabase</span><span class="w"> </span><span class="n">db</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mongoClient</span><span class="p">.</span><span class="na">getDatabase</span><span class="p">(</span><span class="s">&quot;test&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">//Use API query builder to create call expression</span>
+<span class="w">    </span><span class="c1">//Create expression</span>
+<span class="w">    </span><span class="n">Bson</span><span class="w"> </span><span class="n">expression</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">eq</span><span class="p">(</span><span class="s">&quot;borough&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">userInput</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">//Perform call</span>
+<span class="w">    </span><span class="n">FindIterable</span><span class="o">&lt;</span><span class="n">org</span><span class="p">.</span><span class="na">bson</span><span class="p">.</span><span class="na">Document</span><span class="o">&gt;</span><span class="w"> </span><span class="n">restaurants</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">db</span><span class="p">.</span><span class="na">getCollection</span><span class="p">(</span><span class="s">&quot;restaurants&quot;</span><span class="p">).</span><span class="na">find</span><span class="p">(</span><span class="n">expression</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">//Verify result consistency</span>
+<span class="w">    </span><span class="n">restaurants</span><span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Block</span><span class="o">&lt;</span><span class="n">org</span><span class="p">.</span><span class="na">bson</span><span class="p">.</span><span class="na">Document</span><span class="o">&gt;</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nd">@Override</span>
+<span class="w">        </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">apply</span><span class="p">(</span><span class="kd">final</span><span class="w"> </span><span class="n">org</span><span class="p">.</span><span class="na">bson</span><span class="p">.</span><span class="na">Document</span><span class="w"> </span><span class="n">doc</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">restBorough</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">String</span><span class="p">)</span><span class="n">doc</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;borough&quot;</span><span class="p">);</span>
+<span class="w">            </span><span class="n">Assert</span><span class="p">.</span><span class="na">assertTrue</span><span class="p">(</span><span class="s">&quot;Brooklyn&quot;</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">restBorough</span><span class="p">));</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">});</span>
+<span class="p">}</span>
 </code></pre></div>
 <h4 id="references_5">References<a class="headerlink" href="#references_5" title="Permanent link">&para;</a></h4>
 <ul>
@@ -2520,74 +2520,74 @@ redirect_from: "/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html"
 <h4 id="example-using-log4j2">Example using Log4j2<a class="headerlink" href="#example-using-log4j2" title="Permanent link">&para;</a></h4>
 <p>Configuration of a logging policy to roll on 10 files of 5MB each, and encode/limit the log message using the <a href="https://logging.apache.org/log4j/2.x/manual/layouts.html#PatternLayout\%7CLog4j2">Pattern <em>encode{}{CRLF}</em></a>, introduced in <a href="https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api">Log4j2 v2.10.0</a>, and the <em>-500m</em> message size limit.:</p>
 <div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="nt">&lt;Configuration</span> <span class="na">status=</span><span class="s">&quot;error&quot;</span> <span class="na">name=</span><span class="s">&quot;SecureLoggingPolicy&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;Appenders&gt;</span>
-        <span class="nt">&lt;RollingFile</span> <span class="na">name=</span><span class="s">&quot;RollingFile&quot;</span> <span class="na">fileName=</span><span class="s">&quot;App.log&quot;</span> <span class="na">filePattern=</span><span class="s">&quot;App-%i.log&quot;</span> <span class="na">ignoreExceptions=</span><span class="s">&quot;false&quot;</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;PatternLayout&gt;</span>
-                <span class="cm">&lt;!-- Encode any CRLF chars in the message and limit its</span>
+<span class="nt">&lt;Configuration</span><span class="w"> </span><span class="na">status=</span><span class="s">&quot;error&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;SecureLoggingPolicy&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Appenders&gt;</span>
+<span class="w">        </span><span class="nt">&lt;RollingFile</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;RollingFile&quot;</span><span class="w"> </span><span class="na">fileName=</span><span class="s">&quot;App.log&quot;</span><span class="w"> </span><span class="na">filePattern=</span><span class="s">&quot;App-%i.log&quot;</span><span class="w"> </span><span class="na">ignoreExceptions=</span><span class="s">&quot;false&quot;</span><span class="nt">&gt;</span>
+<span class="w">            </span><span class="nt">&lt;PatternLayout&gt;</span>
+<span class="w">                </span><span class="cm">&lt;!-- Encode any CRLF chars in the message and limit its</span>
 <span class="cm">                     maximum size to 500 characters --&gt;</span>
-                <span class="nt">&lt;Pattern&gt;</span>%d{ISO8601} %-5p - %encode{ %.-500m }{CRLF}%n<span class="nt">&lt;/Pattern&gt;</span>
-            <span class="nt">&lt;/PatternLayout&gt;</span>
-            <span class="nt">&lt;Policies&gt;</span>
-                <span class="nt">&lt;SizeBasedTriggeringPolicy</span> <span class="na">size=</span><span class="s">&quot;5MB&quot;</span><span class="nt">/&gt;</span>
-            <span class="nt">&lt;/Policies&gt;</span>
-            <span class="nt">&lt;DefaultRolloverStrategy</span> <span class="na">max=</span><span class="s">&quot;10&quot;</span><span class="nt">/&gt;</span>
-        <span class="nt">&lt;/RollingFile&gt;</span>
-    <span class="nt">&lt;/Appenders&gt;</span>
-    <span class="nt">&lt;Loggers&gt;</span>
-        <span class="nt">&lt;Root</span> <span class="na">level=</span><span class="s">&quot;debug&quot;</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;AppenderRef</span> <span class="na">ref=</span><span class="s">&quot;RollingFile&quot;</span><span class="nt">/&gt;</span>
-        <span class="nt">&lt;/Root&gt;</span>
-    <span class="nt">&lt;/Loggers&gt;</span>
+<span class="w">                </span><span class="nt">&lt;Pattern&gt;</span>%d{ISO8601}<span class="w"> </span>%-5p<span class="w"> </span>-<span class="w"> </span>%encode{<span class="w"> </span>%.-500m<span class="w"> </span>}{CRLF}%n<span class="nt">&lt;/Pattern&gt;</span>
+<span class="w">            </span><span class="nt">&lt;/PatternLayout&gt;</span>
+<span class="w">            </span><span class="nt">&lt;Policies&gt;</span>
+<span class="w">                </span><span class="nt">&lt;SizeBasedTriggeringPolicy</span><span class="w"> </span><span class="na">size=</span><span class="s">&quot;5MB&quot;</span><span class="nt">/&gt;</span>
+<span class="w">            </span><span class="nt">&lt;/Policies&gt;</span>
+<span class="w">            </span><span class="nt">&lt;DefaultRolloverStrategy</span><span class="w"> </span><span class="na">max=</span><span class="s">&quot;10&quot;</span><span class="nt">/&gt;</span>
+<span class="w">        </span><span class="nt">&lt;/RollingFile&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/Appenders&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Loggers&gt;</span>
+<span class="w">        </span><span class="nt">&lt;Root</span><span class="w"> </span><span class="na">level=</span><span class="s">&quot;debug&quot;</span><span class="nt">&gt;</span>
+<span class="w">            </span><span class="nt">&lt;AppenderRef</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;RollingFile&quot;</span><span class="nt">/&gt;</span>
+<span class="w">        </span><span class="nt">&lt;/Root&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/Loggers&gt;</span>
 <span class="nt">&lt;/Configuration&gt;</span>
 </code></pre></div>
 <p>Usage of the logger at code level:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.logging.log4j.LogManager</span><span class="p">;</span><span class="w"></span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.logging.log4j.Logger</span><span class="p">;</span><span class="w"></span>
-<span class="p">...</span><span class="w"></span>
-<span class="c1">// No special action needed because security actions are</span><span class="w"></span>
-<span class="c1">// performed at the logging policy level</span><span class="w"></span>
-<span class="n">Logger</span><span class="w"> </span><span class="n">logger</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LogManager</span><span class="p">.</span><span class="na">getLogger</span><span class="p">(</span><span class="n">MyClass</span><span class="p">.</span><span class="na">class</span><span class="p">);</span><span class="w"></span>
-<span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="n">logMessage</span><span class="p">);</span><span class="w"></span>
-<span class="p">...</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.logging.log4j.LogManager</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.logging.log4j.Logger</span><span class="p">;</span>
+<span class="p">...</span>
+<span class="c1">// No special action needed because security actions are</span>
+<span class="c1">// performed at the logging policy level</span>
+<span class="n">Logger</span><span class="w"> </span><span class="n">logger</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LogManager</span><span class="p">.</span><span class="na">getLogger</span><span class="p">(</span><span class="n">MyClass</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+<span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="n">logMessage</span><span class="p">);</span>
+<span class="p">...</span>
 </code></pre></div>
 <h4 id="example-using-logback-with-the-owasp-security-logging-library">Example using Logback with the OWASP Security Logging library<a class="headerlink" href="#example-using-logback-with-the-owasp-security-logging-library" title="Permanent link">&para;</a></h4>
 <p>Configuration of a logging policy to roll on 10 files of 5MB each, and encode/limit the log message using the <a href="https://github.com/javabeanz/owasp-security-logging/wiki/Log-Forging">CRLFConverter</a>, provided by the <a href="https://owasp.org/www-project-security-logging/">OWASP Security Logging Project</a>, and the <em>-500msg</em> message size limit:</p>
 <div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
 <span class="nt">&lt;configuration&gt;</span>
-    <span class="cm">&lt;!-- Define the CRLFConverter --&gt;</span>
-    <span class="nt">&lt;conversionRule</span> <span class="na">conversionWord=</span><span class="s">&quot;crlf&quot;</span> <span class="na">converterClass=</span><span class="s">&quot;org.owasp.security.logging.mask.CRLFConverter&quot;</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;appender</span> <span class="na">name=</span><span class="s">&quot;RollingFile&quot;</span> <span class="na">class=</span><span class="s">&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;file&gt;</span>App.log<span class="nt">&lt;/file&gt;</span>
-        <span class="nt">&lt;rollingPolicy</span> <span class="na">class=</span><span class="s">&quot;ch.qos.logback.core.rolling.FixedWindowRollingPolicy&quot;</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;fileNamePattern&gt;</span>App-%i.log<span class="nt">&lt;/fileNamePattern&gt;</span>
-            <span class="nt">&lt;minIndex&gt;</span>1<span class="nt">&lt;/minIndex&gt;</span>
-            <span class="nt">&lt;maxIndex&gt;</span>10<span class="nt">&lt;/maxIndex&gt;</span>
-        <span class="nt">&lt;/rollingPolicy&gt;</span>
-        <span class="nt">&lt;triggeringPolicy</span> <span class="na">class=</span><span class="s">&quot;ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy&quot;</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;maxFileSize&gt;</span>5MB<span class="nt">&lt;/maxFileSize&gt;</span>
-        <span class="nt">&lt;/triggeringPolicy&gt;</span>
-        <span class="nt">&lt;encoder&gt;</span>
-            <span class="cm">&lt;!-- Encode any CRLF chars in the message and limit</span>
+<span class="w">    </span><span class="cm">&lt;!-- Define the CRLFConverter --&gt;</span>
+<span class="w">    </span><span class="nt">&lt;conversionRule</span><span class="w"> </span><span class="na">conversionWord=</span><span class="s">&quot;crlf&quot;</span><span class="w"> </span><span class="na">converterClass=</span><span class="s">&quot;org.owasp.security.logging.mask.CRLFConverter&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;appender</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;RollingFile&quot;</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;</span><span class="nt">&gt;</span>
+<span class="w">        </span><span class="nt">&lt;file&gt;</span>App.log<span class="nt">&lt;/file&gt;</span>
+<span class="w">        </span><span class="nt">&lt;rollingPolicy</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;ch.qos.logback.core.rolling.FixedWindowRollingPolicy&quot;</span><span class="nt">&gt;</span>
+<span class="w">            </span><span class="nt">&lt;fileNamePattern&gt;</span>App-%i.log<span class="nt">&lt;/fileNamePattern&gt;</span>
+<span class="w">            </span><span class="nt">&lt;minIndex&gt;</span>1<span class="nt">&lt;/minIndex&gt;</span>
+<span class="w">            </span><span class="nt">&lt;maxIndex&gt;</span>10<span class="nt">&lt;/maxIndex&gt;</span>
+<span class="w">        </span><span class="nt">&lt;/rollingPolicy&gt;</span>
+<span class="w">        </span><span class="nt">&lt;triggeringPolicy</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy&quot;</span><span class="nt">&gt;</span>
+<span class="w">            </span><span class="nt">&lt;maxFileSize&gt;</span>5MB<span class="nt">&lt;/maxFileSize&gt;</span>
+<span class="w">        </span><span class="nt">&lt;/triggeringPolicy&gt;</span>
+<span class="w">        </span><span class="nt">&lt;encoder&gt;</span>
+<span class="w">            </span><span class="cm">&lt;!-- Encode any CRLF chars in the message and limit</span>
 <span class="cm">                 its maximum size to 500 characters --&gt;</span>
-            <span class="nt">&lt;pattern&gt;</span>%relative [%thread] %-5level %logger{35} - %crlf(%.-500msg) %n<span class="nt">&lt;/pattern&gt;</span>
-        <span class="nt">&lt;/encoder&gt;</span>
-    <span class="nt">&lt;/appender&gt;</span>
-    <span class="nt">&lt;root</span> <span class="na">level=</span><span class="s">&quot;debug&quot;</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;appender-ref</span> <span class="na">ref=</span><span class="s">&quot;RollingFile&quot;</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;/root&gt;</span>
+<span class="w">            </span><span class="nt">&lt;pattern&gt;</span>%relative<span class="w"> </span>[%thread]<span class="w"> </span>%-5level<span class="w"> </span>%logger{35}<span class="w"> </span>-<span class="w"> </span>%crlf(%.-500msg)<span class="w"> </span>%n<span class="nt">&lt;/pattern&gt;</span>
+<span class="w">        </span><span class="nt">&lt;/encoder&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/appender&gt;</span>
+<span class="w">    </span><span class="nt">&lt;root</span><span class="w"> </span><span class="na">level=</span><span class="s">&quot;debug&quot;</span><span class="nt">&gt;</span>
+<span class="w">        </span><span class="nt">&lt;appender-ref</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;RollingFile&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/root&gt;</span>
 <span class="nt">&lt;/configuration&gt;</span>
 </code></pre></div>
 <p>You also have to add the <a href="https://github.com/javabeanz/owasp-security-logging/wiki/Usage-with-Logback">OWASP Security Logging</a> dependency to your project.</p>
 <p>Usage of the logger at code level:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">org.slf4j.Logger</span><span class="p">;</span><span class="w"></span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">org.slf4j.LoggerFactory</span><span class="p">;</span><span class="w"></span>
-<span class="p">...</span><span class="w"></span>
-<span class="c1">// No special action needed because security actions</span><span class="w"></span>
-<span class="c1">// are performed at the logging policy level</span><span class="w"></span>
-<span class="n">Logger</span><span class="w"> </span><span class="n">logger</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LoggerFactory</span><span class="p">.</span><span class="na">getLogger</span><span class="p">(</span><span class="n">MyClass</span><span class="p">.</span><span class="na">class</span><span class="p">);</span><span class="w"></span>
-<span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="n">logMessage</span><span class="p">);</span><span class="w"></span>
-<span class="p">...</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">org.slf4j.Logger</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.slf4j.LoggerFactory</span><span class="p">;</span>
+<span class="p">...</span>
+<span class="c1">// No special action needed because security actions</span>
+<span class="c1">// are performed at the logging policy level</span>
+<span class="n">Logger</span><span class="w"> </span><span class="n">logger</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LoggerFactory</span><span class="p">.</span><span class="na">getLogger</span><span class="p">(</span><span class="n">MyClass</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+<span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="n">logMessage</span><span class="p">);</span>
+<span class="p">...</span>
 </code></pre></div>
 <h4 id="references_6">References<a class="headerlink" href="#references_6" title="Permanent link">&para;</a></h4>
 <ul>
@@ -2623,42 +2623,6 @@ other log viewing/analysis tools that don&#39;t expect the log data to be pre-HT
       
         <footer class="md-footer">
   
-    
-    <nav class="md-footer__inner md-grid" aria-label="Footer" >
-      
-        
-        <a href="Injection_Prevention_Cheat_Sheet.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Injection Prevention" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              Injection Prevention
-            </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="Input_Validation_Cheat_Sheet.html" class="md-footer__link md-footer__link--next" aria-label="Next: Input Validation" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              Input Validation
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
-  
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
       <div class="md-copyright">
@@ -2684,12 +2648,11 @@ other log viewing/analysis tools that don&#39;t expect the log data to be pre-HT
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.12658920.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      <script src="../assets/javascripts/bundle.5cf534bf.min.js"></script>
       
-    
     
   </body>
 </html>

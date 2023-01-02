@@ -12,8 +12,14 @@
       
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/JAAS_Cheat_Sheet.html">
       
+      
+        <link rel="prev" href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">
+      
+      
+        <link rel="next" href="JSON_Web_Token_for_Java_Cheat_Sheet.html">
+      
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.0">
     
     
       
@@ -21,11 +27,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.975780f9.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.f79797b0.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
-        
       
       
 
@@ -112,8 +117,6 @@
       <form class="md-header__option" data-md-component="palette">
         
           
-          
-          
           <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
           
             <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
@@ -121,8 +124,6 @@
             </label>
           
         
-          
-          
           
           <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
           
@@ -1699,10 +1700,9 @@
                 
                   
 
-  <a href="https://github.com/OWASP/CheatSheetSeries/edit/master/docs/cheatsheets/JAAS_Cheat_Sheet.md" title="Edit this page" class="md-content__button md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
-  </a>
+  
+  
+
 
 
 <h1 id="jaas-cheat-sheet">JAAS Cheat Sheet<a class="headerlink" href="#jaas-cheat-sheet" title="Permanent link">&para;</a></h1>
@@ -1789,10 +1789,10 @@ Where:
 </ul>
 <h3 id="login">login()<a class="headerlink" href="#login" title="Permanent link">&para;</a></h3>
 <p>Captures user supplied login information. The code snippet below declares an array of two callback objects which, when passed to the <code>callbackHandler.handle</code> method in the <code>callbackHandler.java</code> program, will be loaded with a username and password provided interactively by the user:</p>
-<div class="highlight"><pre><span></span><code><span class="n">NameCallback</span><span class="w"> </span><span class="n">nameCB</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">NameCallback</span><span class="p">(</span><span class="s">&quot;Username&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="n">PasswordCallback</span><span class="w"> </span><span class="n">passwordCB</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PasswordCallback</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;Password&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span><span class="w"></span>
-<span class="n">Callback</span><span class="o">[]</span><span class="w"> </span><span class="n">callbacks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Callback</span><span class="o">[]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">nameCB</span><span class="p">,</span><span class="w"> </span><span class="n">passwordCB</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
-<span class="n">callbackHandler</span><span class="p">.</span><span class="na">handle</span><span class="w"> </span><span class="p">(</span><span class="n">callbacks</span><span class="p">);</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="n">NameCallback</span><span class="w"> </span><span class="n">nameCB</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">NameCallback</span><span class="p">(</span><span class="s">&quot;Username&quot;</span><span class="p">);</span>
+<span class="n">PasswordCallback</span><span class="w"> </span><span class="n">passwordCB</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PasswordCallback</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;Password&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
+<span class="n">Callback</span><span class="o">[]</span><span class="w"> </span><span class="n">callbacks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Callback</span><span class="o">[]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">nameCB</span><span class="p">,</span><span class="w"> </span><span class="n">passwordCB</span><span class="w"> </span><span class="p">};</span>
+<span class="n">callbackHandler</span><span class="p">.</span><span class="na">handle</span><span class="w"> </span><span class="p">(</span><span class="n">callbacks</span><span class="p">);</span>
 </code></pre></div>
 <ul>
 <li>Authenticates the user</li>
@@ -1814,34 +1814,34 @@ Where:
 <p>Principals (i.e. Identities the subject has other than their login name) such as employee number or membership ID in a user group are added to the subject.</p>
 <p>Below, is an example <code>commit()</code> method where first, for each group the authenticated user has membership in, the group name is added as a principal to the subject. The subject's username is then added to their public credentials.</p>
 <p>Code snippet setting then adding any principals and a public credentials to a subject:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">commit</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">If</span><span class="w"> </span><span class="p">(</span><span class="n">userAuthenticated</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="n">Set</span><span class="w"> </span><span class="n">groups</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UserService</span><span class="p">.</span><span class="na">findGroups</span><span class="w"> </span><span class="p">(</span><span class="n">username</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Iterator</span><span class="w"> </span><span class="n">itr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">groups</span><span class="p">.</span><span class="na">iterator</span><span class="w"> </span><span class="p">();</span><span class="w"> </span><span class="n">itr</span><span class="p">.</span><span class="na">hasNext</span><span class="w"> </span><span class="p">();</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">groupName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">String</span><span class="p">)</span><span class="w"> </span><span class="n">itr</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="p">();</span><span class="w"></span>
-<span class="w">            </span><span class="n">UserGroupPrincipal</span><span class="w"> </span><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">UserGroupPrincipal</span><span class="w"> </span><span class="p">(</span><span class="n">GroupName</span><span class="p">);</span><span class="w"></span>
-<span class="w">            </span><span class="n">subject</span><span class="p">.</span><span class="na">getPrincipals</span><span class="w"> </span><span class="p">().</span><span class="na">add</span><span class="w"> </span><span class="p">(</span><span class="n">group</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="p">}</span><span class="w"></span>
-<span class="w">        </span><span class="n">UsernameCredential</span><span class="w"> </span><span class="n">cred</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">UsernameCredential</span><span class="w"> </span><span class="p">(</span><span class="n">username</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="n">subject</span><span class="p">.</span><span class="na">getPublicCredentials</span><span class="p">().</span><span class="na">add</span><span class="w"> </span><span class="p">(</span><span class="n">cred</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">commit</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">If</span><span class="w"> </span><span class="p">(</span><span class="n">userAuthenticated</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Set</span><span class="w"> </span><span class="n">groups</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UserService</span><span class="p">.</span><span class="na">findGroups</span><span class="w"> </span><span class="p">(</span><span class="n">username</span><span class="p">);</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Iterator</span><span class="w"> </span><span class="n">itr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">groups</span><span class="p">.</span><span class="na">iterator</span><span class="w"> </span><span class="p">();</span><span class="w"> </span><span class="n">itr</span><span class="p">.</span><span class="na">hasNext</span><span class="w"> </span><span class="p">();</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">groupName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">String</span><span class="p">)</span><span class="w"> </span><span class="n">itr</span><span class="p">.</span><span class="na">next</span><span class="w"> </span><span class="p">();</span>
+<span class="w">            </span><span class="n">UserGroupPrincipal</span><span class="w"> </span><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">UserGroupPrincipal</span><span class="w"> </span><span class="p">(</span><span class="n">GroupName</span><span class="p">);</span>
+<span class="w">            </span><span class="n">subject</span><span class="p">.</span><span class="na">getPrincipals</span><span class="w"> </span><span class="p">().</span><span class="na">add</span><span class="w"> </span><span class="p">(</span><span class="n">group</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">UsernameCredential</span><span class="w"> </span><span class="n">cred</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">UsernameCredential</span><span class="w"> </span><span class="p">(</span><span class="n">username</span><span class="p">);</span>
+<span class="w">        </span><span class="n">subject</span><span class="p">.</span><span class="na">getPublicCredentials</span><span class="p">().</span><span class="na">add</span><span class="w"> </span><span class="p">(</span><span class="n">cred</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 <h3 id="abort">abort()<a class="headerlink" href="#abort" title="Permanent link">&para;</a></h3>
 <p>The <code>abort()</code> method is called when authentication doesn't succeed. Before the <code>abort()</code> method exits the <code>LoginModule</code>, care should be taken to reset state including the username and password input fields.</p>
 <h3 id="logout">logout()<a class="headerlink" href="#logout" title="Permanent link">&para;</a></h3>
 <p>The release of the users principals and credentials when <code>LoginContext.logout</code> is called:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">logout</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">subject</span><span class="p">.</span><span class="na">isReadOnly</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="n">Set</span><span class="w"> </span><span class="n">principals</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">subject</span><span class="p">.</span><span class="na">getPrincipals</span><span class="p">(</span><span class="n">UserGroupPrincipal</span><span class="p">.</span><span class="na">class</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="n">subject</span><span class="p">.</span><span class="na">getPrincipals</span><span class="p">().</span><span class="na">removeAll</span><span class="p">(</span><span class="n">principals</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="n">Set</span><span class="w"> </span><span class="n">creds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">subject</span><span class="p">.</span><span class="na">getPublicCredentials</span><span class="p">(</span><span class="n">UsernameCredential</span><span class="p">.</span><span class="na">class</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="n">subject</span><span class="p">.</span><span class="na">getPublicCredentials</span><span class="p">().</span><span class="na">removeAll</span><span class="p">(</span><span class="n">creds</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">logout</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">subject</span><span class="p">.</span><span class="na">isReadOnly</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Set</span><span class="w"> </span><span class="n">principals</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">subject</span><span class="p">.</span><span class="na">getPrincipals</span><span class="p">(</span><span class="n">UserGroupPrincipal</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+<span class="w">        </span><span class="n">subject</span><span class="p">.</span><span class="na">getPrincipals</span><span class="p">().</span><span class="na">removeAll</span><span class="p">(</span><span class="n">principals</span><span class="p">);</span>
+<span class="w">        </span><span class="n">Set</span><span class="w"> </span><span class="n">creds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">subject</span><span class="p">.</span><span class="na">getPublicCredentials</span><span class="p">(</span><span class="n">UsernameCredential</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+<span class="w">        </span><span class="n">subject</span><span class="p">.</span><span class="na">getPublicCredentials</span><span class="p">().</span><span class="na">removeAll</span><span class="p">(</span><span class="n">creds</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 <h2 id="callbackhandlerjava">CallbackHandler.java<a class="headerlink" href="#callbackhandlerjava" title="Permanent link">&para;</a></h2>
 <p>The <code>callbackHandler</code> is in a source (<code>.java</code>) file separate from any single <code>LoginModule</code> so that it can service a multitude of LoginModules with differing callback objects:</p>
@@ -1849,18 +1849,18 @@ Where:
 <li>Creates instance of the <code>CallbackHandler</code> class and has only one method, <code>handle()</code>.</li>
 <li>A <code>CallbackHandler</code> servicing a LoginModule requiring username &amp; password to login:</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">handle</span><span class="p">(</span><span class="n">Callback</span><span class="o">[]</span><span class="w"> </span><span class="n">callbacks</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">callbacks</span><span class="p">.</span><span class="na">length</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="n">Callback</span><span class="w"> </span><span class="n">callback</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">callbacks</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">callback</span><span class="w"> </span><span class="k">instanceof</span><span class="w"> </span><span class="n">NameCallback</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">            </span><span class="n">NameCallback</span><span class="w"> </span><span class="n">nameCallBack</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">NameCallback</span><span class="p">)</span><span class="w"> </span><span class="n">callback</span><span class="p">;</span><span class="w"></span>
-<span class="w">            </span><span class="n">nameCallBack</span><span class="p">.</span><span class="na">setName</span><span class="p">(</span><span class="n">username</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w">  </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">callback</span><span class="w"> </span><span class="k">instanceof</span><span class="w"> </span><span class="n">PasswordCallback</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">            </span><span class="n">PasswordCallback</span><span class="w"> </span><span class="n">passwordCallBack</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">PasswordCallback</span><span class="p">)</span><span class="w"> </span><span class="n">callback</span><span class="p">;</span><span class="w"></span>
-<span class="w">            </span><span class="n">passwordCallBack</span><span class="p">.</span><span class="na">setPassword</span><span class="p">(</span><span class="n">password</span><span class="p">.</span><span class="na">toCharArray</span><span class="p">());</span><span class="w"></span>
-<span class="w">        </span><span class="p">}</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">handle</span><span class="p">(</span><span class="n">Callback</span><span class="o">[]</span><span class="w"> </span><span class="n">callbacks</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">callbacks</span><span class="p">.</span><span class="na">length</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Callback</span><span class="w"> </span><span class="n">callback</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">callbacks</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">;</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">callback</span><span class="w"> </span><span class="k">instanceof</span><span class="w"> </span><span class="n">NameCallback</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">NameCallback</span><span class="w"> </span><span class="n">nameCallBack</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">NameCallback</span><span class="p">)</span><span class="w"> </span><span class="n">callback</span><span class="p">;</span>
+<span class="w">            </span><span class="n">nameCallBack</span><span class="p">.</span><span class="na">setName</span><span class="p">(</span><span class="n">username</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span><span class="w">  </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">callback</span><span class="w"> </span><span class="k">instanceof</span><span class="w"> </span><span class="n">PasswordCallback</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">PasswordCallback</span><span class="w"> </span><span class="n">passwordCallBack</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">PasswordCallback</span><span class="p">)</span><span class="w"> </span><span class="n">callback</span><span class="p">;</span>
+<span class="w">            </span><span class="n">passwordCallBack</span><span class="p">.</span><span class="na">setPassword</span><span class="p">(</span><span class="n">password</span><span class="p">.</span><span class="na">toCharArray</span><span class="p">());</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 <h2 id="related-articles">Related Articles<a class="headerlink" href="#related-articles" title="Permanent link">&para;</a></h2>
 <ul>
@@ -1884,42 +1884,6 @@ Where:
       </main>
       
         <footer class="md-footer">
-  
-    
-    <nav class="md-footer__inner md-grid" aria-label="Footer" >
-      
-        
-        <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Insecure Direct Object Reference Prevention" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              Insecure Direct Object Reference Prevention
-            </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="JSON_Web_Token_for_Java_Cheat_Sheet.html" class="md-footer__link md-footer__link--next" aria-label="Next: JSON Web Token for Java" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              JSON Web Token for Java
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
@@ -1946,12 +1910,11 @@ Where:
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.12658920.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      <script src="../assets/javascripts/bundle.5cf534bf.min.js"></script>
       
-    
     
   </body>
 </html>

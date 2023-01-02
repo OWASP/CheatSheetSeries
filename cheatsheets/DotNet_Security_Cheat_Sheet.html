@@ -12,8 +12,14 @@
       
         <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/DotNet_Security_Cheat_Sheet.html">
       
+      
+        <link rel="prev" href="Docker_Security_Cheat_Sheet.html">
+      
+      
+        <link rel="next" href="Error_Handling_Cheat_Sheet.html">
+      
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.0">
     
     
       
@@ -21,11 +27,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.975780f9.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.f79797b0.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
-        
       
       
 
@@ -112,8 +117,6 @@
       <form class="md-header__option" data-md-component="palette">
         
           
-          
-          
           <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
           
             <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
@@ -121,8 +124,6 @@
             </label>
           
         
-          
-          
           
           <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
           
@@ -2211,10 +2212,9 @@
                 
                   
 
-  <a href="https://github.com/OWASP/CheatSheetSeries/edit/master/docs/cheatsheets/DotNet_Security_Cheat_Sheet.md" title="Edit this page" class="md-content__button md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
-  </a>
+  
+  
+
 
 
 <h1 id="dotnet-security-cheat-sheet">DotNet Security Cheat Sheet<a class="headerlink" href="#dotnet-security-cheat-sheet" title="Permanent link">&para;</a></h1>
@@ -2279,126 +2279,126 @@
 <li>Make sure <a href="http://www.iis.net/configreference/system.webserver/tracing">tracing</a> is turned off.</li>
 <li>While viewstate isn't always appropriate for web development, using it can provide CSRF mitigation. To make the ViewState protect against CSRF attacks you need to set the <a href="https://docs.microsoft.com/en-us/dotnet/api/system.web.ui.page.viewstateuserkey">ViewStateUserKey</a>:</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="k">protected</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="nf">OnInit</span><span class="p">(</span><span class="n">EventArgs</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">base</span><span class="p">.</span><span class="n">OnInit</span><span class="p">(</span><span class="n">e</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">ViewStateUserKey</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Session</span><span class="p">.</span><span class="n">SessionID</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">protected</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="nf">OnInit</span><span class="p">(</span><span class="n">EventArgs</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">base</span><span class="p">.</span><span class="n">OnInit</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
+<span class="w">    </span><span class="n">ViewStateUserKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Session</span><span class="p">.</span><span class="n">SessionID</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>If you don't use Viewstate, then look to the default master page of the ASP.NET Web Forms default template for a manual anti-CSRF token using a double-submit cookie.</p>
-<div class="highlight"><pre><span></span><code><span class="k">private</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">AntiXsrfTokenKey</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;__AntiXsrfToken&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="k">private</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">AntiXsrfUserNameKey</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;__AntiXsrfUserName&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="k">private</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">_antiXsrfTokenValue</span><span class="p">;</span><span class="w"></span>
-<span class="k">protected</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Page_Init</span><span class="p">(</span><span class="kt">object</span><span class="w"> </span><span class="n">sender</span><span class="p">,</span><span class="w"> </span><span class="n">EventArgs</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">private</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">AntiXsrfTokenKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;__AntiXsrfToken&quot;</span><span class="p">;</span>
+<span class="k">private</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">AntiXsrfUserNameKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;__AntiXsrfUserName&quot;</span><span class="p">;</span>
+<span class="k">private</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">_antiXsrfTokenValue</span><span class="p">;</span>
+<span class="k">protected</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Page_Init</span><span class="p">(</span><span class="kt">object</span><span class="w"> </span><span class="n">sender</span><span class="p">,</span><span class="w"> </span><span class="n">EventArgs</span><span class="w"> </span><span class="n">e</span><span class="p">)</span>
+<span class="p">{</span>
 <span class="w">    </span><span class="c1">// The code below helps to protect against XSRF attacks</span>
-<span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">requestCookie</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Request</span><span class="p">.</span><span class="n">Cookies</span><span class="p">[</span><span class="n">AntiXsrfTokenKey</span><span class="p">];</span><span class="w"></span>
-<span class="w">    </span><span class="n">Guid</span><span class="w"> </span><span class="n">requestCookieGuidValue</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">requestCookie</span><span class="w"> </span><span class="p">!=</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="p">&amp;&amp;</span><span class="w"> </span><span class="n">Guid</span><span class="p">.</span><span class="n">TryParse</span><span class="p">(</span><span class="n">requestCookie</span><span class="p">.</span><span class="n">Value</span><span class="p">,</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="n">requestCookieGuidValue</span><span class="p">))</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">requestCookie</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Request</span><span class="p">.</span><span class="n">Cookies</span><span class="p">[</span><span class="n">AntiXsrfTokenKey</span><span class="p">];</span>
+<span class="w">    </span><span class="n">Guid</span><span class="w"> </span><span class="n">requestCookieGuidValue</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">requestCookie</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">Guid</span><span class="p">.</span><span class="n">TryParse</span><span class="p">(</span><span class="n">requestCookie</span><span class="p">.</span><span class="n">Value</span><span class="p">,</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="n">requestCookieGuidValue</span><span class="p">))</span>
+<span class="w">    </span><span class="p">{</span>
 <span class="w">       </span><span class="c1">// Use the Anti-XSRF token from the cookie</span>
-<span class="w">       </span><span class="n">_antiXsrfTokenValue</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">requestCookie</span><span class="p">.</span><span class="n">Value</span><span class="p">;</span><span class="w"></span>
-<span class="w">       </span><span class="n">Page</span><span class="p">.</span><span class="n">ViewStateUserKey</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">_antiXsrfTokenValue</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">    </span><span class="k">else</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">       </span><span class="n">_antiXsrfTokenValue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">requestCookie</span><span class="p">.</span><span class="n">Value</span><span class="p">;</span>
+<span class="w">       </span><span class="n">Page</span><span class="p">.</span><span class="n">ViewStateUserKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_antiXsrfTokenValue</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">else</span>
+<span class="w">    </span><span class="p">{</span>
 <span class="w">       </span><span class="c1">// Generate a new Anti-XSRF token and save to the cookie</span>
-<span class="w">       </span><span class="n">_antiXsrfTokenValue</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Guid</span><span class="p">.</span><span class="n">NewGuid</span><span class="p">().</span><span class="n">ToString</span><span class="p">(</span><span class="s">&quot;N&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">       </span><span class="n">Page</span><span class="p">.</span><span class="n">ViewStateUserKey</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">_antiXsrfTokenValue</span><span class="p">;</span><span class="w"></span>
-<span class="w">       </span><span class="kt">var</span><span class="w"> </span><span class="n">responseCookie</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HttpCookie</span><span class="p">(</span><span class="n">AntiXsrfTokenKey</span><span class="p">)</span><span class="w"></span>
-<span class="w">       </span><span class="p">{</span><span class="w"></span>
-<span class="w">          </span><span class="n">HttpOnly</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">true</span><span class="p">,</span><span class="w"></span>
-<span class="w">          </span><span class="n">Value</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">_antiXsrfTokenValue</span><span class="w"></span>
-<span class="w">       </span><span class="p">};</span><span class="w"></span>
-<span class="w">       </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">FormsAuthentication</span><span class="p">.</span><span class="n">RequireSSL</span><span class="w"> </span><span class="p">&amp;&amp;</span><span class="w"> </span><span class="n">Request</span><span class="p">.</span><span class="n">IsSecureConnection</span><span class="p">)</span><span class="w"></span>
-<span class="w">       </span><span class="p">{</span><span class="w"></span>
-<span class="w">          </span><span class="n">responseCookie</span><span class="p">.</span><span class="n">Secure</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span><span class="w"></span>
-<span class="w">       </span><span class="p">}</span><span class="w"></span>
-<span class="w">       </span><span class="n">Response</span><span class="p">.</span><span class="n">Cookies</span><span class="p">.</span><span class="n">Set</span><span class="p">(</span><span class="n">responseCookie</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">    </span><span class="n">Page</span><span class="p">.</span><span class="n">PreLoad</span><span class="w"> </span><span class="p">+=</span><span class="w"> </span><span class="n">master_Page_PreLoad</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-<span class="k">protected</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">master_Page_PreLoad</span><span class="p">(</span><span class="kt">object</span><span class="w"> </span><span class="n">sender</span><span class="p">,</span><span class="w"> </span><span class="n">EventArgs</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(!</span><span class="n">IsPostBack</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">       </span><span class="n">_antiXsrfTokenValue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Guid</span><span class="p">.</span><span class="n">NewGuid</span><span class="p">().</span><span class="n">ToString</span><span class="p">(</span><span class="s">&quot;N&quot;</span><span class="p">);</span>
+<span class="w">       </span><span class="n">Page</span><span class="p">.</span><span class="n">ViewStateUserKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_antiXsrfTokenValue</span><span class="p">;</span>
+<span class="w">       </span><span class="kt">var</span><span class="w"> </span><span class="n">responseCookie</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HttpCookie</span><span class="p">(</span><span class="n">AntiXsrfTokenKey</span><span class="p">)</span>
+<span class="w">       </span><span class="p">{</span>
+<span class="w">          </span><span class="n">HttpOnly</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">,</span>
+<span class="w">          </span><span class="n">Value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_antiXsrfTokenValue</span>
+<span class="w">       </span><span class="p">};</span>
+<span class="w">       </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">FormsAuthentication</span><span class="p">.</span><span class="n">RequireSSL</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">Request</span><span class="p">.</span><span class="n">IsSecureConnection</span><span class="p">)</span>
+<span class="w">       </span><span class="p">{</span>
+<span class="w">          </span><span class="n">responseCookie</span><span class="p">.</span><span class="n">Secure</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
+<span class="w">       </span><span class="p">}</span>
+<span class="w">       </span><span class="n">Response</span><span class="p">.</span><span class="n">Cookies</span><span class="p">.</span><span class="n">Set</span><span class="p">(</span><span class="n">responseCookie</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">Page</span><span class="p">.</span><span class="n">PreLoad</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">master_Page_PreLoad</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">protected</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">master_Page_PreLoad</span><span class="p">(</span><span class="kt">object</span><span class="w"> </span><span class="n">sender</span><span class="p">,</span><span class="w"> </span><span class="n">EventArgs</span><span class="w"> </span><span class="n">e</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">IsPostBack</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
 <span class="w">       </span><span class="c1">// Set Anti-XSRF token</span>
-<span class="w">       </span><span class="n">ViewState</span><span class="p">[</span><span class="n">AntiXsrfTokenKey</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Page</span><span class="p">.</span><span class="n">ViewStateUserKey</span><span class="p">;</span><span class="w"></span>
-<span class="w">       </span><span class="n">ViewState</span><span class="p">[</span><span class="n">AntiXsrfUserNameKey</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Context</span><span class="p">.</span><span class="n">User</span><span class="p">.</span><span class="n">Identity</span><span class="p">.</span><span class="n">Name</span><span class="w"> </span><span class="p">??</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">    </span><span class="k">else</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">       </span><span class="n">ViewState</span><span class="p">[</span><span class="n">AntiXsrfTokenKey</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Page</span><span class="p">.</span><span class="n">ViewStateUserKey</span><span class="p">;</span>
+<span class="w">       </span><span class="n">ViewState</span><span class="p">[</span><span class="n">AntiXsrfUserNameKey</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Context</span><span class="p">.</span><span class="n">User</span><span class="p">.</span><span class="n">Identity</span><span class="p">.</span><span class="n">Name</span><span class="w"> </span><span class="o">??</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">else</span>
+<span class="w">    </span><span class="p">{</span>
 <span class="w">       </span><span class="c1">// Validate the Anti-XSRF token</span>
-<span class="w">       </span><span class="k">if</span><span class="w"> </span><span class="p">((</span><span class="kt">string</span><span class="p">)</span><span class="n">ViewState</span><span class="p">[</span><span class="n">AntiXsrfTokenKey</span><span class="p">]</span><span class="w"> </span><span class="p">!=</span><span class="w"> </span><span class="n">_antiXsrfTokenValue</span><span class="w"> </span><span class="p">||</span><span class="w"></span>
-<span class="w">          </span><span class="p">(</span><span class="kt">string</span><span class="p">)</span><span class="n">ViewState</span><span class="p">[</span><span class="n">AntiXsrfUserNameKey</span><span class="p">]</span><span class="w"> </span><span class="p">!=</span><span class="w"> </span><span class="p">(</span><span class="n">Context</span><span class="p">.</span><span class="n">User</span><span class="p">.</span><span class="n">Identity</span><span class="p">.</span><span class="n">Name</span><span class="w"> </span><span class="p">??</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="n">Empty</span><span class="p">))</span><span class="w"></span>
-<span class="w">       </span><span class="p">{</span><span class="w"></span>
-<span class="w">          </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">InvalidOperationException</span><span class="p">(</span><span class="s">&quot;Validation of Anti-XSRF token failed.&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">       </span><span class="p">}</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">       </span><span class="k">if</span><span class="w"> </span><span class="p">((</span><span class="kt">string</span><span class="p">)</span><span class="n">ViewState</span><span class="p">[</span><span class="n">AntiXsrfTokenKey</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">_antiXsrfTokenValue</span><span class="w"> </span><span class="o">||</span>
+<span class="w">          </span><span class="p">(</span><span class="kt">string</span><span class="p">)</span><span class="n">ViewState</span><span class="p">[</span><span class="n">AntiXsrfUserNameKey</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="p">(</span><span class="n">Context</span><span class="p">.</span><span class="n">User</span><span class="p">.</span><span class="n">Identity</span><span class="p">.</span><span class="n">Name</span><span class="w"> </span><span class="o">??</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="n">Empty</span><span class="p">))</span>
+<span class="w">       </span><span class="p">{</span>
+<span class="w">          </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">InvalidOperationException</span><span class="p">(</span><span class="s">&quot;Validation of Anti-XSRF token failed.&quot;</span><span class="p">);</span>
+<span class="w">       </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 <ul>
 <li>Consider <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security">HSTS</a> in IIS. See <a href="https://support.microsoft.com/en-us/help/954002/how-to-add-a-custom-http-response-header-to-a-web-site-that-is-hosted">here</a> for the procedure.</li>
 <li>This is a recommended <code>web.config</code> setup that handles HSTS among other things.</li>
 </ul>
 <div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
- <span class="nt">&lt;configuration&gt;</span>
-   <span class="nt">&lt;system.web&gt;</span>
-     <span class="nt">&lt;httpRuntime</span> <span class="na">enableVersionHeader=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
-   <span class="nt">&lt;/system.web&gt;</span>
-   <span class="nt">&lt;system.webServer&gt;</span>
-     <span class="nt">&lt;security&gt;</span>
-       <span class="nt">&lt;requestFiltering</span> <span class="na">removeServerHeader=</span><span class="s">&quot;true&quot;</span> <span class="nt">/&gt;</span>
-     <span class="nt">&lt;/security&gt;</span>
-     <span class="nt">&lt;staticContent&gt;</span>
-       <span class="nt">&lt;clientCache</span> <span class="na">cacheControlCustom=</span><span class="s">&quot;public&quot;</span>
-            <span class="na">cacheControlMode=</span><span class="s">&quot;UseMaxAge&quot;</span>
-            <span class="na">cacheControlMaxAge=</span><span class="s">&quot;1.00:00:00&quot;</span>
-            <span class="na">setEtag=</span><span class="s">&quot;true&quot;</span> <span class="nt">/&gt;</span>
-     <span class="nt">&lt;/staticContent&gt;</span>
-     <span class="nt">&lt;httpProtocol&gt;</span>
-       <span class="nt">&lt;customHeaders&gt;</span>
-         <span class="nt">&lt;add</span> <span class="na">name=</span><span class="s">&quot;Content-Security-Policy&quot;</span>
-            <span class="na">value=</span><span class="s">&quot;default-src &#39;none&#39;; style-src &#39;self&#39;; img-src &#39;self&#39;; font-src &#39;self&#39;&quot;</span> <span class="nt">/&gt;</span>
-         <span class="nt">&lt;add</span> <span class="na">name=</span><span class="s">&quot;X-Content-Type-Options&quot;</span> <span class="na">value=</span><span class="s">&quot;NOSNIFF&quot;</span> <span class="nt">/&gt;</span>
-         <span class="nt">&lt;add</span> <span class="na">name=</span><span class="s">&quot;X-Frame-Options&quot;</span> <span class="na">value=</span><span class="s">&quot;DENY&quot;</span> <span class="nt">/&gt;</span>
-         <span class="nt">&lt;add</span> <span class="na">name=</span><span class="s">&quot;X-Permitted-Cross-Domain-Policies&quot;</span> <span class="na">value=</span><span class="s">&quot;master-only&quot;</span><span class="nt">/&gt;</span>
-         <span class="nt">&lt;add</span> <span class="na">name=</span><span class="s">&quot;X-XSS-Protection&quot;</span> <span class="na">value=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
-         <span class="nt">&lt;remove</span> <span class="na">name=</span><span class="s">&quot;X-Powered-By&quot;</span><span class="nt">/&gt;</span>
-       <span class="nt">&lt;/customHeaders&gt;</span>
-     <span class="nt">&lt;/httpProtocol&gt;</span>
-     <span class="nt">&lt;rewrite&gt;</span>
-       <span class="nt">&lt;rules&gt;</span>
-         <span class="nt">&lt;rule</span> <span class="na">name=</span><span class="s">&quot;Redirect to https&quot;</span><span class="nt">&gt;</span>
-           <span class="nt">&lt;match</span> <span class="na">url=</span><span class="s">&quot;(.*)&quot;</span><span class="nt">/&gt;</span>
-           <span class="nt">&lt;conditions&gt;</span>
-             <span class="nt">&lt;add</span> <span class="na">input=</span><span class="s">&quot;{HTTPS}&quot;</span> <span class="na">pattern=</span><span class="s">&quot;Off&quot;</span><span class="nt">/&gt;</span>
-             <span class="nt">&lt;add</span> <span class="na">input=</span><span class="s">&quot;{REQUEST_METHOD}&quot;</span> <span class="na">pattern=</span><span class="s">&quot;^get$|^head$&quot;</span> <span class="nt">/&gt;</span>
-           <span class="nt">&lt;/conditions&gt;</span>
-           <span class="nt">&lt;action</span> <span class="na">type=</span><span class="s">&quot;Redirect&quot;</span> <span class="na">url=</span><span class="s">&quot;https://{HTTP_HOST}/{R:1}&quot;</span> <span class="na">redirectType=</span><span class="s">&quot;Permanent&quot;</span><span class="nt">/&gt;</span>
-         <span class="nt">&lt;/rule&gt;</span>
-       <span class="nt">&lt;/rules&gt;</span>
-       <span class="nt">&lt;outboundRules&gt;</span>
-         <span class="nt">&lt;rule</span> <span class="na">name=</span><span class="s">&quot;Add HSTS Header&quot;</span> <span class="na">enabled=</span><span class="s">&quot;true&quot;</span><span class="nt">&gt;</span>
-           <span class="nt">&lt;match</span> <span class="na">serverVariable=</span><span class="s">&quot;RESPONSE_Strict_Transport_Security&quot;</span> <span class="na">pattern=</span><span class="s">&quot;.*&quot;</span> <span class="nt">/&gt;</span>
-           <span class="nt">&lt;conditions&gt;</span>
-             <span class="nt">&lt;add</span> <span class="na">input=</span><span class="s">&quot;{HTTPS}&quot;</span> <span class="na">pattern=</span><span class="s">&quot;on&quot;</span> <span class="na">ignoreCase=</span><span class="s">&quot;true&quot;</span> <span class="nt">/&gt;</span>
-           <span class="nt">&lt;/conditions&gt;</span>
-           <span class="nt">&lt;action</span> <span class="na">type=</span><span class="s">&quot;Rewrite&quot;</span> <span class="na">value=</span><span class="s">&quot;max-age=15768000&quot;</span> <span class="nt">/&gt;</span>
-         <span class="nt">&lt;/rule&gt;</span>
-       <span class="nt">&lt;/outboundRules&gt;</span>
-     <span class="nt">&lt;/rewrite&gt;</span>
-   <span class="nt">&lt;/system.webServer&gt;</span>
- <span class="nt">&lt;/configuration&gt;</span>
+<span class="w"> </span><span class="nt">&lt;configuration&gt;</span>
+<span class="w">   </span><span class="nt">&lt;system.web&gt;</span>
+<span class="w">     </span><span class="nt">&lt;httpRuntime</span><span class="w"> </span><span class="na">enableVersionHeader=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+<span class="w">   </span><span class="nt">&lt;/system.web&gt;</span>
+<span class="w">   </span><span class="nt">&lt;system.webServer&gt;</span>
+<span class="w">     </span><span class="nt">&lt;security&gt;</span>
+<span class="w">       </span><span class="nt">&lt;requestFiltering</span><span class="w"> </span><span class="na">removeServerHeader=</span><span class="s">&quot;true&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">     </span><span class="nt">&lt;/security&gt;</span>
+<span class="w">     </span><span class="nt">&lt;staticContent&gt;</span>
+<span class="w">       </span><span class="nt">&lt;clientCache</span><span class="w"> </span><span class="na">cacheControlCustom=</span><span class="s">&quot;public&quot;</span>
+<span class="w">            </span><span class="na">cacheControlMode=</span><span class="s">&quot;UseMaxAge&quot;</span>
+<span class="w">            </span><span class="na">cacheControlMaxAge=</span><span class="s">&quot;1.00:00:00&quot;</span>
+<span class="w">            </span><span class="na">setEtag=</span><span class="s">&quot;true&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">     </span><span class="nt">&lt;/staticContent&gt;</span>
+<span class="w">     </span><span class="nt">&lt;httpProtocol&gt;</span>
+<span class="w">       </span><span class="nt">&lt;customHeaders&gt;</span>
+<span class="w">         </span><span class="nt">&lt;add</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;Content-Security-Policy&quot;</span>
+<span class="w">            </span><span class="na">value=</span><span class="s">&quot;default-src &#39;none&#39;; style-src &#39;self&#39;; img-src &#39;self&#39;; font-src &#39;self&#39;&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">         </span><span class="nt">&lt;add</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;X-Content-Type-Options&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;NOSNIFF&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">         </span><span class="nt">&lt;add</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;X-Frame-Options&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;DENY&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">         </span><span class="nt">&lt;add</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;X-Permitted-Cross-Domain-Policies&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;master-only&quot;</span><span class="nt">/&gt;</span>
+<span class="w">         </span><span class="nt">&lt;add</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;X-XSS-Protection&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+<span class="w">         </span><span class="nt">&lt;remove</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;X-Powered-By&quot;</span><span class="nt">/&gt;</span>
+<span class="w">       </span><span class="nt">&lt;/customHeaders&gt;</span>
+<span class="w">     </span><span class="nt">&lt;/httpProtocol&gt;</span>
+<span class="w">     </span><span class="nt">&lt;rewrite&gt;</span>
+<span class="w">       </span><span class="nt">&lt;rules&gt;</span>
+<span class="w">         </span><span class="nt">&lt;rule</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;Redirect to https&quot;</span><span class="nt">&gt;</span>
+<span class="w">           </span><span class="nt">&lt;match</span><span class="w"> </span><span class="na">url=</span><span class="s">&quot;(.*)&quot;</span><span class="nt">/&gt;</span>
+<span class="w">           </span><span class="nt">&lt;conditions&gt;</span>
+<span class="w">             </span><span class="nt">&lt;add</span><span class="w"> </span><span class="na">input=</span><span class="s">&quot;{HTTPS}&quot;</span><span class="w"> </span><span class="na">pattern=</span><span class="s">&quot;Off&quot;</span><span class="nt">/&gt;</span>
+<span class="w">             </span><span class="nt">&lt;add</span><span class="w"> </span><span class="na">input=</span><span class="s">&quot;{REQUEST_METHOD}&quot;</span><span class="w"> </span><span class="na">pattern=</span><span class="s">&quot;^get$|^head$&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">           </span><span class="nt">&lt;/conditions&gt;</span>
+<span class="w">           </span><span class="nt">&lt;action</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;Redirect&quot;</span><span class="w"> </span><span class="na">url=</span><span class="s">&quot;https://{HTTP_HOST}/{R:1}&quot;</span><span class="w"> </span><span class="na">redirectType=</span><span class="s">&quot;Permanent&quot;</span><span class="nt">/&gt;</span>
+<span class="w">         </span><span class="nt">&lt;/rule&gt;</span>
+<span class="w">       </span><span class="nt">&lt;/rules&gt;</span>
+<span class="w">       </span><span class="nt">&lt;outboundRules&gt;</span>
+<span class="w">         </span><span class="nt">&lt;rule</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;Add HSTS Header&quot;</span><span class="w"> </span><span class="na">enabled=</span><span class="s">&quot;true&quot;</span><span class="nt">&gt;</span>
+<span class="w">           </span><span class="nt">&lt;match</span><span class="w"> </span><span class="na">serverVariable=</span><span class="s">&quot;RESPONSE_Strict_Transport_Security&quot;</span><span class="w"> </span><span class="na">pattern=</span><span class="s">&quot;.*&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">           </span><span class="nt">&lt;conditions&gt;</span>
+<span class="w">             </span><span class="nt">&lt;add</span><span class="w"> </span><span class="na">input=</span><span class="s">&quot;{HTTPS}&quot;</span><span class="w"> </span><span class="na">pattern=</span><span class="s">&quot;on&quot;</span><span class="w"> </span><span class="na">ignoreCase=</span><span class="s">&quot;true&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">           </span><span class="nt">&lt;/conditions&gt;</span>
+<span class="w">           </span><span class="nt">&lt;action</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;Rewrite&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;max-age=15768000&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">         </span><span class="nt">&lt;/rule&gt;</span>
+<span class="w">       </span><span class="nt">&lt;/outboundRules&gt;</span>
+<span class="w">     </span><span class="nt">&lt;/rewrite&gt;</span>
+<span class="w">   </span><span class="nt">&lt;/system.webServer&gt;</span>
+<span class="w"> </span><span class="nt">&lt;/configuration&gt;</span>
 </code></pre></div>
 <ul>
 <li>Remove the version header by adding the following line in <code>Machine.config</code> file:</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="nt">&lt;httpRuntime</span> <span class="na">enableVersionHeader=</span><span class="s">&quot;false&quot;</span> <span class="nt">/&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;httpRuntime</span><span class="w"> </span><span class="na">enableVersionHeader=</span><span class="s">&quot;false&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
 </code></pre></div>
 <ul>
 <li>Also remove the Server header using the HttpContext Class in your code.</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="n">HttpContext</span><span class="p">.</span><span class="n">Current</span><span class="p">.</span><span class="n">Response</span><span class="p">.</span><span class="n">Headers</span><span class="p">.</span><span class="n">Remove</span><span class="p">(</span><span class="s">&quot;Server&quot;</span><span class="p">);</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="n">HttpContext</span><span class="p">.</span><span class="n">Current</span><span class="p">.</span><span class="n">Response</span><span class="p">.</span><span class="n">Headers</span><span class="p">.</span><span class="n">Remove</span><span class="p">(</span><span class="s">&quot;Server&quot;</span><span class="p">);</span>
 </code></pre></div>
 <h3 id="http-validation-and-encoding">HTTP validation and encoding<a class="headerlink" href="#http-validation-and-encoding" title="Permanent link">&para;</a></h3>
 <ul>
@@ -2431,54 +2431,54 @@
 <p>DO: Using an object relational mapper (ORM) or stored procedures is the most effective way of countering the SQL Injection vulnerability.</p>
 <p>DO: Use parameterized queries where a direct sql query must be used. More Information can be found <a href="Query_Parameterization_Cheat_Sheet.html">here</a>.</p>
 <p>e.g. In entity frameworks:</p>
-<div class="highlight"><pre><span></span><code><span class="n">var</span><span class="w"> </span><span class="k">sql</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">@</span><span class="ss">&quot;Update [User] SET FirstName = @FirstName WHERE Id = @Id&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="n">context</span><span class="p">.</span><span class="k">Database</span><span class="p">.</span><span class="n">ExecuteSqlCommand</span><span class="p">(</span><span class="w"></span>
-<span class="w">    </span><span class="k">sql</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">SqlParameter</span><span class="p">(</span><span class="ss">&quot;@FirstName&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">firstname</span><span class="p">),</span><span class="w"></span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">SqlParameter</span><span class="p">(</span><span class="ss">&quot;@Id&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">));</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="n">var</span><span class="w"> </span><span class="k">sql</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">@</span><span class="ss">&quot;Update [User] SET FirstName = @FirstName WHERE Id = @Id&quot;</span><span class="p">;</span>
+<span class="n">context</span><span class="p">.</span><span class="k">Database</span><span class="p">.</span><span class="n">ExecuteSqlCommand</span><span class="p">(</span>
+<span class="w">    </span><span class="k">sql</span><span class="p">,</span>
+<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">SqlParameter</span><span class="p">(</span><span class="ss">&quot;@FirstName&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">firstname</span><span class="p">),</span>
+<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">SqlParameter</span><span class="p">(</span><span class="ss">&quot;@Id&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">));</span>
 </code></pre></div>
 <p>DO NOT: Concatenate strings anywhere in your code and execute them against your database (Known as dynamic sql).</p>
 <p>NB: You can still accidentally do this with ORMs or Stored procedures so check everywhere.</p>
 <p>e.g</p>
-<div class="highlight"><pre><span></span><code><span class="n">string</span><span class="w"> </span><span class="n">strQry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;SELECT * FROM Users WHERE UserName=&#39;&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">txtUser</span><span class="p">.</span><span class="nb">Text</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="ss">&quot;&#39; AND Password=&#39;&quot;</span><span class="w"></span>
-<span class="w">                </span><span class="o">+</span><span class="w"> </span><span class="n">txtPassword</span><span class="p">.</span><span class="nb">Text</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="ss">&quot;&#39;&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="k">EXEC</span><span class="w"> </span><span class="n">strQry</span><span class="w"> </span><span class="o">//</span><span class="w"> </span><span class="k">SQL</span><span class="w"> </span><span class="n">Injection</span><span class="w"> </span><span class="n">vulnerability</span><span class="o">!</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="n">string</span><span class="w"> </span><span class="n">strQry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;SELECT * FROM Users WHERE UserName=&#39;&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">txtUser</span><span class="p">.</span><span class="nb">Text</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="ss">&quot;&#39; AND Password=&#39;&quot;</span>
+<span class="w">                </span><span class="o">+</span><span class="w"> </span><span class="n">txtPassword</span><span class="p">.</span><span class="nb">Text</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="ss">&quot;&#39;&quot;</span><span class="p">;</span>
+<span class="k">EXEC</span><span class="w"> </span><span class="n">strQry</span><span class="w"> </span><span class="o">//</span><span class="w"> </span><span class="k">SQL</span><span class="w"> </span><span class="n">Injection</span><span class="w"> </span><span class="n">vulnerability</span><span class="o">!</span>
 </code></pre></div>
 <p>DO: Practice Least Privilege - Connect to the database using an account with a minimum set of permissions required to do it's job i.e. not the sa account</p>
 <h4 id="os-injection">OS Injection<a class="headerlink" href="#os-injection" title="Permanent link">&para;</a></h4>
 <p>General guidance about OS Injection can be found on this <a href="OS_Command_Injection_Defense_Cheat_Sheet.html">cheat sheet</a>.</p>
 <p>DO: Use <a href="https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.process.start?view=netframework-4.7.2">System.Diagnostics.Process.Start</a> to call underlying OS functions.</p>
 <p>e.g</p>
-<div class="highlight"><pre><span></span><code><span class="kt">var</span><span class="w"> </span><span class="n">process</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">Process</span><span class="p">();</span><span class="w"></span>
-<span class="kt">var</span><span class="w"> </span><span class="n">startInfo</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">ProcessStartInfo</span><span class="p">();</span><span class="w"></span>
-<span class="n">startInfo</span><span class="p">.</span><span class="n">FileName</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;validatedCommand&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="n">startInfo</span><span class="p">.</span><span class="n">Arguments</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;validatedArg1 validatedArg2 validatedArg3&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="n">process</span><span class="p">.</span><span class="n">StartInfo</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">startInfo</span><span class="p">;</span><span class="w"></span>
-<span class="n">process</span><span class="p">.</span><span class="n">Start</span><span class="p">();</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kt">var</span><span class="w"> </span><span class="n">process</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">Process</span><span class="p">();</span>
+<span class="kt">var</span><span class="w"> </span><span class="n">startInfo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">ProcessStartInfo</span><span class="p">();</span>
+<span class="n">startInfo</span><span class="p">.</span><span class="n">FileName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;validatedCommand&quot;</span><span class="p">;</span>
+<span class="n">startInfo</span><span class="p">.</span><span class="n">Arguments</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;validatedArg1 validatedArg2 validatedArg3&quot;</span><span class="p">;</span>
+<span class="n">process</span><span class="p">.</span><span class="n">StartInfo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">startInfo</span><span class="p">;</span>
+<span class="n">process</span><span class="p">.</span><span class="n">Start</span><span class="p">();</span>
 </code></pre></div>
 <p>DO NOT: Assume that this mechanism will protect against malicious input designed to break out of one argument and then tamper with another argument to the process. This will still be possible.</p>
 <p>DO: Use allow-list validation on all user supplied input wherever possible. Input validation prevents improperly formed data from entering an information system. For more information please see the <a href="Input_Validation_Cheat_Sheet.html">Input Validation Cheat Sheet</a>.</p>
 <p>e.g Validating user input using <a href="https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress.tryparse?view=netframework-4.8">IPAddress.TryParse Method</a></p>
 <div class="highlight"><pre><span></span><code><span class="c1">//User input</span>
-<span class="kt">string</span><span class="w"> </span><span class="n">ipAddress</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="kt">string</span><span class="w"> </span><span class="n">ipAddress</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">;</span>
 
 <span class="c1">//check to make sure an ip address was provided</span>
-<span class="k">if</span><span class="w"> </span><span class="p">(!</span><span class="kt">string</span><span class="p">.</span><span class="n">IsNullOrEmpty</span><span class="p">(</span><span class="n">ipAddress</span><span class="p">))</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="kt">string</span><span class="p">.</span><span class="n">IsNullOrEmpty</span><span class="p">(</span><span class="n">ipAddress</span><span class="p">))</span>
+<span class="p">{</span>
 <span class="w"> </span><span class="c1">// Create an instance of IPAddress for the specified address string (in</span>
 <span class="w"> </span><span class="c1">// dotted-quad, or colon-hexadecimal notation).</span>
-<span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">IPAddress</span><span class="p">.</span><span class="n">TryParse</span><span class="p">(</span><span class="n">ipAddress</span><span class="p">,</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">var</span><span class="w"> </span><span class="n">address</span><span class="p">))</span><span class="w"></span>
-<span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">IPAddress</span><span class="p">.</span><span class="n">TryParse</span><span class="p">(</span><span class="n">ipAddress</span><span class="p">,</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">var</span><span class="w"> </span><span class="n">address</span><span class="p">))</span>
+<span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="c1">// Display the address in standard notation.</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">ToString</span><span class="p">();</span><span class="w"></span>
-<span class="w"> </span><span class="p">}</span><span class="w"></span>
-<span class="w"> </span><span class="k">else</span><span class="w"></span>
-<span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">ToString</span><span class="p">();</span>
+<span class="w"> </span><span class="p">}</span>
+<span class="w"> </span><span class="k">else</span>
+<span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="c1">//ipAddress is not of type IPAddress</span>
-<span class="w">  </span><span class="p">...</span><span class="w"></span>
-<span class="w"> </span><span class="p">}</span><span class="w"></span>
-<span class="w">    </span><span class="p">...</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="p">...</span>
+<span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>DO: Try to only accept characters which are simple alphanumeric.</p>
 <p>DO NOT: Assume you can sanitize special characters without actually removing them. Various combinations of <code>\</code>, <code>'</code> and <code>@</code> may have an unexpected impact on sanitization attempts.</p>
@@ -2495,34 +2495,34 @@ ASP.net Core Identity framework is well configured by default, where it uses sec
 <p>DO: Set secure password policy</p>
 <p>e.g ASP.net Core Identity</p>
 <div class="highlight"><pre><span></span><code><span class="c1">//startup.cs</span>
-<span class="n">services</span><span class="p">.</span><span class="n">Configure</span><span class="p">&lt;</span><span class="n">IdentityOptions</span><span class="p">&gt;(</span><span class="n">options</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
+<span class="n">services</span><span class="p">.</span><span class="n">Configure</span><span class="o">&lt;</span><span class="n">IdentityOptions</span><span class="o">&gt;</span><span class="p">(</span><span class="n">options</span><span class="w"> </span><span class="o">=&gt;</span>
+<span class="p">{</span>
 <span class="w"> </span><span class="c1">// Password settings</span>
-<span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">Password</span><span class="p">.</span><span class="n">RequireDigit</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span><span class="w"></span>
-<span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">Password</span><span class="p">.</span><span class="n">RequiredLength</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="m">8</span><span class="p">;</span><span class="w"></span>
-<span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">Password</span><span class="p">.</span><span class="n">RequireNonAlphanumeric</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span><span class="w"></span>
-<span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">Password</span><span class="p">.</span><span class="n">RequireUppercase</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span><span class="w"></span>
-<span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">Password</span><span class="p">.</span><span class="n">RequireLowercase</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span><span class="w"></span>
-<span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">Password</span><span class="p">.</span><span class="n">RequiredUniqueChars</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="m">6</span><span class="p">;</span><span class="w"></span>
+<span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">Password</span><span class="p">.</span><span class="n">RequireDigit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
+<span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">Password</span><span class="p">.</span><span class="n">RequiredLength</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">8</span><span class="p">;</span>
+<span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">Password</span><span class="p">.</span><span class="n">RequireNonAlphanumeric</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
+<span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">Password</span><span class="p">.</span><span class="n">RequireUppercase</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
+<span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">Password</span><span class="p">.</span><span class="n">RequireLowercase</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
+<span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">Password</span><span class="p">.</span><span class="n">RequiredUniqueChars</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">6</span><span class="p">;</span>
 
 
-<span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">Lockout</span><span class="p">.</span><span class="n">DefaultLockoutTimeSpan</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">TimeSpan</span><span class="p">.</span><span class="n">FromMinutes</span><span class="p">(</span><span class="m">30</span><span class="p">);</span><span class="w"></span>
-<span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">Lockout</span><span class="p">.</span><span class="n">MaxFailedAccessAttempts</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="m">3</span><span class="p">;</span><span class="w"></span>
+<span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">Lockout</span><span class="p">.</span><span class="n">DefaultLockoutTimeSpan</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TimeSpan</span><span class="p">.</span><span class="n">FromMinutes</span><span class="p">(</span><span class="m">30</span><span class="p">);</span>
+<span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">Lockout</span><span class="p">.</span><span class="n">MaxFailedAccessAttempts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3</span><span class="p">;</span>
 
-<span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">SignIn</span><span class="p">.</span><span class="n">RequireConfirmedEmail</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span><span class="w"></span>
+<span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">SignIn</span><span class="p">.</span><span class="n">RequireConfirmedEmail</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
 
-<span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">User</span><span class="p">.</span><span class="n">RequireUniqueEmail</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span><span class="w"></span>
-<span class="p">});</span><span class="w"></span>
+<span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">User</span><span class="p">.</span><span class="n">RequireUniqueEmail</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
+<span class="p">});</span>
 </code></pre></div>
 <p>DO: Set a cookie policy</p>
 <p>e.g</p>
 <div class="highlight"><pre><span></span><code><span class="c1">//startup.cs</span>
-<span class="n">services</span><span class="p">.</span><span class="n">ConfigureApplicationCookie</span><span class="p">(</span><span class="n">options</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">Cookie</span><span class="p">.</span><span class="n">HttpOnly</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span><span class="w"></span>
-<span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">Cookie</span><span class="p">.</span><span class="n">Expiration</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">TimeSpan</span><span class="p">.</span><span class="n">FromHours</span><span class="p">(</span><span class="m">1</span><span class="p">)</span><span class="w"></span>
-<span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">SlidingExpiration</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span><span class="w"></span>
-<span class="p">});</span><span class="w"></span>
+<span class="n">services</span><span class="p">.</span><span class="n">ConfigureApplicationCookie</span><span class="p">(</span><span class="n">options</span><span class="w"> </span><span class="o">=&gt;</span>
+<span class="p">{</span>
+<span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">Cookie</span><span class="p">.</span><span class="n">HttpOnly</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
+<span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">Cookie</span><span class="p">.</span><span class="n">Expiration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TimeSpan</span><span class="p">.</span><span class="n">FromHours</span><span class="p">(</span><span class="m">1</span><span class="p">)</span>
+<span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">SlidingExpiration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
+<span class="p">});</span>
 </code></pre></div>
 <h3 id="a3-sensitive-data-exposure">A3 Sensitive Data Exposure<a class="headerlink" href="#a3-sensitive-data-exposure" title="Permanent link">&para;</a></h3>
 <p>DO NOT: <a href="Password_Storage_Cheat_Sheet.html#do-not-limit-the-character-set-and-set-long-max-lengths-for-credentials">Store encrypted passwords</a>.</p>
@@ -2537,40 +2537,40 @@ Apply the following test: Would you be happy leaving the data on a spreadsheet o
 <p>More information on Transport Layer Protection can be found <a href="Transport_Layer_Protection_Cheat_Sheet.html">here</a>.
 e.g Web.config</p>
 <div class="highlight"><pre><span></span><code><span class="nt">&lt;system.web&gt;</span>
-    <span class="nt">&lt;httpRuntime</span> <span class="na">enableVersionHeader=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;httpRuntime</span><span class="w"> </span><span class="na">enableVersionHeader=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
 <span class="nt">&lt;/system.web&gt;</span>
 <span class="nt">&lt;system.webServer&gt;</span>
-    <span class="nt">&lt;security&gt;</span>
-        <span class="nt">&lt;requestFiltering</span> <span class="na">removeServerHeader=</span><span class="s">&quot;true&quot;</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;/security&gt;</span>
-    <span class="nt">&lt;httpProtocol&gt;</span>
-        <span class="nt">&lt;customHeaders&gt;</span>
-            <span class="nt">&lt;add</span> <span class="na">name=</span><span class="s">&quot;X-Content-Type-Options&quot;</span> <span class="na">value=</span><span class="s">&quot;nosniff&quot;</span> <span class="nt">/&gt;</span>
-            <span class="nt">&lt;add</span> <span class="na">name=</span><span class="s">&quot;X-Frame-Options&quot;</span> <span class="na">value=</span><span class="s">&quot;DENY&quot;</span> <span class="nt">/&gt;</span>
-            <span class="nt">&lt;add</span> <span class="na">name=</span><span class="s">&quot;X-Permitted-Cross-Domain-Policies&quot;</span> <span class="na">value=</span><span class="s">&quot;master-only&quot;</span><span class="nt">/&gt;</span>
-            <span class="nt">&lt;add</span> <span class="na">name=</span><span class="s">&quot;X-XSS-Protection&quot;</span> <span class="na">value=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
-            <span class="nt">&lt;remove</span> <span class="na">name=</span><span class="s">&quot;X-Powered-By&quot;</span><span class="nt">/&gt;</span>
-        <span class="nt">&lt;/customHeaders&gt;</span>
-    <span class="nt">&lt;/httpProtocol&gt;</span>
+<span class="w">    </span><span class="nt">&lt;security&gt;</span>
+<span class="w">        </span><span class="nt">&lt;requestFiltering</span><span class="w"> </span><span class="na">removeServerHeader=</span><span class="s">&quot;true&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/security&gt;</span>
+<span class="w">    </span><span class="nt">&lt;httpProtocol&gt;</span>
+<span class="w">        </span><span class="nt">&lt;customHeaders&gt;</span>
+<span class="w">            </span><span class="nt">&lt;add</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;X-Content-Type-Options&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;nosniff&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">            </span><span class="nt">&lt;add</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;X-Frame-Options&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;DENY&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="w">            </span><span class="nt">&lt;add</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;X-Permitted-Cross-Domain-Policies&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;master-only&quot;</span><span class="nt">/&gt;</span>
+<span class="w">            </span><span class="nt">&lt;add</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;X-XSS-Protection&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;0&quot;</span><span class="nt">/&gt;</span>
+<span class="w">            </span><span class="nt">&lt;remove</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;X-Powered-By&quot;</span><span class="nt">/&gt;</span>
+<span class="w">        </span><span class="nt">&lt;/customHeaders&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/httpProtocol&gt;</span>
 <span class="nt">&lt;/system.webServer&gt;</span>
 </code></pre></div>
 <p>e.g Startup.cs</p>
-<div class="highlight"><pre><span></span><code><span class="n">app</span><span class="p">.</span><span class="n">UseHsts</span><span class="p">(</span><span class="n">hsts</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="n">hsts</span><span class="p">.</span><span class="n">MaxAge</span><span class="p">(</span><span class="m">365</span><span class="p">).</span><span class="n">IncludeSubdomains</span><span class="p">());</span><span class="w"></span>
-<span class="n">app</span><span class="p">.</span><span class="n">UseXContentTypeOptions</span><span class="p">();</span><span class="w"></span>
-<span class="n">app</span><span class="p">.</span><span class="n">UseReferrerPolicy</span><span class="p">(</span><span class="n">opts</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="n">opts</span><span class="p">.</span><span class="n">NoReferrer</span><span class="p">());</span><span class="w"></span>
-<span class="n">app</span><span class="p">.</span><span class="n">UseXXssProtection</span><span class="p">(</span><span class="n">options</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">FilterDisabled</span><span class="p">());</span><span class="w"></span>
-<span class="n">app</span><span class="p">.</span><span class="n">UseXfo</span><span class="p">(</span><span class="n">options</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">Deny</span><span class="p">());</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="n">app</span><span class="p">.</span><span class="n">UseHsts</span><span class="p">(</span><span class="n">hsts</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">hsts</span><span class="p">.</span><span class="n">MaxAge</span><span class="p">(</span><span class="m">365</span><span class="p">).</span><span class="n">IncludeSubdomains</span><span class="p">());</span>
+<span class="n">app</span><span class="p">.</span><span class="n">UseXContentTypeOptions</span><span class="p">();</span>
+<span class="n">app</span><span class="p">.</span><span class="n">UseReferrerPolicy</span><span class="p">(</span><span class="n">opts</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">opts</span><span class="p">.</span><span class="n">NoReferrer</span><span class="p">());</span>
+<span class="n">app</span><span class="p">.</span><span class="n">UseXXssProtection</span><span class="p">(</span><span class="n">options</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">FilterDisabled</span><span class="p">());</span>
+<span class="n">app</span><span class="p">.</span><span class="n">UseXfo</span><span class="p">(</span><span class="n">options</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">Deny</span><span class="p">());</span>
 
-<span class="n">app</span><span class="p">.</span><span class="n">UseCsp</span><span class="p">(</span><span class="n">opts</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="n">opts</span><span class="w"></span>
-<span class="w"> </span><span class="p">.</span><span class="n">BlockAllMixedContent</span><span class="p">()</span><span class="w"></span>
-<span class="w"> </span><span class="p">.</span><span class="n">StyleSources</span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">Self</span><span class="p">())</span><span class="w"></span>
-<span class="w"> </span><span class="p">.</span><span class="n">StyleSources</span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">UnsafeInline</span><span class="p">())</span><span class="w"></span>
-<span class="w"> </span><span class="p">.</span><span class="n">FontSources</span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">Self</span><span class="p">())</span><span class="w"></span>
-<span class="w"> </span><span class="p">.</span><span class="n">FormActions</span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">Self</span><span class="p">())</span><span class="w"></span>
-<span class="w"> </span><span class="p">.</span><span class="n">FrameAncestors</span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">Self</span><span class="p">())</span><span class="w"></span>
-<span class="w"> </span><span class="p">.</span><span class="n">ImageSources</span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">Self</span><span class="p">())</span><span class="w"></span>
-<span class="w"> </span><span class="p">.</span><span class="n">ScriptSources</span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">Self</span><span class="p">())</span><span class="w"></span>
-<span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">app</span><span class="p">.</span><span class="n">UseCsp</span><span class="p">(</span><span class="n">opts</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">opts</span>
+<span class="w"> </span><span class="p">.</span><span class="n">BlockAllMixedContent</span><span class="p">()</span>
+<span class="w"> </span><span class="p">.</span><span class="n">StyleSources</span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">Self</span><span class="p">())</span>
+<span class="w"> </span><span class="p">.</span><span class="n">StyleSources</span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">UnsafeInline</span><span class="p">())</span>
+<span class="w"> </span><span class="p">.</span><span class="n">FontSources</span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">Self</span><span class="p">())</span>
+<span class="w"> </span><span class="p">.</span><span class="n">FormActions</span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">Self</span><span class="p">())</span>
+<span class="w"> </span><span class="p">.</span><span class="n">FrameAncestors</span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">Self</span><span class="p">())</span>
+<span class="w"> </span><span class="p">.</span><span class="n">ImageSources</span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">Self</span><span class="p">())</span>
+<span class="w"> </span><span class="p">.</span><span class="n">ScriptSources</span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">Self</span><span class="p">())</span>
+<span class="w"> </span><span class="p">);</span>
 </code></pre></div>
 <p>For more information about headers can be found <a href="https://owasp.org/www-project-secure-headers/">here</a>.</p>
 <h3 id="a4-xml-external-entities-xxe">A4 XML External Entities (XXE)<a class="headerlink" href="#a4-xml-external-entities-xxe" title="Permanent link">&para;</a></h3>
@@ -2580,136 +2580,136 @@ e.g Web.config</p>
 <h3 id="a5-broken-access-control">A5 Broken Access Control<a class="headerlink" href="#a5-broken-access-control" title="Permanent link">&para;</a></h3>
 <h4 id="weak-account-management">Weak Account management<a class="headerlink" href="#weak-account-management" title="Permanent link">&para;</a></h4>
 <p>Ensure cookies are sent via httpOnly:</p>
-<div class="highlight"><pre><span></span><code><span class="n">CookieHttpOnly</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">true</span><span class="p">,</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="n">CookieHttpOnly</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">,</span>
 </code></pre></div>
 <p>Reduce the time period a session can be stolen in by reducing session timeout and removing sliding expiration:</p>
-<div class="highlight"><pre><span></span><code><span class="n">ExpireTimeSpan</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">TimeSpan</span><span class="p">.</span><span class="n">FromMinutes</span><span class="p">(</span><span class="m">60</span><span class="p">),</span><span class="w"></span>
-<span class="n">SlidingExpiration</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">false</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="n">ExpireTimeSpan</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TimeSpan</span><span class="p">.</span><span class="n">FromMinutes</span><span class="p">(</span><span class="m">60</span><span class="p">),</span>
+<span class="n">SlidingExpiration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">false</span>
 </code></pre></div>
 <p>See <a href="https://github.com/johnstaveley/SecurityEssentials/blob/master/SecurityEssentials/App_Start/Startup.Auth.cs">here</a> for full startup code snippet</p>
 <p>Ensure cookie is sent over HTTPS in the production environment. This should be enforced in the config transforms:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">&lt;httpCookies</span> <span class="na">requireSSL=</span><span class="s">&quot;true&quot;</span> <span class="na">xdt:Transform=</span><span class="s">&quot;SetAttributes(requireSSL)&quot;</span><span class="nt">/&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;httpCookies</span><span class="w"> </span><span class="na">requireSSL=</span><span class="s">&quot;true&quot;</span><span class="w"> </span><span class="na">xdt:Transform=</span><span class="s">&quot;SetAttributes(requireSSL)&quot;</span><span class="nt">/&gt;</span>
 <span class="nt">&lt;authentication&gt;</span>
-    <span class="nt">&lt;forms</span> <span class="na">requireSSL=</span><span class="s">&quot;true&quot;</span> <span class="na">xdt:Transform=</span><span class="s">&quot;SetAttributes(requireSSL)&quot;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;forms</span><span class="w"> </span><span class="na">requireSSL=</span><span class="s">&quot;true&quot;</span><span class="w"> </span><span class="na">xdt:Transform=</span><span class="s">&quot;SetAttributes(requireSSL)&quot;</span><span class="nt">/&gt;</span>
 <span class="nt">&lt;/authentication&gt;</span>
 </code></pre></div>
 <p>Protect LogOn, Registration and password reset methods against brute force attacks by throttling requests (see code below), consider also using ReCaptcha.</p>
-<div class="highlight"><pre><span></span><code><span class="na">[HttpPost]</span><span class="w"></span>
-<span class="na">[AllowAnonymous]</span><span class="w"></span>
-<span class="na">[ValidateAntiForgeryToken]</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="na">[HttpPost]</span>
+<span class="na">[AllowAnonymous]</span>
+<span class="na">[ValidateAntiForgeryToken]</span>
 <span class="na">[AllowXRequestsEveryXSecondsAttribute(Name = &quot;LogOn&quot;,</span>
 <span class="na">Message = &quot;You have performed this action more than {x} times in the last {n} seconds.&quot;,</span>
-<span class="na">Requests = 3, Seconds = 60)]</span><span class="w"></span>
-<span class="k">public</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&gt;</span><span class="w"> </span><span class="n">LogOn</span><span class="p">(</span><span class="n">LogOnViewModel</span><span class="w"> </span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">returnUrl</span><span class="p">)</span><span class="w"></span>
+<span class="na">Requests = 3, Seconds = 60)]</span>
+<span class="k">public</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="n">Task</span><span class="o">&lt;</span><span class="n">ActionResult</span><span class="o">&gt;</span><span class="w"> </span><span class="n">LogOn</span><span class="p">(</span><span class="n">LogOnViewModel</span><span class="w"> </span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">returnUrl</span><span class="p">)</span>
 </code></pre></div>
 <p>DO NOT: Roll your own authentication or session management, use the one provided by .Net</p>
 <p>DO NOT: Tell someone if the account exists on LogOn, Registration or Password reset. Say something like 'Either the username or password was incorrect', or 'If this account exists then a reset token will be sent to the registered email address'. This protects against account enumeration.</p>
 <p>The feedback to the user should be identical whether or not the account exists, both in terms of content and behavior: e.g. if the response takes 50% longer when the account is real then membership information can be guessed and tested.</p>
 <h4 id="missing-function-level-access-control">Missing function-level access control<a class="headerlink" href="#missing-function-level-access-control" title="Permanent link">&para;</a></h4>
 <p>DO: Authorize users on all externally facing endpoints. The .NET framework has many ways to authorize a user, use them at method level:</p>
-<div class="highlight"><pre><span></span><code><span class="na">[Authorize(Roles = &quot;Admin&quot;)]</span><span class="w"></span>
-<span class="na">[HttpGet]</span><span class="w"></span>
-<span class="k">public</span><span class="w"> </span><span class="n">ActionResult</span><span class="w"> </span><span class="nf">Index</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">page</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="na">[Authorize(Roles = &quot;Admin&quot;)]</span>
+<span class="na">[HttpGet]</span>
+<span class="k">public</span><span class="w"> </span><span class="n">ActionResult</span><span class="w"> </span><span class="nf">Index</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">page</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">)</span>
 </code></pre></div>
 <p>or better yet, at controller level:</p>
-<div class="highlight"><pre><span></span><code><span class="na">[Authorize]</span><span class="w"></span>
-<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">UserController</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="na">[Authorize]</span>
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">UserController</span>
 </code></pre></div>
 <p>You can also check roles in code using identity features in .net: <code>System.Web.Security.Roles.IsUserInRole(userName, roleName)</code></p>
 <p>You can find more information <a href="Access_Control_Cheat_Sheet.html#introduction">here</a> on Access Control and <a href="Authorization_Testing_Automation_Cheat_Sheet.html">here</a> for Authorization.</p>
 <h4 id="insecure-direct-object-references">Insecure Direct object references<a class="headerlink" href="#insecure-direct-object-references" title="Permanent link">&para;</a></h4>
 <p>When you have a resource (object) which can be accessed by a reference (in the sample below this is the <code>id</code>) then you need to ensure that the user is intended to be there</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// Insecure</span>
-<span class="k">public</span><span class="w"> </span><span class="n">ActionResult</span><span class="w"> </span><span class="nf">Edit</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="kt">var</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">_context</span><span class="p">.</span><span class="n">Users</span><span class="p">.</span><span class="n">FirstOrDefault</span><span class="p">(</span><span class="n">e</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">Id</span><span class="w"> </span><span class="p">==</span><span class="w"> </span><span class="n">id</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">View</span><span class="p">(</span><span class="s">&quot;Details&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">UserViewModel</span><span class="p">(</span><span class="n">user</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="k">public</span><span class="w"> </span><span class="n">ActionResult</span><span class="w"> </span><span class="nf">Edit</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">id</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kt">var</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_context</span><span class="p">.</span><span class="n">Users</span><span class="p">.</span><span class="n">FirstOrDefault</span><span class="p">(</span><span class="n">e</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">Id</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">id</span><span class="p">);</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">View</span><span class="p">(</span><span class="s">&quot;Details&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">UserViewModel</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
+<span class="p">}</span>
 
 <span class="c1">// Secure</span>
-<span class="k">public</span><span class="w"> </span><span class="n">ActionResult</span><span class="w"> </span><span class="nf">Edit</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="kt">var</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">_context</span><span class="p">.</span><span class="n">Users</span><span class="p">.</span><span class="n">FirstOrDefault</span><span class="p">(</span><span class="n">e</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">Id</span><span class="w"> </span><span class="p">==</span><span class="w"> </span><span class="n">id</span><span class="p">);</span><span class="w"></span>
+<span class="k">public</span><span class="w"> </span><span class="n">ActionResult</span><span class="w"> </span><span class="nf">Edit</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">id</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="kt">var</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_context</span><span class="p">.</span><span class="n">Users</span><span class="p">.</span><span class="n">FirstOrDefault</span><span class="p">(</span><span class="n">e</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">Id</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">id</span><span class="p">);</span>
 <span class="w">  </span><span class="c1">// Establish user has right to edit the details</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="n">Id</span><span class="w"> </span><span class="p">!=</span><span class="w"> </span><span class="n">_userIdentity</span><span class="p">.</span><span class="n">GetUserId</span><span class="p">())</span><span class="w"></span>
-<span class="w">  </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="n">HandleErrorInfo</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HandleErrorInfo</span><span class="p">(</span><span class="w"></span>
-<span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="nf">Exception</span><span class="p">(</span><span class="s">&quot;INFO: You do not have permission to edit these details&quot;</span><span class="p">));</span><span class="w"></span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nf">View</span><span class="p">(</span><span class="s">&quot;Error&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">error</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nf">View</span><span class="p">(</span><span class="s">&quot;Edit&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">UserViewModel</span><span class="p">(</span><span class="n">user</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="n">Id</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">_userIdentity</span><span class="p">.</span><span class="n">GetUserId</span><span class="p">())</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">        </span><span class="n">HandleErrorInfo</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HandleErrorInfo</span><span class="p">(</span>
+<span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="nf">Exception</span><span class="p">(</span><span class="s">&quot;INFO: You do not have permission to edit these details&quot;</span><span class="p">));</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nf">View</span><span class="p">(</span><span class="s">&quot;Error&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">error</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nf">View</span><span class="p">(</span><span class="s">&quot;Edit&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">UserViewModel</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>More information can be found <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">here</a> for Insecure Direct Object Reference.</p>
 <h3 id="a6-security-misconfiguration">A6 Security Misconfiguration<a class="headerlink" href="#a6-security-misconfiguration" title="Permanent link">&para;</a></h3>
 <h4 id="debug-and-stack-trace">Debug and Stack Trace<a class="headerlink" href="#debug-and-stack-trace" title="Permanent link">&para;</a></h4>
 <p>Ensure debug and trace are off in production. This can be enforced using web.config transforms:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">&lt;compilation</span> <span class="na">xdt:Transform=</span><span class="s">&quot;RemoveAttributes(debug)&quot;</span> <span class="nt">/&gt;</span>
-<span class="nt">&lt;trace</span> <span class="na">enabled=</span><span class="s">&quot;false&quot;</span> <span class="na">xdt:Transform=</span><span class="s">&quot;Replace&quot;</span><span class="nt">/&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;compilation</span><span class="w"> </span><span class="na">xdt:Transform=</span><span class="s">&quot;RemoveAttributes(debug)&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="nt">&lt;trace</span><span class="w"> </span><span class="na">enabled=</span><span class="s">&quot;false&quot;</span><span class="w"> </span><span class="na">xdt:Transform=</span><span class="s">&quot;Replace&quot;</span><span class="nt">/&gt;</span>
 </code></pre></div>
 <p>DO NOT: Use default passwords</p>
 <p>DO: (When using TLS) Redirect a request made over Http to https:</p>
 <p>e.g Global.asax.cs</p>
-<div class="highlight"><pre><span></span><code><span class="k">protected</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Application_BeginRequest</span><span class="p">()</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="cp">#if !DEBUG</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">protected</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Application_BeginRequest</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="cp">#if !DEBUG</span>
 <span class="w">    </span><span class="c1">// SECURE: Ensure any request is returned over SSL/TLS in production</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(!</span><span class="n">Request</span><span class="p">.</span><span class="n">IsLocal</span><span class="w"> </span><span class="p">&amp;&amp;</span><span class="w"> </span><span class="p">!</span><span class="n">Context</span><span class="p">.</span><span class="n">Request</span><span class="p">.</span><span class="n">IsSecureConnection</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">redirect</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Context</span><span class="p">.</span><span class="n">Request</span><span class="p">.</span><span class="n">Url</span><span class="p">.</span><span class="n">ToString</span><span class="p">()</span><span class="w"></span>
-<span class="w">                        </span><span class="p">.</span><span class="n">ToLower</span><span class="p">(</span><span class="n">CultureInfo</span><span class="p">.</span><span class="n">CurrentCulture</span><span class="p">)</span><span class="w"></span>
-<span class="w">                        </span><span class="p">.</span><span class="n">Replace</span><span class="p">(</span><span class="s">&quot;http:&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;https:&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="n">Response</span><span class="p">.</span><span class="n">Redirect</span><span class="p">(</span><span class="n">redirect</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">    </span><span class="cp">#endif</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">Request</span><span class="p">.</span><span class="n">IsLocal</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="n">Context</span><span class="p">.</span><span class="n">Request</span><span class="p">.</span><span class="n">IsSecureConnection</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">redirect</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Context</span><span class="p">.</span><span class="n">Request</span><span class="p">.</span><span class="n">Url</span><span class="p">.</span><span class="n">ToString</span><span class="p">()</span>
+<span class="w">                        </span><span class="p">.</span><span class="n">ToLower</span><span class="p">(</span><span class="n">CultureInfo</span><span class="p">.</span><span class="n">CurrentCulture</span><span class="p">)</span>
+<span class="w">                        </span><span class="p">.</span><span class="n">Replace</span><span class="p">(</span><span class="s">&quot;http:&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;https:&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">Response</span><span class="p">.</span><span class="n">Redirect</span><span class="p">(</span><span class="n">redirect</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="cp">#endif</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>e.g Startup.cs in the Configure()</p>
-<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="n">app</span><span class="p">.</span><span class="n">UseHttpsRedirection</span><span class="p">();</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="n">app</span><span class="p">.</span><span class="n">UseHttpsRedirection</span><span class="p">();</span>
 </code></pre></div>
 <h4 id="cross-site-request-forgery">Cross-site request forgery<a class="headerlink" href="#cross-site-request-forgery" title="Permanent link">&para;</a></h4>
 <p>DO NOT: Send sensitive data without validating Anti-Forgery-Tokens (<a href="https://docs.microsoft.com/en-us/aspnet/web-api/overview/security/preventing-cross-site-request-forgery-csrf-attacks">.NET</a> / <a href="https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-3.0#aspnet-core-antiforgery-configuration">.NET Core</a>).</p>
 <p>DO: Send the anti-forgery token with every POST/PUT request:</p>
 <h5 id="using-net-framework">Using .NET Framework<a class="headerlink" href="#using-net-framework" title="Permanent link">&para;</a></h5>
-<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="p">(</span><span class="n">Html</span><span class="p">.</span><span class="n">BeginForm</span><span class="p">(</span><span class="s">&quot;LogOff&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Account&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">FormMethod</span><span class="p">.</span><span class="n">Post</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;logoutForm&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">                        </span><span class="n">@class</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;pull-right&quot;</span><span class="w"> </span><span class="p">}))</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">@Html</span><span class="p">.</span><span class="n">AntiForgeryToken</span><span class="p">()</span><span class="w"></span>
-<span class="w">    </span><span class="p">&lt;</span><span class="n">ul</span><span class="w"> </span><span class="n">class</span><span class="p">=</span><span class="s">&quot;nav nav-pills&quot;</span><span class="p">&gt;</span><span class="w"></span>
-<span class="w">        </span><span class="p">&lt;</span><span class="n">li</span><span class="w"> </span><span class="n">role</span><span class="p">=</span><span class="s">&quot;presentation&quot;</span><span class="p">&gt;</span><span class="w"></span>
-<span class="w">        </span><span class="n">Logged</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">@User</span><span class="p">.</span><span class="n">Identity</span><span class="p">.</span><span class="n">Name</span><span class="w"></span>
-<span class="w">        </span><span class="p">&lt;/</span><span class="n">li</span><span class="p">&gt;</span><span class="w"></span>
-<span class="w">        </span><span class="p">&lt;</span><span class="n">li</span><span class="w"> </span><span class="n">role</span><span class="p">=</span><span class="s">&quot;presentation&quot;</span><span class="p">&gt;</span><span class="w"></span>
-<span class="w">        </span><span class="p">&lt;</span><span class="n">a</span><span class="w"> </span><span class="n">href</span><span class="p">=</span><span class="s">&quot;javascript:document.getElementById(&#39;logoutForm&#39;).submit()&quot;</span><span class="p">&gt;</span><span class="n">Log</span><span class="w"> </span><span class="n">off</span><span class="p">&lt;/</span><span class="n">a</span><span class="p">&gt;</span><span class="w"></span>
-<span class="w">        </span><span class="p">&lt;/</span><span class="n">li</span><span class="p">&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="p">&lt;/</span><span class="n">ul</span><span class="p">&gt;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="p">(</span><span class="n">Html</span><span class="p">.</span><span class="n">BeginForm</span><span class="p">(</span><span class="s">&quot;LogOff&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Account&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">FormMethod</span><span class="p">.</span><span class="n">Post</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;logoutForm&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="n">@class</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;pull-right&quot;</span><span class="w"> </span><span class="p">}))</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">@Html</span><span class="p">.</span><span class="n">AntiForgeryToken</span><span class="p">()</span>
+<span class="w">    </span><span class="o">&lt;</span><span class="n">ul</span><span class="w"> </span><span class="n">class</span><span class="o">=</span><span class="s">&quot;nav nav-pills&quot;</span><span class="o">&gt;</span>
+<span class="w">        </span><span class="o">&lt;</span><span class="n">li</span><span class="w"> </span><span class="n">role</span><span class="o">=</span><span class="s">&quot;presentation&quot;</span><span class="o">&gt;</span>
+<span class="w">        </span><span class="n">Logged</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">@User</span><span class="p">.</span><span class="n">Identity</span><span class="p">.</span><span class="n">Name</span>
+<span class="w">        </span><span class="o">&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+<span class="w">        </span><span class="o">&lt;</span><span class="n">li</span><span class="w"> </span><span class="n">role</span><span class="o">=</span><span class="s">&quot;presentation&quot;</span><span class="o">&gt;</span>
+<span class="w">        </span><span class="o">&lt;</span><span class="n">a</span><span class="w"> </span><span class="n">href</span><span class="o">=</span><span class="s">&quot;javascript:document.getElementById(&#39;logoutForm&#39;).submit()&quot;</span><span class="o">&gt;</span><span class="n">Log</span><span class="w"> </span><span class="n">off</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
+<span class="w">        </span><span class="o">&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+<span class="w">    </span><span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>Then validate it at the method or preferably the controller level:</p>
-<div class="highlight"><pre><span></span><code><span class="na">[HttpPost]</span><span class="w"></span>
-<span class="na">[ValidateAntiForgeryToken]</span><span class="w"></span>
-<span class="k">public</span><span class="w"> </span><span class="n">ActionResult</span><span class="w"> </span><span class="nf">LogOff</span><span class="p">()</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="na">[HttpPost]</span>
+<span class="na">[ValidateAntiForgeryToken]</span>
+<span class="k">public</span><span class="w"> </span><span class="n">ActionResult</span><span class="w"> </span><span class="nf">LogOff</span><span class="p">()</span>
 </code></pre></div>
 <p>Make sure the tokens are removed completely for invalidation on logout.</p>
 <div class="highlight"><pre><span></span><code><span class="c1">/// &lt;summary&gt;</span>
 <span class="c1">/// SECURE: Remove any remaining cookies including Anti-CSRF cookie</span>
 <span class="c1">/// &lt;/summary&gt;</span>
-<span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">RemoveAntiForgeryCookie</span><span class="p">(</span><span class="n">Controller</span><span class="w"> </span><span class="n">controller</span><span class="p">)</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kt">string</span><span class="p">[]</span><span class="w"> </span><span class="n">allCookies</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">controller</span><span class="p">.</span><span class="n">Request</span><span class="p">.</span><span class="n">Cookies</span><span class="p">.</span><span class="n">AllKeys</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="k">foreach</span><span class="w"> </span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">cookie</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">allCookies</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">controller</span><span class="p">.</span><span class="n">Response</span><span class="p">.</span><span class="n">Cookies</span><span class="p">[</span><span class="n">cookie</span><span class="p">]</span><span class="w"> </span><span class="p">!=</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="p">&amp;&amp;</span><span class="w"></span>
-<span class="w">            </span><span class="n">cookie</span><span class="w"> </span><span class="p">==</span><span class="w"> </span><span class="s">&quot;__RequestVerificationToken&quot;</span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="p">{</span><span class="w"></span>
-<span class="w">            </span><span class="n">controller</span><span class="p">.</span><span class="n">Response</span><span class="p">.</span><span class="n">Cookies</span><span class="p">[</span><span class="n">cookie</span><span class="p">].</span><span class="n">Expires</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">.</span><span class="n">AddDays</span><span class="p">(-</span><span class="m">1</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="p">}</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">RemoveAntiForgeryCookie</span><span class="p">(</span><span class="n">Controller</span><span class="w"> </span><span class="n">controller</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">string</span><span class="p">[]</span><span class="w"> </span><span class="n">allCookies</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">controller</span><span class="p">.</span><span class="n">Request</span><span class="p">.</span><span class="n">Cookies</span><span class="p">.</span><span class="n">AllKeys</span><span class="p">;</span>
+<span class="w">    </span><span class="k">foreach</span><span class="w"> </span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">cookie</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">allCookies</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">controller</span><span class="p">.</span><span class="n">Response</span><span class="p">.</span><span class="n">Cookies</span><span class="p">[</span><span class="n">cookie</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="o">&amp;&amp;</span>
+<span class="w">            </span><span class="n">cookie</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;__RequestVerificationToken&quot;</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">controller</span><span class="p">.</span><span class="n">Response</span><span class="p">.</span><span class="n">Cookies</span><span class="p">[</span><span class="n">cookie</span><span class="p">].</span><span class="n">Expires</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DateTime</span><span class="p">.</span><span class="n">Now</span><span class="p">.</span><span class="n">AddDays</span><span class="p">(</span><span class="o">-</span><span class="m">1</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 <h5 id="using-net-core-20-or-later">Using .NET Core 2.0 or later<a class="headerlink" href="#using-net-core-20-or-later" title="Permanent link">&para;</a></h5>
 <p>Starting with .NET Core 2.0 it is possible to <a href="https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-3.0#aspnet-core-antiforgery-configuration">automatically generate and verify the antiforgery token</a>.</p>
 <p>If you are using <a href="https://docs.microsoft.com/en-us/aspnet/core/mvc/views/tag-helpers/intro">tag-helpers</a>, which is the default for most web project templates, then all forms will automatically send the anti-forgery token. You can check if tag-helpers are enabled by checking if your main <code>_ViewImports.cshtml</code> file contains:</p>
-<div class="highlight"><pre><span></span><code><span class="n">@addTagHelper</span><span class="w"> </span><span class="p">*,</span><span class="w"> </span><span class="n">Microsoft</span><span class="p">.</span><span class="n">AspNetCore</span><span class="p">.</span><span class="n">Mvc</span><span class="p">.</span><span class="n">TagHelpers</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="n">@addTagHelper</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="n">Microsoft</span><span class="p">.</span><span class="n">AspNetCore</span><span class="p">.</span><span class="n">Mvc</span><span class="p">.</span><span class="n">TagHelpers</span>
 </code></pre></div>
 <p><code>IHtmlHelper.BeginForm</code> also sends anti-forgery-tokens automatically.</p>
 <p>Unless you are using tag-helpers or <code>IHtmlHelper.BeginForm</code>, you must use the requisite helper on forms as seen here:</p>
@@ -2718,49 +2718,49 @@ e.g Web.config</p>
 <span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
 </code></pre></div>
 <p>To automatically validate all requests other than GET, HEAD, OPTIONS and TRACE you need to add a global action filter with the <a href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.autovalidateantiforgerytokenattribute?view=aspnetcore-2.2">AutoValidateAntiforgeryToken</a> attribute inside your <code>Startup.cs</code> as mentioned in the following <a href="https://andrewlock.net/automatically-validating-anti-forgery-tokens-in-asp-net-core-with-the-autovalidateantiforgerytokenattribute/">article</a>:</p>
-<div class="highlight"><pre><span></span><code><span class="n">services</span><span class="p">.</span><span class="n">AddMvc</span><span class="p">(</span><span class="n">options</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">options</span><span class="p">.</span><span class="n">Filters</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">AutoValidateAntiforgeryTokenAttribute</span><span class="p">());</span><span class="w"></span>
-<span class="p">});</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="n">services</span><span class="p">.</span><span class="n">AddMvc</span><span class="p">(</span><span class="n">options</span><span class="w"> </span><span class="o">=&gt;</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">options</span><span class="p">.</span><span class="n">Filters</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">AutoValidateAntiforgeryTokenAttribute</span><span class="p">());</span>
+<span class="p">});</span>
 </code></pre></div>
 <p>If you need to disable the attribute validation for a specific method on a controller you can add the <a href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.ignoreantiforgerytokenattribute?view=aspnetcore-2.2">IgnoreAntiforgeryToken</a> attribute to the controller method (for MVC controllers) or parent class (for Razor pages):</p>
-<div class="highlight"><pre><span></span><code><span class="na">[IgnoreAntiforgeryToken]</span><span class="w"></span>
-<span class="na">[HttpDelete]</span><span class="w"></span>
-<span class="k">public</span><span class="w"> </span><span class="n">IActionResult</span><span class="w"> </span><span class="nf">Delete</span><span class="p">()</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="na">[IgnoreAntiforgeryToken]</span>
+<span class="na">[HttpDelete]</span>
+<span class="k">public</span><span class="w"> </span><span class="n">IActionResult</span><span class="w"> </span><span class="nf">Delete</span><span class="p">()</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="na">[IgnoreAntiforgeryToken]</span><span class="w"></span>
-<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">UnsafeModel</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">PageModel</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="na">[IgnoreAntiforgeryToken]</span>
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">UnsafeModel</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">PageModel</span>
 </code></pre></div>
 <p>If you need to also validate the token on GET, HEAD, OPTIONS or TRACE - requests you can add the <a href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.validateantiforgerytokenattribute?view=aspnetcore-2.2">ValidateAntiforgeryToken</a> attribute to the controller method (for MVC controllers) or parent class (for Razor pages):</p>
-<div class="highlight"><pre><span></span><code><span class="na">[HttpGet]</span><span class="w"></span>
-<span class="na">[ValidateAntiforgeryToken]</span><span class="w"></span>
-<span class="k">public</span><span class="w"> </span><span class="n">IActionResult</span><span class="w"> </span><span class="nf">DoSomethingDangerous</span><span class="p">()</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="na">[HttpGet]</span>
+<span class="na">[ValidateAntiforgeryToken]</span>
+<span class="k">public</span><span class="w"> </span><span class="n">IActionResult</span><span class="w"> </span><span class="nf">DoSomethingDangerous</span><span class="p">()</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="na">[HttpGet]</span><span class="w"></span>
-<span class="na">[ValidateAntiforgeryToken]</span><span class="w"></span>
-<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">SafeModel</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">PageModel</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="na">[HttpGet]</span>
+<span class="na">[ValidateAntiforgeryToken]</span>
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">SafeModel</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">PageModel</span>
 </code></pre></div>
 <p>In case you can't use a global action filter, add the <a href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.autovalidateantiforgerytokenattribute?view=aspnetcore-2.2">AutoValidateAntiforgeryToken</a> attribute to your controller classes or razor page models:</p>
-<div class="highlight"><pre><span></span><code><span class="na">[AutoValidateAntiforgeryToken]</span><span class="w"></span>
-<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">UserController</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="na">[AutoValidateAntiforgeryToken]</span>
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">UserController</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="na">[AutoValidateAntiforgeryToken]</span><span class="w"></span>
-<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">SafeModel</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">PageModel</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="na">[AutoValidateAntiforgeryToken]</span>
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">SafeModel</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">PageModel</span>
 </code></pre></div>
 <h5 id="using-net-core-20-or-net-framework-with-ajax">Using .Net Core 2.0 or .NET Framework with AJAX<a class="headerlink" href="#using-net-core-20-or-net-framework-with-ajax" title="Permanent link">&para;</a></h5>
 <p>You will need to attach the anti-forgery token to AJAX requests.</p>
 <p>If you are using jQuery in an ASP.NET Core MVC view this can be achieved using this snippet:</p>
-<div class="highlight"><pre><span></span><code><span class="err">@</span><span class="nx">inject</span><span class="w">  </span><span class="nx">Microsoft</span><span class="p">.</span><span class="nx">AspNetCore</span><span class="p">.</span><span class="nx">Antiforgery</span><span class="p">.</span><span class="nx">IAntiforgery</span><span class="w"> </span><span class="nx">antiforgeryProvider</span><span class="w"></span>
-<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">(</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;POST&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nx">url</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;@Url.Action(&quot;Action&quot;, &quot;Controller&quot;)&#39;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nx">contentType</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;application/x-www-form-urlencoded; charset=utf-8&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="nx">id</span><span class="p">,</span><span class="w"></span>
-<span class="w">        </span><span class="s1">&#39;__RequestVerificationToken&#39;</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;@antiforgeryProvider.GetAndStoreTokens(this.Context).RequestToken&#39;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="p">})</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="err">@</span><span class="nx">inject</span><span class="w">  </span><span class="nx">Microsoft</span><span class="p">.</span><span class="nx">AspNetCore</span><span class="p">.</span><span class="nx">Antiforgery</span><span class="p">.</span><span class="nx">IAntiforgery</span><span class="w"> </span><span class="nx">antiforgeryProvider</span>
+<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">(</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;POST&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">url</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;@Url.Action(&quot;Action&quot;, &quot;Controller&quot;)&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">contentType</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;application/x-www-form-urlencoded; charset=utf-8&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="nx">id</span><span class="p">,</span>
+<span class="w">        </span><span class="s1">&#39;__RequestVerificationToken&#39;</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;@antiforgeryProvider.GetAndStoreTokens(this.Context).RequestToken&#39;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">})</span>
 </code></pre></div>
 <p>If you are using the .NET Framework, you can find some code snippets <a href="https://docs.microsoft.com/en-us/aspnet/web-api/overview/security/preventing-cross-site-request-forgery-csrf-attacks#anti-csrf-and-ajax">here</a>.</p>
 <p>More information can be found <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">here</a> for Cross-Site Request Forgery.</p>
@@ -2770,19 +2770,19 @@ e.g Web.config</p>
 <p><code>Install-Package AntiXSS</code></p>
 <p>Then set in config:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">&lt;system.web&gt;</span>
-<span class="nt">&lt;httpRuntime</span> <span class="na">targetFramework=</span><span class="s">&quot;4.5&quot;</span>
+<span class="nt">&lt;httpRuntime</span><span class="w"> </span><span class="na">targetFramework=</span><span class="s">&quot;4.5&quot;</span>
 <span class="na">enableVersionHeader=</span><span class="s">&quot;false&quot;</span>
 <span class="na">encoderType=</span><span class="s">&quot;Microsoft.Security.Application.AntiXssEncoder, AntiXssLibrary&quot;</span>
-<span class="na">maxRequestLength=</span><span class="s">&quot;4096&quot;</span> <span class="nt">/&gt;</span>
+<span class="na">maxRequestLength=</span><span class="s">&quot;4096&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
 </code></pre></div>
 <p>DO NOT: Use the <code>[AllowHTML]</code> attribute or helper class <code>@Html.Raw</code> unless you really know that the content you are writing to the browser is safe and has been escaped properly.</p>
 <p>DO: Enable a <a href="Content_Security_Policy_Cheat_Sheet.html#context">Content Security Policy</a>, this will prevent your pages from accessing assets it should not be able to access (e.g. a malicious script):</p>
 <div class="highlight"><pre><span></span><code><span class="nt">&lt;system.webServer&gt;</span>
-    <span class="nt">&lt;httpProtocol&gt;</span>
-        <span class="nt">&lt;customHeaders&gt;</span>
-            <span class="nt">&lt;add</span> <span class="na">name=</span><span class="s">&quot;Content-Security-Policy&quot;</span>
-                <span class="na">value=</span><span class="s">&quot;default-src &#39;none&#39;; style-src &#39;self&#39;; img-src &#39;self&#39;;</span>
-<span class="s">                font-src &#39;self&#39;; script-src &#39;self&#39;&quot;</span> <span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;httpProtocol&gt;</span>
+<span class="w">        </span><span class="nt">&lt;customHeaders&gt;</span>
+<span class="w">            </span><span class="nt">&lt;add</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;Content-Security-Policy&quot;</span>
+<span class="w">                </span><span class="na">value=</span><span class="s">&quot;default-src &#39;none&#39;; style-src &#39;self&#39;; img-src &#39;self&#39;;</span>
+<span class="s">                font-src &#39;self&#39;; script-src &#39;self&#39;&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
 </code></pre></div>
 <p>More information can be found <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">here</a> for Cross-Site Scripting.</p>
 <h3 id="a8-insecure-deserialization">A8 Insecure Deserialization<a class="headerlink" href="#a8-insecure-deserialization" title="Permanent link">&para;</a></h3>
@@ -2807,63 +2807,63 @@ If a deserialized hostile object tries to initiate a system processes or access 
 <p>What Logs to Collect and more information about Logging can be found on this <a href="Logging_Cheat_Sheet.html">cheat sheet</a>.</p>
 <p>.NET Core come with a LoggerFactory, which is in Microsoft.Extensions.Logging. More information about ILogger can be found <a href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.ilogger">here</a>.</p>
 <p>How to log all errors from the <code>Startup.cs</code>, so that anytime an error is thrown it will be logged.</p>
-<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Configure</span><span class="p">(</span><span class="n">IApplicationBuilder</span><span class="w"> </span><span class="n">app</span><span class="p">,</span><span class="w"> </span><span class="n">IHostingEnvironment</span><span class="w"> </span><span class="n">env</span><span class="p">)</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">env</span><span class="p">.</span><span class="n">IsDevelopment</span><span class="p">())</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="n">_isDevelopment</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="n">app</span><span class="p">.</span><span class="n">UseDeveloperExceptionPage</span><span class="p">();</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Configure</span><span class="p">(</span><span class="n">IApplicationBuilder</span><span class="w"> </span><span class="n">app</span><span class="p">,</span><span class="w"> </span><span class="n">IHostingEnvironment</span><span class="w"> </span><span class="n">env</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">env</span><span class="p">.</span><span class="n">IsDevelopment</span><span class="p">())</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">_isDevelopment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
+<span class="w">        </span><span class="n">app</span><span class="p">.</span><span class="n">UseDeveloperExceptionPage</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
 
 <span class="w">    </span><span class="c1">//Log all errors in the application</span>
-<span class="w">    </span><span class="n">app</span><span class="p">.</span><span class="n">UseExceptionHandler</span><span class="p">(</span><span class="n">errorApp</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="n">errorApp</span><span class="p">.</span><span class="n">Run</span><span class="p">(</span><span class="k">async</span><span class="w"> </span><span class="n">context</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"></span>
-<span class="w">        </span><span class="p">{</span><span class="w"></span>
-<span class="w">            </span><span class="kt">var</span><span class="w"> </span><span class="n">errorFeature</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">context</span><span class="p">.</span><span class="n">Features</span><span class="p">.</span><span class="n">Get</span><span class="p">&lt;</span><span class="n">IExceptionHandlerFeature</span><span class="p">&gt;();</span><span class="w"></span>
-<span class="w">            </span><span class="kt">var</span><span class="w"> </span><span class="n">exception</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">errorFeature</span><span class="p">.</span><span class="n">Error</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">app</span><span class="p">.</span><span class="n">UseExceptionHandler</span><span class="p">(</span><span class="n">errorApp</span><span class="w"> </span><span class="o">=&gt;</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">errorApp</span><span class="p">.</span><span class="n">Run</span><span class="p">(</span><span class="k">async</span><span class="w"> </span><span class="n">context</span><span class="w"> </span><span class="o">=&gt;</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="kt">var</span><span class="w"> </span><span class="n">errorFeature</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">context</span><span class="p">.</span><span class="n">Features</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">IExceptionHandlerFeature</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">            </span><span class="kt">var</span><span class="w"> </span><span class="n">exception</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">errorFeature</span><span class="p">.</span><span class="n">Error</span><span class="p">;</span>
 
-<span class="w">            </span><span class="n">Log</span><span class="p">.</span><span class="n">Error</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;Stacktrace of error: {0}&quot;</span><span class="p">,</span><span class="n">exception</span><span class="p">.</span><span class="n">StackTrace</span><span class="p">.</span><span class="n">ToString</span><span class="p">()));</span><span class="w"></span>
-<span class="w">        </span><span class="p">});</span><span class="w"></span>
-<span class="w">    </span><span class="p">});</span><span class="w"></span>
+<span class="w">            </span><span class="n">Log</span><span class="p">.</span><span class="n">Error</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;Stacktrace of error: {0}&quot;</span><span class="p">,</span><span class="n">exception</span><span class="p">.</span><span class="n">StackTrace</span><span class="p">.</span><span class="n">ToString</span><span class="p">()));</span>
+<span class="w">        </span><span class="p">});</span>
+<span class="w">    </span><span class="p">});</span>
 
-<span class="w">    </span><span class="n">app</span><span class="p">.</span><span class="n">UseAuthentication</span><span class="p">();</span><span class="w"></span>
-<span class="w">    </span><span class="n">app</span><span class="p">.</span><span class="n">UseMvc</span><span class="p">();</span><span class="w"></span>
-<span class="w"> </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">app</span><span class="p">.</span><span class="n">UseAuthentication</span><span class="p">();</span>
+<span class="w">    </span><span class="n">app</span><span class="p">.</span><span class="n">UseMvc</span><span class="p">();</span>
+<span class="w"> </span><span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>e.g Injecting into the class constructor, which makes writing unit test simpler. It is recommended if instances of the class will be created using dependency injection (e.g. MVC controllers).  The below example shows logging of all unsuccessful log in attempts.</p>
-<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">AccountsController</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Controller</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="k">private</span><span class="w"> </span><span class="n">ILogger</span><span class="w"> </span><span class="n">_Logger</span><span class="p">;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">AccountsController</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">Controller</span>
+<span class="p">{</span>
+<span class="w">        </span><span class="k">private</span><span class="w"> </span><span class="n">ILogger</span><span class="w"> </span><span class="n">_Logger</span><span class="p">;</span>
 
-<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="nf">AccountsController</span><span class="p">(</span><span class="w"> </span><span class="n">ILogger</span><span class="w"> </span><span class="n">logger</span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="p">{</span><span class="w"></span>
-<span class="w">            </span><span class="n">_Logger</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">logger</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="nf">AccountsController</span><span class="p">(</span><span class="w"> </span><span class="n">ILogger</span><span class="w"> </span><span class="n">logger</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">_Logger</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">logger</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
 
-<span class="w">        </span><span class="na">[HttpPost]</span><span class="w"></span>
-<span class="w">        </span><span class="na">[AllowAnonymous]</span><span class="w"></span>
-<span class="w">        </span><span class="na">[ValidateAntiForgeryToken]</span><span class="w"></span>
-<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="n">Task</span><span class="p">&lt;</span><span class="n">IActionResult</span><span class="p">&gt;</span><span class="w"> </span><span class="n">Login</span><span class="p">(</span><span class="n">LoginViewModel</span><span class="w"> </span><span class="n">model</span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="p">{</span><span class="w"></span>
-<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ModelState</span><span class="p">.</span><span class="n">IsValid</span><span class="p">)</span><span class="w"></span>
-<span class="w">            </span><span class="p">{</span><span class="w"></span>
-<span class="w">                </span><span class="kt">var</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">_signInManager</span><span class="p">.</span><span class="n">PasswordSignInAsync</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">Email</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="n">Password</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="n">RememberMe</span><span class="p">,</span><span class="w"> </span><span class="n">lockoutOnFailure</span><span class="p">:</span><span class="w"> </span><span class="k">false</span><span class="p">);</span><span class="w"></span>
-<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">Succeeded</span><span class="p">)</span><span class="w"></span>
-<span class="w">                </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="na">[HttpPost]</span>
+<span class="w">        </span><span class="na">[AllowAnonymous]</span>
+<span class="w">        </span><span class="na">[ValidateAntiForgeryToken]</span>
+<span class="w">        </span><span class="k">public</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="n">Task</span><span class="o">&lt;</span><span class="n">IActionResult</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Login</span><span class="p">(</span><span class="n">LoginViewModel</span><span class="w"> </span><span class="n">model</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ModelState</span><span class="p">.</span><span class="n">IsValid</span><span class="p">)</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="kt">var</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">_signInManager</span><span class="p">.</span><span class="n">PasswordSignInAsync</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">Email</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="n">Password</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="n">RememberMe</span><span class="p">,</span><span class="w"> </span><span class="n">lockoutOnFailure</span><span class="p">:</span><span class="w"> </span><span class="k">false</span><span class="p">);</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">Succeeded</span><span class="p">)</span>
+<span class="w">                </span><span class="p">{</span>
 <span class="w">                    </span><span class="c1">//Log all successful log in attempts</span>
-<span class="w">                    </span><span class="n">Log</span><span class="p">.</span><span class="n">Information</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;User: {0}, Successfully Logged in&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="n">Email</span><span class="p">));</span><span class="w"></span>
+<span class="w">                    </span><span class="n">Log</span><span class="p">.</span><span class="n">Information</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;User: {0}, Successfully Logged in&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="n">Email</span><span class="p">));</span>
 <span class="w">                    </span><span class="c1">//Code for successful login</span>
-<span class="w">                </span><span class="p">}</span><span class="w"></span>
-<span class="w">                </span><span class="k">else</span><span class="w"></span>
-<span class="w">                </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">                </span><span class="k">else</span>
+<span class="w">                </span><span class="p">{</span>
 <span class="w">                </span><span class="c1">//Log all incorrect log in attempts</span>
-<span class="w">                </span><span class="n">Log</span><span class="p">.</span><span class="n">Information</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;User: {0}, Incorrect Password&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="n">Email</span><span class="p">));</span><span class="w"></span>
-<span class="w">                </span><span class="p">}</span><span class="w"></span>
-<span class="w">             </span><span class="p">}</span><span class="w"></span>
-<span class="w">            </span><span class="p">...</span><span class="w"></span>
-<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">                </span><span class="n">Log</span><span class="p">.</span><span class="n">Information</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;User: {0}, Incorrect Password&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="n">Email</span><span class="p">));</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">             </span><span class="p">}</span>
+<span class="w">            </span><span class="p">...</span>
+<span class="w">        </span><span class="p">}</span>
 </code></pre></div>
 <p>Logging levels for ILogger are listed below, in order of high to low importance:</p>
 <h4 id="monitoring">Monitoring<a class="headerlink" href="#monitoring" title="Permanent link">&para;</a></h4>
@@ -2874,28 +2874,28 @@ If a deserialized hostile object tries to initiate a system processes or access 
 <p>Below is vulnerability not discussed in OWASP 2017</p>
 <h3 id="a10-unvalidated-redirects-and-forwards">A10 Unvalidated redirects and forwards<a class="headerlink" href="#a10-unvalidated-redirects-and-forwards" title="Permanent link">&para;</a></h3>
 <p>A protection against this was introduced in Mvc 3 template. Here is the code:</p>
-<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="n">Task</span><span class="p">&lt;</span><span class="n">ActionResult</span><span class="p">&gt;</span><span class="w"> </span><span class="n">LogOn</span><span class="p">(</span><span class="n">LogOnViewModel</span><span class="w"> </span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">returnUrl</span><span class="p">)</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ModelState</span><span class="p">.</span><span class="n">IsValid</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">logonResult</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">_userManager</span><span class="p">.</span><span class="n">TryLogOnAsync</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">UserName</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="n">Password</span><span class="p">);</span><span class="w"></span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">logonResult</span><span class="p">.</span><span class="n">Success</span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="n">Task</span><span class="o">&lt;</span><span class="n">ActionResult</span><span class="o">&gt;</span><span class="w"> </span><span class="n">LogOn</span><span class="p">(</span><span class="n">LogOnViewModel</span><span class="w"> </span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">returnUrl</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ModelState</span><span class="p">.</span><span class="n">IsValid</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">logonResult</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">_userManager</span><span class="p">.</span><span class="n">TryLogOnAsync</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">UserName</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="n">Password</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">logonResult</span><span class="p">.</span><span class="n">Success</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
 <span class="w">            </span><span class="k">await</span><span class="w"> </span><span class="n">_userManager</span><span class="p">.</span><span class="n">LogOnAsync</span><span class="p">(</span><span class="n">logonResult</span><span class="p">.</span><span class="n">UserName</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="n">RememberMe</span><span class="p">);</span><span class="w">  </span>
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nf">RedirectToLocal</span><span class="p">(</span><span class="n">returnUrl</span><span class="p">);</span><span class="w"></span>
-<span class="p">...</span><span class="w"></span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nf">RedirectToLocal</span><span class="p">(</span><span class="n">returnUrl</span><span class="p">);</span>
+<span class="p">...</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="k">private</span><span class="w"> </span><span class="n">ActionResult</span><span class="w"> </span><span class="nf">RedirectToLocal</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">returnUrl</span><span class="p">)</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">Url</span><span class="p">.</span><span class="n">IsLocalUrl</span><span class="p">(</span><span class="n">returnUrl</span><span class="p">))</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nf">Redirect</span><span class="p">(</span><span class="n">returnUrl</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">    </span><span class="k">else</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nf">RedirectToAction</span><span class="p">(</span><span class="s">&quot;Landing&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Account&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">private</span><span class="w"> </span><span class="n">ActionResult</span><span class="w"> </span><span class="nf">RedirectToLocal</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">returnUrl</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">Url</span><span class="p">.</span><span class="n">IsLocalUrl</span><span class="p">(</span><span class="n">returnUrl</span><span class="p">))</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nf">Redirect</span><span class="p">(</span><span class="n">returnUrl</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">else</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nf">RedirectToAction</span><span class="p">(</span><span class="s">&quot;Landing&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Account&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>Other advice:</p>
 <ul>
@@ -2939,42 +2939,6 @@ If a deserialized hostile object tries to initiate a system processes or access 
       
         <footer class="md-footer">
   
-    
-    <nav class="md-footer__inner md-grid" aria-label="Footer" >
-      
-        
-        <a href="Docker_Security_Cheat_Sheet.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Docker Security" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              Docker Security
-            </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="Error_Handling_Cheat_Sheet.html" class="md-footer__link md-footer__link--next" aria-label="Next: Error Handling" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              Error Handling
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
-  
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
       <div class="md-copyright">
@@ -3000,12 +2964,11 @@ If a deserialized hostile object tries to initiate a system processes or access 
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.12658920.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      <script src="../assets/javascripts/bundle.5cf534bf.min.js"></script>
       
-    
     
   </body>
 </html>
