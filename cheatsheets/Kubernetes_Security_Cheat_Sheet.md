@@ -155,7 +155,7 @@ Allowing other components within the cluster to access the master etcd instance 
 
 Kubelets expose HTTPS endpoints which grant powerful control over the node and containers. By default Kubelets allow unauthenticated access to this API. Production clusters should enable Kubelet authentication and authorization.
 
-For more information, refer to Kubelet authentication/authorization documentation at <https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet-authentication-authorization>
+For more information, refer to Kubelet authentication/authorization documentation at <https://kubernetes.io/docs/reference/access-authn-authz/kubelet-authn-authz/>
 
 ### Securing Kubernetes Dashboard
 
@@ -813,7 +813,8 @@ Master documentation - <https://kubernetes.io>
 13. Tesla cloud resources are hacked to run cryptocurrency-mining malware - <https://arstechnica.com/information-technology/2018/02/tesla-cloud-resources-are-hacked-to-run-cryptocurrency-mining-malware>
 14. OPEN POLICY AGENT: CLOUD-NATIVE AUTHORIZATION - <https://blog.styra.com/blog/open-policy-agent-authorization-for-the-cloud>
 15. Introducing Policy As Code: The Open Policy Agent (OPA) - <https://www.magalix.com/blog/introducing-policy-as-code-the-open-policy-agent-opa>
-16. What service mesh provides - <https://aspenmesh.io/what-service-mesh-provides>
+16. What service mesh provides - <https://aspenmesh.io/wp-content/uploads/2019/10/AspenMesh_CompleteGuide.pdf>
 17. Three Technical Benefits of Service Meshes and their Operational Limitations, Part 1 - <https://glasnostic.com/blog/service-mesh-istio-limits-and-benefits-part-1>
 18. Open Policy Agent: What Is OPA and How It Works (Examples) - <https://spacelift.io/blog/what-is-open-policy-agent-and-how-it-works>
-19. Kubernetes Security Checklist - <https://kubernetes.io/docs/concepts/security/security-checklist/>
+19. Send Kubernetes Metrics To Kibana and Elasticsearch - <https://logit.io/sources/configure/kubernetes/>
+20. Kubernetes Security Checklist - <https://kubernetes.io/docs/concepts/security/security-checklist/>
