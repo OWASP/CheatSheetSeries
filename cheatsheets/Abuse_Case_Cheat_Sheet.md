@@ -50,7 +50,7 @@ allowing an attacker to influence the feature or outcome of use of
 the feature based on the attacker action (or input).
 ```
 
-Synopsys defines an **Abuse Case** like this:
+Synopsis defines an **Abuse Case** like this:
 
 ```text
 Misuse and abuse cases describe how users misuse or exploit the weaknesses
@@ -64,7 +64,7 @@ Abuse cases can also be an effective way to drive security requirements
 that lead to proper protection of these critical business use cases.
 ```
 
-[Synopsys source](https://www.synopsys.com/blogs/software-security/abuse-cases-can-drive-security-requirements)
+[Synopsis source](https://www.synopsis.com/blogs/software-security/abuse-cases-can-drive-security-requirements)
 
 #### How to define the list of Abuse Cases
 

@@ -49,7 +49,7 @@ If an authenticated user with the **Student** Role tries to access `Administrato
 
 ### Defense Mechanism \#2
 
-Another option is to modify your CSS files to remove any identifying information. As a general rule, it's recommended that your website have a consistent style between pages, and it's best to write your general CSS rules in such a way that they apply across mutliple pages. This reduces the need for specific selectors in the first place. Furthermore, it's often possible to create CSS selectors that target specific HTML elements without using IDs or class names. For example, `#UserPage .Toolbar .addUserButton` could be rewritten to something more obscure such as `#page_u header button:first-of-type`.
+Another option is to modify your CSS files to remove any identifying information. As a general rule, it's recommended that your website have a consistent style between pages, and it's best to write your general CSS rules in such a way that they apply across multiple pages. This reduces the need for specific selectors in the first place. Furthermore, it's often possible to create CSS selectors that target specific HTML elements without using IDs or class names. For example, `#UserPage .Toolbar .addUserButton` could be rewritten to something more obscure such as `#page_u header button:first-of-type`.
 
 Build-time and runtime tools also exist, which can be integrated to obfuscate your class names. This can reduce the chance of an attacker guessing the features of your application. Some examples:
 
