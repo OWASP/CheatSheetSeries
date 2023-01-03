@@ -4,10 +4,10 @@
 
 Network segmentation is the core of multi-layer defense in depth for modern services. Segmentation slow down an attacker if he cannot implement attacks such as:
 
- - SQL-injections, see [SQL Injection Prevention Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.md)
- - compromise of workstations of employees with elevated privileges
- - compromise of another server in the perimeter of the organization
- - compromise of the target service through the compromise of the LDAP directory, DNS server, and other corporate services and sites published on the Internet
+- SQL-injections, see [SQL Injection Prevention Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.md)
+- compromise of workstations of employees with elevated privileges
+- compromise of another server in the perimeter of the organization
+- compromise of the target service through the compromise of the LDAP directory, DNS server, and other corporate services and sites published on the Internet
 
 The main goal of this cheat sheet is to show the basics of network segmentation to effectively counter attacks by building a secure and maximally isolated service network architecture.
 
@@ -97,9 +97,9 @@ The internal firewall contains 4 VLANs:
 
 - **MIDDLEWARE** security zone contains only one VLAN with name _APPLICATIONS_ - a segment designed to host information system applications that interact with each other (interservice communication) and interact with other services
 - **BACKEND** security zone contains:
-   - _DATABASES_ - a segment designed to delimit various databases of an automated system
-   - _AD SERVICES_ - segment designed to host various Active Directory services, in the example only one server with a domain controller Contoso.com is shown
-   - _LOGS_ - segment, designed to host servers with logs, servers centrally store application logs of an automated system.
+    - _DATABASES_ - a segment designed to delimit various databases of an automated system
+    - _AD SERVICES_ - segment designed to host various Active Directory services, in the example only one server with a domain controller Contoso.com is shown
+    - _LOGS_ - segment, designed to host servers with logs, servers centrally store application logs of an automated system.
 
 ## Interservice interaction
 
