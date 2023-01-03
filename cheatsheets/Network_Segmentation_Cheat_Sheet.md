@@ -28,14 +28,14 @@ Segmentation will avoid the following situations:
 
 Elements used in network diagrams:
 
-![Schematic symbols](https://github.com/OWASP/CheatSheetSeries/blob/master/assets/Network_Segmentation_Cheat_Sheet_Schematic_symbols.drawio.png)
+![Schematic symbols](https://raw.githubusercontent.com/OWASP/CheatSheetSeries/master/assets/Network_Segmentation_Cheat_Sheet_Schematic_symbols.drawio.png)
 
 Crossing the border of the rectangle means crossing the firewall:
-![Traffic passes through two firewalls](https://github.com/OWASP/CheatSheetSeries/blob/master/assets/Network_Segmentation_Cheat_Sheet_firewall_1.drawio.png)
+![Traffic passes through two firewalls](https://raw.githubusercontent.com/OWASP/CheatSheetSeries/master/assets/Network_Segmentation_Cheat_Sheet_firewall_1.drawio.png)
 
 In the image above, traffic passes through two firewalls with the names FW1 and FW2
 
-![Traffic passes through one firewall](https://github.com/OWASP/CheatSheetSeries/blob/master/assets/Network_Segmentation_Cheat_Sheet_firewall_2.drawio.png)
+![Traffic passes through one firewall](https://raw.githubusercontent.com/OWASP/CheatSheetSeries/master/assets/Network_Segmentation_Cheat_Sheet_firewall_2.drawio.png)
 
 In the image above, traffic passes through one firewall, behind which there are two VLANs
 
@@ -58,7 +58,7 @@ FRONTEND - A frontend is a set of segments with the following network elements:
 - web server
 - web cache
 
-![FRONTEND](https://github.com/OWASP/CheatSheetSeries/blob/master/assets/Network_Segmentation_Cheat_Sheet_FRONTEND.drawio.png)
+![FRONTEND](https://raw.githubusercontent.com/OWASP/CheatSheetSeries/master/assets/Network_Segmentation_Cheat_Sheet_FRONTEND.drawio.png)
 
 ### MIDDLEWARE
 
@@ -70,7 +70,7 @@ MIDDLEWARE - a set of segments to accommodate the following network elements:
 - message queues
 - stream processing platform
 
-![MIDDLEWARE](https://github.com/OWASP/CheatSheetSeries/blob/master/assets/Network_Segmentation_Cheat_Sheet_MIDDLEWARE.drawio.png)
+![MIDDLEWARE](https://raw.githubusercontent.com/OWASP/CheatSheetSeries/master/assets/Network_Segmentation_Cheat_Sheet_MIDDLEWARE.drawio.png)
 
 ### BACKEND
 
@@ -81,11 +81,11 @@ BACKEND - a set of network segments to accommodate the following network element
 - storage of cryptographic keys
 - file-server
 
-![BACKEND](https://github.com/OWASP/CheatSheetSeries/blob/master/assets/Network_Segmentation_Cheat_Sheet_BACKEND.drawio.png)
+![BACKEND](https://raw.githubusercontent.com/OWASP/CheatSheetSeries/master/assets/Network_Segmentation_Cheat_Sheet_BACKEND.drawio.png)
 
 ### Example of Three-layer network architecture
 
-![BACKEND](https://github.com/OWASP/CheatSheetSeries/blob/master/assets/Network_Segmentation_Cheat_Sheet_TIER_Example.drawio.png)
+![BACKEND](https://raw.githubusercontent.com/OWASP/CheatSheetSeries/master/assets/Network_Segmentation_Cheat_Sheet_TIER_Example.drawio.png)
 The following example shows an organization's local network. The organization is called "Сontoso".
 
 The edge firewall contains 2 VLANs of **FRONTED** secuirity zone:
@@ -105,7 +105,7 @@ The internal firewall contains 4 VLANs:
 
 Usually some information systems of the company interact with each other. It is important to define a firewall policy for such interactions.
 The base allowed interactions are indicated by the green arrows in the image below:
-![Interservice interaction](https://github.com/OWASP/CheatSheetSeries/blob/master/assets/Network_Segmentation_Cheat_Sheet_interservice.drawio.png)
+![Interservice interaction](https://raw.githubusercontent.com/OWASP/CheatSheetSeries/master/assets/Network_Segmentation_Cheat_Sheet_interservice.drawio.png)
 The image above also shows the allowed access from the FRONTEND and MIDDLEWARE segments to external networks (the Internet, for example).
 
 From this image follows:
@@ -114,14 +114,14 @@ From this image follows:
 2. Access from the MIDDLEWARE segment to the BACKEND segment of another service is prohibited (access to a foreign database bypassing the application server is prohibited).
 
 Forbidden accesses are indicated by red arrows in the image below:
-![Prohibited Interservice Communication](https://github.com/OWASP/CheatSheetSeries/blob/master/assets/Network_Segmentation_Cheat_Sheet_interservice_deny.drawio.png)
+![Prohibited Interservice Communication](https://raw.githubusercontent.com/OWASP/CheatSheetSeries/master/assets/Network_Segmentation_Cheat_Sheet_interservice_deny.drawio.png)
 
 ### Many applications on the same network
 
 If you prefer to have fewer networks in your organization and host more applications on each network, it is acceptable to host the load balancer on those networks. This balancer will balance traffic to applications on the network.
 In this case, it will be necessary to open one port to such a network, and balancing will be performed, for example, based on the HTTP request parameters.
 An example of such segmentation:
-![Interservice Communication with balancing](https://github.com/OWASP/CheatSheetSeries/blob/master/assets/Network_Segmentation_Cheat_Sheet_interservice_balancer.drawio.png)
+![Interservice Communication with balancing](https://raw.githubusercontent.com/OWASP/CheatSheetSeries/master/assets/Network_Segmentation_Cheat_Sheet_interservice_balancer.drawio.png)
 
 As you can see, there is only one incoming access to each network, access is opened up to the balancer in the network. However, in this case, segmentation no longer works, access control between applications from different network segments is performed at the 7th level of the OSI model using a balancer.
 
@@ -146,19 +146,19 @@ Examples in the network policy will help colleagues quickly understand what acce
 #### Permissions for CI/CD
 
 The network security policy may define, for example, the basic permissions allowed for the software development system. Let's look at an example of what such a policy might look like:
-![CI-CD](https://github.com/OWASP/CheatSheetSeries/blob/master/assets/Network_Segmentation_Cheat_Sheet_repo.drawio.png)
+![CI-CD](https://raw.githubusercontent.com/OWASP/CheatSheetSeries/master/assets/Network_Segmentation_Cheat_Sheet_repo.drawio.png)
 
 #### Secure logging
 
 It is important that in the event of a compromise of any information system, its logs are not subsequently modified by an attacker. To do this, you can do the following: copy the logs to a separate server, for example, using the syslog protocol, which does not allow an attacker to modify the logs, syslog only allows you to add new events to the logs.
 The network security policy for this activity looks like this:
-![Logging](https://github.com/OWASP/CheatSheetSeries/blob/master/assets/Network_Segmentation_Cheat_Sheet_logs.drawio.png)
+![Logging](https://raw.githubusercontent.com/OWASP/CheatSheetSeries/master/assets/Network_Segmentation_Cheat_Sheet_logs.drawio.png)
 In this example, we are also talking about application logs that may contain security events, as well as potentially important events that may indicate an attack.
 
 #### Permissions for monitoring systems
 
 Suppose a company uses Zabbix as an IT monitoring system. In this case, the policy might look like this:
-![Zabbix-Example](https://github.com/OWASP/CheatSheetSeries/blob/master/assets/Network_Segmentation_Cheat_Sheet_Monitoring.drawio.png)
+![Zabbix-Example](https://raw.githubusercontent.com/OWASP/CheatSheetSeries/master/assets/Network_Segmentation_Cheat_Sheet_Monitoring.drawio.png)
 
 ## Useful links
 
