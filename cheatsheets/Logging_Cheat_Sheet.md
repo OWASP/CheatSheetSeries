@@ -258,7 +258,7 @@ The service responsible for collecting IT events, including security events, is 
 
 For example, all external requests from users go through the API management service, see application in MIDDLEWARE 2 segment.
 
-![MIDDLEWARE](https://github.com/OWASP/CheatSheetSeries/blob/master/assets/Logging_Cheat_Sheet.drawio.png)
+![MIDDLEWARE](https://raw.githubusercontent.com/OWASP/CheatSheetSeries/master/assets/Logging_Cheat_Sheet.drawio.png)
 
 As you can see in the image above, at the network level, the processes of saving and downloading logs require opening different network accesses (ports), arrows are highlighted in different colors. Also, saving and downloading are performed by different applications.
 
