@@ -19,7 +19,7 @@
         <link rel="next" href="LDAP_Injection_Prevention_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.0">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.1">
     
     
       
@@ -27,7 +27,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.f79797b0.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.3bd4f189.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
@@ -3097,7 +3097,7 @@ Learn more about webhook at <a href="https://kubernetes.io/docs/reference/access
 <li>Adoption of a Platform: The invasiveness of service meshes force both developers and operators to adapt to a highly opinionated platform and conform to its rules.</li>
 </ul>
 <h3 id="implementing-centralized-policy-management">Implementing centralized policy management<a class="headerlink" href="#implementing-centralized-policy-management" title="Permanent link">&para;</a></h3>
-<p>There are numerous projects which are able to provide centralized policy management for a Kubernetes cluster, most predominently the <a href="https://www.openpolicyagent.org/">Open Policy Agent</a> (OPA) project, <a href="https://kyverno.io/">Kyverno</a>, or <a href="https://kubernetes.io/docs/reference/access-authn-authz/validating-admission-policy/">Validating Admission Policy</a> (a built-in, yet alpha (aka off by default) feature as of 1.26). In order to provide some depth, we will focus on OPA for the remainder of this cheat sheet.</p>
+<p>There are numerous projects which are able to provide centralized policy management for a Kubernetes cluster, most predominantly the <a href="https://www.openpolicyagent.org/">Open Policy Agent</a> (OPA) project, <a href="https://kyverno.io/">Kyverno</a>, or <a href="https://kubernetes.io/docs/reference/access-authn-authz/validating-admission-policy/">Validating Admission Policy</a> (a built-in, yet alpha (aka off by default) feature as of 1.26). In order to provide some depth, we will focus on OPA for the remainder of this cheat sheet.</p>
 <p>OPA is a project that started in 2016 aimed at unifying policy enforcement across different technologies and systems. It can be used to enforce policies on their platforms (like Kubernetes clusters). When it comes to Kubernetes, RBAC and Pod security policies to impose fine-grained control over the cluster. But again, this will only apply to the cluster but not outside the cluster. That’s where Open Policy Agent (OPA) comes into play. OPA was introduced to create a unified method of enforcing security policy in the stack.</p>
 <p>OPA is a general-purpose, domain-agnostic policy enforcement tool. It can be integrated with APIs, the Linux SSH daemon, an object store like CEPH, etc. OPA designers purposefully avoided basing it on any other project. Accordingly, the policy query and decision do not follow a specific format. That is, you can use any valid JSON data as request attributes as long as it provides the required data. Similarly, the policy decision coming from OPA can also be any valid JSON data. You choose what gets input and what gets output. For example, you can opt to have OPA return a True or False JSON object, a number, a string, or even a complex data object. Currently, OPA is part of CNCF as an incubating project.</p>
 <p>Most common use cases of OPA:</p>

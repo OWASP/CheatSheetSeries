@@ -19,7 +19,7 @@
         <link rel="next" href="Logging_Vocabulary_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.0">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.1">
     
     
       
@@ -27,7 +27,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.f79797b0.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.3bd4f189.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
@@ -2121,25 +2121,25 @@
 <p>As an example, the diagram below shows a service that provides business functionality to customers. We recommend creating a centralized system for collecting logs. There may be many such services, but all of them must securely collect logs in a centralized system.</p>
 <p>Applications of this business service are located in network segments:</p>
 <ul>
-<li>'FRONTEND 1' aka DMZ (UI)</li>
-<li>'MIDDLEWARE 1' (business application - service core)</li>
-<li>'BACKEND 1' (service database)</li>
+<li>FRONTEND 1 aka DMZ (UI)</li>
+<li>MIDDLEWARE 1 (business application - service core)</li>
+<li>BACKEND 1 (service database)</li>
 </ul>
 <p>The service responsible for collecting IT events, including security events, is located in the following segments:</p>
 <ul>
-<li>'BACKEND 2' (log storage)</li>
-<li>'MIDDLEWARE 3' - 2 applications:<ul>
-<li>log loader application that download log from storage, pre-processes and transver to UI</li>
+<li>BACKEND 2 (log storage)</li>
+<li>MIDDLEWARE 3 - 2 applications:<ul>
+<li>log loader application that download log from storage, pre-processes and transfer to UI</li>
 <li>log collector that accepts logs from business applications, other infrastructure, cloud applications and saves in log storage</li>
 </ul>
 </li>
-<li>'FRONTEND 2' (UI for viewing business service event logs)</li>
-<li>'FRONTEND 3' (applications that receive logs from cloud applications and transfer logs to log collector)<ul>
+<li>FRONTEND 2 (UI for viewing business service event logs)</li>
+<li>FRONTEND 3 (applications that receive logs from cloud applications and transfer logs to log collector)<ul>
 <li>It is allowed to combine the functionality of two applications in one</li>
 </ul>
 </li>
 </ul>
-<p>For example, all external requests from users go through the API management service, see application in 'MIDDLEWARE 2' segment.</p>
+<p>For example, all external requests from users go through the API management service, see application in MIDDLEWARE 2 segment.</p>
 <p><img alt="MIDDLEWARE" src="https://github.com/OWASP/CheatSheetSeries/blob/master/assets/Logging_Cheat_Sheet.drawio.png" /></p>
 <p>As you can see in the image above, at the network level, the processes of saving and downloading logs require opening different network accesses (ports), arrows are highlighted in different colors. Also, saving and downloading are performed by different applications.</p>
 <p>Full network segmentation cheat sheet by <a href="https://github.com/sergiomarotco">sergiomarotco</a>: <a href="https://github.com/sergiomarotco/Network-segmentation-cheat-sheet">link</a></p>

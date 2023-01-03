@@ -19,7 +19,7 @@
         <link rel="next" href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.0">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.1">
     
     
       
@@ -27,7 +27,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.f79797b0.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.3bd4f189.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
@@ -1693,7 +1693,7 @@
 <p>As a CSS Coder / Programmer, always keep the CSS isolated by access control level. By this, it means <strong>Student</strong> will have a different CSS file called as <code>StudentStyling.CSS</code> while <strong>Administrator</strong> has <code>AdministratorStyling.CSS</code> and so on. Make sure these <code>*.CSS</code> files are accessed only for a user with the proper access control level. Only users with the proper access control level should be able to access their <code>*.CSS</code> file.</p>
 <p>If an authenticated user with the <strong>Student</strong> Role tries to access <code>AdministratorStyling.CSS</code> through forced browsing, an alert that an intrusion is occurring should be recorded.</p>
 <h3 id="defense-mechanism-2">Defense Mechanism #2<a class="headerlink" href="#defense-mechanism-2" title="Permanent link">&para;</a></h3>
-<p>Another option is to modify your CSS files to remove any identifying information. As a general rule, it's recommended that your website have a consistent style between pages, and it's best to write your general CSS rules in such a way that they apply across mutliple pages. This reduces the need for specific selectors in the first place. Furthermore, it's often possible to create CSS selectors that target specific HTML elements without using IDs or class names. For example, <code>#UserPage .Toolbar .addUserButton</code> could be rewritten to something more obscure such as <code>#page_u header button:first-of-type</code>.</p>
+<p>Another option is to modify your CSS files to remove any identifying information. As a general rule, it's recommended that your website have a consistent style between pages, and it's best to write your general CSS rules in such a way that they apply across multiple pages. This reduces the need for specific selectors in the first place. Furthermore, it's often possible to create CSS selectors that target specific HTML elements without using IDs or class names. For example, <code>#UserPage .Toolbar .addUserButton</code> could be rewritten to something more obscure such as <code>#page_u header button:first-of-type</code>.</p>
 <p>Build-time and runtime tools also exist, which can be integrated to obfuscate your class names. This can reduce the chance of an attacker guessing the features of your application. Some examples:</p>
 <ul>
 <li><a href="https://cssinjs.org">JSS</a> (CSS in JS) has a <code>minify</code> option which would generate class names such as <code>.c001</code>, <code>.c002</code>.</li>

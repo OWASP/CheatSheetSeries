@@ -19,7 +19,7 @@
         <link rel="next" href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.0">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.1">
     
     
       
@@ -27,7 +27,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.f79797b0.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.3bd4f189.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
@@ -2207,7 +2207,7 @@ Set-Cookie: JSESSIONID=xxxxx; SameSite=Lax
 <span class="w">    </span><span class="nb">window</span><span class="p">.</span><span class="nx">onload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">ajaxLoad</span><span class="p">();</span>
 <span class="w"> </span><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
-<p><strong>Vulnerability:</strong> In this snippet, the program invokes a function <code>ajaxLoad()</code> upon the page load, which is reponsible for loading various webpage elements. The function reads the value of the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Location/hash">URL hash fragment</a> (line 4), and extracts two pieces of information from it (i.e., request method and enpoint) to generate an asynchronous HTTP request (lines 11-13). The vulnerability occurs in lines 15-22, when the JavaScript program uses URL fragments to obtain the server-side endpoint for the asynchronous HTTP request (line 15) and the request method. However, both inputs can be controlled by web attackers, who can pick the value of their choosing, and craft a malicious URL containing the attack payload.</p>
+<p><strong>Vulnerability:</strong> In this snippet, the program invokes a function <code>ajaxLoad()</code> upon the page load, which is responsible for loading various webpage elements. The function reads the value of the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Location/hash">URL hash fragment</a> (line 4), and extracts two pieces of information from it (i.e., request method and endpoint) to generate an asynchronous HTTP request (lines 11-13). The vulnerability occurs in lines 15-22, when the JavaScript program uses URL fragments to obtain the server-side endpoint for the asynchronous HTTP request (line 15) and the request method. However, both inputs can be controlled by web attackers, who can pick the value of their choosing, and craft a malicious URL containing the attack payload.</p>
 <p><strong>Attack:</strong> For exploitation, attackers can share the malicious URL with the victim (e.g.,  spear-phishing emails) and convince them to click on it, because such URL belongs to the origin of an honest, reputable but vulnerable website. Alternatively, they can use it as a part of an attack page they control and abuse browser APIs (e.g., the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/open"><code>window.open()</code></a> API) to trick the vulnerable JavaScript of the target page to send the HTTP request, which closely resemles the attack model of the classical CSRF attacks.</p>
 <p>For more examples of client-side CSRF, see <a href="https://www.facebook.com/notes/facebook-bug-bounty/client-side-csrf/2056804174333798/">this post</a> by the <a href="https://www.facebook.com/whitehat">Facebook Whitehat program</a> and this USENIX Security <a href="https://www.usenix.org/system/files/sec21-khodayari.pdf">paper</a>.</p>
 <h3 id="client-side-csrf-mitigation-techniques">Client-side CSRF Mitigation Techniques<a class="headerlink" href="#client-side-csrf-mitigation-techniques" title="Permanent link">&para;</a></h3>
