@@ -1830,24 +1830,24 @@
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>Network segmentation is the core of multi-layer defense in depth for modern services. Segmentation slow down an attacker if he cannot implement attacks such as:</p>
 <ul>
-<li>SQL-injections, see <a href="https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.md">SQL Injection Prevention Cheat Sheet</a></li>
-<li>compromise of workstations of employees with elevated privileges</li>
-<li>compromise of another server in the perimeter of the organization</li>
-<li>compromise of the target service through the compromise of the LDAP directory, DNS server, and other corporate services and sites published on the Internet</li>
+<li>SQL-injections, see <a href="https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.md">SQL Injection Prevention Cheat Sheet</a>;</li>
+<li>compromise of workstations of employees with elevated privileges;</li>
+<li>compromise of another server in the perimeter of the organization;</li>
+<li>compromise of the target service through the compromise of the LDAP directory, DNS server, and other corporate services and sites published on the Internet.</li>
 </ul>
 <p>The main goal of this cheat sheet is to show the basics of network segmentation to effectively counter attacks by building a secure and maximally isolated service network architecture.</p>
 <p>Segmentation will avoid the following situations:</p>
 <ul>
-<li>executing arbitrary commands on a public web server (NginX, Apache, Internet Information Service) prevents an attacker from gaining direct access to the database</li>
-<li>having unauthorized access to the database server, an attacker cannot access CnC on the Internet</li>
+<li>executing arbitrary commands on a public web server (NginX, Apache, Internet Information Service) prevents an attacker from gaining direct access to the database;</li>
+<li>having unauthorized access to the database server, an attacker cannot access CnC on the Internet.</li>
 </ul>
 <h2 id="content">Content<a class="headerlink" href="#content" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Schematic symbols</li>
-<li>Three-layer network architecture</li>
-<li>Interservice interaction</li>
-<li>Network security policy</li>
-<li>Useful links</li>
+<li>Schematic symbols;</li>
+<li>Three-layer network architecture;</li>
+<li>Interservice interaction;</li>
+<li>Network security policy;</li>
+<li>Useful links.</li>
 </ul>
 <h2 id="schematic-symbols">Schematic symbols<a class="headerlink" href="#schematic-symbols" title="Permanent link">&para;</a></h2>
 <p>Elements used in network diagrams:</p>
@@ -1861,36 +1861,36 @@
 <h2 id="three-layer-network-architecture">Three-layer network architecture<a class="headerlink" href="#three-layer-network-architecture" title="Permanent link">&para;</a></h2>
 <p>By default, developed information systems should consist of at least three components (<strong>security zones</strong>):</p>
 <ol>
-<li><a href="https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Network_Segmentation_Cheat_Sheet.md#FRONTEND">FRONTEND</a></li>
-<li><a href="https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Network_Segmentation_Cheat_Sheet.md#MIDDLEWARE">MIDDLEWARE</a></li>
-<li><a href="https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Network_Segmentation_Cheat_Sheet.md#BACKEND">BACKEND</a></li>
+<li><a href="https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Network_Segmentation_Cheat_Sheet.md#FRONTEND">FRONTEND</a>;</li>
+<li><a href="https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Network_Segmentation_Cheat_Sheet.md#MIDDLEWARE">MIDDLEWARE</a>;</li>
+<li><a href="https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Network_Segmentation_Cheat_Sheet.md#BACKEND">BACKEND</a>.</li>
 </ol>
 <h3 id="frontend">FRONTEND<a class="headerlink" href="#frontend" title="Permanent link">&para;</a></h3>
 <p>FRONTEND - A frontend is a set of segments with the following network elements:</p>
 <ul>
-<li>balancer</li>
-<li>application layer firewall</li>
-<li>web server</li>
-<li>web cache</li>
+<li>balancer;</li>
+<li>application layer firewall;</li>
+<li>web server;</li>
+<li>web cache.</li>
 </ul>
 <p><img alt="FRONTEND" src="https://raw.githubusercontent.com/OWASP/CheatSheetSeries/master/assets/Network_Segmentation_Cheat_Sheet_FRONTEND.drawio.png" /></p>
 <h3 id="middleware">MIDDLEWARE<a class="headerlink" href="#middleware" title="Permanent link">&para;</a></h3>
 <p>MIDDLEWARE - a set of segments to accommodate the following network elements:</p>
 <ul>
-<li>web applications that implement the logic of the information system (processing requests from clients, other services of the company and external services; execution of requests)</li>
-<li>authorization services</li>
-<li>analytics services</li>
-<li>message queues</li>
-<li>stream processing platform</li>
+<li>web applications that implement the logic of the information system (processing requests from clients, other services of the company and external services; execution of requests);</li>
+<li>authorization services;</li>
+<li>analytics services;</li>
+<li>message queues;</li>
+<li>stream processing platform.</li>
 </ul>
 <p><img alt="MIDDLEWARE" src="https://raw.githubusercontent.com/OWASP/CheatSheetSeries/master/assets/Network_Segmentation_Cheat_Sheet_MIDDLEWARE.drawio.png" /></p>
 <h3 id="backend">BACKEND<a class="headerlink" href="#backend" title="Permanent link">&para;</a></h3>
 <p>BACKEND - a set of network segments to accommodate the following network elements:</p>
 <ul>
-<li>SQL database</li>
-<li>LDAP directory (Domain controller)</li>
-<li>storage of cryptographic keys</li>
-<li>file-server</li>
+<li>SQL database;</li>
+<li>LDAP directory (Domain controller);</li>
+<li>storage of cryptographic keys;</li>
+<li>file server.</li>
 </ul>
 <p><img alt="BACKEND" src="https://raw.githubusercontent.com/OWASP/CheatSheetSeries/master/assets/Network_Segmentation_Cheat_Sheet_BACKEND.drawio.png" /></p>
 <h3 id="example-of-three-layer-network-architecture">Example of Three-layer network architecture<a class="headerlink" href="#example-of-three-layer-network-architecture" title="Permanent link">&para;</a></h3>
@@ -1898,15 +1898,15 @@
 The following example shows an organization's local network. The organization is called "Сontoso".</p>
 <p>The edge firewall contains 2 VLANs of <strong>FRONTED</strong> secuirity zone:</p>
 <ul>
-<li><em>DMZ Inbound</em> - a segment for hosting services and applications accessible from the Internet, they must be protected by WAF</li>
-<li><em>DMZ Outgoing</em> - a segment for hosting services that are inaccessible from the Internet, but have access to external networks (the firewall does not contain any rules for allowing traffic from external networks)</li>
+<li><em>DMZ Inbound</em> - a segment for hosting services and applications accessible from the Internet, they must be protected by WAF;</li>
+<li><em>DMZ Outgoing</em> - a segment for hosting services that are inaccessible from the Internet, but have access to external networks (the firewall does not contain any rules for allowing traffic from external networks).</li>
 </ul>
 <p>The internal firewall contains 4 VLANs:</p>
 <ul>
-<li><strong>MIDDLEWARE</strong> security zone contains only one VLAN with name <em>APPLICATIONS</em> - a segment designed to host information system applications that interact with each other (interservice communication) and interact with other services</li>
+<li><strong>MIDDLEWARE</strong> security zone contains only one VLAN with name <em>APPLICATIONS</em> - a segment designed to host information system applications that interact with each other (interservice communication) and interact with other services;</li>
 <li><strong>BACKEND</strong> security zone contains:<ul>
-<li><em>DATABASES</em> - a segment designed to delimit various databases of an automated system</li>
-<li><em>AD SERVICES</em> - segment designed to host various Active Directory services, in the example only one server with a domain controller Contoso.com is shown</li>
+<li><em>DATABASES</em> - a segment designed to delimit various databases of an automated system;</li>
+<li><em>AD SERVICES</em> - segment designed to host various Active Directory services, in the example only one server with a domain controller Contoso.com is shown;</li>
 <li><em>LOGS</em> - segment, designed to host servers with logs, servers centrally store application logs of an automated system.</li>
 </ul>
 </li>
@@ -1956,7 +1956,7 @@ In this example, we are also talking about application logs that may contain sec
 <img alt="Zabbix-Example" src="https://raw.githubusercontent.com/OWASP/CheatSheetSeries/master/assets/Network_Segmentation_Cheat_Sheet_Monitoring.drawio.png" /></p>
 <h2 id="useful-links">Useful links<a class="headerlink" href="#useful-links" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Full network segmentation cheat sheet by <a href="https://github.com/sergiomarotco">sergiomarotco</a>: <a href="https://github.com/sergiomarotco/Network-segmentation-cheat-sheet">link</a></li>
+<li>Full network segmentation cheat sheet by <a href="https://github.com/sergiomarotco">sergiomarotco</a>: <a href="https://github.com/sergiomarotco/Network-segmentation-cheat-sheet">link</a>.</li>
 </ul>
 
 
