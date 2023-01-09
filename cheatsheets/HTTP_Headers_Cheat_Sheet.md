@@ -282,7 +282,7 @@ Header set X-Frame-Options "DENY"
 
 ### IIS
 
-Add configurations below to your `Web.config` in ISS to send the `X-Frame-Options` header.
+Add configurations below to your `Web.config` in IIS to send the `X-Frame-Options` header.
 
 ```xml
 <system.webServer>
@@ -298,7 +298,7 @@ Add configurations below to your `Web.config` in ISS to send the `X-Frame-Option
 
 ### HAProxy
 
-Add the line below to your font-end, listen, or backend configurations to send the `X-Frame-Options` header.
+Add the line below to your front-end, listen, or backend configurations to send the `X-Frame-Options` header.
 
 ```lang-none
 http-response set-header X-Frame-Options DENY
@@ -331,7 +331,7 @@ app.use(
 
 ### Mozilla Observatory
 
-The [Mozilla Observatory](https://observatory.mozilla.org/) is an online tool that you can check your website's header status.
+The [Mozilla Observatory](https://observatory.mozilla.org/) is an online tool which helps you to check your website's header status.
 
 ### SmartScanner
 
