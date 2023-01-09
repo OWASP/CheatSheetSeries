@@ -4,25 +4,25 @@
 
 Network segmentation is the core of multi-layer defense in depth for modern services. Segmentation slow down an attacker if he cannot implement attacks such as:
 
-- SQL-injections, see [SQL Injection Prevention Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.md)
-- compromise of workstations of employees with elevated privileges
-- compromise of another server in the perimeter of the organization
-- compromise of the target service through the compromise of the LDAP directory, DNS server, and other corporate services and sites published on the Internet
+- SQL-injections, see [SQL Injection Prevention Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.md);
+- compromise of workstations of employees with elevated privileges;
+- compromise of another server in the perimeter of the organization;
+- compromise of the target service through the compromise of the LDAP directory, DNS server, and other corporate services and sites published on the Internet.
 
 The main goal of this cheat sheet is to show the basics of network segmentation to effectively counter attacks by building a secure and maximally isolated service network architecture.
 
 Segmentation will avoid the following situations:
 
-- executing arbitrary commands on a public web server (NginX, Apache, Internet Information Service) prevents an attacker from gaining direct access to the database
-- having unauthorized access to the database server, an attacker cannot access CnC on the Internet
+- executing arbitrary commands on a public web server (NginX, Apache, Internet Information Service) prevents an attacker from gaining direct access to the database;
+- having unauthorized access to the database server, an attacker cannot access CnC on the Internet.
 
 ## Content
 
-- Schematic symbols
-- Three-layer network architecture
-- Interservice interaction
-- Network security policy
-- Useful links
+- Schematic symbols;
+- Three-layer network architecture;
+- Interservice interaction;
+- Network security policy;
+- Useful links.
 
 ## Schematic symbols
 
@@ -45,18 +45,18 @@ Further, the schemes do not contain firewall icons so as not to overload the sch
 
 By default, developed information systems should consist of at least three components (**security zones**):
 
-1. [FRONTEND](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Network_Segmentation_Cheat_Sheet.md#FRONTEND)
-2. [MIDDLEWARE](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Network_Segmentation_Cheat_Sheet.md#MIDDLEWARE)
-3. [BACKEND](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Network_Segmentation_Cheat_Sheet.md#BACKEND)
+1. [FRONTEND](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Network_Segmentation_Cheat_Sheet.md#FRONTEND);
+2. [MIDDLEWARE](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Network_Segmentation_Cheat_Sheet.md#MIDDLEWARE);
+3. [BACKEND](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Network_Segmentation_Cheat_Sheet.md#BACKEND).
 
 ### FRONTEND
 
 FRONTEND - A frontend is a set of segments with the following network elements:
 
-- balancer
-- application layer firewall
-- web server
-- web cache
+- balancer;
+- application layer firewall;
+- web server;
+- web cache.
 
 ![FRONTEND](https://raw.githubusercontent.com/OWASP/CheatSheetSeries/master/assets/Network_Segmentation_Cheat_Sheet_FRONTEND.drawio.png)
 
@@ -64,11 +64,11 @@ FRONTEND - A frontend is a set of segments with the following network elements:
 
 MIDDLEWARE - a set of segments to accommodate the following network elements:
 
-- web applications that implement the logic of the information system (processing requests from clients, other services of the company and external services; execution of requests)
-- authorization services
-- analytics services
-- message queues
-- stream processing platform
+- web applications that implement the logic of the information system (processing requests from clients, other services of the company and external services; execution of requests);
+- authorization services;
+- analytics services;
+- message queues;
+- stream processing platform.
 
 ![MIDDLEWARE](https://raw.githubusercontent.com/OWASP/CheatSheetSeries/master/assets/Network_Segmentation_Cheat_Sheet_MIDDLEWARE.drawio.png)
 
@@ -76,10 +76,10 @@ MIDDLEWARE - a set of segments to accommodate the following network elements:
 
 BACKEND - a set of network segments to accommodate the following network elements:
 
-- SQL database
-- LDAP directory (Domain controller)
-- storage of cryptographic keys
-- file-server
+- SQL database;
+- LDAP directory (Domain controller);
+- storage of cryptographic keys;
+- file server.
 
 ![BACKEND](https://raw.githubusercontent.com/OWASP/CheatSheetSeries/master/assets/Network_Segmentation_Cheat_Sheet_BACKEND.drawio.png)
 
@@ -90,15 +90,15 @@ The following example shows an organization's local network. The organization is
 
 The edge firewall contains 2 VLANs of **FRONTED** secuirity zone:
 
-- _DMZ Inbound_ - a segment for hosting services and applications accessible from the Internet, they must be protected by WAF
-- _DMZ Outgoing_ - a segment for hosting services that are inaccessible from the Internet, but have access to external networks (the firewall does not contain any rules for allowing traffic from external networks)
+- _DMZ Inbound_ - a segment for hosting services and applications accessible from the Internet, they must be protected by WAF;
+- _DMZ Outgoing_ - a segment for hosting services that are inaccessible from the Internet, but have access to external networks (the firewall does not contain any rules for allowing traffic from external networks).
 
 The internal firewall contains 4 VLANs:
 
-- **MIDDLEWARE** security zone contains only one VLAN with name _APPLICATIONS_ - a segment designed to host information system applications that interact with each other (interservice communication) and interact with other services
+- **MIDDLEWARE** security zone contains only one VLAN with name _APPLICATIONS_ - a segment designed to host information system applications that interact with each other (interservice communication) and interact with other services;
 - **BACKEND** security zone contains:
-    - _DATABASES_ - a segment designed to delimit various databases of an automated system
-    - _AD SERVICES_ - segment designed to host various Active Directory services, in the example only one server with a domain controller Contoso.com is shown
+    - _DATABASES_ - a segment designed to delimit various databases of an automated system;
+    - _AD SERVICES_ - segment designed to host various Active Directory services, in the example only one server with a domain controller Contoso.com is shown;
     - _LOGS_ - segment, designed to host servers with logs, servers centrally store application logs of an automated system.
 
 ## Interservice interaction
@@ -162,4 +162,4 @@ Suppose a company uses Zabbix as an IT monitoring system. In this case, the poli
 
 ## Useful links
 
-- Full network segmentation cheat sheet by [sergiomarotco](https://github.com/sergiomarotco): [link](https://github.com/sergiomarotco/Network-segmentation-cheat-sheet)
+- Full network segmentation cheat sheet by [sergiomarotco](https://github.com/sergiomarotco): [link](https://github.com/sergiomarotco/Network-segmentation-cheat-sheet).
