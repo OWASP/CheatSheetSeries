@@ -15,6 +15,11 @@ Project leaders:
 - [Jim Manico](https://github.com/jmanico)
 - [Jakub Maćkowski](https://github.com/mackowski)
 
+Core team:
+
+- [Kevin W. Wall](https://github.com/kwwall)
+- [Shlomo Zalman Heigh](https://github.com/szh)
+
 Project links:
 
 - [Homepage](https://owasp.org/www-project-cheat-sheets/)
