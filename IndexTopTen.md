@@ -17,6 +17,7 @@ This cheat sheet will help users of the [OWASP Top Ten](https://owasp.org/www-pr
 * [Transport Layer Protection Cheat Sheet](cheatsheets/Transport_Layer_Protection_Cheat_Sheet.md)
 * [HTTP Strict Transport Security Cheat Sheet](cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.md)
 * [TLS Cipher String Cheat Sheet](cheatsheets/TLS_Cipher_String_Cheat_Sheet.md)
+* [Secrets Management Cheat Sheet](cheatsheets/Secrets_Management_Cheat_Sheet.md)
 * [Key Management Cheat Sheet](cheatsheets/Key_Management_Cheat_Sheet.md)
 * [Pinning Cheat Sheet](cheatsheets/Pinning_Cheat_Sheet.md)
 
