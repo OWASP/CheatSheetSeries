@@ -498,6 +498,8 @@ the ability to manage and rotate secrets centrally.
 
 For more information on Secrets and their alternatives, refer to the documentation at <https://kubernetes.io/docs/concepts/configuration/secret/>.
 
+Also see the [Secrets Management](Secrets_Management_Cheat_Sheet.md) cheat sheet for more details and best practices on managing secrets.
+
 #### Finding exposed secrets
 
 Open-source tools such as [SecretScanner](https://github.com/deepfence/SecretScanner) and [ThreatMapper](https://github.com/deepfence/ThreatMapper) can scan container filesystems for sensitive resources, such as API tokens, passwords, and keys. Such resources would be accessible to any user who had access to the unencrypted container filesystem, whether during build, at rest in a registry or backup, or running.
