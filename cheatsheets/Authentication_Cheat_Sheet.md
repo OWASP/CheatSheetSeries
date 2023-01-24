@@ -215,7 +215,7 @@ Login Throttling is a protocol used to prevent an attacker from making too many 
 
 - Maximum number of attempts.
 
-- ##### Account Lockout
+##### Account Lockout
 
 The most common protection against these attacks is to implement account lockout, which prevents any more login attempts for a period after a certain number of failed logins.
 
