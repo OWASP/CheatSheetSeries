@@ -60,6 +60,7 @@ There are three possible values for the X-Frame-Options header:
 - **DENY**, which prevents any domain from framing the content. The "DENY" setting is recommended unless a specific need has been identified for framing.
 - **SAMEORIGIN**, which only allows the current site to frame the content.
 - **ALLOW-FROM uri**, which permits the specified 'uri' to frame this page. (e.g., `ALLOW-FROM http://www.example.com`).
+    - This is an obsolete directive that no longer works in modern browsers.
     - Check limitations below because this will fail open if the browser does not support it.
     - Other browsers support the new [CSP frame-ancestors directive](https://w3c.github.io/webappsec-csp/#directive-frame-ancestors) instead. A few support both.
 
