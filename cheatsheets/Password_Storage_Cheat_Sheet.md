@@ -8,8 +8,8 @@ After an attacker has acquired stored password hashes, they are always able to b
 
 This cheat sheet provides guidance on the various areas that need to be considered related to storing passwords. In short:
 
-- **Use [Argon2id](#argon2id) with a minimum configuration of 15 MiB of memory, an iteration count of 2, and 1 degree of parallelism.**
-- **If [Argon2id](#argon2id) is not available, use [scrypt](#scrypt) with a minimum CPU/memory cost parameter of (2^16), a minimum block size of 8 (1024 bytes), and a parallelization parameter of 1.**
+- **Use [Argon2id](#argon2id) with a minimum configuration of 19 MiB of memory, an iteration count of 2, and 1 degree of parallelism.**
+- **If [Argon2id](#argon2id) is not available, use [scrypt](#scrypt) with a minimum CPU/memory cost parameter of (2^17), a minimum block size of 8 (1024 bytes), and a parallelization parameter of 1.**
 - **For legacy systems using [bcrypt](#bcrypt), use a work factor of 10 or more and with a password limit of 72 bytes.**
 - **If FIPS-140 compliance is required, use [PBKDF2](#pbkdf2) with a work factor of 600,000 or more and set with an internal hash function of HMAC-SHA-256.**
 - **Consider using a [pepper](#peppering) to provide additional defense in depth (though alone, it provides no additional secure characteristics).**
@@ -97,10 +97,13 @@ The main three algorithms that should be considered are listed below:
 
 Rather than a simple work factor like other algorithms, Argon2id has three different parameters that can be configured. Argon2id should use one of the following configuration settings as a base minimum which includes the minimum memory size (m), the minimum number of iterations (t) and the degree of parallelism (p).
 
-- m=37 MiB, t=1, p=1
-- m=15 MiB, t=2, p=1
+- m=47104 (46 MiB), t=1, p=1 (Do not use with Argon2i)
+- m=19456 (19 MiB), t=2, p=1 (Do not use with Argon2i)
+- m=12288 (12 MiB), t=3, p=1
+- m=9216 (9 MiB), t=4, p=1
+- m=7168 (7 MiB), t=5, p=1
 
-Both of these configuration settings are equivalent in the defense they provide. The only difference is a trade off between CPU and RAM usage.
+These configuration settings are equivalent in the defense they provide. The only difference is a trade off between CPU and RAM usage.
 
 ### scrypt
 
@@ -108,11 +111,11 @@ Both of these configuration settings are equivalent in the defense they provide.
 
 Like [Argon2id](#argon2id), scrypt has three different parameters that can be configured. scrypt should use one of the following configuration settings as a base minimum which includes the minimum CPU/memory cost parameter (N), the blocksize (r) and the degree of parallelism (p).
 
-- N=2^16 (64 MiB), r=8 (1024 bytes), p=1
-- N=2^15 (32 MiB), r=8 (1024 bytes), p=2
-- N=2^14 (16 MiB), r=8 (1024 bytes), p=4
-- N=2^13 (8 MiB), r=8 (1024 bytes), p=8
-- N=2^12 (4 MiB), r=8 (1024 bytes), p=15
+- N=2^17 (128 MiB), r=8 (1024 bytes), p=1
+- N=2^16 (64 MiB), r=8 (1024 bytes), p=2
+- N=2^15 (32 MiB), r=8 (1024 bytes), p=3
+- N=2^14 (16 MiB), r=8 (1024 bytes), p=5
+- N=2^13 (8 MiB), r=8 (1024 bytes), p=10
 
 These configuration settings are equivalent in the defense they provide. The only difference is a trade off between CPU and RAM usage.
 
