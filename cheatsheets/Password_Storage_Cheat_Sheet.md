@@ -66,7 +66,7 @@ One of several peppering strategies is to hash the passwords as usual (using a p
 
 - The pepper is **shared between stored passwords**, rather than being *unique* like a salt.
 - Unlike a password salt, the pepper **should not be stored in the database**.
-- Peppers are secrets and should be stored in "secrets vaults" or HSMs (Hardware Security Modules).
+- Peppers are secrets and should be stored in "secrets vaults" or HSMs (Hardware Security Modules). See the [Secrets Management Cheat Sheet](Secrets_Management_Cheat_Sheet.md) for more information on securely storing secrets.
 - Like any other cryptographic key, a pepper rotation strategy should be considered.
 
 ### Work Factors

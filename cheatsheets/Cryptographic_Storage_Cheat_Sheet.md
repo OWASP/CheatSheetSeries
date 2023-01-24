@@ -12,7 +12,7 @@ The first step in designing any application is to consider the overall architect
 
 This process should begin with considering the [threat model](Threat_Modeling_Cheat_Sheet.md) of the application (i.e, who you are trying to protect that data against).
 
-The use of dedicated secret or key management systems can provide an additional layer of security protection, as well as making the management of secrets significantly easier - however it comes at the cost of additional complexity and administrative overhead - so may not be feasible for all applications. Note that many cloud environments provide these services, so these should be taken advantage of where possible.
+The use of dedicated secret or key management systems can provide an additional layer of security protection, as well as making the management of secrets significantly easier - however it comes at the cost of additional complexity and administrative overhead - so may not be feasible for all applications. Note that many cloud environments provide these services, so these should be taken advantage of where possible. The [Secrets Management Cheat Sheet](Secrets_Management_Cheat_Sheet.md) contains further guidance on this topic.
 
 ### Where to Perform Encryption
 
@@ -149,6 +149,7 @@ Where available, the secure storage mechanisms provided by the operating system,
 - A physical Hardware Security Module (HSM).
 - A virtual HSM.
 - Key vaults such as [Amazon KMS](https://aws.amazon.com/kms/) or [Azure Key Vault](https://azure.microsoft.com/en-gb/services/key-vault/).
+- An external secrets management service such as [Conjur](https://github.com/cyberark/conjur) or [HashiCorp Vault](https://github.com/hashicorp/vault).
 - Secure storage APIs provided by the [ProtectedData](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.protecteddata?redirectedfrom=MSDN&view=netframework-4.8) class in the .NET framework.
 
 There are many advantages to using these types of secure storage over simply putting keys in configuration files. The specifics of these will vary depending on the solution used, but they include:
@@ -165,6 +166,8 @@ In some cases none of these will be available, such as in a shared hosting envir
 - Do not check keys into version control systems.
 - Protect the configuration files containing the keys with restrictive permissions.
 - Avoid storing keys in environment variables, as these can be accidentally exposed through functions such as [phpinfo()](https://www.php.net/manual/en/function.phpinfo.php) or through the `/proc/self/environ` file.
+
+The [Secrets Management Cheat Sheet](Secrets_Management_Cheat_Sheet.md) provides more details on securely storing secrets.
 
 ### Separation of Keys and Data
 
