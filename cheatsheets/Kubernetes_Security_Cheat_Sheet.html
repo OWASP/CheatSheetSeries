@@ -3195,6 +3195,7 @@ It is best for secrets to be mounted into read-only volumes in your containers, 
 provides a number of benefits over using Kubernetes Secrets, including the ability to manage secrets across multiple clusters (or clouds), and
 the ability to manage and rotate secrets centrally.</p>
 <p>For more information on Secrets and their alternatives, refer to the documentation at <a href="https://kubernetes.io/docs/concepts/configuration/secret/">https://kubernetes.io/docs/concepts/configuration/secret/</a>.</p>
+<p>Also see the <a href="Secrets_Management_Cheat_Sheet.html">Secrets Management</a> cheat sheet for more details and best practices on managing secrets.</p>
 <h4 id="finding-exposed-secrets">Finding exposed secrets<a class="headerlink" href="#finding-exposed-secrets" title="Permanent link">&para;</a></h4>
 <p>Open-source tools such as <a href="https://github.com/deepfence/SecretScanner">SecretScanner</a> and <a href="https://github.com/deepfence/ThreatMapper">ThreatMapper</a> can scan container filesystems for sensitive resources, such as API tokens, passwords, and keys. Such resources would be accessible to any user who had access to the unencrypted container filesystem, whether during build, at rest in a registry or backup, or running.</p>
 <p>Review the secret material present on the container against the principle of 'least priviledge', and to assess the risk posed by a compromise.</p>
