@@ -781,6 +781,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#rule-12-run-docker-in-root-less-mode" class="md-nav__link">
+    Rule #12 - Run Docker in root-less mode
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1745,6 +1752,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#rule-12-run-docker-in-root-less-mode" class="md-nav__link">
+    Rule #12 - Run Docker in root-less mode
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1983,6 +1997,15 @@ It can be done by appending <code>:ro</code> to the <code>-v</code> like this:</
 <li><a href="https://docs.docker.com/config/containers/logging/">View logs for a container or service</a></li>
 <li><a href="https://cloudberry.engineering/article/dockerfile-security-best-practices/">Dockerfile Security Best Practices</a></li>
 </ul>
+<h3 id="rule-12-run-docker-in-root-less-mode">Rule #12 - Run Docker in root-less mode<a class="headerlink" href="#rule-12-run-docker-in-root-less-mode" title="Permanent link">&para;</a></h3>
+<p>Rootless mode ensures that the Docker daemon and containers are running as an unprivileged user, which means that even if an attacker breaks out of the container, they will not have root privileges on the host, which in turn substantially limits the attack surface.</p>
+<p>Rootless mode graduated from experimental in Docker Engine v20.10 and should be considered for added security, provided the <a href="https://docs.docker.com/engine/security/rootless/#known-limitations">known limitations</a> are not an impediment.</p>
+<blockquote>
+<p>Rootless mode allows running the Docker daemon and containers as a non-root user to mitigate potential vulnerabilities in the daemon and the container runtime.
+Rootless mode does not require root privileges even during the installation of the Docker daemon, as long as the <a href="https://docs.docker.com/engine/security/rootless/#prerequisites">prerequisites</a> are met.
+Rootless mode was introduced in Docker Engine v19.03 as an experimental feature. Rootless mode graduated from experimental in Docker Engine v20.10.</p>
+</blockquote>
+<p>Read more about rootless mode and its limitations, installation and usage instructions on <a href="https://docs.docker.com/engine/security/rootless/">Docker documentation</a> page.</p>
 <h2 id="related-projects">Related Projects<a class="headerlink" href="#related-projects" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/OWASP/Docker-Security">OWASP Docker Top 10</a></p>
 
