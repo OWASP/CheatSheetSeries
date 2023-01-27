@@ -274,6 +274,18 @@ References:
 - [View logs for a container or service](https://docs.docker.com/config/containers/logging/)
 - [Dockerfile Security Best Practices](https://cloudberry.engineering/article/dockerfile-security-best-practices/)
 
+### Rule \#12 - Run Docker in root-less mode
+
+Rootless mode ensures that the Docker daemon and containers are running as an unprivileged user, which means that even if an attacker breaks out of the container, they will not have root privileges on the host, which in turn substantially limits the attack surface.
+
+Rootless mode graduated from experimental in Docker Engine v20.10 and should be considered for added security, provided the [known limitations](https://docs.docker.com/engine/security/rootless/#known-limitations) are not an impediment.
+
+> Rootless mode allows running the Docker daemon and containers as a non-root user to mitigate potential vulnerabilities in the daemon and the container runtime.
+> Rootless mode does not require root privileges even during the installation of the Docker daemon, as long as the [prerequisites](https://docs.docker.com/engine/security/rootless/#prerequisites) are met.
+> Rootless mode was introduced in Docker Engine v19.03 as an experimental feature. Rootless mode graduated from experimental in Docker Engine v20.10.
+
+Read more about rootless mode and its limitations, installation and usage instructions on [Docker documentation](https://docs.docker.com/engine/security/rootless/) page.
+
 ## Related Projects
 
 [OWASP Docker Top 10](https://github.com/OWASP/Docker-Security)
