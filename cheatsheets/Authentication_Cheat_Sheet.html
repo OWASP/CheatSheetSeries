@@ -651,9 +651,22 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#login-throttling" class="md-nav__link">
+    Login Throttling
+  </a>
+  
+    <nav class="md-nav" aria-label="Login Throttling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#account-lockout" class="md-nav__link">
     Account Lockout
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -2034,9 +2047,22 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#login-throttling" class="md-nav__link">
+    Login Throttling
+  </a>
+  
+    <nav class="md-nav" aria-label="Login Throttling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#account-lockout" class="md-nav__link">
     Account Lockout
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -2314,7 +2340,12 @@ ENDIF
 <h4 id="multi-factor-authentication">Multi-Factor Authentication<a class="headerlink" href="#multi-factor-authentication" title="Permanent link">&para;</a></h4>
 <p>Multi-factor authentication (MFA) is by far the best defence against the majority of password-related attacks, including brute-force attacks, with analysis by Microsoft suggesting that it would have stopped <a href="https://techcommunity.microsoft.com/t5/Azure-Active-Directory-Identity/Your-Pa-word-doesn-t-matter/ba-p/731984">99.9% of account compromises</a>. As such, it should be implemented wherever possible; however, depending on the audience of the application, it may not be practical or feasible to enforce the use of MFA.</p>
 <p>The <a href="Multifactor_Authentication_Cheat_Sheet.html">Multifactor Authentication Cheat Sheet</a> contains further guidance on implementing MFA.</p>
-<h4 id="account-lockout">Account Lockout<a class="headerlink" href="#account-lockout" title="Permanent link">&para;</a></h4>
+<h4 id="login-throttling">Login Throttling<a class="headerlink" href="#login-throttling" title="Permanent link">&para;</a></h4>
+<p>Login Throttling is a protocol used to prevent an attacker from making too many attempts at guessing a password through normal interactive means, it includes:</p>
+<ul>
+<li>Maximum number of attempts.</li>
+</ul>
+<h5 id="account-lockout">Account Lockout<a class="headerlink" href="#account-lockout" title="Permanent link">&para;</a></h5>
 <p>The most common protection against these attacks is to implement account lockout, which prevents any more login attempts for a period after a certain number of failed logins.</p>
 <p>The counter of failed logins should be associated with the account itself, rather than the source IP address, in order to prevent an attacker from making login attempts from a large number of different IP addresses. There are a number of different factors that should be considered when implementing an account lockout policy in order to find a balance between security and usability:</p>
 <ul>
@@ -2323,6 +2354,9 @@ ENDIF
 <li>How long the account is locked out for (lockout duration).</li>
 </ul>
 <p>Rather than implementing a fixed lockout duration (e.g., ten minutes), some applications use an exponential lockout, where the lockout duration starts as a very short period (e.g., one second), but doubles after each failed login attempt.</p>
+<ul>
+<li>Amount of time to delay after each account lockout (max 2-3, after that permanent account lockout).</li>
+</ul>
 <p>When designing an account lockout system, care must be taken to prevent it from being used to cause a denial of service by locking out other users' accounts. One way this could be performed is to allow the user of the forgotten password functionality to log in, even if the account is locked out.</p>
 <h4 id="captcha">CAPTCHA<a class="headerlink" href="#captcha" title="Permanent link">&para;</a></h4>
 <p>The use of an effective CAPTCHA can help to prevent automated login attempts against accounts. However, many CAPTCHA implementations have weaknesses that allow them to be solved using automated techniques or can be outsourced to services which can solve them. As such, the use of CAPTCHA should be viewed as a defence-in-depth control to make brute-force attacks more time consuming and expensive, rather than as a preventative.</p>
