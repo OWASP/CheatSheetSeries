@@ -209,7 +209,13 @@ Multi-factor authentication (MFA) is by far the best defence against the majorit
 
 The [Multifactor Authentication Cheat Sheet](Multifactor_Authentication_Cheat_Sheet.md) contains further guidance on implementing MFA.
 
-#### Account Lockout
+#### Login Throttling
+
+Login Throttling is a protocol used to prevent an attacker from making too many attempts at guessing a password through normal interactive means, it includes:
+
+- Maximum number of attempts.
+
+##### Account Lockout
 
 The most common protection against these attacks is to implement account lockout, which prevents any more login attempts for a period after a certain number of failed logins.
 
@@ -220,6 +226,8 @@ The counter of failed logins should be associated with the account itself, rathe
 - How long the account is locked out for (lockout duration).
 
 Rather than implementing a fixed lockout duration (e.g., ten minutes), some applications use an exponential lockout, where the lockout duration starts as a very short period (e.g., one second), but doubles after each failed login attempt.
+
+- Amount of time to delay after each account lockout (max 2-3, after that permanent account lockout).
 
 When designing an account lockout system, care must be taken to prevent it from being used to cause a denial of service by locking out other users' accounts. One way this could be performed is to allow the user of the forgotten password functionality to log in, even if the account is locked out.
 
