@@ -17,7 +17,7 @@
       
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.8">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.9">
     
     
       
@@ -2229,12 +2229,12 @@
 </tr>
 </tbody>
 </table>
-<p>For more information about SamSite, see the excellent article <a href="https://web.dev/same-site-same-origin/">Understanding "same-site"</a>.</p>
+<p>For more information about SameSite, see the excellent article <a href="https://web.dev/same-site-same-origin/">Understanding "same-site"</a>.</p>
 <h2 id="attacks-using-the-element-id-attribute">Attacks using the element ID attribute<a class="headerlink" href="#attacks-using-the-element-id-attribute" title="Permanent link">&para;</a></h2>
 <p>Elements in the DOM can have an ID attribute that is unique within the document. For example:</p>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">button</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;pro&quot;</span><span class="p">&gt;</span>Pro account<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
 </code></pre></div>
-<p>The browser will automatically focus on an element with a given ID if we append a hash to the URL, e.g. <code>https://example.com#pro</code>. What's more JavaScript <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/focus_event">focus event</a> gets fired. The attacker may try to embed the application in the iframe with specific source on its own controlled page:</p>
+<p>The browser will automatically focus on an element with a given ID if we append a hash to the URL, e.g. <code>https://example.com#pro</code>. What's more, the JavaScript <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/focus_event">focus event</a> gets fired. The attacker may try to embed the application in the iframe with specific source on its own controlled page:</p>
 <p><img alt="XS-Leaks-ID" src="../assets/XS_Leaks_ID.png" /></p>
 <p>then add listener in main document for <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/blur_event">blur event</a> (the opposite of focus). When the victim visits the attackers site, the blur event gets fired. The attacker will be able to conclude that the victim has a pro account.</p>
 <h3 id="defense">Defense<a class="headerlink" href="#defense" title="Permanent link">&para;</a></h3>
@@ -2325,7 +2325,7 @@
 </ul>
 <p>Read more about CORP <a href="https://resourcepolicy.fyi/">here</a>.</p>
 <h2 id="attacks-on-postmessage-communication">Attacks on postMessage communication<a class="headerlink" href="#attacks-on-postmessage-communication" title="Permanent link">&para;</a></h2>
-<p>Sometimes in controlled situations we would like despite SOP to exchange information between different origins. We can use the postMessage mechanism. See below example:</p>
+<p>Sometimes in controlled situations we would like, despite SOP, to exchange information between different origins. We can use the postMessage mechanism. See below example:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// Origin: http://example.com</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">site</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">URLSearchParams</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">search</span><span class="p">).</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;site&#39;</span><span class="p">);</span><span class="w"> </span><span class="c1">// https://evil.com</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">popup</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="nx">site</span><span class="p">);</span>
@@ -2356,7 +2356,7 @@
 <p>So finally, an attacker can obtain the email list and, in a simple loop, open subsequent windows and count the number of frames. If the number of frames in the opened window is equal to 1, the email is in the client's database of the application used by the victim.</p>
 <h3 id="defense_3">Defense<a class="headerlink" href="#defense_3" title="Permanent link">&para;</a></h3>
 <h4 id="cross-origin-opener-policy-coop">Cross-Origin-Opener-Policy (COOP)<a class="headerlink" href="#cross-origin-opener-policy-coop" title="Permanent link">&para;</a></h4>
-<p>Setting this header will prevent cross-origin documents from opening in the same browsing context group. This solution ensures that document A opening another document will not have access to the <code>window</code>object. Possible values:</p>
+<p>Setting this header will prevent cross-origin documents from opening in the same browsing context group. This solution ensures that document A opening another document will not have access to the <code>window</code> object. Possible values:</p>
 <ul>
 <li><code>unsafe-none</code></li>
 <li><code>same-origin-allow-popups</code></li>
