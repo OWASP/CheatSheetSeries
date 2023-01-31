@@ -65,7 +65,7 @@ Sites that have the same eTLD+1 are considered SameSite, examples:
 | `https://evil.net`        | `https://example.com`      | No, different eTLD+1          |
 | `https://sub.example.com` | `https://data.example.com` | Yes, subdomains don't matter |
 
-For more information about SamSite, see the excellent article [Understanding "same-site"](https://web.dev/same-site-same-origin/).
+For more information about SameSite, see the excellent article [Understanding "same-site"](https://web.dev/same-site-same-origin/).
 
 ## Attacks using the element ID attribute
 
@@ -75,7 +75,7 @@ Elements in the DOM can have an ID attribute that is unique within the document.
 <button id="pro">Pro account</button>
 ```
 
-The browser will automatically focus on an element with a given ID if we append a hash to the URL, e.g. `https://example.com#pro`. What's more JavaScript [focus event](https://developer.mozilla.org/en-US/docs/Web/API/Element/focus_event) gets fired. The attacker may try to embed the application in the iframe with specific source on its own controlled page:
+The browser will automatically focus on an element with a given ID if we append a hash to the URL, e.g. `https://example.com#pro`. What's more, the JavaScript [focus event](https://developer.mozilla.org/en-US/docs/Web/API/Element/focus_event) gets fired. The attacker may try to embed the application in the iframe with specific source on its own controlled page:
 
 ![XS-Leaks-ID](../assets/XS_Leaks_ID.png)
 
@@ -198,7 +198,7 @@ Read more about CORP [here](https://resourcepolicy.fyi/).
 
 ## Attacks on postMessage communication
 
-Sometimes in controlled situations we would like despite SOP to exchange information between different origins. We can use the postMessage mechanism. See below example:
+Sometimes in controlled situations we would like, despite SOP, to exchange information between different origins. We can use the postMessage mechanism. See below example:
 
 ```javascript
 // Origin: http://example.com
@@ -244,7 +244,7 @@ So finally, an attacker can obtain the email list and, in a simple loop, open su
 
 #### Cross-Origin-Opener-Policy (COOP)
 
-Setting this header will prevent cross-origin documents from opening in the same browsing context group. This solution ensures that document A opening another document will not have access to the `window`object. Possible values:
+Setting this header will prevent cross-origin documents from opening in the same browsing context group. This solution ensures that document A opening another document will not have access to the `window` object. Possible values:
 
 - `unsafe-none`
 - `same-origin-allow-popups`
