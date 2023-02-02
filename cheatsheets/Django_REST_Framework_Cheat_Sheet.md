@@ -199,5 +199,6 @@ PyCharm Security – [Pycharm-security](https://pycharm-security.readthedocs.io/
 
 ## Related Articles and References
 
+- [Django REST Framework (DRF) Secure Code Guidelines](https://openaccess.uoc.edu/handle/10609/147246)
 - [Django’s security policies](https://docs.djangoproject.com/en/4.1/internals/security/)
 - [Security in Django](https://docs.djangoproject.com/en/4.1/topics/security/)
