@@ -798,7 +798,7 @@ WARN
 ### sensitive_delete:[userid,file|object]
 
 **Description**
-All data marked as sensitive or placed into a directory/table/repository where sensitive data is stored should have deletions of the data logged and reviewed periodically. The file should not be immediately deleted but marked for deletion and an archive of file should be maintained according to legal/privacy requirements.
+All data marked as sensitive or placed into a directory/table/repository where sensitive data is stored should have deletions of the data logged and reviewed periodically. The file should not be immediately deleted but marked for deletion and an archive of the file should be maintained according to legal/privacy requirements.
 
 **Level:**
 WARN
@@ -921,7 +921,7 @@ INFO
 ### session_use_after_expire:[userid]
 
 **Description**
-In the case a user attempts to access systems with an expire session it may be helpful to log, especially if combined with subsequent login failure. This could identify a case where a malicious user is attempting a session hijack or directly accessing another persons machine/browser.
+In the case a user attempts to access systems with an expire session it may be helpful to log, especially if combined with subsequent login failure. This could identify a case where a malicious user is attempting a session hijack or directly accessing another person's machine/browser.
 
 **Level:**
 WARN
@@ -969,7 +969,7 @@ WARN
 ### sys_shutdown:[userid]
 
 **Description**
-When a system is shutdown it can be valuable to log the event, even if the system is serverless or a container, especially if possible to log the user that initiated the system.
+When a system is shut down it can be valuable to log the event, even if the system is serverless or a container, especially if possible to log the user that initiated the system.
 
 **Level:**
 WARN
@@ -1051,7 +1051,7 @@ WARN
     "appid": "foobar.netportal_auth",
     "event": "sys_monitor_disabled:joebob1,crowdstrike",
     "level": "WARN",
-    "description": "User joebob1 has disable CrowdStrike",
+    "description": "User joebob1 has disabled CrowdStrike",
     ...
 }
 ```
