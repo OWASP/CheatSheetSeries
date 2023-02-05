@@ -64,7 +64,7 @@ If there are available libraries or APIs for the language you use, this is the p
 
 For examples, see [escapeshellarg()](https://www.php.net/manual/en/function.escapeshellarg.php) in PHP.
 
-The `escapeshellarg()` sorrounds the user input in single quotes, so if the malformed user input is something like `& echo "hello"`, the final output will be like `calc '& echo "hello"'` which will be parsed as a single argument to the command `calc`.
+The `escapeshellarg()` surrounds the user input in single quotes, so if the malformed user input is something like `& echo "hello"`, the final output will be like `calc '& echo "hello"'` which will be parsed as a single argument to the command `calc`.
 
 Even though `escapeshellarg()` prevents OS Command Injection, an attacker can still pass a single argument to the command.
 
