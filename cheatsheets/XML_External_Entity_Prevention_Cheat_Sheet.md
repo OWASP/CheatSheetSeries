@@ -336,6 +336,8 @@ SAXParserFactory spf = SAXParserFactory.newInstance();
 spf.setFeature("http://xml.org/sax/features/external-general-entities", false);
 spf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
 spf.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+spf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+spf.setXIncludeAware(false);
 
 //Do unmarshall operation
 Source xmlSource = new SAXSource(spf.newSAXParser().getXMLReader(),
