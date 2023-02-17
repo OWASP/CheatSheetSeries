@@ -44,7 +44,7 @@ However, if the attacker controlled string contains an additional argument of th
 system("curl " . escape("--help"))
 ```
 
-Now when the above code is executed, it will show the output of `curl --help`. 
+Now when the above code is executed, it will show the output of `curl --help`.
 
 Depending upon the system command used, the impact of an Argument injection attack can range from **Information Disclosure** to critical **Remote Code Execution**.
 
