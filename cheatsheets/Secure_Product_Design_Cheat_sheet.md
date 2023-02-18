@@ -80,7 +80,7 @@ Ensure that you integrate plausibility checks at each tier of your application (
 
 Building an application securely can all too easily be undone if it's not securely configured. At a minimum we should ensure the following:
 
-1. Bearing in mind the principal of Least Privilege: Limit the access and permissions of system components and users to the minimum required to perform their tasks. 
+1. Bearing in mind the principal of Least Privilege: Limit the access and permissions of system components and users to the minimum required to perform their tasks.
 2. Remembering Defense in Depth: Implement multiple layers of security controls to protect against a wide range of threats.
 3. Ensuring Secure by Default: Configure systems and software to be secure by default, with minimal manual setup or configuration required.
 4. Secure Data: Protect sensitive data, such as personal information and financial data, by encrypting it in transit and at rest. Protecting that data also means ensuring it's correctly backed up and that the data retention is set correctly for the desired Product Security Level.
