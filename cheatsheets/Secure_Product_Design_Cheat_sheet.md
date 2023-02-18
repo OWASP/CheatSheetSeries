@@ -75,8 +75,8 @@ profile as a result?
 The processes employed to build the security context for an application include [Threat
 Modelling](Threat_Modeling_Cheat_Sheet.md) - which results in security related stories being added 
 during **_Product Design_** at every iteration of *product delivery* - and when performing a 
-[Business Impact Assessment](tdb.md) - which results in setting the correct 
-[Product Security Levels](tbd.md)) for a given product during **_Product Inception_**. 
+Business Impact Assessment - which results in setting the correct Product Security Levels for a given 
+product during **_Product Inception_**. 
 
 Context is all important because over-engineering for security can have even greater cost 
 implications than over-engineering for scale or performance, but under-engineering can 
@@ -87,7 +87,7 @@ From libraries in use by the application (selected during any **_Product Design_
 through to external services it might make use of (changing of which happen during 
 **_Product Inception_**), what makes up this application and how are those parts kept secure? 
 In order to do this we leverage a library of secure design patterns and ready to use components in the 
-defined in the [Golden Path / Paved Road](tbd.md) and by analysing those choices through [Threat
+defined in your Golden Path / Paved Road documentation and by analysing those choices through [Threat
 Modelling](Threat_Modeling_Cheat_Sheet.md).
 
 A part of this component review must also include the more commercial aspects of selecting 
@@ -98,7 +98,7 @@ might be required.
 How do you interact with this application and how does it connect to those components and 
 services mentioned before? Where is the data stored and how is it accessed? Connections 
 also describes the lack of connections as well. Think about the segregation of tiers that
-might be required depending on the [Product Security Levels](tbd.md) and the potential 
+might be required depending on the Product Security Levels required and the potential 
 segregation of data or whole environments if required for different tenants.
 
 Adding (or removing) connections is probably a sign that **_Product Inception_** is happening.
@@ -106,7 +106,7 @@ Adding (or removing) connections is probably a sign that **_Product Inception_**
 #### 4. Code
 Code is the ultimate expression of the intention for a product and as such it must be functional 
 first and foremost. But there is a quality to how that functionality is provided that must 
-meet or exceed the expectations (defined in the [Product Security Levels](tbd.md)) of it.
+meet or exceed the expectations of it.
 
 Some basics of secure coding include:
    1. Input validation: Verify that all input data is valid and of the expected type, format, 
@@ -117,12 +117,12 @@ in a secure way and not disclosing sensitive information to an attacker.
    3. Authentication and Authorization: Implementing strong authentication and authorization 
 mechanisms to ensure that only authorized users can access sensitive data and resources.
    4. Cryptography: Use cryptographic functions and protocols to protect data in transit and at 
-rest, such as HTTPS and encryption - the expected levels for a given [Product Security Levels](tbd.md)
-can be found by looking at the [Golden Path / Paved Road](tbd.md).
-   5. Least privilege: Use the principle of least privilege when writing code, such that the 
+rest, such as HTTPS and encryption - the expected levels for a given Product Security Level
+can often be found by reviewing your Golden Path / Paved Road documentation.
+   5. Least privilege: Use the principle of the least privilege when writing code, such that the 
 code and the system it runs on are given the minimum access rights necessary to perform their 
 functions.
-   6. Secure memory management: Use high-level languages recommended in [Golden Path / Paved Road](tbd.md)
+   6. Secure memory management: Use high-level languages recommended in your Golden Path / Paved Road documentation
 or properly manage memory to prevent memory-related vulnerabilities such as buffer overflow and 
 use-after-free.
    7. Avoiding hardcoded secrets: Hardcoded secrets such as passwords and encryption keys should 
@@ -150,7 +150,7 @@ a wide range of threats.
 manual setup or configuration required.
 4. Secure Data: Protect sensitive data, such as personal information and financial data, by 
 encrypting it in transit and at rest. Protecting that data also means ensuring it's correctly
-backed up and that the data retention is set correctly for the [Product Security Levels](tbd.md).
+backed up and that the data retention is set correctly for the desired Product Security Level.
 5. Plan to have the configuration Fail Securely: Design systems to fail in a secure state, rather 
 than exposing vulnerabilities when they malfunction.
 6. Always use Secure Communications: Use secure protocols for communication, such as HTTPS, to protect 
@@ -160,7 +160,7 @@ operating systems up-to-date with the latest security patches is an essential pa
 secure system.
 8. Have a practiced Security Incident response plan: Having a plan 
 in place for how to respond to a security incident is essential for minimizing the damage caused by 
-any successful attack and a crucial part of the [Product Support Model](tbd.md).
+any successful attack and a crucial part of the Product Support Model.
 
 Details of how to precisely ensure secure configuration can be found in 
 [Infrastructure as Code Security Cheatsheet](Infrastructure_as_Code_Security_Cheat_Sheet.md)
