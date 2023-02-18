@@ -1,12 +1,12 @@
-# Secure Product Design #
+# Secure Product Design Cheat Sheet
 
-## Purpose ##
+## Introduction
 The purpose of Secure Product Design is to ensure that all products meet or exceed the 
 security requirements laid down by the organisation as part of the development lifecycle 
 and to ensure that all security decisions made about the product being developed are 
 explicit choices and result in the correct level of security for the product being developed.
 
-## Methodology ##
+## Methodology
 As a basic start, establish secure defaults, minimise the attack surface area, and fail 
 securely to those well-defined and understood, defaults.
 
@@ -18,8 +18,8 @@ The first process happens when a product is conceived, or when an existing produ
 being re-invented. The latter is continuous, evolutionary, and done in the agile way, 
 close to where the code is being written.
 
-## Security Principals ##
-#### 1. The principle of Least Privilege and Separation of Duties ####
+## Security Principals
+#### 1. The principle of Least Privilege and Separation of Duties
 Least Privilege is a security principle that states that users should only be given the 
 minimum amount of access necessary to perform their job. This means that users should only 
 be given access to the resources they need to do their job, and no more. This helps to 
@@ -36,7 +36,7 @@ timely manner. Separation of duties is an important part of any organization's i
 control system, and is essential for maintaining the integrity of the organization's 
 financial records.
 
-#### 2. The principle of Defence in Depth #### 
+#### 2. The principle of Defence in Depth
 The principle of Defence in Depth is a security strategy that involves multiple layers of 
 security controls to protect an organization’s assets. It is based on the idea that if one 
 layer of security fails, the other layers will still be able to protect the asset. The 
@@ -46,7 +46,7 @@ resilient to attack and can quickly detect and respond to any security incidents
 implementing multiple layers of security, organizations can reduce the risk of a successful 
 attack and minimize the damage caused by any successful attack.
 
-#### 3. The principal of Zero Trust #### 
+#### 3. The principal of Zero Trust
 Zero Trust is a security model that assumes that all users, devices, and networks are 
 untrusted and must be verified before access is granted. It is based on the idea that 
 organizations should not trust any user, device, or network, even if they are inside the 
@@ -56,7 +56,7 @@ monitor and audit user activity to ensure that access is only granted to those w
 This model is designed to reduce the risk of data breaches and other security incidents by 
 ensuring that only authorized users have access to sensitive data.
 
-#### 4. The principal of Security in the Open #### 
+#### 4. The principal of Security in the Open
 Security in the Open is a concept that emphasizes the importance of security in open source 
 software development. It focuses on the need for developers to be aware of the security 
 implications of their code and to take steps to ensure that their code is secure. This 
@@ -66,8 +66,8 @@ security experts to ensure that their code is secure. Finally, it emphasizes the
 developers to be aware of the security implications of their code and to take steps to 
 ensure that their code is secure.
 
-## Security Focus Areas ##
-#### 1. Context ####
+## Security Focus Areas
+#### 1. Context
 Where does this application fit into the ecosystem of the organisation, which departments
 use it and for what reason? What kinds of data might it contain, and what is the risk 
 profile as a result? 
@@ -82,7 +82,7 @@ Context is all important because over-engineering for security can have even gre
 implications than over-engineering for scale or performance, but under-engineering can 
 have devastating consequences too.
 
-#### 2. Components ####
+#### 2. Components
 From libraries in use by the application (selected during any **_Product Design_** stage) 
 through to external services it might make use of (changing of which happen during 
 **_Product Inception_**), what makes up this application and how are those parts kept secure? 
@@ -94,7 +94,7 @@ A part of this component review must also include the more commercial aspects of
 the right components (licensing and maintenance) as well as the limits on usage that 
 might be required.
 
-#### 3. Connections ####
+#### 3. Connections
 How do you interact with this application and how does it connect to those components and 
 services mentioned before? Where is the data stored and how is it accessed? Connections 
 also describes the lack of connections as well. Think about the segregation of tiers that
@@ -103,7 +103,7 @@ segregation of data or whole environments if required for different tenants.
 
 Adding (or removing) connections is probably a sign that **_Product Inception_** is happening.
 
-#### 4. Code ####
+#### 4. Code
 Code is the ultimate expression of the intention for a product and as such it must be functional 
 first and foremost. But there is a quality to how that functionality is provided that must 
 meet or exceed the expectations (defined in the [Product Security Levels](tbd.md)) of it.
@@ -139,7 +139,7 @@ backend) and ensure that you write unit and integration tests to validate that a
 are resistant to the results of [Threat Modelling](Threat_Modeling_Cheat_Sheet.md). Use that to compile use-cases 
 and misuse-cases for each tier of your application. 
 
-#### 5. Configuration ####
+#### 5. Configuration
 Building an application securely can all too easily be undone if it's not securely configured. At
 a minimum we should ensure the following:
 1. Bearing in mind the principal of Least Privilege: Limit the access and permissions of system 
