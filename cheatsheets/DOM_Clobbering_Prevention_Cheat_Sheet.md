@@ -64,7 +64,7 @@ The attacker can inject the markup `<a id=config><a id=config name=url href='mal
 
 ## Summary of Guidelines
 
-For quick reference, below is the summary of guidelines discussed next. 
+For quick reference, below is the summary of guidelines discussed next.
 
 |    | **Guidelines**                                                | Description                                                               |
 |----|---------------------------------------------------------------|---------------------------------------------------------------------------|
