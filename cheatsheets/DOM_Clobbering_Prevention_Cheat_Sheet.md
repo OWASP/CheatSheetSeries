@@ -64,21 +64,23 @@ The attacker can inject the markup `<a id=config><a id=config name=url href='mal
 
 ## Summary of Guidelines
 
+For quick reference, below is the summary of guidelines discussed next. 
+
 |    | **Guidelines**                                                | Description                                                               |
 |----|---------------------------------------------------------------|---------------------------------------------------------------------------|
-| 1  | Use HTML Sanitizers                                           | [link](#1-html-sanitization)                                              |
-| 2  | Use Content-Security Policy                                   | [link](#2-content-security-policy)                                        |
-| 3  | Freeze Sensitive DOM Objects                                  | [link](#3-freezing-sensitive-dom-objects)                                 |
-| 4  | Validate All Inputs to DOM Tree                               | [link](#4-validate-all-inputs-to-dom-tree)                                |
-| 5  | Use Explicit Variable Declarations                            | [link](#5-use-explicit-variable-declarations)                             |
-| 6  | Do Not Use Document and Window for Global Variables           | [link](#6-do-not-use-document-and-window-for-global-variables)            |
-| 7  | Do Not Trust Document Built-in APIs Before Validation         | [link](#7-do-not-trust-document-built-in-apis-before-validation)          |
-| 8  | Enforce Type Checking                                         | [link](#8-enforce-type-checking)                                          |
-| 9  | Use Strict Mode                                               | [link](#9-use-strict-mode)                                                |
-| 10 | Apply Browser Feature Detection                               | [link](#10-apply-browser-feature-detection)                               |
-| 11 | Limit Variables to Local Scope                                | [link](#11-limit-variables-to-local-scope)                                |
-| 12 | Use Unique Variable Names In Production                       | [link](#12-use-unique-variable-names-in-production)                       |
-| 13 | Use Object-oriented Programming Techniques like Encapsulation | [link](#13-use-object-oriented-programming-techniques-like-encapsulation) |
+| \# 1  | Use HTML Sanitizers                                           | [link](#1-html-sanitization)                                              |
+| \# 2  | Use Content-Security Policy                                   | [link](#2-content-security-policy)                                        |
+| \# 3  | Freeze Sensitive DOM Objects                                  | [link](#3-freezing-sensitive-dom-objects)                                 |
+| \# 4  | Validate All Inputs to DOM Tree                               | [link](#4-validate-all-inputs-to-dom-tree)                                |
+| \# 5  | Use Explicit Variable Declarations                            | [link](#5-use-explicit-variable-declarations)                             |
+| \# 6  | Do Not Use Document and Window for Global Variables           | [link](#6-do-not-use-document-and-window-for-global-variables)            |
+| \# 7  | Do Not Trust Document Built-in APIs Before Validation         | [link](#7-do-not-trust-document-built-in-apis-before-validation)          |
+| \# 8  | Enforce Type Checking                                         | [link](#8-enforce-type-checking)                                          |
+| \# 9  | Use Strict Mode                                               | [link](#9-use-strict-mode)                                                |
+| \# 10 | Apply Browser Feature Detection                               | [link](#10-apply-browser-feature-detection)                               |
+| \# 11 | Limit Variables to Local Scope                                | [link](#11-limit-variables-to-local-scope)                                |
+| \# 12 | Use Unique Variable Names In Production                       | [link](#12-use-unique-variable-names-in-production)                       |
+| \# 13 | Use Object-oriented Programming Techniques like Encapsulation | [link](#13-use-object-oriented-programming-techniques-like-encapsulation) |
 
 ## Mitigation Techniques
 
