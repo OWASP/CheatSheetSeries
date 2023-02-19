@@ -1,0 +1,2172 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Website with the collection of all the cheat sheets of the project.">
+      
+      
+      
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_Clobbering_Prevention_Cheat_Sheet.html">
+      
+      
+        <link rel="prev" href="Cryptographic_Storage_Cheat_Sheet.html">
+      
+      
+        <link rel="next" href="DOM_based_XSS_Prevention_Cheat_Sheet.html">
+      
+      <link rel="icon" href="../assets/WebSite_Favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.13">
+    
+    
+      
+        <title>DOM Clobbering Prevention - OWASP Cheat Sheet Series</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ffa9267a.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.a0c5b2b5.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#dom-clobbering-prevention-cheat-sheet" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../index.html" title="OWASP Cheat Sheet Series" class="md-header__button md-logo" aria-label="OWASP Cheat Sheet Series" data-md-component="logo">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OWASP Cheat Sheet Series
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              DOM Clobbering Prevention
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="OWASP Cheat Sheet Series" class="md-nav__button md-logo" aria-label="OWASP Cheat Sheet Series" data-md-component="logo">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
+
+    </a>
+    OWASP Cheat Sheet Series
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Glossary.html" class="md-nav__link">
+        Index Alphabetical
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IndexASVS.html" class="md-nav__link">
+        Index ASVS
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IndexMASVS.html" class="md-nav__link">
+        Index MASVS
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IndexProactiveControls.html" class="md-nav__link">
+        Index Proactive Controls
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IndexTopTen.html" class="md-nav__link">
+        Index Top 10
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+          Cheatsheets
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Cheatsheets
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="AJAX_Security_Cheat_Sheet.html" class="md-nav__link">
+        AJAX Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Abuse_Case_Cheat_Sheet.html" class="md-nav__link">
+        Abuse Case
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Access_Control_Cheat_Sheet.html" class="md-nav__link">
+        Access Control
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Attack_Surface_Analysis_Cheat_Sheet.html" class="md-nav__link">
+        Attack Surface Analysis
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Authentication_Cheat_Sheet.html" class="md-nav__link">
+        Authentication
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Authorization_Cheat_Sheet.html" class="md-nav__link">
+        Authorization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Authorization_Testing_Automation_Cheat_Sheet.html" class="md-nav__link">
+        Authorization Testing Automation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Bean_Validation_Cheat_Sheet.html" class="md-nav__link">
+        Bean Validation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html" class="md-nav__link">
+        C-Based Toolchain Hardening
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html" class="md-nav__link">
+        Choosing and Using Security Questions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Clickjacking_Defense_Cheat_Sheet.html" class="md-nav__link">
+        Clickjacking Defense
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Content_Security_Policy_Cheat_Sheet.html" class="md-nav__link">
+        Content Security Policy
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Credential Stuffing Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Cross-Site Request Forgery Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Cross Site Scripting Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Cryptographic_Storage_Cheat_Sheet.html" class="md-nav__link">
+        Cryptographic Storage
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          DOM Clobbering Prevention
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="DOM_Clobbering_Prevention_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+        DOM Clobbering Prevention
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#background" class="md-nav__link">
+    Background
+  </a>
+  
+    <nav class="md-nav" aria-label="Background">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-attack-1" class="md-nav__link">
+    Example Attack 1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-attack-2" class="md-nav__link">
+    Example Attack 2
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-of-guidelines" class="md-nav__link">
+    Summary of Guidelines
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mitigation-techniques" class="md-nav__link">
+    Mitigation Techniques
+  </a>
+  
+    <nav class="md-nav" aria-label="Mitigation Techniques">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-html-sanitization" class="md-nav__link">
+    #1: HTML Sanitization
+  </a>
+  
+    <nav class="md-nav" aria-label="#1: HTML Sanitization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dompurify-sanitizer" class="md-nav__link">
+    DOMPurify Sanitizer
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sanitizer-api" class="md-nav__link">
+    Sanitizer API
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-content-security-policy" class="md-nav__link">
+    #2: Content-Security Policy
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-freezing-sensitive-dom-objects" class="md-nav__link">
+    #3: Freezing Sensitive DOM Objects
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#secure-coding-guidelines" class="md-nav__link">
+    Secure Coding Guidelines
+  </a>
+  
+    <nav class="md-nav" aria-label="Secure Coding Guidelines">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#4-validate-all-inputs-to-dom-tree" class="md-nav__link">
+    #4: Validate All Inputs to DOM Tree
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-use-explicit-variable-declarations" class="md-nav__link">
+    #5: Use Explicit Variable Declarations
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-do-not-use-document-and-window-for-global-variables" class="md-nav__link">
+    #6: Do Not Use Document and Window for Global Variables
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-do-not-trust-document-built-in-apis-before-validation" class="md-nav__link">
+    #7: Do Not Trust Document Built-in APIs Before Validation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-enforce-type-checking" class="md-nav__link">
+    #8: Enforce Type Checking
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-use-strict-mode" class="md-nav__link">
+    #9: Use Strict Mode
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10-apply-browser-feature-detection" class="md-nav__link">
+    #10: Apply Browser Feature Detection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#11-limit-variables-to-local-scope" class="md-nav__link">
+    #11: Limit Variables to Local Scope
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-use-unique-variable-names-in-production" class="md-nav__link">
+    #12: Use Unique Variable Names In Production
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-use-object-oriented-programming-techniques-like-encapsulation" class="md-nav__link">
+    #13: Use Object-oriented Programming Techniques like Encapsulation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        DOM based XSS Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Database_Security_Cheat_Sheet.html" class="md-nav__link">
+        Database Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Denial_of_Service_Cheat_Sheet.html" class="md-nav__link">
+        Denial of Service
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Deserialization_Cheat_Sheet.html" class="md-nav__link">
+        Deserialization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Django_REST_Framework_Cheat_Sheet.html" class="md-nav__link">
+        Django REST Framework
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Docker_Security_Cheat_Sheet.html" class="md-nav__link">
+        Docker Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="DotNet_Security_Cheat_Sheet.html" class="md-nav__link">
+        DotNet Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Error_Handling_Cheat_Sheet.html" class="md-nav__link">
+        Error Handling
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="File_Upload_Cheat_Sheet.html" class="md-nav__link">
+        File Upload
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Forgot_Password_Cheat_Sheet.html" class="md-nav__link">
+        Forgot Password
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="GraphQL_Cheat_Sheet.html" class="md-nav__link">
+        GraphQL
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="HTML5_Security_Cheat_Sheet.html" class="md-nav__link">
+        HTML5 Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="HTTP_Headers_Cheat_Sheet.html" class="md-nav__link">
+        HTTP Headers
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html" class="md-nav__link">
+        HTTP Strict Transport Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Infrastructure_as_Code_Security_Cheat_Sheet.html" class="md-nav__link">
+        Infrastructure as Code Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Injection Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Injection_Prevention_in_Java_Cheat_Sheet.html" class="md-nav__link">
+        Injection Prevention in Java
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Input_Validation_Cheat_Sheet.html" class="md-nav__link">
+        Input Validation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Insecure Direct Object Reference Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="JAAS_Cheat_Sheet.html" class="md-nav__link">
+        JAAS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="JSON_Web_Token_for_Java_Cheat_Sheet.html" class="md-nav__link">
+        JSON Web Token for Java
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Key_Management_Cheat_Sheet.html" class="md-nav__link">
+        Key Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Kubernetes_Security_Cheat_Sheet.html" class="md-nav__link">
+        Kubernetes Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="LDAP_Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        LDAP Injection Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Laravel_Cheat_Sheet.html" class="md-nav__link">
+        Laravel
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Logging_Cheat_Sheet.html" class="md-nav__link">
+        Logging
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Logging_Vocabulary_Cheat_Sheet.html" class="md-nav__link">
+        Logging Vocabulary
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Mass_Assignment_Cheat_Sheet.html" class="md-nav__link">
+        Mass Assignment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html" class="md-nav__link">
+        Microservices based Security Arch Doc
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Microservices_security.html" class="md-nav__link">
+        Microservices security.md
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Multifactor_Authentication_Cheat_Sheet.html" class="md-nav__link">
+        Multifactor Authentication
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="NPM_Security_Cheat_Sheet.html" class="md-nav__link">
+        NPM Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Network_Segmentation_Cheat_Sheet.html" class="md-nav__link">
+        Network Segmentation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="NodeJS_Docker_Cheat_Sheet.html" class="md-nav__link">
+        NodeJS Docker
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Nodejs_Security_Cheat_Sheet.html" class="md-nav__link">
+        Nodejs Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="OS_Command_Injection_Defense_Cheat_Sheet.html" class="md-nav__link">
+        OS Command Injection Defense
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="PHP_Configuration_Cheat_Sheet.html" class="md-nav__link">
+        PHP Configuration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Password_Storage_Cheat_Sheet.html" class="md-nav__link">
+        Password Storage
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Pinning_Cheat_Sheet.html" class="md-nav__link">
+        Pinning
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Query_Parameterization_Cheat_Sheet.html" class="md-nav__link">
+        Query Parameterization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="REST_Assessment_Cheat_Sheet.html" class="md-nav__link">
+        REST Assessment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="REST_Security_Cheat_Sheet.html" class="md-nav__link">
+        REST Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ruby_on_Rails_Cheat_Sheet.html" class="md-nav__link">
+        Ruby on Rails
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="SAML_Security_Cheat_Sheet.html" class="md-nav__link">
+        SAML Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="SQL_Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        SQL Injection Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Secrets_Management_Cheat_Sheet.html" class="md-nav__link">
+        Secrets Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html" class="md-nav__link">
+        Securing Cascading Style Sheets
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Server Side Request Forgery Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Session_Management_Cheat_Sheet.html" class="md-nav__link">
+        Session Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="TLS_Cipher_String_Cheat_Sheet.html" class="md-nav__link">
+        TLS Cipher String
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Third_Party_Javascript_Management_Cheat_Sheet.html" class="md-nav__link">
+        Third Party Javascript Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Threat_Modeling_Cheat_Sheet.html" class="md-nav__link">
+        Threat Modeling
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Transaction_Authorization_Cheat_Sheet.html" class="md-nav__link">
+        Transaction Authorization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Transport_Layer_Protection_Cheat_Sheet.html" class="md-nav__link">
+        Transport Layer Protection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html" class="md-nav__link">
+        Unvalidated Redirects and Forwards
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="User_Privacy_Protection_Cheat_Sheet.html" class="md-nav__link">
+        User Privacy Protection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Virtual_Patching_Cheat_Sheet.html" class="md-nav__link">
+        Virtual Patching
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Vulnerability_Disclosure_Cheat_Sheet.html" class="md-nav__link">
+        Vulnerability Disclosure
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html" class="md-nav__link">
+        Vulnerable Dependency Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Web_Service_Security_Cheat_Sheet.html" class="md-nav__link">
+        Web Service Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="XML_External_Entity_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        XML External Entity Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="XML_Security_Cheat_Sheet.html" class="md-nav__link">
+        XML Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="XSS_Filter_Evasion_Cheat_Sheet.html" class="md-nav__link">
+        XSS Filter Evasion
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="XS_Leaks_Cheat_Sheet.html" class="md-nav__link">
+        XS Leaks
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#background" class="md-nav__link">
+    Background
+  </a>
+  
+    <nav class="md-nav" aria-label="Background">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-attack-1" class="md-nav__link">
+    Example Attack 1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-attack-2" class="md-nav__link">
+    Example Attack 2
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-of-guidelines" class="md-nav__link">
+    Summary of Guidelines
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mitigation-techniques" class="md-nav__link">
+    Mitigation Techniques
+  </a>
+  
+    <nav class="md-nav" aria-label="Mitigation Techniques">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-html-sanitization" class="md-nav__link">
+    #1: HTML Sanitization
+  </a>
+  
+    <nav class="md-nav" aria-label="#1: HTML Sanitization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dompurify-sanitizer" class="md-nav__link">
+    DOMPurify Sanitizer
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sanitizer-api" class="md-nav__link">
+    Sanitizer API
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-content-security-policy" class="md-nav__link">
+    #2: Content-Security Policy
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-freezing-sensitive-dom-objects" class="md-nav__link">
+    #3: Freezing Sensitive DOM Objects
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#secure-coding-guidelines" class="md-nav__link">
+    Secure Coding Guidelines
+  </a>
+  
+    <nav class="md-nav" aria-label="Secure Coding Guidelines">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#4-validate-all-inputs-to-dom-tree" class="md-nav__link">
+    #4: Validate All Inputs to DOM Tree
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-use-explicit-variable-declarations" class="md-nav__link">
+    #5: Use Explicit Variable Declarations
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-do-not-use-document-and-window-for-global-variables" class="md-nav__link">
+    #6: Do Not Use Document and Window for Global Variables
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-do-not-trust-document-built-in-apis-before-validation" class="md-nav__link">
+    #7: Do Not Trust Document Built-in APIs Before Validation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-enforce-type-checking" class="md-nav__link">
+    #8: Enforce Type Checking
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-use-strict-mode" class="md-nav__link">
+    #9: Use Strict Mode
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10-apply-browser-feature-detection" class="md-nav__link">
+    #10: Apply Browser Feature Detection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#11-limit-variables-to-local-scope" class="md-nav__link">
+    #11: Limit Variables to Local Scope
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-use-unique-variable-names-in-production" class="md-nav__link">
+    #12: Use Unique Variable Names In Production
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-use-object-oriented-programming-techniques-like-encapsulation" class="md-nav__link">
+    #13: Use Object-oriented Programming Techniques like Encapsulation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="dom-clobbering-prevention-cheat-sheet">DOM Clobbering Prevention Cheat Sheet<a class="headerlink" href="#dom-clobbering-prevention-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p><a href="https://domclob.xyz/domc_wiki/#overview">DOM Clobbering</a> is a type of code-reuse, HTML-only injection attack, where attackers confuse a web application by injecting HTML elements whose <code>id</code> or <code>name</code> attribute matches the name of security-sensitive variables or browser APIs, such as variables used for fetching remote content (e.g., script src), and overshadow their value.</p>
+<p>It is particularly relevant when script injection is not possible, e.g., when filtered by HTML sanitizers, or mitigated by disallowing or controlling script execution. In these scenarios, attackers may still inject non-script HTML markups into webpages and transform the initially secure markup into executable code, achieving <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html">Cross-Site Scripting (XSS)</a>.</p>
+<p><strong>This cheat sheet is a list of guidelines, secure coding patterns, and practices to prevent or restrict the impact of DOM Clobbering in your web application.</strong></p>
+<h2 id="background">Background<a class="headerlink" href="#background" title="Permanent link">&para;</a></h2>
+<p>Before we dive into DOM Clobbering, let's refresh our knowledge with some basic Web background.</p>
+<p>When a webpage is loaded, the browser creates a <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction">DOM tree</a> that represents the structure and content of the page, and JavaScript code has read and write access to this tree.</p>
+<p>When creating the DOM tree, browsers also create an attribute for (some) named HTML elements on <code>window</code> and <code>document</code> objects. Named HTML elements are those having an <code>id</code> or <code>name</code> attribute. For example, the markup:</p>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">form</span> <span class="na">id</span><span class="o">=</span><span class="s">x</span><span class="p">&gt;&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</code></pre></div>
+<p>will lead to browsers creating references to that form element with the attribute <code>x</code> of <code>window</code> and <code>document</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">obj1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">);</span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">obj2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">x</span><span class="p">;</span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">obj3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">x</span><span class="p">;</span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">obj4</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">x</span><span class="p">;</span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">obj5</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">x</span><span class="p">;</span><span class="w"> </span><span class="c1">// by default, objects belong to the global Window, so x is same as window.x</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span>
+<span class="w"> </span><span class="nx">obj1</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">obj2</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">obj2</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">obj3</span><span class="w"> </span><span class="o">&amp;&amp;</span>
+<span class="w"> </span><span class="nx">obj3</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">obj4</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">obj4</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">obj5</span>
+<span class="p">);</span><span class="w"> </span><span class="c1">// true</span>
+</code></pre></div>
+<p>When accessing an attribute of <code>window</code> and <code>document</code> objects, named HTML element references come before lookups of built-in APIs and other attributes on <code>window</code> and <code>document</code> that developers have defined, also known as <a href="https://html.spec.whatwg.org/multipage/nav-history-apis.html#named-access-on-the-window-object">named property accesses</a>. Developers unaware of such behavior may use the content of window/document attributes for sensitive operations, such as URLs for fetching remote content, and attackers can exploit it by injecting markups with colliding names. Similarly to custom attributes/variables, built-in browser APIs may be overshadowed by DOM Clobbering.</p>
+<p>If attackers are able to inject (non-script) HTML markup in the DOM tree,
+it can change the value of a variable that the web application relies on due to named property accesses, causing it to malfunction, expose sensitive data, or execute attacker-controlled scripts. DOM Clobbering works by taking advantage of this (legacy) behaviour, causing a namespace collision between the execution environment (i.e., <code>window</code> and <code>document</code> objects), and JavaScript code.</p>
+<h3 id="example-attack-1">Example Attack 1<a class="headerlink" href="#example-attack-1" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="nx">redirectTo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">redirectTo</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s1">&#39;/profile/&#39;</span><span class="p">;</span>
+<span class="nx">location</span><span class="p">.</span><span class="nx">assign</span><span class="p">(</span><span class="nx">redirectTo</span><span class="p">);</span>
+</code></pre></div>
+<p>The attacker can:</p>
+<ul>
+<li>inject the markup <code>&lt;a id=redirectTo href='javascript:alert(1)'</code> and obtain XSS.</li>
+<li>inject the markup <code>&lt;a id=redirectTo href='phishing.com'</code> and obtain open redirect.</li>
+</ul>
+<h3 id="example-attack-2">Example Attack 2<a class="headerlink" href="#example-attack-2" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">script</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;script&#39;</span><span class="p">);</span>
+<span class="kd">let</span><span class="w"> </span><span class="nx">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">url</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s1">&#39;script.js&#39;</span><span class="p">;</span>
+<span class="nx">s</span><span class="p">.</span><span class="nx">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">src</span><span class="p">;</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">s</span><span class="p">);</span>
+</code></pre></div>
+<p>The attacker can inject the markup <code>&lt;a id=config&gt;&lt;a id=config name=url href='malicious.js'&gt;</code> to load additional JavaScript code, and obtain arbitrary client-side code execution.</p>
+<h2 id="summary-of-guidelines">Summary of Guidelines<a class="headerlink" href="#summary-of-guidelines" title="Permanent link">&para;</a></h2>
+<p>For quick reference, below is the summary of guidelines discussed next.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>Guidelines</strong></th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td># 1</td>
+<td>Use HTML Sanitizers</td>
+<td><a href="#1-html-sanitization">link</a></td>
+</tr>
+<tr>
+<td># 2</td>
+<td>Use Content-Security Policy</td>
+<td><a href="#2-content-security-policy">link</a></td>
+</tr>
+<tr>
+<td># 3</td>
+<td>Freeze Sensitive DOM Objects</td>
+<td><a href="#3-freezing-sensitive-dom-objects">link</a></td>
+</tr>
+<tr>
+<td># 4</td>
+<td>Validate All Inputs to DOM Tree</td>
+<td><a href="#4-validate-all-inputs-to-dom-tree">link</a></td>
+</tr>
+<tr>
+<td># 5</td>
+<td>Use Explicit Variable Declarations</td>
+<td><a href="#5-use-explicit-variable-declarations">link</a></td>
+</tr>
+<tr>
+<td># 6</td>
+<td>Do Not Use Document and Window for Global Variables</td>
+<td><a href="#6-do-not-use-document-and-window-for-global-variables">link</a></td>
+</tr>
+<tr>
+<td># 7</td>
+<td>Do Not Trust Document Built-in APIs Before Validation</td>
+<td><a href="#7-do-not-trust-document-built-in-apis-before-validation">link</a></td>
+</tr>
+<tr>
+<td># 8</td>
+<td>Enforce Type Checking</td>
+<td><a href="#8-enforce-type-checking">link</a></td>
+</tr>
+<tr>
+<td># 9</td>
+<td>Use Strict Mode</td>
+<td><a href="#9-use-strict-mode">link</a></td>
+</tr>
+<tr>
+<td># 10</td>
+<td>Apply Browser Feature Detection</td>
+<td><a href="#10-apply-browser-feature-detection">link</a></td>
+</tr>
+<tr>
+<td># 11</td>
+<td>Limit Variables to Local Scope</td>
+<td><a href="#11-limit-variables-to-local-scope">link</a></td>
+</tr>
+<tr>
+<td># 12</td>
+<td>Use Unique Variable Names In Production</td>
+<td><a href="#12-use-unique-variable-names-in-production">link</a></td>
+</tr>
+<tr>
+<td># 13</td>
+<td>Use Object-oriented Programming Techniques like Encapsulation</td>
+<td><a href="#13-use-object-oriented-programming-techniques-like-encapsulation">link</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="mitigation-techniques">Mitigation Techniques<a class="headerlink" href="#mitigation-techniques" title="Permanent link">&para;</a></h2>
+<h3 id="1-html-sanitization">#1: HTML Sanitization<a class="headerlink" href="#1-html-sanitization" title="Permanent link">&para;</a></h3>
+<p>Robust HTML sanitizers can prevent or restrict the risk of DOM Clobbering. They can do so in multiple ways. For example:</p>
+<ul>
+<li>completely remove named properties like <code>id</code> and <code>name</code>. While effective, this may hinder the usability when named properties are needed for legitimate functionalties.</li>
+<li>namespace isolation, which can be, for example, prefixing the value of named properties by a constant string to limit the risk of naming collisions.</li>
+<li>dynamically checking if named properties of the input mark has collisions with the existing DOM tree, and if that is the case, then remove named properties of the input markup.</li>
+</ul>
+<p>OWASP recommends <a href="https://github.com/cure53/DOMPurify">DOMPurify</a> or the <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTML_Sanitizer_API">Sanitizer API</a> for HTML sanitization.</p>
+<h4 id="dompurify-sanitizer">DOMPurify Sanitizer<a class="headerlink" href="#dompurify-sanitizer" title="Permanent link">&para;</a></h4>
+<p>By default, DOMPurify removes all clobbering collisions with <strong>built-in</strong> APIs and properties (using the enabled-by-default <code>SANITIZE_DOM</code> configuration option). ]</p>
+<p>To be protected against clobbering of custom variables and properties as well, you need to enable the <code>SANITIZE_NAMED_PROPS</code> config:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">clean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">DOMPurify</span><span class="p">.</span><span class="nx">sanitize</span><span class="p">(</span><span class="nx">dirty</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="nx">SANITIZE_NAMED_PROPS</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">});</span>
+</code></pre></div>
+<p>This would isolate the namespace of named properties and JavaScript variables by prefixing them with <code>user-content-</code> string.</p>
+<h4 id="sanitizer-api">Sanitizer API<a class="headerlink" href="#sanitizer-api" title="Permanent link">&para;</a></h4>
+<p>The new browser-built-in <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTML_Sanitizer_API">Sanitizer API</a> does not prevent DOM Clobbering it its <a href="https://wicg.github.io/sanitizer-api/#dom-clobbering">default setting</a>, but can be configured to remove named properties:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">sanitizerInstance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Sanitizer</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">blockAttributes</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;id&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">elements</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;*&#39;</span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;name&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">elements</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;*&#39;</span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">});</span>
+<span class="nx">containerDOMElement</span><span class="p">.</span><span class="nx">setHTML</span><span class="p">(</span><span class="nx">input</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="nx">sanitizer</span><span class="o">:</span><span class="w"> </span><span class="nx">sanitizerInstance</span><span class="p">});</span>
+</code></pre></div>
+<h3 id="2-content-security-policy">#2: Content-Security Policy<a class="headerlink" href="#2-content-security-policy" title="Permanent link">&para;</a></h3>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy">Content-Security Policy (CSP)</a> is a set of rules that tell the browser which resources are allowed to be loaded on a web page. By restricting the sources of JavaScript files (e.g., with the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/script-src">script-src</a> directive), CSP can prevent malicious code from being injected into the page.</p>
+<p><strong>Note:</strong> CSP can only mitigate <strong>some varints</strong> of DOM clobbering attacks, such as when attackers attempt to load new scripts by clobbering script sources, but not when already-present code can be abused for code execution, e.g., clobbering the parameters of code evaluation constructs like <code>eval()</code>.</p>
+<h3 id="3-freezing-sensitive-dom-objects">#3: Freezing Sensitive DOM Objects<a class="headerlink" href="#3-freezing-sensitive-dom-objects" title="Permanent link">&para;</a></h3>
+<p>A simple way to mitigate DOM Clobbering against individual objects could be to freeze sensitive DOM objects and their properties, e.g., via <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze">Object.freeze()</a> method.</p>
+<p><strong>Note:</strong> Freezing object properties prevents them from being overwritten by named DOM elements. But, determining all objects and object properties that need to be frozen may be not be easy, limiting the usefulness of this approach.</p>
+<h2 id="secure-coding-guidelines">Secure Coding Guidelines<a class="headerlink" href="#secure-coding-guidelines" title="Permanent link">&para;</a></h2>
+<p>DOM Clobbering can be avoided by defensive programming and adhering to a few coding patterns and guidelines.</p>
+<h3 id="4-validate-all-inputs-to-dom-tree">#4: Validate All Inputs to DOM Tree<a class="headerlink" href="#4-validate-all-inputs-to-dom-tree" title="Permanent link">&para;</a></h3>
+<p>Before inserting any markup into the webpage's DOM tree, sanitize <code>id</code> and <code>name</code> attributes (see <a href="#html-sanitization">HTML sanitization</a>).</p>
+<h3 id="5-use-explicit-variable-declarations">#5: Use Explicit Variable Declarations<a class="headerlink" href="#5-use-explicit-variable-declarations" title="Permanent link">&para;</a></h3>
+<p>When initializing varibles, always use a variable declarator like <code>var</code>, <code>let</code> or <code>const</code>, which prevents clobbering of the variable.</p>
+<p><strong>Note:</strong> Declaring a variable with <code>let</code> does not create a property on <code>window</code>, unlike <code>var</code>. Therefore, <code>window.VARNAME</code> can still be clobbered (assuming <code>VARNAME</code> is the name of the variable).</p>
+<h3 id="6-do-not-use-document-and-window-for-global-variables">#6: Do Not Use Document and Window for Global Variables<a class="headerlink" href="#6-do-not-use-document-and-window-for-global-variables" title="Permanent link">&para;</a></h3>
+<p>Avoid using objects like <code>document</code> and <code>window</code> for storing global variables, because they can be easily manipulated. (see, e.g., <a href="https://domclob.xyz/domc_wiki/indicators/patterns.html#do-not-use-document-for-global-variables">here</a>).</p>
+<h3 id="7-do-not-trust-document-built-in-apis-before-validation">#7: Do Not Trust Document Built-in APIs Before Validation<a class="headerlink" href="#7-do-not-trust-document-built-in-apis-before-validation" title="Permanent link">&para;</a></h3>
+<p>Document properties, including built-in ones, are always overshadowed by DOM Clobbering, even right after they are assigned a value.</p>
+<p><strong>Hint:</strong> This is due to the so-called <a href="https://webidl.spec.whatwg.org/#legacy-platform-object-abstract-ops">named property visibility algorithm</a>, where named HTML element references come before lookups of built-in APIs and other attributes on <code>document</code>.</p>
+<h3 id="8-enforce-type-checking">#8: Enforce Type Checking<a class="headerlink" href="#8-enforce-type-checking" title="Permanent link">&para;</a></h3>
+<p>Always check the type of Document and Window properties before using them in sensitive operations, e.g., using the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof">instance of</a> operator.</p>
+<p><strong>Hint:</strong> When an object is clobbered, it would refer to an <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement">HTMLElement</a> instance, which may not be the expected type.</p>
+<h3 id="9-use-strict-mode">#9: Use Strict Mode<a class="headerlink" href="#9-use-strict-mode" title="Permanent link">&para;</a></h3>
+<p>Use <code>strict</code> mode to prevent unintended global variable creation, and to <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors/Read-only">raise an error</a> when read-only properties are attempted to be over-written.</p>
+<h3 id="10-apply-browser-feature-detection">#10: Apply Browser Feature Detection<a class="headerlink" href="#10-apply-browser-feature-detection" title="Permanent link">&para;</a></h3>
+<p>Instead of relying on browser-specific features or properties, use feature detection to determine whether a feature is supported before using it. This can help prevent errors and DOM Clobberng that might arise when using those features in unsupported browsers.</p>
+<p><strong>Hint:</strong> Unsupported feature APIs can act as an undefined variable/property in unsupported browsers, making them clobberable.</p>
+<h3 id="11-limit-variables-to-local-scope">#11: Limit Variables to Local Scope<a class="headerlink" href="#11-limit-variables-to-local-scope" title="Permanent link">&para;</a></h3>
+<p>Global variables are more prone to being overwritten by DOM Clobberng. Whenever possible, use local variables and object properties.</p>
+<h3 id="12-use-unique-variable-names-in-production">#12: Use Unique Variable Names In Production<a class="headerlink" href="#12-use-unique-variable-names-in-production" title="Permanent link">&para;</a></h3>
+<p>Using unique variable names may help prevent naming collisions that could lead to accidental overwrites.</p>
+<h3 id="13-use-object-oriented-programming-techniques-like-encapsulation">#13: Use Object-oriented Programming Techniques like Encapsulation<a class="headerlink" href="#13-use-object-oriented-programming-techniques-like-encapsulation" title="Permanent link">&para;</a></h3>
+<p>Encapsulating variables and functions within objects or classes can help prevent them from being overwritten. By making them private, they cannot be accessed from outside the object, making them less prone to DOM Clobbering.</p>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://domclob.xyz">domclob.xyz</a></li>
+<li><a href="https://portswigger.net/research/dom-clobbering-strikes-back">PortSwigger: DOM Clobbering Strikes Back</a></li>
+<li><a href="https://research.securitum.com/xss-in-amp4email-dom-clobbering/">Blogpost: XSS in GMail’s AMP4Email</a></li>
+<li><a href="https://book.hacktricks.xyz/pentesting-web/xss-cross-site-scripting/dom-clobbering">HackTricks: DOM Clobbering</a></li>
+<li><a href="https://www.htmhell.dev/adventcalendar/2022/12/">HTMLHell: DOM Clobbering</a></li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      ©Copyright 2021 - CheatSheets Series Team - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">Creative Commons Attribution 3.0 Unported License</a>.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.2a6f1dda.min.js"></script>
+      
+    
+  </body>
+</html>
