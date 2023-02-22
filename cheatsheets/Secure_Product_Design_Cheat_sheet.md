@@ -13,7 +13,7 @@ Secure Product Design comes about through two processes:
 1. **_Product Inception_**; and
 2. **_Product Design_**
 
-The first process happens when a product is conceived, or when an existing product is being re-invented. The latter is continuous, evolutionary, and done in the agile way, close to where the code is being written.
+The first process happens when a product is conceived, or when an existing product is being re-invented. The latter is continuous, evolutionary, and done in an agile way, close to where the code is being written.
 
 ## Security Principals
 
