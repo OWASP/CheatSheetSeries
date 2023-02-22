@@ -6,7 +6,7 @@ The purpose of Secure Product Design is to ensure that all products meet or exce
 
 ## Methodology
 
-As a basic start, establish secure defaults, minimise the attack surface area, and fail securely to those well-defined and understood, defaults.
+As a basic start, establish secure defaults, minimise the attack surface area, and fail securely to those well-defined and understood defaults.
 
 Secure Product Design comes about through two processes:
 
