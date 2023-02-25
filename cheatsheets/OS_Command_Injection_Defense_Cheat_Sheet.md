@@ -89,7 +89,7 @@ If calling a system command that incorporates user-supplied cannot be avoided, t
 **Note A:**
 
 ```text
-& |  ; $ > < ` \ ! -
+& |  ; $ > < ` \ ! ' " ( )
 ```
 
 ## Additional Defenses
