@@ -19,7 +19,7 @@
         <link rel="next" href="Django_REST_Framework_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.14">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.0">
     
     
       
@@ -27,7 +27,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.113286f1.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.402914a4.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.a0c5b2b5.min.css">
@@ -87,7 +87,9 @@
     
       
 
-<header class="md-header" data-md-component="header">
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../index.html" title="OWASP Cheat Sheet Series" class="md-header__button md-logo" aria-label="OWASP Cheat Sheet Series" data-md-component="logo">
       
@@ -2021,10 +2023,10 @@
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>This article is focused on providing clear, actionable guidance for safely deserializing untrusted data in your applications.</p>
 <h2 id="what-is-deserialization">What is Deserialization<a class="headerlink" href="#what-is-deserialization" title="Permanent link">&para;</a></h2>
-<p><strong>Serialization</strong> is the process of turning some object into a data format that can be restored later. People often serialize objects in order to save them to storage, or to send as part of communications.</p>
-<p><strong>Deserialization</strong> is the reverse of that process, taking data structured from some format, and rebuilding it into an object. Today, the most popular data format for serializing data is JSON. Before that, it was XML.</p>
-<p>However, many programming languages offer a native capability for serializing objects. These native formats usually offer more features than JSON or XML, including customizability of the serialization process.</p>
-<p>Unfortunately, the features of these native deserialization mechanisms can be repurposed for malicious effect when operating on untrusted data. Attacks against deserializers have been found to allow denial-of-service, access control, and remote code execution (RCE) attacks.</p>
+<p><strong>Serialization</strong> is the process of turning some object into a data format that can be restored later. People often serialize objects in order to save them for storage, or to send as part of communications.</p>
+<p><strong>Deserialization</strong> is the reverse of that process, taking data structured in some format, and rebuilding it into an object. Today, the most popular data format for serializing data is JSON. Before that, it was XML.</p>
+<p>However, many programming languages have native ways to serialize objects. These native formats usually offer more features than JSON or XML, including customizability of the serialization process.</p>
+<p>Unfortunately, the features of these native deserialization mechanisms can sometimes be repurposed for malicious effect when operating on untrusted data. Attacks against deserializers have been found to allow denial-of-service, access control, or remote code execution (RCE) attacks.</p>
 <h2 id="guidance-on-deserializing-objects-safely">Guidance on Deserializing Objects Safely<a class="headerlink" href="#guidance-on-deserializing-objects-safely" title="Permanent link">&para;</a></h2>
 <p>The following language-specific guidance attempts to enumerate safe methodologies for deserializing data that can't be trusted.</p>
 <h3 id="php">PHP<a class="headerlink" href="#php" title="Permanent link">&para;</a></h3>
@@ -2064,11 +2066,11 @@
 <p>1. <code>XMLdecoder</code> with external user defined parameters</p>
 <p>2. <code>XStream</code> with <code>fromXML</code> method (xstream version &lt;= v1.4.6 is vulnerable to the serialization issue)</p>
 <p>3. <code>ObjectInputStream</code> with <code>readObject</code></p>
-<p>4. Uses of <code>readObject</code>, <code>readObjectNodData</code>, <code>readResolve</code> or <code>readExternal</code></p>
+<p>4. Uses of <code>readObject</code>, <code>readObjectNoData</code>, <code>readResolve</code> or <code>readExternal</code></p>
 <p>5. <code>ObjectInputStream.readUnshared</code></p>
 <p>6. <code>Serializable</code></p>
 <h4 id="blackbox-review_1">BlackBox Review<a class="headerlink" href="#blackbox-review_1" title="Permanent link">&para;</a></h4>
-<p>If the captured traffic data include the following patterns may suggest that the data was sent in Java serialization streams</p>
+<p>If the captured traffic data includes the following patterns, it may suggest that the data was sent in Java serialization streams:</p>
 <ul>
 <li><code>AC ED 00 05</code> in Hex</li>
 <li><code>rO0</code> in Base64</li>
@@ -2077,7 +2079,7 @@
 <h4 id="prevent-data-leakage-and-trusted-field-clobbering">Prevent Data Leakage and Trusted Field Clobbering<a class="headerlink" href="#prevent-data-leakage-and-trusted-field-clobbering" title="Permanent link">&para;</a></h4>
 <p>If there are data members of an object that should never be controlled by end users during deserialization or exposed to users during serialization, they should be declared as <a href="https://docs.oracle.com/javase/7/docs/platform/serialization/spec/serial-arch.html#7231">the <code>transient</code> keyword</a> (section <em>Protecting Sensitive Information</em>).</p>
 <p>For a class that defined as Serializable, the sensitive information variable should be declared as <code>private transient</code>.</p>
-<p>For example, the class myAccount, the variable 'profit' and 'margin' were declared as transient to avoid to be serialized:</p>
+<p>For example, the class <code>myAccount</code>, the variables 'profit' and 'margin' were declared as transient to prevent them from being serialized.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">myAccount</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">Serializable</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">transient</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">profit</span><span class="p">;</span><span class="w"> </span><span class="c1">// declared transient</span>
@@ -2086,7 +2088,7 @@
 <span class="w">    </span><span class="p">....</span>
 </code></pre></div>
 <h4 id="prevent-deserialization-of-domain-objects">Prevent Deserialization of Domain Objects<a class="headerlink" href="#prevent-deserialization-of-domain-objects" title="Permanent link">&para;</a></h4>
-<p>Some of your application objects may be forced to implement Serializable due to their hierarchy. To guarantee that your application objects can't be deserialized, a <code>readObject()</code> method should be declared (with a <code>final</code> modifier) which always throws an exception:</p>
+<p>Some of your application objects may be forced to implement <code>Serializable</code> due to their hierarchy. To guarantee that your application objects can't be deserialized, a <code>readObject()</code> method should be declared (with a <code>final</code> modifier) which always throws an exception:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">readObject</span><span class="p">(</span><span class="n">ObjectInputStream</span><span class="w"> </span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">java</span><span class="p">.</span><span class="na">io</span><span class="p">.</span><span class="na">IOException</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">java</span><span class="p">.</span><span class="na">io</span><span class="p">.</span><span class="na">IOException</span><span class="p">(</span><span class="s">&quot;Cannot be deserialized&quot;</span><span class="p">);</span>
 <span class="p">}</span>
@@ -2094,12 +2096,12 @@
 <h4 id="harden-your-own-javaioobjectinputstream">Harden Your Own java.io.ObjectInputStream<a class="headerlink" href="#harden-your-own-javaioobjectinputstream" title="Permanent link">&para;</a></h4>
 <p>The <code>java.io.ObjectInputStream</code> class is used to deserialize objects. It's possible to harden its behavior by subclassing it. This is the best solution if:</p>
 <ul>
-<li>You can change the code that does the deserialization</li>
-<li>You know what classes you expect to deserialize</li>
+<li>uou can change the code that does the deserialization;</li>
+<li>uou know what classes you expect to deserialize.</li>
 </ul>
 <p>The general idea is to override <a href="http://docs.oracle.com/javase/7/docs/api/java/io/ObjectInputStream.html#resolveClass(java.io.ObjectStreamClass)"><code>ObjectInputStream.html#resolveClass()</code></a> in order to restrict which classes are allowed to be deserialized.</p>
-<p>Because this call happens before a <code>readObject()</code> is called, you can be sure that no deserialization activity will occur unless the type is one that you wish to allow.</p>
-<p>A simple example of this shown here, where the <code>LookAheadObjectInputStream</code> class is guaranteed not to deserialize any other type besides the <code>Bicycle</code> class:</p>
+<p>Because this call happens before a <code>readObject()</code> is called, you can be sure that no deserialization activity will occur unless the type is one that you allow.</p>
+<p>A simple example is shown here, where the <code>LookAheadObjectInputStream</code> class is guaranteed to <strong>not</strong> deserialize any other type besides the <code>Bicycle</code> class:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">LookAheadObjectInputStream</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">ObjectInputStream</span><span class="w"> </span><span class="p">{</span>
 
 <span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">LookAheadObjectInputStream</span><span class="p">(</span><span class="n">InputStream</span><span class="w"> </span><span class="n">inputStream</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">IOException</span><span class="w"> </span><span class="p">{</span>
@@ -2305,7 +2307,7 @@
     <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.2a6f1dda.min.js"></script>
+      <script src="../assets/javascripts/bundle.ce72ebac.min.js"></script>
       
     
   </body>
