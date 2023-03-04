@@ -116,8 +116,8 @@ private final void readObject(ObjectInputStream in) throws java.io.IOException {
 
 The `java.io.ObjectInputStream` class is used to deserialize objects. It's possible to harden its behavior by subclassing it. This is the best solution if:
 
-- uou can change the code that does the deserialization;
-- uou know what classes you expect to deserialize.
+- you can change the code that does the deserialization;
+- you know what classes you expect to deserialize.
 
 The general idea is to override [`ObjectInputStream.html#resolveClass()`](http://docs.oracle.com/javase/7/docs/api/java/io/ObjectInputStream.html#resolveClass(java.io.ObjectStreamClass)) in order to restrict which classes are allowed to be deserialized.
 
