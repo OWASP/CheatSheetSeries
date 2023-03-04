@@ -6,13 +6,13 @@ This article is focused on providing clear, actionable guidance for safely deser
 
 ## What is Deserialization
 
-**Serialization** is the process of turning some object into a data format that can be restored later. People often serialize objects in order to save them to storage, or to send as part of communications.
+**Serialization** is the process of turning some object into a data format that can be restored later. People often serialize objects in order to save them for storage, or to send as part of communications.
 
-**Deserialization** is the reverse of that process, taking data structured from some format, and rebuilding it into an object. Today, the most popular data format for serializing data is JSON. Before that, it was XML.
+**Deserialization** is the reverse of that process, taking data structured in some format, and rebuilding it into an object. Today, the most popular data format for serializing data is JSON. Before that, it was XML.
 
-However, many programming languages offer a native capability for serializing objects. These native formats usually offer more features than JSON or XML, including customizability of the serialization process.
+However, many programming languages have native ways to serialize objects. These native formats usually offer more features than JSON or XML, including customizability of the serialization process.
 
-Unfortunately, the features of these native deserialization mechanisms can be repurposed for malicious effect when operating on untrusted data. Attacks against deserializers have been found to allow denial-of-service, access control, and remote code execution (RCE) attacks.
+Unfortunately, the features of these native deserialization mechanisms can sometimes be repurposed for malicious effect when operating on untrusted data. Attacks against deserializers have been found to allow denial-of-service, access control, or remote code execution (RCE) attacks.
 
 ## Guidance on Deserializing Objects Safely
 
@@ -71,7 +71,7 @@ Be aware of the following Java API uses for potential serialization vulnerabilit
 
 3. `ObjectInputStream` with `readObject`
 
-4. Uses of `readObject`, `readObjectNodData`, `readResolve` or `readExternal`
+4. Uses of `readObject`, `readObjectNoData`, `readResolve` or `readExternal`
 
 5. `ObjectInputStream.readUnshared`
 
@@ -79,7 +79,7 @@ Be aware of the following Java API uses for potential serialization vulnerabilit
 
 #### BlackBox Review
 
-If the captured traffic data include the following patterns may suggest that the data was sent in Java serialization streams
+If the captured traffic data includes the following patterns, it may suggest that the data was sent in Java serialization streams:
 
 - `AC ED 00 05` in Hex
 - `rO0` in Base64
@@ -91,7 +91,7 @@ If there are data members of an object that should never be controlled by end us
 
 For a class that defined as Serializable, the sensitive information variable should be declared as `private transient`.
 
-For example, the class myAccount, the variable 'profit' and 'margin' were declared as transient to avoid to be serialized:
+For example, the class `myAccount`, the variables 'profit' and 'margin' were declared as transient to prevent them from being serialized.
 
 ```java
 public class myAccount implements Serializable
@@ -104,7 +104,7 @@ public class myAccount implements Serializable
 
 #### Prevent Deserialization of Domain Objects
 
-Some of your application objects may be forced to implement Serializable due to their hierarchy. To guarantee that your application objects can't be deserialized, a `readObject()` method should be declared (with a `final` modifier) which always throws an exception:
+Some of your application objects may be forced to implement `Serializable` due to their hierarchy. To guarantee that your application objects can't be deserialized, a `readObject()` method should be declared (with a `final` modifier) which always throws an exception:
 
 ```java
 private final void readObject(ObjectInputStream in) throws java.io.IOException {
@@ -116,14 +116,14 @@ private final void readObject(ObjectInputStream in) throws java.io.IOException {
 
 The `java.io.ObjectInputStream` class is used to deserialize objects. It's possible to harden its behavior by subclassing it. This is the best solution if:
 
-- You can change the code that does the deserialization
-- You know what classes you expect to deserialize
+- uou can change the code that does the deserialization;
+- uou know what classes you expect to deserialize.
 
 The general idea is to override [`ObjectInputStream.html#resolveClass()`](http://docs.oracle.com/javase/7/docs/api/java/io/ObjectInputStream.html#resolveClass(java.io.ObjectStreamClass)) in order to restrict which classes are allowed to be deserialized.
 
-Because this call happens before a `readObject()` is called, you can be sure that no deserialization activity will occur unless the type is one that you wish to allow.
+Because this call happens before a `readObject()` is called, you can be sure that no deserialization activity will occur unless the type is one that you allow.
 
-A simple example of this shown here, where the `LookAheadObjectInputStream` class is guaranteed not to deserialize any other type besides the `Bicycle` class:
+A simple example is shown here, where the `LookAheadObjectInputStream` class is guaranteed to **not** deserialize any other type besides the `Bicycle` class:
 
 ```java
 public class LookAheadObjectInputStream extends ObjectInputStream {
