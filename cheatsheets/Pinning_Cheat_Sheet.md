@@ -20,6 +20,10 @@ A host or service's certificate or public key can be added to an application at 
 
 You should pin anytime you want to be relatively certain of the remote host's identity or when operating in a hostile environment. Since one or both are almost always true, you should probably pin all the time.
 
+### When Do You Not Pin?
+
+Pinning requires control of upcoming certificate attributes. If the certificate key pair cannot be predicted in advance before it is put into service, then pinning will lead to an outage when the endpoint presents a new certificate. For instance, if a certificate provider generates random key pairs whenever a certificate is rotated, and you cannot control when this certificate is put into use, then you will not be able to update your clients until they have already experienced an outage.
+
 ### When to Apply Exceptions
 
 If you are working for an organization which practices "egress filtering" as part of a Data Loss Prevention (DLP) strategy, you will likely encounter *Interception Proxies*. I like to refer to these things as **"good" bad actors** (as opposed to **"bad" bad actors**) since both break end-to-end security and we can't tell them apart. In this case, **do not** offer to allow-list the interception proxy since it defeats your security goals. Add the interception proxy's public key to your pinset after being **instructed** to do so by the folks in Risk Acceptance.
@@ -67,7 +71,7 @@ The certificate is easiest to pin. You can fetch the certificate out of band for
 
 **Downsides:**
 
-- If the site rotates its certificate on a regular basis, then your application would need to be updated regularly. For example, Google rotates its certificates, so you will need to update your application about once a month (if it depended on Google services).
+- If the site rotates its certificate on a regular basis, then your application would need to be updated regularly. If you do not control when this certificate is put into service, then pinning will lead to an outage.
 
 #### Public Key
 
@@ -84,6 +88,7 @@ Public key pinning is more flexible but a little trickier due to the extra steps
 
 - It's harder to work with keys (versus certificates) since you must extract the key from the certificate. Extraction is a minor inconvenience in Java and .Net, but it's uncomfortable in Cocoa/CocoaTouch and OpenSSL.
 - The key is static and may violate key rotation policies.
+- Some service providers generate new keys upon renewal.
 - It's not possible to anonymize the public keys.
 
 #### Hash
@@ -99,6 +104,7 @@ While the three choices above used DER encoding, its also acceptable to use a ha
 **Downsides:**
 
 - No access to public key parameters nor contextual information such as an algorithm and OID which might be needed in certain use cases.
+- If the site rotates its certificate on a regular basis, then your application would need to be updated regularly. If you do not control when this certificate is put into service, then pinning would lead to an outage.
 
 ## Examples of Pinning
 
