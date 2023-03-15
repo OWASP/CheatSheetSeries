@@ -329,11 +329,18 @@ Based on testing, if you are missing one of these, you can still be vulnerable t
 
 ### SAXBuilder
 
-To protect a Java `org.jdom2.input.SAXBuilder` from XXE, do this:
+To protect a Java `org.jdom2.input.SAXBuilder` from XXE, disallow DTDs (doctypes) entirely:
 
 ``` java
 SAXBuilder builder = new SAXBuilder();
 builder.setFeature("http://apache.org/xml/features/disallow-doctype-decl",true);
+Document doc = builder.build(new File(fileName));
+```
+
+Alternatively, if DTDs can't be completely disabled, disable external entities and entity expansion:
+
+``` java
+SAXBuilder builder = new SAXBuilder();
 builder.setFeature("http://xml.org/sax/features/external-general-entities", false);
 builder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
 builder.setExpandEntities(false);
