@@ -223,11 +223,15 @@ DocumentBuilder safebuilder = dbf.newDocumentBuilder();
 
 [StAX](http://en.wikipedia.org/wiki/StAX) parsers such as [`XMLInputFactory`](http://docs.oracle.com/javase/7/docs/api/javax/xml/stream/XMLInputFactory.html) allow various properties and features to be set.
 
-To protect a Java `XMLInputFactory` from XXE, do this:
+To protect a Java `XMLInputFactory` from XXE, disable DTDs (doctypes) altogether:
 
 ``` java
 // This disables DTDs entirely for that factory
 xmlInputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+```
+
+or if you can't completely disable DTDs:
+``` java
 // This causes XMLStreamException to be thrown if external DTDs are accessed.
 xmlInputFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
 // disable external entities
