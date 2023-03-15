@@ -88,7 +88,7 @@ Only the `DocumentBuilderFactory` example is presented here. The JAXP `DocumentB
 
 The features can either be set on the factory or the underlying `XMLReader` [setFeature](https://docs.oracle.com/javase/7/docs/api/org/xml/sax/XMLReader.html#setFeature%28java.lang.String,%20boolean%29) method.
 
-Each XML processor implementation has its own features that govern how DTDs and external entities are processed. By disabling DTD processing entirely, most XXE attacks can be averted, although it is also necessary to disable or verify that xInclude is not enabled.
+Each XML processor implementation has its own features that govern how DTDs and external entities are processed. By disabling DTD processing entirely, most XXE attacks can be averted, although it is also necessary to disable or verify that XInclude is not enabled.
 
 Since the JDK 6, the flag [FEATURE_SECURE_PROCESSING](https://docs.oracle.com/javase/6/docs/api/javax/xml/XMLConstants.html#FEATURE_SECURE_PROCESSING) can be used **to instruct the implementation of the parser to process XML securely**. Its behaviour is implementation dependent. Even if it can help tackling resource exhaustion, it may not always mitigate entity expansion. More details on this flag can be found [here](https://docs.oracle.com/en/java/javase/13/security/java-api-xml-processing-jaxp-security-guide.html#GUID-88B04BE2-35EF-4F61-B4FA-57A0E9102342).
 
@@ -119,7 +119,7 @@ try {
 } catch (ParserConfigurationException e) {
     // This should catch a failed setFeature feature
     logger.info("ParserConfigurationException was thrown. The feature '" + FEATURE
-    + "' is probably not supported by your XML processor.");
+    + "' is not supported by your XML processor.");
     ...
 } catch (SAXException e) {
     // On Apache, this should be thrown when disallowing DOCTYPE
