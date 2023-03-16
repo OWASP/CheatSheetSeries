@@ -258,7 +258,7 @@ const app = express();
 app.use(function(req, res, next) {
     if (toobusy()) {
         // log if you see necessary
-        res.send(503, "Server Too Busy");
+        res.status(503).send("Server Too Busy");
     } else {
     next();
     }
@@ -275,7 +275,7 @@ const bouncer = require('express-bouncer');
 bouncer.whitelist.push('127.0.0.1'); // allow an IP address
 // give a custom error message
 bouncer.blocked = function (req, res, next, remaining) {
-    res.send(429, "Too many requests have been made. Please wait " + remaining/1000 + " seconds.");
+    res.status(429).send("Too many requests have been made. Please wait " + remaining/1000 + " seconds.");
 };
 // route to protect
 app.post("/login", bouncer.block, function(req, res) {
