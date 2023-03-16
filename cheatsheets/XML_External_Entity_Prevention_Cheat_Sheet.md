@@ -231,12 +231,15 @@ xmlInputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
 ```
 
 or if you can't completely disable DTDs:
+
 ``` java
 // This causes XMLStreamException to be thrown if external DTDs are accessed.
 xmlInputFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
 // disable external entities
 xmlInputFactory.setProperty("javax.xml.stream.isSupportingExternalEntities", false);
 ```
+
+The setting `xmlInputFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");` is not required, as XMLInputParser is dependent on Validator to perform XML validation against Schemas. Check the [Validator](#Validator) section for the specific configuration.
 
 ### Oracle DOM Parser
 
