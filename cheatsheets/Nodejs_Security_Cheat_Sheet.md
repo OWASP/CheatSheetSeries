@@ -443,9 +443,7 @@ app.use(helmet.hsts("<max-age>", "<includeSubdomains>")); // custom configuratio
 - **[X-Frame-Options](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options):** determines if a page can be loaded via a `<frame>` or an `<iframe>` element. Allowing the page to be framed may result in [Clickjacking](https://owasp.org/www-community/attacks/Clickjacking) attacks. This header can be used with [helmet](https://www.npmjs.com/package/helmet) module as follows:
 
 ```JavaScript
-app.use(helmet.xframe()); // default behavior (DENY)
-helmet.xframe('sameorigin'); // SAMEORIGIN
-helmet.xframe('allow-from', 'http://alloweduri.com'); //ALLOW-FROM uri
+app.use(helmet.frameguard()); // default behavior (SAMEORIGIN)
 ```
 
 - **[X-XSS-Protection](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection):** As described in the [XSS Prevention Cheat Sheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md#x-xss-protection-header), this header should be set to `0` to disable the XSS Auditor.
