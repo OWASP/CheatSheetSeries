@@ -448,7 +448,9 @@ app.use(helmet.frameguard()); // default behavior (SAMEORIGIN)
 
 - **[X-XSS-Protection](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection):** As described in the [XSS Prevention Cheat Sheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md#x-xss-protection-header), this header should be set to `0` to disable the XSS Auditor.
 
-> An [issue](https://github.com/helmetjs/x-xss-protection/issues/14) was created in the [helmetjs](https://github.com/helmetjs/) project to be able to set the header to `0`. Once it is updated, this section will be updated to inform the user to disable the XSS auditor properly using helmetjs.
+```JavaScript
+app.use(helmet.xssFilter()); // sets "X-XSS-Protection: 0"
+```
 
 - **[X-Content-Type-Options](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options):** Even if the server sets a valid `Content-Type` header in the response, browsers may try to sniff the MIME type of the requested resource. This header is a way to stop this behavior and tell the browser not to change MIME types specified in `Content-Type` header. It can be configured in the following way:
 
