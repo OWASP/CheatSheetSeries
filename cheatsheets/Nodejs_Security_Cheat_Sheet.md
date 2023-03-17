@@ -424,7 +424,7 @@ Generally, session information is sent using cookies in web applications. Howeve
 const session = require('express-session');
 app.use(session({
     secret: 'your-secret-key',
-    key: 'cookieName',
+    name: 'cookieName',
     cookie: { secure: true, httpOnly: true, path: '/user', sameSite: true}
 }));
 ```
