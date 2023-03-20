@@ -432,7 +432,7 @@ app.use(session({
 #### Use appropriate security headers
 
 There are several [HTTP security headers](https://owasp.org/www-project-secure-headers/) that can help you prevent some common attack vectors.
-The [helmet](https://www.npmjs.com/package/helmet) package can help to set those headers :
+The [helmet](https://www.npmjs.com/package/helmet) package can help to set those headers:
 
 ```Javascript
 const express = require("express");
@@ -444,7 +444,7 @@ app.use(helmet()); // Add various HTTP headers
 ```
 
 The top-level `helmet` function is a wrapper around 14 smaller middlewares.
-Bellow is a list of HTTP security headers covered by `helmet` middlewares :
+Bellow is a list of HTTP security headers covered by `helmet` middlewares:
 
 - **[Strict-Transport-Security](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security)**: [HTTP Strict Transport Security (HSTS)](https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html) dictates browsers that the application can only be accessed via HTTPS connections. In order to use it in your application, add the following codes:
 
@@ -491,7 +491,7 @@ app.use(csp({
 }))
 ```
 
-- **[Cache-Control](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control) and [Pragma](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Pragma):** Cache-Control header can be used to prevent browsers from caching the given responses. This should be done for pages that contain sensitive information about either the user or the application. However, disabling caching for pages that do not contain sensitive information may seriously affect the performance of the application. Therefore, caching should only be disabled for pages that return sensitive information. Appropriate caching controls and headers can be set easily using the [nocache](https://www.npmjs.com/package/nocache) package :
+- **[Cache-Control](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control) and [Pragma](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Pragma):** Cache-Control header can be used to prevent browsers from caching the given responses. This should be done for pages that contain sensitive information about either the user or the application. However, disabling caching for pages that do not contain sensitive information may seriously affect the performance of the application. Therefore, caching should only be disabled for pages that return sensitive information. Appropriate caching controls and headers can be set easily using the [nocache](https://www.npmjs.com/package/nocache) package:
 
 ```JavaScript
 const nocache = require("nocache");
