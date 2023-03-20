@@ -475,17 +475,21 @@ For moderns browsers, it is recommended to implement a strong **Content-Security
 - **[Content-Security-Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy):** Content Security Policy is developed to reduce the risk of attacks like [Cross-Site Scripting (XSS)](https://owasp.org/www-community/attacks/xss/) and [Clickjacking](https://owasp.org/www-community/attacks/Clickjacking). It allows content from a list that you decide. It has several directives each of which prohibits loading specific type of a content. You can refer to [Content Security Policy Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html) for detailed explanation of each directive and how to use it. You can implement these settings in your application as follows:
 
 ```JavaScript
-const csp = require('helmet-csp')
-app.use(csp({
-   directives: {
-       defaultSrc: ["'self'"],  // default value for all directives that are absent
-       scriptSrc: ["'self'"],   // helps prevent XSS attacks
-       frameAncestors: ["'none'"],  // helps prevent Clickjacking attacks
-       imgSrc: ["'self'", "'http://imgexample.com'"],
-       styleSrc: ["'none'"]
+app.use(
+  helmet.contentSecurityPolicy({
+    // the following directives will be merged into the default helmet CSP policy
+    directives: {
+      defaultSrc: ["'self'"],  // default value for all directives that are absent
+      scriptSrc: ["'self'"],   // helps prevent XSS attacks
+      frameAncestors: ["'none'"],  // helps prevent Clickjacking attacks
+      imgSrc: ["'self'", "'http://imgexample.com'"],
+      styleSrc: ["'none'"]
     }
-}))
+  })
+);
 ```
+
+As this middleware performs very little validation, it is recommended to rely on CSP checkers like [CSP Evaluator](https://csp-evaluator.withgoogle.com/) instead.
 
 - **[X-Content-Type-Options](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options):** Even if the server sets a valid `Content-Type` header in the response, browsers may try to sniff the MIME type of the requested resource. This header is a way to stop this behavior and tell the browser not to change MIME types specified in `Content-Type` header. It can be configured in the following way:
 
