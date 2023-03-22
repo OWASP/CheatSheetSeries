@@ -26,6 +26,28 @@ Now, both the *Calculator* application and the value *test* are displayed:
 
 The problem is exacerbated if the compromised process does not follow the principle of least privileges and attacker-controlled commands end up running with special system privileges that increase the amount of damage.
 
+### Argument Injection
+
+Every OS Command Injection is also an Argument Injection. In this type of attacks, user input can be passed as arguments while executing a specific command.
+
+For example, if the user input is passed through an escape function to escape certain characters like `&`, `|`, `;`, etc.
+
+```php
+system("curl " . escape($url));
+```
+
+which will prevent an attacker to run other commands.
+
+However, if the attacker controlled string contains an additional argument of the `curl` command:
+
+```
+system("curl " . escape("--help"))
+```
+
+Now when the above code is executed, it will show the output of `curl --help`.
+
+Depending upon the system command used, the impact of an Argument injection attack can range from **Information Disclosure** to critical **Remote Code Execution**.
+
 ## Primary Defenses
 
 ### Defense Option 1: Avoid calling OS commands directly
@@ -40,7 +62,11 @@ If there are available libraries or APIs for the language you use, this is the p
 
 **TODO: To enhance.**
 
-For examples, see [escapeshellarg()](https://www.php.net/manual/en/function.escapeshellarg.php) or [escapeshellcmd()](https://www.php.net/manual/en/function.escapeshellcmd.php) in PHP.
+For examples, see [escapeshellarg()](https://www.php.net/manual/en/function.escapeshellarg.php) in PHP.
+
+The `escapeshellarg()` surrounds the user input in single quotes, so if the malformed user input is something like `& echo "hello"`, the final output will be like `calc '& echo "hello"'` which will be parsed as a single argument to the command `calc`.
+
+Even though `escapeshellarg()` prevents OS Command Injection, an attacker can still pass a single argument to the command.
 
 ### Defense option 3: Parameterization in conjunction with Input Validation
 
@@ -58,11 +84,12 @@ If calling a system command that incorporates user-supplied cannot be avoided, t
 - In regards to the **arguments** used for these commands, they should be validated using the following options:
     - **Positive or allow list input validation**: Where are the arguments allowed explicitly defined.
     - **Allow list Regular Expression**: Where a list of good, allowed characters and the maximum length of the string are defined. Ensure that metacharacters like ones specified in `Note A` and white-spaces are not part of the Regular Expression. For example, the following regular expression only allows lowercase letters and numbers and does not contain metacharacters. The length is also being limited to 3-10 characters: `^[a-z0-9]{3,10}$`
+- According to **Guideline 10** of this [POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap12.html), *The first -- argument that is not an option-argument should be accepted as a delimiter indicating the end of options. Any following arguments should be treated as operands, even if they begin with the '-' character.* For example, `curl -- $url` will prevent an argument injection even if the `$url` is malformed and contains an additional argument.
 
 **Note A:**
 
 ```text
-& |  ; $ > < ` \ !
+& |  ; $ > < ` \ ! ' " ( )
 ```
 
 ## Additional Defenses
