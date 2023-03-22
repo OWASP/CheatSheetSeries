@@ -2436,9 +2436,10 @@
 <p><code>DocumentBuilderFactory,</code> <code>SAXParserFactory</code> and <code>DOM4J</code> <code>XML</code> Parsers can be configured using the same techniques to protect them against XXE.</p>
 <p>Only the <code>DocumentBuilderFactory</code> example is presented here. The JAXP <code>DocumentBuilderFactory</code> <a href="https://docs.oracle.com/javase/7/docs/api/javax/xml/parsers/DocumentBuilderFactory.html#setFeature(java.lang.String,%20boolean)">setFeature</a> method allows a developer to control which implementation-specific XML processor features are enabled or disabled.</p>
 <p>The features can either be set on the factory or the underlying <code>XMLReader</code> <a href="https://docs.oracle.com/javase/7/docs/api/org/xml/sax/XMLReader.html#setFeature%28java.lang.String,%20boolean%29">setFeature</a> method.</p>
-<p>Each XML processor implementation has its own features that govern how DTDs and external entities are processed.</p>
-<p>Since the JDK 6, the flag <a href="https://docs.oracle.com/javase/6/docs/api/javax/xml/XMLConstants.html#FEATURE_SECURE_PROCESSING">FEATURE_SECURE_PROCESSING</a> can be used <strong>to instruct the implementation of the parser to process XML securely</strong>. More details on this flag can be found <a href="https://docs.oracle.com/en/java/javase/13/security/java-api-xml-processing-jaxp-security-guide.html#GUID-88B04BE2-35EF-4F61-B4FA-57A0E9102342">here</a>.</p>
-<p>For a syntax highlighted example code snippet using <code>SAXParserFactory</code>, look <a href="https://gist.github.com/asudhakar02/45e2e6fd8bcdfb4bc3b2">here</a>.</p>
+<p>Each XML processor implementation has its own features that govern how DTDs and external entities are processed. By disabling DTD processing entirely, most XXE attacks can be averted, although it is also necessary to disable or verify that XInclude is not enabled.</p>
+<p>Since the JDK 6, the flag <a href="https://docs.oracle.com/javase/6/docs/api/javax/xml/XMLConstants.html#FEATURE_SECURE_PROCESSING">FEATURE_SECURE_PROCESSING</a> can be used <strong>to instruct the implementation of the parser to process XML securely</strong>. Its behaviour is implementation dependent. Even if it can help tackling resource exhaustion, it may not always mitigate entity expansion. More details on this flag can be found <a href="https://docs.oracle.com/en/java/javase/13/security/java-api-xml-processing-jaxp-security-guide.html#GUID-88B04BE2-35EF-4F61-B4FA-57A0E9102342">here</a>.</p>
+<p>For a syntax highlighted example code snippet using <code>SAXParserFactory</code>, look <a href="https://gist.github.com/asudhakar02/45e2e6fd8bcdfb4bc3b2">here</a>.
+Example code disabling DTDs (doctypes) altogether:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">javax.xml.parsers.DocumentBuilderFactory</span><span class="p">;</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">javax.xml.parsers.ParserConfigurationException</span><span class="p">;</span><span class="w"> </span><span class="c1">// catching unsupported features</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">javax.xml.XMLConstants</span><span class="p">;</span>
@@ -2454,12 +2455,39 @@
 <span class="w">    </span><span class="n">FEATURE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;http://apache.org/xml/features/disallow-doctype-decl&quot;</span><span class="p">;</span>
 <span class="w">    </span><span class="n">dbf</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="n">FEATURE</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
 
-<span class="w">    </span><span class="c1">// As stated in the documentation &quot;Feature for Secure Processing (FSP)&quot; is the central mechanism to </span>
-<span class="w">    </span><span class="c1">// help safeguard XML processing. It instructs XML processors, such as parsers, validators, </span>
-<span class="w">    </span><span class="c1">// and transformers, to try and process XML securely. </span>
-<span class="w">    </span><span class="c1">// Exists from JDK6.</span>
-<span class="w">    </span><span class="n">dbf</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">FEATURE_SECURE_PROCESSING</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// and these as well, per Timothy Morgan&#39;s 2014 paper: &quot;XML Schema, DTD, and Entity Attacks&quot;</span>
+<span class="w">    </span><span class="n">dbf</span><span class="p">.</span><span class="na">setXIncludeAware</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
 
+<span class="w">    </span><span class="c1">// remaining parser logic</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">ParserConfigurationException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// This should catch a failed setFeature feature</span>
+<span class="w">    </span><span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;ParserConfigurationException was thrown. The feature &#39;&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">FEATURE</span>
+<span class="w">    </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;&#39; is not supported by your XML processor.&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">SAXException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// On Apache, this should be thrown when disallowing DOCTYPE</span>
+<span class="w">    </span><span class="n">logger</span><span class="p">.</span><span class="na">warning</span><span class="p">(</span><span class="s">&quot;A DOCTYPE was passed into the XML document&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">IOException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// XXE that points to a file that doesn&#39;t exist</span>
+<span class="w">    </span><span class="n">logger</span><span class="p">.</span><span class="na">error</span><span class="p">(</span><span class="s">&quot;IOException occurred, XXE may still possible: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">getMessage</span><span class="p">());</span>
+<span class="w">    </span><span class="p">...</span>
+<span class="p">}</span>
+
+<span class="c1">// Load XML file or stream using a XXE agnostic configured parser...</span>
+<span class="n">DocumentBuilder</span><span class="w"> </span><span class="n">safebuilder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dbf</span><span class="p">.</span><span class="na">newDocumentBuilder</span><span class="p">();</span>
+</code></pre></div>
+<p>If you can't completely disable DTDs:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">javax.xml.parsers.DocumentBuilderFactory</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">javax.xml.parsers.ParserConfigurationException</span><span class="p">;</span><span class="w"> </span><span class="c1">// catching unsupported features</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">javax.xml.XMLConstants</span><span class="p">;</span>
+
+<span class="p">...</span>
+
+<span class="n">DocumentBuilderFactory</span><span class="w"> </span><span class="n">dbf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DocumentBuilderFactory</span><span class="p">.</span><span class="na">newInstance</span><span class="p">();</span>
+<span class="n">String</span><span class="w"> </span><span class="n">FEATURE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">    </span>
 <span class="w">    </span><span class="c1">// If you can&#39;t completely disable DTDs, then at least do the following:</span>
 <span class="w">    </span><span class="c1">// Xerces 1 - http://xerces.apache.org/xerces-j/features.html#external-general-entities</span>
 <span class="w">    </span><span class="c1">// Xerces 2 - http://xerces.apache.org/xerces2-j/features.html#external-general-entities</span>
@@ -2482,6 +2510,14 @@
 <span class="w">    </span><span class="c1">// and these as well, per Timothy Morgan&#39;s 2014 paper: &quot;XML Schema, DTD, and Entity Attacks&quot;</span>
 <span class="w">    </span><span class="n">dbf</span><span class="p">.</span><span class="na">setXIncludeAware</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
 <span class="w">    </span><span class="n">dbf</span><span class="p">.</span><span class="na">setExpandEntityReferences</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// As stated in the documentation &quot;Feature for Secure Processing (FSP)&quot; is the central mechanism to </span>
+<span class="w">    </span><span class="c1">// help safeguard XML processing. It instructs XML processors, such as parsers, validators, </span>
+<span class="w">    </span><span class="c1">// and transformers, to try and process XML securely. This can be used as an alternative to</span>
+<span class="w">    </span><span class="c1">// dbf.setExpandEntityReferences(false); to allow some safe level of Entity Expansion</span>
+<span class="w">    </span><span class="c1">// Exists from JDK6.</span>
+<span class="w">    </span><span class="n">dbf</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">FEATURE_SECURE_PROCESSING</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
+
 
 <span class="w">    </span><span class="c1">// And, per Timothy Morgan: &quot;If for some reason support for inline DOCTYPEs are a requirement, then</span>
 <span class="w">    </span><span class="c1">// ensure the entity settings are disabled (as shown above) and beware that SSRF attacks</span>
@@ -2524,14 +2560,17 @@
 <p><strong>Note:</strong> The above defenses require Java 7 update 67, Java 8 update 20, or above, because the above countermeasures for <code>DocumentBuilderFactory</code> and SAXParserFactory are broken in earlier Java versions, per: <a href="http://www.cvedetails.com/cve/CVE-2014-6517/">CVE-2014-6517</a>.</p>
 <h3 id="xmlinputfactory-a-stax-parser">XMLInputFactory (a StAX parser)<a class="headerlink" href="#xmlinputfactory-a-stax-parser" title="Permanent link">&para;</a></h3>
 <p><a href="http://en.wikipedia.org/wiki/StAX">StAX</a> parsers such as <a href="http://docs.oracle.com/javase/7/docs/api/javax/xml/stream/XMLInputFactory.html"><code>XMLInputFactory</code></a> allow various properties and features to be set.</p>
-<p>To protect a Java <code>XMLInputFactory</code> from XXE, do this:</p>
+<p>To protect a Java <code>XMLInputFactory</code> from XXE, disable DTDs (doctypes) altogether:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// This disables DTDs entirely for that factory</span>
 <span class="n">xmlInputFactory</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="n">XMLInputFactory</span><span class="p">.</span><span class="na">SUPPORT_DTD</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
-<span class="c1">// This causes XMLStreamException to be thrown if external DTDs are accessed.</span>
+</code></pre></div>
+<p>or if you can't completely disable DTDs:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// This causes XMLStreamException to be thrown if external DTDs are accessed.</span>
 <span class="n">xmlInputFactory</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">ACCESS_EXTERNAL_DTD</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span>
 <span class="c1">// disable external entities</span>
 <span class="n">xmlInputFactory</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="s">&quot;javax.xml.stream.isSupportingExternalEntities&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
 </code></pre></div>
+<p>The setting <code>xmlInputFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");</code> is not required, as XMLInputFactory is dependent on Validator to perform XML validation against Schemas. Check the <a href="#Validator">Validator</a> section for the specific configuration.</p>
 <h3 id="oracle-dom-parser">Oracle DOM Parser<a class="headerlink" href="#oracle-dom-parser" title="Permanent link">&para;</a></h3>
 <p>Follow <a href="https://docs.oracle.com/en/database/oracle/oracle-database/18/adxdk/security-considerations-oracle-xml-developers-kit.html#GUID-45303542-41DE-4455-93B3-854A826EF8BB">Oracle recommendation</a> e.g.:</p>
 <div class="highlight"><pre><span></span><code><span class="w">    </span><span class="c1">// Extend oracle.xml.parser.v2.XMLParser</span>
@@ -2597,9 +2636,13 @@
 </code></pre></div>
 <p>Based on testing, if you are missing one of these, you can still be vulnerable to an XXE attack.</p>
 <h3 id="saxbuilder">SAXBuilder<a class="headerlink" href="#saxbuilder" title="Permanent link">&para;</a></h3>
-<p>To protect a Java <code>org.jdom2.input.SAXBuilder</code> from XXE, do this:</p>
+<p>To protect a Java <code>org.jdom2.input.SAXBuilder</code> from XXE, disallow DTDs (doctypes) entirely:</p>
 <div class="highlight"><pre><span></span><code><span class="n">SAXBuilder</span><span class="w"> </span><span class="n">builder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SAXBuilder</span><span class="p">();</span>
 <span class="n">builder</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://apache.org/xml/features/disallow-doctype-decl&quot;</span><span class="p">,</span><span class="kc">true</span><span class="p">);</span>
+<span class="n">Document</span><span class="w"> </span><span class="n">doc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">builder</span><span class="p">.</span><span class="na">build</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="n">fileName</span><span class="p">));</span>
+</code></pre></div>
+<p>Alternatively, if DTDs can't be completely disabled, disable external entities and entity expansion:</p>
+<div class="highlight"><pre><span></span><code><span class="n">SAXBuilder</span><span class="w"> </span><span class="n">builder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SAXBuilder</span><span class="p">();</span>
 <span class="n">builder</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://xml.org/sax/features/external-general-entities&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
 <span class="n">builder</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://xml.org/sax/features/external-parameter-entities&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
 <span class="n">builder</span><span class="p">.</span><span class="na">setExpandEntities</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
