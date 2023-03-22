@@ -88,11 +88,12 @@ Only the `DocumentBuilderFactory` example is presented here. The JAXP `DocumentB
 
 The features can either be set on the factory or the underlying `XMLReader` [setFeature](https://docs.oracle.com/javase/7/docs/api/org/xml/sax/XMLReader.html#setFeature%28java.lang.String,%20boolean%29) method.
 
-Each XML processor implementation has its own features that govern how DTDs and external entities are processed.
+Each XML processor implementation has its own features that govern how DTDs and external entities are processed. By disabling DTD processing entirely, most XXE attacks can be averted, although it is also necessary to disable or verify that XInclude is not enabled.
 
-Since the JDK 6, the flag [FEATURE_SECURE_PROCESSING](https://docs.oracle.com/javase/6/docs/api/javax/xml/XMLConstants.html#FEATURE_SECURE_PROCESSING) can be used **to instruct the implementation of the parser to process XML securely**. More details on this flag can be found [here](https://docs.oracle.com/en/java/javase/13/security/java-api-xml-processing-jaxp-security-guide.html#GUID-88B04BE2-35EF-4F61-B4FA-57A0E9102342).
+Since the JDK 6, the flag [FEATURE_SECURE_PROCESSING](https://docs.oracle.com/javase/6/docs/api/javax/xml/XMLConstants.html#FEATURE_SECURE_PROCESSING) can be used **to instruct the implementation of the parser to process XML securely**. Its behaviour is implementation dependent. Even if it can help tackling resource exhaustion, it may not always mitigate entity expansion. More details on this flag can be found [here](https://docs.oracle.com/en/java/javase/13/security/java-api-xml-processing-jaxp-security-guide.html#GUID-88B04BE2-35EF-4F61-B4FA-57A0E9102342).
 
 For a syntax highlighted example code snippet using `SAXParserFactory`, look [here](https://gist.github.com/asudhakar02/45e2e6fd8bcdfb4bc3b2).
+Example code disabling DTDs (doctypes) altogether:
 
 ``` java
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -109,13 +110,43 @@ try {
     // Xerces 2 only - http://xerces.apache.org/xerces2-j/features.html#disallow-doctype-decl
     FEATURE = "http://apache.org/xml/features/disallow-doctype-decl";
     dbf.setFeature(FEATURE, true);
-    
-    // As stated in the documentation "Feature for Secure Processing (FSP)" is the central mechanism to 
-    // help safeguard XML processing. It instructs XML processors, such as parsers, validators, 
-    // and transformers, to try and process XML securely. 
-    // Exists from JDK6.
-    dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
 
+    // and these as well, per Timothy Morgan's 2014 paper: "XML Schema, DTD, and Entity Attacks"
+    dbf.setXIncludeAware(false);
+
+    // remaining parser logic
+    ...
+} catch (ParserConfigurationException e) {
+    // This should catch a failed setFeature feature
+    logger.info("ParserConfigurationException was thrown. The feature '" + FEATURE
+    + "' is not supported by your XML processor.");
+    ...
+} catch (SAXException e) {
+    // On Apache, this should be thrown when disallowing DOCTYPE
+    logger.warning("A DOCTYPE was passed into the XML document");
+    ...
+} catch (IOException e) {
+    // XXE that points to a file that doesn't exist
+    logger.error("IOException occurred, XXE may still possible: " + e.getMessage());
+    ...
+}
+
+// Load XML file or stream using a XXE agnostic configured parser...
+DocumentBuilder safebuilder = dbf.newDocumentBuilder();
+```
+
+If you can't completely disable DTDs:
+
+``` java
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException; // catching unsupported features
+import javax.xml.XMLConstants;
+
+...
+
+DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+String FEATURE = null;
+try {    
     // If you can't completely disable DTDs, then at least do the following:
     // Xerces 1 - http://xerces.apache.org/xerces-j/features.html#external-general-entities
     // Xerces 2 - http://xerces.apache.org/xerces2-j/features.html#external-general-entities
@@ -138,6 +169,14 @@ try {
     // and these as well, per Timothy Morgan's 2014 paper: "XML Schema, DTD, and Entity Attacks"
     dbf.setXIncludeAware(false);
     dbf.setExpandEntityReferences(false);
+        
+    // As stated in the documentation "Feature for Secure Processing (FSP)" is the central mechanism to 
+    // help safeguard XML processing. It instructs XML processors, such as parsers, validators, 
+    // and transformers, to try and process XML securely. This can be used as an alternative to
+    // dbf.setExpandEntityReferences(false); to allow some safe level of Entity Expansion
+    // Exists from JDK6.
+    dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+
 
     // And, per Timothy Morgan: "If for some reason support for inline DOCTYPEs are a requirement, then
     // ensure the entity settings are disabled (as shown above) and beware that SSRF attacks
@@ -184,16 +223,23 @@ DocumentBuilder safebuilder = dbf.newDocumentBuilder();
 
 [StAX](http://en.wikipedia.org/wiki/StAX) parsers such as [`XMLInputFactory`](http://docs.oracle.com/javase/7/docs/api/javax/xml/stream/XMLInputFactory.html) allow various properties and features to be set.
 
-To protect a Java `XMLInputFactory` from XXE, do this:
+To protect a Java `XMLInputFactory` from XXE, disable DTDs (doctypes) altogether:
 
 ``` java
 // This disables DTDs entirely for that factory
 xmlInputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+```
+
+or if you can't completely disable DTDs:
+
+``` java
 // This causes XMLStreamException to be thrown if external DTDs are accessed.
 xmlInputFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
 // disable external entities
 xmlInputFactory.setProperty("javax.xml.stream.isSupportingExternalEntities", false);
 ```
+
+The setting `xmlInputFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");` is not required, as XMLInputFactory is dependent on Validator to perform XML validation against Schemas. Check the [Validator](#Validator) section for the specific configuration.
 
 ### Oracle DOM Parser
 
@@ -290,11 +336,18 @@ Based on testing, if you are missing one of these, you can still be vulnerable t
 
 ### SAXBuilder
 
-To protect a Java `org.jdom2.input.SAXBuilder` from XXE, do this:
+To protect a Java `org.jdom2.input.SAXBuilder` from XXE, disallow DTDs (doctypes) entirely:
 
 ``` java
 SAXBuilder builder = new SAXBuilder();
 builder.setFeature("http://apache.org/xml/features/disallow-doctype-decl",true);
+Document doc = builder.build(new File(fileName));
+```
+
+Alternatively, if DTDs can't be completely disabled, disable external entities and entity expansion:
+
+``` java
+SAXBuilder builder = new SAXBuilder();
 builder.setFeature("http://xml.org/sax/features/external-general-entities", false);
 builder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
 builder.setExpandEntities(false);
