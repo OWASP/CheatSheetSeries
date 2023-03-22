@@ -1260,6 +1260,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#using-rust-with-sqlx" class="md-nav__link">
+    Using Rust with SQLx
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1821,6 +1828,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#using-rust-with-sqlx" class="md-nav__link">
+    Using Rust with SQLx
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2015,6 +2029,31 @@
 <div class="highlight"><pre><span></span><code><span class="k">my</span><span class="w"> </span><span class="nv">$sql</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;INSERT INTO foo (bar, baz) VALUES ( ?, ? )&quot;</span><span class="p">;</span>
 <span class="k">my</span><span class="w"> </span><span class="nv">$sth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$dbh</span><span class="o">-&gt;</span><span class="n">prepare</span><span class="p">(</span><span class="w"> </span><span class="nv">$sql</span><span class="w"> </span><span class="p">);</span>
 <span class="nv">$sth</span><span class="o">-&gt;</span><span class="n">execute</span><span class="p">(</span><span class="w"> </span><span class="nv">$bar</span><span class="p">,</span><span class="w"> </span><span class="nv">$baz</span><span class="w"> </span><span class="p">);</span>
+</code></pre></div>
+<h4 id="using-rust-with-sqlx">Using Rust with SQLx<a class="headerlink" href="#using-rust-with-sqlx" title="Permanent link">&para;</a></h4>
+<!-- contributed by GeekMasher -->
+
+<div class="highlight"><pre><span></span><code><span class="c1">// Input from CLI args but could be anything</span>
+<span class="kd">let</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span>::<span class="n">env</span>::<span class="n">args</span><span class="p">().</span><span class="n">last</span><span class="p">().</span><span class="n">unwrap</span><span class="p">();</span>
+
+<span class="c1">// Using build-in macros (compile time checks)</span>
+<span class="kd">let</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sqlx</span>::<span class="n">query_as</span><span class="o">!</span><span class="p">(</span>
+<span class="w">        </span><span class="n">User</span><span class="p">,</span>
+<span class="w">        </span><span class="s">&quot;SELECT * FROM users WHERE name = ?&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="n">username</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="n">fetch_all</span><span class="p">(</span><span class="o">&amp;</span><span class="n">pool</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="k">await</span><span class="w"> </span>
+<span class="w">    </span><span class="p">.</span><span class="n">unwrap</span><span class="p">();</span>
+
+<span class="c1">// Using built-in functions</span>
+<span class="kd">let</span><span class="w"> </span><span class="n">users</span>: <span class="nb">Vec</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sqlx</span>::<span class="n">query_as</span>::<span class="o">&lt;</span><span class="n">_</span><span class="p">,</span><span class="w"> </span><span class="n">User</span><span class="o">&gt;</span><span class="p">(</span>
+<span class="w">        </span><span class="s">&quot;SELECT * FROM users WHERE name = ?&quot;</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="n">bind</span><span class="p">(</span><span class="o">&amp;</span><span class="n">username</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="n">fetch_all</span><span class="p">(</span><span class="o">&amp;</span><span class="n">pool</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="k">await</span>
+<span class="w">    </span><span class="p">.</span><span class="n">unwrap</span><span class="p">();</span>
 </code></pre></div>
 <h3 id="stored-procedure-examples">Stored Procedure Examples<a class="headerlink" href="#stored-procedure-examples" title="Permanent link">&para;</a></h3>
 <p>The SQL you write in your web application isn't the only place that SQL injection vulnerabilities can be introduced. If you are using Stored Procedures, and you are dynamically constructing SQL inside them, you can also introduce SQL injection vulnerabilities.</p>
