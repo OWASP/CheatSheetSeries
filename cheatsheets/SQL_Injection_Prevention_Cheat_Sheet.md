@@ -99,7 +99,7 @@ Query safeHQLQuery = session.createQuery("from Inventory where productID=:
 safeHQLQuery.setParameter("productid", userSuppliedParameter);
 ```
 
-For examples of parameterized queries in other languages, including Ruby, PHP, Cold Fusion, and Perl, see the [Query Parameterization Cheat Sheet](Query_Parameterization_Cheat_Sheet.md) or this [site](http://bobby-tables.com/).
+For examples of parameterized queries in other languages, including Ruby, PHP, Cold Fusion, Perl, and Rust, see the [Query Parameterization Cheat Sheet](Query_Parameterization_Cheat_Sheet.md) or this [site](http://bobby-tables.com/).
 
 Developers tend to like the Prepared Statement approach because all the SQL code stays within the application. This makes your application relatively database independent.
 

@@ -127,6 +127,33 @@ my $sth = $dbh->prepare( $sql );
 $sth->execute( $bar, $baz );
 ```
 
+#### Using Rust with SQLx
+<!-- contributed by GeekMasher -->
+
+```rust
+// Input from CLI args but could be anything
+let username = std::env::args().last().unwrap();
+
+// Using build-in macros (compile time checks)
+let users = sqlx::query_as!(
+        User,
+        "SELECT * FROM users WHERE name = ?",
+        username
+    )
+    .fetch_all(&pool)
+    .await 
+    .unwrap();
+
+// Using built-in functions
+let users: Vec<User> = sqlx::query_as::<_, User>(
+        "SELECT * FROM users WHERE name = ?"
+    )
+    .bind(&username)
+    .fetch_all(&pool)
+    .await
+    .unwrap();
+```
+
 ### Stored Procedure Examples
 
 The SQL you write in your web application isn't the only place that SQL injection vulnerabilities can be introduced. If you are using Stored Procedures, and you are dynamically constructing SQL inside them, you can also introduce SQL injection vulnerabilities.
