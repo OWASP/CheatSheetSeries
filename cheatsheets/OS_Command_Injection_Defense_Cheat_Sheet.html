@@ -1123,6 +1123,19 @@
     Introduction
   </a>
   
+    <nav class="md-nav" aria-label="Introduction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#argument-injection" class="md-nav__link">
+    Argument Injection
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1720,6 +1733,19 @@
     Introduction
   </a>
   
+    <nav class="md-nav" aria-label="Introduction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#argument-injection" class="md-nav__link">
+    Argument Injection
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1897,6 +1923,17 @@
 <p>Now, both the <em>Calculator</em> application and the value <em>test</em> are displayed:</p>
 <p><img alt="CommandInjection" src="../assets/OS_Command_Injection_Defense_Cheat_Sheet_CmdInjection.png" /></p>
 <p>The problem is exacerbated if the compromised process does not follow the principle of least privileges and attacker-controlled commands end up running with special system privileges that increase the amount of damage.</p>
+<h3 id="argument-injection">Argument Injection<a class="headerlink" href="#argument-injection" title="Permanent link">&para;</a></h3>
+<p>Every OS Command Injection is also an Argument Injection. In this type of attacks, user input can be passed as arguments while executing a specific command.</p>
+<p>For example, if the user input is passed through an escape function to escape certain characters like <code>&amp;</code>, <code>|</code>, <code>;</code>, etc.</p>
+<div class="highlight"><pre><span></span><code><span class="x">system(&quot;curl &quot; . escape($url));</span>
+</code></pre></div>
+<p>which will prevent an attacker to run other commands.</p>
+<p>However, if the attacker controlled string contains an additional argument of the <code>curl</code> command:</p>
+<div class="highlight"><pre><span></span><code>system(&quot;curl &quot; . escape(&quot;--help&quot;))
+</code></pre></div>
+<p>Now when the above code is executed, it will show the output of <code>curl --help</code>.</p>
+<p>Depending upon the system command used, the impact of an Argument injection attack can range from <strong>Information Disclosure</strong> to critical <strong>Remote Code Execution</strong>.</p>
 <h2 id="primary-defenses">Primary Defenses<a class="headerlink" href="#primary-defenses" title="Permanent link">&para;</a></h2>
 <h3 id="defense-option-1-avoid-calling-os-commands-directly">Defense Option 1: Avoid calling OS commands directly<a class="headerlink" href="#defense-option-1-avoid-calling-os-commands-directly" title="Permanent link">&para;</a></h3>
 <p>The primary defense is to avoid calling OS commands directly. Built-in library functions are a very good alternative to OS Commands, as they cannot be manipulated to perform tasks other than those it is intended to do.</p>
@@ -1904,7 +1941,9 @@
 <p>If there are available libraries or APIs for the language you use, this is the preferred method.</p>
 <h3 id="defense-option-2-escape-values-added-to-os-commands-specific-to-each-os">Defense option 2: Escape values added to OS commands specific to each OS<a class="headerlink" href="#defense-option-2-escape-values-added-to-os-commands-specific-to-each-os" title="Permanent link">&para;</a></h3>
 <p><strong>TODO: To enhance.</strong></p>
-<p>For examples, see <a href="https://www.php.net/manual/en/function.escapeshellarg.php">escapeshellarg()</a> or <a href="https://www.php.net/manual/en/function.escapeshellcmd.php">escapeshellcmd()</a> in PHP.</p>
+<p>For examples, see <a href="https://www.php.net/manual/en/function.escapeshellarg.php">escapeshellarg()</a> in PHP.</p>
+<p>The <code>escapeshellarg()</code> surrounds the user input in single quotes, so if the malformed user input is something like <code>&amp; echo "hello"</code>, the final output will be like <code>calc '&amp; echo "hello"'</code> which will be parsed as a single argument to the command <code>calc</code>.</p>
+<p>Even though <code>escapeshellarg()</code> prevents OS Command Injection, an attacker can still pass a single argument to the command.</p>
 <h3 id="defense-option-3-parameterization-in-conjunction-with-input-validation">Defense option 3: Parameterization in conjunction with Input Validation<a class="headerlink" href="#defense-option-3-parameterization-in-conjunction-with-input-validation" title="Permanent link">&para;</a></h3>
 <p>If calling a system command that incorporates user-supplied cannot be avoided, the following two layers of defense should be used within software to prevent attacks:</p>
 <h4 id="layer-1">Layer 1<a class="headerlink" href="#layer-1" title="Permanent link">&para;</a></h4>
@@ -1918,9 +1957,10 @@
 <li><strong>Allow list Regular Expression</strong>: Where a list of good, allowed characters and the maximum length of the string are defined. Ensure that metacharacters like ones specified in <code>Note A</code> and white-spaces are not part of the Regular Expression. For example, the following regular expression only allows lowercase letters and numbers and does not contain metacharacters. The length is also being limited to 3-10 characters: <code>^[a-z0-9]{3,10}$</code></li>
 </ul>
 </li>
+<li>According to <strong>Guideline 10</strong> of this <a href="https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap12.html">POSIX</a>, <em>The first -- argument that is not an option-argument should be accepted as a delimiter indicating the end of options. Any following arguments should be treated as operands, even if they begin with the '-' character.</em> For example, <code>curl -- $url</code> will prevent an argument injection even if the <code>$url</code> is malformed and contains an additional argument.</li>
 </ul>
 <p><strong>Note A:</strong></p>
-<div class="highlight"><pre><span></span><code>&amp; |  ; $ &gt; &lt; ` \ !
+<div class="highlight"><pre><span></span><code>&amp; |  ; $ &gt; &lt; ` \ ! &#39; &quot; ( )
 </code></pre></div>
 <h2 id="additional-defenses">Additional Defenses<a class="headerlink" href="#additional-defenses" title="Permanent link">&para;</a></h2>
 <p>On top of primary defenses, parameterizations, and input validation, we also recommend adopting all of these additional defenses to provide defense in depth.</p>
