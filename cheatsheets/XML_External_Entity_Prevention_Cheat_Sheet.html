@@ -19,7 +19,7 @@
         <link rel="next" href="XML_Security_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.3">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.4">
     
     
       
@@ -27,7 +27,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.c4a75a56.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.240905d7.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.a0c5b2b5.min.css">
@@ -2462,6 +2462,8 @@ Example code disabling DTDs (doctypes) altogether:</p>
 <span class="w">    </span><span class="p">...</span>
 <span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">ParserConfigurationException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="c1">// This should catch a failed setFeature feature</span>
+<span class="w">    </span><span class="c1">// NOTE: Each call to setFeature() should be in its own try/catch otherwise subsequent calls will be skipped.</span>
+<span class="w">    </span><span class="c1">// This is only important if you&#39;re ignoring errors for multi-provider support.</span>
 <span class="w">    </span><span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;ParserConfigurationException was thrown. The feature &#39;&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">FEATURE</span>
 <span class="w">    </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;&#39; is not supported by your XML processor.&quot;</span><span class="p">);</span>
 <span class="w">    </span><span class="p">...</span>
@@ -2528,6 +2530,8 @@ Example code disabling DTDs (doctypes) altogether:</p>
 <span class="w">    </span><span class="p">...</span>
 <span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">ParserConfigurationException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="c1">// This should catch a failed setFeature feature</span>
+<span class="w">    </span><span class="c1">// NOTE: Each call to setFeature() should be in its own try/catch otherwise subsequent calls will be skipped.</span>
+<span class="w">    </span><span class="c1">// This is only important if you&#39;re ignoring errors for multi-provider support.</span>
 <span class="w">    </span><span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;ParserConfigurationException was thrown. The feature &#39;&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">FEATURE</span>
 <span class="w">    </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;&#39; is probably not supported by your XML processor.&quot;</span><span class="p">);</span>
 <span class="w">    </span><span class="p">...</span>
@@ -3028,7 +3032,7 @@ Rule can be played here <a href="https://semgrep.dev/s/salecharohit:xxe-XMLReade
     <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.efa0ade1.min.js"></script>
+      <script src="../assets/javascripts/bundle.19047be9.min.js"></script>
       
     
   </body>
