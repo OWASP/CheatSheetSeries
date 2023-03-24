@@ -118,6 +118,8 @@ try {
     ...
 } catch (ParserConfigurationException e) {
     // This should catch a failed setFeature feature
+    // NOTE: Each call to setFeature() should be in its own try/catch otherwise subsequent calls will be skipped.
+    // This is only important if you're ignoring errors for multi-provider support.
     logger.info("ParserConfigurationException was thrown. The feature '" + FEATURE
     + "' is not supported by your XML processor.");
     ...
@@ -187,6 +189,8 @@ try {
     ...
 } catch (ParserConfigurationException e) {
     // This should catch a failed setFeature feature
+    // NOTE: Each call to setFeature() should be in its own try/catch otherwise subsequent calls will be skipped.
+    // This is only important if you're ignoring errors for multi-provider support.
     logger.info("ParserConfigurationException was thrown. The feature '" + FEATURE
     + "' is probably not supported by your XML processor.");
     ...
