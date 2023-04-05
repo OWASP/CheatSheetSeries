@@ -376,7 +376,7 @@ This code snippet has been tested with jQuery version 3.3.1.
 - [OWASP Cross-Site Request Forgery (CSRF)](https://owasp.org/www-community/attacks/csrf)
 - [PortSwigger Web Security Academy](https://portswigger.net/web-security/csrf)
 - [Mozilla Web Security Cheat Sheet](https://infosec.mozilla.org/guidelines/web_security#csrf-prevention)
-- [Common CSRF Prevention Misconceptions](https://www.nccgroup.trust/us/about-us/newsroom-and-events/blog/2017/september/common-csrf-prevention-misconceptions/)
+- [Common CSRF Prevention Misconceptions](https://medium.com/keylogged/common-csrf-prevention-misconceptions-67fd026d94a8)
 - [Robust Defenses for Cross-Site Request Forgery](https://seclab.stanford.edu/websec/csrf/csrf.pdf)
 - For Java: OWASP [CSRF Guard](https://owasp.org/www-project-csrfguard/) or [Spring Security](https://docs.spring.io/spring-security/site/docs/5.5.x-SNAPSHOT/reference/html5/#csrf)
 - For PHP and Apache: [CSRFProtector Project](https://owasp.org/www-project-csrfprotector/)
