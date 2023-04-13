@@ -388,9 +388,19 @@ documentBuilder.setEntityResolver(noop);
 Since a `javax.xml.bind.Unmarshaller` parses XML and does not support any flags for disabling XXE, it's imperative to parse the untrusted XML through a configurable secure parser first, generate a source object as a result, and pass the source object to the Unmarshaller. For example:
 
 ``` java
-//Disable XXE
 SAXParserFactory spf = SAXParserFactory.newInstance();
+
+//Option 1: This is the PRIMARY defense against XXE
 spf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+spf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+spf.setXIncludeAware(false);
+
+//Option 2: If disabling doctypes is not possible
+spf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+spf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+spf.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+spf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+spf.setXIncludeAware(false);
 
 //Do unmarshall operation
 Source xmlSource = new SAXSource(spf.newSAXParser().getXMLReader(),
