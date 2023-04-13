@@ -107,7 +107,7 @@ These configuration settings are equivalent in the defense they provide. The onl
 
 ### scrypt
 
-[scrypt](http://www.tarsnap.com/scrypt/scrypt.pdf) is a password-based key derivation function created by [Colin Percival](https://twitter.com/cperciva). While new systems should consider [Argon2id](#argon2id) for password hashing, scrypt should be configured properly when used in legacy systems.
+[scrypt](http://www.tarsnap.com/scrypt/scrypt.pdf) is a password-based key derivation function created by [Colin Percival](https://twitter.com/cperciva). While [Argon2id](#argon2id) should be the best choice for password hashing, [scrypt](#scrypt) should be used when the former is not available.
 
 Like [Argon2id](#argon2id), scrypt has three different parameters that can be configured. scrypt should use one of the following configuration settings as a base minimum which includes the minimum CPU/memory cost parameter (N), the blocksize (r) and the degree of parallelism (p).
 
@@ -121,7 +121,7 @@ These configuration settings are equivalent in the defense they provide. The onl
 
 ### bcrypt
 
-The [bcrypt](https://en.wikipedia.org/wiki/bcrypt) password hashing function should be the second choice for password storage if Argon2id is not available or PBKDF2 is required to achieve FIPS-140 compliance.
+The [bcrypt](https://en.wikipedia.org/wiki/bcrypt) password hashing function should be the best choice for password storage in legacy systems or if PBKDF2 is required to achieve FIPS-140 compliance.
 
 The work factor should be as large as verification server performance will allow, with a minimum of 10.
 
