@@ -2075,7 +2075,7 @@ TX|UT|VT|VI|VA|WA|WV|WI|WY)$
 </ul>
 <p>Properly parsing email addresses for validity with regular expressions is very complicated, although there are a number of <a href="https://tools.ietf.org/id/draft-seantek-mail-regexen-03.html#rfc.section.3">publicly available documents on regex</a>.</p>
 <p>The biggest caveat on this is that although the RFC defines a very flexible format for email addresses, most real world implementations (such as mail servers) use a far more restricted address format, meaning that they will reject addresses that are <em>technically</em> valid.  Although they may be technically correct, these addresses are of little use if your application will not be able to actually send emails to them.</p>
-<p>As such, the best way to validate email addresses is to perform some basic initial validation, and then pass the address to the mail server and catch the exception if it rejects it. This means that any the application can be confident that its mail server can send emails to any addresses it accepts. The initial validation could be as simple as:</p>
+<p>As such, the best way to validate email addresses is to perform some basic initial validation, and then pass the address to the mail server and catch the exception if it rejects it. This means that the application can be confident that its mail server can send emails to any addresses it accepts. The initial validation could be as simple as:</p>
 <ul>
 <li>The email address contains two parts, separated with an <code>@</code> symbol.</li>
 <li>The email address does not contain dangerous characters (such as backticks, single or double quotes, or null bytes).<ul>
