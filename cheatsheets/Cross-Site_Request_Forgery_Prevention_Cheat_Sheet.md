@@ -12,10 +12,10 @@ In short, the following principles should be followed to defend against CSRF:
     - **If framework does not have built-in CSRF protection, add [CSRF tokens](#token-based-mitigation) to all state changing requests (requests that cause actions on the site) and validate them on the backend**
 - **For stateful software use the [synchronizer token pattern](#synchronizer-token-pattern)**
 - **For stateless software use [double submit cookies](#double-submit-cookie)**
+- **For API-driven sites that don't use `<form>` tags, consider [using custom request headers](#custom-request-headers)**
 - **Implement at least one mitigation from [Defense in Depth Mitigations](#defense-in-depth-techniques) section**
     - **Consider [SameSite Cookie Attribute](#samesite-cookie-attribute) for session cookies** but be careful to NOT set a cookie specifically for a domain as that would introduce a security vulnerability that all subdomains of that domain share the cookie. This is particularly an issue when a subdomain has a CNAME to domains not in your control.
     - **Consider implementing [user interaction based protection](#user-interaction-based-csrf-defense) for highly sensitive operations**
-    - **Consider the [use of custom request headers](#use-of-custom-request-headers)**
     - **Consider [verifying the origin with standard headers](#verifying-origin-with-standard-headers)**
 - **Remember that any Cross-Site Scripting (XSS) can be used to defeat all CSRF mitigation techniques!**
     - **See the OWASP [XSS Prevention Cheat Sheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md) for detailed guidance on how to prevent XSS flaws.**
@@ -57,7 +57,7 @@ For example:
 </form>
 ```
 
-Inserting the CSRF token in the custom HTTP request header via JavaScript is considered more secure than adding the token in the hidden field form parameter because it [uses custom request headers](#use-of-custom-request-headers).
+Inserting the CSRF token in a custom HTTP request header via JavaScript is considered more secure than adding the token in the hidden field form parameter because requests with custom headers are automatically subject to the same-origin policy.
 
 ### Double Submit Cookie
 
@@ -66,6 +66,45 @@ If maintaining the state for CSRF token on the server is problematic, an alterna
 To enhance the security of this solution include the token in an encrypted cookie - other than the authentication cookie (since they are often shared within subdomains) - and then at the server side match it (after decrypting the encrypted cookie) with the token in hidden form field or parameter/header for AJAX calls. This works because a sub domain has no way to overwrite a properly crafted encrypted cookie without the necessary information such as encryption key.
 
 A simpler alternative to an encrypted cookie is to HMAC the token with a secret key known only by the server and place this value in a cookie. This is similar to an encrypted cookie (both require knowledge only the server holds), but is less computationally intensive than encrypting and decrypting the cookie. Whether encryption or a HMAC is used, an attacker won't be able to recreate the cookie value from the plain token without knowledge of the server secrets.
+
+### Custom Request Headers
+
+Both the synchronizer token and the double submit cookie are used to prevent forgery of form data, but they can be tricky to implement and degrade usability. Many modern web applications do not use `<form>` tags. A user-friendly defense that is particularly well suited for AJAX or API endpoints is the use of a **custom request header**. No token is needed for this approach.
+
+In this pattern, the client appends a custom header to requests that require CSRF protection. The header can be any arbitrary key/value pair, as long as it does not conflict with existing headers.
+
+```
+X-YOURSITE-CSRF-PROTECTION=1
+```
+
+When handling the request, the API checks for the existence of this header. If the header does not exist, the backend rejects the request as potential forgery. This approach has several advantages:
+
+- UI changes are not required
+- no server state is introduced to track tokens
+
+If you use `<form>` tags anywhere in your client, you will still need to protect them with with alternate approaches described in this document such as tokens.
+
+This defense relies on the browser's [same-origin policy (SOP)](https://en.wikipedia.org/wiki/Same-origin_policy) restriction that only JavaScript can be used to add a custom header, and only within its origin. By default, browsers do not allow JavaScript to make cross origin requests with custom headers. Only JavaScript that you serve from your origin can add these headers.
+
+#### Custom Headers and CORS
+
+Cookies are not set on cross-origin requests (CORS) by default. To enable cookies on an API, you will set `Access-Control-Allow-Credentials=true`. The browser will reject any response that includes `Access-Control-Allow-Origin=*` if credentials are allowed. To allow CORS requests, but protect against CSRF, you need to make sure the server only whitelists a few select origins that you definitively control via the `Access-Control-Allow-Origin` header. Any cross-origin request from an allowed domain will be able to set custom headers.
+
+As an example, you might configure your backend to allow CORS with cookies from `http://www.yoursite.com` and `http://mobile.yoursite.com`, so that the only possible preflight responses are:
+
+```
+Access-Control-Allow-Origin=http://mobile.yoursite.com
+Access-Control-Allow-Credentials=true
+```
+
+or
+
+```
+Access-Control-Allow-Origin=http://www.yoursite.com
+Access-Control-Allow-Credentials=true
+```
+
+A less secure configuration would be to configure your backend server to allow CORS from all subdomains of your site using a regular expression. If an attacker is able to [take over a subdomain](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/10-Test_for_Subdomain_Takeover) (not uncommon with cloud services) your CORS configuration would allow them to bypass the same origin policy and forge a request with your custom header.
 
 ## Defense In Depth Techniques
 
@@ -146,14 +185,6 @@ Another solution for this problem is use of `Cookie Prefixes` for cookie with CS
 As of July 2020 cookie prefixes [are supported by all major browsers except Internet Explorer](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Browser_compatibility).
 
 See the [Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Directives) and [IETF Draft](https://tools.ietf.org/html/draft-west-cookie-prefixes-05) for further information about cookie prefixes.
-
-### Use of Custom Request Headers
-
-Adding CSRF tokens, a double submit cookie and value, an encrypted token, or other defense that involves changing the UI can frequently be complex or otherwise problematic. An alternate defense that is particularly well suited for AJAX or API endpoints is the use of a **custom request header**. This defense relies on the [same-origin policy (SOP)](https://en.wikipedia.org/wiki/Same-origin_policy) restriction that only JavaScript can be used to add a custom header, and only within its origin. By default, browsers do not allow JavaScript to make cross origin requests with custom headers.
-
-If this is the case for your system, you can simply verify the presence of this header and value on all your server side AJAX endpoints in order to protect against CSRF attacks. This approach has the double advantage of usually requiring no UI changes and not introducing any server side state, which is particularly attractive to REST services. You can always add your own **custom header** and value if that is preferred.
-
-This technique obviously works for AJAX calls, but you still need to protect `<form>` tags with approaches described in this document such as tokens. Also, CORS configuration should also be robust to make this solution work effectively (as custom headers for requests coming from other domains trigger a pre-flight CORS check).
 
 ### User Interaction Based CSRF Defense
 
