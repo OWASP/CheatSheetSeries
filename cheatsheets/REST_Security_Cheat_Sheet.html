@@ -1986,19 +1986,23 @@
 <thead>
 <tr>
 <th>Header</th>
+<th>Example</th>
 <th>Rationale</th>
 </tr>
 </thead>
 <tbody>
 <tr>
+<td>Content-Security-Policy</td>
 <td><code>Content-Security-Policy: default-src 'none'</code></td>
 <td>The majority of CSP functionality only affects pages rendered as HTML.</td>
 </tr>
 <tr>
-<td><code>Feature-Policy: 'none'</code></td>
-<td>Feature policies only affect pages rendered as HTML.</td>
+<td>Permissions-Policy</td>
+<td><code>Permissions-Policy: accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), cross-origin-isolated=(), display-capture=(), document-domain=(), encrypted-media=(), execution-while-not-rendered=(), execution-while-out-of-viewport=(), fullscreen=(), geolocation=(), gyroscope=(), keyboard-map=(), magnetometer=(), microphone=(), midi=(), navigation-override=(), payment=(), picture-in-picture=(), publickey-credentials-get=(), screen-wake-lock=(), sync-xhr=(), usb=(), web-share=(), xr-spatial-tracking=()</code></td>
+<td>This header used to be named Feature-Policy. When browsers heed this header, it is used to control browser features via directives. The example disables features with an empty allowlist for a number of permitted <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Permissions-Policy#directives">directive names</a>. When you apply this header, verify that the directives are up-to-date and fit your needs. Please have a look at this <a href="https://developer.chrome.com/en/docs/privacy-sandbox/permissions-policy">article</a> for a detailed explanation on how to control browser features.</td>
 </tr>
 <tr>
+<td>Referrer-Policy</td>
 <td><code>Referrer-Policy: no-referrer</code></td>
 <td>Non-HTML responses should not trigger additional requests.</td>
 </tr>
