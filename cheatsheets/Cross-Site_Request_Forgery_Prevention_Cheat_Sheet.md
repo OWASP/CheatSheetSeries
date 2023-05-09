@@ -71,7 +71,7 @@ A simpler alternative to an encrypted cookie is to HMAC the token with a secret 
 
 Both the synchronizer token and the double submit cookie are used to prevent forgery of form data, but they can be tricky to implement and degrade usability. Many modern web applications do not use `<form>` tags. A user-friendly defense that is particularly well suited for AJAX or API endpoints is the use of a **custom request header**. No token is needed for this approach.
 
-In this pattern, the client appends a custom header to requests that require CSRF protection. The header can be any arbitrary key/value pair, as long as it does not conflict with existing headers.
+In this pattern, the client appends a custom header to requests that require CSRF protection. The header can be any arbitrary key-value pair, as long as it does not conflict with existing headers.
 
 ```
 X-YOURSITE-CSRF-PROTECTION=1
