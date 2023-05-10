@@ -159,10 +159,6 @@ The Poirot tool isolates and diagnoses defects through fault modeling and simula
 
 The Microsoft Threat Modeling Tool (TMT) helps find threats in the design phase of software projects. It is one of the longest lived threat modeling tools, having been introduced as Microsoft SDL in 2008, and is actively supported; [version 7.3](https://aka.ms/threatmodelingtool) was released March 2020. It runs only on Windows 10 Anniversary Update or later, and so is difficult to use on macOS or Linux.
 
-##### SeaSponge
-
-[SeaSponge](https://github.com/mozilla/seasponge) is an accessible web-based threat modeling tool. The tool provides an online [live Demo](http://mozilla.github.io/seasponge/#/).
-
 ### Define Data Flow over your DFD
 
 Define Data Flows over the organization Data Flow Diagram.
