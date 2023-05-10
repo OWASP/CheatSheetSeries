@@ -175,7 +175,7 @@ More information: [Permissions-Policy](https://developer.mozilla.org/en-US/docs/
 #### Recommendation
 
 Set it and disable all the features that your site does not need or allow them only to the authorized domains:
-> `Permissions-Policy: geolocation=() camera=(), microphone=()`
+> `Permissions-Policy: geolocation=(), camera=(), microphone=()`
 
 - *NOTE*: This example is disabling geolocation, camera, and microphone for all domains.
 
