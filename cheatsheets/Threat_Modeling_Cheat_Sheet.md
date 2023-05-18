@@ -159,6 +159,10 @@ The Poirot tool isolates and diagnoses defects through fault modeling and simula
 
 The Microsoft Threat Modeling Tool (TMT) helps find threats in the design phase of software projects. It is one of the longest lived threat modeling tools, having been introduced as Microsoft SDL in 2008, and is actively supported; [version 7.3](https://aka.ms/threatmodelingtool) was released March 2020. It runs only on Windows 10 Anniversary Update or later, and so is difficult to use on macOS or Linux.
 
+##### OWASP pytm
+
+[Pytm](https://github.com/izar/pytm) is a Python library to help you describe your system in terms of objects and attributes, able to generate a DFD in Graphviz (dot) format, a sequence diagram in plantuml format, and a list of threats (out of CAPEC and other threat libraries) to the system in a templated format. As of 2023 it is under active development. No Python knowledge is necessary for its use - if you can define objects and use .attribute notation, you should be able to use it.
+
 ### Define Data Flow over your DFD
 
 Define Data Flows over the organization Data Flow Diagram.
@@ -197,6 +201,7 @@ The user of this cheat can depend on the following list of risks and threat libr
 2. Testing Procedure with [OWASP ASVS](https://owasp.org/www-project-application-security-verification-standard/).
 3. Risks with [SANS Top 25](https://www.sans.org/top25-software-errors).
 4. Microsoft [STRIDE](https://en.wikipedia.org/wiki/STRIDE_%28security%29).
+5. Continuous Threat Modeling [CTM](https://github.com/Autodesk/Continuous-Threat-Modeling).
 
 ### Map Threat agents to application Entry points
 
