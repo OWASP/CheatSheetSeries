@@ -2182,7 +2182,7 @@
 <li>UI changes are not required</li>
 <li>no server state is introduced to track tokens</li>
 </ul>
-<p>If you use <code>&lt;form&gt;</code> tags anywhere in your client, you will still need to protect them with with alternate approaches described in this document such as tokens.</p>
+<p>If you use <code>&lt;form&gt;</code> tags anywhere in your client, you will still need to protect them with alternate approaches described in this document such as tokens.</p>
 <p>This defense relies on the browser's <a href="https://en.wikipedia.org/wiki/Same-origin_policy">same-origin policy (SOP)</a> restriction that only JavaScript can be used to add a custom header, and only within its origin. By default, browsers do not allow JavaScript to make cross origin requests with custom headers. Only JavaScript that you serve from your origin can add these headers.</p>
 <h4 id="custom-headers-and-cors">Custom Headers and CORS<a class="headerlink" href="#custom-headers-and-cors" title="Permanent link">&para;</a></h4>
 <p>Cookies are not set on cross-origin requests (CORS) by default. To enable cookies on an API, you will set <code>Access-Control-Allow-Credentials=true</code>. The browser will reject any response that includes <code>Access-Control-Allow-Origin=*</code> if credentials are allowed. To allow CORS requests, but protect against CSRF, you need to make sure the server only whitelists a few select origins that you definitively control via the <code>Access-Control-Allow-Origin</code> header. Any cross-origin request from an allowed domain will be able to set custom headers.</p>
