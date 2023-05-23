@@ -82,7 +82,7 @@ When handling the request, the API checks for the existence of this header. If t
 - UI changes are not required
 - no server state is introduced to track tokens
 
-If you use `<form>` tags anywhere in your client, you will still need to protect them with with alternate approaches described in this document such as tokens.
+If you use `<form>` tags anywhere in your client, you will still need to protect them with alternate approaches described in this document such as tokens.
 
 This defense relies on the browser's [same-origin policy (SOP)](https://en.wikipedia.org/wiki/Same-origin_policy) restriction that only JavaScript can be used to add a custom header, and only within its origin. By default, browsers do not allow JavaScript to make cross origin requests with custom headers. Only JavaScript that you serve from your origin can add these headers.
 
