@@ -19,7 +19,7 @@
         <link rel="next" href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.13">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.14">
     
     
       
@@ -614,6 +614,26 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#custom-request-headers" class="md-nav__link">
+    Custom Request Headers
+  </a>
+  
+    <nav class="md-nav" aria-label="Custom Request Headers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#custom-headers-and-cors" class="md-nav__link">
+    Custom Headers and CORS
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -685,13 +705,6 @@
         
       </ul>
     </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#use-of-custom-request-headers" class="md-nav__link">
-    Use of Custom Request Headers
-  </a>
   
 </li>
         
@@ -1858,6 +1871,26 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#custom-request-headers" class="md-nav__link">
+    Custom Request Headers
+  </a>
+  
+    <nav class="md-nav" aria-label="Custom Request Headers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#custom-headers-and-cors" class="md-nav__link">
+    Custom Headers and CORS
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1929,13 +1962,6 @@
         
       </ul>
     </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#use-of-custom-request-headers" class="md-nav__link">
-    Use of Custom Request Headers
-  </a>
   
 </li>
         
@@ -2103,10 +2129,10 @@
 </li>
 <li><strong>For stateful software use the <a href="#synchronizer-token-pattern">synchronizer token pattern</a></strong></li>
 <li><strong>For stateless software use <a href="#double-submit-cookie">double submit cookies</a></strong></li>
+<li><strong>For API-driven sites that don't use <code>&lt;form&gt;</code> tags, consider <a href="#custom-request-headers">using custom request headers</a></strong></li>
 <li><strong>Implement at least one mitigation from <a href="#defense-in-depth-techniques">Defense in Depth Mitigations</a> section</strong><ul>
 <li><strong>Consider <a href="#samesite-cookie-attribute">SameSite Cookie Attribute</a> for session cookies</strong> but be careful to NOT set a cookie specifically for a domain as that would introduce a security vulnerability that all subdomains of that domain share the cookie. This is particularly an issue when a subdomain has a CNAME to domains not in your control.</li>
 <li><strong>Consider implementing <a href="#user-interaction-based-csrf-defense">user interaction based protection</a> for highly sensitive operations</strong></li>
-<li><strong>Consider the <a href="#use-of-custom-request-headers">use of custom request headers</a></strong></li>
 <li><strong>Consider <a href="#verifying-origin-with-standard-headers">verifying the origin with standard headers</a></strong></li>
 </ul>
 </li>
@@ -2141,11 +2167,34 @@
 [...]
 <span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
 </code></pre></div>
-<p>Inserting the CSRF token in the custom HTTP request header via JavaScript is considered more secure than adding the token in the hidden field form parameter because it <a href="#use-of-custom-request-headers">uses custom request headers</a>.</p>
+<p>Inserting the CSRF token in a custom HTTP request header via JavaScript is considered more secure than adding the token in the hidden field form parameter because requests with custom headers are automatically subject to the same-origin policy.</p>
 <h3 id="double-submit-cookie">Double Submit Cookie<a class="headerlink" href="#double-submit-cookie" title="Permanent link">&para;</a></h3>
 <p>If maintaining the state for CSRF token on the server is problematic, an alternative defense is to use the double submit cookie technique. This technique is easy to implement and is stateless. In this technique, we send a random value in both a cookie and as a request parameter, with the server verifying if the cookie value and request value match. When a user visits (even before authenticating to prevent login CSRF), the site should generate a (cryptographically strong) pseudorandom value and set it as a cookie on the user's machine separate from the session identifier. The site then requires that every transaction request includes this pseudorandom value as a hidden form value (or as a request parameter/header). If both of them match at server side, the server accepts it as legitimate request and if they don't, it would reject the request.</p>
 <p>To enhance the security of this solution include the token in an encrypted cookie - other than the authentication cookie (since they are often shared within subdomains) - and then at the server side match it (after decrypting the encrypted cookie) with the token in hidden form field or parameter/header for AJAX calls. This works because a sub domain has no way to overwrite a properly crafted encrypted cookie without the necessary information such as encryption key.</p>
 <p>A simpler alternative to an encrypted cookie is to HMAC the token with a secret key known only by the server and place this value in a cookie. This is similar to an encrypted cookie (both require knowledge only the server holds), but is less computationally intensive than encrypting and decrypting the cookie. Whether encryption or a HMAC is used, an attacker won't be able to recreate the cookie value from the plain token without knowledge of the server secrets.</p>
+<h3 id="custom-request-headers">Custom Request Headers<a class="headerlink" href="#custom-request-headers" title="Permanent link">&para;</a></h3>
+<p>Both the synchronizer token and the double submit cookie are used to prevent forgery of form data, but they can be tricky to implement and degrade usability. Many modern web applications do not use <code>&lt;form&gt;</code> tags. A user-friendly defense that is particularly well suited for AJAX or API endpoints is the use of a <strong>custom request header</strong>. No token is needed for this approach.</p>
+<p>In this pattern, the client appends a custom header to requests that require CSRF protection. The header can be any arbitrary key-value pair, as long as it does not conflict with existing headers.</p>
+<div class="highlight"><pre><span></span><code>X-YOURSITE-CSRF-PROTECTION=1
+</code></pre></div>
+<p>When handling the request, the API checks for the existence of this header. If the header does not exist, the backend rejects the request as potential forgery. This approach has several advantages:</p>
+<ul>
+<li>UI changes are not required</li>
+<li>no server state is introduced to track tokens</li>
+</ul>
+<p>If you use <code>&lt;form&gt;</code> tags anywhere in your client, you will still need to protect them with with alternate approaches described in this document such as tokens.</p>
+<p>This defense relies on the browser's <a href="https://en.wikipedia.org/wiki/Same-origin_policy">same-origin policy (SOP)</a> restriction that only JavaScript can be used to add a custom header, and only within its origin. By default, browsers do not allow JavaScript to make cross origin requests with custom headers. Only JavaScript that you serve from your origin can add these headers.</p>
+<h4 id="custom-headers-and-cors">Custom Headers and CORS<a class="headerlink" href="#custom-headers-and-cors" title="Permanent link">&para;</a></h4>
+<p>Cookies are not set on cross-origin requests (CORS) by default. To enable cookies on an API, you will set <code>Access-Control-Allow-Credentials=true</code>. The browser will reject any response that includes <code>Access-Control-Allow-Origin=*</code> if credentials are allowed. To allow CORS requests, but protect against CSRF, you need to make sure the server only whitelists a few select origins that you definitively control via the <code>Access-Control-Allow-Origin</code> header. Any cross-origin request from an allowed domain will be able to set custom headers.</p>
+<p>As an example, you might configure your backend to allow CORS with cookies from <code>http://www.yoursite.com</code> and <code>http://mobile.yoursite.com</code>, so that the only possible preflight responses are:</p>
+<div class="highlight"><pre><span></span><code>Access-Control-Allow-Origin=http://mobile.yoursite.com
+Access-Control-Allow-Credentials=true
+</code></pre></div>
+<p>or</p>
+<div class="highlight"><pre><span></span><code>Access-Control-Allow-Origin=http://www.yoursite.com
+Access-Control-Allow-Credentials=true
+</code></pre></div>
+<p>A less secure configuration would be to configure your backend server to allow CORS from all subdomains of your site using a regular expression. If an attacker is able to <a href="https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/10-Test_for_Subdomain_Takeover">take over a subdomain</a> (not uncommon with cloud services) your CORS configuration would allow them to bypass the same origin policy and forge a request with your custom header.</p>
 <h2 id="defense-in-depth-techniques">Defense In Depth Techniques<a class="headerlink" href="#defense-in-depth-techniques" title="Permanent link">&para;</a></h2>
 <h3 id="samesite-cookie-attribute">SameSite Cookie Attribute<a class="headerlink" href="#samesite-cookie-attribute" title="Permanent link">&para;</a></h3>
 <p>SameSite is a cookie attribute (similar to HTTPOnly, Secure etc.) which aims to mitigate CSRF attacks. It is defined in <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7">RFC6265bis</a>. This attribute helps the browser decide whether to send cookies along with cross-site requests. Possible values for this attribute are <code>Lax</code>, <code>Strict</code>, or <code>None</code>.</p>
@@ -2204,10 +2253,6 @@ Set-Cookie: JSESSIONID=xxxxx; SameSite=Lax
 </ul>
 <p>As of July 2020 cookie prefixes <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Browser_compatibility">are supported by all major browsers except Internet Explorer</a>.</p>
 <p>See the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Directives">Mozilla Developer Network</a> and <a href="https://tools.ietf.org/html/draft-west-cookie-prefixes-05">IETF Draft</a> for further information about cookie prefixes.</p>
-<h3 id="use-of-custom-request-headers">Use of Custom Request Headers<a class="headerlink" href="#use-of-custom-request-headers" title="Permanent link">&para;</a></h3>
-<p>Adding CSRF tokens, a double submit cookie and value, an encrypted token, or other defense that involves changing the UI can frequently be complex or otherwise problematic. An alternate defense that is particularly well suited for AJAX or API endpoints is the use of a <strong>custom request header</strong>. This defense relies on the <a href="https://en.wikipedia.org/wiki/Same-origin_policy">same-origin policy (SOP)</a> restriction that only JavaScript can be used to add a custom header, and only within its origin. By default, browsers do not allow JavaScript to make cross origin requests with custom headers.</p>
-<p>If this is the case for your system, you can simply verify the presence of this header and value on all your server side AJAX endpoints in order to protect against CSRF attacks. This approach has the double advantage of usually requiring no UI changes and not introducing any server side state, which is particularly attractive to REST services. You can always add your own <strong>custom header</strong> and value if that is preferred.</p>
-<p>This technique obviously works for AJAX calls, but you still need to protect <code>&lt;form&gt;</code> tags with approaches described in this document such as tokens. Also, CORS configuration should also be robust to make this solution work effectively (as custom headers for requests coming from other domains trigger a pre-flight CORS check).</p>
 <h3 id="user-interaction-based-csrf-defense">User Interaction Based CSRF Defense<a class="headerlink" href="#user-interaction-based-csrf-defense" title="Permanent link">&para;</a></h3>
 <p>While all the techniques referenced here do not require any user interaction, sometimes it's easier or more appropriate to involve the user in the transaction to prevent unauthorized operations (forged via CSRF or otherwise). The following are some examples of techniques that can act as strong CSRF defense when implemented correctly.</p>
 <ul>
