@@ -78,11 +78,11 @@ public class AesGcmSimpleTest
         var message = "This message to be encrypted";
         Console.WriteLine(message);
 
-		// Encrypt the message
+        // Encrypt the message
         var cipherText = AesGcmSimple.Encrypt(message, nonce, out tag, key);
         Console.WriteLine(Convert.ToBase64String(cipherText));
 
-		// Decrypt the message
+        // Decrypt the message
         var message2 = AesGcmSimple.Decrypt(cipherText, nonce, tag, key);
         Console.WriteLine(message2);
 
@@ -101,13 +101,13 @@ public static class AesGcmSimple
             // Tag for authenticated encryption
             tag = new byte[AesGcm.TagByteSizes.MaxSize];
             
-			// Create a byte array from the message to encrypt
-			var plaintextBytes = Encoding.UTF8.GetBytes(plaintext);
+            // Create a byte array from the message to encrypt
+            var plaintextBytes = Encoding.UTF8.GetBytes(plaintext);
             
-			// Ciphertext will be same length in bytes as plaintext 
-			var ciphertext = new byte[plaintextBytes.Length];
-			
-			// perform the actual encryption
+            // Ciphertext will be same length in bytes as plaintext 
+            var ciphertext = new byte[plaintextBytes.Length];
+            
+            // perform the actual encryption
             aes.Encrypt(nonce, plaintextBytes, ciphertext, tag);
             return ciphertext;
         }
@@ -117,12 +117,12 @@ public static class AesGcmSimple
     {
         using(var aes = new AesGcm(key))
         {
-			// Plaintext will be same length in bytes as Ciphertext 
+            // Plaintext will be same length in bytes as Ciphertext 
             var plaintextBytes = new byte[ciphertext.Length];
-			
-			// perform the actual decryption
+            
+            // perform the actual decryption
             aes.Decrypt(nonce, ciphertext, tag, plaintextBytes);
-						
+                        
             return Encoding.UTF8.GetString(plaintextBytes);
         }
     }
@@ -135,6 +135,8 @@ public static class AesGcmSimple
 - Again, follow the algorithm guidance in the [OWASP Cryptographic Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html#algorithms).
 
 The following code snippet shows an example of using Eliptic Curve/Diffie Helman (ECDH) together with AES-GCM to perform encryption/decryption of data between two different sides without the need the transfer the symmetric key between the two sides. Instead, the sides exchange public keys and can then use ECDH to generate a shared secret which can be used for the symmetric encryption.
+
+Note that this code sample relies on the AesGcmSimple class from the [previous section](#encryption-for-storage).
 
 ```csharp
 public class ECDHSimpleTest
