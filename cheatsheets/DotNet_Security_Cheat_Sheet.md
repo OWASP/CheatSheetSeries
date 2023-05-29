@@ -243,7 +243,6 @@ public class ECDHSimple
     - In .NET Core the strongest algorithm for password hashing is PBKDF2, implemented as [Microsoft.AspNetCore.Cryptography.KeyDerivation.Pbkdf2](https://docs.microsoft.com/en-us/aspnet/core/security/data-protection/consumer-apis/password-hashing) which has several significant advantages over `Rfc2898DeriveBytes`.
     - When using a hashing function to hash non-unique inputs such as passwords, use a salt value added to the original value before hashing.
 
-
 ### General
 
 - Lock down the config file.
