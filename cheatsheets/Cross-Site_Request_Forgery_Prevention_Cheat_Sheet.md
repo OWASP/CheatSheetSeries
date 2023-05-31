@@ -61,11 +61,60 @@ Inserting the CSRF token in a custom HTTP request header via JavaScript is consi
 
 ### Double Submit Cookie
 
-If maintaining the state for CSRF token on the server is problematic, an alternative defense is to use the double submit cookie technique. This technique is easy to implement and is stateless. In this technique, we send a random value in both a cookie and as a request parameter, with the server verifying if the cookie value and request value match. When a user visits (even before authenticating to prevent login CSRF), the site should generate a (cryptographically strong) pseudorandom value and set it as a cookie on the user's machine separate from the session identifier. The site then requires that every transaction request includes this pseudorandom value as a hidden form value (or as a request parameter/header). If both of them match at server side, the server accepts it as legitimate request and if they don't, it would reject the request.
+If maintaining the state for CSRF token on the server is problematic, you can use an alternative technique known as the Double Submit Cookie pattern. This technique is easy to implement and is stateless. There are different ways to implement this technique, where the _naive_ pattern is the most commonly used variation.
 
-To enhance the security of this solution include the token in an encrypted cookie - other than the authentication cookie (since they are often shared within subdomains) - and then at the server side match it (after decrypting the encrypted cookie) with the token in hidden form field or parameter/header for AJAX calls. This works because a sub domain has no way to overwrite a properly crafted encrypted cookie without the necessary information such as encryption key.
+#### Naive Double Submit Cookie
 
-A simpler alternative to an encrypted cookie is to HMAC the token with a secret key known only by the server and place this value in a cookie. This is similar to an encrypted cookie (both require knowledge only the server holds), but is less computationally intensive than encrypting and decrypting the cookie. Whether encryption or a HMAC is used, an attacker won't be able to recreate the cookie value from the plain token without knowledge of the server secrets.
+The _Naive Double Submit Cookie_ is a scalable and easy-to-implement technique where we we send a random value in both a cookie and as a request parameter, with the server verifying if the cookie value and request value match. When a user visits (even before authenticating to prevent login CSRF), the site should generate a (ideally cryptographically strong) random value and set it as a cookie on the user's machine separate from the session identifier. The site then requires that every transaction request includes this random value as a hidden form value, or in the request header. If both of them match at server side, the server accepts it as legitimate request and if they don't, it would reject the request.
+
+In a nutshell, an attacker is unable to access the cookie value during a cross-site request. This prevents them from including a matching value in the hidden form value or as a request parameter/header.
+
+The Naive Double Submit Cookie method is a good initial step to counter CSRF attacks, but it remains vulnerable to certain attacks. [This resource](https://owasp.org/www-chapter-london/assets/slides/David_Johansson-Double_Defeat_of_Double-Submit_Cookie.pdf) provides more information on some vulnerabilities. It is therefore recommended to use a more secure implementation, the _Signed Double Submit Cookie_ pattern.
+
+#### Signed Double Submit Cookie
+
+The _Signed Double Submit Cookie_ involves a secret key known only to the server. This ensures that an attacker cannot create and inject their own, known, CSRF token into the victim's authenticated session. There are two common methods for signing tokens:
+
+- Encrypt the cookie that contains the CSRF token
+- Generate the CSRF Token using HMAC
+
+In both cases, it is recommended to bind the CSRF token with the users current session to even further enhance security.
+
+##### Encrypted CSRF Cookie
+
+Include the CSRF token in an encrypted cookie - other than the authentication cookie (since they are often shared within subdomains) - and then at the server side match it (after decrypting the encrypted cookie) with the token in hidden form field or request header for AJAX calls. This works because a sub domain has no way to overwrite a properly crafted encrypted cookie without the necessary information such as encryption key.
+
+##### HMAC CSRF Token
+
+A simpler alternative to an encrypted CSRF cookie is to use HMAC (Hash-based Message Authentication Code) to hash the random value with a secret key known only by the server and place this value in a cookie. This is similar to an encrypted cookie (both require knowledge only the server holds), but is less computationally intensive than encrypting and decrypting the cookie.
+
+We recommend generating the HMAC CSRF Token, with a session-dependent user value, using the following steps:
+
+- **A session-dependent value that changes with each login session**. This value should only be valid for the entirety of the users authenticated session. Avoid using static values like the user's email or ID, as they are not secure ([1](https://stackoverflow.com/a/8656417) | [2](https://stackoverflow.com/a/30539335) | [3](https://security.stackexchange.com/a/22936)). It's worth noting that updating the CSRF token too frequently, such as for each request, is a misconception that assumes it adds substantial security while actually harming the user experience ([1](https://security.stackexchange.com/a/22936)). For example, you could choose one of the following session-dependent values:
+  - The server-side session id (e.g. [PHP](https://www.php.net/manual/en/function.session-start.php) or [ASP.NET](https://learn.microsoft.com/en-us/previous-versions/aspnet/ms178581(v=vs.100)))
+  - A random value (e.g. UUID) within a JWT that changes every time a JWT is created
+- **A secret cryptographic key** Not to confuse with the random value from the naive implementation. This value is used to generate the HMAC hash. Ideally, store this key as an environment variable.
+- **A random value for anti-collision purposes**. Generate a random value (preferably cryptographically random) to ensure that consecutive calls within the same second do not produce the same hash ([1](https://github.com/data-govt-nz/ckanext-security/issues/23#issuecomment-479752531)).
+
+Below is an example in pseudo-code that demonstrates the implementation steps described above:
+
+```code
+// Gather the values
+secret = readEnvironmentVariable("CSRF_SECRET") // HMAC secret key
+sessionID = session.sessionID // Current authenticated user session
+randomValue = cryptographic.randomValue() // Cryptographic random value
+
+// Create the CSRF Token
+message = sessionID + "!" + randomValue // HMAC message payload
+hmac = hmac("SHA256", secret, message) // Generate the HMAC hash
+csrfToken = hmac + "." + message // Combine HMAC hash with message to generate the token. The plain message is required to later authenticate it against its HMAC hash
+
+// Store the CSRF Token in a cookie
+request.setCookie("csrf_token=" + csrfToken + "; Secure) // Set Cookie without HttpOnly flag
+```
+
+> **Should Timestamps be Included in CSRF Tokens for Expiration?**  
+> It's a common misconception to include timestamps as a value to specify the CSRF token expiration time. A CSRF Token is not an access token. They are used to verify the authenticity of requests throughout a session, using session information. A new session should generate a new token ([1](https://stackoverflow.com/a/30539335)).
 
 ### Custom Request Headers
 
