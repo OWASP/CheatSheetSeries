@@ -2287,7 +2287,7 @@ hmac = hmac(&quot;SHA256&quot;, secret, message) // Generate the HMAC hash
 csrfToken = hmac + &quot;.&quot; + message // Combine HMAC hash with message to generate the token. The plain message is required to later authenticate it against its HMAC hash
 
 // Store the CSRF Token in a cookie
-request.setCookie(&quot;csrf_token=&quot; + csrfToken + &quot;; Secure) // Set Cookie without HttpOnly flag
+response.setCookie(&quot;csrf_token=&quot; + csrfToken + &quot;; Secure) // Set Cookie without HttpOnly flag
 </code></pre></div>
 <blockquote>
 <p><strong>Should Timestamps be Included in CSRF Tokens for Expiration?</strong><br />
