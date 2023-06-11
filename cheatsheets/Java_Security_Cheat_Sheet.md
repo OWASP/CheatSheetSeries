@@ -490,3 +490,196 @@ other log viewing/analysis tools that don't expect the log data to be pre-HTML e
 - [LOG4J Appender](https://logging.apache.org/log4j/2.x/manual/appenders.html)
 - [Log Forging](https://github.com/javabeanz/owasp-security-logging/wiki/Log-Forging) - See the Logback section about the `CRLFConverter` this library provides.
 - [Usage of OWASP Security Logging with Logback](https://github.com/javabeanz/owasp-security-logging/wiki/Usage-with-Logback)
+
+## Cryptography
+
+### General cryptography guidance
+
+- **Never, ever write your own cryptographic functions.**
+- Make sure your application or protocol can easily support a future change of cryptographic algorithms.
+- Use your package manager whereever possible to keep all of your packages up to date. Watch the updates on your development setup, and plan updates to your applications accordingly.
+
+### Encryption for storage
+
+- Follow the algorithm guidance in the [OWASP Cryptographic Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html#algorithms).
+
+The following code snippet shows an example of using AES-GCM to perform encryption/decryption of data.
+
+```java
+import java.nio.charset.StandardCharsets;
+import java.security.SecureRandom;
+import javax.crypto.spec.*;
+import javax.crypto.*;
+import java.util.Base64;
+
+
+// AesGcmSimpleTest
+class Main {
+
+    public static void main(String[] args) throws Exception {
+        // Key of 32 bytes / 256 bits for AES
+        KeyGenerator keyGen = KeyGenerator.getInstance(AesGcmSimple.ALGORITHM);
+        keyGen.init(AesGcmSimple.KEY_SIZE, new SecureRandom());
+        SecretKey secretKey = keyGen.generateKey();
+
+        // Nonce of 12 bytes / 96 bits and this size should always be used.
+        byte[] nonce = new byte[AesGcmSimple.IV_LENGTH];
+        SecureRandom random = new SecureRandom();
+        random.nextBytes(nonce);
+
+        var message = "This message to be encrypted";
+        System.out.println(message);
+
+        // Encrypt the message
+        byte[] cipherText = AesGcmSimple.Encrypt(message, nonce, secretKey);
+        System.out.println(Base64.getEncoder().encodeToString(cipherText));
+
+        // Decrypt the message
+        var message2 = AesGcmSimple.Decrypt(cipherText, nonce, secretKey);
+        System.out.println(message2);
+    }
+}
+
+class AesGcmSimple {
+
+    public static final String ALGORITHM = "AES";
+    public static final String CIPHER_ALGORITHM = "AES/GCM/NoPadding";
+    public static final int KEY_SIZE = 256;
+    public static final int TAG_LENGTH = 128;
+    public static final int IV_LENGTH = 12;
+
+    public static byte[] Encrypt(String plaintext, byte[] nonce, SecretKey secretKey) throws Exception {
+        return CryptoOperation(plaintext.getBytes(StandardCharsets.UTF_8), nonce, secretKey, Cipher.ENCRYPT_MODE);
+    }
+
+    public static String Decrypt(byte[] ciphertext, byte[] nonce, SecretKey secretKey) throws Exception {
+        return new String(CryptoOperation(ciphertext, nonce, secretKey, Cipher.DECRYPT_MODE), StandardCharsets.UTF_8);
+    }
+
+    private static byte[] CryptoOperation(byte[] text, byte[] nonce, SecretKey secretKey, int mode) throws Exception {
+        Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
+        GCMParameterSpec gcmParameterSpec = new GCMParameterSpec(TAG_LENGTH, nonce);
+        cipher.init(mode, secretKey, gcmParameterSpec);
+        return cipher.doFinal(text);
+    }
+
+}
+```
+
+### Encryption for transmission
+
+- Again, follow the algorithm guidance in the [OWASP Cryptographic Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html#algorithms).
+
+The following code snippet shows an example of using Eliptic Curve/Diffie Helman (ECDH) together with AES-GCM to perform encryption/decryption of data between two different sides without the need the transfer the symmetric key between the two sides. Instead, the sides exchange public keys and can then use ECDH to generate a shared secret which can be used for the symmetric encryption.
+
+Note that this code sample relies on the AesGcmSimple class from the [previous section](#encryption-for-storage).
+
+```java
+import java.nio.charset.StandardCharsets;
+import java.security.SecureRandom;
+import javax.crypto.spec.*;
+import javax.crypto.*;
+import java.util.Base64;
+import java.security.*;
+import java.security.spec.*;
+import java.util.Arrays;
+
+// ECDHSimpleTest
+class Main {
+    public static void main(String[] args) throws Exception {
+
+        // Generate ECC key pair for Alice
+        var alice = new ECDHSimple();
+        Key alicePublicKey = alice.getPublicKey();
+
+        // Generate ECC key pair for Bob
+        var bob = new ECDHSimple();
+        Key bobPublicKey = bob.getPublicKey();
+
+        // This keypair generation shoud be reperformed every so often in order to 
+        // obtain a new shared secret to avoid a long lived shared secret.
+
+        // Alice encrypts a message to send to Bob
+        String plaintext = "Hello"; //, Bob!";
+        System.out.println("Secret being sent from Alice to Bob: " + plaintext);
+        var cipherText = alice.Encrypt(bobPublicKey, plaintext);
+        System.out.println("Ciphertext being sent from Alice to Bob: " + Base64.getEncoder().encodeToString(cipherText));
+
+
+        // Bob decrypts the message
+        var decrypted = bob.Decrypt(alicePublicKey, cipherText);
+        System.out.println("Secret received by Bob from Alice: " + decrypted);
+        System.out.println();
+
+        // Bob encrypts a message to send to Alice
+        String plaintext2 = "Hello"; //, Alice!";
+        System.out.println("Secret being sent from Bob to Alice: " + plaintext2);
+        var cipherText2 = bob.Encrypt(alicePublicKey, plaintext2);
+        System.out.println("Ciphertext being sent from Bob to Alice: " + Base64.getEncoder().encodeToString(cipherText2));
+
+        // Bob decrypts the message
+        var decrypted2 = alice.Decrypt(bobPublicKey, cipherText2);
+        System.out.println("Secret received by Alice from Bob: " + decrypted2);
+    }
+}
+class ECDHSimple {
+    private KeyPair keyPair;
+
+    public class AesKeyNonce {
+        public SecretKey Key;
+        public byte[] Nonce;
+    }
+
+    public ECDHSimple() throws Exception {
+        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("EC");
+        ECGenParameterSpec ecSpec = new ECGenParameterSpec("secp256r1"); // Using secp256r1 curve
+        keyPairGenerator.initialize(ecSpec);
+        keyPair = keyPairGenerator.generateKeyPair();
+    }
+
+    public Key getPublicKey() {
+        return keyPair.getPublic();
+    }
+
+    public byte[] Encrypt(Key partnerPublicKey, String message) throws Exception {
+
+        // Generate the AES Key and Nonce
+        AesKeyNonce aesParams = GenerateAESParams(partnerPublicKey);
+
+        // return the encrypted value
+        return AesGcmSimple.Encrypt(message, aesParams.Nonce, aesParams.Key);
+    }
+    public String Decrypt(Key partnerPublicKey, byte[] ciphertext) throws Exception {
+
+        // Generate the AES Key and Nonce
+        AesKeyNonce aesParams = GenerateAESParams(partnerPublicKey);
+
+        // return the decrypted value
+        return AesGcmSimple.Decrypt(ciphertext, aesParams.Nonce, aesParams.Key);
+    }
+
+    private AesKeyNonce GenerateAESParams(Key partnerPublicKey) throws Exception {
+
+        // Derive the secret based on this side's private key and the other side's public key 
+        KeyAgreement keyAgreement = KeyAgreement.getInstance("ECDH");
+        keyAgreement.init(keyPair.getPrivate());
+        keyAgreement.doPhase(partnerPublicKey, true);
+        byte[] shortSecret = keyAgreement.generateSecret();
+
+        // Stretch the secret to provide enough bits for both key and nonce
+        MessageDigest digest = MessageDigest.getInstance("SHA-512");
+        byte[] longerSecret = digest.digest(shortSecret);
+
+        AesKeyNonce aesKeyNonce = new AesKeyNonce();
+
+        // Copy first 32 bytes as the key
+        byte[] key = Arrays.copyOfRange(longerSecret, 0, (AesGcmSimple.KEY_SIZE / 8));
+        aesKeyNonce.Key = new SecretKeySpec(key, 0, key.length, "AES");
+
+        // Copy next 12 bytes as the nonce
+        aesKeyNonce.Nonce = Arrays.copyOfRange(longerSecret, (AesGcmSimple.KEY_SIZE / 8) + 1, (AesGcmSimple.KEY_SIZE / 8) + 1 + AesGcmSimple.IV_LENGTH);
+
+        return aesKeyNonce;
+    }
+}
+```
