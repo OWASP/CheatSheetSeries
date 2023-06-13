@@ -38,17 +38,210 @@ The .NET Framework is the set of APIs that support an advanced type system, data
 - When using SQL Server, prefer [integrated authentication](https://docs.microsoft.com/en-us/sql/connect/odbc/linux-mac/using-integrated-authentication?view=sql-server-2017) over [SQL authentication](https://docs.microsoft.com/en-us/sql/relational-databases/security/choose-an-authentication-mode?view=sql-server-2017#connecting-through-sql-server-authentication).
 - Use [Always Encrypted](https://docs.microsoft.com/en-us/sql/relational-databases/security/encryption/always-encrypted-database-engine) where possible for sensitive data (SQL Server 2016 and SQL Azure),
 
-### Encryption
+### Cryptography
 
-- **Never, ever write your own encryption.**
+#### General cryptography guidance
+
+- **Never, ever write your own cryptographic functions.**
+- Make sure your application or protocol can easily support a future change of cryptographic algorithms.
+- Use [NuGet](https://docs.microsoft.com/en-us/nuget/) to keep all of your packages up to date. Watch the updates on your development setup, and plan updates to your applications accordingly.
+
+#### Encryption for storage
+
 - Use the [Windows Data Protection API (DPAPI)](https://docs.microsoft.com/en-us/dotnet/standard/security/how-to-use-data-protection) for secure local storage of sensitive data.
+- Where DPAPI cannot be used, follow the algorithm guidance in the [OWASP Cryptographic Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html#algorithms).
+
+The following code snippet shows an example of using AES-GCM to perform encryption/decryption of data.
+
+The code is based on example from here: [https://www.scottbrady91.com/c-sharp/aes-gcm-dotnet](https://www.scottbrady91.com/c-sharp/aes-gcm-dotnet)
+
+```csharp
+// Code based on example from here:
+// https://www.scottbrady91.com/c-sharp/aes-gcm-dotnet
+
+public class AesGcmSimpleTest
+{
+    public static void Main()
+    {
+
+        // Key of 32 bytes / 256 bits for AES
+        var key = new byte[32];
+        RandomNumberGenerator.Fill(key);
+
+        // MaxSize = 12 bytes / 96 bits and this size should always be used.
+        var nonce = new byte[AesGcm.NonceByteSizes.MaxSize];
+        RandomNumberGenerator.Fill(nonce);
+
+        // Tag for authenticated encryption
+        var tag = new byte[AesGcm.TagByteSizes.MaxSize];
+
+        var message = "This message to be encrypted";
+        Console.WriteLine(message);
+
+        // Encrypt the message
+        var cipherText = AesGcmSimple.Encrypt(message, nonce, out tag, key);
+        Console.WriteLine(Convert.ToBase64String(cipherText));
+
+        // Decrypt the message
+        var message2 = AesGcmSimple.Decrypt(cipherText, nonce, tag, key);
+        Console.WriteLine(message2);
+
+
+    }
+}
+
+
+public static class AesGcmSimple
+{
+
+    public static byte[] Encrypt(string plaintext, byte[] nonce, out byte[] tag, byte[] key)
+    {
+        using(var aes = new AesGcm(key))
+        {
+            // Tag for authenticated encryption
+            tag = new byte[AesGcm.TagByteSizes.MaxSize];
+            
+            // Create a byte array from the message to encrypt
+            var plaintextBytes = Encoding.UTF8.GetBytes(plaintext);
+            
+            // Ciphertext will be same length in bytes as plaintext 
+            var ciphertext = new byte[plaintextBytes.Length];
+            
+            // perform the actual encryption
+            aes.Encrypt(nonce, plaintextBytes, ciphertext, tag);
+            return ciphertext;
+        }
+    }
+
+    public static string Decrypt(byte[] ciphertext, byte[] nonce, byte[] tag, byte[] key)
+    {
+        using(var aes = new AesGcm(key))
+        {
+            // Plaintext will be same length in bytes as Ciphertext 
+            var plaintextBytes = new byte[ciphertext.Length];
+            
+            // perform the actual decryption
+            aes.Decrypt(nonce, ciphertext, tag, plaintextBytes);
+                        
+            return Encoding.UTF8.GetString(plaintextBytes);
+        }
+    }
+}
+
+```
+
+#### Encryption for transmission
+
+- Again, follow the algorithm guidance in the [OWASP Cryptographic Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html#algorithms).
+
+The following code snippet shows an example of using Eliptic Curve/Diffie Helman (ECDH) together with AES-GCM to perform encryption/decryption of data between two different sides without the need the transfer the symmetric key between the two sides. Instead, the sides exchange public keys and can then use ECDH to generate a shared secret which can be used for the symmetric encryption.
+
+Note that this code sample relies on the AesGcmSimple class from the [previous section](#encryption-for-storage).
+
+```csharp
+public class ECDHSimpleTest
+{
+    public static void Main()
+    {
+        // Generate ECC key pair for Alice
+        var alice = new ECDHSimple();
+        byte[] alicePublicKey = alice.PublicKey;
+
+        // Generate ECC key pair for Bob
+        var bob = new ECDHSimple();
+        byte[] bobPublicKey = bob.PublicKey;
+
+        string plaintext = "Hello, Bob!";
+        Console.WriteLine("Secret being sent from Alice to Bob: " + plaintext);
+
+
+        byte[] tag;
+        var cipherText = alice.Encrypt(bobPublicKey, plaintext, out tag);
+        Console.WriteLine("Ciphertext being sent from Alice to Bob: " + Convert.ToBase64String(cipherText));
+
+        var decrypted = bob.Decrypt(alicePublicKey, cipherText, tag);
+        Console.WriteLine("Secret received by Bob from Alice: " + decrypted);
+
+        Console.WriteLine();
+
+        string plaintext2 = "Hello, Alice!";
+        Console.WriteLine("Secret being sent from Bob to Alice: " + plaintext2);
+
+        byte[] tag2;
+        var cipherText2 = bob.Encrypt(alicePublicKey, plaintext2, out tag2);
+        Console.WriteLine("Ciphertext being sent from Bob to Alice: " + Convert.ToBase64String(cipherText2));
+
+        var decrypted2 = alice.Decrypt(bobPublicKey, cipherText2, tag2);
+        Console.WriteLine("Secret received by Alice from Bob: " + decrypted2);
+    }
+}
+
+
+public class ECDHSimple
+{
+
+    private ECDiffieHellmanCng ecdh = new ECDiffieHellmanCng();
+
+    public byte[] PublicKey
+    {
+        get
+        {
+            return ecdh.PublicKey.ToByteArray();
+        }
+    }
+
+    public byte[] Encrypt(byte[] partnerPublicKey, string message, out byte[] tag)
+    {
+        // Generate the AES Key and Nonce
+        var aesParams = GenerateAESParams(partnerPublicKey);
+
+        // Tag for authenticated encryption
+        tag = new byte[AesGcm.TagByteSizes.MaxSize];
+
+        // return the encrypted value
+        return AesGcmSimple.Encrypt(message, aesParams.Nonce, out tag, aesParams.Key);
+    }
+
+
+    public string Decrypt(byte[] partnerPublicKey, byte[] ciphertext, byte[] tag)
+    {
+        // Generate the AES Key and Nonce
+        var aesParams = GenerateAESParams(partnerPublicKey);
+
+        // return the decrypted value
+        return AesGcmSimple.Decrypt(ciphertext, aesParams.Nonce, tag, aesParams.Key);
+    }
+
+    private(byte[] Key, byte[] Nonce) GenerateAESParams(byte[] partnerPublicKey)
+    {
+        // Derive the secret based on this side's private key and the other side's public key 
+        byte[] shortSecret = ecdh.DeriveKeyMaterial(CngKey.Import(partnerPublicKey, CngKeyBlobFormat.EccPublicBlob));
+        byte[] longerSecret;
+
+        // Stretch the secret to provide enough bits for both key and nonce
+        using(SHA512 sha512 = SHA512.Create())
+        {
+            longerSecret = sha512.ComputeHash(shortSecret);
+        }
+
+        byte[] aesKey = new byte[32]; // 256-bit AES key
+        Array.Copy(longerSecret, 0, aesKey, 0, 32); // Copy first 32 bytes as the key
+
+        byte[] nonce = new byte[12]; // 96-bit nonce
+        Array.Copy(longerSecret, 32, nonce, 0, 12); // Copy next 12 bytes as the nonce
+
+        return (Key: aesKey, Nonce: nonce);
+    }
+}
+```
+
+#### Hashing
+
 - Use a strong hash algorithm.
     - In .NET (both Framework and Core) the strongest hashing algorithm for general hashing requirements is [System.Security.Cryptography.SHA512](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.sha512).
     - In the .NET framework the strongest algorithm for password hashing is PBKDF2, implemented as [System.Security.Cryptography.Rfc2898DeriveBytes](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.rfc2898derivebytes).
     - In .NET Core the strongest algorithm for password hashing is PBKDF2, implemented as [Microsoft.AspNetCore.Cryptography.KeyDerivation.Pbkdf2](https://docs.microsoft.com/en-us/aspnet/core/security/data-protection/consumer-apis/password-hashing) which has several significant advantages over `Rfc2898DeriveBytes`.
     - When using a hashing function to hash non-unique inputs such as passwords, use a salt value added to the original value before hashing.
-- Make sure your application or protocol can easily support a future change of cryptographic algorithms.
-- Use [NuGet](https://docs.microsoft.com/en-us/nuget/) to keep all of your packages up to date. Watch the updates on your development setup, and plan updates to your applications accordingly.
 
 ### General
 
