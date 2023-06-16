@@ -37,6 +37,12 @@ This is all necessary to properly scope the security of an architecture. However
 
 ### Public and Private Resources
 
+Placeholder
+
+Placeholder
+
+Placeholder
+
 
 
 ### Trust Boundaries
