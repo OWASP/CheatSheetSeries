@@ -66,12 +66,12 @@ As shown in the diagram below, this example outlines a model where no component 
 
 **PICTURE HERE**
 
-This could be a necessary approach for certain applications with incredibly high risk of compromise. However, security must be careful when directing this model be used, as it will have significant performance and maintenance drawbacks. 
+This could be a necessary approach for certain applications with incredibly high risk of compromise. However, security must be careful when advocating for this model, as it will have significant performance and maintenance drawbacks. 
 
-| Pros                          | Cons                  |
+|            Pros               |         Cons          |
 |:-----------------------------:|:---------------------:|
 | High assurance data integrity | Slow and inefficient  |
-|  Defense in depth principles  |     Complicated       |
+|       Defense in depth        |      Complicated      |
 |                               | Likely more expensive |
 
 ##### 2. High trust example:
@@ -84,17 +84,24 @@ This is an unlikely architecture for all but the simplest and lowest risk applic
 | Pros      | Cons                    |
 |:---------:|:-----------------------:|
 | Efficient |        Insecure         |
-|   Simple  |        Wasteful         |
+|  Simple   |        Wasteful         |
 |           | High risk of compromise |
 
 
 ##### 3. Some trust example:
-Most applications will need trust boundary configuration like this. Using knowledge from the risk and attack surface analysis in section 1, security can reasonably assign trust to low risk components or processes, and verify only when necessary to protect business critical resources. 
+Most applications will need trust boundary configuration like this. Using knowledge from the risk and attack surface analysis in section 1, security can reasonably assign trust to low risk components or processes, and verify only when necessary to protect business critical resources. This will prevent wasting valuable security resources, but also limit the complexity and efficiency loss due to additional security overhead.
 
 **PICTURE HERE**
 
+By nature, this approach limits the pros and cons of both previous examples. This model should be used for most applications, unless the benefits of the above examples are absolutely necessary to meet business requirements.
 
-*Note: This diverges in some key ways from Zero Trust. For a more in depth look at that topic, check out [CISA's Zero Trust Maturity Model](https://www.cisa.gov/sites/default/files/2023-04/zero_trust_maturity_model_v2_508.pdf)*.
+|              Pros             |          Cons          |
+|:-----------------------------:|:----------------------:|
+|     Secured based on risk     | Known gaps in security |
+| Cost derived from criticality |                        |
+
+
+*Note: This trust methodology diverges from Zero Trust. For a more in depth look at that topic, check out [CISA's Zero Trust Maturity Model](https://www.cisa.gov/sites/default/files/2023-04/zero_trust_maturity_model_v2_508.pdf)*.
 
 
 ## Additional Resources
