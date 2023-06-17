@@ -53,7 +53,8 @@ Trust boundaries are connections between components within a system where a trus
 
 As an example of a trust boundary, consider the architecture below. An API gateway connects to multiple compute instances in a chain. Separately, there exists an authentication server, which can verify the integrity of a Json Web Token at any stage of the process. As shown by the dotted lines, trust boundaries exist between each compute component, the API gateway and the authentication server, even though many or all of the elements could be apart of the same organization's applications. 
 
-**PICTURE HERE**
+
+![Trust Boundaries](../assets/Secure_Cloud_Architecture_Trust_Boundaries_1.png)
 
 
 
@@ -64,7 +65,7 @@ In the example from the last section, the trust boundaries existed between each 
 ##### 1. No trust example:
 As shown in the diagram below, this example outlines a model where no component trusts any other component, regardless of criticality or threat level. This type of trust configuration would likely be used for incredibly high risk applications, where either very personal data or important business data would be exposed, or where the application as a whole has an extremely high criticality for the company. Notice that each component calls out to the authentication server. This implies that no data passing between each component, even when "inside" the application, is considered trusted. 
 
-**PICTURE HERE**
+![No Trust Across Boundaries](../assets/Secure_Cloud_Architecture_Trust_Boundaries_2.png)
 
 This could be a necessary approach for certain applications with incredibly high risk of compromise. However, security must be careful when advocating for this model, as it will have significant performance and maintenance drawbacks. 
 
@@ -77,7 +78,7 @@ This could be a necessary approach for certain applications with incredibly high
 ##### 2. High trust example:
 Next, consider the an opposite approach, where everything is trusted. In this instance, the "dangerous" user input is trusted and essentially handed directly to a high criticality business component. The authentication resource is not used at all. In this instance, there would be a high likelihood that an attack of some kind would occur against the system, because there are no controls in place to prevent it. Additionally, this setup could be considred wasteful, as both the API gateway and the authentication server are not necessarily performing their intended function.
 
-**PICTURE HERE**
+![Complete Trust Across Boundaries](../assets/Secure_Cloud_Architecture_Trust_Boundaries_3.png)
 
 This is an unlikely architecture for all but the simplest and lowest risk applications. **Do not use this trust boundary configuration** unless there is no sensitive content to protect or efficiency is the only metric for success. Generally speaking, trusting user input is never recommended, even in low risk applications.
 
@@ -91,7 +92,7 @@ This is an unlikely architecture for all but the simplest and lowest risk applic
 ##### 3. Some trust example:
 Most applications will need trust boundary configuration like this. Using knowledge from the risk and attack surface analysis in section 1, security can reasonably assign trust to low risk components or processes, and verify only when necessary to protect business critical resources. This will prevent wasting valuable security resources, but also limit the complexity and efficiency loss due to additional security overhead.
 
-**PICTURE HERE**
+![Some Trust Across Boundaries](../assets/Secure_Cloud_Architecture_Trust_Boundaries_4.png)
 
 By nature, this approach limits the pros and cons of both previous examples. This model should be used for most applications, unless the benefits of the above examples are absolutely necessary to meet business requirements.
 
