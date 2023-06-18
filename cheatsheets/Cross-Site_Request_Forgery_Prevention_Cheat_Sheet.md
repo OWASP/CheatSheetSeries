@@ -465,7 +465,7 @@ This code snippet has been tested with jQuery version 3.3.1.
 
 ---
 
-Collapsible Test:
+Collapsible Test 1:
 
 !!! info end "Lorem ipsum"
 
@@ -474,3 +474,22 @@ Collapsible Test:
     Curabitur feugiat, tortor non consequat
     finibus, justo purus auctor massa, nec
     semper lorem quam in massa.
+
+Collapsible Test 2:
+
+<details>
+  <summary>Click me</summary>
+  
+  ### Heading
+  1. Foo
+  2. Bar
+     * Baz
+     * Qux
+
+  ### Some Code
+  ```js
+  function logSomething(something) {
+    console.log('Something', something);
+  }
+  ```
+</details>
