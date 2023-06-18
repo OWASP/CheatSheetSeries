@@ -61,3 +61,6 @@ markdown_extensions:
       emoji_generator: !!python/name:pymdownx.emoji.to_svg
   - toc:
       permalink: true
+  - admonition
+  - pymdownx.details # Required for admonition
+  - pymdownx.superfences # Required for admonition
