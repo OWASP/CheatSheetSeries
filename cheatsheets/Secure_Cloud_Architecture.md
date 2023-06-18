@@ -5,15 +5,6 @@
 This cheat sheet will discuss common and necessary security patterns to follow when creating and reviewing **cloud architectures.** Each section will cover a specific security guideline or cloud design decision to consider. This sheet is written from a medium to large scale enterprise system, so additional overhead elements will be discussed, which may be unecessary for smaller organizations.
 
 
-### Table of Contents
-- Risk Analysis, Threat Modeling, and Attack Surface Modeling
-- Public and Private Resources
-- Trust Boundaries
-- Security Tooling
-- Tooling Limitations
-- Managed vs Un-Managed Tooling
-
-- TODO Additional Resources
 
 
 ## General Guidelines
@@ -36,6 +27,17 @@ This is all necessary to properly scope the security of an architecture. However
 
 
 ### Public and Private Resources
+Cloud resources often have public and private configuration settings, which while flexible, can lead to common pitfalls for developing secure cloud architectures. Generally speaking, resources should be configured for private use with dedicated public connections points for internet access.  
+
+#### Object Storage
+Options 
+
+
+#### VPC and Subnet
+
+
+#### Public vs Private compute?
+
 
 Placeholder
 
@@ -63,11 +65,11 @@ In the example from the last section, the trust boundaries existed between each 
 
 
 ##### 1. No trust example:
-As shown in the diagram below, this example outlines a model where no component trusts any other component, regardless of criticality or threat level. This type of trust configuration would likely be used for incredibly high risk applications, where either very personal data or important business data would be exposed, or where the application as a whole has an extremely high criticality for the company. Notice that each component calls out to the authentication server. This implies that no data passing between each component, even when "inside" the application, is considered trusted. 
+As shown in the diagram below, this example outlines a model where no component trusts any other component, regardless of criticality or threat level. This type of trust configuration would likely be used for incredibly high risk applications, where either very personal data or important business data would be exposed, or where the application as a whole has an extremely high criticality for the company. Notice that each component calls out to the authentication server. This implies that no data passing between each component, even when "inside" the application, is considered trusted. Additionally, notice that there isn't trust between the authentication server and each component. While not displayed in the diagram, this would have additional impacts, like more rigorous checks before authentication, and more overhead dedicated to cryptographic operations.
 
 ![No Trust Across Boundaries](../assets/Secure_Cloud_Architecture_Trust_Boundaries_2.png)
 
-This could be a necessary approach for certain applications with incredibly high risk of compromise. However, security must be careful when advocating for this model, as it will have significant performance and maintenance drawbacks. 
+This could be a necessary approach for certain applications with incredibly high risk of compromise or highly valuable data, such as those found in financial, military or energy systems. However, security must be careful when advocating for this model, as it will have significant performance and maintenance drawbacks. 
 
 |            Pros               |         Cons          |
 |:-----------------------------:|:---------------------:|
@@ -103,6 +105,21 @@ By nature, this approach limits the pros and cons of both previous examples. Thi
 
 
 *Note: This trust methodology diverges from Zero Trust. For a more in depth look at that topic, check out [CISA's Zero Trust Maturity Model](https://www.cisa.gov/sites/default/files/2023-04/zero_trust_maturity_model_v2_508.pdf)*.
+
+
+### Security Tooling
+
+
+
+
+### Cloud Offering Limitations
+
+
+
+
+### Managed vs Un-Managed Tooling
+
+
 
 
 ## Additional Resources
