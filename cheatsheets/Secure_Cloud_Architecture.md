@@ -27,11 +27,47 @@ This is all necessary to properly scope the security of an architecture. However
 
 
 ### Public and Private Resources
-Cloud resources often have public and private configuration settings, which while flexible, can lead to common pitfalls for developing secure cloud architectures. Generally speaking, resources should be configured for private use with dedicated public connections points for internet access.  
+Cloud resources often have public and private configuration settings, which while flexible, can lead to common pitfalls for developing secure cloud architectures. Generally speaking, resources should be configured for private use with dedicated public connections points for internet access. 
 
 #### Object Storage
-Options 
+Object storage usually has multiple options for access data:
 
+- Accessing resources using built in Identity and Access Management policies
+- Using cryptographically signed URLs and HTTP request
+- Direct access with public storage
+
+
+##### IAM Access
+This method involves using other tooling, like a website hosted on the cloud service, to interact with the object storage on the user's behalf. This method is best used when the application has other user interfaces available, when it is important to hide as much of the storage system as possible, or when the information is not direct user assets (metadata). It can be used in combination with web authentication and logging to better track and control access to resources.
+
+|                 Pros                 |                  Cons                  |
+|:------------------------------------:|:--------------------------------------:|
+|       No direct access to table      |    Potential use of broad IAM policy   |
+| No user visibility to object storage | Possibility to inject into custom code |
+|   Identifiable and loggable access   |                                        |
+
+This approach is acceptable for sensitive user data, but must follow rigorous coding and cloud best practices, in order to properly secure data.
+
+
+##### Signed URLs
+URL Signing for object storage involves using some method or either statically or dynamically generating URLs, which cryptographically guarantee that an entity can access a resource in storage. This is best used when direct access to specific user files is necessary or preferred, as there is no file transfer overhead. It is advisable to only use this method for user data which is not very sensitive. This method can be secure, but falls into some interesting pitfalls. Code injection may still be possible if the method of URL generation is custom, dynamic and injectable, and anyone can access the resource anonymously, if given the URL. 
+
+
+|                    Pros                   |                  Cons                  |
+|:-----------------------------------------:|:--------------------------------------:|
+|        Access to only one resource        |            Anonymous Access            |
+| Minimal user visibility to object storage |       Anyone can access with URL       |
+|           Efficient file transfer         | Possibility to inject into custom code |
+
+##### Public Object Storage
+
+**This is not an advisable method for resource storage and distribution**, and should only be used for public, non-sensitive, non-specific resources. This storage approach will provide threat actors additional reconnaissance into a cloud environment, and any data which is stored in this configuration for any period of time must be considered publicly available.
+
+|                 Pros                |                     Cons                     |
+|:-----------------------------------:|:--------------------------------------------:|
+| Efficient access to many resources  |         Anyone can access/No privacy         |
+|       Simple public file share      |            Direct Access to table            |
+|                                     | Possibly leak info mistakenly put in storage |
 
 #### VPC and Subnet
 
