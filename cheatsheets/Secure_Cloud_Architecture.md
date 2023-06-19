@@ -2,10 +2,7 @@
 
 ## Introduction
 
-This cheat sheet will discuss common and necessary security patterns to follow when creating and reviewing **cloud architectures.** Each section will cover a specific security guideline or cloud design decision to consider. This sheet is written from a medium to large scale enterprise system, so additional overhead elements will be discussed, which may be unecessary for smaller organizations.
-
-
-
+This cheat sheet will discuss common and necessary security patterns to follow when creating and reviewing cloud architectures. Each section will cover a specific security guideline or cloud design decision to consider. This sheet is written from a medium to large scale enterprise system, so additional overhead elements will be discussed, which may be unecessary for smaller organizations.
 
 ## General Guidelines
 
@@ -134,10 +131,10 @@ Most applications will need trust boundary configuration like this. Using knowle
 
 By nature, this approach limits the pros and cons of both previous examples. This model should be used for most applications, unless the benefits of the above examples are absolutely necessary to meet business requirements.
 
-|              Pros             |          Cons          |
-|:-----------------------------:|:----------------------:|
-|     Secured based on risk     | Known gaps in security |
-| Cost derived from criticality |                        |
+|                   Pros                   |          Cons          |
+|:----------------------------------------:|:----------------------:|
+|           Secured based on risk          | Known gaps in security |
+| Cost/Efficiency derived from criticality |                        |
 
 
 *Note: This trust methodology diverges from Zero Trust. For a more in depth look at that topic, check out [CISA's Zero Trust Maturity Model](https://www.cisa.gov/sites/default/files/2023-04/zero_trust_maturity_model_v2_508.pdf)*.
@@ -145,6 +142,58 @@ By nature, this approach limits the pros and cons of both previous examples. Thi
 
 ### Security Tooling
 
+#### Web Application Firewall
+Web application firewalls (WAF) are used to monitor or block common attack payloads (like [XSS](https://owasp.org/www-community/attacks/xss/) and [SQLi](https://owasp.org/www-community/attacks/SQL_Injection)), or allow only specific request types and patterns. Applications should use them as a first line of defense, attaching them to entry points like load balancers or API gateways, to handle potentially malicious content before it reaches application code. Cloud providers curate base rule sets which will allow blocking or monitoring of common malicious payloads:
+
+- [AWS Managed Rules](https://docs.aws.amazon.com/waf/latest/developerguide/aws-managed-rule-groups-list.html)
+- [GCP WAF Rules](https://cloud.google.com/armor/docs/waf-rules)
+- [Azure Core Rule Sets](https://learn.microsoft.com/en-us/azure/web-application-firewall/ag/application-gateway-crs-rulegroups-rules?tabs=owasp32)
+
+By design these rule sets are generic and will not cover every attack type an application will face. Consider creating custom rules which will fit the application's specific security needs, like:
+
+- Filtering routes to acceptable endpoints (block web scraping)
+- Adding specific protections for application technologies around key endpoints
+- Rate limit sensitive APIs
+
+#### Logging & Monitoring
+Logging and monitoring is required for a truly secure application. Developers should know exactly what is going on in their environment, making use of alerting mechanisms to warn engineers when systems are not working as expected. Additionally, in the event of a security incident, logging should be verbose enough to track a threat actor through an entire application, and provide enough knowledge for respondents to understand what actions were taken against what resources. Note that proper logging and monitoring can be expensive, and risk/cost trade-offs should be discussed when putting incredibly verbose logging in place.
+
+##### Logging
+Proper logging will have the following:
+
+- All [layer 7](https://en.wikipedia.org/wiki/OSI_model) calls logged with headers, caller metadata, and responses
+  - Payloads may not be logged depending on where logging occurs (before TLS termination) and the sensitivity of data
+- All internal actions logged with user and permission information
+- Trace Ids sent through the entire request lifecycle to track errors or malicious actions
+- Sensitive data masked or removed
+  - SSNs, sensitive health information, and other PII should not be stored in logs
+
+*Appropriate/relevant legal and compliance representatives should weigh in on log retention times for the specific application.*
+
+
+##### Monitoring
+Proper monitoring will have the following (percentages chosen based off risk and team response capacity):
+
+- Anomaly alerts: 
+  - HTTP 4xx and 5xx errors above a percent of normal
+  - Memory, storage or CPU usage above/below percent of normal
+  - Database writes/reads above/below percent of normal
+  - Serverless compute invocations above percent of normal
+- Alerting for failed health checks
+- Alerting for deployment errors or container on/off cycling
+- Alerts or cutoffs for cost limits
+
+WAFs can also have monitoring or alerting attached to them for counting malicious payloads or (in some cases) anomalous activity detection.
+
+#### DDoS Protection
+
+Cloud service companies offer a range of simple and advanced DDoS protection products, depending on application needs. Simple DDOS protection can often be employed using WAFs with rate limits and route blocking rules, while more advanced protection may require specific managed tooling offered by the cloud provider. Examples include:
+
+- [AWS Shield](https://aws.amazon.com/shield/)
+- [GCP Cloud Armor Managed Protection](https://cloud.google.com/armor/docs/managed-protection-overview)
+- [Azure DDoS Protection](https://learn.microsoft.com/en-us/azure/ddos-protection/ddos-protection-overview)
+
+The decision to enable advanced DDoS protections for a specific application should be based off risk and business criticality of application, taking into account mitigating factors and cost (these services can be very inexpensive compared to large company budgets).
 
 
 
@@ -155,7 +204,10 @@ By nature, this approach limits the pros and cons of both previous examples. Thi
 
 ### Managed vs Un-Managed Tooling
 
+#### Updates
 
+
+#### 
 
 
 ## Additional Resources
