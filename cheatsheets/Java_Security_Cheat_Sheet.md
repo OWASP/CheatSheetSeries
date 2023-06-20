@@ -497,11 +497,100 @@ other log viewing/analysis tools that don't expect the log data to be pre-HTML e
 
 - **Never, ever write your own cryptographic functions.**
 - Make sure your application or protocol can easily support a future change of cryptographic algorithms.
-- Use your package manager whereever possible to keep all of your packages up to date. Watch the updates on your development setup, and plan updates to your applications accordingly.
+- Use your package manager wherever possible to keep all of your packages up to date. Watch the updates on your development setup, and plan updates to your applications accordingly.
+- Wherever possible, use a trusted and well known implementation library rather than using the libraries built into JCA/JCE as it is far too easy to make cryptographic errors with them.
+- We will show examples below based on Google Tink which is an opinionated library for performing encryption operations.
 
 ### Encryption for storage
 
 Follow the algorithm guidance in the [OWASP Cryptographic Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html#algorithms).
+
+#### Using Google Tink
+
+Google Tink has documentation on performing common tasks.
+
+For example, this page shows how to perform simple symmetric encryption:
+
+[Simple Symmetric Encryption](https://developers.google.com/tink/encrypt-data) (From Google's website)
+
+The following code snippet shows a simpler implementation of this functionality:
+
+<details>
+  <summary>Click here to expand the code snippet</summary>
+
+``` java
+package com.josh.SymmetricTink;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+
+import com.google.crypto.tink.Aead;
+import com.google.crypto.tink.InsecureSecretKeyAccess;
+import com.google.crypto.tink.KeysetHandle;
+import com.google.crypto.tink.TinkJsonProtoKeysetFormat;
+import com.google.crypto.tink.aead.AeadConfig;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Base64;
+
+// AesGcmSimpleTest
+public class App {
+
+    // Based on example from:
+    // https://github.com/tink-crypto/tink-java/tree/main/examples/aead
+
+    public static void main(String[] args) throws Exception {
+        
+        // Key securely generated using:
+        // tinkey create-keyset --key-template AES128_GCM --out-format JSON --out aead_test_keyset.json
+          
+          
+          
+        // Register all AEAD key types with the Tink runtime.
+        AeadConfig.register();
+      
+        // Read the keyset into a KeysetHandle.
+        KeysetHandle handle =
+        TinkJsonProtoKeysetFormat.parseKeyset(
+            new String(Files.readAllBytes( Paths.get("/home/josh/aead_test_keyset.json")), UTF_8), InsecureSecretKeyAccess.get());
+
+        String message = "This message to be encrypted";
+        System.out.println(message);
+
+        String metadata = "Info about message";
+
+        // Encrypt the message
+        byte[] cipherText = AesGcmSimple.encrypt(message, metadata, handle);
+        System.out.println(Base64.getEncoder().encodeToString(cipherText));
+
+        // Decrypt the message
+        String message2 = AesGcmSimple.decrypt(cipherText, metadata, handle);
+        System.out.println(message2);
+    }
+}
+
+class AesGcmSimple {
+
+    public static byte[] encrypt(String plaintext, String metadata, KeysetHandle handle) throws Exception {
+        // Get the primitive.
+        Aead aead = handle.getPrimitive(Aead.class);
+        return aead.encrypt(plaintext.getBytes(UTF_8), metadata.getBytes(UTF_8));
+    }
+
+    public static String decrypt(byte[] ciphertext, String metadata, KeysetHandle handle) throws Exception {
+        // Get the primitive.
+        Aead aead = handle.getPrimitive(Aead.class);
+        return new String(aead.decrypt(ciphertext, metadata.getBytes(UTF_8)),UTF_8);
+    }
+
+}
+
+```
+</details>
+
+#### Example using built in JCA/JCE classes.
+
+If you absolutely cannot use a separate library, it is still possible to use the built JCA/JCE classes but it is strongly recommended to have a cryptography expert review the full design and code.
 
 The following code snippet shows an example of using AES-GCM to perform encryption/decryption of data.
 
