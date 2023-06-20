@@ -217,17 +217,12 @@ The decision to enable advanced DDoS protections for a specific application shou
 
 
 
-## Cloud Offering Limitations
-
-
-
-
 ## Managed vs Un-Managed Tooling
 
 ### Updates
 
 
-### 
+### Security pros and cons of managed services (dynamo vs RDS
 
 
 ## Additional Resources
