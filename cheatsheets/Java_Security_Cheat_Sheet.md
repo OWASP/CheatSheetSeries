@@ -496,6 +496,7 @@ other log viewing/analysis tools that don't expect the log data to be pre-HTML e
 ### General cryptography guidance
 
 - **Never, ever write your own cryptographic functions.**
+- Wherever possible, try and avoid writing any cryptographic code at all. Instead try and either use pre-existing secret management solutions or the secret management solution provided by your cloud provider. For more information, see the [OWASP Secrets Management Cheat Sheet](/Secrets_Management_Cheat_Sheet).
 - Make sure your application or protocol can easily support a future change of cryptographic algorithms.
 - Use your package manager wherever possible to keep all of your packages up to date. Watch the updates on your development setup, and plan updates to your applications accordingly.
 - Wherever possible, use a trusted and well known implementation library rather than using the libraries built into JCA/JCE as it is far too easy to make cryptographic errors with them.
@@ -505,7 +506,7 @@ other log viewing/analysis tools that don't expect the log data to be pre-HTML e
 
 Follow the algorithm guidance in the [OWASP Cryptographic Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html#algorithms).
 
-#### Using Google Tink
+#### Symmetric example using Google Tink
 
 Google Tink has documentation on performing common tasks.
 
@@ -513,14 +514,12 @@ For example, this page shows how to perform simple symmetric encryption:
 
 [Simple Symmetric Encryption](https://developers.google.com/tink/encrypt-data) (From Google's website)
 
-The following code snippet shows a simpler implementation of this functionality:
+The following code snippet shows an encapsulated use of this functionality:
 
 <details>
   <summary>Click here to expand the code snippet</summary>
 
 ``` java
-package com.josh.SymmetricTink;
-
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 import com.google.crypto.tink.Aead;
@@ -588,11 +587,17 @@ class AesGcmSimple {
 ```
 </details>
 
-#### Example using built in JCA/JCE classes.
+#### Symmetric example using built in JCA/JCE classes.
 
 If you absolutely cannot use a separate library, it is still possible to use the built JCA/JCE classes but it is strongly recommended to have a cryptography expert review the full design and code.
 
 The following code snippet shows an example of using AES-GCM to perform encryption/decryption of data.
+
+A few contraints/pitfalls with this code:
+
+- It does not take into account key rotation or management which is a whole topic in itself.
+- It is important to use a different nonce for every encryption operation, even if the same key is used.
+- The key will need to be stored securely.
 
 <details>
   <summary>Click here to expand the code snippet</summary>
@@ -664,9 +669,160 @@ class AesGcmSimple {
 
 Again, follow the algorithm guidance in the [OWASP Cryptographic Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html#algorithms).
 
+#### Asymmetric example using Google Tink
+
+Google Tink has documentation on performing common tasks.
+
+For example, this page shows how to perform a hybrid encryption process where two parties want to share data based on their asymmetric key pairs:
+
+[Simple Asymmetric Encryption](https://developers.google.com/tink/encrypt-data) (From Google's website)
+
+The following code snippet shows how this functionality can be used to share secrets between Alice and Bob:
+
+<details>
+  <summary>Click here to expand the code snippet</summary>
+
+``` java
+import static java.nio.charset.StandardCharsets.UTF_8;
+
+import com.google.crypto.tink.HybridDecrypt;
+import com.google.crypto.tink.HybridEncrypt;
+import com.google.crypto.tink.InsecureSecretKeyAccess;
+import com.google.crypto.tink.KeysetHandle;
+import com.google.crypto.tink.TinkJsonProtoKeysetFormat;
+import com.google.crypto.tink.hybrid.HybridConfig;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Base64;
+
+// HybridReplaceTest
+class App {
+    public static void main(String[] args) throws Exception {
+        /*
+
+        Generated public/private keypairs for Alice and Bob using the
+        following tinkey commands:
+
+        ./tinkey create-keyset \
+        --key-template DHKEM_X25519_HKDF_SHA256_HKDF_SHA256_AES_256_GCM \
+        --out-format JSON --out alice_private_keyset.json
+
+        ./tinkey create-keyset \
+        --key-template DHKEM_X25519_HKDF_SHA256_HKDF_SHA256_AES_256_GCM \
+        --out-format JSON --out bob_private_keyset.json
+
+        ./tinkey create-public-keyset --in alice_private_keyset.json \
+        --in-format JSON --out-format JSON --out alice_public_keyset.json
+
+        ./tinkey create-public-keyset --in bob_private_keyset.json \
+        --in-format JSON --out-format JSON --out bob_public_keyset.json
+        */
+
+        HybridConfig.register();
+
+        // Generate ECC key pair for Alice
+        var alice = new HybridSimple(
+                getKeysetHandle("/home/josh/alice_private_keyset.json"),
+                getKeysetHandle("/home/josh/alice_public_keyset.json")
+
+        );
+
+        KeysetHandle alicePublicKey = alice.getPublicKey();
+
+        // Generate ECC key pair for Bob
+        var bob = new HybridSimple(
+                getKeysetHandle("/home/josh/bob_private_keyset.json"),
+                getKeysetHandle("/home/josh/bob_public_keyset.json")
+
+        );
+
+        KeysetHandle bobPublicKey = bob.getPublicKey();
+
+        // This keypair generation shoud be reperformed every so often in order to
+        // obtain a new shared secret to avoid a long lived shared secret.
+
+        // Alice encrypts a message to send to Bob
+        String plaintext = "Hello, Bob!";
+        String metadata = "Info about the message";
+
+        System.out.println("Secret being sent from Alice to Bob: " + plaintext);
+        var cipherText = alice.encrypt(bobPublicKey, plaintext, metadata);
+        System.out.println("Ciphertext being sent from Alice to Bob: " + Base64.getEncoder().encodeToString(cipherText));
+
+
+        // Bob decrypts the message
+        var decrypted = bob.decrypt(cipherText, metadata);
+        System.out.println("Secret received by Bob from Alice: " + decrypted);
+        System.out.println();
+
+        // Bob encrypts a message to send to Alice
+        String plaintext2 = "Hello, Alice!";
+        System.out.println("Secret being sent from Bob to Alice: " + plaintext2);
+        var cipherText2 = bob.encrypt(alicePublicKey, plaintext2, metadata);
+        System.out.println("Ciphertext being sent from Bob to Alice: " + Base64.getEncoder().encodeToString(cipherText2));
+
+        // Bob decrypts the message
+        var decrypted2 = alice.decrypt(cipherText2, metadata);
+        System.out.println("Secret received by Alice from Bob: " + decrypted2);
+    }
+
+    private static KeysetHandle getKeysetHandle(String filename) throws Exception
+    {
+        return TinkJsonProtoKeysetFormat.parseKeyset(
+                new String(Files.readAllBytes( Paths.get(filename)), UTF_8), InsecureSecretKeyAccess.get());
+    }
+}
+class HybridSimple {
+
+    private KeysetHandle privateKey;
+    private KeysetHandle publicKey;
+
+
+    public HybridSimple(KeysetHandle privateKeyIn, KeysetHandle publicKeyIn) throws Exception {
+        privateKey = privateKeyIn;
+        publicKey = publicKeyIn;
+    }
+
+    public KeysetHandle getPublicKey() {
+        return publicKey;
+    }
+
+    public byte[] encrypt(KeysetHandle partnerPublicKey, String message, String metadata) throws Exception {
+
+        HybridEncrypt encryptor = partnerPublicKey.getPrimitive(HybridEncrypt.class);
+
+        // return the encrypted value
+        return encryptor.encrypt(message.getBytes(UTF_8), metadata.getBytes(UTF_8));
+    }
+    public String decrypt(byte[] ciphertext, String metadata) throws Exception {
+
+        HybridDecrypt decryptor = privateKey.getPrimitive(HybridDecrypt.class);
+
+        // return the encrypted value
+        return new String(decryptor.decrypt(ciphertext, metadata.getBytes(UTF_8)),UTF_8);
+    }
+
+
+}
+```
+</details>
+
+#### Asymmetric example using built in JCA/JCE classes.
+
+If you absolutely cannot use a separate library, it is still possible to use the built JCA/JCE classes but it is strongly recommended to have a cryptography expert review the full design and code.
+
 The following code snippet shows an example of using Eliptic Curve/Diffie Helman (ECDH) together with AES-GCM to perform encryption/decryption of data between two different sides without the need the transfer the symmetric key between the two sides. Instead, the sides exchange public keys and can then use ECDH to generate a shared secret which can be used for the symmetric encryption.
 
-Note that this code sample relies on the AesGcmSimple class from the [previous section](#encryption-for-storage).
+Note that this code sample relies on the AesGcmSimple class from the [previous section](#symmetric-example-using-built-in-jcajce-classes).
+
+A few contraints/pitfalls with this code:
+
+- It does not take into account key rotation or management which is a whole topic in itself.
+- The code deliberately enforces a new nonce for every encryption operation but this must be managed as a separate data item alongside the ciphertext.
+- The private keys will need to be stored securely.
+- The code does not consider the validation of public keys before use.
+- Overall, there is no verification of authenticity between the two sides.  
 
 <details>
   <summary>Click here to expand the code snippet</summary>
