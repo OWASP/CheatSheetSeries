@@ -80,7 +80,7 @@ Consider the simple architecture diagram below. A VPC will house all of the comp
 2. This gateway connects to a load balancer or a web server in a public subnet. Both components provide public facing functions and are secured accordingly.
 3. These components then interact with their appropriate backend counterparts, a database or backend server, contained in a private VPC. This connections are more limited, preventing extraneous access to potentially more "soft" backend systems.
 
-![VPC Diagram]("../assets/Secure_Cloud_Architecture_VPC.png")
+![VPC Diagram](../assets/Secure_Cloud_Architecture_VPC.png)
 
 **Note: This photo intentionally leaves off routing elements that would be necessary for interfacing between subnets, for simplicity and to be service provider agnostic.
 
