@@ -438,7 +438,7 @@ logger.info(logMessage);
 
 #### Example using Logback with the OWASP Security Logging library
 
-Configuration of a logging policy to roll on 10 files of 5MB each, and encode/limit the log message using the [CRLFConverter](https://github.com/javabeanz/owasp-security-logging/wiki/Log-Forging), provided by the [OWASP Security Logging Project](https://owasp.org/www-project-security-logging/), and the *-500msg* message size limit:
+Configuration of a logging policy to roll on 10 files of 5MB each, and encode/limit the log message using the [CRLFConverter](https://github.com/augustd/owasp-security-logging/wiki/Log-Forging), provided by the **no longer active** [OWASP Security Logging Project](https://github.com/augustd/owasp-security-logging/wiki), and the *-500msg* message size limit:
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -467,7 +467,7 @@ Configuration of a logging policy to roll on 10 files of 5MB each, and encode/li
 </configuration>
 ```
 
-You also have to add the [OWASP Security Logging](https://github.com/javabeanz/owasp-security-logging/wiki/Usage-with-Logback) dependency to your project.
+You also have to add the [OWASP Security Logging](https://github.com/augustd/owasp-security-logging/wiki/Usage-with-Logback) dependency to your project.
 
 Usage of the logger at code level:
 
