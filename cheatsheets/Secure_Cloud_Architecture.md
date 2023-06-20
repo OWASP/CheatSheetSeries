@@ -67,7 +67,27 @@ URL Signing for object storage involves using some method or either statically o
 |                                     | Possibly leak info mistakenly put in storage |
 
 #### VPC and Subnet
+Virtual Private Clouds (VPC) and public/private network subnets allow an application and its network to be segmented into distinct chunks, adding layers of security within a cloud system. Unlike other private vs public trade-offs, an application will likely incorporate most or all of these components in a mature architecture. Each is explained below:
 
+- VPC's are used to create network boundaries within an application, where-in components can talk to each other, much like a physical network in a data center. The VPC will be made up of some number of subnets, both public and private.
+- Public subnets house components which will have an internet facing presence. The subnet will contain network routing elements to allow components within the subnet to connect directly to the internet.
+- Private subnets house components which should not have direct internet access. The subnet will likely contain network routing to connect it to public subnets, to receive internet traffic in a structured and protected way.
+
+
+Consider the simple architecture diagram below. A VPC will house all of the components for the application, but elements will be in a specific subnet depending on their role within the system. The normal flow for an interaction with this application might look like:
+
+1. Access to the application through some sort of internet gateway, API gateway or other internet facing component.
+2. This gateway connects to a load balancer or a web server in a public subnet. Both components provide public facing functions and are secured accordingly.
+3. These components then interact with their appropriate backend counterparts, a database or backend server, contained in a private VPC. This connections are more limited, preventing extraneous access to potentially more "soft" backend systems.
+
+![VPC Diagram]("../assets/Secure_Cloud_Architecture_VPC.png")
+
+**Note: This photo intentionally leaves off routing elements that would be necessary for interfacing between subnets, for simplicity and to be service provider agnostic.
+
+This architecture prevents less hardened backend components or higher risk services like databases from being exposed to the internet directly. It also provides common, public functionality access to the internet to avoid additional routing overhead. This architecture can be secured more easily by focusing on security at the entry points and separating functionality, putting non-public or sensitive information inside a private subnet where it can't be accessed easily by external parties.
+
+
+##### VPC 
 
 #### Public vs Private compute?
 
