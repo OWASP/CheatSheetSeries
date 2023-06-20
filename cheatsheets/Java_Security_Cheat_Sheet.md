@@ -532,11 +532,11 @@ class Main {
         System.out.println(message);
 
         // Encrypt the message
-        byte[] cipherText = AesGcmSimple.Encrypt(message, nonce, secretKey);
+        byte[] cipherText = AesGcmSimple.encrypt(message, nonce, secretKey);
         System.out.println(Base64.getEncoder().encodeToString(cipherText));
 
         // Decrypt the message
-        var message2 = AesGcmSimple.Decrypt(cipherText, nonce, secretKey);
+        var message2 = AesGcmSimple.decrypt(cipherText, nonce, secretKey);
         System.out.println(message2);
     }
 }
@@ -549,15 +549,15 @@ class AesGcmSimple {
     public static final int TAG_LENGTH = 128;
     public static final int IV_LENGTH = 12;
 
-    public static byte[] Encrypt(String plaintext, byte[] nonce, SecretKey secretKey) throws Exception {
-        return CryptoOperation(plaintext.getBytes(StandardCharsets.UTF_8), nonce, secretKey, Cipher.ENCRYPT_MODE);
+    public static byte[] encrypt(String plaintext, byte[] nonce, SecretKey secretKey) throws Exception {
+        return cryptoOperation(plaintext.getBytes(StandardCharsets.UTF_8), nonce, secretKey, Cipher.ENCRYPT_MODE);
     }
 
-    public static String Decrypt(byte[] ciphertext, byte[] nonce, SecretKey secretKey) throws Exception {
-        return new String(CryptoOperation(ciphertext, nonce, secretKey, Cipher.DECRYPT_MODE), StandardCharsets.UTF_8);
+    public static String decrypt(byte[] ciphertext, byte[] nonce, SecretKey secretKey) throws Exception {
+        return new String(cryptoOperation(ciphertext, nonce, secretKey, Cipher.DECRYPT_MODE), StandardCharsets.UTF_8);
     }
 
-    private static byte[] CryptoOperation(byte[] text, byte[] nonce, SecretKey secretKey, int mode) throws Exception {
+    private static byte[] cryptoOperation(byte[] text, byte[] nonce, SecretKey secretKey, int mode) throws Exception {
         Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
         GCMParameterSpec gcmParameterSpec = new GCMParameterSpec(TAG_LENGTH, nonce);
         cipher.init(mode, secretKey, gcmParameterSpec);
