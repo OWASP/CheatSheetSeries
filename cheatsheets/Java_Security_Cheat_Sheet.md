@@ -56,8 +56,6 @@ try (Connection con = DriverManager.getConnection(jdbcUrl)) {
             }
         }
     }
-    Assert.assertEquals(1, colors.size());
-    Assert.assertTrue(colors.contains("yellow"));
 
     /* Sample B: Insert data using Prepared Statement*/
     query = "insert into color(friendly_name, red, green, blue) values(?, ?, ?, ?)";
@@ -69,8 +67,7 @@ try (Connection con = DriverManager.getConnection(jdbcUrl)) {
         pStatement.setInt(4, 11);
         insertedRecordCount = pStatement.executeUpdate();
     }
-    Assert.assertEquals(1, insertedRecordCount);
-
+ 
    /* Sample C: Update data using Prepared Statement*/
     query = "update color set blue = ? where friendly_name = ?";
     int updatedRecordCount;
@@ -79,7 +76,6 @@ try (Connection con = DriverManager.getConnection(jdbcUrl)) {
         pStatement.setString(2, "orange");
         updatedRecordCount = pStatement.executeUpdate();
     }
-    Assert.assertEquals(1, updatedRecordCount);
 
    /* Sample D: Delete data using Prepared Statement*/
     query = "delete from color where friendly_name = ?";
@@ -88,7 +84,6 @@ try (Connection con = DriverManager.getConnection(jdbcUrl)) {
         pStatement.setString(1, "orange");
         deletedRecordCount = pStatement.executeUpdate();
     }
-    Assert.assertEquals(1, deletedRecordCount);
 
 }
 ```
@@ -122,12 +117,6 @@ try {
     Query queryObject = entityManager.createQuery(queryPrototype);
     Color c = (Color) queryObject.setParameter("colorName", "yellow").getSingleResult();
 
-    /* Ensure that the object obtained is the right one */
-    Assert.assertNotNull(c);
-    Assert.assertEquals(c.getFriendlyName(), "yellow");
-    Assert.assertEquals(c.getRed(), 213);
-    Assert.assertEquals(c.getGreen(), 242);
-    Assert.assertEquals(c.getBlue(), 26);
 } finally {
     if (entityManager != null && entityManager.isOpen()) {
         entityManager.close();
@@ -156,7 +145,7 @@ Use technology stack **API** in order to prevent injection.
 * The prevention is to use the feature provided by the Java API instead of building
 * a system command as String and execute it */
 InetAddress host = InetAddress.getByName("localhost");
-Assert.assertTrue(host.isReachable(5000));
+var reachable = host.isReachable(5000);
 ```
 
 #### References
@@ -234,10 +223,8 @@ XPathExpression xPathExpression = xpath.compile("//book[@id=$bookId]");
 /* Apply expression on XML document */
 Object nodes = xPathExpression.evaluate(doc, XPathConstants.NODESET);
 NodeList nodesList = (NodeList) nodes;
-Assert.assertNotNull(nodesList);
-Assert.assertEquals(1, nodesList.getLength());
 Element book = (Element)nodesList.item(0);
-Assert.assertTrue(book.getTextContent().contains("Ralls, Kim"));
+var containsRalls = book.getTextContent().contains("Ralls, Kim");
 ```
 
 #### References
@@ -266,7 +253,10 @@ In fact, you ensure that only allowed characters are part of the input received.
 String userInput = "You user login is owasp-user01";
 
 /* First we check that the value contains only expected character*/
-Assert.assertTrue(Pattern.matches("[a-zA-Z0-9\\s\\-]{1,50}", userInput));
+if (!Pattern.matches("[a-zA-Z0-9\\s\\-]{1,50}", userInput))
+{
+    return false;
+}
 
 /* If the first check pass then ensure that potential dangerous character
 that we have allowed for business requirement are not used in a dangerous way.
@@ -275,7 +265,10 @@ be used in SQL injection so, we
 ensure that this character is not used is a continuous form.
 Use the API COMMONS LANG v3 to help in String analysis...
 */
-Assert.assertEquals(0, StringUtils.countMatches(userInput.replace(" ", ""), "--"));
+If (0 != StringUtils.countMatches(userInput.replace(" ", ""), "--"))
+{
+    return false;
+}
 
 /*
 OUTPUT WAY: Send data to user
@@ -296,7 +289,10 @@ String safeOutput = policy.sanitize(outputToUser);
 /* Encode HTML Tag*/
 safeOutput = Encode.forHtml(safeOutput);
 String finalSafeOutputExpected = "You <p>user login</p> is <strong>owasp-user01</strong>";
-Assert.assertEquals(finalSafeOutputExpected, safeOutput);
+if (!finalSafeOutputExpected.equals(safeOutput))
+{
+    return false;
+}
 ```
 
 #### References
@@ -332,18 +328,29 @@ here they are: ' " \ ; { } $
 */
 //Avoid regexp this time in order to made validation code
 //more easy to read and understand...
-ArrayList<String> specialCharsList = new ArrayList<String>() { {
-    add("'");
-    add("\"");
-    add("\\");
-    add(";");
-    add("{");
-    add("}");
-    add("$");
-} };
-specialCharsList.forEach(specChar -> Assert.assertFalse(userInput.contains(specChar)));
+ArrayList < String > specialCharsList = new ArrayList < String > () {
+    {
+        add("'");
+        add("\"");
+        add("\\");
+        add(";");
+        add("{");
+        add("}");
+        add("$");
+    }
+};
+
+for (String specChar: specialCharsList) {
+    if (userInput.contains(specChar)) {
+        return false;
+    }
+}
+   
 //Add also a check on input max size
-Assert.assertTrue(userInput.length() <= 50);
+if (!userInput.length() <= 50)
+{
+    return false;
+}
 
 /* Then perform query on database using API to build expression */
 //Connect to the local MongoDB instance
@@ -359,7 +366,10 @@ try(MongoClient mongoClient = new MongoClient()){
         @Override
         public void apply(final org.bson.Document doc) {
             String restBorough = (String)doc.get("borough");
-            Assert.assertTrue("Brooklyn".equals(restBorough));
+            if (!"Brooklyn".equals(restBorough))
+            {
+                return false;
+            }
         }
     });
 }
