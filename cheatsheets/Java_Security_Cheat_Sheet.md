@@ -505,6 +505,9 @@ Follow the algorithm guidance in the [OWASP Cryptographic Storage Cheat Sheet](h
 
 The following code snippet shows an example of using AES-GCM to perform encryption/decryption of data.
 
+<details>
+  <summary>Click here to expand the code snippet</summary>
+
 ```java
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
@@ -566,6 +569,7 @@ class AesGcmSimple {
 
 }
 ```
+</details>
 
 ### Encryption for transmission
 
@@ -574,6 +578,9 @@ Again, follow the algorithm guidance in the [OWASP Cryptographic Storage Cheat S
 The following code snippet shows an example of using Eliptic Curve/Diffie Helman (ECDH) together with AES-GCM to perform encryption/decryption of data between two different sides without the need the transfer the symmetric key between the two sides. Instead, the sides exchange public keys and can then use ECDH to generate a shared secret which can be used for the symmetric encryption.
 
 Note that this code sample relies on the AesGcmSimple class from the [previous section](#encryption-for-storage).
+
+<details>
+  <summary>Click here to expand the code snippet</summary>
 
 ```java
 import java.nio.charset.StandardCharsets;
@@ -702,3 +709,4 @@ class ECDHSimple {
     }
 }
 ```
+</details>
