@@ -604,7 +604,7 @@ class Main {
         String plaintext = "Hello"; //, Bob!";
         System.out.println("Secret being sent from Alice to Bob: " + plaintext);
         
-        var retPair = alice.Encrypt(bobPublicKey, plaintext);
+        var retPair = alice.encrypt(bobPublicKey, plaintext);
         var nonce = retPair.getKey();
         var cipherText = retPair.getValue();
         
@@ -612,7 +612,7 @@ class Main {
 
 
         // Bob decrypts the message
-        var decrypted = bob.Decrypt(alicePublicKey, cipherText, nonce);
+        var decrypted = bob.decrypt(alicePublicKey, cipherText, nonce);
         System.out.println("Secret received by Bob from Alice: " + decrypted);
         System.out.println();
 
@@ -620,13 +620,13 @@ class Main {
         String plaintext2 = "Hello"; //, Alice!";
         System.out.println("Secret being sent from Bob to Alice: " + plaintext2);
         
-        var retPair2 = bob.Encrypt(alicePublicKey, plaintext2);
+        var retPair2 = bob.encrypt(alicePublicKey, plaintext2);
         var nonce2 = retPair2.getKey();
         var cipherText2 = retPair2.getValue();
         System.out.println("Both cipherText2 and nonce2 being sent from Bob to Alice: " + Base64.getEncoder().encodeToString(cipherText2) + " " + Base64.getEncoder().encodeToString(nonce2));
 
         // Bob decrypts the message
-        var decrypted2 = alice.Decrypt(bobPublicKey, cipherText2, nonce2);
+        var decrypted2 = alice.decrypt(bobPublicKey, cipherText2, nonce2);
         System.out.println("Secret received by Alice from Bob: " + decrypted2);
     }
 }
@@ -649,10 +649,10 @@ class ECDHSimple {
         return keyPair.getPublic();
     }
 
-    public AbstractMap.SimpleEntry<byte[], byte[]> Encrypt(Key partnerPublicKey, String message) throws Exception {
+    public AbstractMap.SimpleEntry<byte[], byte[]> encrypt(Key partnerPublicKey, String message) throws Exception {
 
         // Generate the AES Key and Nonce
-        AesKeyNonce aesParams = GenerateAESParams(partnerPublicKey);
+        AesKeyNonce aesParams = generateAESParams(partnerPublicKey);
 
         // return the encrypted value
         return new AbstractMap.SimpleEntry<>(
@@ -660,16 +660,16 @@ class ECDHSimple {
             AesGcmSimple.encrypt(message, aesParams.Nonce, aesParams.Key)
             );
     }
-    public String Decrypt(Key partnerPublicKey, byte[] ciphertext, byte[] nonce) throws Exception {
+    public String decrypt(Key partnerPublicKey, byte[] ciphertext, byte[] nonce) throws Exception {
 
         // Generate the AES Key and Nonce
-        AesKeyNonce aesParams = GenerateAESParams(partnerPublicKey, nonce);
+        AesKeyNonce aesParams = generateAESParams(partnerPublicKey, nonce);
 
         // return the decrypted value
         return AesGcmSimple.decrypt(ciphertext, aesParams.Nonce, aesParams.Key);
     }
 
-    private AesKeyNonce GenerateAESParams(Key partnerPublicKey, byte[] nonce) throws Exception {
+    private AesKeyNonce generateAESParams(Key partnerPublicKey, byte[] nonce) throws Exception {
     
         // Derive the secret based on this side's private key and the other side's public key 
         KeyAgreement keyAgreement = KeyAgreement.getInstance("ECDH");
@@ -689,7 +689,7 @@ class ECDHSimple {
         
     }
 
-    private AesKeyNonce GenerateAESParams(Key partnerPublicKey) throws Exception {
+    private AesKeyNonce generateAESParams(Key partnerPublicKey) throws Exception {
     
         // Nonce of 12 bytes / 96 bits and this size should always be used.
         // It is critical for AES-GCM that a unique nonce is used for every cryptographic operation.
@@ -697,7 +697,7 @@ class ECDHSimple {
         byte[] nonce = new byte[AesGcmSimple.IV_LENGTH];
         SecureRandom random = new SecureRandom();
         random.nextBytes(nonce);
-        return GenerateAESParams(partnerPublicKey, nonce);
+        return generateAESParams(partnerPublicKey, nonce);
 
     }
 }
