@@ -227,3 +227,4 @@ The decision to enable advanced DDoS protections for a specific application shou
 
 ## Additional Resources
 - [Secure Product Design](https://cheatsheetseries.owasp.org/cheatsheets/Secure_Product_Design_Cheat_Sheet.html)
+- [CISA Security Technical Reference Architecture](https://www.cisa.gov/sites/default/files/publications/Cloud%20Security%20Technical%20Reference%20Architecture.pdf)
