@@ -523,6 +523,7 @@ class Main {
         SecretKey secretKey = keyGen.generateKey();
 
         // Nonce of 12 bytes / 96 bits and this size should always be used.
+        // It is critical for AES-GCM that a unique nonce is used for every cryptographic operation.
         byte[] nonce = new byte[AesGcmSimple.IV_LENGTH];
         SecureRandom random = new SecureRandom();
         random.nextBytes(nonce);
@@ -579,7 +580,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import javax.crypto.spec.*;
 import javax.crypto.*;
-import java.util.Base64;
+import java.util.*;
 import java.security.*;
 import java.security.spec.*;
 import java.util.Arrays;
@@ -602,23 +603,30 @@ class Main {
         // Alice encrypts a message to send to Bob
         String plaintext = "Hello"; //, Bob!";
         System.out.println("Secret being sent from Alice to Bob: " + plaintext);
-        var cipherText = alice.Encrypt(bobPublicKey, plaintext);
-        System.out.println("Ciphertext being sent from Alice to Bob: " + Base64.getEncoder().encodeToString(cipherText));
+        
+        var retPair = alice.Encrypt(bobPublicKey, plaintext);
+        var nonce = retPair.getKey();
+        var cipherText = retPair.getValue();
+        
+        System.out.println("Both cipherText and nonce being sent from Alice to Bob: " + Base64.getEncoder().encodeToString(cipherText) + " " + Base64.getEncoder().encodeToString(nonce));
 
 
         // Bob decrypts the message
-        var decrypted = bob.Decrypt(alicePublicKey, cipherText);
+        var decrypted = bob.Decrypt(alicePublicKey, cipherText, nonce);
         System.out.println("Secret received by Bob from Alice: " + decrypted);
         System.out.println();
 
         // Bob encrypts a message to send to Alice
         String plaintext2 = "Hello"; //, Alice!";
         System.out.println("Secret being sent from Bob to Alice: " + plaintext2);
-        var cipherText2 = bob.Encrypt(alicePublicKey, plaintext2);
-        System.out.println("Ciphertext being sent from Bob to Alice: " + Base64.getEncoder().encodeToString(cipherText2));
+        
+        var retPair2 = bob.Encrypt(alicePublicKey, plaintext2);
+        var nonce2 = retPair2.getKey();
+        var cipherText2 = retPair2.getValue();
+        System.out.println("Both cipherText2 and nonce2 being sent from Bob to Alice: " + Base64.getEncoder().encodeToString(cipherText2) + " " + Base64.getEncoder().encodeToString(nonce2));
 
         // Bob decrypts the message
-        var decrypted2 = alice.Decrypt(bobPublicKey, cipherText2);
+        var decrypted2 = alice.Decrypt(bobPublicKey, cipherText2, nonce2);
         System.out.println("Secret received by Alice from Bob: " + decrypted2);
     }
 }
@@ -641,45 +649,56 @@ class ECDHSimple {
         return keyPair.getPublic();
     }
 
-    public byte[] Encrypt(Key partnerPublicKey, String message) throws Exception {
+    public AbstractMap.SimpleEntry<byte[], byte[]> Encrypt(Key partnerPublicKey, String message) throws Exception {
 
         // Generate the AES Key and Nonce
         AesKeyNonce aesParams = GenerateAESParams(partnerPublicKey);
 
         // return the encrypted value
-        return AesGcmSimple.Encrypt(message, aesParams.Nonce, aesParams.Key);
+        return new AbstractMap.SimpleEntry<>(
+            aesParams.Nonce,
+            AesGcmSimple.encrypt(message, aesParams.Nonce, aesParams.Key)
+            );
     }
-    public String Decrypt(Key partnerPublicKey, byte[] ciphertext) throws Exception {
+    public String Decrypt(Key partnerPublicKey, byte[] ciphertext, byte[] nonce) throws Exception {
 
         // Generate the AES Key and Nonce
-        AesKeyNonce aesParams = GenerateAESParams(partnerPublicKey);
+        AesKeyNonce aesParams = GenerateAESParams(partnerPublicKey, nonce);
 
         // return the decrypted value
-        return AesGcmSimple.Decrypt(ciphertext, aesParams.Nonce, aesParams.Key);
+        return AesGcmSimple.decrypt(ciphertext, aesParams.Nonce, aesParams.Key);
     }
 
-    private AesKeyNonce GenerateAESParams(Key partnerPublicKey) throws Exception {
-
+    private AesKeyNonce GenerateAESParams(Key partnerPublicKey, byte[] nonce) throws Exception {
+    
         // Derive the secret based on this side's private key and the other side's public key 
         KeyAgreement keyAgreement = KeyAgreement.getInstance("ECDH");
         keyAgreement.init(keyPair.getPrivate());
         keyAgreement.doPhase(partnerPublicKey, true);
-        byte[] shortSecret = keyAgreement.generateSecret();
-
-        // Stretch the secret to provide enough bits for both key and nonce
-        MessageDigest digest = MessageDigest.getInstance("SHA-512");
-        byte[] longerSecret = digest.digest(shortSecret);
+        byte[] secret = keyAgreement.generateSecret();
 
         AesKeyNonce aesKeyNonce = new AesKeyNonce();
 
         // Copy first 32 bytes as the key
-        byte[] key = Arrays.copyOfRange(longerSecret, 0, (AesGcmSimple.KEY_SIZE / 8));
+        byte[] key = Arrays.copyOfRange(secret, 0, (AesGcmSimple.KEY_SIZE / 8));
         aesKeyNonce.Key = new SecretKeySpec(key, 0, key.length, "AES");
-
-        // Copy next 12 bytes as the nonce
-        aesKeyNonce.Nonce = Arrays.copyOfRange(longerSecret, (AesGcmSimple.KEY_SIZE / 8) + 1, (AesGcmSimple.KEY_SIZE / 8) + 1 + AesGcmSimple.IV_LENGTH);
-
+        
+        // Passed in nonce will be used.
+        aesKeyNonce.Nonce = nonce;
         return aesKeyNonce;
+        
+    }
+
+    private AesKeyNonce GenerateAESParams(Key partnerPublicKey) throws Exception {
+    
+        // Nonce of 12 bytes / 96 bits and this size should always be used.
+        // It is critical for AES-GCM that a unique nonce is used for every cryptographic operation.
+        // Therefore this is not generated from the shared secret
+        byte[] nonce = new byte[AesGcmSimple.IV_LENGTH];
+        SecureRandom random = new SecureRandom();
+        random.nextBytes(nonce);
+        return GenerateAESParams(partnerPublicKey, nonce);
+
     }
 }
 ```
