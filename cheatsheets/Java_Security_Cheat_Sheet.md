@@ -821,7 +821,7 @@ class HybridSimple {
 
 </details>
 
-#### Asymmetric example using built in JCA/JCE classes.
+#### Asymmetric example using built in JCA/JCE classes
 
 If you absolutely cannot use a separate library, it is still possible to use the built JCA/JCE classes but it is strongly recommended to have a cryptography expert review the full design and code.
 
