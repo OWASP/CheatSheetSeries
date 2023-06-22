@@ -65,7 +65,7 @@ If maintaining the state for CSRF token on the server is problematic, you can us
 
 #### Naive Double Submit Cookie
 
-The _Naive Double Submit Cookie_ is a scalable and easy-to-implement technique where we we send a random value in both a cookie and as a request parameter, with the server verifying if the cookie value and request value match. When a user visits (even before authenticating to prevent login CSRF), the site should generate a (ideally cryptographically strong) random value and set it as a cookie on the user's machine separate from the session identifier. The site then requires that every transaction request includes this random value as a hidden form value, or in the request header. If both of them match at server side, the server accepts it as legitimate request and if they don't, it would reject the request.
+The _Naive Double Submit Cookie_ is a scalable and easy-to-implement technique where we send a random value in both a cookie and as a request parameter, with the server verifying if the cookie value and request value match. When a user visits (even before authenticating to prevent login CSRF), the site should generate a (ideally cryptographically strong) random value and set it as a cookie on the user's machine separate from the session identifier. The site then requires that every transaction request includes this random value as a hidden form value, or in the request header. If both of them match at server side, the server accepts it as legitimate request and if they don't, it would reject the request.
 
 In a nutshell, an attacker is unable to access the cookie value during a cross-site request. This prevents them from including a matching value in the hidden form value or as a request parameter/header.
 
