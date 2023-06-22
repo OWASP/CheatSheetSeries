@@ -151,27 +151,30 @@ public class ECDHSimpleTest
         var bob = new ECDHSimple();
         byte[] bobPublicKey = bob.PublicKey;
 
-        string plaintext = "Hello, Bob!";
+        string plaintext = "Hello, Bob! How are you?";
         Console.WriteLine("Secret being sent from Alice to Bob: " + plaintext);
 
-
+        // Note that a new nonce is generated with every encryption operation in line with
+        // in line with the AES GCM security 
         byte[] tag;
-        var cipherText = alice.Encrypt(bobPublicKey, plaintext, out tag);
-        Console.WriteLine("Ciphertext being sent from Alice to Bob: " + Convert.ToBase64String(cipherText));
+        byte[] nonce;
+        var cipherText = alice.Encrypt(bobPublicKey, plaintext, out nonce, out tag);
+        Console.WriteLine("Ciphertext, nonce, and tag being sent from Alice to Bob: " + Convert.ToBase64String(cipherText) + " " + Convert.ToBase64String(nonce) + " " + Convert.ToBase64String(tag));
 
-        var decrypted = bob.Decrypt(alicePublicKey, cipherText, tag);
+        var decrypted = bob.Decrypt(alicePublicKey, cipherText, nonce, tag);
         Console.WriteLine("Secret received by Bob from Alice: " + decrypted);
 
         Console.WriteLine();
 
-        string plaintext2 = "Hello, Alice!";
+        string plaintext2 = "Hello, Alice! I'm good, how are you?";
         Console.WriteLine("Secret being sent from Bob to Alice: " + plaintext2);
 
         byte[] tag2;
-        var cipherText2 = bob.Encrypt(alicePublicKey, plaintext2, out tag2);
-        Console.WriteLine("Ciphertext being sent from Bob to Alice: " + Convert.ToBase64String(cipherText2));
+        byte[] nonce2;
+        var cipherText2 = bob.Encrypt(alicePublicKey, plaintext2, out nonce2, out tag2);
+        Console.WriteLine("Ciphertext, nonce, and tag being sent from Bob to Alice: " + Convert.ToBase64String(cipherText2) + " " + Convert.ToBase64String(nonce2) + " " + Convert.ToBase64String(tag2));
 
-        var decrypted2 = alice.Decrypt(bobPublicKey, cipherText2, tag2);
+        var decrypted2 = alice.Decrypt(bobPublicKey, cipherText2, nonce2, tag2);
         Console.WriteLine("Secret received by Alice from Bob: " + decrypted2);
     }
 }
@@ -190,47 +193,43 @@ public class ECDHSimple
         }
     }
 
-    public byte[] Encrypt(byte[] partnerPublicKey, string message, out byte[] tag)
+    public byte[] Encrypt(byte[] partnerPublicKey, string message, out byte[] nonce, out byte[] tag)
     {
         // Generate the AES Key and Nonce
-        var aesParams = GenerateAESParams(partnerPublicKey);
+        var aesKey = GenerateAESKey(partnerPublicKey);
 
         // Tag for authenticated encryption
         tag = new byte[AesGcm.TagByteSizes.MaxSize];
+        
+        // MaxSize = 12 bytes / 96 bits and this size should always be used.
+        // A new nonce is generated with every encryption operation in line with
+        // the AES GCM security model
+        nonce = new byte[AesGcm.NonceByteSizes.MaxSize];
+        RandomNumberGenerator.Fill(nonce);
 
         // return the encrypted value
-        return AesGcmSimple.Encrypt(message, aesParams.Nonce, out tag, aesParams.Key);
+        return AesGcmSimple.Encrypt(message, nonce, out tag, aesKey);
     }
 
 
-    public string Decrypt(byte[] partnerPublicKey, byte[] ciphertext, byte[] tag)
+    public string Decrypt(byte[] partnerPublicKey, byte[] ciphertext, byte[] nonce, byte[] tag)
     {
         // Generate the AES Key and Nonce
-        var aesParams = GenerateAESParams(partnerPublicKey);
+        var aesKey = GenerateAESKey(partnerPublicKey);
 
         // return the decrypted value
-        return AesGcmSimple.Decrypt(ciphertext, aesParams.Nonce, tag, aesParams.Key);
+        return AesGcmSimple.Decrypt(ciphertext, nonce, tag, aesKey);
     }
 
-    private(byte[] Key, byte[] Nonce) GenerateAESParams(byte[] partnerPublicKey)
+    private byte[] GenerateAESKey(byte[] partnerPublicKey)
     {
         // Derive the secret based on this side's private key and the other side's public key 
-        byte[] shortSecret = ecdh.DeriveKeyMaterial(CngKey.Import(partnerPublicKey, CngKeyBlobFormat.EccPublicBlob));
-        byte[] longerSecret;
-
-        // Stretch the secret to provide enough bits for both key and nonce
-        using(SHA512 sha512 = SHA512.Create())
-        {
-            longerSecret = sha512.ComputeHash(shortSecret);
-        }
-
+        byte[] secret = ecdh.DeriveKeyMaterial(CngKey.Import(partnerPublicKey, CngKeyBlobFormat.EccPublicBlob));
+        
         byte[] aesKey = new byte[32]; // 256-bit AES key
-        Array.Copy(longerSecret, 0, aesKey, 0, 32); // Copy first 32 bytes as the key
-
-        byte[] nonce = new byte[12]; // 96-bit nonce
-        Array.Copy(longerSecret, 32, nonce, 0, 12); // Copy next 12 bytes as the nonce
-
-        return (Key: aesKey, Nonce: nonce);
+        Array.Copy(secret, 0, aesKey, 0, 32); // Copy first 32 bytes as the key
+        
+        return aesKey;
     }
 }
 ```
