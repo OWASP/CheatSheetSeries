@@ -154,10 +154,10 @@ public class ECDHSimpleTest
         string plaintext = "Hello, Bob! How are you?";
         Console.WriteLine("Secret being sent from Alice to Bob: " + plaintext);
 
-		// Note that a new nonce is generated with every encryption operation in line with
-		// in line with the AES GCM security 
-		byte[] tag;
-		byte[] nonce;
+        // Note that a new nonce is generated with every encryption operation in line with
+        // in line with the AES GCM security 
+        byte[] tag;
+        byte[] nonce;
         var cipherText = alice.Encrypt(bobPublicKey, plaintext, out nonce, out tag);
         Console.WriteLine("Ciphertext, nonce, and tag being sent from Alice to Bob: " + Convert.ToBase64String(cipherText) + " " + Convert.ToBase64String(nonce) + " " + Convert.ToBase64String(tag));
 
@@ -170,7 +170,7 @@ public class ECDHSimpleTest
         Console.WriteLine("Secret being sent from Bob to Alice: " + plaintext2);
 
         byte[] tag2;
-		byte[] nonce2;
+        byte[] nonce2;
         var cipherText2 = bob.Encrypt(alicePublicKey, plaintext2, out nonce2, out tag2);
         Console.WriteLine("Ciphertext, nonce, and tag being sent from Bob to Alice: " + Convert.ToBase64String(cipherText2) + " " + Convert.ToBase64String(nonce2) + " " + Convert.ToBase64String(tag2));
 
@@ -200,10 +200,10 @@ public class ECDHSimple
 
         // Tag for authenticated encryption
         tag = new byte[AesGcm.TagByteSizes.MaxSize];
-		
-		// MaxSize = 12 bytes / 96 bits and this size should always be used.
-		// A new nonce is generated with every encryption operation in line with
-		// the AES GCM security model
+        
+        // MaxSize = 12 bytes / 96 bits and this size should always be used.
+        // A new nonce is generated with every encryption operation in line with
+        // the AES GCM security model
         nonce = new byte[AesGcm.NonceByteSizes.MaxSize];
         RandomNumberGenerator.Fill(nonce);
 
