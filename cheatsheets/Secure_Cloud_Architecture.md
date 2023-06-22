@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This cheat sheet will discuss common and necessary security patterns to follow when creating and reviewing cloud architectures. Each section will cover a specific security guideline or cloud design decision to consider. This sheet is written from a medium to large scale enterprise system, so additional overhead elements will be discussed, which may be unecessary for smaller organizations.
+This cheat sheet will discuss common and necessary security patterns to follow when creating and reviewing cloud architectures. Each section will cover a specific security guideline or cloud design decision to consider. This sheet is written for a medium to large scale enterprise system, so additional overhead elements will be discussed, which may be unecessary for smaller organizations.
 
 ## Risk Analysis, Threat Modeling, and Attack Surface Assessments
 
@@ -21,7 +21,7 @@ This is all necessary to properly scope the security of an architecture. However
 - [CISA Cyber Risk Assessment](https://www.cisa.gov/sites/default/files/2023-02/22_1201_safecom_guide_to_cybersecurity_risk_assessment_508-r1.pdf)
 
 
-## Public vs Private Components
+## Public and Private Components
 
 ### Secure Object Storage
 Object storage usually has the following options for accessing data:
@@ -156,7 +156,6 @@ By nature, this approach limits the pros and cons of both previous examples. Thi
 
 
 ## Security Tooling
-
 ### Web Application Firewall
 Web application firewalls (WAF) are used to monitor or block common attack payloads (like [XSS](https://owasp.org/www-community/attacks/xss/) and [SQLi](https://owasp.org/www-community/attacks/SQL_Injection)), or allow only specific request types and patterns. Applications should use them as a first line of defense, attaching them to entry points like load balancers or API gateways, to handle potentially malicious content before it reaches application code. Cloud providers curate base rule sets which will block or monitor common malicious payloads:
 
@@ -234,6 +233,6 @@ Use documentation from the cloud provider to understand which security will be t
 - [Azure Functions](https://learn.microsoft.com/en-us/azure/architecture/serverless-quest/functions-app-security)
 
 
-## Additional Resources
+## References
 - [Secure Product Design](https://cheatsheetseries.owasp.org/cheatsheets/Secure_Product_Design_Cheat_Sheet.html)
 - [CISA Security Technical Reference Architecture](https://www.cisa.gov/sites/default/files/publications/Cloud%20Security%20Technical%20Reference%20Architecture.pdf)
