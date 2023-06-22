@@ -178,20 +178,20 @@ By design these rule sets are generic and will not cover every attack type an ap
 Logging and monitoring is required for a truly secure application. Developers should know exactly what is going on in their environment, making use of alerting mechanisms to warn engineers when systems are not working as expected. Additionally, in the event of a security incident, logging should be verbose enough to track a threat actor through an entire application, and provide enough knowledge for respondents to understand what actions were taken against what resources. Note that proper logging and monitoring can be expensive, and risk/cost trade-offs should be discussed when putting logging in place.
 
 #### Logging
-Proper logging will have the following:
+For proper logging, consider:
 
-- All [layer 7](https://en.wikipedia.org/wiki/OSI_model) HTTP calls logged with headers, caller metadata, and responses
+- Logging all [layer 7](https://en.wikipedia.org/wiki/OSI_model) HTTP calls with headers, caller metadata, and responses
   - Payloads may not be logged depending on where logging occurs (before TLS termination) and the sensitivity of data
-- All internal actions logged with user and permission information
-- Trace Ids sent through the entire request lifecycle to track errors or malicious actions
-- Sensitive data masked or removed
+- Logging internal actions with user and permission information
+- Sending trace Ids through the entire request lifecycle to track errors or malicious actions
+- Masking or removing sensitive data
   - SSNs, sensitive health information, and other PII should not be stored in logs
 
 *Legal and compliance representatives should weigh in on log retention times for the specific application.*
 
 
 #### Monitoring
-Proper monitoring will have the following (percentages chosen based off risk and team response capacity):
+For proper monitor consider adding:
 
 - Anomaly alerts: 
   - HTTP 4xx and 5xx errors above a percent of normal
@@ -201,6 +201,8 @@ Proper monitoring will have the following (percentages chosen based off risk and
 - Alerting for failed health checks
 - Alerting for deployment errors or container on/off cycling
 - Alerts or cutoffs for cost limits
+
+*Percentages chosen based off risk and team response capacity.*
 
 WAFs can also have monitoring or alerting attached to them for counting malicious payloads or (in some cases) anomalous activity detection.
 
@@ -217,7 +219,25 @@ The decision to enable advanced DDoS protections for a specific application shou
 
 
 ## Unmanaged tooling maintenance
-Cloud providers generally offer tooling on a spectrum of management. Fully managed services leave very little for the end developer to handle besides coding functionality, while unmanaged systems require much more overhead to maintain. T
+Cloud providers generally offer tooling on a spectrum of management. Fully managed services leave very little for the end developer to handle besides coding functionality, while unmanaged systems require much more overhead to maintain. 
+
+### Update Strategy for Unmanaged Services
+Unmanaged tooling will require additional overhead by developers and support engineers. Depending on the tool, basic version updates, upgrades to images like [AMIs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html) or [Compute Images](https://cloud.google.com/compute/docs/images), or other operating system level maintence will be required. Use automation to regularly update minor versions or [images](https://docs.aws.amazon.com/systems-manager/latest/userguide/automation-tutorial-update-patch-golden-ami.html), and schedule time in development cycles for refreshing stale resources.
+
+### Avoid Gaps in Managed Service Security
+Managed services will offer some level of security, like updating and securing the underlying hardward running application code. However, the development team will still be responsible for many aspects of security in the system. Ensure developers understand what security will be their responsibility based on tool selection. Likely the following will be in part or in whole the responsibility of the developer:
+
+- Authentication and authorization
+- Logging and monitoring
+- Code security ([OWASP Top 10](https://owasp.org/www-project-top-ten/)) and 3rd party library patching
+
+Use documentation from the cloud provider to understand which security will be the responsbility of what party. Examples of this research for serverless functions:
+
+- [AWS Lambda](https://docs.aws.amazon.com/lambda/latest/dg/lambda-security.html)
+- [GCP Cloud Functions](https://cloud.google.com/functions/docs/securing)
+- [Azure Functions](https://learn.microsoft.com/en-us/azure/architecture/serverless-quest/functions-app-security)
+
+
 
 
 
