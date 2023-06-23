@@ -73,16 +73,9 @@ The Naive Double Submit Cookie method is a good initial step to counter CSRF att
 
 #### Signed Double Submit Cookie
 
-The _Signed Double Submit Cookie_ involves a secret key known only to the server. This ensures that an attacker cannot create and inject their own, known, CSRF token into the victim's authenticated session. There are two common methods for signing tokens:
-
-- Encrypt the cookie that contains the CSRF token
-- Generate the CSRF Token using HMAC
+The _Signed Double Submit Cookie_ involves a secret key known only to the server. This ensures that an attacker cannot create and inject their own, known, CSRF token into the victim's authenticated session. Tokens can be secured by hashing or encrypting them, with HMAC algorithm being a popular choice due to its fast speed and easy implementation.
 
 In both cases, it is recommended to bind the CSRF token with the users current session to even further enhance security.
-
-##### Encrypted CSRF Cookie
-
-Include the CSRF token in an encrypted cookie - other than the authentication cookie (since they are often shared within subdomains) - and then at the server side match it (after decrypting the encrypted cookie) with the token in hidden form field or request header for AJAX calls. This works because a sub domain has no way to overwrite a properly crafted encrypted cookie without the necessary information such as encryption key.
 
 ##### HMAC CSRF Token
 
