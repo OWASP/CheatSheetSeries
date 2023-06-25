@@ -561,12 +561,14 @@ public class App {
         // Read the keyset into a KeysetHandle.
         KeysetHandle handle =
         TinkJsonProtoKeysetFormat.parseKeyset(
-            new String(Files.readAllBytes( Paths.get("/home/josh/aead_test_keyset.json")), UTF_8), InsecureSecretKeyAccess.get());
+            new String(Files.readAllBytes( Paths.get("/home/fred/aead_test_keyset.json")), UTF_8), InsecureSecretKeyAccess.get());
 
         String message = "This message to be encrypted";
         System.out.println(message);
 
-        String metadata = "Info about message";
+        // Add some relevant context about the encrypted data that should be verified
+        // on decryption
+        String metadata = "Sender: fredbloggs";
 
         // Encrypt the message
         byte[] cipherText = AesGcmSimple.encrypt(message, metadata, handle);
@@ -756,7 +758,10 @@ class App {
 
         // Alice encrypts a message to send to Bob
         String plaintext = "Hello, Bob!";
-        String metadata = "Info about the message";
+        
+        // Add some relevant context about the encrypted data that should be verified
+        // on decryption
+        String metadata = "Sender: alicesmith";
 
         System.out.println("Secret being sent from Alice to Bob: " + plaintext);
         var cipherText = alice.encrypt(bobPublicKey, plaintext, metadata);
@@ -770,12 +775,17 @@ class App {
 
         // Bob encrypts a message to send to Alice
         String plaintext2 = "Hello, Alice!";
+
+        // Add some relevant context about the encrypted data that should be verified
+        // on decryption
+        String metadata2 = "Sender: bobjones";
+
         System.out.println("Secret being sent from Bob to Alice: " + plaintext2);
-        var cipherText2 = bob.encrypt(alicePublicKey, plaintext2, metadata);
+        var cipherText2 = bob.encrypt(alicePublicKey, plaintext2, metadata2);
         System.out.println("Ciphertext being sent from Bob to Alice: " + Base64.getEncoder().encodeToString(cipherText2));
 
         // Bob decrypts the message
-        var decrypted2 = alice.decrypt(cipherText2, metadata);
+        var decrypted2 = alice.decrypt(cipherText2, metadata2);
         System.out.println("Secret received by Alice from Bob: " + decrypted2);
     }
 
