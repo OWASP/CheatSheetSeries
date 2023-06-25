@@ -715,7 +715,7 @@ class App {
     public static void main(String[] args) throws Exception {
         /*
 
-        Generated public/private keypairs for Alice and Bob using the
+        Generated public/private keypairs for Bob and Alice using the
         following tinkey commands:
 
         ./tinkey create-keyset \
@@ -845,7 +845,7 @@ A few contraints/pitfalls with this code:
 - The code deliberately enforces a new nonce for every encryption operation but this must be managed as a separate data item alongside the ciphertext.
 - The private keys will need to be stored securely.
 - The code does not consider the validation of public keys before use.
-- Overall, there is no verification of authenticity between the two sides.  
+- Overall, there is no verification of authenticity between the two sides.
 
 <details>
   <summary>Click here to expand the code snippet</summary>
