@@ -184,11 +184,11 @@ Logging and monitoring is required for a truly secure application. Developers sh
 For proper logging, consider:
 
 - Logging all [layer 7](https://en.wikipedia.org/wiki/OSI_model) HTTP calls with headers, caller metadata, and responses
-  - Payloads may not be logged depending on where logging occurs (before TLS termination) and the sensitivity of data
+    - Payloads may not be logged depending on where logging occurs (before TLS termination) and the sensitivity of data
 - Logging internal actions with actor and permission information
 - Sending trace Ids through the entire request lifecycle to track errors or malicious actions
 - Masking or removing sensitive data
-  - SSNs, sensitive health information, and other PII should not be stored in logs
+    - SSNs, sensitive health information, and other PII should not be stored in logs
 
 *Legal and compliance representatives should weigh in on log retention times for the specific application.*
 
@@ -197,10 +197,10 @@ For proper logging, consider:
 For proper monitor consider adding:
 
 - Anomaly alerts:
-  - HTTP 4xx and 5xx errors above a percent of normal
-  - Memory, storage or CPU usage above/below percent of normal
-  - Database writes/reads above/below percent of normal
-  - Serverless compute invocations above percent of normal
+    - HTTP 4xx and 5xx errors above a percent of normal
+    - Memory, storage or CPU usage above/below percent of normal
+    - Database writes/reads above/below percent of normal
+    - Serverless compute invocations above percent of normal
 - Alerting for failed health checks
 - Alerting for deployment errors or container on/off cycling
 - Alerts or cutoffs for cost limits

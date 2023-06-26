@@ -3,7 +3,9 @@
   "version": "1.0.1",
   "description": "OWASP CSS Project",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "markdownlint": "^0.29.0"
+  },
   "devDependencies": {
     "markdownlint-cli": "^0.26.0",
     "textlint": "^11.6.3",
