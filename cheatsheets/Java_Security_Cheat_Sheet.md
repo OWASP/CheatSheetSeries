@@ -604,7 +604,7 @@ class AesGcmSimple {
 
 _**End of code snippet.**_
 
-#### Symmetric example using built in JCA/JCE classes
+#### Symmetric example using built-in JCA/JCE classes
 
 If you absolutely cannot use a separate library, it is still possible to use the built JCA/JCE classes but it is strongly recommended to have a cryptography expert review the full design and code, as even the most trivial error can severely weaken your encryption.
 
@@ -843,7 +843,7 @@ class HybridSimple {
 
 _**End of code snippet.**_
 
-#### Asymmetric example using built in JCA/JCE classes
+#### Asymmetric example using built-in JCA/JCE classes
 
 If you absolutely cannot use a separate library, it is still possible to use the built JCA/JCE classes but it is strongly recommended to have a cryptography expert review the full design and code, as even the most trivial error can severely weaken your encryption.
 
