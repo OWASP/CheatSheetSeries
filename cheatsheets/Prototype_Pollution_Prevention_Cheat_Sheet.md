@@ -38,7 +38,7 @@ let obj = {__proto__:null};
 
 ### Use object "freeze" and "seal" mechanisms
 
-You can also use the `Object.freeze()` and `Object.seal()` APIs to prevent built in prototypes from being modified however this can break the application if the libraries they use modify the built in prototypes.
+You can also use the `Object.freeze()` and `Object.seal()` APIs to prevent built-in prototypes from being modified however this can break the application if the libraries they use modify the built-in prototypes.
 
 ### Node.js configuration flag
 
