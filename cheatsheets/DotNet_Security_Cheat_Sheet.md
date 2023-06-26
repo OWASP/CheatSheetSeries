@@ -168,7 +168,7 @@ A few contraints/pitfalls with this code:
 _**To view "ECDH asymmetric encryption" code snippet...**_
 
 <details>
-  <summary>Click here to expand the code snippet</summary>
+  <summary>...click here.</summary>
 
 ```csharp
 public class ECDHSimpleTest
