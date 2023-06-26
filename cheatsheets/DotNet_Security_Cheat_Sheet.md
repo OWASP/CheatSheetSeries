@@ -63,8 +63,10 @@ A few contraints/pitfalls with this code:
 - It is important to use a different nonce for every encryption operation, even if the same key is used.
 - The key will need to be stored securely.
 
+_**To view "AES-GCM symmetric encryption" code snippet...**_
+
 <details>
-  <summary>Click here to expand the code snippet</summary>
+  <summary>...click here.</summary>
   
 ```csharp
 // Code based on example from here:
@@ -143,6 +145,8 @@ public static class AesGcmSimple
 
 </details>
 
+_**End of code snippet.**_
+
 #### Encryption for transmission
 
 - Again, follow the algorithm guidance in the [OWASP Cryptographic Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html#algorithms).
@@ -160,6 +164,8 @@ A few contraints/pitfalls with this code:
 - The private keys will need to be stored securely.
 - The code does not consider the validation of public keys before use.
 - Overall, there is no verification of authenticity between the two sides.
+
+_**To view "ECDH asymmetric encryption" code snippet...**_
 
 <details>
   <summary>Click here to expand the code snippet</summary>
@@ -261,6 +267,8 @@ public class ECDHSimple
 ```
 
 </details>
+
+_**End of code snippet.**_
 
 #### Hashing
 
