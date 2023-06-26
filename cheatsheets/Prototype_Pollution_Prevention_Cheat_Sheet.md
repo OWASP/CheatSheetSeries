@@ -46,11 +46,10 @@ Node.js also offers the ability to remove the `__proto__` property completely us
 
 Prototype pollution is still possible using constructor.prototype properties but removing `__proto__` helps reduce attack surface and prevent certain attacks.
 
+### Other resources
 
-### Other resources:
-
-* [What is prototype pollution? (Portswigger Web Security Academy)](https://portswigger.net/web-security/prototype-pollution)
-* [Prototype pollution (Snyk Learn)](https://learn.snyk.io/lessons/prototype-pollution/javascript/)
+- [What is prototype pollution? (Portswigger Web Security Academy)](https://portswigger.net/web-security/prototype-pollution)
+- [Prototype pollution (Snyk Learn)](https://learn.snyk.io/lessons/prototype-pollution/javascript/)
 
 ### Credits
 
