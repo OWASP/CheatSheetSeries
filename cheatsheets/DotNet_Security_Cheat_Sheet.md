@@ -57,7 +57,7 @@ The following code snippet shows an example of using AES-GCM to perform encrypti
 
 The code is based on example from here: [https://www.scottbrady91.com/c-sharp/aes-gcm-dotnet](https://www.scottbrady91.com/c-sharp/aes-gcm-dotnet)
 
-A few contraints/pitfalls with this code:
+A few constraints/pitfalls with this code:
 
 - It does not take into account key rotation or management which is a whole topic in itself.
 - It is important to use a different nonce for every encryption operation, even if the same key is used.
@@ -157,7 +157,7 @@ The following code snippet shows an example of using Eliptic Curve/Diffie Helman
 
 Note that this code sample relies on the AesGcmSimple class from the [previous section](#encryption-for-storage).
 
-A few contraints/pitfalls with this code:
+A few constraints/pitfalls with this code:
 
 - It does not take into account key rotation or management which is a whole topic in itself.
 - The code deliberately enforces a new nonce for every encryption operation but this must be managed as a separate data item alongside the ciphertext.
