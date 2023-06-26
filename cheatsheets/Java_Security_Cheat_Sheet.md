@@ -507,9 +507,9 @@ other log viewing/analysis tools that don't expect the log data to be pre-HTML e
 
 - **Never, ever write your own cryptographic functions.**
 - Wherever possible, try and avoid writing any cryptographic code at all. Instead try and either use pre-existing secret management solutions or the secret management solution provided by your cloud provider. For more information, see the [OWASP Secrets Management Cheat Sheet](/Secrets_Management_Cheat_Sheet).
+- If you cannot use a pre-existing secret management solution, try and use a trusted and well known implementation library rather than using the libraries built into JCA/JCE as it is far too easy to make cryptographic errors with them.
 - Make sure your application or protocol can easily support a future change of cryptographic algorithms.
 - Use your package manager wherever possible to keep all of your packages up to date. Watch the updates on your development setup, and plan updates to your applications accordingly.
-- Wherever possible, use a trusted and well known implementation library rather than using the libraries built into JCA/JCE as it is far too easy to make cryptographic errors with them.
 - We will show examples below based on Google Tink which is an [opinionated](https://www.baeldung.com/cs/opinionated-software-design#opinionated-design) library for performing encryption operations.
 
 ### Encryption for storage
