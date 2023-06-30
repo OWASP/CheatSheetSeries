@@ -26,13 +26,13 @@ This is all necessary to properly scope the security of an architecture. However
 
 Object storage usually has the following options for accessing data:
 
-- Accessing resources using built in Identity and Access Management policies
+- Accessing resources using built-in Identity and Access Management policies
 - Using cryptographically signed URLs and HTTP requests
 - Directly accessing with public storage
 
 #### IAM Access
 
-This method involves using other tooling, like a website hosted on the cloud service, to interact with the object storage on the user's behalf. This method is best used when the application has other user interfaces or data systems available, when it is important to hide as much of the storage system as possible, or when the information shouldn't/won't be seen by an end user (metadata). It can be used in combination with web authentication and logging to better track and control access to resources. The key security concern for this approach is relying on developed code or policies which could contain weaknesses, as opposed to using built in cloud provider frameworks for access.
+This method involves using other tooling, like a website hosted on the cloud service, to interact with the object storage on the user's behalf. This method is best used when the application has other user interfaces or data systems available, when it is important to hide as much of the storage system as possible, or when the information shouldn't/won't be seen by an end user (metadata). It can be used in combination with web authentication and logging to better track and control access to resources. The key security concern for this approach is relying on developed code or policies which could contain weaknesses, as opposed to using built-in cloud provider frameworks for access.
 
 |                 Pros                 |                  Cons                  |
 |:------------------------------------:|:--------------------------------------:|
@@ -186,7 +186,7 @@ For proper logging, consider:
 - Logging all [layer 7](https://en.wikipedia.org/wiki/OSI_model) HTTP calls with headers, caller metadata, and responses
     - Payloads may not be logged depending on where logging occurs (before TLS termination) and the sensitivity of data
 - Logging internal actions with actor and permission information
-- Sending trace Ids through the entire request lifecycle to track errors or malicious actions
+- Sending trace IDs through the entire request lifecycle to track errors or malicious actions
 - Masking or removing sensitive data
     - SSNs, sensitive health information, and other PII should not be stored in logs
 
@@ -234,7 +234,7 @@ Managed services will offer some level of security, like updating and securing t
 - Authentication and authorization
 - Logging and monitoring
 - Code security ([OWASP Top 10](https://owasp.org/www-project-top-ten/))
-- 3rd party library patching
+- Third-party library patching
 
 Use documentation from the cloud provider to understand which security will be the responsbility of what party. Examples of this research for serverless functions:
 
