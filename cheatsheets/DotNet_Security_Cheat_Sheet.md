@@ -43,6 +43,8 @@ The .NET Framework is the set of APIs that support an advanced type system, data
 #### General cryptography guidance
 
 - **Never, ever write your own cryptographic functions.**
+- Wherever possible, try and avoid writing any cryptographic code at all. Instead try and either use pre-existing secret management solutions or the secret management solution provided by your cloud provider. For more information, see the [OWASP Secrets Management Cheat Sheet](/Secrets_Management_Cheat_Sheet).
+- If you cannot use a pre-existing secret management solution, try and use a trusted and well known implementation library rather than using the libraries built into .NET as it is far too easy to make cryptographic errors with them.
 - Make sure your application or protocol can easily support a future change of cryptographic algorithms.
 - Use [NuGet](https://docs.microsoft.com/en-us/nuget/) to keep all of your packages up to date. Watch the updates on your development setup, and plan updates to your applications accordingly.
 
@@ -51,10 +53,21 @@ The .NET Framework is the set of APIs that support an advanced type system, data
 - Use the [Windows Data Protection API (DPAPI)](https://docs.microsoft.com/en-us/dotnet/standard/security/how-to-use-data-protection) for secure local storage of sensitive data.
 - Where DPAPI cannot be used, follow the algorithm guidance in the [OWASP Cryptographic Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html#algorithms).
 
-The following code snippet shows an example of using AES-GCM to perform encryption/decryption of data.
+The following code snippet shows an example of using AES-GCM to perform encryption/decryption of data. It is strongly recommended to have a cryptography expert review your final design and code, as even the most trivial error can severely weaken your encryption.
 
 The code is based on example from here: [https://www.scottbrady91.com/c-sharp/aes-gcm-dotnet](https://www.scottbrady91.com/c-sharp/aes-gcm-dotnet)
 
+A few constraints/pitfalls with this code:
+
+- It does not take into account key rotation or management which is a whole topic in itself.
+- It is important to use a different nonce for every encryption operation, even if the same key is used.
+- The key will need to be stored securely.
+
+_**To view "AES-GCM symmetric encryption" code snippet...**_
+
+<details>
+  <summary>...click here.</summary>
+  
 ```csharp
 // Code based on example from here:
 // https://www.scottbrady91.com/c-sharp/aes-gcm-dotnet
@@ -130,13 +143,32 @@ public static class AesGcmSimple
 
 ```
 
+</details>
+
+_**End of code snippet.**_
+
 #### Encryption for transmission
 
 - Again, follow the algorithm guidance in the [OWASP Cryptographic Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html#algorithms).
 
 The following code snippet shows an example of using Eliptic Curve/Diffie Helman (ECDH) together with AES-GCM to perform encryption/decryption of data between two different sides without the need the transfer the symmetric key between the two sides. Instead, the sides exchange public keys and can then use ECDH to generate a shared secret which can be used for the symmetric encryption.
 
+ Again, it is strongly recommended to have a cryptography expert review your final design and code, as even the most trivial error can severely weaken your encryption.
+
 Note that this code sample relies on the AesGcmSimple class from the [previous section](#encryption-for-storage).
+
+A few constraints/pitfalls with this code:
+
+- It does not take into account key rotation or management which is a whole topic in itself.
+- The code deliberately enforces a new nonce for every encryption operation but this must be managed as a separate data item alongside the ciphertext.
+- The private keys will need to be stored securely.
+- The code does not consider the validation of public keys before use.
+- Overall, there is no verification of authenticity between the two sides.
+
+_**To view "ECDH asymmetric encryption" code snippet...**_
+
+<details>
+  <summary>...click here.</summary>
 
 ```csharp
 public class ECDHSimpleTest
@@ -233,6 +265,10 @@ public class ECDHSimple
     }
 }
 ```
+
+</details>
+
+_**End of code snippet.**_
 
 #### Hashing
 
