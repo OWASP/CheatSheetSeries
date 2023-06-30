@@ -316,6 +316,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://cheatsheetseries.owasp.org/cheatsheets/Prototype_Pollution_Prevention_Cheat_Sheet.html</loc>
+         <lastmod>2023-06-30</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://cheatsheetseries.owasp.org/cheatsheets/Query_Parameterization_Cheat_Sheet.html</loc>
          <lastmod>2023-06-30</lastmod>
          <changefreq>daily</changefreq>

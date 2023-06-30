@@ -10,20 +10,20 @@
       
       
       
-        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/TLS_Cipher_String_Cheat_Sheet.html">
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Prototype_Pollution_Prevention_Cheat_Sheet.html">
       
       
-        <link rel="prev" href="Session_Management_Cheat_Sheet.html">
+        <link rel="prev" href="Pinning_Cheat_Sheet.html">
       
       
-        <link rel="next" href="Third_Party_Javascript_Management_Cheat_Sheet.html">
+        <link rel="next" href="Query_Parameterization_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
       <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.17">
     
     
       
-        <title>TLS Cipher String - OWASP Cheat Sheet Series</title>
+        <title>Prototype Pollution Prevention - OWASP Cheat Sheet Series</title>
       
     
     
@@ -75,7 +75,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#tls-cipher-string-cheat-sheet" class="md-skip">
+        <a href="#prototype-pollution-prevention-cheat-sheet" class="md-skip">
           Skip to content
         </a>
       
@@ -109,7 +109,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              TLS Cipher String
+              Prototype Pollution Prevention
             
           </span>
         </div>
@@ -1159,11 +1159,107 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="Prototype_Pollution_Prevention_Cheat_Sheet.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Prototype Pollution Prevention
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="Prototype_Pollution_Prevention_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
         Prototype Pollution Prevention
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#explanation" class="md-nav__link">
+    Explanation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#suggested-protection-mechanisms" class="md-nav__link">
+    Suggested protection mechanisms
+  </a>
+  
+    <nav class="md-nav" aria-label="Suggested protection mechanisms">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-new-set-or-new-map" class="md-nav__link">
+    Use "new Set()" or "new Map()"
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#if-objects-or-object-literals-are-required" class="md-nav__link">
+    If objects or object literals are required
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-object-freeze-and-seal-mechanisms" class="md-nav__link">
+    Use object "freeze" and "seal" mechanisms
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nodejs-configuration-flag" class="md-nav__link">
+    Node.js configuration flag
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-resources" class="md-nav__link">
+    Other resources
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#credits" class="md-nav__link">
+    Credits
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1327,59 +1423,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          TLS Cipher String
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="TLS_Cipher_String_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="TLS_Cipher_String_Cheat_Sheet.html" class="md-nav__link">
         TLS Cipher String
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    Introduction
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#related-articles" class="md-nav__link">
-    Related Articles
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1614,16 +1662,64 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    Introduction
+  <a href="#explanation" class="md-nav__link">
+    Explanation
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#related-articles" class="md-nav__link">
-    Related Articles
+  <a href="#suggested-protection-mechanisms" class="md-nav__link">
+    Suggested protection mechanisms
   </a>
+  
+    <nav class="md-nav" aria-label="Suggested protection mechanisms">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-new-set-or-new-map" class="md-nav__link">
+    Use "new Set()" or "new Map()"
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#if-objects-or-object-literals-are-required" class="md-nav__link">
+    If objects or object literals are required
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-object-freeze-and-seal-mechanisms" class="md-nav__link">
+    Use object "freeze" and "seal" mechanisms
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nodejs-configuration-flag" class="md-nav__link">
+    Node.js configuration flag
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-resources" class="md-nav__link">
+    Other resources
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#credits" class="md-nav__link">
+    Credits
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1645,15 +1741,41 @@
   
 
 
-<h1 id="tls-cipher-string-cheat-sheet">TLS Cipher String Cheat Sheet<a class="headerlink" href="#tls-cipher-string-cheat-sheet" title="Permanent link">&para;</a></h1>
-<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>The Mozilla Foundation provides an easy-to-use secure configuration generator for web, database, and mail software. This online (and well updated) tools allows site administrators to select the software they are using and receive a configuration file that is both safe and compatible for a wide variety of browser versions and server software.</p>
-<p>For more information please visit <a href="https://ssl-config.mozilla.org/">https://ssl-config.mozilla.org/</a>.</p>
-<h2 id="related-articles">Related Articles<a class="headerlink" href="#related-articles" title="Permanent link">&para;</a></h2>
+<h1 id="prototype-pollution-prevention-cheat-sheet">Prototype Pollution Prevention Cheat Sheet<a class="headerlink" href="#prototype-pollution-prevention-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h2 id="explanation">Explanation<a class="headerlink" href="#explanation" title="Permanent link">&para;</a></h2>
+<p>Prototype Pollution is a critical vulnerability that can allow attackers to manipulate an application's JavaScript objects and properties, leading to serious security issues such as unauthorized access to data, privilege escalation, and even remote code execution.</p>
+<h2 id="suggested-protection-mechanisms">Suggested protection mechanisms<a class="headerlink" href="#suggested-protection-mechanisms" title="Permanent link">&para;</a></h2>
+<h3 id="use-new-set-or-new-map">Use "new Set()" or "new Map()"<a class="headerlink" href="#use-new-set-or-new-map" title="Permanent link">&para;</a></h3>
+<p>Developers should use <code>new Set()</code> or <code>new Map()</code> instead of using object literals:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="nx">allowedTags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Set</span><span class="p">();</span>
+<span class="nx">allowedTags</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">);</span>
+<span class="k">if</span><span class="p">(</span><span class="nx">allowedTags</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">)){</span>
+<span class="w">  </span><span class="c1">//...</span>
+<span class="p">}</span>
+
+<span class="kd">let</span><span class="w"> </span><span class="nx">options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Map</span><span class="p">();</span>
+<span class="nx">options</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;spaces&#39;</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">);</span>
+<span class="kd">let</span><span class="w"> </span><span class="nx">spaces</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">options</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;spaces&#39;</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="if-objects-or-object-literals-are-required">If objects or object literals are required<a class="headerlink" href="#if-objects-or-object-literals-are-required" title="Permanent link">&para;</a></h3>
+<p>If objects have to be used then they should be created using the <code>Object.create(null)</code> API to ensure they don't inherit from the Object prototype:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="nx">obj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+</code></pre></div>
+<p>If object literals are required then as a last resort you could use the <code>__proto__</code> property:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="nx">obj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="nx">__proto__</span><span class="o">:</span><span class="kc">null</span><span class="p">};</span>
+</code></pre></div>
+<h3 id="use-object-freeze-and-seal-mechanisms">Use object "freeze" and "seal" mechanisms<a class="headerlink" href="#use-object-freeze-and-seal-mechanisms" title="Permanent link">&para;</a></h3>
+<p>You can also use the <code>Object.freeze()</code> and <code>Object.seal()</code> APIs to prevent built-in prototypes from being modified however this can break the application if the libraries they use modify the built-in prototypes.</p>
+<h3 id="nodejs-configuration-flag">Node.js configuration flag<a class="headerlink" href="#nodejs-configuration-flag" title="Permanent link">&para;</a></h3>
+<p>Node.js also offers the ability to remove the <code>__proto__</code> property completely using the <code>--disable-proto=delete</code> flag. Note this is a defence in depth measure.</p>
+<p>Prototype pollution is still possible using constructor.prototype properties but removing <code>__proto__</code> helps reduce attack surface and prevent certain attacks.</p>
+<h3 id="other-resources">Other resources<a class="headerlink" href="#other-resources" title="Permanent link">&para;</a></h3>
 <ul>
-<li><a href="Transport_Layer_Protection_Cheat_Sheet.html">OWASP: Transport Layer Protection Cheat Sheet</a>.</li>
-<li><a href="https://wiki.mozilla.org/Security/Server_Side_TLS">Mozilla Server Side TLS</a></li>
+<li><a href="https://portswigger.net/web-security/prototype-pollution">What is prototype pollution? (Portswigger Web Security Academy)</a></li>
+<li><a href="https://learn.snyk.io/lessons/prototype-pollution/javascript/">Prototype pollution (Snyk Learn)</a></li>
 </ul>
+<h3 id="credits">Credits<a class="headerlink" href="#credits" title="Permanent link">&para;</a></h3>
+<p>Credit to <a href="https://garethheyes.co.uk/">Gareth Hayes</a> for providing the original protection guidance <a href="https://github.com/OWASP/ASVS/issues/1563#issuecomment-1470027723">in this comment</a>.</p>
 
 
 
