@@ -4,6 +4,8 @@
 
 Prototype Pollution is a critical vulnerability that can allow attackers to manipulate an application's JavaScript objects and properties, leading to serious security issues such as unauthorized access to data, privilege escalation, and even remote code execution.
 
+For examples of why this is dangerous, see the links in the [Other resources](#other-resources) section below.
+
 ## Suggested protection mechanisms
 
 ### Use "new Set()" or "new Map()"
