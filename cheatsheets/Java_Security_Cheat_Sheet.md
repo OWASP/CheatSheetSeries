@@ -526,10 +526,8 @@ For example, this page shows how to perform simple symmetric encryption:
 
 The following code snippet shows an encapsulated use of this functionality:
 
-_**To view "Tink symmetric encryption" code snippet...**_
-
 <details>
-  <summary>...click here.</summary>
+  <summary>Click here to view the "Tink symmetric encryption" code snippet.</summary>
 
 ``` java
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -602,8 +600,6 @@ class AesGcmSimple {
 
 </details>
 
-_**End of code snippet.**_
-
 #### Symmetric example using built-in JCA/JCE classes
 
 If you absolutely cannot use a separate library, it is still possible to use the built JCA/JCE classes but it is strongly recommended to have a cryptography expert review the full design and code, as even the most trivial error can severely weaken your encryption.
@@ -616,10 +612,8 @@ A few constraints/pitfalls with this code:
 - It is important to use a different nonce for every encryption operation, even if the same key is used.
 - The key will need to be stored securely.
 
-_**To view "JCA/JCE symmetric encryption" code snippet...**_
-
 <details>
-  <summary>...click here.</summary>
+  <summary>Click here to view the "JCA/JCE symmetric encryption" code snippet.</summary>
 
 ```java
 import java.nio.charset.StandardCharsets;
@@ -685,8 +679,6 @@ class AesGcmSimple {
 
 </details>
 
-_**End of code snippet.**_
-
 ### Encryption for transmission
 
 Again, follow the algorithm guidance in the [OWASP Cryptographic Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html#algorithms).
@@ -701,10 +693,8 @@ For example, this page shows how to perform a hybrid encryption process where tw
 
 The following code snippet shows how this functionality can be used to share secrets between Alice and Bob:
 
-_**To view "Tink hybrid encryption" code snippet...**_
-
 <details>
-  <summary>...click here.</summary>
+  <summary>Click here to view the "Tink hybrid encryption" code snippet.</summary>
 
 ``` java
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -841,8 +831,6 @@ class HybridSimple {
 
 </details>
 
-_**End of code snippet.**_
-
 #### Asymmetric example using built-in JCA/JCE classes
 
 If you absolutely cannot use a separate library, it is still possible to use the built JCA/JCE classes but it is strongly recommended to have a cryptography expert review the full design and code, as even the most trivial error can severely weaken your encryption.
@@ -859,10 +847,8 @@ A few constraints/pitfalls with this code:
 - The code does not consider the validation of public keys before use.
 - Overall, there is no verification of authenticity between the two sides.
 
-_**To view "JCA/JCE hybrid encryption" code snippet...**_
-
 <details>
-  <summary>...click here.</summary>
+  <summary>Click here to view the "JCA/JCE hybrid encryption" code snippet.</summary>
 
 ```java
 import java.nio.charset.StandardCharsets;
@@ -993,5 +979,3 @@ class ECDHSimple {
 ```
 
 </details>
-
-_**End of code snippet.**_
