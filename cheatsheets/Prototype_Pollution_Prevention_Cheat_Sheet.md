@@ -42,7 +42,7 @@ You can also use the `Object.freeze()` and `Object.seal()` APIs to prevent built
 
 ### Node.js configuration flag
 
-Node.js also offers the ability to remove the `__proto__` property completely using the `--disable-proto=delete` flag. Note this is a defence in depth measure.
+Node.js also offers the ability to remove the `__proto__` property completely using the `--disable-proto=delete` flag. Note this is a defense in depth measure.
 
 Prototype pollution is still possible using constructor.prototype properties but removing `__proto__` helps reduce attack surface and prevent certain attacks.
 
