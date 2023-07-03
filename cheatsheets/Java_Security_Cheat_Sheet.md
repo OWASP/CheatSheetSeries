@@ -609,7 +609,7 @@ The following code snippet shows an example of using AES-GCM to perform encrypti
 A few constraints/pitfalls with this code:
 
 - It does not take into account key rotation or management which is a whole topic in itself.
-- It is important to use a different nonce for every encryption operation, even if the same key is used.
+- It is important to use a different nonce for every encryption operation, especially if the same key is used. For more information, see [this answer on Cryptography Stack Exchange](https://crypto.stackexchange.com/a/66500).
 - The key will need to be stored securely.
 
 <details>
