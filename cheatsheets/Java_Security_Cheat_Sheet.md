@@ -561,14 +561,14 @@ public class App {
         // Read the keyset into a KeysetHandle.
         KeysetHandle handle =
         TinkJsonProtoKeysetFormat.parseKeyset(
-            new String(Files.readAllBytes( Paths.get("/home/fred/aead_test_keyset.json")), UTF_8), InsecureSecretKeyAccess.get());
+            new String(Files.readAllBytes( Paths.get("/home/fredbloggs/aead_test_keyset.json")), UTF_8), InsecureSecretKeyAccess.get());
 
         String message = "This message to be encrypted";
         System.out.println(message);
 
         // Add some relevant context about the encrypted data that should be verified
         // on decryption
-        String metadata = "Sender: fredbloggs";
+        String metadata = "Sender: fredbloggs@example.com";
 
         // Encrypt the message
         byte[] cipherText = AesGcmSimple.encrypt(message, metadata, handle);
@@ -737,8 +737,8 @@ class App {
 
         // Generate ECC key pair for Alice
         var alice = new HybridSimple(
-                getKeysetHandle("/home/josh/alice_private_keyset.json"),
-                getKeysetHandle("/home/josh/alice_public_keyset.json")
+                getKeysetHandle("/home/alicesmith/private_keyset.json"),
+                getKeysetHandle("/home/alicesmith/public_keyset.json")
 
         );
 
@@ -746,8 +746,8 @@ class App {
 
         // Generate ECC key pair for Bob
         var bob = new HybridSimple(
-                getKeysetHandle("/home/josh/bob_private_keyset.json"),
-                getKeysetHandle("/home/josh/bob_public_keyset.json")
+                getKeysetHandle("/home/bobjones/private_keyset.json"),
+                getKeysetHandle("/home/bobjones/public_keyset.json")
 
         );
 
@@ -761,7 +761,7 @@ class App {
         
         // Add some relevant context about the encrypted data that should be verified
         // on decryption
-        String metadata = "Sender: alicesmith";
+        String metadata = "Sender: alicesmith@example.com";
 
         System.out.println("Secret being sent from Alice to Bob: " + plaintext);
         var cipherText = alice.encrypt(bobPublicKey, plaintext, metadata);
@@ -778,7 +778,7 @@ class App {
 
         // Add some relevant context about the encrypted data that should be verified
         // on decryption
-        String metadata2 = "Sender: bobjones";
+        String metadata2 = "Sender: bobjones@example.com";
 
         System.out.println("Secret being sent from Bob to Alice: " + plaintext2);
         var cipherText2 = bob.encrypt(alicePublicKey, plaintext2, metadata2);
