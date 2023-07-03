@@ -520,9 +520,7 @@ Follow the algorithm guidance in the [OWASP Cryptographic Storage Cheat Sheet](h
 
 Google Tink has documentation on performing common tasks.
 
-For example, this page shows how to perform simple symmetric encryption:
-
-[Simple Symmetric Encryption](https://developers.google.com/tink/encrypt-data) (From Google's website)
+For example, this page (from Google's website) shows [how to perform simple symmetric encryption](https://developers.google.com/tink/encrypt-data).
 
 The following code snippet shows an encapsulated use of this functionality:
 
@@ -687,9 +685,7 @@ Again, follow the algorithm guidance in the [OWASP Cryptographic Storage Cheat S
 
 Google Tink has documentation on performing common tasks.
 
-For example, this page shows how to perform a hybrid encryption process where two parties want to share data based on their asymmetric key pairs:
-
-[Simple Asymmetric Encryption](https://developers.google.com/tink/encrypt-data) (From Google's website)
+For example, this page (from Google's website) shows [how to perform a hybrid encryption process](https://developers.google.com/tink/exchange-data) where two parties want to share data based on their asymmetric key pair.
 
 The following code snippet shows how this functionality can be used to share secrets between Alice and Bob:
 
