@@ -2873,18 +2873,16 @@ other log viewing/analysis tools that don&#39;t expect the log data to be pre-HT
 <li>If you cannot use a pre-existing secret management solution, try and use a trusted and well known implementation library rather than using the libraries built into JCA/JCE as it is far too easy to make cryptographic errors with them.</li>
 <li>Make sure your application or protocol can easily support a future change of cryptographic algorithms.</li>
 <li>Use your package manager wherever possible to keep all of your packages up to date. Watch the updates on your development setup, and plan updates to your applications accordingly.</li>
-<li>We will show examples below based on Google Tink which is an <a href="https://www.baeldung.com/cs/opinionated-software-design#opinionated-design">opinionated</a> library for performing encryption operations.</li>
+<li>We will show examples below based on Google Tink, which is a library created by cryptography experts for using cryptography safely (in the sense of minimizing common mistakes made when using standard cryptography libraries).</li>
 </ul>
 <h3 id="encryption-for-storage">Encryption for storage<a class="headerlink" href="#encryption-for-storage" title="Permanent link">&para;</a></h3>
 <p>Follow the algorithm guidance in the <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html#algorithms">OWASP Cryptographic Storage Cheat Sheet</a>.</p>
 <h4 id="symmetric-example-using-google-tink">Symmetric example using Google Tink<a class="headerlink" href="#symmetric-example-using-google-tink" title="Permanent link">&para;</a></h4>
 <p>Google Tink has documentation on performing common tasks.</p>
-<p>For example, this page shows how to perform simple symmetric encryption:</p>
-<p><a href="https://developers.google.com/tink/encrypt-data">Simple Symmetric Encryption</a> (From Google's website)</p>
+<p>For example, this page (from Google's website) shows <a href="https://developers.google.com/tink/encrypt-data">how to perform simple symmetric encryption</a>.</p>
 <p>The following code snippet shows an encapsulated use of this functionality:</p>
-<p><em><strong>To view "Tink symmetric encryption" code snippet...</strong></em></p>
 <details>
-  <summary>...click here.</summary>
+  <summary>Click here to view the "Tink symmetric encryption" code snippet.</summary>
 
 <div class="highlight"><pre><span></span><code><span class="kn">import static</span><span class="w"> </span><span class="nn">java.nio.charset.StandardCharsets.UTF_8</span><span class="p">;</span>
 
@@ -2917,14 +2915,14 @@ other log viewing/analysis tools that don&#39;t expect the log data to be pre-HT
 <span class="w">        </span><span class="c1">// Read the keyset into a KeysetHandle.</span>
 <span class="w">        </span><span class="n">KeysetHandle</span><span class="w"> </span><span class="n">handle</span><span class="w"> </span><span class="o">=</span>
 <span class="w">        </span><span class="n">TinkJsonProtoKeysetFormat</span><span class="p">.</span><span class="na">parseKeyset</span><span class="p">(</span>
-<span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">String</span><span class="p">(</span><span class="n">Files</span><span class="p">.</span><span class="na">readAllBytes</span><span class="p">(</span><span class="w"> </span><span class="n">Paths</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;/home/fred/aead_test_keyset.json&quot;</span><span class="p">)),</span><span class="w"> </span><span class="n">UTF_8</span><span class="p">),</span><span class="w"> </span><span class="n">InsecureSecretKeyAccess</span><span class="p">.</span><span class="na">get</span><span class="p">());</span>
+<span class="w">            </span><span class="k">new</span><span class="w"> </span><span class="n">String</span><span class="p">(</span><span class="n">Files</span><span class="p">.</span><span class="na">readAllBytes</span><span class="p">(</span><span class="w"> </span><span class="n">Paths</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;/home/fredbloggs/aead_test_keyset.json&quot;</span><span class="p">)),</span><span class="w"> </span><span class="n">UTF_8</span><span class="p">),</span><span class="w"> </span><span class="n">InsecureSecretKeyAccess</span><span class="p">.</span><span class="na">get</span><span class="p">());</span>
 
 <span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;This message to be encrypted&quot;</span><span class="p">;</span>
 <span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
 
 <span class="w">        </span><span class="c1">// Add some relevant context about the encrypted data that should be verified</span>
 <span class="w">        </span><span class="c1">// on decryption</span>
-<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">metadata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Sender: fredbloggs&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">metadata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Sender: fredbloggs@example.com&quot;</span><span class="p">;</span>
 
 <span class="w">        </span><span class="c1">// Encrypt the message</span>
 <span class="w">        </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">cipherText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AesGcmSimple</span><span class="p">.</span><span class="na">encrypt</span><span class="p">(</span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="n">metadata</span><span class="p">,</span><span class="w"> </span><span class="n">handle</span><span class="p">);</span>
@@ -2955,19 +2953,17 @@ other log viewing/analysis tools that don&#39;t expect the log data to be pre-HT
 
 </details>
 
-<p><em><strong>End of code snippet.</strong></em></p>
 <h4 id="symmetric-example-using-built-in-jcajce-classes">Symmetric example using built-in JCA/JCE classes<a class="headerlink" href="#symmetric-example-using-built-in-jcajce-classes" title="Permanent link">&para;</a></h4>
 <p>If you absolutely cannot use a separate library, it is still possible to use the built JCA/JCE classes but it is strongly recommended to have a cryptography expert review the full design and code, as even the most trivial error can severely weaken your encryption.</p>
 <p>The following code snippet shows an example of using AES-GCM to perform encryption/decryption of data.</p>
 <p>A few constraints/pitfalls with this code:</p>
 <ul>
 <li>It does not take into account key rotation or management which is a whole topic in itself.</li>
-<li>It is important to use a different nonce for every encryption operation, even if the same key is used.</li>
+<li>It is important to use a different nonce for every encryption operation, especially if the same key is used. For more information, see <a href="https://crypto.stackexchange.com/a/66500">this answer on Cryptography Stack Exchange</a>.</li>
 <li>The key will need to be stored securely.</li>
 </ul>
-<p><em><strong>To view "JCA/JCE symmetric encryption" code snippet...</strong></em></p>
 <details>
-  <summary>...click here.</summary>
+  <summary>Click here to view the "JCA/JCE symmetric encryption" code snippet.</summary>
 
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">java.nio.charset.StandardCharsets</span><span class="p">;</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">java.security.SecureRandom</span><span class="p">;</span>
@@ -3032,17 +3028,14 @@ other log viewing/analysis tools that don&#39;t expect the log data to be pre-HT
 
 </details>
 
-<p><em><strong>End of code snippet.</strong></em></p>
 <h3 id="encryption-for-transmission">Encryption for transmission<a class="headerlink" href="#encryption-for-transmission" title="Permanent link">&para;</a></h3>
 <p>Again, follow the algorithm guidance in the <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html#algorithms">OWASP Cryptographic Storage Cheat Sheet</a>.</p>
 <h4 id="asymmetric-example-using-google-tink">Asymmetric example using Google Tink<a class="headerlink" href="#asymmetric-example-using-google-tink" title="Permanent link">&para;</a></h4>
 <p>Google Tink has documentation on performing common tasks.</p>
-<p>For example, this page shows how to perform a hybrid encryption process where two parties want to share data based on their asymmetric key pairs:</p>
-<p><a href="https://developers.google.com/tink/encrypt-data">Simple Asymmetric Encryption</a> (From Google's website)</p>
+<p>For example, this page (from Google's website) shows <a href="https://developers.google.com/tink/exchange-data">how to perform a hybrid encryption process</a> where two parties want to share data based on their asymmetric key pair.</p>
 <p>The following code snippet shows how this functionality can be used to share secrets between Alice and Bob:</p>
-<p><em><strong>To view "Tink hybrid encryption" code snippet...</strong></em></p>
 <details>
-  <summary>...click here.</summary>
+  <summary>Click here to view the "Tink hybrid encryption" code snippet.</summary>
 
 <div class="highlight"><pre><span></span><code><span class="kn">import static</span><span class="w"> </span><span class="nn">java.nio.charset.StandardCharsets.UTF_8</span><span class="p">;</span>
 
@@ -3084,8 +3077,8 @@ other log viewing/analysis tools that don&#39;t expect the log data to be pre-HT
 
 <span class="w">        </span><span class="c1">// Generate ECC key pair for Alice</span>
 <span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="n">alice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HybridSimple</span><span class="p">(</span>
-<span class="w">                </span><span class="n">getKeysetHandle</span><span class="p">(</span><span class="s">&quot;/home/josh/alice_private_keyset.json&quot;</span><span class="p">),</span>
-<span class="w">                </span><span class="n">getKeysetHandle</span><span class="p">(</span><span class="s">&quot;/home/josh/alice_public_keyset.json&quot;</span><span class="p">)</span>
+<span class="w">                </span><span class="n">getKeysetHandle</span><span class="p">(</span><span class="s">&quot;/home/alicesmith/private_keyset.json&quot;</span><span class="p">),</span>
+<span class="w">                </span><span class="n">getKeysetHandle</span><span class="p">(</span><span class="s">&quot;/home/alicesmith/public_keyset.json&quot;</span><span class="p">)</span>
 
 <span class="w">        </span><span class="p">);</span>
 
@@ -3093,8 +3086,8 @@ other log viewing/analysis tools that don&#39;t expect the log data to be pre-HT
 
 <span class="w">        </span><span class="c1">// Generate ECC key pair for Bob</span>
 <span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="n">bob</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HybridSimple</span><span class="p">(</span>
-<span class="w">                </span><span class="n">getKeysetHandle</span><span class="p">(</span><span class="s">&quot;/home/josh/bob_private_keyset.json&quot;</span><span class="p">),</span>
-<span class="w">                </span><span class="n">getKeysetHandle</span><span class="p">(</span><span class="s">&quot;/home/josh/bob_public_keyset.json&quot;</span><span class="p">)</span>
+<span class="w">                </span><span class="n">getKeysetHandle</span><span class="p">(</span><span class="s">&quot;/home/bobjones/private_keyset.json&quot;</span><span class="p">),</span>
+<span class="w">                </span><span class="n">getKeysetHandle</span><span class="p">(</span><span class="s">&quot;/home/bobjones/public_keyset.json&quot;</span><span class="p">)</span>
 
 <span class="w">        </span><span class="p">);</span>
 
@@ -3108,7 +3101,7 @@ other log viewing/analysis tools that don&#39;t expect the log data to be pre-HT
 
 <span class="w">        </span><span class="c1">// Add some relevant context about the encrypted data that should be verified</span>
 <span class="w">        </span><span class="c1">// on decryption</span>
-<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">metadata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Sender: alicesmith&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">metadata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Sender: alicesmith@example.com&quot;</span><span class="p">;</span>
 
 <span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Secret being sent from Alice to Bob: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">plaintext</span><span class="p">);</span>
 <span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="n">cipherText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">alice</span><span class="p">.</span><span class="na">encrypt</span><span class="p">(</span><span class="n">bobPublicKey</span><span class="p">,</span><span class="w"> </span><span class="n">plaintext</span><span class="p">,</span><span class="w"> </span><span class="n">metadata</span><span class="p">);</span>
@@ -3125,7 +3118,7 @@ other log viewing/analysis tools that don&#39;t expect the log data to be pre-HT
 
 <span class="w">        </span><span class="c1">// Add some relevant context about the encrypted data that should be verified</span>
 <span class="w">        </span><span class="c1">// on decryption</span>
-<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">metadata2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Sender: bobjones&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">metadata2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Sender: bobjones@example.com&quot;</span><span class="p">;</span>
 
 <span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Secret being sent from Bob to Alice: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">plaintext2</span><span class="p">);</span>
 <span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="n">cipherText2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bob</span><span class="p">.</span><span class="na">encrypt</span><span class="p">(</span><span class="n">alicePublicKey</span><span class="p">,</span><span class="w"> </span><span class="n">plaintext2</span><span class="p">,</span><span class="w"> </span><span class="n">metadata2</span><span class="p">);</span>
@@ -3178,7 +3171,6 @@ other log viewing/analysis tools that don&#39;t expect the log data to be pre-HT
 
 </details>
 
-<p><em><strong>End of code snippet.</strong></em></p>
 <h4 id="asymmetric-example-using-built-in-jcajce-classes">Asymmetric example using built-in JCA/JCE classes<a class="headerlink" href="#asymmetric-example-using-built-in-jcajce-classes" title="Permanent link">&para;</a></h4>
 <p>If you absolutely cannot use a separate library, it is still possible to use the built JCA/JCE classes but it is strongly recommended to have a cryptography expert review the full design and code, as even the most trivial error can severely weaken your encryption.</p>
 <p>The following code snippet shows an example of using Eliptic Curve/Diffie Helman (ECDH) together with AES-GCM to perform encryption/decryption of data between two different sides without the need the transfer the symmetric key between the two sides. Instead, the sides exchange public keys and can then use ECDH to generate a shared secret which can be used for the symmetric encryption.</p>
@@ -3191,9 +3183,8 @@ other log viewing/analysis tools that don&#39;t expect the log data to be pre-HT
 <li>The code does not consider the validation of public keys before use.</li>
 <li>Overall, there is no verification of authenticity between the two sides.</li>
 </ul>
-<p><em><strong>To view "JCA/JCE hybrid encryption" code snippet...</strong></em></p>
 <details>
-  <summary>...click here.</summary>
+  <summary>Click here to view the "JCA/JCE hybrid encryption" code snippet.</summary>
 
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">java.nio.charset.StandardCharsets</span><span class="p">;</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">java.security.SecureRandom</span><span class="p">;</span>
@@ -3323,8 +3314,6 @@ other log viewing/analysis tools that don&#39;t expect the log data to be pre-HT
 </code></pre></div>
 
 </details>
-
-<p><em><strong>End of code snippet.</strong></em></p>
 
 
 
