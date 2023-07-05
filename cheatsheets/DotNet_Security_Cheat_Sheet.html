@@ -19,7 +19,7 @@
         <link rel="next" href="Error_Handling_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.17">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.18">
     
     
       
@@ -2411,6 +2411,8 @@
 <h4 id="general-cryptography-guidance">General cryptography guidance<a class="headerlink" href="#general-cryptography-guidance" title="Permanent link">&para;</a></h4>
 <ul>
 <li><strong>Never, ever write your own cryptographic functions.</strong></li>
+<li>Wherever possible, try and avoid writing any cryptographic code at all. Instead try and either use pre-existing secret management solutions or the secret management solution provided by your cloud provider. For more information, see the <a href="/Secrets_Management_Cheat_Sheet">OWASP Secrets Management Cheat Sheet</a>.</li>
+<li>If you cannot use a pre-existing secret management solution, try and use a trusted and well known implementation library rather than using the libraries built into .NET as it is far too easy to make cryptographic errors with them.</li>
 <li>Make sure your application or protocol can easily support a future change of cryptographic algorithms.</li>
 <li>Use <a href="https://docs.microsoft.com/en-us/nuget/">NuGet</a> to keep all of your packages up to date. Watch the updates on your development setup, and plan updates to your applications accordingly.</li>
 </ul>
@@ -2419,8 +2421,18 @@
 <li>Use the <a href="https://docs.microsoft.com/en-us/dotnet/standard/security/how-to-use-data-protection">Windows Data Protection API (DPAPI)</a> for secure local storage of sensitive data.</li>
 <li>Where DPAPI cannot be used, follow the algorithm guidance in the <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html#algorithms">OWASP Cryptographic Storage Cheat Sheet</a>.</li>
 </ul>
-<p>The following code snippet shows an example of using AES-GCM to perform encryption/decryption of data.</p>
+<p>The following code snippet shows an example of using AES-GCM to perform encryption/decryption of data. It is strongly recommended to have a cryptography expert review your final design and code, as even the most trivial error can severely weaken your encryption.</p>
 <p>The code is based on example from here: <a href="https://www.scottbrady91.com/c-sharp/aes-gcm-dotnet">https://www.scottbrady91.com/c-sharp/aes-gcm-dotnet</a></p>
+<p>A few constraints/pitfalls with this code:</p>
+<ul>
+<li>It does not take into account key rotation or management which is a whole topic in itself.</li>
+<li>It is important to use a different nonce for every encryption operation, even if the same key is used.</li>
+<li>The key will need to be stored securely.</li>
+</ul>
+<p><em><strong>To view "AES-GCM symmetric encryption" code snippet...</strong></em></p>
+<details>
+  <summary>...click here.</summary>
+
 <div class="highlight"><pre><span></span><code><span class="c1">// Code based on example from here:</span>
 <span class="c1">// https://www.scottbrady91.com/c-sharp/aes-gcm-dotnet</span>
 
@@ -2493,12 +2505,29 @@
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
+
+</details>
+
+<p><em><strong>End of code snippet.</strong></em></p>
 <h4 id="encryption-for-transmission">Encryption for transmission<a class="headerlink" href="#encryption-for-transmission" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Again, follow the algorithm guidance in the <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html#algorithms">OWASP Cryptographic Storage Cheat Sheet</a>.</li>
 </ul>
 <p>The following code snippet shows an example of using Eliptic Curve/Diffie Helman (ECDH) together with AES-GCM to perform encryption/decryption of data between two different sides without the need the transfer the symmetric key between the two sides. Instead, the sides exchange public keys and can then use ECDH to generate a shared secret which can be used for the symmetric encryption.</p>
+<p>Again, it is strongly recommended to have a cryptography expert review your final design and code, as even the most trivial error can severely weaken your encryption.</p>
 <p>Note that this code sample relies on the AesGcmSimple class from the <a href="#encryption-for-storage">previous section</a>.</p>
+<p>A few constraints/pitfalls with this code:</p>
+<ul>
+<li>It does not take into account key rotation or management which is a whole topic in itself.</li>
+<li>The code deliberately enforces a new nonce for every encryption operation but this must be managed as a separate data item alongside the ciphertext.</li>
+<li>The private keys will need to be stored securely.</li>
+<li>The code does not consider the validation of public keys before use.</li>
+<li>Overall, there is no verification of authenticity between the two sides.</li>
+</ul>
+<p><em><strong>To view "ECDH asymmetric encryption" code snippet...</strong></em></p>
+<details>
+  <summary>...click here.</summary>
+
 <div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">ECDHSimpleTest</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Main</span><span class="p">()</span>
@@ -2593,6 +2622,10 @@
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
+
+</details>
+
+<p><em><strong>End of code snippet.</strong></em></p>
 <h4 id="hashing">Hashing<a class="headerlink" href="#hashing" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Use a strong hash algorithm.<ul>
@@ -3306,10 +3339,10 @@ If a deserialized hostile object tries to initiate a system processes or access 
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.74e28a9f.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.b425cdc4.min.js"></script>
+      <script src="../assets/javascripts/bundle.220ee61c.min.js"></script>
       
     
   </body>

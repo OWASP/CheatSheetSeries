@@ -19,7 +19,7 @@
         <link rel="next" href="Query_Parameterization_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.17">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.18">
     
     
       
@@ -1744,6 +1744,7 @@
 <h1 id="prototype-pollution-prevention-cheat-sheet">Prototype Pollution Prevention Cheat Sheet<a class="headerlink" href="#prototype-pollution-prevention-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="explanation">Explanation<a class="headerlink" href="#explanation" title="Permanent link">&para;</a></h2>
 <p>Prototype Pollution is a critical vulnerability that can allow attackers to manipulate an application's JavaScript objects and properties, leading to serious security issues such as unauthorized access to data, privilege escalation, and even remote code execution.</p>
+<p>For examples of why this is dangerous, see the links in the <a href="#other-resources">Other resources</a> section below.</p>
 <h2 id="suggested-protection-mechanisms">Suggested protection mechanisms<a class="headerlink" href="#suggested-protection-mechanisms" title="Permanent link">&para;</a></h2>
 <h3 id="use-new-set-or-new-map">Use "new Set()" or "new Map()"<a class="headerlink" href="#use-new-set-or-new-map" title="Permanent link">&para;</a></h3>
 <p>Developers should use <code>new Set()</code> or <code>new Map()</code> instead of using object literals:</p>
@@ -1767,8 +1768,8 @@
 <h3 id="use-object-freeze-and-seal-mechanisms">Use object "freeze" and "seal" mechanisms<a class="headerlink" href="#use-object-freeze-and-seal-mechanisms" title="Permanent link">&para;</a></h3>
 <p>You can also use the <code>Object.freeze()</code> and <code>Object.seal()</code> APIs to prevent built-in prototypes from being modified however this can break the application if the libraries they use modify the built-in prototypes.</p>
 <h3 id="nodejs-configuration-flag">Node.js configuration flag<a class="headerlink" href="#nodejs-configuration-flag" title="Permanent link">&para;</a></h3>
-<p>Node.js also offers the ability to remove the <code>__proto__</code> property completely using the <code>--disable-proto=delete</code> flag. Note this is a defence in depth measure.</p>
-<p>Prototype pollution is still possible using constructor.prototype properties but removing <code>__proto__</code> helps reduce attack surface and prevent certain attacks.</p>
+<p>Node.js also offers the ability to remove the <code>__proto__</code> property completely using the <code>--disable-proto=delete</code> flag. Note this is a defense in depth measure.</p>
+<p>Prototype pollution is still possible using <code>constructor.prototype</code> properties but removing <code>__proto__</code> helps reduce attack surface and prevent certain attacks.</p>
 <h3 id="other-resources">Other resources<a class="headerlink" href="#other-resources" title="Permanent link">&para;</a></h3>
 <ul>
 <li><a href="https://portswigger.net/web-security/prototype-pollution">What is prototype pollution? (Portswigger Web Security Academy)</a></li>
@@ -1817,10 +1818,10 @@
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.74e28a9f.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.b425cdc4.min.js"></script>
+      <script src="../assets/javascripts/bundle.220ee61c.min.js"></script>
       
     
   </body>
