@@ -510,7 +510,7 @@ other log viewing/analysis tools that don't expect the log data to be pre-HTML e
 - If you cannot use a pre-existing secret management solution, try and use a trusted and well known implementation library rather than using the libraries built into JCA/JCE as it is far too easy to make cryptographic errors with them.
 - Make sure your application or protocol can easily support a future change of cryptographic algorithms.
 - Use your package manager wherever possible to keep all of your packages up to date. Watch the updates on your development setup, and plan updates to your applications accordingly.
-- We will show examples below based on Google Tink which is an [opinionated](https://www.baeldung.com/cs/opinionated-software-design#opinionated-design) library for performing encryption operations.
+- We will show examples below based on Google Tink, which is a library created by cryptography experts for using cryptography safely (in the sense of minimizing common mistakes made when using standard cryptography libraries).
 
 ### Encryption for storage
 
@@ -520,16 +520,12 @@ Follow the algorithm guidance in the [OWASP Cryptographic Storage Cheat Sheet](h
 
 Google Tink has documentation on performing common tasks.
 
-For example, this page shows how to perform simple symmetric encryption:
-
-[Simple Symmetric Encryption](https://developers.google.com/tink/encrypt-data) (From Google's website)
+For example, this page (from Google's website) shows [how to perform simple symmetric encryption](https://developers.google.com/tink/encrypt-data).
 
 The following code snippet shows an encapsulated use of this functionality:
 
-_**To view "Tink symmetric encryption" code snippet...**_
-
 <details>
-  <summary>...click here.</summary>
+  <summary>Click here to view the "Tink symmetric encryption" code snippet.</summary>
 
 ``` java
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -563,14 +559,14 @@ public class App {
         // Read the keyset into a KeysetHandle.
         KeysetHandle handle =
         TinkJsonProtoKeysetFormat.parseKeyset(
-            new String(Files.readAllBytes( Paths.get("/home/fred/aead_test_keyset.json")), UTF_8), InsecureSecretKeyAccess.get());
+            new String(Files.readAllBytes( Paths.get("/home/fredbloggs/aead_test_keyset.json")), UTF_8), InsecureSecretKeyAccess.get());
 
         String message = "This message to be encrypted";
         System.out.println(message);
 
         // Add some relevant context about the encrypted data that should be verified
         // on decryption
-        String metadata = "Sender: fredbloggs";
+        String metadata = "Sender: fredbloggs@example.com";
 
         // Encrypt the message
         byte[] cipherText = AesGcmSimple.encrypt(message, metadata, handle);
@@ -602,8 +598,6 @@ class AesGcmSimple {
 
 </details>
 
-_**End of code snippet.**_
-
 #### Symmetric example using built-in JCA/JCE classes
 
 If you absolutely cannot use a separate library, it is still possible to use the built JCA/JCE classes but it is strongly recommended to have a cryptography expert review the full design and code, as even the most trivial error can severely weaken your encryption.
@@ -613,13 +607,11 @@ The following code snippet shows an example of using AES-GCM to perform encrypti
 A few constraints/pitfalls with this code:
 
 - It does not take into account key rotation or management which is a whole topic in itself.
-- It is important to use a different nonce for every encryption operation, even if the same key is used.
+- It is important to use a different nonce for every encryption operation, especially if the same key is used. For more information, see [this answer on Cryptography Stack Exchange](https://crypto.stackexchange.com/a/66500).
 - The key will need to be stored securely.
 
-_**To view "JCA/JCE symmetric encryption" code snippet...**_
-
 <details>
-  <summary>...click here.</summary>
+  <summary>Click here to view the "JCA/JCE symmetric encryption" code snippet.</summary>
 
 ```java
 import java.nio.charset.StandardCharsets;
@@ -685,8 +677,6 @@ class AesGcmSimple {
 
 </details>
 
-_**End of code snippet.**_
-
 ### Encryption for transmission
 
 Again, follow the algorithm guidance in the [OWASP Cryptographic Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html#algorithms).
@@ -695,16 +685,12 @@ Again, follow the algorithm guidance in the [OWASP Cryptographic Storage Cheat S
 
 Google Tink has documentation on performing common tasks.
 
-For example, this page shows how to perform a hybrid encryption process where two parties want to share data based on their asymmetric key pairs:
-
-[Simple Asymmetric Encryption](https://developers.google.com/tink/encrypt-data) (From Google's website)
+For example, this page (from Google's website) shows [how to perform a hybrid encryption process](https://developers.google.com/tink/exchange-data) where two parties want to share data based on their asymmetric key pair.
 
 The following code snippet shows how this functionality can be used to share secrets between Alice and Bob:
 
-_**To view "Tink hybrid encryption" code snippet...**_
-
 <details>
-  <summary>...click here.</summary>
+  <summary>Click here to view the "Tink hybrid encryption" code snippet.</summary>
 
 ``` java
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -747,8 +733,8 @@ class App {
 
         // Generate ECC key pair for Alice
         var alice = new HybridSimple(
-                getKeysetHandle("/home/josh/alice_private_keyset.json"),
-                getKeysetHandle("/home/josh/alice_public_keyset.json")
+                getKeysetHandle("/home/alicesmith/private_keyset.json"),
+                getKeysetHandle("/home/alicesmith/public_keyset.json")
 
         );
 
@@ -756,8 +742,8 @@ class App {
 
         // Generate ECC key pair for Bob
         var bob = new HybridSimple(
-                getKeysetHandle("/home/josh/bob_private_keyset.json"),
-                getKeysetHandle("/home/josh/bob_public_keyset.json")
+                getKeysetHandle("/home/bobjones/private_keyset.json"),
+                getKeysetHandle("/home/bobjones/public_keyset.json")
 
         );
 
@@ -771,7 +757,7 @@ class App {
         
         // Add some relevant context about the encrypted data that should be verified
         // on decryption
-        String metadata = "Sender: alicesmith";
+        String metadata = "Sender: alicesmith@example.com";
 
         System.out.println("Secret being sent from Alice to Bob: " + plaintext);
         var cipherText = alice.encrypt(bobPublicKey, plaintext, metadata);
@@ -788,7 +774,7 @@ class App {
 
         // Add some relevant context about the encrypted data that should be verified
         // on decryption
-        String metadata2 = "Sender: bobjones";
+        String metadata2 = "Sender: bobjones@example.com";
 
         System.out.println("Secret being sent from Bob to Alice: " + plaintext2);
         var cipherText2 = bob.encrypt(alicePublicKey, plaintext2, metadata2);
@@ -841,8 +827,6 @@ class HybridSimple {
 
 </details>
 
-_**End of code snippet.**_
-
 #### Asymmetric example using built-in JCA/JCE classes
 
 If you absolutely cannot use a separate library, it is still possible to use the built JCA/JCE classes but it is strongly recommended to have a cryptography expert review the full design and code, as even the most trivial error can severely weaken your encryption.
@@ -859,10 +843,8 @@ A few constraints/pitfalls with this code:
 - The code does not consider the validation of public keys before use.
 - Overall, there is no verification of authenticity between the two sides.
 
-_**To view "JCA/JCE hybrid encryption" code snippet...**_
-
 <details>
-  <summary>...click here.</summary>
+  <summary>Click here to view the "JCA/JCE hybrid encryption" code snippet.</summary>
 
 ```java
 import java.nio.charset.StandardCharsets;
@@ -993,5 +975,3 @@ class ECDHSimple {
 ```
 
 </details>
-
-_**End of code snippet.**_
