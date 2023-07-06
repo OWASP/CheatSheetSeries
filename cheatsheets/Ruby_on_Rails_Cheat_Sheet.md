@@ -464,6 +464,8 @@ In general, it is important to have a process for updating dependencies. An exam
 
 Use [brakeman](https://brakemanscanner.org/), an open source code analysis tool for Rails applications, to identify many potential issues. It will not necessarily produce comprehensive security findings, but it can find easily exposed issues. A great way to see potential issues in Rails is to review the brakeman documentation of warning types.
 
+A newer alternative is [bearer](https://github.com/Bearer/bearer), an open source code security and privacy analysis tool for both Ruby and JavaScript/TypeScript code, in order to identify a broad range of OWASP Top 10 potential issues. It provides many configuration options and can easily integrate into your CI/CD pipeline.
+
 There are emerging tools that can be used to track security issues in dependency sets, like automated scanning from [GitHub](https://github.blog/2017-11-16-introducing-security-alerts-on-github/) and [GitLab](https://docs.gitlab.com/ee/user/application_security/dependency_scanning/).
 
 Another area of tooling is the security testing tool [Gauntlt](http://gauntlt.org) which is built on cucumber and uses gherkin syntax to define attack files.
