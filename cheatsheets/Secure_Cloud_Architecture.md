@@ -147,7 +147,7 @@ This is an unlikely architecture for all but the simplest and lowest risk applic
 
 #### 3. Some trust example
 
-Most applications will use a trust boundary configuration like this. Using knowledge from the risk and attack surface analysis in section 1, security can reasonably assign trust to low risk components or processes, and verify only when necessary to protect business critical resources. This prevents wasting valuable security resources, but also limits the complexity and efficiency loss due to additional security overhead.
+Most applications will use a trust boundary configuration like this. Using knowledge from a risk and attack surface analysis, security can reasonably assign trust to low risk components or processes, and verify only when necessary to protect business critical resources. This prevents wasting valuable security resources, but also limits the complexity and efficiency loss due to additional security overhead.
 
 ![Some Trust Across Boundaries](../assets/Secure_Cloud_Architecture_Trust_Boundaries_4.png)
 
