@@ -263,6 +263,10 @@ Sorting applied on the name is an alphabetical one.
 * Jim Manico - jim@owasp.org
 * Matt Seil - mseil@acm.org
 
+**[Secure Cloud Architecture Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/tree/master/cheatsheets/Secure_Cloud_Architecture_Cheat_Sheet.md)**
+* [Joshua Beck](https://josh-beck.github.io)
+* Matthew Wright
+
 **[Securing Cascading Style Sheets Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/tree/master/cheatsheets/Securing_Cascading_Style_Sheets_Cheat_Sheet.md)**
 * [Santhosh Tuppad](https://twitter.com/santhoshst)
 
