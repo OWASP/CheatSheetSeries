@@ -1,0 +1,2454 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Website with the collection of all the cheat sheets of the project.">
+      
+      
+      
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Secure_Cloud_Architecture_Cheat_Sheet.html">
+      
+      
+        <link rel="prev" href="Secrets_Management_Cheat_Sheet.html">
+      
+      
+        <link rel="next" href="Secure_Product_Design_Cheat_Sheet.html">
+      
+      <link rel="icon" href="../assets/WebSite_Favicon.png">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.18">
+    
+    
+      
+        <title>Secure Cloud Architecture - OWASP Cheat Sheet Series</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.26e3688c.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ecc896b0.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#cloud-architecture-security-cheat-sheet" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../index.html" title="OWASP Cheat Sheet Series" class="md-header__button md-logo" aria-label="OWASP Cheat Sheet Series" data-md-component="logo">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OWASP Cheat Sheet Series
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Secure Cloud Architecture
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+          
+            
+            
+            
+            <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+            
+              <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+              </label>
+            
+          
+            
+            
+            
+            <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+            
+              <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+              </label>
+            
+          
+        </form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="OWASP Cheat Sheet Series" class="md-nav__button md-logo" aria-label="OWASP Cheat Sheet Series" data-md-component="logo">
+      
+  <img src="../assets/OWASP_Logo_Transp.png" alt="logo">
+
+    </a>
+    OWASP Cheat Sheet Series
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Glossary.html" class="md-nav__link">
+        Index Alphabetical
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IndexASVS.html" class="md-nav__link">
+        Index ASVS
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IndexMASVS.html" class="md-nav__link">
+        Index MASVS
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IndexProactiveControls.html" class="md-nav__link">
+        Index Proactive Controls
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IndexTopTen.html" class="md-nav__link">
+        Index Top 10
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+          Cheatsheets
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Cheatsheets
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="AJAX_Security_Cheat_Sheet.html" class="md-nav__link">
+        AJAX Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Abuse_Case_Cheat_Sheet.html" class="md-nav__link">
+        Abuse Case
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Access_Control_Cheat_Sheet.html" class="md-nav__link">
+        Access Control
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Attack_Surface_Analysis_Cheat_Sheet.html" class="md-nav__link">
+        Attack Surface Analysis
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Authentication_Cheat_Sheet.html" class="md-nav__link">
+        Authentication
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Authorization_Cheat_Sheet.html" class="md-nav__link">
+        Authorization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Authorization_Testing_Automation_Cheat_Sheet.html" class="md-nav__link">
+        Authorization Testing Automation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Bean_Validation_Cheat_Sheet.html" class="md-nav__link">
+        Bean Validation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html" class="md-nav__link">
+        C-Based Toolchain Hardening
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html" class="md-nav__link">
+        Choosing and Using Security Questions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Clickjacking_Defense_Cheat_Sheet.html" class="md-nav__link">
+        Clickjacking Defense
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Content_Security_Policy_Cheat_Sheet.html" class="md-nav__link">
+        Content Security Policy
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Credential Stuffing Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Cross-Site Request Forgery Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Cross Site Scripting Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Cryptographic_Storage_Cheat_Sheet.html" class="md-nav__link">
+        Cryptographic Storage
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="DOM_Clobbering_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        DOM Clobbering Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        DOM based XSS Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Database_Security_Cheat_Sheet.html" class="md-nav__link">
+        Database Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Denial_of_Service_Cheat_Sheet.html" class="md-nav__link">
+        Denial of Service
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Deserialization_Cheat_Sheet.html" class="md-nav__link">
+        Deserialization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Django_REST_Framework_Cheat_Sheet.html" class="md-nav__link">
+        Django REST Framework
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Docker_Security_Cheat_Sheet.html" class="md-nav__link">
+        Docker Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="DotNet_Security_Cheat_Sheet.html" class="md-nav__link">
+        DotNet Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Error_Handling_Cheat_Sheet.html" class="md-nav__link">
+        Error Handling
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="File_Upload_Cheat_Sheet.html" class="md-nav__link">
+        File Upload
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Forgot_Password_Cheat_Sheet.html" class="md-nav__link">
+        Forgot Password
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="GraphQL_Cheat_Sheet.html" class="md-nav__link">
+        GraphQL
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="HTML5_Security_Cheat_Sheet.html" class="md-nav__link">
+        HTML5 Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="HTTP_Headers_Cheat_Sheet.html" class="md-nav__link">
+        HTTP Headers
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html" class="md-nav__link">
+        HTTP Strict Transport Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Infrastructure_as_Code_Security_Cheat_Sheet.html" class="md-nav__link">
+        Infrastructure as Code Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Injection Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Injection_Prevention_in_Java_Cheat_Sheet.html" class="md-nav__link">
+        Injection Prevention in Java
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Input_Validation_Cheat_Sheet.html" class="md-nav__link">
+        Input Validation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Insecure Direct Object Reference Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="JAAS_Cheat_Sheet.html" class="md-nav__link">
+        JAAS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="JSON_Web_Token_for_Java_Cheat_Sheet.html" class="md-nav__link">
+        JSON Web Token for Java
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Java_Security_Cheat_Sheet.html" class="md-nav__link">
+        Java Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Key_Management_Cheat_Sheet.html" class="md-nav__link">
+        Key Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Kubernetes_Security_Cheat_Sheet.html" class="md-nav__link">
+        Kubernetes Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="LDAP_Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        LDAP Injection Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Laravel_Cheat_Sheet.html" class="md-nav__link">
+        Laravel
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Logging_Cheat_Sheet.html" class="md-nav__link">
+        Logging
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Logging_Vocabulary_Cheat_Sheet.html" class="md-nav__link">
+        Logging Vocabulary
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Mass_Assignment_Cheat_Sheet.html" class="md-nav__link">
+        Mass Assignment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Microservices_Security_Cheat_Sheet.html" class="md-nav__link">
+        Microservices Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html" class="md-nav__link">
+        Microservices based Security Arch Doc
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Multifactor_Authentication_Cheat_Sheet.html" class="md-nav__link">
+        Multifactor Authentication
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="NPM_Security_Cheat_Sheet.html" class="md-nav__link">
+        NPM Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Network_Segmentation_Cheat_Sheet.html" class="md-nav__link">
+        Network Segmentation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="NodeJS_Docker_Cheat_Sheet.html" class="md-nav__link">
+        NodeJS Docker
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Nodejs_Security_Cheat_Sheet.html" class="md-nav__link">
+        Nodejs Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="OS_Command_Injection_Defense_Cheat_Sheet.html" class="md-nav__link">
+        OS Command Injection Defense
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="PHP_Configuration_Cheat_Sheet.html" class="md-nav__link">
+        PHP Configuration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Password_Storage_Cheat_Sheet.html" class="md-nav__link">
+        Password Storage
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Pinning_Cheat_Sheet.html" class="md-nav__link">
+        Pinning
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Prototype_Pollution_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Prototype Pollution Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Query_Parameterization_Cheat_Sheet.html" class="md-nav__link">
+        Query Parameterization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="REST_Assessment_Cheat_Sheet.html" class="md-nav__link">
+        REST Assessment
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="REST_Security_Cheat_Sheet.html" class="md-nav__link">
+        REST Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ruby_on_Rails_Cheat_Sheet.html" class="md-nav__link">
+        Ruby on Rails
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="SAML_Security_Cheat_Sheet.html" class="md-nav__link">
+        SAML Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="SQL_Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        SQL Injection Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Secrets_Management_Cheat_Sheet.html" class="md-nav__link">
+        Secrets Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Secure Cloud Architecture
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="Secure_Cloud_Architecture_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+        Secure Cloud Architecture
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#risk-analysis-threat-modeling-and-attack-surface-assessments" class="md-nav__link">
+    Risk Analysis, Threat Modeling, and Attack Surface Assessments
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#public-and-private-components" class="md-nav__link">
+    Public and Private Components
+  </a>
+  
+    <nav class="md-nav" aria-label="Public and Private Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#secure-object-storage" class="md-nav__link">
+    Secure Object Storage
+  </a>
+  
+    <nav class="md-nav" aria-label="Secure Object Storage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iam-access" class="md-nav__link">
+    IAM Access
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#signed-urls" class="md-nav__link">
+    Signed URLs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#public-object-storage" class="md-nav__link">
+    Public Object Storage
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vpcs-and-subnets" class="md-nav__link">
+    VPCs and Subnets
+  </a>
+  
+    <nav class="md-nav" aria-label="VPCs and Subnets">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vpcs" class="md-nav__link">
+    VPCs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#public-subnets" class="md-nav__link">
+    Public Subnets
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#private-subnets" class="md-nav__link">
+    Private Subnets
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simple-architecture-example" class="md-nav__link">
+    Simple Architecture Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#trust-boundaries" class="md-nav__link">
+    Trust Boundaries
+  </a>
+  
+    <nav class="md-nav" aria-label="Trust Boundaries">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exploring-different-levels-of-trust" class="md-nav__link">
+    Exploring Different Levels of Trust
+  </a>
+  
+    <nav class="md-nav" aria-label="Exploring Different Levels of Trust">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-no-trust-example" class="md-nav__link">
+    1. No trust example
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-high-trust-example" class="md-nav__link">
+    2. High trust example
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-some-trust-example" class="md-nav__link">
+    3. Some trust example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security-tooling" class="md-nav__link">
+    Security Tooling
+  </a>
+  
+    <nav class="md-nav" aria-label="Security Tooling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#web-application-firewall" class="md-nav__link">
+    Web Application Firewall
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logging-monitoring" class="md-nav__link">
+    Logging &amp; Monitoring
+  </a>
+  
+    <nav class="md-nav" aria-label="Logging & Monitoring">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#logging" class="md-nav__link">
+    Logging
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monitoring" class="md-nav__link">
+    Monitoring
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ddos-protection" class="md-nav__link">
+    DDoS Protection
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#self-managed-tooling-maintenance" class="md-nav__link">
+    Self-managed tooling maintenance
+  </a>
+  
+    <nav class="md-nav" aria-label="Self-managed tooling maintenance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#update-strategy-for-self-managed-services" class="md-nav__link">
+    Update Strategy for Self-managed Services
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#avoid-gaps-in-managed-service-security" class="md-nav__link">
+    Avoid Gaps in Managed Service Security
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Secure_Product_Design_Cheat_Sheet.html" class="md-nav__link">
+        Secure Product Design
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html" class="md-nav__link">
+        Securing Cascading Style Sheets
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        Server Side Request Forgery Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Session_Management_Cheat_Sheet.html" class="md-nav__link">
+        Session Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="TLS_Cipher_String_Cheat_Sheet.html" class="md-nav__link">
+        TLS Cipher String
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Third_Party_Javascript_Management_Cheat_Sheet.html" class="md-nav__link">
+        Third Party Javascript Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Threat_Modeling_Cheat_Sheet.html" class="md-nav__link">
+        Threat Modeling
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Transaction_Authorization_Cheat_Sheet.html" class="md-nav__link">
+        Transaction Authorization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Transport_Layer_Protection_Cheat_Sheet.html" class="md-nav__link">
+        Transport Layer Protection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html" class="md-nav__link">
+        Unvalidated Redirects and Forwards
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="User_Privacy_Protection_Cheat_Sheet.html" class="md-nav__link">
+        User Privacy Protection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Virtual_Patching_Cheat_Sheet.html" class="md-nav__link">
+        Virtual Patching
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Vulnerability_Disclosure_Cheat_Sheet.html" class="md-nav__link">
+        Vulnerability Disclosure
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html" class="md-nav__link">
+        Vulnerable Dependency Management
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Web_Service_Security_Cheat_Sheet.html" class="md-nav__link">
+        Web Service Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="XML_External_Entity_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        XML External Entity Prevention
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="XML_Security_Cheat_Sheet.html" class="md-nav__link">
+        XML Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="XSS_Filter_Evasion_Cheat_Sheet.html" class="md-nav__link">
+        XSS Filter Evasion
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="XS_Leaks_Cheat_Sheet.html" class="md-nav__link">
+        XS Leaks
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#risk-analysis-threat-modeling-and-attack-surface-assessments" class="md-nav__link">
+    Risk Analysis, Threat Modeling, and Attack Surface Assessments
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#public-and-private-components" class="md-nav__link">
+    Public and Private Components
+  </a>
+  
+    <nav class="md-nav" aria-label="Public and Private Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#secure-object-storage" class="md-nav__link">
+    Secure Object Storage
+  </a>
+  
+    <nav class="md-nav" aria-label="Secure Object Storage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iam-access" class="md-nav__link">
+    IAM Access
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#signed-urls" class="md-nav__link">
+    Signed URLs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#public-object-storage" class="md-nav__link">
+    Public Object Storage
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vpcs-and-subnets" class="md-nav__link">
+    VPCs and Subnets
+  </a>
+  
+    <nav class="md-nav" aria-label="VPCs and Subnets">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vpcs" class="md-nav__link">
+    VPCs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#public-subnets" class="md-nav__link">
+    Public Subnets
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#private-subnets" class="md-nav__link">
+    Private Subnets
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simple-architecture-example" class="md-nav__link">
+    Simple Architecture Example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#trust-boundaries" class="md-nav__link">
+    Trust Boundaries
+  </a>
+  
+    <nav class="md-nav" aria-label="Trust Boundaries">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exploring-different-levels-of-trust" class="md-nav__link">
+    Exploring Different Levels of Trust
+  </a>
+  
+    <nav class="md-nav" aria-label="Exploring Different Levels of Trust">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-no-trust-example" class="md-nav__link">
+    1. No trust example
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-high-trust-example" class="md-nav__link">
+    2. High trust example
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-some-trust-example" class="md-nav__link">
+    3. Some trust example
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security-tooling" class="md-nav__link">
+    Security Tooling
+  </a>
+  
+    <nav class="md-nav" aria-label="Security Tooling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#web-application-firewall" class="md-nav__link">
+    Web Application Firewall
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logging-monitoring" class="md-nav__link">
+    Logging &amp; Monitoring
+  </a>
+  
+    <nav class="md-nav" aria-label="Logging & Monitoring">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#logging" class="md-nav__link">
+    Logging
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monitoring" class="md-nav__link">
+    Monitoring
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ddos-protection" class="md-nav__link">
+    DDoS Protection
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#self-managed-tooling-maintenance" class="md-nav__link">
+    Self-managed tooling maintenance
+  </a>
+  
+    <nav class="md-nav" aria-label="Self-managed tooling maintenance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#update-strategy-for-self-managed-services" class="md-nav__link">
+    Update Strategy for Self-managed Services
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#avoid-gaps-in-managed-service-security" class="md-nav__link">
+    Avoid Gaps in Managed Service Security
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="cloud-architecture-security-cheat-sheet">Cloud Architecture Security Cheat Sheet<a class="headerlink" href="#cloud-architecture-security-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>This cheat sheet will discuss common and necessary security patterns to follow when creating and reviewing cloud architectures. Each section will cover a specific security guideline or cloud design decision to consider. This sheet is written for a medium to large scale enterprise system, so additional overhead elements will be discussed, which may be unecessary for smaller organizations.</p>
+<h2 id="risk-analysis-threat-modeling-and-attack-surface-assessments">Risk Analysis, Threat Modeling, and Attack Surface Assessments<a class="headerlink" href="#risk-analysis-threat-modeling-and-attack-surface-assessments" title="Permanent link">&para;</a></h2>
+<p>With any application architecture, understanding the risks and threats is extremely important for proper security. No one can spend their entire budget or bandwidth focused on security, so properly allocating security resources is necessary.
+Therefore, enterprises must perform risk assessments, threat modeling activites, and attack surface assessments to identify the following:</p>
+<ul>
+<li>What threats an application might face</li>
+<li>The likelihood of those threats actualizing as attacks</li>
+<li>The attack surface with which those attacks could be targeted</li>
+<li>The business impact of losing data or functionality due to said attack</li>
+</ul>
+<p>This is all necessary to properly scope the security of an architecture. However, these are subjects that can/should be discussed in greater detail. Use the resources link below to investigate further as part of a healthy secure architecture conversation.</p>
+<ul>
+<li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html">Threat Modeling Cheat Sheet</a></li>
+<li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.html">Attack Surface Analysis Cheat Sheet</a></li>
+<li><a href="https://www.cisa.gov/sites/default/files/2023-02/22_1201_safecom_guide_to_cybersecurity_risk_assessment_508-r1.pdf">CISA Cyber Risk Assessment</a></li>
+</ul>
+<h2 id="public-and-private-components">Public and Private Components<a class="headerlink" href="#public-and-private-components" title="Permanent link">&para;</a></h2>
+<h3 id="secure-object-storage">Secure Object Storage<a class="headerlink" href="#secure-object-storage" title="Permanent link">&para;</a></h3>
+<p>Object storage usually has the following options for accessing data:</p>
+<ul>
+<li>Accessing resources using built-in Identity and Access Management policies</li>
+<li>Using cryptographically signed URLs and HTTP requests</li>
+<li>Directly accessing with public storage</li>
+</ul>
+<h4 id="iam-access">IAM Access<a class="headerlink" href="#iam-access" title="Permanent link">&para;</a></h4>
+<p>This method involves indirect access on tooling such as a managed or self-managed service running on ephemeral or persistent infrastructure. This infrastructure contains a persistent control plane IAM credential, which interacts with the object storage on the user's behalf. The method is best used when the application has other user interfaces or data systems available, when it is important to hide as much of the storage system as possible, or when the information shouldn't/won't be seen by an end user (metadata). It can be used in combination with web authentication and logging to better track and control access to resources. The key security concern for this approach is relying on developed code or policies which could contain weaknesses.</p>
+<table>
+<thead>
+<tr>
+<th align="center">Pros</th>
+<th align="center">Cons</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">No direct access to data</td>
+<td align="center">Potential use of broad IAM policy</td>
+</tr>
+<tr>
+<td align="center">No user visibility to object storage</td>
+<td align="center">Credential loss gives access to control plane APIs</td>
+</tr>
+<tr>
+<td align="center">Identifiable and loggable access</td>
+<td align="center">Credentials could be hardcoded</td>
+</tr>
+</tbody>
+</table>
+<p>This approach is acceptable for sensitive user data, but must follow rigorous coding and cloud best practices, in order to properly secure data.</p>
+<h4 id="signed-urls">Signed URLs<a class="headerlink" href="#signed-urls" title="Permanent link">&para;</a></h4>
+<p>URL Signing for object storage involves using some method or either statically or dynamically generating URLs, which cryptographically guarantee that an entity can access a resource in storage. This is best used when direct access to specific user files is necessary or preferred, as there is no file transfer overhead. It is advisable to only use this method for user data which is not very sensitive. This method can be secure, but has notable cons. Code injection may still be possible if the method of signed URL generation is custom, dynamic and injectable, and anyone can access the resource anonymously, if given the URL. Developers must also consider if and when the signed URL should expire, adding to the complexity of the approach.</p>
+<table>
+<thead>
+<tr>
+<th align="center">Pros</th>
+<th align="center">Cons</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Access to only one resource</td>
+<td align="center">Anonymous Access</td>
+</tr>
+<tr>
+<td align="center">Minimal user visibility to object storage</td>
+<td align="center">Anyone can access with URL</td>
+</tr>
+<tr>
+<td align="center">Efficient file transfer</td>
+<td align="center">Possibility of injection with custom code</td>
+</tr>
+</tbody>
+</table>
+<h4 id="public-object-storage">Public Object Storage<a class="headerlink" href="#public-object-storage" title="Permanent link">&para;</a></h4>
+<p><strong>This is not an advisable method for resource storage and distribution</strong>, and should only be used for public, non-sensitive, generic resources. This storage approach will provide threat actors additional reconnaissance into a cloud environment, and any data which is stored in this configuration for any period of time must be considered publicly accessed (leaked to the public).</p>
+<table>
+<thead>
+<tr>
+<th align="center">Pros</th>
+<th align="center">Cons</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Efficient access to many resources</td>
+<td align="center">Anyone can access/No privacy</td>
+</tr>
+<tr>
+<td align="center">Simple public file share</td>
+<td align="center">Unauthenticated access to objects</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">Visibility into full file system</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">Accidently leak stored info</td>
+</tr>
+</tbody>
+</table>
+<h3 id="vpcs-and-subnets">VPCs and Subnets<a class="headerlink" href="#vpcs-and-subnets" title="Permanent link">&para;</a></h3>
+<p>Virtual Private Clouds (VPC) and public/private network subnets allow an application and its network to be segmented into distinct chunks, adding layers of security within a cloud system. Unlike other private vs public trade-offs, an application will likely incorporate most or all of these components in a mature architecture. Each is explained below.</p>
+<h4 id="vpcs">VPCs<a class="headerlink" href="#vpcs" title="Permanent link">&para;</a></h4>
+<p>VPC's are used to create network boundaries within an application, where-in components can talk to each other, much like a physical network in a data center. The VPC will be made up of some number of subnets, both public and private. VPCs can be used to:</p>
+<ul>
+<li>Separate entire applications within the same cloud account.</li>
+<li>Separate large components of application into distinct VPCs with isolated networks.</li>
+<li>Create separations between duplicate applications used for different customers or data sets.</li>
+</ul>
+<h4 id="public-subnets">Public Subnets<a class="headerlink" href="#public-subnets" title="Permanent link">&para;</a></h4>
+<p>Public subnets house components which will have an internet facing presence. The subnet will contain network routing elements to allow components within the subnet to connect directly to the internet. Some use cases include:</p>
+<ul>
+<li>Public facing resources, like front-end web applications.</li>
+<li>Initial touch points for applications, like load balancers and routers.</li>
+<li>Developer access points, like <a href="https://aws-quickstart.github.io/quickstart-linux-bastion/">bastions</a> (note, these can be very insecure if engineered/deployed incorrectly).</li>
+</ul>
+<h4 id="private-subnets">Private Subnets<a class="headerlink" href="#private-subnets" title="Permanent link">&para;</a></h4>
+<p>Private subnets house components which should not have direct internet access. The subnet will likely contain network routing to connect it to public subnets, to receive internet traffic in a structured and protected way. Private subnets are great for:</p>
+<ul>
+<li>Databases and data stores.</li>
+<li>Backend servers and associated file systems.</li>
+<li>Anything deemed too sensitive for direct internet access.</li>
+</ul>
+<h4 id="simple-architecture-example">Simple Architecture Example<a class="headerlink" href="#simple-architecture-example" title="Permanent link">&para;</a></h4>
+<p>Consider the simple architecture diagram below. A VPC will house all of the components for the application, but elements will be in a specific subnet depending on its role within the system. The normal flow for interacting with this application might look like:</p>
+<ol>
+<li>Accessing the application through some sort of internet gateway, API gateway or other internet facing component.</li>
+<li>This gateway connects to a load balancer or a web server in a public subnet. Both components provide public facing functions and are secured accordingly.</li>
+<li>These components then interact with their appropriate backend counterparts, a database or backend server, contained in a private VPC. This connections are more limited, preventing extraneous access to the possibly "soft" backend systems.</li>
+</ol>
+<p><img alt="VPC Diagram" src="../assets/Secure_Cloud_Architecture_VPC.png" /></p>
+<p><em>Note: This diagram intentionally skips routing and IAM elements for subnet interfacing, for simplicity and to be service provider agnostic.</em></p>
+<p>This architecture prevents less hardened backend components or higher risk services like databases from being exposed to the internet directly. It also provides common, public functionality access to the internet to avoid additional routing overhead. This architecture can be secured more easily by focusing on security at the entry points and separating functionality, putting non-public or sensitive information inside a private subnet where it will be harder to access by external parties.</p>
+<h2 id="trust-boundaries">Trust Boundaries<a class="headerlink" href="#trust-boundaries" title="Permanent link">&para;</a></h2>
+<p>Trust boundaries are connections between components within a system where a trust decision has to be made by the components. Another way to phrase it, this boundary is a point where two components with potentially different trust levels meet. These boundaries can range in scale, from the degrees of trust given to users interacting with an application, to trusting or verifying specific claims between code functions or components within a cloud architecture. Generally speaking however, trusting each component to perform its function correctly and securely, suffices. Therefore, trust boundaries likely will occur in the connections between cloud components, and between the application and third party elements, like end users and other vendors.  </p>
+<p>As an example, consider the architecture below. An API gateway connects to a compute instance (ephemeral or persistent), which then accesses a persistent storage resource. Separately, there exists a server which can verify the authentication, authorization and/or identity of the caller. This is a generic representation of an OAuth, IAM or directory system, which controls access to these resources. Additionally, there exists an Ephemeral IAM server which controls access for the stored resources (using an approach like the [IAM Access][#iam-access] section above). As shown by the dotted lines, trust boundaries exist between each compute component, the API gateway and the auth/identity server, even though many or all of the elements could be in the same application.</p>
+<p><img alt="Trust Boundaries" src="../assets/Secure_Cloud_Architecture_Trust_Boundaries_1.png" /></p>
+<h3 id="exploring-different-levels-of-trust">Exploring Different Levels of Trust<a class="headerlink" href="#exploring-different-levels-of-trust" title="Permanent link">&para;</a></h3>
+<p>Architects have to select a trust configuration between components, using quantative factors like risk score/tolerance, velocity of project, as well as subjective security goals. Each example below details trust boundary relationships to better explain the implications of trusting a certain resource. The threat level of a specific resource as a color from green (safe) to red (dangerous) will outline which resources shouldn't be trusted.</p>
+<h4 id="1-no-trust-example">1. No trust example<a class="headerlink" href="#1-no-trust-example" title="Permanent link">&para;</a></h4>
+<p>As shown in the diagram below, this example outlines a model where no component trusts any other component, regardless of criticality or threat level. This type of trust configuration would likely be used for incredibly high risk applications, where either very personal data or important business data is contained, or where the application as a whole has an extremely high business criticality.</p>
+<p>Notice that both the API gateway and compute components call out to the auth/identity server. This implies that no data passing between these components, even when right next to each other "inside" the application, is considered trusted. The compute instance must then assume an ephemeral identity to access the storage, as the compute instance isn't trusted to a specific resource even if the user is trusted to the instance.</p>
+<p>Also note the lack of trust between the auth/identity server and ephemeral IAM server and each component. While not displayed in the diagram, this would have additional impacts, like more rigorous checks before authentication, and possibly more overhead dedicated to cryptographic operations.</p>
+<p><img alt="No Trust Across Boundaries" src="../assets/Secure_Cloud_Architecture_Trust_Boundaries_2.png" /></p>
+<p>This could be a necessary approach for applications found in financial, military or critical infrastructure systems. However, security must be careful when advocating for this model, as it will have significant performance and maintenance drawbacks.</p>
+<table>
+<thead>
+<tr>
+<th align="center">Pros</th>
+<th align="center">Cons</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">High assurance of data integrity</td>
+<td align="center">Slow and inefficient</td>
+</tr>
+<tr>
+<td align="center">Defense in depth</td>
+<td align="center">Complicated</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">Likely more expensive</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2-high-trust-example">2. High trust example<a class="headerlink" href="#2-high-trust-example" title="Permanent link">&para;</a></h4>
+<p>Next, consider the an opposite approach, where everything is trusted. In this instance, the "dangerous" user input is trusted and essentially handed directly to a high criticality business component. The auth/identity resource is not used at all. In this instance, there is higher likelihood of a successful attack against the system, because there are no controls in place to prevent it. Additionally, this setup could be considered wasteful, as both the auth/identity and ephemeral IAM servers are not necessarily performing their intended function. <em>(These could be shared corporate resources that aren't being used to their full potential).</em></p>
+<p><img alt="Complete Trust Across Boundaries" src="../assets/Secure_Cloud_Architecture_Trust_Boundaries_3.png" /></p>
+<p>This is an unlikely architecture for all but the simplest and lowest risk applications. <strong>Do not use this trust boundary configuration</strong> unless there is no sensitive content to protect or efficiency is the only metric for success. Trusting user input is never recommended, even in low risk applications.</p>
+<table>
+<thead>
+<tr>
+<th align="center">Pros</th>
+<th align="center">Cons</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Efficient</td>
+<td align="center">Insecure</td>
+</tr>
+<tr>
+<td align="center">Simple</td>
+<td align="center">Potentially Wasteful</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">High risk of compromise</td>
+</tr>
+</tbody>
+</table>
+<h4 id="3-some-trust-example">3. Some trust example<a class="headerlink" href="#3-some-trust-example" title="Permanent link">&para;</a></h4>
+<p>Most applications will use a trust boundary configuration like this. Using knowledge from a risk and attack surface analysis, security can reasonably assign trust to low risk components or processes, and verify only when necessary. This prevents wasting valuable security resources, but also limits the complexity and efficiency loss due to additional security overhead.</p>
+<p>Notice in this example, that the API gateway checks the auth/identity of a user, then immediately passes the request on to the compute instance. The instance doesn't need to re-verify, and performs it's operation. However, as the compute instance is working with untrusted user inputs (designated yellow for some trust), it is still necessary to assume an ephemeral identity to access the storage system.</p>
+<p><img alt="Some Trust Across Boundaries" src="../assets/Secure_Cloud_Architecture_Trust_Boundaries_4.png" /></p>
+<p>By nature, this approach limits the pros and cons of both previous examples. This model will likely be used for most applications, unless the benefits of the above examples are necessary to meet business requirements.</p>
+<table>
+<thead>
+<tr>
+<th align="center">Pros</th>
+<th align="center">Cons</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Secured based on risk</td>
+<td align="center">Known gaps in security</td>
+</tr>
+<tr>
+<td align="center">Cost/Efficiency derived from criticality</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<p><em>Note: This trust methodology diverges from Zero Trust. For a more in depth look at that topic, check out <a href="https://www.cisa.gov/sites/default/files/2023-04/zero_trust_maturity_model_v2_508.pdf">CISA's Zero Trust Maturity Model</a></em>.</p>
+<h2 id="security-tooling">Security Tooling<a class="headerlink" href="#security-tooling" title="Permanent link">&para;</a></h2>
+<h3 id="web-application-firewall">Web Application Firewall<a class="headerlink" href="#web-application-firewall" title="Permanent link">&para;</a></h3>
+<p>Web application firewalls (WAF) are used to monitor or block common attack payloads (like <a href="https://owasp.org/www-community/attacks/xss/">XSS</a> and <a href="https://owasp.org/www-community/attacks/SQL_Injection">SQLi</a>), or allow only specific request types and patterns. Applications should use them as a first line of defense, attaching them to entry points like load balancers or API gateways, to handle potentially malicious content before it reaches application code. Cloud providers curate base rule sets which will block or monitor common malicious payloads:</p>
+<ul>
+<li><a href="https://docs.aws.amazon.com/waf/latest/developerguide/aws-managed-rule-groups-list.html">AWS Managed Rules</a></li>
+<li><a href="https://cloud.google.com/armor/docs/waf-rules">GCP WAF Rules</a></li>
+<li><a href="https://learn.microsoft.com/en-us/azure/web-application-firewall/ag/application-gateway-crs-rulegroups-rules?tabs=owasp32">Azure Core Rule Sets</a></li>
+</ul>
+<p>By design these rule sets are generic and will not cover every attack type an application will face. Consider creating custom rules which will fit the application's specific security needs, like:</p>
+<ul>
+<li>Filtering routes to acceptable endpoints (block web scraping)</li>
+<li>Adding specific protections for chosen technologies and key application endpoints</li>
+<li>Rate limiting sensitive APIs</li>
+</ul>
+<h3 id="logging-monitoring">Logging &amp; Monitoring<a class="headerlink" href="#logging-monitoring" title="Permanent link">&para;</a></h3>
+<p>Logging and monitoring is required for a truly secure application. Developers should know exactly what is going on in their environment, making use of alerting mechanisms to warn engineers when systems are not working as expected. Additionally, in the event of a security incident, logging should be verbose enough to track a threat actor through an entire application, and provide enough knowledge for respondents to understand what actions were taken against what resources. Note that proper logging and monitoring can be expensive, and risk/cost trade-offs should be discussed when putting logging in place.</p>
+<h4 id="logging">Logging<a class="headerlink" href="#logging" title="Permanent link">&para;</a></h4>
+<p>For proper logging, consider:</p>
+<ul>
+<li>Logging all <a href="https://en.wikipedia.org/wiki/OSI_model">layer 7</a> HTTP calls with headers, caller metadata, and responses<ul>
+<li>Payloads may not be logged depending on where logging occurs (before TLS termination) and the sensitivity of data</li>
+</ul>
+</li>
+<li>Logging internal actions with actor and permission information</li>
+<li>Sending trace IDs through the entire request lifecycle to track errors or malicious actions</li>
+<li>Masking or removing sensitive data<ul>
+<li>SSNs, sensitive health information, and other PII should not be stored in logs</li>
+</ul>
+</li>
+</ul>
+<p><em>Legal and compliance representatives should weigh in on log retention times for the specific application.</em></p>
+<h4 id="monitoring">Monitoring<a class="headerlink" href="#monitoring" title="Permanent link">&para;</a></h4>
+<p>For proper monitoring consider adding:</p>
+<ul>
+<li>Anomaly alerts:<ul>
+<li>HTTP 4xx and 5xx errors above a percent of normal</li>
+<li>Memory, storage or CPU usage above/below percent of normal</li>
+<li>Database writes/reads above/below percent of normal</li>
+<li>Serverless compute invocations above percent of normal</li>
+</ul>
+</li>
+<li>Alerting for failed health checks</li>
+<li>Alerting for deployment errors or container on/off cycling</li>
+<li>Alerts or cutoffs for cost limits</li>
+</ul>
+<p>Anomalies by count and type can vary wildly from app to app. A proper understanding of what qualifies as an anomaly requires an environment specific baseline. Therefore, the percentages mentioned above should be chosen based off that baseline, in addition to considerations like risk and team response capacity.</p>
+<p>WAFs can also have monitoring or alerting attached to them for counting malicious payloads or (in some cases) anomalous activity detection.</p>
+<h3 id="ddos-protection">DDoS Protection<a class="headerlink" href="#ddos-protection" title="Permanent link">&para;</a></h3>
+<p>Cloud service companies offer a range of simple and advanced DDoS protection products, depending on application needs. Simple DDOS protection can often be employed using WAFs with rate limits and route blocking rules, while more advanced protection may require specific managed tooling offered by the cloud provider. Examples include:</p>
+<ul>
+<li><a href="https://aws.amazon.com/shield/">AWS Shield</a></li>
+<li><a href="https://cloud.google.com/armor/docs/managed-protection-overview">GCP Cloud Armor Managed Protection</a></li>
+<li><a href="https://learn.microsoft.com/en-us/azure/ddos-protection/ddos-protection-overview">Azure DDoS Protection</a></li>
+</ul>
+<p>The decision to enable advanced DDoS protections for a specific application should be based off risk and business criticality of application, taking into account mitigating factors and cost (these services can be very inexpensive compared to large company budgets).</p>
+<h2 id="self-managed-tooling-maintenance">Self-managed tooling maintenance<a class="headerlink" href="#self-managed-tooling-maintenance" title="Permanent link">&para;</a></h2>
+<p>Cloud providers generally offer tooling on a spectrum of management. Fully managed services leave very little for the end developer to handle besides coding functionality, while self-managed systems require much more overhead to maintain.</p>
+<h3 id="update-strategy-for-self-managed-services">Update Strategy for Self-managed Services<a class="headerlink" href="#update-strategy-for-self-managed-services" title="Permanent link">&para;</a></h3>
+<p>Self-managed tooling will require additional overhead by developers and support engineers. Depending on the tool, basic version updates, upgrades to images like <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html">AMIs</a> or <a href="https://cloud.google.com/compute/docs/images">Compute Images</a>, or other operating system level maintence will be required. Use automation to regularly update minor versions or <a href="https://docs.aws.amazon.com/systems-manager/latest/userguide/automation-tutorial-update-patch-golden-ami.html">images</a>, and schedule time in development cycles for refreshing stale resources.</p>
+<h3 id="avoid-gaps-in-managed-service-security">Avoid Gaps in Managed Service Security<a class="headerlink" href="#avoid-gaps-in-managed-service-security" title="Permanent link">&para;</a></h3>
+<p>Managed services will offer some level of security, like updating and securing the underlying hardware which runs application code. However, the development team are still responsible for many aspects of security in the system. Ensure developers understand what security will be their responsibility based on tool selection. Likely the following will be partially or wholly the responsibility of the developer:</p>
+<ul>
+<li>Authentication and authorization</li>
+<li>Logging and monitoring</li>
+<li>Code security (<a href="https://owasp.org/www-project-top-ten/">OWASP Top 10</a>)</li>
+<li>Third-party library patching</li>
+</ul>
+<p>Use documentation from the cloud provider to understand which security will be the responsbility of what party. Examples of this research for serverless functions:</p>
+<ul>
+<li><a href="https://docs.aws.amazon.com/lambda/latest/dg/lambda-security.html">AWS Lambda</a></li>
+<li><a href="https://cloud.google.com/functions/docs/securing">GCP Cloud Functions</a></li>
+<li><a href="https://learn.microsoft.com/en-us/azure/architecture/serverless-quest/functions-app-security">Azure Functions</a></li>
+</ul>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Secure_Product_Design_Cheat_Sheet.html">Secure Product Design</a></li>
+<li><a href="https://www.cisa.gov/sites/default/files/publications/Cloud%20Security%20Technical%20Reference%20Architecture.pdf">CISA Security Technical Reference Architecture</a></li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      ©Copyright 2021 - CheatSheets Series Team - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">Creative Commons Attribution 3.0 Unported License</a>.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.74e28a9f.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.220ee61c.min.js"></script>
+      
+    
+  </body>
+</html>
