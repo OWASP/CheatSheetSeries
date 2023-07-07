@@ -6,7 +6,7 @@ This cheat sheet will discuss common and necessary security patterns to follow w
 
 ## Risk Analysis, Threat Modeling, and Attack Surface Assessments
 
-With any application or architecture, understanding the risks and threats is extremely important for proper security. No one can spend their entire budget or bandwidth focused on security, so properly allocating security resources is necessary.
+With any application architecture, understanding the risks and threats is extremely important for proper security. No one can spend their entire budget or bandwidth focused on security, so properly allocating security resources is necessary.
 Therefore, enterprises must perform risk assessments, threat modeling activites, and attack surface assessments to identify the following:
 
 - What threats an application might face
@@ -32,13 +32,13 @@ Object storage usually has the following options for accessing data:
 
 #### IAM Access
 
-This method involves using other tooling, like a website hosted on the cloud service, to interact with the object storage on the user's behalf. This method is best used when the application has other user interfaces or data systems available, when it is important to hide as much of the storage system as possible, or when the information shouldn't/won't be seen by an end user (metadata). It can be used in combination with web authentication and logging to better track and control access to resources. The key security concern for this approach is relying on developed code or policies which could contain weaknesses, as opposed to using built-in cloud provider frameworks for access.
+This method involves indirect access on tooling such as a managed or self-managed service running on ephemeral or persistent infrastructure. This infrastructure contains a persistent control plane IAM credential, which interacts with the object storage on the user's behalf. The method is best used when the application has other user interfaces or data systems available, when it is important to hide as much of the storage system as possible, or when the information shouldn't/won't be seen by an end user (metadata). It can be used in combination with web authentication and logging to better track and control access to resources. The key security concern for this approach is relying on developed code or policies which could contain weaknesses.
 
-|                 Pros                 |                  Cons                  |
-|:------------------------------------:|:--------------------------------------:|
-|       No direct access to data       |    Potential use of broad IAM policy   |
-| No user visibility to object storage | Possibility to inject into custom code |
-|   Identifiable and loggable access   |                                        |
+|                 Pros                 |                       Cons                         |
+|:------------------------------------:|:--------------------------------------------------:|
+|       No direct access to data       |          Potential use of broad IAM policy         |
+| No user visibility to object storage | Credential loss gives access to control plane APIs |
+|   Identifiable and loggable access   |           Credentials could be hardcoded           |
 
 This approach is acceptable for sensitive user data, but must follow rigorous coding and cloud best practices, in order to properly secure data.
 
@@ -59,7 +59,8 @@ URL Signing for object storage involves using some method or either statically o
 |                 Pros                |                 Cons                 |
 |:-----------------------------------:|:------------------------------------:|
 | Efficient access to many resources  |     Anyone can access/No privacy     |
-|       Simple public file share      |       Direct access to table         |
+|       Simple public file share      |  Unauthenticated access to objects   |
+|                                     |  Visibility into full file system    |
 |                                     |     Accidently leak stored info      |
 
 ### VPCs and Subnets
@@ -108,17 +109,17 @@ This architecture prevents less hardened backend components or higher risk servi
 
 Trust boundaries are connections between components within a system where a trust decision has to be made by the components. Another way to phrase it, this boundary is a point where two components with potentially different trust levels meet. These boundaries can range in scale, from the degrees of trust given to users interacting with an application, to trusting or verifying specific claims between code functions or components within a cloud architecture. Generally speaking however, trusting each component to perform its function correctly and securely, suffices. Therefore, trust boundaries likely will occur in the connections between cloud components, and between the application and third party elements, like end users and other vendors.  
 
-As an example, consider the architecture below. An API gateway connects to multiple compute instances in a chain. Separately, there exists an authentication server, which can verify the integrity of a Json Web Token at any stage of the process. As shown by the dotted lines, trust boundaries exist between each compute component, the API gateway and the authentication server, even though many or all of the elements could be in the same application.
+As an example, consider the architecture below. An API gateway connects to a cloud compute instance (ephemeral or persistent), which then accesses a persistent storage resource. Separately, there exists a server which can verify the authentication, authorization and/or identity of the caller. This is a generic representation of an OAuth, IAM or directory system, which controls access to these resources. As shown by the dotted lines, trust boundaries exist between each compute component, the API gateway and the auth/identity server, even though many or all of the elements could be in the same application.
 
 ![Trust Boundaries](../assets/Secure_Cloud_Architecture_Trust_Boundaries_1.png)
 
 ### Exploring Different Levels of Trust
 
-Architects have to select a trust configuration between components, using quantative factors like risk score/tolerance, as well as subjective security goals. Each example below details trust boundary relationships to better explain the implications of trusting a certain resource. The "business criticality" as a number from 1 (lowest) to 5 (highest) will identify which resources are most important in the scenario. The threat level of a specific resource as a color from green (safe) to red (dangerous) will outline which resources should likely hold the least trust.
+Architects have to select a trust configuration between components, using quantative factors like risk score/tolerance, velocity of project, as well as subjective security goals. Each example below details trust boundary relationships to better explain the implications of trusting a certain resource. The "business criticality" as a number from 1 (lowest) to 5 (highest) will identify which resources are most important in the scenario. The threat level of a specific resource as a color from green (safe) to red (dangerous) will outline which resources should likely hold the least trust.
 
 #### 1. No trust example
 
-As shown in the diagram below, this example outlines a model where no component trusts any other component, regardless of criticality or threat level. This type of trust configuration would likely be used for incredibly high risk applications, where either very personal data or important business data is contained, or where the application as a whole has an extremely high business criticality. Notice that each component calls out to the authentication server. This implies that no data passing between each component, even when "inside" the application, is considered trusted. Additionally, there isn't trust between the authentication server and each component. While not displayed in the diagram, this would have additional impacts, like more rigorous checks before authentication, and more overhead dedicated to cryptographic operations.
+As shown in the diagram below, this example outlines a model where no component trusts any other component, regardless of criticality or threat level. This type of trust configuration would likely be used for incredibly high risk applications, where either very personal data or important business data is contained, or where the application as a whole has an extremely high business criticality. Notice that each component calls out to the auth/identity server. This implies that no data passing between each component, even when "inside" the application, is considered trusted. Additionally, there isn't trust between the auth/identity server and each component. While not displayed in the diagram, this would have additional impacts, like more rigorous checks before authentication, and possibly more overhead dedicated to cryptographic operations.
 
 ![No Trust Across Boundaries](../assets/Secure_Cloud_Architecture_Trust_Boundaries_2.png)
 
@@ -132,7 +133,7 @@ This could be a necessary approach for applications found in financial, military
 
 #### 2. High trust example
 
-Next, consider the an opposite approach, where everything is trusted. In this instance, the "dangerous" user input is trusted and essentially handed directly to a high criticality business component. The authentication resource is not used at all. In this instance, there is higher likelihood of a successful attack against the system, because there are no controls in place to prevent it. Additionally, this setup could be considered wasteful, as both the API gateway and the authentication server are not necessarily performing their intended function.
+Next, consider the an opposite approach, where everything is trusted. In this instance, the "dangerous" user input is trusted and essentially handed directly to a high criticality business component. The auth/identity resource is not used at all. In this instance, there is higher likelihood of a successful attack against the system, because there are no controls in place to prevent it. Additionally, this setup could be considered wasteful, as both the API gateway and the auth/identity server are not necessarily performing their intended function.
 
 ![Complete Trust Across Boundaries](../assets/Secure_Cloud_Architecture_Trust_Boundaries_3.png)
 
@@ -149,6 +150,8 @@ This is an unlikely architecture for all but the simplest and lowest risk applic
 Most applications will use a trust boundary configuration like this. Using knowledge from the risk and attack surface analysis in section 1, security can reasonably assign trust to low risk components or processes, and verify only when necessary to protect business critical resources. This prevents wasting valuable security resources, but also limits the complexity and efficiency loss due to additional security overhead.
 
 ![Some Trust Across Boundaries](../assets/Secure_Cloud_Architecture_Trust_Boundaries_4.png)
+
+*Note: Cloud design principles dictate that one doesn't directly connect compute and storage resources. This example provides a simplistic view for brevity and explanatory purposes.*
 
 By nature, this approach limits the pros and cons of both previous examples. This model will likely be used for most applications, unless the benefits of the above examples are necessary to meet business requirements.
 
@@ -194,7 +197,7 @@ For proper logging, consider:
 
 #### Monitoring
 
-For proper monitor consider adding:
+For proper monitoring consider adding:
 
 - Anomaly alerts:
     - HTTP 4xx and 5xx errors above a percent of normal
@@ -205,7 +208,7 @@ For proper monitor consider adding:
 - Alerting for deployment errors or container on/off cycling
 - Alerts or cutoffs for cost limits
 
-*Percentages chosen based off risk and team response capacity.*
+Anomalies by count and type can vary wildly from app to app. A proper understanding of what qualifies as an anomaly requires an environment specific baseline. Therefore, the percentages mentioned above should be chosen based off that baseline, in addition to considerations like risk and team response capacity.
 
 WAFs can also have monitoring or alerting attached to them for counting malicious payloads or (in some cases) anomalous activity detection.
 
@@ -219,13 +222,13 @@ Cloud service companies offer a range of simple and advanced DDoS protection pro
 
 The decision to enable advanced DDoS protections for a specific application should be based off risk and business criticality of application, taking into account mitigating factors and cost (these services can be very inexpensive compared to large company budgets).
 
-## Unmanaged tooling maintenance
+## Self-managed tooling maintenance
 
-Cloud providers generally offer tooling on a spectrum of management. Fully managed services leave very little for the end developer to handle besides coding functionality, while unmanaged systems require much more overhead to maintain.
+Cloud providers generally offer tooling on a spectrum of management. Fully managed services leave very little for the end developer to handle besides coding functionality, while self-managed systems require much more overhead to maintain.
 
-### Update Strategy for Unmanaged Services
+### Update Strategy for Self-managed Services
 
-Unmanaged tooling will require additional overhead by developers and support engineers. Depending on the tool, basic version updates, upgrades to images like [AMIs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html) or [Compute Images](https://cloud.google.com/compute/docs/images), or other operating system level maintence will be required. Use automation to regularly update minor versions or [images](https://docs.aws.amazon.com/systems-manager/latest/userguide/automation-tutorial-update-patch-golden-ami.html), and schedule time in development cycles for refreshing stale resources.
+Self-managed tooling will require additional overhead by developers and support engineers. Depending on the tool, basic version updates, upgrades to images like [AMIs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html) or [Compute Images](https://cloud.google.com/compute/docs/images), or other operating system level maintence will be required. Use automation to regularly update minor versions or [images](https://docs.aws.amazon.com/systems-manager/latest/userguide/automation-tutorial-update-patch-golden-ami.html), and schedule time in development cycles for refreshing stale resources.
 
 ### Avoid Gaps in Managed Service Security
 
