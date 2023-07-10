@@ -56,7 +56,7 @@ The `Referrer-Policy` HTTP header controls how much referrer information (sent v
 
 #### Recommendation
 
-Referrer policy has been supported by browsers since 2014. Today, the default behavior in modern browsers is to no longer send all referrer information (origin, path, and query string) to the same site but to only send the origin to other sites. However, since not all users may be using the latest browsers we suggest forcing this behavior by sending this header on all requests.
+Referrer policy has been supported by browsers since 2014. Today, the default behavior in modern browsers is to no longer send all referrer information (origin, path, and query string) to the same site but to only send the origin to other sites. However, since not all users may be using the latest browsers we suggest forcing this behavior by sending this header on all responses.
 
 > `Referrer-Policy: strict-origin-when-cross-origin`
 
