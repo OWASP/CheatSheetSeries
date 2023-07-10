@@ -2725,7 +2725,7 @@
 <h3 id="referrer-policy">Referrer-Policy<a class="headerlink" href="#referrer-policy" title="Permanent link">&para;</a></h3>
 <p>The <code>Referrer-Policy</code> HTTP header controls how much referrer information (sent via the Referer header) should be included with requests.</p>
 <h4 id="recommendation_3">Recommendation<a class="headerlink" href="#recommendation_3" title="Permanent link">&para;</a></h4>
-<p>Referrer policy has been supported by browsers since 2014. Today, the default behavior in modern browsers is to no longer send all referrer information (origin, path, and query string) to the same site but to only send the origin to other sites. However, since not all users may be using the latest browsers we suggest forcing this behavior by sending this header on all requests.</p>
+<p>Referrer policy has been supported by browsers since 2014. Today, the default behavior in modern browsers is to no longer send all referrer information (origin, path, and query string) to the same site but to only send the origin to other sites. However, since not all users may be using the latest browsers we suggest forcing this behavior by sending this header on all responses.</p>
 <blockquote>
 <p><code>Referrer-Policy: strict-origin-when-cross-origin</code></p>
 </blockquote>
