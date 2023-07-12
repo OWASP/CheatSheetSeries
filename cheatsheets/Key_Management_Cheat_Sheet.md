@@ -4,10 +4,10 @@
 
 This Key Management Cheat Sheet provides developers with guidance for implementation of cryptographic key management within an application in a secure manner. It is important to document and harmonize rules and practices for:
 
-1. key life cycle management (generation, distribution, destruction)
-2. key compromise, recovery and zeroization
-3. key storage
-4. key agreement
+1. Key life cycle management (generation, distribution, destruction)
+2. Key compromise, recovery and zeroization
+3. Key storage
+4. Key agreement
 
 ## General Guidelines and Considerations
 
@@ -108,11 +108,11 @@ Review `NIST SP 800-57` (Recommendation for Key Management) for recommended guid
 
 ### Memory Management Considerations
 
-Keys stored in memory for a long time can become "burned in". This can be mitigated by splitting the key into components that are frequently updated. `NIST SP 800.57`).
+Keys stored in memory for a long time can become "burned in". This can be mitigated by splitting the key into components that are frequently updated. `NIST SP 800-57`).
 
-Loss or corruption of the memory media on which keys and/or certificates are stored, and recovery planning, according to `NIST SP 800.57`.
+Loss or corruption of the memory media on which keys and/or certificates are stored, and recovery planning, according to `NIST SP 800-57`.
 
-Plan for the recovery from possible corruption of the memory media necessary for key or certificate generation, registration, and/or distribution systems, subsystems, or components as recommended in `NIST SP 800.57`.
+Plan for the recovery from possible corruption of the memory media necessary for key or certificate generation, registration, and/or distribution systems, subsystems, or components as recommended in `NIST SP 800-57`.
 
 ### Perfect Forward Secrecy
 
@@ -130,7 +130,7 @@ There are several reasons for this:
 
 ### Cryptographic Module Topics
 
-According to `NIST SP800-133`, cryptographic modules are the set of hardware, software, and/or firmware that implements security functions (including cryptographic algorithms and key generation) and is contained within a cryptographic module boundary to provide protection of the keys.
+According to `NIST SP 800-133`, cryptographic modules are the set of hardware, software, and/or firmware that implements security functions (including cryptographic algorithms and key generation) and is contained within a cryptographic module boundary to provide protection of the keys.
 
 ## Key Management Lifecycle Best Practices
 
@@ -151,12 +151,14 @@ The generated keys shall be transported (when necessary) using secure channels a
 1. Developers must understand where cryptographic keys are stored within the application. Understand what memory devices the keys are stored on.
 2. Keys must be protected on both volatile and persistent memory, ideally processed within secure cryptographic modules.
 3. Keys should never be stored in plaintext format.
-4. Ensure all keys are stored in cryptographic vault, such as a [hardware security module](https://en.wikipedia.org/wiki/Hardware_security_module) (HSM) or isolated cryptographic service.
+4. Ensure all keys are stored in a cryptographic vault, such as a [hardware security module](https://en.wikipedia.org/wiki/Hardware_security_module) (HSM) or isolated cryptographic service.
 5. If you are planning on storing keys in offline devices/databases, then encrypt the keys using Key Encryption Keys (KEKs) prior to the export of the key material. KEK length (and algorithm) should be equivalent to or greater in strength than the keys being protected.
 6. Ensure that keys have integrity protections applied while in storage (consider dual purpose algorithms that support encryption and Message Code Authentication (MAC)).
 7. Ensure that standard application level code never reads or uses cryptographic keys in any way and use key management libraries.
 8. Ensure that keys and cryptographic operation is done inside the sealed vault.
 9. All work should be done in the vault (such as key access, encryption, decryption, signing, etc).
+
+For a more complete guide to storing sensitive information such as keys, see the [Secrets Management Cheat Sheet](Secrets_Management_Cheat_Sheet.md).
 
 ### Escrow and Backup
 
