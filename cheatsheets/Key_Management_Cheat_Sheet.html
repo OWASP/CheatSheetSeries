@@ -2021,10 +2021,10 @@
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>This Key Management Cheat Sheet provides developers with guidance for implementation of cryptographic key management within an application in a secure manner. It is important to document and harmonize rules and practices for:</p>
 <ol>
-<li>key life cycle management (generation, distribution, destruction)</li>
-<li>key compromise, recovery and zeroization</li>
-<li>key storage</li>
-<li>key agreement</li>
+<li>Key life cycle management (generation, distribution, destruction)</li>
+<li>Key compromise, recovery and zeroization</li>
+<li>Key storage</li>
+<li>Key agreement</li>
 </ol>
 <h2 id="general-guidelines-and-considerations">General Guidelines and Considerations<a class="headerlink" href="#general-guidelines-and-considerations" title="Permanent link">&para;</a></h2>
 <p>Formulate a plan for the overall organization's cryptographic strategy to guide developers working on different applications and ensure that each application's cryptographic capability meets minimum requirements and best practices.</p>
@@ -2097,9 +2097,9 @@
 <li>Formulate a strategy for the overall organization's cryptographic strategy to guide developers working on different applications and ensure that each application's cryptographic capability meets minimum requirements and best practices.</li>
 </ol>
 <h3 id="memory-management-considerations">Memory Management Considerations<a class="headerlink" href="#memory-management-considerations" title="Permanent link">&para;</a></h3>
-<p>Keys stored in memory for a long time can become "burned in". This can be mitigated by splitting the key into components that are frequently updated. <code>NIST SP 800.57</code>).</p>
-<p>Loss or corruption of the memory media on which keys and/or certificates are stored, and recovery planning, according to <code>NIST SP 800.57</code>.</p>
-<p>Plan for the recovery from possible corruption of the memory media necessary for key or certificate generation, registration, and/or distribution systems, subsystems, or components as recommended in <code>NIST SP 800.57</code>.</p>
+<p>Keys stored in memory for a long time can become "burned in". This can be mitigated by splitting the key into components that are frequently updated. <code>NIST SP 800-57</code>).</p>
+<p>Loss or corruption of the memory media on which keys and/or certificates are stored, and recovery planning, according to <code>NIST SP 800-57</code>.</p>
+<p>Plan for the recovery from possible corruption of the memory media necessary for key or certificate generation, registration, and/or distribution systems, subsystems, or components as recommended in <code>NIST SP 800-57</code>.</p>
 <h3 id="perfect-forward-secrecy">Perfect Forward Secrecy<a class="headerlink" href="#perfect-forward-secrecy" title="Permanent link">&para;</a></h3>
 <p><a href="https://en.wikipedia.org/wiki/Ephemeral_key">Ephemeral keys</a> can provide perfect forward secrecy protection, which means a compromise of the server's long term signing key does not compromise the confidentiality of past sessions. Refer to <a href="Transport_Layer_Protection_Cheat_Sheet.html">TLS cheat sheet</a>.</p>
 <h3 id="key-usage">Key Usage<a class="headerlink" href="#key-usage" title="Permanent link">&para;</a></h3>
@@ -2111,7 +2111,7 @@
 <li>Some uses of keys interfere with each other. For example, the length of time the key may be required for each use and purpose. Retention requirements of the data may differ for different data types.</li>
 </ol>
 <h3 id="cryptographic-module-topics">Cryptographic Module Topics<a class="headerlink" href="#cryptographic-module-topics" title="Permanent link">&para;</a></h3>
-<p>According to <code>NIST SP800-133</code>, cryptographic modules are the set of hardware, software, and/or firmware that implements security functions (including cryptographic algorithms and key generation) and is contained within a cryptographic module boundary to provide protection of the keys.</p>
+<p>According to <code>NIST SP 800-133</code>, cryptographic modules are the set of hardware, software, and/or firmware that implements security functions (including cryptographic algorithms and key generation) and is contained within a cryptographic module boundary to provide protection of the keys.</p>
 <h2 id="key-management-lifecycle-best-practices">Key Management Lifecycle Best Practices<a class="headerlink" href="#key-management-lifecycle-best-practices" title="Permanent link">&para;</a></h2>
 <h3 id="generation">Generation<a class="headerlink" href="#generation" title="Permanent link">&para;</a></h3>
 <p>Cryptographic keys shall be generated within cryptographic module with at least a <code>FIPS 140-2</code> compliance. For explanatory purposes, consider the cryptographic module in which a key is generated to be the key-generating module.</p>
@@ -2124,13 +2124,14 @@
 <li>Developers must understand where cryptographic keys are stored within the application. Understand what memory devices the keys are stored on.</li>
 <li>Keys must be protected on both volatile and persistent memory, ideally processed within secure cryptographic modules.</li>
 <li>Keys should never be stored in plaintext format.</li>
-<li>Ensure all keys are stored in cryptographic vault, such as a <a href="https://en.wikipedia.org/wiki/Hardware_security_module">hardware security module</a> (HSM) or isolated cryptographic service.</li>
+<li>Ensure all keys are stored in a cryptographic vault, such as a <a href="https://en.wikipedia.org/wiki/Hardware_security_module">hardware security module</a> (HSM) or isolated cryptographic service.</li>
 <li>If you are planning on storing keys in offline devices/databases, then encrypt the keys using Key Encryption Keys (KEKs) prior to the export of the key material. KEK length (and algorithm) should be equivalent to or greater in strength than the keys being protected.</li>
 <li>Ensure that keys have integrity protections applied while in storage (consider dual purpose algorithms that support encryption and Message Code Authentication (MAC)).</li>
 <li>Ensure that standard application level code never reads or uses cryptographic keys in any way and use key management libraries.</li>
 <li>Ensure that keys and cryptographic operation is done inside the sealed vault.</li>
 <li>All work should be done in the vault (such as key access, encryption, decryption, signing, etc).</li>
 </ol>
+<p>For a more complete guide to storing sensitive information such as keys, see the <a href="Secrets_Management_Cheat_Sheet.html">Secrets Management Cheat Sheet</a>.</p>
 <h3 id="escrow-and-backup">Escrow and Backup<a class="headerlink" href="#escrow-and-backup" title="Permanent link">&para;</a></h3>
 <p>Data that has been encrypted with lost cryptographic keys will never be recovered. Therefore, it is essential that the application incorporate a secure key backup capability, especially for applications that support data at rest encryption for long-term data stores.</p>
 <p>When backing up keys, ensure that the database that is used to store the keys is encrypted using at least a <code>FIPS 140-2</code> validated module. It is sometimes useful to escrow key material for use in investigations and for re-provisioning of key material to users in the event that the key is lost or corrupted.</p>
