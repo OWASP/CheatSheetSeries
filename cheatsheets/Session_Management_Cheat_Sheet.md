@@ -55,7 +55,7 @@ Additionally, a random session ID is not enough; it must also be unique to avoid
 **NOTE**:
 
 - The session ID entropy is really affected by other external and difficult to measure factors, such as the number of concurrent active sessions the web application commonly has, the absolute session expiration timeout, the amount of session ID guesses per second the attacker can make and the target web application can support, etc.
-- If a session ID with an entropy of `64 bits` is used, it will take an attacker at least 292 years to successfully guess a valid session ID, assuming the attacker can try 10,000 guesses per second with 100,000 valid simultaneous sessions available in the web application.
+- If a session ID with an entropy of `64 bits` is used, an attacker can expect to spend more than 292 years to successfully guess a valid session ID, assuming the attacker can try 10,000 guesses per second with 100,000 valid simultaneous sessions available in the web application.
 - More information [here](https://owasp.org/www-community/vulnerabilities/Insufficient_Session-ID_Length).
 
 ### Session ID Content (or Value)
