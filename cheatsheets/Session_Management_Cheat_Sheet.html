@@ -19,7 +19,7 @@
         <link rel="next" href="TLS_Cipher_String_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.18">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.19">
     
     
       
@@ -27,7 +27,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.26e3688c.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.eebd395e.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.ecc896b0.min.css">
@@ -2590,7 +2590,7 @@
 <p><strong>NOTE</strong>:</p>
 <ul>
 <li>The session ID entropy is really affected by other external and difficult to measure factors, such as the number of concurrent active sessions the web application commonly has, the absolute session expiration timeout, the amount of session ID guesses per second the attacker can make and the target web application can support, etc.</li>
-<li>If a session ID with an entropy of <code>64 bits</code> is used, it will take an attacker at least 292 years to successfully guess a valid session ID, assuming the attacker can try 10,000 guesses per second with 100,000 valid simultaneous sessions available in the web application.</li>
+<li>If a session ID with an entropy of <code>64 bits</code> is used, an attacker can expect to spend more than 292 years to successfully guess a valid session ID, assuming the attacker can try 10,000 guesses per second with 100,000 valid simultaneous sessions available in the web application.</li>
 <li>More information <a href="https://owasp.org/www-community/vulnerabilities/Insufficient_Session-ID_Length">here</a>.</li>
 </ul>
 <h3 id="session-id-content-or-value">Session ID Content (or Value)<a class="headerlink" href="#session-id-content-or-value" title="Permanent link">&para;</a></h3>
