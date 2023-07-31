@@ -19,7 +19,7 @@
         <link rel="next" href="JAAS_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.19">
+      <meta name="generator" content="mkdocs-1.5.1, mkdocs-material-9.1.21">
     
     
       
@@ -894,36 +894,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#context" class="md-nav__link">
-    Context
+  <a href="#examples" class="md-nav__link">
+    Examples
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#additional-remarks" class="md-nav__link">
-    Additional remarks
+  <a href="#identifier-complexity" class="md-nav__link">
+    Identifier complexity
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#objective" class="md-nav__link">
-    Objective
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#proposition" class="md-nav__link">
-    Proposition
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sources-of-the-prototype" class="md-nav__link">
-    Sources of the prototype
+  <a href="#mitigation" class="md-nav__link">
+    Mitigation
   </a>
   
 </li>
@@ -1663,36 +1649,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#context" class="md-nav__link">
-    Context
+  <a href="#examples" class="md-nav__link">
+    Examples
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#additional-remarks" class="md-nav__link">
-    Additional remarks
+  <a href="#identifier-complexity" class="md-nav__link">
+    Identifier complexity
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#objective" class="md-nav__link">
-    Objective
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#proposition" class="md-nav__link">
-    Proposition
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sources-of-the-prototype" class="md-nav__link">
-    Sources of the prototype
+  <a href="#mitigation" class="md-nav__link">
+    Mitigation
   </a>
   
 </li>
@@ -1717,165 +1689,33 @@
 
 <h1 id="insecure-direct-object-reference-prevention-cheat-sheet">Insecure Direct Object Reference Prevention Cheat Sheet<a class="headerlink" href="#insecure-direct-object-reference-prevention-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p><strong>I</strong>nsecure <strong>D</strong>irect <strong>O</strong>bject <strong>R</strong>eference (called <strong>IDOR</strong> from here) occurs when a application exposes a reference to an internal implementation object. Using this method, an IDOR reveals the real identifier and format or pattern used of the element in the storage backend. The most common example is of a record identifier in a storage system such as a database or filesystem, though these are not the only examples.</p>
-<p>IDOR is referenced in element <a href="https://wiki.owasp.org/index.php/Top_10_2013-A4-Insecure_Direct_Object_References">A4</a> of the OWASP Top 10, in the 2013 edition.</p>
-<h2 id="context">Context<a class="headerlink" href="#context" title="Permanent link">&para;</a></h2>
-<p>IDOR does not create a direct security issue itself because, by itself, it reveals only the format or pattern used for the object identifier. However, IDOR brings, depending on the format or pattern in place, a capacity for the attacker to mount an enumeration attack, allowing the attacker to try to probe access to the associated objects.</p>
-<p>Enumeration attacks can be described in the way in which the attacker builds a collection of valid identifiers using the discovered format or pattern, and tests them against the application.</p>
-<p><strong>For example:</strong></p>
-<p>Imagine an HR application exposing a service accepting employee IDs in order to return employee information, and for which the format or pattern of the employee ID is the following:</p>
-<div class="highlight"><pre><span></span><code>EMP-00000
-EMP-00001
-EMP-00002
-...
+<p>Insecure Direct Object Reference (IDOR) is a vulnerability that arises when attackers can access or modify objects by manipulating identifiers used in a web application's URLs or parameters. It occurs due to missing access control checks, which fail to verify whether a user should be allowed to access specific data.</p>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<p>For instance, when a user accesses their profile, the application might generate a URL like this:</p>
+<div class="highlight"><pre><span></span><code>https://example.org/users/123
 </code></pre></div>
-<p>Based on this, an attacker can build a collection of valid IDs from <em>EMP-00000</em> to <em>EMP-99999</em>.</p>
-<p>To be exploited, an IDOR issue must be combined with an <a href="Access_Control_Cheat_Sheet.html">Access Control</a> issue, because it's the Access Control issue that "allows" the attacker to access the object for which they have guessed the identifier through the enumeration attack.</p>
-<h2 id="additional-remarks">Additional remarks<a class="headerlink" href="#additional-remarks" title="Permanent link">&para;</a></h2>
-<p><strong>From Jeff Williams</strong>:</p>
-<p>Direct Object Reference is fundamentally a Access Control problem. We split it out to emphasize the difference between URL access control and data layer access control. You can't do anything about the data-layer problems with URL access control. And they're not really input validation problems either. But we see DOR manipulation all the time. If we list only "Messed-up from the Floor-up Access Control" then people will probably only put in SiteMinder or JEE declarative access control on URLs and call it a day. That's what we're trying to avoid.</p>
-<p><strong>From Eric Sheridan</strong>:</p>
-<p>An object reference map is first populated with a list of authorized values which are temporarily stored in the session. When the user requests a field (ex: color=654321), the application does a lookup in this map from the session to determine the appropriate column name. If the value does not exist in this limited map, the user is not authorized. Reference maps should not be global (i.e. include every possible value), they are temporary maps/dictionaries that are only ever populated with authorized values.</p>
-<p>"A direct object reference occurs when a developer exposes a reference to an internal implementation object, such as a file, directory, database record, or key, as a URL or form parameter."</p>
-<p>I'm "down" with DOR's for files, directories, etc. But not so much for ALL databases primary keys. That's just insane, like you are suggesting. I think that anytime database primary keys are exposed, an access control rule is required. There is no way to practically DOR all database primary keys in a real enterprise or post-enterprise system.</p>
-<p>But, suppose a user has a list of accounts, like a bank where database ID 23456 is their checking account. I'd DOR that in a heartbeat. You need to be prudent about this.</p>
-<h2 id="objective">Objective<a class="headerlink" href="#objective" title="Permanent link">&para;</a></h2>
-<p>This article proposes an idea to prevent the exposure of real identifiers in a simple, portable, and stateless way because the proposal needs to handle session and session-less application topologies.</p>
-<h2 id="proposition">Proposition<a class="headerlink" href="#proposition" title="Permanent link">&para;</a></h2>
-<p>The proposal uses a hash to replace the direct identifier. This hash is salted with a value defined at the application level to support topologies in which the application is deployed in multi-instance mode, such as in production environments.</p>
-<p>Using a hash enables the following properties:</p>
-<ul>
-<li>Allows the absence of a mapping table—-real ID vs front-end ID—-in user session or application level caches.</li>
-<li>Makes creation of the collection of enumeration values more difficult to achieve because, even if an attacker guesses the hash algorithm from the ID size, he cannot reproduce value, thanks to the salt.</li>
-</ul>
-<p>This is the implementation of the utility class that generates the the identifier to use for an exchange with the front-end:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">javax.xml.bind.DatatypeConverter</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">java.io.UnsupportedEncodingException</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">java.security.MessageDigest</span><span class="p">;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">java.security.NoSuchAlgorithmException</span><span class="p">;</span>
-
-<span class="cm">/**</span>
-<span class="cm"> * Handle the creation of ID that will be send to front end side</span>
-<span class="cm"> * in order to prevent IDOR</span>
-<span class="cm"> */</span>
-
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">IDORUtil</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="cm">/**</span>
-<span class="cm">     * SALT used for the generation of the HASH of the real item identifier</span>
-<span class="cm">     * in order to prevent to forge it on front end side.</span>
-<span class="cm">     */</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">SALT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;[READ_IT_FROM_APP_CONFIGURATION]&quot;</span><span class="p">;</span>
-
-<span class="w">    </span><span class="cm">/**</span>
-<span class="cm">     * Compute a identifier that will be send to the front end and be used as item</span>
-<span class="cm">     * unique identifier on client side.</span>
-<span class="cm">     *</span>
-<span class="cm">     * @param realItemBackendIdentifier Identifier of the item on the backend storage</span>
-<span class="cm">     *                                  (real identifier)</span>
-<span class="cm">     * @return A string representing the identifier to use</span>
-<span class="cm">     * @throws UnsupportedEncodingException If string&#39;s byte cannot be obtained</span>
-<span class="cm">     * @throws NoSuchAlgorithmException If the hashing algorithm used is not</span>
-<span class="cm">     *                                  supported is not available</span>
-<span class="cm">     */</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">computeFrontEndIdentifier</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">realItemBackendIdentifier</span><span class="p">)</span>
-<span class="w">     </span><span class="kd">throws</span><span class="w"> </span><span class="n">NoSuchAlgorithmException</span><span class="p">,</span><span class="w"> </span><span class="n">UnsupportedEncodingException</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">frontEndId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">realItemBackendIdentifier</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="n">realItemBackendIdentifier</span><span class="p">.</span><span class="na">trim</span><span class="p">().</span><span class="na">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="c1">//Prefix the value with the SALT</span>
-<span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">tmp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SALT</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">realItemBackendIdentifier</span><span class="p">;</span>
-<span class="w">            </span><span class="c1">//Get and configure message digester</span>
-<span class="w">            </span><span class="c1">//We use SHA1 here for the following reason even if SHA1 have now potential collision:</span>
-<span class="w">            </span><span class="c1">//1. We do not store sensitive information, just technical ID</span>
-<span class="w">            </span><span class="c1">//2. We want that the ID stay short but not guessable</span>
-<span class="w">            </span><span class="c1">//3. We want that a maximum of backend storage support the algorithm used in order to compute it in selection query/request</span>
-<span class="w">            </span><span class="c1">//If your backend storage supports SHA256 so use it instead of SHA1</span>
-<span class="w">            </span><span class="n">MessageDigest</span><span class="w"> </span><span class="n">digester</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MessageDigest</span><span class="p">.</span><span class="na">getInstance</span><span class="p">(</span><span class="s">&quot;sha1&quot;</span><span class="p">);</span>
-<span class="w">            </span><span class="c1">//Compute the hash</span>
-<span class="w">            </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">hash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">digester</span><span class="p">.</span><span class="na">digest</span><span class="p">(</span><span class="n">tmp</span><span class="p">.</span><span class="na">getBytes</span><span class="p">(</span><span class="s">&quot;utf-8&quot;</span><span class="p">));</span>
-<span class="w">            </span><span class="c1">//Encode is in HEX</span>
-<span class="w">            </span><span class="n">frontEndId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DatatypeConverter</span><span class="p">.</span><span class="na">printHexBinary</span><span class="p">(</span><span class="n">hash</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">frontEndId</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
+<p>The 123 in the URL is a direct reference to the user's record in the database, often represented by the primary key. If an attacker changes this number to 124 and gains access to another user's information, the application is vulnerable to Insecure Direct Object Reference. This happens because the app didn't properly check if the user had permission to view data for user 124 before displaying it.</p>
+<p>In some cases, the identifier may not be in the URL, but rather in the POST body, as shown in the following example:</p>
+<div class="highlight"><pre><span></span><code>&lt;form action=&quot;/update_profile&quot; method=&quot;post&quot;&gt;
+  &lt;!-- Other fields for updating name, email, etc. --&gt;
+  &lt;input type=&quot;hidden&quot; name=&quot;user_id&quot; value=&quot;12345&quot;&gt;
+  &lt;button type=&quot;submit&quot;&gt;Update Profile&lt;/button&gt;
+&lt;/form&gt;
 </code></pre></div>
-<p>This is the example of services using the front identifier:</p>
-<div class="highlight"><pre><span></span><code><span class="cm">/**</span>
-<span class="cm"> * Service to list all available movies</span>
-<span class="cm"> *</span>
-<span class="cm"> * @return The collection of movies ID and name as JSON response</span>
-<span class="cm"> */</span>
-<span class="nd">@RequestMapping</span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;/movies&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GET</span><span class="p">,</span><span class="w"> </span><span class="n">produces</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">MediaType</span><span class="p">.</span><span class="na">APPLICATION_JSON_VALUE</span><span class="p">})</span>
-<span class="kd">public</span><span class="w"> </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">listAllMovies</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
-
-<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">movies</span><span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="n">m</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="c1">//Compute the front end ID for the current element</span>
-<span class="w">                </span><span class="n">String</span><span class="w"> </span><span class="n">frontEndId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">IDORUtil</span><span class="p">.</span><span class="na">computeFrontEndIdentifier</span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="na">getBackendIdentifier</span><span class="p">());</span>
-<span class="w">                </span><span class="c1">//Add the computed ID and the associated item name to the result map</span>
-<span class="w">                </span><span class="n">result</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="n">frontEndId</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="p">.</span><span class="na">getName</span><span class="p">());</span>
-<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="n">LOGGER</span><span class="p">.</span><span class="na">error</span><span class="p">(</span><span class="s">&quot;Error during ID generation for real ID {}: {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="p">.</span><span class="na">getBackendIdentifier</span><span class="p">(),</span>
-<span class="w">                             </span><span class="n">e</span><span class="p">.</span><span class="na">getMessage</span><span class="p">());</span>
-<span class="w">            </span><span class="p">}</span>
-<span class="w">        </span><span class="p">});</span>
-<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">//Ensure that in case of error no item is returned</span>
-<span class="w">        </span><span class="n">result</span><span class="p">.</span><span class="na">clear</span><span class="p">();</span>
-<span class="w">        </span><span class="n">LOGGER</span><span class="p">.</span><span class="na">error</span><span class="p">(</span><span class="s">&quot;Error during processing&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">result</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="cm">/**</span>
-<span class="cm"> * Service to obtain the information on a specific movie</span>
-<span class="cm"> *</span>
-<span class="cm"> * @param id Movie identifier from a front end point of view</span>
-<span class="cm"> * @return The movie object as JSON response</span>
-<span class="cm"> */</span>
-<span class="nd">@RequestMapping</span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;/movies/{id}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GET</span><span class="p">,</span><span class="w"> </span><span class="n">produces</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">MediaType</span><span class="p">.</span><span class="na">APPLICATION_JSON_VALUE</span><span class="p">})</span>
-<span class="kd">public</span><span class="w"> </span><span class="n">Movie</span><span class="w"> </span><span class="nf">obtainMovieName</span><span class="p">(</span><span class="nd">@PathVariable</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-
-<span class="w">    </span><span class="c1">//Search for the wanted movie information using Front End Identifier</span>
-<span class="w">    </span><span class="n">Optional</span><span class="o">&lt;</span><span class="n">Movie</span><span class="o">&gt;</span><span class="w"> </span><span class="n">movie</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">movies</span><span class="p">.</span><span class="na">stream</span><span class="p">().</span><span class="na">filter</span><span class="p">(</span><span class="n">m</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kt">boolean</span><span class="w"> </span><span class="n">match</span><span class="p">;</span>
-<span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="c1">//Compute the front end ID for the current element</span>
-<span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">frontEndId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">IDORUtil</span><span class="p">.</span><span class="na">computeFrontEndIdentifier</span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="na">getBackendIdentifier</span><span class="p">());</span>
-<span class="w">            </span><span class="c1">//Check if the computed ID match the one provided</span>
-<span class="w">            </span><span class="n">match</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">frontEndId</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="c1">//Ensure that in case of error no item is returned</span>
-<span class="w">            </span><span class="n">match</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
-<span class="w">            </span><span class="n">LOGGER</span><span class="p">.</span><span class="na">error</span><span class="p">(</span><span class="s">&quot;Error during processing&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">);</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">match</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}).</span><span class="na">findFirst</span><span class="p">();</span>
-
-<span class="w">    </span><span class="c1">//We have marked the Backend Identifier class field as excluded</span>
-<span class="w">    </span><span class="c1">//from the serialization</span>
-<span class="w">    </span><span class="c1">//So we can send the object to front end through the serializer</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">movie</span><span class="p">.</span><span class="na">get</span><span class="p">();</span>
-<span class="p">}</span>
+<p>In this example, the application allows users to update their profiles by submitting a form with the user ID in a hidden field. If the app doesn't perform proper access control on the server-side, attackers can manipulate the "user_id" field to modify profiles of other users without authorization.</p>
+<h2 id="identifier-complexity">Identifier complexity<a class="headerlink" href="#identifier-complexity" title="Permanent link">&para;</a></h2>
+<p>In some cases, using more complex identifiers like GUIDs can make it practically impossible for attackers to guess valid values. However, even with complex identifiers, access control checks are essential. If attackers obtain URLs for unauthorized objects, the application should still block their access attempts.</p>
+<h2 id="mitigation">Mitigation<a class="headerlink" href="#mitigation" title="Permanent link">&para;</a></h2>
+<p>To mitigate IDOR, implement access control checks for each object that users try to access. Web frameworks often provide ways to facilitate this. Additionally, use complex identifiers as a defense-in-depth measure, but remember that access control is crucial even with these identifiers.</p>
+<p>Avoid exposing identifiers in URLs and POST bodies if possible. Instead, determine the currently authenticated user from session information. When using multi-step flows, pass identifiers in the session to prevent tampering.</p>
+<p>When looking up objects based on primary keys, use datasets that users have access to. For example, in Ruby on Rails:</p>
+<div class="highlight"><pre><span></span><code>// vulnerable, searches all projects
+@project = Project.find(params[:id])
+// secure, searches projects related to the current user
+@project = @current_user.projects.find(params[:id])
 </code></pre></div>
-<p>This is the value object used:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Movie</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="cm">/**</span>
-<span class="cm">     * We indicate to serializer that this field must never be serialized</span>
-<span class="cm">     *</span>
-<span class="cm">     * @see &quot;https://fasterxml.github.io/jackson-annotations/javadoc/2.5/com/fasterxml/</span>
-<span class="cm">     *       jackson/annotation/JsonIgnore.html&quot;</span>
-<span class="cm">     */</span>
-<span class="w">    </span><span class="nd">@JsonIgnore</span>
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">backendIdentifier</span><span class="p">;</span>
-<span class="p">...</span>
-<span class="p">}</span>
-</code></pre></div>
-<h2 id="sources-of-the-prototype">Sources of the prototype<a class="headerlink" href="#sources-of-the-prototype" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/righettod/poc-idor">GitHub repository</a>.</p>
+<p>Verify the user's permission every time an access attempt is made. Implement this structurally using the recommended approach for your web framework.</p>
+<p>As an additional defense-in-depth measure, replace enumerable numeric identifiers with more complex, random identifiers. You can achieve this by adding a column with random strings in the database table and using those strings in the URLs instead of numeric primary keys. Another option is to use UUIDs or other long random values as primary keys. Avoid encrypting identifiers as it can be challenging to do so securely.</p>
 
 
 
