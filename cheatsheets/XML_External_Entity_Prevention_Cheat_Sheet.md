@@ -76,6 +76,49 @@ SAX2XMLReader* reader = XMLReaderFactory::createXMLReader();
 parser->setFeature(XMLUni::fgXercesDisableDefaultEntityResolution, true);
 ```
 
+## ColdFusion
+
+Per [this blog post](https://hoyahaxa.blogspot.com/2022/11/on-coldfusion-xxe-and-other-xml-attacks.html), both Adobe ColdFusion and Lucee have built-in mechanisms to disable support for external XML entities.
+
+### Adobe ColdFusion
+
+As of ColdFusion 2018 Update 14 and ColdFusion 2021 Update 4, all native ColdFusion functions that process XML now support an XML parser argument to disable support for external XML entities.  Note that there is no global setting to disable external entities, so a developer must ensure that every XML function call contains the required security options.
+
+From the [documentation for the XmlParse() function](https://helpx.adobe.com/coldfusion/cfml-reference/coldfusion-functions/functions-t-z/xmlparse.html), you can disable XXE with the code below:
+
+```
+<cfset parseroptions = structnew()>
+<cfset parseroptions.ALLOWEXTERNALENTITIES = false>
+<cfscript>
+a = XmlParse("xml.xml", false, parseroptions);
+writeDump(a);
+</cfscript>
+```
+
+You can use the "parseroptions" structure shown above as an argument to secure other functions that process XML as well, such as:
+
+```
+XxmlSearch(xmldoc, xpath,parseroptions);
+
+XmlTransform(xmldoc,xslt,parseroptions);
+
+isXML(xmldoc,parseroptions);
+```
+
+### Lucee
+
+As of Lucee 5.3.4.51 and later, you can disable support for XML external entities by adding the following to your Application.cfc:
+
+```
+this.xmlFeatures = {
+     externalGeneralEntities: false,
+     secure: true,
+     disallowDoctypeDecl: true
+};
+```
+
+Support for external XML entities is disabled by default as of Lucee 5.4.2.10 and Lucee 6.0.0.514.
+
 ## Java
 
 Java applications using XML libraries are particularly vulnerable to XXE because the default settings for most Java XML parsers is to have XXE enabled. To use these parsers safely, you have to explicitly disable XXE in the parser you use. The following describes how to disable XXE in the most commonly used XML parsers for Java.
