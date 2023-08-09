@@ -111,9 +111,9 @@ As of Lucee 5.3.4.51 and later, you can disable support for XML external entitie
 
 ```
 this.xmlFeatures = {
-	externalGeneralEntities: false,
-	secure: true,
-	disallowDoctypeDecl: true
+     externalGeneralEntities: false,
+     secure: true,
+     disallowDoctypeDecl: true
 };
 ```
 
