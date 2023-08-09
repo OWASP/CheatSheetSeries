@@ -19,7 +19,7 @@
         <link rel="next" href="XML_Security_Cheat_Sheet.html">
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.5.1, mkdocs-material-9.1.21">
+      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.1.21">
     
     
       
@@ -1572,6 +1572,33 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#coldfusion" class="md-nav__link">
+    ColdFusion
+  </a>
+  
+    <nav class="md-nav" aria-label="ColdFusion">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#adobe-coldfusion" class="md-nav__link">
+    Adobe ColdFusion
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lucee" class="md-nav__link">
+    Lucee
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#java" class="md-nav__link">
     Java
   </a>
@@ -2053,6 +2080,33 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#coldfusion" class="md-nav__link">
+    ColdFusion
+  </a>
+  
+    <nav class="md-nav" aria-label="ColdFusion">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#adobe-coldfusion" class="md-nav__link">
+    Adobe ColdFusion
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lucee" class="md-nav__link">
+    Lucee
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#java" class="md-nav__link">
     Java
   </a>
@@ -2478,6 +2532,34 @@
 <div class="highlight"><pre><span></span><code><span class="n">SAX2XMLReader</span><span class="o">*</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XMLReaderFactory</span><span class="o">::</span><span class="n">createXMLReader</span><span class="p">();</span>
 <span class="n">parser</span><span class="o">-&gt;</span><span class="n">setFeature</span><span class="p">(</span><span class="n">XMLUni</span><span class="o">::</span><span class="n">fgXercesDisableDefaultEntityResolution</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">);</span>
 </code></pre></div>
+<h2 id="coldfusion">ColdFusion<a class="headerlink" href="#coldfusion" title="Permanent link">&para;</a></h2>
+<p>Per <a href="https://hoyahaxa.blogspot.com/2022/11/on-coldfusion-xxe-and-other-xml-attacks.html">this blog post</a>, both Adobe ColdFusion and Lucee have built-in mechanisms to disable support for external XML entities.</p>
+<h3 id="adobe-coldfusion">Adobe ColdFusion<a class="headerlink" href="#adobe-coldfusion" title="Permanent link">&para;</a></h3>
+<p>As of ColdFusion 2018 Update 14 and ColdFusion 2021 Update 4, all native ColdFusion functions that process XML now support an XML parser argument to disable support for external XML entities.  Note that there is no global setting to disable external entities, so a developer must ensure that every XML function call contains the required security options.</p>
+<p>From the <a href="https://helpx.adobe.com/coldfusion/cfml-reference/coldfusion-functions/functions-t-z/xmlparse.html">documentation for the XmlParse() function</a>, you can disable XXE with the code below:</p>
+<div class="highlight"><pre><span></span><code>&lt;cfset parseroptions = structnew()&gt;
+&lt;cfset parseroptions.ALLOWEXTERNALENTITIES = false&gt;
+&lt;cfscript&gt;
+a = XmlParse(&quot;xml.xml&quot;, false, parseroptions);
+writeDump(a);
+&lt;/cfscript&gt;
+</code></pre></div>
+<p>You can use the "parseroptions" structure shown above as an argument to secure other functions that process XML as well, such as:</p>
+<div class="highlight"><pre><span></span><code>XxmlSearch(xmldoc, xpath,parseroptions);
+
+XmlTransform(xmldoc,xslt,parseroptions);
+
+isXML(xmldoc,parseroptions);
+</code></pre></div>
+<h3 id="lucee">Lucee<a class="headerlink" href="#lucee" title="Permanent link">&para;</a></h3>
+<p>As of Lucee 5.3.4.51 and later, you can disable support for XML external entities by adding the following to your Application.cfc:</p>
+<div class="highlight"><pre><span></span><code>this.xmlFeatures = {
+     externalGeneralEntities: false,
+     secure: true,
+     disallowDoctypeDecl: true
+};
+</code></pre></div>
+<p>Support for external XML entities is disabled by default as of Lucee 5.4.2.10 and Lucee 6.0.0.514.</p>
 <h2 id="java">Java<a class="headerlink" href="#java" title="Permanent link">&para;</a></h2>
 <p>Java applications using XML libraries are particularly vulnerable to XXE because the default settings for most Java XML parsers is to have XXE enabled. To use these parsers safely, you have to explicitly disable XXE in the parser you use. The following describes how to disable XXE in the most commonly used XML parsers for Java.</p>
 <h3 id="jaxp-documentbuilderfactory-saxparserfactory-and-dom4j">JAXP DocumentBuilderFactory, SAXParserFactory and DOM4J<a class="headerlink" href="#jaxp-documentbuilderfactory-saxparserfactory-and-dom4j" title="Permanent link">&para;</a></h3>
