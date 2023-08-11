@@ -1,7 +1,7 @@
-requests
-feedgen
-wheel
-mkdocs
-mkdocs-material
-pymdown-extensions
-Pygments
+requests>=2.31.0
+feedgen>=0.9.0
+wheel>=0.41.1
+mkdocs>=1.5.2
+mkdocs-material>=9.1.21
+pymdown-extensions>=10.1
+pygments>=2.16.1
