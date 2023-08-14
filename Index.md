@@ -100,7 +100,7 @@
 
 [JAAS Cheat Sheet](cheatsheets/JAAS_Cheat_Sheet.md). ![Java](assets/Index_Java.png) 
 
-[JWT Cheat Sheet](cheatsheets/JWT_Cheat_Sheet.md). ![Javascript](assets/Index_Javascript.png) ![Java](assets/Index_Java.png) ![Json](assets/Index_Json.png) 
+[JWT Cheat Sheet](cheatsheets/JWT_Cheat_Sheet.md). ![Javascript](assets/Index_Javascript.png) ![Json](assets/Index_Json.png) 
 
 [Java Security Cheat Sheet](cheatsheets/Java_Security_Cheat_Sheet.md). ![Java](assets/Index_Java.png) ![Xml](assets/Index_Xml.png) 
 
