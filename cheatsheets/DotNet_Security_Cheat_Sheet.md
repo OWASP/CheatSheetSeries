@@ -43,7 +43,7 @@ The .NET Framework is the set of APIs that support an advanced type system, data
 #### General cryptography guidance
 
 - **Never, ever write your own cryptographic functions.**
-- Wherever possible, try and avoid writing any cryptographic code at all. Instead try and either use pre-existing secret management solutions or the secret management solution provided by your cloud provider. For more information, see the [OWASP Secrets Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet).
+- Wherever possible, try and avoid writing any cryptographic code at all. Instead try and either use pre-existing secret management solutions or the secret management solution provided by your cloud provider. For more information, see the [OWASP Secrets Management Cheat Sheet](Secrets_Management_Cheat_Sheet.md).
 - If you cannot use a pre-existing secret management solution, try and use a trusted and well known implementation library rather than using the libraries built into .NET as it is far too easy to make cryptographic errors with them.
 - Make sure your application or protocol can easily support a future change of cryptographic algorithms.
 - Use [NuGet](https://docs.microsoft.com/en-us/nuget/) to keep all of your packages up to date. Watch the updates on your development setup, and plan updates to your applications accordingly.
