@@ -2981,7 +2981,7 @@
 <h4 id="general-cryptography-guidance">General cryptography guidance<a class="headerlink" href="#general-cryptography-guidance" title="Permanent link">&para;</a></h4>
 <ul>
 <li><strong>Never, ever write your own cryptographic functions.</strong></li>
-<li>Wherever possible, try and avoid writing any cryptographic code at all. Instead try and either use pre-existing secret management solutions or the secret management solution provided by your cloud provider. For more information, see the <a href="/Secrets_Management_Cheat_Sheet">OWASP Secrets Management Cheat Sheet</a>.</li>
+<li>Wherever possible, try and avoid writing any cryptographic code at all. Instead try and either use pre-existing secret management solutions or the secret management solution provided by your cloud provider. For more information, see the <a href="Secrets_Management_Cheat_Sheet.html">OWASP Secrets Management Cheat Sheet</a>.</li>
 <li>If you cannot use a pre-existing secret management solution, try and use a trusted and well known implementation library rather than using the libraries built into .NET as it is far too easy to make cryptographic errors with them.</li>
 <li>Make sure your application or protocol can easily support a future change of cryptographic algorithms.</li>
 <li>Use <a href="https://docs.microsoft.com/en-us/nuget/">NuGet</a> to keep all of your packages up to date. Watch the updates on your development setup, and plan updates to your applications accordingly.</li>
@@ -2989,7 +2989,7 @@
 <h4 id="encryption-for-storage">Encryption for storage<a class="headerlink" href="#encryption-for-storage" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Use the <a href="https://docs.microsoft.com/en-us/dotnet/standard/security/how-to-use-data-protection">Windows Data Protection API (DPAPI)</a> for secure local storage of sensitive data.</li>
-<li>Where DPAPI cannot be used, follow the algorithm guidance in the <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html#algorithms">OWASP Cryptographic Storage Cheat Sheet</a>.</li>
+<li>Where DPAPI cannot be used, follow the algorithm guidance in the <a href="Cryptographic_Storage_Cheat_Sheet.html#algorithms">OWASP Cryptographic Storage Cheat Sheet</a>.</li>
 </ul>
 <p>The following code snippet shows an example of using AES-GCM to perform encryption/decryption of data. It is strongly recommended to have a cryptography expert review your final design and code, as even the most trivial error can severely weaken your encryption.</p>
 <p>The code is based on example from here: <a href="https://www.scottbrady91.com/c-sharp/aes-gcm-dotnet">https://www.scottbrady91.com/c-sharp/aes-gcm-dotnet</a></p>
@@ -3079,7 +3079,7 @@
 
 <h4 id="encryption-for-transmission">Encryption for transmission<a class="headerlink" href="#encryption-for-transmission" title="Permanent link">&para;</a></h4>
 <ul>
-<li>Again, follow the algorithm guidance in the <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html#algorithms">OWASP Cryptographic Storage Cheat Sheet</a>.</li>
+<li>Again, follow the algorithm guidance in the <a href="Cryptographic_Storage_Cheat_Sheet.html#algorithms">OWASP Cryptographic Storage Cheat Sheet</a>.</li>
 </ul>
 <p>The following code snippet shows an example of using Eliptic Curve/Diffie Helman (ECDH) together with AES-GCM to perform encryption/decryption of data between two different sides without the need the transfer the symmetric key between the two sides. Instead, the sides exchange public keys and can then use ECDH to generate a shared secret which can be used for the symmetric encryption.</p>
 <p>Again, it is strongly recommended to have a cryptography expert review your final design and code, as even the most trivial error can severely weaken your encryption.</p>
