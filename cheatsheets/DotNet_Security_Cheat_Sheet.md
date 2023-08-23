@@ -43,7 +43,7 @@ The .NET Framework is the set of APIs that support an advanced type system, data
 #### General cryptography guidance
 
 - **Never, ever write your own cryptographic functions.**
-- Wherever possible, try and avoid writing any cryptographic code at all. Instead try and either use pre-existing secret management solutions or the secret management solution provided by your cloud provider. For more information, see the [OWASP Secrets Management Cheat Sheet](/Secrets_Management_Cheat_Sheet).
+- Wherever possible, try and avoid writing any cryptographic code at all. Instead try and either use pre-existing secret management solutions or the secret management solution provided by your cloud provider. For more information, see the [OWASP Secrets Management Cheat Sheet](Secrets_Management_Cheat_Sheet.md).
 - If you cannot use a pre-existing secret management solution, try and use a trusted and well known implementation library rather than using the libraries built into .NET as it is far too easy to make cryptographic errors with them.
 - Make sure your application or protocol can easily support a future change of cryptographic algorithms.
 - Use [NuGet](https://docs.microsoft.com/en-us/nuget/) to keep all of your packages up to date. Watch the updates on your development setup, and plan updates to your applications accordingly.
@@ -51,7 +51,7 @@ The .NET Framework is the set of APIs that support an advanced type system, data
 #### Encryption for storage
 
 - Use the [Windows Data Protection API (DPAPI)](https://docs.microsoft.com/en-us/dotnet/standard/security/how-to-use-data-protection) for secure local storage of sensitive data.
-- Where DPAPI cannot be used, follow the algorithm guidance in the [OWASP Cryptographic Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html#algorithms).
+- Where DPAPI cannot be used, follow the algorithm guidance in the [OWASP Cryptographic Storage Cheat Sheet](Cryptographic_Storage_Cheat_Sheet.md#algorithms).
 
 The following code snippet shows an example of using AES-GCM to perform encryption/decryption of data. It is strongly recommended to have a cryptography expert review your final design and code, as even the most trivial error can severely weaken your encryption.
 
@@ -145,7 +145,7 @@ public static class AesGcmSimple
 
 #### Encryption for transmission
 
-- Again, follow the algorithm guidance in the [OWASP Cryptographic Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html#algorithms).
+- Again, follow the algorithm guidance in the [OWASP Cryptographic Storage Cheat Sheet](Cryptographic_Storage_Cheat_Sheet.md#algorithms).
 
 The following code snippet shows an example of using Eliptic Curve/Diffie Helman (ECDH) together with AES-GCM to perform encryption/decryption of data between two different sides without the need the transfer the symmetric key between the two sides. Instead, the sides exchange public keys and can then use ECDH to generate a shared secret which can be used for the symmetric encryption.
 
