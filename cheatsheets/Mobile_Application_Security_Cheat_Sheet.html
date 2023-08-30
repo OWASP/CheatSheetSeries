@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Mass_Assignment_Cheat_Sheet.html">
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Mobile_Application_Security_Cheat_Sheet.html">
       
       
-        <link rel="prev" href="Logging_Vocabulary_Cheat_Sheet.html">
+        <link rel="prev" href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html">
       
       
-        <link rel="next" href="Microservices_Security_Cheat_Sheet.html">
+        <link rel="next" href="Multifactor_Authentication_Cheat_Sheet.html">
       
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
@@ -24,7 +24,7 @@
     
     
       
-        <title>Mass Assignment - OWASP Cheat Sheet Series</title>
+        <title>Mobile Application Security - OWASP Cheat Sheet Series</title>
       
     
     
@@ -79,7 +79,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#mass-assignment-cheat-sheet" class="md-skip">
+        <a href="#mobile-application-security-cheat-sheet" class="md-skip">
           Skip to content
         </a>
       
@@ -114,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Mass Assignment
+              Mobile Application Security
             
           </span>
         </div>
@@ -1300,29 +1300,9 @@
                 
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Mass Assignment
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="Mass_Assignment_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="Mass_Assignment_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1331,252 +1311,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    Introduction
-  </a>
-  
-    <nav class="md-nav" aria-label="Introduction">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#definition" class="md-nav__link">
-    Definition
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#alternative-names" class="md-nav__link">
-    Alternative Names
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#example" class="md-nav__link">
-    Example
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#exploitability" class="md-nav__link">
-    Exploitability
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#github-case-study" class="md-nav__link">
-    GitHub case study
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#solutions" class="md-nav__link">
-    Solutions
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#general-solutions" class="md-nav__link">
-    General Solutions
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#language-framework-specific-solutions" class="md-nav__link">
-    Language &amp; Framework specific solutions
-  </a>
-  
-    <nav class="md-nav" aria-label="Language & Framework specific solutions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#spring-mvc" class="md-nav__link">
-    Spring MVC
-  </a>
-  
-    <nav class="md-nav" aria-label="Spring MVC">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#allow-listing" class="md-nav__link">
-    Allow-listing
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#block-listing" class="md-nav__link">
-    Block-listing
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#nodejs-mongoose" class="md-nav__link">
-    NodeJS + Mongoose
-  </a>
-  
-    <nav class="md-nav" aria-label="NodeJS + Mongoose">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#allow-listing_1" class="md-nav__link">
-    Allow-listing
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#block-listing_1" class="md-nav__link">
-    Block-listing
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#ruby-on-rails" class="md-nav__link">
-    Ruby On Rails
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#django" class="md-nav__link">
-    Django
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#asp-net" class="md-nav__link">
-    ASP NET
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#php-laravel-eloquent" class="md-nav__link">
-    PHP Laravel + Eloquent
-  </a>
-  
-    <nav class="md-nav" aria-label="PHP Laravel + Eloquent">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#allow-listing_2" class="md-nav__link">
-    Allow-listing
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#block-listing_2" class="md-nav__link">
-    Block-listing
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#grails" class="md-nav__link">
-    Grails
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#play" class="md-nav__link">
-    Play
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#jackson-json-object-mapper" class="md-nav__link">
-    Jackson (JSON Object Mapper)
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#gson-json-object-mapper" class="md-nav__link">
-    GSON (JSON Object Mapper)
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#json-lib-json-object-mapper" class="md-nav__link">
-    JSON-Lib (JSON Object Mapper)
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#flexjson-json-object-mapper" class="md-nav__link">
-    Flexjson (JSON Object Mapper)
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#references-and-future-reading" class="md-nav__link">
-    References and future reading
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1626,9 +1360,29 @@
                 
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="Mobile_Application_Security_Cheat_Sheet.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Mobile Application Security
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="Mobile_Application_Security_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -1637,6 +1391,388 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#architecture-design" class="md-nav__link">
+    Architecture &amp; Design
+  </a>
+  
+    <nav class="md-nav" aria-label="Architecture & Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-secure-by-design" class="md-nav__link">
+    1. Secure by Design
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-secure-apis" class="md-nav__link">
+    2. Secure APIs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-principle-of-least-privilege" class="md-nav__link">
+    3. Principle of Least Privilege
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-supply-chain" class="md-nav__link">
+    4. Supply Chain
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#authentication-authorization" class="md-nav__link">
+    Authentication &amp; Authorization
+  </a>
+  
+    <nav class="md-nav" aria-label="Authentication & Authorization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-dont-trust-the-client" class="md-nav__link">
+    1. Don't Trust the Client
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-credential-handling" class="md-nav__link">
+    2. Credential Handling
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-passwords-and-pin-policy" class="md-nav__link">
+    3. Passwords and PIN Policy
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-biometric-authentication" class="md-nav__link">
+    4. Biometric Authentication
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-session-management" class="md-nav__link">
+    5. Session Management
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-token-storage" class="md-nav__link">
+    6. Token Storage
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-sensitive-operations" class="md-nav__link">
+    7. Sensitive Operations
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-storage-privacy" class="md-nav__link">
+    Data Storage &amp; Privacy
+  </a>
+  
+    <nav class="md-nav" aria-label="Data Storage & Privacy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-data-encryption" class="md-nav__link">
+    1. Data Encryption
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-data-leakage" class="md-nav__link">
+    2. Data Leakage
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-use-https" class="md-nav__link">
+    3. Use HTTPS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-third-party-libraries" class="md-nav__link">
+    4. Third-Party Libraries
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-personally-identifiable-information-pii" class="md-nav__link">
+    5. Personally Identifiable Information (PII)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-communication" class="md-nav__link">
+    Network Communication
+  </a>
+  
+    <nav class="md-nav" aria-label="Network Communication">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-dont-trust-the-network" class="md-nav__link">
+    1. Don't Trust the Network
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-use-secure-protocols" class="md-nav__link">
+    2. Use Secure Protocols
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-certificate-pinning" class="md-nav__link">
+    3. Certificate Pinning
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#user-interface" class="md-nav__link">
+    User Interface
+  </a>
+  
+    <nav class="md-nav" aria-label="User Interface">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-ui-data-masking" class="md-nav__link">
+    1. UI Data Masking
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-user-notifications" class="md-nav__link">
+    2. User Notifications
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-input-validation" class="md-nav__link">
+    3. Input Validation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-output-validation" class="md-nav__link">
+    4. Output Validation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#code-quality" class="md-nav__link">
+    Code Quality
+  </a>
+  
+    <nav class="md-nav" aria-label="Code Quality">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-static-analysis" class="md-nav__link">
+    1. Static Analysis
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-code-reviews" class="md-nav__link">
+    2. Code Reviews
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-update-libraries" class="md-nav__link">
+    3. Update Libraries
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#application-integrity" class="md-nav__link">
+    Application Integrity
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing" class="md-nav__link">
+    Testing
+  </a>
+  
+    <nav class="md-nav" aria-label="Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-penetration-testing" class="md-nav__link">
+    1. Penetration Testing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-automated-tests" class="md-nav__link">
+    2. Automated Tests
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-usability-testing" class="md-nav__link">
+    3. Usability Testing
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#post-deployment" class="md-nav__link">
+    Post-Deployment
+  </a>
+  
+    <nav class="md-nav" aria-label="Post-Deployment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-incident-response" class="md-nav__link">
+    1. Incident Response
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-updates" class="md-nav__link">
+    2. Updates
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-monitoring-and-analytics" class="md-nav__link">
+    3. Monitoring and Analytics
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#platform-specific-guidance" class="md-nav__link">
+    Platform-Specific Guidance
+  </a>
+  
+    <nav class="md-nav" aria-label="Platform-Specific Guidance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#android" class="md-nav__link">
+    Android
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ios" class="md-nav__link">
+    iOS
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2416,51 +2552,37 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    Introduction
+  <a href="#architecture-design" class="md-nav__link">
+    Architecture &amp; Design
   </a>
   
-    <nav class="md-nav" aria-label="Introduction">
+    <nav class="md-nav" aria-label="Architecture & Design">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#definition" class="md-nav__link">
-    Definition
+  <a href="#1-secure-by-design" class="md-nav__link">
+    1. Secure by Design
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#alternative-names" class="md-nav__link">
-    Alternative Names
+  <a href="#2-secure-apis" class="md-nav__link">
+    2. Secure APIs
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#example" class="md-nav__link">
-    Example
+  <a href="#3-principle-of-least-privilege" class="md-nav__link">
+    3. Principle of Least Privilege
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#exploitability" class="md-nav__link">
-    Exploitability
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#github-case-study" class="md-nav__link">
-    GitHub case study
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#solutions" class="md-nav__link">
-    Solutions
+  <a href="#4-supply-chain" class="md-nav__link">
+    4. Supply Chain
   </a>
   
 </li>
@@ -2471,160 +2593,58 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#general-solutions" class="md-nav__link">
-    General Solutions
+  <a href="#authentication-authorization" class="md-nav__link">
+    Authentication &amp; Authorization
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#language-framework-specific-solutions" class="md-nav__link">
-    Language &amp; Framework specific solutions
-  </a>
-  
-    <nav class="md-nav" aria-label="Language & Framework specific solutions">
+    <nav class="md-nav" aria-label="Authentication & Authorization">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#spring-mvc" class="md-nav__link">
-    Spring MVC
-  </a>
-  
-    <nav class="md-nav" aria-label="Spring MVC">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#allow-listing" class="md-nav__link">
-    Allow-listing
+  <a href="#1-dont-trust-the-client" class="md-nav__link">
+    1. Don't Trust the Client
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#block-listing" class="md-nav__link">
-    Block-listing
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#nodejs-mongoose" class="md-nav__link">
-    NodeJS + Mongoose
-  </a>
-  
-    <nav class="md-nav" aria-label="NodeJS + Mongoose">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#allow-listing_1" class="md-nav__link">
-    Allow-listing
+  <a href="#2-credential-handling" class="md-nav__link">
+    2. Credential Handling
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#block-listing_1" class="md-nav__link">
-    Block-listing
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#ruby-on-rails" class="md-nav__link">
-    Ruby On Rails
+  <a href="#3-passwords-and-pin-policy" class="md-nav__link">
+    3. Passwords and PIN Policy
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#django" class="md-nav__link">
-    Django
+  <a href="#4-biometric-authentication" class="md-nav__link">
+    4. Biometric Authentication
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#asp-net" class="md-nav__link">
-    ASP NET
+  <a href="#5-session-management" class="md-nav__link">
+    5. Session Management
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#php-laravel-eloquent" class="md-nav__link">
-    PHP Laravel + Eloquent
-  </a>
-  
-    <nav class="md-nav" aria-label="PHP Laravel + Eloquent">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#allow-listing_2" class="md-nav__link">
-    Allow-listing
+  <a href="#6-token-storage" class="md-nav__link">
+    6. Token Storage
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#block-listing_2" class="md-nav__link">
-    Block-listing
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#grails" class="md-nav__link">
-    Grails
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#play" class="md-nav__link">
-    Play
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#jackson-json-object-mapper" class="md-nav__link">
-    Jackson (JSON Object Mapper)
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#gson-json-object-mapper" class="md-nav__link">
-    GSON (JSON Object Mapper)
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#json-lib-json-object-mapper" class="md-nav__link">
-    JSON-Lib (JSON Object Mapper)
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#flexjson-json-object-mapper" class="md-nav__link">
-    Flexjson (JSON Object Mapper)
+  <a href="#7-sensitive-operations" class="md-nav__link">
+    7. Sensitive Operations
   </a>
   
 </li>
@@ -2635,9 +2655,261 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#references-and-future-reading" class="md-nav__link">
-    References and future reading
+  <a href="#data-storage-privacy" class="md-nav__link">
+    Data Storage &amp; Privacy
   </a>
+  
+    <nav class="md-nav" aria-label="Data Storage & Privacy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-data-encryption" class="md-nav__link">
+    1. Data Encryption
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-data-leakage" class="md-nav__link">
+    2. Data Leakage
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-use-https" class="md-nav__link">
+    3. Use HTTPS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-third-party-libraries" class="md-nav__link">
+    4. Third-Party Libraries
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-personally-identifiable-information-pii" class="md-nav__link">
+    5. Personally Identifiable Information (PII)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-communication" class="md-nav__link">
+    Network Communication
+  </a>
+  
+    <nav class="md-nav" aria-label="Network Communication">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-dont-trust-the-network" class="md-nav__link">
+    1. Don't Trust the Network
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-use-secure-protocols" class="md-nav__link">
+    2. Use Secure Protocols
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-certificate-pinning" class="md-nav__link">
+    3. Certificate Pinning
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#user-interface" class="md-nav__link">
+    User Interface
+  </a>
+  
+    <nav class="md-nav" aria-label="User Interface">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-ui-data-masking" class="md-nav__link">
+    1. UI Data Masking
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-user-notifications" class="md-nav__link">
+    2. User Notifications
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-input-validation" class="md-nav__link">
+    3. Input Validation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-output-validation" class="md-nav__link">
+    4. Output Validation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#code-quality" class="md-nav__link">
+    Code Quality
+  </a>
+  
+    <nav class="md-nav" aria-label="Code Quality">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-static-analysis" class="md-nav__link">
+    1. Static Analysis
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-code-reviews" class="md-nav__link">
+    2. Code Reviews
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-update-libraries" class="md-nav__link">
+    3. Update Libraries
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#application-integrity" class="md-nav__link">
+    Application Integrity
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing" class="md-nav__link">
+    Testing
+  </a>
+  
+    <nav class="md-nav" aria-label="Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-penetration-testing" class="md-nav__link">
+    1. Penetration Testing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-automated-tests" class="md-nav__link">
+    2. Automated Tests
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-usability-testing" class="md-nav__link">
+    3. Usability Testing
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#post-deployment" class="md-nav__link">
+    Post-Deployment
+  </a>
+  
+    <nav class="md-nav" aria-label="Post-Deployment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-incident-response" class="md-nav__link">
+    1. Incident Response
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-updates" class="md-nav__link">
+    2. Updates
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-monitoring-and-analytics" class="md-nav__link">
+    3. Monitoring and Analytics
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#platform-specific-guidance" class="md-nav__link">
+    Platform-Specific Guidance
+  </a>
+  
+    <nav class="md-nav" aria-label="Platform-Specific Guidance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#android" class="md-nav__link">
+    Android
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ios" class="md-nav__link">
+    iOS
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2659,214 +2931,255 @@
   
 
 
-<h1 id="mass-assignment-cheat-sheet">Mass Assignment Cheat Sheet<a class="headerlink" href="#mass-assignment-cheat-sheet" title="Permanent link">&para;</a></h1>
-<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<h3 id="definition">Definition<a class="headerlink" href="#definition" title="Permanent link">&para;</a></h3>
-<p>Software frameworks sometime allow developers to automatically bind HTTP request parameters into program code variables or objects to make using that framework easier on developers. This can sometimes cause harm.</p>
-<p>Attackers can sometimes use this methodology to create new parameters that the developer never intended which in turn creates or overwrites new variable or objects in program code that was not intended.</p>
-<p>This is called a <strong>Mass Assignment</strong> vulnerability.</p>
-<h3 id="alternative-names">Alternative Names<a class="headerlink" href="#alternative-names" title="Permanent link">&para;</a></h3>
-<p>Depending on the language/framework in question, this vulnerability can have several <a href="https://cwe.mitre.org/data/definitions/915.html">alternative names</a>:</p>
+<h1 id="mobile-application-security-cheat-sheet">Mobile Application Security Cheat Sheet<a class="headerlink" href="#mobile-application-security-cheat-sheet" title="Permanent link">&para;</a></h1>
+<p>Mobile application development presents certain security challenges that are
+unique compared to web applications and other forms of software. This cheat
+sheet provides guidance on security considerations for mobile app development.
+It is not a comprehensive guide by any means, but rather a starting point for
+developers to consider security in their mobile app development.</p>
+<h2 id="architecture-design">Architecture &amp; Design<a class="headerlink" href="#architecture-design" title="Permanent link">&para;</a></h2>
+<h3 id="1-secure-by-design">1. Secure by Design<a class="headerlink" href="#1-secure-by-design" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>Mass Assignment:</strong> Ruby on Rails, NodeJS.</li>
-<li><strong>Autobinding:</strong> Spring MVC, ASP NET MVC.</li>
-<li><strong>Object injection:</strong> PHP.</li>
+<li>Opt for a secure design at the beginning of development, not as an
+  afterthought.</li>
+<li>Keep in mind security principles like least privilege, defense in depth, and
+  separation of concerns.</li>
+<li>Follow industry standards and best practices, such as:<ul>
+<li>National Institute of Standards and Technology (NIST)</li>
+<li>Internet Engineering Task Force (IETF)</li>
 </ul>
-<h3 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h3>
-<p>Suppose there is a form for editing a user's account information:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">form</span><span class="p">&gt;</span>
-     <span class="p">&lt;</span><span class="nt">input</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;userid&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span><span class="p">&gt;</span>
-     <span class="p">&lt;</span><span class="nt">input</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;password&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span><span class="p">&gt;</span>
-     <span class="p">&lt;</span><span class="nt">input</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;email&quot;</span> <span class="na">text</span><span class="o">=</span><span class="s">&quot;text&quot;</span><span class="p">&gt;</span>
-     <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>  
-</code></pre></div>
-<p>Here is the object that the form is binding to:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">User</span><span class="w"> </span><span class="p">{</span>
-<span class="w">   </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">userid</span><span class="p">;</span>
-<span class="w">   </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">password</span><span class="p">;</span>
-<span class="w">   </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">email</span><span class="p">;</span>
-<span class="w">   </span><span class="kd">private</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="n">isAdmin</span><span class="p">;</span>
-
-<span class="w">   </span><span class="c1">//Getters &amp; Setters</span>
-<span class="p">}</span>
-</code></pre></div>
-<p>Here is the controller handling the request:</p>
-<div class="highlight"><pre><span></span><code><span class="nd">@RequestMapping</span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;/addUser&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RequestMethod</span><span class="p">.</span><span class="na">POST</span><span class="p">)</span>
-<span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">submit</span><span class="p">(</span><span class="n">User</span><span class="w"> </span><span class="n">user</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">   </span><span class="n">userService</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
-<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;successPage&quot;</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-<p>Here is the typical request:</p>
-<div class="highlight"><pre><span></span><code>POST /addUser
-...
-userid=bobbytables&amp;password=hashedpass&amp;email=bobby@tables.com
-</code></pre></div>
-<p>And here is the exploit in which we set the value of the attribute <code>isAdmin</code> of the instance of the class <code>User</code>:</p>
-<div class="highlight"><pre><span></span><code>POST /addUser
-...
-userid=bobbytables&amp;password=hashedpass&amp;email=bobby@tables.com&amp;isAdmin=true
-</code></pre></div>
-<h3 id="exploitability">Exploitability<a class="headerlink" href="#exploitability" title="Permanent link">&para;</a></h3>
-<p>This functionality becomes exploitable when:</p>
+</li>
+</ul>
+<p>For more information, see the
+<a href="Secure_Product_Design_Cheat_Sheet.html">Secure Product Design Cheat Sheet</a>.</p>
+<h3 id="2-secure-apis">2. Secure APIs<a class="headerlink" href="#2-secure-apis" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Attacker can guess common sensitive fields.</li>
-<li>Attacker has access to source code and can review the models for sensitive fields.</li>
-<li>AND the object with sensitive fields has an empty constructor.</li>
+<li>Ensure that your mobile app communicates securely with backend services.</li>
+<li>Use OAuth2, JWT, or similar for secure authentication.</li>
+<li>Regularly update and rotate any used API keys or tokens.</li>
 </ul>
-<h3 id="github-case-study">GitHub case study<a class="headerlink" href="#github-case-study" title="Permanent link">&para;</a></h3>
-<p>In 2012, GitHub was hacked using mass assignment. A user was able to upload his public key to any organization and thus make any subsequent changes in their repositories. <a href="https://blog.github.com/2012-03-04-public-key-security-vulnerability-and-mitigation/">GitHub's Blog Post</a>.</p>
-<h3 id="solutions">Solutions<a class="headerlink" href="#solutions" title="Permanent link">&para;</a></h3>
+<h3 id="3-principle-of-least-privilege">3. Principle of Least Privilege<a class="headerlink" href="#3-principle-of-least-privilege" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Allow-list the bindable, non-sensitive fields.</li>
-<li>Block-list the non-bindable, sensitive fields.</li>
-<li>Use <a href="https://martinfowler.com/eaaCatalog/dataTransferObject.html">Data Transfer Objects</a> (DTOs).</li>
+<li>Request only the permissions your app needs.</li>
+<li>This applies not only to device permissions granted by the user, but also to
+  permissions granted to the app by backend services.</li>
+<li>Avoid storing application files with overly permissive permissions.</li>
+<li>Secure by default: applications should have the most secure settings by default.</li>
 </ul>
-<h2 id="general-solutions">General Solutions<a class="headerlink" href="#general-solutions" title="Permanent link">&para;</a></h2>
-<p>An architectural approach is to create Data Transfer Objects and avoid binding input directly to domain objects. Only the fields that are meant to be editable by the user are included in the DTO.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserRegistrationFormDTO</span><span class="w"> </span><span class="p">{</span>
-<span class="w"> </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">userid</span><span class="p">;</span>
-<span class="w"> </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">password</span><span class="p">;</span>
-<span class="w"> </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">email</span><span class="p">;</span>
-
-<span class="w"> </span><span class="c1">//NOTE: isAdmin field is not present</span>
-
-<span class="w"> </span><span class="c1">//Getters &amp; Setters</span>
-<span class="p">}</span>
-</code></pre></div>
-<h2 id="language-framework-specific-solutions">Language &amp; Framework specific solutions<a class="headerlink" href="#language-framework-specific-solutions" title="Permanent link">&para;</a></h2>
-<h3 id="spring-mvc">Spring MVC<a class="headerlink" href="#spring-mvc" title="Permanent link">&para;</a></h3>
-<h4 id="allow-listing">Allow-listing<a class="headerlink" href="#allow-listing" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="nd">@Controller</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserController</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="nd">@InitBinder</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">initBinder</span><span class="p">(</span><span class="n">WebDataBinder</span><span class="w"> </span><span class="n">binder</span><span class="p">,</span><span class="w"> </span><span class="n">WebRequest</span><span class="w"> </span><span class="n">request</span><span class="p">)</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="n">binder</span><span class="p">.</span><span class="na">setAllowedFields</span><span class="p">(</span><span class="o">[</span><span class="s">&quot;userid&quot;</span><span class="p">,</span><span class="s">&quot;password&quot;</span><span class="p">,</span><span class="s">&quot;email&quot;</span><span class="o">]</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">...</span>
-<span class="p">}</span>
-</code></pre></div>
-<p>Take a look <a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/validation/DataBinder.html#setAllowedFields-java.lang.String...-">here</a> for the documentation.</p>
-<h4 id="block-listing">Block-listing<a class="headerlink" href="#block-listing" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="nd">@Controller</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserController</span>
-<span class="p">{</span>
-<span class="w">   </span><span class="nd">@InitBinder</span>
-<span class="w">   </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">initBinder</span><span class="p">(</span><span class="n">WebDataBinder</span><span class="w"> </span><span class="n">binder</span><span class="p">,</span><span class="w"> </span><span class="n">WebRequest</span><span class="w"> </span><span class="n">request</span><span class="p">)</span>
-<span class="w">   </span><span class="p">{</span>
-<span class="w">      </span><span class="n">binder</span><span class="p">.</span><span class="na">setDisallowedFields</span><span class="p">(</span><span class="o">[</span><span class="s">&quot;isAdmin&quot;</span><span class="o">]</span><span class="p">);</span>
-<span class="w">   </span><span class="p">}</span>
-<span class="p">...</span>
-<span class="p">}</span>
-</code></pre></div>
-<p>Take a look <a href="https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/validation/DataBinder.html#setDisallowedFields-java.lang.String...-">here</a> for the documentation.</p>
-<h3 id="nodejs-mongoose">NodeJS + Mongoose<a class="headerlink" href="#nodejs-mongoose" title="Permanent link">&para;</a></h3>
-<h4 id="allow-listing_1">Allow-listing<a class="headerlink" href="#allow-listing_1" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">UserSchema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">({</span>
-<span class="w">    </span><span class="nx">userid</span><span class="o">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">password</span><span class="o">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">email</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">isAdmin</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nb">Boolean</span><span class="p">,</span>
-<span class="p">});</span>
-
-<span class="nx">UserSchema</span><span class="p">.</span><span class="nx">statics</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">User</span><span class="p">.</span><span class="nx">userCreateSafeFields</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;userid&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;password&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;email&#39;</span><span class="p">]</span>
-<span class="p">};</span>
-
-<span class="kd">var</span><span class="w"> </span><span class="nx">User</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="s1">&#39;User&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">UserSchema</span><span class="p">);</span>
-
-<span class="nx">_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;underscore&#39;</span><span class="p">);</span>
-<span class="kd">var</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">User</span><span class="p">(</span><span class="nx">_</span><span class="p">.</span><span class="nx">pick</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">,</span><span class="w"> </span><span class="nx">User</span><span class="p">.</span><span class="nx">userCreateSafeFields</span><span class="p">));</span>
-</code></pre></div>
-<p>Take a look <a href="http://underscorejs.org/#pick">here</a> for the documentation.</p>
-<h4 id="block-listing_1">Block-listing<a class="headerlink" href="#block-listing_1" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">massAssign</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mongoose-mass-assign&#39;</span><span class="p">);</span>
-
-<span class="kd">var</span><span class="w"> </span><span class="nx">UserSchema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">({</span>
-<span class="w">    </span><span class="nx">userid</span><span class="o">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">password</span><span class="o">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">email</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">isAdmin</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="nb">Boolean</span><span class="p">,</span><span class="w"> </span><span class="nx">protect</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="k">default</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">}</span>
-<span class="p">});</span>
-
-<span class="nx">UserSchema</span><span class="p">.</span><span class="nx">plugin</span><span class="p">(</span><span class="nx">massAssign</span><span class="p">);</span>
-
-<span class="kd">var</span><span class="w"> </span><span class="nx">User</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="s1">&#39;User&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">UserSchema</span><span class="p">);</span>
-
-<span class="cm">/** Static method, useful for creation **/</span>
-<span class="kd">var</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">User</span><span class="p">.</span><span class="nx">massAssign</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
-
-<span class="cm">/** Instance method, useful for updating**/</span>
-<span class="kd">var</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">User</span><span class="p">;</span>
-<span class="nx">user</span><span class="p">.</span><span class="nx">massAssign</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
-
-<span class="cm">/** Static massUpdate method **/</span>
-<span class="kd">var</span><span class="w"> </span><span class="nx">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">userid</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;bhelx&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">isAdmin</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;true&#39;</span><span class="w"> </span><span class="p">};</span>
-<span class="nx">User</span><span class="p">.</span><span class="nx">update</span><span class="p">({</span><span class="w"> </span><span class="s1">&#39;_id&#39;</span><span class="o">:</span><span class="w"> </span><span class="nx">someId</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">$set</span><span class="o">:</span><span class="w"> </span><span class="nx">User</span><span class="p">.</span><span class="nx">massUpdate</span><span class="p">(</span><span class="nx">input</span><span class="p">)</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">);</span>
-</code></pre></div>
-<p>Take a look <a href="https://www.npmjs.com/package/mongoose-mass-assign">here</a> for the documentation.</p>
-<h3 id="ruby-on-rails">Ruby On Rails<a class="headerlink" href="#ruby-on-rails" title="Permanent link">&para;</a></h3>
-<p>Take a look <a href="https://guides.rubyonrails.org/v3.2.9/security.html#mass-assignment">here</a> for the documentation.</p>
-<h3 id="django">Django<a class="headerlink" href="#django" title="Permanent link">&para;</a></h3>
-<p>Take a look <a href="https://coffeeonthekeyboard.com/mass-assignment-security-part-10-855/">here</a> for the documentation.</p>
-<h3 id="asp-net">ASP NET<a class="headerlink" href="#asp-net" title="Permanent link">&para;</a></h3>
-<p>Take a look <a href="https://odetocode.com/Blogs/scott/archive/2012/03/11/complete-guide-to-mass-assignment-in-asp-net-mvc.aspx">here</a> for the documentation.</p>
-<h3 id="php-laravel-eloquent">PHP Laravel + Eloquent<a class="headerlink" href="#php-laravel-eloquent" title="Permanent link">&para;</a></h3>
-<h4 id="allow-listing_2">Allow-listing<a class="headerlink" href="#allow-listing_2" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="cp">&lt;?php</span>
-
-<span class="k">namespace</span> <span class="nx">App</span><span class="p">;</span>
-
-<span class="k">use</span> <span class="nx">Illuminate\Database\Eloquent\Model</span><span class="p">;</span>
-
-<span class="k">class</span> <span class="nc">User extends Model</span>
-<span class="p">{</span>
-    <span class="k">private</span> <span class="nv">$userid</span><span class="p">;</span>
-    <span class="k">private</span> <span class="nv">$password</span><span class="p">;</span>
-    <span class="k">private</span> <span class="nv">$email</span><span class="p">;</span>
-    <span class="k">private</span> <span class="nv">$isAdmin</span><span class="p">;</span>
-
-    <span class="k">protected</span> <span class="nv">$fillable </span><span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;userid&#39;</span><span class="p">,</span><span class="s1">&#39;password&#39;</span><span class="p">,</span><span class="s1">&#39;email&#39;</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-<p>Take a look <a href="https://laravel.com/docs/5.2/eloquent#mass-assignment">here</a> for the documentation.</p>
-<h4 id="block-listing_2">Block-listing<a class="headerlink" href="#block-listing_2" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="cp">&lt;?php</span>
-
-<span class="k">namespace</span> <span class="nx">App</span><span class="p">;</span>
-
-<span class="k">use</span> <span class="nx">Illuminate\Database\Eloquent\Model</span><span class="p">;</span>
-
-<span class="k">class</span> <span class="nc">User extends Model</span>
-<span class="p">{</span>
-    <span class="k">private</span> <span class="nv">$userid</span><span class="p">;</span>
-    <span class="k">private</span> <span class="nv">$password</span><span class="p">;</span>
-    <span class="k">private</span> <span class="nv">$email</span><span class="p">;</span>
-    <span class="k">private</span> <span class="nv">$isAdmin</span><span class="p">;</span>
-
-    <span class="k">protected</span> <span class="nv">$guarded </span><span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;isAdmin&#39;</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-<p>Take a look <a href="https://laravel.com/docs/5.2/eloquent#mass-assignment">here</a> for the documentation.</p>
-<h3 id="grails">Grails<a class="headerlink" href="#grails" title="Permanent link">&para;</a></h3>
-<p>Take a look <a href="http://spring.io/blog/2012/03/28/secure-data-binding-with-grails/">here</a> for the documentation.</p>
-<h3 id="play">Play<a class="headerlink" href="#play" title="Permanent link">&para;</a></h3>
-<p>Take a look <a href="https://www.playframework.com/documentation/1.4.x/controllers#nobinding">here</a> for the documentation.</p>
-<h3 id="jackson-json-object-mapper">Jackson (JSON Object Mapper)<a class="headerlink" href="#jackson-json-object-mapper" title="Permanent link">&para;</a></h3>
-<p>Take a look <a href="https://www.baeldung.com/jackson-field-serializable-deserializable-or-not">here</a> and <a href="http://lifelongprogrammer.blogspot.com/2015/09/using-jackson-view-to-protect-mass-assignment.html">here</a> for the documentation.</p>
-<h3 id="gson-json-object-mapper">GSON (JSON Object Mapper)<a class="headerlink" href="#gson-json-object-mapper" title="Permanent link">&para;</a></h3>
-<p>Take a look <a href="https://sites.google.com/site/gson/gson-user-guide#TOC-Excluding-Fields-From-Serialization-and-Deserialization">here</a> and <a href="https://stackoverflow.com/a/27986860">here</a> for the document.</p>
-<h3 id="json-lib-json-object-mapper">JSON-Lib (JSON Object Mapper)<a class="headerlink" href="#json-lib-json-object-mapper" title="Permanent link">&para;</a></h3>
-<p>Take a look <a href="http://json-lib.sourceforge.net/advanced.html">here</a> for the documentation.</p>
-<h3 id="flexjson-json-object-mapper">Flexjson (JSON Object Mapper)<a class="headerlink" href="#flexjson-json-object-mapper" title="Permanent link">&para;</a></h3>
-<p>Take a look <a href="http://flexjson.sourceforge.net/#Serialization">here</a> for the documentation.</p>
-<h2 id="references-and-future-reading">References and future reading<a class="headerlink" href="#references-and-future-reading" title="Permanent link">&para;</a></h2>
+<h3 id="4-supply-chain">4. Supply Chain<a class="headerlink" href="#4-supply-chain" title="Permanent link">&para;</a></h3>
+<p>Developing with third-party libraries and components introduces the possibility
+of security unknowns.</p>
 <ul>
-<li><a href="https://code.tutsplus.com/tutorials/mass-assignment-rails-and-you--net-31695">Mass Assignment, Rails and You</a></li>
+<li>Ensure app signing.</li>
+<li>Use only trusted and validated third-party libraries &amp; components.</li>
+<li>Establish security controls for app updates, patches, and releases.</li>
+<li>Monitor and detect security incidents of used third-party products.</li>
 </ul>
+<p>See the <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html">Vulnerable Dependency Management Cheat Sheet</a>
+for recommendations on managing third-party dependencies when vulnerabilities are discovered.</p>
+<h2 id="authentication-authorization">Authentication &amp; Authorization<a class="headerlink" href="#authentication-authorization" title="Permanent link">&para;</a></h2>
+<p>Authentication is a complex topic and there are many pitfalls. Authentication
+logic must be written and tested with extreme care. The tips here are only a
+starting point and barely scratch the surface. For more information, see the
+<a href="Authentication_Cheat_Sheet.html">Authentication Cheat Sheet</a> and
+<a href="https://owasp.org/www-project-mobile-top-10/2023-risks/m1-insecure-authentication-authorization.html">M1: Insecure Authentication/Authorization</a> from the OWASP Mobile Top 10.</p>
+<h3 id="1-dont-trust-the-client">1. Don't Trust the Client<a class="headerlink" href="#1-dont-trust-the-client" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Perform authentication/authorization server-side and only load data on the device after successful authentication.</li>
+<li>If storing data locally, encrypt it using a key derived from the user’s login credentials.</li>
+<li>Do not store user passwords on the device; use device-specific tokens that can be revoked.</li>
+<li>Avoid using spoofable values like device identifiers for authentication.</li>
+<li>Assume all client-side controls can be bypassed and perform them server-side as well.</li>
+<li>Include client side code to detect code/binary tampering.</li>
+</ul>
+<h3 id="2-credential-handling">2. Credential Handling<a class="headerlink" href="#2-credential-handling" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Do not hardcode credentials in the mobile app.</li>
+<li>Encrypt credentials in transmission.</li>
+<li>Do not store user credentials on the device. Consider using secure, revocable access tokens.</li>
+</ul>
+<h3 id="3-passwords-and-pin-policy">3. Passwords and PIN Policy<a class="headerlink" href="#3-passwords-and-pin-policy" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Require password complexity.</li>
+<li>Do not allow short PINs such as 4 digits.</li>
+<li>Use platform specific secure storage mechanisms, such as Keychain (iOS) or Keystore (Android).</li>
+</ul>
+<h3 id="4-biometric-authentication">4. Biometric Authentication<a class="headerlink" href="#4-biometric-authentication" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Use platform-supported methods for biometric authentication.</li>
+<li>Always provide a fallback, such as a PIN.</li>
+</ul>
+<h3 id="5-session-management">5. Session Management<a class="headerlink" href="#5-session-management" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Sessions should timeout after inactivity.</li>
+<li>Offer a remote logout feature.</li>
+<li>Use randomly generated session tokens.</li>
+<li>Secure session data, both client and server side.</li>
+</ul>
+<h3 id="6-token-storage">6. Token Storage<a class="headerlink" href="#6-token-storage" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Store authentication tokens securely.</li>
+<li>Handle token expiration gracefully.</li>
+</ul>
+<h3 id="7-sensitive-operations">7. Sensitive Operations<a class="headerlink" href="#7-sensitive-operations" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Require users to re-authenticate for sensitive operations like changing
+  passwords or updating payment information.</li>
+<li>Consider requring re-authentication before displaying highly sensitive
+  information as well.</li>
+<li>Require authorization checks on any backend functionality.</li>
+</ul>
+<h2 id="data-storage-privacy">Data Storage &amp; Privacy<a class="headerlink" href="#data-storage-privacy" title="Permanent link">&para;</a></h2>
+<h3 id="1-data-encryption">1. Data Encryption<a class="headerlink" href="#1-data-encryption" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Encrypt sensitive data both at rest and in transit.</li>
+<li>Store private data on the device's internal storage.</li>
+<li>Use platform APIs for encryption. Do not attempt to implement your own
+  encryption algorithms.</li>
+</ul>
+<h3 id="2-data-leakage">2. Data Leakage<a class="headerlink" href="#2-data-leakage" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Beware of caching, logging, and background snapshots. Ensure that sensitive
+  data is not leaked through these mechanisms.</li>
+</ul>
+<p>See the <a href="Logging_Cheat_Sheet.html#data-to-exclude">Logging Cheat Sheet</a> for
+examples of data that should not be logged.</p>
+<h3 id="3-use-https">3. Use HTTPS<a class="headerlink" href="#3-use-https" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Always use HTTPS for network communications.</li>
+</ul>
+<h3 id="4-third-party-libraries">4. Third-Party Libraries<a class="headerlink" href="#4-third-party-libraries" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Ensure all third-party libraries are secure and up to date.</li>
+</ul>
+<h3 id="5-personally-identifiable-information-pii">5. Personally Identifiable Information (PII)<a class="headerlink" href="#5-personally-identifiable-information-pii" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Minimise any PII to neccessity.</li>
+<li>Attempt to replace PII with less critical information if possible.</li>
+<li>Reduce PII, e.g. less frequent location updates.</li>
+<li>Implement automatic expiration and deletion of PII to minimize retention.</li>
+<li>Ask for user consent before collecting or using PII.</li>
+</ul>
+<h2 id="network-communication">Network Communication<a class="headerlink" href="#network-communication" title="Permanent link">&para;</a></h2>
+<h3 id="1-dont-trust-the-network">1. Don't Trust the Network<a class="headerlink" href="#1-dont-trust-the-network" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Assume that all network communication is insecure and can be intercepted.</li>
+</ul>
+<h3 id="2-use-secure-protocols">2. Use Secure Protocols<a class="headerlink" href="#2-use-secure-protocols" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Use HTTPS for all network communication.</li>
+<li>Do not override SSL certificate validation to allow self-signed or invalid
+  certificates.</li>
+<li>Avoid mixed version SSL sessions.</li>
+<li>Encrypt data even if sent over SSL, in case of future SSL vulnerabilities.</li>
+<li>Use strong, industry standard cipher suites, with appropriate key lengths.</li>
+<li>Use certificates signed by a trusted CA provider</li>
+<li>Avoid sending sensitive data via SMS.</li>
+</ul>
+<h3 id="3-certificate-pinning">3. Certificate Pinning<a class="headerlink" href="#3-certificate-pinning" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Consider certificate pinning. See the <a href="Pinning_Cheat_Sheet.html">Pinning Cheat Sheet</a>
+  for pros and cons of this approach.</li>
+</ul>
+<h2 id="user-interface">User Interface<a class="headerlink" href="#user-interface" title="Permanent link">&para;</a></h2>
+<h3 id="1-ui-data-masking">1. UI Data Masking<a class="headerlink" href="#1-ui-data-masking" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Mask sensitive information on UI fields to prevent shoulder surfing.</li>
+</ul>
+<h3 id="2-user-notifications">2. User Notifications<a class="headerlink" href="#2-user-notifications" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Inform the user about security-related activities, such as logins from new
+  devices.</li>
+</ul>
+<h3 id="3-input-validation">3. Input Validation<a class="headerlink" href="#3-input-validation" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Validate and sanitize user input. See the
+  <a href="Input_Validation_Cheat_Sheet.html">Input Validation Cheat Sheet</a> for more
+  information.</li>
+</ul>
+<h3 id="4-output-validation">4. Output Validation<a class="headerlink" href="#4-output-validation" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Validate and sanitize output to prevent injection and execution attacks.</li>
+</ul>
+<h2 id="code-quality">Code Quality<a class="headerlink" href="#code-quality" title="Permanent link">&para;</a></h2>
+<h3 id="1-static-analysis">1. Static Analysis<a class="headerlink" href="#1-static-analysis" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Use static analysis tools to identify vulnerabilities.</li>
+</ul>
+<h3 id="2-code-reviews">2. Code Reviews<a class="headerlink" href="#2-code-reviews" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Make security a focal point during code reviews.</li>
+</ul>
+<h3 id="3-update-libraries">3. Update Libraries<a class="headerlink" href="#3-update-libraries" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Keep all your libraries up to date to patch known vulnerabilities.</li>
+</ul>
+<h2 id="application-integrity">Application Integrity<a class="headerlink" href="#application-integrity" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Disable debugging.</li>
+<li>Include code to validate integrity of application code.</li>
+<li>Obfuscate the app binary.</li>
+</ul>
+<h2 id="testing">Testing<a class="headerlink" href="#testing" title="Permanent link">&para;</a></h2>
+<h3 id="1-penetration-testing">1. Penetration Testing<a class="headerlink" href="#1-penetration-testing" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Perform ethical hacking to identify vulnerabilities.</li>
+<li>Example tests:<ul>
+<li>Cryptographic vulnerability assessment.</li>
+<li>Attempt to execute backend server functionality anonymously by removing any session tokens from POST/GET requests.</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-automated-tests">2. Automated Tests<a class="headerlink" href="#2-automated-tests" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Leverage automated tests to ensure that security features are working as
+  expected and that access controls are enforced.</li>
+</ul>
+<h3 id="3-usability-testing">3. Usability Testing<a class="headerlink" href="#3-usability-testing" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Ensure that security features do not harm usability, which could cause users
+  to bypass security features.</li>
+</ul>
+<h2 id="post-deployment">Post-Deployment<a class="headerlink" href="#post-deployment" title="Permanent link">&para;</a></h2>
+<h3 id="1-incident-response">1. Incident Response<a class="headerlink" href="#1-incident-response" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Have a clear incident response plan in place.</li>
+</ul>
+<h3 id="2-updates">2. Updates<a class="headerlink" href="#2-updates" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>Plan for regular updates and patches. In the case of mobile apps, this is
+  especially important due to the delay between when a patch is released and
+  when users actually receive the updated version due to app store review
+  processes and the time it takes for users to update their apps.</p>
+</li>
+<li>
+<p>Use a mechanism to force users to update their app version when necessary.</p>
+</li>
+</ul>
+<h3 id="3-monitoring-and-analytics">3. Monitoring and Analytics<a class="headerlink" href="#3-monitoring-and-analytics" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Use real-time monitoring to detect and respond to threats.</li>
+</ul>
+<h2 id="platform-specific-guidance">Platform-Specific Guidance<a class="headerlink" href="#platform-specific-guidance" title="Permanent link">&para;</a></h2>
+<h3 id="android">Android<a class="headerlink" href="#android" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Use Android’s ProGuard for code obfuscation.</li>
+<li>Avoid storing sensitive data in SharedPreferences. See the
+  <a href="https://developer.android.com/topic/security/data">Android docs</a>
+  on working with data securely for more details.</li>
+<li>Disable backup mode to prevent sensitive data being stored in backups.</li>
+</ul>
+<h3 id="ios">iOS<a class="headerlink" href="#ios" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Use ATS (App Transport Security) to enforce strong security policies for
+  network communication.</li>
+<li>Do not store sensitive data in plist files.</li>
+</ul>
+<p>For further reading, visit the
+<a href="https://owasp.org/www-project-mobile-top-10/">OWASP Mobile Top 10 Project</a>.
+For a more detailed framework for mobile security, see the
+<a href="https://mas.owasp.org/">OWASP Mobile Application Security Project</a>.</p>
 
 
 

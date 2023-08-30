@@ -271,6 +271,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://cheatsheetseries.owasp.org/cheatsheets/Mobile_Application_Security_Cheat_Sheet.html</loc>
+         <lastmod>2023-08-30</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://cheatsheetseries.owasp.org/cheatsheets/Multifactor_Authentication_Cheat_Sheet.html</loc>
          <lastmod>2023-08-30</lastmod>
          <changefreq>daily</changefreq>
