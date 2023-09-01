@@ -20,7 +20,7 @@
       
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.5">
+      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.6">
     
     
       
@@ -2686,19 +2686,19 @@
 </tr>
 <tr>
 <td>HTML Attribute Encoding</td>
-<td>Except for alphanumeric characters, encode all characters with the HTML  Entity <code>&amp;#xHH;</code> format, including spaces. (<strong>HH</strong> = Hex Value)</td>
+<td>Encode all characters with the HTML Entity <code>&amp;#xHH;</code> format, including spaces, where <strong>HH</strong> represents the hexadecimal value of the character in Unicode. For example, <code>A</code> becomes <code>&amp;#x41;</code>. All alphanumeric characters (letters A to Z, a to z, and digits 0 to 9) remain unencoded.</td>
 </tr>
 <tr>
 <td>URL Encoding</td>
-<td>Standard percent encoding, see <a href="http://www.w3schools.com/tags/ref_urlencode.asp">here</a>. URL encoding should only be used to encode parameter values, not the entire URL or path fragments of a URL.</td>
+<td>Use standard percent encoding, as specified in the <a href="http://www.w3.org/TR/html401/interact/forms.html#h-17.13.4.1">W3C specification</a>, to encode parameter values. Be cautious and encode only parameter values, not the entire URL or path fragments of a URL.</td>
 </tr>
 <tr>
 <td>JavaScript Encoding</td>
-<td>Except for alphanumeric characters, encode all characters with the <code>\uXXXX</code> unicode encoding format (<strong>X</strong> = Integer).</td>
+<td>Encode all characters using the Unicode <code>\uXXXX</code> encoding format, where <strong>XXXX</strong> represents the hexadecimal Unicode code point. For example, <code>A</code> becomes <code>\u0041</code>. All alphanumeric characters (letters A to Z, a to z, and digits 0 to 9) remain unencoded.</td>
 </tr>
 <tr>
 <td>CSS Hex Encoding</td>
-<td>CSS encoding supports <code>\XX</code> and <code>\XXXXXX</code>. Using a two character encode can  cause problems if the next character continues the encode sequence.  There are two solutions: (a) Add a space after the CSS encode (will be  ignored by the CSS parser) (b) use the full amount of CSS encoding  possible by zero padding the value.</td>
+<td>CSS encoding supports both <code>\XX</code> and <code>\XXXXXX</code> formats. To ensure proper encoding, consider these options: (a) Add a space after the CSS encode (which will be ignored by the CSS parser), or (b) use the full six-character CSS encoding format by zero-padding the value. For example, <code>A</code> becomes <code>\41</code> (short format) or <code>\000041</code> (full format). Alphanumeric characters (letters A to Z, a to z, and digits 0 to 9) remain unencoded.</td>
 </tr>
 </tbody>
 </table>
