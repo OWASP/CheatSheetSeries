@@ -74,40 +74,39 @@ Netflix presented ([link](https://www.youtube.com/watch?v=R6tUNpRpdnY), [link](h
     - There is a necessity to train every developer on custom authorization service API and integration, and there’s no open-source community to source information from.
 4. There is a probability that not all access control policies can be enforced by gateways/proxies and shared authorization library/components, so some specific access control rules still have to be implemented.
 
-## External entity identity propagation
+## External Entity Identity Propagation
 
-To make fine-granted authorization decision at the microservice level, microservice has to understand caller context (e.g. user ID, user roles/groups). In order to allow internal service layer to enforce authorization, edge layer has to propagate authenticated external entity identity (e.g., end user context) along with a request to downstream microservices. One of the simplest way to propagate external entity identity is to re-use the access token received by the edge and pass it to internal microservices. It should be mentioned that approach is highly insecure due to possible external access token leakage and may increase an attack surface because the communication relies on proprietary token-based system implementation: If an internal service is unintentionally exposed to the external network, then it can be directly accessed using the leaked access token. This attack is not possible if the internal service only accepts a token format known only to internal services. This pattern also is not external access token agnostic, i.e. internal services have to understand external access token and support a wide range of authentication techniques to extract identity from different types of external tokens (e.g. JWT, cookie, OpenID Connect token).
+To make fine-grained authorization decisions at the microservice level, a microservice has to understand the caller’s context (e.g., user ID, user roles/groups). In order to allow the internal service layer to enforce authorization, the edge layer has to propagate an authenticated external entity identity (e.g., end-user context) along with a request to downstream microservices. One of the simplest ways to propagate external entity identity is to reuse the access token received by the edge and pass it to internal microservices. However, it should be mentioned that this approach is highly insecure due to possible external access token leakage and may increase an attack surface because the communication relies on a proprietary token-based system implementation. If an internal service is unintentionally exposed to the external network, then it can be directly accessed using the leaked access token. This attack is not possible if the internal service only accepts a token format known only to internal services. This pattern is also not external access token agnostic, i.e., internal services have to understand external access tokens and support a wide range of authentication techniques to extract identity from different types of external tokens (e.g., JWT, cookie, OpenID Connect token).
 
 ### Identity propagation: existing patterns
 
-#### Send the external entity identity as a clear or self-signed data structures
+#### Sending the external entity identity as clear or self-signed data structures
 
-In that approach calling microservice extracts external entity identity from incoming request (e.g. via parsing incoming access token), creates data structure (e.g. JSON or self-signed JWT) with context and passes that on to an internal microservices.
-In this scenario recipient microservice has to trust the calling microservice -- if the calling microservice want to violate access control rules, it can do so by setting any user/client ID or user roles it wants as the HTTP header. That approach is applicable in a highly trusted environment in which every microservice is developed by trusted development team according with secure software development practices.
-![Clear text ID propagation](../assets/ID_propogation.png)
+In this approach, the microservice extracts the external entity identity from the incoming request (e.g., by parsing the incoming access token), creates a data structure (e.g., JSON or self-signed JWT) with that context, and passes it on to an internal microservice.
+In this scenario, the recipient microservice has to trust the calling microservice. If the calling microservice wants to violate access control rules, it can do so by setting any user/client ID or user roles it wants in the HTTP header. This approach is suitable only in highly trusted environments where every microservice is developed by a trusted development team that applies secure software development practices.
 
 #### Using a data structures signed by a trusted issuer
 
-In this pattern after the external request is authenticated by authentication service at the edge layer, a data structure representing external entity identity (e.g., contained user ID, user roles/groups or permissions) is generated, signed or encrypted by the trusted issuer and propagated  to internal microservices.
+In this pattern, after the external request is authenticated by the authentication service at the edge layer, a data structure representing the external entity identity (e.g., containing user ID, user roles/groups, or permissions) is generated, signed, or encrypted by the trusted issuer and propagated to internal microservices.
 ![Signed ID propagation](../assets/Signed_ID_propogation.png)
 
-[Netflix presented](https://www.infoq.com/presentations/netflix-user-identity/) a real case of using that pattern: structure called “Passport” that contains user ID and its attributes and HMAC protected is created at the edge level for each incoming request, propagated to internal microservices and never exposes outside:
+[Netflix presented](https://www.infoq.com/presentations/netflix-user-identity/) a real-world case of using that pattern: a structure called “Passport” that contains the user ID and its attributes and which is HMAC protected at the edge level for each incoming request. This structure is propagated to internal microservices and never exposed outside.
 
-1. Edge authentication service (EAS) obtains secret key from the Key Management System.
-2. EAS receives an access token (may be e.g. in a cookie, JWT, OAuth2 token) from incoming request.
-3. EAS decrypts the access token, resolves the external entity identity and sends it to the internal services in the signed “Passport” structure.
-4. Internal services can extract user identity in order to enforce authorization (e.g. to implement identity-based authorization) using wrappers.
-5. If necessary, internal service can propagate “Passport” structure to downstream services in the call chain.
+1. The Edge Authentication Service (EAS) obtains a secret key from the Key Management System.
+2. EAS receives an access token (e.g., in a cookie, JWT, OAuth2 token) from the incoming request.
+3. EAS decrypts the access token, resolves the external entity identity, and sends it to the internal services in the signed “Passport” structure.
+4. Internal services can extract user identity to enforce authorization (e.g., to implement identity-based authorization) using wrappers.
+5. If necessary, internal service can propagate the “Passport” structure to downstream services in the call chain.
 
 ![Netflix ID propagation approach](../assets/Netflix_ID_prop.png)
-It should be mentioned that pattern is external access token agnostic and allows to decouple external entity and its internal representation.
+It should be mentioned that the pattern is external access token agnostic and allows for decoupling of external entities from their internal representations.
 
 ### Recommendation on how to implement identity propagation
 
-1. In order to implement external access token agnostic and extendable system decouple access tokens issued for external entity from its internal representation. Use single data structure to represent and propagate external entity identity among microservices. Edge-level service has to verify incoming external access token, issue internal entity representation structure and propagate it to downstream services.
-2. Using an internal entity representation structure signed (symmetric or asymmetric encryption) by a trusted issuer is recommended pattern adopted by community.
-3. Internal entity representation structure should be extensible to enable add more claims that may lead to low latency.
-4. Internal entity representation structure must not be exposed outside (e.g., to browser or external device).
+1. In order to implement an external access token agnostic and extendable system, decouple the access tokens issued for an external entity from its internal representation. Use a single data structure to represent and propagate the external entity identity among microservices. The edge-level service has to verify the incoming external access token, issue an internal entity representation structure, and propagate it to downstream services.
+2. Using an internal entity representation structure signed (symmetric or asymmetric encryption) by a trusted issuer is a recommended pattern adopted by the community.
+3. The internal entity representation structure should be extensible to enable adding more claims that may lead to low latency.
+4. The internal entity representation structure must not be exposed outside (e.g., to a browser or external device)
 
 ## Service-to-service authentication
 
@@ -115,33 +114,32 @@ It should be mentioned that pattern is external access token agnostic and allows
 
 #### Mutual transport layer security
 
-In mTLS approach each microservice can legitimately identify who it talks to, in addition to achieving confidentiality and integrity of the transmitted data. Each microservice in the deployment has to carry a public/private key pair and uses that key pair to authenticate to the recipient microservices via mTLS. mTLS usually is implemented with a self-hosted Public Key Infrastructure. The main challenges using mTLS are: key provisioning and trust bootstrap, certificate revocation and key rotation.
+With an mTLS approach, each microservice can legitimately identify who it talks to, in addition to achieving confidentiality and integrity of the transmitted data. Each microservice in the deployment has to carry a public/private key pair and use that key pair to authenticate to the recipient microservices via mTLS. mTLS is usually implemented with a self-hosted Public Key Infrastructure. The main challenges of using mTLS are key provisioning and trust bootstrap, certificate revocation, and key rotation.
 
-#### Token based
+#### Token-based
 
-Token based approach works at the application layer. Token is a container and may contain caller ID (microservice ID) and its permissions (scopes). Caller microservice can obtain signed token by invoking special security token service using its own service ID and password and then attaches it to every outgoing requests e.g., via HTTP headers. Called microservice can extract token and validate it online or offline.
+The token-based approach works at the application layer. A token is a container that may contain the caller ID (microservice ID) and its permissions (scopes). The caller microservice can obtain a signed token by invoking a special security token service using its own service ID and password and then attaches it to every outgoing request, e.g., via HTTP headers. The called microservice can extract the token and validate it online or offline.
 ![Signed ID propagation](../assets/Token_validation.png)
 
-1. Online scenario:
-    - to validate incoming token microservice invokes centralized service token service via network call;
-    - revoked (compromised) token can be detected
-    - high latency
-    - should be apply to critical requests
-2. Offline scenario:
-    - to validate incoming token microservice use downloaded service token service public key;
-    - revoked (compromised) token may not be detected
-    - low latency
-    - should be apply to non-critical requests
-In most cases, token-based authentication works over TLS that provides confidentiality and integrity of data in transit.
+Online scenario:
+To validate incoming tokens, the microservice invokes a centralized service token service via network call.
+Revoked (compromised) tokens can be detected.
+High latency.
+Should be applied to critical requests.
+Offline scenario:
+To validate incoming tokens, the microservice uses the downloaded service token service public key.
+Revoked (compromised) tokens may not be detected.
+Low latency.
+Should be applied to non-critical requests.
+In most cases, token-based authentication works over TLS, which provides confidentiality and integrity of data in transit.
 
 ## Logging
 
-Logging services in microservice-based systems aim to meet the principle of accountability and traceability and help detect security anomalies in operations via log analysis. Therefore, it is vital for application security architects to understand and adequately use existing architecture patterns to implement audit logging in microservices-based systems for security operations. A high-level architecture design is shown in the picture below and based on the following principles:
+Logging services in microservice-based systems aim to meet the principles of accountability and traceability and help detect security anomalies in operations via log analysis. Therefore, it is vital for application security architects to understand and adequately use existing architecture patterns to implement audit logging in microservices-based systems for security operations. A high-level architecture design is shown in the picture below and is based on the following principles:
 
-- microservice writes a log message to a local file using standard output (via stdout, stderr)
-- logging agent periodically pulls log messages and sends (publish) them to the message broker (e.g., NATS, Apache Kafka);
-- central logging service subscribes to messages in the message broker, receives and processes them.
-
+- Each microservice writes a log message to a local file using standard output (via stdout, stderr).
+- The logging agent periodically pulls log messages and sends (publishes) them to the message broker (e.g., NATS, Apache Kafka).
+- The central logging service subscribes to messages in the message broker, receives them, and processes them.
 ![Logging pattern](../assets/ms_logging_pattern.png)
 
 High-level recommendations to logging subsystem architecture with its rationales are listed below.
@@ -160,11 +158,11 @@ High-level recommendations to logging subsystem architecture with its rationales
     - this allows mitigating the threat of microservice elevation of privileges
 6. Logging agent shall filter/sanitize output log messages to sensitive data (e.g., PII, passwords, API keys) will never send to the central logging subsystem (data minimization principle). For a comprehensive overview of items that should be excluded from logging, please see the [OWASP Logging Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Logging_Cheat_Sheet.md#data-to-exclude).
 7. Microservices shall generate a correlation ID that uniquely identifies every call chain and helps group log messages to investigate them. The logging agent shall include a correlation ID in every log message.
-8. Logging agent shall periodically provide health and status data to indicate its availability or non-availability.
-9. Logging agent shall publish log messages in structured logs format (e.g., JSON, CSV).
-10. Logging agent shall append log messages with context data, e.g., platform context (hostname, container name), runtime context (class name, filename).
+8. The logging agent shall periodically provide health and status data to indicate its availability or non-availability.
+9. The logging agent shall publish log messages in a structured logs format (e.g., JSON, CSV).
+10. The logging agent shall append log messages with context data, e.g., platform context (hostname, container name), runtime context (class name, filename).
 
-For comprehensive overview of events that should be logged and possible data format, please see the [OWASP Logging Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Logging_Cheat_Sheet.md#which-events-to-log) and [Application Logging Vocabulary Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Logging_Vocabulary_Cheat_Sheet.md)
+For a comprehensive overview of events that should be logged and possible data format, please see the [OWASP Logging Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Logging_Cheat_Sheet.md#which-events-to-log) and [Application Logging Vocabulary Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Logging_Vocabulary_Cheat_Sheet.md)
 
 ## References
 
