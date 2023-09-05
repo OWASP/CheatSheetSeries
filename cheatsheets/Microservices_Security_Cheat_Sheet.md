@@ -72,7 +72,12 @@ Netflix presented ([link](https://www.youtube.com/watch?v=R6tUNpRpdnY), [link](h
     - Security or engineering teams have to build and maintain a custom solution.
     - It is necessary to build and maintain client library SDKs for every language used in the system architecture.
     - There is a necessity to train every developer on custom authorization service API and integration, and there’s no open-source community to source information from.
-4. There is a probability that not all access control policies can be enforced by gateways/proxies and shared authorization library/components, so some specific access control rules still have to be implemented.
+4. There is a probability that not all access control policies can be enforced by gateways/proxies and shared authorization library/components, so some specific access control rules still have to be implemented on microservice business code level. In order to do that, it is advisable to have microservice development teams use simple questionnaires/check-lists to uncover such security requirements and handle them properly during microservice development.
+5. It is advisable to implement the “defense in depth” principle and enforce authorization on:
+    - Gateway and proxy level, at a coarse level of granularity.
+    - Microservice level, using shared authorization library/components to enforce fine-granted decisions.
+    - Microservice business code level, to implement business-specific access control rules.
+6. Formal procedures on access control policy must be implemented on development, approval and rolling-out.
 
 ## External Entity Identity Propagation
 
