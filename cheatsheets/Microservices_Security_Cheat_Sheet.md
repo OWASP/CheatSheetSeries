@@ -66,11 +66,11 @@ Netflix presented ([link](https://www.youtube.com/watch?v=R6tUNpRpdnY), [link](h
 
 ### Recommendations on how to implement authorization
 
-1. To achieve scalability, it is not advisable to hardcode authorization policy in source code (decentralized pattern) but use a special language to express policy instead. The goal is to externalize/decouple authorization from code, and not just with a gateway/proxy that acts as checkpoints. The recommended pattern for service-level authorization is "Centralized pattern with embedded PDP" due to its resilience and wide adoption.
+1. To achieve scalability, it is not advisable to hardcode authorization policy in source code (decentralized pattern) but use a special language to express policy instead. The goal is to externalize/decouple authorization from code, and not just with a gateway/proxy acting as a checkpoint. The recommended pattern for service-level authorization is "Centralized pattern with embedded PDP" due to its resilience and wide adoption.
 2. The authorization solution should be a platform-level solution; a dedicated team (e.g., Platform security team) must be accountable for the development and operation of the authorization solution as well as sharing microservice blueprint/library/components that implement authorization among development teams.
 3. The authorization solution should be based on widely-used solutions because implementing a custom solution has the following cons:
     - Security or engineering teams have to build and maintain a custom solution.
-    - It is necessary to build and maintain client library SDKs for every language used in system architecture.
+    - It is necessary to build and maintain client library SDKs for every language used in the system architecture.
     - There is a necessity to train every developer on custom authorization service API and integration, and there’s no open-source community to source information from.
 4. There is a probability that not all access control policies can be enforced by gateways/proxies and shared authorization library/components, so some specific access control rules still have to be implemented.
 
@@ -121,16 +121,16 @@ With an mTLS approach, each microservice can legitimately identify who it talks 
 The token-based approach works at the application layer. A token is a container that may contain the caller ID (microservice ID) and its permissions (scopes). The caller microservice can obtain a signed token by invoking a special security token service using its own service ID and password and then attaches it to every outgoing request, e.g., via HTTP headers. The called microservice can extract the token and validate it online or offline.
 ![Signed ID propagation](../assets/Token_validation.png)
 
-Online scenario:
-To validate incoming tokens, the microservice invokes a centralized service token service via network call.
-Revoked (compromised) tokens can be detected.
-High latency.
-Should be applied to critical requests.
-Offline scenario:
-To validate incoming tokens, the microservice uses the downloaded service token service public key.
-Revoked (compromised) tokens may not be detected.
-Low latency.
-Should be applied to non-critical requests.
+1. Online scenario:
+    - To validate incoming tokens, the microservice invokes a centralized service token service via network call.
+    - Revoked (compromised) tokens can be detected.
+    - High latency.
+    - Should be applied to critical requests.
+2. Offline scenario:
+    - To validate incoming tokens, the microservice uses the downloaded service token service public key.
+    - Revoked (compromised) tokens may not be detected.
+    - Low latency.
+    - Should be applied to non-critical requests.
 In most cases, token-based authentication works over TLS, which provides confidentiality and integrity of data in transit.
 
 ## Logging
