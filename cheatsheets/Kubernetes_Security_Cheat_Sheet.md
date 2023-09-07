@@ -118,7 +118,7 @@ The recommended approach for larger or production clusters, is to use an externa
 
 In addition to choosing the appropriate authentication system, API access should be considered privileged and use Multi-Factor Authentication (MFA) for all user access.
 
-For more information, consult Kubernetes authentication reference document at <https://kubernetes.io/docs/reference/access-authn-authz/authentication>
+For more information, consult Kubernetes authentication reference documentation at <https://kubernetes.io/docs/reference/access-authn-authz/authentication>
 
 ### API Authorization - Implement role-based access control
 
