@@ -545,7 +545,8 @@ Hardening containers at runtime gives security teams the ability to detect and r
 - A container mounts a sensitive path from the host such as /proc
 - A sensitive file is unexpectedly read in a running container such as /etc/shadow
 - An outbound network connection is established
-- Open source tools such as Falco from Sysdig are available to help operators get up an running with container runtime security by providing a large number of out-of-the-box detections as well as the flexibility to create custom rules.
+
+Open source tools such as Falco from Sysdig are available to help operators get up and running with container runtime security by providing a large number of out-of-the-box detections as well as the flexibility to create custom rules.
 
 ### Container Sandboxing
 
