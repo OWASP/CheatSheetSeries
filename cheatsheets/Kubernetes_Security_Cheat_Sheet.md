@@ -368,7 +368,7 @@ A strong Role Based Access Control (RBAC) system is arguably one of the most cri
 
 #### Disadvantages
 
-Along with the many advantages, Service mesh also brings in its set of challenges, few of them are listed below:
+Along with the many advantages, service mesh also brings in its set of challenges, few of them are listed below:
 
 - Added Complexity: The introduction of proxies, sidecars and other components into an already sophisticated environment dramatically increases the complexity of development and operations.
 - Required Expertise: Adding a service mesh such as Istio on top of an orchestrator such as Kubernetes often requires operators to become experts in both technologies.
