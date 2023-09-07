@@ -22,15 +22,15 @@ The control plane's components make global decisions about the cluster, as well 
 
 Node components run on every node, maintaining running pods and providing the Kubernetes runtime environment. It consists of components such as kubelet, kube-proxy and container runtime.
 
-| Component         | Description                                                                                                               |
-| ----------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| kubelet           | kubelet is an agent that runs on each node in the cluster. It makes sure that containers are running in a Pod             |
-| kube-proxy        | kube-proxy is a network proxy that runs on each node in your cluster, implementing part of the Kubernetes Service concept |
-| Container runtime | The container runtime is the software that is responsible for running containers.                                         |
+| Component         | Description                                                                                                                |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| kubelet           | kubelet is an agent that runs on each node in the cluster. It makes sure that containers are running in a Pod.             |
+| kube-proxy        | kube-proxy is a network proxy that runs on each node in your cluster, implementing part of the Kubernetes Service concept. |
+| Container runtime | The container runtime is the software that is responsible for running containers.                                          |
 
 ![Kubernetes Architecture](../assets/Kubernetes_Architecture.png)
 
-This cheatsheet provides a starting point for securing Kubernetes cluster. It is divided into the following categories:
+This cheat sheet provides a starting point for securing Kubernetes cluster. It is divided into the following categories:
 
 - Securing Kubernetes hosts
 - Securing Kubernetes components
@@ -42,7 +42,7 @@ This cheatsheet provides a starting point for securing Kubernetes cluster. It is
 
 There are several options available to deploy Kubernetes: on bare metal, on-premise, and in the public cloud (custom Kubernetes build on virtual machines OR use a managed service). Kubernetes was designed to be highly portable and customers can easily switch between these installations, migrating their workloads.
 
-All of this potential customisation of Kubernetes means it can be designed to fit a large variety of scenarios; however, this is also its greatest weakness when it comes to security. Kubernetes is designed out of the box to be customizable and users must turn on certain functionality to secure their cluster. This means that the engineers responsible for deploying the Kubernetes platform need to know about all the potential attack vectors and vulnerabilities poor configuration can lead to.
+All of this potential customization of Kubernetes means it can be designed to fit a large variety of scenarios; however, this is also its greatest weakness when it comes to security. Kubernetes is designed out of the box to be customizable and users must turn on certain functionality to secure their cluster. This means that the engineers responsible for deploying the Kubernetes platform need to know about all the potential attack vectors and vulnerabilities poor configuration can lead to.
 
 It is recommended to harden the underlying hosts by installing the latest version of operating system, hardening the operating system, implement necessary patch management and configuration management system, implementing essential firewall rules and undertake specific security measures depending on the datacenter environment.
 
@@ -118,7 +118,7 @@ The recommended approach for larger or production clusters, is to use an externa
 
 In addition to choosing the appropriate authentication system, API access should be considered privileged and use Multi-Factor Authentication (MFA) for all user access.
 
-For more information, consult Kubernetes authentication reference document at <https://kubernetes.io/docs/reference/access-authn-authz/authentication>
+For more information, consult Kubernetes authentication reference documentation at <https://kubernetes.io/docs/reference/access-authn-authz/authentication>.
 
 ### API Authorization - Implement role-based access control
 
@@ -203,7 +203,7 @@ Restricting what's in your runtime container to precisely what's necessary for y
 
 Distroless images contains less packages compared to other images, and does not includes shell, which reduce the attack surface.
 
-For more information on ditroless images, refer to <https://github.com/GoogleContainerTools/distroless>.
+For more information on distroless images, refer to <https://github.com/GoogleContainerTools/distroless>.
 
 #### Scratch image
 
@@ -368,7 +368,7 @@ A strong Role Based Access Control (RBAC) system is arguably one of the most cri
 
 #### Disadvantages
 
-Along with the many advantages, Service mesh also brings in its set of challenges, few of them are listed below:
+Along with the many advantages, service mesh also brings in its set of challenges, few of them are listed below:
 
 - Added Complexity: The introduction of proxies, sidecars and other components into an already sophisticated environment dramatically increases the complexity of development and operations.
 - Required Expertise: Adding a service mesh such as Istio on top of an orchestrator such as Kubernetes often requires operators to become experts in both technologies.
@@ -381,7 +381,7 @@ There are numerous projects which are able to provide centralized policy managem
 
 OPA is a project that started in 2016 aimed at unifying policy enforcement across different technologies and systems. It can be used to enforce policies on their platforms (like Kubernetes clusters). When it comes to Kubernetes, RBAC and Pod security policies to impose fine-grained control over the cluster. But again, this will only apply to the cluster but not outside the cluster. That’s where Open Policy Agent (OPA) comes into play. OPA was introduced to create a unified method of enforcing security policy in the stack.
 
-OPA is a general-purpose, domain-agnostic policy enforcement tool. It can be integrated with APIs, the Linux SSH daemon, an object store like CEPH, etc. OPA designers purposefully avoided basing it on any other project. Accordingly, the policy query and decision do not follow a specific format. That is, you can use any valid JSON data as request attributes as long as it provides the required data. Similarly, the policy decision coming from OPA can also be any valid JSON data. You choose what gets input and what gets output. For example, you can opt to have OPA return a True or False JSON object, a number, a string, or even a complex data object. Currently, OPA is part of CNCF as an incubating project.
+OPA is a general-purpose, domain-agnostic policy enforcement tool. It can be integrated with APIs, the Linux SSH daemon, an object store like Ceph, etc. OPA designers purposefully avoided basing it on any other project. Accordingly, the policy query and decision do not follow a specific format. That is, you can use any valid JSON data as request attributes as long as it provides the required data. Similarly, the policy decision coming from OPA can also be any valid JSON data. You choose what gets input and what gets output. For example, you can opt to have OPA return a True or False JSON object, a number, a string, or even a complex data object. Currently, OPA is part of CNCF as an incubating project.
 
 Most common use cases of OPA:
 
@@ -504,7 +504,7 @@ Also see the [Secrets Management](Secrets_Management_Cheat_Sheet.md) cheat sheet
 
 Open-source tools such as [SecretScanner](https://github.com/deepfence/SecretScanner) and [ThreatMapper](https://github.com/deepfence/ThreatMapper) can scan container filesystems for sensitive resources, such as API tokens, passwords, and keys. Such resources would be accessible to any user who had access to the unencrypted container filesystem, whether during build, at rest in a registry or backup, or running.
 
-Review the secret material present on the container against the principle of 'least priviledge', and to assess the risk posed by a compromise.
+Review the secret material present on the container against the principle of 'least privilege', and to assess the risk posed by a compromise.
 
 ## Kubernetes Security Best Practices: Runtime Phase
 
@@ -545,11 +545,12 @@ Hardening containers at runtime gives security teams the ability to detect and r
 - A container mounts a sensitive path from the host such as /proc
 - A sensitive file is unexpectedly read in a running container such as /etc/shadow
 - An outbound network connection is established
-- Open source tools such as Falco from Sysdig are available to help operators get up an running with container runtime security by providing a large number of out-of-the-box detections as well as the flexibility to create custom rules.
+
+Open source tools such as Falco from Sysdig are available to help operators get up and running with container runtime security by providing a large number of out-of-the-box detections as well as the flexibility to create custom rules.
 
 ### Container Sandboxing
 
-Container runtimes typically are permitted to make direct calls to the host kernel then the kernel interacts with hardware and devices to respond to the request. Cgroups and namespaces exist to give containers a certain amount of isolation but the still kernel presents a large attack surface area. Often times in multi-tenant and highly untrusted clusters an additional layer of sandboxing is required to ensure container breakout and kernel exploits are not present. Below we will explore a few OSS technologies that help further isolate running containers from the host kernel:
+Container runtimes typically are permitted to make direct calls to the host kernel then the kernel interacts with hardware and devices to respond to the request. Cgroups and namespaces exist to give containers a certain amount of isolation but the kernel still presents a large attack surface. Often times in multi-tenant and highly untrusted clusters an additional layer of sandboxing is required to ensure container breakout and kernel exploits are not present. Below we will explore a few OSS technologies that help further isolate running containers from the host kernel:
 
 - Kata Containers: Kata Containers is OSS project that uses stripped-down VMs to keep the resource footprint minimal and maximize performance to ultimately isolate containers further.
 - gVisor : gVisor is a more lightweight than a VM (even stripped down). gVisor is its own independent kernel written in Go to sit in the middle of a container and the host kernel. Strong sandbox. gVisor supports ~70% of the linux system calls from the container but ONLY uses about 20 system calls to the host kernel.
@@ -575,7 +576,7 @@ To block module loading more generically, you can use a Linux Security Module (s
 
 ### Compare and analyze different runtime activity in pods of the same deployments
 
-Containerized applications are replicated for high availability, fault tolerance, or scale reasons. Replicas should behave nearly identically; replicas with significant deviations from the others warrant further investigation. Integrate your Kubernetes security tool with other external systems (email, PagerDuty, Slack, Google Cloud Security Command Center, SIEMs [security information and event management], etc.) and leverage deployment labels or annotations to alert the team responsible for a given application when a potential threat is detected. Commercial Kubernetes security vendors should support a wide array of integrations with external tools
+Containerized applications are replicated for high availability, fault tolerance, or scale reasons. Replicas should behave nearly identically; replicas with significant deviations from the others warrant further investigation. Integrate your Kubernetes security tool with other external systems (email, PagerDuty, Slack, Google Cloud Security Command Center, SIEMs [security information and event management], etc.) and leverage deployment labels or annotations to alert the team responsible for a given application when a potential threat is detected. Commercial Kubernetes security vendors should support a wide array of integrations with external tools.
 
 ### Monitor network traffic to limit unnecessary or insecure communication
 
@@ -595,7 +596,7 @@ The shorter the lifetime of a secret or credential the harder it is for an attac
 
 ### Receiving alerts for security updates and reporting vulnerabilities
 
-Join the kubernetes-announce group (<<https://kubernetes.io/docs/reference/issues-security/security/>) for emails about security announcements. See the security reporting page (<https://kubernetes.io/docs/reference/issues-security/security>) for more on how to report vulnerabilities.
+Join the kubernetes-announce group (<https://kubernetes.io/docs/reference/issues-security/security/>) for emails about security announcements. See the security reporting page (<https://kubernetes.io/docs/reference/issues-security/security>) for more on how to report vulnerabilities.
 
 ### Logging
 
@@ -647,10 +648,10 @@ Audit policy defines rules about what events should be recorded and what data th
 
 The known audit levels are as follows:
 
-- None - don't log events that match this rule.
-- Metadata - log request metadata (requesting user, timestamp, resource, verb, etc.) but not request or response body.
-- Request - log event metadata and request body but not response body. This does not apply for non-resource requests.
-- RequestResponse - log event metadata, request and response bodies. This does not apply for non-resource requests.
+- None - don't log events that match this rule
+- Metadata - log request metadata (requesting user, timestamp, resource, verb, etc.) but not request or response body
+- Request - log event metadata and request body but not response body. This does not apply for non-resource requests
+- RequestResponse - log event metadata, request and response bodies. This does not apply for non-resource requests
 
 You can pass a file with the policy to kube-apiserver using the --audit-policy-file flag. If the flag is omitted, no events are logged. Note that the rules field must be provided in the audit policy file. A policy with no (0) rules is treated as illegal.
 
@@ -660,9 +661,7 @@ One main challenge with logging Kubernetes is understanding what logs are genera
 
 ##### Container logging
 
-The first layer of logs that can be collected from a Kubernetes cluster are those being generated by your containerized applications.
-
-- The easiest method for logging containers is to write to the standard output (stdout) and standard error (stderr) streams.
+The first layer of logs that can be collected from a Kubernetes cluster are those being generated by your containerized applications. The easiest method for logging containers is to write to the standard output (stdout) and standard error (stderr) streams.
 
 Manifest is as follows.
 
@@ -690,7 +689,7 @@ To take a look the logs for this container, run:
 kubectl log <container-name> command.
 ```
 
-- For persisting container logs, the common approach is to write logs to a log file and then use a sidecar container. As shown below in the pod configuration above, a sidecar container will run in the same pod along with the application container, mounting the same volume and processing the logs separately.
+For persisting container logs, the common approach is to write logs to a log file and then use a sidecar container. As shown below in the pod configuration above, a sidecar container will run in the same pod along with the application container, mounting the same volume and processing the logs separately.
 
 Pod Manifest is as follows:
 
