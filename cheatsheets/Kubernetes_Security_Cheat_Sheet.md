@@ -203,7 +203,7 @@ Restricting what's in your runtime container to precisely what's necessary for y
 
 Distroless images contains less packages compared to other images, and does not includes shell, which reduce the attack surface.
 
-For more information on ditroless images, refer to <https://github.com/GoogleContainerTools/distroless>.
+For more information on distroless images, refer to <https://github.com/GoogleContainerTools/distroless>.
 
 #### Scratch image
 
