@@ -30,7 +30,7 @@ Node components run on every node, maintaining running pods and providing the Ku
 
 ![Kubernetes Architecture](../assets/Kubernetes_Architecture.png)
 
-This cheatsheet provides a starting point for securing Kubernetes cluster. It is divided into the following categories:
+This cheat sheet provides a starting point for securing Kubernetes cluster. It is divided into the following categories:
 
 - Securing Kubernetes hosts
 - Securing Kubernetes components
