@@ -504,7 +504,7 @@ Also see the [Secrets Management](Secrets_Management_Cheat_Sheet.md) cheat sheet
 
 Open-source tools such as [SecretScanner](https://github.com/deepfence/SecretScanner) and [ThreatMapper](https://github.com/deepfence/ThreatMapper) can scan container filesystems for sensitive resources, such as API tokens, passwords, and keys. Such resources would be accessible to any user who had access to the unencrypted container filesystem, whether during build, at rest in a registry or backup, or running.
 
-Review the secret material present on the container against the principle of 'least priviledge', and to assess the risk posed by a compromise.
+Review the secret material present on the container against the principle of 'least privilege', and to assess the risk posed by a compromise.
 
 ## Kubernetes Security Best Practices: Runtime Phase
 
