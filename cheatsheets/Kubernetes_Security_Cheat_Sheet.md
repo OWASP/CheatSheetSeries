@@ -648,10 +648,10 @@ Audit policy defines rules about what events should be recorded and what data th
 
 The known audit levels are as follows:
 
-- None - don't log events that match this rule.
-- Metadata - log request metadata (requesting user, timestamp, resource, verb, etc.) but not request or response body.
-- Request - log event metadata and request body but not response body. This does not apply for non-resource requests.
-- RequestResponse - log event metadata, request and response bodies. This does not apply for non-resource requests.
+- None - don't log events that match this rule
+- Metadata - log request metadata (requesting user, timestamp, resource, verb, etc.) but not request or response body
+- Request - log event metadata and request body but not response body. This does not apply for non-resource requests
+- RequestResponse - log event metadata, request and response bodies. This does not apply for non-resource requests
 
 You can pass a file with the policy to kube-apiserver using the --audit-policy-file flag. If the flag is omitted, no events are logged. Note that the rules field must be provided in the audit policy file. A policy with no (0) rules is treated as illegal.
 
