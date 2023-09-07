@@ -596,7 +596,7 @@ The shorter the lifetime of a secret or credential the harder it is for an attac
 
 ### Receiving alerts for security updates and reporting vulnerabilities
 
-Join the kubernetes-announce group (<<https://kubernetes.io/docs/reference/issues-security/security/>) for emails about security announcements. See the security reporting page (<https://kubernetes.io/docs/reference/issues-security/security>) for more on how to report vulnerabilities.
+Join the kubernetes-announce group (<https://kubernetes.io/docs/reference/issues-security/security/>) for emails about security announcements. See the security reporting page (<https://kubernetes.io/docs/reference/issues-security/security>) for more on how to report vulnerabilities.
 
 ### Logging
 
