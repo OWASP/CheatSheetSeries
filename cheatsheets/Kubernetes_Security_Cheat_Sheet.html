@@ -3453,11 +3453,11 @@
 <tbody>
 <tr>
 <td>kubelet</td>
-<td>kubelet is an agent that runs on each node in the cluster. It makes sure that containers are running in a Pod</td>
+<td>kubelet is an agent that runs on each node in the cluster. It makes sure that containers are running in a Pod.</td>
 </tr>
 <tr>
 <td>kube-proxy</td>
-<td>kube-proxy is a network proxy that runs on each node in your cluster, implementing part of the Kubernetes Service concept</td>
+<td>kube-proxy is a network proxy that runs on each node in your cluster, implementing part of the Kubernetes Service concept.</td>
 </tr>
 <tr>
 <td>Container runtime</td>
@@ -3466,7 +3466,7 @@
 </tbody>
 </table>
 <p><img alt="Kubernetes Architecture" src="../assets/Kubernetes_Architecture.png" /></p>
-<p>This cheatsheet provides a starting point for securing Kubernetes cluster. It is divided into the following categories:</p>
+<p>This cheat sheet provides a starting point for securing Kubernetes cluster. It is divided into the following categories:</p>
 <ul>
 <li>Securing Kubernetes hosts</li>
 <li>Securing Kubernetes components</li>
@@ -3476,7 +3476,7 @@
 </ul>
 <h2 id="securing-kubernetes-hosts">Securing Kubernetes hosts<a class="headerlink" href="#securing-kubernetes-hosts" title="Permanent link">&para;</a></h2>
 <p>There are several options available to deploy Kubernetes: on bare metal, on-premise, and in the public cloud (custom Kubernetes build on virtual machines OR use a managed service). Kubernetes was designed to be highly portable and customers can easily switch between these installations, migrating their workloads.</p>
-<p>All of this potential customisation of Kubernetes means it can be designed to fit a large variety of scenarios; however, this is also its greatest weakness when it comes to security. Kubernetes is designed out of the box to be customizable and users must turn on certain functionality to secure their cluster. This means that the engineers responsible for deploying the Kubernetes platform need to know about all the potential attack vectors and vulnerabilities poor configuration can lead to.</p>
+<p>All of this potential customization of Kubernetes means it can be designed to fit a large variety of scenarios; however, this is also its greatest weakness when it comes to security. Kubernetes is designed out of the box to be customizable and users must turn on certain functionality to secure their cluster. This means that the engineers responsible for deploying the Kubernetes platform need to know about all the potential attack vectors and vulnerabilities poor configuration can lead to.</p>
 <p>It is recommended to harden the underlying hosts by installing the latest version of operating system, hardening the operating system, implement necessary patch management and configuration management system, implementing essential firewall rules and undertake specific security measures depending on the datacenter environment.</p>
 <h3 id="kubernetes-version">Kubernetes Version<a class="headerlink" href="#kubernetes-version" title="Permanent link">&para;</a></h3>
 <p>It has become impossible to track all potential attack vectors. This fact is unfortunate as there is nothing more vital than to be aware and on top of potential threats. The best defense is to make sure that you are running the latest available version of Kubernetes.</p>
@@ -3580,7 +3580,7 @@ Hence it is highly recommended to configure authentication and authorization on 
 <li><a href="https://kubernetes.io/docs/reference/access-authn-authz/authentication/#user-impersonation">Kubernetes Impersonation</a> can be used with both managed cloud clusters and on-prem clusters to externalize authentication without having to have access to the API server configuration parameters.</li>
 </ul>
 <p>In addition to choosing the appropriate authentication system, API access should be considered privileged and use Multi-Factor Authentication (MFA) for all user access.</p>
-<p>For more information, consult Kubernetes authentication reference document at <a href="https://kubernetes.io/docs/reference/access-authn-authz/authentication">https://kubernetes.io/docs/reference/access-authn-authz/authentication</a></p>
+<p>For more information, consult Kubernetes authentication reference documentation at <a href="https://kubernetes.io/docs/reference/access-authn-authz/authentication">https://kubernetes.io/docs/reference/access-authn-authz/authentication</a>.</p>
 <h3 id="api-authorization-implement-role-based-access-control">API Authorization - Implement role-based access control<a class="headerlink" href="#api-authorization-implement-role-based-access-control" title="Permanent link">&para;</a></h3>
 <p>In Kubernetes, you must be authenticated (logged in) before your request can be authorized (granted permission to access). Kubernetes expects attributes that are common to REST API requests. This means that Kubernetes authorization works with existing organization-wide or cloud-provider-wide access control systems which may handle other APIs besides the Kubernetes API.</p>
 <p>Kubernetes authorizes API requests using the API server. It evaluates all of the request attributes against all policies and allows or denies the request. All parts of an API request must be allowed by some policy in order to proceed. This means that permissions are denied by default.</p>
@@ -3628,7 +3628,7 @@ To enable RBAC, start the API server with the --authorization-mode flag set to a
 <p>Restricting what's in your runtime container to precisely what's necessary for your app is a best practice employed by Google and other tech giants that have used containers in production for many years. It improves the signal to noise of scanners (e.g. CVE) and reduces the burden of establishing provenance to just what you need.</p>
 <h4 id="distroless-images">Distroless images<a class="headerlink" href="#distroless-images" title="Permanent link">&para;</a></h4>
 <p>Distroless images contains less packages compared to other images, and does not includes shell, which reduce the attack surface.</p>
-<p>For more information on ditroless images, refer to <a href="https://github.com/GoogleContainerTools/distroless">https://github.com/GoogleContainerTools/distroless</a>.</p>
+<p>For more information on distroless images, refer to <a href="https://github.com/GoogleContainerTools/distroless">https://github.com/GoogleContainerTools/distroless</a>.</p>
 <h4 id="scratch-image">Scratch image<a class="headerlink" href="#scratch-image" title="Permanent link">&para;</a></h4>
 <p>An empty image, ideal for statically compiled languages like Go. Because the image is empty - the attack surface it truly minimal - only your code!</p>
 <p>For more information, refer to <a href="https://hub.docker.com/_/scratch">https://hub.docker.com/_/scratch</a></p>
@@ -3757,7 +3757,7 @@ Learn more about webhook at <a href="https://kubernetes.io/docs/reference/access
 <h4 id="rbac">RBAC<a class="headerlink" href="#rbac" title="Permanent link">&para;</a></h4>
 <p>A strong Role Based Access Control (RBAC) system is arguably one of the most critical requirements in large engineering organizations, since even the most secure system can be easily circumvented by overprivileged users or employees. Restricting privileged users to least privileges necessary to perform job responsibilities, ensuring access to systems are set to “deny all” by default, and ensuring proper documentation detailing roles and responsibilities are in place is one of the most critical security concerns in the enterprise.</p>
 <h4 id="disadvantages">Disadvantages<a class="headerlink" href="#disadvantages" title="Permanent link">&para;</a></h4>
-<p>Along with the many advantages, Service mesh also brings in its set of challenges, few of them are listed below:</p>
+<p>Along with the many advantages, service mesh also brings in its set of challenges, few of them are listed below:</p>
 <ul>
 <li>Added Complexity: The introduction of proxies, sidecars and other components into an already sophisticated environment dramatically increases the complexity of development and operations.</li>
 <li>Required Expertise: Adding a service mesh such as Istio on top of an orchestrator such as Kubernetes often requires operators to become experts in both technologies.</li>
@@ -3767,7 +3767,7 @@ Learn more about webhook at <a href="https://kubernetes.io/docs/reference/access
 <h3 id="implementing-centralized-policy-management">Implementing centralized policy management<a class="headerlink" href="#implementing-centralized-policy-management" title="Permanent link">&para;</a></h3>
 <p>There are numerous projects which are able to provide centralized policy management for a Kubernetes cluster, most predominantly the <a href="https://www.openpolicyagent.org/">Open Policy Agent</a> (OPA) project, <a href="https://kyverno.io/">Kyverno</a>, or <a href="https://kubernetes.io/docs/reference/access-authn-authz/validating-admission-policy/">Validating Admission Policy</a> (a built-in, yet alpha (aka off by default) feature as of 1.26). In order to provide some depth, we will focus on OPA for the remainder of this cheat sheet.</p>
 <p>OPA is a project that started in 2016 aimed at unifying policy enforcement across different technologies and systems. It can be used to enforce policies on their platforms (like Kubernetes clusters). When it comes to Kubernetes, RBAC and Pod security policies to impose fine-grained control over the cluster. But again, this will only apply to the cluster but not outside the cluster. That’s where Open Policy Agent (OPA) comes into play. OPA was introduced to create a unified method of enforcing security policy in the stack.</p>
-<p>OPA is a general-purpose, domain-agnostic policy enforcement tool. It can be integrated with APIs, the Linux SSH daemon, an object store like CEPH, etc. OPA designers purposefully avoided basing it on any other project. Accordingly, the policy query and decision do not follow a specific format. That is, you can use any valid JSON data as request attributes as long as it provides the required data. Similarly, the policy decision coming from OPA can also be any valid JSON data. You choose what gets input and what gets output. For example, you can opt to have OPA return a True or False JSON object, a number, a string, or even a complex data object. Currently, OPA is part of CNCF as an incubating project.</p>
+<p>OPA is a general-purpose, domain-agnostic policy enforcement tool. It can be integrated with APIs, the Linux SSH daemon, an object store like Ceph, etc. OPA designers purposefully avoided basing it on any other project. Accordingly, the policy query and decision do not follow a specific format. That is, you can use any valid JSON data as request attributes as long as it provides the required data. Similarly, the policy decision coming from OPA can also be any valid JSON data. You choose what gets input and what gets output. For example, you can opt to have OPA return a True or False JSON object, a number, a string, or even a complex data object. Currently, OPA is part of CNCF as an incubating project.</p>
 <p>Most common use cases of OPA:</p>
 <ul>
 <li>Application authorization</li>
@@ -3851,7 +3851,7 @@ the ability to manage and rotate secrets centrally.</p>
 <p>Also see the <a href="Secrets_Management_Cheat_Sheet.html">Secrets Management</a> cheat sheet for more details and best practices on managing secrets.</p>
 <h4 id="finding-exposed-secrets">Finding exposed secrets<a class="headerlink" href="#finding-exposed-secrets" title="Permanent link">&para;</a></h4>
 <p>Open-source tools such as <a href="https://github.com/deepfence/SecretScanner">SecretScanner</a> and <a href="https://github.com/deepfence/ThreatMapper">ThreatMapper</a> can scan container filesystems for sensitive resources, such as API tokens, passwords, and keys. Such resources would be accessible to any user who had access to the unencrypted container filesystem, whether during build, at rest in a registry or backup, or running.</p>
-<p>Review the secret material present on the container against the principle of 'least priviledge', and to assess the risk posed by a compromise.</p>
+<p>Review the secret material present on the container against the principle of 'least privilege', and to assess the risk posed by a compromise.</p>
 <h2 id="kubernetes-security-best-practices-runtime-phase">Kubernetes Security Best Practices: Runtime Phase<a class="headerlink" href="#kubernetes-security-best-practices-runtime-phase" title="Permanent link">&para;</a></h2>
 <p>The runtime phase exposes containerized applications to a slew of new security challenges. Your goal here is to both gain visibility into your running environment and detect and respond to threats as they arise.</p>
 <p>Proactively securing your containers and Kubernetes deployments at the build and deploy phases can greatly reduce the likelihood of security incidents at runtime and the subsequent effort needed to respond to them.</p>
@@ -3883,10 +3883,10 @@ the ability to manage and rotate secrets centrally.</p>
 <li>A container mounts a sensitive path from the host such as /proc</li>
 <li>A sensitive file is unexpectedly read in a running container such as /etc/shadow</li>
 <li>An outbound network connection is established</li>
-<li>Open source tools such as Falco from Sysdig are available to help operators get up an running with container runtime security by providing a large number of out-of-the-box detections as well as the flexibility to create custom rules.</li>
 </ul>
+<p>Open source tools such as Falco from Sysdig are available to help operators get up and running with container runtime security by providing a large number of out-of-the-box detections as well as the flexibility to create custom rules.</p>
 <h3 id="container-sandboxing">Container Sandboxing<a class="headerlink" href="#container-sandboxing" title="Permanent link">&para;</a></h3>
-<p>Container runtimes typically are permitted to make direct calls to the host kernel then the kernel interacts with hardware and devices to respond to the request. Cgroups and namespaces exist to give containers a certain amount of isolation but the still kernel presents a large attack surface area. Often times in multi-tenant and highly untrusted clusters an additional layer of sandboxing is required to ensure container breakout and kernel exploits are not present. Below we will explore a few OSS technologies that help further isolate running containers from the host kernel:</p>
+<p>Container runtimes typically are permitted to make direct calls to the host kernel then the kernel interacts with hardware and devices to respond to the request. Cgroups and namespaces exist to give containers a certain amount of isolation but the kernel still presents a large attack surface. Often times in multi-tenant and highly untrusted clusters an additional layer of sandboxing is required to ensure container breakout and kernel exploits are not present. Below we will explore a few OSS technologies that help further isolate running containers from the host kernel:</p>
 <ul>
 <li>Kata Containers: Kata Containers is OSS project that uses stripped-down VMs to keep the resource footprint minimal and maximize performance to ultimately isolate containers further.</li>
 <li>gVisor : gVisor is a more lightweight than a VM (even stripped down). gVisor is its own independent kernel written in Go to sit in the middle of a container and the host kernel. Strong sandbox. gVisor supports ~70% of the linux system calls from the container but ONLY uses about 20 system calls to the host kernel.</li>
@@ -3905,7 +3905,7 @@ blacklist sctp
 </code></pre></div>
 <p>To block module loading more generically, you can use a Linux Security Module (such as SELinux) to completely deny the module_request permission to containers, preventing the kernel from loading modules for containers under any circumstances. (Pods would still be able to use modules that had been loaded manually, or modules that were loaded by the kernel on behalf of some more-privileged process.</p>
 <h3 id="compare-and-analyze-different-runtime-activity-in-pods-of-the-same-deployments">Compare and analyze different runtime activity in pods of the same deployments<a class="headerlink" href="#compare-and-analyze-different-runtime-activity-in-pods-of-the-same-deployments" title="Permanent link">&para;</a></h3>
-<p>Containerized applications are replicated for high availability, fault tolerance, or scale reasons. Replicas should behave nearly identically; replicas with significant deviations from the others warrant further investigation. Integrate your Kubernetes security tool with other external systems (email, PagerDuty, Slack, Google Cloud Security Command Center, SIEMs [security information and event management], etc.) and leverage deployment labels or annotations to alert the team responsible for a given application when a potential threat is detected. Commercial Kubernetes security vendors should support a wide array of integrations with external tools</p>
+<p>Containerized applications are replicated for high availability, fault tolerance, or scale reasons. Replicas should behave nearly identically; replicas with significant deviations from the others warrant further investigation. Integrate your Kubernetes security tool with other external systems (email, PagerDuty, Slack, Google Cloud Security Command Center, SIEMs [security information and event management], etc.) and leverage deployment labels or annotations to alert the team responsible for a given application when a potential threat is detected. Commercial Kubernetes security vendors should support a wide array of integrations with external tools.</p>
 <h3 id="monitor-network-traffic-to-limit-unnecessary-or-insecure-communication">Monitor network traffic to limit unnecessary or insecure communication<a class="headerlink" href="#monitor-network-traffic-to-limit-unnecessary-or-insecure-communication" title="Permanent link">&para;</a></h3>
 <p>Observe your active network traffic and compare that traffic to what is allowed based on your Kubernetes network policies. Containerized applications typically make extensive use of cluster networking, and observing active networking traffic is a good way to understand how applications interact with each other and identify unexpected communication.</p>
 <p>At the same time, comparing the active traffic with what’s allowed gives you valuable information about what isn’t happening but is allowed. With that information, you can further tighten your allowed network policies so that it removes superfluous connections and decreases your attack surface.</p>
@@ -3915,7 +3915,7 @@ blacklist sctp
 <h3 id="rotate-infrastructure-credentials-frequently">Rotate infrastructure credentials frequently<a class="headerlink" href="#rotate-infrastructure-credentials-frequently" title="Permanent link">&para;</a></h3>
 <p>The shorter the lifetime of a secret or credential the harder it is for an attacker to make use of that credential. Set short lifetimes on certificates and automate their rotation. Use an authentication provider that can control how long issued tokens are available and use short lifetimes where possible. If you use service account tokens in external integrations, plan to rotate those tokens frequently. For example, once the bootstrap phase is complete, a bootstrap token used for setting up nodes should be revoked or its authorization removed.</p>
 <h3 id="receiving-alerts-for-security-updates-and-reporting-vulnerabilities">Receiving alerts for security updates and reporting vulnerabilities<a class="headerlink" href="#receiving-alerts-for-security-updates-and-reporting-vulnerabilities" title="Permanent link">&para;</a></h3>
-<p>Join the kubernetes-announce group (&lt;<a href="https://kubernetes.io/docs/reference/issues-security/security/">https://kubernetes.io/docs/reference/issues-security/security/</a>) for emails about security announcements. See the security reporting page (<a href="https://kubernetes.io/docs/reference/issues-security/security">https://kubernetes.io/docs/reference/issues-security/security</a>) for more on how to report vulnerabilities.</p>
+<p>Join the kubernetes-announce group (<a href="https://kubernetes.io/docs/reference/issues-security/security/">https://kubernetes.io/docs/reference/issues-security/security/</a>) for emails about security announcements. See the security reporting page (<a href="https://kubernetes.io/docs/reference/issues-security/security">https://kubernetes.io/docs/reference/issues-security/security</a>) for more on how to report vulnerabilities.</p>
 <h3 id="logging">Logging<a class="headerlink" href="#logging" title="Permanent link">&para;</a></h3>
 <p>Kubernetes supplies cluster-based logging, allowing to log container activity into a central log hub. When a cluster is created, the standard output and standard error output of each container can be ingested using a Fluentd agent running on each node into either Google Stackdriver Logging or into Elasticsearch and viewed with Kibana.</p>
 <h4 id="enable-audit-logging">Enable audit logging<a class="headerlink" href="#enable-audit-logging" title="Permanent link">&para;</a></h4>
@@ -3953,19 +3953,16 @@ blacklist sctp
 <p>Audit policy defines rules about what events should be recorded and what data they should include. The audit policy object structure is defined in the audit.k8s.io API group. When an event is processed, it's compared against the list of rules in order. The first matching rule sets the "audit level" of the event.</p>
 <p>The known audit levels are as follows:</p>
 <ul>
-<li>None - don't log events that match this rule.</li>
-<li>Metadata - log request metadata (requesting user, timestamp, resource, verb, etc.) but not request or response body.</li>
-<li>Request - log event metadata and request body but not response body. This does not apply for non-resource requests.</li>
-<li>RequestResponse - log event metadata, request and response bodies. This does not apply for non-resource requests.</li>
+<li>None - don't log events that match this rule</li>
+<li>Metadata - log request metadata (requesting user, timestamp, resource, verb, etc.) but not request or response body</li>
+<li>Request - log event metadata and request body but not response body. This does not apply for non-resource requests</li>
+<li>RequestResponse - log event metadata, request and response bodies. This does not apply for non-resource requests</li>
 </ul>
 <p>You can pass a file with the policy to kube-apiserver using the --audit-policy-file flag. If the flag is omitted, no events are logged. Note that the rules field must be provided in the audit policy file. A policy with no (0) rules is treated as illegal.</p>
 <h4 id="understanding-logging">Understanding Logging<a class="headerlink" href="#understanding-logging" title="Permanent link">&para;</a></h4>
 <p>One main challenge with logging Kubernetes is understanding what logs are generated and how to use them. Let’s start by examining the Kubernetes logging architecture from a birds eye view.</p>
 <h5 id="container-logging">Container logging<a class="headerlink" href="#container-logging" title="Permanent link">&para;</a></h5>
-<p>The first layer of logs that can be collected from a Kubernetes cluster are those being generated by your containerized applications.</p>
-<ul>
-<li>The easiest method for logging containers is to write to the standard output (stdout) and standard error (stderr) streams.</li>
-</ul>
+<p>The first layer of logs that can be collected from a Kubernetes cluster are those being generated by your containerized applications. The easiest method for logging containers is to write to the standard output (stdout) and standard error (stderr) streams.</p>
 <p>Manifest is as follows.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Pod</span>
@@ -3983,9 +3980,7 @@ blacklist sctp
 <p>To take a look the logs for this container, run:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>log<span class="w"> </span>&lt;container-name&gt;<span class="w"> </span>command.
 </code></pre></div>
-<ul>
-<li>For persisting container logs, the common approach is to write logs to a log file and then use a sidecar container. As shown below in the pod configuration above, a sidecar container will run in the same pod along with the application container, mounting the same volume and processing the logs separately.</li>
-</ul>
+<p>For persisting container logs, the common approach is to write logs to a log file and then use a sidecar container. As shown below in the pod configuration above, a sidecar container will run in the same pod along with the application container, mounting the same volume and processing the logs separately.</p>
 <p>Pod Manifest is as follows:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Pod</span>
