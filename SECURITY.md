@@ -1,0 +1,1 @@
+# Security Policy![uuid=4B0A584F-CF19-428E-A162-CBCA1614A846 library=1 type=1 mode=1 loc=false cap=false](https://github.com/OWASP/CheatSheetSeries/assets/127110010/921b8067-5d95-437b-baca-7270a6afaa80)
