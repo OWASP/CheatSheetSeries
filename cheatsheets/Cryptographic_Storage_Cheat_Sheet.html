@@ -20,7 +20,7 @@
       
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.8">
+      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.3.1">
     
     
       
@@ -2584,13 +2584,13 @@
 </tr>
 <tr>
 <td>Java</td>
-<td><code>java.util.Random()</code></td>
-<td><a href="https://docs.oracle.com/javase/8/docs/api/java/security/SecureRandom.html">java.security.SecureRandom</a></td>
+<td><code>Math.random()</code>, <code>StrictMath.random()</code>, <code>java.util.Random</code>, <code>java.util.SplittableRandom</code>, <code>java.util.concurrent.ThreadLocalRandom</code></td>
+<td><a href="https://docs.oracle.com/javase/8/docs/api/java/security/SecureRandom.html">java.security.SecureRandom</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/UUID.html#randomUUID--">java.util.UUID.randomUUID()</a></td>
 </tr>
 <tr>
 <td>PHP</td>
-<td><code>rand()</code>, <code>mt_rand()</code>, <code>array_rand()</code>, <code>uniqid()</code></td>
-<td><a href="https://www.php.net/manual/en/function.random-bytes.php">random_bytes()</a>, <a href="https://www.php.net/manual/en/function.random-int.php">random_int()</a> in PHP 7 or <a href="https://www.php.net/manual/en/function.openssl-random-pseudo-bytes.php">openssl_random_pseudo_bytes()</a> in PHP 5</td>
+<td><code>array_rand()</code>, <code>lcg_value()</code>, <code>mt_rand()</code>, <code>rand()</code>, <code>uniqid()</code></td>
+<td><a href="https://www.php.net/manual/en/function.random-bytes.php">random_bytes()</a>, <a href="https://www.php.net/manual/en/class.random-engine-secure.php">Random\Engine\Secure</a> in PHP 8, <a href="https://www.php.net/manual/en/function.random-int.php">random_int()</a> in PHP 7, <a href="https://www.php.net/manual/en/function.openssl-random-pseudo-bytes.php">openssl_random_pseudo_bytes()</a> in PHP 5</td>
 </tr>
 <tr>
 <td>.NET/C#</td>
@@ -2599,7 +2599,7 @@
 </tr>
 <tr>
 <td>Objective-C</td>
-<td><code>arc4random()</code> (Uses RC4 Cipher)</td>
+<td><code>arc4random()</code>/<code>arc4random_uniform()</code> (Uses RC4 Cipher), subclasses of<code>GKRandomSource</code>, rand(), random()</td>
 <td><a href="https://developer.apple.com/documentation/security/1399291-secrandomcopybytes?language=objc">SecRandomCopyBytes</a></td>
 </tr>
 <tr>
@@ -2609,7 +2609,7 @@
 </tr>
 <tr>
 <td>Ruby</td>
-<td><code>Random</code></td>
+<td><code>rand()</code>, <code>Random</code></td>
 <td><a href="https://ruby-doc.org/stdlib-2.5.1/libdoc/securerandom/rdoc/SecureRandom.html">SecureRandom</a></td>
 </tr>
 <tr>
@@ -2625,7 +2625,7 @@
 <tr>
 <td>Node.js</td>
 <td><code>Math.random()</code></td>
-<td><a href="https://nodejs.org/api/crypto.html#cryptorandombytessize-callback">crypto.randomBytes</a>, <a href="https://nodejs.org/api/crypto.html#cryptorandomintmin-max-callback">crypto.randomInt</a>, <a href="https://nodejs.org/api/crypto.html#cryptorandomuuidoptions">crypto.randomUUID</a></td>
+<td><a href="https://nodejs.org/api/crypto.html#cryptorandombytessize-callback">crypto.randomBytes()</a>, <a href="https://nodejs.org/api/crypto.html#cryptorandomintmin-max-callback">crypto.randomInt()</a>, <a href="https://nodejs.org/api/crypto.html#cryptorandomuuidoptions">crypto.randomUUID()</a></td>
 </tr>
 </tbody>
 </table>
