@@ -20,7 +20,7 @@
       
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
-      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.3.1">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.3.2">
     
     
       
@@ -28,7 +28,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.046329b4.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.30068a00.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.85d0ee34.min.css">
@@ -2581,27 +2581,27 @@
 <tbody>
 <tr>
 <td><code>Cache-Control: no-store</code></td>
-<td>Prevent sensitive information from being cached.</td>
+<td>Header used to direct caching done by browsers. Providing <code>no-store</code> indicates that any caches of any kind (private or shared) should not store the response that contains the header. A browser must make a new request everytime the API is called to fetch the latest response. This header with a <code>no-store</code> value prevents sensitive information from being cached or stored.</td>
 </tr>
 <tr>
 <td><code>Content-Security-Policy: frame-ancestors 'none'</code></td>
-<td>To protect against <a href="https://www.w3.org/Security/wiki/Clickjacking_Threats#Drag_and_drop_attacks">drag-and-drop</a> style clickjacking attacks.</td>
+<td>Header used to specify whether a response can be framed in a <code>&lt;frame&gt;</code>, <code>&lt;iframe&gt;</code>, <code>&lt;embed&gt;</code> or <code>&lt;object&gt;</code> element. For an API response, there is no requirement to be framed in any of those elements. Providing <code>frame-ancestors 'none'</code> prevents any domain from framing the response returned by the API call. This header protects against <a href="https://www.w3.org/Security/wiki/Clickjacking_Threats#Drag_and_drop_attacks">drag-and-drop</a> style clickjacking attacks.</td>
 </tr>
 <tr>
 <td><code>Content-Type</code></td>
-<td>To specify the content type of the response. This should be <code>application/json</code> for JSON responses.</td>
+<td>Header to specify the content type of a response. This must be specified as per the type of content returned by an API call. If not specified or if specified incorrectly, a browser might attempt to guess the content type of the response. This can return in MIME sniffing attacks. One common content type value is <code>application/json</code> if the API response is JSON.</td>
 </tr>
 <tr>
 <td><code>Strict-Transport-Security</code></td>
-<td>To require connections over HTTPS and to protect against spoofed certificates.</td>
+<td>Header to instruct a browser that the domain should only be accessed using HTTPS, and that any future attempts to access it using HTTP should automatically be converted to HTTPS. This header ensures that API calls are made over HTTPS and protects against spoofed certificates.</td>
 </tr>
 <tr>
 <td><code>X-Content-Type-Options: nosniff</code></td>
-<td>To prevent browsers from performing MIME sniffing, and inappropriately interpreting responses as HTML.</td>
+<td>Header to instruct a browser to always use the MIME type that is declared in the <code>Content-Type</code> header rather than trying to determine the MIME type based on the file's content. This header with a <code>nosniff</code> value prevents browsers from performing MIME sniffing, and inappropriately interpreting responses as HTML.</td>
 </tr>
 <tr>
 <td><code>X-Frame-Options: DENY</code></td>
-<td>To protect against drag-and-drop style clickjacking attacks.</td>
+<td>Header used to specify whether a response can be framed in a <code>&lt;frame&gt;</code>, <code>&lt;iframe&gt;</code>, <code>&lt;embed&gt;</code> or <code>&lt;object&gt;</code> element. For an API response, there is no requirement to be framed in any of those elements. Providing <code>DENY</code> prevents any domain from framing the response returned by the API call. This header with a <code>DENY</code> value protects protect against <a href="https://www.w3.org/Security/wiki/Clickjacking_Threats#Drag_and_drop_attacks">drag-and-drop</a> style clickjacking attacks.</td>
 </tr>
 </tbody>
 </table>
