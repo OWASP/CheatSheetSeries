@@ -3194,28 +3194,37 @@ Example code disabling DTDs (doctypes) altogether:</p>
 <span class="p">...</span>
 
 <span class="n">DocumentBuilderFactory</span><span class="w"> </span><span class="n">dbf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DocumentBuilderFactory</span><span class="p">.</span><span class="na">newInstance</span><span class="p">();</span>
-<span class="n">String</span><span class="w"> </span><span class="n">FEATURE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
-<span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">    </span>
-<span class="w">    </span><span class="c1">// If you can&#39;t completely disable DTDs, then at least do the following:</span>
+
+<span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">featuresToDisable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="c1">// Xerces 1 - http://xerces.apache.org/xerces-j/features.html#external-general-entities</span>
 <span class="w">    </span><span class="c1">// Xerces 2 - http://xerces.apache.org/xerces2-j/features.html#external-general-entities</span>
 <span class="w">    </span><span class="c1">// JDK7+ - http://xml.org/sax/features/external-general-entities</span>
 <span class="w">    </span><span class="c1">//This feature has to be used together with the following one, otherwise it will not protect you from XXE for sure</span>
-<span class="w">    </span><span class="n">FEATURE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;http://xml.org/sax/features/external-general-entities&quot;</span><span class="p">;</span>
-<span class="w">    </span><span class="n">dbf</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="n">FEATURE</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
+<span class="w">    </span><span class="s">&quot;http://xml.org/sax/features/external-general-entities&quot;</span><span class="p">,</span>
 
 <span class="w">    </span><span class="c1">// Xerces 1 - http://xerces.apache.org/xerces-j/features.html#external-parameter-entities</span>
 <span class="w">    </span><span class="c1">// Xerces 2 - http://xerces.apache.org/xerces2-j/features.html#external-parameter-entities</span>
 <span class="w">    </span><span class="c1">// JDK7+ - http://xml.org/sax/features/external-parameter-entities</span>
 <span class="w">    </span><span class="c1">//This feature has to be used together with the previous one, otherwise it will not protect you from XXE for sure</span>
-<span class="w">    </span><span class="n">FEATURE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;http://xml.org/sax/features/external-parameter-entities&quot;</span><span class="p">;</span>
-<span class="w">    </span><span class="n">dbf</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="n">FEATURE</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
+<span class="w">    </span><span class="s">&quot;http://xml.org/sax/features/external-parameter-entities&quot;</span><span class="p">,</span>
 
 <span class="w">    </span><span class="c1">// Disable external DTDs as well</span>
-<span class="w">    </span><span class="n">FEATURE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;http://apache.org/xml/features/nonvalidating/load-external-dtd&quot;</span><span class="p">;</span>
-<span class="w">    </span><span class="n">dbf</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="n">FEATURE</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
+<span class="w">    </span><span class="s">&quot;http://apache.org/xml/features/nonvalidating/load-external-dtd&quot;</span>
+<span class="p">}</span>
 
-<span class="w">    </span><span class="c1">// and these as well, per Timothy Morgan&#39;s 2014 paper: &quot;XML Schema, DTD, and Entity Attacks&quot;</span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">feature</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">featuresToDisable</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">    </span>
+<span class="w">        </span><span class="n">dbf</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="n">FEATURE</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span><span class="w"> </span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">ParserConfigurationException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// This should catch a failed setFeature feature</span>
+<span class="w">        </span><span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;ParserConfigurationException was thrown. The feature &#39;&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">feature</span>
+<span class="w">        </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;&#39; is probably not supported by your XML processor.&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="p">...</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Add these as per Timothy Morgan&#39;s 2014 paper: &quot;XML Schema, DTD, and Entity Attacks&quot;</span>
 <span class="w">    </span><span class="n">dbf</span><span class="p">.</span><span class="na">setXIncludeAware</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
 <span class="w">    </span><span class="n">dbf</span><span class="p">.</span><span class="na">setExpandEntityReferences</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
 
@@ -3226,7 +3235,6 @@ Example code disabling DTDs (doctypes) altogether:</p>
 <span class="w">    </span><span class="c1">// Exists from JDK6.</span>
 <span class="w">    </span><span class="n">dbf</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">FEATURE_SECURE_PROCESSING</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
 
-
 <span class="w">    </span><span class="c1">// And, per Timothy Morgan: &quot;If for some reason support for inline DOCTYPEs are a requirement, then</span>
 <span class="w">    </span><span class="c1">// ensure the entity settings are disabled (as shown above) and beware that SSRF attacks</span>
 <span class="w">    </span><span class="c1">// (http://cwe.mitre.org/data/definitions/918.html) and denial</span>
@@ -3236,10 +3244,8 @@ Example code disabling DTDs (doctypes) altogether:</p>
 <span class="w">    </span><span class="p">...</span>
 <span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">ParserConfigurationException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="c1">// This should catch a failed setFeature feature</span>
-<span class="w">    </span><span class="c1">// NOTE: Each call to setFeature() should be in its own try/catch otherwise subsequent calls will be skipped.</span>
-<span class="w">    </span><span class="c1">// This is only important if you&#39;re ignoring errors for multi-provider support.</span>
-<span class="w">    </span><span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;ParserConfigurationException was thrown. The feature &#39;&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">FEATURE</span>
-<span class="w">    </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;&#39; is probably not supported by your XML processor.&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;ParserConfigurationException was thrown. The feature &#39;XMLConstants.FEATURE_SECURE_PROCESSING&#39;&quot;</span>
+<span class="w">    </span><span class="o">+</span><span class="w"> </span><span class="s">&quot; is probably not supported by your XML processor.&quot;</span><span class="p">);</span>
 <span class="w">    </span><span class="p">...</span>
 <span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">SAXException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="c1">// On Apache, this should be thrown when disallowing DOCTYPE</span>
