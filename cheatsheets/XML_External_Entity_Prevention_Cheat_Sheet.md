@@ -190,28 +190,37 @@ import javax.xml.XMLConstants;
 ...
 
 DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-String FEATURE = null;
-try {    
-    // If you can't completely disable DTDs, then at least do the following:
+
+String[] featuresToDisable = {
     // Xerces 1 - http://xerces.apache.org/xerces-j/features.html#external-general-entities
     // Xerces 2 - http://xerces.apache.org/xerces2-j/features.html#external-general-entities
     // JDK7+ - http://xml.org/sax/features/external-general-entities
     //This feature has to be used together with the following one, otherwise it will not protect you from XXE for sure
-    FEATURE = "http://xml.org/sax/features/external-general-entities";
-    dbf.setFeature(FEATURE, false);
+    "http://xml.org/sax/features/external-general-entities",
 
     // Xerces 1 - http://xerces.apache.org/xerces-j/features.html#external-parameter-entities
     // Xerces 2 - http://xerces.apache.org/xerces2-j/features.html#external-parameter-entities
     // JDK7+ - http://xml.org/sax/features/external-parameter-entities
     //This feature has to be used together with the previous one, otherwise it will not protect you from XXE for sure
-    FEATURE = "http://xml.org/sax/features/external-parameter-entities";
-    dbf.setFeature(FEATURE, false);
+    "http://xml.org/sax/features/external-parameter-entities",
 
     // Disable external DTDs as well
-    FEATURE = "http://apache.org/xml/features/nonvalidating/load-external-dtd";
-    dbf.setFeature(FEATURE, false);
+    "http://apache.org/xml/features/nonvalidating/load-external-dtd"
+}
 
-    // and these as well, per Timothy Morgan's 2014 paper: "XML Schema, DTD, and Entity Attacks"
+for (String feature : featuresToDisable) {
+    try {    
+        dbf.setFeature(FEATURE, false); 
+    } catch (ParserConfigurationException e) {
+        // This should catch a failed setFeature feature
+        logger.info("ParserConfigurationException was thrown. The feature '" + feature
+        + "' is probably not supported by your XML processor.");
+        ...
+    }
+}
+
+try {
+    // Add these as per Timothy Morgan's 2014 paper: "XML Schema, DTD, and Entity Attacks"
     dbf.setXIncludeAware(false);
     dbf.setExpandEntityReferences(false);
         
@@ -222,7 +231,6 @@ try {
     // Exists from JDK6.
     dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
 
-
     // And, per Timothy Morgan: "If for some reason support for inline DOCTYPEs are a requirement, then
     // ensure the entity settings are disabled (as shown above) and beware that SSRF attacks
     // (http://cwe.mitre.org/data/definitions/918.html) and denial
@@ -232,10 +240,8 @@ try {
     ...
 } catch (ParserConfigurationException e) {
     // This should catch a failed setFeature feature
-    // NOTE: Each call to setFeature() should be in its own try/catch otherwise subsequent calls will be skipped.
-    // This is only important if you're ignoring errors for multi-provider support.
-    logger.info("ParserConfigurationException was thrown. The feature '" + FEATURE
-    + "' is probably not supported by your XML processor.");
+    logger.info("ParserConfigurationException was thrown. The feature 'XMLConstants.FEATURE_SECURE_PROCESSING'"
+    + " is probably not supported by your XML processor.");
     ...
 } catch (SAXException e) {
     // On Apache, this should be thrown when disallowing DOCTYPE
