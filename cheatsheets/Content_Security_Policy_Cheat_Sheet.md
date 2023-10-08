@@ -135,8 +135,8 @@ However, current leading practice is to create a "Strict" CSP which is much easi
 
 A strict CSP can be created by using a limited number of the granular [Fetch Directives listed below](#fetch-directives) listed below along with one of two mechanisms:
 
-* Nonce based
-* Hash based
+- Nonce based
+- Hash based
 
 The `strict-dynamic` directive can optionally also be used to make it easier to implement a Strict CSP.
 
@@ -276,7 +276,7 @@ As noted above, Google went ahead and set up a detailed and methodological [inst
 
 Based on those instructions, one of the following two policies can be used to apply a strict policy:
 
-#### Nonce-based Strict Policy:
+#### Nonce-based Strict Policy
 
 ```text
 Content-Security-Policy:
@@ -285,7 +285,7 @@ Content-Security-Policy:
   base-uri 'none';
 ```
 
-#### Hash-based Strict Policy:
+#### Hash-based Strict Policy
 
 ```text
 Content-Security-Policy:
