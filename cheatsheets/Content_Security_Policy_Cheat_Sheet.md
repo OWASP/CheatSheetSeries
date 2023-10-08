@@ -125,9 +125,77 @@ Almost everything is still supported, including full XSS defenses. However, you 
 
 **DO NOT** use `X-Content-Security-Policy` or `X-WebKit-CSP`. Their implementations are obsolete (since Firefox 23, Chrome 25), limited, inconsistent, and incredibly buggy.
 
-## CSP Directives
+## CSP Types (granular/allowlist based or strict)
 
-Multiple types of directives exist that allow the developer to control the flow of the policies granularly.
+The original mechanism for building a CSP involved creating allow-lists which would define the content and sources that were permitted in the context of the HTML page.
+
+However, current leading practice is to create a "Strict" CSP which is much easier to deploy and more secure as it is less likely to be bypassed.
+
+## Strict CSP
+
+A strict CSP can be created by using a limited number of the granular [Fetch Directives listed below](#fetch-directives) listed below along with one of two mechanisms:
+
+* Nonce based
+* Hash based
+
+The `strict-dynamic` directive can optionally also be used to make it easier to implement a Strict CSP.
+
+The following sections will provide some basic guidance to these mechanisms but it is strongly recommended to follow Google's detailed and methodological instructions for creating a Strict CSP:
+
+**[Mitigate cross-site scripting (XSS) with a strict Content Security Policy (CSP)](https://web.dev/strict-csp/)**
+
+### Nonce based
+
+Nonces are unique one-time-use random values that you generate for each HTTP response, and add to the Content-Security-Policy header, like so:
+
+```js
+const nonce = uuid.v4();
+scriptSrc += ` 'nonce-${nonce}'`;
+```
+
+You would then pass this nonce to your view (using nonces requires a non-static HTML) and render script tags that look something like this:
+
+```html
+<script nonce="<%= nonce %>">
+    ...
+</script>
+```
+
+#### Warning
+
+**Don't** create a middleware that replaces all script tags with "script nonce=..." because attacker-injected scripts will then get the nonces as well. You need an actual HTML templating engine to use nonces.
+
+### Hashes
+
+When inline scripts are required, the `script-src 'hash_algo-hash'` is another option for allowing only specific scripts to execute.
+
+```text
+Content-Security-Policy: script-src 'sha256-V2kaaafImTjn8RQTWZmF4IfGfQ7Qsqsw9GWaFjzFNPg='
+```
+
+To get the hash, look at Google Chrome developer tools for violations like this:
+
+> ❌ Refused to execute inline script because it violates the following Content Security Policy directive: "..." Either the 'unsafe-inline' keyword, a hash (**'sha256-V2kaaafImTjn8RQTWZmF4IfGfQ7Qsqsw9GWaFjzFNPg='**), or a nonce...
+
+You can also use this [hash generator](https://report-uri.com/home/hash). This is a great [example](https://csp.withgoogle.com/docs/faq.html#static-content) of using hashes.
+
+#### Note
+
+Using hashes can be a risk approach approach. If you change *anything* inside the script tag (even whitespace) by, e.g., formatting your code, the hash will be different, and the script won't render.
+
+### strict-dynamic
+
+The `strict-dynamic` directive can be used as part of a Strict CSP in combination with either hashes or nonces.
+
+If a script block which has either the correct hash or nonce is creating additional DOM elements and executing JS inside of them, `strict-dynamic` tells the browser to trust those elements as well without having to explicitly add nonces or hashes for each one.
+
+Note that whilst `strict-dynamic` is a CSP level 3 feature, CSP level 3 is very widely supported in common, modern browsers.
+
+For more details, check out [strict-dynamic usage](https://w3c.github.io/webappsec-csp/#strict-dynamic-usage).
+
+## Detailed CSP Directives
+
+Multiple types of directives exist that allow the developer to control the flow of the policies granularly. Note that creating a non-Strict policy that is too granular or permissive is likely to lead to bypasses and a loss of protection.
 
 ### Fetch Directives
 
@@ -195,64 +263,40 @@ In order to ensure backward compatibility, use the 2 directives in conjunction. 
 | 'self'           | Refers to the origin site with the same scheme and port number.             |
 | 'unsafe-inline'  | Allows the usage of inline scripts or styles.                               |
 | 'unsafe-eval'    | Allows the usage of eval in scripts.                                        |
-| 'strict-dynamic' | Informs the browser to trust scripts originating from a root trusted script.|
-
-*Note:* `strict-dynamic` is not a standalone directive and should be used in combination with other directive values, such as `nonce`, `hashes`, etc.
 
 To better understand how the directive sources work, check out the [source lists from w3c](https://w3c.github.io/webappsec-csp/#framework-directive-source-list).
 
-### Hashes
-
-When inline scripts are required, the `script-src 'hash_algo-hash'` is one option for allowing only specific scripts to execute.
-
-```text
-Content-Security-Policy: script-src 'sha256-V2kaaafImTjn8RQTWZmF4IfGfQ7Qsqsw9GWaFjzFNPg='
-```
-
-To get the hash, look at Google Chrome developer tools for violations like this:
-
-> ❌ Refused to execute inline script because it violates the following Content Security Policy directive: "..." Either the 'unsafe-inline' keyword, a hash (**'sha256-V2kaaafImTjn8RQTWZmF4IfGfQ7Qsqsw9GWaFjzFNPg='**), or a nonce...
-
-You can also use this [hash generator](https://report-uri.com/home/hash). This is a great [example](https://csp.withgoogle.com/docs/faq.html#static-content) of using hashes.
-
-#### Note
-
-Using hashes is generally not a very good approach. If you change *anything* inside the script tag (even whitespace) by, e.g., formatting your code, the hash will be different, and the script won't render.
-
-### Nonces
-
-Nonces are unique one-time-use random values that you generate for each HTTP response, and add to the Content-Security-Policy header, like so:
-
-```js
-const nonce = uuid.v4();
-scriptSrc += ` 'nonce-${nonce}'`;
-```
-
-You would then pass this nonce to your view (using nonces requires a non-static HTML) and render script tags that look something like this:
-
-```js
-<script nonce="<%= nonce %>">
-    ...
-</script>
-```
-
-#### Warning
-
-**Don't** create a middleware that replaces all script tags with "script nonce=..." because attacker-injected scripts will then get the nonces as well. You need an actual HTML templating engine to use nonces.
-
-### strict-dynamic
-
-The `strict-dynamic` directive can be used in combination with either, hashes or nonces.
-
-If the script block is creating additional DOM elements and executing JS inside of them, `strict-dynamic` tells the browser to trust those elements.
-
-Note that `strict-dynamic` is a CSP level 3 feature and not very widely supported yet. For more details, check out [strict-dynamic usage](https://w3c.github.io/webappsec-csp/#strict-dynamic-usage).
-
 ## CSP Sample Policies
 
-### Basic CSP Policy
+### Strict Policy
 
-This policy prevents cross-site framing and cross-site form-submissions. It will only allow resources from the originating domain for all the default level directives and will not allow inline scripts/styles to execute.
+A strict policy's role is to protect against classical stored, reflected, and some of the DOM XSS attacks and should be the optimal goal of any team trying to implement CSP.
+
+As noted above, Google went ahead and set up a detailed and methodological [instructions](https://web.dev/strict-csp) for creating a Strict CSP.
+
+Based on those instructions, one of the following two policies can be used to apply a strict policy:
+
+#### Nonce-based Strict Policy:
+
+```text
+Content-Security-Policy:
+  script-src 'nonce-{RANDOM}' 'strict-dynamic';
+  object-src 'none';
+  base-uri 'none';
+```
+
+#### Hash-based Strict Policy:
+
+```text
+Content-Security-Policy:
+  script-src 'sha256-{HASHED_INLINE_SCRIPT}' 'strict-dynamic';
+  object-src 'none';
+  base-uri 'none';
+```
+
+### Basic non-Strict CSP Policy
+
+This policy can be used if it is not possible to create a Strict Policy and it prevents cross-site framing and cross-site form-submissions. It will only allow resources from the originating domain for all the default level directives and will not allow inline scripts/styles to execute.
 
 If your application functions with these restrictions, it drastically reduces your attack surface and works with most modern browsers.
 
@@ -291,28 +335,6 @@ Content-Security-Policy: upgrade-insecure-requests;
     - `Content-Security-Policy: frame-ancestors 'self';`
 - To allow for trusted domain, do the following:
     - `Content-Security-Policy: frame-ancestors trusted.com;`
-
-### Strict Policy
-
-A strict policy's role is to protect against classical stored, reflected, and some of the DOM XSS attacks and should be the optimal goal of any team trying to implement CSP.
-
-Google went ahead and set up a [guide](https://web.dev/strict-csp) to adopt a strict CSP based on nonces.
-
-Based on a [presentation](https://speakerdeck.com/lweichselbaum/csp-a-successful-mess-between-hardening-and-mitigation?slide=55) at LocoMocoSec, the following two policies can be used to apply a strict policy:
-
-- Moderate Strict Policy:
-
-```text
-script-src 'nonce-r4nd0m' 'strict-dynamic';
-object-src 'none'; base-uri 'none';
-```
-
-- Locked down Strict Policy:
-
-```text
-script-src 'nonce-r4nd0m';
-object-src 'none'; base-uri 'none';
-```
 
 ### Refactoring inline code
 
