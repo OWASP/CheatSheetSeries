@@ -19,7 +19,7 @@ In order to balance security and usability, multi-factor authentication can be c
 - A new browser/device or IP address.
 - An unusual country or location.
 - Specific countries that are considered untrusted.
-- An IP address that appears on known block lists.
+- An IP address that appears on known block lists or is associated with anonymization services, such as VPN services.
 - An IP address that has tried to login to multiple accounts.
 - A login attempt that appears to be scripted rather than manual.
 
@@ -74,6 +74,10 @@ Using these various attributes, it is possible to create a fingerprint of the de
 The [fingerprintjs2](https://github.com/Valve/fingerprintjs2) JavaScript library can be used to carry out client-side fingerprinting.
 
 It should be noted that as all this information is provided by the client, it can potentially be spoofed by an attacker. In some cases spoofing these attributes is trivial (such as the "User-Agent") header, but in other cases it may be more difficult to modify these attributes.
+
+### Connection Fingerprinting
+
+Similar to device fingerprinting, there are numerous fingerprinting techniques available for network connections.  Same examples include [JA3](https://github.com/salesforce/ja3), HTTP/2 fingerprinting and HTTP header order.  These techniques typically focus on how a device connections, and 
 
 ### Require Unpredictable Usernames
 
