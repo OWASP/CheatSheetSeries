@@ -2,13 +2,16 @@
 
 ## Introduction
 
-This cheatsheet covers defences against two common types of authentication-related attacks: credential stuffing and password spraying. Although these are separate, distinct attacks, in many cases the defences that would be implemented to protect against them are the same, and they would also be effective at protecting against brute-force attacks. A summary of these different attacks is listed below:
+This cheatsheet covers defences against two common types of authentication-related attacks: credential stuffing and password spraying. Although these are separate, distinct attacks, in many cases the defences that would be implemented to protect against them are the same, and they would also be effective at protecting against brute-force attacks. 
+
+A summary of these different attacks is listed below:
 
 | Attack Type | Description |
 |-------------|-------------|
 | Brute Force | Testing multiple passwords from dictionary or other source against a single account. |
 | Credential Stuffing | Testing username/password pairs obtained from the breach of another site. |
 | Password Spraying | Testing a single weak password against a large number of different accounts.|
+| User Enumeration | Testing to identify if a given username exists on a platform. |
 
 ## Multi-Factor Authentication
 
@@ -47,13 +50,14 @@ Requiring a user to solve a CAPTCHA for each login attempt can help to prevent a
 
 To improve usability, it may be desirable to only require the user solve a CAPTCHA when the login request is considered suspicious, using the same criteria discussed above.
 
-### IP Block-listing
+### IP Block-listing and Intelligence
 
-Less sophisticated attacks will often use a relatively small number of IP addresses, which can be block-listed after a number of failed login attempts. These failures should be tracked separately to the per-user failures, which are intended to protect against brute-force attacks. The block list should be temporary, in order to reduce the likelihood of permanently blocking legitimate users.
+Less sophisticated attacks will often use a relatively small number of IP addresses, which can be block-listed after a number of failed login attempts. These failures should be tracked separately to the per-user failures, which are intended to protect against brute-force attacks. The block list should be temporary, in order to reduce the likelihood of permanently blocking legitimate users.  Consider storing the last IP address which successfully logged in to each account, and if this IP address is added to a block list, then taking appropriate action such as locking the account and notifying the user, as it likely that their account has been compromised.
 
-Additionally, there are publicly available block lists of known bad IP addresses which are collected by websites such as [AbuseIPDB](https://www.abuseipdb.com) based on abuse reports from users.
+However, many credential stuffing toolkits offer built-in use of proxy networks to distribute requests across a large volume of unique IP addressess.  This may defeat both IP block-lists and rate limiting, as per IP request volume may remain low.  Correlating authentication traffic with proxy and known bad IP address intelligence, as well as hosting provider IP address ranges can help identify highly distributed credential stuffing attacks and may serve as a mitigation trigger.  For example, every request from a hosting provider could be required to solve CAPTCHA.  
 
-Consider storing the last IP address which successfully logged in to each account, and if this IP address is added to a block list, then taking appropriate action such as locking the account and notifying the user, as it likely that their account has been compromised.
+There are both public and commercial sources of IP address intellignece and classification that may be leveraged, and some hosting providers publish their own IP address space, such as [AWS](https://docs.aws.amazon.com/vpc/latest/userguide/aws-ip-ranges.html).
+
 
 ### Device Fingerprinting
 
@@ -77,7 +81,7 @@ It should be noted that as all this information is provided by the client, it ca
 
 ### Connection Fingerprinting
 
-Similar to device fingerprinting, there are numerous fingerprinting techniques available for network connections.  Same examples include [JA3](https://github.com/salesforce/ja3), HTTP/2 fingerprinting and HTTP header order.  These techniques typically focus on how a device connections, and 
+Similar to device fingerprinting, there are numerous fingerprinting techniques available for network connections.  Some examples include [JA3](https://github.com/salesforce/ja3), HTTP/2 fingerprinting and HTTP header order.  As these techniques typically focus on how a connection is made, connection fingerprinting may provide more accurate results than other techniques that rely on an indicator, such as an IP address, or request payload, such as user agent string.
 
 ### Require Unpredictable Usernames
 
@@ -93,11 +97,15 @@ The following mechanisms are not sufficient to prevent credential stuffing or pa
 
 The majority of off-the-shelf tools are designed for a single step login process, where the credentials are POSTed to the server, and the response indicates whether or not the login attempt was successful. By adding additional steps to this process, such as requiring the username and password to be entered sequentially, or requiring that the user first obtains a random [CSRF Token](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md) before they can login, this makes the attack slightly more difficult to perform, and doubles the number of requests that the attacker must make.
 
+Multi-step login processes, however, should be mindful that they do not faciliate [user enumeration] (Authentication_Cheat_Sheet.md).  
+
 ### Require JavaScript and Block Headless Browsers
 
 Most tools used for these types of attacks will make direct POST requests to the server and read the responses, but will not download or execute JavaScript that was contained in them. By requiring the attacker to evaluate JavaScript in the response (for example to generate a valid token that must be submitted with the request), this forces the attacker to either use a real browser with an automation framework like Selenium or Headless Chrome, or to implement JavaScript parsing with another tool such as PhantomJS. Additionally, there are a number of techniques that can be used to identify [Headless Chrome](https://antoinevastel.com/bot%20detection/2018/01/17/detect-chrome-headless-v2.html) or [PhantomJS](https://blog.shapesecurity.com/2015/01/22/detecting-phantomjs-based-visitors/).
 
 Please note that blocking visitors who have JavaScript disabled will reduce the accessibility of the website, especially to visitors who use screen readers. In certain jurisdictions this may be in breach of equalities legislation.
+
+### 
 
 ### Identifying Leaked Passwords
 
