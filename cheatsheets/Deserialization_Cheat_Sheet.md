@@ -171,6 +171,65 @@ Agents taking this approach have been released by various community members:
 
 A similar, but less scalable approach would be to manually patch and bootstrap your JVM's ObjectInputStream. Guidance on this approach is available [here](https://github.com/wsargent/paranoid-java-serialization).
 
+#### Other Deserialization Libraries and Formats
+
+While the advice above is focused on [Java's Serializable format](https://docs.oracle.com/javase/7/docs/api/java/io/Serializable.html), there are a number of other libraries
+that use other formats for deserialization. Many of these libraries may have similar security
+issues if not configured correctly. This section lists some of these libraries and
+recommended configuration options to avoid security issues when deserializing untrusted data:
+
+**Can be used safely with default configuration:**
+
+The following libraries can be used safely with default configuration:
+
+- **[fastjson2](https://github.com/alibaba/fastjson2)** (JSON) - can be used safely as long as
+the [**autotype**](https://github.com/alibaba/fastjson2/wiki/fastjson2_autotype_cn) option is not turned on
+- **[jackson-databind](https://github.com/FasterXML/jackson-databind)** (JSON) - can be used safely as long
+as polymorphism is not used ([see blog post](https://cowtowncoder.medium.com/on-jackson-cves-dont-panic-here-is-what-you-need-to-know-54cd0d6e8062))
+- **[Kryo v5.0.0+](https://github.com/EsotericSoftware/kryo)** (custom format) - can be used safely
+as long as class registration is not turned **off** ([see documentation](https://github.com/EsotericSoftware/kryo#optional-registration)
+and [this issue](https://github.com/EsotericSoftware/kryo/issues/929))
+- **[YamlBeans v1.16+](https://github.com/EsotericSoftware/yamlbeans)** (YAML) - can be used safely
+as long as the **UnsafeYamlConfig** class isn't used (see [this commit](https://github.com/EsotericSoftware/yamlbeans/commit/b1122588e7610ae4e0d516c50d08c94ee87946e6))
+    - _NOTE: because these versions are not available in Maven Central,
+[a fork exists](https://github.com/Contrast-Security-OSS/yamlbeans) that can be used instead._
+- **[XStream v1.4.17+](https://x-stream.github.io/)** (JSON and XML) - can be used safely
+as long as the allowlist and other security controls are not relaxed ([see documentation](https://x-stream.github.io/security.html))
+
+**Requires configuration before can be used safely:**
+
+The following libraries require configuration options to be set before they can be used safely:
+
+- **[fastjson v1.2.68+](https://github.com/alibaba/fastjson)** (JSON) - cannot be used safely unless
+the [**safemode**](https://github.com/alibaba/fastjson/wiki/fastjson_safemode_en) option is turned on, which disables
+deserialization of any class ([see documentation](https://github.com/alibaba/fastjson/wiki/enable_autotype)).
+Previous versions are not safe.
+- **[json-io](https://github.com/jdereg/json-io)** (JSON) - cannot be used safely since the use of **@type** property in
+JSON allows deserialization of any class. Can only be used safely in following situations:
+    - In [non-typed mode](https://github.com/jdereg/json-io/blob/master/user-guide.md#non-typed-usage) using the **JsonReader.USE_MAPS** setting which turns off generic object deserialization
+    - [With a custom deserializer](https://github.com/jdereg/json-io/blob/master/user-guide.md#customization-technique-4-custom-serializer) controlling which classes get deserialized
+- **[Kryo < v5.0.0](https://github.com/EsotericSoftware/kryo)** (custom format) - cannot be used safely unless class registration is turned **on**,
+which disables deserialization of any class ([see documentation](https://github.com/EsotericSoftware/kryo#optional-registration)
+and [this issue](https://github.com/EsotericSoftware/kryo/issues/929))
+    - _NOTE: other wrappers exist around Kryo such as [Chill](https://github.com/twitter/chill), which may also have class registration
+not required by default regardless of the underlying version of Kryo being used_
+- **[SnakeYAML](https://bitbucket.org/snakeyaml/snakeyaml/src)** (YAML) - cannot be used safely unless
+the **org.yaml.snakeyaml.constructor.SafeConstructor** class is used, which disables
+deserialization of any class ([see docs](https://bitbucket.org/snakeyaml/snakeyaml/wiki/CVE-2022-1471))
+
+**Cannot be used safely:**
+
+The following libraries are either no longer maintained or cannot be used safely with untrusted input:
+
+- **[Castor](https://github.com/castor-data-binding/castor)** (XML) - appears to be abandoned with no commits since 2016
+- **[fastjson < v1.2.68](https://github.com/alibaba/fastjson)** (JSON) - these versions allows deserialization of any class
+([see documentation](https://github.com/alibaba/fastjson/wiki/enable_autotype))
+- **[XMLDecoder in the JDK](https://docs.oracle.com/javase/8/docs/api/java/beans/XMLDecoder.html)** (XML) - _"close to impossible to securely deserialize Java objects in this format from untrusted inputs"_
+("Red Hat Defensive Coding Guide", [end of section 2.6.5](https://redhat-crypto.gitlab.io/defensive-coding-guide/#sect-Defensive_Coding-Tasks-Serialization-XML))
+- **[XStream < v1.4.17](https://x-stream.github.io/)** (JSON and XML) - these versions allows deserialization of any class (see [documentation](https://x-stream.github.io/security.html#explicit))
+- **[YamlBeans < v1.16](https://github.com/EsotericSoftware/yamlbeans)** (YAML) - these versions allows deserialization of any class
+(see [this document](https://github.com/Contrast-Security-OSS/yamlbeans/blob/main/SECURITY.md))
+
 ### .Net CSharp
 
 #### WhiteBox Review
