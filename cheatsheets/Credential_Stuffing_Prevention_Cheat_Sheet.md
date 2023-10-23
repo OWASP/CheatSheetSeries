@@ -21,7 +21,7 @@ In order to balance security and usability, multi-factor authentication can be c
 
 - A new browser/device or IP address.
 - An unusual country or location.
-- Specific countries that are considered untrusted.
+- Specific countries that are considered untrusted or typically do not contain users of a service.
 - An IP address that appears on known block lists or is associated with anonymization services, such as VPN services.
 - An IP address that has tried to login to multiple accounts.
 - A login attempt that appears to be scripted rather than manual.
@@ -36,13 +36,13 @@ Where an application has multiple user roles, it may be appropriate to implement
 
 ## Defense in Depth & Metrics
 
-While not a specific technique or technology, it is important to implement defenses that consider the impact of individual defenses failing.  As an example, client-side defenses, such as device fingerprinting or Javascript challenge, may be spoofed or otherwise defeated and other defenses should be implemented to account for this.
+While not a specific technique, it is important to implement defenses that consider the impact of individual defenses _failing_.  As an example, client-side defenses, such as device fingerprinting or Javascript challenges, may be spoofed or otherwise defeated and other defenses should be implemented to account for this.
 
-Additionally, each defense layer should generate metrics regarding volume, identified or mitigated attack volume and metadata such as IP address, HTTP header values, etc.  Monitoring each layer of defense for deviations may help identify defense failures or unidentified attacks, as well as the impact of new defense implementations.
+Additionally, each defense layer should generate metrics regarding overall volume, including both detected and mitigated attack volume and allow for filter on fields such as IP address, user agent string, etc.  Monitoring and analyzing these metrics may help identify defense failures or the presence of unidentified attacks, as well as the impact of new defense implementations.
 
 ### Secondary Passwords, PINs and Security Questions
 
-As well as requiring a user to enter their password when authenticating, they can also be prompted to provide additional security information such as:
+As well as requiring a user to enter their password when authenticating, users can also be prompted to provide additional security information such as:
 
 - A PIN
 - Specific characters from a secondary passwords or memorable word
@@ -52,23 +52,21 @@ It must be emphasised that this **does not** constitute multi-factor authenticat
 
 ### CAPTCHA
 
-Requiring a user to solve a CAPTCHA for each login attempt can help to prevent automated login attempts, which would significantly slow down a credential stuffing or password spraying attack. However, CAPTCHAs are not perfect, and in many cases tools or services exist that can be used to break them with a reasonably high success rate.  Abnormally high CAPTCHA solve rates may also indicate the use of an automated CAPTCHA breaking technology.
+Requiring a user to solve a CAPTCHA for each login attempt can help to prevent automated login attempts, and may slow down credential stuffing or password spraying attacks.  However, CAPTCHAs are not perfect, and in many cases tools or services exist that can be used to break them with a reasonably high success rate.  Monitoring CAPTCHA solve rates may help identify automated CAPTCHA breaking technology, likely indicated by abnormally high solve rates, or impact to good users.
 
-To improve usability, it may be desirable to only require the user solve a CAPTCHA when the login request is considered suspicious, using the same criteria discussed above.
+To improve usability, it may be desirable to only require the user solve a CAPTCHA when the login request is considered suspicious, using the same criteria discussed in the MFA section.
 
 ### IP Mitigation and Intelligence
 
-Blocking IP addresses serves to establish upper limits on credential stuffing abuse, and may be sufficient to stop less sophisticated attacks.  It is more effective, however, to have a graduated response to abuse that increases the severity of mitigation measures depending on different factors of the attack.  Any logic that places an IP address on a mitigation list (including blocking) should consider both short (i.e. burst) and longer ('low and slow') time periods, and not rely soley on a single predicatble volume limit.  Several examples that should be considered:
+Blocking IP addresses may be sufficent to stop less sophisticated attacks and serves to establish upper limits on credential stuffing abuse.  It is more effective, however, to have a graduated response to abuse that increases the severity of mitigation measures depending on different factors of the attack. In order to reduce the likelihood of permanently blocking legitimate users, IP addresses blocking should typically only be temporary. 
 
-- A single IP address exceeds a 20 authentication requests in 1 minute limit.  This is a burst behavior.
-- 100 IP addresses generate 4 authentication requests per minute, and after 25 minutes each IP has generated 100 authentaction requests.  This is an example of using low request volume across a high volume of IP addresses.
-- A single IP address generates 90 authentication requests in 5 minutes.  While it did not breach an arbitrary limit, the minute to minute volume remained consistent (18 per minute) and was statistically higher volume than similar IP addresses.
+Any logic that places an IP address on a mitigation list (including blocking and CAPTCHA) should consider a multitude of abuse scenarios, and not rely on a single predicatble volume limit.  Short (i.e. burst) and long time periods should be considered, as well as high request volume and instances where one IP address, likely in concert with many other IP addresses, generates small but consistent volumes of traffic.  Additionally, blocking should consider factors such as IP address classification (ex: residential vs hosting) and geolocation.  
 
-Typically, IP addresses blocking should only be temporary, in order to reduce the likelihood of permanently blocking legitimate users, and should consider factors such as IP address classification (ex: residential vs hosting) and geolocation.  Separate from blocking network connections, consider storing an account's IP address authentication history, and if a recent IP address is added to a block list, take appropriate action such as locking the account and notifying the user.
+Separate from blocking network connections, consider storing an account's IP address authentication history.  In case a recent IP address is added to a block list, it may be appropriate to lock the account and notify the user.
 
-However, many credential stuffing toolkits offer built-in use of proxy networks to distribute requests across a large volume of unique IP addressess.  This may defeat both IP block-lists and rate limiting, as per IP request volume may remain relatively low, even on high volume attacks.  Correlating authentication traffic with proxy and similar IP address intelligence, as well as hosting provider IP address ranges can help identify highly distributed credential stuffing attacks, as well as serve as a mitigation trigger.  For example, every request originating from a hosting provider could be required to solve CAPTCHA.
+Many credential stuffing toolkits offer built-in use of proxy networks to distribute requests across a large volume of unique IP addressess.  This may defeat both IP block-lists and rate limiting, as per IP request volume may remain relatively low, even on high volume attacks.  Correlating authentication traffic with proxy and similar IP address intelligence, as well as hosting provider IP address ranges can help identify highly distributed credential stuffing attacks, as well as serve as a mitigation trigger.  For example, every request originating from a hosting provider could be required to solve CAPTCHA.
 
-There are both public and commercial sources of IP address intellignece and classification that may be leveraged as data sources for this purpose, and some hosting providers publish their own IP address space, such as [AWS](https://docs.aws.amazon.com/vpc/latest/userguide/aws-ip-ranges.html).
+There are both public and commercial sources of IP address intelligence and classification that may be leveraged as data sources for this purpose.  Additionally, some hosting providers publish their own IP address space, such as [AWS](https://docs.aws.amazon.com/vpc/latest/userguide/aws-ip-ranges.html).
 
 ### Device Fingerprinting
 
@@ -92,7 +90,7 @@ It should be noted that as all this information is provided by the client, it ca
 
 ### Connection Fingerprinting
 
-Similar to device fingerprinting, there are numerous fingerprinting techniques available for network connections.  Some examples include [JA3](https://github.com/salesforce/ja3), HTTP/2 fingerprinting and HTTP header order.  As these techniques typically focus on how a connection is made, connection fingerprinting may provide more accurate results than other defenses that rely on an indicator, such as an IP address, or request payload, such as user agent string.
+Similar to device fingerprinting, there are numerous fingerprinting techniques available for network connections.  Some examples include [JA3](https://github.com/salesforce/ja3), HTTP/2 fingerprinting and HTTP header order.  As these techniques typically focus on how a connection is made, connection fingerprinting may provide more accurate results than other defenses that rely on an indicator, such as an IP address, or request data, such as user agent string.
 
 Connection fingerprinting may also be used in conjunction with other defenses to ascertain the truthfulness of an authentication request.  For example, if the user agent header and device fingerprint indicates a mobile device, but the connection fingerprint indicates a Python script, the request is likely suspect.
 
@@ -116,9 +114,9 @@ Please note that blocking visitors who have JavaScript disabled will reduce the 
 
 ### Degredation
 
-A more aggresive defense against credential stuffing is to implement measures that increase the amount of time the attack takes to complete.  This may include incrementally increasing the complexity of the Javascript response in the prior step, introducing long wait periods before responding to requests, returning overly large HTML assets or returning randomized error messages.  
+A more aggresive defense against credential stuffing is to implement measures that increase the amount of time the attack takes to complete.  This may include incrementally increasing the complexity of the Javascript response required, introducing long wait periods before responding to requests, returning overly large HTML assets or returning randomized error messages.  
 
-Great care must be taken with this type of defense, but may be required to help mitigate more sophisticated credential stuffing attacks.
+Due to their potential for good user impact, great care must be taken with this type of defense, but this type of defense may be required to help mitigate more sophisticated credential stuffing attacks.
 
 ### Identifying Leaked Passwords
 
