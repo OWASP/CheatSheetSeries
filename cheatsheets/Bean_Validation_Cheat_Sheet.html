@@ -2789,11 +2789,11 @@
 <li><code>@Email</code></li>
 <li><code>@Length</code></li>
 <li><code>@Range</code></li>
-<li><code>@SafeHtml</code></li>
 <li><code>@ScriptAssert</code></li>
 <li><code>@URL</code></li>
 </ul>
 <p>Take a look at this <a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#table-custom-constraints">table</a> for the complete list.</p>
+<p>Note that <code>@SafeHtml</code>, a previously valid constraint, has been deprecated according to the <a href="https://in.relation.to/2019/11/20/hibernate-validator-610-6018-released/">Hibernate Validator 6.1.0.Final and 6.0.18.Final release blogpost</a>. Please refrain from using the <code>@SafeHtml</code> constraint.</p>
 <h2 id="custom-constraints">Custom Constraints<a class="headerlink" href="#custom-constraints" title="Permanent link">&para;</a></h2>
 <p>One of the most powerful features of bean validation is the ability to define your own constraints that go beyond the simple validation offered by built-in constraints.</p>
 <p>Creating custom constraints is beyond the scope of this guide. Please see this <a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch06.html">documentation</a>.</p>
