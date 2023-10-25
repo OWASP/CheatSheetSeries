@@ -448,11 +448,12 @@ In addition to providing the complete set of JSR303 constraints, Hibernate Valid
 - `@Email`
 - `@Length`
 - `@Range`
-- `@SafeHtml`
 - `@ScriptAssert`
 - `@URL`
 
 Take a look at this [table](https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#table-custom-constraints) for the complete list.
+
+Note that `@SafeHtml`, a previously valid constraint, has been deprecated according to the [Hibernate Validator 6.1.0.Final and 6.0.18.Final release blogpost](https://in.relation.to/2019/11/20/hibernate-validator-610-6018-released/). Please refrain from using the `@SafeHtml` constraint.
 
 ## Custom Constraints
 
