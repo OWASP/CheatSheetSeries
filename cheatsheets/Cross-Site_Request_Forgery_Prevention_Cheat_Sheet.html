@@ -737,6 +737,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#cookie-to-header-token" class="md-nav__link">
+    Cookie-to-header token
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#double-submit-cookie" class="md-nav__link">
     Double Submit Cookie
   </a>
@@ -2516,6 +2523,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#cookie-to-header-token" class="md-nav__link">
+    Cookie-to-header token
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#double-submit-cookie" class="md-nav__link">
     Double Submit Cookie
   </a>
@@ -2852,6 +2866,22 @@
 <span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
 </code></pre></div>
 <p>Inserting the CSRF token in a custom HTTP request header via JavaScript is considered more secure than adding the token in the hidden field form parameter because requests with custom headers are automatically subject to the same-origin policy.</p>
+<h3 id="cookie-to-header-token">Cookie-to-header token<a class="headerlink" href="#cookie-to-header-token" title="Permanent link">&para;</a></h3>
+<p>Web applications that use JavaScript for the majority of their operations may use the following anti-CSRF technique:</p>
+<p>On an initial visit without an associated server session, the web application sets a cookie. The cookie typically contains a random token which may remain the same for up to the life of the web session.</p>
+<div class="highlight"><pre><span></span><code>Set-Cookie: __Host-csrf_token=i8XNjC4b8KVok4uw5RftR38Wgp2BFwql; Expires=Thu, 23-Jul-2015 10:25:33 GMT; Max-Age=31449600; Path=/; SameSite=Lax; Secure
+</code></pre></div>
+<p>JavaScript operating on the client side reads its value and copies it into a custom HTTP header sent with each transactional request.</p>
+<div class="highlight"><pre><span></span><code>X-Csrf-Token: i8XNjC4b8KVok4uw5RftR38Wgp2BFwql
+</code></pre></div>
+<p>The server validates presence and integrity of the token.</p>
+<p>The security of this technique is based on the assumption that only JavaScript running on the client side of an HTTPS connection to the server that initially set the cookie will be able to read the cookie's value. JavaScript running from a rogue file or email should not be able to read the cookie value to copy into the custom header. Even though the csrf-token cookie may be automatically sent with the rogue request, subject to the cookies SameSite policy, the server will still expect a valid X-Csrf-Token header.</p>
+<p>The CSRF token itself should be unique and unpredictable. It may be generated randomly, or it may be derived from the session token using HMAC:</p>
+<div class="highlight"><pre><span></span><code>csrf_token = HMAC(session_token, application_secret)
+</code></pre></div>
+<p>The CSRF token cookie must not have httpOnly flag, as it is intended to be read by JavaScript by design.</p>
+<p>This technique is implemented by many frameworks, such as <a href="https://docs.djangoproject.com/en/4.2/howto/csrf/#using-csrf-protection-with-ajax">Django</a> and <a href="https://angular.io/guide/http-security-xsrf-protection">Angular</a>. Because the token remains constant over the whole user session, it works well with AJAX applications, but does not enforce sequence of events in the web application.</p>
+<p>The protection provided by this technique can be thwarted if the target website disables its same-origin policy.</p>
 <h3 id="double-submit-cookie">Double Submit Cookie<a class="headerlink" href="#double-submit-cookie" title="Permanent link">&para;</a></h3>
 <p>If maintaining the state for CSRF token on the server is problematic, you can use an alternative technique known as the Double Submit Cookie pattern. This technique is easy to implement and is stateless. There are different ways to implement this technique, where the <em>naive</em> pattern is the most commonly used variation.</p>
 <h4 id="naive-double-submit-cookie">Naive Double Submit Cookie<a class="headerlink" href="#naive-double-submit-cookie" title="Permanent link">&para;</a></h4>
