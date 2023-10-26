@@ -59,6 +59,38 @@ For example:
 
 Inserting the CSRF token in a custom HTTP request header via JavaScript is considered more secure than adding the token in the hidden field form parameter because requests with custom headers are automatically subject to the same-origin policy.
 
+### Cookie-to-header token
+
+Web applications that use JavaScript for the majority of their operations may use the following anti-CSRF technique:
+
+On an initial visit without an associated server session, the web application sets a cookie. The cookie typically contains a random token which may remain the same for up to the life of the web session.
+
+```
+Set-Cookie: __Host-csrf_token=i8XNjC4b8KVok4uw5RftR38Wgp2BFwql; Expires=Thu, 23-Jul-2015 10:25:33 GMT; Max-Age=31449600; Path=/; SameSite=Lax; Secure
+```
+
+JavaScript operating on the client side reads its value and copies it into a custom HTTP header sent with each transactional request.
+
+```
+X-Csrf-Token: i8XNjC4b8KVok4uw5RftR38Wgp2BFwql
+```
+
+The server validates presence and integrity of the token.
+
+The security of this technique is based on the assumption that only JavaScript running on the client side of an HTTPS connection to the server that initially set the cookie will be able to read the cookie's value. JavaScript running from a rogue file or email should not be able to read the cookie value to copy into the custom header. Even though the csrf-token cookie may be automatically sent with the rogue request, subject to the cookies SameSite policy, the server will still expect a valid X-Csrf-Token header.
+
+The CSRF token itself should be unique and unpredictable. It may be generated randomly, or it may be derived from the session token using HMAC:
+
+```
+csrf_token = HMAC(session_token, application_secret)
+```
+
+The CSRF token cookie must not have httpOnly flag, as it is intended to be read by JavaScript by design.
+
+This technique is implemented by many frameworks, such as [Django](https://docs.djangoproject.com/en/4.2/howto/csrf/#using-csrf-protection-with-ajax) and [Angular](https://angular.io/guide/http-security-xsrf-protection). Because the token remains constant over the whole user session, it works well with AJAX applications, but does not enforce sequence of events in the web application.
+
+The protection provided by this technique can be thwarted if the target website disables its same-origin policy.
+
 ### Double Submit Cookie
 
 If maintaining the state for CSRF token on the server is problematic, you can use an alternative technique known as the Double Submit Cookie pattern. This technique is easy to implement and is stateless. There are different ways to implement this technique, where the _naive_ pattern is the most commonly used variation.
