@@ -1,0 +1,19 @@
+@startuml
+
+() request as "Request to \n"".well-known/jwks.json"""
+
+node api1 as "API 1"
+node api2 as "API 2"
+node api3 as "API 3"
+node api4 as "API 4"
+database redis as "Redis (Or other DB)"
+
+api1 --> redis : Pub (S)
+api2 --> redis : Pub (S)
+api3 --> redis : Pub (S)
+api4 --> redis : Pub (S)
+
+request --> api4 : ""{"keys":[\n\t\t{"kid": "kidnode1"...},\n\t\t{"kid": "kidnode2"...},\n\t\t{"kid": "kidnode3"...},\n\t\t{"kid": "kidnode4"...}\n]}""
+api4 <-- redis : Read all Public Keys
+
+@enduml

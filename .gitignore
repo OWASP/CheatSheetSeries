@@ -13,3 +13,5 @@ package-lock.json
 yarn.lock
 venv
 /.idea
+/.kdev4/CheatSheetSeries.kdev4
+/CheatSheetSeries.kdev4

@@ -46,4 +46,3 @@ console.log(protectedHeader)
 console.log(payload)
 ```
 <!-- --8<-- [end:jose] -->
-

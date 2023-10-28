@@ -23,6 +23,24 @@ This token is created during authentication (is provided in case of successful a
  all of this in a stateless and portable approach (portable in the way that client and server technologies can be
  different including also the transport channel even if HTTP is the most often used).
 
+
+### Verification
+
+Your application, absolutely should verify that the tokens it recieves are valid. You can do this with a symmetric scheme, where
+a secret between all parties out of band. For more on how to manage secrets please refer to the [secrets management cheat sheet](Secrets_Management_Cheat_Sheet.md). Or you can use an asymmetric key to signe your tokens.  you have the option of signing your
+tokens with a centrally signed certificate but, a system [Json Web Key Sets](https://datatracker.ietf.org/doc/html/rfc7517) a
+reasonably well supported system that integrates well with most JWT libraries and allows you the benefits of asymmetric encryption
+while being able to take advantage of modern TLS solutions that prevent your application from needing access to the same certificate
+that's encrypting traffic in transit. There are concerns on how to do this with multi-node systems; but in general use of a data
+store like redis can be used to keep track of the largely ephemeral keys you would create.
+
+![JWKS Multi-Node](../assets/JWTCSA/jwks.png)
+
+### JWKS Startup Examples
+
+=== "Python Example (`jwcrypto`)"
+    --8<-- "JWTCSA/1-jwks.md:jwcrypto"
+
 ## Token Structure
 
 Token structure example taken from [JWT.IO](https://jwt.io/#debugger):
@@ -177,7 +195,13 @@ Use a publicly signed certificate to sign jwts and check for certificate revocat
 
 ### Validate Common Claims
 
-TODO
+So you have a REST or similar api, it accepts JWTs. How to you validate both A, that the jwt is who it says it's from and B, that
+the things in the JWT are nominally "correct". There's a couple of options..
+
+#### Identity Verification Symmetric vs. Asymmetric
+
+
+
 
 ### Implement Buisness Logic post Validation
 
