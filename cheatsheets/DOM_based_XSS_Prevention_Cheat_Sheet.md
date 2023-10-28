@@ -7,7 +7,7 @@ When looking at XSS (Cross-Site Scripting), there are three generally recognized
 - [Reflected or Stored](https://owasp.org/www-community/attacks/xss/#stored-and-reflected-xss-attacks)
 - [DOM Based XSS](https://owasp.org/www-community/attacks/DOM_Based_XSS).
 
-The [XSS Prevention Cheatsheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md) does an excellent job of addressing Reflected and Stored XSS. This cheatsheet addresses DOM (Document Object Model) based XSS and is an extension (and assumes comprehension of) the [XSS Prevention Cheatsheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md).
+The [XSS Prevention Cheatsheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md) does an excellent job of addressing Reflected and Stored XSS. This cheatsheet addresses DOM (Document Object Model) based XSS and is an extension (and assumes comprehension) of the [XSS Prevention Cheatsheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md).
 
 In order to understand DOM based XSS, one needs to see the fundamental difference between Reflected and Stored XSS when compared to DOM based XSS. The primary difference is where the attack is injected into the application.
 

@@ -29,10 +29,10 @@ Application logging might also be used to record other types of events too such 
 - Performance monitoring e.g. data load time, page timeouts
 - Compliance monitoring
 - Data for subsequent requests for information e.g. data subject access, freedom of information, litigation, police and other regulatory investigations
-- Legally sanctioned interception of data e.g application-layer wire-tapping
+- Legally sanctioned interception of data e.g. application-layer wire-tapping
 - Other business-specific requirements
 
-Process monitoring, audit and transaction logs/trails etc are usually collected for different purposes than security event logging, and this often means they should be kept separate.
+Process monitoring, audit, and transaction logs/trails etc. are usually collected for different purposes than security event logging, and this often means they should be kept separate.
 
 The types of events and details collected will tend to be different.
 
@@ -40,7 +40,7 @@ For example a [PCIDSS](https://www.pcisecuritystandards.org/pci_security/) audit
 
 Use knowledge of the intended purposes to guide what, when and how much. The remainder of this cheat sheet primarily discusses security event logging.
 
-## Design, implementation and testing
+## Design, implementation, and testing
 
 ### Event data sources
 
@@ -76,14 +76,14 @@ This could be a centralized log collection and management system (e.g. SIEM or S
 - When using the file system, it is preferable to use a separate partition than those used by the operating system, other application files and user generated content
     - For file-based logs, apply strict permissions concerning which users can access the directories, and the permissions of files within the directories
     - In web applications, the logs should not be exposed in web-accessible locations, and if done so, should have restricted access and be configured with a plain text MIME type (not HTML)
-- When using a database, it is preferable to utilize a separate database account that is only used for writing log data and which has very restrictive database , table, function and command permissions
+- When using a database, it is preferable to utilize a separate database account that is only used for writing log data and which has very restrictive database, table, function and command permissions
 - Use standard formats over secure protocols to record and send event data, or log files, to other systems e.g. Common Log File System (CLFS) or Common Event Format (CEF) over syslog; standard formats facilitate integration with centralised logging services
 
 Consider separate files/tables for extended event information such as error stack traces or a record of HTTP request and response headers and bodies.
 
 ### Which events to log
 
-The level and content of security monitoring, alerting and reporting needs to be set during the requirements and design stage of projects, and should be proportionate to the information security risks. This can then be used to define what should be logged.
+The level and content of security monitoring, alerting, and reporting needs to be set during the requirements and design stage of projects, and should be proportionate to the information security risks. This can then be used to define what should be logged.
 
 There is no one size fits all solution, and a blind checklist approach can lead to unnecessary "alarm fog" that means real problems go undetected.
 
@@ -96,7 +96,7 @@ Where possible, always log:
 - Session management failures e.g. cookie session identification value modification
 - Application errors and system events e.g. syntax and runtime errors, connectivity problems, performance issues, third party service error messages, file system errors, file upload virus detection, configuration changes
 - Application and related systems start-ups and shut-downs, and logging initialization (starting, stopping or pausing)
-- Use of higher-risk functionality e.g. network connections, addition or deletion of users, changes to privileges, assigning users to tokens, adding or deleting tokens, use of systems administrative privileges, access by application administrators,all actions by users with administrative privileges, access to payment cardholder data, use of data encrypting keys, key changes, creation and deletion of system-level objects, data import and export including screen-based reports, submission of user-generated content - especially file uploads
+- Use of higher-risk functionality e.g. network connections, addition or deletion of users, changes to privileges, assigning users to tokens, adding or deleting tokens, use of systems administrative privileges, access by application administrators, all actions by users with administrative privileges, access to payment cardholder data, use of data encrypting keys, key changes, creation and deletion of system-level objects, data import and export including screen-based reports, submission of user-generated content - especially file uploads
 - Legal and other opt-ins e.g. permissions for mobile phone capabilities, terms of use, terms & conditions, personal data usage consent, permission to receive marketing communications
 
 Optionally consider if the following events can be logged and whether it is desirable information:
@@ -105,7 +105,7 @@ Optionally consider if the following events can be logged and whether it is desi
 - Excessive use
 - Data changes
 - Fraud and other criminal activities
-- Suspicious, unacceptable or unexpected behavior
+- Suspicious, unacceptable, or unexpected behavior
 - Modifications to configuration
 - Application code file and/or memory changes
 
@@ -155,17 +155,17 @@ Additionally consider recording:
 
 For more information on these, see the "other" related articles listed at the end, especially the comprehensive article by Anton Chuvakin and Gunnar Peterson.
 
-**Note A:** The "Interaction identifier" is a method of linking all (relevant) events for a single user interaction (e.g. desktop application form submission, web page request, mobile app button click, web service call). The application knows all these events relate to the same interaction, and this should be recorded instead of losing the information and forcing subsequent correlation techniques to re-construct the separate events. For example a single SOAP request may have multiple input validation failures and they may span a small range of times. As another example, an output validation failure may occur much later than the input submission for a long-running "saga request" submitted by the application to a database server.
+**Note A:** The "Interaction identifier" is a method of linking all (relevant) events for a single user interaction (e.g. desktop application form submission, web page request, mobile app button click, web service call). The application knows all these events relate to the same interaction, and this should be recorded instead of losing the information and forcing subsequent correlation techniques to re-construct the separate events. For example, a single SOAP request may have multiple input validation failures and they may span a small range of times. As another example, an output validation failure may occur much later than the input submission for a long-running "saga request" submitted by the application to a database server.
 
 **Note B:** Each organisation should ensure it has a consistent, and documented, approach to classification of events (type, confidence, severity), the syntax of descriptions, and field lengths & data types including the format used for dates/times.
 
 ### Data to exclude
 
-Never log data unless it is legally sanctioned. For example intercepting some communications, monitoring employees, and collecting some data without consent may all be illegal.
+Never log data unless it is legally sanctioned. For example, intercepting some communications, monitoring employees, and collecting some data without consent may all be illegal.
 
 Never exclude any events from "known" users such as other internal systems, "trusted" third parties, search engine robots, uptime/process and other remote monitoring systems, pen testers, auditors. However, you may want to include a classification flag for each of these in the recorded data.
 
-The following should usually not be recorded directly in the logs, but instead should be removed, masked, sanitized, hashed or encrypted:
+The following should usually not be recorded directly in the logs, but instead should be removed, masked, sanitized, hashed, or encrypted:
 
 - Application source code
 - Session identification values (consider replacing with a hashed value if needed to track session specific events)
@@ -202,7 +202,7 @@ It may be desirable to be able to alter the level of logging (type of events bas
 
 ### Event collection
 
-If your development framework supports suitable logging mechanisms use, or build upon that. Otherwise, implement an application-wide log handler which can be called from other modules/components.
+If your development framework supports suitable logging mechanisms, use or build upon that. Otherwise, implement an application-wide log handler which can be called from other modules/components.
 
 Document the interface referencing the organisation-specific event classification and description syntax requirements.
 
@@ -211,13 +211,13 @@ If possible create this log handler as a standard module that can be thoroughly 
 - Perform input validation on event data from other trust zones to ensure it is in the correct format (and consider alerting and not logging if there is an input validation failure)
 - Perform sanitization on all event data to prevent log injection attacks e.g. carriage return (CR), line feed (LF) and delimiter characters (and optionally to remove sensitive data)
 - Encode data correctly for the output (logged) format
-- If writing to databases, read, understand and apply the SQL injection cheat sheet
+- If writing to databases, read, understand, and apply the SQL injection cheat sheet
 - Ensure failures in the logging processes/systems do not prevent the application from otherwise running or allow information leakage
 - Synchronize time across all servers and devices `Note C`
 
-**Note C:** This is not always possible where the application is running on a device under some other party's control (e.g. on an individual's mobile phone, on a remote customer's workstation which is on another corporate network). In these cases attempt to measure the time offset, or record a confidence level in the event timestamp.
+**Note C:** This is not always possible where the application is running on a device under some other party's control (e.g. on an individual's mobile phone, on a remote customer's workstation which is on another corporate network). In these cases, attempt to measure the time offset, or record a confidence level in the event timestamp.
 
-Where possible record data in a standard format, or at least ensure it can be exported/broadcast using an industry-standard format.
+Where possible, record data in a standard format, or at least ensure it can be exported/broadcast using an industry-standard format.
 
 In some cases, events may be relayed or collected together in intermediate points. In the latter some data may be aggregated or summarized before forwarding on to a central repository and analysis system.
 
@@ -226,8 +226,8 @@ In some cases, events may be relayed or collected together in intermediate point
 Logging functionality and systems must be included in code review, application testing and security verification processes:
 
 - Ensure the logging is working correctly and as specified
-- Check events are being classified consistently and the field names, types and lengths are correctly defined to an agreed standard
-- Ensure logging is implemented and enabled during application security, fuzz, penetration and performance testing
+- Check that events are being classified consistently and the field names, types and lengths are correctly defined to an agreed standard
+- Ensure logging is implemented and enabled during application security, fuzz, penetration, and performance testing
 - Test the mechanisms are not susceptible to injection attacks
 - Ensure there are no unwanted side-effects when logging occurs
 - Check the effect on the logging mechanisms when external network connectivity is lost (if this is usually required)
@@ -250,7 +250,7 @@ The service responsible for collecting IT events, including security events, is 
 
 - BACKEND 2 (log storage)
 - MIDDLEWARE 3 - 2 applications:
-    - log loader application that download log from storage, pre-processes and transfer to UI
+    - log loader application that download log from storage, pre-processes, and transfer to UI
     - log collector that accepts logs from business applications, other infrastructure, cloud applications and saves in log storage
 - FRONTEND 2 (UI for viewing business service event logs)
 - FRONTEND 3 (applications that receive logs from cloud applications and transfer logs to log collector)
@@ -284,7 +284,7 @@ In addition, the collected information in the logs may itself have business valu
 
 This data may be held on end devices, at intermediate points, in centralized repositories and in archives and backups.
 
-Consider whether parts of the data may need to be excluded, masked, sanitized, hashed or encrypted during examination or extraction.
+Consider whether parts of the data may need to be excluded, masked, sanitized, hashed, or encrypted during examination or extraction.
 
 At rest:
 
@@ -303,7 +303,7 @@ See `NIST SP 800-92` Guide to Computer Security Log Management for more guidance
 
 ### Monitoring of events
 
-The logged event data needs to be available to review and there are processes in place for appropriate monitoring, alerting and reporting:
+The logged event data needs to be available to review and there are processes in place for appropriate monitoring, alerting, and reporting:
 
 - Incorporate the application logging into any existing log management systems/infrastructure e.g. centralized logging and analysis systems
 - Ensure event information is available to appropriate teams

@@ -226,15 +226,97 @@ Cloud service companies offer a range of simple and advanced DDoS protection pro
 
 The decision to enable advanced DDoS protections for a specific application should be based off risk and business criticality of application, taking into account mitigating factors and cost (these services can be very inexpensive compared to large company budgets).
 
-## Self-managed tooling maintenance
+## Shared Responsibility Model
 
-Cloud providers generally offer tooling on a spectrum of management. Fully managed services leave very little for the end developer to handle besides coding functionality, while self-managed systems require much more overhead to maintain.
+The Shared Responsibility Model is a framework for cloud service providers (CSPs) and those selling cloud based services to properly identify and segment the responsibilities of the developer and the provider. This is broken down into different levels of control, corresponding to different elements/layers of the technology stack. Generally, components like physical computing devices and data center space are the responsibility of the CSP. Depending on the level of [management](#self-managed-tooling), the developer could be responsible for the entire stack from operating system on up, or only for some ancillary functionality, code or administration.
 
-### Update Strategy for Self-managed Services
+This responsiblitity model is often categorized into three levels of service called:
+
+- Infrastructure as a Service ([IaaS](#iaas))
+- Platform as a Service ([PaaS](#paas))
+- Software as a Service ([SaaS](#saas))
+
+*Many other service classifications exist, but aren't listed for simplicity and brevity.*
+
+As each name indicates, the level of responsibility the CSP assumes is the level of "service" they provide. Each level provides its own set of pros and cons, discussed below.
+
+### IaaS
+
+In the case of IaaS, the infrastructure is maintained by the CSP, while everything else is maintained by the developer. This includes:
+
+- Authentication and authorization
+- Data storage, access and management
+- Certain networking tasks (ports, NACLs, etc)
+- Application software
+
+This model favors developer configurability and flexibility, while being more complex and generally higher cost than other service models. It also most closely resembles on premise models which are waning in favor with large companies. Because of this, it may be easier to migrate certain applications to cloud IaaS, than to re-architect with a more cloud native architecture.
+
+|             Pros             |            Cons           |
+|:----------------------------:|:-------------------------:|
+| Control over most components |        Highest cost       |
+|   High level of flexilibity  | More required maintenance |
+| Easy transition from on-prem |  High level of complexity |
+
+**Responsibility is held almost exclusively by the developer, and must be secured as such**. Everything, from network access control, operating system vulnerabilities, application vulnerabilities, data access, and authentication/authorization must be considered when developing an IaaS security strategy. Like described above, this offers a high level of control across almost everything in the technology stack, but can be very difficult to maintain without adequate resources going to tasks like version upgrades or end of life migrations. *([Self-managed security updates](#update-strategy-for-self-managed-services) are discussed in greater detail below.)*
+
+### PaaS
+
+Platform as a Service is in the middle between IaaS and SaaS. The developer controls:
+
+- Application authentication and authorization
+- Application software
+- External data storage
+
+It provides neatly packaged code hosting and containerized options, which allow smaller development teams or less experienced developers a way to get started with their applications while ignoring more complex or superfluous computing tasks. It is generally less expensive than IaaS, while still retaining some control over elements that a SaaS system does not provide. However, developers could have problems with the specific limitations of the offering used, or issues with compatability, as the code must work with the correct container, framework or language version.
+
+Also, while scalability is very dependent on provider and setup, PaaS usually provides higher scalability due to containerization options and common, repeatable base OS systems. Compared to IaaS, where scalability must be built by the developer, and SaaS, where the performance is very platform specific.
+
+|              Pros              |              Cons              |
+|:------------------------------:|:------------------------------:|
+| Easier to onboard and maintain | Potential compatability issues |
+|       Better scalability       |  Offering specific limitations |
+
+Manual security in PaaS solutions is similary less extensive (compared to IaaS). Application specific authentication and authorization must still be handled by the developer, along with any access to external data systems. However, the CSP is responsible for securing containerized instances, operating systems, ephemeral files systems, and certain networking controls.
+
+### SaaS
+
+The Software as a Service model is identified by a nearly complete product, where the end user only has to configure or customize small details in order to meet their needs. The user generally controls:
+
+- Configuration, administration and/or code within the product's boundaries
+- Some user access, such as designating administrators
+- High level connections to other products, through permissions or integrations
+
+The entire technology stack is controlled by the provider (cloud service or other software company), and the developer will only make relatively small tweaks to meet custom needs. This limits cost and maintenance, and problems can typically be solved with a provider's customer support, as opposed to needing technical knowledge to troubleshoot the whole tech stack.
+
+|               Pros               |                Cons                |
+|:--------------------------------:|:----------------------------------:|
+|          Low maintenance         | Restricted by provider constraints |
+|            Inexpensive           |           Minimal control          |
+| Customer support/troubleshooting |      Minimal insight/oversight     |
+
+Security with SaaS is simultaneously the easiest and most difficult, due to the lack of control expressed above. A developer will only have to manage a small set of security functions, like some access controls, the data trust/sharing relationship with integrations, and any security implications of customizations. All other layers of security are controlled by the provider. This means that any security fixes will be out of the developer's hands, and therefore could be handled in a untimely manner, or not to a satisfactory level of security for an end user (depending on security needs). However, such fixes won't require end user involvement and resources, making them easier from the perspective of cost and maintenance burden.
+
+*Note: When looking for SaaS solutions, consider asking for a company's attestation records and proof of compliance to standards like [ISO 27,001](https://www.iso.org/standard/27001). Listed below are links to each of the major CSPs' attestation sites for additional understanding.*
+
+- [GCP](https://cloud.google.com/security/compliance/offerings)
+- [AWS](https://docs.aws.amazon.com/whitepapers/latest/gxp-systems-on-aws/aws-certifications-and-attestations.html)
+- [Azure](https://learn.microsoft.com/en-us/azure/compliance/offerings/)
+
+### Self-managed tooling
+
+Another way to describe this shared responsibility model more generically is by categorizing cloud tooling on a spectrum of "management". Fully managed services leave very little for the end developer to handle besides some coding or administrative functionality (SaaS), while self-managed systems require much more overhead to maintain (IaaS).
+
+AWS provides an excellent example of this difference in management, identifying where some of their different products fall onto different points in the spectrum.
+
+![Shared Responsibility Model](../assets/Secure_Cloud_Architecture_Shared_Responsibility_Model.png)
+
+*Note: It is hard to indicate exactly which offerings are considered what type of service (Ex: IaaS vs PaaS). Developers should look to understand the model which applies to the specific tool they are using.*
+
+#### Update Strategy for Self-managed Services
 
 Self-managed tooling will require additional overhead by developers and support engineers. Depending on the tool, basic version updates, upgrades to images like [AMIs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html) or [Compute Images](https://cloud.google.com/compute/docs/images), or other operating system level maintence will be required. Use automation to regularly update minor versions or [images](https://docs.aws.amazon.com/systems-manager/latest/userguide/automation-tutorial-update-patch-golden-ami.html), and schedule time in development cycles for refreshing stale resources.
 
-### Avoid Gaps in Managed Service Security
+#### Avoid Gaps in Managed Service Security
 
 Managed services will offer some level of security, like updating and securing the underlying hardware which runs application code. However, the development team are still responsible for many aspects of security in the system. Ensure developers understand what security will be their responsibility based on tool selection. Likely the following will be partially or wholly the responsibility of the developer:
 
