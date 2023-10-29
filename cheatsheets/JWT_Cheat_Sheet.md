@@ -198,14 +198,22 @@ Use a publicly signed certificate to sign jwts and check for certificate revocat
 So you have a REST or similar api, it accepts JWTs. How to you validate both A, that the jwt is who it says it's from and B, that
 the things in the JWT are nominally "correct". There's a couple of options..
 
-#### Identity Verification Symmetric vs. Asymmetric
+We'd like to see the following claims be included in our standard:
 
-
-
+| Claim | Name | Example |
+|:------|:-----|:-------------------|
+| `iss` | Issuer Claim | `requestingapplication.example.com` |
+| `sub` | Subject Claim | * `user@application.example.com`<br>* `system`<br>* `user@useremail.com`|
+| `aud` | Audience Claim | `targetapplication.example.com` |
+| `exp` | Expiration Time Claim | unix timestamp |
+| `nbf` | Not Before Claim | unix timestamp |
+| `iat` | Issued At Claim | unix timestamp |
 
 ### Implement Buisness Logic post Validation
 
 TODO
+
+Discuss a moving target towards OIDC claims.
 
 ## Further Reading
 

@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # Verification
 
 ## `None` Examples

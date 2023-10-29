@@ -1,3 +1,8 @@
+---
+search:
+  exclude: true
+---
+
 # JWKS
 
 ## Generating a JWKS Key
