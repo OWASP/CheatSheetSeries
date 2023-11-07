@@ -2,9 +2,7 @@
 
 ## Introduction
 
-This cheatsheet covers defences against two common types of authentication-related attacks: credential stuffing and password spraying. Although these are separate, distinct attacks, in many cases the defences that would be implemented to protect against them are the same, and they would also be effective at protecting against brute-force attacks. 
-
-A summary of these different attacks is listed below:
+This cheatsheet covers defences against two common types of authentication-related attacks: credential stuffing and password spraying. Although these are separate, distinct attacks, in many cases the defences that would be implemented to protect against them are the same, and they would also be effective at protecting against brute-force attacks.  A summary of these different attacks is listed below:
 
 | Attack Type | Description |
 |-------------|-------------|
@@ -21,7 +19,7 @@ In order to balance security and usability, multi-factor authentication can be c
 - A new browser/device or IP address.
 - An unusual country or location.
 - Specific countries that are considered untrusted or typically do not contain users of a service.
-- An IP address that appears on known block lists or is associated with anonymization services, such as VPN services.
+- An IP address that appears on known block lists or is associated with anonymization services, such as proxy or VPN services.
 - An IP address that has tried to login to multiple accounts.
 - A login attempt that appears to be scripted rather than manual.
 
@@ -35,9 +33,9 @@ Where an application has multiple user roles, it may be appropriate to implement
 
 ## Defense in Depth & Metrics
 
-While not a specific technique, it is important to implement defenses that consider the impact of individual defenses being defeated or otherwise _failing_.  As an example, client-side defenses, such as device fingerprinting or Javascript challenges, may be spoofed and other layers of defense should be implemented to account for this.
+While not a specific technique, it is important to implement defenses that consider the impact of individual defenses being defeated or otherwise failing.  As an example, client-side defenses, such as device fingerprinting or Javascript challenges, may be spoofed or bypassed and other layers of defense should be implemented to account for this.
 
-Additionally, each defense layer should generate metrics regarding overall volume, including both detected and mitigated attack volume and allow for filtering on fields such as IP address.  Monitoring and analyzing these metrics may help identify defense failures or the presence of unidentified attacks, as well as the impact of new or improved defenses.
+Additionally, each defense layer should generate metrics regarding authentication request volume as a detective control. Ideally the metrics will include both detected and mitigated attack volume and allow for filtering on fields such as IP address.  Monitoring and analyzing these metrics may defense failures or the presence of unidentified attacks, as well as the impact of new or improved defenses.
 
 Finally, when administration of different defenses is performed by multiple teams, care should be taken to ensure there is communication and coordination when separate teams are performing maintenance, deployment or otherwise modifying individual defenses.
 
@@ -53,7 +51,7 @@ It must be emphasised that this **does not** constitute multi-factor authenticat
 
 ### CAPTCHA
 
-Requiring a user to solve a CAPTCHA for each login attempt can help to prevent automated login attempts, and may slow down credential stuffing or password spraying attacks.  However, CAPTCHAs are not perfect, and in many cases tools or services exist that can be used to break them with a reasonably high success rate.  Monitoring CAPTCHA solve rates may help identify automated CAPTCHA breaking technology, possibly indicated by abnormally high solve rates, or impact to good users.
+Requiring a user to solve a CAPTCHA for each login attempt can help to prevent automated login attempts, and may slow down credential stuffing or password spraying attacks.  However, CAPTCHAs are not perfect, and in many cases tools or services exist that can be used to break them with a reasonably high success rate.  Monitoring CAPTCHA solve rates may help identify impact to good users, as well as automated CAPTCHA breaking technology, possibly indicated by abnormally high solve rates.
 
 To improve usability, it may be desirable to only require the user solve a CAPTCHA when the login request is considered suspicious, using the same criteria discussed in the MFA section.
 
@@ -61,9 +59,9 @@ To improve usability, it may be desirable to only require the user solve a CAPTC
 
 Blocking IP addresses may be sufficent to stop less sophisticated attacks, but should not be used as the primary defense.  It is more effective to have a graduated response to abuse that leverages multiple defensive measures depending on different factors of the attack.
 
-Any process or decision to mitigate (including blocking and CAPTCHA) credential stuffing traffic from an IP address should consider a multitude of abuse scenarios, and not rely on a single predictable volume limit.  Short (i.e. burst) and long time periods should be considered, as well as high request volume and instances where one IP address, likely in concert with many other IP addresses, generates low but consistent volumes of traffic.  Additionally, mitigation decisions should consider factors such as IP address classification (ex: residential vs hosting) and geolocation.  These factors may be leveraged to raise or lower mitigation thresholds in order to reduce potential impact on legitimate users or more aggresively mitigate abuse originating from abnormal sources.  Mitigations, especially blocking an IP address, should be temporary and processes should be in place to remove an IP address from a mitigated state as abuse declines or stops.
+Any process or decision to mitigate (including blocking and CAPTCHA) credential stuffing traffic from an IP address should consider a multitude of abuse scenarios, and not rely on a single predictable volume limit.  Short (i.e. burst) and long time periods should be considered, as well as high request volume and instances where one IP address, likely in concert with _many_ other IP addresses, generates low but consistent volumes of traffic.  Additionally, mitigation decisions should consider factors such as IP address classification (ex: residential vs hosting) and geolocation.  These factors may be leveraged to raise or lower mitigation thresholds in order to reduce potential impact on legitimate users or more aggresively mitigate abuse originating from abnormal sources.  Mitigations, especially blocking an IP address, should be temporary and processes should be in place to remove an IP address from a mitigated state as abuse declines or stops.
 
-Many credential stuffing toolkits offer built-in use of proxy networks to distribute requests across a large volume of unique IP addressess.  This may defeat both IP block-lists and rate limiting, as per IP request volume may remain relatively low, even on high volume attacks.  Correlating authentication traffic with proxy and similar IP address intelligence, as well as hosting provider IP address ranges can help identify highly distributed credential stuffing attacks, as well as serve as a mitigation trigger.  For example, every request originating from a hosting provider could be required to solve CAPTCHA.
+Many credential stuffing toolkits, such as [Sentry MBA](https://federalnewsnetwork.com/wp-content/uploads/2020/06/Shape-Threat-Research-Automating-Cybercrime-with-SentryMBA.pdf), offer built-in use of proxy networks to distribute requests across a large volume of unique IP addressess.  This may defeat both IP block-lists and rate limiting, as per IP request volume may remain relatively low, even on high volume attacks.  Correlating authentication traffic with proxy and similar IP address intelligence, as well as hosting provider IP address ranges can help identify highly distributed credential stuffing attacks, as well as serve as a mitigation trigger.  For example, every request originating from a hosting provider could be required to solve CAPTCHA.
 
 There are both public and commercial sources of IP address intelligence and classification that may be leveraged as data sources for this purpose.  Additionally, some hosting providers publish their own IP address space, such as [AWS](https://docs.aws.amazon.com/vpc/latest/userguide/aws-ip-ranges.html).
 
@@ -105,7 +103,7 @@ Requiring users to create their own username when registering on the website mak
 
 The majority of off-the-shelf tools are designed for a single step login process, where the credentials are POSTed to the server, and the response indicates whether or not the login attempt was successful. By adding additional steps to this process, such as requiring the username and password to be entered sequentially, or requiring that the user first obtains a random [CSRF Token](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md) before they can login, this makes the attack slightly more difficult to perform, and doubles the number of requests that the attacker must make.
 
-Multi-step login processes, however, should be mindful that they do not faciliate [user enumeration](Authentication_Cheat_Sheet.md).  Enumerating users prior to a credential stuffing attack will result in a harder to identify, lower request volume attack.
+Multi-step login processes, however, should be mindful that they do not faciliate [user enumeration](Authentication_Cheat_Sheet.md).  Enumerating users prior to a credential stuffing attack may result in a harder to identify, lower request volume attack.
 
 ### Require JavaScript and Block Headless Browsers
 
@@ -122,6 +120,8 @@ Due to their potential for good user impact, great care must be taken with this 
 ### Identifying Leaked Passwords
 
 [ASVS v4.0 Password Security Requirements](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x11-V2-Authentication.md#v21-password-security-requirements) provision on verifying new passwords presence in breached password datasets should be implemented. 
+
+There are both commercial and public services that may be of use for validating passwords presence in prior breaches.  A well known public service for this is [Pwned Passwords](https://haveibeenpwned.com/Passwords). You can host a copy of the application yourself, or use the [API](https://haveibeenpwned.com/API/v2#PwnedPasswords).
 
 ### Notify users about unusual security events
 
