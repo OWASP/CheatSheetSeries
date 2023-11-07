@@ -62,7 +62,7 @@ class PostForm extends AbstractType
 }
 ```
 
-If you don't use Symfony Forms you can generate and validate CSRF tokens by yourself. To do this you have to install `symfony/security-csrf` component.
+If you don't use Symfony Forms you can generate and validate CSRF tokens by yourself. To do this you have to install `symfony/security-csrf` component. To install it with composer, run:
 ```bash
 composer install symfony/security-csrf
 ```
@@ -147,10 +147,6 @@ For specific PHP filesystem functions relevant to your case, refer to the [PHP d
 
 
 
-
-
-
-
 ### Open Redirection
 
 
@@ -179,6 +175,34 @@ class ExampleController extends AbstractController
 
 ```
 The controller function redirects users based on the `url` query parameter without proper validation. Attackers can craft malicious URLs, leading unsuspecting users to malicious sites. To prevent open redirection, always validate and sanitize user input before redirection, and avoid using untrusted input directly in redirect functions.
+
+### Cross Origin Resource Sharing
+
+CORS is a security feature implemented in web browsers to control how web applications in one domain can request and interact with resources hosted on another domains.
+
+In Symfony you can manage CORS policies using `nemilo/cors-bundle`. This bundle lets you control CORS rules precisely without changing your server settings.
+
+To install it with compser, run:
+```bash
+composer require nelmio/cors-bundle
+```
+
+For Symfony Flex users, the installation generates a basic configuration file in the `config/packages` directory automatically. Take a look at the example configuration for routes starting with */api* prefix.
+
+```yaml
+# config/packages/nelimo_cors.yaml
+nelmio_cors:
+    defaults:
+        origin_regex: true
+        allow_origin: ['*']
+        allow_methods: ['GET', 'OPTIONS', 'POST', 'PUT', 'PATCH', 'DELETE']
+        allow_headers: ['*']
+        expose_headers: ['Link']
+        max_age: 3600
+    paths:
+        '^/api': ~  # ~ means that configurations for this path is inherited from defaults
+```
+
 
 
 
