@@ -119,7 +119,7 @@ Due to their potential for good user impact, great care must be taken with this 
 
 ### Identifying Leaked Passwords
 
-[ASVS v4.0 Password Security Requirements](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x11-V2-Authentication.md#v21-password-security-requirements) provision on verifying new passwords presence in breached password datasets should be implemented. 
+[ASVS v4.0 Password Security Requirements](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x11-V2-Authentication.md#v21-password-security-requirements) provision on verifying new passwords presence in breached password datasets should be implemented.
 
 There are both commercial and public services that may be of use for validating passwords presence in prior breaches.  A well known public service for this is [Pwned Passwords](https://haveibeenpwned.com/Passwords). You can host a copy of the application yourself, or use the [API](https://haveibeenpwned.com/API/v2#PwnedPasswords).
 
