@@ -1,17 +1,21 @@
 # Symfony Cheat Sheet
 ## Introduction
 
-This *Cheat Sheet* aims to provide developers with security tips when building applications using the Symfony framework. It covers common vulnerabilities and best practices to ensure that your Symfony applications are secure.
+This *Cheat Sheet* aims to provide developers with security tips when building applications using the Symfony framework. 
+It covers common vulnerabilities and best practices to ensure that your Symfony applications are secure.
 
-While Symfony comes with built-in security mechanisms, developers must be aware of potential vulnerabilities and best practices to ensure the applications they build are secure. This guide aims to cover common security issues, emphasizing the importance of understanding Symfony's security features and how to utilize them effectively.
-Whether you're a newcomer to Symfony or an experienced developer looking to reinforce your security practices, this document serves as a valuable resource. By following the guidelines outlined here, you can strengthen the security of your Symfony applications and create a safer digital environment for users and data.
+While Symfony comes with built-in security mechanisms, developers must be aware of potential vulnerabilities and best practices to ensure the applications they build are secure.
+This guide aims to cover common security issues, emphasizing the importance of understanding Symfony's security features and how to utilize them effectively.
+Whether you're a newcomer to Symfony or an experienced developer looking to reinforce your security practices, this document serves as a valuable resource. 
+By following the guidelines outlined here, you can strengthen the security of your Symfony applications and create a safer digital environment for users and data.
 
 
 ## Main Sections
 
 ### Cross-Site Scripting (XSS)
 
-Cross-Site Scripting (XSS) is a type of attack where malicious JavaScript code is injected into a displayed variable. For example, if the value of the variable name is `<script>alert('hello')</script>`, and we display it in HTML like this: `Hello {{name}}`, the injected script will be executed when the HTML is rendered.
+Cross-Site Scripting (XSS) is a type of attack where malicious JavaScript code is injected into a displayed variable. 
+For example, if the value of the variable name is `<script>alert('hello')</script>`, and we display it in HTML like this: `Hello {{name}}`, the injected script will be executed when the HTML is rendered.
 
 Symfony comes by default with twig templates that automatically protect applications from XSS attacks by using **output escaping** to transform variables containing special characters by wrapping variable with `{{ }}` statement.
 
@@ -35,7 +39,8 @@ For other information on XSS prevention that is not specific to Symfony, you may
 
 ### Cross-Site Request Forgery (CSRF)
 
-Symfony Form component automatically includes CSRF tokens in the forms, providing built-in protection against CSRF attacks. Symfony validates these tokens automatically, eliminating the need for manual intervention to safeguard your application.
+Symfony Form component automatically includes CSRF tokens in the forms, providing built-in protection against CSRF attacks. 
+Symfony validates these tokens automatically, eliminating the need for manual intervention to safeguard your application.
 
 By default Symfony adds the CSRF token in a hidden field called `_token`, but this can be customized with other settings on a form-by-form basis:
 
@@ -85,8 +90,9 @@ Then you can get value of CSRF token in controller using `isCsrfTokenValid()` fu
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
-class ExampleController 
+class ExampleController extends AbstractController
 {
 
     // ... 
@@ -111,10 +117,86 @@ You can find more information about CSRF not related to Symfony in [Cross-Site R
 ### Session Security
 
 ### SQL Injection
+SQL Injection is a type of security vulnerability that occurs when an attacker is able to manipulate an SQL query in a way that it can execute arbitrary SQL code. 
+This can allow attackers to view, modify, or delete data in the database, potentially leading to unauthorized access or data loss.
+
+Symfony, particularly when used with Doctrine ORM (Object-Relational Mapping), provides protection against SQL injection through prepared statements parameters. 
+Thanks to this it is harder to mistakenly write unprotected queries, however it is still possible. 
+The following example shows insecure DQL usage:
+
+```php
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+
+class ExampleController extends AbstractController {
+    
+    // ...
+
+    public function getPost(Request $request, EntityManagerInterface $em): Response
+    {
+        $id = $request->query->get('id');
+
+        $dql = "SELECT p FROM App\Entity\Post p WHERE p.id = " . $id . ";";
+        $query = $em->createQuery($dql);
+        $post = $query->getSingleResult();
+
+        // ...
+    }
+}
+
+```
+The correct ways are:
+
+```php
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+
+
+class ExampleController extends AbstractController {
+    
+    // ...
+
+    public function getPost(Request $request, EntityManagerInterface $em): Response
+    {
+        $id = $request->query->get('id');
+
+        // Using repository built in method
+        $post = $em->getRepository(Post::class)->findOneBy(['id' => $id]);
+
+        // Using Doctrine DQL language
+        $query = $em->createQuery("SELECT p FROM App\Entity\Post p WHERE p.id = :id");
+        $query->setParameter('id', $id);
+        $post = $query->getSingleResult();
+
+        // Using DBAL Query Builder
+        $qb = $em->createQueryBuilder();
+        $post = $qb->select('p')
+                    ->from('posts','p')
+                    ->where('id = :id')
+                    ->setParameter('id', $id)
+                    ->getQuery()
+                    ->getSingleResult();
+
+        // ...
+    }
+}
+
+```
+
+For more information about Doctrine you can refer to [their documentation](https://www.doctrine-project.org/index.html). 
+You may also refer the [SQL Injection Prevention Cheatsheet](SQL_Injection_Prevention_Cheat_Sheet.md) for more information that is not specific to Symfony nor Doctrine.
+
 
 ### Command Injection
 
-Command Injection occurs when malicious code is injected into an application system and executed.
+Command Injection occurs when malicious code is injected into an application system and executed. 
+For more information refer to [Command Injection Defense Cheat Sheet](OS_Command_Injection_Defense_Cheat_Sheet.md).
 
 
 Consider the following example, where file is removed using the exec() function without any input escaping:
@@ -124,6 +206,7 @@ Consider the following example, where file is removed using the exec() function 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class ExampleController 
 {
@@ -131,7 +214,7 @@ class ExampleController
     // ...
 
     #[Route('/remove_file', methods: ['POST'])]
-    public function removeFile(Request request): Response
+    public function removeFile(Request $request): Response
     {
         $filename =  $request->request->get('filename');
         exec(sprintf('rm %s', $filename));
@@ -141,9 +224,9 @@ class ExampleController
 }
 ```
 
-In this code, there is no validation of user input. Imagine what could happen if a user provides a malicious value like `test.txt && rm -rf ..`.  To mitigate this risk, it is advisable to use native PHP functions like `unlink()` instead of `exec()`.
+In this code, there is no any validation of user's input. Imagine what could happen if user provides a malicious value like `test.txt && rm -rf ..`.  To mitigate this risk, it is advisable to use native PHP functions like `unlink()` or Symfony Filesystem Component `remove()` method instead of `exec()`.
 
-For specific PHP filesystem functions relevant to your case, refer to the [PHP documentation](https://www.php.net/manual/en/refs.fileprocess.file.php).
+For specific PHP filesystem functions relevant to your case, you can refer to the [PHP documentation](https://www.php.net/manual/en/refs.fileprocess.file.php) or [Symfony Filesystem Component documentation](https://symfony.com/doc/current/components/filesystem.html).
 
 
 
@@ -158,6 +241,7 @@ In the provided PHP code snippet:
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 
 class ExampleController extends AbstractController 
@@ -165,7 +249,7 @@ class ExampleController extends AbstractController
     // ...
 
     #[Route('/dynamic_redirect', methods: ['GET'])]
-    public function dynamicRedirect(Request request): Response 
+    public function dynamicRedirect(Request $request): Response 
     {
         $url = $request->query->get('url');
         return $this->redirect($url);
@@ -175,6 +259,53 @@ class ExampleController extends AbstractController
 
 ```
 The controller function redirects users based on the `url` query parameter without proper validation. Attackers can craft malicious URLs, leading unsuspecting users to malicious sites. To prevent open redirection, always validate and sanitize user input before redirection, and avoid using untrusted input directly in redirect functions.
+
+
+### File Upload Vulnerabilities
+
+### Directory Traversal
+A directory or path traversal attack aims to access files and directories that are stored on server by manipulating input data that reference files with “../” *dot-dot-slash* sequences and its variations or by using absolute file paths. 
+For more details refer to [OWASP Path Traversal](https://owasp.org/www-community/attacks/Path_Traversal).
+
+
+You can protect your application before directory traversal attack by validating whether the absolute path of requested file location is correct or strip out directory information from file name input.
+
+```php
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
+
+
+class ExampleController extends AbstractController 
+{
+    // ...
+
+    #[Route('/download', methods: ['GET'])]
+    public function download(#[MapQueryParameter] string $filename): Response 
+    {
+        $storagePath = $this->getParameter('kernel.project_dir') . '/storage';
+        $filePath = $storagePath . '/' . $filename;
+
+        // Using PHP realpath function - check if path exists and wether it aims to storage directory
+        $realBase = realpath($storagePath);
+        $realPath = realpath($filePath);
+
+        if ($realPath === false || !str_starts_with($realPath, $realBase)) {
+            //Directory Traversal!
+        }
+
+
+        // Or strip out directory information with basename function
+        $filePath = $storagePath . '/' . basename($filename);
+
+        // ...
+
+    }
+}
+```
 
 ### Cross Origin Resource Sharing
 
@@ -203,9 +334,56 @@ nelmio_cors:
         '^/api': ~  # ~ means that configurations for this path is inherited from defaults
 ```
 
+### Security Headers
+It's advisable to enhance the security of your Symfony application by adding to your responses essential security headers as:
 
+- Strict-Transport-Security
+- X-Frame-Options
+- X-Content-Type-Options
+- Content-Security-Policy
+- X-Permitted-Cross-Domain-Policies
+- Re ferrer-Policy
+- Clear-Site-Data
+- Cross-Origin-Embedder-Policy
+- Cross-Origin-Opener-Policy
+- Cross-Origin-Resource-Policy
+- Cache-Control
 
+To find more details about individual header refer to [OWASP secure headers project](https://owasp.org/www-project-secure-headers/).
 
+In Symfony you can add those headers either manually or automatically via [*ResponseEvent*](https://symfony.com/doc/current/reference/events.html#kernel-response) to your to every response or configuring web servers like Nginx or Apache.
+
+```php
+$response = new Response();
+$response->headers->set('X-Frame-Options', 'SAMEORIGIN');
+```
+
+### Security Misconfigurations
+
+### Authentication
+
+### API Rate Limiting
+
+### Debug Mode
+
+### Sensitive data/files
+
+### Encryption
+
+### Dependencies vulnerabilities 
+Dependency vulnerabilities can expose your application to various risks, making it crucial to adopt best practices. 
+Keep all Symfony components and third-party libraries up-to-date. Composer, the dependency manager for PHP makes it easy to update packages:
+```bash
+composer update
+```
+When using multiple dependencies, some of them may contain security vulnerabilities. 
+To address this concern, Symfony offers a command called `security:check`. This command specifically examines the *composer.lock* file in your project to identify any known security vulnerabilities within the dependencies that have been installed.
+ By running this command, you can proactively detect and address any potential security issues in your Symfony project.
+
+Use Symfony CLI to run this:
+```bash
+symfony check:security
+```
 
 ## References
 
