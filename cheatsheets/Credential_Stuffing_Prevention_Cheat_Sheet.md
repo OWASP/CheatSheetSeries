@@ -33,7 +33,7 @@ Where an application has multiple user roles, it may be appropriate to implement
 
 ## Defense in Depth & Metrics
 
-While not a specific technique, it is important to implement defenses that consider the impact of individual defenses being defeated or otherwise failing.  As an example, client-side defenses, such as device fingerprinting or Javascript challenges, may be spoofed or bypassed and other layers of defense should be implemented to account for this.
+While not a specific technique, it is important to implement defenses that consider the impact of individual defenses being defeated or otherwise failing.  As an example, client-side defenses, such as device fingerprinting or JavaScript challenges, may be spoofed or bypassed and other layers of defense should be implemented to account for this.
 
 Additionally, each defense layer should generate metrics regarding authentication request volume as a detective control. Ideally the metrics will include both detected and mitigated attack volume and allow for filtering on fields such as IP address.  Monitoring and analyzing these metrics may defense failures or the presence of unidentified attacks, as well as the impact of new or improved defenses.
 
@@ -113,7 +113,7 @@ Please note that blocking visitors who have JavaScript disabled will reduce the 
 
 ### Degredation
 
-A more aggresive defense against credential stuffing is to implement measures that increase the amount of time the attack takes to complete.  This may include incrementally increasing the complexity of the Javascript that must be evaluated, introducing long wait periods before responding to requests, returning overly large HTML assets or returning randomized error messages.  
+A more aggresive defense against credential stuffing is to implement measures that increase the amount of time the attack takes to complete.  This may include incrementally increasing the complexity of the JavaScript that must be evaluated, introducing long wait periods before responding to requests, returning overly large HTML assets or returning randomized error messages.  
 
 Due to their potential for good user impact, great care must be taken with this type of defense, but may be required to help mitigate more sophisticated credential stuffing attacks.
 
