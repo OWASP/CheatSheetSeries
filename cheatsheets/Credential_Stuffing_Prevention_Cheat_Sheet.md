@@ -115,19 +115,19 @@ Please note that blocking visitors who have JavaScript disabled will reduce the 
 
 A more aggresive defense against credential stuffing is to implement measures that increase the amount of time the attack takes to complete.  This may include incrementally increasing the complexity of the JavaScript that must be evaluated, introducing long wait periods before responding to requests, returning overly large HTML assets or returning randomized error messages.  
 
-Due to their potential for good user impact, great care must be taken with this type of defense, but may be required to help mitigate more sophisticated credential stuffing attacks.
+Due to their potential negative impact on legitimate users, great care must be taken with this type of defense, though it may be needed in order to mitigate more sophisticated credential stuffing attacks.
 
 ### Identifying Leaked Passwords
 
 [ASVS v4.0 Password Security Requirements](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x11-V2-Authentication.md#v21-password-security-requirements) provision on verifying new passwords presence in breached password datasets should be implemented.
 
-There are both commercial and public services that may be of use for validating passwords presence in prior breaches.  A well known public service for this is [Pwned Passwords](https://haveibeenpwned.com/Passwords). You can host a copy of the application yourself, or use the [API](https://haveibeenpwned.com/API/v2#PwnedPasswords).
+There are both commercial and free services that may be of use for validating passwords presence in prior breaches.  A well known free service for this is [Pwned Passwords](https://haveibeenpwned.com/Passwords). You can host a copy of the application yourself, or use the [API](https://haveibeenpwned.com/API/v2#PwnedPasswords).
 
 ### Notify users about unusual security events
 
 When suspicious or unusual activity is detected, it may be appropriate to notify or warn the user. However, care should be taken that the user does not get overwhelmed with a large number of notifications that are not important to them, or they will just start to ignore or delete them.  Additionally, due to frequent reuse of passwords across multiple sites, the possibility that the users email account has also been compromised should be considered.
 
-For example, it would generally not be appropriate to notify a user that there had been an attempt to login to their account with an incorrect password. However, if there had been a login with the correct password, but which had then failed the subsequent MFA check, the user should be notified so that they can change their password.  Subsequently, should the user request multiple password resets from different devices or IP addresses, it may be appropriate prevent further access to the account pending further user verification processes.
+For example, it would generally not be appropriate to notify a user that there had been an attempt to login to their account with an incorrect password. However, if there had been a login with the correct password, but which had then failed the subsequent MFA check, the user should be notified so that they can change their password.  Subsequently, should the user request multiple password resets from different devices or IP addresses, it may be appropriate to prevent further access to the account pending further user verification processes.
 
 Details related to current or recent logins should also be made visible to the user. For example, when they login to the application, the date, time and location of their previous login attempt could be displayed to them. Additionally, if the application supports concurrent sessions, the user should be able to view a list of all active sessions, and to terminate any other sessions that are not legitimate.
 
