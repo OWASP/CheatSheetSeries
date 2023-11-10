@@ -51,7 +51,6 @@ namespace App\Form;
 
 class PostForm extends AbstractType
 {
-    // ...
 
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -94,8 +93,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ExampleController extends AbstractController
 {
-
-    // ... 
 
     #[Route('/posts/{id}', methods: ['DELETE'], name: 'delete_post')]
     public function delete(Post $post, Request $request): Response 
@@ -156,11 +153,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-
-
 class ExampleController extends AbstractController {
     
-    // ...
 
     public function getPost(Request $request, EntityManagerInterface $em): Response
     {
@@ -211,8 +205,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class ExampleController 
 {
 
-    // ...
-
     #[Route('/remove_file', methods: ['POST'])]
     public function removeFile(Request $request): Response
     {
@@ -262,6 +254,70 @@ The controller function redirects users based on the `url` query parameter witho
 
 
 ### File Upload Vulnerabilities
+File upload vulnerabilities are security issues that arise when an application does not properly validate and handle file uploads. It's important to ensure that file uploads are handled securely to prevent various types of attacks. Here are some general guidelines to help mitigate this issue in Symfony:
+
+#### Validate file type and size
+Always validate the file type on the server side to ensure that only allowed file types are accepted.
+Also consider limiting the size of uploaded files to prevent denial-of-service attacks and to ensure that your server has enough resources to handle the uploads.
+
+Example with PHP Attributes:
+```php
+
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints\File;
+
+class UploadDto
+{
+    public function __construct(
+        #[File(
+            maxSize: '1024k',
+            mimeTypes: [
+                'application/pdf',
+                'application/x-pdf',
+            ],
+        )]
+        public readonly UploadedFile $file,
+    ){}
+}
+
+```
+Example with Symfony Form:
+```php
+namespace App\Form;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\File;
+
+class FileForm extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('file', FileType::class, [
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k', 
+                        'mimeTypes' => [
+                            'application/pdf',
+                            'application/x-pdf',
+                        ],
+                    ]),
+                ],
+            ]);
+    }
+}
+```
+
+
+#### Use unique file names
+Ensure that each uploaded file has a unique name to prevent overwriting existing files. You can use a combination of a unique identifier and the original file name to generate a unique name.
+#### Store uploaded files securely
+Store uploaded files outside the public directory to prevent direct access. If you use public directory to store them, configure your web server to deny access to the upload directory. 
+
+Refer the [File Upload Cheatsheet](File_Upload_Cheat_Sheet.md) to learn more.
+
+#### 
 
 ### Directory Traversal
 A directory or path traversal attack aims to access files and directories that are stored on server by manipulating input data that reference files with “../” *dot-dot-slash* sequences and its variations or by using absolute file paths. 
@@ -278,10 +334,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 
-
 class ExampleController extends AbstractController 
 {
-    // ...
 
     #[Route('/download', methods: ['GET'])]
     public function download(#[MapQueryParameter] string $filename): Response 
@@ -362,13 +416,28 @@ $response->headers->set('X-Frame-Options', 'SAMEORIGIN');
 
 ### Authentication
 
-### API Rate Limiting
+### Error Handling Disclosure
 
 ### Debug Mode
 
-### Sensitive data/files
+### Sensitive data
+In Symfony the best way for storing configurations like API keys, etc., is through the use of environment variable, which are dependent on the application's location.
+To ensure the security of sensitive values, Symfony provides a *secrets management system* in which values are additionally encoded using cryptographic keys and stored as **secrets**. 
 
-### Encryption
+Consider an example where an API_KEY is stored as secret
+To generate a pair of cryptographic keys you can run the following command. The private key file is highly sensitive and it shouldn't be committed in repository.
+```bash
+bin/console secrets:generate-keys
+```
+
+This command will generate a file for the API_KEY secret in `config/secrets/env(dev|prod|etc.)`
+```bash
+bin/console secret:set API_KEY
+```
+
+You can access secret values in your code in the same manner as environment variables. 
+It's very important to note that if there are environment variables and secrets with identical names, **the values from environment variables will always will override secrets**.
+
 
 ### Dependencies vulnerabilities 
 Dependency vulnerabilities can expose your application to various risks, making it crucial to adopt best practices. 
