@@ -35,7 +35,7 @@ Where an application has multiple user roles, it may be appropriate to implement
 
 While not a specific technique, it is important to implement defenses that consider the impact of individual defenses being defeated or otherwise failing.  As an example, client-side defenses, such as device fingerprinting or JavaScript challenges, may be spoofed or bypassed and other layers of defense should be implemented to account for this.
 
-Additionally, each defense layer should generate metrics regarding authentication request volume as a detective control. Ideally the metrics will include both detected and mitigated attack volume and allow for filtering on fields such as IP address.  Monitoring and analyzing these metrics may defense failures or the presence of unidentified attacks, as well as the impact of new or improved defenses.
+Additionally, each defense should generate volume metrics for use as a detective mechanism. Ideally the metrics will include both detected and mitigated attack volume and allow for filtering on fields such as IP address.  Monitoring and reporting on these metrics may identify defense failures or the presence of unidentified attacks, as well as the impact of new or improved defenses.
 
 Finally, when administration of different defenses is performed by multiple teams, care should be taken to ensure there is communication and coordination when separate teams are performing maintenance, deployment or otherwise modifying individual defenses.
 
@@ -119,7 +119,7 @@ Due to their potential negative impact on legitimate users, great care must be t
 
 ### Identifying Leaked Passwords
 
-[ASVS v4.0 Password Security Requirements](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x11-V2-Authentication.md#v21-password-security-requirements) provision on verifying new passwords presence in breached password datasets should be implemented.
+[ASVS v4.0 Password Security Requirements](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x11-V2-Authentication.md#v21-password-security-requirements) provision (2.1.7) on verifying new passwords presence in breached password datasets should be implemented.
 
 There are both commercial and free services that may be of use for validating passwords presence in prior breaches.  A well known free service for this is [Pwned Passwords](https://haveibeenpwned.com/Passwords). You can host a copy of the application yourself, or use the [API](https://haveibeenpwned.com/API/v2#PwnedPasswords).
 
