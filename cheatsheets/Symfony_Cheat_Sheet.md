@@ -417,8 +417,10 @@ $response->headers->set('X-Frame-Options', 'SAMEORIGIN');
 ### Authentication
 
 ### Error Handling Disclosure
+Symfony has a robust error handling system. By default, Symfony applications are configured to display detailed error messages only in the development environment for security reasons. In the production environment, a generic error page is shown.Symfony's error handling system also allows developers to customize error pages based on different HTTP status codes, providing a seamless and branded user experience. Additionally, Symfony logs detailed error information, aiding developers in identifying and resolving issues efficiently.
 
-### Debug Mode
+For more information about error handling unrelated to Symfony refer to [Error Handling Cheat Sheet](Error_Handling_Cheat_Sheet.md).
+
 
 ### Sensitive data
 In Symfony the best way for storing configurations like API keys, etc., is through the use of environment variable, which are dependent on the application's location.
@@ -453,6 +455,23 @@ Use Symfony CLI to run this:
 ```bash
 symfony check:security
 ```
+
+### Summary 
+- Make sure your app is not in debug mode while in production. To turn off debug mode, set your `APP_ENV` environment variable to `prod`:
+    ```ini
+    APP_ENV=prod
+    ```
+- Make sure your PHP configuration is secure. You may refer the [PHP Configuration Cheat Sheet](PHP_Configuration_Cheat_Sheet.md) for more information on secure PHP configuration settings.
+
+- Ensure that the SSL certificate is properly configured in your web server's virtual host settings and configure your web server to enforce HTTPS by redirecting HTTP traffic to HTTPS.
+
+- Implement security headers to enhance the security posture of your application.
+
+- Ensure that file and directory permissions are set correctly to minimize security risks. 
+
+- Implement regular backups of your production database and critical files. Have a recovery plan in place to quickly restore your application in case of any issue.
+
+-  Consider setting up monitoring tools and error reporting mechanisms to quickly identify and address issues in your production environment. You can check [Blackfire.io](https://www.blackfire.io).
 
 ## References
 
