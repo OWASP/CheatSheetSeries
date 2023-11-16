@@ -111,8 +111,6 @@ class ExampleController extends AbstractController
 You can find more information about CSRF not related to Symfony in [Cross-Site Request Forgery (CSRF) Cheat Sheet](Cross_Site_Request_Forgery_Prevention_Cheat_Sheet.md).
 
 
-### Session Security
-
 ### SQL Injection
 SQL Injection is a type of security vulnerability that occurs when an attacker is able to manipulate an SQL query in a way that it can execute arbitrary SQL code. 
 This can allow attackers to view, modify, or delete data in the database, potentially leading to unauthorized access or data loss.
@@ -185,7 +183,6 @@ class ExampleController extends AbstractController {
 
 For more information about Doctrine you can refer to [their documentation](https://www.doctrine-project.org/index.html). 
 You may also refer the [SQL Injection Prevention Cheatsheet](SQL_Injection_Prevention_Cheat_Sheet.md) for more information that is not specific to Symfony nor Doctrine.
-
 
 ### Command Injection
 
@@ -388,7 +385,7 @@ nelmio_cors:
         '^/api': ~  # ~ means that configurations for this path is inherited from defaults
 ```
 
-### Security Headers
+### Security-related Headers
 It's advisable to enhance the security of your Symfony application by adding to your responses essential security headers as:
 
 - Strict-Transport-Security
@@ -412,7 +409,38 @@ $response = new Response();
 $response->headers->set('X-Frame-Options', 'SAMEORIGIN');
 ```
 
-### Security Misconfigurations
+### Session & Cookies Management
+
+In Symfony sessions are securely configured and enabled by default. However, they can be controlled under the `framework.session` key in `config/packages/framework.yaml`. Make sure to set the following in your session configuration to make your application more secure.
+
+Ensure `cookie_secure` is not explicitly set to `false`(it is set to `true` by default). This mean that cookie won't be accessible by JavaScript.
+```yaml
+cookie_httponly: true
+```
+
+Make sure to set a short TTL duration. According to [OWASP's recommendations](Session_Management_Cheat_Sheet.md), aim for a session TTL of 2-5 minutes for high-value applications and 15-30 minutes for lower-risk applications.
+```yaml
+cookie_lifetime: 5
+```
+
+It is recommended to set `cookie_samesite` to either `lax` or `strict` to prevent cookies being send from cross-origin requests. `lax` allows the cookie to be sent along with "safe" top-level navigations and same-site requests. With `strict`  it would not be possible to send any cookie when the HTTP request is not from the same domain.
+```yaml
+cookie_samesite: lax|strict
+```
+
+Setting `cookie_secure` to `auto` assures as that cookies are only sent over secure connections, meaning `true` for HTTPS and `false` for HTTP.
+```yaml
+cookie_secure: auto
+```
+
+OWASP provides more general information about sessions in [Session Management Cheat Sheet](Session_Management_Cheat_Sheet.md). 
+You may also refer the [Cookie Security Guide](https://owasp.org/www-chapter-london/assets/slides/OWASPLondon20171130_Cookie_Security_Myths_Misconceptions_David_Johansson.pdf).
+
+
+---
+In Symfony, sessions are managed by the framework itself and rely on Symfony's session handling mechanisms rather than PHP's default session handling via the `session.auto_start = 1` directive in the php.ini file.
+The `session.auto_start = 1` directive in PHP is used to automatically start a session on each request, bypassing explicit calls to `session_start()`. However, when using Symfony for session management, it's recommended to disable `session.auto_start` to prevent conflicts and unexpected behavior.
+
 
 ### Authentication
 
@@ -448,13 +476,16 @@ Keep all Symfony components and third-party libraries up-to-date. Composer, the 
 composer update
 ```
 When using multiple dependencies, some of them may contain security vulnerabilities. 
-To address this concern, Symfony offers a command called `security:check`. This command specifically examines the *composer.lock* file in your project to identify any known security vulnerabilities within the dependencies that have been installed.
- By running this command, you can proactively detect and address any potential security issues in your Symfony project.
+To address this concern, Symfony comes with [Symfony Security Checker](https://symfony.com/doc/current/setup.html#checking-security-vulnerabilities). This tool specifically examines the *composer.lock* file in your project to identify any known security vulnerabilities within the dependencies that have been installed and address any potential security issues in your Symfony project.
 
-Use Symfony CLI to run this:
+To use Security Checker run following command using [Symfony CLI](https://github.com/symfony-cli/symfony-cli):
 ```bash
 symfony check:security
 ```
+
+You should also consider using use following tools:
+-  [Local PHP Security Checker](https://github.com/fabpot/local-php-security-checker)
+-  [Enlightn Security Checker](https://github.com/enlightn/security-checker)
 
 ### Summary 
 - Make sure your app is not in debug mode while in production. To turn off debug mode, set your `APP_ENV` environment variable to `prod`:
@@ -471,9 +502,16 @@ symfony check:security
 
 - Implement regular backups of your production database and critical files. Have a recovery plan in place to quickly restore your application in case of any issue.
 
+- Use security checkers to scan your dependencies to identify known vulnerabilities.
+
 -  Consider setting up monitoring tools and error reporting mechanisms to quickly identify and address issues in your production environment. You can check [Blackfire.io](https://www.blackfire.io).
 
 ## References
 
-Any useful references to other useful resources that aren't linked inline elsewhere in the cheat sheet.
-
+- [Symfony Security Documentation](https://symfony.com/doc/current/security.html)
+- [Symfony CSRF Documentation](https://symfony.com/doc/current/security/csrf.html)
+- [Symfony Twig Documentation](https://symfony.com/doc/current/templates.html)
+- [Symfony Secrets Documentation](https://symfony.com/doc/current/configuration/secrets.html)
+- [Symfony Validation Documentation](https://symfony.com/doc/current/validation.html)
+- [Symfony Blackfire Documentation](https://symfony.com/doc/current/the-fast-track/en/29-performance.html)
+- [Doctrine Security Documentation](https://www.doctrine-project.org/projects/doctrine-dbal/en/3.7/reference/security.html)
