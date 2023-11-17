@@ -348,7 +348,7 @@ It's advisable to enhance the security of your Symfony application by adding to 
 - X-Content-Type-Options
 - Content-Security-Policy
 - X-Permitted-Cross-Domain-Policies
-- Re ferrer-Policy
+- Referrer-Policy
 - Clear-Site-Data
 - Cross-Origin-Embedder-Policy
 - Cross-Origin-Opener-Policy
@@ -366,7 +366,7 @@ $response->headers->set('X-Frame-Options', 'SAMEORIGIN');
 
 ### Session & Cookies Management
 
-In Symfony sessions are securely configured and enabled by default. However, they can be controlled manually in `config/packages/framework.yaml` under the `framework.session` key. Make sure to set the following in your session configuration to make your application more aware.
+By default sessions are securely configured and enabled. However, they can be controlled manually in `config/packages/framework.yaml` under the `framework.session` key. Make sure to set the following in your session configuration to make your application more aware.
 
 Ensure `cookie_secure` is not explicitly set to `false`(it is set to `true` by default). Setting http only to `true` means that cookie won't be accessible by JavaScript.
 
@@ -400,6 +400,55 @@ In Symfony, sessions are managed by the framework itself and rely on Symfony's s
 The `session.auto_start = 1` directive in PHP is used to automatically start a session on each request, bypassing explicit calls to `session_start()`. However, when using Symfony for session management, it's recommended to disable `session.auto_start` to prevent conflicts and unexpected behavior.
 
 ### Authentication
+
+[Symfony Security](https://symfony.com/doc/current/security.html) provides a robust authentication system that includes providers, firewalls, and access controls to ensure a secure and controlled access environment. Authentication settings can be configured in `config/packages/security.yaml`.
+
+- **Providers**
+
+    Symfony authentication relies on providers to fetch user information from various storages such as databases, LDAP, or custom sources. Providers get users based on the defined propety and load the corresponding user object.
+
+    In below example [Entity User Provider](https://symfony.com/doc/current/security/user_providers.html#security-entity-user-provider) is presented which uses Doctrine to fetch user by unique identifier.
+
+    ```yaml
+    providers:
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
+    ```
+
+- **Firewalls**
+
+    Symfony use firewalls to define security configurations for different parts of an application. Each firewall define a specific set of rules and actions for incoming requests. They protect different sections of the application by specifying which routes or URLs are secured, the authentication mechanisms to use, and how to handle unauthorized access. A firewall can be associated with specific patterns, request methods, access controls, and authentication providers.
+
+    ```yaml
+    firewalls:
+        dev: # disable security on routes used in development env
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        admin: # handle authentication in /admin pattern routes
+            lazy: true
+            provider: app_user_provider
+            pattern: ^/admin
+            custom_authenticator: App\Security\AdminAuthenticator
+            logout:
+                path: app_logout
+                target: app_login
+        main: # main firewall that include all remaining routes
+            lazy: true
+            provider: app_user_provider
+    ```
+
+- **Access Control**
+
+    Access control determines which users can access specific parts of an application. These rules consist of path patterns and required roles or permissions. Access control rules are configured under `access_control` key.
+
+    ```yaml
+    access_control:
+        - { path: ^/admin, roles: ROLE_ADMIN } # only user with ROLE_ADMIN role is allowed
+        - { path: ^/login, roles: PUBLIC_ACCESS } # everyone can access this route
+    ```
+
 
 ### Error Handling Disclosure
 
@@ -457,7 +506,7 @@ You should also consider following tools:
 
 - [Enlightn Security Checker](https://github.com/enlightn/security-checker)
 
-### Best Practices
+### Recommendations
 
 - Make sure your app is not in debug mode while in production. To turn off debug mode, set your `APP_ENV` environment variable to `prod`:
 
@@ -467,7 +516,7 @@ You should also consider following tools:
 
 - Make sure your PHP configuration is secure. You may refer the [PHP Configuration Cheat Sheet](PHP_Configuration_Cheat_Sheet.md) for more information on secure PHP configuration settings.
 
-- Ensure that the SSL certificate is properly configured in your web server's virtual host settings and configure your web server to enforce HTTPS by redirecting HTTP traffic to HTTPS.
+- Ensure that the SSL certificate is properly configured in your web server and configure it to enforce HTTPS by redirecting HTTP traffic to HTTPS.
 
 - Implement security headers to enhance the security posture of your application.
 
@@ -477,11 +526,10 @@ You should also consider following tools:
 
 - Use security checkers to scan your dependencies to identify known vulnerabilities.
 
-- Consider setting up monitoring tools and error reporting mechanisms to quickly identify and address issues in your production environment. You can check [Blackfire.io](https://www.blackfire.io).
+- Consider setting up monitoring tools and error reporting mechanisms to quickly identify and address issues in your production environment. Explore tools like [Blackfire.io](https://www.blackfire.io).
 
 ## References
 
-- [Symfony Security Documentation](https://symfony.com/doc/current/security.html)
 - [Symfony CSRF Documentation](https://symfony.com/doc/current/security/csrf.html)
 - [Symfony Twig Documentation](https://symfony.com/doc/current/templates.html)
 - [Symfony Validation Documentation](https://symfony.com/doc/current/validation.html)
