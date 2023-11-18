@@ -42,7 +42,7 @@ For other information on XSS prevention that is not specific to Symfony, you may
 Symfony Form component automatically includes CSRF tokens in the forms, providing built-in protection against CSRF attacks.
 Symfony validates these tokens automatically, eliminating the need for manual intervention to safeguard your application.
 
-By default Symfony adds the CSRF token in a hidden field called `_token`, but this can be customized with other settings on a form-by-form basis:
+By default the CSRF token is added as a hidden field called `_token`, but this can be customized with other settings on a form-by-form basis:
 
 ```php
 class PostForm extends AbstractType
@@ -61,7 +61,7 @@ class PostForm extends AbstractType
 }
 ```
 
-If you don't use Symfony Forms you can generate and validate CSRF tokens by yourself. To do this you have to install `symfony/security-csrf` component. To install it with composer, run:
+If you don't use Symfony Forms you can generate and validate CSRF tokens by yourself. To do this you have to install `symfony/security-csrf` component.
 
 ```bash
 composer install symfony/security-csrf
@@ -112,7 +112,7 @@ This can allow attackers to view, modify, or delete data in the database, potent
 
 Symfony, particularly when used with Doctrine ORM (Object-Relational Mapping), provides protection against SQL injection through prepared statements parameters.
 Thanks to this it is harder to mistakenly write unprotected queries, however it is still possible.
-The following example shows insecure DQL usage:
+The following example shows **insecure DQL usage**:
 
 ```php
 class ExampleController extends AbstractController {
@@ -164,7 +164,7 @@ class ExampleController extends AbstractController {
 ```
 
 For more information about Doctrine you can refer to [their documentation](https://www.doctrine-project.org/index.html).
-You may also refer the [SQL Injection Prevention Cheatsheet](SQL_Injection_Prevention_Cheat_Sheet.md) for more information that is not specific to Symfony nor Doctrine.
+You may also refer the [SQL Injection Prevention Cheatsheet](SQL_Injection_Prevention_Cheat_Sheet.md) for more information that is not specific to neither Symfony nor Doctrine.
 
 ### Command Injection
 
@@ -188,7 +188,7 @@ class ExampleController
 }
 ```
 
-In the above code, there is no any validation of user's input. Imagine what could happen if user provides a malicious value like `test.txt && rm -rf .`.  To mitigate this risk, it is advisable to use native PHP functions like in this case `unlink()` or Symfony Filesystem Component `remove()` method instead of `exec()`.
+In the above code, there is no any validation of user's input. Imagine what could happen if user provides a malicious value like `test.txt && rm -rf .` . To mitigate this risk, it is advisable to use native PHP functions like in this case `unlink()` or Symfony Filesystem Component `remove()` method instead of `exec()`.
 
 For specific PHP filesystem functions relevant to your case, you can refer to the [PHP documentation](https://www.php.net/manual/en/refs.fileprocess.file.php) or [Symfony Filesystem Component documentation](https://symfony.com/doc/current/components/filesystem.html).
 
@@ -449,10 +449,9 @@ The `session.auto_start = 1` directive in PHP is used to automatically start a s
         - { path: ^/login, roles: PUBLIC_ACCESS } # everyone can access this route
     ```
 
-
 ### Error Handling Disclosure
 
-Symfony has a robust error handling system. By default, Symfony applications are configured to display detailed error messages only in the development environment for security reasons. In the production environment, a generic error page is shown.Symfony's error handling system also allows developers to customize error pages based on different HTTP status codes, providing a seamless and branded user experience. Additionally, Symfony logs detailed error information, aiding developers in identifying and resolving issues efficiently.
+Symfony has a robust error handling system. By default, Symfony applications are configured to display detailed error messages only in the development environment for security reasons. In the production environment, a generic error page is shown. Symfony's error handling system also allows to customize error pages based on different HTTP status codes, providing a seamless and branded user experience. Additionally, Symfony logs detailed error information, aiding developers in identifying and resolving issues efficiently.
 
 For more information about error handling unrelated to Symfony refer to [Error Handling Cheat Sheet](Error_Handling_Cheat_Sheet.md).
 
@@ -500,7 +499,7 @@ To use Security Checker run following command using [Symfony CLI](https://github
 symfony check:security
 ```
 
-You should also consider following tools:
+You should also consider similar tools:
 
 - [Local PHP Security Checker](https://github.com/fabpot/local-php-security-checker)
 
