@@ -87,7 +87,7 @@ Some modern hashing algorithms have been specifically designed to securely store
 
 You do not need to hide which password hashing algorithm is used by an application. If you utilize a modern password hashing algorithm with proper configuration parameters, it should be safe to state in public which password hashing algorithms are in use and be listed [here](https://pulse.michalspacek.cz/passwords/storages).
 
-Three hashing algorithms that should be considered (see below):
+Three hashing algorithms that should be considered:
 
 ### Argon2id
 
