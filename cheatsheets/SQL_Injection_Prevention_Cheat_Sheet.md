@@ -206,13 +206,14 @@ switch(PARAM):
   default      : throw new InputValidationException("unexpected value provided"
                                                   + " for table name");
 ```
+
 #### Safest Use Of Dynamic SQL Generation (DISCOURAGED)
 
 When we say "implemented safely," the stored procedure does not include any unsafe dynamic SQL generation. Developers do not usually generate dynamic SQL inside stored procedures. However, it can be done, but should be avoided.
 
 If it can't be avoided, the stored procedure must use input validation or proper escaping as described in this article to make sure that all user supplied input to the stored procedure can't be used to inject SQL code into the dynamically generated query. Auditors should always look for uses of `sp_execute`, `execute` or `exec` within SQL Server stored procedures. Similar audit guidelines are necessary for similar functions for other vendors.
 
-**Sample of Safer Dynamic Query Generation (DISCOURAGED)**
+#### Sample of Safer Dynamic Query Generation (DISCOURAGED)
 
 For something simple like a sort order, it would be best if the user supplied input is converted to a boolean, and then that boolean is used to select the safe value to append to the query. This is a very standard need in dynamic query creation.
 
@@ -234,7 +235,7 @@ WARNING: THIS TECHNIQUE SHOULD ONLY BE USED AS A LAST RESORT IF NONE OF THE ABOV
 
 Generally, this approach should only be used to retrofit legacy code when implementing input validation isn't cost effective. If an application is built from scratch or it requires low risk tolerance, those cases should be built or re-written using parameterized queries, stored procedures, or some kind of Object Relational Mapper (ORM) that builds your queries for you.
 
-**Methodology for Escaping User-Supplied Input (DISCOURAGED)**
+#### Methodology for Escaping User-Supplied Input (DISCOURAGED)
 
 In this approach, each DBMS supports one or more character escaping schemes specific to certain kinds of queries. If you then escape all user supplied input using the proper escaping scheme for the database you are using, the DBMS will not confuse that input with SQL code written by the developer, thus avoiding any possible SQL injection vulnerabilities.
 
