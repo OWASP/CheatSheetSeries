@@ -9,14 +9,14 @@ This cheat sheet will help you prevent SQL injection flaws in your applications.
 
 ## What Is a SQL Injection Attack?
 
- Attackers can use SQL injection on an application if it has dynamic database queries that use string concatenation and user supplied input. To avoid SQL injection flaws, developers need to:  
+ Attackers can use SQL injection on an application if it has dynamic database queries that use string concatenation and user supplied input. To avoid SQL injection flaws, developers need to:
  
- 1. Stop writing dynamic queries with string concatenation or 
+ 1. Stop writing dynamic queries with string concatenation or
  2. Prevent malicious SQL input from being included in executed queries.
 
 There are simple techniques for preventing SQL injection vulnerabilities and they can be used with practically any kind of programming language and any type of database. While XML databases can have similar problems (e.g., XPath and XQuery injection), these techniques can be used to protect them as well.
 
-## Using the OWASP Enterprise Security API (ESAPI) ##
+## Using the OWASP Enterprise Security API (ESAPI)
 
 The OWASP Enterprise Security API (ESAPI) is a free, open source, web application security control library that makes it easier for programmers to write lower-risk applications, and they are designed to make it easier for programmers to retrofit security into existing applications. The ESAPI libraries also serve as a solid foundation for new development:
 
@@ -140,7 +140,7 @@ Generally, developers like prepared statements because all the SQL code stays wi
 
 ### Defense Option 2: Stored Procedures
 
-Though stored procedures are not always safe from SQL injection, developers can use certain standard stored procedure programming constructs. This approach has the same effect as the use of parameterized queries as long as the stored procedures are implemented safely (which is the norm for most stored procedure languages). 
+Though stored procedures are not always safe from SQL injection, developers can use certain standard stored procedure programming constructs. This approach has the same effect as the use of parameterized queries as long as the stored procedures are implemented safely (which is the norm for most stored procedure languages).
 
 #### Safe Approach to Stored Procedures
 
@@ -148,7 +148,7 @@ If stored procedures are needed, the safest approach to using them requires the 
 
 #### When Stored Procedures Can Increase Risk
 
-Occasionally, stored procedures can increase risk when a system is attacked. For example, on MS SQL Server, you have three main default roles: `db_datareader`, `db_datawriter` and `db_owner`. Before stored procedures came into use, DBA's would give db_datareader ordb_datawriter rights to the webservice's user, depending on the requirements. 
+Occasionally, stored procedures can increase risk when a system is attacked. For example, on MS SQL Server, you have three main default roles: `db_datareader`, `db_datawriter` and `db_owner`. Before stored procedures came into use, DBA's would give db_datareader ordb_datawriter rights to the webservice's user, depending on the requirements.
 
 However, stored procedures require execute rights, a role that is not available by default. Some setups where the user management has been centralized, but is limited to those 3 roles, cause all web apps to run under db_owner rights so stored procedures can work. Naturally, that means that if a server is breached the attacker has full rights to the database, where previously they might only have had read-access.
 
@@ -206,9 +206,9 @@ switch(PARAM):
   default      : throw new InputValidationException("unexpected value provided"
                                                   + " for table name");
 ```
-#### Safest Use Of Dynamic SQL Generation (DISCOURAGED) 
+#### Safest Use Of Dynamic SQL Generation (DISCOURAGED)
 
-When we say "implemented safely," the stored procedure does not include any unsafe dynamic SQL generation. Developers do not usually generate dynamic SQL inside stored procedures. However, it can be done, but should be avoided. 
+When we say "implemented safely," the stored procedure does not include any unsafe dynamic SQL generation. Developers do not usually generate dynamic SQL inside stored procedures. However, it can be done, but should be avoided.
 
 If it can't be avoided, the stored procedure must use input validation or proper escaping as described in this article to make sure that all user supplied input to the stored procedure can't be used to inject SQL code into the dynamically generated query. Auditors should always look for uses of `sp_execute`, `execute` or `exec` within SQL Server stored procedures. Similar audit guidelines are necessary for similar functions for other vendors.
 
@@ -228,7 +228,7 @@ Any time user input can be converted to a non-String, like a date, numeric, bool
 
 Input validation is also recommended as a secondary defense in ALL cases, even when using bind variables as is discussed later in this article. More techniques on how to implement strong input validation is described in the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md).
 
-### Defense Option 4: Escaping All User-Supplied Input (DISCOURAGED) 
+### Defense Option 4: Escaping All User-Supplied Input (DISCOURAGED)
 
 WARNING: THIS TECHNIQUE SHOULD ONLY BE USED AS A LAST RESORT IF NONE OF THE ABOVE ARE FEASIBLE. Input validation is probably a better choice since this methodology is frail compared to other defenses and we CANNOT guarantee that this option will prevent all SQL injections in all situations. In this approach, the developer will escape all user input before putting it in a query. It is very database specific in its implementation.  
 
@@ -354,7 +354,7 @@ This information is based on [DB2 WebQuery special characters](https://www.ibm.c
 
 Information in regards to differences between several [DB2 Universal drivers](https://www.ibm.com/support/pages/db2-jdbc-driver-versions-and-downloads).
 
-#### Hex-Encoding All Input 
+#### Hex-Encoding All Input
 
 A somewhat special case of escaping is the process of hex-encode the entire string received from the user (this can be seen as escaping every character). The web application should hex-encode the user input before including it in the SQL statement. The SQL statement should take into account this fact, and accordingly compare the data.
 
@@ -413,7 +413,7 @@ Beyond adopting one of the four primary defenses, we also recommend adopting all
 
 ### Least Privilege
 
-To minimize the potential damage of a successful SQL injection attack, you should minimize the privileges assigned to every database account in your environment. Start from the ground up to determine what access rights your application accounts require, rather than trying to figure out what access rights you need to take away. 
+To minimize the potential damage of a successful SQL injection attack, you should minimize the privileges assigned to every database account in your environment. Start from the ground up to determine what access rights your application accounts require, rather than trying to figure out what access rights you need to take away.
 
 Make sure that accounts that only need read access are only granted read access to the tables they need access to. DO NOT ASSIGN DBA OR ADMIN TYPE ACCESS TO YOUR APPLICATION ACCOUNTS. We understand that this is easy, and everything just "works" when you do it this way, but it is very dangerous.
 
@@ -441,7 +441,7 @@ As an example, a login page requires read access to the username and password fi
 
 You can use SQL views to further increase the granularity of access by limiting the read access to specific fields of a table or joins of tables. It could have additional benefits.
 
-For example, if the system is required (perhaps due to some specific legal requirements) to store the passwords of the users, instead of salted-hashed passwords, the designer could use views to compensate for this limitation. They could revoke all access to the table (from all DB users except the owner/admin) and create a view that outputs the hash of the password field and not the field itself. 
+For example, if the system is required (perhaps due to some specific legal requirements) to store the passwords of the users, instead of salted-hashed passwords, the designer could use views to compensate for this limitation. They could revoke all access to the table (from all DB users except the owner/admin) and create a view that outputs the hash of the password field and not the field itself.
 
 Any SQL injection attack that succeeds in stealing DB information will be restricted to stealing the hash of the passwords (could even be a keyed hash), since no DB user for any of the web applications has access to the table itself.
 
