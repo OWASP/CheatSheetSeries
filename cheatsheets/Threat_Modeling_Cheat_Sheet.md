@@ -33,7 +33,7 @@ Proper threat modeling requires participants to think creatively and critically 
 
 ### Identify Risks Early-On
 
-Threat modeling seeks to identify potential security issues during the design phase. This allows security to be "built-into" a system rather rather "bolted-on". This is far more efficient than having to identify and resolve security flaws after a system is in production.
+Threat modeling seeks to identify potential security issues during the design phase. This allows security to be "built-into" a system rather than "bolted-on". This is far more efficient than having to identify and resolve security flaws after a system is in production.
 
 ## High-Level Process
 
