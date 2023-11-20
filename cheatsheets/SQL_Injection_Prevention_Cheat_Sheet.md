@@ -10,7 +10,7 @@ This cheat sheet will help you prevent SQL injection flaws in your applications.
 ## What Is a SQL Injection Attack?
 
  Attackers can use SQL injection on an application if it has dynamic database queries that use string concatenation and user supplied input. To avoid SQL injection flaws, developers need to:
- 
+
  1. Stop writing dynamic queries with string concatenation or
  2. Prevent malicious SQL input from being included in executed queries.
 
@@ -55,7 +55,7 @@ If your database encoder is missing, please let us know.
 
 **Anatomy of A Typical SQL Injection Vulnerability**
 
-A common SQL injection flaw in Java is below. Because its unvalidated "customerName" parameter is simply appended to the query, an attacker can enter SQL code into that query and the application would take the attacker's code and execute it on the database. 
+A common SQL injection flaw in Java is below. Because its unvalidated "customerName" parameter is simply appended to the query, an attacker can enter SQL code into that query and the application would take the attacker's code and execute it on the database.
 
 ```java
 String query = "SELECT account_balance FROM user_data WHERE user_name = "
@@ -72,7 +72,7 @@ try {
 
 ### Defense Option 1: Prepared Statements (with Parameterized Queries)
 
-When developers are taught how to write database queries, they should be told to use prepared statements with variable binding (aka parameterized queries). Prepared statements are simple to write and easier to understand than dynamic queries and parameterized queries force the developer to define all SQL code first and pass in each parameter to the query later. 
+When developers are taught how to write database queries, they should be told to use prepared statements with variable binding (aka parameterized queries). Prepared statements are simple to write and easier to understand than dynamic queries and parameterized queries force the developer to define all SQL code first and pass in each parameter to the query later.
 
 If database queries use this coding style, the database will always distinguish between code and data, regardless of what user input is supplied.
 Also, prepared statements ensure that an attacker is not able to change the intent of a query, even if SQL commands are inserted by an attacker.  
@@ -191,7 +191,7 @@ If you are faced with parts of SQL queries that can't use bind variables, such a
 
 **Sample Of Safe Table Name Validation**
 
-WARNING: If user parameter values are used for targeting different table names and column names, this is a symptom of poor design and a full rewrite should be considered if time allows. If that is not possible, developers should map the parameter values to the legal/expected table or column names to make sure unvalidated user input doesn't end up in the query. 
+WARNING: If user parameter values are used for targeting different table names and column names, this is a symptom of poor design and a full rewrite should be considered if time allows. If that is not possible, developers should map the parameter values to the legal/expected table or column names to make sure unvalidated user input doesn't end up in the query.
 
 In the example below, since `tableName` is identified as one of the legal and expected values for a table name in this query, it can be directly appended to the SQL query. Keep in mind that generic table validation functions can lead to data loss as table names are used in queries where they are not expected.
 
