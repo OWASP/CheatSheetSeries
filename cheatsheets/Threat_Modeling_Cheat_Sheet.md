@@ -56,7 +56,7 @@ STRIDE is a mature and popular threat modeling technique and mnemonic originally
 Threat Category|Violates|Examples
 ---|---|---|
 **S**poofing|Authenticity|An attacker steals the authentication token of a legitimate user and uses it to impersonate the user.|
-**T**ampering|Integrity|An abuses the application to perform unintended updates to a database.|
+**T**ampering|Integrity|An attacker abuses the application to perform unintended updates to a database.|
 **R**epudiation|Non-repudiability|An attacker manipulates logs to cover their actions.|
 **I**nformation Disclosure|Confidentiality|An attacker extract data from  a database containing user account info.|
 **D**enial of Service|Availability|An attacker locks a legitimate user out of their account by performing many failed authentication attempts. |
