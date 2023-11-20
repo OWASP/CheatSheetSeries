@@ -51,7 +51,7 @@ Regardless of how a DFD or comparable model is generated, it is important that t
 
 After the system has been modeled, it is now time to address the question of "what can go wrong?". This question must be explored with the inputs from the first step in mind; that is, it should focus on identifying and ranking threats within the context of the specific system being evaluated. In attempting to answer this question, threat modelers have a wealth of data sources and techniques at their disposal. For illustration purposes, this cheatsheet will leverage STRIDE; however, in practice, other approaches may be used alongside or instead of STRIDE.
 
-STRIDE is a mature and popular threat modeling technique and mnemonic originally developed by Microsoft employees. To facilitate threat identification, STRIDE groups threats into one of six general categories and prompts modelers to systematically consider how these general threats may materialize within the context of the specific system being evaluated. Each STRIDE categories may be considered a violation of a desirable security attribute; the categories and associated desirable attributes are are as follows:
+STRIDE is a mature and popular threat modeling technique and mnemonic originally developed by Microsoft employees. To facilitate threat identification, STRIDE groups threats into one of six general categories and prompts modelers to systematically consider how these general threats may materialize within the context of the specific system being evaluated. Each STRIDE category may be considered a violation of a desirable security attribute; the categories and associated desirable attributes are are as follows:
 
 Threat Category|Violates|Examples
 ---|---|---|
