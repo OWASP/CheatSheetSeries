@@ -9,14 +9,14 @@ This cheat sheet will help you prevent SQL injection flaws in your applications.
 
 ## What Is a SQL Injection Attack?
 
- Attackers can use SQL injection on an application if it has dynamic database queries that use string concatenation and user supplied input. To avoid SQL injection flaws, developers need to:  
+ Attackers can use SQL injection on an application if it has dynamic database queries that use string concatenation and user supplied input. To avoid SQL injection flaws, developers need to:
  
- 1. Stop writing dynamic queries with string concatenation or 
+ 1. Stop writing dynamic queries with string concatenation or
  2. Prevent malicious SQL input from being included in executed queries.
 
 There are simple techniques for preventing SQL injection vulnerabilities and they can be used with practically any kind of programming language and any type of database. While XML databases can have similar problems (e.g., XPath and XQuery injection), these techniques can be used to protect them as well.
 
-## Using the OWASP Enterprise Security API (ESAPI) ##
+## Using the OWASP Enterprise Security API (ESAPI)
 
 The OWASP Enterprise Security API (ESAPI) is a free, open source, web application security control library that makes it easier for programmers to write lower-risk applications. Full details on [ESAPI are available here on OWASP](https://owasp.org/www-project-enterprise-security-api/).
 
@@ -37,7 +37,7 @@ The OWASP Enterprise Security API (ESAPI) is a free, open source, web applicatio
 
 **Anatomy of A Typical SQL Injection Vulnerability**
 
-A common SQL injection flaw in Java is below. Because its unvalidated "customerName" parameter is simply appended to the query, an attacker can enter SQL code into that query and the application would take the attacker's code and execute it on the database. 
+A common SQL injection flaw in Java is below. Because its unvalidated "customerName" parameter is simply appended to the query, an attacker can enter SQL code into that query and the application would take the attacker's code and execute it on the database.
 
 ```java
 String query = "SELECT account_balance FROM user_data WHERE user_name = "
@@ -54,7 +54,7 @@ try {
 
 ### Defense Option 1: Prepared Statements (with Parameterized Queries)
 
-When developers are taught how to write database queries, they should be told to use prepared statements with variable binding (aka parameterized queries). Prepared statements are simple to write and easier to understand than dynamic queries and parameterized queries force the developer to define all SQL code first and pass in each parameter to the query later. 
+When developers are taught how to write database queries, they should be told to use prepared statements with variable binding (aka parameterized queries). Prepared statements are simple to write and easier to understand than dynamic queries and parameterized queries force the developer to define all SQL code first and pass in each parameter to the query later.
 
 If database queries use this coding style, the database will always distinguish between code and data, regardless of what user input is supplied.
 Also, prepared statements ensure that an attacker is not able to change the intent of a query, even if SQL commands are inserted by an attacker.  
@@ -122,7 +122,7 @@ Generally, developers like prepared statements because all the SQL code stays wi
 
 ### Defense Option 2: Stored Procedures
 
-Though stored procedures are not always safe from SQL injection, developers can use certain standard stored procedure programming constructs. This approach has the same effect as the use of parameterized queries as long as the stored procedures are implemented safely (which is the norm for most stored procedure languages). 
+Though stored procedures are not always safe from SQL injection, developers can use certain standard stored procedure programming constructs. This approach has the same effect as the use of parameterized queries as long as the stored procedures are implemented safely (which is the norm for most stored procedure languages).
 
 #### Safe Approach to Stored Procedures
 
@@ -130,7 +130,7 @@ If stored procedures are needed, the safest approach to using them requires the 
 
 #### When Stored Procedures Can Increase Risk
 
-Occasionally, stored procedures can increase risk when a system is attacked. For example, on MS SQL Server, you have three main default roles: `db_datareader`, `db_datawriter` and `db_owner`. Before stored procedures came into use, DBA's would give db_datareader ordb_datawriter rights to the webservice's user, depending on the requirements. 
+Occasionally, stored procedures can increase risk when a system is attacked. For example, on MS SQL Server, you have three main default roles: `db_datareader`, `db_datawriter` and `db_owner`. Before stored procedures came into use, DBA's would give db_datareader ordb_datawriter rights to the webservice's user, depending on the requirements.
 
 However, stored procedures require execute rights, a role that is not available by default. Some setups where the user management has been centralized, but is limited to those 3 roles, cause all web apps to run under db_owner rights so stored procedures can work. Naturally, that means that if a server is breached the attacker has full rights to the database, where previously they might only have had read-access.
 
@@ -173,7 +173,7 @@ If you are faced with parts of SQL queries that can't use bind variables, such a
 
 **Sample Of Safe Table Name Validation**
 
-WARNING: If user parameter values are used for targeting different table names and column names, this is a symptom of poor design and a full rewrite should be considered if time allows. If that is not possible, developers should map the parameter values to the legal/expected table or column names to make sure unvalidated user input doesn't end up in the query. 
+WARNING: If user parameter values are used for targeting different table names and column names, this is a symptom of poor design and a full rewrite should be considered if time allows. If that is not possible, developers should map the parameter values to the legal/expected table or column names to make sure unvalidated user input doesn't end up in the query.
 
 In the example below, since `tableName` is identified as one of the legal and expected values for a table name in this query, it can be directly appended to the SQL query. Keep in mind that generic table validation functions can lead to data loss as table names are used in queries where they are not expected.
 
@@ -188,9 +188,9 @@ switch(PARAM):
   default      : throw new InputValidationException("unexpected value provided"
                                                   + " for table name");
 ```
-#### Safest Use Of Dynamic SQL Generation (DISCOURAGED) 
+#### Safest Use Of Dynamic SQL Generation (DISCOURAGED)
 
-When we say "implemented safely," the stored procedure does not include any unsafe dynamic SQL generation. Developers do not usually generate dynamic SQL inside stored procedures. However, it can be done, but should be avoided. 
+When we say "implemented safely," the stored procedure does not include any unsafe dynamic SQL generation. Developers do not usually generate dynamic SQL inside stored procedures. However, it can be done, but should be avoided.
 
 If it can't be avoided, the stored procedure must use input validation or proper escaping as described in this article to make sure that all user supplied input to the stored procedure can't be used to inject SQL code into the dynamically generated query. Auditors should always look for uses of `sp_execute`, `execute` or `exec` within SQL Server stored procedures. Similar audit guidelines are necessary for similar functions for other vendors.
 
@@ -212,7 +212,7 @@ Input validation is also recommended as a secondary defense in ALL cases, even w
 
 ### STRONGLY DISCOURAGED: Escaping All User-Supplied Input  
 
-In this approach, the developer will escape all user input before putting it in a query. It is very database specific in its implementation.  This methodology is frail compared to other defenses and we CANNOT guarantee that this option will prevent all SQL injections in all situations. 
+In this approach, the developer will escape all user input before putting it in a query. It is very database specific in its implementation.  This methodology is frail compared to other defenses and we CANNOT guarantee that this option will prevent all SQL injections in all situations.
 
 If an application is built from scratch or it requires low risk tolerance, those cases should be built or re-written using parameterized queries, stored procedures, or some kind of Object Relational Mapper (ORM) that builds your queries for you.
 
@@ -226,7 +226,7 @@ Beyond adopting one of the four primary defenses, we also recommend adopting all
 
 ### Least Privilege
 
-To minimize the potential damage of a successful SQL injection attack, you should minimize the privileges assigned to every database account in your environment. Start from the ground up to determine what access rights your application accounts require, rather than trying to figure out what access rights you need to take away. 
+To minimize the potential damage of a successful SQL injection attack, you should minimize the privileges assigned to every database account in your environment. Start from the ground up to determine what access rights your application accounts require, rather than trying to figure out what access rights you need to take away.
 
 Make sure that accounts that only need read access are only granted read access to the tables they need access to. DO NOT ASSIGN DBA OR ADMIN TYPE ACCESS TO YOUR APPLICATION ACCOUNTS. We understand that this is easy, and everything just "works" when you do it this way, but it is very dangerous.
 
