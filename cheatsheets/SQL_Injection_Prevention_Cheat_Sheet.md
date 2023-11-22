@@ -16,17 +16,6 @@ Attackers can use SQL injection on an application if it has dynamic database que
 
 There are simple techniques for preventing SQL injection vulnerabilities and they can be used with practically any kind of programming language and any type of database. While XML databases can have similar problems (e.g., XPath and XQuery injection), these techniques can be used to protect them as well.
 
-## Using the OWASP Enterprise Security API (ESAPI)
-
-The OWASP Enterprise Security API (ESAPI) is a free, open source, web application security control library that makes it easier for programmers to write lower-risk applications. Full details on [ESAPI are available here on OWASP](https://owasp.org/www-project-enterprise-security-api/).
-
-### Primary Defenses:
-
-- **Option 1: Use of Prepared Statements (with Parameterized Queries)**
-- **Option 2: Use of Properly Constructed Stored Procedures**
-- **Option 3: Allow-list Input Validation**
-- **Option 4: STRONGLY DISCOURAGED: Escaping All User Supplied Input**
-
 ## Anatomy of A Typical SQL Injection Vulnerability
 
 A common SQL injection flaw in Java is below. Because its unvalidated "customerName" parameter is simply appended to the query, an attacker can enter SQL code into that query and the application would take the attacker's code and execute it on the database.
@@ -43,6 +32,11 @@ try {
 ```
 
 ## Primary Defenses
+
+- **Option 1: Use of Prepared Statements (with Parameterized Queries)**
+- **Option 2: Use of Properly Constructed Stored Procedures**
+- **Option 3: Allow-list Input Validation**
+- **Option 4: STRONGLY DISCOURAGED: Escaping All User Supplied Input**
 
 ### Defense Option 1: Prepared Statements (with Parameterized Queries)
 
@@ -203,7 +197,7 @@ Any time user input can be converted to a non-String, like a date, numeric, bool
 
 Input validation is also recommended as a secondary defense in ALL cases, even when using bind variables as is discussed later in this article. More techniques on how to implement strong input validation is described in the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md).
 
-### STRONGLY DISCOURAGED: Escaping All User-Supplied Input  
+###  Defense Option 4: STRONGLY DISCOURAGED: Escaping All User-Supplied Input  
 
 In this approach, the developer will escape all user input before putting it in a query. It is very database specific in its implementation.  This methodology is frail compared to other defenses and we CANNOT guarantee that this option will prevent all SQL injections in all situations.
 
