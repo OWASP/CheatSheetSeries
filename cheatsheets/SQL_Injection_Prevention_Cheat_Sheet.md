@@ -9,53 +9,35 @@ This cheat sheet will help you prevent SQL injection flaws in your applications.
 
 ## What Is a SQL Injection Attack?
 
- Attackers can use SQL injection on an application if it has dynamic database queries that use string concatenation and user supplied input. To avoid SQL injection flaws, developers need to:
-
- 1. Stop writing dynamic queries with string concatenation or
+ Attackers can use SQL injection on an application if it has dynamic database queries that use string concatenation and user supplied input. To avoid SQL injection flaws, developers need to:  
+ 
+ 1. Stop writing dynamic queries with string concatenation or 
  2. Prevent malicious SQL input from being included in executed queries.
 
 There are simple techniques for preventing SQL injection vulnerabilities and they can be used with practically any kind of programming language and any type of database. While XML databases can have similar problems (e.g., XPath and XQuery injection), these techniques can be used to protect them as well.
 
-## Using the OWASP Enterprise Security API (ESAPI)
+## Using the OWASP Enterprise Security API (ESAPI) ##
 
-The OWASP Enterprise Security API (ESAPI) is a free, open source, web application security control library that makes it easier for programmers to write lower-risk applications, and they are designed to make it easier for programmers to retrofit security into existing applications. The ESAPI libraries also serve as a solid foundation for new development:
-
-- Full details on [ESAPI are available here on OWASP](https://owasp.org/www-project-enterprise-security-api/).
-- The javadoc for [ESAPI 2.x (Legacy) is available](http://www.javadoc.io/doc/org.owasp.esapi/esapi/2.1.0). This code was migrated to GitHub in November 2014.
-- [The legacy ESAPI for Java at GitHub](https://github.com/ESAPI/esapi-java-legacy) helps understand existing use of it when Javadoc seems insufficient.
-- [An attempt at another ESAPI for Java GitHub](https://github.com/ESAPI/esapi-java) has other approaches and no tests or concrete codecs.
-
-To find the javadoc specifically for the database encoders, click on the `Codec` class on the left hand side. There are lots of Codecs implemented. The two Database specific codecs are `OracleCodec`, and `MySQLCodec`.
-
-Just click on their names in the `All Known Implementing Classes:` at the top of the Interface Codec page.
-
-At this time, ESAPI currently has database encoders for:
-
-- Oracle
-- MySQL (Both ANSI and native modes are supported)
-
-Database encoders are forthcoming for:
-
-- SQL Server
-- PostgreSQL
-
-If your database encoder is missing, please let us know.
+The OWASP Enterprise Security API (ESAPI) is a free, open source, web application security control library that makes it easier for programmers to write lower-risk applications. Full details on [ESAPI are available here on OWASP](https://owasp.org/www-project-enterprise-security-api/).
 
 **Primary Defenses:**
 
 - **Option 1: Use of Prepared Statements (with Parameterized Queries)**
 - **Option 2: Use of Properly Constructed Stored Procedures**
 - **Option 3: Allow-list Input Validation**
-- **Option 4: Escaping All User Supplied Input**
+
+**STRONGLY DISCOURAGED**
+
+- **Escaping All User Supplied Input**
 
 **Additional Defenses:**
 
 - **Also: Enforcing Least Privilege**
 - **Also: Performing Allow-list Input Validation as a Secondary Defense**
 
-## Anatomy of A Typical SQL Injection Vulnerability
+**Anatomy of A Typical SQL Injection Vulnerability**
 
-A common SQL injection flaw in Java is below. Because its unvalidated "customerName" parameter is simply appended to the query, an attacker can enter SQL code into that query and the application would take the attacker's code and execute it on the database.
+A common SQL injection flaw in Java is below. Because its unvalidated "customerName" parameter is simply appended to the query, an attacker can enter SQL code into that query and the application would take the attacker's code and execute it on the database. 
 
 ```java
 String query = "SELECT account_balance FROM user_data WHERE user_name = "
@@ -72,12 +54,12 @@ try {
 
 ### Defense Option 1: Prepared Statements (with Parameterized Queries)
 
-When developers are taught how to write database queries, they should be told to use prepared statements with variable binding (aka parameterized queries). Prepared statements are simple to write and easier to understand than dynamic queries and parameterized queries force the developer to define all SQL code first and pass in each parameter to the query later.
+When developers are taught how to write database queries, they should be told to use prepared statements with variable binding (aka parameterized queries). Prepared statements are simple to write and easier to understand than dynamic queries and parameterized queries force the developer to define all SQL code first and pass in each parameter to the query later. 
 
 If database queries use this coding style, the database will always distinguish between code and data, regardless of what user input is supplied.
 Also, prepared statements ensure that an attacker is not able to change the intent of a query, even if SQL commands are inserted by an attacker.  
 
-#### Safe Prepared Statement in Java
+**Safe Prepared Statement in Java**
 
 In the safe Java example below, if an attacker were to enter the userID of `tom' or '1'='1`, the parameterized query would look for a username which literally matched the entire string `tom' or '1'='1`. Thus, the database would be protected against injections of malicious SQL code.
 
@@ -104,7 +86,7 @@ Occasionally, prepared statements can harm performance. If this occurs, you shou
 
 ```
 
-#### Safe C\# .NET Prepared Statement
+**Safe C\# .NET Prepared Statement**:
 
 In .NET, the creation and execution of the query doesn't change. Just pass the parameters to the query using the `Parameters.Add()` call as shown below.
 
@@ -132,7 +114,7 @@ Query safeHQLQuery = session.createQuery("from Inventory where productID=:
 safeHQLQuery.setParameter("productid", userSuppliedParameter);
 ```
 
-#### Other Examples of Safe Prepared Statements
+**Other Examples of Safe Prepared Statements**
 
 If you need examples of prepared queries/parameterized languages, including Ruby, PHP, Cold Fusion, Perl, and Rust, see the [Query Parameterization Cheat Sheet](Query_Parameterization_Cheat_Sheet.md) or this [site](http://bobby-tables.com/).
 
@@ -140,7 +122,7 @@ Generally, developers like prepared statements because all the SQL code stays wi
 
 ### Defense Option 2: Stored Procedures
 
-Though stored procedures are not always safe from SQL injection, developers can use certain standard stored procedure programming constructs. This approach has the same effect as the use of parameterized queries as long as the stored procedures are implemented safely (which is the norm for most stored procedure languages).
+Though stored procedures are not always safe from SQL injection, developers can use certain standard stored procedure programming constructs. This approach has the same effect as the use of parameterized queries as long as the stored procedures are implemented safely (which is the norm for most stored procedure languages). 
 
 #### Safe Approach to Stored Procedures
 
@@ -148,11 +130,11 @@ If stored procedures are needed, the safest approach to using them requires the 
 
 #### When Stored Procedures Can Increase Risk
 
-Occasionally, stored procedures can increase risk when a system is attacked. For example, on MS SQL Server, you have three main default roles: `db_datareader`, `db_datawriter` and `db_owner`. Before stored procedures came into use, DBA's would give db_datareader ordb_datawriter rights to the webservice's user, depending on the requirements.
+Occasionally, stored procedures can increase risk when a system is attacked. For example, on MS SQL Server, you have three main default roles: `db_datareader`, `db_datawriter` and `db_owner`. Before stored procedures came into use, DBA's would give db_datareader ordb_datawriter rights to the webservice's user, depending on the requirements. 
 
 However, stored procedures require execute rights, a role that is not available by default. Some setups where the user management has been centralized, but is limited to those 3 roles, cause all web apps to run under db_owner rights so stored procedures can work. Naturally, that means that if a server is breached the attacker has full rights to the database, where previously they might only have had read-access.
 
-#### Safe Java Stored Procedure Example
+**Safe Java Stored Procedure Example**:
 
 The following code example uses Java's implementation of the stored procedure interface (`CallableStatement`) to execute the same database query. The `sp_getAccountBalance` stored procedure has top be predefined in the database and use the same functionality as the query below.
 
@@ -169,7 +151,7 @@ try {
 }
 ```
 
-#### Safe VB .NET Stored Procedure Example
+**Safe VB .NET Stored Procedure Example**:
 
 The following code example uses a `SqlCommand`, .NET's implementation of the stored procedure interface, to execute the same database query. The `sp_getAccountBalance` stored procedure must be predefined in the database and use the same functionality as the query defined above.
 
@@ -189,9 +171,9 @@ The following code example uses a `SqlCommand`, .NET's implementation of the sto
 
 If you are faced with parts of SQL queries that can't use bind variables, such as the names of tables or columns as well as the sort order indicator (ASC or DESC), input validation or query redesign is the most appropriate defense. When names of tables or columns are needed, ideally those values come from the code and not from user parameters.
 
-#### Sample Of Safe Table Name Validation
+**Sample Of Safe Table Name Validation**
 
-WARNING: If user parameter values are used for targeting different table names and column names, this is a symptom of poor design and a full rewrite should be considered if time allows. If that is not possible, developers should map the parameter values to the legal/expected table or column names to make sure unvalidated user input doesn't end up in the query.
+WARNING: If user parameter values are used for targeting different table names and column names, this is a symptom of poor design and a full rewrite should be considered if time allows. If that is not possible, developers should map the parameter values to the legal/expected table or column names to make sure unvalidated user input doesn't end up in the query. 
 
 In the example below, since `tableName` is identified as one of the legal and expected values for a table name in this query, it can be directly appended to the SQL query. Keep in mind that generic table validation functions can lead to data loss as table names are used in queries where they are not expected.
 
@@ -206,14 +188,13 @@ switch(PARAM):
   default      : throw new InputValidationException("unexpected value provided"
                                                   + " for table name");
 ```
+#### Safest Use Of Dynamic SQL Generation (DISCOURAGED) 
 
-#### Safest Use Of Dynamic SQL Generation (DISCOURAGED)
-
-When we say "implemented safely," the stored procedure does not include any unsafe dynamic SQL generation. Developers do not usually generate dynamic SQL inside stored procedures. However, it can be done, but should be avoided.
+When we say "implemented safely," the stored procedure does not include any unsafe dynamic SQL generation. Developers do not usually generate dynamic SQL inside stored procedures. However, it can be done, but should be avoided. 
 
 If it can't be avoided, the stored procedure must use input validation or proper escaping as described in this article to make sure that all user supplied input to the stored procedure can't be used to inject SQL code into the dynamically generated query. Auditors should always look for uses of `sp_execute`, `execute` or `exec` within SQL Server stored procedures. Similar audit guidelines are necessary for similar functions for other vendors.
 
-#### Sample of Safer Dynamic Query Generation (DISCOURAGED)
+**Sample of Safer Dynamic Query Generation (DISCOURAGED)**
 
 For something simple like a sort order, it would be best if the user supplied input is converted to a boolean, and then that boolean is used to select the safe value to append to the query. This is a very standard need in dynamic query creation.
 
@@ -229,181 +210,12 @@ Any time user input can be converted to a non-String, like a date, numeric, bool
 
 Input validation is also recommended as a secondary defense in ALL cases, even when using bind variables as is discussed later in this article. More techniques on how to implement strong input validation is described in the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md).
 
-### Defense Option 4: Escaping All User-Supplied Input (DISCOURAGED)
+### STRONGLY DISCOURAGED: Escaping All User-Supplied Input  
 
-WARNING: THIS TECHNIQUE SHOULD ONLY BE USED AS A LAST RESORT IF NONE OF THE ABOVE ARE FEASIBLE. Input validation is probably a better choice since this methodology is frail compared to other defenses and we CANNOT guarantee that this option will prevent all SQL injections in all situations. In this approach, the developer will escape all user input before putting it in a query. It is very database specific in its implementation.  
+In this approach, the developer will escape all user input before putting it in a query. It is very database specific in its implementation.  This methodology is frail compared to other defenses and we CANNOT guarantee that this option will prevent all SQL injections in all situations. 
 
-Generally, this approach should only be used to retrofit legacy code when implementing input validation isn't cost effective. If an application is built from scratch or it requires low risk tolerance, those cases should be built or re-written using parameterized queries, stored procedures, or some kind of Object Relational Mapper (ORM) that builds your queries for you.
+If an application is built from scratch or it requires low risk tolerance, those cases should be built or re-written using parameterized queries, stored procedures, or some kind of Object Relational Mapper (ORM) that builds your queries for you.
 
-#### Methodology for Escaping User-Supplied Input (DISCOURAGED)
-
-In this approach, each DBMS supports one or more character escaping schemes specific to certain kinds of queries. If you then escape all user supplied input using the proper escaping scheme for the database you are using, the DBMS will not confuse that input with SQL code written by the developer, thus avoiding any possible SQL injection vulnerabilities.
-
-#### Database Specific Escaping Details
-
-If you want to build your own escaping routines, here are the escaping details for each of the databases that we have developed ESAPI Encoders for:
-
-- Oracle
-- SQL Server
-- DB2
-
-##### Oracle Escaping
-
-This information is based on the [Oracle Escape character information](http://www.orafaq.com/wiki/SQL_FAQ#How_does_one_escape_special_characters_when_writing_SQL_queries.3F).
-
-###### Escaping Dynamic Queries
-
-To use an ESAPI database codec is pretty simple. An Oracle example looks something like:
-
-```java
-ESAPI.encoder().encodeForSQL( new OracleCodec(), queryparam );
-```
-
-So, if you had an existing Dynamic query being generated in your code that was going to Oracle that looked like this:
-
-```java
-String query = "SELECT user_id FROM user_data WHERE user_name = '"
-              + req.getParameter("userID")
-              + "' and user_password = '" + req.getParameter("pwd") +"'";
-try {
-    Statement statement = connection.createStatement( … );
-    ResultSet results = statement.executeQuery( query );
-}
-```
-
-You would rewrite the first line to look like this:
-
-```java
-Codec ORACLE_CODEC = new OracleCodec();
-String query = "SELECT user_id FROM user_data WHERE user_name = '"
-+ ESAPI.encoder().encodeForSQL( ORACLE_CODEC, req.getParameter("userID"))
-+ "' and user_password = '"
-+ ESAPI.encoder().encodeForSQL( ORACLE_CODEC, req.getParameter("pwd")) +"'";
-```
-
-And it would now be safe from SQL injection, regardless of the input supplied.
-
-For maximum code readability, you could also construct your own `OracleEncoder`:
-
-```java
-Encoder oe = new OracleEncoder();
-String query = "SELECT user_id FROM user_data WHERE user_name = '"
-+ oe.encode( req.getParameter("userID")) + "' and user_password = '"
-+ oe.encode( req.getParameter("pwd")) +"'";
-```
-
-With this type of solution, you would need only to wrap each user-supplied parameter being passed into an `ESAPI.encoder().encodeForOracle( )` call or whatever you named the call and you would be done.
-
-###### Turn Off Character Replacement (Escaping Details)
-
-Use `SET DEFINE OFF` or `SET SCAN OFF` to ensure that automatic character replacement is turned off. If this character replacement is turned on, the & character will be treated like a SQLPlus variable prefix that could allow an attacker to retrieve private data.
-
-See [here](https://docs.oracle.com/cd/B19306_01/server.102/b14357/ch12040.htm#i2698854) and [here](https://stackoverflow.com/a/410490) for more information
-
-###### Escaping Wildcard characters in Like Clauses
-
-The `LIKE` keyword allows for text scanning searches. In Oracle, the underscore `_` character matches only one character, while the ampersand `%` is used to match zero or more occurrences of any characters. These characters must be escaped in LIKE clause criteria.
-
-For example:
-
-```sql
-SELECT name FROM emp WHERE id LIKE '%/_%' ESCAPE '/';
-
-SELECT name FROM emp WHERE id LIKE '%\%%' ESCAPE '\';
-```
-
-###### Oracle 10g Escaping
-
-An alternative for Oracle 10g and later is to place `{` and `}` around the string to escape the entire string. However, you have to be careful that there isn't a `}` character already in the string. You must search for these and if there is one, then you must replace it with `}}`. Otherwise that character will end the escaping early, and may introduce a vulnerability.
-
-##### MySQL Escaping
-
-MySQL supports two escaping modes:
-
-1. `ANSI_QUOTES` SQL mode, and a mode with this off, which we call
-2. `MySQL` mode.
-
-`ANSI SQL` mode: Simply encode all `'` (single tick) characters with `''` (two single ticks)
-
-`MySQL` mode, do the following:
-
-```text
-NUL (0x00) --> \0  [This is a zero, not the letter O]
-BS  (0x08) --> \b
-TAB (0x09) --> \t
-LF  (0x0a) --> \n
-CR  (0x0d) --> \r
-SUB (0x1a) --> \Z
-"   (0x22) --> \"
-%   (0x25) --> \%
-'   (0x27) --> \'
-\   (0x5c) --> \\
-_   (0x5f) --> \_
-all other non-alphanumeric characters with ASCII values
-less than 256  --> \c where 'c' is the original non-alphanumeric character.
-```
-
-This information is based on the [MySQL Escape character information](https://dev.mysql.com/doc/refman/5.7/en/string-literals.html).
-
-##### MS SQL Server Escaping
-
-We have not implemented the MS SQL Server escaping routine yet, but the following has good pointers and links to articles describing how to prevent SQL injection attacks on MS SQL Server, see [here](https://aka.ms/sql-injection).
-
-##### DB2 Escaping
-
-This information is based on [DB2 WebQuery special characters](https://www.ibm.com/support/pages/web-query-special-characters) as well as some information from [Oracle's JDBC DB2 driver](http://docs.oracle.com/cd/E12840_01/wls/docs103/jdbc_drivers/sqlescape.html).
-
-Information in regards to differences between several [DB2 Universal drivers](https://www.ibm.com/support/pages/db2-jdbc-driver-versions-and-downloads).
-
-#### Hex-Encoding All Input
-
-A somewhat special case of escaping is the process of hex-encode the entire string received from the user (this can be seen as escaping every character). The web application should hex-encode the user input before including it in the SQL statement. The SQL statement should take into account this fact, and accordingly compare the data.
-
-For example, if we have to look up a record matching a sessionID, and the user transmitted the string abc123 as the session ID, the select statement would be:
-
-```sql
-SELECT ... FROM session WHERE hex_encode(sessionID) = '616263313233'
-```
-
-`hex_encode` should be replaced by the particular facility for the database being used. The string 606162313233 is the hex encoded version of the string received from the user (it is the sequence of hex values of the ASCII/UTF-8 codes of the user data).
-
-If an attacker were to transmit a string containing a single-quote character followed by their attempt to inject SQL code, the constructed SQL statement will only look like:
-
-```sql
-... WHERE hex_encode ( ... ) = '2720 ... '
-```
-
-`27` being the ASCII code (in hex) of the single-quote, which is simply hex-encoded like any other character in the string. The resulting SQL can only contain numeric digits and letters `a` to `f`, and never any special character that could enable an SQL injection.
-
-#### Escaping SQLi in PHP
-
-In this situation, use prepared statements and parameterized queries. These are SQL statements that are sent to and parsed by the database server separately from any parameters. This way, it is impossible for an attacker to inject malicious SQL.
-
-You basically have two options to achieve this:
-
-1. Using [PDO](https://www.php.net/manual/en/book.pdo.php) (for any supported database driver):
-
-```php
-$stmt = $pdo->prepare('SELECT * FROM employees WHERE name = :name');
-$stmt->execute(array('name' => $name));
-foreach ($stmt as $row) {
-    // do something with $row
-}
-```
-
-2. Using [MySQLi](https://www.php.net/manual/en/book.mysqli.php) (for MySQL):
-
-```php
-$stmt = $dbConnection->prepare('SELECT * FROM employees WHERE name = ?');
-$stmt->bind_param('s', $name);
-$stmt->execute();
-$result = $stmt->get_result();
-while ($row = $result->fetch_assoc()) {
-    // do something with $row
-}
-```
-
-PDO is the universal option. If you're connecting to a database other than MySQL, you can refer to a driver-specific second option (e.g. pg_prepare() and pg_execute() for PostgreSQL).
 
 ## Additional Defenses
 
@@ -414,7 +226,7 @@ Beyond adopting one of the four primary defenses, we also recommend adopting all
 
 ### Least Privilege
 
-To minimize the potential damage of a successful SQL injection attack, you should minimize the privileges assigned to every database account in your environment. Start from the ground up to determine what access rights your application accounts require, rather than trying to figure out what access rights you need to take away.
+To minimize the potential damage of a successful SQL injection attack, you should minimize the privileges assigned to every database account in your environment. Start from the ground up to determine what access rights your application accounts require, rather than trying to figure out what access rights you need to take away. 
 
 Make sure that accounts that only need read access are only granted read access to the tables they need access to. DO NOT ASSIGN DBA OR ADMIN TYPE ACCESS TO YOUR APPLICATION ACCOUNTS. We understand that this is easy, and everything just "works" when you do it this way, but it is very dangerous.
 
@@ -442,7 +254,7 @@ As an example, a login page requires read access to the username and password fi
 
 You can use SQL views to further increase the granularity of access by limiting the read access to specific fields of a table or joins of tables. It could have additional benefits.
 
-For example, if the system is required (perhaps due to some specific legal requirements) to store the passwords of the users, instead of salted-hashed passwords, the designer could use views to compensate for this limitation. They could revoke all access to the table (from all DB users except the owner/admin) and create a view that outputs the hash of the password field and not the field itself.
+For example, if the system is required (perhaps due to some specific legal requirements) to store the passwords of the users, instead of salted-hashed passwords, the designer could use views to compensate for this limitation. They could revoke all access to the table (from all DB users except the owner/admin) and create a view that outputs the hash of the password field and not the field itself. 
 
 Any SQL injection attack that succeeds in stealing DB information will be restricted to stealing the hash of the passwords (could even be a keyed hash), since no DB user for any of the web applications has access to the table itself.
 
