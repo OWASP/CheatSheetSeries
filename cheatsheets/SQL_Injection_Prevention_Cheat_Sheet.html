@@ -1735,6 +1735,20 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#what-is-a-sql-injection-attack" class="md-nav__link">
+    What Is a SQL Injection Attack?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anatomy-of-a-typical-sql-injection-vulnerability" class="md-nav__link">
+    Anatomy of A Typical SQL Injection Vulnerability
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#primary-defenses" class="md-nav__link">
     Primary Defenses
   </a>
@@ -1747,12 +1761,66 @@
     Defense Option 1: Prepared Statements (with Parameterized Queries)
   </a>
   
+    <nav class="md-nav" aria-label="Defense Option 1: Prepared Statements (with Parameterized Queries)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#safe-prepared-statement-in-java" class="md-nav__link">
+    Safe Prepared Statement in Java
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#safe-c-net-prepared-statement" class="md-nav__link">
+    Safe C# .NET Prepared Statement
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hibernate-query-language-hql-prepared-statement-named-parameters-examples" class="md-nav__link">
+    Hibernate Query Language (HQL) Prepared Statement (Named Parameters) Examples
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-examples-of-safe-prepared-statements" class="md-nav__link">
+    Other Examples of Safe Prepared Statements
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
   <a href="#defense-option-2-stored-procedures" class="md-nav__link">
     Defense Option 2: Stored Procedures
   </a>
+  
+    <nav class="md-nav" aria-label="Defense Option 2: Stored Procedures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#safe-approach-to-stored-procedures" class="md-nav__link">
+    Safe Approach to Stored Procedures
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-stored-procedures-can-increase-risk" class="md-nav__link">
+    When Stored Procedures Can Increase Risk
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -1761,56 +1829,26 @@
     Defense Option 3: Allow-list Input Validation
   </a>
   
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#defense-option-4-escaping-all-user-supplied-input" class="md-nav__link">
-    Defense Option 4: Escaping All User-Supplied Input
-  </a>
-  
-    <nav class="md-nav" aria-label="Defense Option 4: Escaping All User-Supplied Input">
+    <nav class="md-nav" aria-label="Defense Option 3: Allow-list Input Validation">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#database-specific-escaping-details" class="md-nav__link">
-    Database Specific Escaping Details
-  </a>
-  
-    <nav class="md-nav" aria-label="Database Specific Escaping Details">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#oracle-escaping" class="md-nav__link">
-    Oracle Escaping
-  </a>
-  
-    <nav class="md-nav" aria-label="Oracle Escaping">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#escaping-dynamic-queries" class="md-nav__link">
-    Escaping Dynamic Queries
+  <a href="#sample-of-safe-table-name-validation" class="md-nav__link">
+    Sample Of Safe Table Name Validation
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#turn-off-character-replacement" class="md-nav__link">
-    Turn off character replacement
+  <a href="#safest-use-of-dynamic-sql-generation-discouraged" class="md-nav__link">
+    Safest Use Of Dynamic SQL Generation (DISCOURAGED)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#escaping-wildcard-characters-in-like-clauses" class="md-nav__link">
-    Escaping Wildcard characters in Like Clauses
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#oracle-10g-escaping" class="md-nav__link">
-    Oracle 10g escaping
+  <a href="#sample-of-safer-dynamic-query-generation-discouraged" class="md-nav__link">
+    Sample of Safer Dynamic Query Generation (DISCOURAGED)
   </a>
   
 </li>
@@ -1821,47 +1859,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#mysql-escaping" class="md-nav__link">
-    MySQL Escaping
+  <a href="#defense-option-4-strongly-discouraged-escaping-all-user-supplied-input" class="md-nav__link">
+    Defense Option 4: STRONGLY DISCOURAGED: Escaping All User-Supplied Input
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sql-server-escaping" class="md-nav__link">
-    SQL Server Escaping
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#db2-escaping" class="md-nav__link">
-    DB2 Escaping
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#hex-encoding-all-input" class="md-nav__link">
-    Hex-encoding all input
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#escaping-sqli-in-php" class="md-nav__link">
-    Escaping SQLi in PHP
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -1887,15 +1887,29 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#multiple-db-users" class="md-nav__link">
-    Multiple DB Users
+  <a href="#minimizing-application-and-os-privileges" class="md-nav__link">
+    Minimizing Application and OS Privileges
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#views" class="md-nav__link">
-    Views
+  <a href="#details-of-least-privilege-when-developing" class="md-nav__link">
+    Details Of Least Privilege When Developing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#least-admin-privileges-for-multiple-dbs" class="md-nav__link">
+    Least Admin Privileges For Multiple DBs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enhancing-least-privilege-with-sql-views" class="md-nav__link">
+    Enhancing Least Privilege with SQL Views
   </a>
   
 </li>
@@ -2394,6 +2408,20 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#what-is-a-sql-injection-attack" class="md-nav__link">
+    What Is a SQL Injection Attack?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anatomy-of-a-typical-sql-injection-vulnerability" class="md-nav__link">
+    Anatomy of A Typical SQL Injection Vulnerability
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#primary-defenses" class="md-nav__link">
     Primary Defenses
   </a>
@@ -2406,12 +2434,66 @@
     Defense Option 1: Prepared Statements (with Parameterized Queries)
   </a>
   
+    <nav class="md-nav" aria-label="Defense Option 1: Prepared Statements (with Parameterized Queries)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#safe-prepared-statement-in-java" class="md-nav__link">
+    Safe Prepared Statement in Java
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#safe-c-net-prepared-statement" class="md-nav__link">
+    Safe C# .NET Prepared Statement
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hibernate-query-language-hql-prepared-statement-named-parameters-examples" class="md-nav__link">
+    Hibernate Query Language (HQL) Prepared Statement (Named Parameters) Examples
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-examples-of-safe-prepared-statements" class="md-nav__link">
+    Other Examples of Safe Prepared Statements
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
   <a href="#defense-option-2-stored-procedures" class="md-nav__link">
     Defense Option 2: Stored Procedures
   </a>
+  
+    <nav class="md-nav" aria-label="Defense Option 2: Stored Procedures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#safe-approach-to-stored-procedures" class="md-nav__link">
+    Safe Approach to Stored Procedures
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-stored-procedures-can-increase-risk" class="md-nav__link">
+    When Stored Procedures Can Increase Risk
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -2420,56 +2502,26 @@
     Defense Option 3: Allow-list Input Validation
   </a>
   
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#defense-option-4-escaping-all-user-supplied-input" class="md-nav__link">
-    Defense Option 4: Escaping All User-Supplied Input
-  </a>
-  
-    <nav class="md-nav" aria-label="Defense Option 4: Escaping All User-Supplied Input">
+    <nav class="md-nav" aria-label="Defense Option 3: Allow-list Input Validation">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#database-specific-escaping-details" class="md-nav__link">
-    Database Specific Escaping Details
-  </a>
-  
-    <nav class="md-nav" aria-label="Database Specific Escaping Details">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#oracle-escaping" class="md-nav__link">
-    Oracle Escaping
-  </a>
-  
-    <nav class="md-nav" aria-label="Oracle Escaping">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#escaping-dynamic-queries" class="md-nav__link">
-    Escaping Dynamic Queries
+  <a href="#sample-of-safe-table-name-validation" class="md-nav__link">
+    Sample Of Safe Table Name Validation
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#turn-off-character-replacement" class="md-nav__link">
-    Turn off character replacement
+  <a href="#safest-use-of-dynamic-sql-generation-discouraged" class="md-nav__link">
+    Safest Use Of Dynamic SQL Generation (DISCOURAGED)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#escaping-wildcard-characters-in-like-clauses" class="md-nav__link">
-    Escaping Wildcard characters in Like Clauses
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#oracle-10g-escaping" class="md-nav__link">
-    Oracle 10g escaping
+  <a href="#sample-of-safer-dynamic-query-generation-discouraged" class="md-nav__link">
+    Sample of Safer Dynamic Query Generation (DISCOURAGED)
   </a>
   
 </li>
@@ -2480,47 +2532,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#mysql-escaping" class="md-nav__link">
-    MySQL Escaping
+  <a href="#defense-option-4-strongly-discouraged-escaping-all-user-supplied-input" class="md-nav__link">
+    Defense Option 4: STRONGLY DISCOURAGED: Escaping All User-Supplied Input
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sql-server-escaping" class="md-nav__link">
-    SQL Server Escaping
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#db2-escaping" class="md-nav__link">
-    DB2 Escaping
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#hex-encoding-all-input" class="md-nav__link">
-    Hex-encoding all input
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#escaping-sqli-in-php" class="md-nav__link">
-    Escaping SQLi in PHP
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -2546,15 +2560,29 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#multiple-db-users" class="md-nav__link">
-    Multiple DB Users
+  <a href="#minimizing-application-and-os-privileges" class="md-nav__link">
+    Minimizing Application and OS Privileges
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#views" class="md-nav__link">
-    Views
+  <a href="#details-of-least-privilege-when-developing" class="md-nav__link">
+    Details Of Least Privilege When Developing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#least-admin-privileges-for-multiple-dbs" class="md-nav__link">
+    Least Admin Privileges For Multiple DBs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enhancing-least-privilege-with-sql-views" class="md-nav__link">
+    Enhancing Least Privilege with SQL Views
   </a>
   
 </li>
@@ -2603,50 +2631,42 @@
 
 <h1 id="sql-injection-prevention-cheat-sheet">SQL Injection Prevention Cheat Sheet<a class="headerlink" href="#sql-injection-prevention-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>This article is focused on providing clear, simple, actionable guidance for preventing SQL Injection flaws in your applications. <a href="https://owasp.org/www-community/attacks/SQL_Injection">SQL Injection</a> attacks are unfortunately very common, and this is due to two factors:</p>
+<p>This cheat sheet will help you prevent SQL injection flaws in your applications. It will define what SQL injection is, explain where those flaws occur, and provide four options for defending against SQL injection attacks. <a href="https://owasp.org/www-community/attacks/SQL_Injection">SQL Injection</a> attacks are common because:</p>
 <ol>
-<li>the significant prevalence of SQL Injection vulnerabilities, and</li>
-<li>the attractiveness of the target (i.e., the database typically contains all the interesting/critical data for your application).</li>
+<li>SQL Injection vulnerabilities are very common, and</li>
+<li>The application's database is a frequent target for attackers because it typically contains interesting/critical data.</li>
 </ol>
-<p>SQL Injection flaws are introduced when software developers create dynamic database queries constructed with string concatenation which includes user supplied input. To avoid SQL injection flaws is simple. Developers need to either: a) stop writing dynamic queries with string concatenation; and/or b) prevent user supplied input which contains malicious SQL from affecting the logic of the executed query.</p>
-<p>This article provides a set of simple techniques for preventing SQL Injection vulnerabilities by avoiding these two problems. These techniques can be used with practically any kind of programming language with any type of database. There are other types of databases, like XML databases, which can have similar problems (e.g., XPath and XQuery injection) and these techniques can be used to protect them as well.</p>
-<p><strong>Primary Defenses:</strong></p>
-<ul>
-<li><strong>Option 1: Use of Prepared Statements (with Parameterized Queries)</strong></li>
-<li><strong>Option 2: Use of Properly Constructed Stored Procedures</strong></li>
-<li><strong>Option 3: Allow-list Input Validation</strong></li>
-<li><strong>Option 4: Escaping All User Supplied Input</strong></li>
-</ul>
-<p><strong>Additional Defenses:</strong></p>
-<ul>
-<li><strong>Also: Enforcing Least Privilege</strong></li>
-<li><strong>Also: Performing Allow-list Input Validation as a Secondary Defense</strong></li>
-</ul>
-<p><strong>Unsafe Example:</strong></p>
-<p>SQL injection flaws typically look like this:</p>
-<p>The following (Java) example is UNSAFE, and would allow an attacker to inject code into the query that would be executed by the database. The unvalidated "customerName" parameter that is simply appended to the query allows an attacker to inject any SQL code they want. Unfortunately, this method for accessing databases is all too common.</p>
+<h2 id="what-is-a-sql-injection-attack">What Is a SQL Injection Attack?<a class="headerlink" href="#what-is-a-sql-injection-attack" title="Permanent link">&para;</a></h2>
+<p>Attackers can use SQL injection on an application if it has dynamic database queries that use string concatenation and user supplied input. To avoid SQL injection flaws, developers need to:</p>
+<ol>
+<li>Stop writing dynamic queries with string concatenation or</li>
+<li>Prevent malicious SQL input from being included in executed queries.</li>
+</ol>
+<p>There are simple techniques for preventing SQL injection vulnerabilities and they can be used with practically any kind of programming language and any type of database. While XML databases can have similar problems (e.g., XPath and XQuery injection), these techniques can be used to protect them as well.</p>
+<h2 id="anatomy-of-a-typical-sql-injection-vulnerability">Anatomy of A Typical SQL Injection Vulnerability<a class="headerlink" href="#anatomy-of-a-typical-sql-injection-vulnerability" title="Permanent link">&para;</a></h2>
+<p>A common SQL injection flaw in Java is below. Because its unvalidated "customerName" parameter is simply appended to the query, an attacker can enter SQL code into that query and the application would take the attacker's code and execute it on the database.</p>
 <div class="highlight"><pre><span></span><code><span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;SELECT account_balance FROM user_data WHERE user_name = &quot;</span>
 <span class="w">             </span><span class="o">+</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;customerName&quot;</span><span class="p">);</span>
 <span class="k">try</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">Statement</span><span class="w"> </span><span class="n">statement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">connection</span><span class="p">.</span><span class="na">createStatement</span><span class="p">(</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">);</span>
 <span class="w">    </span><span class="n">ResultSet</span><span class="w"> </span><span class="n">results</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">statement</span><span class="p">.</span><span class="na">executeQuery</span><span class="p">(</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="p">);</span>
 <span class="p">}</span>
+
 <span class="p">...</span>
 </code></pre></div>
 <h2 id="primary-defenses">Primary Defenses<a class="headerlink" href="#primary-defenses" title="Permanent link">&para;</a></h2>
-<h3 id="defense-option-1-prepared-statements-with-parameterized-queries">Defense Option 1: Prepared Statements (with Parameterized Queries)<a class="headerlink" href="#defense-option-1-prepared-statements-with-parameterized-queries" title="Permanent link">&para;</a></h3>
-<p>The use of prepared statements with variable binding (aka parameterized queries) is how all developers should first be taught how to write database queries. They are simple to write, and easier to understand than dynamic queries. Parameterized queries force the developer to first define all the SQL code, and then pass in each parameter to the query later. This coding style allows the database to distinguish between code and data, regardless of what user input is supplied.</p>
-<p>Prepared statements ensure that an attacker is not able to change the intent of a query, even if SQL commands are inserted by an attacker. In the safe example below, if an attacker were to enter the userID of <code>tom' or '1'='1</code>, the parameterized query would not be vulnerable and would instead look for a username which literally matched the entire string <code>tom' or '1'='1</code>.</p>
-<p>Language specific recommendations:</p>
 <ul>
-<li>Java EE – use <code>PreparedStatement()</code> with bind variables</li>
-<li>.NET – use parameterized queries like <code>SqlCommand()</code> or <code>OleDbCommand()</code> with bind variables</li>
-<li>PHP – use PDO with strongly typed parameterized queries (using bindParam())</li>
-<li>Hibernate - use <code>createQuery()</code> with bind variables (called named parameters in Hibernate)</li>
-<li>SQLite - use <code>sqlite3_prepare()</code> to create a <a href="http://www.sqlite.org/c3ref/stmt.html">statement object</a></li>
+<li><strong>Option 1: Use of Prepared Statements (with Parameterized Queries)</strong></li>
+<li><strong>Option 2: Use of Properly Constructed Stored Procedures</strong></li>
+<li><strong>Option 3: Allow-list Input Validation</strong></li>
+<li><strong>Option 4: STRONGLY DISCOURAGED: Escaping All User Supplied Input</strong></li>
 </ul>
-<p>In rare circumstances, prepared statements can harm performance. When confronted with this situation, it is best to either a) strongly validate all data or b) escape all user supplied input using an escaping routine specific to your database vendor as described below, rather than using a prepared statement.</p>
-<p><strong>Safe Java Prepared Statement Example</strong>:</p>
+<h3 id="defense-option-1-prepared-statements-with-parameterized-queries">Defense Option 1: Prepared Statements (with Parameterized Queries)<a class="headerlink" href="#defense-option-1-prepared-statements-with-parameterized-queries" title="Permanent link">&para;</a></h3>
+<p>When developers are taught how to write database queries, they should be told to use prepared statements with variable binding (aka parameterized queries). Prepared statements are simple to write and easier to understand than dynamic queries and parameterized queries force the developer to define all SQL code first and pass in each parameter to the query later.</p>
+<p>If database queries use this coding style, the database will always distinguish between code and data, regardless of what user input is supplied.
+Also, prepared statements ensure that an attacker is not able to change the intent of a query, even if SQL commands are inserted by an attacker.  </p>
+<h4 id="safe-prepared-statement-in-java">Safe Prepared Statement in Java<a class="headerlink" href="#safe-prepared-statement-in-java" title="Permanent link">&para;</a></h4>
+<p>In the safe Java example below, if an attacker were to enter the userID of <code>tom' or '1'='1</code>, the parameterized query would look for a username which literally matched the entire string <code>tom' or '1'='1</code>. Thus, the database would be protected against injections of malicious SQL code.</p>
 <p>The following code example uses a <code>PreparedStatement</code>, Java's implementation of a parameterized query, to execute the same database query.</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// This should REALLY be validated too</span>
 <span class="n">String</span><span class="w"> </span><span class="n">custname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;customerName&quot;</span><span class="p">);</span>
@@ -2655,9 +2675,19 @@
 <span class="n">PreparedStatement</span><span class="w"> </span><span class="n">pstmt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">connection</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="p">);</span>
 <span class="n">pstmt</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">custname</span><span class="p">);</span>
 <span class="n">ResultSet</span><span class="w"> </span><span class="n">results</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pstmt</span><span class="p">.</span><span class="na">executeQuery</span><span class="p">(</span><span class="w"> </span><span class="p">);</span>
+
+<span class="err">####</span><span class="w"> </span><span class="n">Language</span><span class="o">-</span><span class="n">Specific</span><span class="w"> </span><span class="n">Recommendations</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Prepared</span><span class="w"> </span><span class="n">Statements</span><span class="p">:</span>
+
+<span class="o">--</span><span class="n">Java</span><span class="w"> </span><span class="n">EE</span><span class="p">:</span><span class="w"> </span><span class="err">`</span><span class="n">PreparedStatement</span><span class="p">()</span><span class="err">`</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">bind</span><span class="w"> </span><span class="n">variables</span>
+<span class="o">--</span><span class="p">.</span><span class="na">NET</span><span class="p">:</span><span class="w"> </span><span class="n">Parameterized</span><span class="w"> </span><span class="n">queries</span><span class="w"> </span><span class="n">like</span><span class="w"> </span><span class="err">`</span><span class="n">SqlCommand</span><span class="p">()</span><span class="err">`</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="err">`</span><span class="n">OleDbCommand</span><span class="p">()</span><span class="err">`</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">bind</span><span class="w"> </span><span class="n">variables</span>
+<span class="o">--</span><span class="n">PHP</span><span class="p">:</span><span class="w"> </span><span class="n">PDO</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">strongly</span><span class="w"> </span><span class="n">typed</span><span class="w"> </span><span class="n">parameterized</span><span class="w"> </span><span class="nf">queries</span><span class="w"> </span><span class="p">(</span><span class="n">using</span><span class="w"> </span><span class="nf">bindParam</span><span class="p">())</span>
+<span class="o">--</span><span class="n">Hibernate</span><span class="p">:</span><span class="w"> </span><span class="err">`</span><span class="n">createQuery</span><span class="p">()</span><span class="err">`</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">bind</span><span class="w"> </span><span class="nf">variables</span><span class="w"> </span><span class="p">(</span><span class="n">called</span><span class="w"> </span><span class="n">named</span><span class="w"> </span><span class="n">parameters</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">Hibernate</span><span class="p">)</span>
+<span class="o">--</span><span class="n">SQLite</span><span class="p">:</span><span class="w"> </span><span class="err">`</span><span class="n">sqlite3_prepare</span><span class="p">()</span><span class="err">`</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">create</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">[</span><span class="n">statement</span><span class="w"> </span><span class="n">object</span><span class="o">]</span><span class="p">(</span><span class="n">http</span><span class="p">:</span><span class="c1">//www.sqlite.org/c3ref/stmt.html)</span>
+
+<span class="n">Occasionally</span><span class="p">,</span><span class="w"> </span><span class="n">prepared</span><span class="w"> </span><span class="n">statements</span><span class="w"> </span><span class="n">can</span><span class="w"> </span><span class="n">harm</span><span class="w"> </span><span class="n">performance</span><span class="p">.</span><span class="w"> </span><span class="n">If</span><span class="w"> </span><span class="k">this</span><span class="w"> </span><span class="n">occurs</span><span class="p">,</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">should</span><span class="w"> </span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="n">strongly</span><span class="w"> </span><span class="n">validate</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="n">instead</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">using</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">prepared</span><span class="w"> </span><span class="n">statement</span><span class="p">,</span><span class="w"> </span><span class="n">escape</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="n">supplied</span><span class="w"> </span><span class="n">input</span><span class="w"> </span><span class="n">using</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">escaping</span><span class="w"> </span><span class="n">routine</span><span class="w"> </span><span class="n">specific</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">database</span><span class="w"> </span><span class="n">vendor</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">described</span><span class="w"> </span><span class="n">below</span><span class="p">.</span>
 </code></pre></div>
-<p><strong>Safe C# .NET Prepared Statement Example</strong>:</p>
-<p>With .NET, it's even more straightforward. The creation and execution of the query doesn't change. All you have to do is simply pass the parameters to the query using the <code>Parameters.Add()</code> call as shown here.</p>
+<h4 id="safe-c-net-prepared-statement">Safe C# .NET Prepared Statement<a class="headerlink" href="#safe-c-net-prepared-statement" title="Permanent link">&para;</a></h4>
+<p>In .NET, the creation and execution of the query doesn't change. Just pass the parameters to the query using the <code>Parameters.Add()</code> call as shown below.</p>
 <div class="highlight"><pre><span></span><code><span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;SELECT account_balance FROM user_data WHERE user_name = ?&quot;</span><span class="p">;</span>
 <span class="k">try</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="n">OleDbCommand</span><span class="w"> </span><span class="n">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">OleDbCommand</span><span class="p">(</span><span class="n">query</span><span class="p">,</span><span class="w"> </span><span class="n">connection</span><span class="p">);</span>
@@ -2668,23 +2698,26 @@
 <span class="w">  </span><span class="c1">// error handling</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>We have shown examples in Java and .NET but practically all other languages, including Cold Fusion, and Classic ASP, support parameterized query interfaces. Even SQL abstraction layers, like the <a href="http://hibernate.org/">Hibernate Query Language</a> (HQL) have the same type of injection problems (which we call <a href="http://cwe.mitre.org/data/definitions/564.html">HQL Injection</a>). HQL supports parameterized queries as well, so we can avoid this problem:</p>
-<p><strong>Hibernate Query Language (HQL) Prepared Statement (Named Parameters) Examples</strong>:</p>
+<p>While we have shown examples in Java and .NET, practically all other languages (including Cold Fusion and Classic ASP) support parameterized query interfaces. Even SQL abstraction layers, like the <a href="http://hibernate.org/">Hibernate Query Language</a> (HQL) with the same type of injection problems (called <a href="http://cwe.mitre.org/data/definitions/564.html">HQL Injection</a>)  supports parameterized queries as well:</p>
+<h4 id="hibernate-query-language-hql-prepared-statement-named-parameters-examples">Hibernate Query Language (HQL) Prepared Statement (Named Parameters) Examples<a class="headerlink" href="#hibernate-query-language-hql-prepared-statement-named-parameters-examples" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="c1">//First is an unsafe HQL Statement</span>
 <span class="n">Query</span><span class="w"> </span><span class="n">unsafeHQLQuery</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">createQuery</span><span class="p">(</span><span class="s">&quot;from Inventory where productID=&#39;&quot;</span><span class="o">+</span><span class="n">userSuppliedParameter</span><span class="o">+</span><span class="s">&quot;&#39;&quot;</span><span class="p">);</span>
 <span class="c1">//Here is a safe version of the same query using named parameters</span>
 <span class="n">Query</span><span class="w"> </span><span class="n">safeHQLQuery</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">createQuery</span><span class="p">(</span><span class="s">&quot;from Inventory where productID=:productid&quot;</span><span class="p">);</span>
 <span class="n">safeHQLQuery</span><span class="p">.</span><span class="na">setParameter</span><span class="p">(</span><span class="s">&quot;productid&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">userSuppliedParameter</span><span class="p">);</span>
 </code></pre></div>
-<p>For examples of parameterized queries in other languages, including Ruby, PHP, Cold Fusion, Perl, and Rust, see the <a href="Query_Parameterization_Cheat_Sheet.html">Query Parameterization Cheat Sheet</a> or this <a href="http://bobby-tables.com/">site</a>.</p>
-<p>Developers tend to like the Prepared Statement approach because all the SQL code stays within the application. This makes your application relatively database independent.</p>
+<h4 id="other-examples-of-safe-prepared-statements">Other Examples of Safe Prepared Statements<a class="headerlink" href="#other-examples-of-safe-prepared-statements" title="Permanent link">&para;</a></h4>
+<p>If you need examples of prepared queries/parameterized languages, including Ruby, PHP, Cold Fusion, Perl, and Rust, see the <a href="Query_Parameterization_Cheat_Sheet.html">Query Parameterization Cheat Sheet</a> or this <a href="http://bobby-tables.com/">site</a>.</p>
+<p>Generally, developers like prepared statements because all the SQL code stays within the application, which makes your application relatively database independent.</p>
 <h3 id="defense-option-2-stored-procedures">Defense Option 2: Stored Procedures<a class="headerlink" href="#defense-option-2-stored-procedures" title="Permanent link">&para;</a></h3>
-<p>Stored procedures are not always safe from SQL injection. However, certain standard stored procedure programming constructs have the same effect as the use of parameterized queries when implemented safely which is the norm for most stored procedure languages.</p>
-<p>They require the developer to just build SQL statements with parameters which are automatically parameterized unless the developer does something largely out of the norm. The difference between prepared statements and stored procedures is that the SQL code for a stored procedure is defined and stored in the database itself, and then called from the application. Both of these techniques have the same effectiveness in preventing SQL injection so your organization should choose which approach makes the most sense for you.</p>
-<p>Note: "Implemented safely" means the stored procedure does not include any unsafe dynamic SQL generation. Developers do not usually generate dynamic SQL inside stored procedures. However, it can be done, but should be avoided. If it can't be avoided, the stored procedure must use input validation or proper escaping as described in this article to make sure that all user supplied input to the stored procedure can't be used to inject SQL code into the dynamically generated query. Auditors should always look for uses of <code>sp_execute</code>, <code>execute</code> or <code>exec</code> within SQL Server stored procedures. Similar audit guidelines are necessary for similar functions for other vendors.</p>
-<p>There are also several cases where stored procedures can increase risk. For example, on MS SQL server, you have 3 main default roles: <code>db_datareader</code>, <code>db_datawriter</code> and <code>db_owner</code>. Before stored procedures came into use, DBA's would give db_datareader or db_datawriter rights to the webservice's user, depending on the requirements. However, stored procedures require execute rights, a role that is not available by default. Some setups where the user management has been centralized, but is limited to those 3 roles, cause all web apps to run under db_owner rights so stored procedures can work. Naturally, that means that if a server is breached the attacker has full rights to the database, where previously they might only have had read-access.</p>
+<p>Though stored procedures are not always safe from SQL injection, developers can use certain standard stored procedure programming constructs. This approach has the same effect as the use of parameterized queries as long as the stored procedures are implemented safely (which is the norm for most stored procedure languages).</p>
+<h4 id="safe-approach-to-stored-procedures">Safe Approach to Stored Procedures<a class="headerlink" href="#safe-approach-to-stored-procedures" title="Permanent link">&para;</a></h4>
+<p>If stored procedures are needed, the safest approach to using them requires the developer to build SQL statements with parameters that are automatically parameterized, unless the developer does something largely out of the norm. The difference between prepared statements and stored procedures is that the SQL code for a stored procedure is defined and stored in the database itself, and then called from the application. Since prepared statements and safe stored procedures are equally effecitve in preventing SQL injection so your organization should choose which approach makes the most sense for you.</p>
+<h4 id="when-stored-procedures-can-increase-risk">When Stored Procedures Can Increase Risk<a class="headerlink" href="#when-stored-procedures-can-increase-risk" title="Permanent link">&para;</a></h4>
+<p>Occasionally, stored procedures can increase risk when a system is attacked. For example, on MS SQL Server, you have three main default roles: <code>db_datareader</code>, <code>db_datawriter</code> and <code>db_owner</code>. Before stored procedures came into use, DBA's would give db_datareader ordb_datawriter rights to the webservice's user, depending on the requirements.</p>
+<p>However, stored procedures require execute rights, a role that is not available by default. Some setups where the user management has been centralized, but is limited to those 3 roles, cause all web apps to run under db_owner rights so stored procedures can work. Naturally, that means that if a server is breached the attacker has full rights to the database, where previously they might only have had read-access.</p>
 <p><strong>Safe Java Stored Procedure Example</strong>:</p>
-<p>The following code example uses a <code>CallableStatement</code>, Java's implementation of the stored procedure interface, to execute the same database query. The <code>sp_getAccountBalance</code> stored procedure would have to be predefined in the database and implement the same functionality as the query defined above.</p>
+<p>The following code example uses Java's implementation of the stored procedure interface (<code>CallableStatement</code>) to execute the same database query. The <code>sp_getAccountBalance</code> stored procedure has top be predefined in the database and use the same functionality as the query below.</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// This should REALLY be validated</span>
 <span class="n">String</span><span class="w"> </span><span class="n">custname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;customerName&quot;</span><span class="p">);</span>
 <span class="k">try</span><span class="w"> </span><span class="p">{</span>
@@ -2697,7 +2730,7 @@
 <span class="p">}</span>
 </code></pre></div>
 <p><strong>Safe VB .NET Stored Procedure Example</strong>:</p>
-<p>The following code example uses a <code>SqlCommand</code>, .NET's implementation of the stored procedure interface, to execute the same database query. The <code>sp_getAccountBalance</code> stored procedure would have to be predefined in the database and implement the same functionality as the query defined above.</p>
+<p>The following code example uses a <code>SqlCommand</code>, .NET's implementation of the stored procedure interface, to execute the same database query. The <code>sp_getAccountBalance</code> stored procedure must be predefined in the database and use the same functionality as the query defined above.</p>
 <div class="highlight"><pre><span></span><code><span class="w"> </span><span class="k">Try</span>
 <span class="w">   </span><span class="k">Dim</span><span class="w"> </span><span class="n">command</span><span class="w"> </span><span class="ow">As</span><span class="w"> </span><span class="n">SqlCommand</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SqlCommand</span><span class="p">(</span><span class="s">&quot;sp_getAccountBalance&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">connection</span><span class="p">)</span>
 <span class="w">   </span><span class="n">command</span><span class="p">.</span><span class="n">CommandType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CommandType</span><span class="p">.</span><span class="n">StoredProcedure</span>
@@ -2709,9 +2742,10 @@
 <span class="w"> </span><span class="k">End</span><span class="w"> </span><span class="k">Try</span>
 </code></pre></div>
 <h3 id="defense-option-3-allow-list-input-validation">Defense Option 3: Allow-list Input Validation<a class="headerlink" href="#defense-option-3-allow-list-input-validation" title="Permanent link">&para;</a></h3>
-<p>Various parts of SQL queries aren't legal locations for the use of bind variables, such as the names of tables or columns, and the sort order indicator (ASC or DESC). In such situations, input validation or query redesign is the most appropriate defense. For the names of tables or columns, ideally those values come from the code, and not from user parameters.</p>
-<p>But if user parameter values are used for targeting different table names and column names, then the parameter values should be mapped to the legal/expected table or column names to make sure unvalidated user input doesn't end up in the query. Please note, this is a symptom of poor design and a full rewrite should be considered if time allows.</p>
-<p>Here is an example of table name validation.</p>
+<p>If you are faced with parts of SQL queries that can't use bind variables, such as the names of tables or columns as well as the sort order indicator (ASC or DESC), input validation or query redesign is the most appropriate defense. When names of tables or columns are needed, ideally those values come from the code and not from user parameters.</p>
+<h4 id="sample-of-safe-table-name-validation">Sample Of Safe Table Name Validation<a class="headerlink" href="#sample-of-safe-table-name-validation" title="Permanent link">&para;</a></h4>
+<p>WARNING: If user parameter values are used for targeting different table names and column names, this is a symptom of poor design and a full rewrite should be considered if time allows. If that is not possible, developers should map the parameter values to the legal/expected table or column names to make sure unvalidated user input doesn't end up in the query.</p>
+<p>In the example below, since <code>tableName</code> is identified as one of the legal and expected values for a table name in this query, it can be directly appended to the SQL query. Keep in mind that generic table validation functions can lead to data loss as table names are used in queries where they are not expected.</p>
 <div class="highlight"><pre><span></span><code>String tableName;
 switch(PARAM):
   case &quot;Value1&quot;: tableName = &quot;fooTable&quot;;
@@ -2722,7 +2756,10 @@ switch(PARAM):
   default      : throw new InputValidationException(&quot;unexpected value provided&quot;
                                                   + &quot; for table name&quot;);
 </code></pre></div>
-<p>The <code>tableName</code> can then be directly appended to the SQL query since it is now known to be one of the legal and expected values for a table name in this query. Keep in mind that generic table validation functions can lead to data loss as table names are used in queries where they are not expected.</p>
+<h4 id="safest-use-of-dynamic-sql-generation-discouraged">Safest Use Of Dynamic SQL Generation (DISCOURAGED)<a class="headerlink" href="#safest-use-of-dynamic-sql-generation-discouraged" title="Permanent link">&para;</a></h4>
+<p>When we say "implemented safely," the stored procedure does not include any unsafe dynamic SQL generation. Developers do not usually generate dynamic SQL inside stored procedures. However, it can be done, but should be avoided.</p>
+<p>If it can't be avoided, the stored procedure must use input validation or proper escaping as described in this article to make sure that all user supplied input to the stored procedure can't be used to inject SQL code into the dynamically generated query. Auditors should always look for uses of <code>sp_execute</code>, <code>execute</code> or <code>exec</code> within SQL Server stored procedures. Similar audit guidelines are necessary for similar functions for other vendors.</p>
+<h4 id="sample-of-safer-dynamic-query-generation-discouraged">Sample of Safer Dynamic Query Generation (DISCOURAGED)<a class="headerlink" href="#sample-of-safer-dynamic-query-generation-discouraged" title="Permanent link">&para;</a></h4>
 <p>For something simple like a sort order, it would be best if the user supplied input is converted to a boolean, and then that boolean is used to select the safe value to append to the query. This is a very standard need in dynamic query creation.</p>
 <p>For example:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">someMethod</span><span class="p">(</span><span class="kt">boolean</span><span class="w"> </span><span class="n">sortOrder</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
@@ -2731,141 +2768,9 @@ switch(PARAM):
 </code></pre></div>
 <p>Any time user input can be converted to a non-String, like a date, numeric, boolean, enumerated type, etc. before it is appended to a query, or used to select a value to append to the query, this ensures it is safe to do so.</p>
 <p>Input validation is also recommended as a secondary defense in ALL cases, even when using bind variables as is discussed later in this article. More techniques on how to implement strong input validation is described in the <a href="Input_Validation_Cheat_Sheet.html">Input Validation Cheat Sheet</a>.</p>
-<h3 id="defense-option-4-escaping-all-user-supplied-input">Defense Option 4: Escaping All User-Supplied Input<a class="headerlink" href="#defense-option-4-escaping-all-user-supplied-input" title="Permanent link">&para;</a></h3>
-<p>This technique should only be used as a last resort, when none of the above are feasible. Input validation is probably a better choice as this methodology is frail compared to other defenses and we cannot guarantee it will prevent all SQL Injections in all situations.</p>
-<p>This technique is to escape user input before putting it in a query. It is very database specific in its implementation. It's usually only recommended to retrofit legacy code when implementing input validation isn't cost effective. Applications built from scratch, or applications requiring low risk tolerance should be built or re-written using parameterized queries, stored procedures, or some kind of Object Relational Mapper (ORM) that builds your queries for you.</p>
-<p>This technique works like this. Each DBMS supports one or more character escaping schemes specific to certain kinds of queries. If you then escape all user supplied input using the proper escaping scheme for the database you are using, the DBMS will not confuse that input with SQL code written by the developer, thus avoiding any possible SQL injection vulnerabilities.</p>
-<p>The OWASP Enterprise Security API (ESAPI) is a free, open source, web application security control library that makes it easier for programmers to write lower-risk applications. The ESAPI libraries are designed to make it easier for programmers to retrofit security into existing applications. The ESAPI libraries also serve as a solid foundation for new development:</p>
-<ul>
-<li>Full details on <a href="https://owasp.org/www-project-enterprise-security-api/">ESAPI are available here on OWASP</a>.</li>
-<li>The javadoc for <a href="http://www.javadoc.io/doc/org.owasp.esapi/esapi/2.1.0">ESAPI 2.x (Legacy) is available</a>. This code was migrated to GitHub in November 2014.</li>
-<li><a href="https://github.com/ESAPI/esapi-java-legacy">The legacy ESAPI for Java at GitHub</a> helps understand existing use of it when Javadoc seems insufficient.</li>
-<li><a href="https://github.com/ESAPI/esapi-java">An attempt at another ESAPI for Java GitHub</a> has other approaches and no tests or concrete codecs.</li>
-</ul>
-<p>To find the javadoc specifically for the database encoders, click on the <code>Codec</code> class on the left hand side. There are lots of Codecs implemented. The two Database specific codecs are <code>OracleCodec</code>, and <code>MySQLCodec</code>.</p>
-<p>Just click on their names in the <code>All Known Implementing Classes:</code> at the top of the Interface Codec page.</p>
-<p>At this time, ESAPI currently has database encoders for:</p>
-<ul>
-<li>Oracle</li>
-<li>MySQL (Both ANSI and native modes are supported)</li>
-</ul>
-<p>Database encoders are forthcoming for:</p>
-<ul>
-<li>SQL Server</li>
-<li>PostgreSQL</li>
-</ul>
-<p>If your database encoder is missing, please let us know.</p>
-<h4 id="database-specific-escaping-details">Database Specific Escaping Details<a class="headerlink" href="#database-specific-escaping-details" title="Permanent link">&para;</a></h4>
-<p>If you want to build your own escaping routines, here are the escaping details for each of the databases that we have developed ESAPI Encoders for:</p>
-<ul>
-<li>Oracle</li>
-<li>SQL Server</li>
-<li>DB2</li>
-</ul>
-<h5 id="oracle-escaping">Oracle Escaping<a class="headerlink" href="#oracle-escaping" title="Permanent link">&para;</a></h5>
-<p>This information is based on the <a href="http://www.orafaq.com/wiki/SQL_FAQ#How_does_one_escape_special_characters_when_writing_SQL_queries.3F">Oracle Escape character information</a>.</p>
-<h6 id="escaping-dynamic-queries">Escaping Dynamic Queries<a class="headerlink" href="#escaping-dynamic-queries" title="Permanent link">&para;</a></h6>
-<p>To use an ESAPI database codec is pretty simple. An Oracle example looks something like:</p>
-<div class="highlight"><pre><span></span><code><span class="n">ESAPI</span><span class="p">.</span><span class="na">encoder</span><span class="p">().</span><span class="na">encodeForSQL</span><span class="p">(</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">OracleCodec</span><span class="p">(),</span><span class="w"> </span><span class="n">queryparam</span><span class="w"> </span><span class="p">);</span>
-</code></pre></div>
-<p>So, if you had an existing Dynamic query being generated in your code that was going to Oracle that looked like this:</p>
-<div class="highlight"><pre><span></span><code><span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;SELECT user_id FROM user_data WHERE user_name = &#39;&quot;</span>
-<span class="w">              </span><span class="o">+</span><span class="w"> </span><span class="n">req</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;userID&quot;</span><span class="p">)</span>
-<span class="w">              </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;&#39; and user_password = &#39;&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">req</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;pwd&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="s">&quot;&#39;&quot;</span><span class="p">;</span>
-<span class="k">try</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">Statement</span><span class="w"> </span><span class="n">statement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">connection</span><span class="p">.</span><span class="na">createStatement</span><span class="p">(</span><span class="w"> </span><span class="err">…</span><span class="w"> </span><span class="p">);</span>
-<span class="w">    </span><span class="n">ResultSet</span><span class="w"> </span><span class="n">results</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">statement</span><span class="p">.</span><span class="na">executeQuery</span><span class="p">(</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-<p>You would rewrite the first line to look like this:</p>
-<div class="highlight"><pre><span></span><code><span class="n">Codec</span><span class="w"> </span><span class="n">ORACLE_CODEC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">OracleCodec</span><span class="p">();</span>
-<span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;SELECT user_id FROM user_data WHERE user_name = &#39;&quot;</span>
-<span class="o">+</span><span class="w"> </span><span class="n">ESAPI</span><span class="p">.</span><span class="na">encoder</span><span class="p">().</span><span class="na">encodeForSQL</span><span class="p">(</span><span class="w"> </span><span class="n">ORACLE_CODEC</span><span class="p">,</span><span class="w"> </span><span class="n">req</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;userID&quot;</span><span class="p">))</span>
-<span class="o">+</span><span class="w"> </span><span class="s">&quot;&#39; and user_password = &#39;&quot;</span>
-<span class="o">+</span><span class="w"> </span><span class="n">ESAPI</span><span class="p">.</span><span class="na">encoder</span><span class="p">().</span><span class="na">encodeForSQL</span><span class="p">(</span><span class="w"> </span><span class="n">ORACLE_CODEC</span><span class="p">,</span><span class="w"> </span><span class="n">req</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;pwd&quot;</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="s">&quot;&#39;&quot;</span><span class="p">;</span>
-</code></pre></div>
-<p>And it would now be safe from SQL injection, regardless of the input supplied.</p>
-<p>For maximum code readability, you could also construct your own <code>OracleEncoder</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="n">Encoder</span><span class="w"> </span><span class="n">oe</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">OracleEncoder</span><span class="p">();</span>
-<span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;SELECT user_id FROM user_data WHERE user_name = &#39;&quot;</span>
-<span class="o">+</span><span class="w"> </span><span class="n">oe</span><span class="p">.</span><span class="na">encode</span><span class="p">(</span><span class="w"> </span><span class="n">req</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;userID&quot;</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;&#39; and user_password = &#39;&quot;</span>
-<span class="o">+</span><span class="w"> </span><span class="n">oe</span><span class="p">.</span><span class="na">encode</span><span class="p">(</span><span class="w"> </span><span class="n">req</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;pwd&quot;</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="s">&quot;&#39;&quot;</span><span class="p">;</span>
-</code></pre></div>
-<p>With this type of solution, you would need only to wrap each user-supplied parameter being passed into an <code>ESAPI.encoder().encodeForOracle( )</code> call or whatever you named the call and you would be done.</p>
-<h6 id="turn-off-character-replacement">Turn off character replacement<a class="headerlink" href="#turn-off-character-replacement" title="Permanent link">&para;</a></h6>
-<p>Use <code>SET DEFINE OFF</code> or <code>SET SCAN OFF</code> to ensure that automatic character replacement is turned off. If this character replacement is turned on, the &amp; character will be treated like a SQLPlus variable prefix that could allow an attacker to retrieve private data.</p>
-<p>See <a href="https://docs.oracle.com/cd/B19306_01/server.102/b14357/ch12040.htm#i2698854">here</a> and <a href="https://stackoverflow.com/a/410490">here</a> for more information</p>
-<h6 id="escaping-wildcard-characters-in-like-clauses">Escaping Wildcard characters in Like Clauses<a class="headerlink" href="#escaping-wildcard-characters-in-like-clauses" title="Permanent link">&para;</a></h6>
-<p>The <code>LIKE</code> keyword allows for text scanning searches. In Oracle, the underscore <code>_</code> character matches only one character, while the ampersand <code>%</code> is used to match zero or more occurrences of any characters. These characters must be escaped in LIKE clause criteria.</p>
-<p>For example:</p>
-<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">emp</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">&#39;%/_%&#39;</span><span class="w"> </span><span class="k">ESCAPE</span><span class="w"> </span><span class="s1">&#39;/&#39;</span><span class="p">;</span>
-
-<span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">emp</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">&#39;%\%%&#39;</span><span class="w"> </span><span class="k">ESCAPE</span><span class="w"> </span><span class="s1">&#39;\&#39;</span><span class="p">;</span>
-</code></pre></div>
-<h6 id="oracle-10g-escaping">Oracle 10g escaping<a class="headerlink" href="#oracle-10g-escaping" title="Permanent link">&para;</a></h6>
-<p>An alternative for Oracle 10g and later is to place <code>{</code> and <code>}</code> around the string to escape the entire string. However, you have to be careful that there isn't a <code>}</code> character already in the string. You must search for these and if there is one, then you must replace it with <code>}}</code>. Otherwise that character will end the escaping early, and may introduce a vulnerability.</p>
-<h5 id="mysql-escaping">MySQL Escaping<a class="headerlink" href="#mysql-escaping" title="Permanent link">&para;</a></h5>
-<p>MySQL supports two escaping modes:</p>
-<ol>
-<li><code>ANSI_QUOTES</code> SQL mode, and a mode with this off, which we call</li>
-<li><code>MySQL</code> mode.</li>
-</ol>
-<p><code>ANSI SQL</code> mode: Simply encode all <code>'</code> (single tick) characters with <code>''</code> (two single ticks)</p>
-<p><code>MySQL</code> mode, do the following:</p>
-<div class="highlight"><pre><span></span><code>NUL (0x00) --&gt; \0  [This is a zero, not the letter O]
-BS  (0x08) --&gt; \b
-TAB (0x09) --&gt; \t
-LF  (0x0a) --&gt; \n
-CR  (0x0d) --&gt; \r
-SUB (0x1a) --&gt; \Z
-&quot;   (0x22) --&gt; \&quot;
-%   (0x25) --&gt; \%
-&#39;   (0x27) --&gt; \&#39;
-\   (0x5c) --&gt; \\
-_   (0x5f) --&gt; \_
-all other non-alphanumeric characters with ASCII values
-less than 256  --&gt; \c where &#39;c&#39; is the original non-alphanumeric character.
-</code></pre></div>
-<p>This information is based on the <a href="https://dev.mysql.com/doc/refman/5.7/en/string-literals.html">MySQL Escape character information</a>.</p>
-<h5 id="sql-server-escaping">SQL Server Escaping<a class="headerlink" href="#sql-server-escaping" title="Permanent link">&para;</a></h5>
-<p>We have not implemented the SQL Server escaping routine yet, but the following has good pointers and links to articles describing how to prevent SQL injection attacks on SQL server, see <a href="https://aka.ms/sql-injection">here</a>.</p>
-<h5 id="db2-escaping">DB2 Escaping<a class="headerlink" href="#db2-escaping" title="Permanent link">&para;</a></h5>
-<p>This information is based on <a href="https://www.ibm.com/support/pages/web-query-special-characters">DB2 WebQuery special characters</a> as well as some information from <a href="http://docs.oracle.com/cd/E12840_01/wls/docs103/jdbc_drivers/sqlescape.html">Oracle's JDBC DB2 driver</a>.</p>
-<p>Information in regards to differences between several <a href="https://www.ibm.com/support/pages/db2-jdbc-driver-versions-and-downloads">DB2 Universal drivers</a>.</p>
-<h4 id="hex-encoding-all-input">Hex-encoding all input<a class="headerlink" href="#hex-encoding-all-input" title="Permanent link">&para;</a></h4>
-<p>A somewhat special case of escaping is the process of hex-encode the entire string received from the user (this can be seen as escaping every character). The web application should hex-encode the user input before including it in the SQL statement. The SQL statement should take into account this fact, and accordingly compare the data.</p>
-<p>For example, if we have to look up a record matching a sessionID, and the user transmitted the string abc123 as the session ID, the select statement would be:</p>
-<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">session</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">hex_encode</span><span class="p">(</span><span class="n">sessionID</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;616263313233&#39;</span>
-</code></pre></div>
-<p><code>hex_encode</code> should be replaced by the particular facility for the database being used. The string 606162313233 is the hex encoded version of the string received from the user (it is the sequence of hex values of the ASCII/UTF-8 codes of the user data).</p>
-<p>If an attacker were to transmit a string containing a single-quote character followed by their attempt to inject SQL code, the constructed SQL statement will only look like:</p>
-<div class="highlight"><pre><span></span><code><span class="p">...</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">hex_encode</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;2720 ... &#39;</span>
-</code></pre></div>
-<p><code>27</code> being the ASCII code (in hex) of the single-quote, which is simply hex-encoded like any other character in the string. The resulting SQL can only contain numeric digits and letters <code>a</code> to <code>f</code>, and never any special character that could enable an SQL injection.</p>
-<h4 id="escaping-sqli-in-php">Escaping SQLi in PHP<a class="headerlink" href="#escaping-sqli-in-php" title="Permanent link">&para;</a></h4>
-<p>Use prepared statements and parameterized queries. These are SQL statements that are sent to and parsed by the database server separately from any parameters. This way it is impossible for an attacker to inject malicious SQL.</p>
-<p>You basically have two options to achieve this:</p>
-<ol>
-<li>Using <a href="https://www.php.net/manual/en/book.pdo.php">PDO</a> (for any supported database driver):</li>
-</ol>
-<div class="highlight"><pre><span></span><code><span class="x">$stmt = $pdo-&gt;prepare(&#39;SELECT * FROM employees WHERE name = :name&#39;);</span>
-<span class="x">$stmt-&gt;execute(array(&#39;name&#39; =&gt; $name));</span>
-<span class="x">foreach ($stmt as $row) {</span>
-<span class="x">    // do something with $row</span>
-<span class="x">}</span>
-</code></pre></div>
-<ol>
-<li>Using <a href="https://www.php.net/manual/en/book.mysqli.php">MySQLi</a> (for MySQL):</li>
-</ol>
-<div class="highlight"><pre><span></span><code><span class="x">$stmt = $dbConnection-&gt;prepare(&#39;SELECT * FROM employees WHERE name = ?&#39;);</span>
-<span class="x">$stmt-&gt;bind_param(&#39;s&#39;, $name);</span>
-<span class="x">$stmt-&gt;execute();</span>
-<span class="x">$result = $stmt-&gt;get_result();</span>
-<span class="x">while ($row = $result-&gt;fetch_assoc()) {</span>
-<span class="x">    // do something with $row</span>
-<span class="x">}</span>
-</code></pre></div>
-<p>PDO is the universal option. If you're connecting to a database other than MySQL, you can refer to a driver-specific second option (e.g. pg_prepare() and pg_execute() for PostgreSQL).</p>
+<h3 id="defense-option-4-strongly-discouraged-escaping-all-user-supplied-input">Defense Option 4: STRONGLY DISCOURAGED: Escaping All User-Supplied Input<a class="headerlink" href="#defense-option-4-strongly-discouraged-escaping-all-user-supplied-input" title="Permanent link">&para;</a></h3>
+<p>In this approach, the developer will escape all user input before putting it in a query. It is very database specific in its implementation.  This methodology is frail compared to other defenses and we CANNOT guarantee that this option will prevent all SQL injections in all situations.</p>
+<p>If an application is built from scratch or it requires low risk tolerance, those cases should be built or re-written using parameterized queries, stored procedures, or some kind of Object Relational Mapper (ORM) that builds your queries for you.</p>
 <h2 id="additional-defenses">Additional Defenses<a class="headerlink" href="#additional-defenses" title="Permanent link">&para;</a></h2>
 <p>Beyond adopting one of the four primary defenses, we also recommend adopting all of these additional defenses in order to provide defense in depth. These additional defenses are:</p>
 <ul>
@@ -2873,24 +2778,27 @@ less than 256  --&gt; \c where &#39;c&#39; is the original non-alphanumeric char
 <li><strong>Allow-list Input Validation</strong></li>
 </ul>
 <h3 id="least-privilege">Least Privilege<a class="headerlink" href="#least-privilege" title="Permanent link">&para;</a></h3>
-<p>To minimize the potential damage of a successful SQL injection attack, you should minimize the privileges assigned to every database account in your environment. Do not assign DBA or admin type access rights to your application accounts. We understand that this is easy, and everything just "works" when you do it this way, but it is very dangerous.</p>
-<p>Start from the ground up to determine what access rights your application accounts require, rather than trying to figure out what access rights you need to take away. Make sure that accounts that only need read access are only granted read access to the tables they need access to.</p>
-<p>If an account only needs access to portions of a table, consider creating a view that limits access to that portion of the data and assigning the account access to the view instead, rather than the underlying table. Rarely, if ever, grant create or delete access to database accounts.</p>
-<p>If you adopt a policy where you use stored procedures everywhere, and don't allow application accounts to directly execute their own queries, then restrict those accounts to only be able to execute the stored procedures they need. Don't grant them any rights directly to the tables in the database.</p>
+<p>To minimize the potential damage of a successful SQL injection attack, you should minimize the privileges assigned to every database account in your environment. Start from the ground up to determine what access rights your application accounts require, rather than trying to figure out what access rights you need to take away.</p>
+<p>Make sure that accounts that only need read access are only granted read access to the tables they need access to. DO NOT ASSIGN DBA OR ADMIN TYPE ACCESS TO YOUR APPLICATION ACCOUNTS. We understand that this is easy, and everything just "works" when you do it this way, but it is very dangerous.</p>
+<h4 id="minimizing-application-and-os-privileges">Minimizing Application and OS Privileges<a class="headerlink" href="#minimizing-application-and-os-privileges" title="Permanent link">&para;</a></h4>
 <p>SQL injection is not the only threat to your database data. Attackers can simply change the parameter values from one of the legal values they are presented with, to a value that is unauthorized for them, but the application itself might be authorized to access. As such, minimizing the privileges granted to your application will reduce the likelihood of such unauthorized access attempts, even when an attacker is not trying to use SQL injection as part of their exploit.</p>
 <p>While you are at it, you should minimize the privileges of the operating system account that the DBMS runs under. Don't run your DBMS as root or system! Most DBMSs run out of the box with a very powerful system account. For example, MySQL runs as system on Windows by default! Change the DBMS's OS account to something more appropriate, with restricted privileges.</p>
-<h4 id="multiple-db-users">Multiple DB Users<a class="headerlink" href="#multiple-db-users" title="Permanent link">&para;</a></h4>
+<h4 id="details-of-least-privilege-when-developing">Details Of Least Privilege When Developing<a class="headerlink" href="#details-of-least-privilege-when-developing" title="Permanent link">&para;</a></h4>
+<p>If an account only needs access to portions of a table, consider creating a view that limits access to that portion of the data and assigning the account access to the view instead, rather than the underlying table. Rarely, if ever, grant create or delete access to database accounts.</p>
+<p>If you adopt a policy where you use stored procedures everywhere, and don't allow application accounts to directly execute their own queries, then restrict those accounts to only be able to execute the stored procedures they need. Don't grant them any rights directly to the tables in the database.</p>
+<h4 id="least-admin-privileges-for-multiple-dbs">Least Admin Privileges For Multiple DBs<a class="headerlink" href="#least-admin-privileges-for-multiple-dbs" title="Permanent link">&para;</a></h4>
 <p>The designers of web applications should avoid using the same owner/admin account in the web applications to connect to the database. Different DB users should be used for different web applications.</p>
 <p>In general, each separate web application that requires access to the database should have a designated database user account that the application will use to connect to the DB. That way, the designer of the application can have good granularity in the access control, thus reducing the privileges as much as possible. Each DB user will then have select access to what it needs only, and write-access as needed.</p>
 <p>As an example, a login page requires read access to the username and password fields of a table, but no write access of any form (no insert, update, or delete). However, the sign-up page certainly requires insert privilege to that table; this restriction can only be enforced if these web apps use different DB users to connect to the database.</p>
-<h4 id="views">Views<a class="headerlink" href="#views" title="Permanent link">&para;</a></h4>
-<p>You can use SQL views to further increase the granularity of access by limiting the read access to specific fields of a table or joins of tables. It could potentially have additional benefits: for example, suppose that the system is required (perhaps due to some specific legal requirements) to store the passwords of the users, instead of salted-hashed passwords.</p>
-<p>The designer could use views to compensate for this limitation; revoke all access to the table (from all DB users except the owner/admin) and create a view that outputs the hash of the password field and not the field itself. Any SQL injection attack that succeeds in stealing DB information will be restricted to stealing the hash of the passwords (could even be a keyed hash), since no DB user for any of the web applications has access to the table itself.</p>
+<h4 id="enhancing-least-privilege-with-sql-views">Enhancing Least Privilege with SQL Views<a class="headerlink" href="#enhancing-least-privilege-with-sql-views" title="Permanent link">&para;</a></h4>
+<p>You can use SQL views to further increase the granularity of access by limiting the read access to specific fields of a table or joins of tables. It could have additional benefits.</p>
+<p>For example, if the system is required (perhaps due to some specific legal requirements) to store the passwords of the users, instead of salted-hashed passwords, the designer could use views to compensate for this limitation. They could revoke all access to the table (from all DB users except the owner/admin) and create a view that outputs the hash of the password field and not the field itself.</p>
+<p>Any SQL injection attack that succeeds in stealing DB information will be restricted to stealing the hash of the passwords (could even be a keyed hash), since no DB user for any of the web applications has access to the table itself.</p>
 <h3 id="allow-list-input-validation">Allow-list Input Validation<a class="headerlink" href="#allow-list-input-validation" title="Permanent link">&para;</a></h3>
 <p>In addition to being a primary defense when nothing else is possible (e.g., when a bind variable isn't legal), input validation can also be a secondary defense used to detect unauthorized input before it is passed to the SQL query. For more information please see the <a href="Input_Validation_Cheat_Sheet.html">Input Validation Cheat Sheet</a>. Proceed with caution here. Validated data is not necessarily safe to insert into SQL queries via string building.</p>
 <h2 id="related-articles">Related Articles<a class="headerlink" href="#related-articles" title="Permanent link">&para;</a></h2>
 <p><strong>SQL Injection Attack Cheat Sheets</strong>:</p>
-<p>The following articles describe how to exploit different kinds of SQL Injection Vulnerabilities on various platforms that this article was created to help you avoid:</p>
+<p>The following articles describe how to exploit different kinds of SQL injection vulnerabilities on various platforms (that this article was created to help you avoid):</p>
 <ul>
 <li><a href="https://www.netsparker.com/blog/web-security/sql-injection-cheat-sheet/">SQL Injection Cheat Sheet</a></li>
 <li>Bypassing WAF's with SQLi - <a href="https://owasp.org/www-community/attacks/SQL_Injection_Bypassing_WAF">SQL Injection Bypassing WAF</a></li>
