@@ -45,7 +45,7 @@ When developers are taught how to write database queries, they should be told to
 If database queries use this coding style, the database will always distinguish between code and data, regardless of what user input is supplied.
 Also, prepared statements ensure that an attacker is not able to change the intent of a query, even if SQL commands are inserted by an attacker.  
 
-**Safe Prepared Statement in Java**
+#### Safe Prepared Statement in Java:
 
 In the safe Java example below, if an attacker were to enter the userID of `tom' or '1'='1`, the parameterized query would look for a username which literally matched the entire string `tom' or '1'='1`. Thus, the database would be protected against injections of malicious SQL code.
 
@@ -72,7 +72,7 @@ Occasionally, prepared statements can harm performance. If this occurs, you shou
 
 ```
 
-**Safe C\# .NET Prepared Statement**:
+#### Safe C\# .NET Prepared Statement:
 
 In .NET, the creation and execution of the query doesn't change. Just pass the parameters to the query using the `Parameters.Add()` call as shown below.
 
@@ -90,7 +90,7 @@ try {
 
 While we have shown examples in Java and .NET, practically all other languages (including Cold Fusion and Classic ASP) support parameterized query interfaces. Even SQL abstraction layers, like the [Hibernate Query Language](http://hibernate.org/) (HQL) with the same type of injection problems (called [HQL Injection](http://cwe.mitre.org/data/definitions/564.html))  supports parameterized queries as well:
 
-**Hibernate Query Language (HQL) Prepared Statement (Named Parameters) Examples**:
+#### Hibernate Query Language (HQL) Prepared Statement (Named Parameters) Examples:
 
 ```java
 //First is an unsafe HQL Statement
@@ -100,7 +100,7 @@ Query safeHQLQuery = session.createQuery("from Inventory where productID=:
 safeHQLQuery.setParameter("productid", userSuppliedParameter);
 ```
 
-**Other Examples of Safe Prepared Statements**
+#### Other Examples of Safe Prepared Statements:
 
 If you need examples of prepared queries/parameterized languages, including Ruby, PHP, Cold Fusion, Perl, and Rust, see the [Query Parameterization Cheat Sheet](Query_Parameterization_Cheat_Sheet.md) or this [site](http://bobby-tables.com/).
 
@@ -157,7 +157,7 @@ The following code example uses a `SqlCommand`, .NET's implementation of the sto
 
 If you are faced with parts of SQL queries that can't use bind variables, such as the names of tables or columns as well as the sort order indicator (ASC or DESC), input validation or query redesign is the most appropriate defense. When names of tables or columns are needed, ideally those values come from the code and not from user parameters.
 
-**Sample Of Safe Table Name Validation**
+#### Sample Of Safe Table Name Validation:
 
 WARNING: If user parameter values are used for targeting different table names and column names, this is a symptom of poor design and a full rewrite should be considered if time allows. If that is not possible, developers should map the parameter values to the legal/expected table or column names to make sure unvalidated user input doesn't end up in the query.
 
@@ -181,7 +181,7 @@ When we say "implemented safely," the stored procedure does not include any unsa
 
 If it can't be avoided, the stored procedure must use input validation or proper escaping as described in this article to make sure that all user supplied input to the stored procedure can't be used to inject SQL code into the dynamically generated query. Auditors should always look for uses of `sp_execute`, `execute` or `exec` within SQL Server stored procedures. Similar audit guidelines are necessary for similar functions for other vendors.
 
-**Sample of Safer Dynamic Query Generation (DISCOURAGED)**
+#### Sample of Safer Dynamic Query Generation (DISCOURAGED)
 
 For something simple like a sort order, it would be best if the user supplied input is converted to a boolean, and then that boolean is used to select the safe value to append to the query. This is a very standard need in dynamic query creation.
 
@@ -197,7 +197,7 @@ Any time user input can be converted to a non-String, like a date, numeric, bool
 
 Input validation is also recommended as a secondary defense in ALL cases, even when using bind variables as is discussed later in this article. More techniques on how to implement strong input validation is described in the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md).
 
-###  Defense Option 4: STRONGLY DISCOURAGED: Escaping All User-Supplied Input  
+### Defense Option 4: STRONGLY DISCOURAGED: Escaping All User-Supplied Input
 
 In this approach, the developer will escape all user input before putting it in a query. It is very database specific in its implementation.  This methodology is frail compared to other defenses and we CANNOT guarantee that this option will prevent all SQL injections in all situations.
 
