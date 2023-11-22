@@ -351,6 +351,32 @@ $filePath = $storagePath . '/' . basename($filename);
 // ...
 ```
 
+### Dependencies vulnerabilities
+
+Dependency vulnerabilities can expose your application to various risks, making it crucial to adopt best practices.
+Keep all Symfony components and third-party libraries up-to-date.
+
+Composer, the dependency manager for PHP makes it easy to update PHP packages:
+
+```bash
+composer update
+```
+
+When using multiple dependencies, some of them may contain security vulnerabilities.
+To address this concern, Symfony comes with [Symfony Security Checker](https://symfony.com/doc/current/setup.html#checking-security-vulnerabilities). This tool specifically examines the *composer.lock* file in your project to identify any known security vulnerabilities within the dependencies that have been installed and address any potential security issues in your Symfony project.
+
+To use Security Checker run following command using [Symfony CLI](https://github.com/symfony-cli/symfony-cli):
+
+```bash
+symfony check:security
+```
+
+You should also consider similar tools:
+
+- [Local PHP Security Checker](https://github.com/fabpot/local-php-security-checker)
+
+- [Enlightn Security Checker](https://github.com/enlightn/security-checker)
+
 ### Cross Origin Resource Sharing
 
 CORS is a security feature implemented in web browsers to control how web applications in one domain can request and interact with resources hosted on another domains.
@@ -521,33 +547,7 @@ It's very important to note that if there are environment variables and secrets 
 
 For more details refer to [Symfony Secrets Documentation](https://symfony.com/doc/current/configuration/secrets.html).
 
-### Dependencies vulnerabilities
-
-Dependency vulnerabilities can expose your application to various risks, making it crucial to adopt best practices.
-Keep all Symfony components and third-party libraries up-to-date.
-
-Composer, the dependency manager for PHP makes it easy to update PHP packages:
-
-```bash
-composer update
-```
-
-When using multiple dependencies, some of them may contain security vulnerabilities.
-To address this concern, Symfony comes with [Symfony Security Checker](https://symfony.com/doc/current/setup.html#checking-security-vulnerabilities). This tool specifically examines the *composer.lock* file in your project to identify any known security vulnerabilities within the dependencies that have been installed and address any potential security issues in your Symfony project.
-
-To use Security Checker run following command using [Symfony CLI](https://github.com/symfony-cli/symfony-cli):
-
-```bash
-symfony check:security
-```
-
-You should also consider similar tools:
-
-- [Local PHP Security Checker](https://github.com/fabpot/local-php-security-checker)
-
-- [Enlightn Security Checker](https://github.com/enlightn/security-checker)
-
-### Recommendations
+### Summary
 
 - Make sure your app is not in debug mode while in production. To turn off debug mode, set your `APP_ENV` environment variable to `prod`:
 
