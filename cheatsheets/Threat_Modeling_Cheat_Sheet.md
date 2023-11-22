@@ -2,321 +2,116 @@
 
 ## Introduction
 
-Threat modeling is a structured approach of identifying and prioritizing potential threats to a system, and determining the value that potential mitigations would have in reducing or neutralizing those threats. This cheat sheet aims to provide guidance on how to create threat models for both existing systems or applications as well as new systems.
+Threat modeling is an important concept for modern application developers to understand. This goal of this cheatsheet is provide a concise, but actionable, reference for both those new to threat modeling and those seeking a refresher.
 
-You do not need to be a security expert in order to implement the techniques covered in this cheat sheet. All developers, software and system designers, and architects should strive to include threat modeling in their software development life cycle. Optimally, you will create your threat models and determine which mitigations are needed during an early stage of the development of a new system, application, or feature. Assessing potential threats during the design phase of your project can save significant resources that might be needed to refactor the project to include risk mitigations during a later phase of the project.
+## Overview
 
-When you produce a threat model, you will:
+In the context of application security, threat modeling is a structured, repeatable process used to gain actionable insights into the security characteristics of a particular system. It involves modeling a system from a security perspective, identifying applicable threats based on this model, and determining responses to these threats. Threat modeling analyzes a system from an adversarial perspective, focusing on ways in which an attacker can exploit a system.
 
-- Document how data flows through a system to identify where the system might be attacked.
-- Document as many potential threats to the system as possible.
-- Document security controls that may be put in place to reduce the likelihood or impact
-  of a potential threat.
+Threat modeling is ideally performed early in the SDLC, such as during the design phase. Moreover, it is not something that is performed once and never again. A threat model is something that should be maintained, updated and refined alongside the system. Ideally, threat modeling should be integrated seamlessly into a team's normal SDLC process; it should be treated as standard and necessary step in the process, not an add-on.
 
-Note that throughout the document, the terms "systems" and "applications" are used interchangeably. The principles in the document apply equally to designing and building systems such as network infrastructures or server clusters as they do to designing or developing desktop, mobile, or web applications.
+According to  the [Threat Model Manifesto](https://www.threatmodelingmanifesto.org/), the threat modeling process should answer the following four questions:
 
-### Threat Modeling Terminology
+1. What are we working on?
+2. What can go wrong?
+3. What are we going to do about it?
+4. Did we do a good enough job?
 
-You should be familiar with the following terms that will be used throughout this cheat sheet.
+These four questions will act as the foundation for the four major phases described below.
 
-A *threat agent* is an individual or group that is capable of carrying out a particular threat. It is fundamental to identify who would want to exploit the assets of a company, how they might use them against the company, and if they would be capable of doing so. Some threats require more expertise or resources, and thus raise the level of threat actor needed. For example, if a threat requires hundreds of thousands of dollars of computing power to implement, it is likely that only organized corporate, criminal, or government actors would be valid threat actors for such a threat. However, with the rise of cloud computing and the prevalence of attack software on the internet, other threats may be easy to implement with relatively little skill and few resources.
+## Advantages
 
-*Impact* is a measure of the potential damage caused by a particular threat. Impact and damage can take a variety of forms. A threat may result in damage to physical assets, or may result in obvious financial loss. Indirect loss may also result from an attack, and needs to be considered as part of the impact. For example, if your company's website were defaced this could cause damage to your company's reputation, which may in turn cause a loss of business because of the loss of confidence by your users. Depending on the business you are in, attacks that expose user information could potentially result in a physical threat of harm or loss of life to your users, greatly raising the impact of threats that would allow such exposure.
+Before turning to an overview of the process, it may be worth addressing the question: why threat model? Why bother adding more work to the development process? What are the benefits? The following section will briefly outline some answers to these questions.
 
-*Likelihood* is a measure of the possibility of a threat being carried out. A variety of factors can impact the likelihood of a threat being carried out, including how difficult the implementation of the threat is, and how rewarding it would be to the attacker. For example, if a threat required a skilled threat actor with tens of thousands of dollars of computing resources to implement, and the only reward was that they were able to gain access to information that is already public in some other form, the likelihood is low. However, if the threat is relatively easy to accomplish, or if the attacker were to gain valuable information from which they could profit, the likelihood may be higher.
+### Improved Visibility of Target of Evaluation (TOE)
 
-*Controls* are safeguards or countermeasures that you put in place in order to avoid, detect, counteract, or minimize potential threats against your information, systems, or other assets.
+ Threat modeling requires a deep understanding of the system being evaluated. To properly threat model, one must understand data flows, trust boundaries, and other characteristics of the system. Thus, [Stiliyana Simeonova](https://securityintelligence.com/threat-modeling-in-the-enterprise-part-1-understanding-the-basics/) asserts that improved visibility into a system and its interactions is one advantage of threat modeling.
 
-*Preventions* are controls that may completely prevent a particular attack from being possible. For example, if you identify a threat that your users' personal information may be identified by certain application logging, and you decide to completely remove that logging, you have prevented that particular threat.
+### Increased Secuirty Awareness
 
-*Mitigations* are controls that are put in place to reduce either the likelihood or the impact of a threat, while not necessarily completely preventing it. For example, if you store your user's passwords as hashes in a database, two users who have the same password will have the same hash. Thus, if an attacker has access to the hashed passwords and is able to determine the password associated with one hash, he is easily able to find all the other users who share the same password simply by looking for the same hash. However, if you [add salts to each user's password](Password_Storage_Cheat_Sheet.md#salting), the cost of this particular attack is greatly increased, as the attacker must crack each password individual. An increase in cost reduces the likelihood, and thus has _mitigated_ the attack.
+Proper threat modeling requires participants to think creatively and critically about the security and threat landscape of a specific application. It challenges individuals to "think like an attacker" and apply general security knowledge to a specific context. Threat modeling is also typically a team effort with members being encouraged to share ideas and provide feedback on others. Overall, threat modeling can prove to be a highly educational activity that benefits participants.
 
-A *data flow diagram* is a depiction of how information flows through your system. It shows each place that data is input into or output from each process or subsystem. It includes anywhere that data is stored in the system, either temporarily or long-term.
+### Identify Risks Early-On
 
-A *trust boundary* (in the context of threat modeling) is a location on the data flow diagram where data changes its level of trust. Any place where data is passed between two processes is typically a trust boundary. If your application reads a file from disk, there's a trust boundary between the application and the file because outside processes and users can modify the data in the file. If your application makes a call to a remote process, or a remote process makes calls to your application, that's a trust boundary. If you read data from a database, there's typically a trust boundary because other processes can modify the data in the database. Any place you accept user input in any form is always a trust boundary.
+Threat modeling seeks to identify potential security issues during the design phase. This allows security to be "built-into" a system rather than "bolted-on". This is far more efficient than having to identify and resolve security flaws after a system is in production.
 
-In addition to the above terminologies, it is important to be familiar with the key threat modeling principles defined in the [Threat Modeling Manifesto](https://www.threatmodelingmanifesto.org) project. Those principles are considered throughout the following steps in this cheat sheet.
+## High-Level Process
 
-## Getting Started
+Many threat modeling techniques, including PASTA, STRIDE, and OCTAVE have been developed  and utilized effectively in the industry. There is no universally accepted industry standard for the threat modeling process, no "right" answer for every use case. However, despite this diversity, most approaches do include the the processes of system modeling, threat identification, and risk response in some form. Inspired by these commonalities and guided by the four key questions of threat modeling discussed above, this cheatsheet will break the threat modeling down into four basic steps: application decomposition, threat identification and ranking, mitigations, and review and validation.  
 
-### Define Business Objectives
+### Application Decomposition
 
-Before starting the threat modeling process it is important to identify business objectives of the applications you are assessing, and to identify security and compliance requirements that may be necessary due to business or government regulation. Having these objectives and requirements in mind before the threat assessment begins will help you to evaluate the impact of any threat you find during the risk analysis process.
+The step of application decomposition seeks to answer the question "what are we building"? Without understanding a system, one cannot truly understand what threats are most applicable to it; thus, this step provides a critical foundation for subsequent activities. Although different techniques may be used in this first step of threat modeling, data flow diagrams (DFDs) are arguably the most common approach.
 
-### Identify application design
+DFDs allow one to visually model a system and its interactions with data and other entities; they are created using a [small number of simple symbols](https://github.com/adamshostack/DFD3). DFDs may be created within dedicated threat modeling tools such as [OWASP's Threat Dragon](https://github.com/OWASP/threat-dragon) or [Microsoft' Threat Modeling Tool](https://learn.microsoft.com/en-us/azure/security/develop/threat-modeling-tool) or using general purpose diagraming solutions such as [draw.io](https://draw.io). Depending on the scale and complexity of the system being modeled, multiple DFDs may be required. For example, one could create a DFD representing a high-level overview of the entire system along with a number of more focused DFDs which detail sub-systems. Technical tools are not strictly necessary; whiteboarding may be sufficient in some instances, though it is preferable to have the DFDs in a form that can be easily stored, referenced, and updated as needed.
 
-Early in the threat modeling process, you will need to draw a data flow diagram of the entire system that is being assessed, including its trust boundaries. Thus, understanding the design of the application is key to performing threat modeling. Even if you are very familiar with the application design, you may identify additional data flows and trust boundaries throughout the threat modeling process.
+Regardless of how a DFD or comparable model is generated, it is important that the solution provides a clear view of trust boundaries, data flows, data stores, processes, and the external entities which may interact with the system. These often represent possible attack points and provide crucial input for the subsequent steps.
 
-A thorough understanding of how the system is designed will also help you assess the likelihood and potential impact of any particular threat that you identify.
+### Threat Identification and Ranking
 
-When you are assessing an existing system that has existing design documentation, spend time reviewing that documentation. The documentation may be out of date, requiring you to gather new information to update the documentation. Or, there may be not documentation at all, requiring you to create the design documents.
+After the system has been modeled, it is now time to address the question of "what can go wrong?". This question must be explored with the inputs from the first step in mind; that is, it should focus on identifying and ranking threats within the context of the specific system being evaluated. In attempting to answer this question, threat modelers have a wealth of data sources and techniques at their disposal. For illustration purposes, this cheatsheet will leverage STRIDE; however, in practice, other approaches may be used alongside or instead of STRIDE.
 
-In the optimal case, you are performing your assessment during the design phase of the project, and the design documentation will be up-to-date and available. In any event, this cheat sheet outlines steps you can take to create design documents if they are needed.
+STRIDE is a mature and popular threat modeling technique and mnemonic originally developed by Microsoft employees. To facilitate threat identification, STRIDE groups threats into one of six general categories and prompts modelers to systematically consider how these general threats may materialize within the context of the specific system being evaluated. Each STRIDE category may be considered a violation of a desirable security attribute; the categories and associated desirable attributes are are as follows:
 
-### Create design documents
+Threat Category|Violates|Examples
+---|---|---|
+**S**poofing|Authenticity|An attacker steals the authentication token of a legitimate user and uses it to impersonate the user.|
+**T**ampering|Integrity|An attacker abuses the application to perform unintended updates to a database.|
+**R**epudiation|Non-repudiability|An attacker manipulates logs to cover their actions.|
+**I**nformation Disclosure|Confidentiality|An attacker extract data from  a database containing user account info.|
+**D**enial of Service|Availability|An attacker locks a legitimate user out of their account by performing many failed authentication attempts. |
+**E**levation of Privileges|Authorization|An attacker tampers with a JWT to change their role.|
 
-There are many ways to generate design documents; the **4+1** view model is one of the matured approaches to building your design document.
+STRIDE provides valuable structure for responding to the question of "what can go wrong". It is also a highly flexible approach and getting started need not be complex. Simple techniques such as brainstorming and whiteboarding or even [games](https://github.com/adamshostack/eop/) may be used initially. STRIDE categories are also incorporated into popular threat modeling tools such as [OWASP's Threat Dragon](https://github.com/OWASP/threat-dragon) and [Microsoft' Threat Modeling Tool](https://learn.microsoft.com/en-us/azure/security/develop/threat-modeling-tool). Additionally, as a relatively high-level process, STRIDE pairs well with more tactical approaches such as kill chains or [MITRE ATT&CK](https://attack.mitre.org/) (please refer to [this article](https://blog.isc2.org/isc2_blog/2020/02/under-attack-how-mitres-methodology-to-find-threats-and-embed-counter-measures-might-work-in-your-or.html) for an overview of how STRIDE and ATT&CK can work together).
 
-Reference to **4+1** view model of architecture [here](https://en.wikipedia.org/wiki/4%2B1_architectural_view_model).
+After possible threats have been identified, they must be ranked. Ranking should generally be based on the product of an identified threat's likelihood and its impact. A threat that is likely to occur and result in serious damage would be prioritized much higher than one that is unlikely to occur and would only have a moderate impact.
 
-Please note that the **4+1** is comprehensive, you may use any other design model during this phase.
+### Response and Mitigations
 
-The following subsections show the details about **4+1** approach and how this could help in the threat modeling process:
+Equipped with an understanding of both the system and applicable threats, it is now time to answer "what are we going to do about it"?. Each threat identified earlier must have a response. Threat responses are similar, but not identical, to risk responses. [Adam Shostack](https://shostack.org/resources/threat-modeling) lists the following responses:
 
-#### Logical View
+- Mitigate. Take action to reduce the likelihood that the threat will materialize.
+- Eliminate: Simply remove the feature or component that is causing the threat.
+- Transfer. Shift responsibility to another entity such as the customer.
+- Accept. Do not mitigate, eliminate, or transfer the risk because none of the above options are acceptable given business requirements or constraints.
 
-Create a logical map of the Target of Evaluation.
+If one decides to mitigates a threat, mitigation strategies must be formulated and documented as requirements.  Depending on the complexity of the system, nature of threats identified, and the process used for identifying threats (STRIDE or another method), mitigation responses may be applied at either the category or individual threat level. In the former case, the mitigation would apply to all threats within that category. Mitigations strategies must be actionable not hypothetical; they must be something that can actually be built into to the system being developed. Although mitigations strategies must be tailored to the particular application, resources such as as [OWASP's ASVS](https://owasp.org/www-project-application-security-verification-standard/) and [MITRE's CWE list](https://cwe.mitre.org/index.html) can prove valuable when formulating these responses.
 
-**Audience**: Designers.
+### Review and Validation
 
-**Area**: Functional Requirements: describes the design's object model.
+Finally, it is time to answer the question "did we do a good enough job"? The threat model must be reviewed by all stakeholders, not just the development or security teams. Areas to focus on include:
 
-**Related Artifacts**: Design model
+- Does the DFD (or comparable) accurately reflect the system?
+- Have all threats been identified?
+- For each identified threat, has a response strategy been agreed upon?
+- For identified threats for which mitigation is the desired response, have mitigation strategies been developed which reduce risk to an acceptable level?
+- Has the threat model been formally documented? Are artifacts from the threat model process stored in such a way that it can be accessed by those with "need to know"?
+- Can the agreed upon mitigations be tested? Can success or failure of the requirements and recommendations from the the threat model be measured?
 
-#### Implementation View
+## References
 
-**Audience**:  Programmers.
+### General Reference
 
-**Area**:  Software components: describes the layers and subsystems of the application.
+- [Awesome Threat Modeling](https://github.com/hysnsec/awesome-threat-modelling) - resource list
+- [Tactical Threat Modeling](https://safecode.org/wp-content/uploads/2017/05/SAFECode_TM_Whitepaper.pdf)
+- [Threat Modeling: A Summary of Available Methods](https://insights.sei.cmu.edu/library/threat-modeling-a-summary-of-available-methods/)
+- [Threat Modeling Handbook](https://security.cms.gov/policy-guidance/threat-modeling-handbook)
+- [Threat Modeling Process](https://owasp.org/www-community/Threat_Modeling_Process)
+- [The Ultimate Beginner's Guide to Threat Modeling](https://shostack.org/resources/threat-modeling)
 
-**Related Artifacts**:  Implementation model, components
+### Methods and Techniques
 
-Please refer to the image in the appendix section for sample design for the implementation view.
-
-#### Process View
-
-**Audience**:  Integrators.
-
-**Area**:  Non-functional requirements: describes the design's concurrency and synchronization aspects.
-
-**Related Artifacts**:  (no specific artifact).
-
-#### Deployment View
-
-Create a physical map of the Target of Evaluation
-
-**Audience**: Deployment managers.
-
-**Area**: Topology: describes the mapping of the software onto the hardware and shows the system's distributed aspects.
-
-**Related Artifacts**: Deployment model.
-
-#### Use-Case View
-
-**Audience**: All the stakeholders of the system, including the end users.
-
-**Area**:  describes the set of scenarios and/or use cases that represent some significant, central functionality of the system.
-
-**Related Artifacts**:  Use-Case Model, Use-Case documents
-
-## Decompose and Model the System
-
-Gain an understanding of how the system works to perform a threat model, it is important to understand how the system works and interacts with its ecosystem. To start with creating a high-level information flow diagram, like the following:
-
-1. Identify the trusted boundaries of your system/application/module/ecosystem that you may want to start off with.
-2. Add actors – internal and external
-3. Define internal trusted boundaries. These can be the different security zones that have been designed
-4. Relook at the actors you have identified in \#2 for consistency
-5. Add information flows
-6. Identify the information elements and their classification as per your information classification policy
-7. Where possible add assets to the identified information flows.
-
-### Define and Evaluate your Assets
-
-Assets involved in the information flow should be defined and evaluated according to their value of confidentiality, integrity and availability.
-
-#### Consider Data in transit and Data at rest
-
-Data protection in transit is the protection of this data while it’s travelling from network to network or being transferred from a local storage device to a cloud storage device – wherever data is moving, effective data protection measures for in-transit data are critical as data is often considered less secure while in motion.
-
-While data at rest is sometimes considered to be less vulnerable than data in transit, attackers often find data at rest a more valuable target than data in motion.
-
-The risk profile for data in transit or data at rest depends on the security measures that are in place to secure data in either state. Protecting sensitive data both in transit and at rest is imperative for modern enterprises as attackers find increasingly innovative ways to compromise systems and steal data.
-
-### Create an information flow diagram
-
-#### Whiteboard Your Architecture
-
-It is important to whiteboard system architecture by showing the major constraints and decisions in order to frame and start conversations. The value is actually twofold. If the architecture cannot be white-boarded, then it suggests that it is not well understood. If a clear and concise whiteboard diagram can be provided, others will understand it and it will be easier to communicate details.
-
-#### Manage to present your DFD in the context of MVC
-
-In this step, Data Flow Diagram should be divided in the context of Model, View, Controller (MVC).
-
-#### Use tools to draw your diagram
-
-If you don’t like to manually draw your DFD; there are several tools available that could be used:
-
-##### OWASP Threat Dragon
-
-The OWASP [Threat Dragon project](https://owasp.org/www-project-threat-dragon/) is a cross platform tool that runs on Linux, macOS and Windows 10. Threat Dragon (TD) is used to create threat model diagrams and to record possible threats and decide on their mitigations using STRIDE methodology. TD is both a web application and a desktop application; refer to the project's GitHub repository for the latest [release](https://github.com/OWASP/threat-dragon/releases).
-
-##### Poirot
-
-The Poirot tool isolates and diagnoses defects through fault modeling and simulation. Along with a carefully selected partitioning strategy, functional and sequential test pattern applications show success with circuits having a high degree of observability.
-
-##### MS TMT
-
-The Microsoft Threat Modeling Tool (TMT) helps find threats in the design phase of software projects. It is one of the longest lived threat modeling tools, having been introduced as Microsoft SDL in 2008, and is actively supported; [version 7.3](https://aka.ms/threatmodelingtool) was released March 2020. It runs only on Windows 10 Anniversary Update or later, and so is difficult to use on macOS or Linux.
-
-##### OWASP pytm
-
-[Pytm](https://github.com/izar/pytm) is a Python library to help you describe your system in terms of objects and attributes, able to generate a DFD in Graphviz (dot) format, a sequence diagram in plantuml format, and a list of threats (out of CAPEC and other threat libraries) to the system in a templated format. As of 2023 it is under active development. No Python knowledge is necessary for its use - if you can define objects and use .attribute notation, you should be able to use it.
-
-### Define Data Flow over your DFD
-
-Define Data Flows over the organization Data Flow Diagram.
-
-### Define Trust Boundaries
-
-Define any distinct boundaries (External boundaries and Internal boundaries) within which a system trusts all sub-systems (including data).
-
-### Define applications user roles and trust levels
-
-Define access rights that the application will grant to external entities and internal entities.
-
-### Highlight Authorization per user role over the DFD
-
-Highlight Authorization per user role, for example, defining app users’ role, admins’ role, anonymous visitors’ role...etc.
-
-### Define Application Entry points
-
-Define the interfaces through which potential attackers can interact with the application or supply them with data.
-
-## Identify Threat Agents
-
-### Define all possible threats
-
-Identify Possible Attackers threat agents that could exist within the Target of Evaluation. Use Means, Motive, and Opportunities to understand Threats posed by Attackers. Then associate threat agents with system components they can directly interact with.
-
-Work on minimizing the number of threat agents by:
-
-- Treating them as equivalent classes.
-- Considering the attacker’s motivation when evaluating likelihood.
-- Consider insider Threats
-
-The user of this cheat can depend on the following list of risks and threat libraries sources to define the possible threats an application might be facing:
-
-1. Risks with [OWASP Top 10](https://owasp.org/www-project-top-ten/).
-2. Testing Procedure with [OWASP ASVS](https://owasp.org/www-project-application-security-verification-standard/).
-3. Risks with [SANS Top 25](https://www.sans.org/top25-software-errors).
-4. Microsoft [STRIDE](https://en.wikipedia.org/wiki/STRIDE_%28security%29).
-5. Continuous Threat Modeling [CTM](https://github.com/Autodesk/Continuous-Threat-Modeling).
-
-### Map Threat agents to application Entry points
-
-Map threat agents to the application entry point, whether it is a login process, a registration process or whatever it might be and consider insider Threats.
-
-### Draw attack vectors and attacks tree
-
-During this phase conduct the following activities:
-
-- Draw attack vectors and attacks tree.
-- Identify Use Cases/Abuse Cases.
-- Re-Define attack vectors to consider multi-step attacks.
-
-### Mapping Abuse Cases to Use Cases
-
-This is a very important step that can help identifying application logical threats. List of all possible abuse cases should be developed for each application use case. Being familiar with the types of application logical attack is an important during the mapping process. You can refer to OWASP Testing Guide 4.0: Business Logic Testing and OWASP ASVS for more details.
-
-### Re-Define attack vectors
-
-In most cases after defining the attack vectors, the compromised user role could lead to further attacks into the application. For example, assuming that an internet banking user credentials could be compromised, the user of this cheat sheet has to then redefine the attack vectors that could result from compromising the user’s credentials and so on.
-
-## Write your Threat traceability matrix
-
-### Define the Impact and Probability for each threat
-
-Enumerate Attacks posed by the most dangerous attacker in designated areas of the logical and physical maps of the target of evaluation.
-
-Assume the attacker has a zero-day because he does. In this methodology, we assume compromise; because a zero-day will exist or already does exist (even if we don't know about it). This is about what can be done by skilled attackers, with much more time, money, motive and opportunity that we have.
-
-Use risk management methodology to determine the risk behind the threat
-
-Create risks in risk log for every identified threat or attack to any assets. A risk assessment methodology is followed in order to identify the risk level for each vulnerability and hence for each server.
-
-Here we will highlight two risk methodology that could be used:
-
-#### DREAD
-
-[DREAD](https://en.wikipedia.org/wiki/DREAD_%28risk_assessment_model%29), is about evaluating each existing vulnerability using a mathematical formula to retrieve the vulnerability’s corresponding risk. The **DREAD** formula is divided into 5 main categories:
-
-- **D**amage - how bad would an attack be?
-- **R**eproducibility - how easy it is to reproduce the attack?
-- **E**xploitability - how much work is it to launch the attack?
-- **A**ffected users - how many people will be impacted?
-- **D**iscoverability - how easy it is to discover the threat?
-
-**DREAD** formula is:
-
-Risk Value = (Damage + Affected users) x (Reproducibility + Exploitability + Discoverability).
-
-Then the risk level is determined using defined thresholds below.
-
-#### PASTA
-
-[PASTA](https://versprite.com/tag/pasta-threat-modeling/), Attack Simulation & Threat Analysis (PASTA) is a complete methodology to perform application threat modeling. PASTA introduces a risk-centric methodology aimed at applying security countermeasures that are commensurate to the possible impact that could be sustained from defined threat models, vulnerabilities, weaknesses, and attack patterns.
-
-PASTA introduces a complete risk analysis and evaluation procedures that you can follow to evaluate the risk for each of the identified threat. The main difference in using PASTA Approach is that you should evaluate the impact early on in the analysis phase instead of addressing the impact at the step of evaluating the risk.
-
-The idea behind addressing the impact earlier in PASTA approach is that the audience that knows impact knows the consequences on a product or use case failures more than participants in the threat analysis phase.
-
-Application security risk assessments are not enough because they are very binary and leverage a control framework basis for denoting risks. It is recommended to contextually look at threats impacts, probability and effectiveness of countermeasures that may be present.
-
-R = (T*V*P*I) / Countermeasures
-
-For more details [about PASTA](https://owasp.org/www-pdf-archive/AppSecEU2012_PASTA.pdf).
-
-### Rank Risks
-
-Using risk matrix rank risks from most severe to least severe based on Means, Motive & Opportunity. Below is a sample risk matrix table, depending on your risk approach you can define different risk ranking matrix:
-
-- Risk Value: 01 to 12 &rarr; Risk Level: **Notice**
-- Risk Value: 13 to 18 &rarr; Risk Level: **Low**
-- Risk Value: 19 to 36 &rarr; Risk Level: **Medium**
-- Risk Value: 37 to 54 &rarr; Risk Level: **High**
-
-## Determine countermeasures and mitigation
-
-Identify risk owners and agree on risk mitigation with risk owners and stakeholders. Provide the needed controls in forms of code upgrades and configuration updates to reduce risks to acceptable levels.
-
-### Identify risk owners
-
-For the assessors: After defining and analyzing the risks, the assessor should be working on the mitigation plan by firstly identifying risk owners which is the personnel that is responsible for mitigating the risk. i.e. one of the information security team or the development team.
-
-For the designers or the architects: they should assign the risk mitigation to the development team to consider it while building the application.
-
-### Agree on risk mitigation with risk owners and stakeholders
-
-After identifying the risk owners, it is important to review the mitigation controls for each of the identified risks. Some controls might be inapplicable, you should propose other mitigation controls or discuss with the risk owners the possible compensation controls.
-
-### Build your risk treatment strategy
-
-- **Reduce:** building controls if the form of code upgrades, confirming a specific design for the application or building a specific configuration during the deployment phase to make sure that application risk is reduced.
-- **Transfer:** For a specific component in the application the risk can be transferred to an outsourced third party to develop that component and making sure that the third party is doing the right testing for the component; or during the deployment phase, outsourcing a third party to do the deployment and transferring that risk to that third party.
-- **Avoid:** an example of avoiding the risk is disabling a specific function in the application that is the source for that risk.
-- **Accept:** if the risk is within acceptable criteria set earlier, in that case, the designer risk owner can accept that risk.
-
-For the assessor, this is considered as the last step in the assessment process. The following steps should be conducted by the risk owner, however, the assessor shall engage in 6.5 (Testing risk treatment) to verify the remediation.
-
-### Select appropriate controls to mitigate the risk
-
-Selecting one of the controls to reduce the risk, either by upgrading the code, or building a specific configuration during the deployment phase and so on.
-
-### Test risk treatment to verify remediation
-
-Mitigation controls will not vanish the risk completely, rather, it would just reduce the risk. In this case, the user of this cheat sheet should measure the value of the risk after applying the mitigation controls. The value of the risk should be reduced to the acceptable criteria set earlier.
-
-### Reduce risk in risk log for verified treated risk
-
-After applying the mitigation and measuring the new risk value, the user of this cheat sheet should update the risk log to verify that risk has been reduced.
-
-### Periodically retest risk
-
-Application threat modeling is an ongoing process, in addition to the changes that might be happened to the application that may require re-evaluating the expected threats, it is also important to do periodic retest for the identified risks and the implemented risk treatments.
-
-## Appendix
-
-- Mikko Kontio, Architectural manifesto: Designing software architectures, Part 5.
-- Hui LM, Leung CW, Fan CK and Wong TN, "modeling agent-based systems with UML". Proceedings of the Fifth Asia Pacific Industrial Engineering and Management Systems Conference.
-- References for the “4+1” View Model of Software Architecture: Kruchten, Philippe. Architectural Blueprints — The “4+1” View Model of Software Architecture. IEEE Software 12 (6), pp. 42-50.
+- [LINDDUN](https://linddun.org/)
+- [OCTAVE](https://insights.sei.cmu.edu/library/introduction-to-the-octave-approach/)
+- [PASTA](https://cdn2.hubspot.net/hubfs/4598121/Content%20PDFs/VerSprite-PASTA-Threat-Modeling-Process-for-Attack-Simulation-Threat-Analysis.pdf)
+- [STRIDE](https://learn.microsoft.com/en-us/previous-versions/commerce-server/ee823878(v=cs.20)?redirectedfrom=MSDN)
+- [TRIKE](http://www.octotrike.org/papers/Trike_v1_Methodology_Document-draft.pdf)
+- [VAST](https://go.threatmodeler.com/vast-methodology-data-sheet)
+
+### Tools
+
+- [Cairis](https://github.com/cairis-platform/cairis)
+- [draw.io](https://draw.io) - see also [threat modeling libraries](https://github.com/michenriksen/drawio-threatmodeling) for the tool
+- [IriusRisk](https://www.iriusrisk.com/) - offers a free Community Edition
+- [Microsoft Threat Modeling Tool](https://learn.microsoft.com/en-us/azure/security/develop/threat-modeling-tool)
+- [OWASP's Threat Dragon](https://github.com/OWASP/threat-dragon)
