@@ -146,7 +146,7 @@ class ExampleController extends AbstractController {
 
 Examples bellow shows the **correct ways** that provides protection against SQL Injection:
 
-- Using entity repository built in method
+- Using entity repository built-in method
 
 ```php
 $id = $request->query->get('id');
@@ -292,9 +292,9 @@ class FileForm extends AbstractType
 }
 ```
 
-#### Use unique file names
+#### Use unique filenames
 
-Ensure that each uploaded file has a unique name to prevent overwriting existing files. You can use a combination of a unique identifier and the original file name to generate a unique name.
+Ensure that each uploaded file has a unique name to prevent overwriting existing files. You can use a combination of a unique identifier and the original filename to generate a unique name.
 
 #### Store uploaded files securely
 
@@ -307,7 +307,7 @@ Refer the [File Upload Cheatsheet](File_Upload_Cheat_Sheet.md) to learn more.
 A directory or path traversal attack aims to access files and directories that are stored on server by manipulating input data that reference files with “../” *dot-dot-slash* sequences and its variations or by using absolute file paths.
 For more details refer to [OWASP Path Traversal](https://owasp.org/www-community/attacks/Path_Traversal).
 
-You can protect your application before directory traversal attack by validating whether the absolute path of requested file location is correct or strip out directory information from file name input.
+You can protect your application before directory traversal attack by validating whether the absolute path of requested file location is correct or strip out directory information from filename input.
 
 - Check if path exists using PHP *realpath* function and that it leads to the storage directory
 
@@ -389,7 +389,7 @@ To install it with composer, run:
 composer require nelmio/cors-bundle
 ```
 
-For Symfony Flex users, the installation generates a basic configuration file in the `config/packages` directory automatically. Take a look at the example configuration for routes starting with */api* prefix.
+For Symfony Flex users, the installation generates a basic configuration file in the `config/packages` directory automatically. Take a look at the example configuration for routes starting with */API* prefix.
 
 ```yaml
 # config/packages/nelimo_cors.yaml
