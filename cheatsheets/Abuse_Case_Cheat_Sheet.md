@@ -33,7 +33,7 @@ This cheat sheet can be seen as a getting-started tutorial.
 
 Clearly identifying the attacks against which the application must defend is essential in order to enable the following steps in a project or sprint:
 
-- Evaluate the business risk for each of the identified attacks in order perform a selection according to the business risk and the project/sprint budget.
+- Evaluate the business risk for each of the identified attacks in order to perform a selection according to the business risk and the project/sprint budget.
 - Derive security requirements and add them into the project specification or sprint's user stories and acceptance criteria.
 - Estimate the overhead of provision in the initial project/sprint charge that will be necessary to implement the countermeasures.
 - About countermeasures: Allow the project team to define them, and to determine in which location they are appropriate (network, infrastructure, code...) to be located.
@@ -97,7 +97,7 @@ It is important to take into account **Technical** and **Business** kind of abus
 *Example:*
 
 - Technical flagged abuse case: Add Cross Site Scripting injection into a comment input field.
-- Business flagged abuse case: Ability to modify arbitrary the price of an article in an online shop prior to pass an order causing the user to pay a lower amount for the wanted article.
+- Business flagged abuse case: Ability to arbitrarily modify the price of an article in an online shop prior to passing an order causing the user to pay a lower amount for the wanted article.
 
 #### When to define the list of Abuse Cases
 
@@ -105,7 +105,7 @@ In agile projects, the definition workshop must be made after the meeting in whi
 
 In waterfall projects, the definition workshop must be made when the business features to implement are identified and known by the business.
 
-Whatever the mode of project used (agile or waterfall), the abuse cases selected to be addressed must become security requirements in each feature specification section (waterfall) or User Story acceptance criteria (agile) in order to allow additional cost/effort evaluation, identification and implementation of the countermeasures.
+Whatever the mode of the project used (agile or waterfall), the abuse cases selected to be addressed must become security requirements in each feature specification section (waterfall) or User Story acceptance criteria (agile) in order to allow additional cost/effort evaluation, identification and implementation of the countermeasures.
 
 Each abuse case must have a unique identifier in order to allow tracking throughout the whole project/sprint (details about this point will be given in the proposal section).
 
@@ -166,9 +166,9 @@ For each feature, follow this flow:
     1. Appsec proposes a countermeasure and a preferred set up location (infrastructure, network, code, design...).
     2. Technical people give feedback about the feasibility of the proposed countermeasure.
     3. Penetration testers use the CVSS v3 (or other standard) calculator to determine a risk rating. (ex: [CVSS V3 calculator](https://www.first.org/cvss/calculator/3.0))
-    4. Risk key people accept/increase/decrease the rating to have final one that match the real business impact for the company.
+    4. Risk leaders should accept or modify the risk rating to determine the final risk score which accurately reflects the real business impact for the company.
 
-4. Business, Risk and Technical key peoples find a consensus and filter the list of abuses for the current feature to keep the ones that must be addressed, and then flag them accordingly in the *ABUSE CASES* sheet (**if risk is accepted then add a comment to explain why**).
+4. Business, Risk, and Technical leaders should find a consensus and filter the list of abuses for the current feature to keep the ones that must be addressed, and then flag them accordingly in the *ABUSE CASES* sheet (**if risk is accepted then add a comment to explain why**).
 5. Pass to next feature...
 
 If the presence of penetration testers is not possible then you can use the following references to identify the applicable attacks on your features:
@@ -181,14 +181,14 @@ If the presence of penetration testers is not possible then you can use the foll
 Important note on attacks and countermeasure knowledge base(s):
 
 ```text
-With the time and across projects, you will obtain your own dictionary of attacks and countermeasures
+With time and experience across projects, you will obtain your own dictionary of attacks and countermeasures
 that are applicable to the kind of application in your business domain.
 
 This dictionary will speed up the future workshops in a significant way.
 
 To promote the creation of this dictionary, you can, at the end of the project/sprint, gather the list
 of attacks and countermeasures identified in a central location (wiki, database, file...) that will be
-used during the next workshop in combination with input from penetration pesters.
+used during the next workshop in combination with input from penetration testers.
 ```
 
 #### Step 3: After the workshop
@@ -198,7 +198,7 @@ The spreadsheet contains (at this stage) the list of all abuse cases that must b
 Now, there are two remaining task:
 
 1. Key business people must update the specification of each feature (waterfall) or the User Story of each feature (agile) to include the associated abuse cases as Security Requirements (waterfall) or Acceptance Criteria (agile).
-2. Key technical people must evaluate the overhead in terms of charge/effort to take into account the countermeasure.
+2. Key technical people must evaluate the overhead in terms of expense/effort to take into account the countermeasure.
 
 #### Step 4: During implementation - Abuse cases handling tracking
 
@@ -221,7 +221,7 @@ As abuse cases are defined, it is possible to put in place automated or manual v
 - All the selected abuse cases are handled.
 - An abuse case is correctly/completely handled.
 
-Validations can be of the following kinds:
+Validations can be of the following varieties:
 
 - Automated (run regularly at commit, daily or weekly in the Continuous Integration Jobs of the project):
     - Custom audit rules in Static Application Security Testing (SAST) or Dynamic Application Security Testing (DAST) tools.
@@ -232,11 +232,11 @@ Validations can be of the following kinds:
     - Provide the list of all abuse cases addressed to pentesters so that they may validate the protection efficiency for each abuse case during an intrusion test against the application (the pentester will validate that the attacks identified are no longer effective and will also try to find other possible attacks).
     - ...
 
-Adding automated tests also allow teams to track that countermeasures against the abuse cases are still effective/in place during a maintenance or bug fixing phase of a project (to prevent accidental removal/disabling). It is also useful when a [Continuous Delivery](https://continuousdelivery.com/) approach is used, to ensure that all abuse cases protections are in place before opening access to the application.
+Adding automated tests also allow teams to track the effectiveness of countermeasures against abuse cases and determine if the countermeasures are still in place during a maintenance or bug fixing phase of a project (to prevent accidental removal/disabling). It is also useful when a [Continuous Delivery](https://continuousdelivery.com/) approach is used, to ensure that all abuse cases protections are in place before opening access to the application.
 
 ### Example of derivation of Abuse Cases as User Stories
 
-The following section show an example of derivation of Abuse Cases as User Stories, here using the [OWASP TOP 10](https://owasp.org/www-project-top-ten/) as input source.
+The following section shows an example of derivation of Abuse Cases as User Stories, here using the [OWASP TOP 10](https://owasp.org/www-project-top-ten/) as input source.
 
 Threat Oriented Personas:
 
@@ -348,7 +348,7 @@ As an attacker, I access APIs with missing access controls for POST, PUT and DEL
 
 *Abuse Case:*
 
-As an attacker, I target default crypto keys in use, weak crypto keys generated or re-used, or keys where rotation missing is missing.
+As an attacker, I target default crypto keys in use, weak crypto keys generated or re-used, or keys where rotation is missing.
 
 *Abuse Case:*
 
@@ -386,7 +386,7 @@ As an attacker, I find security settings in the application servers, application
 
 *Abuse Case:*
 
-As an attacker, I find the server does not send security headers or directives or they are not set to secure values.
+As an attacker, I find the server does not send security headers or directives or are set to insecure values.
 
 #### A7:2017-Cross-Site Scripting (XSS)
 
@@ -396,7 +396,7 @@ XSS is the second most prevalent issue in the OWASP Top 10, and is found in arou
 
 *Abuse Case:*
 
-As an attacker, I perform reflected XSS where the application or API includes unvalidated and unescaped user input as part of HTML output. My successful attack can allow the attacker to execution of arbitrary HTML and JavaScript in my victim's browser. Typically the victim will need to interact with some malicious link that points to an attacker-controlled page, such as malicious watering hole websites, advertisements, or similar.
+As an attacker, I perform reflected XSS where the application or API includes unvalidated and unescaped user input as part of HTML output. My successful attack can allow the attacker to execute arbitrary HTML and JavaScript in my victim's browser. Typically the victim will need to interact with some malicious link that points to an attacker-controlled page, such as malicious watering hole websites, advertisements, or similar.
 
 *Abuse Case:*
 
@@ -430,7 +430,7 @@ As an attacker, I find common open source or closed source packages with weaknes
 
 *Epic:*
 
-Exploitation of insufficient logging and monitoring is the bedrock of nearly every major incident. Attackers rely on the lack of monitoring and timely response to achieve their goals without being detected. In 2016, identifying a breach took an [average of 191 days](https://www-01.ibm.com/common/ssi/cgi-bin/ssialias?htmlfid=SEL03130WWEN) so plenty of time for damage to be inflicted.
+Exploitation of insufficient logging and monitoring is the bedrock of nearly every major incident. Attackers rely on the lack of monitoring and timely response to achieve their goals without being detected. In 2016, identifying a breach took an [average of 191 days](https://www-01.ibm.com/common/ssi/cgi-bin/ssialias?htmlfid=SEL03130WWEN) allowing substancial chance for damage to be inflicted.
 
 *Abuse Case:*
 
