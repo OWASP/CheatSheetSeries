@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This *Cheat Sheet* aims to provide developers with security tips when building applications using the Symfony framework.
+This cheat sheet aims to provide developers with security tips when building applications using the Symfony framework.
 It covers common vulnerabilities and best practices to ensure that your Symfony applications are secure.
 
 While Symfony comes with built-in security mechanisms, developers must be aware of potential vulnerabilities and best practices to ensure the applications they build are secure.
