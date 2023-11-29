@@ -37,7 +37,7 @@ Threat modeling seeks to identify potential security issues during the design ph
 
 ## High-Level Process
 
-Many threat modeling techniques, including PASTA, STRIDE, and OCTAVE have been developed  and utilized effectively in the industry. There is no universally accepted industry standard for the threat modeling process, no "right" answer for every use case. However, despite this diversity, most approaches do include the the processes of system modeling, threat identification, and risk response in some form. Inspired by these commonalities and guided by the four key questions of threat modeling discussed above, this cheatsheet will break the threat modeling down into four basic steps: application decomposition, threat identification and ranking, mitigations, and review and validation.  
+Many threat modeling techniques, including PASTA, STRIDE, and OCTAVE have been developed  and utilized effectively in the industry. There is no universally accepted industry standard for the threat modeling process, no "right" answer for every use case. However, despite this diversity, most approaches do include the the processes of system modeling, threat identification, and risk response in some form. Inspired by these commonalities and guided by the four key questions of threat modeling discussed above, this cheatsheet will break the threat modeling down into four basic steps: application decomposition, threat identification and ranking, mitigations, and review and validation.
 
 ### Application Decomposition
 
@@ -53,14 +53,14 @@ After the system has been modeled, it is now time to address the question of "wh
 
 STRIDE is a mature and popular threat modeling technique and mnemonic originally developed by Microsoft employees. To facilitate threat identification, STRIDE groups threats into one of six general categories and prompts modelers to systematically consider how these general threats may materialize within the context of the specific system being evaluated. Each STRIDE category may be considered a violation of a desirable security attribute; the categories and associated desirable attributes are are as follows:
 
-Threat Category|Violates|Examples
----|---|---|
-**S**poofing|Authenticity|An attacker steals the authentication token of a legitimate user and uses it to impersonate the user.|
-**T**ampering|Integrity|An attacker abuses the application to perform unintended updates to a database.|
-**R**epudiation|Non-repudiability|An attacker manipulates logs to cover their actions.|
-**I**nformation Disclosure|Confidentiality|An attacker extract data from  a database containing user account info.|
-**D**enial of Service|Availability|An attacker locks a legitimate user out of their account by performing many failed authentication attempts. |
-**E**levation of Privileges|Authorization|An attacker tampers with a JWT to change their role.|
+| Threat Category             | Violates          | Examples                                                                                                    |
+|-----------------------------|-------------------|-------------------------------------------------------------------------------------------------------------|
+| **S**poofing                | Authenticity      | An attacker steals the authentication token of a legitimate user and uses it to impersonate the user.       |
+| **T**ampering               | Integrity         | An attacker abuses the application to perform unintended updates to a database.                             |
+| **R**epudiation             | Non-repudiability | An attacker manipulates logs to cover their actions.                                                        |
+| **I**nformation Disclosure  | Confidentiality   | An attacker extract data from a database containing user account info.                                      |
+| **D**enial of Service       | Availability      | An attacker locks a legitimate user out of their account by performing many failed authentication attempts. |
+| **E**levation of Privileges | Authorization     | An attacker tampers with a JWT to change their role.                                                        |
 
 STRIDE provides valuable structure for responding to the question of "what can go wrong". It is also a highly flexible approach and getting started need not be complex. Simple techniques such as brainstorming and whiteboarding or even [games](https://github.com/adamshostack/eop/) may be used initially. STRIDE categories are also incorporated into popular threat modeling tools such as [OWASP's Threat Dragon](https://github.com/OWASP/threat-dragon) and [Microsoft' Threat Modeling Tool](https://learn.microsoft.com/en-us/azure/security/develop/threat-modeling-tool). Additionally, as a relatively high-level process, STRIDE pairs well with more tactical approaches such as kill chains or [MITRE ATT&CK](https://attack.mitre.org/) (please refer to [this article](https://blog.isc2.org/isc2_blog/2020/02/under-attack-how-mitres-methodology-to-find-threats-and-embed-counter-measures-might-work-in-your-or.html) for an overview of how STRIDE and ATT&CK can work together).
 
