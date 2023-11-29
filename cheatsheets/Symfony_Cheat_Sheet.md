@@ -111,7 +111,7 @@ class ExampleController extends AbstractController
 }
 ```
 
-You can find more information about CSRF not related to Symfony in [Cross-Site Request Forgery (CSRF) Cheat Sheet](Cross_Site_Request_Forgery_Prevention_Cheat_Sheet.md).
+You can find more information about CSRF not related to Symfony in [Cross-Site Request Forgery (CSRF) Cheat Sheet](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md).
 
 ### SQL Injection
 
