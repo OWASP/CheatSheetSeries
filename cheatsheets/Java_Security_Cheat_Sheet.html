@@ -3499,14 +3499,14 @@ other log viewing/analysis tools that don&#39;t expect the log data to be pre-HT
 <h3 id="general-cryptography-guidance">General cryptography guidance<a class="headerlink" href="#general-cryptography-guidance" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Never, ever write your own cryptographic functions.</strong></li>
-<li>Wherever possible, try and avoid writing any cryptographic code at all. Instead try and either use pre-existing secret management solutions or the secret management solution provided by your cloud provider. For more information, see the <a href="/Secrets_Management_Cheat_Sheet">OWASP Secrets Management Cheat Sheet</a>.</li>
+<li>Wherever possible, try and avoid writing any cryptographic code at all. Instead try and either use pre-existing secret management solutions or the secret management solution provided by your cloud provider. For more information, see the <a href="Secrets_Management_Cheat_Sheet.html">OWASP Secrets Management Cheat Sheet</a>.</li>
 <li>If you cannot use a pre-existing secret management solution, try and use a trusted and well known implementation library rather than using the libraries built into JCA/JCE as it is far too easy to make cryptographic errors with them.</li>
 <li>Make sure your application or protocol can easily support a future change of cryptographic algorithms.</li>
 <li>Use your package manager wherever possible to keep all of your packages up to date. Watch the updates on your development setup, and plan updates to your applications accordingly.</li>
 <li>We will show examples below based on Google Tink, which is a library created by cryptography experts for using cryptography safely (in the sense of minimizing common mistakes made when using standard cryptography libraries).</li>
 </ul>
 <h3 id="encryption-for-storage">Encryption for storage<a class="headerlink" href="#encryption-for-storage" title="Permanent link">&para;</a></h3>
-<p>Follow the algorithm guidance in the <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html#algorithms">OWASP Cryptographic Storage Cheat Sheet</a>.</p>
+<p>Follow the algorithm guidance in the <a href="Cryptographic_Storage_Cheat_Sheet.m#algorithms">OWASP Cryptographic Storage Cheat Sheet</a>.</p>
 <h4 id="symmetric-example-using-google-tink">Symmetric example using Google Tink<a class="headerlink" href="#symmetric-example-using-google-tink" title="Permanent link">&para;</a></h4>
 <p>Google Tink has documentation on performing common tasks.</p>
 <p>For example, this page (from Google's website) shows <a href="https://developers.google.com/tink/encrypt-data">how to perform simple symmetric encryption</a>.</p>
