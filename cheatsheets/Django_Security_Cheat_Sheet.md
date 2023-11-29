@@ -99,8 +99,8 @@ The Django framework provides some built-in security features that aim to be sec
 The `SECRET_KEY` parameter in settings.py is used for cryptographic signing and should be kept confidential. Consider the following recommendations:
 
 - Generate a key at least 50 characters or more, containing a mix of letters, digits, and symbols.
-- Ensure that the `SECRET_KEY` is generated using a strong random generator, such as `get_radnom_secret_key()` function in Django.
-- Avoid hard coding the `SECRET_KEY` value in settings.py or any other location. Consider storing the key value in environment variables or secrets managers.
+- Ensure that the `SECRET_KEY` is generated using a strong random generator, such as `get_random_secret_key()` function in Django.
+- Avoid hard coding the `SECRET_KEY` value in settings.py or any other location. Consider storing the key-value in environment variables or secrets managers.
 
   ```python
   import os
