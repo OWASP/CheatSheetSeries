@@ -1842,6 +1842,26 @@
   
   
     <li class="md-nav__item">
+      <a href="Symfony_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Symfony
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
       <a href="TLS_Cipher_String_Cheat_Sheet.html" class="md-nav__link">
         
   
@@ -2496,7 +2516,7 @@
 <h3 id="identify-risks-early-on">Identify Risks Early-On<a class="headerlink" href="#identify-risks-early-on" title="Permanent link">&para;</a></h3>
 <p>Threat modeling seeks to identify potential security issues during the design phase. This allows security to be "built-into" a system rather than "bolted-on". This is far more efficient than having to identify and resolve security flaws after a system is in production.</p>
 <h2 id="high-level-process">High-Level Process<a class="headerlink" href="#high-level-process" title="Permanent link">&para;</a></h2>
-<p>Many threat modeling techniques, including PASTA, STRIDE, and OCTAVE have been developed  and utilized effectively in the industry. There is no universally accepted industry standard for the threat modeling process, no "right" answer for every use case. However, despite this diversity, most approaches do include the the processes of system modeling, threat identification, and risk response in some form. Inspired by these commonalities and guided by the four key questions of threat modeling discussed above, this cheatsheet will break the threat modeling down into four basic steps: application decomposition, threat identification and ranking, mitigations, and review and validation.  </p>
+<p>Many threat modeling techniques, including PASTA, STRIDE, and OCTAVE have been developed  and utilized effectively in the industry. There is no universally accepted industry standard for the threat modeling process, no "right" answer for every use case. However, despite this diversity, most approaches do include the the processes of system modeling, threat identification, and risk response in some form. Inspired by these commonalities and guided by the four key questions of threat modeling discussed above, this cheatsheet will break the threat modeling down into four basic steps: application decomposition, threat identification and ranking, mitigations, and review and validation.</p>
 <h3 id="application-decomposition">Application Decomposition<a class="headerlink" href="#application-decomposition" title="Permanent link">&para;</a></h3>
 <p>The step of application decomposition seeks to answer the question "what are we building"? Without understanding a system, one cannot truly understand what threats are most applicable to it; thus, this step provides a critical foundation for subsequent activities. Although different techniques may be used in this first step of threat modeling, data flow diagrams (DFDs) are arguably the most common approach.</p>
 <p>DFDs allow one to visually model a system and its interactions with data and other entities; they are created using a <a href="https://github.com/adamshostack/DFD3">small number of simple symbols</a>. DFDs may be created within dedicated threat modeling tools such as <a href="https://github.com/OWASP/threat-dragon">OWASP's Threat Dragon</a> or <a href="https://learn.microsoft.com/en-us/azure/security/develop/threat-modeling-tool">Microsoft' Threat Modeling Tool</a> or using general purpose diagraming solutions such as <a href="https://draw.io">draw.io</a>. Depending on the scale and complexity of the system being modeled, multiple DFDs may be required. For example, one could create a DFD representing a high-level overview of the entire system along with a number of more focused DFDs which detail sub-systems. Technical tools are not strictly necessary; whiteboarding may be sufficient in some instances, though it is preferable to have the DFDs in a form that can be easily stored, referenced, and updated as needed.</p>
@@ -2504,14 +2524,47 @@
 <h3 id="threat-identification-and-ranking">Threat Identification and Ranking<a class="headerlink" href="#threat-identification-and-ranking" title="Permanent link">&para;</a></h3>
 <p>After the system has been modeled, it is now time to address the question of "what can go wrong?". This question must be explored with the inputs from the first step in mind; that is, it should focus on identifying and ranking threats within the context of the specific system being evaluated. In attempting to answer this question, threat modelers have a wealth of data sources and techniques at their disposal. For illustration purposes, this cheatsheet will leverage STRIDE; however, in practice, other approaches may be used alongside or instead of STRIDE.</p>
 <p>STRIDE is a mature and popular threat modeling technique and mnemonic originally developed by Microsoft employees. To facilitate threat identification, STRIDE groups threats into one of six general categories and prompts modelers to systematically consider how these general threats may materialize within the context of the specific system being evaluated. Each STRIDE category may be considered a violation of a desirable security attribute; the categories and associated desirable attributes are are as follows:</p>
-<p>Threat Category|Violates|Examples
----|---|---|
-<strong>S</strong>poofing|Authenticity|An attacker steals the authentication token of a legitimate user and uses it to impersonate the user.|
-<strong>T</strong>ampering|Integrity|An attacker abuses the application to perform unintended updates to a database.|
-<strong>R</strong>epudiation|Non-repudiability|An attacker manipulates logs to cover their actions.|
-<strong>I</strong>nformation Disclosure|Confidentiality|An attacker extract data from  a database containing user account info.|
-<strong>D</strong>enial of Service|Availability|An attacker locks a legitimate user out of their account by performing many failed authentication attempts. |
-<strong>E</strong>levation of Privileges|Authorization|An attacker tampers with a JWT to change their role.|</p>
+<table>
+<thead>
+<tr>
+<th>Threat Category</th>
+<th>Violates</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>S</strong>poofing</td>
+<td>Authenticity</td>
+<td>An attacker steals the authentication token of a legitimate user and uses it to impersonate the user.</td>
+</tr>
+<tr>
+<td><strong>T</strong>ampering</td>
+<td>Integrity</td>
+<td>An attacker abuses the application to perform unintended updates to a database.</td>
+</tr>
+<tr>
+<td><strong>R</strong>epudiation</td>
+<td>Non-repudiability</td>
+<td>An attacker manipulates logs to cover their actions.</td>
+</tr>
+<tr>
+<td><strong>I</strong>nformation Disclosure</td>
+<td>Confidentiality</td>
+<td>An attacker extract data from a database containing user account info.</td>
+</tr>
+<tr>
+<td><strong>D</strong>enial of Service</td>
+<td>Availability</td>
+<td>An attacker locks a legitimate user out of their account by performing many failed authentication attempts.</td>
+</tr>
+<tr>
+<td><strong>E</strong>levation of Privileges</td>
+<td>Authorization</td>
+<td>An attacker tampers with a JWT to change their role.</td>
+</tr>
+</tbody>
+</table>
 <p>STRIDE provides valuable structure for responding to the question of "what can go wrong". It is also a highly flexible approach and getting started need not be complex. Simple techniques such as brainstorming and whiteboarding or even <a href="https://github.com/adamshostack/eop/">games</a> may be used initially. STRIDE categories are also incorporated into popular threat modeling tools such as <a href="https://github.com/OWASP/threat-dragon">OWASP's Threat Dragon</a> and <a href="https://learn.microsoft.com/en-us/azure/security/develop/threat-modeling-tool">Microsoft' Threat Modeling Tool</a>. Additionally, as a relatively high-level process, STRIDE pairs well with more tactical approaches such as kill chains or <a href="https://attack.mitre.org/">MITRE ATT&amp;CK</a> (please refer to <a href="https://blog.isc2.org/isc2_blog/2020/02/under-attack-how-mitres-methodology-to-find-threats-and-embed-counter-measures-might-work-in-your-or.html">this article</a> for an overview of how STRIDE and ATT&amp;CK can work together).</p>
 <p>After possible threats have been identified, they must be ranked. Ranking should generally be based on the product of an identified threat's likelihood and its impact. A threat that is likely to occur and result in serious damage would be prioritized much higher than one that is unlikely to occur and would only have a moderate impact.</p>
 <h3 id="response-and-mitigations">Response and Mitigations<a class="headerlink" href="#response-and-mitigations" title="Permanent link">&para;</a></h3>
