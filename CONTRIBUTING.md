@@ -23,7 +23,7 @@ To propose changes to the existing cheat sheets or the creation of a new one, th
 
 ### Markdown
 
-- Use the markdown syntax described in this [guide](https://guides.github.com/features/mastering-markdown/).
+- Use the markdown syntax described in this [guide](https://daringfireball.net/projects/markdown/syntax), it's using python-markdown so check if what you need is [supported](https://python-markdown.github.io/#support).
 - Use `**bold**` syntax for **bold** text.
 - Lists and nested lists should use `-` strictly.
 - Avoid the use of HTML in the cheat sheets (stick to pure Markdown).
