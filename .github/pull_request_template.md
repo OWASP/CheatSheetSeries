@@ -9,7 +9,7 @@ Please make sure that for your contribution:
 - [ ] All the markdown files follow these [format rules](https://github.com/OWASP/CheatSheetSeries/blob/master/CONTRIBUTING.md#markdown).
 - [ ] All your assets are stored in the **assets** folder.
 - [ ] All the images used are in the **PNG** format.
-- [ ] Any references to websites have been formatted as [TEXT](URL)
+- [ ] Any references to websites have been formatted as `[TEXT](URL)`
 - [ ] You verified/tested the effectiveness of your contribution (e.g., the defensive code proposed is really an effective remediation? Please verify it works!).
 - [ ] The CI build of your PR pass, see the build status [here](https://github.com/OWASP/CheatSheetSeries/actions).
 
