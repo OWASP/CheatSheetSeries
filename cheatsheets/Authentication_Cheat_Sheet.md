@@ -425,12 +425,24 @@ People's email addresses regularly change.  The process below is the recommended
 ## Notes on the Above Processes
 - Google thinks differently
 
-Even if a User of Google only has their account protected with a password, when someone submits a change of registered email address, if the submitter knows the User's password, [Google just sends a _notification-only_ email message to the currently-registered email address](https://support.google.com/accounts/answer/55393?hl=en) for that Google User with a link for "I didn't request this email address change".
+IF a User of Google only has their account protected with a password, when someone submits a change of registered email address, if the submitter knows the User's password, [Google just sends a _notification-only_ email message to the currently-registered email address](https://support.google.com/accounts/answer/55393?hl=en) for that Google User with a link for "I didn't request this email address change".
 
 This is risky: 
 
-IF the User's password is easily-guessable -- or is a repeated-password stolen from someplace else -- Google apparently is still ok with the risk that the request might be unauthorized.  Hopefully the real User will see the email message to the soon-to-be originally-registered email address and click the "this is unexpected" link before the "this is unexpected" nonce expires
+The User's password might be easily-guessable -- or might be a repeated-password stolen from someplace else.
 
-- Social Engineering Training Is Essential
+Nevertheless, Google apparently is still ok with the risk that the request might be unauthorized.  Hopefully the real User will see the email message to the soon-to-be originally-registered email address and click the "this is unexpected" link before the "this is unexpected" nonce expires.
 
-In the event someone contacts a System's System Administrator or Help Desk 
+- Regular Social Engineering Training Is Essential
+
+In the event someone contacts a System's System Administrator or Help Desk to request the change of a registered email address stating they are unable to go through the above process, the System Administrator / Help Desk has to either:
+
+(a) be instructed to refuse to make any changes that do not follow the above process
+
+-- or --
+
+(b) be instructed on best-practice dalternative methods of verifying the person's identity before making changes that do not follow the above process
+
+OWASP recommends regularly training staff on how to identify and respond to social engineering attacks.  However, as of this writing (2023-12-01), OWASP does not offer social engineering training. 
+
+For a brief guide, see the United States Cybersecurity & Infrastructure Agency's (CISA) ["Avoiding Social Engineering and Phishing Attacks"](https://www.cisa.gov/news-events/news/avoiding-social-engineering-and-phishing-attacks).  
