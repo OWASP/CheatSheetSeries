@@ -302,16 +302,16 @@ Web applications should not make password managers' job more difficult than nece
 
 ## Changing A User's Registered Email Address
 
-People's email addresses regularly change.  The process below is the recommended method to implement in a system to handle that situation.  The process is less-stringent when using [Multifactor Authentication](Multifactor_Authentication) because the identity-proof is stronger than just using a password.
+People's email addresses regularly change.  The process below is the recommended method to implement in a system to handle that situation.  The process is less-stringent when using [Multifactor Authentication](Multifactor_Authentication_Cheat_Sheet.md) because the identity-proof is stronger than just using a password.
 
 ## Process (Depending on a System's Level of Authentication)
 
-### Recommended Process If The User HAS [Multifactor Authentication](Multifactor_Authentication) Enabled
+### Recommended Process If The User HAS [Multifactor Authentication](Multifactor_Authentication_Cheat_Sheet.md) Enabled
 
 1. The System shall confirm the User's authentication cookie / token is still valid; if not, the System should display a login screen.
 1. To reduce User friction, the System shall describe to the User the process that the User will be expected to follow to change their registered email address within the System.
 1. The System shall ask the User to submit a proposed-new email address.  The System **shall not** continue this process unless the proposed-new email address meets the System's rules for registered email addresses.
-1. The System shall ask the User to use [Multifactor Authentication](Multifactor_Authentication) to prove their identity. The System **shall not** continue this process until the [Multifactor Authentication](Multifactor_Authentication) submission is successful.
+1. The System shall ask the User to use [Multifactor Authentication](Multifactor_Authentication_Cheat_Sheet.md) to prove their identity. The System **shall not** continue this process until the [Multifactor Authentication](Multifactor_Authentication_Cheat_Sheet.md) submission is successful.
 1. The System shall now store in the data-store the proposed-new email address in a way that represents this is a "proposed-new" email address for that User's account in the System AND NOT the actual registered email address.
 1. The System shall now create and stored in the System data-store two separate time-limited nonces associated with the User's account -- making sure to not duplicate any existing nonces in the data-store:
    1. A nonce to be used to notify the System to, in turn, directly notify the System Administrators that the request to change the registered email address was unexpected and should be investigated immediately.
