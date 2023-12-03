@@ -1,5 +1,3 @@
-Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md
-
 # Cross-Site Request Forgery Prevention Cheat Sheet
 
 ## Introduction
