@@ -282,7 +282,7 @@ Email verification requires that the user enters a code or clicks a link sent to
 
 ## Something You Are
 
-The final factor in the traditional view of MFA is something you are - which is one of the physical attributes of the users (often called biometrics). Biometrics are rarely used in web applications due to the requirement for users to have specific hardware.
+The final factor in the traditional view of MFA is something you are - which is one of the physical attributes of the users (often called biometrics). Biometrics has been rarely used in web pages due to the requirement for users to have specific hardware.  Most modern apps which require secure authentication have an option to use biometrics, particularly if the interfaces is already designed for a smart phone or tablet.
 
 ### Biometrics
 
@@ -301,7 +301,6 @@ The are a number of common types of biometrics that are used, including:
 
 - Require manual enrolment of the user's physical attributes.
 - Custom (sometimes expensive) hardware is often required to read biometrics.
-- Modern browsers do not have native support, so custom client-side software is required.
 - Privacy concerns: Sensitive physical information must be stored about users.
 - If compromised, biometric data can be difficult to change.
 
