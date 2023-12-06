@@ -41,7 +41,7 @@ or
 
 There are certain characters that are considered special characters in a DN.
 
-The [exhaustive list](https://ldapwiki.com/wiki/DN%20Escape%20Values) is the following: `\ # + < > , ; " =` and leading or trailing spaces.
+The [exhaustive list](https://ldapwiki.com/wiki/Wiki.jsp?page=DN%20Escape%20Values) is the following: `\ # + < > , ; " =` and leading or trailing spaces.
 
 Some "special" characters that are allowed in Distinguished Names and do not need to be escaped include:
 
