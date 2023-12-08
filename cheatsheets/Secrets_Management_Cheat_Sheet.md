@@ -52,7 +52,55 @@ Rotating certain keys, such as encryption keys, might trigger full or partial da
 - Scheduled rotation
 - and more...
 
-### 2.5 Auditing
+### 2.5 Handling Secrets in Memory
+
+An additional level of security can be achieved by minimizing the time window
+where a secret is in memory and limiting the access to its memory space.
+However, this approach may be considered overkill in many cases, as it is only
+useful if the attacker already has access to the memory of the process handling
+the secret. By that point, the security breach may have already occurred.
+
+Nevertheless, in highly sensitive environments, protecting secrets in memory can
+be a valuable additional layer of security. For example, in scenarios where an
+advanced attacker can cause a system to crash and gain access to a memory dump,
+they may be able to extract secrets from it. Therefore, carefully safeguarding
+secrets in memory is recommended for untrusted environments or situations where
+tight security is of utmost importance.
+
+Furthermore, in lower level languages like C/C++, it is relatively easy to protect
+secrets in memory. Thus, it may be worthwhile to implement this practice even if
+the risk of an attacker gaining access to the memory is low.
+
+- **Structures and Classes:** In .NET and Java, do not use immutable structures
+    such as Strings to store secrets, since it is impossible to force them to
+    be garbage collected. Instead use primitive types such as byte arrays or
+    char arrays, where the memory can be directly overwritten. You can also
+    use Java's
+    [GuardedString](https://docs.oracle.com/html/E28160_01/org/identityconnectors/common/security/GuardedString.html)
+    or .NET's
+    [SecureString](https://learn.microsoft.com/en-us/dotnet/api/system.security.securestring#string-versus-securestring)
+    which are designed to solve precisely this problem.
+
+- **Zeroing Memory:** After a secret has been used, the memory it occupied
+  should be zeroed out to prevent it from lingering in memory where it could
+  potentially be accessed.
+    - If using Java's GuardedString, call the `dispose()` method.
+    - If using .NET's SecureString, call the `Dispose()` method.
+
+- **Memory Encryption:** In some cases, it may be possible to use hardware or
+  operating system features to encrypt the entire memory space of the process
+  handling the secret. This can provide an additional layer of security. For
+  example, GuardedString in Java encrypts the values in memory, and SecureString
+  in .NET does so on Windows.
+
+Remember, the goal is to minimize the time window where the secret is in
+plaintext in memory as much as possible.
+
+For more detailed information, see
+[Testing Memory for Sensitive Data](https://mas.owasp.org/MASTG/tests/android/MASVS-STORAGE/MASTG-TEST-0011)
+from the OWASP MAS project.
+
+### 2.6 Auditing
 
 Auditing is an essential part of secrets management due to the nature of the application. You must implement auditing securely to be resilient against attempts to tamper with or delete the audit logs. At a minimum, you should audit the following:
 
@@ -67,7 +115,7 @@ Auditing is an essential part of secrets management due to the nature of the app
 
 It is essential that all auditing has correct timestamps. Therefore, the secret management solution should have proper time sync protocols set up at its supporting infrastructure. You should monitor the stack on which the solution runs for possible clock-skew and manual time adjustments.
 
-### 2.6 Secret Lifecycle
+### 2.7 Secret Lifecycle
 
 Secrets follow a lifecycle. The stages of the lifecycle are as follows:
 
@@ -76,7 +124,7 @@ Secrets follow a lifecycle. The stages of the lifecycle are as follows:
 - Revocation
 - Expiration
 
-#### 2.6.1 Creation
+#### 2.7.1 Creation
 
 New secrets must be securely generated and cryptographically robust enough for their purpose. Secrets must have the minimum privileges assigned to them to enable their required use/role.
 
@@ -86,7 +134,7 @@ Applications may not benefit from having multiple communication channels, so you
 
 See [the Open CRE project on secrets lookup](https://www.opencre.org/cre/223-780) for more technical recommendations on secret creation.
 
-#### 2.6.2 Rotation
+#### 2.7.2 Rotation
 
 You should regularly rotate secrets so that any stolen credentials will only work for a short time. Regular rotation will also reduce the tendency for users to fall back to bad habits such as re-using credentials.
 
@@ -94,22 +142,22 @@ Depending on a secret's function and what it protects, the lifetime could be fro
 
 User credentials are excluded from regular rotating. These should only be rotated if there is suspicion or evidence that they have been compromised, according to [NIST recommendations](https://pages.nist.gov/800-63-FAQ/#q-b05).
 
-#### 2.6.3 Revocation
+#### 2.7.3 Revocation
 
 When secrets are no longer required or potentially compromised, you must securely revoke them to restrict access. With (TLS) certificates, this also involves certificate revocation.
 
-#### 2.6.4 Expiration
+#### 2.7.4 Expiration
 
 You should create secrets to expire after a defined time where possible. This expiration can either be active expiration by the secret consuming system, or an expiration date set at the secrets management system forcing supporting processes to be triggered, resulting in a secret rotation.
 You should apply policies through the secrets management solution to ensure credentials are only made available for a limited time appropriate for the type of credentials. Applications should verify that the secret is still active before trusting it.
 
-### 2.7 Transport Layer Security (TLS) Everywhere
+### 2.8 Transport Layer Security (TLS) Everywhere
 
 Never transmit secrets via plaintext. In this day and age, there is no excuse given the ubiquitous adoption of TLS.
 
 Furthermore, you can effectively use secrets management solutions to provision TLS certificates.
 
-### 2.8 Downtime, Break-glass, Backup and Restore
+### 2.9 Downtime, Break-glass, Backup and Restore
 
 Consider the possibility that a secrets management service becomes unavailable for various reasons, such as scheduled downtime for maintenance. It could be impossible to retrieve the credentials required to restore the service if you did not previously acquire them. Thus, choose maintenance windows carefully based on earlier metrics and audit logs.
 
@@ -121,13 +169,13 @@ Next, the backup and restore procedures of the system should be regularly tested
 
 Lastly, you should implement emergency ("break-glass") processes to restore the service if the system becomes unavailable for reasons other than regular maintenance. Therefore, emergency break-glass credentials should be regularly backed up securely in a secondary secrets management system and tested routinely to verify they work.
 
-### 2.9 Policies
+### 2.10 Policies
 
 Consistently enforce policies defining the minimum complexity requirements of passwords and approved encryption algorithms at an organization-wide level. Using a centralized secrets management solution can help companies implement these policies.
 
 Next, having an organization-wide secrets management policy can help enforce applying the best practices defined in this cheat sheet.
 
-### 2.10 Metadata: prepare to move the secret
+### 2.11 Metadata: prepare to move the secret
 
 A secret management solution should provide the capability to store at least the following metadata about a secret:
 
