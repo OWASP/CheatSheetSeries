@@ -334,6 +334,6 @@ User email addresses often change. The following process is recommended to handl
 
 ## Notes on the Above Processes
 
-- It's worth noting that Google adopts a different approach, sending a notification-only email for email address changes if the submitter knows the user's password. This method carries risks and requires user vigilance.
+- It's worth noting that Google adopts a different approach with accounts secured only by a password -- [where the current email address receives a notification-only email](https://support.google.com/accounts/answer/55393?hl=en). This method carries risks and requires user vigilance.
 
 - Regular social engineering training is crucial. System administrators and help desk staff should be trained to follow the prescribed process and recognize and respond to social engineering attacks. Refer to [CISA's "Avoiding Social Engineering and Phishing Attacks"](https://www.cisa.gov/news-events/news/avoiding-social-engineering-and-phishing-attacks) for guidance.
