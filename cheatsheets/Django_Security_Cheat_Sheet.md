@@ -163,27 +163,9 @@ The recommendations in this section are in addition to XSS recommendations alrea
 
 ## Admin panel URL
 
-It is advisable to modify the default url leading to the admin panel (example.com/admin/), in order to make automated attacks this bit more difficult. Here's how to do it:
+It is advisable to modify the default URL leading to the admin panel (example.com/admin/), in order to slightly increase the difficulty for automated attacks. Here’s how to do it:
 
-- In the default app folder within your project, locate the `urls.py` file managing the top-level urls. Within the file, modify the ```urlpatterns``` variable (list), so that the url leading to admin.site.urls is different than "admin/".
-
-```urlpatterns``` before update:
-
-```python
-urlpatterns = [
-    path("admin/", admin.site.urls),
-    # ...
-    ]
-```
-
-```urlpatterns``` in desired form:
-
-```python
-urlpatterns = [
-    path("my_custom_url/", admin.site.urls),
-    # ...
-    ]
-```
+In the default app folder within your project, locate the `urls.py` file managing the top-level URLs. Within the file, modify the `urlpatterns` variable, a list, so that the URL leading to `admin.site.urls` is different from "admin/". This approach adds an extra layer of security by obscuring the common endpoint used for administrative access.
 
 ## References
 
