@@ -10,7 +10,7 @@ The Django framework provides some built-in security features that aim to be sec
 
 - Always keep Django and your application's dependencies up-to-date to keep up with security vulnerabilities.
 - Ensure that the application is never in `DEBUG` mode in a production environment. Never run `DEBUG = True` in production.
-- Use packages like [`django_ratelimit`](https://django-ratelimit.readthedocs.io/en/stable/) to prevent brute-force attacks.
+- Use packages like [`django_ratelimit`](https://django-ratelimit.readthedocs.io/en/stable/) or [`django-axes`](https://django-axes.readthedocs.io/en/latest/index.html) to prevent brute-force attacks.
 
 ## Authentication
 
@@ -160,6 +160,12 @@ The recommendations in this section are in addition to XSS recommendations alrea
 - Include the `django.middleware.security.SecurityMiddleware` module in the `MIDDLEWARE` setting in your project's `settings.py` if not already added.
 - Set the `SECURE_SSL_REDIRECT = True` in the `settings.py` file to ensure that all communication is over HTTPS. This will redirect any HTTP requests automatically to HTTPS. This is also a 301 (permanent) redirect, so your browser will remember the redirect for subsequent requests.
 - If your Django application is behind a proxy or load balancer, set the `SECURE_PROXY_SSL_HEADER` setting to `TRUE` so that Django can detect the original request's protocol. For futher details refer to [SECURE_PROXY_SSL_HEADER documentation](https://docs.djangoproject.com/en/3.2/ref/settings/#secure-proxy-ssl-header).
+
+## Admin panel URL
+
+It is advisable to modify the default URL leading to the admin panel (example.com/admin/), in order to slightly increase the difficulty for automated attacks. Here’s how to do it:
+
+In the default app folder within your project, locate the `urls.py` file managing the top-level URLs. Within the file, modify the `urlpatterns` variable, a list, so that the URL leading to `admin.site.urls` is different from "admin/". This approach adds an extra layer of security by obscuring the common endpoint used for administrative access.
 
 ## References
 

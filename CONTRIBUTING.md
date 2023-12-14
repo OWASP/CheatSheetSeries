@@ -68,7 +68,7 @@ When submitting changes in a PR, consider the following areas:
 ### Language
 
 - Use US English.
-    - Spell check before submitted a PR.
+    - Spell check before submitting a PR.
 - Try and keep the language relatively simple to make it easier for non-native speakers
 - Define any non-ubiquitous acronyms when they are first used.
     - This is not necessary for extremely common acronyms such as "HTTP" or "URL".
