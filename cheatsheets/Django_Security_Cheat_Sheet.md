@@ -175,6 +175,7 @@ urlpatterns = [
     # ...
     ]
 ```
+
 ```urlpatterns``` in desired form:
 
 ```python
