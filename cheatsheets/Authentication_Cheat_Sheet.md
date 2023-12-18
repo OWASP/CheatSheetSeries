@@ -299,3 +299,41 @@ Web applications should not make password managers' job more difficult than nece
 - Allow any printable characters to be used in passwords.
 - Allow users to paste into the username and password fields.
 - Allow users to navigate between the username and password field with a single press of the `Tab` key.
+
+## Changing A User's Registered Email Address
+
+User email addresses often change. The following process is recommended to handle such situations in a system:
+
+*Note: The process is less stringent with [Multifactor Authentication](https://cheatsheetseries.owasp.org/cheatsheets/Multifactor_Authentication_Cheat_Sheet.html), as proof-of-identity is stronger than relying solely on a password.*
+
+### Recommended Process If the User HAS [Multifactor Authentication](https://cheatsheetseries.owasp.org/cheatsheets/Multifactor_Authentication_Cheat_Sheet.html) Enabled
+
+1. Confirm the validity of the user's authentication cookie/token. If not valid, display a login screen.
+2. Describe the process for changing the registered email address to the user.
+3. Ask the user to submit a proposed new email address, ensuring it complies with system rules.
+4. Request the use of [Multifactor Authentication](https://cheatsheetseries.owasp.org/cheatsheets/Multifactor_Authentication_Cheat_Sheet.html) for identity verification.
+5. Store the proposed new email address as a pending change.
+6. Create and store **two** time-limited nonces for (a) system administrators' notification, and (b) user confirmation.
+7. Send two email messages with links with those nonces:
+   - A **notification-only email message** to the current address, alerting the user to the impending change and providing a link for an unexpected situation.
+   - A **confirmation-required email message** to the proposed new address, instructing the user to confirm the change and providing a link for an unexpected situations.
+8. Handle responses from the links accordingly.
+
+### Recommended Process If the User DOES NOT HAVE Multifactor Authentication Enabled
+
+1. Confirm the validity of the user's authentication cookie/token. If not valid, display a login screen.
+2. Describe the process for changing the registered email address to the user.
+3. Ask the user to submit a proposed new email address, ensuring it complies with system rules.
+4. Request the user's current password for identity verification.
+5. Store the proposed new email address as a pending change.
+6. Create and store three time-limited nonces for system administrators' notification, user confirmation, and an additional step for password reliance.
+7. Send two email messages with links to those nonces:
+   - A **confirmation-required email message** to the current address, instructing the user to confirm the change and providing a link for an unexpected situation.
+   - A **separate confirmation-required email message** to the proposed new address, instructing the user to confirm the change and providing a link for an unexpected situation.
+8. Handle responses from the links accordingly.
+
+## Notes on the Above Processes
+
+- It's worth noting that Google adopts a different approach with accounts secured only by a password -- [where the current email address receives a notification-only email](https://support.google.com/accounts/answer/55393?hl=en). This method carries risks and requires user vigilance.
+
+- Regular social engineering training is crucial. System administrators and help desk staff should be trained to follow the prescribed process and recognize and respond to social engineering attacks. Refer to [CISA's "Avoiding Social Engineering and Phishing Attacks"](https://www.cisa.gov/news-events/news/avoiding-social-engineering-and-phishing-attacks) for guidance.
