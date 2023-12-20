@@ -16,7 +16,7 @@ In short, the following principles should be followed to defend against CSRF:
 - **First, check if your framework has [built-in CSRF protection](#use-built-in-or-existing-csrf-implementations-for-csrf-protection) and use it**
 - **If the framework does not have built-in CSRF protection, add [CSRF tokens](#token-based-mitigation) to all state changing requests (requests that cause actions on the site) and validate them on the backend**
 - **Stateful software should use the [synchronizer token pattern](#synchronizer-token-pattern)**
-- **Stateless software shoud use [double submit cookies](#double-submit-cookie)**
+- **Stateless software should use [double submit cookies](#double-submit-cookie)**
 - **If an API-driven site can't use `<form>` tags, consider [using custom request headers](#custom-request-headers)**
 - **Implement at least one mitigation from [Defense in Depth Mitigations](#defense-in-depth-techniques) section**
 - **[SameSite Cookie Attribute](#samesite-cookie-attribute) can be used for session cookies** but be careful to NOT set a cookie specifically for a domain. This action introduces a security vulnerability because all subdomains of that domain will share the cookie, and this is particularly an issue if a subdomain has a CNAME to domains not in your control.

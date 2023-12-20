@@ -749,7 +749,7 @@ class App {
 
         KeysetHandle bobPublicKey = bob.getPublicKey();
 
-        // This keypair generation shoud be reperformed every so often in order to
+        // This keypair generation should be reperformed every so often in order to
         // obtain a new shared secret to avoid a long lived shared secret.
 
         // Alice encrypts a message to send to Bob
@@ -868,7 +868,7 @@ class Main {
         var bob = new ECDHSimple();
         Key bobPublicKey = bob.getPublicKey();
 
-        // This keypair generation shoud be reperformed every so often in order to 
+        // This keypair generation should be reperformed every so often in order to 
         // obtain a new shared secret to avoid a long lived shared secret.
 
         // Alice encrypts a message to send to Bob
