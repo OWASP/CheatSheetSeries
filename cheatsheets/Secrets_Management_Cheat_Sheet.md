@@ -56,9 +56,28 @@ Rotating certain keys, such as encryption keys, might trigger full or partial da
 
 An additional level of security can be achieved by minimizing the time window
 where a secret is in memory and limiting the access to its memory space.
-However, this approach may be considered overkill in many cases, as it is only
-useful if the attacker already has access to the memory of the process handling
-the secret. By that point, the security breach may have already occurred.
+
+Depending on your particular circumstances, this can be difficult implement in a
+manner that ensures memory security. Since determining whether it is beneficial
+to take this an additional step, you are encouraged first to develop a threat model
+in order to clearly surface your implicit assumptions about both your deployment environment as well
+as understanding the capability of your adversaries.
+
+Often attempting to protect protect secrets in memory will be considered overkill
+because as you evaluate a threat model the potential threat
+actors that you consider either do not have the capabilities to carry out such attacks
+or the cost of defense far exceeds the likely impact of a compromise arising from
+exposing secrets in memory. However, it should be kept in mind while developing an
+appropriate threat model, that if an attacker already has access to the memory of
+the process handling the secret, by that time a security breach may have already
+occurred. Furthermore, it should be recognized that with the advent of attacks like
+[Rowhammer](https://arxiv.org/pdf/2211.07613.pdf), or
+[Meltdown and Spectre](https://meltdownattack.com/), it is important
+to understand that the operating system alone is not sufficient to protect your process
+memory from these types of attacks. This becomes especially important when your
+application is deployed to the cloud. The only fullproof approach to protecting memory
+against these and similar attacks to fully physically isolate your process memory from all other
+untrusted processes.
 
 Nevertheless, in highly sensitive environments, protecting secrets in memory can
 be a valuable additional layer of security. For example, in scenarios where an
@@ -69,7 +88,9 @@ tight security is of utmost importance.
 
 Furthermore, in lower level languages like C/C++, it is relatively easy to protect
 secrets in memory. Thus, it may be worthwhile to implement this practice even if
-the risk of an attacker gaining access to the memory is low.
+the risk of an attacker gaining access to the memory is low. On the other hand, for
+programming languages that rely on garbarge collection, securing secrets in memory
+generally is much more difficult.
 
 - **Structures and Classes:** In .NET and Java, do not use immutable structures
     such as Strings to store secrets, since it is impossible to force them to
