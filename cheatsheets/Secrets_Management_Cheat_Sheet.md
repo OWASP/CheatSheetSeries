@@ -79,7 +79,8 @@ application is deployed to the cloud. The only foolproof approach to protecting 
 against these and similar attacks to fully physically isolate your process memory from all other
 untrusted processes.
 
-Nevertheless, in highly sensitive environments, protecting secrets in memory can
+Despite the implementation difficulties, in highly sensitive
+environments, protecting secrets in memory can
 be a valuable additional layer of security. For example, in scenarios where an
 advanced attacker can cause a system to crash and gain access to a memory dump,
 they may be able to extract secrets from it. Therefore, carefully safeguarding
