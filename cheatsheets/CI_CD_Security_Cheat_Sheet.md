@@ -23,7 +23,7 @@ The specific methods attackers use to exploit CI/CD environments are diverse; ho
 - CICD-SEC-5: Insufficient PBAC (Pipeline-Based Access Controls)
 - CICD-SEC-6: Insufficient Credential Hygiene
 - CICD-SEC-7: Insecure System Configuration
-- CICD-SEC-8: Ungoverned Usage of 3rd Party Services
+- CICD-SEC-8: Ungoverned Usage of Third-Party Services
 - CICD-SEC-9: Improper Artifact Integrity Validation
 - CICD-SEC-10: Insufficient Logging and Visibility
 
