@@ -158,7 +158,6 @@ Once an appropriate logging strategy has been defined and necessary configuratio
 - [SignServer](https://www.signserver.org/)
 - [SigStore](https://www.sigstore.dev/)
 - [SLSA](https://slsa.dev/)
--
 
 ### Secrets Management Tools
 
