@@ -75,14 +75,14 @@ Enforce deterministic builds with `npm ci`. This prevents surprises in a continu
 
 In the case of building a Docker image for production we want to ensure that we only install production dependencies in a deterministic way, and this brings us to the following recommendation for the best practice for installing npm dependencies in a container image:
 
-**`RUN npm ci --only=production`**
+**`RUN npm ci --omit=dev`**
 
 The updated Dockerfile contents in this stage are as follows:
 
     FROM node:lts-alpine@sha256:b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a
     WORKDIR /usr/src/app
     COPY . /usr/src/app
-    RUN npm ci --only=production
+    RUN npm ci --omit=dev
     CMD "npm" "start"
 
 ## 3) Optimize Node.js tooling for production
@@ -113,7 +113,7 @@ The updated Dockerfile should now read as follows with the `NODE_ENV` environmen
     ENV NODE_ENV production
     WORKDIR /usr/src/app
     COPY . /usr/src/app
-    RUN npm ci --only=production
+    RUN npm ci --omit=dev
     CMD "npm" "start"
 
 ## 4) Don’t run containers as root
@@ -137,7 +137,7 @@ The complete and proper way of dropping privileges is as follows, also showing o
     ENV NODE_ENV production
     WORKDIR /usr/src/app
     COPY --chown=node:node . /usr/src/app
-    RUN npm ci --only=production
+    RUN npm ci --omit=dev
     USER node
     CMD "npm" "start"
 
@@ -208,7 +208,7 @@ This brings us to the following up to date Dockerfile. You’ll notice that we p
     ENV NODE_ENV production
     WORKDIR /usr/src/app
     COPY --chown=node:node . .
-    RUN npm ci --only=production
+    RUN npm ci --omit=dev
     USER node
     CMD ["dumb-init", "node", "server.js"]
 
@@ -293,22 +293,22 @@ Here’s an example for what I’m talking about:
     ENV NPM_TOKEN 1234
     WORKDIR /usr/src/app
     COPY --chown=node:node . .
-    #RUN npm ci --only=production
+    #RUN npm ci --omit=dev
     RUN echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc && \
-       npm ci --only=production
+       npm ci --omit=dev
     USER node
     CMD ["dumb-init", "node", "server.js"]
 
 Doing this, however, leaves the `.npmrc` file with the secret npm token inside the Docker image. You could attempt to improve it by deleting it afterwards, like this:
 
     RUN echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc && \
-       npm ci --only=production
+       npm ci --omit=dev
     RUN rm -rf .npmrc
 
 However, now the `.npmrc` file is available in a different layer of the Docker image. If this Docker image is public, or someone is able to access it somehow, then your token is compromised. A better improvement would be as follows:
 
     RUN echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc && \
-       npm ci --only=production; \
+       npm ci --omit=dev; \
        rm -rf .npmrc
 
 The problem now is that the Dockerfile itself needs to be treated as a secret asset, because it contains the secret npm token inside it.
@@ -317,7 +317,7 @@ Luckily, Docker supports a way to pass arguments into the build process:
 
     ARG NPM_TOKEN
     RUN echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc && \
-       npm ci --only=production; \
+       npm ci --omit=dev; \
        rm -rf .npmrc
 
 And then we build it as follows:
@@ -362,7 +362,7 @@ Here is the update to our Dockerfile that represents our progress so far, but se
     WORKDIR /usr/src/app
     COPY package*.json /usr/src/app/
     RUN echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc && \
-       npm ci --only=production && \
+       npm ci --omit=dev && \
        rm -f .npmrc
      
     # --------------> The production image
@@ -457,7 +457,7 @@ Then, the complete Dockerfile, with the updated RUN directive to install npm pac
     FROM node:latest AS build
     WORKDIR /usr/src/app
     COPY package*.json /usr/src/app/
-    RUN --mount=type=secret,mode=0644,id=npmrc,target=/usr/src/app/.npmrc npm ci --only=production
+    RUN --mount=type=secret,mode=0644,id=npmrc,target=/usr/src/app/.npmrc npm ci --omit=dev
      
     # --------------> The production image
     FROM node:lts-alpine
