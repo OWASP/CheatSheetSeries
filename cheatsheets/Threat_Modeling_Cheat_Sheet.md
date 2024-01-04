@@ -115,3 +115,4 @@ Finally, it is time to answer the question "did we do a good enough job"? The th
 - [IriusRisk](https://www.iriusrisk.com/) - offers a free Community Edition
 - [Microsoft Threat Modeling Tool](https://learn.microsoft.com/en-us/azure/security/develop/threat-modeling-tool)
 - [OWASP's Threat Dragon](https://github.com/OWASP/threat-dragon)
+- [TaaC-AI](https://github.com/yevh/TaaC-AI) - AI-driven Threat modeling-as-a-Code (TaaC)
