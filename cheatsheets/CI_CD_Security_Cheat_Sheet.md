@@ -75,7 +75,7 @@ First, one should take steps to reduce the likelihood that secrets can be stolen
 
 Second, one must take steps to reduce impact in the event that secrets are stolen in a format that is usable by an attacker. Using temporary credentials or OTPs is one method for reducing impact. Furthermore, one may impose IP based or other restrictions that prevent even valid credentials from accessing resources if these further requirements are not met.The [Least Privilege](#least-privilege) and [Identity Lifecycle Management](#identity-lifecycle-management) sections below provide further guidance on techniques to mitigate risk related to secrets theft.
 
-For additional guidance on securely managing secrets, please reference the [Secrets Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html).
+For additional guidance on securely managing secrets, please reference the [Secrets Management Cheat Sheet](Secrets_Management_Cheat_Sheet.md).
 
 ### Least Privilege
 
