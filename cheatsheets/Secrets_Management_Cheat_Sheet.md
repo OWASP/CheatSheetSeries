@@ -57,17 +57,17 @@ Rotating certain keys, such as encryption keys, might trigger full or partial da
 An additional level of security can be achieved by minimizing the time window
 where a secret is in memory and limiting the access to its memory space.
 
-Depending on your particular circumstances, this can be difficult implement in a
-manner that ensures memory security. Since determining whether it is beneficial
-to take this an additional step, you are encouraged first to develop a threat model
-in order to clearly surface your implicit assumptions about both your deployment environment as well
-as understanding the capability of your adversaries.
+Depending on your application's particular circumstances, this can be difficult
+to implement in a manner that ensures memory security. Because of this potential
+implementation complexity, you are first encouraged to develop a threat model in order to clearly
+surface your implicit assumptions about both your application's deployment environment as well
+as understanding the capabilities of your adversaries.
 
 Often attempting to protect protect secrets in memory will be considered overkill
-because as you evaluate a threat model the potential threat
+because as you evaluate a threat model, the potential threat
 actors that you consider either do not have the capabilities to carry out such attacks
 or the cost of defense far exceeds the likely impact of a compromise arising from
-exposing secrets in memory. However, it should be kept in mind while developing an
+exposing secrets in memory. Also, it should be kept in mind while developing an
 appropriate threat model, that if an attacker already has access to the memory of
 the process handling the secret, by that time a security breach may have already
 occurred. Furthermore, it should be recognized that with the advent of attacks like
@@ -75,11 +75,12 @@ occurred. Furthermore, it should be recognized that with the advent of attacks l
 [Meltdown and Spectre](https://meltdownattack.com/), it is important
 to understand that the operating system alone is not sufficient to protect your process
 memory from these types of attacks. This becomes especially important when your
-application is deployed to the cloud. The only fullproof approach to protecting memory
+application is deployed to the cloud. The only foolproof approach to protecting memory
 against these and similar attacks to fully physically isolate your process memory from all other
 untrusted processes.
 
-Nevertheless, in highly sensitive environments, protecting secrets in memory can
+Despite the implementation difficulties, in highly sensitive
+environments, protecting secrets in memory can
 be a valuable additional layer of security. For example, in scenarios where an
 advanced attacker can cause a system to crash and gain access to a memory dump,
 they may be able to extract secrets from it. Therefore, carefully safeguarding
