@@ -332,7 +332,7 @@ User email addresses often change. The following process is recommended to handl
    - A **separate confirmation-required email message** to the proposed new address, instructing the user to confirm the change and providing a link for an unexpected situation.
 8. Handle responses from the links accordingly.
 
-## Notes on the Above Processes
+### Notes on the Above Processes
 
 - It's worth noting that Google adopts a different approach with accounts secured only by a password -- [where the current email address receives a notification-only email](https://support.google.com/accounts/answer/55393?hl=en). This method carries risks and requires user vigilance.
 
