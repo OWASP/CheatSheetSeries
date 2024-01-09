@@ -832,6 +832,40 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#changing-a-users-registered-email-address" class="md-nav__link">
+    Changing A User's Registered Email Address
+  </a>
+  
+    <nav class="md-nav" aria-label="Changing A User's Registered Email Address">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommended-process-if-the-user-has-multifactor-authentication-enabled" class="md-nav__link">
+    Recommended Process If the User HAS Multifactor Authentication Enabled
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recommended-process-if-the-user-does-not-have-multifactor-authentication-enabled" class="md-nav__link">
+    Recommended Process If the User DOES NOT HAVE Multifactor Authentication Enabled
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#notes-on-the-above-processes" class="md-nav__link">
+    Notes on the Above Processes
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -912,6 +946,26 @@
   
   <span class="md-ellipsis">
     C-Based Toolchain Hardening
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="CI_CD_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CI CD Security
   </span>
   
 
@@ -2839,6 +2893,40 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#changing-a-users-registered-email-address" class="md-nav__link">
+    Changing A User's Registered Email Address
+  </a>
+  
+    <nav class="md-nav" aria-label="Changing A User's Registered Email Address">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommended-process-if-the-user-has-multifactor-authentication-enabled" class="md-nav__link">
+    Recommended Process If the User HAS Multifactor Authentication Enabled
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recommended-process-if-the-user-does-not-have-multifactor-authentication-enabled" class="md-nav__link">
+    Recommended Process If the User DOES NOT HAVE Multifactor Authentication Enabled
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#notes-on-the-above-processes" class="md-nav__link">
+    Notes on the Above Processes
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3094,6 +3182,44 @@ ENDIF
 <li>Allow any printable characters to be used in passwords.</li>
 <li>Allow users to paste into the username and password fields.</li>
 <li>Allow users to navigate between the username and password field with a single press of the <code>Tab</code> key.</li>
+</ul>
+<h2 id="changing-a-users-registered-email-address">Changing A User's Registered Email Address<a class="headerlink" href="#changing-a-users-registered-email-address" title="Permanent link">&para;</a></h2>
+<p>User email addresses often change. The following process is recommended to handle such situations in a system:</p>
+<p><em>Note: The process is less stringent with <a href="https://cheatsheetseries.owasp.org/cheatsheets/Multifactor_Authentication_Cheat_Sheet.html">Multifactor Authentication</a>, as proof-of-identity is stronger than relying solely on a password.</em></p>
+<h3 id="recommended-process-if-the-user-has-multifactor-authentication-enabled">Recommended Process If the User HAS <a href="https://cheatsheetseries.owasp.org/cheatsheets/Multifactor_Authentication_Cheat_Sheet.html">Multifactor Authentication</a> Enabled<a class="headerlink" href="#recommended-process-if-the-user-has-multifactor-authentication-enabled" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Confirm the validity of the user's authentication cookie/token. If not valid, display a login screen.</li>
+<li>Describe the process for changing the registered email address to the user.</li>
+<li>Ask the user to submit a proposed new email address, ensuring it complies with system rules.</li>
+<li>Request the use of <a href="https://cheatsheetseries.owasp.org/cheatsheets/Multifactor_Authentication_Cheat_Sheet.html">Multifactor Authentication</a> for identity verification.</li>
+<li>Store the proposed new email address as a pending change.</li>
+<li>Create and store <strong>two</strong> time-limited nonces for (a) system administrators' notification, and (b) user confirmation.</li>
+<li>Send two email messages with links with those nonces:</li>
+<li>A <strong>notification-only email message</strong> to the current address, alerting the user to the impending change and providing a link for an unexpected situation.</li>
+<li>A <strong>confirmation-required email message</strong> to the proposed new address, instructing the user to confirm the change and providing a link for an unexpected situations.</li>
+<li>Handle responses from the links accordingly.</li>
+</ol>
+<h3 id="recommended-process-if-the-user-does-not-have-multifactor-authentication-enabled">Recommended Process If the User DOES NOT HAVE Multifactor Authentication Enabled<a class="headerlink" href="#recommended-process-if-the-user-does-not-have-multifactor-authentication-enabled" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Confirm the validity of the user's authentication cookie/token. If not valid, display a login screen.</li>
+<li>Describe the process for changing the registered email address to the user.</li>
+<li>Ask the user to submit a proposed new email address, ensuring it complies with system rules.</li>
+<li>Request the user's current password for identity verification.</li>
+<li>Store the proposed new email address as a pending change.</li>
+<li>Create and store three time-limited nonces for system administrators' notification, user confirmation, and an additional step for password reliance.</li>
+<li>Send two email messages with links to those nonces:</li>
+<li>A <strong>confirmation-required email message</strong> to the current address, instructing the user to confirm the change and providing a link for an unexpected situation.</li>
+<li>A <strong>separate confirmation-required email message</strong> to the proposed new address, instructing the user to confirm the change and providing a link for an unexpected situation.</li>
+<li>Handle responses from the links accordingly.</li>
+</ol>
+<h2 id="notes-on-the-above-processes">Notes on the Above Processes<a class="headerlink" href="#notes-on-the-above-processes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p>It's worth noting that Google adopts a different approach with accounts secured only by a password -- <a href="https://support.google.com/accounts/answer/55393?hl=en">where the current email address receives a notification-only email</a>. This method carries risks and requires user vigilance.</p>
+</li>
+<li>
+<p>Regular social engineering training is crucial. System administrators and help desk staff should be trained to follow the prescribed process and recognize and respond to social engineering attacks. Refer to <a href="https://www.cisa.gov/news-events/news/avoiding-social-engineering-and-phishing-attacks">CISA's "Avoiding Social Engineering and Phishing Attacks"</a> for guidance.</p>
+</li>
 </ul>
 
 

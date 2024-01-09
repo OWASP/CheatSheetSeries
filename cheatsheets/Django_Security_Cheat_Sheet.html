@@ -582,6 +582,26 @@
   
   
     <li class="md-nav__item">
+      <a href="CI_CD_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CI CD Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
       <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html" class="md-nav__link">
         
   
@@ -946,6 +966,13 @@
         <li class="md-nav__item">
   <a href="#https" class="md-nav__link">
     HTTPS
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#admin-panel-url" class="md-nav__link">
+    Admin panel URL
   </a>
   
 </li>
@@ -2363,6 +2390,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#admin-panel-url" class="md-nav__link">
+    Admin panel URL
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#references" class="md-nav__link">
     References
   </a>
@@ -2395,7 +2429,7 @@
 <ul>
 <li>Always keep Django and your application's dependencies up-to-date to keep up with security vulnerabilities.</li>
 <li>Ensure that the application is never in <code>DEBUG</code> mode in a production environment. Never run <code>DEBUG = True</code> in production.</li>
-<li>Use packages like <a href="https://django-ratelimit.readthedocs.io/en/stable/"><code>django_ratelimit</code></a> to prevent brute-force attacks.</li>
+<li>Use packages like <a href="https://django-ratelimit.readthedocs.io/en/stable/"><code>django_ratelimit</code></a> or <a href="https://django-axes.readthedocs.io/en/latest/index.html"><code>django-axes</code></a> to prevent brute-force attacks.</li>
 </ul>
 <h2 id="authentication">Authentication<a class="headerlink" href="#authentication" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2533,6 +2567,9 @@
 <li>Set the <code>SECURE_SSL_REDIRECT = True</code> in the <code>settings.py</code> file to ensure that all communication is over HTTPS. This will redirect any HTTP requests automatically to HTTPS. This is also a 301 (permanent) redirect, so your browser will remember the redirect for subsequent requests.</li>
 <li>If your Django application is behind a proxy or load balancer, set the <code>SECURE_PROXY_SSL_HEADER</code> setting to <code>TRUE</code> so that Django can detect the original request's protocol. For futher details refer to <a href="https://docs.djangoproject.com/en/3.2/ref/settings/#secure-proxy-ssl-header">SECURE_PROXY_SSL_HEADER documentation</a>.</li>
 </ul>
+<h2 id="admin-panel-url">Admin panel URL<a class="headerlink" href="#admin-panel-url" title="Permanent link">&para;</a></h2>
+<p>It is advisable to modify the default URL leading to the admin panel (example.com/admin/), in order to slightly increase the difficulty for automated attacks. Here’s how to do it:</p>
+<p>In the default app folder within your project, locate the <code>urls.py</code> file managing the top-level URLs. Within the file, modify the <code>urlpatterns</code> variable, a list, so that the URL leading to <code>admin.site.urls</code> is different from "admin/". This approach adds an extra layer of security by obscuring the common endpoint used for administrative access.</p>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <p>Additional documentation -</p>
 <ul>

@@ -582,6 +582,26 @@
   
   
     <li class="md-nav__item">
+      <a href="CI_CD_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CI CD Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
       <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html" class="md-nav__link">
         
   
@@ -2893,7 +2913,7 @@
 <li><strong>First, check if your framework has <a href="#use-built-in-or-existing-csrf-implementations-for-csrf-protection">built-in CSRF protection</a> and use it</strong></li>
 <li><strong>If the framework does not have built-in CSRF protection, add <a href="#token-based-mitigation">CSRF tokens</a> to all state changing requests (requests that cause actions on the site) and validate them on the backend</strong></li>
 <li><strong>Stateful software should use the <a href="#synchronizer-token-pattern">synchronizer token pattern</a></strong></li>
-<li><strong>Stateless software shoud use <a href="#double-submit-cookie">double submit cookies</a></strong></li>
+<li><strong>Stateless software should use <a href="#alternative-using-a-double-submit-cookie-pattern">double submit cookies</a></strong></li>
 <li><strong>If an API-driven site can't use <code>&lt;form&gt;</code> tags, consider <a href="#custom-request-headers">using custom request headers</a></strong></li>
 <li><strong>Implement at least one mitigation from <a href="#defense-in-depth-techniques">Defense in Depth Mitigations</a> section</strong></li>
 <li><strong><a href="#samesite-cookie-attribute">SameSite Cookie Attribute</a> can be used for session cookies</strong> but be careful to NOT set a cookie specifically for a domain. This action introduces a security vulnerability because all subdomains of that domain will share the cookie, and this is particularly an issue if a subdomain has a CNAME to domains not in your control.</li>

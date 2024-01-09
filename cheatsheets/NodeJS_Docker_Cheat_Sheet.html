@@ -582,6 +582,26 @@
   
   
     <li class="md-nav__item">
+      <a href="CI_CD_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CI CD Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
       <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html" class="md-nav__link">
         
   
@@ -2526,12 +2546,12 @@ CMD &quot;npm&quot; &quot;start&quot;
 <p><strong><code>RUN npm install</code></strong></p>
 <p>Enforce deterministic builds with <code>npm ci</code>. This prevents surprises in a continuous integration (CI) flow because it halts if any deviations from the lockfile are made.</p>
 <p>In the case of building a Docker image for production we want to ensure that we only install production dependencies in a deterministic way, and this brings us to the following recommendation for the best practice for installing npm dependencies in a container image:</p>
-<p><strong><code>RUN npm ci --only=production</code></strong></p>
+<p><strong><code>RUN npm ci --omit=dev</code></strong></p>
 <p>The updated Dockerfile contents in this stage are as follows:</p>
 <div class="highlight"><pre><span></span><code>FROM node:lts-alpine@sha256:b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a
 WORKDIR /usr/src/app
 COPY . /usr/src/app
-RUN npm ci --only=production
+RUN npm ci --omit=dev
 CMD &quot;npm&quot; &quot;start&quot;
 </code></pre></div>
 <h2 id="3-optimize-nodejs-tooling-for-production">3) Optimize Node.js tooling for production<a class="headerlink" href="#3-optimize-nodejs-tooling-for-production" title="Permanent link">&para;</a></h2>
@@ -2550,7 +2570,7 @@ CMD &quot;npm&quot; &quot;start&quot;
 ENV NODE_ENV production
 WORKDIR /usr/src/app
 COPY . /usr/src/app
-RUN npm ci --only=production
+RUN npm ci --omit=dev
 CMD &quot;npm&quot; &quot;start&quot;
 </code></pre></div>
 <h2 id="4-dont-run-containers-as-root">4) Don’t run containers as root<a class="headerlink" href="#4-dont-run-containers-as-root" title="Permanent link">&para;</a></h2>
@@ -2567,7 +2587,7 @@ CMD &quot;npm&quot; &quot;start&quot;
 ENV NODE_ENV production
 WORKDIR /usr/src/app
 COPY --chown=node:node . /usr/src/app
-RUN npm ci --only=production
+RUN npm ci --omit=dev
 USER node
 CMD &quot;npm&quot; &quot;start&quot;
 </code></pre></div>
@@ -2620,7 +2640,7 @@ RUN apk add dumb-init
 ENV NODE_ENV production
 WORKDIR /usr/src/app
 COPY --chown=node:node . .
-RUN npm ci --only=production
+RUN npm ci --omit=dev
 USER node
 CMD [&quot;dumb-init&quot;, &quot;node&quot;, &quot;server.js&quot;]
 </code></pre></div>
@@ -2686,27 +2706,27 @@ ENV NODE_ENV production
 ENV NPM_TOKEN 1234
 WORKDIR /usr/src/app
 COPY --chown=node:node . .
-#RUN npm ci --only=production
+#RUN npm ci --omit=dev
 RUN echo &quot;//registry.npmjs.org/:_authToken=$NPM_TOKEN&quot; &gt; .npmrc &amp;&amp; \
-   npm ci --only=production
+   npm ci --omit=dev
 USER node
 CMD [&quot;dumb-init&quot;, &quot;node&quot;, &quot;server.js&quot;]
 </code></pre></div>
 <p>Doing this, however, leaves the <code>.npmrc</code> file with the secret npm token inside the Docker image. You could attempt to improve it by deleting it afterwards, like this:</p>
 <div class="highlight"><pre><span></span><code>RUN echo &quot;//registry.npmjs.org/:_authToken=$NPM_TOKEN&quot; &gt; .npmrc &amp;&amp; \
-   npm ci --only=production
+   npm ci --omit=dev
 RUN rm -rf .npmrc
 </code></pre></div>
 <p>However, now the <code>.npmrc</code> file is available in a different layer of the Docker image. If this Docker image is public, or someone is able to access it somehow, then your token is compromised. A better improvement would be as follows:</p>
 <div class="highlight"><pre><span></span><code>RUN echo &quot;//registry.npmjs.org/:_authToken=$NPM_TOKEN&quot; &gt; .npmrc &amp;&amp; \
-   npm ci --only=production; \
+   npm ci --omit=dev; \
    rm -rf .npmrc
 </code></pre></div>
 <p>The problem now is that the Dockerfile itself needs to be treated as a secret asset, because it contains the secret npm token inside it.</p>
 <p>Luckily, Docker supports a way to pass arguments into the build process:</p>
 <div class="highlight"><pre><span></span><code>ARG NPM_TOKEN
 RUN echo &quot;//registry.npmjs.org/:_authToken=$NPM_TOKEN&quot; &gt; .npmrc &amp;&amp; \
-   npm ci --only=production; \
+   npm ci --omit=dev; \
    rm -rf .npmrc
 </code></pre></div>
 <p>And then we build it as follows:</p>
@@ -2738,7 +2758,7 @@ ARG NPM_TOKEN
 WORKDIR /usr/src/app
 COPY package*.json /usr/src/app/
 RUN echo &quot;//registry.npmjs.org/:_authToken=$NPM_TOKEN&quot; &gt; .npmrc &amp;&amp; \
-   npm ci --only=production &amp;&amp; \
+   npm ci --omit=dev &amp;&amp; \
    rm -f .npmrc
 
 # --------------&gt; The production image
@@ -2816,7 +2836,7 @@ Dockerfile
 FROM node:latest AS build
 WORKDIR /usr/src/app
 COPY package*.json /usr/src/app/
-RUN --mount=type=secret,mode=0644,id=npmrc,target=/usr/src/app/.npmrc npm ci --only=production
+RUN --mount=type=secret,mode=0644,id=npmrc,target=/usr/src/app/.npmrc npm ci --omit=dev
 
 # --------------&gt; The production image
 FROM node:lts-alpine
