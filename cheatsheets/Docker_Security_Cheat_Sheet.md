@@ -225,6 +225,7 @@ To detect containers with known vulnerabilities - scan images using static analy
 - Commercial
     - [Snyk](https://snyk.io/) **(open source and free option available)**
     - [anchore](https://anchore.com/opensource/) **(open source and free option available)**
+    - [Docker Scout](https://www.docker.com/products/docker-scout/) **(open source and free option available)**
     - [JFrog XRay](https://jfrog.com/xray/)
     - [Qualys](https://www.qualys.com/apps/container-security/)
 
