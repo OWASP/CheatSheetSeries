@@ -228,7 +228,6 @@ To detect containers with known vulnerabilities - scan images using static analy
     - [Docker Scout](https://www.docker.com/products/docker-scout/) **(open source and free option available)**
     - [JFrog XRay](https://jfrog.com/xray/)
     - [Qualys](https://www.qualys.com/apps/container-security/)
-   
 
 To detect secrets in images:
 
