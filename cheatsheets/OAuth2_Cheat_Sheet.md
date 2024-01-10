@@ -1,6 +1,6 @@
 # OAuth 2.0 Protocol Cheatsheet
 
-This cheatsheet describes the best current security practices [1] for OAuth 2.0 as derived from its RFC [2][3]. OAuth became the standard for API protection and the basis for federated login using OpenID Connect. OpenID Connect 1.0 is a simple identity layer on top of the OAuth 2.0 protocol. It enables clients to verify the identity of the end-user based on the authentication performed by an authorization server, as well as to obtain basic profile information about the end-user in an interoperable and REST-like manner.
+This cheatsheet describes the best current security practices [1] for OAuth 2.0 as derived from its RFC [2][3]. OAuth became the standard for API protection and the basis for federated login using OpenID Connect. OpenID Connect 1.0 is a simple identity layer on top of the OAuth 2.0 protocol. It enables clients to verify the identity of the end user based on the authentication performed by an authorization server, as well as to obtain basic profile information about the end user in an interoperable and REST-like manner.
 
 ## Terminology
 
@@ -8,7 +8,7 @@ This cheatsheet describes the best current security practices [1] for OAuth 2.0 
 - Refresh tokens = are credentials used to obtain access tokens. These are issued to the client by the authorization server and are used to obtain a new access token when the current access token becomes invalid or expires or to obtain additional access tokens with identical or narrower scope (access tokens may have a shorter lifetime and fewer permissions than authorized by the resource owner).
 - Client = generally refers to an application making protected resource requests on behalf of the resource owner and with its authorization. The term "client" does not imply any particular implementation characteristics (e.g., whether the application executes on a server, a desktop, or other devices).
 - Authorization Server (AS) = refers to the server issuing access tokens to the client after successfully authenticating the resource owner and obtaining authorization.
-- Resource Owner (RO) = refers to an entity capable of granting access to a protected resource. When the resource owner is a person, it is referred to as an end-user.
+- Resource Owner (RO) = refers to an entity capable of granting access to a protected resource. When the resource owner is a person, it is referred to as an end user.
 - Resource Server (RS) = refers to the server hosting the protected resources, capable of accepting and responding to protected resource requests using access tokens.
 
 ## OAuth 2.0 Essential Basics
