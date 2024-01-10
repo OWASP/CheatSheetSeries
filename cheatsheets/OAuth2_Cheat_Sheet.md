@@ -36,7 +36,7 @@ The implicit grant is a simplified authorization code flow optimized for clients
 
 10. Clients are using the response type "code" (aka authorization code grant type) or any other response type that causes the authorization server to issue access tokens in the token response, such as the "code id_token" response type. This allows the Authorization Server to detect replay attempts by attackers and generally reduces the attack surface since access tokens are not exposed in the URLs. It also allows the Authorization Server to sender-contrain the issued tokens.
 
-## Token Replay Prevention 
+## Token Replay Prevention
 
 11. The Authorization and Resource Servers are using mechanisms for sender-constraining access tokens to prevent token replay, such as Mutual TLS for OAuth 2.0 or OAuth Demonstration of Proof of Possession (DPoP).
 12. Refresh tokens are sender-constrained or use refresh token rotation.
@@ -60,7 +60,7 @@ The implicit grant is a simplified authorization code flow optimized for clients
 18. Authorization Servers do not allow clients to influence their "client_id" or "sub" value or any other Claim that can cause confusion with a genuine Resource Owner. It is recommended to use end-to-end TLS.
 19. Authorization responses are not transmitted over unencrypted network connections. Authorization Servers must not allow redirect URIs that use the "http" scheme except for native clients that use Loopback Interface Redirection.
 
-References: 
+References:
 
 [RFC 6750](https://www.rfc-editor.org/info/rfc6750)
 [RFC 6749](https://www.rfc-editor.org/info/rfc6749)
