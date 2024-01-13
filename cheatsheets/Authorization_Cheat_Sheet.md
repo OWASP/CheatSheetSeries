@@ -139,6 +139,8 @@ Unit and integration testing should aim to incorporate many of the concepts expl
 
 - [ABAC with Spring Security](https://dzone.com/articles/simple-attribute-based-access-control-with-spring)
 
+- [What is ABAC? Implementation patterns and examples](https://www.osohq.com/learn/what-is-attribute-based-access-control-abac)
+
 - [NIST Special Publication 800-162 Guide to Attribute Based Access Control (ABAC) Definition and Considerations](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-162.pdf)
   
 - [NIST SP 800-178 A Comparison of Attribute Based Access Control (ABAC) Standards for Data Service Applications](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-178.pdf)
