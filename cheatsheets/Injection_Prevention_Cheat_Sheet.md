@@ -54,7 +54,7 @@ SQL Injection attacks can be divided into the following three classes:
 
 please check for any queries to the database are not done via prepared statements.
 
-If dynamic statements are being made please check if the data is sanitized before used as par of the statement.
+If dynamic statements are being made please check if the data is sanitized before used as part of the statement.
 
 Auditors should always look for uses of sp_execute, execute or exec within SQL Server stored procedures. Similar audit guidelines are necessary for similar functions for other vendors.
 
