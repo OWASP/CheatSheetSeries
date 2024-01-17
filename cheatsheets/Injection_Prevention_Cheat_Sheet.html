@@ -3128,7 +3128,7 @@
 <h5 id="how-to-test-for-the-issue">How to test for the issue<a class="headerlink" href="#how-to-test-for-the-issue" title="Permanent link">&para;</a></h5>
 <h6 id="during-code-review">During code review<a class="headerlink" href="#during-code-review" title="Permanent link">&para;</a></h6>
 <p>please check for any queries to the database are not done via prepared statements.</p>
-<p>If dynamic statements are being made please check if the data is sanitized before used as par of the statement.</p>
+<p>If dynamic statements are being made please check if the data is sanitized before used as part of the statement.</p>
 <p>Auditors should always look for uses of sp_execute, execute or exec within SQL Server stored procedures. Similar audit guidelines are necessary for similar functions for other vendors.</p>
 <h6 id="automated-exploitation">Automated Exploitation<a class="headerlink" href="#automated-exploitation" title="Permanent link">&para;</a></h6>
 <p>Most of the situation and techniques below here can be performed in a automated way using some tools. In this article the tester can find information how to perform an automated auditing using <a href="https://wiki.owasp.org/index.php/Automated_Audit_using_SQLMap">SQLMap</a></p>
