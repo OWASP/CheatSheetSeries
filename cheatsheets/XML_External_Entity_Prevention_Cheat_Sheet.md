@@ -328,6 +328,8 @@ To protect a `javax.xml.validation.Validator` from XXE, do this:
 
 ``` java
 SchemaFactory factory = SchemaFactory.newInstance("http://www.w3.org/2001/XMLSchema");
+factory.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+factory.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
 Schema schema = factory.newSchema();
 Validator validator = schema.newValidator();
 validator.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
