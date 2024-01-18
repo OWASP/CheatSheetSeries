@@ -564,7 +564,6 @@ For the purpose of understanding the above table, the `.NET Framework Version` f
 
 This configuration tag should not be confused with a simmilar configuration tag: `<compilation targetFramework="..." />` or the assemblies / projects targetFramework, which are **not** sufficient for achieving secure-by-default behaviour as advertised in the above table.
 
-
 ### LINQ to XML
 
 Both the `XElement` and `XDocument` objects in the `System.Xml.Linq` library are safe from XXE injection from external file and DoS attack by default. `XElement` parses only the elements within the XML file, so DTDs are ignored altogether. `XDocument` has XmlResolver [disabled by default](https://docs.microsoft.com/en-us/dotnet/standard/linq/linq-xml-security) so it's safe from SSRF. Whilst DTDs are [enabled by default](https://referencesource.microsoft.com/#System.Xml.Linq/System/Xml/Linq/XLinq.cs,71f4626a3d6f9bad), from Framework versions ≥4.5.2, it is **not** vulnerable to DoS as noted but it may be vulnerable in earlier Framework versions. For more information, see [Microsoft's guidance on how to prevent XXE and XML Denial of Service in .NET](http://msdn.microsoft.com/en-us/magazine/ee335713.aspx)
