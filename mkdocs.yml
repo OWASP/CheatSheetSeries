@@ -11,9 +11,10 @@ copyright: ©Copyright <script>document.write(new Date().getFullYear())</script>
 
 #Config
 docs_dir: cheatsheets/
-google_analytics:
-  - !!python/object/apply:os.getenv ["WORKFLOW_GOOGLE_ANALYTICS_KEY", "none"]
-  - auto
+extra:
+  analytics:
+    provider: google
+    property: !!python/object/apply:os.getenv ["WORKFLOW_GOOGLE_ANALYTICS_KEY", "none"]
 use_directory_urls: false
 plugins:
   - search:
@@ -56,6 +57,12 @@ markdown_extensions:
   - pymdownx.highlight
   - pymdownx.superfences # Required by Pygments
   - pymdownx.inlinehilite
+  - pymdownx.blocks.details
+  - pymdownx.snippets:
+      base_path:
+        ../assets/
+  - pymdownx.tabbed:
+      alternate_style: true
   - pymdownx.emoji:
       emoji_index: !!python/name:pymdownx.emoji.twemoji
       emoji_generator: !!python/name:pymdownx.emoji.to_svg
