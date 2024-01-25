@@ -38,7 +38,7 @@ However, there are some situations where an attacker can "crack" the hashes in s
 - Calculating the hash
 - Comparing the hash you calculated to the hash of the victim. If they match, you have correctly "cracked" the hash and now know the plaintext value of their password.
 
-Usually, the attacker will repeat this process wth a list of large number of potential candidate passwords, such as:
+Usually, the attacker will repeat this process with a list of large number of potential candidate passwords, such as:
 
 - Lists of passwords obtained from other compromised sites
 - Brute force (trying every possible candidate)
