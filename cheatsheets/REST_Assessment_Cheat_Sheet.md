@@ -22,7 +22,7 @@ RESTful web services (often called simply REST) are a light weight variant of We
     - No application utilizes all the available functions and parameters exposed by the service
     - Those used are often activated dynamically by client side code and not as links in pages.
     - The client application is often not a web application and does not allow inspection of the activating link or even relevant code.
-- The parameters are none standard making it hard to determine what is just part of the URL or a constant header and what is a parameter worth [fuzzing](https://owasp.org/www-community/Fuzzing).
+- The parameters are non-standard making it hard to determine what is just part of the URL or a constant header and what is a parameter worth [fuzzing](https://owasp.org/www-community/Fuzzing).
 - As a machine interface the number of parameters used can be very large, for example a JSON structure may include dozens of parameters. [fuzzing](https://owasp.org/www-community/Fuzzing) each one significantly lengthen the time required for testing.
 - Custom authentication mechanisms require reverse engineering and make popular tools not useful as they cannot track a login session.
 
