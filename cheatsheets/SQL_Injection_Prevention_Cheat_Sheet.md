@@ -112,7 +112,7 @@ Though stored procedures are not always safe from SQL injection, developers can 
 
 #### Safe Approach to Stored Procedures
 
-If stored procedures are needed, the safest approach to using them requires the developer to build SQL statements with parameters that are automatically parameterized, unless the developer does something largely out of the norm. The difference between prepared statements and stored procedures is that the SQL code for a stored procedure is defined and stored in the database itself, and then called from the application. Since prepared statements and safe stored procedures are equally effecitve in preventing SQL injection so your organization should choose which approach makes the most sense for you.
+If stored procedures are needed, the safest approach to using them requires the developer to build SQL statements with parameters that are automatically parameterized, unless the developer does something largely out of the norm. The difference between prepared statements and stored procedures is that the SQL code for a stored procedure is defined and stored in the database itself, and then called from the application. Since prepared statements and safe stored procedures are equally effective in preventing SQL injection so your organization should choose which approach makes the most sense for you.
 
 #### When Stored Procedures Can Increase Risk
 
