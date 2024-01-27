@@ -150,7 +150,7 @@ This cheatsheet will help users of the [OWASP Proactive Controls](https://owasp.
 
 [TLS Cipher String Cheat Sheet](cheatsheets/TLS_Cipher_String_Cheat_Sheet.md)
 
-[Transport Layer Protection Cheat Sheet](cheatsheets/Transport_Layer_Protection_Cheat_Sheet.md)
+[Transport Layer Security Cheat Sheet](cheatsheets/Transport_Layer_Security_Cheat_Sheet.md)
 
 [Key Management Cheat Sheet](cheatsheets/Key_Management_Cheat_Sheet.md)
 

@@ -175,7 +175,7 @@ DO NOT: [Allow SSL, this is now obsolete](https://github.com/ssllabs/research/wi
 DO: Have a strong TLS policy (see [SSL Best Practices](https://www.ssllabs.com/projects/best-practices/index.html)), use TLS 1.2+ wherever possible. Then check the configuration using [SSL Test](https://www.ssllabs.com/ssltest/) or [TestSSL](https://testssl.sh/).
 
 More information on Transport Layer Protection can be found in the
-[Transport Layer Protection Cheat Sheet](Transport_Layer_Protection_Cheat_Sheet.md).
+[Transport Layer Security Cheat Sheet](Transport_Layer_Security_Cheat_Sheet.md).
 
 DO: Ensure headers are not disclosing information about your application. See [HttpHeaders.cs](https://github.com/johnstaveley/SecurityEssentials/blob/master/SecurityEssentials/Core/HttpHeaders.cs), [Dionach StripHeaders](https://github.com/Dionach/StripHeaders/), disable via `web.config` or [Startup.cs](https://medium.com/bugbountywriteup/security-headers-1c770105940b).
 
@@ -241,7 +241,7 @@ A few constraints/pitfalls with this code:
 
 <details>
   <summary>Click here to view the "AES-GCM symmetric encryption" code snippet.</summary>
-  
+
 ```csharp
 // Code based on example from here:
 // https://www.scottbrady91.com/c-sharp/aes-gcm-dotnet
@@ -287,13 +287,13 @@ public static class AesGcmSimple
         {
             // Tag for authenticated encryption
             tag = new byte[AesGcm.TagByteSizes.MaxSize];
-            
+
             // Create a byte array from the message to encrypt
             var plaintextBytes = Encoding.UTF8.GetBytes(plaintext);
-            
-            // Ciphertext will be same length in bytes as plaintext 
+
+            // Ciphertext will be same length in bytes as plaintext
             var ciphertext = new byte[plaintextBytes.Length];
-            
+
             // perform the actual encryption
             aes.Encrypt(nonce, plaintextBytes, ciphertext, tag);
             return ciphertext;
@@ -304,12 +304,12 @@ public static class AesGcmSimple
     {
         using(var aes = new AesGcm(key))
         {
-            // Plaintext will be same length in bytes as Ciphertext 
+            // Plaintext will be same length in bytes as Ciphertext
             var plaintextBytes = new byte[ciphertext.Length];
-            
+
             // perform the actual decryption
             aes.Decrypt(nonce, ciphertext, tag, plaintextBytes);
-                        
+
             return Encoding.UTF8.GetString(plaintextBytes);
         }
     }
@@ -357,7 +357,7 @@ public class ECDHSimpleTest
         Console.WriteLine("Secret being sent from Alice to Bob: " + plaintext);
 
         // Note that a new nonce is generated with every encryption operation in line with
-        // in line with the AES GCM security 
+        // in line with the AES GCM security
         byte[] tag;
         byte[] nonce;
         var cipherText = alice.Encrypt(bobPublicKey, plaintext, out nonce, out tag);
@@ -402,7 +402,7 @@ public class ECDHSimple
 
         // Tag for authenticated encryption
         tag = new byte[AesGcm.TagByteSizes.MaxSize];
-        
+
         // MaxSize = 12 bytes / 96 bits and this size should always be used.
         // A new nonce is generated with every encryption operation in line with
         // the AES GCM security model
@@ -425,12 +425,12 @@ public class ECDHSimple
 
     private byte[] GenerateAESKey(byte[] partnerPublicKey)
     {
-        // Derive the secret based on this side's private key and the other side's public key 
+        // Derive the secret based on this side's private key and the other side's public key
         byte[] secret = ecdh.DeriveKeyMaterial(CngKey.Import(partnerPublicKey, CngKeyBlobFormat.EccPublicBlob));
-        
+
         byte[] aesKey = new byte[32]; // 256-bit AES key
         Array.Copy(secret, 0, aesKey, 0, 32); // Copy first 32 bytes as the key
-        
+
         return aesKey;
     }
 }

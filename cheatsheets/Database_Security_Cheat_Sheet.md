@@ -26,7 +26,7 @@ Most databases will allow unencrypted network connections in their default confi
 - Configure the client application to connect using TLSv1.2+ with modern ciphers (e.g, AES-GCM or ChaCha20).
 - Configure the client application to verify that the digital certificate is correct.
 
-The [Transport Layer Protection](Transport_Layer_Protection_Cheat_Sheet.md) and [TLS Cipher String](TLS_Cipher_String_Cheat_Sheet.md) Cheat Sheets contain further guidance on securely configuring TLS.
+The [Transport Layer Security Cheat Sheet](Transport_Layer_Security_Cheat_Sheet.md) contains further guidance on securely configuring TLS.
 
 ## Authentication
 

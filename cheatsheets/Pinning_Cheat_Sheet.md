@@ -161,7 +161,7 @@ Otherwise, you can validate certificates by yourself using [ses.setCertificateVe
 
 - OWASP [Injection Theory](https://owasp.org/www-community/Injection_Theory)
 - OWASP [Data Validation](https://wiki.owasp.org/index.php/Data_Validation)
-- OWASP [Transport Layer Protection Cheat Sheet](Transport_Layer_Protection_Cheat_Sheet.md)
+- OWASP [Transport Layer Security Cheat Sheet](Transport_Layer_Security_Cheat_Sheet.md)
 - OWASP [Mobile Security Testing Guide](https://github.com/OWASP/owasp-mstg)
 - IETF [RFC 1421 (PEM Encoding)](http://www.ietf.org/rfc/rfc1421.txt)
 - IETF [RFC 4648 (Base16, Base32, and Base64 Encodings)](http://www.ietf.org/rfc/rfc4648.txt)

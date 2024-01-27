@@ -8,5 +8,7 @@ For more information please visit [https://ssl-config.mozilla.org/](https://ssl-
 
 ## Related Articles
 
-- [OWASP: Transport Layer Protection Cheat Sheet](Transport_Layer_Protection_Cheat_Sheet.md).
+- [OWASP: Transport Layer Security Cheat Sheet](Transport_Layer_Security_Cheat_Sheet.md).
 - [Mozilla Server Side TLS](https://wiki.mozilla.org/Security/Server_Side_TLS)
+
+TLS_Cipher_String_Cheat_Sheet.md

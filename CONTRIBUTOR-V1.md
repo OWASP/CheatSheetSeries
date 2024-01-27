@@ -296,7 +296,7 @@ Sorting applied on the name is an alphabetical one.
 * Sławomir Jasek, SecuRing
 * Wojciech Dworakowski - wojciech.dworakowski@securing.pl
 
-**[Transport Layer Protection Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/tree/master/cheatsheets/Transport_Layer_Protection_Cheat_Sheet.md)**
+**[Transport Layer Security Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/tree/master/cheatsheets/Transport_Layer_Security_Cheat_Sheet.md)**
 * Dave Wichers - dave.wichers@owasp.org
 * Michael Coates - michael.coates@owasp.org
 * Tony Hsu - hsiang_chih@yahoo.com
