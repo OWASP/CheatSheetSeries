@@ -62,8 +62,6 @@ This index is based on the version 1.x.x of the MASVS.
 
 [Transport Layer Security Cheat Sheet](cheatsheets/Transport_Layer_Security_Cheat_Sheet.md).
 
-[TLS Cipher String Cheat Sheet](cheatsheets/TLS_Cipher_String_Cheat_Sheet.md).
-
 [HTTP Strict Transport Security Cheat Sheet](cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.md).
 
 [REST Security Cheat Sheet](cheatsheets/REST_Security_Cheat_Sheet.md).

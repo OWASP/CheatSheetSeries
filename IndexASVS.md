@@ -143,8 +143,6 @@ None.
 
 [Transport Layer Security Cheat Sheet](cheatsheets/Transport_Layer_Security_Cheat_Sheet.md).
 
-[TLS Cipher String Cheat Sheet](cheatsheets/TLS_Cipher_String_Cheat_Sheet.md).
-
 ### V1.10 Malicious Software Architectural Requirements
 
 [Third Party Javascript Management Cheat Sheet](cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.md).
@@ -182,8 +180,6 @@ None.
 [Authentication Cheat Sheet](cheatsheets/Authentication_Cheat_Sheet.md).
 
 [Transport Layer Security Cheat Sheet](cheatsheets/Transport_Layer_Security_Cheat_Sheet.md).
-
-[TLS Cipher String Cheat Sheet](cheatsheets/TLS_Cipher_String_Cheat_Sheet.md).
 
 ### V2.3 Authenticator Lifecycle Requirements
 
@@ -400,8 +396,6 @@ None.
 [HTTP Strict Transport Security Cheat Sheet](cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.md).
 
 [Transport Layer Security Cheat Sheet](cheatsheets/Transport_Layer_Security_Cheat_Sheet.md).
-
-[TLS Cipher String Cheat Sheet](cheatsheets/TLS_Cipher_String_Cheat_Sheet.md).
 
 ### V9.2 Server Communications Security Requirements
 

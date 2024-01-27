@@ -273,10 +273,6 @@ Sorting applied on the name is an alphabetical one.
 **[Session Management Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/tree/master/cheatsheets/Session_Management_Cheat_Sheet.md)**
 * Raul Siles (DinoSec) - raul@dinosec.com
 
-**[TLS Cipher String Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/tree/master/cheatsheets/TLS_Cipher_String_Cheat_Sheet.md)**
-* Achim Hoffmann - achim@owasp.org
-* Torsten Gigler - torsten.gigler@owasp.org
-
 **[Third Party Javascript Management Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/tree/master/cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.md)**
 * Jim Weiler - Jim.Weiler@owasp.org
 
