@@ -6,7 +6,7 @@ This cheat sheet provides guidance on implementing transport layer protection fo
 
 - **Confidentiality**: Provides protection against attackers reading the contents of the traffic.
 - **Integrity**: Provides protection against traffic modification, such as an attacker replaying requests against the server.
-- **Authentication**: Enables the client to confirm they are connected to the legitimate server. Note that the identity of the client is not verified unless [client certificates](#client-certificates-and-mutual-tls) are employed.
+- **[Authentication](Authentication_Cheat_Sheet.md)**: Enables the client to confirm they are connected to the legitimate server. Note that the identity of the client is not verified unless [client certificates](#client-certificates-and-mutual-tls) are employed.
 
 ### SSL vs TLS
 
