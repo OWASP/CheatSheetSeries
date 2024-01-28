@@ -227,6 +227,8 @@ None.
 
 [Session Management Cheat Sheet](cheatsheets/Session_Management_Cheat_Sheet.md).
 
+[Transport Layer Security Cheat Sheet](cheatsheets/Transport_Layer_Security_Cheat_Sheet.md).
+
 ### V3.3 Session Logout and Timeout Requirements
 
 [Session Management Cheat Sheet](cheatsheets/Session_Management_Cheat_Sheet.md).
@@ -399,7 +401,7 @@ None.
 
 ### V9.2 Server Communications Security Requirements
 
-None.
+[Transport Layer Security Cheat Sheet](cheatsheets/Transport_Layer_Security_Cheat_Sheet.md).
 
 ## V10: Malicious Code Verification Requirements
 
@@ -466,6 +468,8 @@ None.
 [REST Security Cheat Sheet](cheatsheets/REST_Security_Cheat_Sheet.md).
 
 [Cross-Site Request Forgery Prevention Cheat Sheet](cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md).
+
+[Transport Layer Security Cheat Sheet](cheatsheets/Transport_Layer_Security_Cheat_Sheet.md).
 
 ### V13.3 SOAP Web Service Verification Requirements
 
