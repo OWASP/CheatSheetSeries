@@ -210,7 +210,7 @@ Hardware U2F tokens communicate with the users workstation over USB or NFC, and 
 
 ### Certificates
 
-Digital certificates are files that are stored on the user's device which are automatically provided alongside the user's password when authenticating. The most common type is X.509 certificates (discussed in the [Transport Layer Protection Cheat Sheet](Transport_Layer_Protection_Cheat_Sheet.md#consider-the-use-of-client-side-certificates)), more commonly known as client certificates.
+Digital certificates are files that are stored on the user's device which are automatically provided alongside the user's password when authenticating. The most common type is X.509 certificates (discussed in the [Transport Layer Security Cheat Sheet](Transport_Layer_Security_Cheat_Sheet.md#client-certificates-and-mutual-tls)), more commonly known as client certificates.
 
 Certificates are supported by all major web browsers, and once installed require no further interaction from the user. The certificates should be linked to an individual's user account in order to prevent users from trying to authenticate against other accounts.
 

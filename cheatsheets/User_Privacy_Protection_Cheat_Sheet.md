@@ -16,7 +16,7 @@ For detailed guides about strong cryptography and best practices, read the follo
 
 1. [Cryptographic Storage Cheat Sheet](Cryptographic_Storage_Cheat_Sheet.md).
 2. [Authentication Cheat Sheet](Authentication_Cheat_Sheet.md).
-3. [Transport Layer Protection Cheat Sheet](Transport_Layer_Protection_Cheat_Sheet.md).
+3. [Transport Layer Security Cheat Sheet](Transport_Layer_Security_Cheat_Sheet.md).
 4. [Guide to Cryptography](https://wiki.owasp.org/index.php/Guide_to_Cryptography).
 5. [Testing for TLS/SSL](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/09-Testing_for_Weak_Cryptography/01-Testing_for_Weak_SSL_TLS_Ciphers_Insufficient_Transport_Layer_Protection.html).
 

@@ -65,7 +65,7 @@ When developing a change password feature, ensure to have:
 
 ### Transmit Passwords Only Over TLS or Other Strong Transport
 
-See: [Transport Layer Protection Cheat Sheet](Transport_Layer_Protection_Cheat_Sheet.md)
+See: [Transport Layer Security Cheat Sheet](Transport_Layer_Security_Cheat_Sheet.md)
 
 The login page and all subsequent authenticated pages must be exclusively accessed over TLS or other strong transport. Failure to utilize TLS or other strong transport for the login page allows an attacker to modify the login form action, causing the user's credentials to be posted to an arbitrary location. Failure to utilize TLS or other strong transport for authenticated pages after login enables an attacker to view the unencrypted session ID and compromise the user's authenticated session.
 

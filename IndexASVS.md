@@ -141,9 +141,7 @@ None.
 
 ### V1.9 Communications Architectural Requirements
 
-[Transport Layer Protection Cheat Sheet](cheatsheets/Transport_Layer_Protection_Cheat_Sheet.md).
-
-[TLS Cipher String Cheat Sheet](cheatsheets/TLS_Cipher_String_Cheat_Sheet.md).
+[Transport Layer Security Cheat Sheet](cheatsheets/Transport_Layer_Security_Cheat_Sheet.md).
 
 ### V1.10 Malicious Software Architectural Requirements
 
@@ -181,9 +179,7 @@ None.
 
 [Authentication Cheat Sheet](cheatsheets/Authentication_Cheat_Sheet.md).
 
-[Transport Layer Protection Cheat Sheet](cheatsheets/Transport_Layer_Protection_Cheat_Sheet.md).
-
-[TLS Cipher String Cheat Sheet](cheatsheets/TLS_Cipher_String_Cheat_Sheet.md).
+[Transport Layer Security Cheat Sheet](cheatsheets/Transport_Layer_Security_Cheat_Sheet.md).
 
 ### V2.3 Authenticator Lifecycle Requirements
 
@@ -230,6 +226,8 @@ None.
 ### V3.2 Session Binding Requirements
 
 [Session Management Cheat Sheet](cheatsheets/Session_Management_Cheat_Sheet.md).
+
+[Transport Layer Security Cheat Sheet](cheatsheets/Transport_Layer_Security_Cheat_Sheet.md).
 
 ### V3.3 Session Logout and Timeout Requirements
 
@@ -399,13 +397,11 @@ None.
 
 [HTTP Strict Transport Security Cheat Sheet](cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.md).
 
-[Transport Layer Protection Cheat Sheet](cheatsheets/Transport_Layer_Protection_Cheat_Sheet.md).
-
-[TLS Cipher String Cheat Sheet](cheatsheets/TLS_Cipher_String_Cheat_Sheet.md).
+[Transport Layer Security Cheat Sheet](cheatsheets/Transport_Layer_Security_Cheat_Sheet.md).
 
 ### V9.2 Server Communications Security Requirements
 
-None.
+[Transport Layer Security Cheat Sheet](cheatsheets/Transport_Layer_Security_Cheat_Sheet.md).
 
 ## V10: Malicious Code Verification Requirements
 
@@ -472,6 +468,8 @@ None.
 [REST Security Cheat Sheet](cheatsheets/REST_Security_Cheat_Sheet.md).
 
 [Cross-Site Request Forgery Prevention Cheat Sheet](cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md).
+
+[Transport Layer Security Cheat Sheet](cheatsheets/Transport_Layer_Security_Cheat_Sheet.md).
 
 ### V13.3 SOAP Web Service Verification Requirements
 

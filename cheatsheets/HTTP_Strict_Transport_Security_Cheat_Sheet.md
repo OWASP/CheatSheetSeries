@@ -53,7 +53,7 @@ As of September 2019 HSTS is supported by [all modern browsers](https://caniuse.
 ## References
 
 - [Chromium Projects/HSTS](https://www.chromium.org/hsts/)
-- [OWASP TLS Protection Cheat Sheet](Transport_Layer_Protection_Cheat_Sheet.md)
+- [OWASP TLS Protection Cheat Sheet](Transport_Layer_Security_Cheat_Sheet.md)
 - [sslstrip](https://github.com/moxie0/sslstrip)
 - [AppSecTutorial Series - Episode 4](https://www.youtube.com/watch?v=zEV3HOuM_Vw)
 - [Nmap NSE script to detect HSTS configuration](https://github.com/icarot/NSE_scripts/blob/master/http-hsts-verify.nse)
