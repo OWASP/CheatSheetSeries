@@ -2464,6 +2464,26 @@
   
   
     <li class="md-nav__item">
+      <a href="Transport_Layer_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Transport Layer Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
       <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html" class="md-nav__link">
         
   
@@ -3252,7 +3272,7 @@ to assess for other threats or get a professionally completed Penetration Test.<
 <p>DO NOT: <a href="https://github.com/ssllabs/research/wiki/SSL-and-TLS-Deployment-Best-Practices">Allow SSL, this is now obsolete</a>.</p>
 <p>DO: Have a strong TLS policy (see <a href="https://www.ssllabs.com/projects/best-practices/index.html">SSL Best Practices</a>), use TLS 1.2+ wherever possible. Then check the configuration using <a href="https://www.ssllabs.com/ssltest/">SSL Test</a> or <a href="https://testssl.sh/">TestSSL</a>.</p>
 <p>More information on Transport Layer Protection can be found in the
-<a href="Transport_Layer_Protection_Cheat_Sheet.html">Transport Layer Protection Cheat Sheet</a>.</p>
+<a href="Transport_Layer_Security_Cheat_Sheet.html">Transport Layer Security Cheat Sheet</a>.</p>
 <p>DO: Ensure headers are not disclosing information about your application. See <a href="https://github.com/johnstaveley/SecurityEssentials/blob/master/SecurityEssentials/Core/HttpHeaders.cs">HttpHeaders.cs</a>, <a href="https://github.com/Dionach/StripHeaders/">Dionach StripHeaders</a>, disable via <code>web.config</code> or <a href="https://medium.com/bugbountywriteup/security-headers-1c770105940b">Startup.cs</a>.</p>
 <p>e.g Web.config</p>
 <div class="highlight"><pre><span></span><code><span class="nt">&lt;system.web&gt;</span>
@@ -3356,7 +3376,7 @@ to assess for other threats or get a professionally completed Penetration Test.<
 <span class="w">            </span><span class="c1">// Create a byte array from the message to encrypt</span>
 <span class="w">            </span><span class="kt">var</span><span class="w"> </span><span class="n">plaintextBytes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="n">plaintext</span><span class="p">);</span>
 
-<span class="w">            </span><span class="c1">// Ciphertext will be same length in bytes as plaintext </span>
+<span class="w">            </span><span class="c1">// Ciphertext will be same length in bytes as plaintext</span>
 <span class="w">            </span><span class="kt">var</span><span class="w"> </span><span class="n">ciphertext</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">byte</span><span class="p">[</span><span class="n">plaintextBytes</span><span class="p">.</span><span class="n">Length</span><span class="p">];</span>
 
 <span class="w">            </span><span class="c1">// perform the actual encryption</span>
@@ -3369,7 +3389,7 @@ to assess for other threats or get a professionally completed Penetration Test.<
 <span class="w">    </span><span class="p">{</span>
 <span class="w">        </span><span class="n">using</span><span class="p">(</span><span class="kt">var</span><span class="w"> </span><span class="n">aes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AesGcm</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
 <span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="c1">// Plaintext will be same length in bytes as Ciphertext </span>
+<span class="w">            </span><span class="c1">// Plaintext will be same length in bytes as Ciphertext</span>
 <span class="w">            </span><span class="kt">var</span><span class="w"> </span><span class="n">plaintextBytes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">byte</span><span class="p">[</span><span class="n">ciphertext</span><span class="p">.</span><span class="n">Length</span><span class="p">];</span>
 
 <span class="w">            </span><span class="c1">// perform the actual decryption</span>
@@ -3417,7 +3437,7 @@ to assess for other threats or get a professionally completed Penetration Test.<
 <span class="w">        </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">&quot;Secret being sent from Alice to Bob: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">plaintext</span><span class="p">);</span>
 
 <span class="w">        </span><span class="c1">// Note that a new nonce is generated with every encryption operation in line with</span>
-<span class="w">        </span><span class="c1">// in line with the AES GCM security </span>
+<span class="w">        </span><span class="c1">// in line with the AES GCM security</span>
 <span class="w">        </span><span class="kt">byte</span><span class="p">[]</span><span class="w"> </span><span class="n">tag</span><span class="p">;</span>
 <span class="w">        </span><span class="kt">byte</span><span class="p">[]</span><span class="w"> </span><span class="n">nonce</span><span class="p">;</span>
 <span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">cipherText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">alice</span><span class="p">.</span><span class="n">Encrypt</span><span class="p">(</span><span class="n">bobPublicKey</span><span class="p">,</span><span class="w"> </span><span class="n">plaintext</span><span class="p">,</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="n">nonce</span><span class="p">,</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="n">tag</span><span class="p">);</span>
@@ -3485,7 +3505,7 @@ to assess for other threats or get a professionally completed Penetration Test.<
 
 <span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="kt">byte</span><span class="p">[]</span><span class="w"> </span><span class="nf">GenerateAESKey</span><span class="p">(</span><span class="kt">byte</span><span class="p">[]</span><span class="w"> </span><span class="n">partnerPublicKey</span><span class="p">)</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="c1">// Derive the secret based on this side&#39;s private key and the other side&#39;s public key </span>
+<span class="w">        </span><span class="c1">// Derive the secret based on this side&#39;s private key and the other side&#39;s public key</span>
 <span class="w">        </span><span class="kt">byte</span><span class="p">[]</span><span class="w"> </span><span class="n">secret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ecdh</span><span class="p">.</span><span class="n">DeriveKeyMaterial</span><span class="p">(</span><span class="n">CngKey</span><span class="p">.</span><span class="n">Import</span><span class="p">(</span><span class="n">partnerPublicKey</span><span class="p">,</span><span class="w"> </span><span class="n">CngKeyBlobFormat</span><span class="p">.</span><span class="n">EccPublicBlob</span><span class="p">));</span>
 
 <span class="w">        </span><span class="kt">byte</span><span class="p">[]</span><span class="w"> </span><span class="n">aesKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">byte</span><span class="p">[</span><span class="m">32</span><span class="p">];</span><span class="w"> </span><span class="c1">// 256-bit AES key</span>

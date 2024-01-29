@@ -2002,6 +2002,26 @@
   
   
     <li class="md-nav__item">
+      <a href="Transport_Layer_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Transport Layer Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
       <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html" class="md-nav__link">
         
   
@@ -2557,7 +2577,7 @@
 <p>Please notice that due to the difference in implementation between different frameworks, this cheat sheet is kept at a high level.</p>
 <h2 id="transport-confidentiality">Transport Confidentiality<a class="headerlink" href="#transport-confidentiality" title="Permanent link">&para;</a></h2>
 <p>Transport confidentiality protects against eavesdropping and man-in-the-middle attacks against web service communications to/from the server.</p>
-<p><strong>Rule</strong>: All communication with and between web services containing sensitive features, an authenticated session, or transfer of sensitive data must be encrypted using well-configured <a href="https://en.wikipedia.org/wiki/Transport_Layer_Security">TLS</a>. This is recommended even if the messages themselves are encrypted because <a href="https://en.wikipedia.org/wiki/Transport_Layer_Security">TLS</a> provides numerous benefits beyond traffic confidentiality including integrity protection, replay defenses, and server authentication. For more information on how to do this properly see the <a href="Transport_Layer_Protection_Cheat_Sheet.html">Transport Layer Protection Cheat Sheet</a>.</p>
+<p><strong>Rule</strong>: All communication with and between web services containing sensitive features, an authenticated session, or transfer of sensitive data must be encrypted using well-configured <a href="https://en.wikipedia.org/wiki/Transport_Layer_Security">TLS</a>. This is recommended even if the messages themselves are encrypted because <a href="https://en.wikipedia.org/wiki/Transport_Layer_Security">TLS</a> provides numerous benefits beyond traffic confidentiality including integrity protection, replay defenses, and server authentication. For more information on how to do this properly see the <a href="Transport_Layer_Security_Cheat_Sheet.html">Transport Layer Security Cheat Sheet</a>.</p>
 <h2 id="server-authentication">Server Authentication<a class="headerlink" href="#server-authentication" title="Permanent link">&para;</a></h2>
 <p><strong>Rule</strong>: TLS must be used to authenticate the service provider to the service consumer. The service consumer should verify the server certificate is issued by a trusted provider, is not expired, is not revoked, matches the domain name of the service, and that the server has proven that it has the private key associated with the public key certificate (by properly signing something or successfully decrypting something encrypted with the associated public key).</p>
 <h2 id="user-authentication">User Authentication<a class="headerlink" href="#user-authentication" title="Permanent link">&para;</a></h2>

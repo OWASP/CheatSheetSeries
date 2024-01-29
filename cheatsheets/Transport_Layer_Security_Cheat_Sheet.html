@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/NPM_Security_Cheat_Sheet.html">
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Transport_Layer_Security_Cheat_Sheet.html">
       
       
-        <link rel="prev" href="Multifactor_Authentication_Cheat_Sheet.html">
+        <link rel="prev" href="Transport_Layer_Protection_Cheat_Sheet.html">
       
       
-        <link rel="next" href="Network_Segmentation_Cheat_Sheet.html">
+        <link rel="next" href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
       
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
@@ -24,7 +24,7 @@
     
     
       
-        <title>NPM Security - OWASP Cheat Sheet Series</title>
+        <title>Transport Layer Security - OWASP Cheat Sheet Series</title>
       
     
     
@@ -79,7 +79,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#npm-security-best-practices" class="md-skip">
+        <a href="#transport-layer-security-cheat-sheet" class="md-skip">
           Skip to content
         </a>
       
@@ -114,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              NPM Security
+              Transport Layer Security
             
           </span>
         </div>
@@ -1440,29 +1440,9 @@
                 
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    NPM Security
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="NPM_Security_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="NPM_Security_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1471,116 +1451,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#1-avoid-publishing-secrets-to-the-npm-registry" class="md-nav__link">
-    1) Avoid publishing secrets to the npm registry
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#2-enforce-the-lockfile" class="md-nav__link">
-    2) Enforce the lockfile
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#3-minimize-attack-surfaces-by-ignoring-run-scripts" class="md-nav__link">
-    3) Minimize attack surfaces by ignoring run-scripts
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#4-assess-npm-project-health" class="md-nav__link">
-    4) Assess npm project health
-  </a>
-  
-    <nav class="md-nav" aria-label="4) Assess npm project health">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#npm-outdated-command" class="md-nav__link">
-    npm outdated command
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#npm-doctor-command" class="md-nav__link">
-    npm doctor command
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#5-audit-for-vulnerabilities-in-open-source-dependencies" class="md-nav__link">
-    5) Audit for vulnerabilities in open source dependencies
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#6-use-a-local-npm-proxy" class="md-nav__link">
-    6) Use a local npm proxy
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#7-responsibly-disclose-security-vulnerabilities" class="md-nav__link">
-    7) Responsibly disclose security vulnerabilities
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#8-enable-2fa" class="md-nav__link">
-    8) Enable 2FA
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#9-use-npm-author-tokens" class="md-nav__link">
-    9) Use npm author tokens
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#10-understand-module-naming-conventions-and-typosquatting-attacks" class="md-nav__link">
-    10) Understand module naming conventions and typosquatting attacks
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -2130,9 +2000,29 @@
                 
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="Transport_Layer_Security_Cheat_Sheet.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Transport Layer Security
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="Transport_Layer_Security_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -2141,6 +2031,239 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+    <nav class="md-nav" aria-label="Introduction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ssl-vs-tls" class="md-nav__link">
+    SSL vs TLS
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#server-configuration" class="md-nav__link">
+    Server Configuration
+  </a>
+  
+    <nav class="md-nav" aria-label="Server Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#only-support-strong-protocols" class="md-nav__link">
+    Only Support Strong Protocols
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#only-support-strong-ciphers" class="md-nav__link">
+    Only Support Strong Ciphers
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-strong-diffie-hellman-parameters" class="md-nav__link">
+    Use Strong Diffie-Hellman Parameters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disable-compression" class="md-nav__link">
+    Disable Compression
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#patch-cryptographic-libraries" class="md-nav__link">
+    Patch Cryptographic Libraries
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-the-server-configuration" class="md-nav__link">
+    Test the Server Configuration
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#certificates" class="md-nav__link">
+    Certificates
+  </a>
+  
+    <nav class="md-nav" aria-label="Certificates">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-strong-keys-and-protect-them" class="md-nav__link">
+    Use Strong Keys and Protect Them
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-strong-cryptographic-hashing-algorithms" class="md-nav__link">
+    Use Strong Cryptographic Hashing Algorithms
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-correct-domain-names" class="md-nav__link">
+    Use Correct Domain Names
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#carefully-consider-the-use-of-wildcard-certificates" class="md-nav__link">
+    Carefully Consider the use of Wildcard Certificates
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-an-appropriate-certification-authority-for-the-applications-user-base" class="md-nav__link">
+    Use an Appropriate Certification Authority for the Application's User Base
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-caa-records-to-restrict-which-cas-can-issue-certificates" class="md-nav__link">
+    Use CAA Records to Restrict Which CAs can Issue Certificates
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#always-provide-all-needed-certificates" class="md-nav__link">
+    Always Provide All Needed Certificates
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consider-the-use-of-extended-validation-certificates" class="md-nav__link">
+    Consider the use of Extended Validation Certificates
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#application" class="md-nav__link">
+    Application
+  </a>
+  
+    <nav class="md-nav" aria-label="Application">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-tls-for-all-pages" class="md-nav__link">
+    Use TLS For All Pages
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#do-not-mix-tls-and-non-tls-content" class="md-nav__link">
+    Do Not Mix TLS and Non-TLS Content
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-the-secure-cookie-flag" class="md-nav__link">
+    Use the "Secure" Cookie Flag
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prevent-caching-of-sensitive-data" class="md-nav__link">
+    Prevent Caching of Sensitive Data
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-http-strict-transport-security" class="md-nav__link">
+    Use HTTP Strict Transport Security
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#client-certificates-and-mutual-tls" class="md-nav__link">
+    Client Certificates and Mutual TLS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#public-key-pinning" class="md-nav__link">
+    Public Key Pinning
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-articles" class="md-nav__link">
+    Related Articles
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2380,44 +2503,16 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#1-avoid-publishing-secrets-to-the-npm-registry" class="md-nav__link">
-    1) Avoid publishing secrets to the npm registry
+  <a href="#introduction" class="md-nav__link">
+    Introduction
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#2-enforce-the-lockfile" class="md-nav__link">
-    2) Enforce the lockfile
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#3-minimize-attack-surfaces-by-ignoring-run-scripts" class="md-nav__link">
-    3) Minimize attack surfaces by ignoring run-scripts
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#4-assess-npm-project-health" class="md-nav__link">
-    4) Assess npm project health
-  </a>
-  
-    <nav class="md-nav" aria-label="4) Assess npm project health">
+    <nav class="md-nav" aria-label="Introduction">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#npm-outdated-command" class="md-nav__link">
-    npm outdated command
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#npm-doctor-command" class="md-nav__link">
-    npm doctor command
+  <a href="#ssl-vs-tls" class="md-nav__link">
+    SSL vs TLS
   </a>
   
 </li>
@@ -2428,43 +2523,194 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#5-audit-for-vulnerabilities-in-open-source-dependencies" class="md-nav__link">
-    5) Audit for vulnerabilities in open source dependencies
+  <a href="#server-configuration" class="md-nav__link">
+    Server Configuration
   </a>
+  
+    <nav class="md-nav" aria-label="Server Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#only-support-strong-protocols" class="md-nav__link">
+    Only Support Strong Protocols
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#only-support-strong-ciphers" class="md-nav__link">
+    Only Support Strong Ciphers
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-strong-diffie-hellman-parameters" class="md-nav__link">
+    Use Strong Diffie-Hellman Parameters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disable-compression" class="md-nav__link">
+    Disable Compression
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#patch-cryptographic-libraries" class="md-nav__link">
+    Patch Cryptographic Libraries
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-the-server-configuration" class="md-nav__link">
+    Test the Server Configuration
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#6-use-a-local-npm-proxy" class="md-nav__link">
-    6) Use a local npm proxy
+  <a href="#certificates" class="md-nav__link">
+    Certificates
   </a>
+  
+    <nav class="md-nav" aria-label="Certificates">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-strong-keys-and-protect-them" class="md-nav__link">
+    Use Strong Keys and Protect Them
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-strong-cryptographic-hashing-algorithms" class="md-nav__link">
+    Use Strong Cryptographic Hashing Algorithms
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-correct-domain-names" class="md-nav__link">
+    Use Correct Domain Names
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#carefully-consider-the-use-of-wildcard-certificates" class="md-nav__link">
+    Carefully Consider the use of Wildcard Certificates
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-an-appropriate-certification-authority-for-the-applications-user-base" class="md-nav__link">
+    Use an Appropriate Certification Authority for the Application's User Base
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-caa-records-to-restrict-which-cas-can-issue-certificates" class="md-nav__link">
+    Use CAA Records to Restrict Which CAs can Issue Certificates
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#always-provide-all-needed-certificates" class="md-nav__link">
+    Always Provide All Needed Certificates
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consider-the-use-of-extended-validation-certificates" class="md-nav__link">
+    Consider the use of Extended Validation Certificates
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#7-responsibly-disclose-security-vulnerabilities" class="md-nav__link">
-    7) Responsibly disclose security vulnerabilities
+  <a href="#application" class="md-nav__link">
+    Application
   </a>
+  
+    <nav class="md-nav" aria-label="Application">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-tls-for-all-pages" class="md-nav__link">
+    Use TLS For All Pages
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#do-not-mix-tls-and-non-tls-content" class="md-nav__link">
+    Do Not Mix TLS and Non-TLS Content
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-the-secure-cookie-flag" class="md-nav__link">
+    Use the "Secure" Cookie Flag
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prevent-caching-of-sensitive-data" class="md-nav__link">
+    Prevent Caching of Sensitive Data
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-http-strict-transport-security" class="md-nav__link">
+    Use HTTP Strict Transport Security
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#client-certificates-and-mutual-tls" class="md-nav__link">
+    Client Certificates and Mutual TLS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#public-key-pinning" class="md-nav__link">
+    Public Key Pinning
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#8-enable-2fa" class="md-nav__link">
-    8) Enable 2FA
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#9-use-npm-author-tokens" class="md-nav__link">
-    9) Use npm author tokens
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#10-understand-module-naming-conventions-and-typosquatting-attacks" class="md-nav__link">
-    10) Understand module naming conventions and typosquatting attacks
+  <a href="#related-articles" class="md-nav__link">
+    Related Articles
   </a>
   
 </li>
@@ -2487,121 +2733,164 @@
   
 
 
-<h1 id="npm-security-best-practices">NPM Security best practices<a class="headerlink" href="#npm-security-best-practices" title="Permanent link">&para;</a></h1>
-<p>In the following npm cheatsheet, we’re going to focus on <a href="https://snyk.io/blog/ten-npm-security-best-practices">10 npm security best practices</a> and productivity tips, useful for JavaScript and Node.js developers.</p>
-<h2 id="1-avoid-publishing-secrets-to-the-npm-registry">1) Avoid publishing secrets to the npm registry<a class="headerlink" href="#1-avoid-publishing-secrets-to-the-npm-registry" title="Permanent link">&para;</a></h2>
-<p>Whether you’re making use of API keys, passwords or other secrets, they can very easily end up leaking into source control or even a published package on the public npm registry. You may have secrets in your working directory in designated files such as a <code>.env</code> which should be added to a <code>.gitignore</code> to avoid committing it to a SCM, but what happen when you publish an npm package from the project’s directory?</p>
-<p>The npm CLI packs up a project into a tar archive (tarball) in order to push it to the registry. The following criteria determine which files and directories are added to the tarball:</p>
+<h1 id="transport-layer-security-cheat-sheet">Transport Layer Security Cheat Sheet<a class="headerlink" href="#transport-layer-security-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>This cheat sheet provides guidance on implementing transport layer protection for applications using Transport Layer Security (TLS). It primarily focuses on how to use TLS to protect clients connecting to a web application over HTTPS, though much of this guidance is also applicable to other uses of TLS. When correctly implemented, TLS can provide several security benefits:</p>
 <ul>
-<li>If there is either a <code>.gitignore</code> or a <code>.npmignore</code> file, the contents of the file are used as an ignore pattern when preparing the package for publication.</li>
-<li>If both ignore files exist, everything not located in <code>.npmignore</code> is published to the registry. This condition is a common source of confusion and is a problem that can lead to leaking secrets.</li>
+<li><strong>Confidentiality</strong>: Provides protection against attackers reading the contents of the traffic.</li>
+<li><strong>Integrity</strong>: Provides protection against traffic modification, such as an attacker replaying requests against the server.</li>
+<li><strong><a href="Authentication_Cheat_Sheet.html">Authentication</a></strong>: Enables the client to confirm they are connected to the legitimate server. Note that the identity of the client is not verified unless <a href="#client-certificates-and-mutual-tls">client certificates</a> are employed.</li>
 </ul>
-<p>Developers may end up updating the <code>.gitignore</code> file, but forget to update <code>.npmignore</code> as well, which can lead to a potentially sensitive file not being pushed to source control, but still being included in the npm package.</p>
-<p>Another good practice to adopt is making use of the <code>files</code> property in package.json, which works as a whitelist and specifies the array of files to be included in the package that is to be created and installed (while the ignore file functions as a blacklist). The <code>files</code> property and an ignore file can both be used together to determine which files should explicitly be included, as well as excluded, from the package. When using both, the former the <code>files</code> property in package.json takes precedence over the ignore file.</p>
-<p>When a package is published, the npm CLI will verbosely display the archive being created. To be extra careful, add a <code>--dry-run</code> command-line argument to your publish command in order to first review how the tarball is created without actually publishing it to the registry.</p>
-<p>In January 2019, npm shared on their blog that they added a <a href="https://blog.npmjs.org/post/182015409750/automated-token-revocation-for-when-you">mechanism that automatically revokes a token</a> if they detect that one has been published with a package.</p>
-<h2 id="2-enforce-the-lockfile">2) Enforce the lockfile<a class="headerlink" href="#2-enforce-the-lockfile" title="Permanent link">&para;</a></h2>
-<p>We embraced the birth of package lockfiles with open arms, which introduced: deterministic installations across different environments, and enforced dependency expectations across team collaboration. Life is good! Or so I thought… what would have happened had I slipped a change into the project’s <code>package.json</code> file but had forgotten to commit the lockfile along side of it?</p>
-<p>Both Yarn, and npm act the same during dependency installation . When they detect an inconsistency between the project’s <code>package.json</code> and the lockfile, they compensate for such change based on the <code>package.json</code> manifest by installing different versions than those that were recorded in the lockfile.</p>
-<p>This kind of situation can be hazardous for build and production environments as they could pull in unintended package versions and render the entire benefit of a lockfile futile.</p>
-<p>Luckily, there is a way to tell both Yarn and npm to adhere to a specified set of dependencies and their versions by referencing them from the lockfile. Any inconsistency will abort the installation. The command-line should read as follows:</p>
+<h3 id="ssl-vs-tls">SSL vs TLS<a class="headerlink" href="#ssl-vs-tls" title="Permanent link">&para;</a></h3>
+<p>Secure Socket Layer (SSL) was the original protocol that was used to provide encryption for HTTP traffic, in the form of HTTPS. There were two publicly released versions of SSL - versions 2 and 3. Both of these have serious cryptographic weaknesses and should no longer be used.</p>
+<p>For <a href="http://tim.dierks.org/2014/05/security-standards-and-name-changes-in.html">various reasons</a> the next version of the protocol (effectively SSL 3.1) was named Transport Layer Security (TLS) version 1.0. Subsequently TLS versions 1.1, 1.2 and 1.3 have been released.</p>
+<p>The terms "SSL", "SSL/TLS" and "TLS" are frequently used interchangeably, and in many cases "SSL" is used when referring to the more modern TLS protocol. This cheatsheet will use the term "TLS" except where referring to the legacy protocols.</p>
+<h2 id="server-configuration">Server Configuration<a class="headerlink" href="#server-configuration" title="Permanent link">&para;</a></h2>
+<h3 id="only-support-strong-protocols">Only Support Strong Protocols<a class="headerlink" href="#only-support-strong-protocols" title="Permanent link">&para;</a></h3>
+<p>General purpose web applications should default to <strong>TLS 1.3</strong> (support TLS 1.2 if necessary) with all other protocols disabled.</p>
+<p>In specific and uncommon situations where a web server is required to accommodate legacy clients that depend on outdated and unsecured browsers (like Internet Explorer 10), activating TLS 1.0 may be the only option. However, this approach should be exercised with caution and is generally not advised due to the security implications. Additionally, <a href="https://tools.ietf.org/html/rfc7507">"TLS_FALLBACK_SCSV" extension</a> should be enabled in order to prevent downgrade attacks against newer clients.</p>
+<p>Note that PCI DSS <a href="https://www.pcisecuritystandards.org/documents/Migrating-from-SSL-Early-TLS-Info-Supp-v1_1.pdf">forbids the use of legacy protocols such as TLS 1.0</a>.</p>
+<h3 id="only-support-strong-ciphers">Only Support Strong Ciphers<a class="headerlink" href="#only-support-strong-ciphers" title="Permanent link">&para;</a></h3>
+<p>There are a large number of different ciphers (or cipher suites) that are supported by TLS, that provide varying levels of security. Where possible, only GCM ciphers should be enabled. However, if it is necessary to support legacy clients, then other ciphers may be required. At a minimum, the following types of ciphers should always be disabled:</p>
 <ul>
-<li>If you’re using Yarn, run <code>yarn install --frozen-lockfile</code>.</li>
-<li>If you’re using npm run <code>npm ci</code>.</li>
+<li>Null ciphers</li>
+<li>Anonymous ciphers</li>
+<li>EXPORT ciphers</li>
 </ul>
-<h2 id="3-minimize-attack-surfaces-by-ignoring-run-scripts">3) Minimize attack surfaces by ignoring run-scripts<a class="headerlink" href="#3-minimize-attack-surfaces-by-ignoring-run-scripts" title="Permanent link">&para;</a></h2>
-<p>The npm CLI works with package run-scripts. If you’ve ever run <code>npm start</code> or <code>npm test</code> then you’ve used package run-scripts too. The npm CLI builds on scripts that a package can declare, and allows packages to define scripts to run at specific entry points during the package’s installation in a project. For example, some of these <a href="https://docs.npmjs.com/misc/scripts">script hook</a> entries may be <code>postinstall</code> scripts that a package that is being installed will execute in order to perform housekeeping chores.</p>
-<p>With this capability, bad actors may create or alter packages to perform malicious acts by running any arbitrary command when their package is installed. A couple of cases where we’ve seen this already happening is the popular <a href="https://snyk.io/vuln/npm:eslint-scope:20180712">eslint-scope incident</a> that harvested npm tokens, and the <a href="https://snyk.io/vuln/npm:crossenv:20170802">crossenv incident</a>, along with 36 other packages that abused a typosquatting attack on the npm registry.</p>
-<p>Apply these npm security best practices in order to minimize the malicious module attack surface:</p>
-<ul>
-<li>Always vet and perform due-diligence on third-party modules that you install in order to confirm their health and credibility.</li>
-<li>Hold-off on upgrading immediately to new versions; allow new package versions some time to circulate before trying them out.</li>
-<li>Before upgrading, make sure to review changelog and release notes for the upgraded version.</li>
-<li>When installing packages make sure to add the <code>--ignore-scripts</code> suffix to disable the execution of any scripts by third-party packages.</li>
-<li>Consider adding <code>ignore-scripts</code> to your <code>.npmrc</code> project file, or to your global npm configuration.</li>
-</ul>
-<h2 id="4-assess-npm-project-health">4) Assess npm project health<a class="headerlink" href="#4-assess-npm-project-health" title="Permanent link">&para;</a></h2>
-<h3 id="npm-outdated-command">npm outdated command<a class="headerlink" href="#npm-outdated-command" title="Permanent link">&para;</a></h3>
-<p>Rushing to constantly upgrade dependencies to their latest releases is not necessarily a good practice if it is done without reviewing release notes, the code changes, and generally testing new upgrades in a comprehensive manner. With that said, staying out of date and not upgrading at all, or after a long time, is a source for trouble as well.</p>
-<p>The npm CLI can provide information about the freshness of dependencies you use with regards to their semantic versioning offset. By running <code>npm outdated</code>, you can see which packages are out of date. Dependencies in yellow correspond to the semantic versioning as specified in the package.json manifest, and dependencies colored in red mean that there’s an update available. Furthermore, the output also shows the latest version for each dependency.</p>
-<h3 id="npm-doctor-command">npm doctor command<a class="headerlink" href="#npm-doctor-command" title="Permanent link">&para;</a></h3>
-<p>Between the variety of Node.js package managers, and different versions of Node.js you may have installed in your path, how do you verify a healthy npm installation and working environment? Whether you’re working with the npm CLI in a development environment or within a CI, it is important to assess that everything is working as expected.</p>
-<p>Call the doctor! The npm CLI incorporates a health assessment tool to diagnose your environment for a well-working npm interaction. Run <code>npm doctor</code> to review your npm setup:</p>
-<ul>
-<li>Check the official npm registry is reachable, and display the currently configured registry.</li>
-<li>Check that Git is available.</li>
-<li>Review installed npm and Node.js versions.</li>
-<li>Run permission checks on the various folders such as the local and global <code>node_modules</code>, and on the folder used for package cache.</li>
-<li>Check the local npm module cache for checksum correctness.</li>
-</ul>
-<h2 id="5-audit-for-vulnerabilities-in-open-source-dependencies">5) Audit for vulnerabilities in open source dependencies<a class="headerlink" href="#5-audit-for-vulnerabilities-in-open-source-dependencies" title="Permanent link">&para;</a></h2>
-<p>The npm ecosystem is the single largest repository of application libraries amongst all the other language ecosystems. The registry and the libraries in it are at the core for JavaScript developers as they are able to leverage work that others have already built and incorporate it into their codebase. With that said, the increasing adoption of open source libraries in applications brings with it an increased risk of introducing security vulnerabilities.</p>
-<p>Many popular npm packages have been found to be vulnerable and may carry a significant risk without proper security auditing of your project’s dependencies. Some examples are npm <a href="https://snyk.io/vuln/npm:request:20160119">request</a>, <a href="https://snyk.io/vuln/search?q=superagent&amp;type=npm">superagent</a>, <a href="https://snyk.io/vuln/search?q=mongoose&amp;type=npm">mongoose</a>, and even security-related packages like <a href="https://snyk.io/vuln/npm:jsonwebtoken:20150331">jsonwebtoken</a>, and  <a href="https://snyk.io/vuln/search?q=validator&amp;type=npm">validator</a>.</p>
-<p>Security doesn’t end by just scanning for security vulnerabilities when installing a package but should also be streamlined with developer workflows to be effectively adopted throughout the entire lifecycle of software development, and monitored continuously when code is deployed:</p>
-<ul>
-<li>Scan for security vulnerabilities in <a href="https://owasp.org/www-community/Component_Analysis">third-party open source projects</a></li>
-<li>Monitor snapshots of your project's manifests so you can receive alerts when new CVEs impact them</li>
-</ul>
-<h2 id="6-use-a-local-npm-proxy">6) Use a local npm proxy<a class="headerlink" href="#6-use-a-local-npm-proxy" title="Permanent link">&para;</a></h2>
-<p>The npm registry is the biggest collection of packages that is available for all JavaScript developers and is also the home of the most of the Open Source projects for web developers. But sometimes you might have different needs in terms of security, deployments or performance. When this is true, npm allows you to switch to a different registry:</p>
-<p>When you run <code>npm install</code>, it automatically starts a communication with the main registry to resolve all your dependencies; if you wish to use a different registry, that too is pretty straightforward:</p>
-<ul>
-<li>Set <code>npm set registry</code> to set up a default registry.</li>
-<li>Use the argument <code>--registry</code> for one single registry.</li>
-</ul>
-<p><a href="https://verdaccio.org/">Verdaccio</a> is a simple lightweight zero-config-required private registry and installing it is as simple as follows: <code>$ npm install --global verdaccio</code>.</p>
-<p>Hosting your own registry was never so easy! Let’s check the most important features of this tool:</p>
-<ul>
-<li>It supports the npm registry format including private package features, scope support, package access control and authenticated users in the web interface.</li>
-<li>It provides capabilities to hook remote registries and the power to route each dependency to different registries and caching tarballs. To reduce duplicate downloads and save bandwidth in your local development and CI servers, you should proxy all dependencies.</li>
-<li>As an authentication provider by default, it uses an htpasswd security, but also supports Gitlab, Bitbucket, LDAP. You can also use your own.</li>
-<li>It’s easy to scale using a different storage provider.</li>
-<li>If your project is based in Docker, using the official image is the best choice.</li>
-<li>It enables really fast bootstrap for testing environments, and is handy for testing big mono-repos projects.</li>
-</ul>
-<h2 id="7-responsibly-disclose-security-vulnerabilities">7) Responsibly disclose security vulnerabilities<a class="headerlink" href="#7-responsibly-disclose-security-vulnerabilities" title="Permanent link">&para;</a></h2>
-<p>When security vulnerabilities are found, they pose a potentially serious threat if publicly disclosed without prior warning or appropriate mitigation available for users to protect themselves.</p>
-<p>It is recommended that security researchers follow a responsible disclosure program, which is a set of processes and guidelines that aims to connect the researchers with the vendor or maintainer of the vulnerable asset, in order to convey the vulnerability, it’s impact and applicability. Once the vulnerability is correctly triaged, the vendor and researcher coordinate a fix and a publication date for the vulnerability in an effort to provide an upgrade-path or remediation for affected users before the security issue is made public.</p>
-<h2 id="8-enable-2fa">8) Enable 2FA<a class="headerlink" href="#8-enable-2fa" title="Permanent link">&para;</a></h2>
-<p>In October 2017, npm officially announced support for two-factor authentication (2FA) for developers using the npm registry to host their closed and open source packages.</p>
-<p>Even though 2FA has been supported on the npm registry for a while now, it seems to be slowly adopted with one example being the eslint-scope incident in mid-2018 when a stolen developer account on the ESLint team lead to a <a href="https://snyk.io/vuln/npm:eslint-scope">malicious version of eslint-scope</a> being published by bad actors.</p>
-<p>Enabling 2FA is an easy and significant win for an npm security best practices. The registry supports two modes for enabling 2FA in a user’s account:</p>
-<ul>
-<li>Authorization-only—when a user logs in to npm via the website or the CLI, or performs other sets of actions such as changing profile information.</li>
-<li>Authorization and write-mode—profile and log-in actions, as well as write actions such as managing tokens and packages, and minor support for team and package visibility information.</li>
-</ul>
-<p>Equip yourself with an authentication application, such as Google Authentication, which you can install on a mobile device, and you’re ready to get started. One easy way to get started with the 2FA extended protection for your account is through npm’s user interface, which allows enabling it very easily. If you’re a command-line person, it’s also easy to enable 2FA when using a supported npm client version (&gt;=5.5.1):</p>
-<div class="highlight"><pre><span></span><code>npm<span class="w"> </span>profile<span class="w"> </span>enable-2fa<span class="w"> </span>auth-and-writes
+<p>The Mozilla Foundation provides an <a href="https://ssl-config.mozilla.org/">easy-to-use secure configuration generator</a> for web, database and mail servers. This tool allows site administrators to select the software they are using and receive a configuration file that is optimised to balance security and compatibility for a wide variety of browser versions and server software.</p>
+<h3 id="use-strong-diffie-hellman-parameters">Use Strong Diffie-Hellman Parameters<a class="headerlink" href="#use-strong-diffie-hellman-parameters" title="Permanent link">&para;</a></h3>
+<p>Where ciphers that use the ephemeral Diffie-Hellman key exchange are in use (signified by the "DHE" or "EDH" strings in the cipher name) sufficiently secure Diffie-Hellman parameters (at least 2048 bits) should be used</p>
+<p>The following command can be used to generate 2048 bit parameters:</p>
+<div class="highlight"><pre><span></span><code>openssl<span class="w"> </span>dhparam<span class="w"> </span><span class="m">2048</span><span class="w"> </span>-out<span class="w"> </span>dhparam2048.pem
 </code></pre></div>
-<p>Follow the command-line instructions to enable 2FA, and to save emergency authentication codes. If you wish to enable 2FA mode for login and profile changes only, you may replace the <code>auth-and-writes</code> with <code>auth-only</code> in the code as it appears above.</p>
-<h2 id="9-use-npm-author-tokens">9) Use npm author tokens<a class="headerlink" href="#9-use-npm-author-tokens" title="Permanent link">&para;</a></h2>
-<p>Every time you log in with the npm CLI, a token is generated for your user and authenticates you to the npm registry. Tokens make it easy to perform npm registry-related actions during CI and automated procedures, such as accessing private modules on the registry or publishing new versions from a build step.</p>
-<p>Tokens can be managed through the npm registry website, as well as using the npm command-line client. An example of using the CLI to create  a read-only token that is restricted to a specific IPv4 address range is as follows:</p>
-<div class="highlight"><pre><span></span><code>npm<span class="w"> </span>token<span class="w"> </span>create<span class="w"> </span>--read-only<span class="w"> </span>--cidr<span class="o">=</span><span class="m">192</span>.0.2.0/24
-</code></pre></div>
-<p>To verify which tokens are created for your user or to revoke tokens in cases of emergency, you can use <code>npm token list</code> or <code>npm token revoke</code> respectively.</p>
-<p>Ensure you are following this npm security best practice by protecting and minimizing the exposure of your npm tokens.</p>
-<h2 id="10-understand-module-naming-conventions-and-typosquatting-attacks">10) Understand module naming conventions and typosquatting attacks<a class="headerlink" href="#10-understand-module-naming-conventions-and-typosquatting-attacks" title="Permanent link">&para;</a></h2>
-<p>Naming a module is the first thing you might do when creating a package, but before defining a final name, npm defines some rules that a package name must follow:</p>
+<p>The <a href="https://weakdh.org/sysadmin.html">Weak DH</a> website provides guidance on how various web servers can be configured to use these generated parameters.</p>
+<h3 id="disable-compression">Disable Compression<a class="headerlink" href="#disable-compression" title="Permanent link">&para;</a></h3>
+<p>TLS compression should be disabled in order to protect against a vulnerability (nicknamed <a href="https://threatpost.com/crime-attack-uses-compression-ratio-tls-requests-side-channel-hijack-secure-sessions-091312/77006/">CRIME</a>) which could potentially allow sensitive information such as session cookies to be recovered by an attacker.</p>
+<h3 id="patch-cryptographic-libraries">Patch Cryptographic Libraries<a class="headerlink" href="#patch-cryptographic-libraries" title="Permanent link">&para;</a></h3>
+<p>As well as the vulnerabilities in the SSL and TLS protocols, there have also been a large number of historic vulnerability in SSL and TLS libraries, with <a href="http://heartbleed.com">Heartbleed</a> being the most well known. As such, it is important to ensure that these libraries are kept up to date with the latest security patches.</p>
+<h3 id="test-the-server-configuration">Test the Server Configuration<a class="headerlink" href="#test-the-server-configuration" title="Permanent link">&para;</a></h3>
+<p>Once the server has been hardened, the configuration should be tested. The <a href="https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/09-Testing_for_Weak_Cryptography/01-Testing_for_Weak_Transport_Layer_Security">OWASP Testing Guide chapter on SSL/TLS Testing</a> contains further information on testing.</p>
+<p>There are a number of online tools that can be used to quickly validate the configuration of a server, including:</p>
 <ul>
-<li>It is limited to 214 characters</li>
-<li>It cannot start with dot or underscore</li>
-<li>No uppercase letters in the name</li>
-<li>No trailing spaces</li>
-<li>Only lowercase</li>
-<li>Some special characters are not allowed: “~\’!()*”)’</li>
-<li>Can’t start with . or _</li>
-<li>Can’t use node_modules or favicon.ico due are banned</li>
-<li>Even if you follow these rules, be aware that npm uses a spam detection mechanism when publishing new packages, based on score and whether a package name violates the terms of the service. If conditions are violated, the registry might deny the request.</li>
+<li><a href="https://www.ssllabs.com/ssltest">SSL Labs Server Test</a></li>
+<li><a href="https://cryptcheck.fr/">CryptCheck</a></li>
+<li><a href="https://www.hardenize.com/">Hardenize</a></li>
+<li><a href="https://www.immuniweb.com/ssl/">ImmuniWeb</a></li>
+<li><a href="https://observatory.mozilla.org">Observatory by Mozilla</a></li>
+<li><a href="https://scanigma.com">Scanigma</a></li>
+<li><a href="https://purpleteam-labs.com/">OWASP PurpleTeam</a> <code>cloud</code></li>
 </ul>
-<p>Typosquatting is an attack that relies on mistakes made by users, such as typos. With typosquatting, bad actors could publish malicious modules to the npm registry with names that look much like existing popular modules.</p>
-<p>We have been tracking tens of malicious packages in the npm ecosystem; they have been seen on the PyPi Python registry as well. Perhaps some of the most popular incidents have been for <a href="https://snyk.io/vuln/npm:crossenv:20170802">cross-env</a>, <a href="https://snyk.io/vuln/SNYK-JS-EVENTSTREAM-72638">event-stream</a>, and <a href="https://snyk.io/vuln/npm:eslint-scope:20180712">eslint-scope</a>.</p>
-<p>One of the main targets for typosquatting attacks are the user credentials, since any package has access to environment variables via the global variable process.env. Other examples we’ve seen in the past include the case with event-stream, where the attack targeted developers in the hopes of <a href="https://snyk.io/blog/a-post-mortem-of-the-malicious-event-stream-backdoor">injecting malicious code</a> into an application’s source code.</p>
-<p>Closing our list of ten npm security best practices are the following tips to reduce the risk of such attacks:</p>
+<p>Additionally, there are a number of offline tools that can be used:</p>
 <ul>
-<li>Be extra-careful when copy-pasting package installation instructions into the terminal. Make sure to verify in the source code repository as well as on the npm registry that this is indeed the package you are intending to install. You might verify the metadata of the package with <code>npm info</code> to fetch more information about contributors and latest versions.</li>
-<li>Default to having an npm logged-out user in your daily work routines so your credentials won’t be the weak spot that would lead to easily compromising your account.</li>
-<li>When installing packages, append the <code>--ignore-scripts</code> to reduce the risk of arbitrary command execution. For example: <code>npm install my-malicious-package --ignore-scripts</code></li>
+<li><a href="https://wiki.owasp.org/index.php/O-Saft">O-Saft - OWASP SSL advanced forensic tool</a></li>
+<li><a href="https://github.com/mozilla/cipherscan">CipherScan</a></li>
+<li><a href="https://gitlab.com/coroner/cryptolyzer">CryptoLyzer</a></li>
+<li><a href="https://github.com/rbsec/sslscan">SSLScan - Fast SSL Scanner</a></li>
+<li><a href="https://github.com/nabla-c0d3/sslyze">SSLyze</a></li>
+<li><a href="https://testssl.sh">testssl.sh - Testing any TLS/SSL encryption</a></li>
+<li><a href="https://github.com/prbinu/tls-scan">tls-scan</a></li>
+<li><a href="https://purpleteam-labs.com/">OWASP PurpleTeam</a> <code>local</code></li>
+</ul>
+<h2 id="certificates">Certificates<a class="headerlink" href="#certificates" title="Permanent link">&para;</a></h2>
+<h3 id="use-strong-keys-and-protect-them">Use Strong Keys and Protect Them<a class="headerlink" href="#use-strong-keys-and-protect-them" title="Permanent link">&para;</a></h3>
+<p>The private key used to generate the cipher key must be sufficiently strong for the anticipated lifetime of the private key and corresponding certificate. The current best practice is to select a key size of at least 2048 bits. Additional information on key lifetimes and comparable key strengths can be found <a href="http://www.keylength.com/en/compare/">here</a> and in <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf">NIST SP 800-57</a>.</p>
+<p>The private key should also be protected from unauthorized access using filesystem permissions and other technical and administrative controls.</p>
+<h3 id="use-strong-cryptographic-hashing-algorithms">Use Strong Cryptographic Hashing Algorithms<a class="headerlink" href="#use-strong-cryptographic-hashing-algorithms" title="Permanent link">&para;</a></h3>
+<p>Certificates should use SHA-256 for the hashing algorithm, rather than the older MD5 and SHA-1 algorithms. These have a number of cryptographic weaknesses, and are not trusted by modern browsers.</p>
+<h3 id="use-correct-domain-names">Use Correct Domain Names<a class="headerlink" href="#use-correct-domain-names" title="Permanent link">&para;</a></h3>
+<p>The domain name (or subject) of the certificate must match the fully qualified name of the server that presents the certificate. Historically this was stored in the <code>commonName</code> (CN) attribute of the certificate. However, modern versions of Chrome ignore the CN attribute, and require that the FQDN is in the <code>subjectAlternativeName</code> (SAN) attribute. For compatibility reasons, certificates should have the primary FQDN in the CN, and the full list of FQDNs in the SAN.</p>
+<p>Additionally, when creating the certificate, the following should be taken into account:</p>
+<ul>
+<li>Consider whether the "www" subdomain should also be included.</li>
+<li>Do not include non-qualified hostnames.</li>
+<li>Do not include IP addresses.</li>
+<li>Do not include internal domain names on externally facing certificates.<ul>
+<li>If a server is accessible using both internal and external FQDNs, configure it with multiple certificates.</li>
+</ul>
+</li>
+</ul>
+<h3 id="carefully-consider-the-use-of-wildcard-certificates">Carefully Consider the use of Wildcard Certificates<a class="headerlink" href="#carefully-consider-the-use-of-wildcard-certificates" title="Permanent link">&para;</a></h3>
+<p>Wildcard certificates can be convenient, however they violate <a href="https://wiki.owasp.org/index.php/Least_privilege">the principal of least privilege</a>, as a single certificate is valid for all subdomains of a domain (such as *.example.org). Where multiple systems are sharing a wildcard certificate, the likelihood that the private key for the certificate is compromised increases, as the key may be present on multiple systems. Additionally, the value of this key is significantly increased, making it a more attractive target for attackers.</p>
+<p>The issues around the use of wildcard certificates are complicated, and there are <a href="https://blog.sean-wright.com/wildcard-certs-not-quite-the-star/">various</a> other <a href="https://gist.github.com/joepie91/7e5cad8c0726fd6a5e90360a754fc568">discussions</a> of them online.</p>
+<p>When risk assessing the use of wildcard certificates, the following areas should be considered:</p>
+<ul>
+<li>Only use wildcard certificates where there is a genuine need, rather than for convenience.<ul>
+<li>Consider the use of the <a href="https://en.wikipedia.org/wiki/Automated_Certificate_Management_Environment">ACME</a> to allow systems to automatically request and update their own certificates instead.</li>
+</ul>
+</li>
+<li>Never use a wildcard certificates for systems at different trust levels.<ul>
+<li>Two VPN gateways could use a shared wildcard certificate.</li>
+<li>Multiple instances of a web application could share a certificate.</li>
+<li>A VPN gateway and a public webserver <strong>should not</strong> share a wildcard certificate.</li>
+<li>A public webserver and an internal server <strong>should not</strong> share a wildcard certificate.</li>
+</ul>
+</li>
+<li>Consider the use of a reverse proxy server which performs TLS termination, so that the wildcard private key is only present on one system.</li>
+<li>A list of all systems sharing a certificate should be maintained to allow them all to be updated if the certificate expires or is compromised.</li>
+<li>Limit the scope of a wildcard certificate by issuing it for a subdomain (such as <code>*.foo.example.org</code>), or a for a separate domain.</li>
+</ul>
+<h3 id="use-an-appropriate-certification-authority-for-the-applications-user-base">Use an Appropriate Certification Authority for the Application's User Base<a class="headerlink" href="#use-an-appropriate-certification-authority-for-the-applications-user-base" title="Permanent link">&para;</a></h3>
+<p>In order to be trusted by users, certificates must be signed by a trusted certificate authority (CA). For Internet facing applications, this should be one of the CAs which are well-known and automatically trusted by operating systems and browsers.</p>
+<p>The <a href="https://letsencrypt.org">LetsEncrypt</a> CA provides free domain validated SSL certificates, which are trusted by all major browsers. As such, consider whether there are any benefits to purchasing a certificate from a CA.</p>
+<p>For internal applications, an internal CA can be used. This means that the FQDN of the certificate will not be exposed (either to an external CA, or publicly in certificate transparency lists). However, the certificate will only be trusted by users who have imported and trusted the internal CA certificate that was used to sign them.</p>
+<h3 id="use-caa-records-to-restrict-which-cas-can-issue-certificates">Use CAA Records to Restrict Which CAs can Issue Certificates<a class="headerlink" href="#use-caa-records-to-restrict-which-cas-can-issue-certificates" title="Permanent link">&para;</a></h3>
+<p>Certification Authority Authorization (CAA) DNS records can be used to define which CAs are permitted to issue certificates for a domain. The records contains a list of CAs, and any CA who is not included in that list should refuse to issue a certificate for the domain. This can help to prevent an attacker from obtaining unauthorized certificates for a domain through a less-reputable CA. Where it is applied to all subdomains, it can also be useful from an administrative perspective by limiting which CAs administrators or developers are able to use, and by preventing them from obtaining unauthorized wildcard certificates.</p>
+<h3 id="always-provide-all-needed-certificates">Always Provide All Needed Certificates<a class="headerlink" href="#always-provide-all-needed-certificates" title="Permanent link">&para;</a></h3>
+<p>In order to validate the authenticity of a certificate, the user's browser must examine the certificate that was used to sign it and compare it to the list of CAs trusted by their system. In many cases the certificate is not directly signed by a root CA, but is instead signed by an intermediate CA, which is in turn signed by the root CA.</p>
+<p>If the user does not know or trust this intermediate CA then the certificate validation will fail, even if the user trusts the ultimate root CA, as they cannot establish a chain of trust between the certificate and the root. In order to avoid this, any intermediate certificates should be provided alongside the main certificate.</p>
+<h3 id="consider-the-use-of-extended-validation-certificates">Consider the use of Extended Validation Certificates<a class="headerlink" href="#consider-the-use-of-extended-validation-certificates" title="Permanent link">&para;</a></h3>
+<p>Extended validation (EV) certificates claim to provide a higher level of verification of the entity, as they perform checks that the requestor is a legitimate legal entity, rather than just verifying the ownership of the domain name like normal (or "Domain Validated") certificates. This can effectively be viewed as the difference between "This site is really run by Example Company Inc." vs "This domain is really example.org".</p>
+<p>Historically these displayed differently in the browser, often showing the company name or a green icon or background in the address bar. However, as of 2019 both <a href="https://groups.google.com/a/chromium.org/forum/m/#!msg/security-dev/h1bTcoTpfeI/jUTk1z7VAAAJ">Chrome</a> and <a href="https://groups.google.com/forum/m/?fromgroups&amp;hl=en#!topic/firefox-dev/6wAg_PpnlY4">Firefox</a> have announced that they will be removing these indicators, as they do not believe that EV certificates provide any additional protection.</p>
+<p>There is no security downside to the use of EV certificates. However, as they are significantly more expensive than domain validated certificates, an assessment should be made to determine whether they provide any additional value.</p>
+<h2 id="application">Application<a class="headerlink" href="#application" title="Permanent link">&para;</a></h2>
+<h3 id="use-tls-for-all-pages">Use TLS For All Pages<a class="headerlink" href="#use-tls-for-all-pages" title="Permanent link">&para;</a></h3>
+<p>TLS should be used for all pages, not just those that are considered sensitive such as the login page. If there are any pages that do not enforce the use of TLS, these could give an attacker an opportunity to sniff sensitive information such as session tokens, or to inject malicious JavaScript into the responses to carry out other attacks against the user.</p>
+<p>For public facing applications, it may be appropriate to have the web server listening for unencrypted HTTP connections on port 80, and then immediately redirecting them with a permanent redirect (HTTP 301) in order to provide a better experience to users who manually type in the domain name. This should then be supported with the <a href="#use-http-strict-transport-security">HTTP Strict Transport Security (HSTS)</a> header to prevent them accessing the site over HTTP in the future.</p>
+<h3 id="do-not-mix-tls-and-non-tls-content">Do Not Mix TLS and Non-TLS Content<a class="headerlink" href="#do-not-mix-tls-and-non-tls-content" title="Permanent link">&para;</a></h3>
+<p>A page that is available over TLS should not include any resources (such as JavaScript or CSS) files which are loaded over unencrypted HTTP. These unencrypted resources could allow an attacker to sniff session cookies or inject malicious code into the page. Modern browsers will also block attempts to load active content over unencrypted HTTP into secure pages.</p>
+<h3 id="use-the-secure-cookie-flag">Use the "Secure" Cookie Flag<a class="headerlink" href="#use-the-secure-cookie-flag" title="Permanent link">&para;</a></h3>
+<p>All cookies should be marked with the "<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#Secure_and_HttpOnly_cookies">Secure</a>" attribute, which instructs the browser to only send them over encrypted HTTPS connections, in order to prevent them from being sniffed from an unencrypted HTTP connection. This is important even if the website does not listen on HTTP (port 80), as an attacker performing an active man in the middle attack could present a spoofed webserver on port 80 to the user in order to steal their cookie.</p>
+<h3 id="prevent-caching-of-sensitive-data">Prevent Caching of Sensitive Data<a class="headerlink" href="#prevent-caching-of-sensitive-data" title="Permanent link">&para;</a></h3>
+<p>Although TLS provides protection of data while it is in transit, it does not provide any protection for data once it has reached the requesting system. As such, this information may be stored in the cache of the user's browser, or by any intercepting proxies which are configured to perform TLS decryption.</p>
+<p>Where sensitive data is returned in responses, HTTP headers should be used to instruct the browser and any proxy servers not to cache the information, in order to prevent it being stored or returned to other users. This can be achieved by setting the following HTTP headers in the response:</p>
+<div class="highlight"><pre><span></span><code>Cache-Control: no-cache, no-store, must-revalidate
+Pragma: no-cache
+Expires: 0
+</code></pre></div>
+<h3 id="use-http-strict-transport-security">Use HTTP Strict Transport Security<a class="headerlink" href="#use-http-strict-transport-security" title="Permanent link">&para;</a></h3>
+<p>HTTP Strict Transport Security (HSTS) instructs the user's browser to always request the site over HTTPS, and also prevents the user from bypassing certificate warnings. See the <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html">HTTP Strict Transport Security Cheat Sheet</a> for further information on implementing HSTS.</p>
+<h3 id="client-certificates-and-mutual-tls">Client Certificates and Mutual TLS<a class="headerlink" href="#client-certificates-and-mutual-tls" title="Permanent link">&para;</a></h3>
+<p>In a typical TLS configuration, a certificate on the server allows the client to verify the server's identity and provides an encrypted connection between them. However, this approach has two main weaknesses:</p>
+<ul>
+<li>The server lacks a mechanism to verify the client's identity.</li>
+<li>An attacker, obtaining a valid certificate for the domain, can intercept the connection. This interception is often used by businesses to inspect TLS traffic, by installing a trusted CA certificate on their client systems.</li>
+</ul>
+<p>Client certificates, central to mutual TLS (mTLS), address these issues. In mTLS, both the client and server authenticate each other using TLS. The client proves their identity to the server with their own certificate. This not only enables strong authentication of the client but also prevents an intermediate party from decrypting TLS traffic, even if they have a trusted CA certificate on the client system.</p>
+<p>Challenges and Considerations</p>
+<p>Client certificates are rarely used in public systems due to several challenges:</p>
+<ul>
+<li>Issuing and managing client certificates involves significant administrative overhead.</li>
+<li>Non-technical users may find installing client certificates difficult.</li>
+<li>Organizations' TLS decryption practices can cause client certificate authentication, a key component of mTLS, to fail.</li>
+</ul>
+<p>Despite these challenges, client certificates and mTLS should be considered for high-value applications or APIs, particularly where users are technically sophisticated or part of the same organization.</p>
+<h3 id="public-key-pinning">Public Key Pinning<a class="headerlink" href="#public-key-pinning" title="Permanent link">&para;</a></h3>
+<p>Public key pinning can be used to provides assurance that the server's certificate is not only valid and trusted, but also that it matches the certificate expected for the server. This provides protection against an attacker who is able to obtain a valid certificate, either by exploiting a weakness in the validation process, compromising a trusted certificate authority, or having administrative access to the client.</p>
+<p>Public key pinning was added to browsers in the HTTP Public Key Pinning (HPKP) standard. However, due to a number of issues, it has subsequently been deprecated and is no longer recommended or <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Public-Key-Pins">supported by modern browsers</a>.</p>
+<p>However, public key pinning can still provide security benefits for mobile applications, thick clients and server-to-server communication. This is discussed in further detail in the <a href="Pinning_Cheat_Sheet.html">Pinning Cheat Sheet</a>.</p>
+<h2 id="related-articles">Related Articles<a class="headerlink" href="#related-articles" title="Permanent link">&para;</a></h2>
+<ul>
+<li>OWASP - <a href="https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/09-Testing_for_Weak_Cryptography/01-Testing_for_Weak_Transport_Layer_Security">Testing for Weak TLS</a></li>
+<li>OWASP - <a href="https://github.com/OWASP/ASVS/blob/v4.0.1/4.0/en/0x17-V9-Communications.md">Application Security Verification Standard (ASVS) - Communication Security Verification Requirements (V9)</a></li>
+<li>Mozilla - <a href="https://wiki.mozilla.org/Security/Server_Side_TLS#Recommended_configurations">Mozilla Recommended Configurations</a></li>
+<li>NIST - <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-52r2.pdf">SP 800-52 Rev. 2 Guidelines for the Selection, Configuration, and Use of Transport Layer Security (TLS) Implementations</a></li>
+<li>NIST - <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf">NIST SP 800-57 Recommendation for Key Management, Revision 5</a></li>
+<li>NIST - <a href="https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-95.pdf">SP 800-95 Guide to Secure Web Services</a></li>
+<li>IETF - <a href="https://tools.ietf.org/html/rfc5280">RFC 5280 Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile</a></li>
+<li>IETF - <a href="https://tools.ietf.org/html/rfc2246">RFC 2246 The Transport Layer Security (TLS) Protocol Version 1.0 (JAN 1999)</a></li>
+<li>IETF - <a href="https://tools.ietf.org/html/rfc4346">RFC 4346 The Transport Layer Security (TLS) Protocol Version 1.1 (APR 2006)</a></li>
+<li>IETF - <a href="https://tools.ietf.org/html/rfc5246">RFC 5246 The Transport Layer Security (TLS) Protocol Version 1.2 (AUG 2008)</a></li>
+<li>Bettercrypto - <a href="https://bettercrypto.org">Applied Crypto Hardening: HOWTO for secure crypto settings of the most common services)</a></li>
 </ul>
 
 
