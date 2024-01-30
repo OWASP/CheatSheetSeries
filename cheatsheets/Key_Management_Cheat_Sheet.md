@@ -116,7 +116,7 @@ Plan for the recovery from possible corruption of the memory media necessary for
 
 ### Perfect Forward Secrecy
 
-[Ephemeral keys](https://en.wikipedia.org/wiki/Ephemeral_key) can provide perfect forward secrecy protection, which means a compromise of the server's long term signing key does not compromise the confidentiality of past sessions. Refer to [TLS cheat sheet](Transport_Layer_Protection_Cheat_Sheet.md).
+[Ephemeral keys](https://en.wikipedia.org/wiki/Ephemeral_key) can provide perfect forward secrecy protection, which means a compromise of the server's long term signing key does not compromise the confidentiality of past sessions. Refer to [TLS cheat sheet](Transport_Layer_Security_Cheat_Sheet.md).
 
 ### Key Usage
 
