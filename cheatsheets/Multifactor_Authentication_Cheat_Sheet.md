@@ -38,7 +38,7 @@ Exactly when and how MFA is implemented in an application will vary on a number 
 However, the following recommendations are generally appropriate for most applications, and provide an initial starting point to consider.
 
 - Require some form of MFA for all users.
-- Provide the option for users to enable MFA on their accounts using [TOTP](#software-totp-tokens).
+- Provide the option for users to enable MFA on their accounts using [TOTP](#software-otp-tokens).
 - Require MFA for administrative or other high privileged users.
 - Implement a secure procedure to allow users to reset their MFA.
 - Consider [MFA as a service](#consider-using-a-third-party-service).
@@ -305,7 +305,6 @@ The are a number of common types of biometrics that are used, including:
 
 - Well-implemented biometrics are hard to spoof, and require a targeted attack.
 - Fast and convenient for users.
-
 
 #### Cons
 
