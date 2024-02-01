@@ -251,7 +251,7 @@ By default, the Docker daemon is configured to have a base logging level of 'inf
 To configure the log level in Docker Compose:
 
 ```bash
-docker compose --log-level info up
+docker compose --log-level info up -d
 ```
 
 ### Rule \#11 - Lint the Dockerfile at build time
@@ -284,6 +284,31 @@ Rootless mode graduated from experimental in Docker Engine v20.10 and should be 
 > Rootless mode was introduced in Docker Engine v19.03 as an experimental feature. Rootless mode graduated from experimental in Docker Engine v20.10.
 
 Read more about rootless mode and its limitations, installation and usage instructions on [Docker documentation](https://docs.docker.com/engine/security/rootless/) page.
+
+### RULE \#13 - Utilize Docker Secrets for Sensitive Data Management
+
+Docker Secrets provide a secure way to store and manage sensitive data such as passwords, tokens, and SSH keys. Using Docker Secrets helps in avoiding the exposure of sensitive data in container images or in runtime commands.
+
+```bash
+docker secret create my_secret /path/to/super-secret-data.txt
+docker service create --name web --secret my_secret nginx:latest
+```
+
+Or for Docker Compose:
+
+```yaml
+  version: "3.8"
+  secrets:
+    my_secret:
+      file: ./super-secret-data.txt
+  services:
+    web:
+      image: nginx:latest
+      secrets:
+        - my_secret
+```
+
+While Docker Secrets are generally, this approach is not recommended for Kubernetes, where secrets are stored in plaintext by default. In Kubernetes, consider using additional security measures such as etcd encryption, or third-party tools. Refer to the [Secrets Management Cheat Sheet](Secrets_Management_Cheat_Sheet.md) for more information.
 
 ## References and Further Reading
 
