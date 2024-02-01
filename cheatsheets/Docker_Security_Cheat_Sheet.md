@@ -12,7 +12,7 @@ The aim of this cheat sheet is to provide a straightforward list of common secur
 
 To prevent known container escapes vulnerabilities, which typically result in the attacker gaining root access to the host, it is crucial to keep the host and Docker up to date. This includes the host kernel and Docker Engine.
 
-This is due to the fact that containers share the host's kernel. If the host's kernel is vulnerable, the containers are also vulnerable. For example, the kernel privilege escalation exploit ([Dirty COW](https://github.com/scumjr/dirtycow-vdso)) executed inside a well-insulated container would still result in root access on a vulnerable host.
+This is due to the fact that containers share the host's kernel. If the host's kernel is vulnerable, the containers are also vulnerable. For example, the kernel privilege escalation exploit [Dirty COW](https://github.com/scumjr/dirtycow-vdso) executed inside a well-insulated container would still result in root access on a vulnerable host.
 
 ### RULE \#1 - Do not expose the Docker daemon socket (even to the containers)
 
@@ -109,7 +109,7 @@ spec:
 
 As a Kubernetes cluster administrator, you can configure it using [Pod Security Policies](https://kubernetes.io/docs/concepts/policy/pod-security-policy/).
 
-### RULE \#4 - Prevent in container privilege escalation
+### RULE \#4 - Prevent in-container privilege escalation
 
 Always run your docker images with `--security-opt=no-new-privileges` in order to prevent privilege escalation. This will prevent the container from gaining new privileges via `setuid` or `setgid` binaries.
 
@@ -133,7 +133,7 @@ spec:
 
 As a Kubernetes cluster administrator, you can refer to Kubernetes documentation to configure it using [Pod Security Policies](https://kubernetes.io/docs/concepts/policy/pod-security-policy/).
 
-### RULE \#5 - Be mindful of Inter Container Connectivity
+### RULE \#5 - Be mindful of Inter-Container Connectivity
 
 Inter Container Connectivity (icc) is enabled by default, allowing all containers to communicate with each other through the [`docker0` bridged network](https://docs.docker.com/network/drivers/bridge/). Instead of using the --icc=false flag with the Docker daemon, which completely disables inter-container communication, consider defining specific network configurations. This can be achieved by creating custom Docker networks and specifying which containers should be attached to them. This method provides more granular control over container communication.
 
