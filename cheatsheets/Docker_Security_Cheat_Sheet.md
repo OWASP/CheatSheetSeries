@@ -2,17 +2,17 @@
 
 ## Introduction
 
-Docker is the most popular containerization technology. Upon proper use, it can increase the level of security (in comparison to running applications directly on the host). On the other hand, some misconfigurations can lead to downgrade the level of security or even introduce new vulnerabilities.
+Docker is the most popular containerization technology. When used correctly, it can enhance security compared to running applications directly on the host system. However, certain misconfigurations can reduce security levels or introduce new vulnerabilities.
 
-The aim of this cheat sheet is to provide an easy to use list of common security mistakes and good practices that will help you secure your Docker containers.
+The aim of this cheat sheet is to provide a straightforward list of common security errors and best practices to assist in securing your Docker containers.
 
 ## Rules
 
 ### RULE \#0 - Keep Host and Docker up to date
 
-To prevent from known, container escapes vulnerabilities, which typically end in escalating to root/administrator privileges, patching Docker Engine and Docker Machine is crucial.
+To prevent known container escapes vulnerabilities, which typically result in the attacker gaining root access to the host, it is crucial to keep the host and Docker up to date. This includes the host kernel and Docker Engine.
 
-In addition, containers (unlike in virtual machines) share the kernel with the host, therefore kernel exploits executed inside the container will directly hit host kernel. For example, kernel privilege escalation exploit ([like Dirty COW](https://github.com/scumjr/dirtycow-vdso)) executed inside a well-insulated container will result in root access in a host.
+This is due to the fact that containers share the host's kernel. If the host's kernel is vulnerable, the containers are also vulnerable. For example, the kernel privilege escalation exploit ([Dirty COW](https://github.com/scumjr/dirtycow-vdso)) executed inside a well-insulated container would still result in root access on a vulnerable host.
 
 ### RULE \#1 - Do not expose the Docker daemon socket (even to the containers)
 
@@ -21,11 +21,11 @@ Docker socket */var/run/docker.sock* is the UNIX socket that Docker is listening
 **Do not enable *tcp* Docker daemon socket.** If you are running docker daemon with `-H tcp://0.0.0.0:XXX` or similar you are exposing un-encrypted and unauthenticated direct access to the Docker daemon, if the host is internet connected this means the docker daemon on your computer can be used by anyone from the public internet.
 If you really, **really** have to do this, you should secure it. Check how to do this [following Docker official documentation](https://docs.docker.com/engine/reference/commandline/dockerd/#daemon-socket-option).
 
-**Do not expose */var/run/docker.sock* to other containers**. If you are running your docker image with `-v /var/run/docker.sock://var/run/docker.sock` or similar, you should change it. Remember that mounting the socket read-only is not a solution but only makes it harder to exploit. Equivalent in the docker-compose file is something like this:
+**Do not expose */var/run/docker.sock* to other containers**. If you are running your docker image with `-v /var/run/docker.sock://var/run/docker.sock` or similar, you should change it. Remember that mounting the socket read-only is not a solution but only makes it harder to exploit. Equivalent in the docker compose file is something like this:
 
 ```yaml
-volumes:
-- "/var/run/docker.sock:/var/run/docker.sock"
+    volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock"
 ```
 
 ### RULE \#2 - Set a user
@@ -85,7 +85,7 @@ docker run --cap-drop all --cap-add CHOWN alpine
 
 **And remember: Do not run containers with the *--privileged* flag!!!**
 
-In kubernetes this can be configured in [Security Context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) using `capabilities` field e.g.:
+In Kubernetes this can be configured in [Security Context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) using `capabilities` field e.g.:
 
 ```yaml
 kind: ...
@@ -109,11 +109,11 @@ spec:
 
 As a Kubernetes cluster administrator, you can configure it using [Pod Security Policies](https://kubernetes.io/docs/concepts/policy/pod-security-policy/).
 
-### RULE \#4 - Add –no-new-privileges flag
+### RULE \#4 - Prevent in container privilege escalation
 
-Always run your docker images with `--security-opt=no-new-privileges` in order to prevent escalate privileges using `setuid` or `setgid` binaries.
+Always run your docker images with `--security-opt=no-new-privileges` in order to prevent privilege escalation. This will prevent the container from gaining new privileges via `setuid` or `setgid` binaries.
 
-In kubernetes, this can be configured in [Security Context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) using `allowPrivilegeEscalation` field e.g.:
+In Kubernetes, this can be configured in [Security Context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) using `allowPrivilegeEscalation` field e.g.:
 
 ```yaml
 kind: ...
@@ -133,14 +133,13 @@ spec:
 
 As a Kubernetes cluster administrator, you can refer to Kubernetes documentation to configure it using [Pod Security Policies](https://kubernetes.io/docs/concepts/policy/pod-security-policy/).
 
-### RULE \#5 - Disable inter-container communication (--icc=false)
+### RULE \#5 - Be mindful of Inter Container Connectivity
 
-By default inter-container communication (icc) is enabled - it means that all containers can talk with each other (using [`docker0` bridged network](https://docs.docker.com/v17.09/engine/userguide/networking/default_network/container-communication/#communication-between-containers)).
-This can be disabled by running docker daemon with `--icc=false` flag.
-If icc is disabled (icc=false) it is required to tell which containers can communicate using --link=CONTAINER_NAME_or_ID:ALIAS option.
-See more in [Docker documentation - container communication](https://docs.docker.com/v17.09/engine/userguide/networking/default_network/container-communication/#communication-between-containers)
+Inter Container Connectivity (icc) is enabled by default, allowing all containers to communicate with each other through the [`docker0` bridged network](https://docs.docker.com/network/drivers/bridge/). Instead of using the --icc=false flag with the Docker daemon, which completely disables inter-container communication, consider defining specific network configurations. This can be achieved by creating custom Docker networks and specifying which containers should be attached to them. This method provides more granular control over container communication.
 
-In Kubernetes [Network Policies](https://kubernetes.io/docs/concepts/services-networking/network-policies/) can be used for it.
+For detailed guidance on configuring Docker networks for container communication, refer to the [Docker Documentation](https://docs.docker.com/network/#communication-between-containers).
+
+In Kubernetes environments, [Network Policies](https://kubernetes.io/docs/concepts/services-networking/network-policies/) can be used to define rules that regulate pod interactions within the cluster. These policies provide a robust framework to control how pods communicate with each other and with other network endpoints. Additionally, [Network Policy Editor](https://networkpolicy.io/) simplifies the creation and management of network policies, making it more accessible to define complex networking rules through a user-friendly interface.
 
 ### RULE \#6 - Use Linux Security Module (seccomp, AppArmor, or SELinux)
 
@@ -156,8 +155,7 @@ The best way to avoid DoS attacks is by limiting resources. You can limit [memor
 
 [Check documentation for more details about ulimits](https://docs.docker.com/engine/reference/commandline/run/#set-ulimits-in-container---ulimit)
 
-You can also do this inside Kubernetes: [Assign Memory Resources to Containers and Pods](https://kubernetes.io/docs/tasks/configure-pod-container/assign-memory-resource/), [Assign CPU Resources to Containers and Pods](https://kubernetes.io/docs/tasks/configure-pod-container/assign-cpu-resource/) and [Assign Extended Resources to a Container
-](https://kubernetes.io/docs/tasks/configure-pod-container/extended-resource/)
+You can also do this for Kubernetes: [Assign Memory Resources to Containers and Pods](https://kubernetes.io/docs/tasks/configure-pod-container/assign-memory-resource/), [Assign CPU Resources to Containers and Pods](https://kubernetes.io/docs/tasks/configure-pod-container/assign-cpu-resource/) and [Assign Extended Resources to a Container](https://kubernetes.io/docs/tasks/configure-pod-container/extended-resource/)
 
 ### RULE \#8 - Set filesystem and volumes to read-only
 
@@ -173,7 +171,7 @@ If an application inside a container has to save something temporarily, combine 
 docker run --read-only --tmpfs /tmp alpine sh -c 'echo "whatever" > /tmp/file'
 ```
 
-Equivalent in the docker-compose file will be:
+The Docker Compose `compose.yml` equivalent would be:
 
 ```yaml
 version: "3"
@@ -183,7 +181,7 @@ services:
     read_only: true
 ```
 
-Equivalent in kubernetes in [Security Context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) will be:
+Equivalent in Kubernetes in [Security Context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) will be:
 
 ```yaml
 kind: ...
@@ -221,10 +219,10 @@ To detect containers with known vulnerabilities - scan images using static analy
 - Free
     - [Clair](https://github.com/coreos/clair)
     - [ThreatMapper](https://github.com/deepfence/ThreatMapper)
-    - [Trivy](https://github.com/knqyf263/trivy)
+    - [Trivy](https://github.com/aquasecurity/trivy)
 - Commercial
     - [Snyk](https://snyk.io/) **(open source and free option available)**
-    - [anchore](https://anchore.com/opensource/) **(open source and free option available)**
+    - [Anchore](https://github.com/anchore/grype/) **(open source and free option available)**
     - [Docker Scout](https://www.docker.com/products/docker-scout/) **(open source and free option available)**
     - [JFrog XRay](https://jfrog.com/xray/)
     - [Qualys](https://www.qualys.com/apps/container-security/)
@@ -250,10 +248,10 @@ To detect misconfigurations in Docker:
 
 By default, the Docker daemon is configured to have a base logging level of 'info', and if this is not the case: set the Docker daemon log level to 'info'. Rationale: Setting up an appropriate log level, configures the Docker daemon to log events that you would want to review later. A base log level of 'info' and above would capture all logs except the debug logs. Until and unless required, you should not run docker daemon at the 'debug' log level.
 
-To configure the log level in docker-compose:
+To configure the log level in Docker Compose:
 
 ```bash
-docker-compose --log-level info up
+docker compose --log-level info up
 ```
 
 ### Rule \#11 - Lint the Dockerfile at build time
@@ -270,7 +268,7 @@ References:
 
 - [Docker Baselines on DevSec](https://dev-sec.io/baselines/docker/)
 - [Use the Docker command line](https://docs.docker.com/engine/reference/commandline/cli/)
-- [Overview of docker-compose CLI](https://docs.docker.com/compose/reference/overview/)
+- [Overview of Docker Compose v2 CLI](https://docs.docker.com/compose/reference/overview/)
 - [Configuring Logging Drivers](https://docs.docker.com/config/containers/logging/configure/)
 - [View logs for a container or service](https://docs.docker.com/config/containers/logging/)
 - [Dockerfile Security Best Practices](https://cloudberry.engineering/article/dockerfile-security-best-practices/)
@@ -287,6 +285,8 @@ Rootless mode graduated from experimental in Docker Engine v20.10 and should be 
 
 Read more about rootless mode and its limitations, installation and usage instructions on [Docker documentation](https://docs.docker.com/engine/security/rootless/) page.
 
-## Related Projects
+## References and Further Reading
 
 [OWASP Docker Top 10](https://github.com/OWASP/Docker-Security)
+[Docker Security Best Practices](https://docs.docker.com/develop/security-best-practices/)
+[Docker Engine Security](https://docs.docker.com/engine/security/)
