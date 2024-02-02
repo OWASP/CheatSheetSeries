@@ -14,7 +14,7 @@ Generally, the two dimensions of each authorization should be listed in a spread
 
 ## Objective
 
-This cheat sheet is designed to help you generate your own approaches to automating authorization tests in an authorization matrix. Since developers will need to design their own approach to automating authorization tests, **this cheat sheet will show a possible approach to automating authorization tests for one possible implementation of an application that exposes REST Services.** 
+This cheat sheet is designed to help you generate your own approaches to automating authorization tests in an authorization matrix. Since developers will need to design their own approach to automating authorization tests, **this cheat sheet will show a possible approach to automating authorization tests for one possible implementation of an application that exposes REST Services.**
 
 ## Proposition
 
@@ -122,7 +122,7 @@ This XML structure has three main sections (or nodes):
 
 ### Implementing an integration test
 
-**To create an integration test, you should use a maximum of factorized code and one test case by **Point Of View (POV)** so the verifications can be profiled by access level (logical role). This will facilitate the rendering/identification of the errors.**
+**To create an integration test, you should use a maximum of factorized code and one test case by Point Of View (POV) so the verifications can be profiled by access level (logical role). This will facilitate the rendering/identification of the errors.**
 
 In this integration test, we have implemented parsing, object mapping and access to the authorization matrix by marshalling XML into a Java object and unmarshalling the object back into XML These features are used to implement the tests (JAXB here) and limit the code to the developer in charge of performing the tests.
 
