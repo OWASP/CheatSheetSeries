@@ -1485,8 +1485,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#only-use-authorized-iumages-in-your-environment" class="md-nav__link">
-    Only use authorized iumages in Your environment
+  <a href="#only-use-authorized-images-in-your-environment" class="md-nav__link">
+    Only use authorized images in Your environment
   </a>
   
 </li>
@@ -3124,8 +3124,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#only-use-authorized-iumages-in-your-environment" class="md-nav__link">
-    Only use authorized iumages in Your environment
+  <a href="#only-use-authorized-images-in-your-environment" class="md-nav__link">
+    Only use authorized images in Your environment
   </a>
   
 </li>
@@ -3794,12 +3794,12 @@ Description: The container runtime is the software that is responsible for runni
 <p>--</p>
 <h3 id="what-is-a-container-image">What is a container image?<a class="headerlink" href="#what-is-a-container-image" title="Permanent link">&para;</a></h3>
 <p>A container image (CI) is an immutable, lightweight, standalone, executable package of software that includes everything needed to run an application: code, runtime, system tools, system libraries and settings [<a href="https://www.docker.com/resources/what-container">https://www.docker.com/resources/what-container</a>]. Each image shares the kernel of the operating system present in the host machine.</p>
-<p>Your CIs must be built on a approved and secure base image. This base imate must be scanned and monitored at regular intervals to ensure that all CIs are based on a secure and authentic image. Implement strong governance policies that determine how images are built and stored in trusted image registries.</p>
+<p>Your CIs must be built on a approved and secure base image. This base image must be scanned and monitored at regular intervals to ensure that all CIs are based on a secure and authentic image. Implement strong governance policies that determine how images are built and stored in trusted image registries.</p>
 <p>--</p>
 <h4 id="ensure-that-cis-are-up-to-date">Ensure that CIs are up to date<a class="headerlink" href="#ensure-that-cis-are-up-to-date" title="Permanent link">&para;</a></h4>
 <p>Ensure your images (and any third-party tools you include) are up-to-date and use the latest versions of their components.</p>
 <p>--</p>
-<h3 id="only-use-authorized-iumages-in-your-environment">Only use authorized iumages in Your environment<a class="headerlink" href="#only-use-authorized-iumages-in-your-environment" title="Permanent link">&para;</a></h3>
+<h3 id="only-use-authorized-images-in-your-environment">Only use authorized images in Your environment<a class="headerlink" href="#only-use-authorized-images-in-your-environment" title="Permanent link">&para;</a></h3>
 <p>Downloading and running CIs from unknown sources is very dangerous. Make sure that only images adhering to the organization’s policy are allowed to run, or else the organization is open to risk of running vulnerable or even malicious containers.</p>
 <p>--</p>
 <h3 id="use-a-ci-pipeline-to-control-and-identify-vunlerabilities">Use A CI Pipeline To Control and Identify Vunlerabilities<a class="headerlink" href="#use-a-ci-pipeline-to-control-and-identify-vunlerabilities" title="Permanent link">&para;</a></h3>
@@ -3855,11 +3855,11 @@ kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> <
 <p>Learn more about webhook at <a href="https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#imagepolicywebhook">https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#imagepolicywebhook</a></p>
 <p>--</p>
 <h3 id="implement-continuous-security-vulnerability-scanning">Implement continuous security vulnerability scanning<a class="headerlink" href="#implement-continuous-security-vulnerability-scanning" title="Permanent link">&para;</a></h3>
-<p>Since new vulnerabilities are always being discovered, you may not always know if your containers may have recently-disclosed vulnerabilities (CVEs) or outdatd packages. To maintain a strong security posture, do regular production scanning of first-party containers (applications you have built and previously scanned) as well as third-party containers (swhich are ourced from trusted repository and vendors).</p>
+<p>Since new vulnerabilities are always being discovered, you may not always know if your containers may have recently-disclosed vulnerabilities (CVEs) or outdatd packages. To maintain a strong security posture, do regular production scanning of first-party containers (applications you have built and previously scanned) as well as third-party containers (which are ourced from trusted repository and vendors).</p>
 <p>Open Source projects such as <a href="https://github.com/deepfence/ThreatMapper">ThreatMapper</a> can assist in identifying and prioritizing vulnerabilities.</p>
 <p>--</p>
 <h3 id="continuously-assess-the-privileges-used-by-containers">Continuously assess the privileges used by containers<a class="headerlink" href="#continuously-assess-the-privileges-used-by-containers" title="Permanent link">&para;</a></h3>
-<p>We strongly recommend that all your containers should so they should adhere to the principle of least privilege, since your security risk is heavily influenced by the capabilities, role bindings, and privileges given to containers. Each container should only have the minimum privileges and capabilities that allows it to perform its intended function.</p>
+<p>We strongly recommend that all your containers should adhere to the principle of least privilege, since your security risk is heavily influenced by the capabilities, role bindings, and privileges given to containers. Each container should only have the minimum privileges and capabilities that allows it to perform its intended function.</p>
 <p><strong>Use Pod security policies to control the security-related attributes of pods, which includes container privilege levels.</strong></p>
 <p>All security policies should include the following conditions:</p>
 <ul>
@@ -4054,7 +4054,7 @@ kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> <
 <li>Network communications among containerized services</li>
 <li>Network communications between containerized services and external clients and servers</li>
 </ul>
-<p>Detecting anomalies by oserving container behavior is generally easier in containers than in virtual machines because of the declarative nature of containers and Kubernetes. These attributes allow easier introspection into what you have deployed and its expected activity.</p>
+<p>Detecting anomalies by observing container behavior is generally easier in containers than in virtual machines because of the declarative nature of containers and Kubernetes. These attributes allow easier introspection into what you have deployed and its expected activity.</p>
 <h3 id="use-pod-security-policies-to-prevent-risky-containerspods-from-being-used">Use Pod Security Policies to prevent risky containers/Pods from being used<a class="headerlink" href="#use-pod-security-policies-to-prevent-risky-containerspods-from-being-used" title="Permanent link">&para;</a></h3>
 <p>We strongly recommend that you use PodSecurityPolicy, which is a cluster-level resources available in Kubernetes (via kubectl). The PodSecurityPolicy admission controller must be enabled to use it, and given the nature of admission controllers, you must authorize at least one policy - otherwise it will not allow pods to be created in the cluster.</p>
 <p>Pod Security Policies address several critical security use cases such as:</p>
