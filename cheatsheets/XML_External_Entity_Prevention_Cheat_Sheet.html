@@ -2402,6 +2402,33 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#overview-of-net-parser-safety-levels" class="md-nav__link">
+    Overview of .NET Parser Safety Levels
+  </a>
+  
+    <nav class="md-nav" aria-label="Overview of .NET Parser Safety Levels">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#xmldocument-xmltextreader-xpathnavigator-default-safety-levels" class="md-nav__link">
+    XmlDocument, XmlTextReader, XPathNavigator default safety levels
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xmldictionaryreader-xmlnodereader-xmlreader-default-safety-levels" class="md-nav__link">
+    XmlDictionaryReader, XmlNodeReader, XmlReader default safety levels
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#aspnet" class="md-nav__link">
     ASP.NET
   </a>
@@ -2936,6 +2963,33 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#overview-of-net-parser-safety-levels" class="md-nav__link">
+    Overview of .NET Parser Safety Levels
+  </a>
+  
+    <nav class="md-nav" aria-label="Overview of .NET Parser Safety Levels">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#xmldocument-xmltextreader-xpathnavigator-default-safety-levels" class="md-nav__link">
+    XmlDocument, XmlTextReader, XPathNavigator default safety levels
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xmldictionaryreader-xmlnodereader-xmlreader-default-safety-levels" class="md-nav__link">
+    XmlDictionaryReader, XmlNodeReader, XmlReader default safety levels
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#aspnet" class="md-nav__link">
     ASP.NET
   </a>
@@ -3173,17 +3227,21 @@
 
 <h1 id="xml-external-entity-prevention-cheat-sheet">XML External Entity Prevention Cheat Sheet<a class="headerlink" href="#xml-external-entity-prevention-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p><em>XML eXternal Entity injection</em> (XXE), which is now part of the <a href="https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A4-XML_External_Entities_%28XXE%29">OWASP Top 10</a> via the point <strong>A4</strong>, is a type of attack against an application that parses XML input.</p>
-<p>XXE issue is referenced under the ID <a href="https://cwe.mitre.org/data/definitions/611.html">611</a> in the <a href="https://cwe.mitre.org/index.html">Common Weakness Enumeration</a> referential.</p>
-<p>This attack occurs when untrusted XML input containing a <strong>reference to an external entity is processed by a weakly configured XML parser</strong>.</p>
-<p>This attack may lead to the disclosure of confidential data, denial of service, <a href="https://owasp.org/www-community/attacks/Server_Side_Request_Forgery">Server Side Request Forgery</a> (SSRF), port scanning from the perspective of the machine where the parser is located, and other system impacts. The following guide provides concise information to prevent this vulnerability.</p>
+<p>An <em>XML eXternal Entity injection</em> (XXE), which is now part of the <a href="https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A4-XML_External_Entities_%28XXE%29">OWASP Top 10</a> via the point <strong>A4</strong>, is attack against applications that parse XML input. This issue is referenced in the ID <a href="https://cwe.mitre.org/data/definitions/611.html">611</a> in the <a href="https://cwe.mitre.org/index.html">Common Weakness Enumeration</a> referential. An XXE attack occurs when untrusted XML input with a <strong>reference to an external entity is processed by a weakly configured XML parser</strong>, and this attack could be used to stage multiple incidents, including:</p>
+<ul>
+<li>A denial of service attack on the system</li>
+<li>A <a href="https://owasp.org/www-community/attacks/Server_Side_Request_Forgery">Server Side Request Forgery</a> (SSRF) attack</li>
+<li>The ability to scan ports from the machine where the parser is located</li>
+<li>Other system impacts.</li>
+</ul>
+<p>This cheat sheet will help you prevent this vulnerability.</p>
 <p>For more information on XXE, please visit <a href="https://en.wikipedia.org/wiki/XML_external_entity_attack">XML External Entity (XXE)</a>.</p>
 <h2 id="general-guidance">General Guidance<a class="headerlink" href="#general-guidance" title="Permanent link">&para;</a></h2>
-<p>The safest way to prevent XXE is always to disable DTDs (External Entities) completely. Depending on the parser, the method should be similar to the following:</p>
+<p><strong>The safest way to prevent XXE is always to disable DTDs (External Entities) completely.</strong> Depending on the parser, the method should be similar to the following:</p>
 <div class="highlight"><pre><span></span><code><span class="n">factory</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://apache.org/xml/features/disallow-doctype-decl&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
 </code></pre></div>
-<p>Disabling <a href="https://www.w3schools.com/xml/xml_dtd.asp">DTD</a>s also makes the parser secure against denial of services (DOS) attacks such as <a href="https://en.wikipedia.org/wiki/Billion_laughs_attack">Billion Laughs</a>. If it is not possible to disable DTDs completely, then external entities and external document type declarations must be disabled in the way that's specific to each parser.</p>
-<p>Detailed XXE Prevention guidance for a number of languages and commonly used XML parsers in those languages is provided below.</p>
+<p>Disabling <a href="https://www.w3schools.com/xml/xml_dtd.asp">DTD</a>s also makes the parser secure against denial of services (DOS) attacks such as <a href="https://en.wikipedia.org/wiki/Billion_laughs_attack">Billion Laughs</a>. <strong>If it is not possible to disable DTDs completely, then external entities and external document type declarations must be disabled in the way that's specific to each parser.</strong></p>
+<p><strong>Detailed XXE Prevention guidance is provided below for multiple languages (C++, Cold Fusion, Java, .NET, iOS, PHP, Python, Semgrep Rules) and their commonly used XML parsers.</strong></p>
 <h2 id="cc">C/C++<a class="headerlink" href="#cc" title="Permanent link">&para;</a></h2>
 <h3 id="libxml2">libxml2<a class="headerlink" href="#libxml2" title="Permanent link">&para;</a></h3>
 <p>The Enum <a href="http://xmlsoft.org/html/libxml-parser.html#xmlParserOption">xmlParserOption</a> should not have the following options defined:</p>
@@ -3193,7 +3251,7 @@
 </ul>
 <p>Note:</p>
 <p>Per: According to <a href="https://mail.gnome.org/archives/xml/2012-October/msg00045.html">this post</a>, starting with libxml2 version 2.9, XXE has been disabled by default as committed by the following <a href="https://gitlab.gnome.org/GNOME/libxml2/commit/4629ee02ac649c27f9c0cf98ba017c6b5526070f">patch</a>.</p>
-<p>Search for the usage of the following APIs to ensure there is no <code>XML_PARSE_NOENT</code> and <code>XML_PARSE_DTDLOAD</code> defined in the parameters:</p>
+<p>Search whether the following APIs are being used and make sure there is no <code>XML_PARSE_NOENT</code> and <code>XML_PARSE_DTDLOAD</code> defined in the parameters:</p>
 <ul>
 <li><code>xmlCtxtReadDoc</code></li>
 <li><code>xmlCtxtReadFd</code></li>
@@ -3225,7 +3283,7 @@
 <h2 id="coldfusion">ColdFusion<a class="headerlink" href="#coldfusion" title="Permanent link">&para;</a></h2>
 <p>Per <a href="https://hoyahaxa.blogspot.com/2022/11/on-coldfusion-xxe-and-other-xml-attacks.html">this blog post</a>, both Adobe ColdFusion and Lucee have built-in mechanisms to disable support for external XML entities.</p>
 <h3 id="adobe-coldfusion">Adobe ColdFusion<a class="headerlink" href="#adobe-coldfusion" title="Permanent link">&para;</a></h3>
-<p>As of ColdFusion 2018 Update 14 and ColdFusion 2021 Update 4, all native ColdFusion functions that process XML now support an XML parser argument to disable support for external XML entities.  Note that there is no global setting to disable external entities, so a developer must ensure that every XML function call contains the required security options.</p>
+<p>As of ColdFusion 2018 Update 14 and ColdFusion 2021 Update 4, all native ColdFusion functions that process XML have a XML parser argument that disables support for external XML entities. Since there is no global setting that disables external entities, developers must ensure that every XML function call uses the correct security options.</p>
 <p>From the <a href="https://helpx.adobe.com/coldfusion/cfml-reference/coldfusion-functions/functions-t-z/xmlparse.html">documentation for the XmlParse() function</a>, you can disable XXE with the code below:</p>
 <div class="highlight"><pre><span></span><code>&lt;cfset parseroptions = structnew()&gt;
 &lt;cfset parseroptions.ALLOWEXTERNALENTITIES = false&gt;
@@ -3251,13 +3309,14 @@ isXML(xmldoc,parseroptions);
 </code></pre></div>
 <p>Support for external XML entities is disabled by default as of Lucee 5.4.2.10 and Lucee 6.0.0.514.</p>
 <h2 id="java">Java<a class="headerlink" href="#java" title="Permanent link">&para;</a></h2>
-<p>Java applications using XML libraries are particularly vulnerable to XXE because the default settings for most Java XML parsers is to have XXE enabled. To use these parsers safely, you have to explicitly disable XXE in the parser you use. The following describes how to disable XXE in the most commonly used XML parsers for Java.</p>
+<p><strong>Since most Java XML parsers have XXE enabled by default, this language is especially vulnerable to XXE attack, so you must explicitly disable XXE to use these parsers safely.</strong> This section describes how to disable XXE in the most commonly used Java XML parsers.</p>
 <h3 id="jaxp-documentbuilderfactory-saxparserfactory-and-dom4j">JAXP DocumentBuilderFactory, SAXParserFactory and DOM4J<a class="headerlink" href="#jaxp-documentbuilderfactory-saxparserfactory-and-dom4j" title="Permanent link">&para;</a></h3>
-<p><code>DocumentBuilderFactory,</code> <code>SAXParserFactory</code> and <code>DOM4J</code> <code>XML</code> Parsers can be configured using the same techniques to protect them against XXE.</p>
-<p>Only the <code>DocumentBuilderFactory</code> example is presented here. The JAXP <code>DocumentBuilderFactory</code> <a href="https://docs.oracle.com/javase/7/docs/api/javax/xml/parsers/DocumentBuilderFactory.html#setFeature(java.lang.String,%20boolean)">setFeature</a> method allows a developer to control which implementation-specific XML processor features are enabled or disabled.</p>
-<p>The features can either be set on the factory or the underlying <code>XMLReader</code> <a href="https://docs.oracle.com/javase/7/docs/api/org/xml/sax/XMLReader.html#setFeature%28java.lang.String,%20boolean%29">setFeature</a> method.</p>
-<p>Each XML processor implementation has its own features that govern how DTDs and external entities are processed. By disabling DTD processing entirely, most XXE attacks can be averted, although it is also necessary to disable or verify that XInclude is not enabled.</p>
-<p>Since the JDK 6, the flag <a href="https://docs.oracle.com/javase/6/docs/api/javax/xml/XMLConstants.html#FEATURE_SECURE_PROCESSING">FEATURE_SECURE_PROCESSING</a> can be used <strong>to instruct the implementation of the parser to process XML securely</strong>. Its behaviour is implementation dependent. Even if it can help tackling resource exhaustion, it may not always mitigate entity expansion. More details on this flag can be found <a href="https://docs.oracle.com/en/java/javase/13/security/java-api-xml-processing-jaxp-security-guide.html#GUID-88B04BE2-35EF-4F61-B4FA-57A0E9102342">here</a>.</p>
+<p>The<code>DocumentBuilderFactory,</code> <code>SAXParserFactory</code> and <code>DOM4J</code> <code>XML</code> parsers can be protected against XXE attacks with the same techniques.</p>
+<p><strong>For brevity, we will only show you how to protect the <code>DocumentBuilderFactory</code> parser. Additional instructions for protecting this parser are embedded within the example code</strong></p>
+<p>The JAXP <code>DocumentBuilderFactory</code> <a href="https://docs.oracle.com/javase/7/docs/api/javax/xml/parsers/DocumentBuilderFactory.html#setFeature(java.lang.String,%20boolean)">setFeature</a> method allows a developer to control which implementation-specific XML processor features are enabled or disabled.</p>
+<p>These features can either be set on the factory or the underlying <code>XMLReader</code> <a href="https://docs.oracle.com/javase/7/docs/api/org/xml/sax/XMLReader.html#setFeature%28java.lang.String,%20boolean%29">setFeature</a> method.</p>
+<p><strong>Each XML processor implementation has its own features that govern how DTDs and external entities are processed. By disabling DTD processing entirely, most XXE attacks can be averted, although it is also necessary to disable or verify that XInclude is not enabled.</strong></p>
+<p><strong>Since the JDK 6, the flag <a href="https://docs.oracle.com/javase/6/docs/api/javax/xml/XMLConstants.html#FEATURE_SECURE_PROCESSING">FEATURE_SECURE_PROCESSING</a> can be used to instruct the implementation of the parser to process XML securely</strong>. Its behavior is implementation-dependent. It may help with resource exhaustion but it may not always mitigate entity expansion. More details on this flag can be found <a href="https://docs.oracle.com/en/java/javase/13/security/java-api-xml-processing-jaxp-security-guide.html#GUID-88B04BE2-35EF-4F61-B4FA-57A0E9102342">here</a>.</p>
 <p>For a syntax highlighted example code snippet using <code>SAXParserFactory</code>, look <a href="https://gist.github.com/asudhakar02/45e2e6fd8bcdfb4bc3b2">here</a>.
 Example code disabling DTDs (doctypes) altogether:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">javax.xml.parsers.DocumentBuilderFactory</span><span class="p">;</span>
@@ -3342,9 +3401,9 @@ Example code disabling DTDs (doctypes) altogether:</p>
 <span class="w">    </span><span class="n">dbf</span><span class="p">.</span><span class="na">setXIncludeAware</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
 <span class="w">    </span><span class="n">dbf</span><span class="p">.</span><span class="na">setExpandEntityReferences</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
 
-<span class="w">    </span><span class="c1">// As stated in the documentation &quot;Feature for Secure Processing (FSP)&quot; is the central mechanism to </span>
-<span class="w">    </span><span class="c1">// help safeguard XML processing. It instructs XML processors, such as parsers, validators, </span>
-<span class="w">    </span><span class="c1">// and transformers, to try and process XML securely. This can be used as an alternative to</span>
+<span class="w">    </span><span class="c1">// As stated in the documentation, &quot;Feature for Secure Processing (FSP)&quot; is the central mechanism that will</span>
+<span class="w">    </span><span class="c1">// help you safeguard XML processing. It instructs XML processors, such as parsers, validators, </span>
+<span class="w">    </span><span class="c1">// and transformers, to try and process XML securely, and the FSP can be used as an alternative to</span>
 <span class="w">    </span><span class="c1">// dbf.setExpandEntityReferences(false); to allow some safe level of Entity Expansion</span>
 <span class="w">    </span><span class="c1">// Exists from JDK6.</span>
 <span class="w">    </span><span class="n">dbf</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">FEATURE_SECURE_PROCESSING</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
@@ -3387,7 +3446,7 @@ Example code disabling DTDs (doctypes) altogether:</p>
 <li>Do not include parameter entities by setting <a href="https://xerces.apache.org/xerces2-j/features.html#external-parameter-entities">this feature</a> to <code>false</code>.</li>
 <li>Do not include external DTDs by setting <a href="https://xerces.apache.org/xerces-j/features.html#load-external-dtd">this feature</a> to <code>false</code>.</li>
 </ul>
-<p><strong>Note:</strong> The above defenses require Java 7 update 67, Java 8 update 20, or above, because the above countermeasures for <code>DocumentBuilderFactory</code> and SAXParserFactory are broken in earlier Java versions, per: <a href="http://www.cvedetails.com/cve/CVE-2014-6517/">CVE-2014-6517</a>.</p>
+<p><strong>Note:</strong> The above defenses require Java 7 update 67, Java 8 update 20, or above, because the countermeasures for <code>DocumentBuilderFactory</code> and SAXParserFactory are broken in earlier Java versions, per: <a href="http://www.cvedetails.com/cve/CVE-2014-6517/">CVE-2014-6517</a>.</p>
 <h3 id="xmlinputfactory-a-stax-parser">XMLInputFactory (a StAX parser)<a class="headerlink" href="#xmlinputfactory-a-stax-parser" title="Permanent link">&para;</a></h3>
 <p><a href="http://en.wikipedia.org/wiki/StAX">StAX</a> parsers such as <a href="http://docs.oracle.com/javase/7/docs/api/javax/xml/stream/XMLInputFactory.html"><code>XMLInputFactory</code></a> allow various properties and features to be set.</p>
 <p>To protect a Java <code>XMLInputFactory</code> from XXE, disable DTDs (doctypes) altogether:</p>
@@ -3452,7 +3511,7 @@ Example code disabling DTDs (doctypes) altogether:</p>
 <li><code>javax.xml.XMLConstants.ACCESS_EXTERNAL_STYLESHEET</code></li>
 </ul>
 <h3 id="xmlreader">XMLReader<a class="headerlink" href="#xmlreader" title="Permanent link">&para;</a></h3>
-<p>To protect a Java <code>org.xml.sax.XMLReader</code> from XXE, do this:</p>
+<p>To protect the Java <code>org.xml.sax.XMLReader</code> from an XXE attack, do this:</p>
 <div class="highlight"><pre><span></span><code><span class="n">XMLReader</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XMLReaderFactory</span><span class="p">.</span><span class="na">createXMLReader</span><span class="p">();</span>
 <span class="n">reader</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://apache.org/xml/features/disallow-doctype-decl&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
 <span class="c1">// This may not be strictly required as DTDs shouldn&#39;t be allowed at all, per previous line.</span>
@@ -3461,14 +3520,14 @@ Example code disabling DTDs (doctypes) altogether:</p>
 <span class="n">reader</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://xml.org/sax/features/external-parameter-entities&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
 </code></pre></div>
 <h3 id="saxreader">SAXReader<a class="headerlink" href="#saxreader" title="Permanent link">&para;</a></h3>
-<p>To protect a Java <code>org.dom4j.io.SAXReader</code> from XXE, do this:</p>
+<p>To protect a Java <code>org.dom4j.io.SAXReader</code> from an XXE attack, do this:</p>
 <div class="highlight"><pre><span></span><code><span class="n">saxReader</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://apache.org/xml/features/disallow-doctype-decl&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
 <span class="n">saxReader</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://xml.org/sax/features/external-general-entities&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
 <span class="n">saxReader</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://xml.org/sax/features/external-parameter-entities&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
 </code></pre></div>
-<p>Based on testing, if you are missing one of these, you can still be vulnerable to an XXE attack.</p>
+<p>If your code does not have all of these lines, you could be vulnerable to an XXE attack.</p>
 <h3 id="saxbuilder">SAXBuilder<a class="headerlink" href="#saxbuilder" title="Permanent link">&para;</a></h3>
-<p>To protect a Java <code>org.jdom2.input.SAXBuilder</code> from XXE, disallow DTDs (doctypes) entirely:</p>
+<p>To protect a Java <code>org.jdom2.input.SAXBuilder</code> from an XXE attack, disallow DTDs (doctypes) entirely:</p>
 <div class="highlight"><pre><span></span><code><span class="n">SAXBuilder</span><span class="w"> </span><span class="n">builder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SAXBuilder</span><span class="p">();</span>
 <span class="n">builder</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://apache.org/xml/features/disallow-doctype-decl&quot;</span><span class="p">,</span><span class="kc">true</span><span class="p">);</span>
 <span class="n">Document</span><span class="w"> </span><span class="n">doc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">builder</span><span class="p">.</span><span class="na">build</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="p">(</span><span class="n">fileName</span><span class="p">));</span>
@@ -3499,7 +3558,7 @@ Example code disabling DTDs (doctypes) altogether:</p>
 <span class="n">documentBuilder</span><span class="p">.</span><span class="na">setEntityResolver</span><span class="p">(</span><span class="n">noop</span><span class="p">);</span>
 </code></pre></div>
 <h3 id="jaxb-unmarshaller">JAXB Unmarshaller<a class="headerlink" href="#jaxb-unmarshaller" title="Permanent link">&para;</a></h3>
-<p>Since a <code>javax.xml.bind.Unmarshaller</code> parses XML and does not support any flags for disabling XXE, it's imperative to parse the untrusted XML through a configurable secure parser first, generate a source object as a result, and pass the source object to the Unmarshaller. For example:</p>
+<p><strong>Because <code>javax.xml.bind.Unmarshaller</code> parses XML but does not support any flags for disabling XXE, you must parse the untrusted XML through a configurable secure parser first, generate a source object as a result, and pass the source object to the Unmarshaller.</strong> For example:</p>
 <div class="highlight"><pre><span></span><code><span class="n">SAXParserFactory</span><span class="w"> </span><span class="n">spf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SAXParserFactory</span><span class="p">.</span><span class="na">newInstance</span><span class="p">();</span>
 
 <span class="c1">//Option 1: This is the PRIMARY defense against XXE</span>
@@ -3522,7 +3581,7 @@ Example code disabling DTDs (doctypes) altogether:</p>
 <span class="n">um</span><span class="p">.</span><span class="na">unmarshal</span><span class="p">(</span><span class="n">xmlSource</span><span class="p">);</span>
 </code></pre></div>
 <h3 id="xpathexpression">XPathExpression<a class="headerlink" href="#xpathexpression" title="Permanent link">&para;</a></h3>
-<p>A <code>javax.xml.xpath.XPathExpression</code> can not be configured securely by itself, so the untrusted data must be parsed through another securable XML parser first.</p>
+<p><strong>Since <code>javax.xml.xpath.XPathExpression</code> can not be configured securely by itself, the untrusted data must be parsed through another securable XML parser first.</strong></p>
 <p>For example:</p>
 <div class="highlight"><pre><span></span><code><span class="n">DocumentBuilderFactory</span><span class="w"> </span><span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DocumentBuilderFactory</span><span class="p">.</span><span class="na">newInstance</span><span class="p">();</span>
 <span class="n">df</span><span class="p">.</span><span class="na">setAttribute</span><span class="p">(</span><span class="n">XMLConstants</span><span class="p">.</span><span class="na">ACCESS_EXTERNAL_DTD</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span>
@@ -3532,21 +3591,21 @@ Example code disabling DTDs (doctypes) altogether:</p>
 <span class="w">                            </span><span class="k">new</span><span class="w"> </span><span class="n">ByteArrayInputStream</span><span class="p">(</span><span class="n">xml</span><span class="p">.</span><span class="na">getBytes</span><span class="p">()))</span><span class="w"> </span><span class="p">);</span>
 </code></pre></div>
 <h3 id="javabeansxmldecoder">java.beans.XMLDecoder<a class="headerlink" href="#javabeansxmldecoder" title="Permanent link">&para;</a></h3>
-<p>The <a href="https://docs.oracle.com/javase/8/docs/api/java/beans/XMLDecoder.html#readObject--">readObject()</a> method in this class is fundamentally unsafe.</p>
-<p>Not only is the XML it parses subject to XXE, but the method can be used to construct any Java object, and <a href="http://stackoverflow.com/questions/14307442/is-it-safe-to-use-xmldecoder-to-read-document-files">execute arbitrary code as described here</a>.</p>
-<p>And there is no way to make use of this class safe except to trust or properly validate the input being passed into it.</p>
-<p>As such, we'd strongly recommend completely avoiding the use of this class and replacing it with a safe or properly configured XML parser as described elsewhere in this cheat sheet.</p>
+<p><strong>The <a href="https://docs.oracle.com/javase/8/docs/api/java/beans/XMLDecoder.html#readObject--">readObject()</a> method in this class is fundamentally unsafe.</strong></p>
+<p><strong>Not only is the XML it parses subject to XXE, but the method can be used to construct any Java object, and <a href="http://stackoverflow.com/questions/14307442/is-it-safe-to-use-xmldecoder-to-read-document-files">execute arbitrary code as described here</a>.</strong></p>
+<p><strong>And there is no way to make use of this class safe except to trust or properly validate the input being passed into it.</strong></p>
+<p><strong>As such, we'd strongly recommend completely avoiding the use of this class and replacing it with a safe or properly configured XML parser as described elsewhere in this cheat sheet.</strong></p>
 <h3 id="other-xml-parsers">Other XML Parsers<a class="headerlink" href="#other-xml-parsers" title="Permanent link">&para;</a></h3>
-<p>There are many third-party libraries that parse XML either directly or through their use of other libraries. Please test and verify their XML parser is secure against XXE by default. If the parser is not secure by default, look for flags supported by the parser to disable all possible external resource inclusions like the examples given above. If there's no control exposed to the outside, make sure the untrusted content is passed through a secure parser first and then passed to insecure third-party parser similar to how the Unmarshaller is secured.</p>
+<p><strong>There are many third-party libraries that parse XML either directly or through their use of other libraries. Please test and verify their XML parser is secure against XXE by default.</strong> If the parser is not secure by default, look for flags supported by the parser to disable all possible external resource inclusions like the examples given above. If there's no control exposed to the outside, make sure the untrusted content is passed through a secure parser first and then passed to insecure third-party parser similar to how the Unmarshaller is secured.</p>
 <h4 id="spring-framework-mvcoxm-xxe-vulnerabilities">Spring Framework MVC/OXM XXE Vulnerabilities<a class="headerlink" href="#spring-framework-mvcoxm-xxe-vulnerabilities" title="Permanent link">&para;</a></h4>
-<p>For example, some XXE vulnerabilities were found in <a href="https://pivotal.io/security/cve-2013-4152">Spring OXM</a> and <a href="https://pivotal.io/security/cve-2013-7315">Spring MVC</a>. The following versions of the Spring Framework are vulnerable to XXE:</p>
+<p>**Some XXE vulnerabilities were found in <a href="https://pivotal.io/security/cve-2013-4152">Spring OXM</a> and <a href="https://pivotal.io/security/cve-2013-7315">Spring MVC</a> . The following versions of the Spring Framework are vulnerable to XXE:</p>
 <ul>
 <li><strong>3.0.0</strong> to <strong>3.2.3</strong> (Spring OXM &amp; Spring MVC)</li>
 <li><strong>4.0.0.M1</strong> (Spring OXM)</li>
 <li><strong>4.0.0.M1-4.0.0.M2</strong> (Spring MVC)</li>
 </ul>
 <p>There were other issues as well that were fixed later, so to fully address these issues, Spring recommends you upgrade to Spring Framework 3.2.8+ or 4.0.2+.</p>
-<p>For Spring OXM, this is referring to the use of org.springframework.oxm.jaxb.Jaxb2Marshaller. Note that the CVE for Spring OXM specifically indicates that 2 XML parsing situations are up to the developer to get right, and 2 are the responsibility of Spring and were fixed to address this CVE.</p>
+<p>For Spring OXM, this is referring to the use of org.springframework.oxm.jaxb.Jaxb2Marshaller. <strong>Note that the CVE for Spring OXM specifically indicates that two XML parsing situations are up to the developer to get right, and the other two are the responsibility of Spring and were fixed to address this CVE.</strong></p>
 <p>Here's what they say:</p>
 <p>Two situations developers must handle:</p>
 <ul>
@@ -3565,99 +3624,33 @@ Example code disabling DTDs (doctypes) altogether:</p>
 </code></pre></div>
 <p>So, per the <a href="https://pivotal.io/security/cve-2013-4152">Spring OXM CVE writeup</a>, the above is now safe. But if you were to use a DOMSource or StAXSource instead, it would be up to you to configure those sources to be safe from XXE.</p>
 <h4 id="castor">Castor<a class="headerlink" href="#castor" title="Permanent link">&para;</a></h4>
-<p>Castor is a data binding framework for Java. It allows conversion between Java objects, XML, and relational tables. The XML features in Castor <strong>prior to version 1.3.3</strong> are vulnerable to XXE, and should be upgraded to the latest version. For additional information, check the official <a href="https://castor-data-binding.github.io/castor/reference-guide/reference/xml/xml-properties.html">XML configuration file</a></p>
+<p><strong>Castor is a data binding framework for Java. It allows conversion between Java objects, XML, and relational tables. The XML features in Castor prior to version 1.3.3 are vulnerable to XXE, and should be upgraded to the latest version.</strong> For additional information, check the official <a href="https://castor-data-binding.github.io/castor/reference-guide/reference/xml/xml-properties.html">XML configuration file</a></p>
 <h2 id="net">.NET<a class="headerlink" href="#net" title="Permanent link">&para;</a></h2>
-<p>The following, up to date information for XXE injection in .NET is directly from this <a href="https://github.com/deanf1/dotnet-security-unit-tests">web application of unit tests by Dean Fleming</a>. This web application covers all currently supported .NET XML parsers, and has test cases for each demonstrating when they are safe from XXE injection and when they are not, but tests are only with injection from file and not direct DTD (used by DoS attacks).</p>
+<p><strong>Up-to-date information for XXE injection in .NET is taken directly from the <a href="https://github.com/deanf1/dotnet-security-unit-tests">web application of unit tests by Dean Fleming</a>, which covers all currently supported .NET XML parsers, and has test cases that demonstrate when they are safe from XXE injection and when they are not, but these tests are only with injection from file and not direct DTD (used by DoS attacks).</strong></p>
 <p>For DoS attacks using a direct DTD (such as the <a href="https://en.wikipedia.org/wiki/Billion_laughs_attack">Billion laughs attack</a>), a <a href="https://github.com/BounceSecurity/BillionLaughsTester">separate testing application from Josh Grossman at Bounce Security</a> has been created to verify that .NET &gt;=4.5.2 is safe from these attacks.</p>
 <p>Previously, this information was based on some older articles which may not be 100% accurate including:</p>
 <ul>
 <li><a href="https://www.jardinesoftware.net/2016/05/26/xxe-and-net/">James Jardine's excellent .NET XXE article</a>.</li>
 <li><a href="http://msdn.microsoft.com/en-us/magazine/ee335713.aspx">Guidance from Microsoft on how to prevent XXE and XML Denial of Service in .NET</a>.</li>
 </ul>
-<p>The following table lists all supported .NET XML parsers and their default safety levels. Note that in .NET Framework ≥4.5.2 <strong>in all cases</strong> if a DoS attempt is performed, an exception is thrown due to the expanded XML being too many characters.</p>
-<p>Table explanation:</p>
-<ul>
-<li>✅ = Not Vulnerable</li>
-<li>❌ = Vulnerable</li>
-<li>❓ = Not clear</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>Attack Type</th>
-<th>.NET Framework Version</th>
-<th style="text-align: center;"><a href="#linq-to-xml">XDocument (Linq to XML)</a></th>
-<th style="text-align: center;"><a href="#xmldictionaryreader">XmlDictionaryReader</a></th>
-<th style="text-align: center;"><a href="#xmldocument">XmlDocument</a></th>
-<th style="text-align: center;"><a href="#xmlnodereader">XmlNodeReader</a></th>
-<th style="text-align: center;"><a href="#xmlreader">XmlReader</a></th>
-<th style="text-align: center;"><a href="#xmltextreader">XmlTextReader</a></th>
-<th style="text-align: center;"><a href="#xpathnavigator">XPathNavigator</a></th>
-<th style="text-align: center;"><a href="#xslcompiledtransform">XslCompiledTransform</a></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>External entity Attacks</strong></td>
-<td>&lt;4.5.2</td>
-<td style="text-align: center;">✅</td>
-<td style="text-align: center;">✅</td>
-<td style="text-align: center;">❌</td>
-<td style="text-align: center;">✅</td>
-<td style="text-align: center;">✅</td>
-<td style="text-align: center;">❌</td>
-<td style="text-align: center;">❌</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td></td>
-<td>≥4.5.2</td>
-<td style="text-align: center;">✅</td>
-<td style="text-align: center;">✅</td>
-<td style="text-align: center;">✅</td>
-<td style="text-align: center;">✅</td>
-<td style="text-align: center;">✅</td>
-<td style="text-align: center;">✅</td>
-<td style="text-align: center;">✅</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td><strong>Billion Laughs</strong></td>
-<td>&lt;4.5.2</td>
-<td style="text-align: center;">❓</td>
-<td style="text-align: center;">✅</td>
-<td style="text-align: center;">❌</td>
-<td style="text-align: center;">✅</td>
-<td style="text-align: center;">✅</td>
-<td style="text-align: center;">❌</td>
-<td style="text-align: center;">❌</td>
-<td style="text-align: center;">✅</td>
-</tr>
-<tr>
-<td></td>
-<td>≥4.5.2</td>
-<td style="text-align: center;">✅</td>
-<td style="text-align: center;">✅*</td>
-<td style="text-align: center;">✅</td>
-<td style="text-align: center;">✅*</td>
-<td style="text-align: center;">✅*</td>
-<td style="text-align: center;">✅</td>
-<td style="text-align: center;">✅</td>
-<td style="text-align: center;">✅</td>
-</tr>
-</tbody>
-</table>
-<p>* For .NET Framework Versions ≥4.5.2, these libraries won't even process the in-line DTD by default. Even if you change the default to allow processing a DTD, if a DoS attempt is performed an exception will still be thrown as documented above.</p>
+<h3 id="overview-of-net-parser-safety-levels">Overview of .NET Parser Safety Levels<a class="headerlink" href="#overview-of-net-parser-safety-levels" title="Permanent link">&para;</a></h3>
+<p>**Below is an overview of all supported .NET XML parsers and their default safety levels. More details about each parser are included after this list.</p>
+<p>**XDocument (Ling to XML)</p>
+<p>This parser is protected from external entities at .NET Framework version 4.5.2 and protected from Billion Laughs at version 4.5.2 or greater, but it is uncertain if this parser is protected from Billion Laughs before version 4.5.2.</p>
+<h4 id="xmldocument-xmltextreader-xpathnavigator-default-safety-levels">XmlDocument, XmlTextReader, XPathNavigator default safety levels<a class="headerlink" href="#xmldocument-xmltextreader-xpathnavigator-default-safety-levels" title="Permanent link">&para;</a></h4>
+<p>These parsers are vulnerable to external entity attacks and Billion Laughs at versions below version 4.5.2 but protected at versions equal or greater than 4.5.2.</p>
+<h4 id="xmldictionaryreader-xmlnodereader-xmlreader-default-safety-levels">XmlDictionaryReader, XmlNodeReader, XmlReader default safety levels<a class="headerlink" href="#xmldictionaryreader-xmlnodereader-xmlreader-default-safety-levels" title="Permanent link">&para;</a></h4>
+<p>These parsers are not vulnerable to external entity attacks or Billion Laughs before or after version 4.5.2. Also, at or greater than versions ≥4.5.2, these libraries won't even process the in-line DTD by default. Even if you change the default to allow processing a DTD, if a DoS attempt is performed an exception will still be thrown as documented above.</p>
 <h3 id="aspnet">ASP.NET<a class="headerlink" href="#aspnet" title="Permanent link">&para;</a></h3>
 <p>ASP.NET applications ≥ .NET 4.5.2 must also ensure setting the <code>&lt;httpRuntime targetFramework="..." /&gt;</code> in their <code>Web.config</code> to ≥4.5.2 or risk being vulnerable regardless or the actual .NET version. Omitting this tag will also result in unsafe-by-default behavior.</p>
 <p>For the purpose of understanding the above table, the <code>.NET Framework Version</code> for an ASP.NET applications is either the .NET version the application was build with or the httpRuntime's <code>targetFramework</code> (Web.config), <strong>whichever is lower</strong>.</p>
 <p>This configuration tag should not be confused with a simmilar configuration tag: <code>&lt;compilation targetFramework="..." /&gt;</code> or the assemblies / projects targetFramework, which are <strong>not</strong> sufficient for achieving secure-by-default behaviour as advertised in the above table.</p>
 <h3 id="linq-to-xml">LINQ to XML<a class="headerlink" href="#linq-to-xml" title="Permanent link">&para;</a></h3>
-<p>Both the <code>XElement</code> and <code>XDocument</code> objects in the <code>System.Xml.Linq</code> library are safe from XXE injection from external file and DoS attack by default. <code>XElement</code> parses only the elements within the XML file, so DTDs are ignored altogether. <code>XDocument</code> has XmlResolver <a href="https://docs.microsoft.com/en-us/dotnet/standard/linq/linq-xml-security">disabled by default</a> so it's safe from SSRF. Whilst DTDs are <a href="https://referencesource.microsoft.com/#System.Xml.Linq/System/Xml/Linq/XLinq.cs,71f4626a3d6f9bad">enabled by default</a>, from Framework versions ≥4.5.2, it is <strong>not</strong> vulnerable to DoS as noted but it may be vulnerable in earlier Framework versions. For more information, see <a href="http://msdn.microsoft.com/en-us/magazine/ee335713.aspx">Microsoft's guidance on how to prevent XXE and XML Denial of Service in .NET</a></p>
+<p><strong>Both the <code>XElement</code> and <code>XDocument</code> objects in the <code>System.Xml.Linq</code> library are safe from XXE injection from external file and DoS attack by default.</strong> <code>XElement</code> parses only the elements within the XML file, so DTDs are ignored altogether. <code>XDocument</code> has XmlResolver <a href="https://docs.microsoft.com/en-us/dotnet/standard/linq/linq-xml-security">disabled by default</a> so it's safe from SSRF. Whilst DTDs are <a href="https://referencesource.microsoft.com/#System.Xml.Linq/System/Xml/Linq/XLinq.cs,71f4626a3d6f9bad">enabled by default</a>, from Framework versions ≥4.5.2, it is <strong>not</strong> vulnerable to DoS as noted but it may be vulnerable in earlier Framework versions. For more information, see <a href="http://msdn.microsoft.com/en-us/magazine/ee335713.aspx">Microsoft's guidance on how to prevent XXE and XML Denial of Service in .NET</a></p>
 <h3 id="xmldictionaryreader">XmlDictionaryReader<a class="headerlink" href="#xmldictionaryreader" title="Permanent link">&para;</a></h3>
-<p><code>System.Xml.XmlDictionaryReader</code> is safe by default, as when it attempts to parse the DTD, the compiler throws an exception saying that "CData elements not valid at top level of an XML document". It becomes unsafe if constructed with a different unsafe XML parser.</p>
+<p><strong><code>System.Xml.XmlDictionaryReader</code> is safe by default, as when it attempts to parse the DTD, the compiler throws an exception saying that "CData elements not valid at top level of an XML document". It becomes unsafe if constructed with a different unsafe XML parser.</strong></p>
 <h3 id="xmldocument">XmlDocument<a class="headerlink" href="#xmldocument" title="Permanent link">&para;</a></h3>
-<p>Prior to .NET Framework version 4.5.2, <code>System.Xml.XmlDocument</code> is <strong>unsafe</strong> by default. The <code>XmlDocument</code> object has an <code>XmlResolver</code> object within it that needs to be set to null in versions prior to 4.5.2. In versions 4.5.2 and up, this <code>XmlResolver</code> is set to null by default.</p>
+<p><strong>Prior to .NET Framework version 4.5.2, <code>System.Xml.XmlDocument</code> is unsafe by default. The <code>XmlDocument</code> object has an <code>XmlResolver</code> object within it that needs to be set to null in versions prior to 4.5.2. In versions 4.5.2 and up, this <code>XmlResolver</code> is set to null by default.</strong></p>
 <p>The following example shows how it is made safe:</p>
 <div class="highlight"><pre><span></span><code><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">LoadXML</span><span class="p">()</span>
 <span class="w"> </span><span class="p">{</span>
@@ -3673,7 +3666,7 @@ Example code disabling DTDs (doctypes) altogether:</p>
 <span class="w">   </span><span class="n">Console</span><span class="p">.</span><span class="n">ReadLine</span><span class="p">();</span>
 <span class="w"> </span><span class="p">}</span>
 </code></pre></div>
-<p>For .NET Framework version ≥4.5.2, this is <strong>safe by default</strong>.</p>
+<p><strong>For .NET Framework version ≥4.5.2, this is safe by default</strong>.</p>
 <p><code>XmlDocument</code> can become unsafe if you create your own nonnull <code>XmlResolver</code> with default or unsafe settings. If you need to enable DTD processing, instructions on how to do so safely are described in detail in the <a href="https://msdn.microsoft.com/en-us/magazine/ee335713.aspx">referenced MSDN article</a>.</p>
 <h3 id="xmlnodereader">XmlNodeReader<a class="headerlink" href="#xmlnodereader" title="Permanent link">&para;</a></h3>
 <p><code>System.Xml.XmlNodeReader</code> objects are safe by default and will ignore DTDs even when constructed with an unsafe parser or wrapped in another unsafe parser.</p>
@@ -3692,9 +3685,9 @@ Example code disabling DTDs (doctypes) altogether:</p>
 <span class="n">reader</span><span class="p">.</span><span class="n">ProhibitDtd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span><span class="w">  </span>
 </code></pre></div>
 <h4 id="net-40-net-452">.NET 4.0 - .NET 4.5.2<a class="headerlink" href="#net-40-net-452" title="Permanent link">&para;</a></h4>
-<p>In .NET Framework version 4.0, DTD parsing behavior has been changed. The <code>ProhibitDtd</code> property has been deprecated in favor of the new <code>DtdProcessing</code> property.</p>
-<p>However, they didn't change the default settings so <code>XmlTextReader</code> is still vulnerable to XXE by default.</p>
-<p>Setting <code>DtdProcessing</code> to <code>Prohibit</code> causes the runtime to throw an exception if a <code>&lt;!DOCTYPE&gt;</code> element is present in the XML.</p>
+<p><strong>In .NET Framework version 4.0, DTD parsing behavior has been changed. The <code>ProhibitDtd</code> property has been deprecated in favor of the new <code>DtdProcessing</code> property.</strong></p>
+<p><strong>However, they didn't change the default settings so <code>XmlTextReader</code> is still vulnerable to XXE by default.</strong></p>
+<p><strong>Setting <code>DtdProcessing</code> to <code>Prohibit</code> causes the runtime to throw an exception if a <code>&lt;!DOCTYPE&gt;</code> element is present in the XML.</strong></p>
 <p>To set this value yourself, it looks like this:</p>
 <div class="highlight"><pre><span></span><code><span class="n">XmlTextReader</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">XmlTextReader</span><span class="p">(</span><span class="n">stream</span><span class="p">);</span>
 <span class="c1">// NEEDED because the default is Parse!!</span>
@@ -3721,26 +3714,26 @@ Example code disabling DTDs (doctypes) altogether:</p>
 <p>Some of the <code>Transform()</code> methods accept an <code>XmlReader</code> or <code>IXPathNavigable</code> (e.g., <code>XmlDocument</code>) as an input, and if you pass in an unsafe XML Parser then the <code>Transform</code> will also be unsafe.</p>
 <h2 id="ios">iOS<a class="headerlink" href="#ios" title="Permanent link">&para;</a></h2>
 <h3 id="libxml2_1">libxml2<a class="headerlink" href="#libxml2_1" title="Permanent link">&para;</a></h3>
-<p>iOS includes the C/C++ libxml2 library described above, so that guidance applies if you are using libxml2 directly.</p>
-<p>However, the version of libxml2 provided up through iOS6 is prior to version 2.9 of libxml2 (which protects against XXE by default).</p>
+<p><strong>iOS includes the C/C++ libxml2 library described above, so that guidance applies if you are using libxml2 directly.</strong></p>
+<p><strong>However, the version of libxml2 provided up through iOS6 is prior to version 2.9 of libxml2 (which protects against XXE by default).</strong></p>
 <h3 id="nsxmldocument">NSXMLDocument<a class="headerlink" href="#nsxmldocument" title="Permanent link">&para;</a></h3>
-<p>iOS also provides an <code>NSXMLDocument</code> type, which is built on top of libxml2.</p>
-<p>However, <code>NSXMLDocument</code> provides some additional protections against XXE that aren't available in libxml2 directly.</p>
+<p><strong>iOS also provides an <code>NSXMLDocument</code> type, which is built on top of libxml2.</strong></p>
+<p><strong>However, <code>NSXMLDocument</code> provides some additional protections against XXE that aren't available in libxml2 directly.</strong></p>
 <p>Per the 'NSXMLDocument External Entity Restriction API' section of this <a href="https://developer.apple.com/library/archive/releasenotes/Foundation/RN-Foundation-iOS/Foundation_iOS5.html">page</a>:</p>
 <ul>
 <li>iOS4 and earlier: All external entities are loaded by default.</li>
 <li>iOS5 and later: Only entities that don't require network access are loaded. (which is safer)</li>
 </ul>
-<p>However, to completely disable XXE in an <code>NSXMLDocument</code> in any version of iOS you simply specify <code>NSXMLNodeLoadExternalEntitiesNever</code> when creating the <code>NSXMLDocument</code>.</p>
+<p><strong>However, to completely disable XXE in an <code>NSXMLDocument</code> in any version of iOS you simply specify <code>NSXMLNodeLoadExternalEntitiesNever</code> when creating the <code>NSXMLDocument</code>.</strong></p>
 <h2 id="php">PHP<a class="headerlink" href="#php" title="Permanent link">&para;</a></h2>
-<p>When using the default XML parser (based on libxml2), PHP 8.0 and newer <a href="https://www.php.net/manual/en/function.libxml-disable-entity-loader.php">prevent XXE by default</a>.</p>
-<p>For PHP versions prior to 8.0, per <a href="https://www.php.net/manual/en/function.libxml-set-external-entity-loader.php">the PHP documentation</a>, the following should be set when using the default PHP XML parser in order to prevent XXE:</p>
+<p><strong>When using the default XML parser (based on libxml2), PHP 8.0 and newer <a href="https://www.php.net/manual/en/function.libxml-disable-entity-loader.php">prevent XXE by default</a>.</strong></p>
+<p><strong>For PHP versions prior to 8.0, per <a href="https://www.php.net/manual/en/function.libxml-set-external-entity-loader.php">the PHP documentation</a>, the following should be set when using the default PHP XML parser in order to prevent XXE:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="x">libxml_set_external_entity_loader(null);</span>
 </code></pre></div>
 <p>A description of how to abuse this in PHP is presented in a good <a href="https://www.sensepost.com/blog/2014/revisting-xxe-and-abusing-protocols/">SensePost article</a> describing a cool PHP based XXE vulnerability that was fixed in Facebook.</p>
 <h2 id="python">Python<a class="headerlink" href="#python" title="Permanent link">&para;</a></h2>
 <p>The Python 3 official documentation contains a section on <a href="https://docs.python.org/3/library/xml.html#xml-vulnerabilities">xml vulnerabilities</a>. As of the 1st January 2020 Python 2 is no longer supported, however the Python website still contains <a href="https://docs.Python.org/2/library/xml.html#xml-vulnerabilities">some legacy documentation</a>.</p>
-<p>The following table gives an overview of various modules in Python 3 used for XML parsing and whether or not they are vulnerable.</p>
+<p>The table below shows you which various XML parsing modules in Python 3 are vulnerable to certain XXE attacks.</p>
 <table>
 <thead>
 <tr>
