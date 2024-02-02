@@ -237,7 +237,7 @@ During the build phase, you should secure your Kubernetes container images by bu
 
 A container image (CI) is an immutable, lightweight, standalone, executable package of software that includes everything needed to run an application: code, runtime, system tools, system libraries and settings [<https://www.docker.com/resources/what-container>]. Each image shares the kernel of the operating system present in the host machine.
 
-Your CIs must be built on a approved and secure base image. This base imate must be scanned and monitored at regular intervals to ensure that all CIs are based on a secure and authentic image. Implement strong governance policies that determine how images are built and stored in trusted image registries.
+Your CIs must be built on a approved and secure base image. This base image must be scanned and monitored at regular intervals to ensure that all CIs are based on a secure and authentic image. Implement strong governance policies that determine how images are built and stored in trusted image registries.
 
 --
 
@@ -247,7 +247,7 @@ Ensure your images (and any third-party tools you include) are up-to-date and us
 
 --
 
-### Only use authorized iumages in Your environment
+### Only use authorized images in Your environment
 
 Downloading and running CIs from unknown sources is very dangerous. Make sure that only images adhering to the organization’s policy are allowed to run, or else the organization is open to risk of running vulnerable or even malicious containers.
 
@@ -344,7 +344,7 @@ Learn more about webhook at <https://kubernetes.io/docs/reference/access-authn-a
 
 ### Implement continuous security vulnerability scanning
 
-Since new vulnerabilities are always being discovered, you may not always know if your containers may have recently-disclosed vulnerabilities (CVEs) or outdatd packages. To maintain a strong security posture, do regular production scanning of first-party containers (applications you have built and previously scanned) as well as third-party containers (swhich are ourced from trusted repository and vendors).
+Since new vulnerabilities are always being discovered, you may not always know if your containers may have recently-disclosed vulnerabilities (CVEs) or outdatd packages. To maintain a strong security posture, do regular production scanning of first-party containers (applications you have built and previously scanned) as well as third-party containers (which are ourced from trusted repository and vendors).
 
 Open Source projects such as [ThreatMapper](https://github.com/deepfence/ThreatMapper) can assist in identifying and prioritizing vulnerabilities.
 
@@ -352,7 +352,7 @@ Open Source projects such as [ThreatMapper](https://github.com/deepfence/ThreatM
 
 ### Continuously assess the privileges used by containers
 
-We strongly recommend that all your containers should so they should adhere to the principle of least privilege, since your security risk is heavily influenced by the capabilities, role bindings, and privileges given to containers. Each container should only have the minimum privileges and capabilities that allows it to perform its intended function.
+We strongly recommend that all your containers should adhere to the principle of least privilege, since your security risk is heavily influenced by the capabilities, role bindings, and privileges given to containers. Each container should only have the minimum privileges and capabilities that allows it to perform its intended function.
 
 **Use Pod security policies to control the security-related attributes of pods, which includes container privilege levels.**
 
@@ -611,7 +611,7 @@ First, monitor the most security-relevant container activities, including:
 - Network communications among containerized services
 - Network communications between containerized services and external clients and servers
 
-Detecting anomalies by oserving container behavior is generally easier in containers than in virtual machines because of the declarative nature of containers and Kubernetes. These attributes allow easier introspection into what you have deployed and its expected activity.
+Detecting anomalies by observing container behavior is generally easier in containers than in virtual machines because of the declarative nature of containers and Kubernetes. These attributes allow easier introspection into what you have deployed and its expected activity.
 
 ### Use Pod Security Policies to prevent risky containers/Pods from being used
 
