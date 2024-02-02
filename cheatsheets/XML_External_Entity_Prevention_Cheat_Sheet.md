@@ -2,13 +2,12 @@
 
 ## Introduction
 
-
 An *XML eXternal Entity injection* (XXE), which is now part of the [OWASP Top 10](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A4-XML_External_Entities_%28XXE%29) via the point **A4**, is attack against applications that parse XML input. This issue is referenced in the ID [611](https://cwe.mitre.org/data/definitions/611.html) in the [Common Weakness Enumeration](https://cwe.mitre.org/index.html) referential. An XXE attack occurs when untrusted XML input with a **reference to an external entity is processed by a weakly configured XML parser**, and this attack could be used to stage multiple incidents, including:
 
 - A denial of service attack on the system
-- A [Server Side Request Forgery] (https://owasp.org/www-community/attacks/Server_Side_Request_Forgery) (SSRF) attack
+- A [Server Side Request Forgery](https://owasp.org/www-community/attacks/Server_Side_Request_Forgery) (SSRF) attack
 - The ability to scan ports from the machine where the parser is located
-- Other system impacts. 
+- Other system impacts.
 
 This cheat sheet will help you prevent this vulnerability.
 
@@ -532,7 +531,7 @@ So, per the [Spring OXM CVE writeup](https://pivotal.io/security/cve-2013-4152),
 
 #### Castor
 
-**Castor is a data binding framework for Java. It allows conversion between Java objects, XML, and relational tables. The XML features in Castor **prior to version 1.3.3** are vulnerable to XXE, and should be upgraded to the latest version.** For additional information, check the official [XML configuration file](https://castor-data-binding.github.io/castor/reference-guide/reference/xml/xml-properties.html)
+**Castor is a data binding framework for Java. It allows conversion between Java objects, XML, and relational tables. The XML features in Castor prior to version 1.3.3 are vulnerable to XXE, and should be upgraded to the latest version.** For additional information, check the official [XML configuration file](https://castor-data-binding.github.io/castor/reference-guide/reference/xml/xml-properties.html)
 
 ## .NET
 
@@ -553,11 +552,11 @@ Previously, this information was based on some older articles which may not be 1
 
 This parser is protected from external entities at .NET Framework version 4.5.2 and protected from Billion Laughs at version 4.5.2 or greater, but it is uncertain if this parser is protected from Billion Laughs before version 4.5.2.
 
-**XmlDocument, XmlTextReader, XPathNavigator default safety levels**
+#### XmlDocument, XmlTextReader, XPathNavigator default safety levels
 
 These parsers are vulnerable to external entity attacks and Billion Laughs at versions below version 4.5.2 but protected at versions equal or greater than 4.5.2.
 
-**XmlDictionaryReader, XmlNodeReader, XmlReader default safety levels**
+#### XmlDictionaryReader, XmlNodeReader, XmlReader default safety levels
 
 These parsers are not vulnerable to external entity attacks or Billion Laughs before or after version 4.5.2. Also, at or greater than versions ≥4.5.2, these libraries won't even process the in-line DTD by default. Even if you change the default to allow processing a DTD, if a DoS attempt is performed an exception will still be thrown as documented above.
 
@@ -579,7 +578,7 @@ This configuration tag should not be confused with a simmilar configuration tag:
 
 ### XmlDocument
 
-**Prior to .NET Framework version 4.5.2, `System.Xml.XmlDocument` is **unsafe** by default. The `XmlDocument` object has an `XmlResolver` object within it that needs to be set to null in versions prior to 4.5.2. In versions 4.5.2 and up, this `XmlResolver` is set to null by default.**
+**Prior to .NET Framework version 4.5.2, `System.Xml.XmlDocument` is unsafe by default. The `XmlDocument` object has an `XmlResolver` object within it that needs to be set to null in versions prior to 4.5.2. In versions 4.5.2 and up, this `XmlResolver` is set to null by default.**
 
 The following example shows how it is made safe:
 
