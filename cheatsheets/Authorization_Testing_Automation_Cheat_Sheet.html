@@ -601,15 +601,22 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#authorization-matrix-pivot-file" class="md-nav__link">
-    Authorization matrix pivot file
+  <a href="#preparing-to-automate-the-authorization-matrix" class="md-nav__link">
+    Preparing to automate the authorization matrix
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#integration-tests" class="md-nav__link">
-    Integration tests
+  <a href="#create-the-authorization-matrix-pivot-file" class="md-nav__link">
+    Create the authorization matrix pivot file
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implementing-an-integration-test" class="md-nav__link">
+    Implementing an integration test
   </a>
   
 </li>
@@ -620,8 +627,8 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
 </li>
       
         <li class="md-nav__item">
-  <a href="#rendering-of-the-authorization-matrix-for-an-audit-review" class="md-nav__link">
-    Rendering of the authorization matrix for an audit / review
+  <a href="#rendering-the-authorization-matrix-for-an-audit-review" class="md-nav__link">
+    Rendering the authorization matrix for an audit / review
   </a>
   
 </li>
@@ -2385,15 +2392,22 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#authorization-matrix-pivot-file" class="md-nav__link">
-    Authorization matrix pivot file
+  <a href="#preparing-to-automate-the-authorization-matrix" class="md-nav__link">
+    Preparing to automate the authorization matrix
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#integration-tests" class="md-nav__link">
-    Integration tests
+  <a href="#create-the-authorization-matrix-pivot-file" class="md-nav__link">
+    Create the authorization matrix pivot file
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implementing-an-integration-test" class="md-nav__link">
+    Implementing an integration test
   </a>
   
 </li>
@@ -2404,8 +2418,8 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
 </li>
       
         <li class="md-nav__item">
-  <a href="#rendering-of-the-authorization-matrix-for-an-audit-review" class="md-nav__link">
-    Rendering of the authorization matrix for an audit / review
+  <a href="#rendering-the-authorization-matrix-for-an-audit-review" class="md-nav__link">
+    Rendering the authorization matrix for an audit / review
   </a>
   
 </li>
@@ -2437,57 +2451,54 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
 
 <h1 id="authorization-testing-automation-cheat-sheet">Authorization Testing Automation Cheat Sheet<a class="headerlink" href="#authorization-testing-automation-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>Authorizations definition and implementation is one of the important protection measures of an application. They are defined in the creation phase of the project and, even if authorization issues are found when the application is initially released and submitted to a security audit before to going live, the most significant number of issues related to authorization come in the maintenance lifetime of the application.</p>
-<p>This situation is often explained by the fact that features are added/modified and no review of the authorizations is performed on the application before the publishing of the new release, for cost or time issue reason.</p>
+<p><strong>When you are implementing protection measures for an application, one of the most important parts of the process is defining and implementing the application's authorizations.</strong> Despite all of the checks and security audits conducted during the creation phase, most of the problems with authorizations occur because features are added/modified in updated releases without determining their effect on the application's authorizations (usually because of cost or time issue reasons).</p>
+<p>To deal with this problem, we recommend that developars automate the evaluation of the authorizations and perform a test when a new release is created. This ensures that the team knows if changes to the application will conflict with an authorization's definition and/or implementation.</p>
 <h2 id="context">Context<a class="headerlink" href="#context" title="Permanent link">&para;</a></h2>
-<p>In order to try to address this situation, it can be interesting to automate the evaluation of the authorizations definition and implementation on the application. This, to constantly ensure that implementation of the authorizations in the application is consistent with the authorizations' definition.</p>
-<p>An authorization is often composed by 2 elements (also named dimensions): The <strong>Feature</strong>, and the <strong>Logical Role</strong> that can access it (sometime a third dimension named <strong>Data</strong> is added in order to define access that includes a filtering at business data level).</p>
-<p>The representation of the different combinations of these 2 dimensions is often named an <strong>Authorization matrix</strong> and is often formalized in a spreadsheet.</p>
-<p>During a test of an authorization, a <strong>Logical Role</strong> is also called a <strong>Point Of View</strong>.</p>
+<p>An authorization usually contains two elements (also named dimensions): The <strong>Feature</strong> and the <strong>Logical Role</strong> that accesses it. Sometime a third dimension named <strong>Data</strong> is added in order to define access that includes a filtering at business data level.</p>
+<p>Generally, the two dimensions of each authorization should be listed in a spreadsheet that is called an <strong>authorization matrix</strong>. When authorizations are tested, the logical roles are sometimes called a <strong>Point Of View</strong>.</p>
 <h2 id="objective">Objective<a class="headerlink" href="#objective" title="Permanent link">&para;</a></h2>
-<p>This article describes a proposition of implementation in order to automate the tests of an <em>authorization matrix</em>.</p>
-<p>This article assumes that 2 dimensions are used to represent an authorization for the technical proposition described and takes an application exposing REST services as an example.</p>
-<p>The objective is to provide starting ideas/hints in order to create a tailored way of testing of the authorization matrix for the target application.</p>
+<p>This cheat sheet is designed to help you generate your own approaches to automating authorization tests in an authorization matrix. Since developers will need to design their own approach to automating authorization tests, <strong>this cheat sheet will show a possible approach to automating authorization tests for one possible implementation of an application that exposes REST Services.</strong></p>
 <h2 id="proposition">Proposition<a class="headerlink" href="#proposition" title="Permanent link">&para;</a></h2>
-<p>In order to achieve the full automation of the evaluation of the <em>authorization matrix</em>, the following actions have been performed:</p>
+<h3 id="preparing-to-automate-the-authorization-matrix">Preparing to automate the authorization matrix<a class="headerlink" href="#preparing-to-automate-the-authorization-matrix" title="Permanent link">&para;</a></h3>
+<p>Before we start to automate a test of the authorization matrix, we will need to do the following:</p>
 <ol>
 <li>
-<p>Formalize the authorization matrix in a pivot format file allowing:</p>
+<p><strong>Formalize the authorization matrix in a pivot format file, which will allow you to:</strong></p>
 <ol>
-<li>The processing by a program easily.</li>
-<li>To be read and updated by a human for the follow-up of the authorization combinations.</li>
-<li>Hierarchy in the information in order to easily materialize the different combinations.</li>
-<li>The maximum possible of independence from the technology and design used to implement the application exposing the features.</li>
+<li>Easily process the matrix by a program.</li>
+<li>Allow a human to read and update when you need to follow up on the authorization combinations.</li>
+<li>Set up a hierarchy of the authorizations, which will allow you to easily create different combinations.</li>
+<li>Create the maximum possible of independence from the technology and design used to implement the applications.</li>
 </ol>
 </li>
 <li>
-<p>Create a set of integration tests that fully use the authorization matrix pivot file as input source in order to evaluate the different combinations with:</p>
+<p><strong>Create a set of integration tests that fully use the authorization matrix pivot file as an input source, which will allow you to evaluate the different combinations with the following advantages:</strong></p>
 <ol>
 <li>The minimum possible of maintenance when the authorization matrix pivot file is updated.</li>
 <li>A clear indication, in case of failed test, of the source authorization combination that does not respect the authorization matrix.</li>
 </ol>
 </li>
 </ol>
-<h3 id="authorization-matrix-pivot-file">Authorization matrix pivot file<a class="headerlink" href="#authorization-matrix-pivot-file" title="Permanent link">&para;</a></h3>
-<p>The XML format has been used to formalize the authorization matrix.</p>
-<p>The XML structure contains 3 main sections:</p>
+<h3 id="create-the-authorization-matrix-pivot-file">Create the authorization matrix pivot file<a class="headerlink" href="#create-the-authorization-matrix-pivot-file" title="Permanent link">&para;</a></h3>
+<p><strong>In this example, we use an XML format to formalize the authorization matrix.</strong></p>
+<p>This XML structure has three main sections (or nodes):</p>
 <ul>
-<li>Node <strong>roles</strong>: This node describes the possible logical roles used in the system, is used to provide a list, and the explanation of the different roles (authorization level).</li>
-<li>Node <strong>services</strong>: This node lists and describes the available services exposed by the system, and the associated logical role(s) that can call them.</li>
-<li>Node <strong>services-testing</strong>: This node provides a test payload for each service if the service uses input data other than the one coming from URL or path.</li>
+<li>Node <strong>roles</strong>: Describes the possible logical roles used in the system, provides a list of the roles, and explains the different roles (authorization level).</li>
+<li>Node <strong>services</strong>: Provides a list of the available services exposed by the system, provides a description of those services, and defines the associated logical role(s) that can call them.</li>
+<li>Node <strong>services-testing</strong>: Provides a test payload for each service if the service uses input data other than the one coming from URL or path.</li>
 </ul>
-<p>This is an example of the XML used to represent the authorization:</p>
+<p><strong>This sample demonstrates how an authorization could be defined with XML</strong>:</p>
 <blockquote>
 <p>Placeholders (values between {}) are used to mark location where test value must be placed by the integration tests if needed</p>
 </blockquote>
 <div class="highlight"><pre><span></span><code><span class="w">  </span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
 <span class="w">  </span><span class="cm">&lt;!--</span>
 <span class="cm">      This file materializes the authorization matrix for the different</span>
-<span class="cm">      services exposed by the system.</span>
+<span class="cm">      services exposed by the system:</span>
 
-<span class="cm">      It will be used by the tests as a input source for the different tests cases:</span>
-<span class="cm">      1) Evaluate legitimate access and its correct implementation</span>
-<span class="cm">      2) Identify not legitimate access (authorization definition issue</span>
+<span class="cm">      The tests will use this as a input source for the different test cases by:</span>
+<span class="cm">      1) Defining legitimate access and the correct implementation</span>
+<span class="cm">      2) Identifing illegitimate access (authorization definition issue</span>
 <span class="cm">      on service implementation)</span>
 
 <span class="cm">      The &quot;name&quot; attribute is used to uniquely identify a SERVICE or a ROLE.</span>
@@ -2552,10 +2563,10 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
 
 <span class="w">  </span><span class="nt">&lt;/authorization-matrix&gt;</span>
 </code></pre></div>
-<h3 id="integration-tests">Integration tests<a class="headerlink" href="#integration-tests" title="Permanent link">&para;</a></h3>
-<p>Integration tests are implemented using a maximum of factorized code and one test case by <strong>Point Of View (POV)</strong> has been created in order to group the verifications by profile of access level (logical role) and facilitate the rendering/identification of the errors.</p>
-<p>Parsing, object mapping and access to the authorization matrix information has been implemented using XML marshalling/unmarshalling built-in features provided by the technology used to implement the tests (JAXB here) in order to limit the code to the one in charge of performing the tests.</p>
-<p>This is the implementation of the integration tests case class:</p>
+<h3 id="implementing-an-integration-test">Implementing an integration test<a class="headerlink" href="#implementing-an-integration-test" title="Permanent link">&para;</a></h3>
+<p><strong>To create an integration test, you should use a maximum of factorized code and one test case by Point Of View (POV) so the verifications can be profiled by access level (logical role). This will facilitate the rendering/identification of the errors.</strong></p>
+<p>In this integration test, we have implemented parsing, object mapping and access to the authorization matrix by marshalling XML into a Java object and unmarshalling the object back into XML These features are used to implement the tests (JAXB here) and limit the code to the developer in charge of performing the tests.</p>
+<p><strong>Here is a sample implementation of an integration test case class:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">org.owasp.pocauthztesting.enumeration.SecurityRole</span><span class="p">;</span>
 <span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">org.owasp.pocauthztesting.service.AuthService</span><span class="p">;</span>
 <span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">org.owasp.pocauthztesting.vo.AuthorizationMatrix</span><span class="p">;</span>
@@ -2582,9 +2593,9 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
 <span class="w">  </span><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Optional</span><span class="p">;</span>
 
 <span class="w">  </span><span class="cm">/**</span>
-<span class="cm">   * Integration Test cases in charge of validate the correct implementation of the authorization matrix.</span>
-<span class="cm">   * Create on test case by logical role that will test access on all services exposed by the system.</span>
-<span class="cm">   * Implements here focus on readability</span>
+<span class="cm">   * Integration test cases validate the correct implementation of the authorization matrix.</span>
+<span class="cm">   * They create a test case by logical role that will test access on all services exposed by the system.</span>
+<span class="cm">   * This implementation focuses on readability</span>
 <span class="cm">   */</span>
 <span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">AuthorizationMatrixIT</span><span class="w"> </span><span class="p">{</span>
 
@@ -2643,7 +2654,7 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
 <span class="w">      </span><span class="p">}</span>
 
 <span class="w">      </span><span class="cm">/**</span>
-<span class="cm">       * Test access to the services from a administrator user.</span>
+<span class="cm">       * Test access to the services from a user with administrator access.</span>
 <span class="cm">       *</span>
 <span class="cm">       * @throws Exception</span>
 <span class="cm">       */</span>
@@ -2658,7 +2669,7 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
 <span class="w">      </span><span class="p">}</span>
 
 <span class="w">      </span><span class="cm">/**</span>
-<span class="cm">       * Evaluate the access to all service using the point of view (POV) specified.</span>
+<span class="cm">       * Evaluate the access to all service using the specified point of view (POV).</span>
 <span class="cm">       *</span>
 <span class="cm">       * @param pointOfView Point of view to use</span>
 <span class="cm">       * @param accessToken Access token that is linked to the point of view in terms of authorization.</span>
@@ -2721,8 +2732,8 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
 <span class="w">      </span><span class="p">}</span>
 
 <span class="w">      </span><span class="cm">/**</span>
-<span class="cm">       * Call a service with a specific payload and return the HTTP response code received.</span>
-<span class="cm">       * Delegate this step in order to made the test cases more easy to maintain.</span>
+<span class="cm">       * Call a service with a specific payload and return the HTTP response code that was received.</span>
+<span class="cm">       * This step was delegated in order to made the test cases more easy to maintain.</span>
 <span class="cm">       *</span>
 <span class="cm">       * @param uri                URI of the target service</span>
 <span class="cm">       * @param payloadContentType Content type of the payload to send</span>
@@ -2735,7 +2746,7 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
 <span class="w">      </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">callService</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">uri</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">payload</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">payloadContentType</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">httpMethod</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">accessToken</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
 <span class="w">          </span><span class="kt">int</span><span class="w"> </span><span class="n">rc</span><span class="p">;</span>
 
-<span class="w">          </span><span class="c1">//Build the request - Use Apache HTTP Client in order to be more flexible in the combination</span>
+<span class="w">          </span><span class="c1">//Build the request - Use Apache HTTP Client in order to be more flexible in the combination.</span>
 <span class="w">          </span><span class="n">HttpRequestBase</span><span class="w"> </span><span class="n">request</span><span class="p">;</span>
 <span class="w">          </span><span class="n">String</span><span class="w"> </span><span class="n">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">BASE_URL</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">uri</span><span class="p">).</span><span class="na">replaceAll</span><span class="p">(</span><span class="s">&quot;\\{messageId\\}&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="p">);</span>
 <span class="w">          </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">httpMethod</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
@@ -2758,7 +2769,7 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
 <span class="w">          </span><span class="n">request</span><span class="p">.</span><span class="na">setHeader</span><span class="p">(</span><span class="s">&quot;Authorization&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">accessToken</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">accessToken</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span>
 
 
-<span class="w">          </span><span class="c1">//Send the request and get the HTTP response code</span>
+<span class="w">          </span><span class="c1">//Send the request and get the HTTP response code.</span>
 <span class="w">          </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">CloseableHttpClient</span><span class="w"> </span><span class="n">httpClient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HttpClients</span><span class="p">.</span><span class="na">createDefault</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
 <span class="w">              </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">CloseableHttpResponse</span><span class="w"> </span><span class="n">httpResponse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">httpClient</span><span class="p">.</span><span class="na">execute</span><span class="p">(</span><span class="n">request</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                  </span><span class="c1">//Don&#39;t care here about the response content...</span>
@@ -2770,7 +2781,7 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
 <span class="w">      </span><span class="p">}</span>
 
 <span class="w">      </span><span class="cm">/**</span>
-<span class="cm">       * Generate a JWT token the user and role specified.</span>
+<span class="cm">       * Generate a JWT token for the specified user and role.</span>
 <span class="cm">       *</span>
 <span class="cm">       * @param login User login</span>
 <span class="cm">       * @param role  Authorization logical role</span>
@@ -2783,7 +2794,7 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
 
 
 <span class="w">      </span><span class="cm">/**</span>
-<span class="cm">       * Format a list of errors to a printable string</span>
+<span class="cm">       * Format a list of errors to a printable string.</span>
 <span class="cm">       *</span>
 <span class="cm">       * @param errors Error list</span>
 <span class="cm">       * @return Printable string</span>
@@ -2795,7 +2806,7 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
 <span class="w">      </span><span class="p">}</span>
 <span class="w">  </span><span class="p">}</span>
 </code></pre></div>
-<p>In case of detecting an authorization issue(s) the output is the following:</p>
+<p>If an authorization issue is detected (or issues are detected), the output is the following:</p>
 <div class="highlight"><pre><span></span><code><span class="n">testAccessUsingAnonymousUserPointOfView</span><span class="p">(</span><span class="n">org</span><span class="p">.</span><span class="na">owasp</span><span class="p">.</span><span class="na">pocauthztesting</span><span class="p">.</span><span class="na">AuthorizationMatrixIT</span><span class="p">)</span>
 <span class="n">Time</span><span class="w"> </span><span class="n">elapsed</span><span class="p">:</span><span class="w"> </span><span class="mf">1.009</span><span class="w"> </span><span class="n">s</span><span class="w">  </span><span class="err">###</span><span class="w"> </span><span class="n">FAILURE</span>
 <span class="n">java</span><span class="p">.</span><span class="na">lang</span><span class="p">.</span><span class="na">AssertionError</span><span class="p">:</span>
@@ -2813,9 +2824,9 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
 <span class="w">    </span><span class="n">The</span><span class="w"> </span><span class="n">service</span><span class="w"> </span><span class="err">&#39;</span><span class="n">DeleteMessage</span><span class="err">&#39;</span><span class="w"> </span><span class="n">when</span><span class="w"> </span><span class="n">called</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">POV</span><span class="w"> </span><span class="err">&#39;</span><span class="n">BASIC</span><span class="err">&#39;</span><span class="w"> </span><span class="k">return</span>
 <span class="w">    </span><span class="n">a</span><span class="w"> </span><span class="n">response</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="mi">200</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">not</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">expected</span><span class="w"> </span><span class="nf">one</span><span class="w"> </span><span class="p">(</span><span class="mi">403</span><span class="w"> </span><span class="n">expected</span><span class="p">).</span>
 </code></pre></div>
-<h2 id="rendering-of-the-authorization-matrix-for-an-audit-review">Rendering of the authorization matrix for an audit / review<a class="headerlink" href="#rendering-of-the-authorization-matrix-for-an-audit-review" title="Permanent link">&para;</a></h2>
-<p>Even if the authorization matrix is stored in a human-readable format (XML), it can be interesting to provide an on-the-fly rendering representation of the XML file in order to facilitate the review, audit and discussion about the authorization matrix in order to spot potential inconsistencies.</p>
-<p>The Following XSL stylesheet can be used:</p>
+<h2 id="rendering-the-authorization-matrix-for-an-audit-review">Rendering the authorization matrix for an audit / review<a class="headerlink" href="#rendering-the-authorization-matrix-for-an-audit-review" title="Permanent link">&para;</a></h2>
+<p>Even if the authorization matrix is stored in a human-readable format (XML), you might want to show an on-the-fly rendered representation of the XML file to spot potential inconsistencies and facilitate the review, audit and discussion about the authorization matrix.</p>
+<p>To achieve this task, you could use the following XSL stylesheet:</p>
 <div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
 <span class="k">&lt;xsl:stylesheet</span><span class="w"> </span><span class="na">xmlns:xsl=</span><span class="s">&quot;http://www.w3.org/1999/XSL/Transform&quot;</span><span class="w"> </span><span class="na">version=</span><span class="s">&quot;1.0&quot;</span><span class="nt">&gt;</span>
 <span class="w">  </span><span class="k">&lt;xsl:template</span><span class="w"> </span><span class="na">match=</span><span class="s">&quot;/&quot;</span><span class="nt">&gt;</span>
