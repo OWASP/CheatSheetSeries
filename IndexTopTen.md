@@ -36,12 +36,15 @@ This cheat sheet will help users of the [OWASP Top Ten](https://owasp.org/www-pr
 ## [A04:2021 – Insecure Design](https://owasp.org/Top10/A04_2021-Insecure_Design/)
 
 - [Threat Modeling Cheat Sheet](cheatsheets/Threat_Modeling_Cheat_Sheet.md)
+- [Abuse Case Cheat Sheet](cheatsheets/Abuse_Case_Cheat_Sheet.md)
+- [Attack Surface Analysis Cheat Sheet](cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.md)
 
 ## [A05:2021 – Security Misconfiguration](https://owasp.org/Top10/A05_2021-Security_Misconfiguration/)
 
 - [Infrastructure as Code Security Cheat Sheet](cheatsheets/Infrastructure_as_Code_Security_Cheat_Sheet.md)
 - [XML External Entity Prevention Cheat Sheet](cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md)
 - [PHP Configuration Cheat Sheet](cheatsheets/PHP_Configuration_Cheat_Sheet.md)
+- [Docker Security Cheat Sheet](cheatsheets/Docker_Security_Cheat_Sheet.md)
 
 ## [A06:2021 – Vulnerable and Outdated Components](https://owasp.org/Top10/A06_2021-Vulnerable_and_Outdated_Components/)
 
@@ -76,3 +79,5 @@ This cheat sheet will help users of the [OWASP Top Ten](https://owasp.org/www-pr
 - [Server Side Request Forgery Prevention Cheat Sheet](cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md)
 
 ## [A11:2021 – Next Steps](https://owasp.org/Top10/A11_2021-Next_Steps/)
+
+- [Denial of Service Cheat Sheet](cheatsheets/Denial_of_Service_Cheat_Sheet.md)
