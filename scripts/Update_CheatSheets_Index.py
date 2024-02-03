@@ -25,15 +25,14 @@ def extract_languages_snippet_provided(cheatsheet):
 
 # Define templates
 cs_md_link_template = "[%s](cheatsheets/%s)."
-language_md_link_template = "![%s](assets/Index_%s.png)"
+language_md_link_template = "![%s](assets/Index_%s.svg)"
 header_template = "## %s\n\n"
 top_menu_template = "[%s](Index.md#%s)"
 cs_count_template = "**%s** cheat sheets available."
 cs_index_title_template = "# Index Alphabetical\n\n"
 
 # Scan all CS files
-index = {}
-cs_count = 0
+index = {}cs_count = 0
 cheatsheets = [f.name for f in os.scandir("../cheatsheets") if f.is_file()]
 for cheatsheet in cheatsheets:
     letter = cheatsheet[0].upper()
