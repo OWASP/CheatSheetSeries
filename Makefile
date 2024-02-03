@@ -1,5 +1,5 @@
 .PHONY: help
-.SILENT: 
+.SILENT:
 
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?# .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?# "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
@@ -10,7 +10,7 @@ install-python-requirements:  # Install Python 3 required libraries
 	source venv/bin/activate; \
 	python -m pip install -r requirements.txt
 
-generate-site: install-python-requirements # Use custom-script to generate the website 
+generate-site: install-python-requirements # Use custom-script to generate the website
 	source venv/bin/activate; \
 	(cd scripts && bash Generate_Site_mkDocs.sh)
 
