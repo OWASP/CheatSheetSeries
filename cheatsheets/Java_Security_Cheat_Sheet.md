@@ -514,7 +514,7 @@ other log viewing/analysis tools that don't expect the log data to be pre-HTML e
 
 ### Encryption for storage
 
-Follow the algorithm guidance in the [OWASP Cryptographic Storage Cheat Sheet](Cryptographic_Storage_Cheat_Sheet.m#algorithms).
+Follow the algorithm guidance in the [OWASP Cryptographic Storage Cheat Sheet](Cryptographic_Storage_Cheat_Sheet.md#algorithms).
 
 #### Symmetric example using Google Tink
 
