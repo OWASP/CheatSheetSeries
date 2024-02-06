@@ -67,7 +67,7 @@ try (Connection con = DriverManager.getConnection(jdbcUrl)) {
         pStatement.setInt(4, 11);
         insertedRecordCount = pStatement.executeUpdate();
     }
- 
+
    /* Sample C: Update data using Prepared Statement*/
     query = "update color set blue = ? where friendly_name = ?";
     int updatedRecordCount;
@@ -345,7 +345,7 @@ for (String specChar: specialCharsList) {
         return false;
     }
 }
-   
+
 //Add also a check on input max size
 if (!userInput.length() <= 50)
 {
@@ -514,7 +514,7 @@ other log viewing/analysis tools that don't expect the log data to be pre-HTML e
 
 ### Encryption for storage
 
-Follow the algorithm guidance in the [OWASP Cryptographic Storage Cheat Sheet](Cryptographic_Storage_Cheat_Sheet.m#algorithms).
+Follow the algorithm guidance in the [OWASP Cryptographic Storage Cheat Sheet](Cryptographic_Storage_Cheat_Sheet.md#algorithms).
 
 #### Symmetric example using Google Tink
 
@@ -547,15 +547,15 @@ public class App {
     // https://github.com/tink-crypto/tink-java/tree/main/examples/aead
 
     public static void main(String[] args) throws Exception {
-        
+
         // Key securely generated using:
         // tinkey create-keyset --key-template AES128_GCM --out-format JSON --out aead_test_keyset.json
-          
-          
-          
+
+
+
         // Register all AEAD key types with the Tink runtime.
         AeadConfig.register();
-      
+
         // Read the keyset into a KeysetHandle.
         KeysetHandle handle =
         TinkJsonProtoKeysetFormat.parseKeyset(
@@ -754,7 +754,7 @@ class App {
 
         // Alice encrypts a message to send to Bob
         String plaintext = "Hello, Bob!";
-        
+
         // Add some relevant context about the encrypted data that should be verified
         // on decryption
         String metadata = "Sender: alicesmith@example.com";
@@ -868,17 +868,17 @@ class Main {
         var bob = new ECDHSimple();
         Key bobPublicKey = bob.getPublicKey();
 
-        // This keypair generation should be reperformed every so often in order to 
+        // This keypair generation should be reperformed every so often in order to
         // obtain a new shared secret to avoid a long lived shared secret.
 
         // Alice encrypts a message to send to Bob
         String plaintext = "Hello"; //, Bob!";
         System.out.println("Secret being sent from Alice to Bob: " + plaintext);
-        
+
         var retPair = alice.encrypt(bobPublicKey, plaintext);
         var nonce = retPair.getKey();
         var cipherText = retPair.getValue();
-        
+
         System.out.println("Both cipherText and nonce being sent from Alice to Bob: " + Base64.getEncoder().encodeToString(cipherText) + " " + Base64.getEncoder().encodeToString(nonce));
 
 
@@ -890,7 +890,7 @@ class Main {
         // Bob encrypts a message to send to Alice
         String plaintext2 = "Hello"; //, Alice!";
         System.out.println("Secret being sent from Bob to Alice: " + plaintext2);
-        
+
         var retPair2 = bob.encrypt(alicePublicKey, plaintext2);
         var nonce2 = retPair2.getKey();
         var cipherText2 = retPair2.getValue();
@@ -941,8 +941,8 @@ class ECDHSimple {
     }
 
     private AesKeyNonce generateAESParams(Key partnerPublicKey, byte[] nonce) throws Exception {
-    
-        // Derive the secret based on this side's private key and the other side's public key 
+
+        // Derive the secret based on this side's private key and the other side's public key
         KeyAgreement keyAgreement = KeyAgreement.getInstance("ECDH");
         keyAgreement.init(keyPair.getPrivate());
         keyAgreement.doPhase(partnerPublicKey, true);
@@ -953,15 +953,15 @@ class ECDHSimple {
         // Copy first 32 bytes as the key
         byte[] key = Arrays.copyOfRange(secret, 0, (AesGcmSimple.KEY_SIZE / 8));
         aesKeyNonce.Key = new SecretKeySpec(key, 0, key.length, "AES");
-        
+
         // Passed in nonce will be used.
         aesKeyNonce.Nonce = nonce;
         return aesKeyNonce;
-        
+
     }
 
     private AesKeyNonce generateAESParams(Key partnerPublicKey) throws Exception {
-    
+
         // Nonce of 12 bytes / 96 bits and this size should always be used.
         // It is critical for AES-GCM that a unique nonce is used for every cryptographic operation.
         // Therefore this is not generated from the shared secret
