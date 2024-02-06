@@ -90,7 +90,7 @@ tight security is of utmost importance.
 Furthermore, in lower level languages like C/C++, it is relatively easy to protect
 secrets in memory. Thus, it may be worthwhile to implement this practice even if
 the risk of an attacker gaining access to the memory is low. On the other hand, for
-programming languages that rely on garbarge collection, securing secrets in memory
+programming languages that rely on garbage collection, securing secrets in memory
 generally is much more difficult.
 
 - **Structures and Classes:** In .NET and Java, do not use immutable structures
