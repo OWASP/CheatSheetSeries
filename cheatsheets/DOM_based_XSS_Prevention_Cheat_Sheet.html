@@ -3019,7 +3019,7 @@
 <p>HTML encoded example to highlight a fundamental difference with JavaScript encoded values (DNW):</p>
 <div class="highlight"><pre><span></span><code><span class="err">&lt;</span><span class="ni">&amp;#x61;</span> href=...&gt;
 </code></pre></div>
-<p>If HTML encoding followed the same semantics as JavaScript encoding. The line above could have possibly worked to render a link. This difference makes JavaScript encoding a less viable weapon in our fight against XSS.</p>
+<p>If HTML encoding followed the same semantics as JavaScript encoding, the line above could have possibly worked to render a link. This difference makes JavaScript encoding a less viable weapon in our fight against XSS.</p>
 <h2 id="rule-4-javascript-escape-before-inserting-untrusted-data-into-the-css-attribute-subcontext-within-the-execution-context">RULE #4 - JavaScript Escape Before Inserting Untrusted Data into the CSS Attribute Subcontext within the Execution Context<a class="headerlink" href="#rule-4-javascript-escape-before-inserting-untrusted-data-into-the-css-attribute-subcontext-within-the-execution-context" title="Permanent link">&para;</a></h2>
 <p>Normally executing JavaScript from a CSS context required either passing <code>javascript:attackCode()</code> to the CSS <code>url()</code> method or invoking the CSS <code>expression()</code> method passing JavaScript code to be directly executed.</p>
 <p>From my experience, calling the <code>expression()</code> function from an execution context (JavaScript) has been disabled. In order to mitigate against the CSS <code>url()</code> method, ensure that you are URL encoding the data passed to the CSS <code>url()</code> method.</p>
