@@ -16,7 +16,7 @@
 
 The primary function of a User ID is to uniquely identify a user within a system. Ideally, User IDs should be randomly generated to prevent the creation of predictable or sequential IDs, which could pose a security risk, especially in systems where User IDs might be exposed or inferred from external sources.
 
-### UserNames
+### Usernames
 
 Usernames are easy-to-remember identifiers that users tend to choose to tell the service who they claim to be (identification phase). This is why randomly generated usernames don't offer a good trade-off between security and usability. 
 
