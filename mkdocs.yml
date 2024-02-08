@@ -7,7 +7,7 @@ repo_name: OWASP/CheatSheetSeries
 repo_url: https://github.com/OWASP/CheatSheetSeries
 
 # Copyright
-copyright: ©Copyright <script>document.write(new Date().getFullYear())</script> - CheatSheets Series Team - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">Creative Commons Attribution 3.0 Unported License</a>.
+copyright: ©Copyright <script>document.write(new Date().getFullYear())</script> - Cheat Sheets Series Team - This work is licensed under <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a>.
 
 #Config
 docs_dir: cheatsheets/
