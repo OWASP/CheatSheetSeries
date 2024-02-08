@@ -22,7 +22,7 @@ Ideally, IDs should be unique and, if possible, ungessable. This is why using a 
 
 Usernames are easy-to-remember identifiers that users tend to choose to tell the service who they claim to be (identification phase). This is why randomly generated usernames don't offer a good trade-off between security and usability. 
 
-The best recommendation is to use the user's email as the username. For information on validating email addresses, please visit the [input validation cheatsheet email discussion](Input_Validation_Cheat_Sheet.md#email-address-validation).
+Users should be permitted to use their email address as a username, provided the email is verified during signup. Additionally, they should have the option to choose a username other than an email address. For information on validating email addresses, please visit the [input validation cheatsheet email discussion](Input_Validation_Cheat_Sheet.md#email-address-validation).
 
 ### Authentication Solution and Sensitive Accounts
 
