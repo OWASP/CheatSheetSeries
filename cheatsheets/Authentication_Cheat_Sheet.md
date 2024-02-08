@@ -16,8 +16,6 @@
 
 The primary function of a User ID is to uniquely identify a user within a system. Ideally, User IDs should be randomly generated to prevent the creation of predictable or sequential IDs, which could pose a security risk, especially in systems where User IDs might be exposed or inferred from external sources.
 
-Ideally, IDs should be unique and, if possible, ungessable. This is why using a PRNG (not necessarily a CSPRNG) is usually a good idea. UUID4 is a fine algorithm to use for this purpose. The trade-off of this decision is usually performance in terms of user creation and user search. 
-
 ### UserNames
 
 Usernames are easy-to-remember identifiers that users tend to choose to tell the service who they claim to be (identification phase). This is why randomly generated usernames don't offer a good trade-off between security and usability. 
