@@ -126,7 +126,7 @@ The `Access-Control-Allow-Origin` is a CORS (cross-origin resource sharing) head
 If you use it, set specific [origins](https://developer.mozilla.org/en-US/docs/Glossary/Origin) instead of `*`. Checkout [Access-Control-Allow-Origin](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin) for details.
 > `Access-Control-Allow-Origin: https://yoursite.com`
 
-- *NOTE*: The use '*' might be necessary depending on your needs. For example, for a public API that should be accessible from any origin, it might be necessary to allow '*'.
+- *NOTE*: The use of '\*' might be necessary depending on your needs. For example, for a public API that should be accessible from any origin, it might be necessary to allow '\*'.
 
 ### Cross-Origin-Opener-Policy (COOP)
 
