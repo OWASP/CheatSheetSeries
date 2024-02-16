@@ -239,7 +239,7 @@ public class EndpointConfigurator extends ServerEndpointConfig.Configurator {
 
 When using websocket as communication channel, it's important to use an authentication method allowing the user to receive an access *Token* that is not automatically sent by the browser and then must be explicitly sent by the client code during each exchange.
 
-HMAC digests are the simplest method, and [JSON Web Token](https://jwt.io/introduction/) is a good feature rich alternative, because it allows the transport of access ticket information in a stateless and not alterable way. Moreover, it defines a validity timeframe. You can find additional information about JWT token hardening on this [cheat sheet](JSON_Web_Token_for_Java_Cheat_Sheet.md).
+HMAC digests are the simplest method, and [JSON Web Token](https://jwt.io/introduction/) is a good feature rich alternative, because it allows the transport of access ticket information in a stateless and not alterable way. Moreover, it defines a validity timeframe. You can find additional information about JWT hardening on this [cheat sheet](JSON_Web_Token_for_Java_Cheat_Sheet.md).
 
 [JSON Validation Schema](http://json-schema.org/) are used to define and validate the expected content in input and output messages.
 
@@ -413,7 +413,7 @@ public class AuthenticationMessageHandler implements MessageHandler.Whole<Authen
 }
 ```
 
-**Utility class to manage JWT token** - Handle the issuing and the validation of the access token. Simple JWT token has been used for the example (focus was made here on the global WS endpoint implementation) here without extra hardening (see this [cheat sheet](JSON_Web_Token_for_Java_Cheat_Sheet.md) to apply extra hardening on the JWT token)
+**Utility class to manage JWT** - Handle the issuing and the validation of the access token. Simple JWT has been used for the example (focus was made here on the global WS endpoint implementation) here without extra hardening (see this [cheat sheet](JSON_Web_Token_for_Java_Cheat_Sheet.md) to apply extra hardening on the JWT)
 
 ``` java
 import com.auth0.jwt.JWT;
