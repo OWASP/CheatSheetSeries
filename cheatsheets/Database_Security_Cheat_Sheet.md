@@ -61,22 +61,17 @@ When developers are assigning permissions to database user accounts, they should
 
 - Do not use the built-in `root`, `sa` or `SYS` accounts.
 - Do not grant the account administrative rights over the database instance.
-- Only allow the account to connect from allowed hosts.
-    - This would often be `localhost` or the address of the application server.
-- Only grant the account access to the specific databases it needs.
-    - Development, UAT and Production environments should all use separate databases and accounts.
-- Only grant the required permissions on the databases.
-    - Most applications would only need `SELECT`, `UPDATE` and `DELETE` permissions.
-    - The account should not be the owner of the database as this can lead to privilege escalation vulnerabilities.
-- Avoid using database links or linked servers.
-    - Where they are required, use an account that has been granted access to only the minimum databases, tables, and system privileges required.
+- Make sure the account can only connect from allowed hosts. This would often be `localhost` or the address of the application server.
+- The account should only access the specific databases it needs. Development, UAT and Production environments should all use separate databases and accounts.
+- Only grant the required permissions on the databases. Most applications would only need `SELECT`, `UPDATE` and `DELETE` permissions. The account should not be the owner of the database as this can lead to privilege escalation vulnerabilities.
+- Avoid using database links or linked servers. Where they are required, use an account that has been granted access to only the minimum databases, tables, and system privileges required.
 
 Most security-critical applications, apply permissions at more granular levels, including:
 
 - Table-level permissions.
 - Column-level permissions.
 - Row-level permissions
-- Blocking access to the underlying tables, and requiring all access through restricted [views](https://en.wikipedia.org/wiki/View_(SQL)).
+- Blocking access to the underlying tables, and requiring all access through restricted [views](<https://en.wikipedia.org/wiki/View_(SQL)>).
 
 ## Database Configuration and Hardening
 
@@ -88,8 +83,7 @@ The database application should also be properly configured and hardened. The fo
 - Configure the database services to run under a low privileged user account.
 - Remove any default accounts and databases.
 - Store [transaction logs](https://en.wikipedia.org/wiki/Transaction_log) on a separate disk to the main database files.
-- Configure a regular backup of the database.
-    - Ensure that the backups are protected with appropriate permissions, and ideally encrypted.
+- Configure a regular backup of the database. Ensure that the backups are protected with appropriate permissions, and ideally encrypted.
 
 The following sections gives some further recommendations for specific database software, in addition to the more general recommendations given above.
 
