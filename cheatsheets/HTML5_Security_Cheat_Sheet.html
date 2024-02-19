@@ -2874,7 +2874,7 @@
 </code></pre></div>
 <h3 id="authentication-and-inputoutput-validation">Authentication and Input/Output validation<a class="headerlink" href="#authentication-and-inputoutput-validation" title="Permanent link">&para;</a></h3>
 <p>When using websocket as communication channel, it's important to use an authentication method allowing the user to receive an access <em>Token</em> that is not automatically sent by the browser and then must be explicitly sent by the client code during each exchange.</p>
-<p>HMAC digests are the simplest method, and <a href="https://jwt.io/introduction/">JSON Web Token</a> is a good feature rich alternative, because it allows the transport of access ticket information in a stateless and not alterable way. Moreover, it defines a validity timeframe. You can find additional information about JWT token hardening on this <a href="JSON_Web_Token_for_Java_Cheat_Sheet.html">cheat sheet</a>.</p>
+<p>HMAC digests are the simplest method, and <a href="https://jwt.io/introduction/">JSON Web Token</a> is a good feature rich alternative, because it allows the transport of access ticket information in a stateless and not alterable way. Moreover, it defines a validity timeframe. You can find additional information about JWT hardening on this <a href="JSON_Web_Token_for_Java_Cheat_Sheet.html">cheat sheet</a>.</p>
 <p><a href="http://json-schema.org/">JSON Validation Schema</a> are used to define and validate the expected content in input and output messages.</p>
 <p>The code below defines the complete authentication messages flow handling:</p>
 <p><strong>Authentication Web Socket endpoint</strong> - Provide a WS endpoint that enables authentication exchange</p>
@@ -3039,7 +3039,7 @@
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-<p><strong>Utility class to manage JWT token</strong> - Handle the issuing and the validation of the access token. Simple JWT token has been used for the example (focus was made here on the global WS endpoint implementation) here without extra hardening (see this <a href="JSON_Web_Token_for_Java_Cheat_Sheet.html">cheat sheet</a> to apply extra hardening on the JWT token)</p>
+<p><strong>Utility class to manage JWT</strong> - Handle the issuing and the validation of the access token. Simple JWT has been used for the example (focus was made here on the global WS endpoint implementation) here without extra hardening (see this <a href="JSON_Web_Token_for_Java_Cheat_Sheet.html">cheat sheet</a> to apply extra hardening on the JWT)</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">com.auth0.jwt.JWT</span><span class="p">;</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">com.auth0.jwt.JWTVerifier</span><span class="p">;</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">com.auth0.jwt.algorithms.Algorithm</span><span class="p">;</span>
