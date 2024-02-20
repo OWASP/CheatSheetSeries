@@ -837,16 +837,16 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#connecting-to-the-database" class="md-nav__link">
-    Connecting to the Database
+  <a href="#protecting-the-backend-database" class="md-nav__link">
+    Protecting the Backend Database
   </a>
   
-    <nav class="md-nav" aria-label="Connecting to the Database">
+    <nav class="md-nav" aria-label="Protecting the Backend Database">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#transport-layer-protection" class="md-nav__link">
-    Transport Layer Protection
+  <a href="#implementing-transport-layer-protection" class="md-nav__link">
+    Implementing Transport Layer Protection
   </a>
   
 </li>
@@ -857,16 +857,16 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#authentication" class="md-nav__link">
-    Authentication
+  <a href="#configuring-secure-authentication" class="md-nav__link">
+    Configuring Secure Authentication
   </a>
   
-    <nav class="md-nav" aria-label="Authentication">
+    <nav class="md-nav" aria-label="Configuring Secure Authentication">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#storing-database-credentials" class="md-nav__link">
-    Storing Database Credentials
+  <a href="#storing-database-credentials-securely" class="md-nav__link">
+    Storing Database Credentials Securely
   </a>
   
 </li>
@@ -877,8 +877,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#permissions" class="md-nav__link">
-    Permissions
+  <a href="#creating-secure-permissions" class="md-nav__link">
+    Creating Secure Permissions
   </a>
   
 </li>
@@ -892,22 +892,22 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#microsoft-sql-server" class="md-nav__link">
-    Microsoft SQL Server
+  <a href="#hardening-a-microsoft-sql-server" class="md-nav__link">
+    Hardening a Microsoft SQL Server
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#mysql-and-mariadb" class="md-nav__link">
-    MySQL and MariaDB
+  <a href="#hardening-a-mysql-or-a-mariadb-server" class="md-nav__link">
+    Hardening a MySQL or a MariaDB Server
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#postgresql" class="md-nav__link">
-    PostgreSQL
+  <a href="#hardewning-a-postgresql-server" class="md-nav__link">
+    Hardewning a PostgreSQL Server
   </a>
   
 </li>
@@ -2401,16 +2401,16 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#connecting-to-the-database" class="md-nav__link">
-    Connecting to the Database
+  <a href="#protecting-the-backend-database" class="md-nav__link">
+    Protecting the Backend Database
   </a>
   
-    <nav class="md-nav" aria-label="Connecting to the Database">
+    <nav class="md-nav" aria-label="Protecting the Backend Database">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#transport-layer-protection" class="md-nav__link">
-    Transport Layer Protection
+  <a href="#implementing-transport-layer-protection" class="md-nav__link">
+    Implementing Transport Layer Protection
   </a>
   
 </li>
@@ -2421,16 +2421,16 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#authentication" class="md-nav__link">
-    Authentication
+  <a href="#configuring-secure-authentication" class="md-nav__link">
+    Configuring Secure Authentication
   </a>
   
-    <nav class="md-nav" aria-label="Authentication">
+    <nav class="md-nav" aria-label="Configuring Secure Authentication">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#storing-database-credentials" class="md-nav__link">
-    Storing Database Credentials
+  <a href="#storing-database-credentials-securely" class="md-nav__link">
+    Storing Database Credentials Securely
   </a>
   
 </li>
@@ -2441,8 +2441,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#permissions" class="md-nav__link">
-    Permissions
+  <a href="#creating-secure-permissions" class="md-nav__link">
+    Creating Secure Permissions
   </a>
   
 </li>
@@ -2456,22 +2456,22 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#microsoft-sql-server" class="md-nav__link">
-    Microsoft SQL Server
+  <a href="#hardening-a-microsoft-sql-server" class="md-nav__link">
+    Hardening a Microsoft SQL Server
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#mysql-and-mariadb" class="md-nav__link">
-    MySQL and MariaDB
+  <a href="#hardening-a-mysql-or-a-mariadb-server" class="md-nav__link">
+    Hardening a MySQL or a MariaDB Server
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#postgresql" class="md-nav__link">
-    PostgreSQL
+  <a href="#hardewning-a-postgresql-server" class="md-nav__link">
+    Hardewning a PostgreSQL Server
   </a>
   
 </li>
@@ -2515,32 +2515,32 @@
 
 <h1 id="database-security-cheat-sheet">Database Security Cheat Sheet<a class="headerlink" href="#database-security-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>This cheat sheet provides guidance on securely configuring and using the SQL and NoSQL databases. It is intended to be used by application developers when they are responsible for managing the databases, in the absence of a dedicated database administrator (DBA). For details about protecting against SQL Injection attacks, see the <a href="SQL_Injection_Prevention_Cheat_Sheet.html">SQL Injection Prevention Cheat Sheet</a>.</p>
-<h2 id="connecting-to-the-database">Connecting to the Database<a class="headerlink" href="#connecting-to-the-database" title="Permanent link">&para;</a></h2>
-<p>The backend database used by the application should be isolated as much as possible, in order to prevent malicious or undesirable users from being able to connect to it. Exactly how this is achieved will depend on the system and network architecture. The following options could be used to protect it:</p>
+<p>This cheat sheet provides advice for securely configuring SQL and NoSQL databases. It is designed to be used by application developers if they are responsible for managing the databases. For details about protecting against SQL Injection attacks, see the <a href="SQL_Injection_Prevention_Cheat_Sheet.html">SQL Injection Prevention Cheat Sheet</a>.</p>
+<h2 id="protecting-the-backend-database">Protecting the Backend Database<a class="headerlink" href="#protecting-the-backend-database" title="Permanent link">&para;</a></h2>
+<p>The application's backend database should be isolated from other servers and only connect with as few hosts as possible. This task will depend on the system and network architecture. Consider these suggestions:</p>
 <ul>
 <li>Disabling network (TCP) access and requiring all access is over a local socket file or named pipe.</li>
 <li>Configuring the database to only bind on localhost.</li>
 <li>Restricting access to the network port to specific hosts with firewall rules.</li>
 <li>Placing the database server in a separate DMZ isolated from the application server.</li>
 </ul>
-<p>Similar protection should be implemented to protect any web-based management tools used with the database, such as phpMyAdmin.</p>
-<p>When an application is running on an untrusted system (such as a thick-client), it should always connect to the backend through an API that can enforce appropriate access control and restrictions. Direct connections should <strong>never</strong> be made from a thick client to the backend database.</p>
-<h3 id="transport-layer-protection">Transport Layer Protection<a class="headerlink" href="#transport-layer-protection" title="Permanent link">&para;</a></h3>
-<p>Most databases will allow unencrypted network connections in their default configurations. Although some will encrypt the initial authentication (such as Microsoft SQL Server), the rest of the traffic will be unencrypted, meaning that all kinds of sensitive information will be sent across the network in clear text. The following steps should be taken to prevent unencrypted traffic:</p>
+<p>Similar protections should protect any web-based management tools used with the database, such as phpMyAdmin.</p>
+<p>When an application is running on an untrusted system (such as a thick-client), it should always connect to the backend through an API that can enforce appropriate access control and restrictions. Direct connections should <strong>never ever</strong> be made from a thick client to the backend database.</p>
+<h3 id="implementing-transport-layer-protection">Implementing Transport Layer Protection<a class="headerlink" href="#implementing-transport-layer-protection" title="Permanent link">&para;</a></h3>
+<p>Most database default configurations start with unencrypted network connections, though some do encrypt the initial authentication (such as Microsoft SQL Server). Even if the initial authentication is encrypted, the rest of the traffic will be unencrypted and all kinds of sensitive information will be sent across the network in clear text. The following steps should be taken to prevent unencrypted traffic:</p>
 <ul>
 <li>Configure the database to only allow encrypted connections.</li>
 <li>Install a trusted digital certificate on the server.</li>
-<li>Configure the client application to connect using TLSv1.2+ with modern ciphers (e.g, AES-GCM or ChaCha20).</li>
-<li>Configure the client application to verify that the digital certificate is correct.</li>
+<li>The client application to connect using TLSv1.2+ with modern ciphers (e.g, AES-GCM or ChaCha20).</li>
+<li>The client application to verify that the digital certificate is correct.</li>
 </ul>
 <p>The <a href="Transport_Layer_Security_Cheat_Sheet.html">Transport Layer Security Cheat Sheet</a> contains further guidance on securely configuring TLS.</p>
-<h2 id="authentication">Authentication<a class="headerlink" href="#authentication" title="Permanent link">&para;</a></h2>
-<p>The database should be configured to always require authentication, including connections from the local server. Database accounts should be:</p>
+<h2 id="configuring-secure-authentication">Configuring Secure Authentication<a class="headerlink" href="#configuring-secure-authentication" title="Permanent link">&para;</a></h2>
+<p>The database should always require authentication, including connections from the local server. Database accounts should be:</p>
 <ul>
 <li>Protected with strong and unique passwords.</li>
 <li>Used by a single application or service.</li>
-<li>Configured with the minimum permissions required as discussed in the <a href="#permissions">permissions section below</a>.</li>
+<li>Configured with the minimum permissions required as discussed in the <a href="#creating-secure-permissions">permissions section below</a>.</li>
 </ul>
 <p>As with any system that has its own user accounts, the usual account management processes should be followed, including:</p>
 <ul>
@@ -2550,7 +2550,7 @@
 <li>Changing the passwords when staff leave, or there is reason to believe that they may have been compromised.</li>
 </ul>
 <p>For Microsoft SQL Server, consider the use of <a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/authentication-in-sql-server">Windows or Integrated-Authentication</a>, which uses existing Windows accounts rather than SQL Server accounts. This also removes the requirement to store credentials in the application, as it will connect using the credentials of the Windows user it is running under. The <a href="https://dev.mysql.com/doc/connector-net/en/connector-net-programming-authentication-windows-native.html">Windows Native Authentication Plugins</a> provides similar functionality for MySQL.</p>
-<h3 id="storing-database-credentials">Storing Database Credentials<a class="headerlink" href="#storing-database-credentials" title="Permanent link">&para;</a></h3>
+<h3 id="storing-database-credentials-securely">Storing Database Credentials Securely<a class="headerlink" href="#storing-database-credentials-securely" title="Permanent link">&para;</a></h3>
 <p>Database credentials should never be stored in the application source code, especially if they are unencrypted. Instead, they should be stored in a configuration file that:</p>
 <ul>
 <li>Is outside of the webroot.</li>
@@ -2558,30 +2558,17 @@
 <li>Is not checked into source code repositories.</li>
 </ul>
 <p>Where possible, these credentials should also be encrypted or otherwise protected using built-in functionality, such as the <code>web.config</code> encryption available in <a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/connection-strings-and-configuration-files#encrypting-configuration-file-sections-using-protected-configuration">ASP.NET</a>.</p>
-<h2 id="permissions">Permissions<a class="headerlink" href="#permissions" title="Permanent link">&para;</a></h2>
-<p>The permissions assigned to database user accounts should be based on the principle of least privilege (i.e, the accounts should only have the minimal permissions required for the application to function). This can be applied at a number of increasingly granular levels depending on the functionality available in the database. The following steps should be applicable to all environments:</p>
+<h2 id="creating-secure-permissions">Creating Secure Permissions<a class="headerlink" href="#creating-secure-permissions" title="Permanent link">&para;</a></h2>
+<p>When developers are assigning permissions to database user accounts, they should employ the principle of least privilege (i.e, the accounts should only have the minimal permissions required for the application to function). This principle can be applied at a number of increasingly granular levels depending on the functionality available in the database. You can do the following in all environments:</p>
 <ul>
 <li>Do not use the built-in <code>root</code>, <code>sa</code> or <code>SYS</code> accounts.</li>
 <li>Do not grant the account administrative rights over the database instance.</li>
-<li>Only allow the account to connect from allowed hosts.<ul>
-<li>This would often be <code>localhost</code> or the address of the application server.</li>
+<li>Make sure the account can only connect from allowed hosts. This would often be <code>localhost</code> or the address of the application server.</li>
+<li>The account should only access the specific databases it needs. Development, UAT and Production environments should all use separate databases and accounts.</li>
+<li>Only grant the required permissions on the databases. Most applications would only need <code>SELECT</code>, <code>UPDATE</code> and <code>DELETE</code> permissions. The account should not be the owner of the database as this can lead to privilege escalation vulnerabilities.</li>
+<li>Avoid using database links or linked servers. Where they are required, use an account that has been granted access to only the minimum databases, tables, and system privileges required.</li>
 </ul>
-</li>
-<li>Only grant the account access to the specific databases it needs.<ul>
-<li>Development, UAT and Production environments should all use separate databases and accounts.</li>
-</ul>
-</li>
-<li>Only grant the required permissions on the databases.<ul>
-<li>Most applications would only need <code>SELECT</code>, <code>UPDATE</code> and <code>DELETE</code> permissions.</li>
-<li>The account should not be the owner of the database as this can lead to privilege escalation vulnerabilities.</li>
-</ul>
-</li>
-<li>Avoid using database links or linked servers.<ul>
-<li>Where they are required, use an account that has been granted access to only the minimum databases, tables, and system privileges required.</li>
-</ul>
-</li>
-</ul>
-<p>For more security-critical applications, it is possible to apply permissions at more granular levels, including:</p>
+<p>Most security-critical applications, apply permissions at more granular levels, including:</p>
 <ul>
 <li>Table-level permissions.</li>
 <li>Column-level permissions.</li>
@@ -2589,20 +2576,17 @@
 <li>Blocking access to the underlying tables, and requiring all access through restricted <a href="https://en.wikipedia.org/wiki/View_(SQL)">views</a>.</li>
 </ul>
 <h2 id="database-configuration-and-hardening">Database Configuration and Hardening<a class="headerlink" href="#database-configuration-and-hardening" title="Permanent link">&para;</a></h2>
-<p>The underlying operating system for the database server should be hardened in the same way as any other server, based on a secure baseline such as the <a href="https://www.cisecurity.org/cis-benchmarks/">CIS Benchmarks</a> or the <a href="https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-security-baselines">Microsoft Security Baselines</a>.</p>
+<p>The database server's underlying operating system should be hardened by basing the it on a secure baseline such as the <a href="https://www.cisecurity.org/cis-benchmarks/">CIS Benchmarks</a> or the <a href="https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-security-baselines">Microsoft Security Baselines</a>.</p>
 <p>The database application should also be properly configured and hardened. The following principles should apply to any database application and platform:</p>
 <ul>
 <li>Install any required security updates and patches.</li>
 <li>Configure the database services to run under a low privileged user account.</li>
 <li>Remove any default accounts and databases.</li>
 <li>Store <a href="https://en.wikipedia.org/wiki/Transaction_log">transaction logs</a> on a separate disk to the main database files.</li>
-<li>Configure a regular backup of the database.<ul>
-<li>Ensure that the backups are protected with appropriate permissions, and ideally encrypted.</li>
-</ul>
-</li>
+<li>Configure a regular backup of the database. Ensure that the backups are protected with appropriate permissions, and ideally encrypted.</li>
 </ul>
 <p>The following sections gives some further recommendations for specific database software, in addition to the more general recommendations given above.</p>
-<h3 id="microsoft-sql-server">Microsoft SQL Server<a class="headerlink" href="#microsoft-sql-server" title="Permanent link">&para;</a></h3>
+<h3 id="hardening-a-microsoft-sql-server">Hardening a Microsoft SQL Server<a class="headerlink" href="#hardening-a-microsoft-sql-server" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Disable <code>xp_cmdshell</code>, <code>xp_dirtree</code> and other stored procedures that are not required.</li>
 <li>Disable Common Language Runtime (CLR) execution.</li>
@@ -2611,13 +2595,13 @@
 <li>Ensure that the sample <a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/linq/downloading-sample-databases">Northwind and AdventureWorks databases</a> have been removed.</li>
 <li>See Microsoft's articles on <a href="https://docs.microsoft.com/en-us/sql/relational-databases/security/securing-sql-server">securing SQL Server</a>.</li>
 </ul>
-<h3 id="mysql-and-mariadb">MySQL and MariaDB<a class="headerlink" href="#mysql-and-mariadb" title="Permanent link">&para;</a></h3>
+<h3 id="hardening-a-mysql-or-a-mariadb-server">Hardening a MySQL or a MariaDB Server<a class="headerlink" href="#hardening-a-mysql-or-a-mariadb-server" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Run the <code>mysql_secure_installation</code> script to remove the default databases and accounts.</li>
 <li>Disable the <a href="https://dev.mysql.com/doc/refman/8.0/en/privileges-provided.html#priv_file">FILE</a> privilege for all users to prevent them reading or writing files.</li>
 <li>See the <a href="https://dev.mysql.com/doc/refman/8.0/en/security-guidelines.html">Oracle MySQL</a> and <a href="https://mariadb.com/kb/en/library/securing-mariadb/">MariaDB</a> hardening guides.</li>
 </ul>
-<h3 id="postgresql">PostgreSQL<a class="headerlink" href="#postgresql" title="Permanent link">&para;</a></h3>
+<h3 id="hardewning-a-postgresql-server">Hardewning a PostgreSQL Server<a class="headerlink" href="#hardewning-a-postgresql-server" title="Permanent link">&para;</a></h3>
 <ul>
 <li>See the <a href="https://www.postgresql.org/docs/current/runtime.html">PostgreSQL Server Setup and Operation documentation</a> and the older <a href="https://www.postgresql.org/docs/7.0/security.htm">Security documentation</a>.</li>
 </ul>
