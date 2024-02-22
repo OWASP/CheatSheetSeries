@@ -274,8 +274,8 @@ We're going to examine two common [anti-patterns](https://en.wikipedia.org/wiki/
 ### Sole Reliance on Content-Security-Policy (CSP) Headers
 
 First, let us be clear, we are a strong proponent of CSP when it is used properly. In the context of XSS defense, CSP works best when it it is:
-* Used as a defense-in-depth technique.
-* Customized for each individual application rather than being deployed as a one-size-fits-all enterprise solution.
+- Used as a defense-in-depth technique.
+- Customized for each individual application rather than being deployed as a one-size-fits-all enterprise solution.
 
 What we are against is a blanket CSP policy for the entire enterprise. Problems with that approach are:
 
