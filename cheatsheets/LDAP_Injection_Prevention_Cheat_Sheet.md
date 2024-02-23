@@ -1,4 +1,5 @@
 # LDAP Injection Prevention Cheat Sheet
+
 ## Introduction
 
 The Lightweight Directory Access Protocol (LDAP) allows an application to remotely perform operations such as searching and modifying records in
