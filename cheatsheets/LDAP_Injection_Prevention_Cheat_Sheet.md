@@ -1,5 +1,4 @@
 # LDAP Injection Prevention Cheat Sheet
-
 ## Introduction
 
 The Lightweight Directory Access Protocol (LDAP) allows an application to remotely perform operations such as searching and modifying records in
@@ -82,7 +81,7 @@ For more information on search filter escaping visit [RFC4515](https://datatrack
 The following solution uses a whitelist to sanitize user input so that the filter string contains only valid characters. In this code, userSN may contain
 only letters and spaces, whereas a password may contain only alphanumeric characters:
 
-```text
+```java
 // String userSN = "Sherlock Holmes"; // Valid
 // String userPassword = "secret2"; // Valid
 // ... beginning of LDAPInjection.searchRecord()...
@@ -120,7 +119,7 @@ For further information visit [OWASP ESAPI Java Encoder Project which includes e
 #### Safe .NET Example
 
 We recommend using [LINQ to LDAP](https://www.nuget.org/packages/LinqToLdap/) in DotNet. It provides automatic LDAP encoding when building LDAP queries.
-Visit the [Readme file](https://github.com/madhatter22/LinqToLdap/blob/master/README.md) on github.
+Contact the [Readme file](https://github.com/madhatter22/LinqToLdap/blob/master/README.md) in the project repository.
 
 ## Additional Defenses
 
