@@ -38,7 +38,6 @@ See the following documentation for further details and more complex examples:
 
 ### Limitations
 
-- **Browser support:** CSP frame-ancestors is not supported by all the major browsers yet.
 - **X-Frame-Options takes priority:** [Section "Relation to X-Frame-Options" of the CSP Spec](https://w3c.github.io/webappsec/specs/content-security-policy/#frame-ancestors-and-frame-options) says: "*If a resource is delivered with an policy that includes a directive named frame-ancestors and whose disposition is "enforce", then the X-Frame-Options header MUST be ignored*", but Chrome 40 & Firefox 35 ignore the frame-ancestors directive and follow the X-Frame-Options header instead.
 
 ### Browser Support
