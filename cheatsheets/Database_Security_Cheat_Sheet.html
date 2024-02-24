@@ -906,8 +906,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#hardewning-a-postgresql-server" class="md-nav__link">
-    Hardewning a PostgreSQL Server
+  <a href="#hardening-a-postgresql-server" class="md-nav__link">
+    Hardening a PostgreSQL Server
   </a>
   
 </li>
@@ -2470,8 +2470,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#hardewning-a-postgresql-server" class="md-nav__link">
-    Hardewning a PostgreSQL Server
+  <a href="#hardening-a-postgresql-server" class="md-nav__link">
+    Hardening a PostgreSQL Server
   </a>
   
 </li>
@@ -2553,7 +2553,7 @@
 <h3 id="storing-database-credentials-securely">Storing Database Credentials Securely<a class="headerlink" href="#storing-database-credentials-securely" title="Permanent link">&para;</a></h3>
 <p>Database credentials should never be stored in the application source code, especially if they are unencrypted. Instead, they should be stored in a configuration file that:</p>
 <ul>
-<li>Is outside of the webroot.</li>
+<li>Is outside of the web root.</li>
 <li>Has appropriate permissions so that it can only be read by the required user(s).</li>
 <li>Is not checked into source code repositories.</li>
 </ul>
@@ -2601,7 +2601,7 @@
 <li>Disable the <a href="https://dev.mysql.com/doc/refman/8.0/en/privileges-provided.html#priv_file">FILE</a> privilege for all users to prevent them reading or writing files.</li>
 <li>See the <a href="https://dev.mysql.com/doc/refman/8.0/en/security-guidelines.html">Oracle MySQL</a> and <a href="https://mariadb.com/kb/en/library/securing-mariadb/">MariaDB</a> hardening guides.</li>
 </ul>
-<h3 id="hardewning-a-postgresql-server">Hardewning a PostgreSQL Server<a class="headerlink" href="#hardewning-a-postgresql-server" title="Permanent link">&para;</a></h3>
+<h3 id="hardening-a-postgresql-server">Hardening a PostgreSQL Server<a class="headerlink" href="#hardening-a-postgresql-server" title="Permanent link">&para;</a></h3>
 <ul>
 <li>See the <a href="https://www.postgresql.org/docs/current/runtime.html">PostgreSQL Server Setup and Operation documentation</a> and the older <a href="https://www.postgresql.org/docs/7.0/security.htm">Security documentation</a>.</li>
 </ul>
