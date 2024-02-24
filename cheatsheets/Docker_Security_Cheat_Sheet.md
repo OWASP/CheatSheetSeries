@@ -233,7 +233,7 @@ References:
 - [View logs for a container or service](https://docs.docker.com/config/containers/logging/)
 - [Dockerfile Security Best Practices](https://cloudberry.engineering/article/dockerfile-security-best-practices/)
 
- Container scanning tools are espescially important as part of a succesful security strategy. They can detect known vulnerabilities, secrets and misconfigurations in container images and provide a report of the findings with recommendations on how to fix them. Some examples of popular container scanning tools are:
+ Container scanning tools are especially important as part of a successful security strategy. They can detect known vulnerabilities, secrets and misconfigurations in container images and provide a report of the findings with recommendations on how to fix them. Some examples of popular container scanning tools are:
 
 - Free
     - [Clair](https://github.com/coreos/clair)

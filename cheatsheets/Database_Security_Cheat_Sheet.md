@@ -49,7 +49,7 @@ For Microsoft SQL Server, consider the use of [Windows or Integrated-Authenticat
 
 Database credentials should never be stored in the application source code, especially if they are unencrypted. Instead, they should be stored in a configuration file that:
 
-- Is outside of the webroot.
+- Is outside of the web root.
 - Has appropriate permissions so that it can only be read by the required user(s).
 - Is not checked into source code repositories.
 
@@ -102,7 +102,7 @@ The following sections gives some further recommendations for specific database 
 - Disable the [FILE](https://dev.mysql.com/doc/refman/8.0/en/privileges-provided.html#priv_file) privilege for all users to prevent them reading or writing files.
 - See the [Oracle MySQL](https://dev.mysql.com/doc/refman/8.0/en/security-guidelines.html) and [MariaDB](https://mariadb.com/kb/en/library/securing-mariadb/) hardening guides.
 
-### Hardewning a PostgreSQL Server
+### Hardening a PostgreSQL Server
 
 - See the [PostgreSQL Server Setup and Operation documentation](https://www.postgresql.org/docs/current/runtime.html) and the older [Security documentation](https://www.postgresql.org/docs/7.0/security.htm).
 

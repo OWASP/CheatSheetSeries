@@ -14,7 +14,7 @@ Secure Socket Layer (SSL) was the original protocol that was used to provide enc
 
 For [various reasons](http://tim.dierks.org/2014/05/security-standards-and-name-changes-in.html) the next version of the protocol (effectively SSL 3.1) was named Transport Layer Security (TLS) version 1.0. Subsequently TLS versions 1.1, 1.2 and 1.3 have been released.
 
-The terms "SSL", "SSL/TLS" and "TLS" are frequently used interchangeably, and in many cases "SSL" is used when referring to the more modern TLS protocol. This cheatsheet will use the term "TLS" except where referring to the legacy protocols.
+The terms "SSL", "SSL/TLS" and "TLS" are frequently used interchangeably, and in many cases "SSL" is used when referring to the more modern TLS protocol. This cheat sheet will use the term "TLS" except where referring to the legacy protocols.
 
 ## Server Configuration
 
@@ -34,7 +34,7 @@ There are a large number of different ciphers (or cipher suites) that are suppor
 - Anonymous ciphers
 - EXPORT ciphers
 
-The Mozilla Foundation provides an [easy-to-use secure configuration generator](https://ssl-config.mozilla.org/) for web, database and mail servers. This tool allows site administrators to select the software they are using and receive a configuration file that is optimised to balance security and compatibility for a wide variety of browser versions and server software.
+The Mozilla Foundation provides an [easy-to-use secure configuration generator](https://ssl-config.mozilla.org/) for web, database and mail servers. This tool allows site administrators to select the software they are using and receive a configuration file that is optimized to balance security and compatibility for a wide variety of browser versions and server software.
 
 ### Use Strong Diffie-Hellman Parameters
 
@@ -118,8 +118,8 @@ When risk assessing the use of wildcard certificates, the following areas should
 - Never use a wildcard certificates for systems at different trust levels.
     - Two VPN gateways could use a shared wildcard certificate.
     - Multiple instances of a web application could share a certificate.
-    - A VPN gateway and a public webserver **should not** share a wildcard certificate.
-    - A public webserver and an internal server **should not** share a wildcard certificate.
+    - A VPN gateway and a public web server **should not** share a wildcard certificate.
+    - A public web server and an internal server **should not** share a wildcard certificate.
 - Consider the use of a reverse proxy server which performs TLS termination, so that the wildcard private key is only present on one system.
 - A list of all systems sharing a certificate should be maintained to allow them all to be updated if the certificate expires or is compromised.
 - Limit the scope of a wildcard certificate by issuing it for a subdomain (such as `*.foo.example.org`), or a for a separate domain.
@@ -164,7 +164,7 @@ A page that is available over TLS should not include any resources (such as Java
 
 ### Use the "Secure" Cookie Flag
 
-All cookies should be marked with the "[Secure](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#Secure_and_HttpOnly_cookies)" attribute, which instructs the browser to only send them over encrypted HTTPS connections, in order to prevent them from being sniffed from an unencrypted HTTP connection. This is important even if the website does not listen on HTTP (port 80), as an attacker performing an active man in the middle attack could present a spoofed webserver on port 80 to the user in order to steal their cookie.
+All cookies should be marked with the "[Secure](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#Secure_and_HttpOnly_cookies)" attribute, which instructs the browser to only send them over encrypted HTTPS connections, in order to prevent them from being sniffed from an unencrypted HTTP connection. This is important even if the website does not listen on HTTP (port 80), as an attacker performing an active man in the middle attack could present a spoofed web server on port 80 to the user in order to steal their cookie.
 
 ### Prevent Caching of Sensitive Data
 
@@ -221,4 +221,4 @@ However, public key pinning can still provide security benefits for mobile appli
 - IETF - [RFC 2246 The Transport Layer Security (TLS) Protocol Version 1.0 (JAN 1999)](https://tools.ietf.org/html/rfc2246)
 - IETF - [RFC 4346 The Transport Layer Security (TLS) Protocol Version 1.1 (APR 2006)](https://tools.ietf.org/html/rfc4346)
 - IETF - [RFC 5246 The Transport Layer Security (TLS) Protocol Version 1.2 (AUG 2008)](https://tools.ietf.org/html/rfc5246)
-- Bettercrypto - [Applied Crypto Hardening: HOWTO for secure crypto settings of the most common services)](https://bettercrypto.org)
+- Bettercrypto - [Applied Crypto Hardening: HOW TO for secure crypto settings of the most common services)](https://bettercrypto.org)
