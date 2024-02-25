@@ -301,7 +301,8 @@ While all the techniques referenced here do not require any user interaction, so
 
 - ~~Re-Authentication~~Authorization mechanisms (password or stronger)
 - One-time Tokens
-- CAPTCHA (prefer newer CAPTCHA versions without user interaction or visual pattern matching)
+
+Do NOT use CAPTCHA because it is specifically designed to protect against bots. It is possible, and still valid in some implementations of CAPTCHA, to obtain proof of human interaction/presence from a different user session. Although this makes the CSRF exploit more complex, it does not protect against it.
 
 While these are very strong CSRF defenses, it can create a significant impact on the user experience. As such, they would generally only be used for security critical operations (such as password changes, money transfers, etc.), alongside the other defences discussed in this cheat sheet.
 
