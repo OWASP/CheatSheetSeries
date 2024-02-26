@@ -122,7 +122,7 @@ However, stored procedures require execute rights, a role that is not available 
 
 **Safe Java Stored Procedure Example**:
 
-The following code example uses Java's implementation of the stored procedure interface (`CallableStatement`) to execute the same database query. The `sp_getAccountBalance` stored procedure has top be predefined in the database and use the same functionality as the query below.
+The following code example uses Java's implementation of the stored procedure interface (`CallableStatement`) to execute the same database query. The `sp_getAccountBalance` stored procedure has to be predefined in the database and use the same functionality as the query below.
 
 ```java
 // This should REALLY be validated
