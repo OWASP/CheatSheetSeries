@@ -1827,22 +1827,22 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#safe-prepared-statement-in-java" class="md-nav__link">
-    Safe Prepared Statement in Java
+  <a href="#safe-java-prepared-statement-example" class="md-nav__link">
+    Safe Java Prepared Statement Example
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#safe-c-net-prepared-statement" class="md-nav__link">
-    Safe C# .NET Prepared Statement
+  <a href="#safe-c-net-prepared-statement-example" class="md-nav__link">
+    Safe C# .NET Prepared Statement Example
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#hibernate-query-language-hql-prepared-statement-named-parameters-examples" class="md-nav__link">
-    Hibernate Query Language (HQL) Prepared Statement (Named Parameters) Examples
+  <a href="#hibernate-query-language-hql-prepared-statement-named-parameters-example" class="md-nav__link">
+    Hibernate Query Language (HQL) Prepared Statement (Named Parameters) Example
   </a>
   
 </li>
@@ -1877,6 +1877,20 @@
           <li class="md-nav__item">
   <a href="#when-stored-procedures-can-increase-risk" class="md-nav__link">
     When Stored Procedures Can Increase Risk
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#safe-java-stored-procedure-example" class="md-nav__link">
+    Safe Java Stored Procedure Example
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#safe-vb-net-stored-procedure-example" class="md-nav__link">
+    Safe VB .NET Stored Procedure Example
   </a>
   
 </li>
@@ -2540,22 +2554,22 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#safe-prepared-statement-in-java" class="md-nav__link">
-    Safe Prepared Statement in Java
+  <a href="#safe-java-prepared-statement-example" class="md-nav__link">
+    Safe Java Prepared Statement Example
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#safe-c-net-prepared-statement" class="md-nav__link">
-    Safe C# .NET Prepared Statement
+  <a href="#safe-c-net-prepared-statement-example" class="md-nav__link">
+    Safe C# .NET Prepared Statement Example
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#hibernate-query-language-hql-prepared-statement-named-parameters-examples" class="md-nav__link">
-    Hibernate Query Language (HQL) Prepared Statement (Named Parameters) Examples
+  <a href="#hibernate-query-language-hql-prepared-statement-named-parameters-example" class="md-nav__link">
+    Hibernate Query Language (HQL) Prepared Statement (Named Parameters) Example
   </a>
   
 </li>
@@ -2590,6 +2604,20 @@
           <li class="md-nav__item">
   <a href="#when-stored-procedures-can-increase-risk" class="md-nav__link">
     When Stored Procedures Can Increase Risk
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#safe-java-stored-procedure-example" class="md-nav__link">
+    Safe Java Stored Procedure Example
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#safe-vb-net-stored-procedure-example" class="md-nav__link">
+    Safe VB .NET Stored Procedure Example
   </a>
   
 </li>
@@ -2765,9 +2793,8 @@
 </ul>
 <h3 id="defense-option-1-prepared-statements-with-parameterized-queries">Defense Option 1: Prepared Statements (with Parameterized Queries)<a class="headerlink" href="#defense-option-1-prepared-statements-with-parameterized-queries" title="Permanent link">&para;</a></h3>
 <p>When developers are taught how to write database queries, they should be told to use prepared statements with variable binding (aka parameterized queries). Prepared statements are simple to write and easier to understand than dynamic queries and parameterized queries force the developer to define all SQL code first and pass in each parameter to the query later.</p>
-<p>If database queries use this coding style, the database will always distinguish between code and data, regardless of what user input is supplied.
-Also, prepared statements ensure that an attacker is not able to change the intent of a query, even if SQL commands are inserted by an attacker.  </p>
-<h4 id="safe-prepared-statement-in-java">Safe Prepared Statement in Java<a class="headerlink" href="#safe-prepared-statement-in-java" title="Permanent link">&para;</a></h4>
+<p>If database queries use this coding style, the database will always distinguish between code and data, regardless of what user input is supplied. Also, prepared statements ensure that an attacker is not able to change the intent of a query, even if SQL commands are inserted by an attacker.</p>
+<h4 id="safe-java-prepared-statement-example">Safe Java Prepared Statement Example<a class="headerlink" href="#safe-java-prepared-statement-example" title="Permanent link">&para;</a></h4>
 <p>In the safe Java example below, if an attacker were to enter the userID of <code>tom' or '1'='1</code>, the parameterized query would look for a username which literally matched the entire string <code>tom' or '1'='1</code>. Thus, the database would be protected against injections of malicious SQL code.</p>
 <p>The following code example uses a <code>PreparedStatement</code>, Java's implementation of a parameterized query, to execute the same database query.</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// This should REALLY be validated too</span>
@@ -2777,18 +2804,8 @@ Also, prepared statements ensure that an attacker is not able to change the inte
 <span class="n">PreparedStatement</span><span class="w"> </span><span class="n">pstmt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">connection</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="p">);</span>
 <span class="n">pstmt</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">custname</span><span class="p">);</span>
 <span class="n">ResultSet</span><span class="w"> </span><span class="n">results</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pstmt</span><span class="p">.</span><span class="na">executeQuery</span><span class="p">(</span><span class="w"> </span><span class="p">);</span>
-
-<span class="err">####</span><span class="w"> </span><span class="n">Language</span><span class="o">-</span><span class="n">Specific</span><span class="w"> </span><span class="n">Recommendations</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Prepared</span><span class="w"> </span><span class="n">Statements</span><span class="p">:</span>
-
-<span class="o">--</span><span class="n">Java</span><span class="w"> </span><span class="n">EE</span><span class="p">:</span><span class="w"> </span><span class="err">`</span><span class="n">PreparedStatement</span><span class="p">()</span><span class="err">`</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">bind</span><span class="w"> </span><span class="n">variables</span>
-<span class="o">--</span><span class="p">.</span><span class="na">NET</span><span class="p">:</span><span class="w"> </span><span class="n">Parameterized</span><span class="w"> </span><span class="n">queries</span><span class="w"> </span><span class="n">like</span><span class="w"> </span><span class="err">`</span><span class="n">SqlCommand</span><span class="p">()</span><span class="err">`</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="err">`</span><span class="n">OleDbCommand</span><span class="p">()</span><span class="err">`</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">bind</span><span class="w"> </span><span class="n">variables</span>
-<span class="o">--</span><span class="n">PHP</span><span class="p">:</span><span class="w"> </span><span class="n">PDO</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">strongly</span><span class="w"> </span><span class="n">typed</span><span class="w"> </span><span class="n">parameterized</span><span class="w"> </span><span class="nf">queries</span><span class="w"> </span><span class="p">(</span><span class="n">using</span><span class="w"> </span><span class="nf">bindParam</span><span class="p">())</span>
-<span class="o">--</span><span class="n">Hibernate</span><span class="p">:</span><span class="w"> </span><span class="err">`</span><span class="n">createQuery</span><span class="p">()</span><span class="err">`</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">bind</span><span class="w"> </span><span class="nf">variables</span><span class="w"> </span><span class="p">(</span><span class="n">called</span><span class="w"> </span><span class="n">named</span><span class="w"> </span><span class="n">parameters</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">Hibernate</span><span class="p">)</span>
-<span class="o">--</span><span class="n">SQLite</span><span class="p">:</span><span class="w"> </span><span class="err">`</span><span class="n">sqlite3_prepare</span><span class="p">()</span><span class="err">`</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">create</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">[</span><span class="n">statement</span><span class="w"> </span><span class="n">object</span><span class="o">]</span><span class="p">(</span><span class="n">http</span><span class="p">:</span><span class="c1">//www.sqlite.org/c3ref/stmt.html)</span>
-
-<span class="n">Occasionally</span><span class="p">,</span><span class="w"> </span><span class="n">prepared</span><span class="w"> </span><span class="n">statements</span><span class="w"> </span><span class="n">can</span><span class="w"> </span><span class="n">harm</span><span class="w"> </span><span class="n">performance</span><span class="p">.</span><span class="w"> </span><span class="n">If</span><span class="w"> </span><span class="k">this</span><span class="w"> </span><span class="n">occurs</span><span class="p">,</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">should</span><span class="w"> </span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="n">strongly</span><span class="w"> </span><span class="n">validate</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="n">instead</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">using</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">prepared</span><span class="w"> </span><span class="n">statement</span><span class="p">,</span><span class="w"> </span><span class="n">escape</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="n">supplied</span><span class="w"> </span><span class="n">input</span><span class="w"> </span><span class="n">using</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">escaping</span><span class="w"> </span><span class="n">routine</span><span class="w"> </span><span class="n">specific</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">database</span><span class="w"> </span><span class="n">vendor</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">described</span><span class="w"> </span><span class="n">below</span><span class="p">.</span>
 </code></pre></div>
-<h4 id="safe-c-net-prepared-statement">Safe C# .NET Prepared Statement<a class="headerlink" href="#safe-c-net-prepared-statement" title="Permanent link">&para;</a></h4>
+<h4 id="safe-c-net-prepared-statement-example">Safe C# .NET Prepared Statement Example<a class="headerlink" href="#safe-c-net-prepared-statement-example" title="Permanent link">&para;</a></h4>
 <p>In .NET, the creation and execution of the query doesn't change. Just pass the parameters to the query using the <code>Parameters.Add()</code> call as shown below.</p>
 <div class="highlight"><pre><span></span><code><span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;SELECT account_balance FROM user_data WHERE user_name = ?&quot;</span><span class="p">;</span>
 <span class="k">try</span><span class="w"> </span><span class="p">{</span>
@@ -2801,10 +2818,10 @@ Also, prepared statements ensure that an attacker is not able to change the inte
 <span class="p">}</span>
 </code></pre></div>
 <p>While we have shown examples in Java and .NET, practically all other languages (including Cold Fusion and Classic ASP) support parameterized query interfaces. Even SQL abstraction layers, like the <a href="http://hibernate.org/">Hibernate Query Language</a> (HQL) with the same type of injection problems (called <a href="http://cwe.mitre.org/data/definitions/564.html">HQL Injection</a>)  supports parameterized queries as well:</p>
-<h4 id="hibernate-query-language-hql-prepared-statement-named-parameters-examples">Hibernate Query Language (HQL) Prepared Statement (Named Parameters) Examples<a class="headerlink" href="#hibernate-query-language-hql-prepared-statement-named-parameters-examples" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="c1">//First is an unsafe HQL Statement</span>
+<h4 id="hibernate-query-language-hql-prepared-statement-named-parameters-example">Hibernate Query Language (HQL) Prepared Statement (Named Parameters) Example<a class="headerlink" href="#hibernate-query-language-hql-prepared-statement-named-parameters-example" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="c1">// This is an unsafe HQL statement</span>
 <span class="n">Query</span><span class="w"> </span><span class="n">unsafeHQLQuery</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">createQuery</span><span class="p">(</span><span class="s">&quot;from Inventory where productID=&#39;&quot;</span><span class="o">+</span><span class="n">userSuppliedParameter</span><span class="o">+</span><span class="s">&quot;&#39;&quot;</span><span class="p">);</span>
-<span class="c1">//Here is a safe version of the same query using named parameters</span>
+<span class="c1">// Here is a safe version of the same query using named parameters</span>
 <span class="n">Query</span><span class="w"> </span><span class="n">safeHQLQuery</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="na">createQuery</span><span class="p">(</span><span class="s">&quot;from Inventory where productID=:productid&quot;</span><span class="p">);</span>
 <span class="n">safeHQLQuery</span><span class="p">.</span><span class="na">setParameter</span><span class="p">(</span><span class="s">&quot;productid&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">userSuppliedParameter</span><span class="p">);</span>
 </code></pre></div>
@@ -2814,12 +2831,12 @@ Also, prepared statements ensure that an attacker is not able to change the inte
 <h3 id="defense-option-2-stored-procedures">Defense Option 2: Stored Procedures<a class="headerlink" href="#defense-option-2-stored-procedures" title="Permanent link">&para;</a></h3>
 <p>Though stored procedures are not always safe from SQL injection, developers can use certain standard stored procedure programming constructs. This approach has the same effect as the use of parameterized queries as long as the stored procedures are implemented safely (which is the norm for most stored procedure languages).</p>
 <h4 id="safe-approach-to-stored-procedures">Safe Approach to Stored Procedures<a class="headerlink" href="#safe-approach-to-stored-procedures" title="Permanent link">&para;</a></h4>
-<p>If stored procedures are needed, the safest approach to using them requires the developer to build SQL statements with parameters that are automatically parameterized, unless the developer does something largely out of the norm. The difference between prepared statements and stored procedures is that the SQL code for a stored procedure is defined and stored in the database itself, and then called from the application. Since prepared statements and safe stored procedures are equally effective in preventing SQL injection so your organization should choose which approach makes the most sense for you.</p>
+<p>If stored procedures are needed, the safest approach to using them requires the developer to build SQL statements with parameters that are automatically parameterized, unless the developer does something largely out of the norm. The difference between prepared statements and stored procedures is that the SQL code for a stored procedure is defined and stored in the database itself, and then called from the application. Since prepared statements and safe stored procedures are equally effective in preventing SQL injection, your organization should choose the approach that makes the most sense for you.</p>
 <h4 id="when-stored-procedures-can-increase-risk">When Stored Procedures Can Increase Risk<a class="headerlink" href="#when-stored-procedures-can-increase-risk" title="Permanent link">&para;</a></h4>
-<p>Occasionally, stored procedures can increase risk when a system is attacked. For example, on MS SQL Server, you have three main default roles: <code>db_datareader</code>, <code>db_datawriter</code> and <code>db_owner</code>. Before stored procedures came into use, DBA's would give db_datareader ordb_datawriter rights to the webservice's user, depending on the requirements.</p>
-<p>However, stored procedures require execute rights, a role that is not available by default. Some setups where the user management has been centralized, but is limited to those 3 roles, cause all web apps to run under db_owner rights so stored procedures can work. Naturally, that means that if a server is breached the attacker has full rights to the database, where previously they might only have had read-access.</p>
-<p><strong>Safe Java Stored Procedure Example</strong>:</p>
-<p>The following code example uses Java's implementation of the stored procedure interface (<code>CallableStatement</code>) to execute the same database query. The <code>sp_getAccountBalance</code> stored procedure has top be predefined in the database and use the same functionality as the query below.</p>
+<p>Occasionally, stored procedures can increase risk when a system is attacked. For example, on MS SQL Server, you have three main default roles: <code>db_datareader</code>, <code>db_datawriter</code> and <code>db_owner</code>. Before stored procedures came into use, DBAs would give <code>db_datareader</code> or <code>db_datawriter</code> rights to the webservice's user, depending on the requirements.</p>
+<p>However, stored procedures require execute rights, a role that is not available by default. In some setups where user management has been centralized, but is limited to those 3 roles, web apps would have to run as <code>db_owner</code> so stored procedures could work. Naturally, that means that if a server is breached the attacker has full rights to the database, where previously they might only have had read-access.</p>
+<h4 id="safe-java-stored-procedure-example">Safe Java Stored Procedure Example<a class="headerlink" href="#safe-java-stored-procedure-example" title="Permanent link">&para;</a></h4>
+<p>The following code example uses Java's implementation of the stored procedure interface (<code>CallableStatement</code>) to execute the same database query. The <code>sp_getAccountBalance</code> stored procedure has to be predefined in the database and use the same functionality as the query above.</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// This should REALLY be validated</span>
 <span class="n">String</span><span class="w"> </span><span class="n">custname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;customerName&quot;</span><span class="p">);</span>
 <span class="k">try</span><span class="w"> </span><span class="p">{</span>
@@ -2831,7 +2848,7 @@ Also, prepared statements ensure that an attacker is not able to change the inte
 <span class="w">  </span><span class="c1">// … logging and error handling</span>
 <span class="p">}</span>
 </code></pre></div>
-<p><strong>Safe VB .NET Stored Procedure Example</strong>:</p>
+<h4 id="safe-vb-net-stored-procedure-example">Safe VB .NET Stored Procedure Example<a class="headerlink" href="#safe-vb-net-stored-procedure-example" title="Permanent link">&para;</a></h4>
 <p>The following code example uses a <code>SqlCommand</code>, .NET's implementation of the stored procedure interface, to execute the same database query. The <code>sp_getAccountBalance</code> stored procedure must be predefined in the database and use the same functionality as the query defined above.</p>
 <div class="highlight"><pre><span></span><code><span class="w"> </span><span class="k">Try</span>
 <span class="w">   </span><span class="k">Dim</span><span class="w"> </span><span class="n">command</span><span class="w"> </span><span class="ow">As</span><span class="w"> </span><span class="n">SqlCommand</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SqlCommand</span><span class="p">(</span><span class="s">&quot;sp_getAccountBalance&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">connection</span><span class="p">)</span>
@@ -2859,7 +2876,7 @@ switch(PARAM):
                                                   + &quot; for table name&quot;);
 </code></pre></div>
 <h4 id="safest-use-of-dynamic-sql-generation-discouraged">Safest Use Of Dynamic SQL Generation (DISCOURAGED)<a class="headerlink" href="#safest-use-of-dynamic-sql-generation-discouraged" title="Permanent link">&para;</a></h4>
-<p>When we say "implemented safely," the stored procedure does not include any unsafe dynamic SQL generation. Developers do not usually generate dynamic SQL inside stored procedures. However, it can be done, but should be avoided.</p>
+<p>When we say a stored procedure is "implemented safely," that means it does not include any unsafe dynamic SQL generation. Developers do not usually generate dynamic SQL inside stored procedures. However, it can be done, but should be avoided.</p>
 <p>If it can't be avoided, the stored procedure must use input validation or proper escaping as described in this article to make sure that all user supplied input to the stored procedure can't be used to inject SQL code into the dynamically generated query. Auditors should always look for uses of <code>sp_execute</code>, <code>execute</code> or <code>exec</code> within SQL Server stored procedures. Similar audit guidelines are necessary for similar functions for other vendors.</p>
 <h4 id="sample-of-safer-dynamic-query-generation-discouraged">Sample of Safer Dynamic Query Generation (DISCOURAGED)<a class="headerlink" href="#sample-of-safer-dynamic-query-generation-discouraged" title="Permanent link">&para;</a></h4>
 <p>For something simple like a sort order, it would be best if the user supplied input is converted to a boolean, and then that boolean is used to select the safe value to append to the query. This is a very standard need in dynamic query creation.</p>
@@ -2869,10 +2886,10 @@ switch(PARAM):
 <span class="w"> </span><span class="p">...</span>
 </code></pre></div>
 <p>Any time user input can be converted to a non-String, like a date, numeric, boolean, enumerated type, etc. before it is appended to a query, or used to select a value to append to the query, this ensures it is safe to do so.</p>
-<p>Input validation is also recommended as a secondary defense in ALL cases, even when using bind variables as is discussed later in this article. More techniques on how to implement strong input validation is described in the <a href="Input_Validation_Cheat_Sheet.html">Input Validation Cheat Sheet</a>.</p>
+<p>Input validation is also recommended as a secondary defense in ALL cases, even when using bind variables as discussed earlier in this article. More techniques on how to implement strong input validation is described in the <a href="Input_Validation_Cheat_Sheet.html">Input Validation Cheat Sheet</a>.</p>
 <h3 id="defense-option-4-strongly-discouraged-escaping-all-user-supplied-input">Defense Option 4: STRONGLY DISCOURAGED: Escaping All User-Supplied Input<a class="headerlink" href="#defense-option-4-strongly-discouraged-escaping-all-user-supplied-input" title="Permanent link">&para;</a></h3>
 <p>In this approach, the developer will escape all user input before putting it in a query. It is very database specific in its implementation.  This methodology is frail compared to other defenses and we CANNOT guarantee that this option will prevent all SQL injections in all situations.</p>
-<p>If an application is built from scratch or it requires low risk tolerance, those cases should be built or re-written using parameterized queries, stored procedures, or some kind of Object Relational Mapper (ORM) that builds your queries for you.</p>
+<p>If an application is built from scratch or requires low risk tolerance, it should be built or re-written using parameterized queries, stored procedures, or some kind of Object Relational Mapper (ORM) that builds your queries for you.</p>
 <h2 id="additional-defenses">Additional Defenses<a class="headerlink" href="#additional-defenses" title="Permanent link">&para;</a></h2>
 <p>Beyond adopting one of the four primary defenses, we also recommend adopting all of these additional defenses in order to provide defense in depth. These additional defenses are:</p>
 <ul>
