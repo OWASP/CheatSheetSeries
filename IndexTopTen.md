@@ -2,7 +2,7 @@
 
 The [OWASP Top Ten](https://owasp.org/www-project-top-ten/) is a standard awareness document for developers and web application security. It represents a broad consensus about the most critical security risks to web applications.
 
-This cheat sheet will help users of the [OWASP Top Ten](https://owasp.org/www-project-top-ten/) identify which cheat sheets map to each security category. This mapping is based the [OWASP Top Ten 2021 version](https://owasp.org/www-project-top-ten/).
+This cheat sheet will help users of the [OWASP Top Ten](https://owasp.org/Top10/) identify which cheat sheets map to each security category. This mapping is based the [OWASP Top Ten 2021 version](https://owasp.org/Top10/#welcome-to-the-owasp-top-10-2021).
 
 ## [A01:2021 – Broken Access Control](https://owasp.org/Top10/A01_2021-Broken_Access_Control/)
 
