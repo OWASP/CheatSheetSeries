@@ -3151,8 +3151,8 @@ Set-Cookie: JSESSIONID=xxxxx; SameSite=Lax
 <ul>
 <li>~~Re-Authentication~~Authorization mechanisms (password or stronger)</li>
 <li>One-time Tokens</li>
-<li>CAPTCHA (prefer newer CAPTCHA versions without user interaction or visual pattern matching)</li>
 </ul>
+<p>Do NOT use CAPTCHA because it is specifically designed to protect against bots. It is possible, and still valid in some implementations of CAPTCHA, to obtain proof of human interaction/presence from a different user session. Although this makes the CSRF exploit more complex, it does not protect against it.</p>
 <p>While these are very strong CSRF defenses, it can create a significant impact on the user experience. As such, they would generally only be used for security critical operations (such as password changes, money transfers, etc.), alongside the other defences discussed in this cheat sheet.</p>
 <h2 id="possible-csrf-vulnerabilities-in-login-forms">Possible CSRF Vulnerabilities in Login Forms<a class="headerlink" href="#possible-csrf-vulnerabilities-in-login-forms" title="Permanent link">&para;</a></h2>
 <p>Most developers tend to ignore CSRF vulnerabilities on login forms as they assume that CSRF would not be applicable on login forms because user is not authenticated at that stage, however this assumption is not always true. CSRF vulnerabilities can still occur on login forms where the user is not authenticated, but the impact and risk is different.</p>
