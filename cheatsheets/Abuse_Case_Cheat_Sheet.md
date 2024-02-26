@@ -64,8 +64,6 @@ Abuse cases can also be an effective way to drive security requirements
 that lead to proper protection of these critical business use cases.
 ```
 
-[Synopsis source](https://www.synopsis.com/blogs/software-security/abuse-cases-can-drive-security-requirements)
-
 #### How to define the list of Abuse Cases
 
 There are many different ways to define the list of abuse cases for a feature (that can be mapped to a user story in agile projects).
