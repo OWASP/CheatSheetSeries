@@ -267,7 +267,7 @@ Encoding Mechanism: CSS encoding supports both `\XX` and `\XXXXXX` formats. To e
 
 ## Common Anti-patterns: Ineffective Approaches to Avoid
 
-Defending against XSS is hard. For that reason, some have sought shortcuts to preventing XSS...a silver bullet to slay their XSS werewolves if you will.
+Defending against XSS is hard. For that reason, some have sought shortcuts to preventing XSS.
 
 We're going to examine two common [anti-patterns](https://en.wikipedia.org/wiki/Anti-pattern) that frequently show up in ancient posts, but are still commonly cited as solutions in modern posts about XSS defense on programmer forums such as Stack Overflow and other developer hangouts.
 
