@@ -489,7 +489,7 @@ process.Start();
 
 DO NOT: Assume that this mechanism will protect against malicious input designed to break out of one argument and then tamper with another argument to the process. This will still be possible.
 
-DO: Use allow list validation on all user supplied input wherever possible. Input validation prevents improperly formed data from entering an information system. For more information please see the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md).
+DO: Use allowlist validation on all user supplied input wherever possible. Input validation prevents improperly formed data from entering an information system. For more information please see the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md).
 
 e.g Validating user input using [IPAddress.TryParse Method](https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress.tryparse?view=netframework-4.8)
 
@@ -888,7 +888,7 @@ More information about Logging and Monitoring can be found [here](https://github
 
 DO: Validate and sanitize all user input before using it to make a request
 
-DO: Use an allow list of allowed protocols and domains
+DO: Use an allowlist of allowed protocols and domains
 
 DO: Use `IPAddress.TryParse()` and `Uri.CheckHostName()` to ensure that IP addresses and domain names are valid
 
@@ -914,7 +914,7 @@ Please refer to the [XXE cheat sheet](XML_External_Entity_Prevention_Cheat_Sheet
 
 #### A07:2017 Cross-Site Scripting (XSS)
 
-DO NOT: Trust any data the user sends you. Prefer allow lists (always safe) over block lists.
+DO NOT: Trust any data the user sends you. Prefer allowlists (always safe) over denylists.
 
 You get encoding of all HTML content with MVC3. To properly encode all content whether HTML,
 JavaScript, CSS, LDAP, etc., use the Microsoft AntiXSS library:
@@ -1045,7 +1045,7 @@ protected override OnInit(EventArgs e) {
 }
 ```
 
-If you don't use Viewstate, then look to the default master page of the ASP.NET Web Forms default template for a manual anti-CSRF token using a double-submit cookie.
+If you don't use Viewstate, then look to the default main page of the ASP.NET Web Forms default template for a manual anti-CSRF token using a double-submit cookie.
 
 ```csharp
 private const string AntiXsrfTokenKey = "__AntiXsrfToken";

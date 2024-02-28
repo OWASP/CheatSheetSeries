@@ -203,19 +203,19 @@ This problem is inherent to JWT because a token only becomes invalid when it exp
 
 #### How to Prevent
 
-Since JWTs are stateless, There is no session maintained on the server(s) serving client requests. As such, there is no session to invalidate on the server side. A well implemented Token Sidejacking solution (as explained above) should alleviate the need for maintaining block list on server side. This is because a hardened cookie used in the Token Sidejacking can be considered as secure as a session ID used in the traditional session system, and unless both the cookie and the JWT are intercepted/stolen, the JWT is unusable. A logout can thus be 'simulated' by clearing the JWT from session storage. If the user chooses to close the browser instead, then both the cookie and sessionStorage are cleared automatically.
+Since JWTs are stateless, There is no session maintained on the server(s) serving client requests. As such, there is no session to invalidate on the server side. A well implemented Token Sidejacking solution (as explained above) should alleviate the need for maintaining denylist on server side. This is because a hardened cookie used in the Token Sidejacking can be considered as secure as a session ID used in the traditional session system, and unless both the cookie and the JWT are intercepted/stolen, the JWT is unusable. A logout can thus be 'simulated' by clearing the JWT from session storage. If the user chooses to close the browser instead, then both the cookie and sessionStorage are cleared automatically.
 
-Another way to protect against this is to implement a token block list that will be used to mimic the "logout" feature that exists with traditional session management system.
+Another way to protect against this is to implement a token denylist that will be used to mimic the "logout" feature that exists with traditional session management system.
 
-The block list will keep a digest (SHA-256 encoded in HEX) of the token with a revocation date. This entry must endure at least until the expiration of the token.
+The denylist will keep a digest (SHA-256 encoded in HEX) of the token with a revocation date. This entry must endure at least until the expiration of the token.
 
-When the user wants to "logout" then it call a dedicated service that will add the provided user token to the block list resulting in an immediate invalidation of the token for further usage in the application.
+When the user wants to "logout" then it call a dedicated service that will add the provided user token to the denylist resulting in an immediate invalidation of the token for further usage in the application.
 
 #### Implementation Example
 
 ##### Block List Storage
 
-A database table with the following structure will be used as the central block list storage.
+A database table with the following structure will be used as the central denylist storage.
 
 ``` sql
 create table if not exists revoked_token(jwt_token_digest varchar(255) primary key,
@@ -224,7 +224,7 @@ revocation_date timestamp default now());
 
 ##### Token Revocation Management
 
-Code in charge of adding a token to the block list and checking if a token is revoked.
+Code in charge of adding a token to the denylist and checking if a token is revoked.
 
 ``` java
 /**
@@ -560,9 +560,9 @@ function myFetchModule() {
         return fetch(req)
     }
 }
-    
+
 ...
- 
+
 // usage:
 const myFetch = new myFetchModule()
 

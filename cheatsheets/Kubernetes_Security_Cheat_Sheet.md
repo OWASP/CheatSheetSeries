@@ -122,9 +122,9 @@ The Kubernetes scheduler will search etcd for pod definitions that do not have a
 
 Administrators should always use strong credentials from the API servers to their etcd server, such as mutual auth via TLS client certificates, and it is often recommended to isolate the etcd servers behind a firewall that only the API servers may access.
 
-#### Limiting acccess to the master etcd instance
+#### Limiting access to the primary etcd instance
 
-Allowing other components within the cluster to access the master etcd instance with read or write access to the full keyspace is equivalent to granting cluster-admin access. Using separate etcd instances for non-master components or using etcd ACLs to restrict read and write access to a subset of the keyspace is strongly recommended.
+Allowing other components within the cluster to access the primary etcd instance with read or write access to the full keyspace is equivalent to granting cluster-admin access. Using separate etcd instances for other components or using etcd ACLs to restrict read and write access to a subset of the keyspace is strongly recommended.
 
 --
 
@@ -134,7 +134,7 @@ It is highly recommended to configure authentication and authorization on the cl
 
 An overview of the default ports used in Kubernetes is provided below. Make sure that your network blocks access to ports, and you should seriously consider limiting access to the Kubernetes API server to trusted networks.
 
-**Master node(s):**
+**Control plane node(s):**
 
 | Protocol | Port Range | Purpose                 |
 | -------- | ---------- | ----------------------- |
@@ -465,7 +465,7 @@ When proxies, sidecars and other components are introduced an already sophistica
 
 If a mesh like Istio is added on top of an orchestrator such as Kubernetes, operators need to become experts in both technologies.
 
-- Insfrastrucure Can Be Slowed
+- Infrastructure Can Be Slowed
 
 Because a service mesh is an invasive and intricate technology, it can significantly slow down an architecture.
 
@@ -507,9 +507,9 @@ It is important to define resource quotas for containers in Kubernetes, since al
 
 Additionally, the OPA can limit how many pods, services, or volumes exist in each namespace, and it can restrict the maximum or minimum size of some of the resources above. The resource quotas provide default limits when none are specified and prevent users from requesting unreasonably high or low values for commonly reserved resources like memory.
 
-Below is an example of definiing namespace resource quota in the appropriate yaml. It limits the number of pods in the namespace to 4, limits their CPU requests between 1 and 2 and memory requests between 1GB to 2GB.
+Below is an example of defining namespace resource quota in the appropriate yaml. It limits the number of pods in the namespace to 4, limits their CPU requests between 1 and 2 and memory requests between 1GB to 2GB.
 
-compute-resources.yaml:
+`compute-resources.yaml`:
 
 ```yaml
 apiVersion: v1
@@ -535,7 +535,7 @@ For more information on configuring resource quotas, refer to the Kubernetes doc
 
 ### Use Kubernetes network policies to control traffic between pods and clusters
 
-If your cluster runs different applications, a compromised application could attack other neighboring applications. This scenario might happen becausse Kubernetes allows every pod to contact every other pod by default. If ingress from an external network endpoint is allowed, the pod will be able to send its traffic to an endpoint outside the cluster.
+If your cluster runs different applications, a compromised application could attack other neighboring applications. This scenario might happen because Kubernetes allows every pod to contact every other pod by default. If ingress from an external network endpoint is allowed, the pod will be able to send its traffic to an endpoint outside the cluster.
 
 It is strongly recommended that developers implement network segmentation, because it is a key security control that ensures that containers can only communicate with other approved containers and prevents attackers from pursuing lateral movement across containers. However, applying network segmentation in the cloud is challenging because of the “dynamic” nature of container network identities (IPs).
 
@@ -623,10 +623,10 @@ Pod Security Policies address several critical security use cases such as:
 - Prevents the host PID/IPC namespace, networking, and ports from being shared - this step ensures proper isolation between Docker containers and the underlying host
 - Limits the use of volume types - writable hostPath directory volumes, for example, allow containers to write to the filesystem in a manner that allows them to traverse the host filesystem outside the pathPrefix, so readOnly: true must be used
 - Puts limits on host filesystem use
-- Enforcess read only for root file system via the ReadOnlyRootFilesystem
+- Enforces read only for root file system via the ReadOnlyRootFilesystem
 - Prevents privilege escalation to root privileges
 - Rejects containers with root privileges
-- Restricts Linux capabilities to avbare minimum in adherence with least privilege principles
+- Restricts Linux capabilities to the bare minimum in adherence with least privilege principles
 
 For more information on Pod security policies, refer to the documentation at <https://kubernetes.io/docs/concepts/policy/pod-security-policy/>.
 
@@ -653,9 +653,9 @@ When container runtimes are permitted to make direct calls to the host kernel, t
 
 Because Linux kernel automatically loads kernel modules from disk if needed in certain circumstances, such as when a piece of hardware is attached or a filesystem is mounted, this can be a significant attack surface. Of particular relevance to Kubernetes, even unprivileged processes can cause certain network-protocol-related kernel modules to be loaded, just by creating a socket of the appropriate type. This situation may allow attackers to exploit a security hole in kernel modules that the administrator assumed was not in use.
 
-To prevent specific modules from being automatically loaded, you can uninstall them from the node, or add rules to block them. On most Linux distributions, you can do that by creating a file such as /etc/modprobe.d/kubernetes-blacklist.conf with contents like:
+To prevent specific modules from being automatically loaded, you can uninstall them from the node, or add rules to block them. On most Linux distributions, you can do that by creating a file such as `/etc/modprobe.d/kubernetes-blacklist.conf` with contents like:
 
-```
+```conf
 # DCCP is unlikely to be needed, has had multiple serious
 # vulnerabilities, and is not well-maintained.
 blacklist dccp
@@ -842,7 +842,7 @@ Kubernetes events can indicate any Kubernetes resource state changes and errors,
 
 The following command returns all events within a specific namespace:
 
-```
+```bash
 kubectl get events -n <namespace>
 
 NAMESPACE LAST SEEN TYPE   REASON OBJECT MESSAGE
@@ -856,7 +856,7 @@ kube-system     8m23s               Normal    SuccessfulCreate          replicas
 
 The following command will show the latest events for this specific Kubernetes resource:
 
-```
+```bash
 kubectl describe pod <pod-name>
 
 Events:
@@ -890,7 +890,7 @@ For example, a deployment containing a vulnerability with severity score of 7 or
 
 ## References
 
-Master documentation - <https://kubernetes.io>
+Control plane documentation - <https://kubernetes.io>
 
 1. Kubernetes Security Best Practices everyone must follow - <https://www.cncf.io/blog/2019/01/14/9-kubernetes-security-best-practices-everyone-must-follow>
 2. Securing a Cluster - <https://kubernetes.io/blog/2016/08/security-best-practices-kubernetes-deployment>
