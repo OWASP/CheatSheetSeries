@@ -2795,7 +2795,7 @@ gem<span class="w"> </span><span class="s1">&#39;omniauth&#39;</span>
 <p>The above request would redirect the user to <code>http://www.example.com/checkout</code>. The security concern associated with this functionality is leveraging an organization's trusted brand to phish users and trick them into visiting a malicious site, in our example, <code>badhacker.com</code>.</p>
 <p>Example:</p>
 <p><code>http://www.example.com/redirect?url=http://badhacker.com</code></p>
-<p>The most basic, but restrictive protection is to use the <code>:only_path</code> option. Setting this to true will essentially strip out any host information. However, the <code>:only_path</code> option must be part of the first argument. If the first argument is not a hash table, then there is no way to pass in this option. In the absence of a custom helper or allow list, this is one approach that can work:</p>
+<p>The most basic, but restrictive protection is to use the <code>:only_path</code> option. Setting this to true will essentially strip out any host information. However, the <code>:only_path</code> option must be part of the first argument. If the first argument is not a hash table, then there is no way to pass in this option. In the absence of a custom helper or allowlist, this is one approach that can work:</p>
 <div class="highlight"><pre><span></span><code><span class="k">begin</span>
 <span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">URI</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:url</span><span class="o">]</span><span class="p">)</span><span class="o">.</span><span class="n">path</span>
 <span class="w">    </span><span class="n">redirect_to</span><span class="w"> </span><span class="n">path</span>
@@ -2813,7 +2813,7 @@ gem<span class="w"> </span><span class="s1">&#39;omniauth&#39;</span>
 <span class="n">validation_routine</span><span class="p">(</span><span class="n">host</span><span class="p">)</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">host</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">validation_routine</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
 <span class="w">  </span><span class="c1"># Validation routine where we use  \A and \z as anchors *not* ^ and $</span>
-<span class="w">  </span><span class="c1"># you could also check the host value against an allow list</span>
+<span class="w">  </span><span class="c1"># you could also check the host value against an allowlist</span>
 <span class="k">end</span>
 </code></pre></div>
 <p>Also blind redirecting to user input parameter can lead to XSS.</p>
@@ -2847,7 +2847,7 @@ gem<span class="w"> </span><span class="s1">&#39;omniauth&#39;</span>
 <p>The receiving site should list only those domains allowed to make such requests as well as set the <code>Access-Control-Allow-Origin</code> header in both the response to the <code>OPTIONS</code> request and <code>POST</code> request. This is because the OPTIONS request is sent first, in order to determine if the remote or receiving site allows the requesting domain. Next, a second request, a <code>POST</code> request, is sent. Once again, the header must be set in order for the transaction to be shown as successful.</p>
 <p>When standard HTTP constructs are used:</p>
 <p><em>The request is sent and the browser, upon receiving a response, inspects the response headers in order to determine if the response can and should be processed.</em></p>
-<p>Allow list in Rails:</p>
+<p>Allowlist in Rails:</p>
 <p><strong>Gemfile:</strong></p>
 <div class="highlight"><pre><span></span><code>gem<span class="w"> </span><span class="s1">&#39;rack-cors&#39;</span>,<span class="w"> </span>:require<span class="w"> </span><span class="o">=</span>&gt;<span class="w"> </span><span class="s1">&#39;rack/cors&#39;</span>
 </code></pre></div>

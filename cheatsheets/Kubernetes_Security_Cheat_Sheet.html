@@ -1387,8 +1387,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#limiting-acccess-to-the-master-etcd-instance" class="md-nav__link">
-    Limiting acccess to the master etcd instance
+  <a href="#limiting-access-to-the-primary-etcd-instance" class="md-nav__link">
+    Limiting access to the primary etcd instance
   </a>
   
 </li>
@@ -3026,8 +3026,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#limiting-acccess-to-the-master-etcd-instance" class="md-nav__link">
-    Limiting acccess to the master etcd instance
+  <a href="#limiting-access-to-the-primary-etcd-instance" class="md-nav__link">
+    Limiting access to the primary etcd instance
   </a>
   
 </li>
@@ -3664,13 +3664,13 @@ Description: The container runtime is the software that is responsible for runni
 <p>etcd is a critical Kubernetes component which stores information on states and secrets, and it should be protected differently from the rest of your cluster. Write access to the API server's etcd is equivalent to gaining root on the entire cluster, and even read access can be used to escalate privileges fairly easily.</p>
 <p>The Kubernetes scheduler will search etcd for pod definitions that do not have a node. It then sends the pods it finds to an available kubelet for scheduling. Validation for submitted pods is performed by the API server before it writes them to etcd, so malicious users writing directly to etcd can bypass many security mechanisms - e.g. PodSecurityPolicies.</p>
 <p>Administrators should always use strong credentials from the API servers to their etcd server, such as mutual auth via TLS client certificates, and it is often recommended to isolate the etcd servers behind a firewall that only the API servers may access.</p>
-<h4 id="limiting-acccess-to-the-master-etcd-instance">Limiting acccess to the master etcd instance<a class="headerlink" href="#limiting-acccess-to-the-master-etcd-instance" title="Permanent link">&para;</a></h4>
-<p>Allowing other components within the cluster to access the master etcd instance with read or write access to the full keyspace is equivalent to granting cluster-admin access. Using separate etcd instances for non-master components or using etcd ACLs to restrict read and write access to a subset of the keyspace is strongly recommended.</p>
+<h4 id="limiting-access-to-the-primary-etcd-instance">Limiting access to the primary etcd instance<a class="headerlink" href="#limiting-access-to-the-primary-etcd-instance" title="Permanent link">&para;</a></h4>
+<p>Allowing other components within the cluster to access the primary etcd instance with read or write access to the full keyspace is equivalent to granting cluster-admin access. Using separate etcd instances for other components or using etcd ACLs to restrict read and write access to a subset of the keyspace is strongly recommended.</p>
 <p>--</p>
 <h3 id="controlling-network-access-to-sensitive-ports">Controlling Network Access to Sensitive Ports<a class="headerlink" href="#controlling-network-access-to-sensitive-ports" title="Permanent link">&para;</a></h3>
 <p>It is highly recommended to configure authentication and authorization on the cluster and cluster nodes. Since Kubernetes clusters usually listen on a range of well-defined and distinctive ports, it is easier for attackers to identify the clusters and attack them.</p>
 <p>An overview of the default ports used in Kubernetes is provided below. Make sure that your network blocks access to ports, and you should seriously consider limiting access to the Kubernetes API server to trusted networks.</p>
-<p><strong>Master node(s):</strong></p>
+<p><strong>Control plane node(s):</strong></p>
 <table>
 <thead>
 <tr>
@@ -3962,7 +3962,7 @@ kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> <
 </ul>
 <p>If a mesh like Istio is added on top of an orchestrator such as Kubernetes, operators need to become experts in both technologies.</p>
 <ul>
-<li>Insfrastrucure Can Be Slowed</li>
+<li>Infrastructure Can Be Slowed</li>
 </ul>
 <p>Because a service mesh is an invasive and intricate technology, it can significantly slow down an architecture.</p>
 <ul>
@@ -3986,8 +3986,8 @@ kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> <
 <h3 id="limiting-resource-usage-on-a-cluster">Limiting resource usage on a cluster<a class="headerlink" href="#limiting-resource-usage-on-a-cluster" title="Permanent link">&para;</a></h3>
 <p>It is important to define resource quotas for containers in Kubernetes, since all resources in a Kubernetes cluster are created with unbounded CPU limits and memory requests/limits by default. If you run resource-unbound containers, your system will be in risk of Denial of Service (DoS) or “noisy neighbor” scenarios. Fortunately, OPA can use resource quotas on a namespace, which will limit the number or capacity of resources granted to that namespace and restrict that namespace by defining its CPU capacity, memory, or persistent disk space.</p>
 <p>Additionally, the OPA can limit how many pods, services, or volumes exist in each namespace, and it can restrict the maximum or minimum size of some of the resources above. The resource quotas provide default limits when none are specified and prevent users from requesting unreasonably high or low values for commonly reserved resources like memory.</p>
-<p>Below is an example of definiing namespace resource quota in the appropriate yaml. It limits the number of pods in the namespace to 4, limits their CPU requests between 1 and 2 and memory requests between 1GB to 2GB.</p>
-<p>compute-resources.yaml:</p>
+<p>Below is an example of defining namespace resource quota in the appropriate yaml. It limits the number of pods in the namespace to 4, limits their CPU requests between 1 and 2 and memory requests between 1GB to 2GB.</p>
+<p><code>compute-resources.yaml</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ResourceQuota</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -4005,7 +4005,7 @@ kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> <
 </code></pre></div>
 <p>For more information on configuring resource quotas, refer to the Kubernetes documentation at <a href="https://kubernetes.io/docs/concepts/policy/resource-quotas/">https://kubernetes.io/docs/concepts/policy/resource-quotas/</a>.</p>
 <h3 id="use-kubernetes-network-policies-to-control-traffic-between-pods-and-clusters">Use Kubernetes network policies to control traffic between pods and clusters<a class="headerlink" href="#use-kubernetes-network-policies-to-control-traffic-between-pods-and-clusters" title="Permanent link">&para;</a></h3>
-<p>If your cluster runs different applications, a compromised application could attack other neighboring applications. This scenario might happen becausse Kubernetes allows every pod to contact every other pod by default. If ingress from an external network endpoint is allowed, the pod will be able to send its traffic to an endpoint outside the cluster.</p>
+<p>If your cluster runs different applications, a compromised application could attack other neighboring applications. This scenario might happen because Kubernetes allows every pod to contact every other pod by default. If ingress from an external network endpoint is allowed, the pod will be able to send its traffic to an endpoint outside the cluster.</p>
 <p>It is strongly recommended that developers implement network segmentation, because it is a key security control that ensures that containers can only communicate with other approved containers and prevents attackers from pursuing lateral movement across containers. However, applying network segmentation in the cloud is challenging because of the “dynamic” nature of container network identities (IPs).</p>
 <p>While users of Google Cloud Platform can benefit from automatic firewall rules, which prevent cross-cluster communication, other users can apply similar implementations by deploying on-premises using network firewalls or SDN solutions. Also, the Kubernetes Network SIG is working on methods that will greatly improve the pod-to-pod communication policies. A new network policy API should address the need to create firewall rules around pods, limiting the network access that a containerized can have.</p>
 <p>The following is an example of a network policy that controls the network for “backend” pods, which only allows inbound network access from “frontend” pods:</p>
@@ -4065,10 +4065,10 @@ kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> <
 <li>Prevents the host PID/IPC namespace, networking, and ports from being shared - this step ensures proper isolation between Docker containers and the underlying host</li>
 <li>Limits the use of volume types - writable hostPath directory volumes, for example, allow containers to write to the filesystem in a manner that allows them to traverse the host filesystem outside the pathPrefix, so readOnly: true must be used</li>
 <li>Puts limits on host filesystem use</li>
-<li>Enforcess read only for root file system via the ReadOnlyRootFilesystem</li>
+<li>Enforces read only for root file system via the ReadOnlyRootFilesystem</li>
 <li>Prevents privilege escalation to root privileges</li>
 <li>Rejects containers with root privileges</li>
-<li>Restricts Linux capabilities to avbare minimum in adherence with least privilege principles</li>
+<li>Restricts Linux capabilities to the bare minimum in adherence with least privilege principles</li>
 </ul>
 <p>For more information on Pod security policies, refer to the documentation at <a href="https://kubernetes.io/docs/concepts/policy/pod-security-policy/">https://kubernetes.io/docs/concepts/policy/pod-security-policy/</a>.</p>
 <h3 id="container-runtime-security">Container Runtime Security<a class="headerlink" href="#container-runtime-security" title="Permanent link">&para;</a></h3>
@@ -4089,7 +4089,7 @@ kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> <
 </ul>
 <h3 id="preventing-containers-from-loading-unwanted-kernel-modules">Preventing containers from loading unwanted kernel modules<a class="headerlink" href="#preventing-containers-from-loading-unwanted-kernel-modules" title="Permanent link">&para;</a></h3>
 <p>Because Linux kernel automatically loads kernel modules from disk if needed in certain circumstances, such as when a piece of hardware is attached or a filesystem is mounted, this can be a significant attack surface. Of particular relevance to Kubernetes, even unprivileged processes can cause certain network-protocol-related kernel modules to be loaded, just by creating a socket of the appropriate type. This situation may allow attackers to exploit a security hole in kernel modules that the administrator assumed was not in use.</p>
-<p>To prevent specific modules from being automatically loaded, you can uninstall them from the node, or add rules to block them. On most Linux distributions, you can do that by creating a file such as /etc/modprobe.d/kubernetes-blacklist.conf with contents like:</p>
+<p>To prevent specific modules from being automatically loaded, you can uninstall them from the node, or add rules to block them. On most Linux distributions, you can do that by creating a file such as <code>/etc/modprobe.d/kubernetes-blacklist.conf</code> with contents like:</p>
 <div class="highlight"><pre><span></span><code># DCCP is unlikely to be needed, has had multiple serious
 # vulnerabilities, and is not well-maintained.
 blacklist dccp
@@ -4219,26 +4219,26 @@ blacklist sctp
 <h4 id="events">Events<a class="headerlink" href="#events" title="Permanent link">&para;</a></h4>
 <p>Kubernetes events can indicate any Kubernetes resource state changes and errors, such as exceeded resource quota or pending pods, as well as any informational messages.</p>
 <p>The following command returns all events within a specific namespace:</p>
-<div class="highlight"><pre><span></span><code>kubectl get events -n &lt;namespace&gt;
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>events<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
 
-NAMESPACE LAST SEEN TYPE   REASON OBJECT MESSAGE
-kube-system  8m22s  Normal   Scheduled            pod/metrics-server-66dbbb67db-lh865                                       Successfully assigned kube-system/metrics-server-66dbbb67db-lh865 to aks-agentpool-42213468-1
-kube-system     8m14s               Normal    Pulling                   pod/metrics-server-66dbbb67db-lh865                                       Pulling image &quot;aksrepos.azurecr.io/mirror/metrics-server-amd64:v0.2.1&quot;
-kube-system     7m58s               Normal    Pulled                    pod/metrics-server-66dbbb67db-lh865                                       Successfully pulled image &quot;aksrepos.azurecr.io/mirror/metrics-server-amd64:v0.2.1&quot;
-kube-system     7m57s               Normal     Created                   pod/metrics-server-66dbbb67db-lh865                                       Created container metrics-server
-kube-system     7m57s               Normal    Started                   pod/metrics-server-66dbbb67db-lh865                                       Started container metrics-server
-kube-system     8m23s               Normal    SuccessfulCreate          replicaset/metrics-server-66dbbb67db             Created pod: metrics-server-66dbbb67db-lh865
+NAMESPACE<span class="w"> </span>LAST<span class="w"> </span>SEEN<span class="w"> </span>TYPE<span class="w">   </span>REASON<span class="w"> </span>OBJECT<span class="w"> </span>MESSAGE
+kube-system<span class="w">  </span>8m22s<span class="w">  </span>Normal<span class="w">   </span>Scheduled<span class="w">            </span>pod/metrics-server-66dbbb67db-lh865<span class="w">                                       </span>Successfully<span class="w"> </span>assigned<span class="w"> </span>kube-system/metrics-server-66dbbb67db-lh865<span class="w"> </span>to<span class="w"> </span>aks-agentpool-42213468-1
+kube-system<span class="w">     </span>8m14s<span class="w">               </span>Normal<span class="w">    </span>Pulling<span class="w">                   </span>pod/metrics-server-66dbbb67db-lh865<span class="w">                                       </span>Pulling<span class="w"> </span>image<span class="w"> </span><span class="s2">&quot;aksrepos.azurecr.io/mirror/metrics-server-amd64:v0.2.1&quot;</span>
+kube-system<span class="w">     </span>7m58s<span class="w">               </span>Normal<span class="w">    </span>Pulled<span class="w">                    </span>pod/metrics-server-66dbbb67db-lh865<span class="w">                                       </span>Successfully<span class="w"> </span>pulled<span class="w"> </span>image<span class="w"> </span><span class="s2">&quot;aksrepos.azurecr.io/mirror/metrics-server-amd64:v0.2.1&quot;</span>
+kube-system<span class="w">     </span>7m57s<span class="w">               </span>Normal<span class="w">     </span>Created<span class="w">                   </span>pod/metrics-server-66dbbb67db-lh865<span class="w">                                       </span>Created<span class="w"> </span>container<span class="w"> </span>metrics-server
+kube-system<span class="w">     </span>7m57s<span class="w">               </span>Normal<span class="w">    </span>Started<span class="w">                   </span>pod/metrics-server-66dbbb67db-lh865<span class="w">                                       </span>Started<span class="w"> </span>container<span class="w"> </span>metrics-server
+kube-system<span class="w">     </span>8m23s<span class="w">               </span>Normal<span class="w">    </span>SuccessfulCreate<span class="w">          </span>replicaset/metrics-server-66dbbb67db<span class="w">             </span>Created<span class="w"> </span>pod:<span class="w"> </span>metrics-server-66dbbb67db-lh865
 </code></pre></div>
 <p>The following command will show the latest events for this specific Kubernetes resource:</p>
-<div class="highlight"><pre><span></span><code>kubectl describe pod &lt;pod-name&gt;
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>pod<span class="w"> </span>&lt;pod-name&gt;
 
 Events:
-  Type    Reason     Age   From                               Message
-  ----    ------     ----  ----                               -------
-  Normal  Scheduled  14m   default-scheduler                  Successfully assigned kube-system/coredns-7b54b5b97c-dpll7 to aks-agentpool-42213468-1
-  Normal  Pulled     13m   kubelet, aks-agentpool-42213468-1  Container image &quot;aksrepos.azurecr.io/mirror/coredns:1.3.1&quot; already present on machine
-  Normal  Created    13m   kubelet, aks-agentpool-42213468-1  Created container coredns
-  Normal  Started    13m   kubelet, aks-agentpool-42213468-1  Started container coredns
+<span class="w">  </span>Type<span class="w">    </span>Reason<span class="w">     </span>Age<span class="w">   </span>From<span class="w">                               </span>Message
+<span class="w">  </span>----<span class="w">    </span>------<span class="w">     </span>----<span class="w">  </span>----<span class="w">                               </span>-------
+<span class="w">  </span>Normal<span class="w">  </span>Scheduled<span class="w">  </span>14m<span class="w">   </span>default-scheduler<span class="w">                  </span>Successfully<span class="w"> </span>assigned<span class="w"> </span>kube-system/coredns-7b54b5b97c-dpll7<span class="w"> </span>to<span class="w"> </span>aks-agentpool-42213468-1
+<span class="w">  </span>Normal<span class="w">  </span>Pulled<span class="w">     </span>13m<span class="w">   </span>kubelet,<span class="w"> </span>aks-agentpool-42213468-1<span class="w">  </span>Container<span class="w"> </span>image<span class="w"> </span><span class="s2">&quot;aksrepos.azurecr.io/mirror/coredns:1.3.1&quot;</span><span class="w"> </span>already<span class="w"> </span>present<span class="w"> </span>on<span class="w"> </span>machine
+<span class="w">  </span>Normal<span class="w">  </span>Created<span class="w">    </span>13m<span class="w">   </span>kubelet,<span class="w"> </span>aks-agentpool-42213468-1<span class="w">  </span>Created<span class="w"> </span>container<span class="w"> </span>coredns
+<span class="w">  </span>Normal<span class="w">  </span>Started<span class="w">    </span>13m<span class="w">   </span>kubelet,<span class="w"> </span>aks-agentpool-42213468-1<span class="w">  </span>Started<span class="w"> </span>container<span class="w"> </span>coredns
 </code></pre></div>
 <h2 id="section-5-final-thoughts">SECTION 5: Final Thoughts<a class="headerlink" href="#section-5-final-thoughts" title="Permanent link">&para;</a></h2>
 <h3 id="embed-security-into-the-container-lifecycle-as-early-as-possible">Embed security into the container lifecycle as early as possible<a class="headerlink" href="#embed-security-into-the-container-lifecycle-as-early-as-possible" title="Permanent link">&para;</a></h3>
@@ -4251,7 +4251,7 @@ Events:
 <hr />
 <p><img alt="Kubernetes Architecture" src="../assets/Kubernetes_Architecture.png" /></p>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
-<p>Master documentation - <a href="https://kubernetes.io">https://kubernetes.io</a></p>
+<p>Control plane documentation - <a href="https://kubernetes.io">https://kubernetes.io</a></p>
 <ol>
 <li>Kubernetes Security Best Practices everyone must follow - <a href="https://www.cncf.io/blog/2019/01/14/9-kubernetes-security-best-practices-everyone-must-follow">https://www.cncf.io/blog/2019/01/14/9-kubernetes-security-best-practices-everyone-must-follow</a></li>
 <li>Securing a Cluster - <a href="https://kubernetes.io/blog/2016/08/security-best-practices-kubernetes-deployment">https://kubernetes.io/blog/2016/08/security-best-practices-kubernetes-deployment</a></li>

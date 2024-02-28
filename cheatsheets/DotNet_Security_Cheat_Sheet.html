@@ -3552,7 +3552,7 @@ to do its job, not the database administrator account.</p>
 <span class="n">process</span><span class="p">.</span><span class="n">Start</span><span class="p">();</span>
 </code></pre></div>
 <p>DO NOT: Assume that this mechanism will protect against malicious input designed to break out of one argument and then tamper with another argument to the process. This will still be possible.</p>
-<p>DO: Use allow list validation on all user supplied input wherever possible. Input validation prevents improperly formed data from entering an information system. For more information please see the <a href="Input_Validation_Cheat_Sheet.html">Input Validation Cheat Sheet</a>.</p>
+<p>DO: Use allowlist validation on all user supplied input wherever possible. Input validation prevents improperly formed data from entering an information system. For more information please see the <a href="Input_Validation_Cheat_Sheet.html">Input Validation Cheat Sheet</a>.</p>
 <p>e.g Validating user input using <a href="https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress.tryparse?view=netframework-4.8">IPAddress.TryParse Method</a></p>
 <div class="highlight"><pre><span></span><code><span class="c1">//User input</span>
 <span class="kt">string</span><span class="w"> </span><span class="n">ipAddress</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;127.0.0.1&quot;</span><span class="p">;</span>
@@ -3836,7 +3836,7 @@ objects received from the network</p>
 <p>More information about Logging and Monitoring can be found <a href="https://github.com/microsoft/code-with-engineering-playbook/blob/main/docs/observability/README.md">here</a>.</p>
 <h3 id="a10-server-side-request-forgery-ssrf">A10 Server-Side Request Forgery (SSRF)<a class="headerlink" href="#a10-server-side-request-forgery-ssrf" title="Permanent link">&para;</a></h3>
 <p>DO: Validate and sanitize all user input before using it to make a request</p>
-<p>DO: Use an allow list of allowed protocols and domains</p>
+<p>DO: Use an allowlist of allowed protocols and domains</p>
 <p>DO: Use <code>IPAddress.TryParse()</code> and <code>Uri.CheckHostName()</code> to ensure that IP addresses and domain names are valid</p>
 <p>DO NOT: Follow HTTP redirects</p>
 <p>DO NOT: Forward raw HTTP responses to the user</p>
@@ -3850,7 +3850,7 @@ but were not included in the 2021 list because they have become less prevalent.<
 <p><a href="https://docs.microsoft.com/en-us/dotnet/standard/data/xml/xml-processing-options">This article</a> discusses the most common XML Processing Options for .NET.</p>
 <p>Please refer to the <a href="XML_External_Entity_Prevention_Cheat_Sheet.html#net">XXE cheat sheet</a> for more detailed information on preventing XXE and other XML Denial of Service attacks.</p>
 <h4 id="a072017-cross-site-scripting-xss">A07:2017 Cross-Site Scripting (XSS)<a class="headerlink" href="#a072017-cross-site-scripting-xss" title="Permanent link">&para;</a></h4>
-<p>DO NOT: Trust any data the user sends you. Prefer allow lists (always safe) over block lists.</p>
+<p>DO NOT: Trust any data the user sends you. Prefer allowlists (always safe) over denylists.</p>
 <p>You get encoding of all HTML content with MVC3. To properly encode all content whether HTML,
 JavaScript, CSS, LDAP, etc., use the Microsoft AntiXSS library:</p>
 <p><code>Install-Package AntiXSS</code></p>
@@ -3954,7 +3954,7 @@ go to <a href="http://github.com/johnstaveley/SecurityEssentials/">Security Esse
 <span class="w">    </span><span class="n">ViewStateUserKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Session</span><span class="p">.</span><span class="n">SessionID</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>If you don't use Viewstate, then look to the default master page of the ASP.NET Web Forms default template for a manual anti-CSRF token using a double-submit cookie.</p>
+<p>If you don't use Viewstate, then look to the default main page of the ASP.NET Web Forms default template for a manual anti-CSRF token using a double-submit cookie.</p>
 <div class="highlight"><pre><span></span><code><span class="k">private</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">AntiXsrfTokenKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;__AntiXsrfToken&quot;</span><span class="p">;</span>
 <span class="k">private</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">AntiXsrfUserNameKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;__AntiXsrfUserName&quot;</span><span class="p">;</span>
 <span class="k">private</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">_antiXsrfTokenValue</span><span class="p">;</span>

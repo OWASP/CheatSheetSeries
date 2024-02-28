@@ -2647,7 +2647,7 @@ to bypass such a check.</p>
 <h3 id="content-type-validation">Content-Type Validation<a class="headerlink" href="#content-type-validation" title="Permanent link">&para;</a></h3>
 <p><em>The Content-Type for uploaded files is provided by the user, and as such cannot be trusted, as it is trivial to spoof. Although it should not be relied upon for security, it provides a quick check to prevent users from unintentionally uploading files with the incorrect type.</em></p>
 <p>Other than defining the extension of the uploaded file, its MIME-type can be checked for a quick protection against simple file upload attacks.</p>
-<p>This can be done preferably in an allow list approach; otherwise, this can be done in a block list approach.</p>
+<p>This can be done preferably in an allowlist approach; otherwise, this can be done in a denylist approach.</p>
 <h3 id="file-signature-validation">File Signature Validation<a class="headerlink" href="#file-signature-validation" title="Permanent link">&para;</a></h3>
 <p>In conjunction with <a href="#content-type-validation">content-type validation</a>, validating the file's signature can be checked and verified against the expected file that should be received.</p>
 <blockquote>

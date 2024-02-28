@@ -2800,8 +2800,8 @@ reqID Parameter prone to SQL Injection.
 <h3 id="proactive-identification">Proactive Identification<a class="headerlink" href="#proactive-identification" title="Permanent link">&para;</a></h3>
 <p>This occurs when an organization takes it upon themselves to assess their web security posture and conducts the following tasks:</p>
 <ul>
-<li><strong>Dynamic Application Assessments</strong> - Whitehat attackers conduct penetration tests or automated web assessment tools are run against the live web application to identify flaws.</li>
-<li><strong>Source code reviews</strong> - Whitehat attackers use manual/automated means to analyze the source code of the web application to identify flaws.</li>
+<li><strong>Dynamic Application Assessments</strong> - Ethical attackers conduct penetration tests or automated web assessment tools are run against the live web application to identify flaws.</li>
+<li><strong>Source code reviews</strong> - Ethical attackers use manual/automated means to analyze the source code of the web application to identify flaws.</li>
 </ul>
 <p>Due to the fact that custom coded web applications are unique, these proactive identification tasks are extremely important as you are not able to rely upon third-party vulnerability notifications.</p>
 <h3 id="reactive-identification">Reactive Identification<a class="headerlink" href="#reactive-identification" title="Permanent link">&para;</a></h3>
@@ -2831,7 +2831,7 @@ reqID Parameter prone to SQL Injection.
 <p>Care should be taken to attempt to minimize either of these two rules. It may not be possible to adhere 100% to each of these goals but remember that virtual patching is about <strong>Risk Reduction</strong>. It should be understood by business owners that while you are gaining the advantage of shortening the Time-to-Fix metric, you may not be implementing a complete fix for the flaw.</p>
 <h3 id="manual-virtual-patch-creation">Manual Virtual Patch Creation<a class="headerlink" href="#manual-virtual-patch-creation" title="Permanent link">&para;</a></h3>
 <h4 id="positive-security-allow-list-virtual-patches-recommended-solution">Positive Security (Allow List) Virtual Patches (<strong>Recommended Solution</strong>)<a class="headerlink" href="#positive-security-allow-list-virtual-patches-recommended-solution" title="Permanent link">&para;</a></h4>
-<p>Positive security model (allow list) is a comprehensive security mechanism that provides an independent input validation envelope to an application. The model specifies the characteristics of valid input (character set, length, etc…) and denies anything that does not conform. By defining rules for every parameter in every page in the application the application is protected by an additional security envelop independent from its code.</p>
+<p>Positive security model (allowlist) is a comprehensive security mechanism that provides an independent input validation envelope to an application. The model specifies the characteristics of valid input (character set, length, etc…) and denies anything that does not conform. By defining rules for every parameter in every page in the application the application is protected by an additional security envelop independent from its code.</p>
 <h5 id="example-allow-list-modsecurity-virtual-patch">Example Allow List ModSecurity Virtual Patch<a class="headerlink" href="#example-allow-list-modsecurity-virtual-patch" title="Permanent link">&para;</a></h5>
 <p>In order to create an allow-list virtual patch, you must be able to verify what the normal, expected input values are. If you have implemented proper audit logging as part of the Preparation Phase, then you should be able to review audit logs to identify the format of expected input types. In this case, the <code>reqID</code> parameter is supposed to only hold integer characters so we can use this virtual patch:</p>
 <div class="highlight"><pre><span></span><code>##
@@ -2852,7 +2852,7 @@ SecRule REQUEST_URI &quot;@contains /wp-content/plugins/levelfourstorefront/scri
 <li><strong>Caution</strong>: There are numerous evasion vectors when creating virtual patches. Please consult the <a href="https://owasp.org/www-community/Virtual_Patching_Best_Practices">OWASP Best Practices: Virtual Patching document</a> for a more thorough discussion on countering evasion methods.</li>
 </ul>
 <h4 id="negative-security-block-list-virtual-patches">Negative Security (Block List) Virtual Patches<a class="headerlink" href="#negative-security-block-list-virtual-patches" title="Permanent link">&para;</a></h4>
-<p>A negative security model (block list) is based on a set of rules that detect specific known attacks rather than allow only valid traffic.</p>
+<p>A negative security model (denylist) is based on a set of rules that detect specific known attacks rather than allow only valid traffic.</p>
 <h5 id="example-block-list-modsecurity-virtual-patch">Example Block List ModSecurity Virtual Patch<a class="headerlink" href="#example-block-list-modsecurity-virtual-patch" title="Permanent link">&para;</a></h5>
 <p>Here is the example <a href="https://packetstormsecurity.com/files/119217/WordPress-Shopping-Cart-8.1.14-Shell-Upload-SQL-Injection.html">PoC code</a> that was supplied by the public advisory:</p>
 <div class="highlight"><pre><span></span><code>http://localhost/wordpress/wp-content/plugins/levelfourstorefront/scripts/administration/exportsubscribers.php?reqID=1&#39; or 1=&#39;1

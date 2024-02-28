@@ -2823,7 +2823,7 @@
 <h3 id="access-filtering">Access filtering<a class="headerlink" href="#access-filtering" title="Permanent link">&para;</a></h3>
 <p>During a websocket channel initiation, the browser sends the <strong>Origin</strong> HTTP request header that contains the source domain initiation for the request to handshake. Even if this header can be spoofed in a forged HTTP request (not browser based), it cannot be overridden or forced in a browser context. It then represents a good candidate to apply filtering according to an expected value.</p>
 <p>An example of an attack using this vector, named <em>Cross-Site WebSocket Hijacking (CSWSH)</em>, is described <a href="https://www.christian-schneider.net/CrossSiteWebSocketHijacking.html">here</a>.</p>
-<p>The code below defines a configuration that applies filtering based on an "allow list" of origins. This ensures that only allowed origins can establish a full handshake:</p>
+<p>The code below defines a configuration that applies filtering based on an "allowlist" of origins. This ensures that only allowed origins can establish a full handshake:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">org.owasp.encoder.Encode</span><span class="p">;</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">org.slf4j.Logger</span><span class="p">;</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">org.slf4j.LoggerFactory</span><span class="p">;</span>
@@ -3343,10 +3343,10 @@
 <p>Note that the same approach is used in the messages handling part of the POC. All messages exchanged between the client and the server are systematically validated using the same way, using dedicated JSON schemas linked to messages dedicated Encoder/Decoder (serialization/deserialization).</p>
 <h3 id="authorization-and-access-token-explicit-invalidation">Authorization and access token explicit invalidation<a class="headerlink" href="#authorization-and-access-token-explicit-invalidation" title="Permanent link">&para;</a></h3>
 <p>Authorization information is stored in the access token using the JWT <em>Claim</em> feature (in the POC the name of the claim is <em>access_level</em>). Authorization is validated when a request is received and before any other action using the user input information.</p>
-<p>The access token is passed with every message sent to the message endpoint and a block list is used in order to allow the user to request an explicit token invalidation.</p>
+<p>The access token is passed with every message sent to the message endpoint and a denylist is used in order to allow the user to request an explicit token invalidation.</p>
 <p>Explicit token invalidation is interesting from a user's point of view because, often when tokens are used, the validity timeframe of the token is relatively long (it's common to see a valid timeframe superior to 1 hour) so it's important to allow a user to have a way to indicate to the system "OK, I have finished my exchange with you, so you can close our exchange session and cleanup associated links".</p>
 <p>It also helps the user to revoke itself of current access if a malicious concurrent access is detected using the same token (case of token stealing).</p>
-<p><strong>Token block list</strong> - Maintain a temporary list using memory and time limited Caching of hashes of token that are not allowed to be used anymore</p>
+<p><strong>Token denylist</strong> - Maintain a temporary list using memory and time limited Caching of hashes of token that are not allowed to be used anymore</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.jcs.JCS</span><span class="p">;</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.jcs.access.CacheAccess</span><span class="p">;</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.commons.jcs.access.exception.CacheException</span><span class="p">;</span>
@@ -3381,7 +3381,7 @@
 <span class="w">    </span><span class="p">}</span>
 
 <span class="w">    </span><span class="cm">/**</span>
-<span class="cm">     * Add token into the block list</span>
+<span class="cm">     * Add token into the denylist</span>
 <span class="cm">     *</span>
 <span class="cm">     * @param token Token for which the hash must be added</span>
 <span class="cm">     * @throws NoSuchAlgorithmException If SHA256 is not available</span>
@@ -3396,7 +3396,7 @@
 <span class="w">    </span><span class="p">}</span>
 
 <span class="w">    </span><span class="cm">/**</span>
-<span class="cm">     * Check if a token is present in the block list</span>
+<span class="cm">     * Check if a token is present in the denylist</span>
 <span class="cm">     *</span>
 <span class="cm">     * @param token Token for which the presence of the hash must be verified</span>
 <span class="cm">     * @return TRUE if token is block-listed</span>

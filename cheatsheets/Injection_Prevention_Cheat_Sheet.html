@@ -3284,8 +3284,8 @@
 <li><strong>Input validation</strong> - the values for commands and the relevant arguments should be both validated. There are different degrees of validation for the actual command and its arguments:<ul>
 <li>When it comes to the <strong>commands</strong> used, these must be validated against a list of allowed commands.</li>
 <li>In regards to the <strong>arguments</strong> used for these commands, they should be validated using the following options:<ul>
-<li>Positive or "allow list" input validation - where are the arguments allowed explicitly defined</li>
-<li>Allow-list Regular Expression - where is explicitly defined a list of good characters allowed and the maximum length of the string. Ensure that metacharacters like <code>&amp; | ; $ &gt; &lt; \</code> \ !` and white-spaces are not part of the Regular Expression. For example, the following regular expression only allows lowercase letters and numbers, and does not contain metacharacters. The length is also being limited to 3-10 characters:</li>
+<li>Positive or allowlist input validation - where are the arguments allowed explicitly defined</li>
+<li>Allow-list Regular Expression - where is explicitly defined a list of good characters allowed and the maximum length of the string. Ensure that metacharacters like <code>&amp; | ; $ &gt; &lt; \</code> \ !` and whitespaces are not part of the Regular Expression. For example, the following regular expression only allows lowercase letters and numbers, and does not contain metacharacters. The length is also being limited to 3-10 characters:</li>
 </ul>
 </li>
 </ul>
@@ -3308,7 +3308,7 @@
 <p>Web applications often communicate with network daemons (like SMTP, IMAP, FTP) where user input becomes part of the communication stream. Here it is possible to inject command sequences to abuse an established session.</p>
 <h2 id="injection-prevention-rules">Injection Prevention Rules<a class="headerlink" href="#injection-prevention-rules" title="Permanent link">&para;</a></h2>
 <h3 id="rule-1-perform-proper-input-validation">Rule #1 (Perform proper input validation)<a class="headerlink" href="#rule-1-perform-proper-input-validation" title="Permanent link">&para;</a></h3>
-<p>Perform proper input validation. Positive or "allow list" input validation with appropriate canonicalization is also recommended, but <strong>is not a complete defense</strong> as many applications require special characters in their input.</p>
+<p>Perform proper input validation. Positive or allowlist input validation with appropriate canonicalization is also recommended, but <strong>is not a complete defense</strong> as many applications require special characters in their input.</p>
 <h3 id="rule-2-use-a-safe-api">Rule #2 (Use a safe API)<a class="headerlink" href="#rule-2-use-a-safe-api" title="Permanent link">&para;</a></h3>
 <p>The preferred option is to use a safe API which avoids the use of the interpreter entirely or provides a parameterized interface. Be careful of APIs, such as stored procedures, that are parameterized, but can still introduce injection under the hood.</p>
 <h3 id="rule-3-contextually-escape-user-data">Rule #3 (Contextually escape user data)<a class="headerlink" href="#rule-3-contextually-escape-user-data" title="Permanent link">&para;</a></h3>

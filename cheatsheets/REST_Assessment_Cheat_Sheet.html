@@ -2408,11 +2408,11 @@
 <li>Custom authentication mechanisms require reverse engineering and make popular tools not useful as they cannot track a login session.</li>
 </ul>
 <h2 id="how-to-pentest-a-restful-web-service">How to pentest a RESTful web service<a class="headerlink" href="#how-to-pentest-a-restful-web-service" title="Permanent link">&para;</a></h2>
-<p>Determine the attack surface through documentation - RESTful pen testing might be better off if some level of white box testing is allowed and you can get information about the service.</p>
+<p>Determine the attack surface through documentation - RESTful pen testing might be better off if some level of clear-box testing is allowed and you can get information about the service.</p>
 <p>This information will ensure fuller coverage of the attack surface. Such information to look for:</p>
 <ul>
 <li>Formal service description - While for other types of web services such as SOAP a formal description, usually in WSDL is often available, this is seldom the case for REST. That said, either WSDL 2.0 or WADL can describe REST and are sometimes used.</li>
-<li>A developer guide for using the service may be less detailed but will commonly be found, and might even be considered <em>black box</em>.</li>
+<li>A developer guide for using the service may be less detailed but will commonly be found, and might even be considered <em>opaque-box</em> testing.</li>
 <li>Application source or configuration - in many frameworks, including dotNet ,the REST service definition might be easily obtained from configuration files rather than from code.</li>
 </ul>
 <p>Collect full requests using a <a href="https://www.zaproxy.org/">proxy</a> - while always an important pen testing step, this is more important for REST based applications as the application UI may not give clues on the actual attack surface.</p>

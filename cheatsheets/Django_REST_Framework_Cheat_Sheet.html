@@ -2756,8 +2756,8 @@ namespace REST_FRAMEWORK, usually in the settings.py file. From a security persp
 <p>DO NOT: Overwrite the authorization class on a class-based (variable <code>permission_classes</code>) or function-based (decorator <code>permission_classes</code>) view unless you are confident about the change and understand the impact.</p>
 <h3 id="api62019-mass-assignment">API6:2019 Mass Assignment<a class="headerlink" href="#api62019-mass-assignment" title="Permanent link">&para;</a></h3>
 <p>When using ModelForms:</p>
-<p>DO: Use Meta.fields (allow list approach).</p>
-<p>DO NOT: Use Meta.exclude (block list approach).</p>
+<p>DO: Use Meta.fields (allowlist approach).</p>
+<p>DO NOT: Use Meta.exclude (denylist approach).</p>
 <p>DO NOT: Use <code>ModelForms.Meta.fields = "__all__"</code></p>
 <h3 id="api72019-security-misconfiguration">API7:2019 Security Misconfiguration<a class="headerlink" href="#api72019-security-misconfiguration" title="Permanent link">&para;</a></h3>
 <p>DO: Setup Django settings <code>DEBUG</code> and <code>DEBUG_PROPAGATE_EXCEPTIONS</code> to False.</p>

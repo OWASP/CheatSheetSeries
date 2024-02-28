@@ -2710,8 +2710,8 @@
 <h2 id="cases">Cases<a class="headerlink" href="#cases" title="Permanent link">&para;</a></h2>
 <p>Depending on the application's functionality and requirements, there are two basic cases in which SSRF can happen:</p>
 <ul>
-<li>Application can send request only to <strong>identified and trusted applications</strong>: Case when <a href="https://en.wikipedia.org/wiki/Whitelisting">allow listing</a> approach is available.</li>
-<li>Application can send requests to <strong>ANY external IP address or domain name</strong>: Case when <a href="https://en.wikipedia.org/wiki/Whitelisting">allow listing</a> approach is unavailable.</li>
+<li>Application can send request only to <strong>identified and trusted applications</strong>: Case when <a href="https://en.wikipedia.org/wiki/Whitelisting">allowlist</a> approach is available.</li>
+<li>Application can send requests to <strong>ANY external IP address or domain name</strong>: Case when <a href="https://en.wikipedia.org/wiki/Whitelisting">allowlist</a> approach is unavailable.</li>
 </ul>
 <p>Because these two cases are very different, this cheat sheet will describe defences against them separately.</p>
 <h3 id="case-1-application-can-send-request-only-to-identified-and-trusted-applications">Case 1 - Application can send request only to identified and trusted applications<a class="headerlink" href="#case-1-application-can-send-request-only-to-identified-and-trusted-applications" title="Permanent link">&para;</a></h3>
@@ -2722,13 +2722,13 @@
 Basically, the user cannot reach the HR system directly, but, if the web application in charge of receiving user information is vulnerable to SSRF, the user can leverage it to access the HR system.
 The user leverages the web application as a proxy to the HR system.</p>
 </blockquote>
-<p>The allow list approach is a viable option since the internal application called by the <em>VulnerableApplication</em> is clearly identified in the technical/business flow. It can be stated that the required calls will only be targeted between those identified and trusted applications.</p>
+<p>The allowlist approach is a viable option since the internal application called by the <em>VulnerableApplication</em> is clearly identified in the technical/business flow. It can be stated that the required calls will only be targeted between those identified and trusted applications.</p>
 <h4 id="available-protections">Available protections<a class="headerlink" href="#available-protections" title="Permanent link">&para;</a></h4>
 <p>Several protective measures are possible at the <strong>Application</strong> and <strong>Network</strong> layers. To apply the <strong>defense in depth</strong> principle, both layers will be hardened against such attacks.</p>
 <h5 id="application-layer">Application layer<a class="headerlink" href="#application-layer" title="Permanent link">&para;</a></h5>
 <p>The first level of protection that comes to mind is <a href="Input_Validation_Cheat_Sheet.html">Input validation</a>.</p>
 <p>Based on that point, the following question comes to mind: <em>How to perform this input validation?</em></p>
-<p>As <a href="https://twitter.com/orange_8361">Orange Tsai</a> shows in his <a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Orange_Tsai_Talk.pdf">talk</a>, depending on the programming language used, parsers can be abused. One possible countermeasure is to apply the <a href="Input_Validation_Cheat_Sheet.html#allow-list-vs-block-list">allow list approach</a> when input validation is used because, most of the time, the format of the information expected from the user is globally known.</p>
+<p>As <a href="https://twitter.com/orange_8361">Orange Tsai</a> shows in his <a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Orange_Tsai_Talk.pdf">talk</a>, depending on the programming language used, parsers can be abused. One possible countermeasure is to apply the <a href="Input_Validation_Cheat_Sheet.html#allow-list-vs-block-list">allowlist approach</a> when input validation is used because, most of the time, the format of the information expected from the user is globally known.</p>
 <p>The request sent to the internal application will be based on the following information:</p>
 <ul>
 <li>String containing business data.</li>
@@ -2766,7 +2766,7 @@ The user leverages the web application as a proxy to the HR system.</p>
 </li>
 <li><strong>.NET</strong>: Method <a href="https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress.tryparse?view=netframework-4.8">IPAddress.TryParse</a> from the SDK.<ul>
 <li><strong>It is exposed</strong> to bypass using Hex, Octal, Dword and Mixed encoding but <strong>NOT</strong> the URL encoding.</li>
-<li>As allow listing is used here, any bypass tentative will be blocked during the comparison against the allowed list of IP addresses.</li>
+<li>As allowlisting is used here, any bypass tentative will be blocked during the comparison against the allowed list of IP addresses.</li>
 </ul>
 </li>
 <li><strong>JavaScript</strong>: Library <a href="https://www.npmjs.com/package/ip-address">ip-address</a>.<ul>
@@ -2779,9 +2779,9 @@ The user leverages the web application as a proxy to the HR system.</p>
 </li>
 </ul>
 <blockquote>
-<p><strong>Use the output value of the method/library as the IP address to compare against the allow list.</strong></p>
+<p><strong>Use the output value of the method/library as the IP address to compare against the allowlist.</strong></p>
 </blockquote>
-<p>After ensuring the validity of the incoming IP address, the second layer of validation is applied. An allow list is created after determining all the IP addresses (v4 and v6 to avoid bypasses) of the identified and trusted applications. The valid IP is cross-checked with that list to ensure its communication with the internal application (string strict comparison with case sensitive).</p>
+<p>After ensuring the validity of the incoming IP address, the second layer of validation is applied. An allowlist is created after determining all the IP addresses (v4 and v6 to avoid bypasses) of the identified and trusted applications. The valid IP is cross-checked with that list to ensure its communication with the internal application (string strict comparison with case sensitive).</p>
 <h6 id="domain-name">Domain name<a class="headerlink" href="#domain-name" title="Permanent link">&para;</a></h6>
 <p>In the attempt of validate domain names, it is apparent to do a DNS resolution to verify the existence of the domain. In general, it is not a bad idea, yet it opens up the application to attacks depending on the configuration used regarding the DNS servers used for the domain name resolution:</p>
 <ul>
@@ -2792,7 +2792,7 @@ The user leverages the web application as a proxy to the HR system.</p>
 <p>In the context of SSRF, there are two validations to perform:</p>
 <ol>
 <li>Ensure that the data provided is a valid domain name.</li>
-<li>Ensure that the domain name provided belongs to one of the domain names of the identified and trusted applications (the allow listing comes to action here).</li>
+<li>Ensure that the domain name provided belongs to one of the domain names of the identified and trusted applications (the allowlisting comes to action here).</li>
 </ol>
 <p>Similar to the IP address validation, the first layer of validation can be applied using libraries that ensure the security of the domain name format, based on the technology used (library option is proposed here in order to delegate the managing of the domain name format and leverage battle tested validation function):</p>
 <blockquote>
@@ -2830,13 +2830,13 @@ The user leverages the web application as a proxy to the HR system.</p>
 </code></pre></div>
 <p>After ensuring the validity of the incoming domain name, the second layer of validation is applied:</p>
 <ol>
-<li>Build an allow list with all the domain names of every identified and trusted applications.</li>
-<li>Verify that the domain name received is part of this allow list (string strict comparison with case sensitive).</li>
+<li>Build an allowlist with all the domain names of every identified and trusted applications.</li>
+<li>Verify that the domain name received is part of this allowlist (string strict comparison with case sensitive).</li>
 </ol>
 <p>Unfortunately here, the application is still vulnerable to the <code>DNS pinning</code> bypass mentioned in this <a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf">document</a>. Indeed, a DNS resolution will be made when the business code will be executed. To address that issue, the following action must be taken in addition of the validation on the domain name:</p>
 <ol>
 <li>Ensure that the domains that are part of your organization are resolved by your internal DNS server first in the chains of DNS resolvers.</li>
-<li>Monitor the domains allow list in order to detect when any of them resolves to a/an:</li>
+<li>Monitor the domains allowlist in order to detect when any of them resolves to a/an:</li>
 <li>Local IP address (V4 + V6).</li>
 <li>Internal IP of your organization (expected to be in private IP ranges) for the domain that are not part of your organization.</li>
 </ol>
@@ -2845,7 +2845,7 @@ The user leverages the web application as a proxy to the HR system.</p>
 <span class="kn">import</span> <span class="nn">ipaddress</span>
 <span class="kn">import</span> <span class="nn">dns.resolver</span>
 
-<span class="c1"># Configure the allow list to check</span>
+<span class="c1"># Configure the allowlist to check</span>
 <span class="n">DOMAINS_ALLOWLIST</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;owasp.org&quot;</span><span class="p">,</span> <span class="s2">&quot;labslinux&quot;</span><span class="p">]</span>
 
 <span class="c1"># Configure the DNS resolver to use for all DNS queries</span>
@@ -2875,7 +2875,7 @@ The user leverages the web application as a proxy to the HR system.</p>
 
 <span class="k">def</span> <span class="nf">check</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Perform the check of the allow list of domains.</span>
+<span class="sd">    Perform the check of the allowlist of domains.</span>
 <span class="sd">    Return a boolean indicating if any error has been detected.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">error_detected</span> <span class="o">=</span> <span class="kc">False</span>
@@ -2924,7 +2924,7 @@ The user leverages the web application as a proxy to the HR system.</p>
 <li>Uses a convention defined between the <em>VulnerableApplication</em> and the expected IP/domain in order to <em>prove</em> that the call has been legitimately initiated.</li>
 </ul>
 <h4 id="challenges-in-blocking-urls-at-application-layer">Challenges in blocking URLs at application layer<a class="headerlink" href="#challenges-in-blocking-urls-at-application-layer" title="Permanent link">&para;</a></h4>
-<p>Based on the business requirements of the above mentioned applications, the allow list approach is not a valid solution. Despite knowing that the block-list approach is not an impenetrable wall, it is the best solution in this scenario. It is informing the application what it should <strong>not</strong> do.</p>
+<p>Based on the business requirements of the above mentioned applications, the allowlist approach is not a valid solution. Despite knowing that the block-list approach is not an impenetrable wall, it is the best solution in this scenario. It is informing the application what it should <strong>not</strong> do.</p>
 <p>Here is why filtering URLs is hard at the Application layer:</p>
 <ul>
 <li>It implies that the application must be able to detect, at the code level, that the provided IP (V4 + V6) is not part of the official <a href="https://en.wikipedia.org/wiki/Private_network">private networks ranges</a> including also <em>localhost</em> and <em>IPv4/v6 Link-Local</em> addresses. Not every SDK provides a built-in feature for this kind of verification, and leaves the handling up to the developer to understand all of its pitfalls and possible values, which makes it a demanding task.</li>
