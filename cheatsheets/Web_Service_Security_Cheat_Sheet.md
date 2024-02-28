@@ -70,7 +70,7 @@ Schema validation enforces constraints and syntax defined by the schema.
 
 - Validation against malformed XML entities.
 - Validation against [XML Bomb attacks](https://en.wikipedia.org/wiki/Billion_laughs_attack).
-- Validating inputs using a strong allow list.
+- Validating inputs using a strong allowlist.
 - Validating against [external entity attacks](https://owasp.org/www-community/vulnerabilities/XML_External_Entity_%28XXE%29_Processing).
 
 ## Output Encoding
