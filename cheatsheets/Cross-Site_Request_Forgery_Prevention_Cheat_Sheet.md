@@ -120,7 +120,7 @@ Though the Naive Double-Submit Cookie method is a good initial step to counter C
 When a `<form>` tag is used to submit data, it sends a ["simple" request](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#simple_requests) that browsers do not designate as "to be preflighted". These "simple" requests introduce risk of CSRF because browsers permit them to be sent to any origin. If your application uses `<form>` tags to submit data anywhere in your client, you will still need to protect them with alternate approaches described in this document such as tokens.
 
 > **Caveat:**
-Should a browser bug allow custom HTTP headers, or [not enforce](https://issues.chromium.org/issues/40082106) preflight on non-simple content types, it could compromise your security. Although unlikely, it is prudent to consider this in your threat model. Implementing CSRF tokens adds additional layer of defence and gives developers more control over security of the application.
+Should a browser bug allow custom HTTP headers, or not enforce preflight on non-simple content types, it could compromise your security. Although unlikely, it is prudent to consider this in your threat model. Implementing CSRF tokens adds additional layer of defence and gives developers more control over security of the application.
 
 ### Disallowing simple content types
 
