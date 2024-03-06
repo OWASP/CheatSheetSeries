@@ -1370,14 +1370,32 @@
     Defense Option 2: Use Frameworks that Automatically Protect from LDAP Injection
   </a>
   
-</li>
+    <nav class="md-nav" aria-label="Defense Option 2: Use Frameworks that Automatically Protect from LDAP Injection">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#defense-option-3-additional-defenses" class="md-nav__link">
-    Defense Option 3: Additional Defenses
+  <a href="#safe-net-example" class="md-nav__link">
+    Safe .NET Example
   </a>
   
-    <nav class="md-nav" aria-label="Defense Option 3: Additional Defenses">
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#additional-defenses" class="md-nav__link">
+    Additional Defenses
+  </a>
+  
+    <nav class="md-nav" aria-label="Additional Defenses">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1398,11 +1416,6 @@
   <a href="#allow-list-input-validation" class="md-nav__link">
     Allow-List Input Validation
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -2461,14 +2474,32 @@
     Defense Option 2: Use Frameworks that Automatically Protect from LDAP Injection
   </a>
   
-</li>
+    <nav class="md-nav" aria-label="Defense Option 2: Use Frameworks that Automatically Protect from LDAP Injection">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#defense-option-3-additional-defenses" class="md-nav__link">
-    Defense Option 3: Additional Defenses
+  <a href="#safe-net-example" class="md-nav__link">
+    Safe .NET Example
   </a>
   
-    <nav class="md-nav" aria-label="Defense Option 3: Additional Defenses">
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#additional-defenses" class="md-nav__link">
+    Additional Defenses
+  </a>
+  
+    <nav class="md-nav" aria-label="Additional Defenses">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2489,11 +2520,6 @@
   <a href="#allow-list-input-validation" class="md-nav__link">
     Allow-List Input Validation
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -2529,22 +2555,25 @@
 
 <h1 id="ldap-injection-prevention-cheat-sheet">LDAP Injection Prevention Cheat Sheet<a class="headerlink" href="#ldap-injection-prevention-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>This cheatsheet is focused on providing clear, simple, actionable guidance for preventing LDAP Injection flaws in your applications.</p>
+<p>The Lightweight Directory Access Protocol (LDAP) allows an application to remotely perform operations such as searching and modifying records in
+directories. LDAP injection results from inadequate input sanitization and validation and allows malicious users to glean restricted information using the
+directory service. For general information about LDAP please visit <a href="https://www.redhat.com/en/topics/security/what-is-ldap-authentication">lightweight directory access protocol (LDAP)</a>.</p>
 <p>LDAP Injection is an attack used to exploit web based applications that construct LDAP statements based on user input. When an application fails to properly sanitize user input, it's possible to modify LDAP statements through techniques similar to <a href="https://owasp.org/www-community/attacks/SQL_Injection">SQL Injection</a>.</p>
-<p>LDAP injection attacks could result in the granting of permissions to unauthorized queries, and content modification inside the LDAP tree.</p>
-<p>For more information on LDAP Injection attacks, visit <a href="https://owasp.org/www-community/attacks/LDAP_Injection">LDAP injection</a>.</p>
-<p><a href="https://owasp.org/www-community/attacks/LDAP_Injection">LDAP injection</a> attacks are common due to two factors:</p>
+<p>This cheatsheet is focused on providing clear, simple, actionable guidance for preventing LDAP Injection flaws in your applications. <a href="https://owasp.org/www-community/attacks/LDAP_Injection">LDAP injection</a> attacks are common due to two factors:</p>
 <ol>
 <li>The lack of safer, parameterized LDAP query interfaces</li>
 <li>The widespread use of LDAP to authenticate users to systems.</li>
 </ol>
+<p>LDAP injection attacks could result in the granting of permissions to unauthorized queries, and content modification inside the LDAP tree.</p>
 <p>Primary Defenses:</p>
 <ul>
 <li>Escape all variables using the right LDAP encoding function</li>
+<li>Use a framework that escapes automatically.</li>
 </ul>
 <p>Additional Defenses:</p>
 <ul>
-<li>Use a framework (like <a href="https://www.nuget.org/packages/LinqToLdap/">LINQtoLDAP</a> that escapes automatically.</li>
+<li>Least Privilege</li>
+<li>Allow-List Input Validation</li>
 </ul>
 <h2 id="primary-defenses">Primary Defenses<a class="headerlink" href="#primary-defenses" title="Permanent link">&para;</a></h2>
 <h3 id="defense-option-1-escape-all-variables-using-the-right-ldap-encoding-function">Defense Option 1: Escape all variables using the right LDAP encoding function<a class="headerlink" href="#defense-option-1-escape-all-variables-using-the-right-ldap-encoding-function" title="Permanent link">&para;</a></h3>
@@ -2554,7 +2583,8 @@
 <p><code>cn=Richard Feynman, ou=Physics Department, dc=Caltech, dc=edu</code></p>
 <p>or</p>
 <p><code>uid=inewton, ou=Mathematics Department, dc=Cambridge, dc=com</code></p>
-<p>There are certain characters that are considered special characters in a DN.</p>
+<p>A whitelist can be used to restrict input to a list of valid characters. Characters and character sequences that must be excluded from whitelists — including
+Java Naming and Directory Interface (JNDI) metacharacters and LDAP special characters — are listed in the following list.</p>
 <p>The <a href="https://ldapwiki.com/wiki/Wiki.jsp?page=DN%20Escape%20Values">exhaustive list</a> is the following: <code>\ # + &lt; &gt; , ; " =</code> and leading or trailing spaces.</p>
 <p>Some "special" characters that are allowed in Distinguished Names and do not need to be escaped include:</p>
 <div class="highlight"><pre><span></span><code>* ( ) . &amp; - _ [ ] ` ~ | @ $ % ^ ? : { } ! &#39;
@@ -2574,31 +2604,49 @@
 </code></pre></div>
 <p>For more information on search filter escaping visit <a href="https://datatracker.ietf.org/doc/html/rfc4515#section-3">RFC4515</a>.</p>
 <h4 id="safe-java-escaping-example">Safe Java Escaping Example<a class="headerlink" href="#safe-java-escaping-example" title="Permanent link">&para;</a></h4>
-<ul>
-<li><a href="https://wiki.sei.cmu.edu/confluence/spaces/flyingpdf/pdfpageexport.action?pageId=88487534">Prevent LDAP injection</a>.</li>
-<li><a href="https://github.com/ESAPI/esapi-java-legacy/blob/develop/src/main/java/org/owasp/esapi/reference/DefaultEncoder.java">Legacy OWASP ESAPI for Java DefaultEncoder which includes encodeForLDAP(String) and encodeForDN(String)</a>.</li>
-</ul>
+<p>The following solution uses a whitelist to sanitize user input so that the filter string contains only valid characters. In this code, userSN may contain
+only letters and spaces, whereas a password may contain only alphanumeric characters:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// String userSN = &quot;Sherlock Holmes&quot;; // Valid</span>
+<span class="c1">// String userPassword = &quot;secret2&quot;; // Valid</span>
+<span class="c1">// ... beginning of LDAPInjection.searchRecord()...</span>
+<span class="n">sc</span><span class="p">.</span><span class="na">setSearchScope</span><span class="p">(</span><span class="n">SearchControls</span><span class="p">.</span><span class="na">SUBTREE_SCOPE</span><span class="p">);</span>
+<span class="n">String</span><span class="w"> </span><span class="n">base</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;dc=example,dc=com&quot;</span><span class="p">;</span>
+
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">userSN</span><span class="p">.</span><span class="na">matches</span><span class="p">(</span><span class="s">&quot;[\\w\\s]*&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">!</span><span class="n">userPassword</span><span class="p">.</span><span class="na">matches</span><span class="p">(</span><span class="s">&quot;[\\w]*&quot;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalArgumentException</span><span class="p">(</span><span class="s">&quot;Invalid input&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">String</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;(&amp;(sn = &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">userSN</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;)(userPassword=&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">userPassword</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;))&quot;</span><span class="p">;</span>
+<span class="c1">// ... remainder of LDAPInjection.searchRecord()... </span>
+</code></pre></div>
+<p>When a database field such as a password must include special characters, it is critical to ensure that the authentic data is stored in sanitized form in the
+database and also that any user input is normalized before the validation or comparison takes place. Using characters that have special meanings in JNDI
+and LDAP in the absence of a comprehensive normalization and whitelisting-based routine is discouraged. Special characters must be transformed to
+sanitized, safe values before they are added to the whitelist expression against which input will be validated. Likewise, normalization of user input should
+occur before the validation step (source: <a href="https://wiki.sei.cmu.edu/confluence/spaces/flyingpdf/pdfpageexport.action?pageId=88487534">Prevent LDAP injection</a>).</p>
+<p>For further information visit <a href="https://owasp.org/www-project-java-encoder/">OWASP ESAPI Java Encoder Project which includes encodeForLDAP(String) and encodeForDN(String)</a>.</p>
 <h4 id="safe-c-sharp-net-tba-example">Safe C Sharp .NET TBA Example<a class="headerlink" href="#safe-c-sharp-net-tba-example" title="Permanent link">&para;</a></h4>
 <p><a href="https://blogs.msdn.microsoft.com/securitytools/2010/09/30/antixss-4-0-released/">.NET AntiXSS</a> (now the Encoder class) has LDAP encoding functions including <code>Encoder.LdapFilterEncode(string)</code>, <code>Encoder.LdapDistinguishedNameEncode(string)</code> and <code>Encoder.LdapDistinguishedNameEncode(string, bool, bool)</code>.</p>
 <p><code>Encoder.LdapFilterEncode</code> encodes input according to <a href="https://tools.ietf.org/search/rfc4515">RFC4515</a> where unsafe values are converted to <code>\XX</code> where <code>XX</code> is the representation of the unsafe character.</p>
 <p><code>Encoder.LdapDistinguishedNameEncode</code> encodes input according to <a href="https://tools.ietf.org/html/rfc2253">RFC2253</a> where unsafe characters are converted to <code>#XX</code> where <code>XX</code> is the representation of the unsafe character and the comma, plus, quote, slash, less than and great than signs are escaped using slash notation (<code>\X</code>). In addition to this a space or octothorpe (<code>#</code>) at the beginning of the input string is <code>\</code> escaped as is a space at the end of a string.</p>
 <p><code>LdapDistinguishedNameEncode(string, bool, bool)</code> is also provided so you may turn off the initial or final character escaping rules, for example if you are concatenating the escaped distinguished name fragment into the midst of a complete distinguished name.</p>
 <h3 id="defense-option-2-use-frameworks-that-automatically-protect-from-ldap-injection">Defense Option 2: Use Frameworks that Automatically Protect from LDAP Injection<a class="headerlink" href="#defense-option-2-use-frameworks-that-automatically-protect-from-ldap-injection" title="Permanent link">&para;</a></h3>
-<p>Safe NET Example</p>
-<p><a href="https://linqtoad.codeplex.com">LINQ to Active Directory</a> provides automatic LDAP encoding when building LDAP queries.</p>
-<h3 id="defense-option-3-additional-defenses">Defense Option 3: Additional Defenses<a class="headerlink" href="#defense-option-3-additional-defenses" title="Permanent link">&para;</a></h3>
+<h4 id="safe-net-example">Safe .NET Example<a class="headerlink" href="#safe-net-example" title="Permanent link">&para;</a></h4>
+<p>We recommend using <a href="https://www.nuget.org/packages/LinqToLdap/">LINQ to LDAP</a> in DotNet. It provides automatic LDAP encoding when building LDAP queries.
+Contact the <a href="https://github.com/madhatter22/LinqToLdap/blob/master/README.md">Readme file</a> in the project repository.</p>
+<h2 id="additional-defenses">Additional Defenses<a class="headerlink" href="#additional-defenses" title="Permanent link">&para;</a></h2>
 <p>Beyond adopting one of the two primary defenses, we also recommend adopting all of these additional defenses in order to provide defense in depth. These additional defenses are:</p>
 <ul>
 <li><strong>Least Privilege</strong></li>
 <li><strong>Allow-List Input Validation</strong></li>
 </ul>
-<h4 id="least-privilege">Least Privilege<a class="headerlink" href="#least-privilege" title="Permanent link">&para;</a></h4>
+<h3 id="least-privilege">Least Privilege<a class="headerlink" href="#least-privilege" title="Permanent link">&para;</a></h3>
 <p>To minimize the potential damage of a successful LDAP injection attack, you should minimize the privileges assigned to the LDAP binding account in your environment.</p>
-<h4 id="enabling-bind-authentication">Enabling Bind Authentication<a class="headerlink" href="#enabling-bind-authentication" title="Permanent link">&para;</a></h4>
+<h3 id="enabling-bind-authentication">Enabling Bind Authentication<a class="headerlink" href="#enabling-bind-authentication" title="Permanent link">&para;</a></h3>
 <p>If LDAP protocol is configured with bind Authentication, attackers would not be able to perform LDAP injection attacks because of verification
 and authorization checks that are performed against valid credentials passed by the user.
 An attacker can still bypass bind authentication through an anonymous connection or by exploiting the use of unauthenticated bind: Anonymous Bind (LDAP) and Unauthenticated Bind (LDAP).</p>
-<h4 id="allow-list-input-validation">Allow-List Input Validation<a class="headerlink" href="#allow-list-input-validation" title="Permanent link">&para;</a></h4>
+<h3 id="allow-list-input-validation">Allow-List Input Validation<a class="headerlink" href="#allow-list-input-validation" title="Permanent link">&para;</a></h3>
 <p>Input validation can be used to detect unauthorized input before it is passed to the LDAP query. For more information please see the <a href="Input_Validation_Cheat_Sheet.html">Input Validation Cheat Sheet</a>.</p>
 <h2 id="related-articles">Related Articles<a class="headerlink" href="#related-articles" title="Permanent link">&para;</a></h2>
 <ul>

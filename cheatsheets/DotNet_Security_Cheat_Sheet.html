@@ -3762,6 +3762,13 @@ or dependencies being introduced</p>
 <p>DO NOT: Send unsigned or unencrypted serialized objects over the network</p>
 <p>DO: Perform integrity checks or validate digital signatures on serialized
 objects received from the network</p>
+<p>DO NOT: Use the BinaryFormatter type which is dangerous and <a href="https://learn.microsoft.com/en-us/dotnet/standard/serialization/binaryformatter-security-guide">not recommended</a> for data processing.
+.NET offers several in-box serializers that can handle untrusted data safely:</p>
+<ul>
+<li>XmlSerializer and DataContractSerializer to serialize object graphs into and from XML. Do not confuse DataContractSerializer with NetDataContractSerializer.</li>
+<li>BinaryReader and BinaryWriter for XML and JSON.</li>
+<li>The System.Text.Json APIs to serialize object graphs into JSON.</li>
+</ul>
 <h3 id="a09-security-logging-and-monitoring-failures">A09 Security Logging and Monitoring Failures<a class="headerlink" href="#a09-security-logging-and-monitoring-failures" title="Permanent link">&para;</a></h3>
 <p>DO: Ensure all login, access control, and server-side input validation failures are logged with sufficient user context to identify suspicious or malicious accounts.</p>
 <p>DO: Establish effective monitoring and alerting so suspicious activities are detected and responded to in a timely fashion.</p>
