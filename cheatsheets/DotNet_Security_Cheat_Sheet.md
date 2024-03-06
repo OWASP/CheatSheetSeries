@@ -794,7 +794,7 @@ DO NOT: Send unsigned or unencrypted serialized objects over the network
 DO: Perform integrity checks or validate digital signatures on serialized
 objects received from the network
 
-DO NOT: Use the BinaryFormatter type which is dangerous and not recommended for data processing.
+DO NOT: Use the BinaryFormatter type which is dangerous and [not recommended](https://learn.microsoft.com/en-us/dotnet/standard/serialization/binaryformatter-security-guide) for data processing.
 NET offers several in-box serializers that can handle untrusted data safely:
 - XmlSerializer and DataContractSerializer to serialize object graphs into and from XML. Do not confuse DataContractSerializer with NetDataContractSerializer.
 - BinaryReader and BinaryWriter for XML and JSON.
