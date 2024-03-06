@@ -28,12 +28,12 @@ RESTful web services (often called simply REST) are a light weight variant of We
 
 ## How to pentest a RESTful web service
 
-Determine the attack surface through documentation - RESTful pen testing might be better off if some level of white box testing is allowed and you can get information about the service.
+Determine the attack surface through documentation - RESTful pen testing might be better off if some level of clear-box testing is allowed and you can get information about the service.
 
 This information will ensure fuller coverage of the attack surface. Such information to look for:
 
 - Formal service description - While for other types of web services such as SOAP a formal description, usually in WSDL is often available, this is seldom the case for REST. That said, either WSDL 2.0 or WADL can describe REST and are sometimes used.
-- A developer guide for using the service may be less detailed but will commonly be found, and might even be considered *black box*.
+- A developer guide for using the service may be less detailed but will commonly be found, and might even be considered *opaque-box* testing.
 - Application source or configuration - in many frameworks, including dotNet ,the REST service definition might be easily obtained from configuration files rather than from code.
 
 Collect full requests using a [proxy](https://www.zaproxy.org/) - while always an important pen testing step, this is more important for REST based applications as the application UI may not give clues on the actual attack surface.

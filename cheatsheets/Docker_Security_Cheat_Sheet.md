@@ -34,42 +34,39 @@ Configuring the container to use an unprivileged user is the best way to prevent
 
 1. During runtime using `-u` option of `docker run` command e.g.:
 
-    ```bash
-    docker run -u 4000 alpine
-    ```
+```bash
+docker run -u 4000 alpine
+```
 
 2. During build time. Simple add user in Dockerfile and use it. For example:
 
-    ```docker
-    FROM alpine
-    RUN groupadd -r myuser && useradd -r -g myuser myuser
-    <HERE DO WHAT YOU HAVE TO DO AS A ROOT USER LIKE INSTALLING PACKAGES ETC.>
-    USER myuser
-    ```
+```dockerfile
+FROM alpine
+RUN groupadd -r myuser && useradd -r -g myuser myuser
+#    <HERE DO WHAT YOU HAVE TO DO AS A ROOT USER LIKE INSTALLING PACKAGES ETC.>
+USER myuser
+```
 
 3. Enable user namespace support (`--userns-remap=default`) in [Docker daemon](https://docs.docker.com/engine/security/userns-remap/#enable-userns-remap-on-the-daemon)
 
-More information about this topic can be found at [Docker official documentation](https://docs.docker.com/engine/security/userns-remap/). For additional security, you can also run in rootless mode, which is discussed in [Rule \#12](#rule-12---run-docker-in-root-less-mode).
+More information about this topic can be found at [Docker official documentation](https://docs.docker.com/engine/security/userns-remap/). For additional security, you can also run in rootless mode, which is discussed in [Rule \#11](#rule-11---run-docker-in-rootless-mode).
 
-In Kubernetes, this can be configured in [Security Context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) using `runAsNonRoot` field e.g.:
+In Kubernetes, this can be configured in [Security Context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) using the `runAsUser` field with the user ID e.g:
 
 ```yaml
-kind: ...
-apiVersion: ...
+apiVersion: v1
+kind: Pod
 metadata:
-  name: ...
+  name: example
 spec:
-  ...
   containers:
-  - name: ...
-    image: ....
+  - name: example
+    image: gcr.io/google-samples/node-hello:1.0
     securityContext:
-          ...
-          runAsNonRoot: true
-          ...
+      runAsUser: 4000 # <-- This is the pod user ID
 ```
 
-As a Kubernetes cluster administrator, you can configure it using [Pod Security Policies](https://kubernetes.io/docs/concepts/policy/pod-security-policy/).
+As a Kubernetes cluster administrator, you can configure a hardened default using the [`Restricted` level](https://kubernetes.io/docs/concepts/security/pod-security-standards/#restricted) with built-in [Pod Security admission controller](https://kubernetes.io/docs/concepts/security/pod-security-admission/), if greater customization is desired consider using [Admission Webhooks](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#what-are-admission-webhooks) or a [third party alternative](https://kubernetes.io/docs/concepts/security/pod-security-standards/#alternatives).
 
 ### RULE \#3 - Limit capabilities (Grant only specific capabilities, needed by a container)
 
@@ -85,29 +82,25 @@ docker run --cap-drop all --cap-add CHOWN alpine
 
 **And remember: Do not run containers with the *--privileged* flag!!!**
 
-In Kubernetes this can be configured in [Security Context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) using `capabilities` field e.g.:
+In Kubernetes this can be configured in [Security Context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) using `capabilities` field e.g:
 
 ```yaml
-kind: ...
-apiVersion: ...
+apiVersion: v1
+kind: Pod
 metadata:
-  name: ...
+  name: example
 spec:
-  ...
   containers:
-  - name: ...
-    image: ....
+  - name: example
+    image: gcr.io/google-samples/node-hello:1.0
     securityContext:
-          ...
           capabilities:
             drop:
-              - all
-            add:
-              - CHOWN
-          ...
+              - ALL
+            add: ["CHOWN"]
 ```
 
-As a Kubernetes cluster administrator, you can configure it using [Pod Security Policies](https://kubernetes.io/docs/concepts/policy/pod-security-policy/).
+As a Kubernetes cluster administrator, you can configure a hardened default using the [`Restricted` level](https://kubernetes.io/docs/concepts/security/pod-security-standards/#restricted) with built-in [Pod Security admission controller](https://kubernetes.io/docs/concepts/security/pod-security-admission/), if greater customization is desired consider using [Admission Webhooks](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#what-are-admission-webhooks) or a [third party alternative](https://kubernetes.io/docs/concepts/security/pod-security-standards/#alternatives).
 
 ### RULE \#4 - Prevent in-container privilege escalation
 
@@ -116,26 +109,23 @@ Always run your docker images with `--security-opt=no-new-privileges` in order t
 In Kubernetes, this can be configured in [Security Context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) using `allowPrivilegeEscalation` field e.g.:
 
 ```yaml
-kind: ...
-apiVersion: ...
+apiVersion: v1
+kind: Pod
 metadata:
-  name: ...
+  name: example
 spec:
-  ...
   containers:
-  - name: ...
-    image: ....
+  - name: example
+    image: gcr.io/google-samples/node-hello:1.0
     securityContext:
-          ...
-          allowPrivilegeEscalation: false
-          ...
+      allowPrivilegeEscalation: false
 ```
 
-As a Kubernetes cluster administrator, you can refer to Kubernetes documentation to configure it using [Pod Security Policies](https://kubernetes.io/docs/concepts/policy/pod-security-policy/).
+As a Kubernetes cluster administrator, you can configure a hardened default using the [`Restricted` level](https://kubernetes.io/docs/concepts/security/pod-security-standards/#restricted) with built-in [Pod Security admission controller](https://kubernetes.io/docs/concepts/security/pod-security-admission/), if greater customization is desired consider using [Admission Webhooks](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#what-are-admission-webhooks) or a [third party alternative](https://kubernetes.io/docs/concepts/security/pod-security-standards/#alternatives).
 
 ### RULE \#5 - Be mindful of Inter-Container Connectivity
 
-Inter-Container Connectivity (icc) is enabled by default, allowing all containers to communicate with each other through the [`docker0` bridged network](https://docs.docker.com/network/drivers/bridge/). Instead of using the --icc=false flag with the Docker daemon, which completely disables inter-container communication, consider defining specific network configurations. This can be achieved by creating custom Docker networks and specifying which containers should be attached to them. This method provides more granular control over container communication.
+Inter-Container Connectivity (icc) is enabled by default, allowing all containers to communicate with each other through the [`docker0` bridged network](https://docs.docker.com/network/drivers/bridge/). Instead of using the `--icc=false` flag with the Docker daemon, which completely disables inter-container communication, consider defining specific network configurations. This can be achieved by creating custom Docker networks and specifying which containers should be attached to them. This method provides more granular control over container communication.
 
 For detailed guidance on configuring Docker networks for container communication, refer to the [Docker Documentation](https://docs.docker.com/network/#communication-between-containers).
 
@@ -147,7 +137,7 @@ In Kubernetes environments, [Network Policies](https://kubernetes.io/docs/concep
 
 Consider using security profile like [seccomp](https://docs.docker.com/engine/security/seccomp/) or [AppArmor](https://docs.docker.com/engine/security/apparmor/).
 
-Instructions how to do this inside Kubernetes can be found at [Security Context documentation](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) and in [Kubernetes API documentation](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#securitycontext-v1-core)
+Instructions how to do this inside Kubernetes can be found at [Configure a Security Context for a Pod or Container](https://kubernetes.io/docs/tutorials/security/seccomp/).
 
 ### RULE \#7 - Limit resources (memory, CPU, file descriptors, processes, restarts)
 
@@ -181,22 +171,19 @@ services:
     read_only: true
 ```
 
-Equivalent in Kubernetes in [Security Context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) will be:
+Equivalent in Kubernetes in [Security Context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/):
 
 ```yaml
-kind: ...
-apiVersion: ...
+apiVersion: v1
+kind: Pod
 metadata:
-  name: ...
+  name: example
 spec:
-  ...
   containers:
-  - name: ...
-    image: ....
+  - name: example
+    image: gcr.io/google-samples/node-hello:1.0
     securityContext:
-          ...
-          readOnlyRootFilesystem: true
-          ...
+      readOnlyRootFilesystem: true
 ```
 
 In addition, if the volume is mounted only for reading **mount them as a read-only**

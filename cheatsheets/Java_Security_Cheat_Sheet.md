@@ -16,7 +16,7 @@ Sample code used in tips is located [here](https://github.com/righettod/injectio
 
 The following point can be applied, in a general way, to prevent *Injection* issue:
 
-1. Apply **Input Validation** (using "allow list" approach) combined with **Output Sanitizing+Escaping** on user input/output.
+1. Apply **Input Validation** (using allowlist approach) combined with **Output Sanitizing+Escaping** on user input/output.
 2. If you need to interact with system, try to use API features provided by your technology stack (Java / .Net / PHP...) instead of building command.
 
 Additional advices are provided on this [cheatsheet](Input_Validation_Cheat_Sheet.md).
@@ -239,14 +239,14 @@ Injection of this type occur when the application uses untrusted user input to b
 
 #### How to prevent
 
-Either apply strict input validation ("allow list" approach) or use output sanitizing+escaping if input validation is not possible (combine both every time is possible).
+Either apply strict input validation (allowlist approach) or use output sanitizing+escaping if input validation is not possible (combine both every time is possible).
 
 #### Example
 
 ``` java
 /*
 INPUT WAY: Receive data from user
-Here it's recommended to use strict input validation using "allow list" approach.
+Here it's recommended to use strict input validation using allowlist approach.
 In fact, you ensure that only allowed characters are part of the input received.
 */
 

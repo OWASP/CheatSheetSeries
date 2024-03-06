@@ -20,17 +20,17 @@ The following language-specific guidance attempts to enumerate safe methodologie
 
 ### PHP
 
-#### WhiteBox Review
+#### Clear-box Review
 
-Check the use of [unserialize()](https://www.php.net/manual/en/function.unserialize.php) function and review how the external parameters are accepted. Use a safe, standard data interchange format such as JSON (via `json_decode()` and `json_encode()`) if you need to pass serialized data to the user.
+Check the use of [`unserialize()`](https://www.php.net/manual/en/function.unserialize.php) function and review how the external parameters are accepted. Use a safe, standard data interchange format such as JSON (via `json_decode()` and `json_encode()`) if you need to pass serialized data to the user.
 
 ### Python
 
-#### BlackBox Review
+#### Opaque-box Review
 
 If the traffic data contains the symbol dot `.` at the end, it's very likely that the data was sent in serialization.
 
-#### WhiteBox Review
+#### Clear-box Review
 
 The following API in Python will be vulnerable to serialization attack. Search code for the pattern below.
 
@@ -61,7 +61,7 @@ Implementation advices:
 - In your code, override the `ObjectInputStream#resolveClass()` method to prevent arbitrary classes from being deserialized. This safe behavior can be wrapped in a library like [SerialKiller](https://github.com/ikkisoft/SerialKiller).
 - Use a safe replacement for the generic `readObject()` method as seen here. Note that this addresses "[billion laughs](https://en.wikipedia.org/wiki/Billion_laughs_attack)" type attacks by checking input length and number of objects deserialized.
 
-#### WhiteBox Review
+#### Clear-box Review
 
 Be aware of the following Java API uses for potential serialization vulnerability.
 
@@ -77,7 +77,7 @@ Be aware of the following Java API uses for potential serialization vulnerabilit
 
 6. `Serializable`
 
-#### BlackBox Review
+#### Opaque-box Review
 
 If the captured traffic data includes the following patterns, it may suggest that the data was sent in Java serialization streams:
 
@@ -155,7 +155,7 @@ More complete implementations of this approach have been proposed by various com
 
 As mentioned above, the `java.io.ObjectInputStream` class is used to deserialize objects. It's possible to harden its behavior by subclassing it. However, if you don't own the code or can't wait for a patch, using an agent to weave in hardening to `java.io.ObjectInputStream` is the best solution.
 
-Globally changing `ObjectInputStream` is only safe for block-listing known malicious types, because it's not possible to know for all applications what the expected classes to be deserialized are. Fortunately, there are very few classes needed in the blocklist to be safe from all the known attack vectors, today.
+Globally changing `ObjectInputStream` is only safe for block-listing known malicious types, because it's not possible to know for all applications what the expected classes to be deserialized are. Fortunately, there are very few classes needed in the denylist to be safe from all the known attack vectors, today.
 
 It's inevitable that more "gadget" classes will be discovered that can be abused. However, there is an incredible amount of vulnerable software exposed today, in need of a fix. In some cases, "fixing" the vulnerability may involve re-architecting messaging systems and breaking backwards compatibility as developers move towards not accepting serialized objects.
 
@@ -232,7 +232,7 @@ The following libraries are either no longer maintained or cannot be used safely
 
 ### .Net CSharp
 
-#### WhiteBox Review
+#### Clear-box Review
 
 Search the source code for the following terms:
 
@@ -241,7 +241,7 @@ Search the source code for the following terms:
 
 Look for any serializers where the type is set by a user controlled variable.
 
-#### BlackBox Review
+#### Opaque-box Review
 
 Search for the following base64 encoded content that starts with:
 
@@ -333,7 +333,7 @@ If the application knows before deserialization which messages will need to be p
 ## Mitigation Tools/Libraries
 
 - [Java secure deserialization library](https://github.com/ikkisoft/SerialKiller)
-- [SWAT](https://github.com/cschneider4711/SWAT) (Serial Whitelist Application Trainer)
+- [SWAT - tool for creating allowlists](https://github.com/cschneider4711/SWAT)
 - [NotSoSerial](https://github.com/kantega/notsoserial)
 
 ## Detection Tools
