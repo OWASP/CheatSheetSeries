@@ -4,8 +4,8 @@
 
 While the specifications for XML and XML schemas provide you with the tools needed to protect XML applications, they also include multiple security flaws. They can be exploited to perform multiple types of attacks, including file retrieval, server side request forgery, port scanning, and brute forcing. This cheat sheet will make you aware of how attackers can exploit the different possibilities in XML used in libraries and software using two possible attack surfaces:
 
-- **Malformed XML Documents**: Exploiting vulnerablities that occur when applications encounte XML documents that are not well-formed.
-- **Invalid XML Documents**: Exploiting vulnerabilities that occur when  documents that do not have the expected structure.
+- **Malformed XML Documents**: Exploiting vulnerabilities that occur when applications encounter XML documents that are not well-formed.
+- **Invalid XML Documents**: Exploiting vulnerabilities that occur when documents that do not have the expected structure.
 
 ## Dealing with malformed XML documents
 
