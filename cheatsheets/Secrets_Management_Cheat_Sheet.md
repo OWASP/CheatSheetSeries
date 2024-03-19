@@ -597,5 +597,5 @@ Consider using a standardized logging format and vocabulary such as the [Logging
 - [Blog: 10 Pointers on Secrets Management](https://xebia.com/blog/secure-deployment-10-pointers-on-secrets-management/)
 - [Blog: From build to run: pointers on secure deployment](https://xebia.com/from-build-to-run-pointers-on-secure-deployment/)
 - [Github listing on secrets detection tools](https://github.com/topics/secrets-detection)
-- [OpenCRE References to secrets](https://www.opencre.org/search/secret)
 - [NIST SP 800-57 Recommendation for Key Management](https://csrc.nist.gov/publications/detail/sp/800-57-part-1/rev-5/final)
+- [OpenCRE References to secrets](https://opencre.org/cre/223-780)
