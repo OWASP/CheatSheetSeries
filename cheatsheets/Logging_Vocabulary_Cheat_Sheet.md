@@ -240,7 +240,7 @@ INFO
 {
     "datetime": "2019-01-01 00:00:00,000",
     "appid": "foobar.netportal_auth",
-    "event": "authn_password_change:joebob1",
+    "event": "authn_password_change_fail:joebob1",
     "level": "INFO",
     "description": "User joebob1 failed to changing their password",
     ...
