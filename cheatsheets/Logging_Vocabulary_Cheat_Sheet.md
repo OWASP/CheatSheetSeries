@@ -422,7 +422,7 @@ All activity by privileged users such as admin should be recorded.
     "appid": "foobar.netportal_auth",
     "event": "authz_admin:joebob1,user_privilege_change",
     "level": "WARN",
-    "description": "Administrtator joebob1 has updated privileges of user foobarapi from user to admin",
+    "description": "Administrator joebob1 has updated privileges of user foobarapi from user to admin",
     ...
 }
 ```
