@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Threat modeling is an important concept for modern application developers to understand. This goal of this cheatsheet is provide a concise, but actionable, reference for both those new to threat modeling and those seeking a refresher. The official project page is https://owasp.org/www-project-threat-model/.
+Threat modeling is an important concept for modern application developers to understand. This goal of this cheatsheet is provide a concise, but actionable, reference for both those new to threat modeling and those seeking a refresher. The official project page is [https://owasp.org/www-project-threat-model/](https://owasp.org/www-project-threat-model/).
 
 ## Overview
 
@@ -90,15 +90,14 @@ Finally, it is time to answer the question "did we do a good enough job"? The th
 
 ## References
 
-
 ### Methods and Techniques
 An alphabetical list of techniques:
+
 - [LINDDUN](https://linddun.org/)
 - [PASTA](https://cdn2.hubspot.net/hubfs/4598121/Content%20PDFs/VerSprite-PASTA-Threat-Modeling-Process-for-Attack-Simulation-Threat-Analysis.pdf)
 - [STRIDE](https://learn.microsoft.com/en-us/previous-versions/commerce-server/ee823878(v=cs.20)?redirectedfrom=MSDN)
 - [OCTAVE](https://insights.sei.cmu.edu/library/introduction-to-the-octave-approach/)
 - [VAST](https://go.threatmodeler.com/vast-methodology-data-sheet)
-
 
 ### Tools
 
