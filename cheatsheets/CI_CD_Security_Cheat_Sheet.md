@@ -48,9 +48,9 @@ CI/CD environments allow for code to be pushed to a repository and then deployed
 - Carefully weigh the risk against the benefits of allowing ephemeral contributors. Limit the number and permissions of external contributions when possible.
 - Enable MFA where available
 
-### Pipeline and Execution Enviornment
+### Pipeline and Execution Environment
 
-In addition to SCM systems, it is imperative that the automation servers responsible for running the pipelines are also configured securely. Examples o these technologies include Travis, TeamCity, Jenkins, and CircleCI. While the exact hardening process will vary according to the specific platform used, some general best practices include:
+In addition to SCM systems, it is imperative that the automation servers responsible for running the pipelines are also configured securely. Examples of these technologies include Travis, TeamCity, Jenkins, and CircleCI. While the exact hardening process will vary according to the specific platform used, some general best practices include:
 
 - Perform builds in appropriately isolated nodes (see Jenkins example [here](https://www.jenkins.io/doc/book/security/controller-isolation/))
 - Ensure communication between the SCM and CI/CD platform is secured using widely accepted protocols such as TLS 1.2 or greater.
