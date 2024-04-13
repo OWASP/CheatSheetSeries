@@ -33,7 +33,7 @@ A key concern when using passwords for authentication is password strength. A "s
 
 - Password Length
     - **Minimum** length of the passwords should be **enforced** by the application. Passwords **shorter than 8 characters** are considered to be weak ([NIST SP800-63B](https://pages.nist.gov/800-63-3/sp800-63b.html)).
-    - **Maximum** password length should not be set **too low**, as it will prevent users from creating passphrases. A common maximum length is 64 characters due to limitations in certain hashing algorithms, as discussed in the [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.md#maximum-password-lengths). It is important to set a maximum password length to prevent [long password Denial of Service attacks](https://www.acunetix.com/vulnerabilities/web/long-password-denial-of-service/).
+    - **Maximum** password length should be **at least 64 characters** to allow passphrases ([NIST SP800-63B](https://pages.nist.gov/800-63-3/sp800-63b.html)). Note that certain implementations of hashing algorithms may cause [long password denial of service](https://www.acunetix.com/vulnerabilities/web/long-password-denial-of-service/).
 - Do not silently truncate passwords. The [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.md#maximum-password-lengths) provides further guidance on how to handle passwords that are longer than the maximum length.
 - Allow usage of **all** characters including unicode and whitespace. There should be no password composition rules limiting the type of characters permitted.
 - Ensure credential rotation when a password leak occurs, or at the time of compromise identification.
@@ -304,7 +304,7 @@ Web applications should not make the job of password managers more difficult tha
 
 - Use standard HTML forms for username and password input with appropriate `type` attributes.
 - Avoid plugin-based login pages (such as Flash or Silverlight).
-- Implement a reasonable maximum password length, such as 64 characters, as discussed in the [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.md#maximum-password-lengths).
+- Implement a reasonable maximum password length, at least 64 characters, as discussed in the [Implement Proper Password Strength Controls section](#implement-proper-password-strength-controls).
 - Allow any printable characters to be used in passwords.
 - Allow users to paste into the username, password, and MFA fields.
 - Allow users to navigate between the username and password field with a single press of the `Tab` key.
