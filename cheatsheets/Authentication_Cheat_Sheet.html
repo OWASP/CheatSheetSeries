@@ -2997,7 +2997,7 @@
 <ul>
 <li>Password Length<ul>
 <li><strong>Minimum</strong> length of the passwords should be <strong>enforced</strong> by the application. Passwords <strong>shorter than 8 characters</strong> are considered to be weak (<a href="https://pages.nist.gov/800-63-3/sp800-63b.html">NIST SP800-63B</a>).</li>
-<li><strong>Maximum</strong> password length should not be set <strong>too low</strong>, as it will prevent users from creating passphrases. A common maximum length is 64 characters due to limitations in certain hashing algorithms, as discussed in the <a href="Password_Storage_Cheat_Sheet.html#maximum-password-lengths">Password Storage Cheat Sheet</a>. It is important to set a maximum password length to prevent <a href="https://www.acunetix.com/vulnerabilities/web/long-password-denial-of-service/">long password Denial of Service attacks</a>.</li>
+<li><strong>Maximum</strong> password length should be <strong>at least 64 characters</strong> to allow passphrases (<a href="https://pages.nist.gov/800-63-3/sp800-63b.html">NIST SP800-63B</a>). Note that certain implementations of hashing algorithms may cause <a href="https://www.acunetix.com/vulnerabilities/web/long-password-denial-of-service/">long password denial of service</a>.</li>
 </ul>
 </li>
 <li>Do not silently truncate passwords. The <a href="Password_Storage_Cheat_Sheet.html#maximum-password-lengths">Password Storage Cheat Sheet</a> provides further guidance on how to handle passwords that are longer than the maximum length.</li>
@@ -3212,7 +3212,7 @@ ENDIF
 <ul>
 <li>Use standard HTML forms for username and password input with appropriate <code>type</code> attributes.</li>
 <li>Avoid plugin-based login pages (such as Flash or Silverlight).</li>
-<li>Implement a reasonable maximum password length, such as 64 characters, as discussed in the <a href="Password_Storage_Cheat_Sheet.html#maximum-password-lengths">Password Storage Cheat Sheet</a>.</li>
+<li>Implement a reasonable maximum password length, at least 64 characters, as discussed in the <a href="#implement-proper-password-strength-controls">Implement Proper Password Strength Controls section</a>.</li>
 <li>Allow any printable characters to be used in passwords.</li>
 <li>Allow users to paste into the username, password, and MFA fields.</li>
 <li>Allow users to navigate between the username and password field with a single press of the <code>Tab</code> key.</li>
