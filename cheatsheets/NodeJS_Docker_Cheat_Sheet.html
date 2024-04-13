@@ -2599,7 +2599,7 @@ CMD &quot;npm&quot; &quot;start&quot;
 <h2 id="3-optimize-nodejs-tooling-for-production">3) Optimize Node.js tooling for production<a class="headerlink" href="#3-optimize-nodejs-tooling-for-production" title="Permanent link">&para;</a></h2>
 <p>When you build your Node.js Docker image for production, you want to ensure that all frameworks and libraries are using the optimal settings for performance and security.</p>
 <p>This brings us to add the following Dockerfile directive:</p>
-<p><strong><code>ENV NODE\_ENV production</code></strong></p>
+<p><strong><code>ENV NODE_ENV production</code></strong></p>
 <p>At first glance, this looks redundant, since we already specified only production dependencies in the <code>npm install</code> phase—so why is this necessary?</p>
 <p>Developers mostly associate the <code>NODE_ENV=production</code> environment variable setting with the installation of production-related dependencies, however, this setting also has other effects which we need to be aware of.</p>
 <p>Some frameworks and libraries may only turn on the optimized configuration that is suited to production if that <code>NODE_ENV</code> environment variable is set to <code>production</code>. Putting aside our opinion on whether this is a good or bad practice for frameworks to take, it is important to know this.</p>
@@ -2658,7 +2658,7 @@ CMD &quot;npm&quot; &quot;start&quot;
 process.on(&#39;SIGHUP&#39;, handle)
 </code></pre></div>
 <p>Then run the container, and once it’s up specifically send it the <code>SIGHUP</code> signal using the <code>docker</code> CLI and the special <code>--signal</code> command-line flag:</p>
-<p><strong><code>$ docker kill --signal=SIGHUP elastic\_archimedes</code></strong></p>
+<p><strong><code>$ docker kill --signal=SIGHUP elastic_archimedes</code></strong></p>
 <p>Nothing happened, right? That’s because the npm client doesn’t forward any signals to the node process that it spawned.</p>
 <p>The other caveat has to do with the different ways in which way you can specify the <code>CMD</code> directive in the Dockerfile. There are two ways, and they are not the same:</p>
 <ol>
@@ -2666,7 +2666,7 @@ process.on(&#39;SIGHUP&#39;, handle)
 <li>the execform notation, which directly spawns a process without wrapping it in a shell. It is specified using the JSON array notation, such as: <code>CMD [“npm”, “start”]</code>. Any signals sent to the container are directly sent to the process.</li>
 </ol>
 <p>Based on that knowledge, we want to improve our Dockerfile process execution directive as follows:</p>
-<p><strong><code>CMD \["node", "server.js"\]</code></strong></p>
+<p><strong><code>CMD ["node", "server.js"]</code></strong></p>
 <p>We are now invoking the node process directly, ensuring that it receives all of the signals sent to it, without it being wrapped in a shell interpreter.</p>
 <p>However, this introduces another pitfall.</p>
 <p>When processes run as PID 1 they effectively take on some of the responsibilities of an init system, which is typically responsible for initializing an operating system and processes. The kernel treats PID 1 in a different way than it treats other process identifiers. This special treatment from the kernel means that the handling of a <code>SIGTERM</code> signal to a running process won’t invoke a default fallback behavior of killing the process if the process doesn’t already set a handler for it.</p>
@@ -2772,7 +2772,7 @@ RUN echo &quot;//registry.npmjs.org/:_authToken=$NPM_TOKEN&quot; &gt; .npmrc &am
    rm -rf .npmrc
 </code></pre></div>
 <p>And then we build it as follows:</p>
-<p><strong><code>$ docker build . -t nodejs-tutorial --build-arg NPM\_TOKEN=1234</code></strong></p>
+<p><strong><code>$ docker build . -t nodejs-tutorial --build-arg NPM_TOKEN=1234</code></strong></p>
 <p>I know you were thinking that we’re all done at this point but, sorry to disappoint 🙂</p>
 <p>That’s how it is with security—sometimes the obvious things are yet just another pitfall.</p>
 <p>What’s the problem now, you ponder? Build arguments passed like that to Docker are kept in the history log. Let’s see with our own eyes. Run this command:</p>
