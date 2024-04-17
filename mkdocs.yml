@@ -68,3 +68,4 @@ markdown_extensions:
       emoji_generator: !!python/name:pymdownx.emoji.to_svg
   - toc:
       permalink: true
+  - sane_lists
