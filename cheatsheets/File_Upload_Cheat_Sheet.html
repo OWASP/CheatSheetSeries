@@ -2679,8 +2679,8 @@ to bypass such a check.</p>
 <ol>
 <li>Store the files on a <strong>different host</strong>, which allows for complete segregation of duties between the application serving the user, and the host handling file uploads and their storage.</li>
 <li>Store the files <strong>outside the webroot</strong>, where only administrative access is allowed.</li>
-<li>Store the files <strong>inside the webroot</strong>, and set them in write permissions only.</li>
-<li>If read access is required, setting proper controls is a must (<em>e.g.</em> internal IP, authorized user, etc.)</li>
+<li>Store the files <strong>inside the webroot</strong>, and set them in write permissions only.
+   - If read access is required, setting proper controls is a must (<em>e.g.</em> internal IP, authorized user, etc.)</li>
 </ol>
 <p>Storing files in a studied manner in databases is one additional technique. This is sometimes used for automatic backup processes, non file-system attacks, and permissions issues. In return, this opens up the door to performance issues (in some cases), storage considerations for the database and its backups, and this opens up the door to SQLi attack. This is advised only when a DBA is on the team and that this process shows to be an improvement on storing them on the file-system.</p>
 <blockquote>

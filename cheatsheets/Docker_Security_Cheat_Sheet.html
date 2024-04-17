@@ -2596,7 +2596,7 @@ If you really, <strong>really</strong> have to do this, you should secure it. Ch
 </ol>
 <div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-u<span class="w"> </span><span class="m">4000</span><span class="w"> </span>alpine
 </code></pre></div>
-<ol>
+<ol start="2">
 <li>During build time. Simple add user in Dockerfile and use it. For example:</li>
 </ol>
 <div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="s">alpine</span>
@@ -2604,7 +2604,7 @@ If you really, <strong>really</strong> have to do this, you should secure it. Ch
 <span class="c">#    &lt;HERE DO WHAT YOU HAVE TO DO AS A ROOT USER LIKE INSTALLING PACKAGES ETC.&gt;</span>
 <span class="k">USER</span><span class="w"> </span><span class="s">myuser</span>
 </code></pre></div>
-<ol>
+<ol start="3">
 <li>Enable user namespace support (<code>--userns-remap=default</code>) in <a href="https://docs.docker.com/engine/security/userns-remap/#enable-userns-remap-on-the-daemon">Docker daemon</a></li>
 </ol>
 <p>More information about this topic can be found at <a href="https://docs.docker.com/engine/security/userns-remap/">Docker official documentation</a>. For additional security, you can also run in rootless mode, which is discussed in <a href="#rule-11---run-docker-in-rootless-mode">Rule #11</a>.</p>

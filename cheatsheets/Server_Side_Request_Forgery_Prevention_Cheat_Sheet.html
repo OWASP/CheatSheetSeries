@@ -2836,9 +2836,9 @@ The user leverages the web application as a proxy to the HR system.</p>
 <p>Unfortunately here, the application is still vulnerable to the <code>DNS pinning</code> bypass mentioned in this <a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf">document</a>. Indeed, a DNS resolution will be made when the business code will be executed. To address that issue, the following action must be taken in addition of the validation on the domain name:</p>
 <ol>
 <li>Ensure that the domains that are part of your organization are resolved by your internal DNS server first in the chains of DNS resolvers.</li>
-<li>Monitor the domains allowlist in order to detect when any of them resolves to a/an:</li>
-<li>Local IP address (V4 + V6).</li>
-<li>Internal IP of your organization (expected to be in private IP ranges) for the domain that are not part of your organization.</li>
+<li>Monitor the domains allowlist in order to detect when any of them resolves to a/an:
+   - Local IP address (V4 + V6).
+   - Internal IP of your organization (expected to be in private IP ranges) for the domain that are not part of your organization.</li>
 </ol>
 <p>The following Python3 script can be used, as a starting point, for the monitoring mentioned above:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Dependencies: pip install ipaddress dnspython</span>
@@ -2941,14 +2941,16 @@ The user leverages the web application as a proxy to the HR system.</p>
 <p><strong>Validation flow (if one the validation steps fail then the request is rejected):</strong></p>
 <ol>
 <li>The application will receive the IP address or domain name of the <em>TargetedApplication</em> and it will apply the first validation on the input data using the libraries/regex mentioned in this <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html#application-layer">section</a>.</li>
-<li>The second validation will be applied against the IP address or domain name of the <em>TargetedApplication</em> using the following block-list approach:</li>
-<li>For IP address:<ul>
+<li>The second validation will be applied against the IP address or domain name of the <em>TargetedApplication</em> using the following block-list approach:
+   - For IP address:<ul>
 <li>The application will verify that it is a public one (see the hint provided in the next paragraph with the python code sample).</li>
+<li>For domain name:<ol>
+<li>The application will verify that it is a public one by trying to resolve the domain name against the DNS resolver that will only resolve internal domain name. Here, it must return a response indicating that it do not know the provided domain because the expected value received must be a public domain.</li>
+<li>To prevent the <code>DNS pinning</code> attack described in this <a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf">document</a>, the application will retrieve all the IP addresses behind the domain name provided (taking records <em>A</em> + <em>AAAA</em> for IPv4 + IPv6) and it will apply the same verification described in the previous point about IP addresses.</li>
+</ol>
+</li>
 </ul>
 </li>
-<li>For domain name:
-        1. The application will verify that it is a public one by trying to resolve the domain name against the DNS resolver that will only resolve internal domain name. Here, it must return a response indicating that it do not know the provided domain because the expected value received must be a public domain.
-        2. To prevent the <code>DNS pinning</code> attack described in this <a href="../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf">document</a>, the application will retrieve all the IP addresses behind the domain name provided (taking records <em>A</em> + <em>AAAA</em> for IPv4 + IPv6) and it will apply the same verification described in the previous point about IP addresses.</li>
 <li>The application will receive the protocol to use for the request via a dedicated input parameter for which it will verify the value against an allowed list of protocols (<code>HTTP</code> or <code>HTTPS</code>).</li>
 <li>The application will receive the parameter name for the token to pass to the <em>TargetedApplication</em> via a dedicated input parameter for which it will only allow the characters set <code>[a-z]{1,10}</code>.</li>
 <li>The application will receive the token itself via a dedicated input parameter for which it will only allow the characters set <code>[a-zA-Z0-9]{20}</code>.</li>

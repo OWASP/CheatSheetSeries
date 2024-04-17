@@ -3401,35 +3401,29 @@ redirect_from: "/cheatsheets/Application_Logging_Vocabulary_Cheat_Sheet.html"
 <h3 id="identifying-events">Identifying Events<a class="headerlink" href="#identifying-events" title="Permanent link">&para;</a></h3>
 <p>In order to better understand security event logging a good high-level understanding of threat modeling would be helpful, even if it's a simple approach of:</p>
 <ol>
-<li>
-<p><strong>What could go wrong?</strong></p>
-</li>
-<li>
-<p>Orders: could someone order on behalf of another?</p>
-</li>
+<li><strong>What could go wrong?</strong></li>
+</ol>
+<ul>
+<li>Orders: could someone order on behalf of another?</li>
 <li>Authentication: could I log in as someone else?</li>
-<li>
-<p>Authorization: could I see someone else' account?</p>
-</li>
-<li>
-<p><strong>What would happen if it did?</strong></p>
-</li>
-<li>
-<p>Orders: I've placed an order on behalf of another... to an abandoned warehouse in New Jersey. Oops.</p>
-</li>
+<li>Authorization: could I see someone else' account?</li>
+</ul>
+<ol start="2">
+<li><strong>What would happen if it did?</strong></li>
+</ol>
+<ul>
+<li>Orders: I've placed an order on behalf of another... to an abandoned warehouse in New Jersey. Oops.</li>
 <li>Then I bragged about it on 4Chan.</li>
-<li>
-<p>Then I told the New York Times about it.</p>
-</li>
-<li>
-<p><strong>Who might intend to do this?</strong></p>
-</li>
-<li>
-<p>Intentional attacks by hackers.</p>
-</li>
+<li>Then I told the New York Times about it.</li>
+</ul>
+<ol start="3">
+<li><strong>Who might intend to do this?</strong></li>
+</ol>
+<ul>
+<li>Intentional attacks by hackers.</li>
 <li>An employee "testing" how things work.</li>
 <li>An API coded incorrectly doing things the author did not intend.</li>
-</ol>
+</ul>
 <h2 id="format">Format<a class="headerlink" href="#format" title="Permanent link">&para;</a></h2>
 <p><em>NOTE: All dates should be logged in <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a> format <strong>WITH</strong> UTC offset to ensure maximum portability</em></p>
 <div class="highlight"><pre><span></span><code>{

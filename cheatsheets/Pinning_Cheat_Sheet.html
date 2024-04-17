@@ -2647,11 +2647,11 @@
 <li>
 <p>If you chose the public key, you have two additional choices:</p>
 </li>
-<li>
-<p>Pin the <code>subjectPublicKeyInfo</code>.</p>
-</li>
-<li>Pin one of the concrete types such as <code>RSAPublicKey</code> or <code>DSAPublicKey</code>.</li>
 </ol>
+<ul>
+<li>Pin the <code>subjectPublicKeyInfo</code>.</li>
+<li>Pin one of the concrete types such as <code>RSAPublicKey</code> or <code>DSAPublicKey</code>.</li>
+</ul>
 <p><strong>subjectPublicKeyInfo</strong>:</p>
 <p><img alt="RandomOrgDERDump" src="../assets/Pinning_Cheat_Sheet_RandomOrgDERDump.png" /></p>
 <p>The three choices are explained below in more detail. I would encourage you to pin the <code>subjectPublicKeyInfo</code> because it has the public parameters (such as <code>{e,n}</code> for an RSA public key) <strong>and</strong> contextual information such as an algorithm and OID. The context will help you keep your bearings at times, and the figure to the right shows the additional information available.</p>

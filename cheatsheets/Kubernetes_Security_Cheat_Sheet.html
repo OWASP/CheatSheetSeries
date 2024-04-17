@@ -3924,25 +3924,25 @@ kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> <
 <li>Observability</li>
 </ol>
 <p>It generates tracing and telemetry metrics, which make it easy to understand your system and quickly root cause any problems.</p>
-<ol>
+<ol start="2">
 <li>Specialized security features</li>
 </ol>
 <p>It provides security features which quickly identify any compromising traffic that enters your cluster and can secure the services inside your network if they are properly implemented. It can also help you manage security through mTLS, ingress and egress control, and more.</p>
-<ol>
+<ol start="3">
 <li>Ability to secure microservices with mTLS</li>
 </ol>
 <p>Since securing microservices is hard, there are many tools that address microservices security. However, the service mesh is the most elegant solution for addressing encryption of on-the-wire traffic within the network.</p>
 <p>It provides defense with mutual TLS (mTLS) encryption of the traffic between your services, and the mesh can automatically encrypt and decrypt requests and responses, which removes that burden from application developers. The mesh can also improve performance by prioritizing the reuse of existing, persistent connections, which reduces the need for the computationally expensive creation of new ones. With service mesh, you can secure traffic over the wire and also make strong identity-based authentication and authorizations for each microservice.</p>
 <p>We see that a service mesh has a lot of value of enterprise companies, because a mesh allows you to see whether mTLS is enabled and working between each of your services. Also, you can get immediate alerts if the security status changes.</p>
-<ol>
+<ol start="4">
 <li>Ingress &amp; egress control</li>
 </ol>
 <p>It allows you to monitor and address compromising traffic as it passes through the mesh. For example, if Istio integrates with Kubernetes as an ingress controller, it can take care of load balancing for ingress. This allows defenders to add a level of security at the perimeter with ingress rules, while egress control allows you to see and manage external services and control how your services interact with traffic.</p>
-<ol>
+<ol start="5">
 <li>Operational Control</li>
 </ol>
 <p>It can help security and platform teams set the right macro controls to enforce access controls, while allowing developers to make customizations they need to move quickly within these guardrails.</p>
-<ol>
+<ol start="6">
 <li>Ability to manage RBAC</li>
 </ol>
 <p>A service mesh can help defenders implement a strong Role Based Access Control (RBAC) system, which is arguably one of the most critical requirements in large engineering organizations. Even a secure system can be easily circumvented by over-privileged users or employees, and an RBAC system can:</p>
