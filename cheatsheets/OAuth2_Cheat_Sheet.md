@@ -62,9 +62,9 @@ The implicit grant is a simplified authorization code flow optimized for clients
 
 References:
 
-[RFC 6750](https://www.rfc-editor.org/info/rfc6750)
-[RFC 6749](https://www.rfc-editor.org/info/rfc6749)
-[OAuth 2.0 Best Practices](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics#name-best-practices)
-[Mix-up attacks](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics-18#mix_up)
-[RFC9207](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics-18#section-2.1-4)
-[Other Countermeasures for Mix-up attacks](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics-18#section-2.1-6)
+- [RFC 6750](https://www.rfc-editor.org/info/rfc6750)
+- [RFC 6749](https://www.rfc-editor.org/info/rfc6749)
+- [OAuth 2.0 Best Practices](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics#name-best-practices)
+- [Mix-up attacks](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics-18#mix_up)
+- [RFC9207](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics-18#section-2.1-4)
+- [Other Countermeasures for Mix-up attacks](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics-18#section-2.1-6)
