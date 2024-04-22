@@ -292,8 +292,10 @@ Usually, a minor percentage of traffic does fall under above categories ([1-2%](
 
 #### Using Cookies with Host Prefixes to Identify Origins
 
-While the `SameSite` attribute guards against malicious actors *reading* cookies,
-they may still try to inject or overwrite otherwise secured cookies.
+While the `SameSite` and `Secure` attributes mentioned earlier restrict the sending of already set cookies
+and `HttpOnly` restricts the reading of a set cookie,
+an attacker may still try to inject or overwrite otherwise secured cookies
+(cf. [session fixation attacks](http://www.acrossecurity.com/papers/session_fixation.pdf)).
 Using `Cookie Prefixes` for cookies with CSRF tokens extends security protections against this kind of attacks as well.
 If cookies have `__Host-` prefixes e.g. `Set-Cookie: __Host-token=RANDOM; path=/; Secure` then each cookie:
 
