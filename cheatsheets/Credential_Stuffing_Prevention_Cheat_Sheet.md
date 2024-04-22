@@ -12,16 +12,21 @@ This cheatsheet covers defences against two common types of authentication-relat
 
 ## Multi-Factor Authentication
 
-Multi-factor authentication (MFA) is by far the best defense against the majority of password-related attacks, including credential stuffing and password spraying, with analysis by Microsoft suggesting that it would have stopped [99.9% of account compromises](https://techcommunity.microsoft.com/t5/Azure-Active-Directory-Identity/Your-Pa-word-doesn-t-matter/ba-p/731984). As such, it should be implemented wherever possible; however, depending on the audience of the application, it may not be practical or feasible to enforce the use of MFA.
+[Multi-factor authentication (MFA)](Multifactor_Authentication_Cheat_Sheet.md) is by far the best defense against the majority of password-related attacks, including credential stuffing and password spraying, with analysis by Microsoft suggesting that it would have stopped [99.9% of account compromises](https://techcommunity.microsoft.com/t5/Azure-Active-Directory-Identity/Your-Pa-word-doesn-t-matter/ba-p/731984). As such, it should be implemented wherever possible. Historically, depending on the audience of the application, it may not have been practical or feasible to enforce the use of MFA, however with modern browsers and mobile devices now supporting FIDO2 Passkeys and other forms of MFA, it is attainable for most use cases.
 
-In order to balance security and usability, multi-factor authentication can be combined with other techniques to require for 2nd factor only in specific circumstances where there is reason to suspect that the login attempt may not be legitimate, such as a login from:
+In order to balance security and usability, multi-factor authentication can be combined with other techniques to require the 2nd factor only in specific circumstances where there is reason to suspect that the login attempt may not be legitimate, such as a login from:
 
 - A new browser/device or IP address.
 - An unusual country or location.
 - Specific countries that are considered untrusted or typically do not contain users of a service.
 - An IP address that appears on known denylists or is associated with anonymization services, such as proxy or VPN services.
 - An IP address that has tried to login to multiple accounts.
-- A login attempt that appears to be scripted rather than manual.
+- A login attempt that appears to be scripted or from a bot rather than a human (i.e. large login volume sourced from a single IP or subnet).
+
+Or an organization may choose to require MFA in the form of a "step-up" authentication for the above scenarios during a session combined with a request for a high risk activity such as:
+
+- Large currency transactions
+- Privileged or Administrative configuration changes
 
 Additionally, for enterprise applications, known trusted IP ranges could be added to an allowlist so that MFA is not required when users connect from these ranges.
 
@@ -51,13 +56,13 @@ It must be emphasised that this **does not** constitute multi-factor authenticat
 
 ### CAPTCHA
 
-Requiring a user to solve a CAPTCHA for each login attempt can help to prevent automated login attempts, and may slow down credential stuffing or password spraying attacks.  However, CAPTCHAs are not perfect, and in many cases tools or services exist that can be used to break them with a reasonably high success rate.  Monitoring CAPTCHA solve rates may help identify impact to good users, as well as automated CAPTCHA breaking technology, possibly indicated by abnormally high solve rates.
+Requiring a user to solve a "Completely Automated Public Turing test to tell Computers and Humans Apart" (CAPTCHA) or similar puzzle for each login attempt can help to identify automated/bot attacks and help prevent automated login attempts, and may slow down credential stuffing or password spraying attacks.  However, CAPTCHAs are not perfect, and in many cases tools or services exist that can be used to break them with a reasonably high success rate.  Monitoring CAPTCHA solve rates may help identify impact to good users, as well as automated CAPTCHA breaking technology, possibly indicated by abnormally high solve rates.
 
-To improve usability, it may be desirable to only require the user solve a CAPTCHA when the login request is considered suspicious, using the same criteria discussed in the MFA section.
+To improve usability, it may be desirable to only require the user solve a CAPTCHA when the login request is considered suspicious or high risk, using the same criteria discussed in the MFA section.
 
 ### IP Mitigation and Intelligence
 
-Blocking IP addresses may be sufficent to stop less sophisticated attacks, but should not be used as the primary defense.  It is more effective to have a graduated response to abuse that leverages multiple defensive measures depending on different factors of the attack.
+Blocking IP addresses may be sufficent to stop less sophisticated attacks, but should not be used as the primary defense due to the ease in circumvention.  It is more effective to have a graduated response to abuse that leverages multiple defensive measures depending on different factors of the attack.
 
 Any process or decision to mitigate (including blocking and CAPTCHA) credential stuffing traffic from an IP address should consider a multitude of abuse scenarios, and not rely on a single predictable volume limit.  Short (i.e. burst) and long time periods should be considered, as well as high request volume and instances where one IP address, likely in concert with _many_ other IP addresses, generates low but consistent volumes of traffic.  Additionally, mitigation decisions should consider factors such as IP address classification (ex: residential vs hosting) and geolocation.  These factors may be leveraged to raise or lower mitigation thresholds in order to reduce potential impact on legitimate users or more aggresively mitigate abuse originating from abnormal sources.  Mitigations, especially blocking an IP address, should be temporary and processes should be in place to remove an IP address from a mitigated state as abuse declines or stops.
 
@@ -65,14 +70,14 @@ Many credential stuffing toolkits, such as [Sentry MBA](https://federalnewsnetwo
 
 There are both public and commercial sources of IP address intelligence and classification that may be leveraged as data sources for this purpose.  Additionally, some hosting providers publish their own IP address space, such as [AWS](https://docs.aws.amazon.com/vpc/latest/userguide/aws-ip-ranges.html).
 
-Separate from blocking network connections, consider storing an account's IP address authentication history.  In case a recent IP address is added to a mitigation list, it may be appropriate to lock the account and notify the user.
+Separate from blocking network connections, consider storing an account's IP address authentication history.  In case a recent IP address is added to a block or mitigation list, it may be appropriate to lock the account and notify the user.
 
 ### Device Fingerprinting
 
 Aside from the IP address, there are a number of different factors that can be used to attempt to fingerprint a device. Some of these can be obtained passively by the server from the HTTP headers (particularly the "User-Agent" header), including:
 
-- Operating system
-- Browser
+- Operating system & version
+- Browser & version
 - Language
 
 Using JavaScript it is possible to access far more information, such as:
@@ -81,7 +86,7 @@ Using JavaScript it is possible to access far more information, such as:
 - Installed fonts
 - Installed browser plugins
 
-Using these various attributes, it is possible to create a fingerprint of the device. This fingerprint can then be matched against any browser attempting to login to the account, and if it doesn't match then the user can be prompted for additional authentication. Many users will have multiple devices or browsers that they use, so it is not practical to block attempts that do not match the existing fingerprints.
+Using these various attributes, it is possible to create a fingerprint of the device. This fingerprint can then be matched against any browser attempting to login to the account, and if it doesn't match then the user can be prompted for additional authentication. Many users will have multiple devices or browsers that they use, so it is not practical to simply block attempts that do not match the existing fingerprints, however it is common to define a process for users or customers to view their device history and manage their remembered devices.  Also these attributes can be used to detect anomalous activity such as a device appearing to be running an older version of OS or Browser.
 
 The [fingerprintjs2](https://github.com/Valve/fingerprintjs2) JavaScript library can be used to carry out client-side fingerprinting.
 

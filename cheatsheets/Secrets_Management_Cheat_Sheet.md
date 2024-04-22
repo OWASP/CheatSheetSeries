@@ -63,7 +63,7 @@ implementation complexity, you are first encouraged to develop a threat model in
 surface your implicit assumptions about both your application's deployment environment as well
 as understanding the capabilities of your adversaries.
 
-Often attempting to protect protect secrets in memory will be considered overkill
+Often attempting to protect secrets in memory will be considered overkill
 because as you evaluate a threat model, the potential threat
 actors that you consider either do not have the capabilities to carry out such attacks
 or the cost of defense far exceeds the likely impact of a compromise arising from

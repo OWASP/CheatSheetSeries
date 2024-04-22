@@ -104,7 +104,7 @@ hmac = hmac("SHA256", secret, message) // Generate the HMAC hash
 csrfToken = hmac + "." + message // Combine HMAC hash with message to generate the token. The plain message is required to later authenticate it against its HMAC hash
 
 // Store the CSRF Token in a cookie
-response.setCookie("csrf_token=" + csrfToken + "; Secure) // Set Cookie without HttpOnly flag
+response.setCookie("csrf_token=" + csrfToken + "; Secure") // Set Cookie without HttpOnly flag
 ```
 
 ### Naive Double-Submit Cookie Pattern (DISCOURAGED)
@@ -124,7 +124,7 @@ Should a browser bug allow custom HTTP headers, or not enforce preflight on non-
 
 ### Disallowing simple content types
 
-For a request to be deemed simple, it must have one of the following content types - `application/x-www-form-urlencoded`, `multipart/form-data` or `text/plain`.  Many modern web applications use JSON APIs so would naturally require CORS, however they may accept `text/plain` which would be vulnerable to CSRF. Therefore a simple migitation is for the server or API to disallow these simple content types.
+For a request to be deemed simple, it must have one of the following content types - `application/x-www-form-urlencoded`, `multipart/form-data` or `text/plain`.  Many modern web applications use JSON APIs so would naturally require CORS, however they may accept `text/plain` which would be vulnerable to CSRF. Therefore a simple mitigation is for the server or API to disallow these simple content types.
 
 ### Employing Custom Request Headers for AJAX/API
 

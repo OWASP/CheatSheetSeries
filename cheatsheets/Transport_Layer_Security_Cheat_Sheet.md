@@ -43,7 +43,7 @@ Where ciphers that use the ephemeral Diffie-Hellman key exchange are in use (sig
 The following command can be used to generate 2048 bit parameters:
 
 ```bash
-openssl dhparam 2048 -out dhparam2048.pem
+openssl dhparam -out dhparam2048.pem 2048
 ```
 
 The [Weak DH](https://weakdh.org/sysadmin.html) website provides guidance on how various web servers can be configured to use these generated parameters.
