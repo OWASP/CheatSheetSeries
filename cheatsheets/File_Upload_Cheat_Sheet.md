@@ -77,7 +77,7 @@ _The Content-Type for uploaded files is provided by the user, and as such cannot
 
 Other than defining the extension of the uploaded file, its MIME-type can be checked for a quick protection against simple file upload attacks.
 
-This can be done preferably in an allow list approach; otherwise, this can be done in a block list approach.
+This can be done preferably in an allowlist approach; otherwise, this can be done in a denylist approach.
 
 ### File Signature Validation
 

@@ -91,9 +91,9 @@ DO NOT: Overwrite the authorization class on a class-based (variable `permission
 
 When using ModelForms:
 
-DO: Use Meta.fields (allow list approach).
+DO: Use Meta.fields (allowlist approach).
 
-DO NOT: Use Meta.exclude (block list approach).
+DO NOT: Use Meta.exclude (denylist approach).
 
 DO NOT: Use `ModelForms.Meta.fields = "__all__"`
 

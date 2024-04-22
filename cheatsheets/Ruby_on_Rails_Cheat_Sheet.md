@@ -273,7 +273,7 @@ Example:
 
 `http://www.example.com/redirect?url=http://badhacker.com`
 
-The most basic, but restrictive protection is to use the `:only_path` option. Setting this to true will essentially strip out any host information. However, the `:only_path` option must be part of the first argument. If the first argument is not a hash table, then there is no way to pass in this option. In the absence of a custom helper or allow list, this is one approach that can work:
+The most basic, but restrictive protection is to use the `:only_path` option. Setting this to true will essentially strip out any host information. However, the `:only_path` option must be part of the first argument. If the first argument is not a hash table, then there is no way to pass in this option. In the absence of a custom helper or allowlist, this is one approach that can work:
 
 ``` ruby
 begin
@@ -297,7 +297,7 @@ host = URI.parse("#{params[:url]}").host
 validation_routine(host) if host
 def validation_routine(host)
   # Validation routine where we use  \A and \z as anchors *not* ^ and $
-  # you could also check the host value against an allow list
+  # you could also check the host value against an allowlist
 end
 ```
 
@@ -357,7 +357,7 @@ When standard HTTP constructs are used:
 
 *The request is sent and the browser, upon receiving a response, inspects the response headers in order to determine if the response can and should be processed.*
 
-Allow list in Rails:
+Allowlist in Rails:
 
 **Gemfile:**
 

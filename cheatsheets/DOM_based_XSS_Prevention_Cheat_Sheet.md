@@ -516,11 +516,11 @@ There are a number of open source encoding libraries out there:
 4. [Jtidy](http://jtidy.sourceforge.net/)
 5. Your company's custom implementation.
 
-Some work on a block list while others ignore important characters like "&lt;" and "&gt;".
+Some work on a denylist while others ignore important characters like "&lt;" and "&gt;".
 
 Java Encoder is an active project providing supports for HTML, CSS and JavaScript encoding.
 
-ESAPI is one of the few which works on an allow list and encodes all non-alphanumeric characters. It is important to use an encoding library that understands which characters can be used to exploit vulnerabilities in their respective contexts. Misconceptions abound related to the proper encoding that is required.
+ESAPI is one of the few which works on an allowlist and encodes all non-alphanumeric characters. It is important to use an encoding library that understands which characters can be used to exploit vulnerabilities in their respective contexts. Misconceptions abound related to the proper encoding that is required.
 
 ### Encoding Misconceptions
 

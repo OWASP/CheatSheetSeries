@@ -227,7 +227,7 @@ Using the information from the full disclosure post or the pentester's exploitat
 
 ## Tools
 
-This section lists several tools that can used to analyse the dependencies used by a project in order to detect the vulnerabilities.
+This section lists several tools that can used to analyze the dependencies used by a project in order to detect the vulnerabilities.
 
 It's important to ensure, during the selection process of a vulnerable dependency detection tool, that this one:
 

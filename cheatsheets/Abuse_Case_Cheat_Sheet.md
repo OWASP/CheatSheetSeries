@@ -64,7 +64,7 @@ Abuse cases can also be an effective way to drive security requirements
 that lead to proper protection of these critical business use cases.
 ```
 
-[Synopsis source](https://www.synopsis.com/blogs/software-security/abuse-cases-can-drive-security-requirements)
+[Synopsis source](https://www.synopsys.com/blogs/software-security/abuse-cases-can-drive-security-requirements.html)
 
 #### How to define the list of Abuse Cases
 

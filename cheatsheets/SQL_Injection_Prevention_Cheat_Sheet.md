@@ -42,10 +42,9 @@ try {
 
 When developers are taught how to write database queries, they should be told to use prepared statements with variable binding (aka parameterized queries). Prepared statements are simple to write and easier to understand than dynamic queries and parameterized queries force the developer to define all SQL code first and pass in each parameter to the query later.
 
-If database queries use this coding style, the database will always distinguish between code and data, regardless of what user input is supplied.
-Also, prepared statements ensure that an attacker is not able to change the intent of a query, even if SQL commands are inserted by an attacker.  
+If database queries use this coding style, the database will always distinguish between code and data, regardless of what user input is supplied. Also, prepared statements ensure that an attacker is not able to change the intent of a query, even if SQL commands are inserted by an attacker.
 
-#### Safe Prepared Statement in Java
+#### Safe Java Prepared Statement Example
 
 In the safe Java example below, if an attacker were to enter the userID of `tom' or '1'='1`, the parameterized query would look for a username which literally matched the entire string `tom' or '1'='1`. Thus, the database would be protected against injections of malicious SQL code.
 
@@ -59,20 +58,9 @@ String query = "SELECT account_balance FROM user_data WHERE user_name =
 PreparedStatement pstmt = connection.prepareStatement( query );
 pstmt.setString( 1, custname);
 ResultSet results = pstmt.executeQuery( );
-
-#### Language-Specific Recommendations for Prepared Statements:
-
---Java EE: `PreparedStatement()` with bind variables
---.NET: Parameterized queries like `SqlCommand()` or `OleDbCommand()` with bind variables
---PHP: PDO with strongly typed parameterized queries (using bindParam())
---Hibernate: `createQuery()` with bind variables (called named parameters in Hibernate)
---SQLite: `sqlite3_prepare()` to create a [statement object](http://www.sqlite.org/c3ref/stmt.html)
-
-Occasionally, prepared statements can harm performance. If this occurs, you should a) strongly validate all data or b) instead of using a prepared statement, escape all user supplied input using an escaping routine specific to your database vendor as described below.
-
 ```
 
-#### Safe C\# .NET Prepared Statement
+#### Safe C\# .NET Prepared Statement Example
 
 In .NET, the creation and execution of the query doesn't change. Just pass the parameters to the query using the `Parameters.Add()` call as shown below.
 
@@ -90,12 +78,12 @@ try {
 
 While we have shown examples in Java and .NET, practically all other languages (including Cold Fusion and Classic ASP) support parameterized query interfaces. Even SQL abstraction layers, like the [Hibernate Query Language](http://hibernate.org/) (HQL) with the same type of injection problems (called [HQL Injection](http://cwe.mitre.org/data/definitions/564.html))  supports parameterized queries as well:
 
-#### Hibernate Query Language (HQL) Prepared Statement (Named Parameters) Examples
+#### Hibernate Query Language (HQL) Prepared Statement (Named Parameters) Example
 
 ```java
-//First is an unsafe HQL Statement
+// This is an unsafe HQL statement
 Query unsafeHQLQuery = session.createQuery("from Inventory where productID='"+userSuppliedParameter+"'");
-//Here is a safe version of the same query using named parameters
+// Here is a safe version of the same query using named parameters
 Query safeHQLQuery = session.createQuery("from Inventory where productID=:productid");
 safeHQLQuery.setParameter("productid", userSuppliedParameter);
 ```
@@ -112,17 +100,17 @@ Though stored procedures are not always safe from SQL injection, developers can 
 
 #### Safe Approach to Stored Procedures
 
-If stored procedures are needed, the safest approach to using them requires the developer to build SQL statements with parameters that are automatically parameterized, unless the developer does something largely out of the norm. The difference between prepared statements and stored procedures is that the SQL code for a stored procedure is defined and stored in the database itself, and then called from the application. Since prepared statements and safe stored procedures are equally effective in preventing SQL injection so your organization should choose which approach makes the most sense for you.
+If stored procedures are needed, the safest approach to using them requires the developer to build SQL statements with parameters that are automatically parameterized, unless the developer does something largely out of the norm. The difference between prepared statements and stored procedures is that the SQL code for a stored procedure is defined and stored in the database itself, and then called from the application. Since prepared statements and safe stored procedures are equally effective in preventing SQL injection, your organization should choose the approach that makes the most sense for you.
 
 #### When Stored Procedures Can Increase Risk
 
-Occasionally, stored procedures can increase risk when a system is attacked. For example, on MS SQL Server, you have three main default roles: `db_datareader`, `db_datawriter` and `db_owner`. Before stored procedures came into use, DBA's would give db_datareader ordb_datawriter rights to the webservice's user, depending on the requirements.
+Occasionally, stored procedures can increase risk when a system is attacked. For example, on MS SQL Server, you have three main default roles: `db_datareader`, `db_datawriter` and `db_owner`. Before stored procedures came into use, DBAs would give `db_datareader` or `db_datawriter` rights to the webservice's user, depending on the requirements.
 
-However, stored procedures require execute rights, a role that is not available by default. Some setups where the user management has been centralized, but is limited to those 3 roles, cause all web apps to run under db_owner rights so stored procedures can work. Naturally, that means that if a server is breached the attacker has full rights to the database, where previously they might only have had read-access.
+However, stored procedures require execute rights, a role that is not available by default. In some setups where user management has been centralized, but is limited to those 3 roles, web apps would have to run as `db_owner` so stored procedures could work. Naturally, that means that if a server is breached the attacker has full rights to the database, where previously they might only have had read-access.
 
-**Safe Java Stored Procedure Example**:
+#### Safe Java Stored Procedure Example
 
-The following code example uses Java's implementation of the stored procedure interface (`CallableStatement`) to execute the same database query. The `sp_getAccountBalance` stored procedure has top be predefined in the database and use the same functionality as the query below.
+The following code example uses Java's implementation of the stored procedure interface (`CallableStatement`) to execute the same database query. The `sp_getAccountBalance` stored procedure has to be predefined in the database and use the same functionality as the query above.
 
 ```java
 // This should REALLY be validated
@@ -137,7 +125,7 @@ try {
 }
 ```
 
-**Safe VB .NET Stored Procedure Example**:
+#### Safe VB .NET Stored Procedure Example
 
 The following code example uses a `SqlCommand`, .NET's implementation of the stored procedure interface, to execute the same database query. The `sp_getAccountBalance` stored procedure must be predefined in the database and use the same functionality as the query defined above.
 
@@ -177,7 +165,7 @@ switch(PARAM):
 
 #### Safest Use Of Dynamic SQL Generation (DISCOURAGED)
 
-When we say "implemented safely," the stored procedure does not include any unsafe dynamic SQL generation. Developers do not usually generate dynamic SQL inside stored procedures. However, it can be done, but should be avoided.
+When we say a stored procedure is "implemented safely," that means it does not include any unsafe dynamic SQL generation. Developers do not usually generate dynamic SQL inside stored procedures. However, it can be done, but should be avoided.
 
 If it can't be avoided, the stored procedure must use input validation or proper escaping as described in this article to make sure that all user supplied input to the stored procedure can't be used to inject SQL code into the dynamically generated query. Auditors should always look for uses of `sp_execute`, `execute` or `exec` within SQL Server stored procedures. Similar audit guidelines are necessary for similar functions for other vendors.
 
@@ -195,13 +183,13 @@ public String someMethod(boolean sortOrder) {
 
 Any time user input can be converted to a non-String, like a date, numeric, boolean, enumerated type, etc. before it is appended to a query, or used to select a value to append to the query, this ensures it is safe to do so.
 
-Input validation is also recommended as a secondary defense in ALL cases, even when using bind variables as is discussed later in this article. More techniques on how to implement strong input validation is described in the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md).
+Input validation is also recommended as a secondary defense in ALL cases, even when using bind variables as discussed earlier in this article. More techniques on how to implement strong input validation is described in the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md).
 
 ### Defense Option 4: STRONGLY DISCOURAGED: Escaping All User-Supplied Input
 
 In this approach, the developer will escape all user input before putting it in a query. It is very database specific in its implementation.  This methodology is frail compared to other defenses and we CANNOT guarantee that this option will prevent all SQL injections in all situations.
 
-If an application is built from scratch or it requires low risk tolerance, those cases should be built or re-written using parameterized queries, stored procedures, or some kind of Object Relational Mapper (ORM) that builds your queries for you.
+If an application is built from scratch or requires low risk tolerance, it should be built or re-written using parameterized queries, stored procedures, or some kind of Object Relational Mapper (ORM) that builds your queries for you.
 
 ## Additional Defenses
 

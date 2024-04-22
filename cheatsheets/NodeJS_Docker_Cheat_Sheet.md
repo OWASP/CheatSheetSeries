@@ -91,7 +91,7 @@ When you build your Node.js Docker image for production, you want to ensure that
 
 This brings us to add the following Dockerfile directive:
 
-**`ENV NODE\_ENV production`**
+**`ENV NODE_ENV production`**
 
 At first glance, this looks redundant, since we already specified only production dependencies in the `npm install` phase—so why is this necessary?
 
@@ -173,7 +173,7 @@ Make sure that in your Node.js application you set an event handler for the `SIG
 
 Then run the container, and once it’s up specifically send it the `SIGHUP` signal using the `docker` CLI and the special `--signal` command-line flag:
 
-**`$ docker kill --signal=SIGHUP elastic\_archimedes`**
+**`$ docker kill --signal=SIGHUP elastic_archimedes`**
 
 Nothing happened, right? That’s because the npm client doesn’t forward any signals to the node process that it spawned.
 
@@ -184,7 +184,7 @@ The other caveat has to do with the different ways in which way you can specify 
 
 Based on that knowledge, we want to improve our Dockerfile process execution directive as follows:
 
-**`CMD \["node", "server.js"\]`**
+**`CMD ["node", "server.js"]`**
 
 We are now invoking the node process directly, ensuring that it receives all of the signals sent to it, without it being wrapped in a shell interpreter.
 
@@ -322,7 +322,7 @@ Luckily, Docker supports a way to pass arguments into the build process:
 
 And then we build it as follows:
 
-**`$ docker build . -t nodejs-tutorial --build-arg NPM\_TOKEN=1234`**
+**`$ docker build . -t nodejs-tutorial --build-arg NPM_TOKEN=1234`**
 
 I know you were thinking that we’re all done at this point but, sorry to disappoint 🙂
 

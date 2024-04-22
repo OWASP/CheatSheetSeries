@@ -173,7 +173,7 @@ The following should usually not be recorded directly in the logs, but instead s
 - Sensitive personal data and some forms of personally identifiable information (PII) e.g. health, government identifiers, vulnerable people
 - Authentication passwords
 - Database connection strings
-- Encryption keys and other master secrets
+- Encryption keys and other primary secrets
 - Bank account or payment card holder data
 - Data of a higher security classification than the logging system is allowed to store
 - Commercially-sensitive information

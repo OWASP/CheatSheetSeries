@@ -381,7 +381,7 @@ You should also consider similar tools:
 
 CORS is a security feature implemented in web browsers to control how web applications in one domain can request and interact with resources hosted on another domains.
 
-In Symfony you can manage CORS policies using `nemilo/cors-bundle`. This bundle lets you control CORS rules precisely without changing your server settings.
+In Symfony you can manage CORS policies using `nelmio/cors-bundle`. This bundle lets you control CORS rules precisely without changing your server settings.
 
 To install it with composer, run:
 

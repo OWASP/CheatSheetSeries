@@ -125,4 +125,4 @@ Rate limiting is the process of controlling traffic rate from and to a server or
 
 ## Related Articles
 
-- [CERT-EU Whitepaper](http://cert.europa.eu/static/WhitePapers/CERT-EU-SWP_14_09_DDoS_final.pdf)
+- [CERT-EU Publication](http://cert.europa.eu/static/WhitePapers/CERT-EU-SWP_14_09_DDoS_final.pdf)

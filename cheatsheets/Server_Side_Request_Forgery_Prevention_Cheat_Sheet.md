@@ -27,8 +27,8 @@ SSRF is an attack vector that abuses an application to interact with the interna
 
 Depending on the application's functionality and requirements, there are two basic cases in which SSRF can happen:
 
-- Application can send request only to **identified and trusted applications**: Case when [allow listing](https://en.wikipedia.org/wiki/Whitelisting) approach is available.
-- Application can send requests to **ANY external IP address or domain name**: Case when [allow listing](https://en.wikipedia.org/wiki/Whitelisting) approach is unavailable.
+- Application can send request only to **identified and trusted applications**: Case when [allowlist](https://en.wikipedia.org/wiki/Whitelisting) approach is available.
+- Application can send requests to **ANY external IP address or domain name**: Case when [allowlist](https://en.wikipedia.org/wiki/Whitelisting) approach is unavailable.
 
 Because these two cases are very different, this cheat sheet will describe defences against them separately.
 
@@ -42,7 +42,7 @@ Sometimes, an application needs to perform a request to another application, oft
  > Basically, the user cannot reach the HR system directly, but, if the web application in charge of receiving user information is vulnerable to SSRF, the user can leverage it to access the HR system.
  > The user leverages the web application as a proxy to the HR system.
 
-The allow list approach is a viable option since the internal application called by the *VulnerableApplication* is clearly identified in the technical/business flow. It can be stated that the required calls will only be targeted between those identified and trusted applications.
+The allowlist approach is a viable option since the internal application called by the *VulnerableApplication* is clearly identified in the technical/business flow. It can be stated that the required calls will only be targeted between those identified and trusted applications.
 
 #### Available protections
 
@@ -54,7 +54,7 @@ The first level of protection that comes to mind is [Input validation](Input_Val
 
 Based on that point, the following question comes to mind: *How to perform this input validation?*
 
-As [Orange Tsai](https://twitter.com/orange_8361) shows in his [talk](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Orange_Tsai_Talk.pdf), depending on the programming language used, parsers can be abused. One possible countermeasure is to apply the [allow list approach](Input_Validation_Cheat_Sheet.md#allow-list-vs-block-list) when input validation is used because, most of the time, the format of the information expected from the user is globally known.
+As [Orange Tsai](https://twitter.com/orange_8361) shows in his [talk](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_Orange_Tsai_Talk.pdf), depending on the programming language used, parsers can be abused. One possible countermeasure is to apply the [allowlist approach](Input_Validation_Cheat_Sheet.md#allow-list-vs-block-list) when input validation is used because, most of the time, the format of the information expected from the user is globally known.
 
 The request sent to the internal application will be based on the following information:
 
@@ -99,15 +99,15 @@ The first layer of validation can be applied using libraries that ensure the sec
     - **It is NOT exposed** to bypass using Hex, Octal, Dword, URL and Mixed encoding.
 - **.NET**: Method [IPAddress.TryParse](https://docs.microsoft.com/en-us/dotnet/api/system.net.ipaddress.tryparse?view=netframework-4.8) from the SDK.
     - **It is exposed** to bypass using Hex, Octal, Dword and Mixed encoding but **NOT** the URL encoding.
-    - As allow listing is used here, any bypass tentative will be blocked during the comparison against the allowed list of IP addresses.
+    - As allowlisting is used here, any bypass tentative will be blocked during the comparison against the allowed list of IP addresses.
 - **JavaScript**: Library [ip-address](https://www.npmjs.com/package/ip-address).
     - **It is NOT exposed** to bypass using Hex, Octal, Dword, URL and Mixed encoding.
 - **Ruby**: Class [IPAddr](https://ruby-doc.org/stdlib-2.0.0/libdoc/ipaddr/rdoc/IPAddr.html) from the SDK.
     - **It is NOT exposed** to bypass using Hex, Octal, Dword, URL and Mixed encoding.
 
-> **Use the output value of the method/library as the IP address to compare against the allow list.**
+> **Use the output value of the method/library as the IP address to compare against the allowlist.**
 
-After ensuring the validity of the incoming IP address, the second layer of validation is applied. An allow list is created after determining all the IP addresses (v4 and v6 to avoid bypasses) of the identified and trusted applications. The valid IP is cross-checked with that list to ensure its communication with the internal application (string strict comparison with case sensitive).
+After ensuring the validity of the incoming IP address, the second layer of validation is applied. An allowlist is created after determining all the IP addresses (v4 and v6 to avoid bypasses) of the identified and trusted applications. The valid IP is cross-checked with that list to ensure its communication with the internal application (string strict comparison with case sensitive).
 
 ###### Domain name
 
@@ -120,7 +120,7 @@ In the attempt of validate domain names, it is apparent to do a DNS resolution t
 In the context of SSRF, there are two validations to perform:
 
 1. Ensure that the data provided is a valid domain name.
-2. Ensure that the domain name provided belongs to one of the domain names of the identified and trusted applications (the allow listing comes to action here).
+2. Ensure that the domain name provided belongs to one of the domain names of the identified and trusted applications (the allowlisting comes to action here).
 
 Similar to the IP address validation, the first layer of validation can be applied using libraries that ensure the security of the domain name format, based on the technology used (library option is proposed here in order to delegate the managing of the domain name format and leverage battle tested validation function):
 
@@ -160,13 +160,13 @@ $ ruby test.rb
 
 After ensuring the validity of the incoming domain name, the second layer of validation is applied:
 
-1. Build an allow list with all the domain names of every identified and trusted applications.
-2. Verify that the domain name received is part of this allow list (string strict comparison with case sensitive).
+1. Build an allowlist with all the domain names of every identified and trusted applications.
+2. Verify that the domain name received is part of this allowlist (string strict comparison with case sensitive).
 
 Unfortunately here, the application is still vulnerable to the `DNS pinning` bypass mentioned in this [document](../assets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet_SSRF_Bible.pdf). Indeed, a DNS resolution will be made when the business code will be executed. To address that issue, the following action must be taken in addition of the validation on the domain name:
 
 1. Ensure that the domains that are part of your organization are resolved by your internal DNS server first in the chains of DNS resolvers.
-2. Monitor the domains allow list in order to detect when any of them resolves to a/an:
+2. Monitor the domains allowlist in order to detect when any of them resolves to a/an:
    - Local IP address (V4 + V6).
    - Internal IP of your organization (expected to be in private IP ranges) for the domain that are not part of your organization.
 
@@ -177,7 +177,7 @@ The following Python3 script can be used, as a starting point, for the monitorin
 import ipaddress
 import dns.resolver
 
-# Configure the allow list to check
+# Configure the allowlist to check
 DOMAINS_ALLOWLIST = ["owasp.org", "labslinux"]
 
 # Configure the DNS resolver to use for all DNS queries
@@ -207,7 +207,7 @@ def verify_dns_records(domain, records, type):
 
 def check():
     """
-    Perform the check of the allow list of domains.
+    Perform the check of the allowlist of domains.
     Return a boolean indicating if any error has been detected.
     """
     error_detected = False
@@ -270,7 +270,7 @@ Thus, the call from the *Vulnerable Application*:
 
 #### Challenges in blocking URLs at application layer
 
-Based on the business requirements of the above mentioned applications, the allow list approach is not a valid solution. Despite knowing that the block-list approach is not an impenetrable wall, it is the best solution in this scenario. It is informing the application what it should **not** do.
+Based on the business requirements of the above mentioned applications, the allowlist approach is not a valid solution. Despite knowing that the block-list approach is not an impenetrable wall, it is the best solution in this scenario. It is informing the application what it should **not** do.
 
 Here is why filtering URLs is hard at the Application layer:
 

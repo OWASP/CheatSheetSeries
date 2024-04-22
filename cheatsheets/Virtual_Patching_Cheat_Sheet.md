@@ -90,8 +90,8 @@ The Identification Phase occurs when an organization becomes aware of a vulnerab
 
 This occurs when an organization takes it upon themselves to assess their web security posture and conducts the following tasks:
 
-- **Dynamic Application Assessments** - Whitehat attackers conduct penetration tests or automated web assessment tools are run against the live web application to identify flaws.
-- **Source code reviews** - Whitehat attackers use manual/automated means to analyze the source code of the web application to identify flaws.
+- **Dynamic Application Assessments** - Ethical attackers conduct penetration tests or automated web assessment tools are run against the live web application to identify flaws.
+- **Source code reviews** - Ethical attackers use manual/automated means to analyze the source code of the web application to identify flaws.
 
 Due to the fact that custom coded web applications are unique, these proactive identification tasks are extremely important as you are not able to rely upon third-party vulnerability notifications.
 
@@ -128,7 +128,7 @@ Care should be taken to attempt to minimize either of these two rules. It may no
 
 #### Positive Security (Allow List) Virtual Patches (**Recommended Solution**)
 
-Positive security model (allow list) is a comprehensive security mechanism that provides an independent input validation envelope to an application. The model specifies the characteristics of valid input (character set, length, etc…) and denies anything that does not conform. By defining rules for every parameter in every page in the application the application is protected by an additional security envelop independent from its code.
+Positive security model (allowlist) is a comprehensive security mechanism that provides an independent input validation envelope to an application. The model specifies the characteristics of valid input (character set, length, etc…) and denies anything that does not conform. By defining rules for every parameter in every page in the application the application is protected by an additional security envelop independent from its code.
 
 ##### Example Allow List ModSecurity Virtual Patch
 
@@ -155,7 +155,7 @@ This virtual patch will inspect the `reqID` parameter value on the specified pag
 
 #### Negative Security (Block List) Virtual Patches
 
-A negative security model (block list) is based on a set of rules that detect specific known attacks rather than allow only valid traffic.
+A negative security model (denylist) is based on a set of rules that detect specific known attacks rather than allow only valid traffic.
 
 ##### Example Block List ModSecurity Virtual Patch
 

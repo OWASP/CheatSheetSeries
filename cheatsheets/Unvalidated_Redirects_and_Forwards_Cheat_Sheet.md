@@ -183,7 +183,7 @@ Safe use of redirects and forwards can be done in a number of ways:
     - Be careful that this doesn't introduce an enumeration vulnerability where a user could cycle through IDs to find all possible redirect targets
 - If user input can’t be avoided, ensure that the supplied **value** is valid, appropriate for the application, and is **authorized** for the user.
 - Sanitize input by creating a list of trusted URLs (lists of hosts or a regex).
-    - This should be based on an allow-list approach, rather than a block list.
+    - This should be based on an allow-list approach, rather than a denylist.
 - Force all redirects to first go through a page notifying users that they are going off of your site, with the destination clearly displayed, and have them click a link to confirm.
 
 ### Validating URLs
