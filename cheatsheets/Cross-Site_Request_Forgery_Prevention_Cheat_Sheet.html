@@ -3183,12 +3183,28 @@ Set-Cookie: JSESSIONID=xxxxx; SameSite=Lax
 </ul>
 <p>Usually, a minor percentage of traffic does fall under above categories (<a href="http://homakov.blogspot.com/2012/04/playing-with-referer-origin-disquscom.html">1-2%</a>) and no enterprise would want to lose this traffic. One of the popular technique used across the Internet to make this technique more usable is to accept the request if the Origin/referrer matches your configured list of domains "OR" a null value (Examples <a href="http://homakov.blogspot.com/2012/04/playing-with-referer-origin-disquscom.html">here</a>. The null value is to cover the edge cases mentioned above where these headers are not sent). Please note that, attackers can exploit this but people prefer to use this technique as a defense in depth measure because of the minor effort involved in deploying it.</p>
 <h4 id="using-cookies-with-host-prefixes-to-identify-origins">Using Cookies with Host Prefixes to Identify Origins<a class="headerlink" href="#using-cookies-with-host-prefixes-to-identify-origins" title="Permanent link">&para;</a></h4>
-<p>Another solution for this problem is using <code>Cookie Prefixes</code> for cookies with CSRF tokens. If cookies have <code>__Host-</code> prefixes e.g. <code>Set-Cookie: __Host-token=RANDOM; path=/; Secure</code> then each cookie:</p>
+<p>While the <code>SameSite</code> and <code>Secure</code> attributes mentioned earlier restrict the sending of already set cookies
+and <code>HttpOnly</code> restricts the reading of a set cookie,
+an attacker may still try to inject or overwrite otherwise secured cookies
+(cf. <a href="http://www.acrossecurity.com/papers/session_fixation.pdf">session fixation attacks</a>).
+Using <code>Cookie Prefixes</code> for cookies with CSRF tokens extends security protections against this kind of attacks as well.
+If cookies have <code>__Host-</code> prefixes e.g. <code>Set-Cookie: __Host-token=RANDOM; path=/; Secure</code> then each cookie:</p>
 <ul>
-<li>Cannot be (over)written from another subdomain.</li>
+<li>Cannot be (over)written from another subdomain and</li>
+<li>cannot have a <code>Domain</code> attribute.</li>
 <li>Must have the path of <code>/</code>.</li>
 <li>Must be marked as Secure (i.e, cannot be sent over unencrypted HTTP).</li>
 </ul>
+<p>In addition to the <code>__Host-</code> prefix, the weaker <code>__Secure-</code> prefix is also supported by browser vendors.
+It relaxes the restrictions on domain overwrites, i.e., they</p>
+<ul>
+<li>Can have <code>Domain</code> attributes and</li>
+<li>can be overwritten by subdomains.</li>
+<li>Can have a <code>Path</code> other than <code>/</code>.</li>
+</ul>
+<p>This relaxed variant can be used as an alternative to the "domain locked" <code>__Host-</code> prefix,
+if authenticated users would need to visit different (sub-)domains.
+In all other cases, using the <code>__Host-</code> prefix in addition to the <code>SameSite</code> attribute is recommended.</p>
 <p>As of July 2020 cookie prefixes <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Browser_compatibility">are supported by all major browsers</a>.</p>
 <p>See the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Directives">Mozilla Developer Network</a> and <a href="https://tools.ietf.org/html/draft-west-cookie-prefixes-05">IETF Draft</a> for further information about cookie prefixes.</p>
 <h3 id="user-interaction-based-csrf-defense">User Interaction-Based CSRF Defense<a class="headerlink" href="#user-interaction-based-csrf-defense" title="Permanent link">&para;</a></h3>
