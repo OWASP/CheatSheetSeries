@@ -824,11 +824,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#disallowing-non-simple-requests" class="md-nav__link">
-    Disallowing non-simple requests
+  <a href="#disallowing-simple-requests" class="md-nav__link">
+    Disallowing simple requests
   </a>
   
-    <nav class="md-nav" aria-label="Disallowing non-simple requests">
+    <nav class="md-nav" aria-label="Disallowing simple requests">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2723,11 +2723,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#disallowing-non-simple-requests" class="md-nav__link">
-    Disallowing non-simple requests
+  <a href="#disallowing-simple-requests" class="md-nav__link">
+    Disallowing simple requests
   </a>
   
-    <nav class="md-nav" aria-label="Disallowing non-simple requests">
+    <nav class="md-nav" aria-label="Disallowing simple requests">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -3065,7 +3065,7 @@ response.setCookie(&quot;csrf_token=&quot; + csrfToken + &quot;; Secure&quot;) /
 <p>The <em>Naive Double-Submit Cookie</em> method is a scalable and easy-to-implement technique which uses a cryptographically strong random value as a cookie and as a request parameter (even before user authentication). Then the server verifies if the cookie value and request value match. The site must require that every transaction request from the user includes this random value as a hidden form value or inside the request header. If the value matches at server side, the server accepts it as a legitimate request and if they don't, it rejects the request.</p>
 <p>Since an attacker is unable to access the cookie value during a cross-site request, they cannot include a matching value in the hidden form value or as a request parameter/header.</p>
 <p>Though the Naive Double-Submit Cookie method is a good initial step to counter CSRF, it still remains vulnerable to certain attacks. <a href="https://owasp.org/www-chapter-london/assets/slides/David_Johansson-Double_Defeat_of_Double-Submit_Cookie.pdf">This resource</a> provides more information on some vulnerabilities. Thus, we strongly recommend that you use the <em>Signed Double-Submit Cookie</em> pattern.</p>
-<h2 id="disallowing-non-simple-requests">Disallowing non-simple requests<a class="headerlink" href="#disallowing-non-simple-requests" title="Permanent link">&para;</a></h2>
+<h2 id="disallowing-simple-requests">Disallowing simple requests<a class="headerlink" href="#disallowing-simple-requests" title="Permanent link">&para;</a></h2>
 <p>When a <code>&lt;form&gt;</code> tag is used to submit data, it sends a <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#simple_requests">"simple" request</a> that browsers do not designate as "to be preflighted". These "simple" requests introduce risk of CSRF because browsers permit them to be sent to any origin. If your application uses <code>&lt;form&gt;</code> tags to submit data anywhere in your client, you will still need to protect them with alternate approaches described in this document such as tokens.</p>
 <blockquote>
 <p><strong>Caveat:</strong>
