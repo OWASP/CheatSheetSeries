@@ -115,7 +115,7 @@ Since an attacker is unable to access the cookie value during a cross-site reque
 
 Though the Naive Double-Submit Cookie method is a good initial step to counter CSRF, it still remains vulnerable to certain attacks. [This resource](https://owasp.org/www-chapter-london/assets/slides/David_Johansson-Double_Defeat_of_Double-Submit_Cookie.pdf) provides more information on some vulnerabilities. Thus, we strongly recommend that you use the _Signed Double-Submit Cookie_ pattern.
 
-## Disallowing non-simple requests
+## Disallowing simple requests
 
 When a `<form>` tag is used to submit data, it sends a ["simple" request](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#simple_requests) that browsers do not designate as "to be preflighted". These "simple" requests introduce risk of CSRF because browsers permit them to be sent to any origin. If your application uses `<form>` tags to submit data anywhere in your client, you will still need to protect them with alternate approaches described in this document such as tokens.
 
