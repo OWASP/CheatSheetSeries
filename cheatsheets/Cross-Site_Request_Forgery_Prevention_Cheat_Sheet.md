@@ -292,11 +292,28 @@ Usually, a minor percentage of traffic does fall under above categories ([1-2%](
 
 #### Using Cookies with Host Prefixes to Identify Origins
 
-Another solution for this problem is using `Cookie Prefixes` for cookies with CSRF tokens. If cookies have `__Host-` prefixes e.g. `Set-Cookie: __Host-token=RANDOM; path=/; Secure` then each cookie:
+While the `SameSite` and `Secure` attributes mentioned earlier restrict the sending of already set cookies
+and `HttpOnly` restricts the reading of a set cookie,
+an attacker may still try to inject or overwrite otherwise secured cookies
+(cf. [session fixation attacks](http://www.acrossecurity.com/papers/session_fixation.pdf)).
+Using `Cookie Prefixes` for cookies with CSRF tokens extends security protections against this kind of attacks as well.
+If cookies have `__Host-` prefixes e.g. `Set-Cookie: __Host-token=RANDOM; path=/; Secure` then each cookie:
 
-- Cannot be (over)written from another subdomain.
+- Cannot be (over)written from another subdomain and
+- cannot have a `Domain` attribute.
 - Must have the path of `/`.
 - Must be marked as Secure (i.e, cannot be sent over unencrypted HTTP).
+
+In addition to the `__Host-` prefix, the weaker `__Secure-` prefix is also supported by browser vendors.
+It relaxes the restrictions on domain overwrites, i.e., they
+
+- Can have `Domain` attributes and
+- can be overwritten by subdomains.
+- Can have a `Path` other than `/`.
+
+This relaxed variant can be used as an alternative to the "domain locked" `__Host-` prefix,
+if authenticated users would need to visit different (sub-)domains.
+In all other cases, using the `__Host-` prefix in addition to the `SameSite` attribute is recommended.
 
 As of July 2020 cookie prefixes [are supported by all major browsers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Browser_compatibility).
 
