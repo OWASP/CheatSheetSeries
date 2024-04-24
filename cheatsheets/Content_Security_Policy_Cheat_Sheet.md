@@ -181,7 +181,7 @@ You can also use this [hash generator](https://report-uri.com/home/hash). This i
 
 #### Note
 
-Using hashes can be a risk approach approach. If you change *anything* inside the script tag (even whitespace) by, e.g., formatting your code, the hash will be different, and the script won't render.
+Using hashes can be a risky approach. If you change *anything* inside the script tag (even whitespace) by, e.g., formatting your code, the hash will be different, and the script won't render.
 
 ### strict-dynamic
 
