@@ -3039,7 +3039,7 @@
 </blockquote>
 <p>You can also use this <a href="https://report-uri.com/home/hash">hash generator</a>. This is a great <a href="https://csp.withgoogle.com/docs/faq.html#static-content">example</a> of using hashes.</p>
 <h4 id="note">Note<a class="headerlink" href="#note" title="Permanent link">&para;</a></h4>
-<p>Using hashes can be a risk approach approach. If you change <em>anything</em> inside the script tag (even whitespace) by, e.g., formatting your code, the hash will be different, and the script won't render.</p>
+<p>Using hashes can be a risky approach. If you change <em>anything</em> inside the script tag (even whitespace) by, e.g., formatting your code, the hash will be different, and the script won't render.</p>
 <h3 id="strict-dynamic">strict-dynamic<a class="headerlink" href="#strict-dynamic" title="Permanent link">&para;</a></h3>
 <p>The <code>strict-dynamic</code> directive can be used as part of a Strict CSP in combination with either hashes or nonces.</p>
 <p>If a script block which has either the correct hash or nonce is creating additional DOM elements and executing JS inside of them, <code>strict-dynamic</code> tells the browser to trust those elements as well without having to explicitly add nonces or hashes for each one.</p>
@@ -3078,7 +3078,7 @@
 <li><code>plugin-types</code> limits the types of resources that can be loaded into the document (<em>e.g.</em> application/pdf). 3 rules apply to the affected elements, <code>&lt;embed&gt;</code> and <code>&lt;object&gt;</code>:<ul>
 <li>The element needs to explicitly declare its type.</li>
 <li>The element's type needs to match the declared type.</li>
-<li>The element's resource need to match the declared type.</li>
+<li>The element's resource needs to match the declared type.</li>
 </ul>
 </li>
 <li><code>sandbox</code> restricts a page's actions such as submitting forms.<ul>
@@ -3091,11 +3091,11 @@
 <h3 id="navigation-directives">Navigation Directives<a class="headerlink" href="#navigation-directives" title="Permanent link">&para;</a></h3>
 <p>Navigation directives instruct the browser about the locations that the document can navigate to.</p>
 <ul>
-<li><code>navigate-to</code> restricts the URLs which a document can navigate to by any mean (<a href="https://caniuse.com/?search=navigate-to">not yet supported</a> by modern browsers in Jan 2021).</li>
+<li><code>navigate-to</code> restricts the URLs which a document can navigate to by any means (<a href="https://caniuse.com/?search=navigate-to">not yet supported</a> by modern browsers in Jan 2021).</li>
 <li><code>form-action</code> restricts the URLs which the forms can submit to.</li>
 <li><code>frame-ancestors</code> restricts the URLs that can embed the requested resource inside of  <code>&lt;frame&gt;</code>, <code>&lt;iframe&gt;</code>, <code>&lt;object&gt;</code>, <code>&lt;embed&gt;</code>, or <code>&lt;applet&gt;</code> elements.<ul>
 <li>If this directive is specified in a <code>&lt;meta&gt;</code> tag, the directive is ignored.</li>
-<li>This directive doesn't fallback to <code>default-src</code> directive.</li>
+<li>This directive doesn't fallback to the <code>default-src</code> directive.</li>
 <li><code>X-Frame-Options</code> is rendered obsolete by this directive and is ignored by the user agents.</li>
 </ul>
 </li>
@@ -3103,7 +3103,7 @@
 <h3 id="reporting-directives">Reporting Directives<a class="headerlink" href="#reporting-directives" title="Permanent link">&para;</a></h3>
 <p>Reporting directives deliver violations of prevented behaviors to specified locations. These directives serve no purpose on their own and are dependent on other directives.</p>
 <ul>
-<li><code>report-to</code> which is a groupname defined in the header in a json formatted header value.<ul>
+<li><code>report-to</code> which is a group name defined in the header in a JSON formatted header value.<ul>
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/report-to">MDN report-to documentation</a></li>
 </ul>
 </li>
