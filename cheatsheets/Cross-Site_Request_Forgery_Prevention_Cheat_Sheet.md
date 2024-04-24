@@ -115,7 +115,7 @@ Since an attacker is unable to access the cookie value during a cross-site reque
 
 Though the Naive Double-Submit Cookie method is a good initial step to counter CSRF, it still remains vulnerable to certain attacks. [This resource](https://owasp.org/www-chapter-london/assets/slides/David_Johansson-Double_Defeat_of_Double-Submit_Cookie.pdf) provides more information on some vulnerabilities. Thus, we strongly recommend that you use the _Signed Double-Submit Cookie_ pattern.
 
-## Disallowing non-simple requests
+## Disallowing simple requests
 
 When a `<form>` tag is used to submit data, it sends a ["simple" request](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#simple_requests) that browsers do not designate as "to be preflighted". These "simple" requests introduce risk of CSRF because browsers permit them to be sent to any origin. If your application uses `<form>` tags to submit data anywhere in your client, you will still need to protect them with alternate approaches described in this document such as tokens.
 
@@ -292,11 +292,28 @@ Usually, a minor percentage of traffic does fall under above categories ([1-2%](
 
 #### Using Cookies with Host Prefixes to Identify Origins
 
-Another solution for this problem is using `Cookie Prefixes` for cookies with CSRF tokens. If cookies have `__Host-` prefixes e.g. `Set-Cookie: __Host-token=RANDOM; path=/; Secure` then each cookie:
+While the `SameSite` and `Secure` attributes mentioned earlier restrict the sending of already set cookies
+and `HttpOnly` restricts the reading of a set cookie,
+an attacker may still try to inject or overwrite otherwise secured cookies
+(cf. [session fixation attacks](http://www.acrossecurity.com/papers/session_fixation.pdf)).
+Using `Cookie Prefixes` for cookies with CSRF tokens extends security protections against this kind of attacks as well.
+If cookies have `__Host-` prefixes e.g. `Set-Cookie: __Host-token=RANDOM; path=/; Secure` then each cookie:
 
-- Cannot be (over)written from another subdomain.
+- Cannot be (over)written from another subdomain and
+- cannot have a `Domain` attribute.
 - Must have the path of `/`.
 - Must be marked as Secure (i.e, cannot be sent over unencrypted HTTP).
+
+In addition to the `__Host-` prefix, the weaker `__Secure-` prefix is also supported by browser vendors.
+It relaxes the restrictions on domain overwrites, i.e., they
+
+- Can have `Domain` attributes and
+- can be overwritten by subdomains.
+- Can have a `Path` other than `/`.
+
+This relaxed variant can be used as an alternative to the "domain locked" `__Host-` prefix,
+if authenticated users would need to visit different (sub-)domains.
+In all other cases, using the `__Host-` prefix in addition to the `SameSite` attribute is recommended.
 
 As of July 2020 cookie prefixes [are supported by all major browsers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Browser_compatibility).
 
