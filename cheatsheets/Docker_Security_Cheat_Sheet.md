@@ -94,9 +94,9 @@ spec:
   - name: example
     image: gcr.io/google-samples/node-hello:1.0
     securityContext:
-          capabilities:
+        capabilities:
             drop:
-              - ALL
+                - ALL
             add: ["CHOWN"]
 ```
 
