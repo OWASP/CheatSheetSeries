@@ -181,7 +181,7 @@ You can also use this [hash generator](https://report-uri.com/home/hash). This i
 
 #### Note
 
-Using hashes can be a risk approach approach. If you change *anything* inside the script tag (even whitespace) by, e.g., formatting your code, the hash will be different, and the script won't render.
+Using hashes can be a risky approach. If you change *anything* inside the script tag (even whitespace) by, e.g., formatting your code, the hash will be different, and the script won't render.
 
 ### strict-dynamic
 
@@ -227,7 +227,7 @@ Document directives instruct the browser about the properties of the document to
 - `plugin-types` limits the types of resources that can be loaded into the document (*e.g.* application/pdf). 3 rules apply to the affected elements, `<embed>` and `<object>`:
     - The element needs to explicitly declare its type.
     - The element's type needs to match the declared type.
-    - The element's resource need to match the declared type.
+    - The element's resource needs to match the declared type.
 - `sandbox` restricts a page's actions such as submitting forms.
     - Only applies when used with the request header `Content-Security-Policy`.
     - Not specifying a value for the directive activates all of the sandbox restrictions. `Content-Security-Policy: sandbox;`
@@ -237,18 +237,18 @@ Document directives instruct the browser about the properties of the document to
 
 Navigation directives instruct the browser about the locations that the document can navigate to.
 
-- `navigate-to` restricts the URLs which a document can navigate to by any mean ([not yet supported](https://caniuse.com/?search=navigate-to) by modern browsers in Jan 2021).
+- `navigate-to` restricts the URLs which a document can navigate to by any means ([not yet supported](https://caniuse.com/?search=navigate-to) by modern browsers in Jan 2021).
 - `form-action` restricts the URLs which the forms can submit to.
 - `frame-ancestors` restricts the URLs that can embed the requested resource inside of  `<frame>`, `<iframe>`, `<object>`, `<embed>`, or `<applet>` elements.
     - If this directive is specified in a `<meta>` tag, the directive is ignored.
-    - This directive doesn't fallback to `default-src` directive.
+    - This directive doesn't fallback to the `default-src` directive.
     - `X-Frame-Options` is rendered obsolete by this directive and is ignored by the user agents.
 
 ### Reporting Directives
 
 Reporting directives deliver violations of prevented behaviors to specified locations. These directives serve no purpose on their own and are dependent on other directives.
 
-- `report-to` which is a groupname defined in the header in a json formatted header value.
+- `report-to` which is a group name defined in the header in a JSON formatted header value.
     - [MDN report-to documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/report-to)
 - `report-uri` directive is deprecated by `report-to`, which is a URI that the reports are sent to.
     - Goes by the format of: `Content-Security-Policy: report-uri https://example.com/csp-reports`
