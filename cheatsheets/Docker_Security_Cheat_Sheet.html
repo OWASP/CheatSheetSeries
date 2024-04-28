@@ -2639,9 +2639,9 @@ Remember not to run containers with the <code>--privileged</code> flag - this wi
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example</span>
 <span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gcr.io/google-samples/node-hello:1.0</span>
 <span class="w">    </span><span class="nt">securityContext</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">capabilities</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">capabilities</span><span class="p">:</span>
 <span class="w">            </span><span class="nt">drop</span><span class="p">:</span>
-<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ALL</span>
+<span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ALL</span>
 <span class="w">            </span><span class="nt">add</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;CHOWN&quot;</span><span class="p p-Indicator">]</span>
 </code></pre></div>
 <p>As a Kubernetes cluster administrator, you can configure a hardened default using the <a href="https://kubernetes.io/docs/concepts/security/pod-security-standards/#restricted"><code>Restricted</code> level</a> with built-in <a href="https://kubernetes.io/docs/concepts/security/pod-security-admission/">Pod Security admission controller</a>, if greater customization is desired consider using <a href="https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#what-are-admission-webhooks">Admission Webhooks</a> or a <a href="https://kubernetes.io/docs/concepts/security/pod-security-standards/#alternatives">third party alternative</a>.</p>
