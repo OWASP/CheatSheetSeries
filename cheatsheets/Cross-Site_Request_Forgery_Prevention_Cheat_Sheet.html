@@ -3210,7 +3210,7 @@ In all other cases, using the <code>__Host-</code> prefix in addition to the <co
 <h3 id="user-interaction-based-csrf-defense">User Interaction-Based CSRF Defense<a class="headerlink" href="#user-interaction-based-csrf-defense" title="Permanent link">&para;</a></h3>
 <p>While all the techniques referenced here do not require any user interaction, sometimes it's easier or more appropriate to involve the user in the transaction to prevent unauthorized operations (forged via CSRF or otherwise). The following are some examples of techniques that can act as strong CSRF defense when implemented correctly.</p>
 <ul>
-<li>~~Re-Authentication~~Authorization mechanisms (password or stronger)</li>
+<li>Re-Authentication mechanisms</li>
 <li>One-time Tokens</li>
 </ul>
 <p>Do NOT use CAPTCHA because it is specifically designed to protect against bots. It is possible, and still valid in some implementations of CAPTCHA, to obtain proof of human interaction/presence from a different user session. Although this makes the CSRF exploit more complex, it does not protect against it.</p>
