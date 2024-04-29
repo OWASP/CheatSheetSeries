@@ -323,7 +323,7 @@ See the [Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/Web
 
 While all the techniques referenced here do not require any user interaction, sometimes it's easier or more appropriate to involve the user in the transaction to prevent unauthorized operations (forged via CSRF or otherwise). The following are some examples of techniques that can act as strong CSRF defense when implemented correctly.
 
-- ~~Re-Authentication~~Authorization mechanisms (password or stronger)
+- Re-Authentication mechanisms
 - One-time Tokens
 
 Do NOT use CAPTCHA because it is specifically designed to protect against bots. It is possible, and still valid in some implementations of CAPTCHA, to obtain proof of human interaction/presence from a different user session. Although this makes the CSRF exploit more complex, it does not protect against it.
