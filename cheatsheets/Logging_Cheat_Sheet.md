@@ -97,18 +97,16 @@ Where possible, always log:
 - Application errors and system events e.g. syntax and runtime errors, connectivity problems, performance issues, third party service error messages, file system errors, file upload virus detection, configuration changes
 - Application and related systems start-ups and shut-downs, and logging initialization (starting, stopping or pausing)
 - Use of higher-risk functionality including:
-  - User administration actions such as addition or deletion of users, changes to privileges, assigning users to tokens, adding or deleting tokens
-  - Use of systems administrative privileges or access by application administrators including all actions by those users
-  - Access to sensitive data such as payment cardholder data,
-  - Encryption activities such as use or rotation of cryptographic keys
-  - Creation and deletion of system-level objects
-  - Data import and export including screen-based reports
-  - Submission and processing of user-generated content - especially file uploads
-  - Deserialization failures
-  - Network connections and associated failures such as backend TLS failures (including certificate validation failures), or requests with an unexpected HTTP verb
+    - User administration actions such as addition or deletion of users, changes to privileges, assigning users to tokens, adding or deleting tokens
+    - Use of systems administrative privileges or access by application administrators including all actions by those users
+    - Access to sensitive data such as payment cardholder data,
+    - Encryption activities such as use or rotation of cryptographic keys
+    - Creation and deletion of system-level objects
+    - Data import and export including screen-based reports
+    - Submission and processing of user-generated content - especially file uploads
+    - Deserialization failures
+    - Network connections and associated failures such as backend TLS failures (including certificate validation failures), or requests with an unexpected HTTP verb
 - Legal and other opt-ins e.g. permissions for mobile phone capabilities, terms of use, terms & conditions, personal data usage consent, permission to receive marketing communications
-
-
 
 Optionally consider if the following events can be logged and whether it is desirable information:
 
