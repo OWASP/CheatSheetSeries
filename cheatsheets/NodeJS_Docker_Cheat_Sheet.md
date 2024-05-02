@@ -152,7 +152,7 @@ One of the most common mistakes I see with blogs and articles about containerizi
 
 Let’s dig in! I’ll walk you through the differences between them and why they’re all patterns to avoid.
 
-The following concerns are key in order to understanding the context for properly running and terminating Node.js Docker applications:
+The following concerns are key to understanding the context for properly running and terminating Node.js Docker applications:
 
 1. An orchestration engine, such as Docker Swarm, Kubernetes, or even just Docker engine itself, needs a way to send signals to the process in the container. Mostly, these are signals to terminate an application, such as `SIGTERM` and `SIGKILL`.
 2. The process may run indirectly, and if that happens then it’s not always guaranteed that it will receive these signals.
