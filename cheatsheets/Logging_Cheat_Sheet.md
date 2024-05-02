@@ -99,6 +99,7 @@ Where possible, always log:
 - Use of higher-risk functionality including:
     - User administration actions such as addition or deletion of users, changes to privileges, assigning users to tokens, adding or deleting tokens
     - Use of systems administrative privileges or access by application administrators including all actions by those users
+    - Use of default or shared accounts or a "break-glass" account.
     - Access to sensitive data such as payment cardholder data,
     - Encryption activities such as use or rotation of cryptographic keys
     - Creation and deletion of system-level objects
