@@ -231,7 +231,7 @@ Sample Defense: Canonicalize input, URL Validation, Safe URL verification, Allow
 Data Type: String
 Context: CSS Value
 Code: `HTML <div style="width: UNTRUSTED DATA ;">Selection</div>`
-Sample Defense: Strict structural validation (rule \#4), CSS hex encoding, Good design of CSS features. J
+Sample Defense: Strict structural validation (rule \#4), CSS hex encoding, Good design of CSS features.
 
 Data Type: String
 Context: JavaScript Variable
