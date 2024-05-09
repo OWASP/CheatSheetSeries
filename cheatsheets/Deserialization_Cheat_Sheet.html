@@ -2774,7 +2774,7 @@
 <p>Check the use of <a href="https://www.php.net/manual/en/function.unserialize.php"><code>unserialize()</code></a> function and review how the external parameters are accepted. Use a safe, standard data interchange format such as JSON (via <code>json_decode()</code> and <code>json_encode()</code>) if you need to pass serialized data to the user.</p>
 <h3 id="python">Python<a class="headerlink" href="#python" title="Permanent link">&para;</a></h3>
 <h4 id="opaque-box-review">Opaque-box Review<a class="headerlink" href="#opaque-box-review" title="Permanent link">&para;</a></h4>
-<p>If the traffic data contains the symbol dot <code>.</code> at the end, it's very likely that the data was sent in serialization.</p>
+<p>If the traffic data contains the symbol dot <code>.</code> at the end, it's very likely that the data was sent in serialization. It will be only true if the data is not being encoded using Base64 or Hexadecimal schemas. If the data is being encoded, then it's best to check if the serialization is likely happening or not by looking at the starting characters of the parameter value. For example if data is Base64 encoded, then it will most likely start with <code>gASV</code>.</p>
 <h4 id="clear-box-review_1">Clear-box Review<a class="headerlink" href="#clear-box-review_1" title="Permanent link">&para;</a></h4>
 <p>The following API in Python will be vulnerable to serialization attack. Search code for the pattern below.</p>
 <ol>
