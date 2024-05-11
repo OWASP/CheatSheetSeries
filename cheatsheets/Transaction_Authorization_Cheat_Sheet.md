@@ -155,7 +155,7 @@ To prevent many replay attacks, each set of authorization credentials should be 
 
 Here are some other issues should be taken into consideration while implementing transaction authorization, but are beyond the scope of this cheat sheet:
 
-- **Which transactions should be authorized? All transactions or only some of them?** Each application is different and an application owner should decide if all transactions should be authorized or only some of them, considering risk analysis, risk exposition of given application, and other safeguards implemented in an application.
+- Which transactions should be authorized? All transactions or only some of them?Each application is different and an application owner should decide if all transactions should be authorized or only some of them, considering risk analysis, risk exposition of given application, and other safeguards implemented in an application.
 - **We recommend the use of cryptographic operations to protect transactions and to ensure integrity, confidentiality and non-repudiation.**
 - **It is critically important to provision & protect the device signing keys during device "pairing" is as is the actual signing protocol itself. Malware may attempt to inject/replace or steal the signing keys.**
 - User awareness: For example in transaction authorization methods, when a user types in significant transaction data to an authorization component (e.g. an external dedicated device or a mobile application), users should be trained to rewrite transaction data from a trusted source and not from a computer screen.
