@@ -276,7 +276,7 @@ Below is an `.htaccess` sample configuration which sets the `X-Frame-Options` he
 
 ```lang-bsh
 <IfModule mod_headers.c>
-Header set X-Frame-Options "DENY"
+Header always set X-Frame-Options "DENY"
 </IfModule>
 ```
 
@@ -309,7 +309,7 @@ http-response set-header X-Frame-Options DENY
 Below is a sample configuration, it sets the `X-Frame-Options` header in Nginx.
 
 ```lang-none
-add_header "X-Frame-Options" "DENY";
+add_header "X-Frame-Options" "DENY" always;
 ```
 
 ### Express
