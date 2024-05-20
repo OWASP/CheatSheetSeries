@@ -392,7 +392,7 @@ composer require nelmio/cors-bundle
 For Symfony Flex users, the installation generates a basic configuration file in the `config/packages` directory automatically. Take a look at the example configuration for routes starting with */API* prefix.
 
 ```yaml
-# config/packages/nelimo_cors.yaml
+# config/packages/nelmio_cors.yaml
 nelmio_cors:
     defaults:
         origin_regex: true
