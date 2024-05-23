@@ -3566,9 +3566,9 @@ If you do not control links on your website, you might want to set <code>off</co
 <div class="highlight"><pre><span></span><code><span class="x">header(&quot;X-Frame-Options: DENY&quot;);</span>
 </code></pre></div>
 <h3 id="apache">Apache<a class="headerlink" href="#apache" title="Permanent link">&para;</a></h3>
-<p>Below is an <code>.htaccess</code> sample configuration which sets the <code>X-Frame-Options</code> header in Apache.</p>
+<p>Below is an <code>.htaccess</code> sample configuration which sets the <code>X-Frame-Options</code> header in Apache. Note that without the <code>always</code> option, the header will only be sent for certain status codes, as described in <a href="https://httpd.apache.org/docs/2.4/mod/mod_headers.html#header">the Apache documentation</a>.</p>
 <div class="highlight"><pre><span></span><code>&lt;IfModule mod_headers.c&gt;
-Header set X-Frame-Options &quot;DENY&quot;
+Header always set X-Frame-Options &quot;DENY&quot;
 &lt;/IfModule&gt;
 </code></pre></div>
 <h3 id="iis">IIS<a class="headerlink" href="#iis" title="Permanent link">&para;</a></h3>
@@ -3588,8 +3588,8 @@ Header set X-Frame-Options &quot;DENY&quot;
 <div class="highlight"><pre><span></span><code>http-response set-header X-Frame-Options DENY
 </code></pre></div>
 <h3 id="nginx">Nginx<a class="headerlink" href="#nginx" title="Permanent link">&para;</a></h3>
-<p>Below is a sample configuration, it sets the <code>X-Frame-Options</code> header in Nginx.</p>
-<div class="highlight"><pre><span></span><code>add_header &quot;X-Frame-Options&quot; &quot;DENY&quot;;
+<p>Below is a sample configuration, it sets the <code>X-Frame-Options</code> header in Nginx. Note that without the <code>always</code> option, the header will only be sent for certain status codes, as described in <a href="https://nginx.org/en/docs/http/ngx_http_headers_module.html#add_header">the nginx documentation</a>.</p>
+<div class="highlight"><pre><span></span><code>add_header &quot;X-Frame-Options&quot; &quot;DENY&quot; always;
 </code></pre></div>
 <h3 id="express">Express<a class="headerlink" href="#express" title="Permanent link">&para;</a></h3>
 <p>You can use <a href="https://www.npmjs.com/package/helmet">helmet</a> to setup HTTP headers in Express. The code below is sample for adding the <code>X-Frame-Options</code> header.</p>
