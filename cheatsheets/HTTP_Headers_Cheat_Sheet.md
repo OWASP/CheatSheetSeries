@@ -272,11 +272,11 @@ header("X-Frame-Options: DENY");
 
 ### Apache
 
-Below is an `.htaccess` sample configuration which sets the `X-Frame-Options` header in Apache.
+Below is an `.htaccess` sample configuration which sets the `X-Frame-Options` header in Apache. Note that without the `always` option, the header will only be sent for certain status codes, as described in [the Apache documentation](https://httpd.apache.org/docs/2.4/mod/mod_headers.html#header).
 
 ```lang-bsh
 <IfModule mod_headers.c>
-Header set X-Frame-Options "DENY"
+Header always set X-Frame-Options "DENY"
 </IfModule>
 ```
 
@@ -306,10 +306,10 @@ http-response set-header X-Frame-Options DENY
 
 ### Nginx
 
-Below is a sample configuration, it sets the `X-Frame-Options` header in Nginx.
+Below is a sample configuration, it sets the `X-Frame-Options` header in Nginx. Note that without the `always` option, the header will only be sent for certain status codes, as described in [the nginx documentation](https://nginx.org/en/docs/http/ngx_http_headers_module.html#add_header).
 
 ```lang-none
-add_header "X-Frame-Options" "DENY";
+add_header "X-Frame-Options" "DENY" always;
 ```
 
 ### Express
