@@ -21,10 +21,16 @@ Welcome to the Cheat Sheet Help Guide. This guide is designed to help you naviga
 
 ### What's Inside This Guide
 1. Basic Navigation
+2. FAQs
+3. Troubleshooting Guide
+4. Feedback and Support
+5. Step-by-Step Guides
 
-## Main Sections
+## Guides
 
 The main sections will vary based on the content of the cheat sheet. Generally there should be no more than half a dozen level 2 sections in the cheat sheet, with subsections created for these as required.
+### Basic Navigation
+
 
 ## References
 
