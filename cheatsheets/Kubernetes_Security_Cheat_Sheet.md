@@ -30,7 +30,7 @@ When you deploy Kubernetes, you get a cluster. A Kubernetes cluster consists of 
 The control plane's components make global decisions about the cluster, as well as detecting and responding to cluster events. It consists of components such as kube-apiserver, etcd, kube-scheduler, kube-controller-manager and cloud-controller-manager.
 
 **Component:** kube-apiserver  
-**Description**: Exposes the Kubernetes API. The API server is the front end for the Kubernetes control plane.
+**Description:** Exposes the Kubernetes API. The API server is the front end for the Kubernetes control plane.
 
 **Component:** etcd  
 **Description:** A consistent and highly-available key-value store used as Kubernetes' backing store for all cluster data.
@@ -380,16 +380,16 @@ When you are configuring the security context for your pods, only grant the priv
 
 Security Context Settings:
 
-1. SecurityContext->runAsNonRoot
+1. Security Context Setting: SecurityContext->**runAsNonRoot**  
    Description: Indicates that containers should run as non-root user.
 
-2. Security Context Setting: SecurityContext->Capabilities
+2. Security Context Setting: SecurityContext->**Capabilities**  
    Description: Controls the Linux capabilities assigned to the container.
 
-3. Security Context Setting: SecurityContext->readOnlyRootFilesystem
+3. Security Context Setting: SecurityContext->**readOnlyRootFilesystem**  
    Description: Controls whether a container will be able to write into the root filesystem.
 
-4. Security Context Setting: PodSecurityContext->runAsNonRoot
+4. Security Context Setting: PodSecurityContext->**runAsNonRoot**  
    Description: Prevents running a container with 'root' user as part of the pod |
 
 #### Security context example: A pod definition that includes security context parameters
