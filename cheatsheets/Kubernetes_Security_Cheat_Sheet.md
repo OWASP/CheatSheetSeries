@@ -29,20 +29,20 @@ When you deploy Kubernetes, you get a cluster. A Kubernetes cluster consists of 
 
 The control plane's components make global decisions about the cluster, as well as detecting and responding to cluster events. It consists of components such as kube-apiserver, etcd, kube-scheduler, kube-controller-manager and cloud-controller-manager.
 
-Component: kube-apiserver
-Description: Exposes the Kubernetes API. The API server is the front end for the Kubernetes control plane.
+**Component:** kube-apiserver  
+**Description**: Exposes the Kubernetes API. The API server is the front end for the Kubernetes control plane.
 
-Component: etcd
-Description: A consistent and highly-available key-value store used as Kubernetes' backing store for all cluster data.
+**Componen:** etcd  
+**Description:** A consistent and highly-available key-value store used as Kubernetes' backing store for all cluster data.
 
-Component: kube-scheduler
-Description: Watches for newly created Pods with no assigned node, and selects a node for them to run on.
+**Component:** kube-scheduler  
+**Description:** Watches for newly created Pods with no assigned node, and selects a node for them to run on.
 
-Component: kube-controller-manager
-Description: Runs controller processes. Logically, each controller is a separate process, but to reduce complexity, they are all compiled into a single binary and run in a single process.
+**Component:** kube-controller-manager  
+**Description:** Runs controller processes. Logically, each controller is a separate process, but to reduce complexity, they are all compiled into a single binary and run in a single process.
 
-Component: cloud-controller-manager
-Description: The cloud controller manager lets you link your cluster into your cloud provider's API, and separates out the components that interact with that cloud platform from components that just interact with your cluster.
+**Component:** cloud-controller-manager  
+**Description:** The cloud controller manager lets you link your cluster into your cloud provider's API, and separates out the components that interact with that cloud platform from components that just interact with your cluster.
 
 ### Node Components
 
