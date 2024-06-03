@@ -98,9 +98,9 @@ Once the organization has inventoried depdencies, it must also monitor them for 
 
 Although using SAST to detect potential security in custom developed code is a widely used security technique, it can also be used on OSS components within the SSC [[2](#references)]. As when using SAST on internally developed code, one must recognize that these tools can produce both false positives and false negatives. Thus, SAST results must not be accepted without manual verification and should not be interpreted as providing a comprehensive view of the project's security. However, as long as their limitations are understood, SAST scans can prove useful when analyzing both internally developed or OSS code.
 
-#### Lock File/Version Pinning
+#### Lockfile/Version Pinning
 
-To reduce the likelihood that a compromised or vulnerable version is unwittingly pulled into an application, one should limit the applications dependencies to a specific version that has been previously verified as legitimate and secure. This is commonly accomplished using lock files such as the package-lock.json file used by npm.
+To reduce the likelihood that a compromised or vulnerable version is unwittingly pulled into an application, one should limit the applications dependencies to a specific version that has been previously verified as legitimate and secure. This is commonly accomplished using lockfiles such as the package-lock.json file used by npm.
 
 ### Build Threats
 
@@ -110,11 +110,11 @@ The section below describes techniques that are especially relevant for securing
 
 Knowing the components used in the SSC is essential to the security of that SSC. This concept extends to build tools. An inventory of all build tools, including versions and any plugins, should be automatically collected and mainlined, One must also monitor vulnerability databases, vendor security advisories and other sources for any vulnerabilities related to the identified build tools.
 
-#### Harden  Build Systems
+#### Harden Build Tools
 
-Compromised build systems can enable a wide range of exploits and thus represent an appealing target for attackers. As such, all infrastructure and tools used in build process must be hardened to mitigate risk. Techniques for hardening build environments include [[2](#references)]:
+Compromised build tools can enable a wide range of exploits and thus represent an appealing target for attackers. As such, all infrastructure and tools used in build process must be hardened to mitigate risk. Techniques for hardening build environments include [[2](#references)]:
 
-- Ensure build systems are located in an appropriately segregated networks.
+- Ensure build tools are located in an appropriately segregated networks.
 - Use DLP and other tools and techniques to detect and prevent exfiltration.
 - Disable/remove any unused services.
 - Use version control systems to manage and store pipeline configurations.
@@ -123,7 +123,7 @@ Compromised build systems can enable a wide range of exploits and thus represent
 
 From a the perspective of software consumers, only accepting components which have been digitally signed and validating the signature before utilizing the software is an important task step in ensuring the component is authentic and has not been tampered with. For those performing code signing, it is imperative that the code signing infrastructure is thoroughly hardened. Failure to do so can result in compromise of the code signing system and lead further exploits, including those targeting consumers of the software.
 
-#### Use Private Artifact Repo
+#### Use Private Artifact Repository
 
 Using a private artifact repository increases the control an organization has over the various artifacts that are used within the SSC. Artifacts should be reviewed before being allowed in the private repository and organizations must ensure that usage of these repositories cannot be bypassed. Although usage of private repositories can introduce extra maintenance or reduce agility, they can also be an important component of SSCS, especially for sensitive or critical applications.
 
