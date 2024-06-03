@@ -32,7 +32,7 @@ The control plane's components make global decisions about the cluster, as well 
 **Component:** kube-apiserver  
 **Description**: Exposes the Kubernetes API. The API server is the front end for the Kubernetes control plane.
 
-**Componen:** etcd  
+**Component:** etcd  
 **Description:** A consistent and highly-available key-value store used as Kubernetes' backing store for all cluster data.
 
 **Component:** kube-scheduler  
