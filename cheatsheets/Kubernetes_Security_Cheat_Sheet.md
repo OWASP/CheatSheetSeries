@@ -380,16 +380,16 @@ When you are configuring the security context for your pods, only grant the priv
 
 Security Context Settings:
 
-1. Security Context Setting: SecurityContext->**runAsNonRoot**  
+1. SecurityContext->**runAsNonRoot**  
    Description: Indicates that containers should run as non-root user.
 
-2. Security Context Setting: SecurityContext->**Capabilities**  
+2. SecurityContext->**Capabilities**  
    Description: Controls the Linux capabilities assigned to the container.
 
-3. Security Context Setting: SecurityContext->**readOnlyRootFilesystem**  
+3. SecurityContext->**readOnlyRootFilesystem**  
    Description: Controls whether a container will be able to write into the root filesystem.
 
-4. Security Context Setting: PodSecurityContext->**runAsNonRoot**  
+4. PodSecurityContext->**runAsNonRoot**  
    Description: Prevents running a container with 'root' user as part of the pod |
 
 #### Security context example: A pod definition that includes security context parameters
@@ -544,7 +544,7 @@ While users of Google Cloud Platform can benefit from automatic firewall rules, 
 The following is an example of a network policy that controls the network for “backend” pods, which only allows inbound network access from “frontend” pods:
 
 ```json
-POST /apis/net.alpha.kubernetes.io/v1alpha1/namespaces/tenant-a/networkpolicys
+POST /apis/net.alpha.kubernetes.io/v1alpha1/namespaces/tenant-a/networkpolicies
 {
   "kind": "NetworkPolicy",
   "metadata": {
