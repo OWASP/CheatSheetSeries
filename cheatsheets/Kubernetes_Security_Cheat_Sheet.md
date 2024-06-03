@@ -48,14 +48,14 @@ The control plane's components make global decisions about the cluster, as well 
 
 Node components run on every node, maintaining running pods and providing the Kubernetes runtime environment. It consists of components such as kubelet, kube-proxy and container runtime.
 
-Component: kubelet
-Description: An agent that runs on each node in the cluster. It makes sure that containers are running in a Pod.
+**Component:** kubelet  
+**Description:** An agent that runs on each node in the cluster. It makes sure that containers are running in a Pod.
 
-Component: kube-proxy
-Description: A network proxy that runs on each node in your cluster, implementing part of the Kubernetes Service concept.
+**Component:** kube-proxy  
+**Description:** A network proxy that runs on each node in your cluster, implementing part of the Kubernetes Service concept.
 
-Container: runtime
-Description: The container runtime is the software that is responsible for running containers |
+**Container:** runtime  
+**Description:** The container runtime is the software that is responsible for running containers |
 
 ## SECTION 1: Securing Kubernetes Hosts
 
