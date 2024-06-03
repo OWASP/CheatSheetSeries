@@ -544,7 +544,7 @@ While users of Google Cloud Platform can benefit from automatic firewall rules, 
 The following is an example of a network policy that controls the network for “backend” pods, which only allows inbound network access from “frontend” pods:
 
 ```json
-POST /apis/net.alpha.kubernetes.io/v1alpha1/namespaces/tenant-a/networkpolicies
+POST /apis/net.alpha.kubernetes.io/v1alpha1/namespaces/tenant-a/networkpolicys
 {
   "kind": "NetworkPolicy",
   "metadata": {
