@@ -2632,7 +2632,7 @@ occur before the validation step (source: <a href="https://wiki.sei.cmu.edu/conf
 <p><code>LdapDistinguishedNameEncode(string, bool, bool)</code> is also provided so you may turn off the initial or final character escaping rules, for example if you are concatenating the escaped distinguished name fragment into the midst of a complete distinguished name.</p>
 <h3 id="defense-option-2-use-frameworks-that-automatically-protect-from-ldap-injection">Defense Option 2: Use Frameworks that Automatically Protect from LDAP Injection<a class="headerlink" href="#defense-option-2-use-frameworks-that-automatically-protect-from-ldap-injection" title="Permanent link">&para;</a></h3>
 <h4 id="safe-net-example">Safe .NET Example<a class="headerlink" href="#safe-net-example" title="Permanent link">&para;</a></h4>
-<p>We recommend using <a href="https://www.nuget.org/packages/LinqToLdap/">LINQ to LDAP</a> in DotNet. It provides automatic LDAP encoding when building LDAP queries.
+<p>We recommend using <a href="https://www.nuget.org/packages/LinqToLdap/">LINQ to LDAP</a> (for .NET Framework 4.5 or lower <a href="https://github.com/madhatter22/LinqToLdap/issues/31">until it has been updated</a>) in DotNet. It provides automatic LDAP encoding when building LDAP queries.
 Contact the <a href="https://github.com/madhatter22/LinqToLdap/blob/master/README.md">Readme file</a> in the project repository.</p>
 <h2 id="additional-defenses">Additional Defenses<a class="headerlink" href="#additional-defenses" title="Permanent link">&para;</a></h2>
 <p>Beyond adopting one of the two primary defenses, we also recommend adopting all of these additional defenses in order to provide defense in depth. These additional defenses are:</p>
