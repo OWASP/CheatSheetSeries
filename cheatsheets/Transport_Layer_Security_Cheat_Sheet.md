@@ -138,7 +138,7 @@ Certification Authority Authorization (CAA) DNS records can be used to define wh
 
 ### Consider the Certificate’s Validation Type
 
-Certificates come in the types of validation. Validation is the process the Certificate Authority uses to make sure you are allowed to have the certificate. This is authorization. The base validation is called Domain Validated (DV). All publicly issued certificates must be domain validated. This process involves practical proof of control of the name or endpoint requested in the certificate. This usually involves a challenge and response in DNS, to an official email address, or to the endpoint that will get the certificate.
+Certificates come in types of validation. Validation is the process the Certificate Authority uses to make sure you are allowed to have the certificate. This is authorization. The base validation is called Domain Validated (DV). All publicly issued certificates must be domain validated. This process involves practical proof of control of the name or endpoint requested in the certificate. This usually involves a challenge and response in DNS, to an official email address, or to the endpoint that will get the certificate.
 
 Organization Validated (OV) certificates include the subscriber’s organization information in the certificates subject DN. E.g. C = GB, ST = Manchester, **O = Sectigo Limited**, CN = sectigo.com. The process to acquire an OV certificate requires official contact with the subscriber company via a method that proves to the CA that they are truly talking to the right company.
 
