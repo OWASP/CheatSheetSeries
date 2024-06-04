@@ -136,19 +136,18 @@ For internal applications, an internal CA can be used. This means that the FQDN 
 
 Certification Authority Authorization (CAA) DNS records can be used to define which CAs are permitted to issue certificates for a domain. The records contains a list of CAs, and any CA who is not included in that list should refuse to issue a certificate for the domain. This can help to prevent an attacker from obtaining unauthorized certificates for a domain through a less-reputable CA. Where it is applied to all subdomains, it can also be useful from an administrative perspective by limiting which CAs administrators or developers are able to use, and by preventing them from obtaining unauthorized wildcard certificates.
 
-### Always Provide All Needed Certificates
+### Consider the Certificate’s Validation Type
 
-In order to validate the authenticity of a certificate, the user's browser must examine the certificate that was used to sign it and compare it to the list of CAs trusted by their system. In many cases the certificate is not directly signed by a root CA, but is instead signed by an intermediate CA, which is in turn signed by the root CA.
+Certificates come in the types of validation. Validation is the process the Certificate Authority uses to make sure you are allowed to have the certificate. This is authorization. The base validation is called Domain Validated (DV). All publicly issued certificates must be domain validated. This process involves practical proof of control of the name or endpoint requested in the certificate. This usually involves a challenge and response in DNS, to an official email address, or to the endpoint that will get the certificate.
 
-If the user does not know or trust this intermediate CA then the certificate validation will fail, even if the user trusts the ultimate root CA, as they cannot establish a chain of trust between the certificate and the root. In order to avoid this, any intermediate certificates should be provided alongside the main certificate.
+Organization Validated (OV) certificates include the subscriber’s organization information in the certificates subject DN. E.g. C = GB, ST = Manchester, **O = Sectigo Limited**, CN = sectigo.com. The process to acquire an OV certificate requires official contact with the subscriber company via a method that proves to the CA that they are truly talking to the right company.
 
-### Consider the use of Extended Validation Certificates
-
-Extended validation (EV) certificates claim to provide a higher level of verification of the entity, as they perform checks that the requestor is a legitimate legal entity, rather than just verifying the ownership of the domain name like normal (or "Domain Validated") certificates. This can effectively be viewed as the difference between "This site is really run by Example Company Inc." vs "This domain is really example.org".
+Extended validation (EV) certificates claim to provide an even higher level of verification of the entity than OV checks. They perform checks that the requestor is a legitimate legal entity, rather than just verifying the ownership of the domain name like OV certificates or simply showing practical proof of control, like DV certificates. This can effectively be viewed as the difference between "This site is really run by Example Company Inc." vs "This domain is really example.org".
 
 Historically these displayed differently in the browser, often showing the company name or a green icon or background in the address bar. However, as of 2019 both [Chrome](https://groups.google.com/a/chromium.org/forum/m/#!msg/security-dev/h1bTcoTpfeI/jUTk1z7VAAAJ) and [Firefox](https://groups.google.com/forum/m/?fromgroups&hl=en#!topic/firefox-dev/6wAg_PpnlY4) have announced that they will be removing these indicators, as they do not believe that EV certificates provide any additional protection.
 
-There is no security downside to the use of EV certificates. However, as they are significantly more expensive than domain validated certificates, an assessment should be made to determine whether they provide any additional value.
+As all browsers and TLS stacks are unaware of the different between DV, OV, and EV certificates, they are effectively the same in terms of security. An attacker only need to reach the level of practical control of the domain to get a rogue certificate.  The additional pain in getting OV and EV certificates may create an availability risk and there use should be thoroughly reviewed with this in mind. 
+
 
 ## Application
 
