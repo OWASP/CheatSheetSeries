@@ -46,7 +46,7 @@ In **MAC flooding attacks**, a switch is flooded with packets that all have diff
 
 [Future additions to sheet: The impact in relation to DoS and document compact remediation]
 
-In **ARP poisoning attacks**, a malicious actor sends spoofs ARP (Address Resolution Protocol) messages over the wire. If the attacker's MAC address becomes linked to the IP address of a legitimate device on the network, the attacker can intercept, modify or stop data that was intended for the victim IP address. The ARP protocol is specific to the local area network and could cause a DoS on the wire communication.
+In **ARP poisoning attacks**, a malicious actor sends spoofed ARP (Address Resolution Protocol) messages over the wire. If the attacker's MAC address becomes linked to the IP address of a legitimate device on the network, the attacker can intercept, modify or stop data that was intended for the victim IP address. The ARP protocol is specific to the local area network and could cause a DoS on the wire communication.
 
 Packet filtering technology can be used to inspect packets in transit to identify and block offending ARP packets. Another approach is to use static ARP tables but they prove difficult to be maintained.
 
