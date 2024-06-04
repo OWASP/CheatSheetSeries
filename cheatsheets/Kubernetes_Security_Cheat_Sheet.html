@@ -3604,24 +3604,24 @@
 <p>When you deploy Kubernetes, you get a cluster. A Kubernetes cluster consists of a set of worker machines, called nodes that run containerized applications. The control plane manages the worker nodes and the Pods in the cluster.</p>
 <h3 id="control-plane-components">Control Plane Components<a class="headerlink" href="#control-plane-components" title="Permanent link">&para;</a></h3>
 <p>The control plane's components make global decisions about the cluster, as well as detecting and responding to cluster events. It consists of components such as kube-apiserver, etcd, kube-scheduler, kube-controller-manager and cloud-controller-manager.</p>
-<p>Component: kube-apiserver
-Description: Exposes the Kubernetes API. The API server is the front end for the Kubernetes control plane.</p>
-<p>Component: etcd
-Description: A consistent and highly-available key-value store used as Kubernetes' backing store for all cluster data.</p>
-<p>Component: kube-scheduler
-Description: Watches for newly created Pods with no assigned node, and selects a node for them to run on.</p>
-<p>Component: kube-controller-manager
-Description: Runs controller processes. Logically, each controller is a separate process, but to reduce complexity, they are all compiled into a single binary and run in a single process.</p>
-<p>Component: cloud-controller-manager
-Description: The cloud controller manager lets you link your cluster into your cloud provider's API, and separates out the components that interact with that cloud platform from components that just interact with your cluster.</p>
+<p><strong>Component:</strong> kube-apiserver<br />
+<strong>Description:</strong> Exposes the Kubernetes API. The API server is the front end for the Kubernetes control plane.</p>
+<p><strong>Component:</strong> etcd<br />
+<strong>Description:</strong> A consistent and highly-available key-value store used as Kubernetes' backing store for all cluster data.</p>
+<p><strong>Component:</strong> kube-scheduler<br />
+<strong>Description:</strong> Watches for newly created Pods with no assigned node, and selects a node for them to run on.</p>
+<p><strong>Component:</strong> kube-controller-manager<br />
+<strong>Description:</strong> Runs controller processes. Logically, each controller is a separate process, but to reduce complexity, they are all compiled into a single binary and run in a single process.</p>
+<p><strong>Component:</strong> cloud-controller-manager<br />
+<strong>Description:</strong> The cloud controller manager lets you link your cluster into your cloud provider's API, and separates out the components that interact with that cloud platform from components that just interact with your cluster.</p>
 <h3 id="node-components">Node Components<a class="headerlink" href="#node-components" title="Permanent link">&para;</a></h3>
 <p>Node components run on every node, maintaining running pods and providing the Kubernetes runtime environment. It consists of components such as kubelet, kube-proxy and container runtime.</p>
-<p>Component: kubelet
-Description: An agent that runs on each node in the cluster. It makes sure that containers are running in a Pod.</p>
-<p>Component: kube-proxy
-Description: A network proxy that runs on each node in your cluster, implementing part of the Kubernetes Service concept.</p>
-<p>Container: runtime
-Description: The container runtime is the software that is responsible for running containers |</p>
+<p><strong>Component:</strong> kubelet<br />
+<strong>Description:</strong> An agent that runs on each node in the cluster. It makes sure that containers are running in a Pod.</p>
+<p><strong>Component:</strong> kube-proxy<br />
+<strong>Description:</strong> A network proxy that runs on each node in your cluster, implementing part of the Kubernetes Service concept.</p>
+<p><strong>Container:</strong> runtime<br />
+<strong>Description:</strong> The container runtime is the software that is responsible for running containers |</p>
 <h2 id="section-1-securing-kubernetes-hosts">SECTION 1: Securing Kubernetes Hosts<a class="headerlink" href="#section-1-securing-kubernetes-hosts" title="Permanent link">&para;</a></h2>
 <p>Kubernetes can be deployed in different ways: on bare metal, on-premise, and in the public cloud (a custom Kubernetes build on virtual machines OR use a managed service). Since Kubernetes is designed to be highly portable, customers can easily and migrate their workloads and switch between multiple installations.</p>
 <p>Because Kubernetes can be designed to fit a large variety of scenarios, this flexibility is a weakness when it comes to securing Kubernetes clusters. The engineers responsible for deploying the Kubernetes platform must to know about all the potential attack vectors and vulnerabilities for their clusters.</p>
@@ -3883,19 +3883,19 @@ kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> <
 <p>Security Context Settings:</p>
 <ol>
 <li>
-<p>SecurityContext-&gt;runAsNonRoot
+<p>SecurityContext-&gt;<strong>runAsNonRoot</strong><br />
    Description: Indicates that containers should run as non-root user.</p>
 </li>
 <li>
-<p>Security Context Setting: SecurityContext-&gt;Capabilities
+<p>SecurityContext-&gt;<strong>Capabilities</strong><br />
    Description: Controls the Linux capabilities assigned to the container.</p>
 </li>
 <li>
-<p>Security Context Setting: SecurityContext-&gt;readOnlyRootFilesystem
+<p>SecurityContext-&gt;<strong>readOnlyRootFilesystem</strong><br />
    Description: Controls whether a container will be able to write into the root filesystem.</p>
 </li>
 <li>
-<p>Security Context Setting: PodSecurityContext-&gt;runAsNonRoot
+<p>PodSecurityContext-&gt;<strong>runAsNonRoot</strong><br />
    Description: Prevents running a container with 'root' user as part of the pod |</p>
 </li>
 </ol>
