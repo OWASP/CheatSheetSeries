@@ -21,7 +21,7 @@ This cheatsheet describes the best current security practices [1] for OAuth 2.0 
 
 ## PKCE - Proof Key for Code Exchange Mechanism
 
-OAuth 2.0 public clients utilizing the Authorization Code Grant are susceptible to the authorization code interception attack. Proof Key for Code Exchange (PCKE, pronounced "pixy") is the technique used to mitigate against the threat of authorization code interception attack.
+OAuth 2.0 public clients utilizing the Authorization Code Grant are susceptible to the authorization code interception attack. Proof Key for Code Exchange (PKCE, pronounced "pixy") is the technique used to mitigate against the threat of authorization code interception attack.
 
 Originally, PKCE is intended to be used solely focused on securing native apps, but then it became a deployed OAuth feature. It does not only protect against authorization code injection attacks but also protects authorization codes created for public clients as PKCE ensures that the attacker cannot redeem a stolen authorization code at the token endpoint of the authorization server without knowledge of the code_verifier.
 
