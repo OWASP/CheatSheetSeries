@@ -119,7 +119,7 @@ For further information visit [OWASP ESAPI Java Encoder Project which includes e
 
 #### Safe .NET Example
 
-We recommend using [LINQ to LDAP](https://www.nuget.org/packages/LinqToLdap/) in DotNet. It provides automatic LDAP encoding when building LDAP queries.
+We recommend using [LINQ to LDAP](https://www.nuget.org/packages/LinqToLdap/) (for .NET Framework 4.5 or lower [until it has been updated](https://github.com/madhatter22/LinqToLdap/issues/31)) in DotNet. It provides automatic LDAP encoding when building LDAP queries.
 Contact the [Readme file](https://github.com/madhatter22/LinqToLdap/blob/master/README.md) in the project repository.
 
 ## Additional Defenses
