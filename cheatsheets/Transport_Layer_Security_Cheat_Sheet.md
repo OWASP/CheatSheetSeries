@@ -146,8 +146,7 @@ Extended validation (EV) certificates claim to provide an even higher level of v
 
 Historically these displayed differently in the browser, often showing the company name or a green icon or background in the address bar. However, as of 2019 both [Chrome](https://groups.google.com/a/chromium.org/forum/m/#!msg/security-dev/h1bTcoTpfeI/jUTk1z7VAAAJ) and [Firefox](https://groups.google.com/forum/m/?fromgroups&hl=en#!topic/firefox-dev/6wAg_PpnlY4) have announced that they will be removing these indicators, as they do not believe that EV certificates provide any additional protection.
 
-As all browsers and TLS stacks are unaware of the different between DV, OV, and EV certificates, they are effectively the same in terms of security. An attacker only need to reach the level of practical control of the domain to get a rogue certificate.  The additional pain in getting OV and EV certificates may create an availability risk and there use should be thoroughly reviewed with this in mind. 
-
+As all browsers and TLS stacks are unaware of the different between DV, OV, and EV certificates, they are effectively the same in terms of security. An attacker only need to reach the level of practical control of the domain to get a rogue certificate.  The additional pain in getting OV and EV certificates may create an availability risk and there use should be thoroughly reviewed with this in mind.
 
 ## Application
 
