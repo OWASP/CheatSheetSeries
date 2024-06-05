@@ -28,7 +28,7 @@ In this cheat sheet, we will use the DDOS classification as documented by CERT-E
 
 #### 1) Overview of potential DoS weaknesses
 
-It is important to understand that each of these three attack categories need to be considered when designing a DoS-resilient solution:
+It is important to understand that each of these three attack categories needs to be considered when designing a DoS-resilient solution:
 
  **Application attacks** focus on rendering applications unavailable by exhausting resources or by making it unusable in a functional way.
 
