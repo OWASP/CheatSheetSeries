@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/CI_CD_Security_Cheat_Sheet.html">
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Software_Supply_Chain_Security.html">
       
       
-        <link rel="prev" href="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
+        <link rel="prev" href="Session_Management_Cheat_Sheet.html">
       
       
-        <link rel="next" href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">
+        <link rel="next" href="Symfony_Cheat_Sheet.html">
       
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
@@ -24,7 +24,7 @@
     
     
       
-        <title>CI CD Security - OWASP Cheat Sheet Series</title>
+        <title>Software Supply Chain Security.md - OWASP Cheat Sheet Series</title>
       
     
     
@@ -79,7 +79,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#cicd-security-cheat-sheet" class="md-skip">
+        <a href="#software-supply-chain-security" class="md-skip">
           Skip to content
         </a>
       
@@ -114,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              CI CD Security
+              Software Supply Chain Security.md
             
           </span>
         </div>
@@ -582,29 +582,9 @@
                 
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    CI CD Security
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="CI_CD_Security_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="CI_CD_Security_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -613,203 +593,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    Introduction
-  </a>
-  
-    <nav class="md-nav" aria-label="Introduction">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#definition-and-background" class="md-nav__link">
-    Definition and Background
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#understanding-cicd-risk" class="md-nav__link">
-    Understanding CI/CD Risk
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#secure-configuration" class="md-nav__link">
-    Secure Configuration
-  </a>
-  
-    <nav class="md-nav" aria-label="Secure Configuration">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#secure-scm-configuration" class="md-nav__link">
-    Secure SCM Configuration
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pipeline-and-execution-environment" class="md-nav__link">
-    Pipeline and Execution Environment
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#iam" class="md-nav__link">
-    IAM
-  </a>
-  
-    <nav class="md-nav" aria-label="IAM">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#secrets-management" class="md-nav__link">
-    Secrets Management
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#least-privilege" class="md-nav__link">
-    Least Privilege
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#identity-lifecycle-management" class="md-nav__link">
-    Identity Lifecycle Management
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#managing-third-party-code" class="md-nav__link">
-    Managing Third-Party Code
-  </a>
-  
-    <nav class="md-nav" aria-label="Managing Third-Party Code">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#dependency-management" class="md-nav__link">
-    Dependency Management
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#plug-in-and-integration-management" class="md-nav__link">
-    Plug-In and Integration Management
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#integrity-assurance" class="md-nav__link">
-    Integrity Assurance
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#visibility-and-monitoring" class="md-nav__link">
-    Visibility and Monitoring
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#references" class="md-nav__link">
-    References
-  </a>
-  
-    <nav class="md-nav" aria-label="References">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#general-references" class="md-nav__link">
-    General References
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#cicd-platforms" class="md-nav__link">
-    CI/CD Platforms
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#iac-scanning" class="md-nav__link">
-    IaC Scanning
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#integrity-verification-and-signing" class="md-nav__link">
-    Integrity Verification and Signing
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#secrets-management-tools" class="md-nav__link">
-    Secrets Management Tools
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -2099,9 +1882,29 @@
                 
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="Software_Supply_Chain_Security.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Software Supply Chain Security.md
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="Software_Supply_Chain_Security.html" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -2110,6 +1913,265 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overview-of-threat-landscape" class="md-nav__link">
+    Overview of Threat Landscape
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mitigations-and-security-best-practices" class="md-nav__link">
+    Mitigations and Security Best Practices
+  </a>
+  
+    <nav class="md-nav" aria-label="Mitigations and Security Best Practices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#general" class="md-nav__link">
+    General
+  </a>
+  
+    <nav class="md-nav" aria-label="General">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#implement-strong-access-control" class="md-nav__link">
+    Implement Strong Access Control
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logging-and-monitoring" class="md-nav__link">
+    Logging and Monitoring
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leverage-security-automation" class="md-nav__link">
+    Leverage Security Automation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mitigating-source-code-threats" class="md-nav__link">
+    Mitigating Source Code Threats
+  </a>
+  
+    <nav class="md-nav" aria-label="Mitigating Source Code Threats">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#peer-reviews" class="md-nav__link">
+    Peer Reviews
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#secure-config-of-version-control-systems" class="md-nav__link">
+    Secure Config of Version Control Systems
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#secure-development-platform" class="md-nav__link">
+    Secure Development Platform
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mitigating-dependency-threats" class="md-nav__link">
+    Mitigating Dependency Threats
+  </a>
+  
+    <nav class="md-nav" aria-label="Mitigating Dependency Threats">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#assess-suppliers" class="md-nav__link">
+    Assess Suppliers
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#understand-and-monitor-software-dependencies" class="md-nav__link">
+    Understand and Monitor Software Dependencies
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sast" class="md-nav__link">
+    SAST
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lockfileversion-pinning" class="md-nav__link">
+    Lockfile/Version Pinning
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-threats" class="md-nav__link">
+    Build Threats
+  </a>
+  
+    <nav class="md-nav" aria-label="Build Threats">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inventory-build-tools" class="md-nav__link">
+    Inventory Build Tools
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#harden-build-tools" class="md-nav__link">
+    Harden Build Tools
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enforce-code-signing" class="md-nav__link">
+    Enforce Code Signing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-private-artifact-repository" class="md-nav__link">
+    Use Private Artifact Repository
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-source-control-for-build-scritps-and-config" class="md-nav__link">
+    Use Source Control for Build Scritps and Config
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verify-provenanceensure-sufficient-metadata-is-generated" class="md-nav__link">
+    Verify Provenance/Ensure Sufficient Metadata is Generated
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ephemeral-isolated-builds" class="md-nav__link">
+    Ephemeral, Isolated Builds
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limit-use-of-parameters" class="md-nav__link">
+    Limit use of Parameters
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deployment-and-runtime-threats" class="md-nav__link">
+    Deployment and Runtime Threats
+  </a>
+  
+    <nav class="md-nav" aria-label="Deployment and Runtime Threats">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scan-final-build-binary" class="md-nav__link">
+    Scan Final Build Binary
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monitor-deployed-software-for-vulnerabilities" class="md-nav__link">
+    Monitor Deployed Software for Vulnerabilities
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2493,19 +2555,48 @@
     Introduction
   </a>
   
-    <nav class="md-nav" aria-label="Introduction">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overview-of-threat-landscape" class="md-nav__link">
+    Overview of Threat Landscape
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mitigations-and-security-best-practices" class="md-nav__link">
+    Mitigations and Security Best Practices
+  </a>
+  
+    <nav class="md-nav" aria-label="Mitigations and Security Best Practices">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#definition-and-background" class="md-nav__link">
-    Definition and Background
+  <a href="#general" class="md-nav__link">
+    General
+  </a>
+  
+    <nav class="md-nav" aria-label="General">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#implement-strong-access-control" class="md-nav__link">
+    Implement Strong Access Control
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#understanding-cicd-risk" class="md-nav__link">
-    Understanding CI/CD Risk
+  <a href="#logging-and-monitoring" class="md-nav__link">
+    Logging and Monitoring
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leverage-security-automation" class="md-nav__link">
+    Leverage Security Automation
   </a>
   
 </li>
@@ -2514,25 +2605,32 @@
     </nav>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#secure-configuration" class="md-nav__link">
-    Secure Configuration
+        
+          <li class="md-nav__item">
+  <a href="#mitigating-source-code-threats" class="md-nav__link">
+    Mitigating Source Code Threats
   </a>
   
-    <nav class="md-nav" aria-label="Secure Configuration">
+    <nav class="md-nav" aria-label="Mitigating Source Code Threats">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#secure-scm-configuration" class="md-nav__link">
-    Secure SCM Configuration
+  <a href="#peer-reviews" class="md-nav__link">
+    Peer Reviews
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#pipeline-and-execution-environment" class="md-nav__link">
-    Pipeline and Execution Environment
+  <a href="#secure-config-of-version-control-systems" class="md-nav__link">
+    Secure Config of Version Control Systems
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#secure-development-platform" class="md-nav__link">
+    Secure Development Platform
   </a>
   
 </li>
@@ -2541,32 +2639,39 @@
     </nav>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#iam" class="md-nav__link">
-    IAM
+        
+          <li class="md-nav__item">
+  <a href="#mitigating-dependency-threats" class="md-nav__link">
+    Mitigating Dependency Threats
   </a>
   
-    <nav class="md-nav" aria-label="IAM">
+    <nav class="md-nav" aria-label="Mitigating Dependency Threats">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#secrets-management" class="md-nav__link">
-    Secrets Management
+  <a href="#assess-suppliers" class="md-nav__link">
+    Assess Suppliers
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#least-privilege" class="md-nav__link">
-    Least Privilege
+  <a href="#understand-and-monitor-software-dependencies" class="md-nav__link">
+    Understand and Monitor Software Dependencies
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#identity-lifecycle-management" class="md-nav__link">
-    Identity Lifecycle Management
+  <a href="#sast" class="md-nav__link">
+    SAST
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lockfileversion-pinning" class="md-nav__link">
+    Lockfile/Version Pinning
   </a>
   
 </li>
@@ -2575,25 +2680,67 @@
     </nav>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#managing-third-party-code" class="md-nav__link">
-    Managing Third-Party Code
+        
+          <li class="md-nav__item">
+  <a href="#build-threats" class="md-nav__link">
+    Build Threats
   </a>
   
-    <nav class="md-nav" aria-label="Managing Third-Party Code">
+    <nav class="md-nav" aria-label="Build Threats">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#dependency-management" class="md-nav__link">
-    Dependency Management
+  <a href="#inventory-build-tools" class="md-nav__link">
+    Inventory Build Tools
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#plug-in-and-integration-management" class="md-nav__link">
-    Plug-In and Integration Management
+  <a href="#harden-build-tools" class="md-nav__link">
+    Harden Build Tools
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enforce-code-signing" class="md-nav__link">
+    Enforce Code Signing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-private-artifact-repository" class="md-nav__link">
+    Use Private Artifact Repository
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-source-control-for-build-scritps-and-config" class="md-nav__link">
+    Use Source Control for Build Scritps and Config
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verify-provenanceensure-sufficient-metadata-is-generated" class="md-nav__link">
+    Verify Provenance/Ensure Sufficient Metadata is Generated
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ephemeral-isolated-builds" class="md-nav__link">
+    Ephemeral, Isolated Builds
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limit-use-of-parameters" class="md-nav__link">
+    Limit use of Parameters
   </a>
   
 </li>
@@ -2602,18 +2749,36 @@
     </nav>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#integrity-assurance" class="md-nav__link">
-    Integrity Assurance
+        
+          <li class="md-nav__item">
+  <a href="#deployment-and-runtime-threats" class="md-nav__link">
+    Deployment and Runtime Threats
+  </a>
+  
+    <nav class="md-nav" aria-label="Deployment and Runtime Threats">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scan-final-build-binary" class="md-nav__link">
+    Scan Final Build Binary
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#visibility-and-monitoring" class="md-nav__link">
-    Visibility and Monitoring
+        
+          <li class="md-nav__item">
+  <a href="#monitor-deployed-software-for-vulnerabilities" class="md-nav__link">
+    Monitor Deployed Software for Vulnerabilities
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2621,47 +2786,6 @@
   <a href="#references" class="md-nav__link">
     References
   </a>
-  
-    <nav class="md-nav" aria-label="References">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#general-references" class="md-nav__link">
-    General References
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#cicd-platforms" class="md-nav__link">
-    CI/CD Platforms
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#iac-scanning" class="md-nav__link">
-    IaC Scanning
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#integrity-verification-and-signing" class="md-nav__link">
-    Integrity Verification and Signing
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#secrets-management-tools" class="md-nav__link">
-    Secrets Management Tools
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -2683,136 +2807,115 @@
   
 
 
-<h1 id="cicd-security-cheat-sheet">CI/CD Security Cheat Sheet<a class="headerlink" href="#cicd-security-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h1 id="software-supply-chain-security">Software Supply Chain Security<a class="headerlink" href="#software-supply-chain-security" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>CI/CD pipelines and processes facilitate efficient, repeatable software builds and deployments; as such, they occupy an important role in the modern SDLC. However, given their importance and popularity, CI/CD pipelines are also an appealing target for malicious hackers, and their security cannot be ignored. This goal of this cheat sheet is to provide developers practical guidelines for reducing risk associated with these critical components. This cheat sheet will focus on securing the pipeline itself. It will begin by providing some brief background information before proceeding with specific CI/CD security best practices.</p>
-<h3 id="definition-and-background">Definition and Background<a class="headerlink" href="#definition-and-background" title="Permanent link">&para;</a></h3>
-<p>CI/CD refers to a set of largely automated processes used to build and deliver software; it is often portrayed as a pipeline consisting of a series of sequential, discrete steps. The pipeline generally begins when code under development is pushed to a repository and, if all steps complete successfully, ends with the a software solution built, tested, and deployed to a production environment. CI/CD may be decomposed into two distinct parts: continuous integration (CI) and continuous delivery and/or continuous deployment (CD).  CI focuses on build and testing automation; continuous delivery focuses on promoting this built code to a staging or higher environment and, generally, performing additional automated testing. Continuous delivery and continuous deployment may not always be distinguished in definitions of CI/CD; however, according to <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-204C.pdf">NIST</a>, continuous delivery requires code to be manually pushed to production whereas continuous deployment automates even this step.</p>
-<p>The exact steps in a CI/CD pipeline may vary from organization to organization and from project to project; however, automation, and the repeatability and agility it brings, should be a core focus of any CI/CD implementation.</p>
-<h3 id="understanding-cicd-risk">Understanding CI/CD Risk<a class="headerlink" href="#understanding-cicd-risk" title="Permanent link">&para;</a></h3>
-<p>Although CI/CD brings many benefits, it also increases an organization's attack surface. People, processes, and technology are all required for CI/CD and all can be avenues of attack; code repositories, automation servers such as Jenkins, deployment procedures, and the nodes responsible for running CI/CD pipelines are just a few examples of CI/CD components which can be exploited by malicious entities.  Furthermore, since CI/CD steps are frequently executed using high-privileged identities, successful attacks against CI/CD often have high damage potential. If an organization chooses to leverage the many benefits of CI/CD, it must also ensure it invests the resources required to properly secure it; the <a href="https://blog.gitguardian.com/codecov-supply-chain-breach/">Codecov</a> and <a href="https://www.cyberark.com/resources/blog/the-anatomy-of-the-solarwinds-attack-chain">SolarWinds</a> breaches are just two sobering examples of the potential impact of CI/CD compromise.</p>
-<p>The specific methods attackers use to exploit CI/CD environments are diverse; however, certain risks are more prominent than others. Although one should not restrict themselves to knowledge of them, understanding the the most prominent risks to CI/CD environments can help organizations allocate security resources more efficiently. <a href="https://owasp.org/www-project-top-10-ci-cd-security-risks/">OWASP's Top 10 CI/CD Security Risks</a> is a valuable resources for this purpose; the project identifies the following as the top 10 CI/CD risks:</p>
+<p>No piece of software is developed in a vacuum; regardless of the technologies used to develop it, software is embedded in a Software Supply Chain (SSC). According to <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-204D.pdf">NIST</a>, an entity's SSC can be defined as "a collection of steps that create, transform, and assess the quality and  policy conformance of software artifacts". From a developer's perspective, these steps span the entire SDLC and are accomplished using a wide range of components and tools. Common examples (by no means exhaustive) of components that are especially relevant from a developer's perspective include:</p>
 <ul>
-<li>CICD-SEC-1: Insufficient Flow Control Mechanisms</li>
-<li>CICD-SEC-2: Inadequate Identity and Access Management</li>
-<li>CICD-SEC-3: Dependency Chain Abuse</li>
-<li>CICD-SEC-4: Poisoned Pipeline Execution (PPE)</li>
-<li>CICD-SEC-5: Insufficient PBAC (Pipeline-Based Access Controls)</li>
-<li>CICD-SEC-6: Insufficient Credential Hygiene</li>
-<li>CICD-SEC-7: Insecure System Configuration</li>
-<li>CICD-SEC-8: Ungoverned Usage of Third-Party Services</li>
-<li>CICD-SEC-9: Improper Artifact Integrity Validation</li>
-<li>CICD-SEC-10: Insufficient Logging and Visibility</li>
+<li>IDEs and code editors</li>
+<li>Internally developed source code</li>
+<li>Third-party software libraries</li>
+<li>Version control systems (VCS)</li>
+<li>Build tools (Maven, Rake, make, Grunt, etc.)</li>
+<li>CI/CD software (Jenkins, CircleCI, TeamCity, etc.)</li>
+<li>Configuration management tools (Ansible, Puppet, Chef, etc.)</li>
+<li>Package management software and ecosystems (pip, npm, Composer, etc.)</li>
 </ul>
-<p>The remainder of this cheat sheet will focus on providing guidance for mitigating against these top 10 and other CI/CD risks.</p>
-<h2 id="secure-configuration">Secure Configuration<a class="headerlink" href="#secure-configuration" title="Permanent link">&para;</a></h2>
-<p>Time and effort must be invested into properly securing the components, such as SCM systems and automation servers (Jenkins, TeamCity, etc), that enable CI/CD processes. Regardless of the specific tools in use, one should never blindly rely on default vendor settings. At the same time, one must not adjust settings without fully understanding the implications, nor perform any needed configuration updates in an uncontrolled, entirely ad-hoc way. Change management and appropriate governance must be in place. Additionally, education is key; before leveraging a tool to perform critical, security sensitive operations such as code deployment, it is imperative one take time to understand the underlying technology. Secure configuration does not happen automatically; it requires education and planning.</p>
-<p>Furthermore, one must also take steps to ensure the security of the operating systems, container images, web servers, or other infrastructure used to run or support the CI/CD components identified above.  These systems must be kept appropriately patched, and an inventory of these assets, including software versions, should also be maintained. These technologies should be hardened according to standards such as <a href="https://www.cisecurity.org/cis-benchmarks">CIS Benchmarks</a> or <a href="https://public.cyber.mil/stigs/downloads/">STIGs</a> where appropriate.</p>
-<p>Beyond these general principles, some specific guideline relevant to CI/CD configuration will be explored below.</p>
-<h3 id="secure-scm-configuration">Secure SCM Configuration<a class="headerlink" href="#secure-scm-configuration" title="Permanent link">&para;</a></h3>
-<p>CI/CD environments allow for code to be pushed to a repository and then deployed to a production environment with little to no manual intervention. However, this benefit can quickly become an attack vector if it allows untrusted, potentially malicious code to be deployed directly to a production system. Proper configuration of the SCM system can help mitigate this risk. Best practices include:</p>
+<p>Each of these components must be secured; a flaw in a single component, such as a vulnerable third-party dependency or misconfigured VCS, can put an entire SSC in jeopardy. Thus, in order to strengthen Software Supply Chain Security (SCSS), developers should possess a general understanding of what the SSC is, common threats against it, and practices and techniques that can be applied to reduce SSC risk.</p>
+<h2 id="overview-of-threat-landscape">Overview of Threat Landscape<a class="headerlink" href="#overview-of-threat-landscape" title="Permanent link">&para;</a></h2>
+<p>Given the breadth and complexity of the SSC, it is unsurprising that the threat landscape for SSC is similarly expansive. Threats include <a href="https://fossa.com/blog/dependency-confusion-understanding-preventing-attacks/">dependency confusion</a>, compromise of an upstream providers infrastructure, theft of code signing certificates, and CI/CD system exploits. More broadly, threats may be grouped into four categories based upon what component of the supply chain they seek to compromise [<a href="#references">4,5</a>]:</p>
 <ul>
-<li>Avoid the use of auto-merge rules in platforms such as <a href="https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html">Gitlab</a>, <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/automatically-merging-a-pull-request">Github</a>, or Bitbucket.</li>
-<li>Require pull requests to be reviewed before merging and ensure this review step cannot be bypassed.</li>
-<li>Leverage <a href="https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches">protected branches</a>.</li>
-<li>Require commits to be signed</li>
-<li>Carefully weigh the risk against the benefits of allowing ephemeral contributors. Limit the number and permissions of external contributions when possible.</li>
-<li>Enable MFA where available</li>
+<li>Source code threats. These type of threats focus on violating the integrity of a source code which is then built and and deployed or potentially consumed by other software projects. Threats in this category include VCS exploits, the introduction of malicious or vulnerable code into a code base, or building code from an unauthorized branch.</li>
+<li>Build environment threats. These threats modify a software artifact but without altering the underlying source code or exploiting the build process itself. Examples include build cache poisoning, compromising a privileged account used by the build system, or publishing software built from an untrusted source.</li>
+<li>Dependency related threats. Threats that result from the consumption of both direct and transitive software dependencies. The most common threat is using a vulnerable or compromised dependency.</li>
+<li>Deployment and runtime threats. These threats exploit either the deployment process or runtime environment. Common examples include compromising a privilege CI/CD account, software misconfigurations, and deployment of compromised binaries.</li>
 </ul>
-<h3 id="pipeline-and-execution-environment">Pipeline and Execution Environment<a class="headerlink" href="#pipeline-and-execution-environment" title="Permanent link">&para;</a></h3>
-<p>In addition to SCM systems, it is imperative that the automation servers responsible for running the pipelines are also configured securely. Examples of these technologies include Travis, TeamCity, Jenkins, and CircleCI. While the exact hardening process will vary according to the specific platform used, some general best practices include:</p>
+<p>The characteristics of threat actors seeking exploit the SSC are similarly diverse. Although SSC compromise is often associated with highly sophisticated threat actors, such sophistication is not inherently necessary for attacking the SSC, especially if the attack focuses on compromising the SSC of entities with poor security practices. Threat actor motive also varies widely, A SSC exploit can result in loss of confidentiality, integrity, and/or availability of any organization's assets and thus fulfill a wide range of attacker goals such as espionage or financial gain.</p>
+<p>Finally, it must be recognized that many SSC threats have the capability to propagate across many entities. This is due to consumer-supplier relationship that is integral to an SSC. For example, uf a large-scale software supplier, whether proprietary or open-source, is compromised, many downstream, consuming entities could also be impacted as a result. The 2020 Solarwind and 2021 Codecov incidents are excellent real-world examples of this.</p>
+<h2 id="mitigations-and-security-best-practices">Mitigations and Security Best Practices<a class="headerlink" href="#mitigations-and-security-best-practices" title="Permanent link">&para;</a></h2>
+<p>Mitigating SSC related risk can seem daunting, yet it need not be. Even for sophisticated attacks that may focus on compromising upstream suppliers, individual organization can take reasonable steps to defend its own assets and mitigate risk even if its supplier is compromised. Although some parts of SSCS may remain outside direct control of development teams, those teams must still do their part to improve SSCS in their organization; the guidance below is intended as starting point for developers to do just that.</p>
+<h3 id="general">General<a class="headerlink" href="#general" title="Permanent link">&para;</a></h3>
+<p>The practices described below are general techniques that can be used to mitigate risk related to a wide variety of threat types.</p>
+<h4 id="implement-strong-access-control">Implement Strong Access Control<a class="headerlink" href="#implement-strong-access-control" title="Permanent link">&para;</a></h4>
+<p>Compromised accounts, particularly privileged ones, represents a significant threats to SSCs. Account takeover can allow an attacker can perform a variety of malicious acts including i^njecting code into legitimate dependencies, manipulating CI/CD pipeline execution, and replacing a benign artifact with a malicious one. Strong access control for build, development, version control, and similar environments is thus critical. Best practices include adhering to  the basic security principles of least privileges and separation of duties, enforcing MFA, rotating credentials, and ensuring credentials are never stored or transmitted in clear text or committed to source control.</p>
+<h4 id="logging-and-monitoring">Logging and Monitoring<a class="headerlink" href="#logging-and-monitoring" title="Permanent link">&para;</a></h4>
+<p>When considering SSCS, the importance of detective controls should not be overlooked; these controls are essential for detecting attacks and enabling prompt respond. In the context of SSCS, logging is critical. All systems involved in the SSC, including VCS, build tools, delivery mechanisms, artifact repositories, and the systems responsible for running applications should be configured to log authentication attempts, configuration changes, and other events that could assist in identifying anomalous behavior or that could prove crucial for incident response efforts. Logs throughout the SSC must be sufficient in both depth and breadth to support detection and response</p>
+<p>However, logging events is not sufficient. These logs must be monitored, and, if necessary, acted upon. A centralized SIEM, log aggregator, or similar tool is preferred, especially given the complexity of SSCs. Regardless of the technology used, the basic objective remains the same: log data should be actionable.</p>
+<h4 id="leverage-security-automation">Leverage Security Automation<a class="headerlink" href="#leverage-security-automation" title="Permanent link">&para;</a></h4>
+<p>For complex SSCs, automation of security tasks, such as scanning, monitoring, and testing is critical. Such automation, while not a replacement for manual reviews and other actions performed by skilled professionals, is capable of detecting, and in some cases responding to, vulnerabilities and potential attacks with a scale and consistency that is hard to achieve through manual human intervention. Types of tools that support automation include SAST, DAST, SCA, container image scanners and more. The exact tools most capable of delivering value to an organization will vary significantly based on the characteristics of the organization. However, regardless of the type of tools and vendors used, it is important to acknowledge that these tools themselves must be mainlined, secured, and configured correctly. Failure to do so could actually increase SSC risk for an organization, or at the very least, fail to bring meaningful benefit to the organization. Finally, it must be clearly understood that these tools are but one component of an overall SSCS program; they cannot be considered a comprehensive solution or be relied on to identify all vulnerabilities.</p>
+<h3 id="mitigating-source-code-threats">Mitigating Source Code Threats<a class="headerlink" href="#mitigating-source-code-threats" title="Permanent link">&para;</a></h3>
+<p>The practices described below can help reduce SSC risk associated with source code and development.</p>
+<h4 id="peer-reviews">Peer Reviews<a class="headerlink" href="#peer-reviews" title="Permanent link">&para;</a></h4>
+<p>Manual code reviews are an important, relatively low cost technique for reducing SSC risk; these reviews can act as both detective controls and deterrents. Reviews should be performed by peers possessing both experience in the technology being used and secure coding processes and should occur before code is merged within a source control systems [<a href="#references">3</a>]. The reviews should look for both unintentional security flaws as well as intentional code that could serve malicious purposes. The results of the review should be documented for later review if needed.</p>
+<h4 id="secure-config-of-version-control-systems">Secure Config of Version Control Systems<a class="headerlink" href="#secure-config-of-version-control-systems" title="Permanent link">&para;</a></h4>
+<p>Compromise or abuse of the source control system is consistently recognized as a significant SSC risk [<a href="#references">4,5</a>]. The general security best practices of strong access control and logging and monitoring are two methods to help secure VCS. Security features specific to the VCS system, such as protected branches and merge policies in git, should also be leveraged. Regardless of any security controls added a VCS, it must be remember that secrets should never be committed to these systems.</p>
+<h4 id="secure-development-platform">Secure Development Platform<a class="headerlink" href="#secure-development-platform" title="Permanent link">&para;</a></h4>
+<p>IDEs, development plugins, and similar tools can help assist the development process. However, like all pieces of software, these components can have vulnerabilities and become an attack vector. Thus, it is important to take steps not only to ensure these tools are used securely, but also to secure the underlying system. The development system should have endpoint security software installed and should have threat assessments performed against it [<a href="#references">2</a>]. Only trusted, well-vetted software should be used in the development process; this includes not only "core" development tools such as IDEs, but also any plugins or extensions.  Additionally, these tools should be included as part of an organization's system inventory.</p>
+<h3 id="mitigating-dependency-threats">Mitigating Dependency Threats<a class="headerlink" href="#mitigating-dependency-threats" title="Permanent link">&para;</a></h3>
+<p>Best practices and techniques related to secure use of dependencies are described below.</p>
+<h4 id="assess-suppliers">Assess Suppliers<a class="headerlink" href="#assess-suppliers" title="Permanent link">&para;</a></h4>
+<p>Before incorporating a third-party service, product, or software component into the SSC, the vendor and specific offering should both be thoroughly assessed for security. This applies to both open-source and proprietary offerings. The form and extent of the analysis will vary substantially in accordance with both the criticality and nature of the component being considered. Component maturity, security history, and the vendor's response to past vulnerabilities are useful information in nearly any case. For larger vendors or service offerings, determining whether or not a solution has been evaluated against third-party assessments and certifications, such as those performed against <a href="https://marketplace.fedramp.gov/products">FedRAMP</a>, <a href="https://cloudsecurityalliance.org/star/registry">CSA</a>, or various ISO standards (ISO/IEC 27001, ISO/IEC 15408,
+ISO/IEC 27034), can be a useful data point, but must not be relied on exclusively.</p>
+<p>Due to its transparent nature, open-source projects offer additional assessment opportunities. Questions to consider include [<a href="#references">6</a>]:</p>
 <ul>
-<li>Perform builds in appropriately isolated nodes (see Jenkins example <a href="https://www.jenkins.io/doc/book/security/controller-isolation/">here</a>)</li>
-<li>Ensure communication between the SCM and CI/CD platform is secured using widely accepted protocols such as TLS 1.2 or greater.</li>
-<li>Restrict access to CI/CD environments by IP if possible.</li>
-<li>If feasible, store the CI config file outside the repository that is hosting the code being built. If the file is stored alongside the code, it is imperative that the file is reviewed before any merge request is approved.</li>
-<li>Enable an appropriate level of logging (discussed more under <a href="#visibility-and-monitoring">Visibility and Monitoring</a> below)</li>
-<li>Incorporate language appropriate SAST, DAST, IaC vulnerability scanning and related tools into the pipeline.</li>
-<li>Require manual approval and review before triggering production deployment.</li>
-<li>If pipelines steps are executed in  Docker image, avoid using the <code>--privileged</code> flag <a href="https://research.nccgroup.com/2022/01/13/10-real-world-stories-of-how-weve-compromised-ci-cd-pipelines/">ref</a></li>
-<li>Ensure the pipeline configuration code is version controlled (<a href="https://www.cisa.gov/sites/default/files/publications/ESF_SECURING_THE_SOFTWARE_SUPPLY_CHAIN_DEVELOPERS.PDF">ref</a>)</li>
-<li>Enforce MFA where possible</li>
+<li>Is the project actively maintained?</li>
+<li>Is the project sufficiently popular and well-known in the applicable community?</li>
+<li>Is the project sufficiently mature?</li>
+<li>Is the product or version being evaluated a "release" version, e.g. not an alpha, beta, or comparable versions?</li>
+<li>Given the complexity of the project, does the project have a sufficient number of maintainers and contributors?</li>
+<li>Does the project keep its dependencies updated?</li>
+<li>Does the project have sufficient test coverage and do the tests include security relevant rules?</li>
+<li>Is the project well-documented and does the document include guidance on how to use the component securely?</li>
+<li>Does the project have an established and documented process for reporting vulnerabilities and are these vulnerabilities addressed in a timely manner?</li>
+<li>Is the intended usage of the project consistent with the project's license?</li>
 </ul>
-<h2 id="iam">IAM<a class="headerlink" href="#iam" title="Permanent link">&para;</a></h2>
-<p>Identity and Access Management (IAM) is the process of managing digital identities and controlling their access to digital resources. Examples of identities include system accounts, roles, groups, or individual user accounts. IAM has wide applications well beyond CI/CD, but mismanagement of identities and their underlying credentials are among the most prominent risks impacting CI/CD environments. The following subsections will highlight some IAM related security best practices that are especially relevant to CI/CD environments.</p>
-<h3 id="secrets-management">Secrets Management<a class="headerlink" href="#secrets-management" title="Permanent link">&para;</a></h3>
-<p>Secrets, such as API keys or passwords, are often required for a CI/CD pipeline to execute successfully. Secrets in CI/CD environment are often numerous, with at least some providing substantial access to sensitive systems or operations. This combination introduces a challenge: how does one securely manage secrets while also allowing automated CI/CD processes to access them as needed? Following some simple guidelines can help substantially mitigate, though certainly not eliminate, risk.</p>
-<p>First, one should take steps to reduce the likelihood that secrets can be stolen in a usable format. Secrets should <strong>never</strong> be hardcoded in code repositories or CI/CD configuration files. Employ tools such as <a href="https://github.com/gitleaks/gitleaks">git-leaks</a> or <a href="https://github.com/awslabs/git-secrets">git-secrets</a> to detect such secrets. Strive to prevent secrets from ever being committed in the first place and perform ongoing monitoring to detect any deviations. Secrets must also be removed from other artifacts such as Docker images and compiled binaries. Secrets must  always be encrypted using industry accepted standards. Encryption must be applied while secrets are at-rest in a file-system, vault, or similar store; however, one must also ensure these secrets are not disclosed or persisted in cleartext as a consequence of use in the CI/CD pipeline. For example, secrets must not be printed out to the console, logged, or stored in a system's command history files (such as <code>~/.bash-history</code>). A third-party solution such as <a href="https://www.hashicorp.com/products/vault">HashiCorp Vault</a>, <a href="https://aws.amazon.com/secrets-manager/">AWS Secrets Manager</a>, <a href="https://www.akeyless.io/">AKeyless</a>, or <a href="https://www.cyberark.com/">CyberArk</a> may be used for this purpose.</p>
-<p>Second, one must take steps to reduce impact in the event that secrets are stolen in a format that is usable by an attacker. Using temporary credentials or OTPs is one method for reducing impact. Furthermore, one may impose IP based or other restrictions that prevent even valid credentials from accessing resources if these further requirements are not met.The <a href="#least-privilege">Least Privilege</a> and <a href="#identity-lifecycle-management">Identity Lifecycle Management</a> sections below provide further guidance on techniques to mitigate risk related to secrets theft.</p>
-<p>For additional guidance on securely managing secrets, please reference the <a href="Secrets_Management_Cheat_Sheet.html">Secrets Management Cheat Sheet</a>.</p>
-<h3 id="least-privilege">Least Privilege<a class="headerlink" href="#least-privilege" title="Permanent link">&para;</a></h3>
-<p>Least privilege, defined by <a href="https://csrc.nist.gov/glossary/term/least_privilege">NIST</a> as:</p>
-<blockquote>
-<p>The principle that a security architecture is designed so that each entity is granted the minimum system resources and authorizations that the entity needs to perform its function".</p>
-</blockquote>
-<p>In the context of CI/CD environments, this principle should be applied to at least three main areas: the secrets used within pipeline steps to access external resources, the access one pipeline or step has to other resources configured in the CI/CD platform (Palo Alto Networks, n.d.), and the permissions of the OS user executing the pipeline.</p>
-<p>Regardless of the specific application, the general guidance remains the same: access must be justified, not assumed. One should adopt a "deny by default" mindset. Any identities used within the pipeline must be assigned only the minimum permissions necessary to do its job. For example, if a pipeline must access an AWS service in order to complete its task, the AWS credentials used in that pipeline must only be able to perform the specific operations on the  specific services and resources it requires to perform its task. Similarly, credential sharing across pipelines should be kept to a minimum; in particular, such sharing should not occur across pipelines having different levels of sensitivity or value. If pipeline A does not require access to the same secrets pipeline B requires, they should ideally not be shared. Finally, the OS accounts responsible for running the pipeline should not have root or comparable privileges; this will help mitigate impact in case of compromise.</p>
-<h3 id="identity-lifecycle-management">Identity Lifecycle Management<a class="headerlink" href="#identity-lifecycle-management" title="Permanent link">&para;</a></h3>
-<p>Although proper secrets management and application of the principle of least privilege are necessary for secure IAM, they are not sufficient. The lifecycle of identities, from creation to deprovisioning, must be carefully managed to reduce risk for CI/CD and other environments.</p>
-<p>In the initial or "Joiner" phase of Identity Management (as defined in the <a href="https://www.idmanagement.gov/playbooks/ilm/">ILM Playbook</a>), considerations include using a centralized IdP rather than allowing local accounts, disallowing shared accounts, disallowing self-provisioning of identities, and only allowing email accounts with domains controlled by the organization responsible for the CI/CD environment (OWASP, n.d.). Once provisioned, identities must be tracked, maintained, and, when necessary, deprovisioned. Of particular concern in complex, distributed CI/CD environments is ensuring that an accurate, comprehensive, and up-to-date inventory of identities is maintained. The format of this inventory can vary by organizational needs, but, in addition to the identity itself, suggested fields include identity owner or responsible party, identity provider, last used, last updated, granted permissions, and permissions actually used by the identity. Such an inventory will help one readily identify identities which may be over-privileged or which may be candidates for deprovisioning. Proper identity maintenance must not be overlooked; the "forgotten" identity can be the vector an attacker users to compromise a CI/CD system.</p>
-<h2 id="managing-third-party-code">Managing Third-Party Code<a class="headerlink" href="#managing-third-party-code" title="Permanent link">&para;</a></h2>
-<p>Due, in part, to high-profile breaches such as SolarWinds, the concept of software supply chain security has received increasing attention in recent years. This issue is especially pressing in the context of CI/CD as such environments interact with third-party code in multiple ways. Two such areas of interaction, the dependencies used by projects running within the pipeline and the third-party integrations and plug-ins with the CI/CD system itself will be discussed below.</p>
-<h3 id="dependency-management">Dependency Management<a class="headerlink" href="#dependency-management" title="Permanent link">&para;</a></h3>
-<p>Using third-party packages with known vulnerabilities is a well-known problem in software engineering, and many tools have been developed to address this. In the context of CI/CD, automated use of SCA and comparable tools can actually assist in improving security in this area. However, the CI/CD environment itself is susceptible to a different, but related, risk: dependency chain abuse.</p>
-<p>Dependency chain abuse involves the exploitation of flaws within a system's dependency chain and dependency resolution processes; a successful attack can result in the execution of malicious code from an attacker controlled package. The dependency chain itself refers to the set of packages, including internal, direct third-party, and transitive dependencies, that a software solution requires to function. An attacker can take advantage of this dependency chain through methods such as <a href="https://fossa.com/blog/dependency-confusion-understanding-preventing-attacks/">dependency confusion</a>, <a href="https://blog.gitguardian.com/protecting-your-software-supply-chain-understanding-typosquatting-and-dependency-confusion-attacks/">typosquatting</a>, or takeover of a valid package maintainer's account. Dependency chain abuse attacks can be quite complex and comprehensive defense is correspondingly so; however, basic mitigation are quite straightforward.</p>
-<p>Mitigation techniques begin early on in the SDLC, well before the CI/CD pipeline begins execution. The project's package management technology (such as npm) should be configured in such a way as to ensure dependency references are immutable (CISA et al. 2022). Version pinning should be performed, the version chosen for pinning must be one that is known to be valid and secure, and the integrity of any package the system downloads should be validated by comparing its hash or checksum to a  known good hash of the pinned package. The exact procedures to achieve this will vary depending on the project's underlying technology, but, in general, both version pinning and hash verification can be performed via a platform's "lock" or similar file (i.e. <a href="https://docs.npmjs.com/cli/v7/configuring-npm/package-lock-json">package-lock.json</a> or  <a href="https://pipenv.pypa.io/en/latest/pipfile.html">Pipfile.lock</a>). Prefer using private repositories where possible, and configure the package manager to use only a single private feed (Microsoft, 2021). For private packages, leverage <a href="https://docs.npmjs.com/cli/v10/using-npm/scope">scoped NPM packages</a>,  <a href="https://learn.microsoft.com/en-us/nuget/nuget-org/id-prefix-reservation">ID prefixes for NuGet packages</a>, or a comparable feature to reduce the risk of dependency confusion. Finally, regardless of the platform used, ensure the file(s) responsible for controlling these settings (such as <code>.npmrc</code> in node environments), is committed to source control and accessible in the CI/CD environment.</p>
-<h3 id="plug-in-and-integration-management">Plug-In and Integration Management<a class="headerlink" href="#plug-in-and-integration-management" title="Permanent link">&para;</a></h3>
-<p>Most CI/CD platforms are extensible through means of plug-ins or other third-party integrations. While these extensions can introduce many benefits, including potentially improving the security capabilities of the system, they also increase the attack surface. This is not to say that plug-ins should necessarily be disallowed; rather, the risk must simply be considered and reduced to an acceptable level.</p>
-<p>Installation of plug-ins or integration with third-party services should be treated like the acquisition of any software. These tools are often easy to install and setup, but this does not mean their installation and usage should go ungoverned. Least privileges must be enforced to ensure only a small subset of users even have the permissions required to extend CI/CD platforms. Additionally, such extentions must be vetted before installation. Questions to consider are comparable to those that should be asked before any software acquisition:</p>
+<h4 id="understand-and-monitor-software-dependencies">Understand and Monitor Software Dependencies<a class="headerlink" href="#understand-and-monitor-software-dependencies" title="Permanent link">&para;</a></h4>
+<p>While third-party software dependencies can greatly accelerate the development process, they are also one of the leading risks associated with modern applications. Dependencies must not only be carefully selected before they are incorporated into an application, but also carefully monitored and maintained throughout the SDLC. In order achieve this, having insight into the various dependencies consumed by software is a crucial first step. To facilitate this, SBOMs may be used. Both production and consumption of these SBOMs should be automated, preferably as part of the  organization's CI/CD process.</p>
+<p>Once the organization has inventoried depdencies, it must also monitor them for known vulnerabilities. This should also be automated as much as possible; tools such as <a href="https://owasp.org/www-project-dependency-check/">OWASP Dependency Check</a> or <a href="https://retirejs.github.io/retire.js/">retire.js</a> can assist in this process. Additionally, sources such as the <a href="https://nvd.nist.gov/">NVD</a>, <a href="https://osv.dev/list">OSVDB</a>, or <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">CISA KEV catalog</a> may also be monitored for known vulnerabilities related to dependencies used in the organization's SSC.</p>
+<h4 id="sast">SAST<a class="headerlink" href="#sast" title="Permanent link">&para;</a></h4>
+<p>Although using SAST to detect potential security in custom developed code is a widely used security technique, it can also be used on OSS components within the SSC [<a href="#references">2</a>]. As when using SAST on internally developed code, one must recognize that these tools can produce both false positives and false negatives. Thus, SAST results must not be accepted without manual verification and should not be interpreted as providing a comprehensive view of the project's security. However, as long as their limitations are understood, SAST scans can prove useful when analyzing both internally developed or OSS code.</p>
+<h4 id="lockfileversion-pinning">Lockfile/Version Pinning<a class="headerlink" href="#lockfileversion-pinning" title="Permanent link">&para;</a></h4>
+<p>To reduce the likelihood that a compromised or vulnerable version is unwittingly pulled into an application, one should limit the applications dependencies to a specific version that has been previously verified as legitimate and secure. This is commonly accomplished using lockfiles such as the package-lock.json file used by npm.</p>
+<h3 id="build-threats">Build Threats<a class="headerlink" href="#build-threats" title="Permanent link">&para;</a></h3>
+<p>The section below describes techniques that are especially relevant for securing build related threats.</p>
+<h4 id="inventory-build-tools">Inventory Build Tools<a class="headerlink" href="#inventory-build-tools" title="Permanent link">&para;</a></h4>
+<p>Knowing the components used in the SSC is essential to the security of that SSC. This concept extends to build tools. An inventory of all build tools, including versions and any plugins, should be automatically collected and mainlined, One must also monitor vulnerability databases, vendor security advisories and other sources for any vulnerabilities related to the identified build tools.</p>
+<h4 id="harden-build-tools">Harden Build Tools<a class="headerlink" href="#harden-build-tools" title="Permanent link">&para;</a></h4>
+<p>Compromised build tools can enable a wide range of exploits and thus represent an appealing target for attackers. As such, all infrastructure and tools used in build process must be hardened to mitigate risk. Techniques for hardening build environments include [<a href="#references">2</a>]:</p>
 <ul>
-<li>Is the vendor a recognized and respected developer or company?</li>
-<li>Does the vendor have a strong or weak history in regards to application security?</li>
-<li>How popular is the specific plug-in or integration endpoint?</li>
-<li>Is the plugin or integration actively maintained?</li>
-<li>Will the extension require configuration changes that could reduce security (such as exposing additional ports)?</li>
-<li>Does the organization have the experience and resources to properly configure and maintain the offering?</li>
+<li>Ensure build tools are located in an appropriately segregated networks.</li>
+<li>Use DLP and other tools and techniques to detect and prevent exfiltration.</li>
+<li>Disable/remove any unused services.</li>
+<li>Use version control systems to manage and store pipeline configurations.</li>
 </ul>
-<p>After a plug-in or other integration has been approved, it must be incorporated into the organization's configuration management processes. The software must be kept up-to-date, especially with any security patches that become available. The extension must also be continually reviewed for value; if it is no longer needed, the extension should be removed.</p>
-<h2 id="integrity-assurance">Integrity Assurance<a class="headerlink" href="#integrity-assurance" title="Permanent link">&para;</a></h2>
-<p>CI/CD exploits often require attackers to insert themselves into the normal flow of the pipeline and modify the inputs and/or outputs of one or more steps. As such, integrity verification is an important method of reducing risk in CI/CD environments.</p>
-<p>As with many other defensive actions, implementation of integrity related controls begins early in the SDLC. As noted earlier, the SCM should require commits to be signed before the code can be merged. Also, as discussed in <a href="#dependency-management">Dependency Management</a>, the package management platform should be configured to use hashes or comparable to verify the integrity of a package. Code signing should also be employed; technologies such as <a href="https://www.sigstore.dev/">Sigstore</a> or <a href="https://www.signserver.org/">Signserver</a> may be used for this purpose. However, it is important to note that code signing and related technologies are not absolute guarantors of security; the code signing processes itself can be exploited. Please see <a href="https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.01262018.pdf">NIST's Security Considerations for Code Signing</a> for additional guidance on securing the code singing processes. Finally, integration of the <a href="https://in-toto.io/">in-toto.to</a> framework or similar can further assist in improving integrity within the CI/CD environment.</p>
-<h2 id="visibility-and-monitoring">Visibility and Monitoring<a class="headerlink" href="#visibility-and-monitoring" title="Permanent link">&para;</a></h2>
-<p>CI/CD environments can be complex and may often seem like a opaque-box to developers. However, visibility into these systems is critical for detecting potential attacks, better understand one's risk posture, and detecting and remediating vulnerabilities. Though their value is often underestimated, logging and log analysis are vital for providing visibility into CI/CD systems.</p>
-<p>The first step in increasing CI/CD visibility, is ensuring that the logging configuration within the CI/CD environment is compliant with your organization's log management policy. Beyond adherence to internal policies, configure the system to log data in a readily parsable format such as JSON or syslog. Carefully consider what content needs to be logged an at what verbosity. Although proper logging should allow for end-to-end visibility of the pipeline, more logging is not inherently better. One must not only consider the storage costs associated with logs, but also take care to avoid logging any sensitive data. For example, most authentication related events likely should be logged. However, one should never log plaintext passwords, authentication tokens, API keys, or similar secrets.</p>
-<p>Once an appropriate logging strategy has been defined and necessary configuration has been performed, one is ready to start utilizing these logs to reduce risk. Sending aggregate logs to a centralized log management system or, preferably, a SIEM is a first step for realizing the value of logs. If a SIEM is used, alert should be carefully configured, and regularly refined, in order to provide timely alerts of anomalies and potential attacks. The exact configuration will vary significantly depending on the CI/CD environment, SIEM platform, and other factors. For an overview of CI/CD observability within the context of the ELK Stack (a popular SIEM platform) refer to this <a href="https://www.elastic.co/guide/en/observability/current/ci-cd-observability.html#ci-cd-developers">article</a> or reference <a href="https://dzone.com/articles/jenkins-log-monitoring-with-elk">this article</a> for an alternative approach which can be readily adapted to a variety of CI/CD environments. It is important to keep in mind that SIEM alerts will never be 100% accurate in detecting CI/CD attacks. Both false positive and false negatives will occur. Such platforms should not be relied on unquestioningly, but they do provide important visibility into CI/CD environments and can act as important alert systems when thoughtfully configured.</p>
+<h4 id="enforce-code-signing">Enforce Code Signing<a class="headerlink" href="#enforce-code-signing" title="Permanent link">&para;</a></h4>
+<p>From a the perspective of software consumers, only accepting components which have been digitally signed and validating the signature before utilizing the software is an important task step in ensuring the component is authentic and has not been tampered with. For those performing code signing, it is imperative that the code signing infrastructure is thoroughly hardened. Failure to do so can result in compromise of the code signing system and lead further exploits, including those targeting consumers of the software.</p>
+<h4 id="use-private-artifact-repository">Use Private Artifact Repository<a class="headerlink" href="#use-private-artifact-repository" title="Permanent link">&para;</a></h4>
+<p>Using a private artifact repository increases the control an organization has over the various artifacts that are used within the SSC. Artifacts should be reviewed before being allowed in the private repository and organizations must ensure that usage of these repositories cannot be bypassed. Although usage of private repositories can introduce extra maintenance or reduce agility, they can also be an important component of SSCS, especially for sensitive or critical applications.</p>
+<h4 id="use-source-control-for-build-scritps-and-config">Use Source Control for Build Scritps and Config<a class="headerlink" href="#use-source-control-for-build-scritps-and-config" title="Permanent link">&para;</a></h4>
+<p>The benefits of VCSs can be realized for items beyond source control; this is especially true for config and scripts related to CI/CD pipelines. Enforcing version control for these files allows one to incorporate reviews, merge rules, and like controls into the config update process. Using VCS also increase visibility, allowing one easy visibility into any changes introduced, whether malicious or benign [<a href="#references">2</a>].</p>
+<h4 id="verify-provenanceensure-sufficient-metadata-is-generated">Verify Provenance/Ensure Sufficient Metadata is Generated<a class="headerlink" href="#verify-provenanceensure-sufficient-metadata-is-generated" title="Permanent link">&para;</a></h4>
+<p>Having assurance that an SSC component comes from a trusted source and has not been tampered with is a important part of SSCS. Generation and consumption of provenance, defined in <a href="https://slsa.dev/spec/v1.0/provenance">SLSA 1.0</a> as "the verifiable information about software artifacts describing where, when and how something was produced"cis an important part of this. The provenance should be generated by the build platform (as opposed to a local development system), be very difficult for attackers to forge, and contain all details necessary to accurately link the result back to the builder [<a href="#references">7</a>]. SLSA 1.0 compliant provenance can be generated using builders such as <a href="https://github.com/buildsec/frsca">FRSCA</a> or <a href="https://github.com/slsa-framework/slsa-github-generator">Github Actions</a> and verified <a href="https://github.com/slsa-framework/slsa-verifier?tab=readme-ov-file">using SLSA Verifier</a></p>
+<h4 id="ephemeral-isolated-builds">Ephemeral, Isolated Builds<a class="headerlink" href="#ephemeral-isolated-builds" title="Permanent link">&para;</a></h4>
+<p>Reuse and sharing of build environments may allow attackers to perform cache poising or otherwise more readily inject malicious code.  Builds should be performed in isolated, temporary ("ephemeral") environments. This can be achieved using technologies such as VMs or containers for builds and ensuring the environment is immediately destroyed afterward.</p>
+<h4 id="limit-use-of-parameters">Limit use of Parameters<a class="headerlink" href="#limit-use-of-parameters" title="Permanent link">&para;</a></h4>
+<p>Although passing user controllable parameters to a build process can increase flexibility, it also increases risk. If parameters can be modified by users in order to alter how a build is performed, an attacker with sufficient permission will also be able to modify the parameters and potentially compromise the build process [<a href="#references">8</a>]. One should thus make an effort to minimize or eliminate any user controllable build parameters.</p>
+<h3 id="deployment-and-runtime-threats">Deployment and Runtime Threats<a class="headerlink" href="#deployment-and-runtime-threats" title="Permanent link">&para;</a></h3>
+<p>The section below outlines a couple of techniques that can be used to protect software during the deployment and runtime phases.</p>
+<h4 id="scan-final-build-binary">Scan Final Build Binary<a class="headerlink" href="#scan-final-build-binary" title="Permanent link">&para;</a></h4>
+<p>Once the build process has finished, one should not simply assume that the final result is secure. Binary composition analysis can help detect exposed secrets, detect unauthorized components or content, and verify integrity [<a href="#references">2</a>]. This task should be performed by both suppliers and consumers.</p>
+<h4 id="monitor-deployed-software-for-vulnerabilities">Monitor Deployed Software for Vulnerabilities<a class="headerlink" href="#monitor-deployed-software-for-vulnerabilities" title="Permanent link">&para;</a></h4>
+<p>SSCS does not end with the deployment of the software; the deployed software must be monitored and maintained to reduce risk. New vulnerabilities, whether introduced due to an update or simply newly discovered (or made public), are a continual concern in software systems [<a href="#references">4</a>]. When performing this monitoring, a wholistic approached must be used; code dependencies, container images, web servers, and operating system components are just a sampling of items that must be consider.To support this monitoring, an accurate and up-to-date inventory of system components is critical. Additionally, insecure configuration changes must be monitored and acted upon.</p>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
-<h3 id="general-references">General References<a class="headerlink" href="#general-references" title="Permanent link">&para;</a></h3>
-<ul>
-<li><a href="https://www.cisa.gov/sites/default/files/publications/ESF_SECURING_THE_SOFTWARE_SUPPLY_CHAIN_DEVELOPERS.PDF">CISA, NSA, &amp; ODNI (2022). Securing the Software Supply Chain: Recommended Processes for Developers</a></li>
-<li><a href="https://azure.microsoft.com/mediahandler/files/resourcefiles/3-ways-to-mitigate-risk-using-private-package-feeds/3%20Ways%20to%20Mitigate%20Risk%20When%20Using%20Private%20Package%20Feeds%20-%20v1.0.pdf">Microsoft (2021). 3 Ways to Mitigate Risks Using Private Package Feeds</a></li>
-<li><a href="https://owasp.org/www-project-top-10-ci-cd-security-risks/">OWASP (n.d.). OWASP Top 10 CI/CD Security Risks</a></li>
-<li><a href="https://www.paloaltonetworks.com/cyberpedia/pipeline-based-access-controls-cicd-sec5">Palo Alto Networks (n.d.). What is Insufficient Pipeline-Based Access Controls</a></li>
-</ul>
-<h3 id="cicd-platforms">CI/CD Platforms<a class="headerlink" href="#cicd-platforms" title="Permanent link">&para;</a></h3>
-<ul>
-<li><a href="https://circleci.com/">CircleCI</a></li>
-<li><a href="https://www.jenkins.io/">Jenkins</a></li>
-<li><a href="https://www.signserver.org/">SignServer</a></li>
-<li><a href="https://www.jetbrains.com/teamcity/">TeamCity</a></li>
-<li><a href="https://www.jenkins.io/">TravisCI</a></li>
-</ul>
-<h3 id="iac-scanning">IaC Scanning<a class="headerlink" href="#iac-scanning" title="Permanent link">&para;</a></h3>
-<ul>
-<li><a href="https://www.sigstore.dev/">Checkov</a></li>
-<li><a href="https://www.kics.io/">Kics</a></li>
-<li><a href="https://www.sonarsource.com/">SonarSource</a></li>
-<li><a href="https://runterrascan.io/">TerraScan</a></li>
-</ul>
-<h3 id="integrity-verification-and-signing">Integrity Verification and Signing<a class="headerlink" href="#integrity-verification-and-signing" title="Permanent link">&para;</a></h3>
-<ul>
-<li><a href="https://in-toto.io/">In-toto</a></li>
-<li><a href="https://www.signserver.org/">SignServer</a></li>
-<li><a href="https://www.sigstore.dev/">SigStore</a></li>
-<li><a href="https://slsa.dev/">SLSA</a></li>
-</ul>
-<h3 id="secrets-management-tools">Secrets Management Tools<a class="headerlink" href="#secrets-management-tools" title="Permanent link">&para;</a></h3>
-<ul>
-<li><a href="https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html">AWS Secrets Manager</a></li>
-<li><a href="https://azure.microsoft.com/en-us/products/key-vault/">Azure Key Vault</a></li>
-<li><a href="https://www.cyberark.com/products/secrets-management/">CyberArk Secrets Management</a></li>
-<li><a href="https://cloud.google.com/security/products/security-key-management">Google Cloud Key Management</a></li>
-<li><a href="https://www.hashicorp.com/products/vault">HashiCorp Vault</a></li>
-</ul>
+<ol>
+<li><a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-204D.pdf">NIST SP 800-204D: Strategies for the Integration of Software Supply Chain Security in DevSecOps CI/CD Pipelines</a></li>
+<li><a href="https://media.defense.gov/2022/Sep/01/2003068942/-1/-1/0/ESF_SECURING_THE_SOFTWARE_SUPPLY_CHAIN_DEVELOPERS.PDF">Securing the Software Supply Chain: Recommended Practices Guide for Developers</a></li>
+<li><a href="https://cloud.google.com/software-supply-chain-security/docs/safeguard-source">Google Cloud Software Supply Chain Security: Safeguard Source</a></li>
+<li><a href="https://cloud.google.com/software-supply-chain-security/docs/attack-vectors">Google Cloud Software Supply Chain Security: Attack Vectors</a></li>
+<li><a href="https://slsa.dev/spec/v1.0/threats">SLSA 1.0: Threats</a></li>
+<li><a href="https://best.openssf.org/Concise-Guide-for-Evaluating-Open-Source-Software">OpenSSF: Concise Guide for Evaluating Open Source Software</a></li>
+<li><a href="https://slsa.dev/spec/v1.0/requirements#provenance-generation">SLSA 1.0: Requirements</a></li>
+<li><a href="https://cloud.google.com/software-supply-chain-security/docs/safeguard-builds">Google Cloud Security Supply Chain Security: Safeguard Builds</a></li>
+</ol>
 
 
 
