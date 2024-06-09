@@ -45,6 +45,47 @@ If you prefer a darker theme, there is a dark mode option for the cheat sheets. 
 If you wish to visit the project's GitHub repository, click on the repository link next to the search bar.
 ![Repository_Link](https://github.com/tylersnel/CheatSheetSeries/assets/67352917/8582725d-941f-4d2d-b38d-7986e2659cc6)
 
+### FAQs
+Here are some frequently asked questions (FAQs) for the OWASP Cheat Sheet Series website:
+
+#### General Information
+
+**Q: What is the OWASP Cheat Sheet Series?**  
+A: The OWASP Cheat Sheet Series is a collection of concise, high-value information on specific application security topics, created by various experts in the field.
+
+**Q: Who creates the cheat sheets?**  
+A: The cheat sheets are created by application security professionals who have expertise in the specific topics covered.
+
+**Q: What topics do the cheat sheets cover?**  
+A: The cheat sheets cover a wide range of application security topics, including but not limited to authentication, data validation, secure coding practices, and more.
+
+#### Access and Usage
+
+**Q: How can I access the cheat sheets?**  
+A: You can access the cheat sheets directly on the OWASP Cheat Sheet Series website. They are available for free to view and download.
+
+**Q: Can I use the cheat sheets in my projects?**  
+A: Yes, the cheat sheets are designed to be practical resources that you can use in your projects to enhance security practices.
+
+**Q: Are the cheat sheets regularly updated?**  
+A: Yes, the cheat sheets are periodically reviewed and updated to reflect the latest security practices and emerging threats.
+
+#### Contributions and Community
+
+**Q: Can I contribute to the cheat sheet series?**  
+A: Yes, contributions from the community are welcome. You can contribute by suggesting new topics, providing feedback, or updating existing cheat sheets.
+
+
+#### Licensing and Usage Rights
+
+**Q: Under what license are the cheat sheets available?**  
+A: Creative Commons Attribution-Share Alike 4.0 International
+
+**Q: Can I use the cheat sheets in my commercial projects?**  
+A: Yes, you can use the cheat sheets in commercial projects, provided you adhere to the terms of the open-source license under which they are released.
+
+These FAQs should help users understand the purpose, usage, and contributions related to the OWASP Cheat Sheet Series website.
+
 ### Troubleshooting Guide
 Refreshing the web page will fix most issues encountered. If the problem persists, close the browser, reopen the browser, and return to the cheat sheet website.
 Clear your cache and cookies or try a different browser. 
