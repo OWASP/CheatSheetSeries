@@ -36,8 +36,8 @@ If you prefer a darker theme, there is a dark mode option for the cheat sheets. 
 If you wish to visit the project's GitHub repository, click on the repository link next to the search bar.
 ![Repository_Link](https://github.com/tylersnel/CheatSheetSeries/assets/67352917/8582725d-941f-4d2d-b38d-7986e2659cc6)
 
-### FAQs
-Here are some frequently asked questions (FAQs) for the OWASP Cheat Sheet Series website:
+### FAQ
+Here are some frequently asked questions (FAQs) for the OWASP Cheat Sheet Series:
 
 #### General Information
 
