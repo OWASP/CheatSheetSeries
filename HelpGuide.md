@@ -13,7 +13,6 @@ Welcome to the Cheat Sheet Help Guide. This guide is designed to help you naviga
 
 ## Guides
 
-The main sections will vary based on the content of the cheat sheet. Generally there should be no more than half a dozen level 2 sections in the cheat sheet, with subsections created for these as required.
 ### Basic Navigation
 Navigation is easy. Just click on any cheat sheet or cheat sheet series you wish to see on the left side of the site. These links won't go away as you navigate so click away without getting lost.
 ![Help_Nav](https://github.com/tylersnel/CheatSheetSeries/assets/67352917/020de84c-e18f-477a-acd4-889617666308)
