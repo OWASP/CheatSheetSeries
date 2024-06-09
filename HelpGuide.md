@@ -1,13 +1,4 @@
-# Mandatory Markdown Format Rules
-
-**!!! REMOVE THIS SECTION BEFORE TO SUBMIT YOUR CHEAT SHEET VIA PULL REQUEST !!!**
-
-* Use this [editor and validation policy](https://github.com/OWASP/CheatSheetSeries#editor--validation-policy).
-* Use these [format rules](https://github.com/OWASP/CheatSheetSeries#conversion-rules).
-
 # `Help Guide` Cheat Sheet
-
-**Replace `Topic` with the topic you're tackling, such as `Authentication` and remove this line**
 
 ## Introduction
 
@@ -91,8 +82,7 @@ Refreshing the web page will fix most issues encountered. If the problem persist
 Clear your cache and cookies or try a different browser. 
 If the website is not loading, please check your internet connection. 
 
+### Feedback and Support
+admin@owasp.com
+https://owasp.org/slack/invite
 
-
-## References
-
-Any useful references to other useful resources that aren't linked inline elsewhere in the cheat sheet.
