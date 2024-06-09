@@ -2,12 +2,6 @@
 
 ## Introduction
 
-Provide high level information about the topic in order to introduce it to people that do not know it.
-
-You can add pointer to external sources if needed but at least give an overview allowing a reader to continue on the CS.
-
-You can also add schema or diagram in any part of the CS but be sure to respect the copyright of the source file.
-
 Welcome to the Cheat Sheet Help Guide. This guide is designed to help you navigate the website and make the most of the features and resources offered. The cheat sheets are packed with valuable information, and we want to ensure you have all the tools you need to use them effectively.
 
 ### What's Inside This Guide
