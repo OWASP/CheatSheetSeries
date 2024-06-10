@@ -2,15 +2,19 @@
 
 ## Introduction
 
-Pre-amble, maybe with an example of some common legacy system. 
+Legacy applications are applications that are recognised as being outdated but remain in active use. This may occur if a viable alternative to the application is not available, is currently infeasibly expensive, or if the application is highly bespoke and services a very niche role within an organisation's digital ecosystem. Legacy applications often introduce significant security risks to an organisation for the following reasons:
 
-## Inventory and Asset Management
-
-Keeping an asset inventory noting particularly high risk entry points into the legacy application environment. Might be a certain amount of treat modeling involved here too.
+- Legacy applications might have reached End-of-Life (EoL) meaning that the application no longer receives patching or vendor support. This drastically increases the risk of an unmitigated zero day being left in an exploitable state on the application.
+- Some applications have been built using technologies that are no longer conventionally used or taught to technical staff. This might mean that the knowledge required to troubleshoot fix vulnerabilities when they arise may be lacking.
+- Legacy applications may produce data in custom formats, use old interfaces or networking protocols that may stifle efforts to use data produced by the applications with services used for vulnerability management or security logging, such as a SIEM (Security Information and Event Management) solution.
 
 ## Access Controls
 
 Will be the content that deals with who and how these assets can be managed.
+
+## Inventory and Asset Management
+
+Keeping an asset inventory noting particularly high risk entry points into the legacy application environment. Might be a certain amount of treat modeling involved here too.
 
 ## Vulnerability Management
 
