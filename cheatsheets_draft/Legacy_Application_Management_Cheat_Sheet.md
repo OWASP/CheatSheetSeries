@@ -8,7 +8,7 @@ Legacy applications are applications that are recognised as being outdated but r
 - Some applications have been built using technologies that are no longer conventionally used or taught to technical staff. This might mean that the knowledge required to troubleshoot fix vulnerabilities when they arise may be lacking.
 - Legacy applications may produce data in custom formats, use old interfaces or networking protocols that may stifle efforts to use data produced by the applications with services used for vulnerability management or security logging, such as a SIEM (Security Information and Event Management) solution.
 
-There is no one-size fits all approach to securing legacy applications. The preferred approach will depend on factors such as the data stored and produced by the legacy application, whether the application and associated infrastructure has know vulnerabilities that cannot be patched, how much it is possible to restrict access to use of the legacy application.
+As there is no one-size fits all approach to securing legacy applications, this cheat sheet is intended to act as a resource offering some practical suggestions on securing legacy applications when alternatives to the use of legacy applications do not exist. The preferred approach will depend on factors such as the data stored and produced by the legacy application, whether the application and associated infrastructure has know vulnerabilities that cannot be patched, how much it is possible to restrict access to use of the legacy application.
 
 ## Inventory and Asset Management
 
@@ -25,17 +25,26 @@ As a more informal indicator of how conservative security measures to protect th
 - How criticial is the availability of the legacy application to your organisation's business continuity?
 - If an attacker were able to gain access to this application, is there a risk that they could use this to exfiltrate other information from or establish acess to a particularly privileged network or environment?
 
-## Access Controls
+## Authorization
 
-Will be the content that deals with who and how these assets can be managed.
+Authorization measures enforce rules around who can access a given resource and how they can establish access to that resource. Authorization is covered in significant depth in the [OWASP Authorization Cheat Sheet](/cheatsheets/Authorization_Cheat_Sheet.md).
+
+Specifically, when it comes to applying authorization controls to legacy systems, organisations should consider these to be inherently high risk. Therefore, the security principle of least privilege (allowing only as much access as is strictly required for staff/users to perform required roles and to facilitate business operations) particularly applies to the use of legacy software. Consider implementing the following as applicable:
+
+- Apply network authorization controls to the application. This might entail hosting the application within a restricted subnet and/or applying IP allow-listing to prevent users interacting particularly with public-facing legacy applications from arbitrary hosts.
+- If the above is not feasible, authorization controls could be considered at a more granular level, for example, restricting lower privileged users from performing administrative functionality or having access to administrative interfaces.
+- Ensure that only authenticated users can access the application. This might be enforced by the application itself, by use of an IdP (Identity Provider) service. If the application is hosted in a restricted network environment, authentication should also be required to access this network environment. Implementing one or more of these controls will both slow down an attacker and will assist with investigations if an incident were to occur. See the [OWASP Authentication Cheet Sheet](/cheatsheets/Authentication_Cheat_Sheet.md) for further information pertaining to authentication management.
+- For situations where an application is hosted/supported by on premises infrastructure, like physical web and database servers, disable ports that can be used for access to management interfaces, e.g. IPMI (Intelligent Platform Management Interface).
 
 ## Vulnerability Management
 
-Program expectations for vulnerability management. 
+**Vulnerability Scanning:** Legacy applications should be subject to regular vulnerability scanning with an industry standard vulnerability assessment tool, such as Nessus and Qualys. This should occur on a regular basis, ideally with scans scheduled to occur automatically at some time interval. Where appropirate, some vulnerabilities might also be identified using code scanning tools, such as a SAST (Static Application Security Testing) tool or SCA (Software Composition Analysis) for checking the currency of dependencies used to support the application.
+
+**Patch Management:** Where possible, apply patches raised by the tools described above. Patching efforts should be prioritized on the basis of the severity of the vulnerability and whether the vulnerability has a published CVE (Common Vulnerabilities and Exposures) and a publicly listed exploit. In circumstances where patching is not practically possible for the legacy application, consider applying additional restrictions to the application/affected component as noted in the section on Authorization.
 
 ## Data Storage
 
-How we handle data at rest and in transmission; can we encrypt data associated with the legacy system at all.
+Confirm that, where ever possible, data handled by the application is both encrypted at rest (i.e. when stored in a database) and in transit. Cheat Sheets on [Cryptographic Storage](/cheatsheets/Cryptographic_Storage_Cheat_Sheet.md) and [HTTP Strict Transport Security](/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.md) may provide some useful further context. In some circumstances legacy applications might be restricted to the use of older network protocols that only support tranmission of data in clear-text. In this case and particularly if it is expected that sensitive data will be transmitted to and from the application in its network environment, it is especially important to apply the most restrictive network conditions possible to the application, which in extreme cases might necessitate temporary or permanent air-gapping (functional isolation) of the application.
 
 ## Ensuring Maintainability
 
@@ -54,5 +63,3 @@ Keeping staff trained, having appropriate logging up and running so that it is p
 Backups, staff procedures, etc..
 
 ## References
-
-A
