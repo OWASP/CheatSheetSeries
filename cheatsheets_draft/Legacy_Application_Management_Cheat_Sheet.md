@@ -48,7 +48,10 @@ Confirm that, where ever possible, data handled by the application is both encry
 
 ## Ensuring Maintainability
 
-Staff training, having more than 1 person able to assist with troubleshooting the legacy application.
+It may be necessary to maintain a high degree of institutional expertise regarding the application, so that it is possible for staff to both remediate security vulnerabilities and troubleshoot the application when needed to ensure business continuity. The following recommendations apply:
+
+- Ideally more than one staff member should be adequately trained to the extent of being able to resolve basic bugs or troubleshoot/reconfigure the legacy application as needed. This will reduce the risk of catastrophic loss of capability regarding maintanence of the legacy application if one member of staff leaves the organisation.
+- Encourage staff to regularly document processes including recording troubleshoot guides for common failure scenarios for the legacy application.
 
 ## Change Management
 
