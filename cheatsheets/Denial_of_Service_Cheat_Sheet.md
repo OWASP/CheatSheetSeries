@@ -14,13 +14,13 @@ Because anti-DoS methods cannot be one-step solutions, your developers and appli
 
 ![DDOSFlow](../assets/Denial_of_Service_Cheat_Sheet_FlowDDOS.png)
 
-This DoS system inventory should look for potential places where DoS attacks can cause problems and highlight single point of system failures, which can range from programming related errors to resource exhaustion. It should give you a clear picture of what issues at stake (e.g. bottlenecks, etc.). **To resolve problems, a solid understanding of your environment is essential to develop suitable defence mechanisms**. These could be aligned with:
+This DoS system inventory should look for potential places where DoS attacks can cause problems and highlight any single points of system failures, which can range from programming related errors to resource exhaustion. It should give you a clear picture of what issues are at stake (e.g. bottlenecks, etc.). **To resolve problems, a solid understanding of your environment is essential to develop suitable defence mechanisms**. These could be aligned with:
 
 1. Scaling options (**up** = inner hardware components, **out** = the number of complete components).
 2. Existing conceptual / logical techniques (such as applying redundancy measurements, bulk-heading, etc. - which expands your in-house capabilities).
 3. A cost analysis applied to your situation.
 
-This document adopts a specific guidance structure from CERT-EU to analyze this subject, which you may need to change depending on your situation. It is not a complete approach but it will help you create fundamental blocks which should be utilized to assist you in constructing anti-DoS concepts fitting to your needs.
+This document adopts a specific guidance structure from CERT-EU to analyze this subject, which you may need to change depending on your situation. It is not a complete approach but it will help you create fundamental blocks which should be utilized to assist you in constructing anti-DoS concepts fitting your needs.
 
 ### Analyzing DoS attack surfaces
 
@@ -28,7 +28,7 @@ In this cheat sheet, we will use the DDOS classification as documented by CERT-E
 
 #### 1) Overview of potential DoS weaknesses
 
-It is important to understand that each of these three attack categories needs to be considered when designing a DoS resilient solution:
+It is important to understand that each of these three attack categories needs to be considered when designing a DoS-resilient solution:
 
  **Application attacks** focus on rendering applications unavailable by exhausting resources or by making it unusable in a functional way.
 
@@ -36,13 +36,13 @@ It is important to understand that each of these three attack categories needs t
 
  **Network (or volumetric) attacks** focus on saturating the bandwidth of the network resource.
 
-Note that OSI model layer 1 and 2 are not included in this categorization, so we will now discuss these layers and how DoS applies to them.
+Note that OSI model layers 1 and 2 are not included in this categorization, so we will now discuss these layers and how DoS applies to them.
 
-The **physical layer** consists of the networking hardware transmission technologies of a network. It is a fundamental layer underlying the logical data structures of the higher-level functions in a network. Typical DoS scenarios that involve the physical layer involve system destruction, obstruction, and malfunction. For example, a Georgian elderly woman sliced through an underground cable, resulting in loss of internet for the whole of Armenia.
+The **physical layer** consists of the networking hardware transmission technologies of a network. It is a fundamental layer underlying the logical data structures of the higher-level functions in a network. Typical DoS scenarios that involve the physical layer involve system destruction, obstruction, and malfunction. For example, a Georgian elderly woman sliced through an underground cable, resulting in the loss of internet for the whole of Armenia.
 
 The **data layer** is the protocol layer that transfers data between adjacent network nodes in a wide area network (WAN) or between nodes on the same local area network (LAN) segment. Typical DoS scenarios are MAC flooding (targeting switch MAC tables) and ARP poisoning.
 
-In **MAC flooding attacks**, a switch is flooded with packets that all have different source MAC addresses. The goal of this attack is to consume the limited memory used by a switch to store the MAC and physical port translation table (MAC table), which causes valid MAC addresses to be purged and forces the switch to enter a fail-over mode where it becomes a network hub. If this occurs, all data forwarded to all ports, resulting in a data leakage.
+In **MAC flooding attacks**, a switch is flooded with packets that all have different source MAC addresses. The goal of this attack is to consume the limited memory used by a switch to store the MAC and physical port translation table (MAC table), which causes valid MAC addresses to be purged and forces the switch to enter a fail-over mode where it becomes a network hub. If this occurs, all data is forwarded to all ports, resulting in a data leakage.
 
 [Future additions to sheet: The impact in relation to DoS and document compact remediation]
 
@@ -52,7 +52,7 @@ Packet filtering technology can be used to inspect packets in transit to identif
 
 ## Application attacks
 
-**Application layer attacks usually make applications unavailable by exhausting system resources or by making it unusable in a functional way.** These attacks do not have to consume the network bandwidth to be effective. Rather they place an operational strain on the application server in such a way that the server becomes unavailable, unusable or non-functional. All attacks exploiting weaknesses on OSI layer 7 protocol stack are generally categorised as application attacks. They are most challenging to identify/mitigate.
+**Application layer attacks usually make applications unavailable by exhausting system resources or by making it unusable in a functional way.** These attacks do not have to consume the network bandwidth to be effective. Rather they place an operational strain on the application server in such a way that the server becomes unavailable, unusable or non-functional. All attacks exploiting weaknesses on OSI layer 7 protocol stack are generally categorised as application attacks. They are the most challenging to identify/mitigate.
 
 [Future additions to sheet: List all attacks per category. Because we cannot map remediations one on one with an attack vector, we will first need to list them before discussing the action points.]
 
@@ -72,7 +72,7 @@ Packet filtering technology can be used to inspect packets in transit to identif
 ### Session
 
 - **Limit server side session time based on inactivity and a final timeout**: (resource exhaustion) While sessions timeout is most of the time discussed in relation to session security and preventing session hijacking, it is also an important measure to prevent resource exhaustion.
-- **Limit session bound information storage**: The less data is linked to a session, the less burden a user session has on webserver's performance.
+- **Limit session bound information storage**: The less data is linked to a session, the less burden a user session has on the webserver's performance.
 
 ### Input validation
 
