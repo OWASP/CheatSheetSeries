@@ -2195,15 +2195,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#always-provide-all-needed-certificates" class="md-nav__link">
-    Always Provide All Needed Certificates
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#consider-the-use-of-extended-validation-certificates" class="md-nav__link">
-    Consider the use of Extended Validation Certificates
+  <a href="#consider-the-certificates-validation-type" class="md-nav__link">
+    Consider the Certificate’s Validation Type
   </a>
   
 </li>
@@ -2650,15 +2643,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#always-provide-all-needed-certificates" class="md-nav__link">
-    Always Provide All Needed Certificates
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#consider-the-use-of-extended-validation-certificates" class="md-nav__link">
-    Consider the use of Extended Validation Certificates
+  <a href="#consider-the-certificates-validation-type" class="md-nav__link">
+    Consider the Certificate’s Validation Type
   </a>
   
 </li>
@@ -2857,13 +2843,12 @@
 <p>For internal applications, an internal CA can be used. This means that the FQDN of the certificate will not be exposed (either to an external CA, or publicly in certificate transparency lists). However, the certificate will only be trusted by users who have imported and trusted the internal CA certificate that was used to sign them.</p>
 <h3 id="use-caa-records-to-restrict-which-cas-can-issue-certificates">Use CAA Records to Restrict Which CAs can Issue Certificates<a class="headerlink" href="#use-caa-records-to-restrict-which-cas-can-issue-certificates" title="Permanent link">&para;</a></h3>
 <p>Certification Authority Authorization (CAA) DNS records can be used to define which CAs are permitted to issue certificates for a domain. The records contains a list of CAs, and any CA who is not included in that list should refuse to issue a certificate for the domain. This can help to prevent an attacker from obtaining unauthorized certificates for a domain through a less-reputable CA. Where it is applied to all subdomains, it can also be useful from an administrative perspective by limiting which CAs administrators or developers are able to use, and by preventing them from obtaining unauthorized wildcard certificates.</p>
-<h3 id="always-provide-all-needed-certificates">Always Provide All Needed Certificates<a class="headerlink" href="#always-provide-all-needed-certificates" title="Permanent link">&para;</a></h3>
-<p>In order to validate the authenticity of a certificate, the user's browser must examine the certificate that was used to sign it and compare it to the list of CAs trusted by their system. In many cases the certificate is not directly signed by a root CA, but is instead signed by an intermediate CA, which is in turn signed by the root CA.</p>
-<p>If the user does not know or trust this intermediate CA then the certificate validation will fail, even if the user trusts the ultimate root CA, as they cannot establish a chain of trust between the certificate and the root. In order to avoid this, any intermediate certificates should be provided alongside the main certificate.</p>
-<h3 id="consider-the-use-of-extended-validation-certificates">Consider the use of Extended Validation Certificates<a class="headerlink" href="#consider-the-use-of-extended-validation-certificates" title="Permanent link">&para;</a></h3>
-<p>Extended validation (EV) certificates claim to provide a higher level of verification of the entity, as they perform checks that the requestor is a legitimate legal entity, rather than just verifying the ownership of the domain name like normal (or "Domain Validated") certificates. This can effectively be viewed as the difference between "This site is really run by Example Company Inc." vs "This domain is really example.org".</p>
-<p>Historically these displayed differently in the browser, often showing the company name or a green icon or background in the address bar. However, as of 2019 both <a href="https://groups.google.com/a/chromium.org/forum/m/#!msg/security-dev/h1bTcoTpfeI/jUTk1z7VAAAJ">Chrome</a> and <a href="https://groups.google.com/forum/m/?fromgroups&amp;hl=en#!topic/firefox-dev/6wAg_PpnlY4">Firefox</a> have announced that they will be removing these indicators, as they do not believe that EV certificates provide any additional protection.</p>
-<p>There is no security downside to the use of EV certificates. However, as they are significantly more expensive than domain validated certificates, an assessment should be made to determine whether they provide any additional value.</p>
+<h3 id="consider-the-certificates-validation-type">Consider the Certificate’s Validation Type<a class="headerlink" href="#consider-the-certificates-validation-type" title="Permanent link">&para;</a></h3>
+<p>Certificates come in different types of validation. Validation is the process the Certificate Authority (CA) uses to make sure you are allowed to have the certificate. This is authorization. The <a href="https://cabforum.org/working-groups/server/baseline-requirements/documents/">CA/Browser Forum</a> is an organization made of CA and browser vendors, as well as others with an interest in web security. They set the rules which CAs must follow based on the validation type. The base validation is called Domain Validated (DV). All publicly issued certificates must be domain validated. This process involves practical proof of control of the name or endpoint requested in the certificate. This usually involves a challenge and response in DNS, to an official email address, or to the endpoint that will get the certificate.</p>
+<p>Organization Validated (OV) certificates include the requestor’s organization information in the certificates subject. E.g. C = GB, ST = Manchester, <strong>O = Sectigo Limited</strong>, CN = sectigo.com. The process to acquire an OV certificate requires official contact with the requesting company via a method that proves to the CA that they are truly talking to the right company.</p>
+<p>Extended validation (EV) certificates provide an even higher level of verification as well as all the DV and OV verifications. This can effectively be viewed as the difference between "This site is really run by Example Company Inc." vs "This domain is really example.org". <a href="https://cabforum.org/working-groups/server/extended-validation/guidelines/">Latest Extended Validation Guidelines</a></p>
+<p>Historically these displayed differently in the browser, often showing the company name or a green icon or background in the address bar. However, as of 2019 no major browser shows EV status like this as they do not believe that EV certificates provide any additional protection. (<a href="https://groups.google.com/a/chromium.org/forum/m/#!msg/security-dev/h1bTcoTpfeI/jUTk1z7VAAAJ">Chromium</a> Covering Chrome, Edge, Brave, and Opera. <a href="https://groups.google.com/forum/m/?fromgroups&amp;hl=en#!topic/firefox-dev/6wAg_PpnlY4">Firefox</a> <a href="https://cabforum.org/2018/06/06/minutes-of-the-f2f-44-meeting-in-london-england-6-7-june-2018/#apple-root-program-update">Safari</a>)</p>
+<p>As all browsers and TLS stacks are unaware of the different between DV, OV, and EV certificates, they are effectively the same in terms of security. An attacker only needs to reach the level of practical control of the domain to get a rogue certificate.  The extra work for an attacker to get an OV or EV certificate in no way increases the scope of an incident. In fact, those actions would likely mean detection. The additional pain in getting OV and EV certificates may create an availability risk and their use should be reviewed with this in mind.</p>
 <h2 id="application">Application<a class="headerlink" href="#application" title="Permanent link">&para;</a></h2>
 <h3 id="use-tls-for-all-pages">Use TLS For All Pages<a class="headerlink" href="#use-tls-for-all-pages" title="Permanent link">&para;</a></h3>
 <p>TLS should be used for all pages, not just those that are considered sensitive such as the login page. If there are any pages that do not enforce the use of TLS, these could give an attacker an opportunity to sniff sensitive information such as session tokens, or to inject malicious JavaScript into the responses to carry out other attacks against the user.</p>
