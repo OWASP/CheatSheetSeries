@@ -1,4 +1,4 @@
-# `Help Guide` Cheat Sheet
+# Cheat Sheet Help Guide
 
 ## Introduction
 
