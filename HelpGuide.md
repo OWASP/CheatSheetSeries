@@ -22,7 +22,7 @@ Navigation is easy. Just click on any cheat sheet or cheat sheet series you wish
 Use the search bar located at the top of the page to search for certain cheat sheets and keywords in cheat sheets. 
 ![Capture2](https://github.com/tylersnel/CheatSheetSeries/assets/67352917/5af0a995-ef96-42e3-90f6-e7cc8a18cfd1)
 #### Dark Mode
-If you prefer a darker theme, there is a dark mode option for the cheat sheets. Click the dark mode button to enable dark mode, which is located next to the search bar.
+If you prefer a darker theme, there is a dark mode option for the cheat sheets. Click the light/dark mode button, located next to the search bar, to switch between modes.
 
 ![Dark_Mode](https://github.com/tylersnel/CheatSheetSeries/assets/67352917/ce753a58-c34e-4384-a726-e947d851e21f)
 #### GitHub Repository
