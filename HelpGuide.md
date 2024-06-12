@@ -71,9 +71,9 @@ A: Yes, you can use the cheat sheets in commercial projects, provided you adhere
 These FAQs should help users understand the purpose, usage, and contributions related to the OWASP Cheat Sheet Series website.
 
 ### Troubleshooting Guide
-Refreshing the web page will fix most issues encountered. If the problem persists, close the browser, reopen the browser, and return to the cheat sheet website.
-Clear your cache and cookies or try a different browser. 
-If the website is not loading, please check your internet connection. 
+* Refreshing the web page will fix most issues encountered. If the problem persists, close the browser, reopen the browser, and return to the cheat sheet website.
+* Clear your cache and cookies or try a different browser. 
+* If the website is not loading, please check your internet connection. 
 
 ### Feedback and Support
 admin@owasp.com
