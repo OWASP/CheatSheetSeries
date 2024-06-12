@@ -35,7 +35,7 @@ Here are some frequently asked questions (FAQs) for the OWASP Cheat Sheet Series
 #### General Information
 
 **Q: What is the OWASP Cheat Sheet Series?**  
-A: The OWASP Cheat Sheet Series is a collection of concise, high-value information on specific application security topics, created by various experts in the field.
+A: The OWASP Cheat Sheet Series is a collection of concise, high-value informational articles on specific application security topics, created by various experts in the field.
 
 **Q: Who creates the cheat sheets?**  
 A: The cheat sheets are created by application security professionals who have expertise in the specific topics covered.
