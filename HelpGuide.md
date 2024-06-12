@@ -38,7 +38,7 @@ Here are some frequently asked questions (FAQs) for the OWASP Cheat Sheet Series
 A: The OWASP Cheat Sheet Series is a collection of concise, high-value informational articles on specific application security topics, created by various experts in the field.
 
 **Q: Who creates the cheat sheets?**  
-A: The cheat sheets are created by application security professionals who have expertise in the specific topics covered.
+A: The cheat sheets are created by application security professionals who have expertise in the specific topics covered. They are open source and anyone is welcome to contribute by submitting a pull request on the [GitHub repository](https://github.com/OWASP/CheatSheetSeries/).
 
 **Q: What topics do the cheat sheets cover?**  
 A: The cheat sheets cover a wide range of application security topics, including but not limited to authentication, data validation, secure coding practices, and more.
