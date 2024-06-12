@@ -57,7 +57,7 @@ A: Yes, the cheat sheets are periodically reviewed and updated to reflect the la
 #### Contributions and Community
 
 **Q: Can I contribute to the cheat sheet series?**  
-A: Yes, contributions from the community are welcome. You can contribute by suggesting new topics, providing feedback, or updating existing cheat sheets.
+A: Yes, contributions from the community are welcome. You can contribute by suggesting new topics, providing feedback, or updating existing cheat sheets. Create an issue or pull request on our [GitHub repository](https://github.com/OWASP/CheatSheetSeries/).
 
 
 #### Licensing and Usage Rights
