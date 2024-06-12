@@ -5,11 +5,11 @@
 Welcome to the Cheat Sheet Help Guide. This guide is designed to help you navigate the website and make the most of the features and resources offered. The cheat sheets are packed with valuable information, and we want to ensure you have all the tools you need to use them effectively.
 
 ### What's Inside This Guide
-1. Basic Navigation
-2. Features
-3. FAQ
-4. Troubleshooting Guide
-5. Feedback and Support
+1. [Basic Navigation](#Basic-Navigation)
+2. [Features](#Features)
+3. [FAQ](#FAQ)
+4. [Troubleshooting Guide](#Troubleshooting-Guide)
+5. [Feedback and Support](#Feedback-and-Support)
 
 ## Guides
 
