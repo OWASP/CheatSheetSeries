@@ -55,7 +55,13 @@ It may be necessary to maintain a high degree of institutional expertise regardi
 
 ## Change Management
 
-Including over the longer term considering ways that you are able to migrate from this legacy application to something that will be maintainable. 
+Where ever feasible the ultimate goal will be to shift from the use of unmantainable legacy applications to a solution which is both maintainable and architected to be resilient to threats. Staged change management planning will need to take into account the following factors:
+
+- What budget can practically be allocated to upgrading to a modern solution and within what timeframe?
+- Do people with the necessary expertise to do the technical work required to handle this exist within your organisation or could these people be acquired/developed?
+- How urgently does a migration to an upgraded solution need to happen?
+
+A change management plan, formal or informal, should include a clear description of granular steps towards migration to an upgraded solution, an explicit date of expected completion, a clear articulation of the business and security case for the change. To produce a realistic plan for migration staff involved in overseeing and using the existing solution should be consulted extensively to get a sense for how critical the legacy application is to your organisation and what constraints there might be to facilitating migration.
 
 ## Continuous Monitoring and Incident Response
 
