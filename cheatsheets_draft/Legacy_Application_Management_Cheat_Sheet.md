@@ -65,7 +65,12 @@ A change management plan, formal or informal, should include a clear description
 
 ## Continuous Monitoring and Incident Response
 
-Keeping staff trained, having appropriate logging up and running so that it is possible to run investigations.
+Legacy applications should be subject to an especially high degree of security monitoring and rapid response to potential incidents. This might be challenged by intra-operability issues that mean that logs produced by the application are in a format that cannot be ingested by security monitoring tools by your organisation. Potential work arounds might include:
+
+- Developing custom APIs for modifiying security applicable information from your legacy application/legacy application logs into a format ingestable by security monitoring solutions used by your organisations.
+- Where the above is not possible consider using automation scripts to generate reports that can be reviewed by staff at regular intervals that assess for indicators of compromise.
+- Be vigilant to any anomolous network traffic into and out of the legacy application environment and to any surges in network activity.
+- If you have access to an incident response team, ensure that they are aware that incident response and investigation of unusual events should be prioritised for critical legacy systems.
 
 ## Disaster Recovery Planning
 
