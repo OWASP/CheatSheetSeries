@@ -71,10 +71,7 @@ Legacy applications should be subject to an especially high degree of security m
 - Developing custom APIs for modifiying security applicable information from your legacy application/legacy application logs into a format ingestable by security monitoring solutions used by your organisations.
 - Where the above is not possible consider using automation scripts to generate reports that can be reviewed by staff at regular intervals that assess for indicators of compromise.
 - Be vigilant to any anomolous network traffic into and out of the legacy application environment and to any surges in network activity.
-- If you have access to an incident response team, ensure that they are aware that incident response and investigation of unusual events should be prioritised for critical legacy systems.
-
-## Disaster Recovery Planning
-
-Backups, staff procedures, etc..
+- If you have access to an incident response team, ensure that they are aware that incident response and investigation of unusual events should be prioritised for critical legacy systems. Processes for handling application downtime and compromise ideally are documented in advance as a part of an incident response playbook which gives staff a clear rundown of emergency procedures including escalation contacts and details of incident response leaders.
+- Incident response planning should occur within the broader context of a business continuity plan.
 
 ## References
