@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The microservice architecture is being increasingly used for designing and implementing application systems in both cloud-based and on-premise infrastructures, high-scale applications and services. There are many security challenges that need to be addressed in the application design and implementation phases. The fundamental security requirements that have to be addressed during design phase are authentication and authorization. Therefore, it is vital for applications security architects to understand and properly use existing architecture patterns to implement authentication and authorization in microservices-based systems. The goal of this cheat sheet is to identify such patterns and to do recommendations for applications security architects on possible ways to use it.
+The microservice architecture is being increasingly used for designing and implementing application systems in both cloud-based and on-premise infrastructures, high-scale applications and services. There are many security challenges that need to be addressed in the application design and implementation phases. The fundamental security requirements that have to be addressed during design phase are authentication and authorization. Therefore, it is vital for applications security architects to understand and properly use existing architecture patterns to implement authentication and authorization in microservices-based systems. The goal of this cheat sheet is to identify such patterns and to do recommendations for applications security architects on possible ways to use them.
 
 ## Edge-level authorization
 
@@ -151,13 +151,13 @@ High-level recommendations to logging subsystem architecture with its rationales
 
 1. Microservice shall not send log messages directly to the central logging subsystem using network communication. Microservice shall write its log message to a local log file:
     - this allows to mitigate the threat of data loss due to logging service failure due to attack or in case of its flooding by legitimate microservice
-    - in case of logging service outage, microservice will still write log messages to the local file (without data loss) and after logging service recovery logs will be available to shipping;
+    - in case of logging service outage, microservice will still write log messages to the local file (without data loss), and after logging service recovery, logs will be available to shipping;
 2. There shall be a dedicated component (logging agent) decoupled from the microservice. The logging agent shall collect log data on the microservice  (read local log file) and send it to the central logging subsystem. Due to possible network latency issues, the logging agent shall be deployed on the same host (virtual or physical machine) with the microservice:
     - this allows mitigating the threat of data loss due to logging service failure due to attack or in case of its flooding by legitimate microservice
     - in case of logging agent failure, microservice still writes information to the log file, logging agent after recovery will read the file and send information to message broker;
 3. A possible DoS attack on the central logging subsystem logging agent shall not use an asynchronous request/response pattern to send log messages. There shall be a message broker to implement the asynchronous connection between the logging agent and central logging service:
     - this allows to mitigate the threat of data loss due to logging service failure in case of its flooding by legitimate microservice
-    - in case of logging service outage, microservice will still write log messages to the local file (without data loss) and after logging service recovery logs will be available to shipping;
+    - in case of logging service outage, microservice will still write log messages to the local file (without data loss), and after logging service recovery, logs will be available to shipping;
 4. Logging agent and message broker shall use mutual authentication (e.g., based on TLS) to encrypt all transmitted data (log messages) and authenticate themselves:
     - this allows mitigating threats such as: microservice spoofing, logging/transport system spoofing, network traffic injection, sniffing network traffic
 5. Message broker shall enforce access control policy to mitigate unauthorized access and implement the principle of least privileges:
