@@ -630,11 +630,6 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-        
           <li class="md-nav__item">
   <a href="#a82017-insecure-deserialization" class="md-nav__link">
     A8:2017-Insecure Deserialization
@@ -653,6 +648,11 @@
   <a href="#a102017-insufficient-logging-monitoring" class="md-nav__link">
     A10:2017-Insufficient Logging &amp; Monitoring
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -2671,11 +2671,6 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-        
           <li class="md-nav__item">
   <a href="#a82017-insecure-deserialization" class="md-nav__link">
     A8:2017-Insecure Deserialization
@@ -2694,6 +2689,11 @@
   <a href="#a102017-insufficient-logging-monitoring" class="md-nav__link">
     A10:2017-Insufficient Logging &amp; Monitoring
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -3062,17 +3062,17 @@ used during the next workshop in combination with input from penetration testers
 <p>As an attacker, I perform stored XSS where the application or API stores unsanitized user input that is viewed at a later time by another user or an administrator.</p>
 <p><em>Abuse Case:</em></p>
 <p>As an attacker, I perform DOM XSS where JavaScript frameworks, single-page applications, and APIs that dynamically include attacker-controllable data to a page is vulnerable to DOM XSS.</p>
-<h3 id="a82017-insecure-deserialization">A8:2017-Insecure Deserialization<a class="headerlink" href="#a82017-insecure-deserialization" title="Permanent link">&para;</a></h3>
+<h4 id="a82017-insecure-deserialization">A8:2017-Insecure Deserialization<a class="headerlink" href="#a82017-insecure-deserialization" title="Permanent link">&para;</a></h4>
 <p><em>Epic:</em></p>
 <p>Exploitation of deserialization is somewhat difficult, as off-the-shelf exploits rarely work without changes or tweaks to the underlying exploit code.</p>
 <p><em>Abuse Case:</em></p>
 <p>As an attacker, I find areas of the application and APIs where deserialization of hostile or tampered objects can be supplied. As a result, I can focus on an object and data structure related attacks where the attacker modifies application logic or achieves arbitrary remote code execution if there are classes available to the application that can change behavior during or after deserialization. Or I focus on data tampering attacks such as access-control-related attacks where existing data structures are used but the content is changed.</p>
-<h3 id="a92017-using-components-with-known-vulnerabilities">A9:2017-Using Components with Known Vulnerabilities<a class="headerlink" href="#a92017-using-components-with-known-vulnerabilities" title="Permanent link">&para;</a></h3>
+<h4 id="a92017-using-components-with-known-vulnerabilities">A9:2017-Using Components with Known Vulnerabilities<a class="headerlink" href="#a92017-using-components-with-known-vulnerabilities" title="Permanent link">&para;</a></h4>
 <p><em>Epic:</em></p>
 <p>While it is easy to find already-written exploits for many known vulnerabilities, other vulnerabilities require concentrated effort to develop a custom exploit.</p>
 <p><em>Abuse Case:</em></p>
 <p>As an attacker, I find common open source or closed source packages with weaknesses and perform attacks against vulnerabilities and exploits which are disclosed</p>
-<h3 id="a102017-insufficient-logging-monitoring">A10:2017-Insufficient Logging &amp; Monitoring<a class="headerlink" href="#a102017-insufficient-logging-monitoring" title="Permanent link">&para;</a></h3>
+<h4 id="a102017-insufficient-logging-monitoring">A10:2017-Insufficient Logging &amp; Monitoring<a class="headerlink" href="#a102017-insufficient-logging-monitoring" title="Permanent link">&para;</a></h4>
 <p><em>Epic:</em></p>
 <p>Exploitation of insufficient logging and monitoring is the bedrock of nearly every major incident. Attackers rely on the lack of monitoring and timely response to achieve their goals without being detected. In 2016, identifying a breach took an <a href="https://www-01.ibm.com/common/ssi/cgi-bin/ssialias?htmlfid=SEL03130WWEN">average of 191 days</a> allowing substancial chance for damage to be inflicted.</p>
 <p><em>Abuse Case:</em></p>
