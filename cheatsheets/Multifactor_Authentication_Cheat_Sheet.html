@@ -3801,7 +3801,7 @@
 <li>The use of smartcards requires backend PKIs.</li>
 </ul>
 <h3 id="sms-messages-and-phone-calls">SMS Messages and Phone Calls<a class="headerlink" href="#sms-messages-and-phone-calls" title="Permanent link">&para;</a></h3>
-<p>SMS messages or phone calls can be used to provide users with a single-use code that they must submit as an additional factor.</p>
+<p>SMS messages or phone calls can be used to provide users with a single-use code that they must submit as an additional factor. Due to the risks posed by these methods, they should not be used to protect applications that hold Personally Identifiable Information (PII) or where there is financial risk. e.g. healthcare and banking. <a href="https://pages.nist.gov/800-63-3/sp800-63b.html">NIST SP 800-63</a> does not allow these factors for applications containing PII.</p>
 <h4 id="pros_7">Pros<a class="headerlink" href="#pros_7" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Relatively simple to implement.</li>
@@ -3815,6 +3815,8 @@
 <li>Susceptible to SIM swapping attacks.</li>
 <li>SMS messages may be received on the same device the user is authenticating from.</li>
 <li>Susceptible to phishing.</li>
+<li>SMS may be previewed when the device is locked.</li>
+<li>SMS may be read by malicious or insecure applications.</li>
 </ul>
 <h3 id="email">Email<a class="headerlink" href="#email" title="Permanent link">&para;</a></h3>
 <p>Email verification requires that the user enters a code or clicks a link sent to their email address. There is some debate as to whether email constitutes a form of MFA, because if the user does not have MFA configured on their email account, it simply requires knowledge of the user's email password (which is often the same as their application password). However, it is included here for completeness.</p>
