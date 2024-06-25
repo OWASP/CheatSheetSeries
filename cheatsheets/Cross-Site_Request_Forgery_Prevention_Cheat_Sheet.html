@@ -3061,7 +3061,7 @@
 <li>A random value (e.g. UUID) within a JWT that changes every time a JWT is created.</li>
 </ul>
 </li>
-<li><strong>A secret cryptographic key</strong> Not to confuse with the random value from the naive implementation. This value is used to generate the HMAC hash. Ideally, store this key as an environment variable.</li>
+<li><strong>A secret cryptographic key</strong> Not to be confused with the random value from the naive implementation. This value is used to generate the HMAC hash. Ideally, store this key as discussed in the <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html#key-storage">Cryptographic Storage page</a>.</li>
 <li><strong>A random value for anti-collision purposes</strong>. Generate a random value (preferably cryptographically random) to ensure that consecutive calls within the same second do not produce the same hash (<a href="https://github.com/data-govt-nz/ckanext-security/issues/23#issuecomment-479752531">1</a>).</li>
 </ul>
 <p><strong>Should Timestamps be Included in CSRF Tokens for Expiration?</strong></p>
