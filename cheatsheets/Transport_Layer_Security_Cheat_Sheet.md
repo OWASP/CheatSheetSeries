@@ -68,6 +68,7 @@ There are a number of online tools that can be used to quickly validate the conf
 - [ImmuniWeb](https://www.immuniweb.com/ssl/)
 - [Observatory by Mozilla](https://observatory.mozilla.org)
 - [Scanigma](https://scanigma.com)
+- [Stellastra](https://stellastra.com/tls-cipher-suite-check)
 - [OWASP PurpleTeam](https://purpleteam-labs.com/) `cloud`
 
 Additionally, there are a number of offline tools that can be used:

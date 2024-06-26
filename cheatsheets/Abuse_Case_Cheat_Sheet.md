@@ -406,7 +406,7 @@ As an attacker, I perform stored XSS where the application or API stores unsanit
 
 As an attacker, I perform DOM XSS where JavaScript frameworks, single-page applications, and APIs that dynamically include attacker-controllable data to a page is vulnerable to DOM XSS.
 
-### A8:2017-Insecure Deserialization
+#### A8:2017-Insecure Deserialization
 
 *Epic:*
 
@@ -416,7 +416,7 @@ Exploitation of deserialization is somewhat difficult, as off-the-shelf exploits
 
 As an attacker, I find areas of the application and APIs where deserialization of hostile or tampered objects can be supplied. As a result, I can focus on an object and data structure related attacks where the attacker modifies application logic or achieves arbitrary remote code execution if there are classes available to the application that can change behavior during or after deserialization. Or I focus on data tampering attacks such as access-control-related attacks where existing data structures are used but the content is changed.
 
-### A9:2017-Using Components with Known Vulnerabilities
+#### A9:2017-Using Components with Known Vulnerabilities
 
 *Epic:*
 
@@ -426,7 +426,7 @@ While it is easy to find already-written exploits for many known vulnerabilities
 
 As an attacker, I find common open source or closed source packages with weaknesses and perform attacks against vulnerabilities and exploits which are disclosed
 
-### A10:2017-Insufficient Logging & Monitoring
+#### A10:2017-Insufficient Logging & Monitoring
 
 *Epic:*
 

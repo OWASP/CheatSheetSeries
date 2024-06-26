@@ -255,7 +255,7 @@ Smartcards are credit-card size cards with a chip containing a digital certifica
 
 ### SMS Messages and Phone Calls
 
-SMS messages or phone calls can be used to provide users with a single-use code that they must submit as an additional factor.
+SMS messages or phone calls can be used to provide users with a single-use code that they must submit as an additional factor. Due to the risks posed by these methods, they should not be used to protect applications that hold Personally Identifiable Information (PII) or where there is financial risk. e.g. healthcare and banking. [NIST SP 800-63](https://pages.nist.gov/800-63-3/sp800-63b.html) does not allow these factors for applications containing PII.
 
 #### Pros
 
@@ -270,6 +270,8 @@ SMS messages or phone calls can be used to provide users with a single-use code 
 - Susceptible to SIM swapping attacks.
 - SMS messages may be received on the same device the user is authenticating from.
 - Susceptible to phishing.
+- SMS may be previewed when the device is locked.
+- SMS may be read by malicious or insecure applications.
 
 ### Email
 
