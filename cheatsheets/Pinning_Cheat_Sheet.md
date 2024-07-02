@@ -7,9 +7,8 @@ The Pinning Cheat Sheet is a technical guide to implementing certificate and pub
 ## What's the problem
 
 Users, developers, and applications expect security on their communication channels, but some channels may not meet this expectation. Channels built using well known protocols like SSL, and TLS can be vulnerable to Man-in-the-Middle (MITM) attacks if certificate-based trusts are misused. Malicious attacks come in two forms:
-An attacker is able to acquire a rogue digital certificate from a trusted certificate authority (CA) in the name of the victim site.
-The attacker is able to inject a dangerous CA into the client’s trust store.
-
+1. An attacker is able to acquire a rogue digital certificate from a trusted certificate authority (CA) in the name of the victim site;
+2. The attacker is able to inject a dangerous CA into the client’s trust store.
 In the case of the latter issue, an attacker with the access to update a trust store will have the access to change the workings of the mobile application, potentially defeating pinning.
 
 As [Certificate and Public Key Pinning](https://owasp.org/www-community/controls/Certificate_and_Public_Key_Pinning) makes clear, this problem is very small due to years of security advancements by the certificate authority and browser communities.
@@ -22,7 +21,7 @@ Pinning is the process of associating a host with their *expected* X509 certific
 
 A host or service's certificate or public key can be added to an application at development time, it can be added upon first encountering the certificate or public key (an approach commonly known as “Trust On First Use”, or TOFU), or it can be added and updated in real time via an unpinned channel. The former - adding at development time - is preferred since *preloading* the certificate or public key *out-of-band* usually means the attacker cannot taint the pin.
 
-Keep in mind that this when is about at what point in time you pin. The first question should be, “Should I Pin?”. The answer to this is probably never.
+Keep in mind that this **when** is about at what point in time you pin. The first question should be, “Should I Pin?”. The answer to this is probably never.
 
 ### When Do You Perform Pinning
 
@@ -30,11 +29,11 @@ There is almost no situation where you should consider pinning. The risk of outa
 
 ### When Do You Not Pin?
 
-If you don’t control the client and server side of the connection, don’t pin.
-If you can’t update the pinset securely, don’t pin.
-If updating the pinset is disruptive, such as requiring application redeployment, probably don’t pin. (A possible exception is when you control the redeployment of the application, such as in forced updates within the confines of a corporation.)
-If the certificate key pair cannot be predicted in advance before it is put into service, don’t pin.
-If it is not a native mobile application, do not pin.
+- If you don’t control the client and server side of the connection, don’t pin.
+- If you can’t update the pinset securely, don’t pin.
+- If updating the pinset is disruptive, such as requiring application redeployment, probably don’t pin. (A possible exception is when you control the redeployment of the application, such as in forced updates within the confines of a corporation.)
+- If the certificate key pair cannot be predicted in advance before it is put into service, don’t pin.
+- If it is not a native mobile application, do not pin.
 
 ### When to Apply Exceptions
 
@@ -69,7 +68,7 @@ The three choices are explained below in more detail. You are encouraged to pin 
 
 #### Certificate
 
-The certificate is easiest to pin. You can fetch the certificate out of band for the website, have the IT folks email your company certificate to you, use `openssl s_client` to retrieve the certificate etc. At runtime, you retrieve the website or server's certificate in the callback. Within the callback, you compare the retrieved certificate with the certificate embedded within the program. If the comparison fails, then fail the method or function, log it on the client-side and alert the end user. If your threat model warrants pinning, understand that users will click past any warnings, so do not give the user an option to proceed and bypass the pin.
+The certificate is easiest to pin. You can fetch the certificate out of band for the website, have the IT folks email your company certificate to you, use `openssl s_client` to retrieve the certificate, etc. At runtime, you can retrieve the website or server's certificate in a callback. Within the callback, you compare the retrieved certificate with the certificate embedded within the program. If the comparison fails, then fail the method or function, log it on the client-side and alert the end user. If your threat model warrants pinning, understand that users will click past any warnings, so do not give the user an option to proceed and bypass the pin.
 
 **Benefits:**
 
@@ -86,7 +85,7 @@ Public key pinning is more flexible but a little trickier due to the extra steps
 **Benefits:**
 
 - It allows access to public key parameters (such as `{e,n}` for an RSA public key) and contextual information such as an algorithm and OID.
-- It's more flexible than certificate pinning. The pin can be calculated long before the certificate is issued and if policy allows, the certificate can be renewed with the same key to avoid breaking pinning. The latter is a bad key management practice and should only be used in an emergency..
+- It's more flexible than certificate pinning. The pin can be calculated long before the certificate is issued and if policy allows, the certificate can be renewed with the same key to avoid breaking pinning. The latter is a bad key management practice and should only be used in an emergency.
 
 **Downsides:**
 
