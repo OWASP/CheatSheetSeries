@@ -2610,7 +2610,7 @@ Java Naming and Directory Interface (JNDI) metacharacters and LDAP special chara
 <div class="highlight"><pre><span></span><code>* ( ) . &amp; - _ [ ] ` ~ | @ $ % ^ ? : { } ! &#39;
 </code></pre></div>
 <h4 id="search-filter-escaping">Search Filter Escaping<a class="headerlink" href="#search-filter-escaping" title="Permanent link">&para;</a></h4>
-<p>Each DN points to exactly 1 entry, which can be thought of sort of like a row in a RDBMS. For each entry, there will be 1 or more attributes which are analogous to RDBMS columns. If you are interested in searching through LDAP for users will certain attributes, you may do so with search filters.</p>
+<p>Each DN points to exactly 1 entry, which can be thought of sort of like a row in a RDBMS. For each entry, there will be 1 or more attributes which are analogous to RDBMS columns. If you are interested in searching through LDAP for users with certain attributes, you may do so with search filters.</p>
 <p>In a search filter, you can use standard boolean logic to get a list of users matching an arbitrary constraint. Search filters are written in Polish notation AKA prefix notation.</p>
 <p>Example:</p>
 <div class="highlight"><pre><span></span><code>(&amp;(ou=Physics)(|
