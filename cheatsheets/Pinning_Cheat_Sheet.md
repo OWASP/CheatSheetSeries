@@ -7,8 +7,10 @@ The Pinning Cheat Sheet is a technical guide to implementing certificate and pub
 ## What's the problem
 
 Users, developers, and applications expect security on their communication channels, but some channels may not meet this expectation. Channels built using well known protocols like SSL, and TLS can be vulnerable to Man-in-the-Middle (MITM) attacks if certificate-based trusts are misused. Malicious attacks come in two forms:
+
 1. An attacker is able to acquire a rogue digital certificate from a trusted certificate authority (CA) in the name of the victim site;
 2. The attacker is able to inject a dangerous CA into the client’s trust store.
+
 In the case of the latter issue, an attacker with the access to update a trust store will have the access to change the workings of the mobile application, potentially defeating pinning.
 
 As [Certificate and Public Key Pinning](https://owasp.org/www-community/controls/Certificate_and_Public_Key_Pinning) makes clear, this problem is very small due to years of security advancements by the certificate authority and browser communities.
