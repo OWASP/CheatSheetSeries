@@ -23,7 +23,7 @@ Pinning is the process of associating a host with their *expected* X509 certific
 
 A host or service's certificate or public key can be added to an application at development time, it can be added upon first encountering the certificate or public key (an approach commonly known as “Trust On First Use”, or TOFU), or it can be added and updated in real time via an unpinned channel. The former - adding at development time - is preferred since *preloading* the certificate or public key *out-of-band* usually means the attacker cannot taint the pin.
 
-Keep in mind that this **when** is about at what point in time you pin. The first question should be, “Should I Pin?”. The answer to this is probably never.
+Keep in mind that this "when" is about at what point in time you pin. The first question should be, “Should I Pin?”. The answer to this is probably never.
 
 ### When Do You Perform Pinning
 
