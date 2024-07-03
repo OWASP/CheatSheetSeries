@@ -2633,34 +2633,47 @@
 
 <h1 id="pinning-cheat-sheet">Pinning Cheat Sheet<a class="headerlink" href="#pinning-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>The Pinning Cheat Sheet is a technical guide to implementing certificate and public key pinning as discussed at the Virginia chapter's presentation <a href="https://wiki.owasp.org/images/8/8f/Securing-Wireless-Channels-in-the-Mobile-Space.ppt">Securing Wireless Channels in the Mobile Space</a>. This guide is focused on providing clear, simple, actionable guidance for securing the channel in a hostile environment where actors could be malicious and the conference of trust a liability.</p>
+<p>The Pinning Cheat Sheet is a technical guide to implementing certificate and public key pinning as discussed by Jeffrey Walton at the Virginia chapter's presentation <a href="https://wiki.owasp.org/images/8/8f/Securing-Wireless-Channels-in-the-Mobile-Space.ppt">Securing Wireless Channels in the Mobile Space</a>. This guide is focused on providing clear, simple, actionable guidance for securing the channel in a hostile environment where actors could be malicious and the conference of trust a liability.</p>
 <h2 id="whats-the-problem">What's the problem<a class="headerlink" href="#whats-the-problem" title="Permanent link">&para;</a></h2>
-<p>Users, developers, and applications expect end-to-end security on their secure channels, but some secure channels are not meeting the expectation. Specifically, channels built using well known protocols such as VPN, SSL, and TLS can be vulnerable to a number of attacks.</p>
+<p>Users, developers, and applications expect security on their communication channels, but some channels may not meet this expectation. Channels built using well known protocols like SSL, and TLS can be vulnerable to Man-in-the-Middle (MITM) attacks if certificate-based trusts are misused. Malicious attacks come in two forms:</p>
+<ol>
+<li>An attacker is able to acquire a rogue digital certificate from a trusted certificate authority (CA) in the name of the victim site;</li>
+<li>The attacker is able to inject a dangerous CA into the client’s trust store.</li>
+</ol>
+<p>In the case of the latter issue, an attacker with the access to update a trust store will have the access to change the workings of the mobile application, potentially defeating pinning.</p>
+<p>As <a href="https://owasp.org/www-community/controls/Certificate_and_Public_Key_Pinning">Certificate and Public Key Pinning</a> makes clear, this problem is very small due to years of security advancements by the certificate authority and browser communities.</p>
 <h2 id="what-is-pinning">What Is Pinning<a class="headerlink" href="#what-is-pinning" title="Permanent link">&para;</a></h2>
-<p>Pinning is the process of associating a host with their <em>expected</em> X509 certificate or public key. Once a certificate or public key is known or seen for a host, the certificate or public key is associated or 'pinned' to the host. If more than one certificate or public key is acceptable, then the program holds a <em>pinset</em> (taking from <a href="https://developers.google.com/events/io/sessions/gooio2012/107/">Jon Larimer and Kenny Root Google I/O talk</a>). In this case, the advertised identity must match one of the elements in the pinset.</p>
+<p>Pinning is the process of associating a host with their <em>expected</em> X509 certificate or public key. Once a certificate or public key is known or seen for a host, the certificate or public key is associated or 'pinned' to the host. If more than one certificate or public key is acceptable, then the program holds a <em>pinset</em> (taken from <a href="https://www.youtube.com/watch?v=RPJENzweI-A">Jon Larimer and Kenny Root Google I/O talk</a>). In this case, the advertised credential must match one of the elements in the pinset.</p>
 <h3 id="when-to-add-a-pin">When to Add a Pin<a class="headerlink" href="#when-to-add-a-pin" title="Permanent link">&para;</a></h3>
-<p>A host or service's certificate or public key can be added to an application at development time, or it can be added upon first encountering the certificate or public key. The former - adding at development time - is preferred since <em>preloading</em> the certificate or public key <em>out of band</em> usually means the attacker cannot taint the pin.</p>
+<p>A host or service's certificate or public key can be added to an application at development time, it can be added upon first encountering the certificate or public key (an approach commonly known as “Trust On First Use”, or TOFU), or it can be added and updated in real time via an unpinned channel. The former - adding at development time - is preferred since <em>preloading</em> the certificate or public key <em>out-of-band</em> usually means the attacker cannot taint the pin.</p>
+<p>Keep in mind that this "when" is about at what point in time you pin. The first question should be, “Should I Pin?”. The answer to this is probably never.</p>
 <h3 id="when-do-you-perform-pinning">When Do You Perform Pinning<a class="headerlink" href="#when-do-you-perform-pinning" title="Permanent link">&para;</a></h3>
-<p>You should pin anytime you want to be relatively certain of the remote host's identity or when operating in a hostile environment. Since one or both are almost always true, you should probably pin all the time.</p>
+<p>There is almost no situation where you should consider pinning. The risk of outages almost always outweighs any security risks given advances in security. If you consider pinning, you should read <a href="https://owasp.org/www-community/controls/Certificate_and_Public_Key_Pinning">Certificate and Public Key Pinning</a> and fully understand the threat model.</p>
 <h3 id="when-do-you-not-pin">When Do You Not Pin?<a class="headerlink" href="#when-do-you-not-pin" title="Permanent link">&para;</a></h3>
-<p>Pinning requires control of upcoming certificate attributes. If the certificate key pair cannot be predicted in advance before it is put into service, then pinning will lead to an outage when the endpoint presents a new certificate. For instance, if a certificate provider generates random key pairs whenever a certificate is rotated, and you cannot control when this certificate is put into use, then you will not be able to update your clients until they have already experienced an outage.</p>
+<ul>
+<li>If you don’t control the client and server side of the connection, don’t pin.</li>
+<li>If you can’t update the pinset securely, don’t pin.</li>
+<li>If updating the pinset is disruptive, such as requiring application redeployment, probably don’t pin. (A possible exception is when you control the redeployment of the application, such as in forced updates within the confines of a corporation.)</li>
+<li>If the certificate key pair cannot be predicted in advance before it is put into service, don’t pin.</li>
+<li>If it is not a native mobile application, do not pin.</li>
+</ul>
 <h3 id="when-to-apply-exceptions">When to Apply Exceptions<a class="headerlink" href="#when-to-apply-exceptions" title="Permanent link">&para;</a></h3>
-<p>If you are working for an organization which practices "egress filtering" as part of a Data Loss Prevention (DLP) strategy, you will likely encounter <em>Interception Proxies</em>. I like to refer to these things as <strong>"good" bad actors</strong> (as opposed to <strong>"bad" bad actors</strong>) since both break end-to-end security and we can't tell them apart. In this case, <strong>do not</strong> offer to allow-list the interception proxy since it defeats your security goals. Add the interception proxy's public key to your pinset after being <strong>instructed</strong> to do so by the folks in Risk Acceptance.</p>
+<p>If you are working for an organization which practices "egress filtering" as part of a Data Loss Prevention (DLP) strategy, you will likely encounter <em>Interception Proxies</em>. We like to refer to these things as <strong>"good" bad actors</strong> (as opposed to <strong>"bad" bad actors</strong>) since both break end-to-end security and we can't tell them apart. In this case, <strong>do not</strong> offer to allow-list the interception proxy since it defeats your security goals. Add the interception proxy's public key to your pinset after being <strong>instructed</strong> to do so by the folks in Risk Acceptance.</p>
 <h3 id="how-do-you-pin">How Do You Pin<a class="headerlink" href="#how-do-you-pin" title="Permanent link">&para;</a></h3>
-<p>The idea is to re-use the exiting protocols and infrastructure, but use them in a hardened manner. For re-use, a program would keep doing the things it used to do when establishing a secure connection.</p>
+<p>The idea is to reuse the existing protocols and infrastructure, but use them in a hardened manner. For reuse, a program would keep doing the things it used to do when establishing a secure connection.</p>
 <p>To harden the channel, the program would take advantage of the <code>OnConnect</code> callback offered by a library, framework or platform. In the callback, the program would verify the remote host's identity by validating its certificate or public key. See <a href="#examples-of-pinning">some examples</a> below.</p>
 <h3 id="what-should-be-pinned">What Should Be Pinned<a class="headerlink" href="#what-should-be-pinned" title="Permanent link">&para;</a></h3>
 <p>In order to decide what should be pinned you can follow the following steps.</p>
 <ol>
-<li>
-<p>Decide if you want to pin the root CA, intermediate CA or leaf certificate:</p>
+<li>Decide if you want to pin the root CA, intermediate CA or leaf certificate:</li>
+</ol>
 <ul>
 <li>Pinning the <strong>root CA</strong> is generally not recommended since it highly increases the risk because it implies also trusting all its intermediate CAs.</li>
-<li>Pinning a specific <strong>intermediate CA</strong> reduces the risk but the application will be also trusting any other certificates issues by that CA, not only the ones meant for your application.</li>
-<li>Pinning a <strong>leaf certificate</strong> is recommended but must include backup (e.g. intermediate CA). It provides 100% certainty that the app exclusively trusts the remote hosts it was designed to connect to.</li>
+<li>Pinning a specific <strong>issuing or intermediate CA</strong> reduces the risk but the application will be also trusting any other certificates issued by that CA or sub-CAs, not only the ones meant for your application.</li>
+<li>Pinning a <strong>leaf certificate</strong> is recommended but must include backup (e.g. intermediate CA or a pinset containing alternates). This provides 100% certainty that the app exclusively trusts the remote hosts it was designed to connect to while adding resiliency for failover or certificate rotation.</li>
 </ul>
 <p>For example, the application pins the remote endpoint leaf certificate but includes a backup pin for the intermediate CA. This increases the risk by trusting more certificate authorities but decreases the chances of bricking your app. If there's any issue with the leaf certificate, the app can always fall back to the intermediate CA until you release an app update.</p>
-</li>
+<ol start="2">
 <li>
 <p>Choose if you want to pin the <strong>whole certificate</strong> or just its <strong>public key</strong>.</p>
 </li>
@@ -2672,12 +2685,9 @@
 <li>Pin the <code>subjectPublicKeyInfo</code>.</li>
 <li>Pin one of the concrete types such as <code>RSAPublicKey</code> or <code>DSAPublicKey</code>.</li>
 </ul>
-<p><strong>subjectPublicKeyInfo</strong>:</p>
-<p><img alt="RandomOrgDERDump" src="../assets/Pinning_Cheat_Sheet_RandomOrgDERDump.png" /></p>
-<p>The three choices are explained below in more detail. I would encourage you to pin the <code>subjectPublicKeyInfo</code> because it has the public parameters (such as <code>{e,n}</code> for an RSA public key) <strong>and</strong> contextual information such as an algorithm and OID. The context will help you keep your bearings at times, and the figure to the right shows the additional information available.</p>
+<p>The three choices are explained below in more detail. You are encouraged to pin the <code>subjectPublicKeyInfo</code> because it has the public parameters (such as <code>{e,n}</code> for an RSA public key) <strong>and</strong> contextual information such as an algorithm and OID. The context will help you keep your bearings at times, and the figure to the right shows the additional information available.</p>
 <h4 id="certificate">Certificate<a class="headerlink" href="#certificate" title="Permanent link">&para;</a></h4>
-<p><img alt="Certificate" src="../assets/Pinning_Cheat_Sheet_Certificate.png" /></p>
-<p>The certificate is easiest to pin. You can fetch the certificate out of band for the website, have the IT folks email your company certificate to you, use <code>openssl s_client</code> to retrieve the certificate etc. At runtime, you retrieve the website or server's certificate in the callback. Within the callback, you compare the retrieved certificate with the certificate embedded within the program. If the comparison fails, then fail the method or function.</p>
+<p>The certificate is easiest to pin. You can fetch the certificate out of band for the website, have the IT folks email your company certificate to you, use <code>openssl s_client</code> to retrieve the certificate, etc. At runtime, you can retrieve the website or server's certificate in a callback. Within the callback, you compare the retrieved certificate with the certificate embedded within the program. If the comparison fails, then fail the method or function, log it on the client-side and alert the end user. If your threat model warrants pinning, understand that users will click past any warnings, so do not give the user an option to proceed and bypass the pin.</p>
 <p><strong>Benefits:</strong></p>
 <ul>
 <li>It might be easier to implement than the other methods, especially in languages such as Cocoa/CocoaTouch and OpenSSL.</li>
@@ -2687,27 +2697,23 @@
 <li>If the site rotates its certificate on a regular basis, then your application would need to be updated regularly. If you do not control when this certificate is put into service, then pinning will lead to an outage.</li>
 </ul>
 <h4 id="public-key">Public Key<a class="headerlink" href="#public-key" title="Permanent link">&para;</a></h4>
-<p><img alt="PublicKey" src="../assets/Pinning_Cheat_Sheet_PublicKey.png" /></p>
-<p>Public key pinning is more flexible but a little trickier due to the extra steps necessary to extract the public key from a certificate. As with a certificate, the program checks the extracted public key with its embedded copy of the public key.</p>
+<p>Public key pinning is more flexible but a little trickier due to the extra steps necessary to extract the public key from a certificate. As with a certificate, the program checks the extracted public key with its embedded copy of the public key. Given that most certificates today are only good for 90 days, using public key pinning can also make the timeline for updating pinsets longer, as you can pin a key where the certificate has not even been issued yet.</p>
 <p><strong>Benefits:</strong></p>
 <ul>
 <li>It allows access to public key parameters (such as <code>{e,n}</code> for an RSA public key) and contextual information such as an algorithm and OID.</li>
-<li>It's more flexible than certificate pinning. Even if the server rotates its certificates, the underlying public keys (within the certificate) remain static.</li>
+<li>It's more flexible than certificate pinning. The pin can be calculated long before the certificate is issued and if policy allows, the certificate can be renewed with the same key to avoid breaking pinning. The latter is a bad key management practice and should only be used in an emergency.</li>
 </ul>
 <p><strong>Downsides:</strong></p>
 <ul>
-<li>It's harder to work with keys (versus certificates) since you must extract the key from the certificate. Extraction is a minor inconvenience in Java and .Net, but it's uncomfortable in Cocoa/CocoaTouch and OpenSSL.</li>
-<li>The key is static and may violate key rotation policies.</li>
-<li>Some service providers generate new keys upon renewal.</li>
-<li>It's not possible to anonymize the public keys.</li>
+<li>It can be harder to work with keys (versus certificates) since you must extract the key from the certificate. Extraction is a minor inconvenience in Java and .Net, but it's uncomfortable in the iOS Cocoa/CocoaTouch framework and OpenSSL.</li>
+<li>Some service providers generate new keys upon renewal making pre-caching impossible.</li>
 </ul>
 <h4 id="hash">Hash<a class="headerlink" href="#hash" title="Permanent link">&para;</a></h4>
-<p>While the three choices above used DER encoding, its also acceptable to use a hash of the information. In fact, the original sample programs were written using digested certificates and public keys. The samples were changed to allow a programmer to inspect the objects with tools like <code>dumpasn1</code> and other ASN.1 decoders.</p>
+<p>While the three choices above used DER encoding, it's also acceptable to use a hash of the information. In fact, the original sample programs were written using digested certificates and public keys. The samples were changed to allow a programmer to inspect the objects with tools like <code>dumpasn1</code> and other ASN.1 decoders.</p>
 <p><strong>Benefits:</strong></p>
 <ul>
 <li>It's convenient to use. A digested certificate fingerprint is often available as a native API for many libraries.</li>
-<li>Hashing allows you to anonymize a certificate or public key. This might be important if you application is concerned about leaking information during decompilation and re-engineering.</li>
-<li>An organization might want to supply a reserve (or back-up) identity in case the primary identity is compromised. Hashing ensures your adversaries do not see the reserved certificate or public key in advance of its use. In fact, Google's IETF draft <em>websec-key-pinning</em> uses the technique.</li>
+<li>The hash is small and a fixed length.</li>
 </ul>
 <p><strong>Downsides:</strong></p>
 <ul>
@@ -2719,7 +2725,6 @@
 <h3 id="android">Android<a class="headerlink" href="#android" title="Permanent link">&para;</a></h3>
 <p>Since Android N, the preferred way for implementing pinning is by leveraging Android's <a href="https://developer.android.com/training/articles/security-config.html">Network Security Configuration</a> feature, which lets apps customize their network security settings in a safe, declarative configuration file without modifying app code.</p>
 <p>To enable pinning, <a href="https://developer.android.com/training/articles/security-config.html#CertificatePinning">the <code>&lt;pin-set&gt;</code> configuration setting</a> can be used.</p>
-<p>If devices running a version of Android that is earlier than N need to be supported, a backport of the Network Security Configuration pinning functionality is available via the <a href="https://github.com/datatheorem/TrustKit-Android">TrustKit Android library</a>.</p>
 <p>Alternatively you can use methods such as the pinning from OkHTTP in order to set specific pins programmatically, as explained in the <a href="https://github.com/OWASP/owasp-mstg/blob/master/Document/0x05g-Testing-Network-Communication.md#network-libraries-and-webviews">OWASP Mobile Security Testing Guide (MSTG)</a> and <a href="https://square.github.io/okhttp/3.x/okhttp/okhttp3/CertificatePinner.html">the OKHttp documentation</a>.</p>
 <p>The Android documentation provides an example of how SSL validation can be customized within the app's code (in order to implement pinning) in the <a href="https://developer.android.com/training/articles/security-ssl.html#UnknownCa">Unknown CA implementation document</a>. However, implementing pinning validation from scratch should be avoided, as implementation mistakes are extremely likely and usually lead to severe vulnerabilities.</p>
 <p>Lastly, if you want to validate whether the pinning is successful, please follow instructions from the <a href="https://github.com/OWASP/owasp-mstg/blob/master/Document/0x04f-Testing-Network-Communication.md#testing-network-communication">introduction into testing network communication</a> and the <a href="https://github.com/OWASP/owasp-mstg/blob/master/Document/0x05g-Testing-Network-Communication.md">Android specific network testing</a> chapters of the OWASP Mobile Security Testing Guide (MSTG).</p>
@@ -2740,7 +2745,7 @@
 </ol>
 <p>Download: <a href="../assets/Pinning_Cheat_Sheet_Certificate_OpenSSLSample.zip">OpenSSL sample program</a>.</p>
 <h3 id="electron">Electron<a class="headerlink" href="#electron" title="Permanent link">&para;</a></h3>
-<p><a href="https://github.com/dialogs/electron-ssl-pinning">electron-ssl-pinning</a>, an open-source SSL pinning library for <a href="https://electronjs.org">Electron</a> based applications. It provides an easy-to-use API for implementing pinning and also provides tool for fetching configuration based on needed hosts.</p>
+<p><a href="https://github.com/dialogs/electron-ssl-pinning">electron-ssl-pinning</a>, an open-source SSL pinning library for <a href="https://electronjs.org">Electron</a> based applications. It provides an easy-to-use API for implementing pinning and also provides a tool for fetching configuration based on needed hosts.</p>
 <p>Otherwise, you can validate certificates by yourself using <a href="https://electronjs.org/docs/api/session#sessetcertificateverifyprocproc">ses.setCertificateVerifyProc(proc)</a>.</p>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
