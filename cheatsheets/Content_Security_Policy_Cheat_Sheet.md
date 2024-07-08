@@ -235,9 +235,8 @@ Document directives instruct the browser about the properties of the document to
 
 ### Navigation Directives
 
-Navigation directives instruct the browser about the locations that the document can navigate to.
+Navigation directives instruct the browser about the locations that the document can navigate to or be embedded from.
 
-- `navigate-to` restricts the URLs which a document can navigate to by any means ([not yet supported](https://caniuse.com/?search=navigate-to) by modern browsers in Jan 2021).
 - `form-action` restricts the URLs which the forms can submit to.
 - `frame-ancestors` restricts the URLs that can embed the requested resource inside of  `<frame>`, `<iframe>`, `<object>`, `<embed>`, or `<applet>` elements.
     - If this directive is specified in a `<meta>` tag, the directive is ignored.
