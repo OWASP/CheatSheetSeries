@@ -4,7 +4,7 @@
 
 C-Based Toolchain Hardening is a treatment of project settings that will help you deliver reliable and secure code when using C, C++ and Objective C languages in a number of development environments. This article will examine Microsoft and GCC toolchains for the C, C++ and Objective C languages. It will guide you through the steps you should take to create executables with firmer defensive postures and increased integration with the available platform security. Effectively configuring the toolchain also means your project will enjoy a number of benefits during development, including enhanced warnings and static analysis, and self-debugging code.
 
-There are four areas to be examined when hardening the toolchain: configuration, preprocessor, compiler, and linker. Nearly all areas are overlooked or neglected when setting up a project. The neglect appears to be pandemic, and it applies to nearly all projects including Auto-configured projects, Makefile-based, Eclipse-based, Visual Studio-based, and Xcode-based. It's important to address the gaps at configuration and build time because it's difficult to impossible to [add hardening on a distributed executable after the fact](https://sourceware.org/ml/binutils/2012-03/msg00309.html) on some platforms.
+There are four areas to be examined when hardening the toolchain: configuration, preprocessor, compiler, and linker. Nearly all areas are overlooked or neglected when setting up a project. The neglect appears to be pandemic, and it applies to nearly all projects including Auto-configured projects, makefile-based, Eclipse-based, Visual Studio-based, and Xcode-based. It's important to address the gaps at configuration and build time because it's difficult to impossible to [add hardening on a distributed executable after the fact](https://sourceware.org/ml/binutils/2012-03/msg00309.html) on some platforms.
 
 This is a prescriptive article, and it will not debate semantics or speculate on behavior. Some information, such as the C/C++ committee's motivation and pedigree for [`program diagnostics`, `NDEBUG`, `assert`, and `abort()`](https://groups.google.com/a/isocpp.org/forum/?fromgroups=#!topic/std-discussion/ak8e1mzBhGs), appears to be lost like a tale in the Lord of the Rings. As such, the article will specify semantics (for example, the philosophy of 'debug' and 'release' build configurations), assign behaviors (for example, what an assert should do in 'debug' and 'release' build configurations), and present a position. If you find the posture is too aggressive, then you should back off as required to suit your taste.
 
@@ -24,7 +24,7 @@ Code **must** be correct. It **should** be secure. It **can** be efficient.
 
 ## Configuration
 
-Configuration is the first opportunity to configure your project for success. Not only do you have to configure your project to meet reliability and security goals, you must also configure integrated libraries properly. You typically have three choices. First, you can use auto-configuration utilities if on Linux or Unix. Second, you can write a Makefile by hand. This is predominant on Linux, macOS, and Unix, but it applies to Windows, as well. Finally, you can use an integrated development environment or IDE.
+Configuration is the first opportunity to configure your project for success. Not only do you have to configure your project to meet reliability and security goals, you must also configure integrated libraries properly. You typically have three choices. First, you can use auto-configuration utilities if on Linux or Unix. Second, you can write a makefile by hand. This is predominant on Linux, macOS, and Unix, but it applies to Windows, as well. Finally, you can use an integrated development environment or IDE.
 
 ### Build Configurations
 
@@ -96,11 +96,11 @@ Nearly everyone gets a positive test right, so no more needs to be said. The neg
 
 Auto configuration tools are popular on many Linux and Unix based systems, and the tools include _Autoconf_, _Automake_, _config_, and _Configure_. The tools work together to produce project files from scripts and template files. After the process completes, your project should be set up and ready to be made with `make`.
 
-When using auto configuration tools, there are a few files of interest worth mentioning. The files are part of the Autotools chain and include `m4` and the various `*.in`, `*.ac` (Autoconf), and `*.am` (Automake) files. At times, you will have to open them, or the resulting Makefiles, to tune the "stock" configuration.
+When using auto configuration tools, there are a few files of interest worth mentioning. The files are part of the Autotools chain and include `m4` and the various `*.in`, `*.ac` (Autoconf), and `*.am` (Automake) files. At times, you will have to open them, or the resulting makefiles, to tune the "stock" configuration.
 
 There are three downsides to the command-line configuration tools in the toolchain: (1) they often ignore user requests, (2) they cannot create configurations, and (3) security is often not a goal.
 
-To demonstrate the first issue, configure your project with the following: `configure` `CFLAGS="-Wall` `-fPIE"` `CXXFLAGS="-Wall` `-fPIE"` `LDFLAGS="-pie"`. You will probably find that Autotools ignored your request, which means the command below will not produce expected results. As a workaround, you will have to open an `m4` script, `Makefile.in` or `Makefile.am`, and fix the configuration.
+To demonstrate the first issue, configure your project with the following: `configure` `CFLAGS="-Wall` `-fPIE"` `CXXFLAGS="-Wall` `-fPIE"` `LDFLAGS="-pie"`. You will probably find that Autotools ignored your request, which means the command below will not produce expected results. As a workaround, you will have to open an `m4` script, `makefile.in` or `makefile.am`, and fix the configuration.
 
 ```bash
 $ configure CFLAGS="-Wall -Wextra -Wconversion -fPIE -Wno-unused-parameter
@@ -118,10 +118,10 @@ A recent discussion on the Automake mailing list illuminates the issue: _[Enabli
 
 Make is one of the earliest build tools dating back to the 1970s. It's available on Linux, macOS and Unix, so you will frequently encounter projects using it. Unfortunately, Make has a number of shortcomings (_[Recursive Make Considered Harmful](https://embeddedartistry.com/blog/2017/04/10/recursive-make-considered-harmful/)_ and _[What's Wrong With GNU make?](https://www.conifersystems.com/whitepapers/gnu-make/)_), and can cause some discomfort. Despite issues with Make, ESAPI C++ uses Make primarily for three reasons: first, it's omnipresent; second, it's easier to manage than the Autotools family; and third, `libtool` was out of the question.
 
-Consider what happens when you: (1) type `make` `debug`, and then type `make` `release`. Each build would require different `CFLAGS` due to optimizations and level of debug support. In your Makefile, you would extract the relevant target and set `CFLAGS` and `CXXFLAGS` similar to below (taken from [ESAPI C++ Makefile](https://code.google.com/archive/p/owasp-esapi-cplusplus/source/default/source)):
+Consider what happens when you: (1) type `make` `debug`, and then type `make` `release`. Each build would require different `CFLAGS` due to optimizations and level of debug support. In your makefile, you would extract the relevant target and set `CFLAGS` and `CXXFLAGS` similar to below (taken from [ESAPI C++ makefile](https://code.google.com/archive/p/owasp-esapi-cplusplus/source/default/source)):
 
 ```text
-## Makefile
+## makefile
 DEBUG_GOALS = $(filter $(MAKECMDGOALS), debug)
 ifneq ($(DEBUG_GOALS),)
     WANT_DEBUG := 1
@@ -426,7 +426,7 @@ The use of aggressive warnings will produce spurious noise. The noise is a trade
 - `-Wno-type-limits` (GCC 4.3)
 - `-Wno-tautological-compare` (Clang)
 
-Finally, a simple version based Makefile example is shown below. This is different than a feature based Makefile produced by Autotools (which will test for a particular feature and then define a symbol or configure a template file). Not all platforms use all options and flags. To address the issue you can pursue one of two strategies. First, you can ship with a weakened posture by servicing the lowest common denominator or, second, you can ship with everything in force. In the latter case, those who don't have a feature available will edit the Makefile to accommodate their installation.
+Finally, a simple version based makefile example is shown below. This is different than a feature based makefile produced by Autotools (which will test for a particular feature and then define a symbol or configure a template file). Not all platforms use all options and flags. To address the issue you can pursue one of two strategies. First, you can ship with a weakened posture by servicing the lowest common denominator or, second, you can ship with everything in force. In the latter case, those who don't have a feature available will edit the makefile to accommodate their installation.
 
 ```bash
 CXX=g++
@@ -606,7 +606,7 @@ if(ret == -1 || ret >= sizeof(path))
 …
 ```
 
-The problem is pandemic, and not just boring userland programs. Projects which offer high integrity code, such as SELinux, suffer silent truncations. The following is from an approved SELinux patch even though a comment was made that it suffered silent truncations in its `security_compute_create_name` function from `compute_create.c`.
+The problem is pandemic, and not just boring user-land programs. Projects which offer high integrity code, such as SELinux, suffer silent truncations. The following is from an approved SELinux patch even though a comment was made that it suffered silent truncations in its `security_compute_create_name` function from `compute_create.c`.
 
 ```c
 12  int security_compute_create_raw(security_context_t scon,
