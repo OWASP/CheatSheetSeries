@@ -103,7 +103,22 @@ Based on the expected type, special file content validation can be applied:
 
 - For **images**, applying image rewriting techniques destroys any kind of malicious content injected in an image; this could be done through [randomization](https://security.stackexchange.com/a/8625/118367).
 - For **Microsoft documents**, the usage of [Apache POI](https://poi.apache.org/) helps validating the uploaded documents.
+- For **PDF documents**, the usage of [Apache PDFBox](https://pdfbox.apache.org/) helps validating the uploaded documents.
 - **ZIP files** are not recommended since they can contain all types of files, and the attack vectors pertaining to them are numerous.
+
+It is possible to "hide" a malicious file in a document or image, by adding it to the end of the source file, like this:
+
+```shell
+$ file safe-document.pdf
+safe-document.pdf: PDF document, version 1.4
+$ file malicious-file.exe
+malicious-file.exe: PE32+ executable (console) x86-64, for MS Windows
+$ cat safe-document.pdf malicious-file.exe > malicious-document.pdf
+$ file malicious-document.pdf
+malicious-document.pdf: PDF document, version 1.4
+```
+
+Therefore, it is recommended like mentioned above for images, to apply document rewriting techniques to destroys any kind of malicious content embedded.
 
 The File Upload service should allow users to report illegal content, and copyright owners to report abuse.
 
@@ -149,6 +164,3 @@ The application should set proper size limits for the upload service in order to
 
 The application should set proper request limits as well for the download service if available to protect the server from DoS attacks.
 
-## Java Code Snippets
-
-[Document Upload Protection](https://github.com/righettod/document-upload-protection) repository written by Dominique for certain document types in Java.
