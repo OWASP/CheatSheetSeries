@@ -218,7 +218,6 @@ JavaScript is a dynamic language and depending on how the framework parses a URL
 | `?foo[]=bar` | `['bar']` (array of string) |
 | `?foo[]=bar&foo[]=baz` | `['bar', 'baz']` (array of string) |
 | `?foo[bar]=baz` | `{ bar : 'baz' }` (object with a key) |
-| `?foo[]=bar` | `['bar']` (array of string) |
 | `?foo[]baz=bar` | `['bar']` (array of string - postfix is lost) |
 | `?foo[][baz]=bar` | `[ { baz: 'bar' } ]` (array of object) |
 | `?foo[bar][baz]=bar` | `{ foo: { bar: { baz: 'bar' } } }` (object tree) |
