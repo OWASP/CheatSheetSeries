@@ -111,9 +111,11 @@ For JSON, verify that the `Content-Type` header is `application/json` and not `t
 <span style="property : $varUnsafe">Oh no</span>
 ```
 
-If you're using JavaScript to change a CSS property, look into using `style.property = x`. This is a **Safe Sink** and will automatically CSS encode data in it.
+If you're using JavaScript to change a CSS property, look into using
+`style.property = x`.
+This is a **Safe Sink** and will automatically CSS encode data in it.
 
-// Add CSS Encoding Advice
+When inserting variables into CSS properties, ensure the data is properly encoded and sanitized to prevent injection attacks. Avoid placing variables directly into selectors or other CSS contexts.
 
 ### Output Encoding for “URL Contexts”
 
