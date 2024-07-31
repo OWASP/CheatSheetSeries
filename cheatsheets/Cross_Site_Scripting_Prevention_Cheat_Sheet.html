@@ -2846,8 +2846,10 @@
 <span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span><span class="w"> </span><span class="nt">selector</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">property</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;$varUnsafe&quot;</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">span</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;property : $varUnsafe&quot;</span><span class="p">&gt;</span>Oh no<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
 </code></pre></div>
-<p>If you're using JavaScript to change a CSS property, look into using <code>style.property = x</code>. This is a <strong>Safe Sink</strong> and will automatically CSS encode data in it.</p>
-<p>// Add CSS Encoding Advice</p>
+<p>If you're using JavaScript to change a CSS property, look into using
+<code>style.property = x</code>.
+This is a <strong>Safe Sink</strong> and will automatically CSS encode data in it.</p>
+<p>When inserting variables into CSS properties, ensure the data is properly encoded and sanitized to prevent injection attacks. Avoid placing variables directly into selectors or other CSS contexts.</p>
 <h3 id="output-encoding-for-url-contexts">Output Encoding for “URL Contexts”<a class="headerlink" href="#output-encoding-for-url-contexts" title="Permanent link">&para;</a></h3>
 <p>“URL Contexts” refer to variables placed into a URL. Most commonly, a developer will add a parameter or URL fragment to a URL base that is then displayed or used in some operation. Use URL Encoding for these scenarios.</p>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;http://www.owasp.org?test=$varUnsafe&quot;</span><span class="p">&gt;</span>link<span class="p">&lt;/</span><span class="nt">a</span> <span class="p">&gt;</span>
