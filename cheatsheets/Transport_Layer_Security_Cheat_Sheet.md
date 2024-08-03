@@ -36,17 +36,38 @@ There are a large number of different ciphers (or cipher suites) that are suppor
 
 The Mozilla Foundation provides an [easy-to-use secure configuration generator](https://ssl-config.mozilla.org/) for web, database and mail servers. This tool allows site administrators to select the software they are using and receive a configuration file that is optimized to balance security and compatibility for a wide variety of browser versions and server software.
 
-### Use Strong Diffie-Hellman Parameters
+### Set the appropriate Diffie-Hellman groups
 
-Where ciphers that use the ephemeral Diffie-Hellman key exchange are in use (signified by the "DHE" or "EDH" strings in the cipher name) sufficiently secure Diffie-Hellman parameters (at least 2048 bits) should be used
+The practice of earlier than TLS 1.3 protocol versions of Diffie-Hellman parameter generation for use by the ephemeral Diffie-Hellman key exchange (signified by the "DHE" or "EDH" strings in the cipher suite name) had practical issues. For example, the client had no say in the selection of server parameters, meaning it could only unconditionally accept or drop, and the random parameter generation often resulted to denial of service attacks (CVE-2022-40735, CVE-2002-20001).
 
-The following command can be used to generate 2048 bit parameters:
+TLS 1.3 restricts Diffie-Hellman group parameters to known groups via the `supported_groups` extension. The available
+Diffie-Hellman groups are `ffdhe2048`, `ffdhe3072`, `ffdhe4096`, `ffdhe6144`, `ffdhe8192` as specified in [RFC7919](https://www.rfc-editor.org/rfc/rfc7919).
 
-```bash
-openssl dhparam -out dhparam2048.pem 2048
+By default openssl 3.0 enables all the above groups. To modify them ensure that the right Diffie-Hellman group parameters are present in `openssl.cnf`. For example
+
+```text
+openssl_conf = openssl_init
+[openssl_init]
+ssl_conf = ssl_module
+[ssl_module]
+system_default = tls_system_default
+[tls_system_default]
+Groups = x25519:prime256v1:x448:ffdhe2048:ffdhe3072
 ```
 
-The [Weak DH](https://weakdh.org/sysadmin.html) website provides guidance on how various web servers can be configured to use these generated parameters.
+An apache configuration would look like
+
+```text
+SSLOpenSSLConfCmd Groups x25519:secp256r1:ffdhe3072
+```
+
+The same group on NGINX would look like the following
+
+```text
+ssl_ecdh_curve x25519:secp256r1:ffdhe3072;
+```
+
+For TLS 1.2 or earlier versions it is recommended not to set Diffie-Hellman parameters.
 
 ### Disable Compression
 
