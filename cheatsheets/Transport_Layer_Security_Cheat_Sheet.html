@@ -2112,8 +2112,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#use-strong-diffie-hellman-parameters" class="md-nav__link">
-    Use Strong Diffie-Hellman Parameters
+  <a href="#set-the-appropriate-diffie-hellman-groups" class="md-nav__link">
+    Set the appropriate Diffie-Hellman groups
   </a>
   
 </li>
@@ -2560,8 +2560,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#use-strong-diffie-hellman-parameters" class="md-nav__link">
-    Use Strong Diffie-Hellman Parameters
+  <a href="#set-the-appropriate-diffie-hellman-groups" class="md-nav__link">
+    Set the appropriate Diffie-Hellman groups
   </a>
   
 </li>
@@ -2766,12 +2766,26 @@
 <li>EXPORT ciphers</li>
 </ul>
 <p>The Mozilla Foundation provides an <a href="https://ssl-config.mozilla.org/">easy-to-use secure configuration generator</a> for web, database and mail servers. This tool allows site administrators to select the software they are using and receive a configuration file that is optimized to balance security and compatibility for a wide variety of browser versions and server software.</p>
-<h3 id="use-strong-diffie-hellman-parameters">Use Strong Diffie-Hellman Parameters<a class="headerlink" href="#use-strong-diffie-hellman-parameters" title="Permanent link">&para;</a></h3>
-<p>Where ciphers that use the ephemeral Diffie-Hellman key exchange are in use (signified by the "DHE" or "EDH" strings in the cipher name) sufficiently secure Diffie-Hellman parameters (at least 2048 bits) should be used</p>
-<p>The following command can be used to generate 2048 bit parameters:</p>
-<div class="highlight"><pre><span></span><code>openssl<span class="w"> </span>dhparam<span class="w"> </span>-out<span class="w"> </span>dhparam2048.pem<span class="w"> </span><span class="m">2048</span>
+<h3 id="set-the-appropriate-diffie-hellman-groups">Set the appropriate Diffie-Hellman groups<a class="headerlink" href="#set-the-appropriate-diffie-hellman-groups" title="Permanent link">&para;</a></h3>
+<p>The practice of earlier than TLS 1.3 protocol versions of Diffie-Hellman parameter generation for use by the ephemeral Diffie-Hellman key exchange (signified by the "DHE" or "EDH" strings in the cipher suite name) had practical issues. For example, the client had no say in the selection of server parameters, meaning it could only unconditionally accept or drop, and the random parameter generation often resulted to denial of service attacks (CVE-2022-40735, CVE-2002-20001).</p>
+<p>TLS 1.3 restricts Diffie-Hellman group parameters to known groups via the <code>supported_groups</code> extension. The available
+Diffie-Hellman groups are <code>ffdhe2048</code>, <code>ffdhe3072</code>, <code>ffdhe4096</code>, <code>ffdhe6144</code>, <code>ffdhe8192</code> as specified in <a href="https://www.rfc-editor.org/rfc/rfc7919">RFC7919</a>.</p>
+<p>By default openssl 3.0 enables all the above groups. To modify them ensure that the right Diffie-Hellman group parameters are present in <code>openssl.cnf</code>. For example</p>
+<div class="highlight"><pre><span></span><code>openssl_conf = openssl_init
+[openssl_init]
+ssl_conf = ssl_module
+[ssl_module]
+system_default = tls_system_default
+[tls_system_default]
+Groups = x25519:prime256v1:x448:ffdhe2048:ffdhe3072
 </code></pre></div>
-<p>The <a href="https://weakdh.org/sysadmin.html">Weak DH</a> website provides guidance on how various web servers can be configured to use these generated parameters.</p>
+<p>An apache configuration would look like</p>
+<div class="highlight"><pre><span></span><code>SSLOpenSSLConfCmd Groups x25519:secp256r1:ffdhe3072
+</code></pre></div>
+<p>The same group on NGINX would look like the following</p>
+<div class="highlight"><pre><span></span><code>ssl_ecdh_curve x25519:secp256r1:ffdhe3072;
+</code></pre></div>
+<p>For TLS 1.2 or earlier versions it is recommended not to set Diffie-Hellman parameters.</p>
 <h3 id="disable-compression">Disable Compression<a class="headerlink" href="#disable-compression" title="Permanent link">&para;</a></h3>
 <p>TLS compression should be disabled in order to protect against a vulnerability (nicknamed <a href="https://threatpost.com/crime-attack-uses-compression-ratio-tls-requests-side-channel-hijack-secure-sessions-091312/77006/">CRIME</a>) which could potentially allow sensitive information such as session cookies to be recovered by an attacker.</p>
 <h3 id="patch-cryptographic-libraries">Patch Cryptographic Libraries<a class="headerlink" href="#patch-cryptographic-libraries" title="Permanent link">&para;</a></h3>
