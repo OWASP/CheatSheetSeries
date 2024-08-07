@@ -16,6 +16,7 @@ In short, the following principles should be followed to reach a secure file upl
 - **Store the files on a different server. If that's not possible, store them outside of the webroot**
     - **In the case of public access to the files, use a handler that gets mapped to filenames inside the application (someid -> file.ext)**
 - **Run the file through an antivirus or a sandbox if available to validate that it doesn't contain malicious data**
+- **Run the file through CDR (Content Disarm & Reconstruct) if applicable type (PDF, DOCX, etc...)**
 - **Ensure that any libraries used are securely configured and kept up to date**
 - **Protect the file upload from [CSRF](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md) attacks**
 
