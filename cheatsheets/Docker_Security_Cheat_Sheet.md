@@ -38,7 +38,7 @@ Configuring the container to use an unprivileged user is the best way to prevent
 docker run -u 4000 alpine
 ```
 
-2. During build time. Simple add user in Dockerfile and use it. For example:
+2. During build time. Simply add user in Dockerfile and use it. For example:
 
 ```dockerfile
 FROM alpine
