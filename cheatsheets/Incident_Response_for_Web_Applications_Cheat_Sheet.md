@@ -1,4 +1,4 @@
-# Incident Response for Web Applications
+# Incident Response for Web Applications Cheat Sheet
 
 ## Introduction
 
