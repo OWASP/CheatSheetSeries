@@ -17,6 +17,6 @@ Please make sure that for your contribution:
 
 If your PR is related to an issue, please finish your PR text with the following line:
 
-This PR covers issue #`<REPLACE WITH ISSUE NUMBER>`.
+This PR fixes issue #`<REPLACE WITH ISSUE NUMBER>`.
 
 Thank you again for your contribution :smiley:
