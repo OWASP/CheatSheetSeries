@@ -2867,10 +2867,10 @@ it can change the value of a variable that the web application relies on due to 
 <h3 id="9-use-strict-mode">#9: Use Strict Mode<a class="headerlink" href="#9-use-strict-mode" title="Permanent link">&para;</a></h3>
 <p>Use <code>strict</code> mode to prevent unintended global variable creation, and to <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors/Read-only">raise an error</a> when read-only properties are attempted to be over-written.</p>
 <h3 id="10-apply-browser-feature-detection">#10: Apply Browser Feature Detection<a class="headerlink" href="#10-apply-browser-feature-detection" title="Permanent link">&para;</a></h3>
-<p>Instead of relying on browser-specific features or properties, use feature detection to determine whether a feature is supported before using it. This can help prevent errors and DOM Clobberng that might arise when using those features in unsupported browsers.</p>
+<p>Instead of relying on browser-specific features or properties, use feature detection to determine whether a feature is supported before using it. This can help prevent errors and DOM Clobbering that might arise when using those features in unsupported browsers.</p>
 <p><strong>Hint:</strong> Unsupported feature APIs can act as an undefined variable/property in unsupported browsers, making them clobberable.</p>
 <h3 id="11-limit-variables-to-local-scope">#11: Limit Variables to Local Scope<a class="headerlink" href="#11-limit-variables-to-local-scope" title="Permanent link">&para;</a></h3>
-<p>Global variables are more prone to being overwritten by DOM Clobberng. Whenever possible, use local variables and object properties.</p>
+<p>Global variables are more prone to being overwritten by DOM Clobbering. Whenever possible, use local variables and object properties.</p>
 <h3 id="12-use-unique-variable-names-in-production">#12: Use Unique Variable Names In Production<a class="headerlink" href="#12-use-unique-variable-names-in-production" title="Permanent link">&para;</a></h3>
 <p>Using unique variable names may help prevent naming collisions that could lead to accidental overwrites.</p>
 <h3 id="13-use-object-oriented-programming-techniques-like-encapsulation">#13: Use Object-oriented Programming Techniques like Encapsulation<a class="headerlink" href="#13-use-object-oriented-programming-techniques-like-encapsulation" title="Permanent link">&para;</a></h3>

@@ -1680,13 +1680,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#suhosin" class="md-nav__link">
-    Suhosin
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#snuffleupagus" class="md-nav__link">
     Snuffleupagus
   </a>
@@ -2471,13 +2464,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#suhosin" class="md-nav__link">
-    Suhosin
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#snuffleupagus" class="md-nav__link">
     Snuffleupagus
   </a>
@@ -2519,8 +2505,8 @@
 <h2 id="php-configuration-and-deployment">PHP Configuration and Deployment<a class="headerlink" href="#php-configuration-and-deployment" title="Permanent link">&para;</a></h2>
 <h3 id="phpini">php.ini<a class="headerlink" href="#phpini" title="Permanent link">&para;</a></h3>
 <p>Some of following settings need to be adapted to your system, in particular <code>session.save_path</code>, <code>session.cookie_path</code> (e.g. <code>/var/www/mysite</code>), and <code>session.cookie_domain</code> (e.g. <code>ExampleSite.com</code>).</p>
-<p>You should also be running PHP 7.2 or later. If running PHP 7.0 and 7.1, you will use slightly different values in a couple of places below (see inline comments). Finally look through the <a href="https://www.php.net/manual/ini.core.php">PHP Manual</a> for a complete reference on every value in the php.ini configuration file.</p>
-<p>You can find a copy of the following values in a ready-to-go php.ini file <a href="https://github.com/danehrlich1/very-secure-php-ini">here</a>.</p>
+<p>You should be running a <a href="https://www.php.net/supported-versions.php">supported version of PHP</a> (as of this writing, 8.1 is the oldest version receiving security support). Review the <a href="https://www.php.net/manual/ini.core.php">core <code>php.ini</code> directives</a> in the PHP Manual for a complete reference on every value in the <code>php.ini</code> configuration file.</p>
+<p>You can find a copy of the following values in a <a href="https://github.com/danehrlich1/very-secure-php-ini">ready-to-go <code>php.ini</code> file here</a>.</p>
 <h4 id="php-error-handling">PHP error handling<a class="headerlink" href="#php-error-handling" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>expose_php              = Off
 error_reporting         = E_ALL
@@ -2554,7 +2540,6 @@ max_file_uploads        = 2
 <h4 id="php-executable-handling">PHP executable handling<a class="headerlink" href="#php-executable-handling" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>enable_dl               = Off
 disable_functions       = system, exec, shell_exec, passthru, phpinfo, show_source, highlight_file, popen, proc_open, fopen_with_path, dbmopen, dbase_open, putenv, move_uploaded_file, chdir, mkdir, rmdir, chmod, rename, filepro, filepro_rowcount, filepro_retrieve, posix_mkfifo
-# see also: http://ir.php.net/features.safe-mode
 disable_classes         =
 </code></pre></div>
 <p>These are dangerous PHP functions. You should disable all that you don't use.</p>
@@ -2575,9 +2560,7 @@ disable_classes         =
  session.cookie_samesite          = Strict
  session.cache_expire             = 30
  session.sid_length               = 256
- session.sid_bits_per_character   = 6 # PHP 7.2+
- session.hash_function            = 1 # PHP 7.0-7.1
- session.hash_bits_per_character  = 6 # PHP 7.0-7.1
+ session.sid_bits_per_character   = 6
 </code></pre></div>
 <h4 id="some-more-security-paranoid-checks">Some more security paranoid checks<a class="headerlink" href="#some-more-security-paranoid-checks" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>session.referer_check   = /application/path
@@ -2585,12 +2568,9 @@ memory_limit            = 50M
 post_max_size           = 20M
 max_execution_time      = 60
 report_memleaks         = On
-track_errors            = Off
 html_errors             = Off
+zend.exception_ignore_args = Off
 </code></pre></div>
-<h3 id="suhosin">Suhosin<a class="headerlink" href="#suhosin" title="Permanent link">&para;</a></h3>
-<p><a href="https://www.hardened-php.net/suhosin/index.html">Suhosin</a> is a patch to PHP which provides a number of hardening and security features that are not available in the default PHP build. However, Suhosin only works with PHP 5, which is <strong>unsupported</strong> and <strong>should not be used</strong>.</p>
-<p>For PHP 7, there is <a href="https://github.com/sektioneins/suhosin-ng/wiki/News">Suhosin-ng</a>, but it's in a prerelease stage, and as such <strong>should not be used in production</strong>.</p>
 <h3 id="snuffleupagus">Snuffleupagus<a class="headerlink" href="#snuffleupagus" title="Permanent link">&para;</a></h3>
 <p><a href="https://snuffleupagus.readthedocs.io">Snuffleupagus</a> is the spiritual
 descendent of Suhosin for PHP 7 and onwards, with <a href="https://snuffleupagus.readthedocs.io/features.html">modern
