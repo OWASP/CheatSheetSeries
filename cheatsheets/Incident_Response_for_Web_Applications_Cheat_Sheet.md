@@ -10,8 +10,10 @@ Incident response is a crucial aspect of web application security, ensuring swif
 
 - Utilize robust logging mechanisms to capture relevant security events. \
   Enable verbose logging: `LogLevel debug`
+<!-- textlint-disable terminology -->
 - Implement intrusion detection systems (IDS) for real-time monitoring. \
   Snort IDS rule example:
+<!-- textlint-enable -->
   `alert tcp any any -> $HOME_NET 80 (msg:"Possible SQL injection attempt"; content:"SELECT * FROM"; sid:1000001;)`
 - Employ anomaly detection algorithms to identify unusual patterns in user behavior. \
   Python script for anomaly detection:
