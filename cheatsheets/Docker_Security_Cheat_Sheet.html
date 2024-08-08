@@ -2617,7 +2617,7 @@ If you really, <strong>really</strong> have to do this, you should secure it. Ch
 <div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-u<span class="w"> </span><span class="m">4000</span><span class="w"> </span>alpine
 </code></pre></div>
 <ol start="2">
-<li>During build time. Simple add user in Dockerfile and use it. For example:</li>
+<li>During build time. Simply add user in Dockerfile and use it. For example:</li>
 </ol>
 <div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="s">alpine</span>
 <span class="k">RUN</span><span class="w"> </span>groupadd<span class="w"> </span>-r<span class="w"> </span>myuser<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>useradd<span class="w"> </span>-r<span class="w"> </span>-g<span class="w"> </span>myuser<span class="w"> </span>myuser
