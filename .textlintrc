@@ -1,22 +1,22 @@
 {
-    "filters": {
-        "comments": true,
-        "whitelist": {
-            "allow": [
-                "XSL stylesheet",
-                "OS X 10.9",
-                "Argon2**id**",
-                "Network IDS"
-            ]
-        }
-    },
+	"filters": {
+		"comments": true,
+		"whitelist": {
+			"allow": [
+				"XSL stylesheet",
+				"OS X 10.9",
+				"Argon2**id**",
+				"Network IDS"
+			]
+		}
+	},
 	"rules": {
 		"terminology": {
 			// Load default terms (see terms.json in the repository)
 			"defaultTerms": false,
 			// Syntax elements to skip. Overrides the default
 			"skip": [
-                "Link",
+				"Link",
 				"Blockquote"
 			],
 			// List of terms
@@ -125,10 +125,10 @@
 					"wi[- ]?fi",
 					"Wi-Fi"
 				],
-                [
-                    "CVE['’]?s",
-                    "CVEs"
-                ],
+				[
+						"CVE['’]?s",
+						"CVEs"
+				],
 
 				// Words and phrases
 				"ID",
