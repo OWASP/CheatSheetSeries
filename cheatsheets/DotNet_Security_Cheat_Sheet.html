@@ -3797,7 +3797,7 @@ objects received from the network</p>
 <h4 id="logging">Logging<a class="headerlink" href="#logging" title="Permanent link">&para;</a></h4>
 <p>What logs to collect and more information about logging can be found in the <a href="Logging_Cheat_Sheet.html">Logging Cheat Sheet</a>.</p>
 <p>.NET Core comes with a LoggerFactory, which is in Microsoft.Extensions.Logging. More information about ILogger can be found <a href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.ilogger">here</a>.</p>
-<p>How to log all errors from the <code>Startup.cs</code>, so that anytime an error is thrown it will be logged:</p>
+<p>Here's how to log all errors from the <code>Startup.cs</code>, so that anytime an error is thrown it will be logged:</p>
 <div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">Configure</span><span class="p">(</span><span class="n">IApplicationBuilder</span><span class="w"> </span><span class="n">app</span><span class="p">,</span><span class="w"> </span><span class="n">IHostingEnvironment</span><span class="w"> </span><span class="n">env</span><span class="p">)</span>
 <span class="p">{</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">env</span><span class="p">.</span><span class="n">IsDevelopment</span><span class="p">())</span>
@@ -3905,7 +3905,7 @@ sure that the content you are writing to the browser is safe and has been escape
 <p>Malicious users are able to use objects like cookies to insert malicious information to change user roles. In some cases, hackers are able to elevate their privileges to administrator rights by using a pre-existing or cached password hash from a previous session.</p>
 <p>DO: Prevent Deserialization of Domain Objects</p>
 <p>DO: Run the Deserialization Code with Limited Access Permissions
-If a deserialized hostile object tries to initiate a system processes or access a resource within the server or the host's OS, it will be denied access and a permission flag will be raised so that a system administrator is made aware of any anomalous activity on the server.</p>
+If a deserialized hostile object tries to initiate a system process or access a resource within the server or the host's OS, it will be denied access and a permission flag will be raised so that a system administrator is made aware of any anomalous activity on the server.</p>
 <p>More information about Insecure Deserialization can be found in the <a href="Deserialization_Cheat_Sheet.html#net-csharp">Deserialization Cheat Sheet</a>.</p>
 <h4 id="a102013-unvalidated-redirects-and-forwards">A10:2013 Unvalidated redirects and forwards<a class="headerlink" href="#a102013-unvalidated-redirects-and-forwards" title="Permanent link">&para;</a></h4>
 <p>A protection against this was introduced in MVC 3 template. Here is the code:</p>
