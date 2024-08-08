@@ -2505,7 +2505,7 @@
 <h2 id="php-configuration-and-deployment">PHP Configuration and Deployment<a class="headerlink" href="#php-configuration-and-deployment" title="Permanent link">&para;</a></h2>
 <h3 id="phpini">php.ini<a class="headerlink" href="#phpini" title="Permanent link">&para;</a></h3>
 <p>Some of following settings need to be adapted to your system, in particular <code>session.save_path</code>, <code>session.cookie_path</code> (e.g. <code>/var/www/mysite</code>), and <code>session.cookie_domain</code> (e.g. <code>ExampleSite.com</code>).</p>
-<p>You should be running a <a href="https://www.php.net/supported-versions.php">supported version of PHP</a> (as of this writing, 8.1 is the oldest version receiving security support). Review the <a href="https://www.php.net/manual/ini.core.php">core <code>php.ini</code> directives</a> in the PHP Manual for a complete reference on every value in the <code>php.ini</code> configuration file.</p>
+<p>You should be running a <a href="https://www.php.net/supported-versions.php">supported version of PHP</a> (as of this writing, 8.1 is the oldest version receiving security support from PHP, though distribution vendors often provide extended support). Review the <a href="https://www.php.net/manual/ini.core.php">core <code>php.ini</code> directives</a> in the PHP Manual for a complete reference on every value in the <code>php.ini</code> configuration file.</p>
 <p>You can find a copy of the following values in a <a href="https://github.com/danehrlich1/very-secure-php-ini">ready-to-go <code>php.ini</code> file here</a>.</p>
 <h4 id="php-error-handling">PHP error handling<a class="headerlink" href="#php-error-handling" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code>expose_php              = Off
@@ -2569,7 +2569,7 @@ post_max_size           = 20M
 max_execution_time      = 60
 report_memleaks         = On
 html_errors             = Off
-zend.exception_ignore_args = Off
+zend.exception_ignore_args = On
 </code></pre></div>
 <h3 id="snuffleupagus">Snuffleupagus<a class="headerlink" href="#snuffleupagus" title="Permanent link">&para;</a></h3>
 <p><a href="https://snuffleupagus.readthedocs.io">Snuffleupagus</a> is the spiritual
