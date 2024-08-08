@@ -13,8 +13,8 @@ Incident response is a crucial aspect of web application security, ensuring swif
 <!-- textlint-disable terminology -->
 - Implement intrusion detection systems (IDS) for real-time monitoring. \
   Snort IDS rule example:
-<!-- textlint-enable -->
   `alert tcp any any -> $HOME_NET 80 (msg:"Possible SQL injection attempt"; content:"SELECT * FROM"; sid:1000001;)`
+<!-- textlint-enable -->
 - Employ anomaly detection algorithms to identify unusual patterns in user behavior. \
   Python script for anomaly detection:
   `from sklearn.ensemble import IsolationForest`
