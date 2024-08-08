@@ -817,7 +817,7 @@ What logs to collect and more information about logging can be found in the [Log
 
 .NET Core comes with a LoggerFactory, which is in Microsoft.Extensions.Logging. More information about ILogger can be found [here](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.logging.ilogger).
 
-How to log all errors from the `Startup.cs`, so that anytime an error is thrown it will be logged:
+Here's how to log all errors from the `Startup.cs`, so that anytime an error is thrown it will be logged:
 
 ``` csharp
 public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -965,7 +965,7 @@ Malicious users are able to use objects like cookies to insert malicious informa
 DO: Prevent Deserialization of Domain Objects
 
 DO: Run the Deserialization Code with Limited Access Permissions
-If a deserialized hostile object tries to initiate a system processes or access a resource within the server or the host's OS, it will be denied access and a permission flag will be raised so that a system administrator is made aware of any anomalous activity on the server.
+If a deserialized hostile object tries to initiate a system process or access a resource within the server or the host's OS, it will be denied access and a permission flag will be raised so that a system administrator is made aware of any anomalous activity on the server.
 
 More information about Insecure Deserialization can be found in the [Deserialization Cheat Sheet](Deserialization_Cheat_Sheet.md#net-csharp).
 
