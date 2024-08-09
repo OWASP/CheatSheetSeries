@@ -58,7 +58,7 @@ This XSS method uses the relaxed rendering engine to create an XSS vector within
 If the system does not allow quotes of any kind, you can `eval()` a `fromCharCode` in JavaScript to create any XSS vector you need:
 
 ```html
-<a href="javascript:alert(String,fromCharCode(88,83,83))">Click Me!</a>
+<a href="javascript:alert(String.fromCharCode(88,83,83))">Click Me!</a>
 ```
 
 ### Default SRC Tag to Get Past Filters that Check SRC Domain
