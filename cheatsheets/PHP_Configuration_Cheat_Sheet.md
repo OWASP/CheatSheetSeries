@@ -17,9 +17,9 @@ For general PHP codebase security please refer to the two following great guides
 
 Some of following settings need to be adapted to your system, in particular `session.save_path`, `session.cookie_path` (e.g. `/var/www/mysite`), and `session.cookie_domain` (e.g. `ExampleSite.com`).
 
-You should also be running PHP 7.2 or later. If running PHP 7.0 and 7.1, you will use slightly different values in a couple of places below (see inline comments). Finally look through the [PHP Manual](https://www.php.net/manual/ini.core.php) for a complete reference on every value in the php.ini configuration file.
+You should be running a [supported version of PHP](https://www.php.net/supported-versions.php) (as of this writing, 8.1 is the oldest version receiving security support from PHP, though distribution vendors often provide extended support). Review the [core `php.ini` directives](https://www.php.net/manual/ini.core.php) in the PHP Manual for a complete reference on every value in the `php.ini` configuration file.
 
-You can find a copy of the following values in a ready-to-go php.ini file [here](https://github.com/danehrlich1/very-secure-php-ini).
+You can find a copy of the following values in a [ready-to-go `php.ini` file here](https://github.com/danehrlich1/very-secure-php-ini).
 
 #### PHP error handling
 
@@ -68,7 +68,6 @@ If your application is not using file uploads, and say the only data the user wi
 ```text
 enable_dl               = Off
 disable_functions       = system, exec, shell_exec, passthru, phpinfo, show_source, highlight_file, popen, proc_open, fopen_with_path, dbmopen, dbase_open, putenv, move_uploaded_file, chdir, mkdir, rmdir, chmod, rename, filepro, filepro_rowcount, filepro_retrieve, posix_mkfifo
-# see also: http://ir.php.net/features.safe-mode
 disable_classes         =
 ```
 
@@ -94,9 +93,7 @@ Session settings are some of the MOST important values to concentrate on in conf
  session.cookie_samesite          = Strict
  session.cache_expire             = 30
  session.sid_length               = 256
- session.sid_bits_per_character   = 6 # PHP 7.2+
- session.hash_function            = 1 # PHP 7.0-7.1
- session.hash_bits_per_character  = 6 # PHP 7.0-7.1
+ session.sid_bits_per_character   = 6
 ```
 
 #### Some more security paranoid checks
@@ -107,15 +104,9 @@ memory_limit            = 50M
 post_max_size           = 20M
 max_execution_time      = 60
 report_memleaks         = On
-track_errors            = Off
 html_errors             = Off
+zend.exception_ignore_args = On
 ```
-
-### Suhosin
-
-[Suhosin](https://www.hardened-php.net/suhosin/index.html) is a patch to PHP which provides a number of hardening and security features that are not available in the default PHP build. However, Suhosin only works with PHP 5, which is **unsupported** and **should not be used**.
-
-For PHP 7, there is [Suhosin-ng](https://github.com/sektioneins/suhosin-ng/wiki/News), but it's in a prerelease stage, and as such **should not be used in production**.
 
 ### Snuffleupagus
 

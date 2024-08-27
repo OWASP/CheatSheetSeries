@@ -1,13 +1,15 @@
-# Mandatory Markdown Format Rules
-
-**!!! REMOVE THIS SECTION BEFORE TO SUBMIT YOUR CHEAT SHEET VIA PULL REQUEST !!!**
-
-* Use this [editor and validation policy](https://github.com/OWASP/CheatSheetSeries#editor--validation-policy).
-* Use these [format rules](https://github.com/OWASP/CheatSheetSeries#conversion-rules).
-
 # `Topic` Cheat Sheet
 
 **Replace `Topic` with the topic you're tackling, such as `Authentication` and remove this line**
+
+```markdown
+# Mandatory Markdown Format Rules
+
+**!!! REMOVE THIS BLOCK BEFORE TO SUBMIT YOUR CHEAT SHEET VIA PULL REQUEST !!!**
+
+- Use this [editor and validation policy](https://github.com/OWASP/CheatSheetSeries#editor--validation-policy).
+- Use these [format rules](https://github.com/OWASP/CheatSheetSeries#conversion-rules).
+```
 
 ## Introduction
 

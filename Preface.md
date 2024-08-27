@@ -1,4 +1,4 @@
-![OWASPHeader](assets/Preface_Cheatsheet_Header.png)
+# ![OWASPHeader](assets/Preface_Cheatsheet_Header.png)
 
 ![ProjectLogoOfficial](assets/Preface_Cheatsheet_Logo.png)
 

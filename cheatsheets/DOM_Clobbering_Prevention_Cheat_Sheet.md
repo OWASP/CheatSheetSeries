@@ -168,13 +168,13 @@ Use `strict` mode to prevent unintended global variable creation, and to [raise 
 
 ### \#10: Apply Browser Feature Detection
 
-Instead of relying on browser-specific features or properties, use feature detection to determine whether a feature is supported before using it. This can help prevent errors and DOM Clobberng that might arise when using those features in unsupported browsers.
+Instead of relying on browser-specific features or properties, use feature detection to determine whether a feature is supported before using it. This can help prevent errors and DOM Clobbering that might arise when using those features in unsupported browsers.
 
 **Hint:** Unsupported feature APIs can act as an undefined variable/property in unsupported browsers, making them clobberable.
 
 ### \#11: Limit Variables to Local Scope
 
-Global variables are more prone to being overwritten by DOM Clobberng. Whenever possible, use local variables and object properties.
+Global variables are more prone to being overwritten by DOM Clobbering. Whenever possible, use local variables and object properties.
 
 ### \#12: Use Unique Variable Names In Production
 

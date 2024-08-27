@@ -12,22 +12,15 @@ assignees: ''
 ## What is the proposed Cheat Sheet about?
 <!--- A short summary of what the Cheat Sheet will be about -->
 
-
 ## What security issues are commonly encountered related to this area?
 <!--- Common issues or vulnerabilities that would be addressed -->
 
-
-
 ## What is the objective of the Cheat Sheet?
 <!--- What the Cheat Sheet will provide to the reader and wider community -->
-
-
 
 ## What other resources exist in this area?
 <!--- Are there any other OWASP projects that cover this area? -->
 <!--- Would this content be better suited to the testing guide projects? -->
 <!--- What other third party guidelines or resources currently exist? -->
-
-
 
 <!-- Thank you again for your contribution -->

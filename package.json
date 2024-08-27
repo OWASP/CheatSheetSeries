@@ -14,7 +14,7 @@
   "scripts": {
     "test": "npm run lint-markdown && npm run lint-terminology",
     "lint-terminology": "textlint ./cheatsheets/",
-    "lint-markdown": "markdownlint ./cheatsheets/ --ignore node_modules",
+    "lint-markdown": "markdownlint ./ -c .markdownlint.json --ignore node_modules --ignore cheatsheets_excluded",
     "link-check": "find  cheatsheets -name \\*.md -exec markdown-link-check -c markdown-link-check-config.json 1> log 2> err {} \\; && if [ -e err ] && grep -q  \"ERROR:\" err ; then exit 113  ; else echo -e \"All good\"; fi"
   },
   "repository": {

@@ -274,6 +274,7 @@ None.
 ### V4.3 Other Access Control Considerations
 
 [REST Assessment Cheat Sheet](cheatsheets/REST_Assessment_Cheat_Sheet.md)
+[Multifactor Authentication Cheat Sheet](cheatsheets/Multifactor_Authentication_Cheat_Sheet.md)
 
 ## V5: Validation, Sanitization and Encoding Verification Requirements
 
