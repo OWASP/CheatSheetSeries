@@ -408,7 +408,8 @@ Pod Security Standards combined with the Pod Security Admission Controller allow
 
 Each of the profiles have defined settings baselines that can be found in more detail [here](https://kubernetes.io/docs/concepts/security/pod-security-standards/#profile-details).
 
-The Pod Security Admission Controller allows you to enforce, audit, or warn upon the violation of a defined policy. `audit` and `warn` modes can be utilized to determine if a particular Pod Security Standard would normally prevent the deployment of a pod when set to `enforce` mode. 
+The Pod Security Admission Controller allows you to enforce, audit, or warn upon the violation of a defined policy. `audit` and `warn` modes can be utilized to determine if a particular Pod Security Standard would normally prevent the deployment of a pod when set to `enforce` mode.
+
 
 Below is an example of a namespace that would only allow Pods to be deployed that conform to the restricted Pod Security Standard:
 
