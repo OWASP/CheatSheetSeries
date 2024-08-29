@@ -397,7 +397,8 @@ For more information on security context for Pods, refer to the documentation at
 
 We strongly recommend that all your containers should adhere to the principle of least privilege, since your security risk is heavily influenced by the capabilities, role bindings, and privileges given to containers. Each container should only have the minimum privileges and capabilities that allows it to perform its intended function.
 
-**Utilize Pod Security Standards and the Built-in Pod Security Admission Controller to enforce container privilege levels**
+#### Utilize Pod Security Standards and the Built-in Pod Security Admission Controller to enforce container privilege levels
+
 
 Pod Security Standards combined with the Pod Security Admission Controller allow cluster administrators to enforce requirements on a pods `securityContext` fields. Three Pod Security Standard profiles exist:
 
