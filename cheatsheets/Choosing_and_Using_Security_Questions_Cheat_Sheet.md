@@ -43,6 +43,7 @@ Any questions that do not have all of the characteristics discussed above should
 | What is your favourite movie? | Likely to change over time. |
 | What is your favourite cricket team? | Not applicable to most users. |
 | What is the make and model of your first car? | Fairly small range of likely answers. |
+| What is your nickname? | This could be guessed by glancing through social media posts. |
 
 Additionally, the context of the application must be considered when deciding whether questions are good or bad. For example, a question such as "What was your maths teacher's surname in your 8th year of school?" would be very easy to guess if it was using in a virtual learning environment for your school (as other students probably know this information), but would be much stronger for an online gaming website.
 
@@ -79,7 +80,7 @@ Answers should also be checked against a denylist, including:
 
 #### Renewing Security Questions
 
-If the security questions are not used as part of the main authentication process, then consider periodically prompting the user to review their security questions and verify that they still know the answers. This should give them a chance to update any answers that may have changed (although ideally this shouldn't happen with good questions), and increases the likelihood that they will remember them if they ever need to recover their account.
+If the security questions are not used as part of the main authentication process, then consider periodically (such as when they are changing their passwords after expiration) prompting the user to review their security questions and verify that they still know the answers. This should give them a chance to update any answers that may have changed (although ideally this shouldn't happen with good questions), and increases the likelihood that they will remember them if they ever need to recover their account.
 
 ### System Defined Security Questions
 
