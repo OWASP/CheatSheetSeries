@@ -399,7 +399,6 @@ We strongly recommend that all your containers should adhere to the principle of
 
 #### Utilize Pod Security Standards and the Built-in Pod Security Admission Controller to enforce container privilege levels
 
-
 Pod Security Standards combined with the Pod Security Admission Controller allow cluster administrators to enforce requirements on a pods `securityContext` fields. Three Pod Security Standard profiles exist:
 
 - **Privileged**: Unrestricted, allows for known privilege escalations. Intended for use with system and infrastructure level workloads that require privilege to operate properly. All securityContext settings are permitted
