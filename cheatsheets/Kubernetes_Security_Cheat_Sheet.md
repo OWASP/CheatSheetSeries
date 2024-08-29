@@ -428,8 +428,7 @@ Cluster administrators should properly organize and and enforce policy on cluste
 
 If more granular policy enforcement is required beyond the three profiles (Privileged, Baseline, Restricted), Third party admission controllers like OPA Gatekeeper or Kyverno, or built in Validating Admission Policy can be utilized.
 
-#### Use Pod security policies to control the security-related attributes of pods, which includes container privilege levels.
-
+#### Use Pod security policies to control the security-related attributes of pods, which includes container privilege levels
 
 > **Warning**  
 > Kubernetes deprecated Pod Security Policies in favor of Pod Security Standards and the Pod Security Admission Controller, and was removed from Kubernetes in v1.25. Consider using Pod Security Standards and the Pod Security Admission Controller instead.
