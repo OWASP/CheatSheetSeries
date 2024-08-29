@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/NPM_Security_Cheat_Sheet.html">
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Legacy_Application_Management_Cheat_Sheet.html">
       
       
-        <link rel="prev" href="Multifactor_Authentication_Cheat_Sheet.html">
+        <link rel="prev" href="Laravel_Cheat_Sheet.html">
       
       
-        <link rel="next" href="Network_Segmentation_Cheat_Sheet.html">
+        <link rel="next" href="Logging_Cheat_Sheet.html">
       
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
@@ -24,7 +24,7 @@
     
     
       
-        <title>NPM Security - OWASP Cheat Sheet Series</title>
+        <title>Legacy Application Management - OWASP Cheat Sheet Series</title>
       
     
     
@@ -79,7 +79,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#npm-security-best-practices" class="md-skip">
+        <a href="#legacy-application-management-cheat-sheet" class="md-skip">
           Skip to content
         </a>
       
@@ -114,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              NPM Security
+              Legacy Application Management
             
           </span>
         </div>
@@ -1302,9 +1302,29 @@
                 
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="Legacy_Application_Management_Cheat_Sheet.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Legacy Application Management
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="Legacy_Application_Management_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -1313,6 +1333,82 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inventory-and-asset-management" class="md-nav__link">
+    Inventory and Asset Management
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#authenticationauthorization" class="md-nav__link">
+    Authentication/Authorization
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vulnerability-management" class="md-nav__link">
+    Vulnerability Management
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-storage" class="md-nav__link">
+    Data Storage
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ensuring-maintainability" class="md-nav__link">
+    Ensuring Maintainability
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#change-management" class="md-nav__link">
+    Change Management
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#continuous-monitoring-and-incident-response" class="md-nav__link">
+    Continuous Monitoring and Incident Response
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1462,29 +1558,9 @@
                 
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    NPM Security
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="NPM_Security_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="NPM_Security_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1493,116 +1569,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#1-avoid-publishing-secrets-to-the-npm-registry" class="md-nav__link">
-    1) Avoid publishing secrets to the npm registry
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#2-enforce-the-lockfile" class="md-nav__link">
-    2) Enforce the lockfile
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#3-minimize-attack-surfaces-by-ignoring-run-scripts" class="md-nav__link">
-    3) Minimize attack surfaces by ignoring run-scripts
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#4-assess-npm-project-health" class="md-nav__link">
-    4) Assess npm project health
-  </a>
-  
-    <nav class="md-nav" aria-label="4) Assess npm project health">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#npm-outdated-command" class="md-nav__link">
-    npm outdated command
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#npm-doctor-command" class="md-nav__link">
-    npm doctor command
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#5-audit-for-vulnerabilities-in-open-source-dependencies" class="md-nav__link">
-    5) Audit for vulnerabilities in open source dependencies
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#6-use-a-local-npm-proxy" class="md-nav__link">
-    6) Use a local npm proxy
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#7-responsibly-disclose-security-vulnerabilities" class="md-nav__link">
-    7) Responsibly disclose security vulnerabilities
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#8-enable-2fa" class="md-nav__link">
-    8) Enable 2FA
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#9-use-npm-author-tokens" class="md-nav__link">
-    9) Use npm author tokens
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#10-understand-module-naming-conventions-and-typosquatting-attacks" class="md-nav__link">
-    10) Understand module naming conventions and typosquatting attacks
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -2422,91 +2388,57 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#1-avoid-publishing-secrets-to-the-npm-registry" class="md-nav__link">
-    1) Avoid publishing secrets to the npm registry
+  <a href="#introduction" class="md-nav__link">
+    Introduction
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-enforce-the-lockfile" class="md-nav__link">
-    2) Enforce the lockfile
+  <a href="#inventory-and-asset-management" class="md-nav__link">
+    Inventory and Asset Management
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#3-minimize-attack-surfaces-by-ignoring-run-scripts" class="md-nav__link">
-    3) Minimize attack surfaces by ignoring run-scripts
+  <a href="#authenticationauthorization" class="md-nav__link">
+    Authentication/Authorization
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#4-assess-npm-project-health" class="md-nav__link">
-    4) Assess npm project health
-  </a>
-  
-    <nav class="md-nav" aria-label="4) Assess npm project health">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#npm-outdated-command" class="md-nav__link">
-    npm outdated command
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#npm-doctor-command" class="md-nav__link">
-    npm doctor command
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#5-audit-for-vulnerabilities-in-open-source-dependencies" class="md-nav__link">
-    5) Audit for vulnerabilities in open source dependencies
+  <a href="#vulnerability-management" class="md-nav__link">
+    Vulnerability Management
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#6-use-a-local-npm-proxy" class="md-nav__link">
-    6) Use a local npm proxy
+  <a href="#data-storage" class="md-nav__link">
+    Data Storage
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#7-responsibly-disclose-security-vulnerabilities" class="md-nav__link">
-    7) Responsibly disclose security vulnerabilities
+  <a href="#ensuring-maintainability" class="md-nav__link">
+    Ensuring Maintainability
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#8-enable-2fa" class="md-nav__link">
-    8) Enable 2FA
+  <a href="#change-management" class="md-nav__link">
+    Change Management
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#9-use-npm-author-tokens" class="md-nav__link">
-    9) Use npm author tokens
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#10-understand-module-naming-conventions-and-typosquatting-attacks" class="md-nav__link">
-    10) Understand module naming conventions and typosquatting attacks
+  <a href="#continuous-monitoring-and-incident-response" class="md-nav__link">
+    Continuous Monitoring and Incident Response
   </a>
   
 </li>
@@ -2529,121 +2461,64 @@
   
 
 
-<h1 id="npm-security-best-practices">NPM Security best practices<a class="headerlink" href="#npm-security-best-practices" title="Permanent link">&para;</a></h1>
-<p>In the following npm cheatsheet, we’re going to focus on <a href="https://snyk.io/blog/ten-npm-security-best-practices">10 npm security best practices</a> and productivity tips, useful for JavaScript and Node.js developers.</p>
-<h2 id="1-avoid-publishing-secrets-to-the-npm-registry">1) Avoid publishing secrets to the npm registry<a class="headerlink" href="#1-avoid-publishing-secrets-to-the-npm-registry" title="Permanent link">&para;</a></h2>
-<p>Whether you’re making use of API keys, passwords or other secrets, they can very easily end up leaking into source control or even a published package on the public npm registry. You may have secrets in your working directory in designated files such as a <code>.env</code> which should be added to a <code>.gitignore</code> to avoid committing it to a SCM, but what happen when you publish an npm package from the project’s directory?</p>
-<p>The npm CLI packs up a project into a tar archive (tarball) in order to push it to the registry. The following criteria determine which files and directories are added to the tarball:</p>
+<h1 id="legacy-application-management-cheat-sheet">Legacy Application Management Cheat Sheet<a class="headerlink" href="#legacy-application-management-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>Legacy applications are applications that are recognized as being outdated but remain in active use by an organization. This may occur if a viable alternative to the application is not available, replacement is currently too expensive, or if the application is highly bespoke and services a very niche role within an organization's digital ecosystem. Legacy applications often introduce significant security risks to an organization for the following reasons:</p>
 <ul>
-<li>If there is either a <code>.gitignore</code> or a <code>.npmignore</code> file, the contents of the file are used as an ignore pattern when preparing the package for publication.</li>
-<li>If both ignore files exist, everything not located in <code>.npmignore</code> is published to the registry. This condition is a common source of confusion and is a problem that can lead to leaking secrets.</li>
+<li>Legacy applications might have reached End-of-Life (EoL) meaning that the application no longer receives patching or vendor support. This drastically increases the risk of vulnerability in the application being left in an exploitable state.</li>
+<li>Some applications have been built using technologies that are no longer conventionally used or taught to technical staff. This can mean that the knowledge required to troubleshoot or fix vulnerabilities when they arise may be lacking.</li>
+<li>Legacy applications may produce data in custom formats and/or use old interfaces or networking protocols. This may stifle efforts to use data produced by the application with services used for vulnerability management or security logging, such as a SIEM (Security Information and Event Management) solution.</li>
 </ul>
-<p>Developers may end up updating the <code>.gitignore</code> file, but forget to update <code>.npmignore</code> as well, which can lead to a potentially sensitive file not being pushed to source control, but still being included in the npm package.</p>
-<p>Another good practice to adopt is making use of the <code>files</code> property in package.json, which works as an allowlist and specifies the array of files to be included in the package that is to be created and installed (while the ignore file functions as a denylist). The <code>files</code> property and an ignore file can both be used together to determine which files should explicitly be included, as well as excluded, from the package. When using both, the former the <code>files</code> property in package.json takes precedence over the ignore file.</p>
-<p>When a package is published, the npm CLI will verbosely display the archive being created. To be extra careful, add a <code>--dry-run</code> command-line argument to your publish command in order to first review how the tarball is created without actually publishing it to the registry.</p>
-<p>In January 2019, npm shared on their blog that they added a <a href="https://blog.npmjs.org/post/182015409750/automated-token-revocation-for-when-you">mechanism that automatically revokes a token</a> if they detect that one has been published with a package.</p>
-<h2 id="2-enforce-the-lockfile">2) Enforce the lockfile<a class="headerlink" href="#2-enforce-the-lockfile" title="Permanent link">&para;</a></h2>
-<p>We embraced the birth of package lockfiles with open arms, which introduced: deterministic installations across different environments, and enforced dependency expectations across team collaboration. Life is good! Or so I thought… what would have happened had I slipped a change into the project’s <code>package.json</code> file but had forgotten to commit the lockfile alongside of it?</p>
-<p>Both Yarn, and npm act the same during dependency installation . When they detect an inconsistency between the project’s <code>package.json</code> and the lockfile, they compensate for such change based on the <code>package.json</code> manifest by installing different versions than those that were recorded in the lockfile.</p>
-<p>This kind of situation can be hazardous for build and production environments as they could pull in unintended package versions and render the entire benefit of a lockfile futile.</p>
-<p>Luckily, there is a way to tell both Yarn and npm to adhere to a specified set of dependencies and their versions by referencing them from the lockfile. Any inconsistency will abort the installation. The command-line should read as follows:</p>
+<p>As there is no one-size fits all approach to securing legacy applications, this cheat sheet is intended to act as a resource offering some practical suggestions on hardening legacy applications when alternatives to the use of legacy applications do not exist. The preferred approach will depend on factors such as the type of data stored and produced by the legacy application, whether the application and associated infrastructure have known vulnerabilities, and the extent to which it is possible to restrict access to the legacy application or some of its riskier components. Engaging with security domain experts (in-house or external) who can provide specific and contextualized advice may be necessary.</p>
+<h2 id="inventory-and-asset-management">Inventory and Asset Management<a class="headerlink" href="#inventory-and-asset-management" title="Permanent link">&para;</a></h2>
+<p>At a baseline, organizations should have a clear understanding about what legacy applications are currently in use and what the expected risk of the use of these legacy solutions are.</p>
+<p><strong>Inventory Management:</strong> Start by compiling documentation identifying the legacy applications used by your organization including version numbers, date of production, and relevant configuration settings. Ideally, this will include details regarding what network hosts need to be situated on to reach the application and associated infrastructure. A record of the services running on infrastructure used for hosting the application and/or for data storage should also be outlined. In some circumstances documentation could include information about the physical location of and permitted access to servers associated with the application. Organizations might opt to generate a formal SBOM (Software Bill of Materials) as part of this process. SBOMs serve a useful role when an application relies on third-party dependencies in order to function.</p>
+<p><strong>Risk Assessment and Threat Modeling:</strong> Ensure your organization has a clear understanding of the level of risk and the kinds of threats theoretically posed by using the legacy application and its specific components (e.g. specific API routes or open ports on hosting infrastructure). This may be informed by formal or informal threat-modeling of an application, as described in the <a href="/Threat_Modeling_Cheat_Sheet.md">Threat Modeling Cheat Sheet</a>. Qualifying the risk posed by legacy software might also be aided by using an industry standard risk assessment framework, such as the NIST (National Institute of Standards and Technology) <a href="https://csrc.nist.gov/Projects/risk-management">Risk Management Framework</a>. There are many threat modeling and risk assessment frameworks and tools that have different strengths and weaknesses.</p>
+<p>As a more informal indicator of how conservative security measures used to protect the application ought to be, consider the questions below. These may help to contextualize what the risk profile of a particular legacy application or it's components might be:</p>
 <ul>
-<li>If you’re using Yarn, run <code>yarn install --frozen-lockfile</code>.</li>
-<li>If you’re using npm run <code>npm ci</code>.</li>
+<li>What information is handled/stored by the application? If this information were to be compromised, how would this impact your business and potentially its regulatory/compliance requirements?</li>
+<li>Do the application/application dependencies/infrastructure used to support the application have known vulnerabilities? If so, how easily exploitable are these? Can these be patched with the right resources including skilled professionals?</li>
+<li>How critical is the availability of the legacy application to your organization's business continuity?</li>
+<li>If an attacker were able to gain access to this application, is there a risk that they could use it to exfiltrate other critical information from your organization? Could an attacker establish access to a particularly privileged network or environment by compromising the legacy application?</li>
 </ul>
-<h2 id="3-minimize-attack-surfaces-by-ignoring-run-scripts">3) Minimize attack surfaces by ignoring run-scripts<a class="headerlink" href="#3-minimize-attack-surfaces-by-ignoring-run-scripts" title="Permanent link">&para;</a></h2>
-<p>The npm CLI works with package run-scripts. If you’ve ever run <code>npm start</code> or <code>npm test</code> then you’ve used package run-scripts too. The npm CLI builds on scripts that a package can declare, and allows packages to define scripts to run at specific entry points during the package’s installation in a project. For example, some of these <a href="https://docs.npmjs.com/misc/scripts">script hook</a> entries may be <code>postinstall</code> scripts that a package that is being installed will execute in order to perform housekeeping chores.</p>
-<p>With this capability, bad actors may create or alter packages to perform malicious acts by running any arbitrary command when their package is installed. A couple of cases where we’ve seen this already happening is the popular <a href="https://snyk.io/vuln/npm:eslint-scope:20180712">eslint-scope incident</a> that harvested npm tokens, and the <a href="https://snyk.io/vuln/npm:crossenv:20170802">crossenv incident</a>, along with 36 other packages that abused a typosquatting attack on the npm registry.</p>
-<p>Apply these npm security best practices in order to minimize the malicious module attack surface:</p>
+<h2 id="authenticationauthorization">Authentication/Authorization<a class="headerlink" href="#authenticationauthorization" title="Permanent link">&para;</a></h2>
+<p>Authorization measures enforce rules around who can access a given resource and how they can establish access to that resource. Authorization is covered in significant depth in the <a href="/Authorization_Cheat_Sheet.md">Authorization Cheat Sheet</a>.</p>
+<p>When it comes to applying authorization controls to legacy systems, organizations should consider the applications to be inherently high risk. The security principle of least privilege (allowing only as much access as is strictly required for staff/users/systems to perform their required roles and to facilitate business operations) applies especially to legacy applications. Consider implementing the following as applicable:</p>
 <ul>
-<li>Always vet and perform due-diligence on third-party modules that you install in order to confirm their health and credibility.</li>
-<li>Hold-off on upgrading immediately to new versions; allow new package versions some time to circulate before trying them out.</li>
-<li>Before upgrading, make sure to review changelog and release notes for the upgraded version.</li>
-<li>When installing packages make sure to add the <code>--ignore-scripts</code> suffix to disable the execution of any scripts by third-party packages.</li>
-<li>Consider adding <code>ignore-scripts</code> to your <code>.npmrc</code> project file, or to your global npm configuration.</li>
+<li>Apply network-level access controls to the application. This might entail hosting the application within a restricted subnet and/or applying IP allow-listing to prevent arbitrary users from interacting particularly with public-facing legacy applications from arbitrary hosts. In some circumstances the application may be required to run in an air-gapped environment.</li>
+<li>Authorization controls could be considered at a more granular level by reducing the feature set available to end users. For example, it might be necessary to disable certain high risk functionalities, particularly administrative functionalities.</li>
+<li>Ensure that only authenticated users can access the application. This could be enforced by the application itself, or by use of an IdP (Identity Provider) service. If the application is hosted in a restricted network environment, authentication should also be required to access this network environment (e.g. users could be required to authenticate to a VPN server before accessing the application). Implementing one or more of these controls will both slow down an attacker and assist with investigations if an incident were to occur. See the <a href="/Authentication_Cheat_Sheet.md">Authentication Cheat Sheet</a> for further information regarding authentication controls.</li>
+<li>Close any ports on hosts used to run the application that are not strictly needed in order for the application to perform only the tasks required of it by your organization. Access to certain ports may also be restricted using firewall/application firewall rules to lock down server infrastructure.</li>
+<li>In some circumstances it may be possible to restrict almost all users from directly accessing the legacy application by developing an intermediary service (e.g. a separate set of APIs) that handles essential movement of data into and out of the legacy application without an end user having any requirement to interact directly with the legacy application.</li>
 </ul>
-<h2 id="4-assess-npm-project-health">4) Assess npm project health<a class="headerlink" href="#4-assess-npm-project-health" title="Permanent link">&para;</a></h2>
-<h3 id="npm-outdated-command">npm outdated command<a class="headerlink" href="#npm-outdated-command" title="Permanent link">&para;</a></h3>
-<p>Rushing to constantly upgrade dependencies to their latest releases is not necessarily a good practice if it is done without reviewing release notes, the code changes, and generally testing new upgrades in a comprehensive manner. With that said, staying out of date and not upgrading at all, or after a long time, is a source for trouble as well.</p>
-<p>The npm CLI can provide information about the freshness of dependencies you use with regards to their semantic versioning offset. By running <code>npm outdated</code>, you can see which packages are out of date. Dependencies in yellow correspond to the semantic versioning as specified in the package.json manifest, and dependencies colored in red mean that there’s an update available. Furthermore, the output also shows the latest version for each dependency.</p>
-<h3 id="npm-doctor-command">npm doctor command<a class="headerlink" href="#npm-doctor-command" title="Permanent link">&para;</a></h3>
-<p>Between the variety of Node.js package managers, and different versions of Node.js you may have installed in your path, how do you verify a healthy npm installation and working environment? Whether you’re working with the npm CLI in a development environment or within a CI, it is important to assess that everything is working as expected.</p>
-<p>Call the doctor! The npm CLI incorporates a health assessment tool to diagnose your environment for a well-working npm interaction. Run <code>npm doctor</code> to review your npm setup:</p>
+<h2 id="vulnerability-management">Vulnerability Management<a class="headerlink" href="#vulnerability-management" title="Permanent link">&para;</a></h2>
+<p><strong>Vulnerability Scanning:</strong> Legacy applications should be subject to regular vulnerability scanning with an industry standard vulnerability assessment tool, where possible, such as Nessus and Qualys. This should occur on a regular basis, ideally with scans scheduled to occur automatically at some set time interval. Where appropriate, some vulnerabilities might also be identified using code scanning tools, such as a SAST (Static Application Security Testing) tool to check the codebase for obvious vulnerabilities or SCA (Software Composition Analysis) tool identify vulnerable dependencies used by the application. In some cases none of the above options will be viable for the application and, in this case, direct human assessment of host configuration and manual code reviews might be the only suitable option for assessing the security posture of the legacy application.</p>
+<p><strong>Patch Management:</strong> Where possible, apply patches raised by the tools described above. Patching efforts should be prioritized on the basis of the severity of the vulnerability and whether the vulnerability has a published CVE (Common Vulnerabilities and Exposures) and/or a publicly listed exploit. In circumstances where patching is not practically possible for the legacy application, consider applying additional restrictions to the application/affected components as noted in the section on Authentication/Authorization.</p>
+<h2 id="data-storage">Data Storage<a class="headerlink" href="#data-storage" title="Permanent link">&para;</a></h2>
+<p>Confirm that, where ever possible, data handled by the application is both encrypted at rest (i.e. when stored in a database) and in transit. Cheat Sheets on <a href="/Cryptographic_Storage_Cheat_Sheet.md">Cryptographic Storage</a> and <a href="/HTTP_Strict_Transport_Security_Cheat_Sheet.md">HTTP Strict Transport Security</a> may provide some useful further context. In some circumstances legacy applications might be restricted to the use of older network protocols that only support transmission of data in plain text. In this case it is especially important to apply the most restrictive network access controls possible to the application. This could necessitate temporary or permanent air-gapping (functional isolation) of the application.</p>
+<h2 id="ensuring-maintainability">Ensuring Maintainability<a class="headerlink" href="#ensuring-maintainability" title="Permanent link">&para;</a></h2>
+<p>Where possible, aim to maintain a high degree of institutional expertise regarding the application, so that staff can both remediate security vulnerabilities and troubleshoot the application as needed to ensure business continuity. The following recommendations apply:</p>
 <ul>
-<li>Check the official npm registry is reachable, and display the currently configured registry.</li>
-<li>Check that Git is available.</li>
-<li>Review installed npm and Node.js versions.</li>
-<li>Run permission checks on the various folders such as the local and global <code>node_modules</code>, and on the folder used for package cache.</li>
-<li>Check the local npm module cache for checksum correctness.</li>
+<li>More than one staff member should be adequately trained to troubleshoot/reconfigure the legacy application. This will reduce the risk of complete loss of maintenance capability for the legacy application if one trained member of staff leaves the organization.</li>
+<li>Encourage staff to regularly document processes including recording troubleshoot guides for common failure scenarios for the legacy application.</li>
+<li>It might be necessary to teach a core group of staff to write basic programs in the language used by the legacy application, where this expertise does not exist in your organization.</li>
 </ul>
-<h2 id="5-audit-for-vulnerabilities-in-open-source-dependencies">5) Audit for vulnerabilities in open source dependencies<a class="headerlink" href="#5-audit-for-vulnerabilities-in-open-source-dependencies" title="Permanent link">&para;</a></h2>
-<p>The npm ecosystem is the single largest repository of application libraries amongst all the other language ecosystems. The registry and the libraries in it are at the core for JavaScript developers as they are able to leverage work that others have already built and incorporate it into their codebase. With that said, the increasing adoption of open source libraries in applications brings with it an increased risk of introducing security vulnerabilities.</p>
-<p>Many popular npm packages have been found to be vulnerable and may carry a significant risk without proper security auditing of your project’s dependencies. Some examples are npm <a href="https://snyk.io/vuln/npm:request:20160119">request</a>, <a href="https://snyk.io/vuln/search?q=superagent&amp;type=npm">superagent</a>, <a href="https://snyk.io/vuln/search?q=mongoose&amp;type=npm">mongoose</a>, and even security-related packages like <a href="https://snyk.io/vuln/npm:jsonwebtoken:20150331">jsonwebtoken</a>, and  <a href="https://snyk.io/vuln/search?q=validator&amp;type=npm">validator</a>.</p>
-<p>Security doesn’t end by just scanning for security vulnerabilities when installing a package but should also be streamlined with developer workflows to be effectively adopted throughout the entire lifecycle of software development, and monitored continuously when code is deployed:</p>
+<h2 id="change-management">Change Management<a class="headerlink" href="#change-management" title="Permanent link">&para;</a></h2>
+<p>The ultimate goal for most legacy applications will be to migrate from the unmaintainable system to a solution which is both maintainable and architected to be resilient to contemporary threats. Staged change management may take into account the following factors:</p>
 <ul>
-<li>Scan for security vulnerabilities in <a href="https://owasp.org/www-community/Component_Analysis">third-party open source projects</a></li>
-<li>Monitor snapshots of your project's manifests so you can receive alerts when new CVEs impact them</li>
+<li>What budget can practically be allocated for upgrading to a modern solution and within what time frame could budget be made available?</li>
+<li>Do people with the necessary expertise required to handle migration exist within your organization or could these people be acquired/developed?</li>
+<li>How urgently does a migration to an upgraded solution need to happen based on the risk profile of the application and the risk appetite of your organization?</li>
 </ul>
-<h2 id="6-use-a-local-npm-proxy">6) Use a local npm proxy<a class="headerlink" href="#6-use-a-local-npm-proxy" title="Permanent link">&para;</a></h2>
-<p>The npm registry is the biggest collection of packages that is available for all JavaScript developers and is also the home of the most of the Open Source projects for web developers. But sometimes you might have different needs in terms of security, deployments or performance. When this is true, npm allows you to switch to a different registry:</p>
-<p>When you run <code>npm install</code>, it automatically starts a communication with the main registry to resolve all your dependencies; if you wish to use a different registry, that too is pretty straightforward:</p>
+<p>A change management plan, formal or informal, should include a clear description of granular steps to be taken towards migration to an upgraded solution, an explicit date of expected completion, and a clear articulation of the business and security case for the change. To produce a realistic plan for migration, staff involved in overseeing and using the existing solution should be consulted extensively to get a sense for how critical the legacy application is to your organization and what barriers there might be to facilitating migration or completely decommissioning the application.</p>
+<h2 id="continuous-monitoring-and-incident-response">Continuous Monitoring and Incident Response<a class="headerlink" href="#continuous-monitoring-and-incident-response" title="Permanent link">&para;</a></h2>
+<p>Legacy applications should be subject to an especially high degree of security monitoring with rapid response efforts made to investigate potential incidents. This might be challenged by intra-operability issues that mean that logs produced by the application are in a format that cannot be readily ingested by security monitoring tools used by your organization. Potential workarounds might include:</p>
 <ul>
-<li>Set <code>npm set registry</code> to set up a default registry.</li>
-<li>Use the argument <code>--registry</code> for one single registry.</li>
-</ul>
-<p><a href="https://verdaccio.org/">Verdaccio</a> is a simple lightweight zero-config-required private registry and installing it is as simple as follows: <code>$ npm install --global verdaccio</code>.</p>
-<p>Hosting your own registry was never so easy! Let’s check the most important features of this tool:</p>
-<ul>
-<li>It supports the npm registry format including private package features, scope support, package access control and authenticated users in the web interface.</li>
-<li>It provides capabilities to hook remote registries and the power to route each dependency to different registries and caching tarballs. To reduce duplicate downloads and save bandwidth in your local development and CI servers, you should proxy all dependencies.</li>
-<li>As an authentication provider by default, it uses an htpasswd security, but also supports Gitlab, Bitbucket, LDAP. You can also use your own.</li>
-<li>It’s easy to scale using a different storage provider.</li>
-<li>If your project is based in Docker, using the official image is the best choice.</li>
-<li>It enables really fast bootstrap for testing environments, and is handy for testing big mono-repos projects.</li>
-</ul>
-<h2 id="7-responsibly-disclose-security-vulnerabilities">7) Responsibly disclose security vulnerabilities<a class="headerlink" href="#7-responsibly-disclose-security-vulnerabilities" title="Permanent link">&para;</a></h2>
-<p>When security vulnerabilities are found, they pose a potentially serious threat if they are publicised without prior warning or appropriate remedial action for users who cannot protect themselves.</p>
-<p>It is recommended that security researchers follow a responsible disclosure program, which is a set of processes and guidelines that aims to connect the researchers with the vendor or maintainer of the vulnerable asset, in order to convey the vulnerability, it’s impact and applicability. Once the vulnerability is correctly triaged, the vendor and researcher coordinate a fix and a publication date for the vulnerability in an effort to provide an upgrade-path or remediation for affected users before the security issue is made public.</p>
-<h2 id="8-enable-2fa">8) Enable 2FA<a class="headerlink" href="#8-enable-2fa" title="Permanent link">&para;</a></h2>
-<p>In October 2017, npm officially announced support for two-factor authentication (2FA) for developers using the npm registry to host their closed and open source packages.</p>
-<p>Even though 2FA has been supported on the npm registry for a while now, it seems to be slowly adopted with one example being the eslint-scope incident in mid-2018 when a stolen developer account on the ESLint team lead to a <a href="https://snyk.io/vuln/npm:eslint-scope">malicious version of eslint-scope</a> being published by bad actors.</p>
-<p>Enabling 2FA is an easy and significant win for an npm security best practices. The registry supports two modes for enabling 2FA in a user’s account:</p>
-<ul>
-<li>Authorization-only—when a user logs in to npm via the website or the CLI, or performs other sets of actions such as changing profile information.</li>
-<li>Authorization and write-mode—profile and log-in actions, as well as write actions such as managing tokens and packages, and minor support for team and package visibility information.</li>
-</ul>
-<p>Equip yourself with an authentication application, such as Google Authentication, which you can install on a mobile device, and you’re ready to get started. One easy way to get started with the 2FA extended protection for your account is through npm’s user interface, which allows enabling it very easily. If you’re a command-line person, it’s also easy to enable 2FA when using a supported npm client version (&gt;=5.5.1):</p>
-<div class="highlight"><pre><span></span><code>npm<span class="w"> </span>profile<span class="w"> </span>enable-2fa<span class="w"> </span>auth-and-writes
-</code></pre></div>
-<p>Follow the command-line instructions to enable 2FA, and to save emergency authentication codes. If you wish to enable 2FA mode for login and profile changes only, you may replace the <code>auth-and-writes</code> with <code>auth-only</code> in the code as it appears above.</p>
-<h2 id="9-use-npm-author-tokens">9) Use npm author tokens<a class="headerlink" href="#9-use-npm-author-tokens" title="Permanent link">&para;</a></h2>
-<p>Every time you log in with the npm CLI, a token is generated for your user and authenticates you to the npm registry. Tokens make it easy to perform npm registry-related actions during CI and automated procedures, such as accessing private modules on the registry or publishing new versions from a build step.</p>
-<p>Tokens can be managed through the npm registry website, as well as using the npm command-line client. An example of using the CLI to create  a read-only token that is restricted to a specific IPv4 address range is as follows:</p>
-<div class="highlight"><pre><span></span><code>npm<span class="w"> </span>token<span class="w"> </span>create<span class="w"> </span>--read-only<span class="w"> </span>--cidr<span class="o">=</span><span class="m">192</span>.0.2.0/24
-</code></pre></div>
-<p>To verify which tokens are created for your user or to revoke tokens in cases of emergency, you can use <code>npm token list</code> or <code>npm token revoke</code> respectively.</p>
-<p>Ensure you are following this npm security best practice by protecting and minimizing the exposure of your npm tokens.</p>
-<h2 id="10-understand-module-naming-conventions-and-typosquatting-attacks">10) Understand module naming conventions and typosquatting attacks<a class="headerlink" href="#10-understand-module-naming-conventions-and-typosquatting-attacks" title="Permanent link">&para;</a></h2>
-<p>Naming a module is the first thing you might do when creating a package, but before defining a final name, npm defines some rules that a package name must follow:</p>
-<ul>
-<li>It is limited to 214 characters</li>
-<li>It cannot start with dot or underscore</li>
-<li>No uppercase letters in the name</li>
-<li>No trailing spaces</li>
-<li>Only lowercase</li>
-<li>Some special characters are not allowed: “~\’!()*”)’</li>
-<li>Can’t start with . or _</li>
-<li>Can’t use node_modules or favicon.ico due are banned</li>
-<li>Even if you follow these rules, be aware that npm uses a spam detection mechanism when publishing new packages, based on score and whether a package name violates the terms of the service. If conditions are violated, the registry might deny the request.</li>
-</ul>
-<p>Typosquatting is an attack that relies on mistakes made by users, such as typos. With typosquatting, bad actors could publish malicious modules to the npm registry with names that look much like existing popular modules.</p>
-<p>We have been tracking tens of malicious packages in the npm ecosystem; they have been seen on the PyPi Python registry as well. Perhaps some of the most popular incidents have been for <a href="https://snyk.io/vuln/npm:crossenv:20170802">cross-env</a>, <a href="https://snyk.io/vuln/SNYK-JS-EVENTSTREAM-72638">event-stream</a>, and <a href="https://snyk.io/vuln/npm:eslint-scope:20180712">eslint-scope</a>.</p>
-<p>One of the main targets for typosquatting attacks are the user credentials, since any package has access to environment variables via the global variable process.env. Other examples we’ve seen in the past include the case with event-stream, where the attack targeted developers in the hopes of <a href="https://snyk.io/blog/a-post-mortem-of-the-malicious-event-stream-backdoor">injecting malicious code</a> into an application’s source code.</p>
-<p>Closing our list of ten npm security best practices are the following tips to reduce the risk of such attacks:</p>
-<ul>
-<li>Be extra-careful when copy-pasting package installation instructions into the terminal. Make sure to verify in the source code repository as well as on the npm registry that this is indeed the package you are intending to install. You might verify the metadata of the package with <code>npm info</code> to fetch more information about contributors and latest versions.</li>
-<li>Default to having an npm logged-out user in your daily work routines so your credentials won’t be the weak spot that would lead to easily compromising your account.</li>
-<li>When installing packages, append the <code>--ignore-scripts</code> to reduce the risk of arbitrary command execution. For example: <code>npm install my-malicious-package --ignore-scripts</code></li>
+<li>Developing custom APIs for modifying security-applicable information from your legacy application and/or its logs into a format ingestible by security monitoring solutions used by your organization.</li>
+<li>Where the above is not possible, consider using automation scripts to generate reports that assess for indicators of compromise.</li>
+<li>Be vigilant to any anomalous network traffic into and out of the legacy application environment and to any surges in network activity.</li>
+<li>If you have access to an internal or hired incident response team, ensure that they are aware that incident response and investigation of unusual events should be prioritized for critical legacy systems. Processes for handling application downtime and compromise ideally are to be documented in advance as a part of an incident response playbook. This needs to give staff a clear rundown of emergency procedures including escalation contacts and details of incident response leaders.</li>
+<li>Incident response planning should occur within the broader context of a business continuity plan.</li>
 </ul>
 
 
