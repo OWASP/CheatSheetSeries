@@ -194,7 +194,7 @@ elem.innerHTML = DOMPurify.sanitize(dangerVar);
 
 **Safe HTML Attributes include:** `align`, `alink`, `alt`, `bgcolor`, `border`, `cellpadding`, `cellspacing`, `class`, `color`, `cols`, `colspan`, `coords`, `dir`, `face`, `height`, `hspace`, `ismap`, `lang`, `marginheight`, `marginwidth`, `multiple`, `nohref`, `noresize`, `noshade`, `nowrap`, `ref`, `rel`, `rev`, `rows`, `rowspan`, `scrolling`, `shape`, `span`, `summary`, `tabindex`, `title`, `usemap`, `valign`, `value`, `vlink`, `vspace`, `width`.
 
-For attributes not reported above be aware to verify that if JavaScript code is provided as value then it can't be executed.
+For attributes not reported above, ensure that if JavaScript code is provided as a value, it cannot be executed.
 
 ## Other Controls
 
