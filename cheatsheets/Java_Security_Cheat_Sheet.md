@@ -391,14 +391,13 @@ try(MongoClient mongoClient = new MongoClient()){
 
 To prevent an attacker from writing malicious content into the application log, apply defenses such as:
 
-- Using a structured log event format, such as JSON or RFC5424.
 - Filter the user input used to prevent injection of **C**arriage **R**eturn (CR) or **L**ine **F**eed (LF) characters.
 - Limit the size of the user input value used to create the log message.
 - Make sure [all XSS defenses](Cross_Site_Scripting_Prevention_Cheat_Sheet.md) are applied when viewing log files in a web browser.
 
 #### Example using Log4j2
 
-Configuration of a logging policy to roll on 10 files of 5MB each, using the structured
+The recommended logging policy for a production environment is sending logs to a network socket using the structured
 [JSON Template Layout](https://logging.apache.org/log4j/2.x/manual/json-template-layout.html)
 introduced in
 [Log4j 2.14.0](https://logging.apache.org/log4j/2.x/release-notes.html#release-notes-2-14-0)
@@ -413,22 +412,29 @@ and limit the size of strings to 500 bytes using the
                    https://logging.apache.org/xml/ns
                    https://logging.apache.org/xml/ns/log4j-config-2.xsd">
   <Appenders>
-    <RollingFile name="ROLLING" fileName="App.log" filePattern="App-%i.log" ignoreExceptions="false">
-      <!-- Limit the size of string to 500 bytes -->
-      <JsonTemplateLayout maxStringLength="500"/>
-      <DefaultRolloverStrategy max="10"/>
-      <SizeBasedTriggeringPolicy size="5MB"/>
-    </RollingFile>
+    <Socket name="SOCKET"
+            host="localhost"
+            port="12345">
+      <!-- Limit the size of any string field in the produced JSON document to 500 bytes -->
+      <JsonTemplateLayout maxStringLength="500"
+                          nullEventDelimiterEnabled="true"/>
+    </Socket>
   </Appenders>
   <Loggers>
     <Root level="DEBUG">
-      <AppenderRef ref="ROLLING"/>
+      <AppenderRef ref="SOCKET"/>
     </Root>
   </Loggers>
 </Configuration>
 ```
 
-Configuration of a logging policy to roll on 10 files of 5MB each, using the **unstructured**
+See
+[Integration with service-oriented architectures](https://logging.apache.org/log4j/2.x/soa.html)
+on
+[Log4j website](https://logging.apache.org/log4j/2.x/index.html)
+for more tips.
+
+In a development and testing environment, you can configure a logging policy to roll on 10 files of 5MB each, using the **unstructured**
 [Pattern Layout](https://logging.apache.org/log4j/2.x/manual/pattern-layout.html)
 and:
 
@@ -472,12 +478,20 @@ Usage of the logger at code level:
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 ...
-// No special action needed because security actions are
-// performed at the logging policy level
-Logger logger = LogManager.getLogger();
-logger.info(logMessage);
+// Most common way to declare a logger
+private static final LOGGER = LogManager.getLogger();
+// Use parameterized logging to add user data to a message
+// The pattern should be a compile-time constant
+logger.warn("Login failed for user {}.", username);
+// Don't mix string concatenation and parameters
+// If `username` contains `{}`, the exception will leak into the message
+logger.warn("Failure for user " + username + " and role {}.", role, ex);
 ...
 ```
+
+See
+[Log4j API Best Practices](https://logging.apache.org/log4j/2.x/manual/api.html#best-practice)
+for more information.
 
 #### Example using Logback with the OWASP Security Logging library
 
