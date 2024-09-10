@@ -176,7 +176,7 @@ RESTful web services should be careful to prevent leaking credentials. Passwords
 
 **NOT OK:**
 
-`https://example.com/controller/123/action?apiKey=a53f435643de32` because API Key is into the URL.
+`https://example.com/controller/123/action?apiKey=a53f435643de32` because the apiKey is in the URL.
 
 ## HTTP Return Code
 
