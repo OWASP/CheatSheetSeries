@@ -140,7 +140,7 @@ An alphabetical list of techniques:
 - [Awesome Threat Modeling](https://github.com/hysnsec/awesome-threat-modelling) - resource list
 - [Tactical Threat Modeling](https://safecode.org/wp-content/uploads/2017/05/SAFECode_TM_Whitepaper.pdf)
 - [Threat Modeling: A Summary of Available Methods](https://insights.sei.cmu.edu/library/threat-modeling-a-summary-of-available-methods/)
-- Threat modeling for builders, free online training available on [AWS SkillBuilder](https://explore.skillbuilder.aws/learn/course/external/view/elearning/13274/threat-modeling-for-builders-workshop), and [AWS Workshop Studio](https://catalog.workshops.aws/threatmodel/en-US) 
+- Threat modeling for builders, free online training available on [AWS SkillBuilder](https://explore.skillbuilder.aws/learn/course/external/view/elearning/13274/threat-modeling-for-builders-workshop), and [AWS Workshop Studio](https://catalog.workshops.aws/threatmodel/en-US)
 - [Threat Modeling Handbook](https://security.cms.gov/policy-guidance/threat-modeling-handbook)
 - [Threat Modeling Process](https://owasp.org/www-community/Threat_Modeling_Process)
 - [The Ultimate Beginner's Guide to Threat Modeling](https://shostack.org/resources/threat-modeling)
