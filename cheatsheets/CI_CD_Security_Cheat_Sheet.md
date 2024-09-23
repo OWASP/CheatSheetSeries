@@ -47,7 +47,11 @@ CI/CD environments allow for code to be pushed to a repository and then deployed
 - Require commits to be signed
 - Carefully weigh the risk against the benefits of allowing ephemeral contributors. Limit the number and permissions of external contributions when possible.
 - Enable MFA where available
-- To help navigate SCM configuration challenges, there are free tools available, such as [Legitify](https://github.com/Legit-Labs/legitify), a free and open-source tool for identifying misconfigurations in GitHub and GitLab.
+- Avoid assigning default permissions for users and roles with access to your SCM assets. Carefully manage your permissions.
+- Restrict the ability to fork private or internal repositories.
+- Limit the option to change repository visibility to public.
+
+To help navigate SCM configuration challenges, there are tools available, such as [Legitify](https://github.com/Legit-Labs/legitify), an open-source tool by [Legit security](https://www.legitsecurity.com/). Legitify scans SCM assets and identifies misconfigurations and security issues, including policies for all the above best practices (available for GitHub and GitLab).
 
 ### Pipeline and Execution Environment
 
