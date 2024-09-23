@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This cheat sheet provides Django REST Framework security advice for developers. It is a basic set of guidelines for Django REST developers who need to secure fundamental aspects of their application.
+This cheat sheet provides Django REST Framework security advice for developers. It is a basic set of guidelines for Django REST developers who need to secure fundamental aspects of an application.
 
 ## What is a view in Django?
 
@@ -26,13 +26,13 @@ A list of throttle classes that determines the default set of throttles checked 
 
 ### DEFAULT_PAGINATION_CLASS
 
-The default class to use for queryset pagination. **In Django, pagination is disabled by default. Without proper pagination, Denial of Service (DoS) problems or attacks could occur if there’s a lot of data.**
+The default class to use for queryset pagination. **In Django, pagination is disabled by default.** Without proper pagination, Denial of Service (DoS) problems or attacks could occur if there’s a lot of data.
 
 ## OWASP API Security Top 10 (2019)
 
-The [OWASP API Security Top 10](https://owasp.org/www-project-api-security/) is a list of the most critical security risks for APIs, developed by the [Open Web Application Security Project (OWASP)](https://owasp.org/). It is intended to help organizations identify and prioritize the most significant risks to their APIs, so that they can implement appropriate controls to mitigate those risks.
+The [OWASP API Security Top 10](https://owasp.org/www-project-api-security/) is a list of the most critical security risks for APIs that was developed by the [Open Web Application Security Project (OWASP)](https://owasp.org/). It is designed to help organizations identify and prioritize the most significant risks to their APIs so that they can implement appropriate controls to mitigate those risks.
 
-This section is based on this. Your approach to securing your web API should be to start at the top threat A1 below and work down, this will ensure that any time spent on security will be spent most effectively spent and cover the top threats first and lesser threats afterwards. After covering the top 10 it is generally advisable to assess for other threats or get a professionally completed Penetration Test.
+This section uses the 2019 version of the API Security Top 10. The best approach to securing your web API is to start at the top threat (A1 below) and work your way down. This will ensure that any time spent on security will be spent most effectively because you will cover the top threats first. After you look at the Top 10, it is generally advisable to assess for other threats or get a professional penetration test.
 
 ### API1:2019 Broken Object Level Authorization
 
@@ -67,7 +67,7 @@ EXTRA: If possible, do rate limiting with a WAF or similar. DRF should be the la
 
 To stop this problem, change the default value (`'rest_framework.permissions.AllowAny'`) of DEFAULT_PERMISSION_CLASSES. Use the setting value DEFAULT_PERMISSION_CLASSES with the correct classes for your project.
 
-DO NOT use `rest_framework.permissions.AllowAny` except for public API endpoints and DO NOT overwrite the authorization class on a class-based (variable permission_classes`) or function-based (decorator `permission_classes`) view unless you are confident about the change and understand the impact.
+DO NOT use `rest_framework.permissions.AllowAny` except for public API endpoints and DO NOT overwrite the authorization class on a class-based (variable `permission_classes`) or function-based (decorator `permission_classes`) view unless you are confident about the change and understand the impact.
 
 ### API6:2019 Mass Assignment
 
@@ -83,10 +83,9 @@ To stop this problem, you must have a repeatable hardening process leading to fa
 
 ### API8:2019 Injection
 
-
 #### SQLi
 
-**To prevent this problem, use parametrized queries.** Be careful when using dangerous methods like `raw()`, `extra()` and custom SQL (via `cursor.execute()`). Do NOT add user input to dangerous methods (`raw()`, `extra()`, `cursor.execute()`).
+**To prevent this problem, use parametrized queries.** Be careful when using dangerous methods like `raw()`, `extra()` and custom SQL (via `cursor.execute()`). DO NOT add user input to dangerous methods (`raw()`, `extra()`, `cursor.execute()`).
 
 #### RCE
 
@@ -100,7 +99,7 @@ To prevent this problem, create an inventory of all API hosts. In this inventory
 
 ### API10:2019 Insufficient Logging & Monitoring
 
-Do the following: 
+For proper logging and monitoring capabilities, do the following: 
 
 --Log all failed authentication attempts, denied access, and input validation errors with sufficient user context to identify suspicious or malicious accounts.
 
@@ -138,9 +137,9 @@ Be aware of possible business logic errors that result in security bugs. Since b
 
 All applications have dependencies and those dependencies can have vulnerabilities. One good practice is to audit the dependencies your project is using. In general, it is important to have a process for updating dependencies. A sample process might define three mechanisms for triggering an update of response:
 
-- Every month/quarter dependencies in general are updated.
-- Every week important security vulnerabilities are considered and potentially trigger an update.
-- In EXCEPTIONAL conditions, emergency updates may need to be applied.
+--Every month/quarter dependencies in general are updated.
+--Every week important security vulnerabilities are considered and potentially trigger an update.
+--In EXCEPTIONAL conditions, emergency updates may need to be applied.
 
 The Django Security team has information on [How Django discloses security issues](https://docs.djangoproject.com/en/4.1/internals/security/#how-django-discloses-security-issues).
 
