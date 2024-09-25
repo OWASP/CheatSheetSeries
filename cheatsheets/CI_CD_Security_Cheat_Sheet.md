@@ -50,6 +50,7 @@ CI/CD environments allow for code to be pushed to a repository and then deployed
 - Avoid assigning default permissions for users and roles with access to your SCM assets. Carefully manage your permissions.
 - Restrict the ability to fork private or internal repositories.
 - Limit the option to change repository visibility to public.
+You can find a wide variety of additional policies in this [documentation](https://policies.legitify.dev/).
 
 To help navigate SCM configuration challenges, there are tools available, such as [Legitify](https://github.com/Legit-Labs/legitify), an open-source tool by [Legit security](https://www.legitsecurity.com/). Legitify scans SCM assets and identifies misconfigurations and security issues, including policies for all the above best practices (available for GitHub and GitLab).
 
