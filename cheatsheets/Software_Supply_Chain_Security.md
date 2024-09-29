@@ -60,7 +60,7 @@ Manual code reviews are an important, relatively low cost technique for reducing
 
 #### Secure Config of Version Control Systems
 
-Compromise or abuse of the source control system is consistently recognized as a significant SSC risk [[4,5](#references)]. The general security best practices of strong access control and logging and monitoring are two methods to help secure VCS. Security features specific to the VCS system, such as protected branches and merge policies in git, should also be leveraged. Regardless of any security controls added a VCS, it must be remember that secrets should never be committed to these systems.
+Compromise or abuse of the source control system is consistently recognized as a significant SSC risk [[4,5](#references)]. The general security best practices of strong access control and logging and monitoring are two methods to help secure VCS. Security features specific to the VCS system, such as protected branches and merge policies in git, should also be leveraged. You can find a wide variety of recommended policies in this [documentation](https://policies.legitify.dev/). There are tools available to help manage configuration of SCM systems, such as [Legitify](https://github.com/Legit-Labs/legitify), an open-source tool by [Legit security](https://www.legitsecurity.com/). Legitify is designed to detect misconfigurations in GitHub and GitLab and assist with the implementation of best practices. Regardless of any security controls added a VCS, it must be remember that secrets should never be committed to these systems.
 
 #### Secure Development Platform
 
