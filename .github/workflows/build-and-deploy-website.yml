@@ -34,7 +34,7 @@ jobs:
     - name: Test bundle
       run: zip -T bundle.zip
     - name: Upload bundle as artifact
-      uses: actions/upload-artifact@v2.2.2
+      uses: actions/upload-artifact@v4
       with:
         name: Bundle
         path: bundle.zip
