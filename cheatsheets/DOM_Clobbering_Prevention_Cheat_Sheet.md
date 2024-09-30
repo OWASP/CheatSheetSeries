@@ -96,7 +96,7 @@ OWASP recommends [DOMPurify](https://github.com/cure53/DOMPurify) or the [Saniti
 
 #### DOMPurify Sanitizer
 
-By default, DOMPurify removes all clobbering collisions with **built-in** APIs and properties (using the enabled-by-default `SANITIZE_DOM` configuration option). ]
+By default, DOMPurify removes all clobbering collisions with **built-in** APIs and properties (using the enabled-by-default `SANITIZE_DOM` configuration option).
 
 To be protected against clobbering of custom variables and properties as well, you need to enable the `SANITIZE_NAMED_PROPS` config:
 
@@ -158,9 +158,9 @@ Document properties, including built-in ones, are always overshadowed by DOM Clo
 
 ### \#8: Enforce Type Checking
 
-Always check the type of Document and Window properties before using them in sensitive operations, e.g., using the [instance of](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof) operator.
+Always check the type of `document` and `window` properties before using them in sensitive operations, e.g., using the [`instanceof`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof) operator.
 
-**Hint:** When an object is clobbered, it would refer to an [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement) instance, which may not be the expected type.
+**Hint:** When an object is clobbered, it would refer to an [`Element`](https://developer.mozilla.org/en-US/docs/Web/API/Element) instance, which may not be the expected type.
 
 ### \#9: Use Strict Mode
 
