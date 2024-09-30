@@ -58,7 +58,7 @@ jobs:
         shopt -s extglob
         rm -rdfv !("CNAME"|"robots.txt"|"_config.yml")
     - name: Download new build from artifact
-      uses: actions/download-artifact@v1
+      uses: actions/download-artifact@v4
       with:
         name: Bundle
     - name: Replace bundle with new build
