@@ -2738,7 +2738,12 @@
 <li>Require commits to be signed</li>
 <li>Carefully weigh the risk against the benefits of allowing ephemeral contributors. Limit the number and permissions of external contributions when possible.</li>
 <li>Enable MFA where available</li>
+<li>Avoid assigning default permissions for users and roles with access to your SCM assets. Carefully manage your permissions.</li>
+<li>Restrict the ability to fork private or internal repositories.</li>
+<li>Limit the option to change repository visibility to public.
+You can find a wide variety of additional policies in this <a href="https://policies.legitify.dev/">documentation</a>.</li>
 </ul>
+<p>To help navigate SCM configuration challenges, there are tools available, such as <a href="https://github.com/Legit-Labs/legitify">Legitify</a>, an open-source tool by <a href="https://www.legitsecurity.com/">Legit security</a>. Legitify scans SCM assets and identifies misconfigurations and security issues, including policies for all the above best practices (available for GitHub and GitLab).</p>
 <h3 id="pipeline-and-execution-environment">Pipeline and Execution Environment<a class="headerlink" href="#pipeline-and-execution-environment" title="Permanent link">&para;</a></h3>
 <p>In addition to SCM systems, it is imperative that the automation servers responsible for running the pipelines are also configured securely. Examples of these technologies include Travis, TeamCity, Jenkins, and CircleCI. While the exact hardening process will vary according to the specific platform used, some general best practices include:</p>
 <ul>
