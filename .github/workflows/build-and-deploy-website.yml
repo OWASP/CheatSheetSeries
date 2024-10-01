@@ -63,7 +63,7 @@ jobs:
         name: Bundle
     - name: Replace bundle with new build
       run: |
-        mv Bundle/Bundle.zip bundle.zip
+        mv Bundle.zip bundle.zip
         rm -rf Bundle 1>/dev/null 2>&1
     - name: Test new bundle
       run: zip -T bundle.zip
