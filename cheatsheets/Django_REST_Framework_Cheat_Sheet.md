@@ -99,7 +99,8 @@ To prevent this problem, create an inventory of all API hosts. In this inventory
 
 ### API10:2019 Insufficient Logging & Monitoring
 
-For proper logging and monitoring capabilities, do the following: 
+For proper logging and monitoring capabilities, do the following:
+
 
 --Log all failed authentication attempts, denied access, and input validation errors with sufficient user context to identify suspicious or malicious accounts.
 
