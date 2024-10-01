@@ -897,6 +897,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#what-is-a-view-in-django" class="md-nav__link">
+    What is a view in Django?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#settings" class="md-nav__link">
     Settings
   </a>
@@ -938,11 +945,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#owasp-api-security-top-10" class="md-nav__link">
-    OWASP API Security Top 10
+  <a href="#owasp-api-security-top-10-2019" class="md-nav__link">
+    OWASP API Security Top 10 (2019)
   </a>
   
-    <nav class="md-nav" aria-label="OWASP API Security Top 10">
+    <nav class="md-nav" aria-label="OWASP API Security Top 10 (2019)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1042,10 +1049,10 @@
       
         <li class="md-nav__item">
   <a href="#other-security-risks" class="md-nav__link">
-    Other security Risks
+    Other Security Risks
   </a>
   
-    <nav class="md-nav" aria-label="Other security Risks">
+    <nav class="md-nav" aria-label="Other Security Risks">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2538,6 +2545,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#what-is-a-view-in-django" class="md-nav__link">
+    What is a view in Django?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#settings" class="md-nav__link">
     Settings
   </a>
@@ -2579,11 +2593,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#owasp-api-security-top-10" class="md-nav__link">
-    OWASP API Security Top 10
+  <a href="#owasp-api-security-top-10-2019" class="md-nav__link">
+    OWASP API Security Top 10 (2019)
   </a>
   
-    <nav class="md-nav" aria-label="OWASP API Security Top 10">
+    <nav class="md-nav" aria-label="OWASP API Security Top 10 (2019)">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2683,10 +2697,10 @@
       
         <li class="md-nav__item">
   <a href="#other-security-risks" class="md-nav__link">
-    Other security Risks
+    Other Security Risks
   </a>
   
-    <nav class="md-nav" aria-label="Other security Risks">
+    <nav class="md-nav" aria-label="Other Security Risks">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2749,107 +2763,83 @@
 
 <h1 id="django-rest-framework-drf-cheat-sheet">Django REST Framework (DRF) Cheat Sheet<a class="headerlink" href="#django-rest-framework-drf-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>This <em>Cheat sheet</em> intends to provide quick basic Django REST Framework security tips for developers.</p>
-<p>The Django REST framework abstracts developers from quite a bit of tedious work and provides the means to build APIs quickly and with ease using Django. New developers, those unfamiliar with the inner workings of Django, likely need a basic set of guidelines to secure fundamental aspects of their application. The intended purpose of this doc is to be that guide.</p>
+<p>This cheat sheet provides Django REST Framework security advice for developers. It is a basic set of guidelines for Django REST developers who need to secure fundamental aspects of an application.</p>
+<h2 id="what-is-a-view-in-django">What is a view in Django?<a class="headerlink" href="#what-is-a-view-in-django" title="Permanent link">&para;</a></h2>
+<p>A view in Django is a Python class or a function that returns a web response after it receives a web request. That response can be in simple HTTP, an HTML template, or an HTTP redirect request that redirects a user to another page.</p>
 <h2 id="settings">Settings<a class="headerlink" href="#settings" title="Permanent link">&para;</a></h2>
-<p>All the Django REST Framework (DRF) configuration is done under the
-namespace REST_FRAMEWORK, usually in the settings.py file. From a security perspective, the most relevant ones are:</p>
+<p>To configure the Django REST Framework (DRF), you will need to access the namespace REST_FRAMEWORK. Normally, you will find this namespace in the settings.py file. From a security perspective, the most relevant items are:</p>
 <h3 id="default_authentication_classes">DEFAULT_AUTHENTICATION_CLASSES<a class="headerlink" href="#default_authentication_classes" title="Permanent link">&para;</a></h3>
-<p>A list of authentication classes that determines the default set of authenticators used when accessing the request.user or request.auth properties. In other words, what classes should be used to identify which user is authenticated.</p>
-<p>Defaults are 'rest_framework.authentication.SessionAuthentication', 'rest_framework.authentication.BasicAuthentication', that means that by default it checks the session and basic authentication for the user.</p>
+<p>A list of authentication classes that are used by default to identify which user is authenticated by accessing the request.user or request.auth properties. These classes are 'rest_framework.authentication.SessionAuthentication' (session authentication) and 'rest_framework.authentication.BasicAuthentication' (basic authentication).</p>
 <h3 id="default_permission_classes">DEFAULT_PERMISSION_CLASSES<a class="headerlink" href="#default_permission_classes" title="Permanent link">&para;</a></h3>
-<p>A list of permission classes that determines the default set of permissions checked at the start of a view.</p>
-<p>Permission must be granted by every class in the list. Default is 'rest_framework.permissions.AllowAny'18, that means that by <strong>default every view allows access to everybody.</strong></p>
+<p>A list of permission classes that defines the default set of permissions that Django checks before a view can be accessed. Since the default is 'rest_framework.permissions.AllowAny', that means <strong>unless the default permission class is changed, everybody can access every view by default.</strong></p>
 <h3 id="default_throttle_classes">DEFAULT_THROTTLE_CLASSES<a class="headerlink" href="#default_throttle_classes" title="Permanent link">&para;</a></h3>
-<p>A list of throttle classes that determines the default set of throttles checked at the start of a view.
-<strong>Default is empty</strong>, that means that by default there is no throttling in place.</p>
+<p>A list of throttle classes that determines the default set of throttles checked at the start of a view. <strong>By default, there is no throttling in place since the default class is empty.</strong></p>
 <h3 id="default_pagination_class">DEFAULT_PAGINATION_CLASS<a class="headerlink" href="#default_pagination_class" title="Permanent link">&para;</a></h3>
-<p>The default class to use for queryset pagination. <strong>Pagination is disabled by default.</strong> Lack of proper pagination could lead to Denial of Service (DoS) in cases where there’s a lot of data.</p>
-<h2 id="owasp-api-security-top-10">OWASP API Security Top 10<a class="headerlink" href="#owasp-api-security-top-10" title="Permanent link">&para;</a></h2>
-<p>The <a href="https://owasp.org/www-project-api-security/">OWASP API Security Top 10</a> is a list of the most critical security risks for APIs, developed by the <a href="https://owasp.org/">Open Web Application Security Project (OWASP)</a>. It is intended to help organizations identify and prioritize the most significant risks to their APIs, so that they can implement appropriate controls to mitigate those risks.</p>
-<p>This section is based on this. Your approach to securing your web API should be to start at the top threat A1 below and work down, this will ensure that any time spent on security will be spent most effectively spent and cover the top threats first and lesser threats afterwards. After covering the top 10 it is generally advisable to assess for other threats or get a professionally completed Penetration Test.</p>
+<p>The default class to use for queryset pagination. <strong>In Django, pagination is disabled by default.</strong> Without proper pagination, Denial of Service (DoS) problems or attacks could occur if there’s a lot of data.</p>
+<h2 id="owasp-api-security-top-10-2019">OWASP API Security Top 10 (2019)<a class="headerlink" href="#owasp-api-security-top-10-2019" title="Permanent link">&para;</a></h2>
+<p>The <a href="https://owasp.org/www-project-api-security/">OWASP API Security Top 10</a> is a list of the most critical security risks for APIs that was developed by the <a href="https://owasp.org/">Open Web Application Security Project (OWASP)</a>. It is designed to help organizations identify and prioritize the most significant risks to their APIs so that they can implement appropriate controls to mitigate those risks.</p>
+<p>This section uses the 2019 version of the API Security Top 10. The best approach to securing your web API is to start at the top threat (A1 below) and work your way down. This will ensure that any time spent on security will be spent most effectively because you will cover the top threats first. After you look at the Top 10, it is generally advisable to assess for other threats or get a professional penetration test.</p>
 <h3 id="api12019-broken-object-level-authorization">API1:2019 Broken Object Level Authorization<a class="headerlink" href="#api12019-broken-object-level-authorization" title="Permanent link">&para;</a></h3>
-<p>When using object-level permissions:</p>
-<p>DO: Validate that the object can be accessed by the user using the method <code>.check_object_permissions(request, obj)</code>. Example:</p>
+<p>When using object-level permissions, you should make sure that the object can be accessed by the user using the method <code>.check_object_permissions(request, obj)</code>.</p>
+<p>Example:</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_object</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="n">obj</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_queryset</span><span class="p">(),</span> <span class="n">pk</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;pk&quot;</span><span class="p">])</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">check_object_permissions</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">obj</span>
 </code></pre></div>
-<p>DO NOT: Override the method <code>get_object()</code> without checking if the request should have access to that object.</p>
+<p>DO NOT override the method <code>get_object()</code> without checking if the request should have access to that object.</p>
 <h3 id="api22019-broken-user-authentication">API2:2019 Broken User Authentication<a class="headerlink" href="#api22019-broken-user-authentication" title="Permanent link">&para;</a></h3>
-<p>DO: Use the setting value DEFAULT_AUTHENTICATION_CLASSES with the correct classes for your project.</p>
-<p>DO: Have authentication on every non-public API endpoint.</p>
-<p>DO NOT: Overwrite the authentication class on a class-based (variable <code>authentication_classes</code>) or function-based (decorator <code>authentication_classes</code>) view unless you are confident about the change and understand the impact.</p>
+<p>To prevent broken user authentication, use the setting value DEFAULT_AUTHENTICATION_CLASSES with the correct classes for your project and have authentication on every non-public API endpoint. Do not overwrite the authentication class on a class-based (variable <code>authentication_classes</code>) or function-based (decorator <code>authentication_classes</code>) view unless you are confident about the change and understand the impact.</p>
 <h3 id="api32019-excessive-data-exposure">API3:2019 Excessive Data Exposure<a class="headerlink" href="#api32019-excessive-data-exposure" title="Permanent link">&para;</a></h3>
-<p>DO: Review the serializer and the information you are displaying.</p>
-<p>If the serializer is inheriting from ModelSerializer DO NOT use the exclude Meta property.</p>
-<p>DO NOT: Display more information that the minimum required.</p>
+<p>To prevent this problem, only display the minimum amount of required information. Make sure you review the serializer and the information you are displaying. If the serializer is inheriting from ModelSerializer, DO NOT use the exclude Meta property.</p>
 <h3 id="api42019-lack-of-resources-rate-limiting">API4:2019 Lack of Resources &amp; Rate Limiting<a class="headerlink" href="#api42019-lack-of-resources-rate-limiting" title="Permanent link">&para;</a></h3>
-<p>DO: Configure the setting DEFAULT_THROTTLE_CLASSES.</p>
-<p>DO NOT: Overwrite the throttle class on a class-based (variable <code>throttle_classes</code>) or function-based (decorator <code>throttle_classes</code>) view unless you are confident about the change and understand the impact.</p>
-<p>EXTRA: If possible rate limiting should also be done with a WAF or similar. DRF should be the last layer of rate limiting.</p>
+<p>To prevent this problem, configure the setting DEFAULT_THROTTLE_CLASSES and DO NOT overwrite the throttle class on a class-based (variable <code>throttle_classes</code>) or function-based (decorator <code>throttle_classes</code>) view, unless you are confident about the change and understand the impact.</p>
+<p>EXTRA: If possible, do rate limiting with a WAF or similar. DRF should be the last layer of rate limiting.</p>
 <h3 id="api52019-broken-function-level-authorization">API5:2019 Broken Function Level Authorization<a class="headerlink" href="#api52019-broken-function-level-authorization" title="Permanent link">&para;</a></h3>
-<p>DO: Change the default value (<code>'rest_framework.permissions.AllowAny'</code>) of DEFAULT_PERMISSION_CLASSES.</p>
-<p>DO NOT: Use <code>rest_framework.permissions.AllowAny</code> except for public API endpoints.</p>
-<p>DO: Use the setting value DEFAULT_PERMISSION_CLASSES with the correct classes for your project.</p>
-<p>DO NOT: Overwrite the authorization class on a class-based (variable <code>permission_classes</code>) or function-based (decorator <code>permission_classes</code>) view unless you are confident about the change and understand the impact.</p>
+<p>To stop this problem, change the default value (<code>'rest_framework.permissions.AllowAny'</code>) of DEFAULT_PERMISSION_CLASSES. Use the setting value DEFAULT_PERMISSION_CLASSES with the correct classes for your project.</p>
+<p>DO NOT use <code>rest_framework.permissions.AllowAny</code> except for public API endpoints and DO NOT overwrite the authorization class on a class-based (variable <code>permission_classes</code>) or function-based (decorator <code>permission_classes</code>) view unless you are confident about the change and understand the impact.</p>
 <h3 id="api62019-mass-assignment">API6:2019 Mass Assignment<a class="headerlink" href="#api62019-mass-assignment" title="Permanent link">&para;</a></h3>
-<p>When using ModelForms:</p>
-<p>DO: Use Meta.fields (allowlist approach).</p>
-<p>DO NOT: Use Meta.exclude (denylist approach).</p>
-<p>DO NOT: Use <code>ModelForms.Meta.fields = "__all__"</code></p>
+<p>To prevent this problem, use Meta.fields (allowlist approach) when using ModelForms. DO NOT use Meta.exclude (denylist approach) or <code>ModelForms.Meta.fields = "__all__"</code></p>
 <h3 id="api72019-security-misconfiguration">API7:2019 Security Misconfiguration<a class="headerlink" href="#api72019-security-misconfiguration" title="Permanent link">&para;</a></h3>
-<p>DO: Setup Django settings <code>DEBUG</code> and <code>DEBUG_PROPAGATE_EXCEPTIONS</code> to False.</p>
-<p>DO: Setup Django setting <code>SECRET_KEY</code> to a random value. Never hardcode secrets.</p>
-<p>DO: Have a repeatable hardening process leading to fast and easy deployment of a properly locked down environment.</p>
-<p>DO: Have an automated process to continuously assess the effectiveness of the configuration and settings in all environments.</p>
-<p>DO: Ensure API can only be accessed by the specified HTTP verbs. All other HTTP verbs should be disabled.</p>
-<p>DO NOT: Use default passwords</p>
+<p>To stop this problem, you must have a repeatable hardening process leading to fast and easy deployment of a properly locked down environment. Have an automated process to continuously assess the effectiveness of the configuration and settings in all environments.</p>
+<p><strong>DO NOT use default passwords. Set the Django settings <code>DEBUG</code> and <code>DEBUG_PROPAGATE_EXCEPTIONS</code> to False. Ensure API can only be accessed by the specified HTTP verbs. All other HTTP verbs should be disabled. Set <code>SECRET_KEY</code> to a random value and NEVER hardcode secrets.</strong></p>
+<p><strong>DO validate, filter, and sanitize all client-provided data, or other data coming from integrated systems.</strong></p>
 <h3 id="api82019-injection">API8:2019 Injection<a class="headerlink" href="#api82019-injection" title="Permanent link">&para;</a></h3>
-<p>DO: Validate, filter, and sanitize all client-provided data, or other data coming from integrated systems.</p>
 <h4 id="sqli">SQLi<a class="headerlink" href="#sqli" title="Permanent link">&para;</a></h4>
-<p>DO: Use parametrized queries.</p>
-<p>TRY NOT TO: Use dangerous methods like <code>raw()</code>, <code>extra()</code> and custom SQL (via <code>cursor.execute()</code>).</p>
-<p>DO NOT: Add user input to dangerous methods (<code>raw()</code>, <code>extra()</code>, <code>cursor.execute()</code>).</p>
+<p><strong>To prevent this problem, use parametrized queries.</strong> Be careful when using dangerous methods like <code>raw()</code>, <code>extra()</code> and custom SQL (via <code>cursor.execute()</code>). DO NOT add user input to dangerous methods (<code>raw()</code>, <code>extra()</code>, <code>cursor.execute()</code>).</p>
 <h4 id="rce">RCE<a class="headerlink" href="#rce" title="Permanent link">&para;</a></h4>
-<p>DO NOT: Add user input to dangerous methods (<code>eval()</code>, <code>exec()</code> and <code>execfile()</code>).</p>
-<p>DO NOT: Load user-controlled pickle files. This includes the pandas method <code>pandas.read_pickle()</code>.</p>
-<p>DO NOT: Load user-controlled YAML files using the method <code>load()</code>.</p>
-<p>DO: Use the <code>Loader=yaml.SafeLoader</code> for YAML files.</p>
+<p>To stop this problem, use the <code>Loader=yaml.SafeLoader</code> for YAML files. DO NOT load user-controlled YAML files using the method <code>load()</code>.</p>
+<p>Also, DO NOT add user input to dangerous methods (<code>eval()</code>, <code>exec()</code> and <code>execfile()</code>) and DO NOT load user-controlled pickle files, which includes the pandas method <code>pandas.read_pickle()</code>.</p>
 <h3 id="api92019-improper-assets-management">API9:2019 Improper Assets Management<a class="headerlink" href="#api92019-improper-assets-management" title="Permanent link">&para;</a></h3>
-<p>DO: Have an inventory of all API hosts and document important aspects of each one of them, focusing on the API environment (e.g., production, staging, test, development), who should have network access to the host (e.g., public, internal, partners) and the API version.</p>
-<p>DO: Document all aspects of your API such as authentication, errors, redirects, rate limiting, cross-origin resource sharing (CORS) policy and endpoints, including their parameters, requests, and responses.</p>
+<p>To prevent this problem, create an inventory of all API hosts. In this inventory, document the important aspects of each host. Focus on the API version and the API environment (e.g., production, staging, test, development) and determine who should have network access to the host (e.g., public, internal, partners). Make sure you document all aspects of your API such as authentication, errors, redirects, rate limiting, cross-origin resource sharing (CORS) policy and endpoints, including their parameters, requests, and responses.</p>
 <h3 id="api102019-insufficient-logging-monitoring">API10:2019 Insufficient Logging &amp; Monitoring<a class="headerlink" href="#api102019-insufficient-logging-monitoring" title="Permanent link">&para;</a></h3>
-<p>DO: Log all failed authentication attempts, denied access, and input validation errors with sufficient user context to identify suspicious or malicious accounts.</p>
-<p>DO: Create logs in a format suited to be consumed by a log management solution and should include enough detail to identify the malicious actor.</p>
-<p>DO: Handle logs as sensitive data, and their integrity should be guaranteed at rest and transit.</p>
-<p>DO: Configure a monitoring system to continuously monitor the infrastructure, network, and the API functioning.</p>
-<p>DO: Use a Security Information and Event Management (SIEM) system to aggregate and manage logs from all components of the API stack and hosts.</p>
-<p>DO: Configure custom dashboards and alerts, enabling suspicious activities to be detected and responded to earlier.</p>
-<p>DO: Establish effective monitoring and alerting so suspicious activities are detected and responded to in a timely fashion.</p>
-<p>DO NOT: Log generic error messages such as: Log.Error("Error was thrown"); rather log the stack trace, error message and user ID who caused the error.</p>
-<p>DO NOT: Log sensitive data such as user's passwords, API Tokens or PII.</p>
-<h2 id="other-security-risks">Other security Risks<a class="headerlink" href="#other-security-risks" title="Permanent link">&para;</a></h2>
+<p>For proper logging and monitoring capabilities, do the following:</p>
+<p>--Log all failed authentication attempts, denied access, and input validation errors with sufficient user context to identify suspicious or malicious accounts.</p>
+<p>--Create logs in a format suited to be consumed by a log management solution and include enough detail to identify the malicious actor.</p>
+<p>--Handle logs as sensitive data, and their integrity should be guaranteed at rest and transit.</p>
+<p>--Configure a monitoring system to continuously monitor the infrastructure, network, and the API functioning.</p>
+<p>--Use a Security Information and Event Management (SIEM) system to aggregate and manage logs from all components of the API stack and hosts.</p>
+<p>--Configure custom dashboards and alerts, enabling suspicious activities to be detected and responded to earlier.</p>
+<p>--Establish effective monitoring and alerting so suspicious activities are detected and responded to in a timely fashion.</p>
+<p>DO NOT:</p>
+<p>--Log generic error messages such as: Log.Error("Error was thrown"); rather log the stack trace, error message and user ID who caused the error.</p>
+<p>--Log sensitive data such as user's passwords, API Tokens or PII.</p>
+<h2 id="other-security-risks">Other Security Risks<a class="headerlink" href="#other-security-risks" title="Permanent link">&para;</a></h2>
 <p>Below is a list of security risks for APIs not discussed in the OWASP API Security Top 10.</p>
 <h3 id="business-logic-bugs">Business Logic Bugs<a class="headerlink" href="#business-logic-bugs" title="Permanent link">&para;</a></h3>
-<p>Any application in any technology can contain business logic errors that result in security bugs. Business logic bugs are difficult to impossible to detect using automated tools. The best ways to prevent business logic security bugs are to do threat model, security design review, code review, pair program and write unit tests.</p>
+<p>Be aware of possible business logic errors that result in security bugs. Since business logic bugs are difficult to impossible to detect using automated tools, the best ways to prevent business logic security bugs are use threat models, do security design reviews, do code reviews, pair programs and write unit tests.</p>
 <h3 id="secret-management">Secret Management<a class="headerlink" href="#secret-management" title="Permanent link">&para;</a></h3>
-<p>Secrets should never be hardcoded. The best practice is to use a Secret Manager. For more information review OWASP <a href="https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html">Secrets Management Cheat Sheet</a></p>
+<p><strong>Secrets should never be hardcoded. The best practice is to use a Secret Manager.</strong> For more information review OWASP <a href="https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html">Secrets Management Cheat Sheet</a></p>
 <h2 id="updating-django-and-drf-and-having-a-process-for-updating-dependencies">Updating Django and DRF and Having a Process for Updating Dependencies<a class="headerlink" href="#updating-django-and-drf-and-having-a-process-for-updating-dependencies" title="Permanent link">&para;</a></h2>
-<p>An concern with every application, including Python applications, is that dependencies can have vulnerabilities.</p>
-<p>One good practice is to audit the dependencies your project is using.</p>
-<p>In general, it is important to have a process for updating dependencies. An example process might define three mechanisms for triggering an update of response:</p>
-<ul>
-<li>Every month/quarter dependencies in general are updated.</li>
-<li>Every week important security vulnerabilities are considered and potentially trigger an update.</li>
-<li>In EXCEPTIONAL conditions, emergency updates may need to be applied.</li>
-</ul>
-<p>The Django Security team has a information on <a href="https://docs.djangoproject.com/en/4.1/internals/security/#how-django-discloses-security-issues">How Django discloses security issues</a>.</p>
-<p>Finally, an important aspect when considering if a new dependency should be added or not to the project is the "Security Health" of the library. How often it's updated? Does it have known vulnerabilities? Does it have an active community? etc. Some tools can help with this task (E.g. <a href="https://snyk.io/advisor/python">Snyk Advisor</a>)</p>
+<p>All applications have dependencies and those dependencies can have vulnerabilities. One good practice is to audit the dependencies your project is using. In general, it is important to have a process for updating dependencies. A sample process might define three mechanisms for triggering an update of response:</p>
+<p>--Every month/quarter dependencies in general are updated.
+--Every week important security vulnerabilities are considered and potentially trigger an update.
+--In EXCEPTIONAL conditions, emergency updates may need to be applied.</p>
+<p>The Django Security team has information on <a href="https://docs.djangoproject.com/en/4.1/internals/security/#how-django-discloses-security-issues">How Django discloses security issues</a>.</p>
+<p>When a library is under consideration, consider the "Security Health" of the library. How often it's updated? Does it have known vulnerabilities? Does it have an active community? etc. Some tools can help with this task (E.g. <a href="https://snyk.io/advisor/python">Snyk Advisor</a>)</p>
 <h2 id="sast-tools">SAST Tools<a class="headerlink" href="#sast-tools" title="Permanent link">&para;</a></h2>
 <p>There are several excellent open-source static analysis security tools for Python that are worth considering, including:</p>
-<p>Bandit – <a href="https://bandit.readthedocs.io/en/latest/">Bandit</a> is a tool designed to find common security issues in Python. To do this Bandit processes each file, builds an Abstract Syntax Tree (AST) from it, and runs appropriate plugins against the AST nodes. Once Bandit has finished scanning all the files it generates a report. Bandit was originally developed within the OpenStack Security Project and later rehomed to PyCQA.</p>
+<p>Bandit – <a href="https://bandit.readthedocs.io/en/latest/">Bandit</a> is a tool designed to find common security issues in Python. Bandit processes each file, builds an Abstract Syntax Tree (AST) from it, and runs appropriate plugins against the AST nodes. Once Bandit has finished scanning all the files it generates a report. Bandit was originally developed within the OpenStack Security Project and later rehomed to PyCQA.</p>
 <p>Semgrep – <a href="https://semgrep.dev/">Semgrep</a> is a fast, open-source, static analysis engine for finding bugs, detecting vulnerabilities in third-party dependencies, and enforcing code standards. Developed by “Return To Corporation” (usually referred to as r2c) and open-source contributors. It works based on rules, which can focus on security, language best practices, or something else. Creating a rule is easy and semgrep is very powerful. For Django there are 29 rules.</p>
 <p>PyCharm Security – <a href="https://pycharm-security.readthedocs.io/en/latest/index.html">Pycharm-security</a> is a plugin for PyCharm, or JetBrains IDEs with the Python plugin. The plugin looks at Python code for common security vulnerabilities and suggests fixes. It can also be executed from a Docker container. It has about 40 checks and some are Django specific.</p>
 <h2 id="related-articles-and-references">Related Articles and References<a class="headerlink" href="#related-articles-and-references" title="Permanent link">&para;</a></h2>
