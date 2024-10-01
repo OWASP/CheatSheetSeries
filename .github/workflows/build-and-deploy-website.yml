@@ -61,6 +61,8 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: Bundle
+    - name: Display structure of downloaded files
+      run: ls -R
     - name: Replace bundle with new build
       run: |
         mv Bundle.zip bundle.zip
