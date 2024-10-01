@@ -2848,7 +2848,7 @@ it can change the value of a variable that the web application relies on due to 
 </ul>
 <p>OWASP recommends <a href="https://github.com/cure53/DOMPurify">DOMPurify</a> or the <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTML_Sanitizer_API">Sanitizer API</a> for HTML sanitization.</p>
 <h4 id="dompurify-sanitizer">DOMPurify Sanitizer<a class="headerlink" href="#dompurify-sanitizer" title="Permanent link">&para;</a></h4>
-<p>By default, DOMPurify removes all clobbering collisions with <strong>built-in</strong> APIs and properties (using the enabled-by-default <code>SANITIZE_DOM</code> configuration option). ]</p>
+<p>By default, DOMPurify removes all clobbering collisions with <strong>built-in</strong> APIs and properties (using the enabled-by-default <code>SANITIZE_DOM</code> configuration option).</p>
 <p>To be protected against clobbering of custom variables and properties as well, you need to enable the <code>SANITIZE_NAMED_PROPS</code> config:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">clean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">DOMPurify</span><span class="p">.</span><span class="nx">sanitize</span><span class="p">(</span><span class="nx">dirty</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="nx">SANITIZE_NAMED_PROPS</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">});</span>
 </code></pre></div>
@@ -2882,8 +2882,8 @@ it can change the value of a variable that the web application relies on due to 
 <p>Document properties, including built-in ones, are always overshadowed by DOM Clobbering, even right after they are assigned a value.</p>
 <p><strong>Hint:</strong> This is due to the so-called <a href="https://webidl.spec.whatwg.org/#legacy-platform-object-abstract-ops">named property visibility algorithm</a>, where named HTML element references come before lookups of built-in APIs and other attributes on <code>document</code>.</p>
 <h3 id="8-enforce-type-checking">#8: Enforce Type Checking<a class="headerlink" href="#8-enforce-type-checking" title="Permanent link">&para;</a></h3>
-<p>Always check the type of Document and Window properties before using them in sensitive operations, e.g., using the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof">instance of</a> operator.</p>
-<p><strong>Hint:</strong> When an object is clobbered, it would refer to an <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement">HTMLElement</a> instance, which may not be the expected type.</p>
+<p>Always check the type of <code>document</code> and <code>window</code> properties before using them in sensitive operations, e.g., using the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof"><code>instanceof</code></a> operator.</p>
+<p><strong>Hint:</strong> When an object is clobbered, it would refer to an <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element"><code>Element</code></a> instance, which may not be the expected type.</p>
 <h3 id="9-use-strict-mode">#9: Use Strict Mode<a class="headerlink" href="#9-use-strict-mode" title="Permanent link">&para;</a></h3>
 <p>Use <code>strict</code> mode to prevent unintended global variable creation, and to <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors/Read-only">raise an error</a> when read-only properties are attempted to be over-written.</p>
 <h3 id="10-apply-browser-feature-detection">#10: Apply Browser Feature Detection<a class="headerlink" href="#10-apply-browser-feature-detection" title="Permanent link">&para;</a></h3>
