@@ -101,7 +101,6 @@ To prevent this problem, create an inventory of all API hosts. In this inventory
 
 For proper logging and monitoring capabilities, do the following:
 
-
 --Log all failed authentication attempts, denied access, and input validation errors with sufficient user context to identify suspicious or malicious accounts.
 
 --Create logs in a format suited to be consumed by a log management solution and include enough detail to identify the malicious actor.
