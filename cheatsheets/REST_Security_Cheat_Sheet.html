@@ -2678,7 +2678,7 @@
 </ul>
 <h3 id="validate-request-content-types">Validate request content types<a class="headerlink" href="#validate-request-content-types" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Reject requests containing unexpected or missing content type headers with HTTP response status <code>406 Unacceptable</code> or <code>415 Unsupported Media Type</code>.</li>
+<li>Reject requests containing unexpected or missing content type headers with HTTP response status <code>406 Unacceptable</code> or <code>415 Unsupported Media Type</code>. For requests with <code>Content-Length: 0</code> however, a <code>Content-type</code> header is optional.</li>
 <li>For XML content types ensure appropriate XML parser hardening, see the <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">XXE cheat sheet</a>.</li>
 <li>Avoid accidentally exposing unintended content types by explicitly defining content types e.g. <a href="https://jersey.github.io/">Jersey</a> (Java) <code>@consumes("application/json"); @produces("application/json")</code>. This avoids <a href="https://owasp.org/www-community/vulnerabilities/XML_External_Entity_%28XXE%29_Processing">XXE-attack</a> vectors for example.</li>
 </ul>
