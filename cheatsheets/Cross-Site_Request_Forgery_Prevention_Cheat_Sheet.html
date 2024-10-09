@@ -3076,8 +3076,8 @@
 <h5 id="employing-hmac-csrf-tokens">Employing HMAC CSRF Tokens<a class="headerlink" href="#employing-hmac-csrf-tokens" title="Permanent link">&para;</a></h5>
 <p>To generate HMAC CSRF tokens (with a session-dependent user value), the system must have:</p>
 <ul>
-<li><strong>A session-dependent value that changes with each login session</strong>. This value should only be valid for the entirety of the users authenticated session. Avoid using static values like the user's email or ID, as they are not secure (<a href="https://stackoverflow.com/a/8656417">1</a> | <a href="https://stackoverflow.com/a/30539335">2</a> | <a href="https://security.stackexchange.com/a/22936">3</a>). It's worth noting that updating the CSRF token too frequently, such as for each request, is a misconception that assumes it adds substantial security while actually harming the user experience (<a href="https://security.stackexchange.com/a/22936">1</a>). For example, you could choose one of the following session-dependent values:<ul>
-<li>The server-side session ID (e.g. <a href="https://www.php.net/manual/en/function.session-start.php">PHP</a> or <a href="https://learn.microsoft.com/en-us/previous-versions/aspnet/ms178581(v=vs.100)">ASP.NET</a>).</li>
+<li><strong>A session-dependent value that changes with each login session</strong>. This value should only be valid for the entirety of the users authenticated session. Avoid using static values like the user's email or ID, as they are not secure (<a href="https://stackoverflow.com/a/8656417">1</a> | <a href="https://stackoverflow.com/a/30539335">2</a> | <a href="https://security.stackexchange.com/a/22936">3</a>). It's worth noting that updating the CSRF token too frequently, such as for each request, is a misconception that assumes it adds substantial security while actually harming the user experience (<a href="https://security.stackexchange.com/a/22936">1</a>). For example, you could choose one, or a combination, of the following session-dependent values:<ul>
+<li>The server-side session ID (e.g. <a href="https://www.php.net/manual/en/function.session-start.php">PHP</a> or <a href="https://learn.microsoft.com/en-us/previous-versions/aspnet/ms178581(v=vs.100)">ASP.NET</a>). This value should never leave the server or be in plain text in the CSRF Token.</li>
 <li>A random value (e.g. UUID) within a JWT that changes every time a JWT is created.</li>
 </ul>
 </li>
@@ -3096,7 +3096,7 @@ randomValue = cryptographic.randomValue() // Cryptographic random value
 // Create the CSRF Token
 message = sessionID + &quot;!&quot; + randomValue // HMAC message payload
 hmac = hmac(&quot;SHA256&quot;, secret, message) // Generate the HMAC hash
-csrfToken = hmac + &quot;.&quot; + message // Combine HMAC hash with message to generate the token. The plain message is required to later authenticate it against its HMAC hash
+csrfToken = hmac + &quot;.&quot; + randomValue // Add the `randomValue` to the HMAC hash to create the final CSRF token. Avoid using the `message` because it contains the sessionID in plain text, which the server already stores separately.
 
 // Store the CSRF Token in a cookie
 response.setCookie(&quot;csrf_token=&quot; + csrfToken + &quot;; Secure&quot;) // Set Cookie without HttpOnly flag
