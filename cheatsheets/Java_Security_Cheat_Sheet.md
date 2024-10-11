@@ -397,29 +397,78 @@ To prevent an attacker from writing malicious content into the application log, 
 
 #### Example using Log4j2
 
-Configuration of a logging policy to roll on 10 files of 5MB each, and encode/limit the log message using the [Pattern *encode{}{CRLF}*](https://logging.apache.org/log4j/2.x/manual/layouts.html#PatternLayout\%7CLog4j2), introduced in [Log4j2 v2.10.0](https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api), and the *-500m* message size limit.:
+The recommended logging policy for a production environment is sending logs to a network socket using the structured
+[JSON Template Layout](https://logging.apache.org/log4j/2.x/manual/json-template-layout.html)
+introduced in
+[Log4j 2.14.0](https://logging.apache.org/log4j/2.x/release-notes.html#release-notes-2-14-0)
+and limit the size of strings to 500 bytes using the
+[`maxStringLength` configuration attrribute](https://logging.apache.org/log4j/2.x/manual/json-template-layout.html#plugin-attr-maxStringLength):
 
-``` xml
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="error" name="SecureLoggingPolicy">
-    <Appenders>
-        <RollingFile name="RollingFile" fileName="App.log" filePattern="App-%i.log" ignoreExceptions="false">
-            <PatternLayout>
-                <!-- Encode any CRLF chars in the message and limit its
-                     maximum size to 500 characters -->
-                <Pattern>%d{ISO8601} %-5p - %encode{ %.-500m }{CRLF}%n</Pattern>
-            </PatternLayout>
-            <Policies>
-                <SizeBasedTriggeringPolicy size="5MB"/>
-            </Policies>
-            <DefaultRolloverStrategy max="10"/>
-        </RollingFile>
-    </Appenders>
-    <Loggers>
-        <Root level="debug">
-            <AppenderRef ref="RollingFile"/>
-        </Root>
-    </Loggers>
+<Configuration xmlns="https://logging.apache.org/xml/ns"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="
+                   https://logging.apache.org/xml/ns
+                   https://logging.apache.org/xml/ns/log4j-config-2.xsd">
+  <Appenders>
+    <Socket name="SOCKET"
+            host="localhost"
+            port="12345">
+      <!-- Limit the size of any string field in the produced JSON document to 500 bytes -->
+      <JsonTemplateLayout maxStringLength="500"
+                          nullEventDelimiterEnabled="true"/>
+    </Socket>
+  </Appenders>
+  <Loggers>
+    <Root level="DEBUG">
+      <AppenderRef ref="SOCKET"/>
+    </Root>
+  </Loggers>
+</Configuration>
+```
+
+See
+[Integration with service-oriented architectures](https://logging.apache.org/log4j/2.x/soa.html)
+on
+[Log4j website](https://logging.apache.org/log4j/2.x/index.html)
+for more tips.
+
+In a development and testing environment, you can configure a logging policy to roll on 10 files of 5MB each, using the **unstructured**
+[Pattern Layout](https://logging.apache.org/log4j/2.x/manual/pattern-layout.html)
+and:
+
+- encoding the log event using the
+  [`encode{}{CRLF}` pattern](https://logging.apache.org/log4j/2.x/manual/pattern-layout.html#converter-encode),
+  introduced in
+  [Log4j 2.10.0](https://logging.apache.org/log4j/2.x/release-notes.html#release-notes-2-10-0),
+- limiting the size of the log message using the
+  [`.-500` format modifier](https://logging.apache.org/log4j/2.x/manual/pattern-layout.html#format-modifiers).
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration xmlns="https://logging.apache.org/xml/ns"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="
+                   https://logging.apache.org/xml/ns
+                   https://logging.apache.org/xml/ns/log4j-config-2.xsd">
+  <Appenders>
+    <RollingFile name="ROLLING" fileName="App.log" filePattern="App-%i.log" ignoreExceptions="false">
+      <!-- * Encode any CRLF chars in the log event.
+           * Limit the maximum message size to 500 characters.
+           * Add the exception converter `%xEx` explicitly.
+           * Set `alwaysWriteExceptions` to `false`. -->
+      <PatternLayout pattern="%encode{%d{ISO8601} [%t] %-5p %c - %.-500m%notEmpty{%n%xEx}}{CRLF}%n"
+                     alwaysWriteExceptions="false"/>
+      <DefaultRolloverStrategy max="10"/>
+      <SizeBasedTriggeringPolicy size="5MB"/>
+    </RollingFile>
+  </Appenders>
+  <Loggers>
+    <Root level="DEBUG">
+      <AppenderRef ref="ROLLING"/>
+    </Root>
+  </Loggers>
 </Configuration>
 ```
 
@@ -429,12 +478,20 @@ Usage of the logger at code level:
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 ...
-// No special action needed because security actions are
-// performed at the logging policy level
-Logger logger = LogManager.getLogger(MyClass.class);
-logger.info(logMessage);
+// Most common way to declare a logger
+private static final LOGGER = LogManager.getLogger();
+// Use parameterized logging to add user data to a message
+// The pattern should be a compile-time constant
+logger.warn("Login failed for user {}.", username);
+// Don't mix string concatenation and parameters
+// If `username` contains `{}`, the exception will leak into the message
+logger.warn("Failure for user " + username + " and role {}.", role, ex);
 ...
 ```
+
+See
+[Log4j API Best Practices](https://logging.apache.org/log4j/2.x/manual/api.html#best-practice)
+for more information.
 
 #### Example using Logback with the OWASP Security Logging library
 
