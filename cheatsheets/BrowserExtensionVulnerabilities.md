@@ -96,7 +96,7 @@ If the update mechanism is compromised, attackers can push malicious code to use
 
 **Vulnerable Code Example:**
 
-```javascript
+```json
 {
   "dependencies": {
     "vulnerable-lib": "1.0.0"
@@ -112,7 +112,7 @@ An extension relying on outdated third-party libraries may become vulnerable if 
 
 **Vulnerable Code Example:**
 
-```javascript
+```json
 
 {
   "manifest_version": 2,
@@ -141,7 +141,7 @@ If an attacker gains access to the local storage, they can easily retrieve sensi
 
 **Vulnerable Code Example:**
 
-```javascript
+```json
 {
   "manifest_version": 2,
   "name": "My Extension",
