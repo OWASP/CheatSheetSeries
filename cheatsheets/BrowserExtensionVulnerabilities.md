@@ -1,7 +1,5 @@
 # Browser Extension Security Vulnerabilities
-
 This document outlines common security vulnerabilities found in browser extensions and provides examples of how attackers can exploit these vulnerabilities.
-
 ## 1. Permissions Overreach
 Vulnerable Code Example:
 ```json
