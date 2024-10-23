@@ -63,7 +63,7 @@ fetch('http://example.com/api/data')
 
 Data sent over insecure HTTP can be intercepted by attackers on the same network, allowing them to capture sensitive information, such as tokens or personal data.
 
-## 4. Code Injection
+## 5. Code Injection
 
 **Vulnerable Code Example:**
 ```javascript
