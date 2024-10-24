@@ -99,7 +99,7 @@ sessionID = session.sessionID // Current authenticated user session
 randomValue = cryptographic.randomValue() // Cryptographic random value
 
 // Create the CSRF Token
-message = sessionID + "!" + randomValue // HMAC message payload
+message = sessionID.length + "!" + sessionID + "!" + randomValue.length + "!" + randomValue // HMAC message payload
 hmac = hmac("SHA256", secret, message) // Generate the HMAC hash
 csrfToken = hmac + "." + randomValue // Add the `randomValue` to the HMAC hash to create the final CSRF token. Avoid using the `message` because it contains the sessionID in plain text, which the server already stores separately.
 
