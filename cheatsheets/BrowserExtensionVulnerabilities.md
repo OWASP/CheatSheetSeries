@@ -43,7 +43,8 @@ Exploitation Scenario:
 User inputs can execute scripts in the page's context. An attacker could inject scripts that steal cookies, session tokens, or sensitive data.
 ## 4. Insecure Communication
 Vulnerable Code Example:
-```javascript// User input retrieval with sanitization
+```javascript
+// User input retrieval with sanitization
 fetch('http://example.com/api/data')
   .then(response => response.json()) // Ensure to handle the response
   .catch(error => console.error('Error fetching data:', error));
@@ -76,9 +77,10 @@ Vulnerable Code Example:
 ```json
 {
   "dependencies": {
-    "vulnerable-lib": "1.0.0" // Consider updating to a secure version
+    "vulnerable-lib": "1.0.0"
   }
 }
+// Consider updating to a secure version
 ```
 Exploitation Scenario:
 An extension relying on outdated third-party libraries may become vulnerable if those libraries have known security flaws that attackers can exploit.
