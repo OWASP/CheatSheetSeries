@@ -80,7 +80,6 @@ Vulnerable Code Example:
     "vulnerable-lib": "1.0.0"
   }
 }
-// Consider updating to a secure version
 ```
 Exploitation Scenario:
 An extension relying on outdated third-party libraries may become vulnerable if those libraries have known security flaws that attackers can exploit.
@@ -108,7 +107,7 @@ Vulnerable Code Example:
 {
   "manifest_version": 2,
   "name": "My Extension",
-  "description": "A cool extension with no privacy policy." // Ensure to provide a privacy policy
+  "description": "A cool extension with no privacy policy."
 }
 ```
 Exploitation Scenario:
