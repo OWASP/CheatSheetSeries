@@ -37,7 +37,7 @@ Threat modeling requires a deep understanding of the system being evaluated. To 
 
 ## Addressing Each Question
 
-There is no universally accepted industry standard for the threat modeling process, no "right" answer for every use case. However, despite this diversity, most approaches do include the the processes of system modeling, threat identification, and risk response in some form. Inspired by these commonalities and guided by the four key questions of threat modeling discussed above, this cheatsheet will break the threat modeling down into four basic steps: application decomposition, threat identification and ranking, mitigations, and review and validation. There are processes that are less aligned to this, including PASTA and OCTAVE, each of which has passionate advocates.
+There is no universally accepted industry standard for the threat modeling process, no "right" answer for every use case. However, despite this diversity, most approaches do include the processes of system modeling, threat identification, and risk response in some form. Inspired by these commonalities and guided by the four key questions of threat modeling discussed above, this cheatsheet will break the threat modeling down into four basic steps: application decomposition, threat identification and ranking, mitigations, and review and validation. There are processes that are less aligned to this, including PASTA and OCTAVE, each of which has passionate advocates.
 
 ### System Modeling
 
@@ -92,7 +92,7 @@ Finally, it is time to answer the question "did we do a good enough job"? The th
 - For each identified threat, has a response strategy been agreed upon?
 - For identified threats for which mitigation is the desired response, have mitigation strategies been developed which reduce risk to an acceptable level?
 - Has the threat model been formally documented? Are artifacts from the threat model process stored in such a way that it can be accessed by those with "need to know"?
-- Can the agreed upon mitigations be tested? Can success or failure of the requirements and recommendations from the the threat model be measured?
+- Can the agreed upon mitigations be tested? Can success or failure of the requirements and recommendations from the threat model be measured?
 
 ## Threat Modeling and the Development Team
 
