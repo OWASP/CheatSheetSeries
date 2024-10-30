@@ -7,7 +7,7 @@ on:
 jobs:
   build:
     name: Identify old issues and PR
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     env:
       CI: true
     steps:
@@ -16,9 +16,9 @@ jobs:
     - name: Setup Node
       uses: actions/setup-node@v4
       with:
-        node-version: 12.x
+        node-version: 20.x
     - name: SetUp python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: '3.x'
     - name: Install python dependencies
