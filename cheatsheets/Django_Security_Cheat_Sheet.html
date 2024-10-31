@@ -2600,7 +2600,7 @@
 <span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;DJANGO_SECRET_KEY&#39;</span><span class="p">)</span>
 </code></pre></div>
 <ul>
-<li>Regularly rotate the key, keeping in mind that this action can invalidate sessions, password reset tokens, etc. Rotate the key immediatley it if it ever gets exposed.</li>
+<li>Regularly rotate the key, keeping in mind that this action can invalidate sessions, password reset tokens, etc. Rotate the key immediately it if it ever gets exposed.</li>
 </ul>
 <h2 id="headers">Headers<a class="headerlink" href="#headers" title="Permanent link">&para;</a></h2>
 <p>Include the <code>django.middleware.security.SecurityMiddleware</code> module in the <code>MIDDLEWARE</code> setting in your project's <code>settings.py</code> to add security-related headers to your responses. This module is used to set the following parameters:</p>
