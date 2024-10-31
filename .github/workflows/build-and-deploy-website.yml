@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     name: Build offline website
-    runs-on: ubuntu-20.04 #ubuntu-latest ubuntu latest have some bug, we need to use older one 
+    runs-on: ubuntu-24.04
     env:
       CI: true
       WORKFLOW_GOOGLE_ANALYTICS_KEY: ${{ secrets.GOOGLE_ANALYTICS_KEY }}
@@ -16,11 +16,11 @@ jobs:
     - name: Setup Action
       uses: actions/checkout@v4
     - name: Setup Node
-      uses: actions/setup-node@v2.1.5
+      uses: actions/setup-node@v4
       with:
-        node-version: 12.x
+        node-version: 20.x
     - name: Setup Python
-      uses: actions/setup-python@v2.2.1
+      uses: actions/setup-python@v5
       with:
         python-version: '3.x'
     - name: Install Python dependencies
