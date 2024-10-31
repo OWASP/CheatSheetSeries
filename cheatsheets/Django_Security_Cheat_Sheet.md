@@ -107,7 +107,7 @@ The `SECRET_KEY` parameter in settings.py is used for cryptographic signing and 
   SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
   ```
 
-- Regularly rotate the key, keeping in mind that this action can invalidate sessions, password reset tokens, etc. Rotate the key immediatley it if it ever gets exposed.
+- Regularly rotate the key, keeping in mind that this action can invalidate sessions, password reset tokens, etc. Rotate the key immediately it if it ever gets exposed.
 
 ## Headers
 
