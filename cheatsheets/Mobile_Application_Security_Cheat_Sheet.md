@@ -247,6 +247,7 @@ examples of data that should not be logged.
 - Disable backup mode to prevent sensitive data being stored in backups.
 
 ### iOS and iPadOS
+
 #### Shortcuts Permissions
 
 - iOS/iPadOS Shortcuts allow for automation of app functions, which may enable sensitive actions even when the device is locked.
@@ -266,6 +267,7 @@ examples of data that should not be logged.
 - **How**: Configure `requiresUserAuthentication` to `true` on intents that expose sensitive information or functionality. Additionally, set `INIntent.userConfirmationRequired = true` for operations requiring explicit user confirmation. These settings ensure proper authentication (e.g., Face ID or PIN) and explicit approval before Siri can execute sensitive commands. (For more information, see Apple Developer's [SiriKit](https://developer.apple.com/documentation/sirikit) documentation.)
 
 #### Deep Link Security
+
 - Deep links offer direct access to specific app screens, which could potentially bypass authentication if not secured, allowing unauthorized users access to secure sections of the app.
 - An example of this on Microsoft Authenticator for iOS (which was remediated in July 2024) allowed users to bypass App Lock by simply navigating to `msauth://microsoft.aad.brokerplugin/?`, which would open Authenticator and dismiss the Face ID/Touch ID/passcode prompt.
 - **How**: Implement authentication checks on any view controllers or endpoints accessed via deep links. Configure and validate Universal Links using apple-app-site-association files for secure deep linking. Sanitize and validate all parameters received through deep links to prevent injection attacks. Ensure unauthorized users are redirected to the login screen, preventing direct access to sensitive parts of the app without proper authentication. (See Apple Developer's [Supporting universal links in your app](https://developer.apple.com/documentation/xcode/supporting-universal-links-in-your-app) documentation for more information.)
@@ -276,6 +278,7 @@ examples of data that should not be logged.
 - **How**: For iOS/iPadOS versions 17 and higher, use `WidgetInfo.isLocked` to detect lock screen state. For earlier iOS versions, implement custom logic based on available widget states since `widgetFamily` alone doesn't directly provide lock screen information. Apply conditional logic to mask or restrict sensitive widget content when appropriate security conditions aren't met. (See Apple's [WidgetKit security](https://support.apple.com/guide/security/widgetkit-security-secbb0a1f9b4/web) for more information.)
 
 #### Additional Security Considerations
+
 - Configure appropriate background refresh policies to prevent sensitive data updates while the device is locked.
 - Implement proper privacy-related configurations in `Info.plist` for features requiring user permissions.
 - Use App Groups with appropriate security configurations when sharing data between app and widgets.
