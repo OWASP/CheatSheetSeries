@@ -8,7 +8,7 @@ However, once an attacker has acquired stored password hashes, they are always a
 
 To sum up our recommendations:
 
-- **Use [Argon2id](#argon2id) with a minimum configuration of 19 MiB of memory, an iteration count of 2, and 1 degree of parallelism.**
+- **Use [Argon2id](#argon2id) (Type 19) with a minimum configuration of 2GiB of memory (m=2097152) (HIGH performance devices) or 64MiB of memory (m=65535) (Low Performance Devices), and 4 degree of parallelism (p). Start the iteration count/time cost (t) from 1 and increase it till the verification time is greater than your security requirement of the runtime.** [RFC 9106 reference](https://www.rfc-editor.org/rfc/rfc9106.html#name-parameter-choice)
 - **If [Argon2id](#argon2id) is not available, use [scrypt](#scrypt) with a minimum CPU/memory cost parameter of (2^17), a minimum block size of 8 (1024 bytes), and a parallelization parameter of 1.**
 - **For legacy systems using [bcrypt](#bcrypt), use a work factor of 10 or more and with a password limit of 72 bytes.**
 - **If FIPS-140 compliance is required, use [PBKDF2](#pbkdf2) with a work factor of 600,000 or more and set with an internal hash function of HMAC-SHA-256.**
@@ -93,13 +93,10 @@ Three hashing algorithms that should be considered:
 
 [Argon2](https://en.wikipedia.org/wiki/Argon2) was the winner of the 2015 [Password Hashing Competition](https://en.wikipedia.org/wiki/Password_Hashing_Competition). Out of the three Argon2 versions, use the  Argon2id variant since it provides a balanced approach to resisting both side-channel and GPU-based attacks.
 
-Rather than a simple work factor like other algorithms, Argon2id has three different parameters that can be configured: the base minimum of the minimum memory size (m), the minimum number of iterations (t), and the degree of parallelism (p). We recommend the following configuration settings:
+Rather than a simple work factor like other algorithms, Argon2id (Type 19) has three different parameters that can be configured: the base minimum of the minimum memory size (m), the minimum number of iterations (t), and the degree of parallelism (p). We recommend the following configuration settings:
 
-- m=47104 (46 MiB), t=1, p=1 (Do not use with Argon2i)
-- m=19456 (19 MiB), t=2, p=1 (Do not use with Argon2i)
-- m=12288 (12 MiB), t=3, p=1
-- m=9216 (9 MiB), t=4, p=1
-- m=7168 (7 MiB), t=5, p=1
+- m=2097152 (2 GiB), t=1 or greater, p=4 (Recommended from RFC9106) [RFC 9106 reference](https://www.rfc-editor.org/rfc/rfc9106.html)
+- m=2097152 (64 MiB), t=3 or greater, p=4 (Only for low performance devices as per the RFC)
 
 These configuration settings provide an equal level of defense, and the only difference is a trade off between CPU and RAM usage.
 
