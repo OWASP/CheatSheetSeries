@@ -96,7 +96,7 @@ Three hashing algorithms that should be considered:
 Rather than a simple work factor like other algorithms, Argon2id (Type 19) has three different parameters that can be configured: the base minimum of the minimum memory size (m), the minimum number of iterations (t), and the degree of parallelism (p). We recommend the following configuration settings:
 
 - m=2097152 (2 GiB), t=1 or greater, p=4 (Recommended from RFC9106) [RFC 9106 reference](https://www.rfc-editor.org/rfc/rfc9106.html)
-- m=2097152 (64 MiB), t=3 or greater, p=4 (Only for low performance devices as per the RFC)
+- m=65535 (64 MiB), t=3 or greater, p=4 (Only for low performance devices as per the RFC)
 
 These configuration settings provide an equal level of defense, and the only difference is a trade off between CPU and RAM usage.
 
