@@ -617,7 +617,7 @@ Managing secrets in a multi-cloud environment presents unique challenges due to 
 - [Azure Key Vault](https://azure.microsoft.com/en-us/services/key-vault/)
 - [Google Cloud Secret Manager](https://cloud.google.com/secret-manager)
 
-## 10 Related Cheat Sheets & further reading
+## 11 Related Cheat Sheets & further reading
 
 - [Key Management Cheat Sheet](Key_Management_Cheat_Sheet.md)
 - [Logging Cheat Sheet](Logging_Cheat_Sheet.md)
