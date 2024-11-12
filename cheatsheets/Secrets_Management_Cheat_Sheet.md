@@ -361,6 +361,7 @@ There are open source and commercial solutions available. Some examples are:
 
 - [CyberArk Conjur](https://www.conjur.org/)
 - [HashiCorp Vault](https://www.vaultproject.io/)
+- [Pulumi ESC](https://www.pulumi.com/esc/)
 
 ### 4.2 Envelope & client-side encryption
 
