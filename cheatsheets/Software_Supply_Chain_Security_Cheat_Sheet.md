@@ -26,7 +26,7 @@ Given the breadth and complexity of the SSC, it is unsurprising that the threat 
 
 The characteristics of threat actors seeking exploit the SSC are similarly diverse. Although SSC compromise is often associated with highly sophisticated threat actors, such sophistication is not inherently necessary for attacking the SSC, especially if the attack focuses on compromising the SSC of entities with poor security practices. Threat actor motive also varies widely, A SSC exploit can result in loss of confidentiality, integrity, and/or availability of any organization's assets and thus fulfill a wide range of attacker goals such as espionage or financial gain.
 
-Finally, it must be recognized that many SSC threats have the capability to propagate across many entities. This is due to consumer-supplier relationship that is integral to an SSC. For example, uf a large-scale software supplier, whether proprietary or open-source, is compromised, many downstream, consuming entities could also be impacted as a result. The 2020 Solarwind and 2021 Codecov incidents are excellent real-world examples of this.
+Finally, it must be recognized that many SSC threats have the capability to propagate across many entities. This is due to consumer-supplier relationship that is integral to an SSC. For example, uf a large-scale software supplier, whether proprietary or open-source, is compromised, many downstream, consuming entities could also be impacted as a result. The 2020 SolarWinds and 2021 Codecov incidents are excellent real-world examples of this.
 
 ## Mitigations and Security Best Practices
 
