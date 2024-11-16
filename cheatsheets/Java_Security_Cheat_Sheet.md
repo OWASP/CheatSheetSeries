@@ -462,21 +462,31 @@ for more information.
 
 #### Example using Logback
 
-The recommended logging policy for a production environment is sending logs to a network socket using the structured
+The recommended logging policy for a production environment is using the structured
 [JsonEncoder](https://logback.qos.ch/manual/encoders.html#JsonEncoder)
 introduced in
-[Logback 1.3.8](https://logback.qos.ch/news.html#1.3.8):
+[Logback 1.3.8](https://logback.qos.ch/news.html#1.3.8).
+In the example below, Logback is configured to roll on 10 log files of 5 MiB each:
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE configuration>
 <configuration>
   <import class="ch.qos.logback.classic.encoder.JsonEncoder"/>
-  <import class="ch.qos.logback.classic.net.SocketAppender"/>
+  <import class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy"/>
+  <import class="ch.qos.logback.core.rolling.RollingFileAppender"/>
+  <import class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy"/>
 
-  <appender name="SOCKET" class="SocketAppender">
-    <remoteHost>localhost</remoteHost>
-    <port>12345</port>
+  <appender name="RollingFile" class="RollingFileAppender">
+    <file>app.log</file>
+    <rollingPolicy class="FixedWindowRollingPolicy">
+      <fileNamePattern>app-%i.log</fileNamePattern>
+      <minIndex>1</minIndex>
+      <maxIndex>10</maxIndex>
+    </rollingPolicy>
+    <triggeringPolicy class="SizeBasedTriggeringPolicy">
+      <maxFileSize>5MB</maxFileSize>
+    </triggeringPolicy>
     <encoder class="JsonEncoder"/>
   </appender>
 
