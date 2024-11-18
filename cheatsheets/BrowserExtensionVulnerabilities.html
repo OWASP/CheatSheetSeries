@@ -10,28 +10,28 @@
       
       
       
-        <link rel="canonical" href="https://cheatsheetseries.owasp.org/IndexMASVS.html">
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/BrowserExtensionVulnerabilities.html">
       
       
-        <link rel="prev" href="IndexASVS.html">
+        <link rel="prev" href="Bean_Validation_Cheat_Sheet.html">
       
       
-        <link rel="next" href="IndexProactiveControls.html">
+        <link rel="next" href="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
       
       
-      <link rel="icon" href="assets/WebSite_Favicon.png">
+      <link rel="icon" href="../assets/WebSite_Favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.42">
     
     
       
-        <title>Index MASVS - OWASP Cheat Sheet Series</title>
+        <title>BrowserExtensionVulnerabilities.md - OWASP Cheat Sheet Series</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.0253249f.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.0253249f.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -50,7 +50,7 @@
       
     
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#masvs-index" class="md-skip">
+        <a href="#browser-extension-security-vulnerabilities" class="md-skip">
           Skip to content
         </a>
       
@@ -92,9 +92,9 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="index.html" title="OWASP Cheat Sheet Series" class="md-header__button md-logo" aria-label="OWASP Cheat Sheet Series" data-md-component="logo">
+    <a href="../index.html" title="OWASP Cheat Sheet Series" class="md-header__button md-logo" aria-label="OWASP Cheat Sheet Series" data-md-component="logo">
       
-  <img src="assets/OWASP_Logo.svg" alt="logo">
+  <img src="../assets/OWASP_Logo.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -111,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Index MASVS
+              BrowserExtensionVulnerabilities.md
             
           </span>
         </div>
@@ -224,9 +224,9 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="index.html" title="OWASP Cheat Sheet Series" class="md-nav__button md-logo" aria-label="OWASP Cheat Sheet Series" data-md-component="logo">
+    <a href="../index.html" title="OWASP Cheat Sheet Series" class="md-nav__button md-logo" aria-label="OWASP Cheat Sheet Series" data-md-component="logo">
       
-  <img src="assets/OWASP_Logo.svg" alt="logo">
+  <img src="../assets/OWASP_Logo.svg" alt="logo">
 
     </a>
     OWASP Cheat Sheet Series
@@ -253,7 +253,7 @@
   
   
     <li class="md-nav__item">
-      <a href="index.html" class="md-nav__link">
+      <a href="../index.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -273,7 +273,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Glossary.html" class="md-nav__link">
+      <a href="../Glossary.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -293,7 +293,7 @@
   
   
     <li class="md-nav__item">
-      <a href="IndexASVS.html" class="md-nav__link">
+      <a href="../IndexASVS.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -308,6 +308,276 @@
     
       
       
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IndexMASVS.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Index MASVS
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IndexProactiveControls.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Index Proactive Controls
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IndexTopTen.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Index Top 10
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Cheatsheets
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Cheatsheets
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="AJAX_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AJAX Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Abuse_Case_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Abuse Case
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Access_Control_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Access Control
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Attack_Surface_Analysis_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Attack Surface Analysis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Authentication_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Authentication
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Authorization_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Authorization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Authorization_Testing_Automation_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Authorization Testing Automation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Bean_Validation_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bean Validation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
   
   
     
@@ -326,18 +596,18 @@
           
   
   <span class="md-ellipsis">
-    Index MASVS
+    BrowserExtensionVulnerabilities.md
   </span>
   
 
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <a href="IndexMASVS.html" class="md-nav__link md-nav__link--active">
+      <a href="BrowserExtensionVulnerabilities.html" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
-    Index MASVS
+    BrowserExtensionVulnerabilities.md
   </span>
   
 
@@ -359,90 +629,90 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#table-of-contents" class="md-nav__link">
+  <a href="#1-permissions-overreach" class="md-nav__link">
     <span class="md-ellipsis">
-      Table of Contents
+      1. Permissions Overreach
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#objective" class="md-nav__link">
+  <a href="#2-data-leakage" class="md-nav__link">
     <span class="md-ellipsis">
-      Objective
+      2. Data Leakage
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#masvs-storage" class="md-nav__link">
+  <a href="#3-cross-site-scripting-xss" class="md-nav__link">
     <span class="md-ellipsis">
-      MASVS-STORAGE
+      3. Cross-Site Scripting (XSS)
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#masvs-crypto" class="md-nav__link">
+  <a href="#4-insecure-communication" class="md-nav__link">
     <span class="md-ellipsis">
-      MASVS-CRYPTO
+      4. Insecure Communication
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#masvs-auth" class="md-nav__link">
+  <a href="#5-code-injection" class="md-nav__link">
     <span class="md-ellipsis">
-      MASVS-AUTH
+      5. Code Injection
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#masvs-network" class="md-nav__link">
+  <a href="#6-malicious-updates" class="md-nav__link">
     <span class="md-ellipsis">
-      MASVS-NETWORK
+      6. Malicious Updates
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#masvs-platform" class="md-nav__link">
+  <a href="#7-third-party-dependencies" class="md-nav__link">
     <span class="md-ellipsis">
-      MASVS-PLATFORM
+      7. Third-Party Dependencies
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#masvs-code" class="md-nav__link">
+  <a href="#8-lack-of-content-security-policy-csp" class="md-nav__link">
     <span class="md-ellipsis">
-      MASVS-CODE
+      8. Lack of Content Security Policy (CSP)
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#masvs-resilience" class="md-nav__link">
+  <a href="#9-insecure-storage" class="md-nav__link">
     <span class="md-ellipsis">
-      MASVS-RESILIENCE
+      9. Insecure Storage
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#masvs-privacy" class="md-nav__link">
+  <a href="#10-insufficient-privacy-controls" class="md-nav__link">
     <span class="md-ellipsis">
-      MASVS-PRIVACY
+      10. Insufficient Privacy Controls
     </span>
   </a>
   
@@ -455,108 +725,6 @@
     </li>
   
 
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="IndexProactiveControls.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Index Proactive Controls
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="IndexTopTen.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Index Top 10
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-    
-      
-        
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
-      
-        
-        
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
-        
-          
-          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
-            
-  
-  <span class="md-ellipsis">
-    Cheatsheets
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7">
-            <span class="md-nav__icon md-icon"></span>
-            Cheatsheets
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="cheatsheets/AJAX_Security_Cheat_Sheet.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    AJAX Security
-  </span>
-  
-
-      </a>
-    </li>
-  
-
               
             
               
@@ -566,175 +734,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Abuse_Case_Cheat_Sheet.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Abuse Case
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="cheatsheets/Access_Control_Cheat_Sheet.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Access Control
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Attack Surface Analysis
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="cheatsheets/Authentication_Cheat_Sheet.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Authentication
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="cheatsheets/Authorization_Cheat_Sheet.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Authorization
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="cheatsheets/Authorization_Testing_Automation_Cheat_Sheet.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Authorization Testing Automation
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="cheatsheets/Bean_Validation_Cheat_Sheet.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Bean Validation
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="cheatsheets/BrowserExtensionVulnerabilities.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    BrowserExtensionVulnerabilities.md
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="cheatsheets/C-Based_Toolchain_Hardening_Cheat_Sheet.html" class="md-nav__link">
+      <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -755,7 +755,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/CI_CD_Security_Cheat_Sheet.html" class="md-nav__link">
+      <a href="CI_CD_Security_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -776,7 +776,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Choosing_and_Using_Security_Questions_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -797,7 +797,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Clickjacking_Defense_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Clickjacking_Defense_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -818,7 +818,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Content_Security_Policy_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Content_Security_Policy_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -839,7 +839,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -860,7 +860,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -881,7 +881,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -902,7 +902,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Cryptographic_Storage_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Cryptographic_Storage_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -923,7 +923,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/DOM_Clobbering_Prevention_Cheat_Sheet.html" class="md-nav__link">
+      <a href="DOM_Clobbering_Prevention_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -944,7 +944,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html" class="md-nav__link">
+      <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -965,7 +965,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Database_Security_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Database_Security_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -986,7 +986,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Denial_of_Service_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Denial_of_Service_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1007,7 +1007,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Deserialization_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Deserialization_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1028,7 +1028,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Django_REST_Framework_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Django_REST_Framework_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1049,7 +1049,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Django_Security_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Django_Security_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1070,7 +1070,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Docker_Security_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Docker_Security_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1091,7 +1091,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/DotNet_Security_Cheat_Sheet.html" class="md-nav__link">
+      <a href="DotNet_Security_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1112,7 +1112,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Error_Handling_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Error_Handling_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1133,7 +1133,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/File_Upload_Cheat_Sheet.html" class="md-nav__link">
+      <a href="File_Upload_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1154,7 +1154,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Forgot_Password_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Forgot_Password_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1175,7 +1175,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/GraphQL_Cheat_Sheet.html" class="md-nav__link">
+      <a href="GraphQL_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1196,7 +1196,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/HTML5_Security_Cheat_Sheet.html" class="md-nav__link">
+      <a href="HTML5_Security_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1217,7 +1217,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/HTTP_Headers_Cheat_Sheet.html" class="md-nav__link">
+      <a href="HTTP_Headers_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1238,7 +1238,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html" class="md-nav__link">
+      <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1259,7 +1259,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Infrastructure_as_Code_Security_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Infrastructure_as_Code_Security_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1280,7 +1280,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1301,7 +1301,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Injection_Prevention_in_Java_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Injection_Prevention_in_Java_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1322,7 +1322,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Input_Validation_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Input_Validation_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1343,7 +1343,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1364,7 +1364,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/JAAS_Cheat_Sheet.html" class="md-nav__link">
+      <a href="JAAS_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1385,7 +1385,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html" class="md-nav__link">
+      <a href="JSON_Web_Token_for_Java_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1406,7 +1406,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Java_Security_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Java_Security_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1427,7 +1427,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Key_Management_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Key_Management_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1448,7 +1448,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Kubernetes_Security_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Kubernetes_Security_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1469,7 +1469,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/LDAP_Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+      <a href="LDAP_Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1490,7 +1490,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Laravel_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Laravel_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1511,7 +1511,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Legacy_Application_Management_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Legacy_Application_Management_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1532,7 +1532,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Logging_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Logging_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1553,7 +1553,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Logging_Vocabulary_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Logging_Vocabulary_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1574,7 +1574,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Mass_Assignment_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Mass_Assignment_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1595,7 +1595,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Microservices_Security_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Microservices_Security_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1616,7 +1616,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Microservices_based_Security_Arch_Doc_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1637,7 +1637,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Mobile_Application_Security_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Mobile_Application_Security_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1658,7 +1658,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Multifactor_Authentication_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Multifactor_Authentication_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1679,7 +1679,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/NPM_Security_Cheat_Sheet.html" class="md-nav__link">
+      <a href="NPM_Security_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1700,7 +1700,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Network_Segmentation_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Network_Segmentation_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1721,7 +1721,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/NodeJS_Docker_Cheat_Sheet.html" class="md-nav__link">
+      <a href="NodeJS_Docker_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1742,7 +1742,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Nodejs_Security_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Nodejs_Security_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1763,7 +1763,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/OAuth2_Cheat_Sheet.html" class="md-nav__link">
+      <a href="OAuth2_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1784,7 +1784,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.html" class="md-nav__link">
+      <a href="OS_Command_Injection_Defense_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1805,7 +1805,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/PHP_Configuration_Cheat_Sheet.html" class="md-nav__link">
+      <a href="PHP_Configuration_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1826,7 +1826,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Password_Storage_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Password_Storage_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1847,7 +1847,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Pinning_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Pinning_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1868,7 +1868,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Prototype_Pollution_Prevention_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Prototype_Pollution_Prevention_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1889,7 +1889,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Query_Parameterization_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Query_Parameterization_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1910,7 +1910,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/REST_Assessment_Cheat_Sheet.html" class="md-nav__link">
+      <a href="REST_Assessment_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1931,7 +1931,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/REST_Security_Cheat_Sheet.html" class="md-nav__link">
+      <a href="REST_Security_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1952,7 +1952,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Ruby_on_Rails_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Ruby_on_Rails_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1973,7 +1973,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/SAML_Security_Cheat_Sheet.html" class="md-nav__link">
+      <a href="SAML_Security_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1994,7 +1994,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+      <a href="SQL_Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2015,7 +2015,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Secrets_Management_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Secrets_Management_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2036,7 +2036,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Secure_Cloud_Architecture_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Secure_Cloud_Architecture_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2057,7 +2057,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Secure_Product_Design_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Secure_Product_Design_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2078,7 +2078,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Securing_Cascading_Style_Sheets_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2099,7 +2099,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2120,7 +2120,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Session_Management_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Session_Management_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2141,7 +2141,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Software_Supply_Chain_Security_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Software_Supply_Chain_Security_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2162,7 +2162,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Symfony_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Symfony_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2183,7 +2183,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/TLS_Cipher_String_Cheat_Sheet.html" class="md-nav__link">
+      <a href="TLS_Cipher_String_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2204,7 +2204,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Third_Party_Javascript_Management_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2225,7 +2225,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Threat_Modeling_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Threat_Modeling_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2246,7 +2246,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Transaction_Authorization_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Transaction_Authorization_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2267,7 +2267,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Transport_Layer_Protection_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Transport_Layer_Protection_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2288,7 +2288,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Transport_Layer_Security_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Transport_Layer_Security_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2309,7 +2309,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2330,7 +2330,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/User_Privacy_Protection_Cheat_Sheet.html" class="md-nav__link">
+      <a href="User_Privacy_Protection_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2351,7 +2351,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Virtual_Patching_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Virtual_Patching_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2372,7 +2372,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Vulnerability_Disclosure_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Vulnerability_Disclosure_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2393,7 +2393,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Vulnerable_Dependency_Management_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2414,7 +2414,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/Web_Service_Security_Cheat_Sheet.html" class="md-nav__link">
+      <a href="Web_Service_Security_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2435,7 +2435,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.html" class="md-nav__link">
+      <a href="XML_External_Entity_Prevention_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2456,7 +2456,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/XML_Security_Cheat_Sheet.html" class="md-nav__link">
+      <a href="XML_Security_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2477,7 +2477,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/XSS_Filter_Evasion_Cheat_Sheet.html" class="md-nav__link">
+      <a href="XSS_Filter_Evasion_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2498,7 +2498,7 @@
   
   
     <li class="md-nav__item">
-      <a href="cheatsheets/XS_Leaks_Cheat_Sheet.html" class="md-nav__link">
+      <a href="XS_Leaks_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2546,90 +2546,90 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#table-of-contents" class="md-nav__link">
+  <a href="#1-permissions-overreach" class="md-nav__link">
     <span class="md-ellipsis">
-      Table of Contents
+      1. Permissions Overreach
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#objective" class="md-nav__link">
+  <a href="#2-data-leakage" class="md-nav__link">
     <span class="md-ellipsis">
-      Objective
+      2. Data Leakage
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#masvs-storage" class="md-nav__link">
+  <a href="#3-cross-site-scripting-xss" class="md-nav__link">
     <span class="md-ellipsis">
-      MASVS-STORAGE
+      3. Cross-Site Scripting (XSS)
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#masvs-crypto" class="md-nav__link">
+  <a href="#4-insecure-communication" class="md-nav__link">
     <span class="md-ellipsis">
-      MASVS-CRYPTO
+      4. Insecure Communication
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#masvs-auth" class="md-nav__link">
+  <a href="#5-code-injection" class="md-nav__link">
     <span class="md-ellipsis">
-      MASVS-AUTH
+      5. Code Injection
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#masvs-network" class="md-nav__link">
+  <a href="#6-malicious-updates" class="md-nav__link">
     <span class="md-ellipsis">
-      MASVS-NETWORK
+      6. Malicious Updates
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#masvs-platform" class="md-nav__link">
+  <a href="#7-third-party-dependencies" class="md-nav__link">
     <span class="md-ellipsis">
-      MASVS-PLATFORM
+      7. Third-Party Dependencies
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#masvs-code" class="md-nav__link">
+  <a href="#8-lack-of-content-security-policy-csp" class="md-nav__link">
     <span class="md-ellipsis">
-      MASVS-CODE
+      8. Lack of Content Security Policy (CSP)
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#masvs-resilience" class="md-nav__link">
+  <a href="#9-insecure-storage" class="md-nav__link">
     <span class="md-ellipsis">
-      MASVS-RESILIENCE
+      9. Insecure Storage
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#masvs-privacy" class="md-nav__link">
+  <a href="#10-insufficient-privacy-controls" class="md-nav__link">
     <span class="md-ellipsis">
-      MASVS-PRIVACY
+      10. Insufficient Privacy Controls
     </span>
   </a>
   
@@ -2653,67 +2653,28 @@
   
 
 
-<h1 id="masvs-index">MASVS Index<a class="headerlink" href="#masvs-index" title="Permanent link">&para;</a></h1>
-<h2 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
-<ul>
-<li><a href="#objective">Objective</a></li>
-<li><a href="#masvs-storage">MASVS-STORAGE</a></li>
-<li><a href="#masvs-crypto">MASVS-CRYPTO</a></li>
-<li><a href="#masvs-auth">MASVS-AUTH</a></li>
-<li><a href="#masvs-network">MASVS-NETWORK</a></li>
-<li><a href="#masvs-platform">MASVS-PLATFORM</a></li>
-<li><a href="#masvs-code">MASVS-CODE</a></li>
-<li><a href="#masvs-resilience">MASVS-RESILIENCE</a></li>
-<li><a href="#masvs-privacy">MASVS-PRIVACY</a></li>
-</ul>
-<h2 id="objective">Objective<a class="headerlink" href="#objective" title="Permanent link">&para;</a></h2>
-<p>The objective of this index is to help OWASP <a href="https://github.com/OWASP/owasp-masvs">Mobile Application Security Verification Standard</a> (MASVS) users clearly identify which cheat sheets are useful for each section during their usage of the MASVS.</p>
-<p>This index is based on version <a href="https://github.com/OWASP/owasp-masvs/releases/tag/v2.1.0">2.1.0</a> of the MASVS.</p>
-<h2 id="masvs-storage">MASVS-STORAGE<a class="headerlink" href="#masvs-storage" title="Permanent link">&para;</a></h2>
-<p><a href="cheatsheets/Password_Storage_Cheat_Sheet.html">Password Storage Cheat Sheet</a></p>
-<p><a href="cheatsheets/Logging_Cheat_Sheet.html">Logging Cheat Sheet</a></p>
-<p><a href="cheatsheets/Cryptographic_Storage_Cheat_Sheet.html">Cryptographic Storage Cheat Sheet</a></p>
-<p><a href="cheatsheets/Secrets_Management_Cheat_Sheet.html">Secrets Management Cheat Sheet</a></p>
-<h2 id="masvs-crypto">MASVS-CRYPTO<a class="headerlink" href="#masvs-crypto" title="Permanent link">&para;</a></h2>
-<p><a href="cheatsheets/Cryptographic_Storage_Cheat_Sheet.html">Cryptographic Storage Cheat Sheet</a></p>
-<p><a href="cheatsheets/Key_Management_Cheat_Sheet.html">Key Management Cheat Sheet</a></p>
-<h2 id="masvs-auth">MASVS-AUTH<a class="headerlink" href="#masvs-auth" title="Permanent link">&para;</a></h2>
-<p><a href="cheatsheets/Authentication_Cheat_Sheet.html">Authentication Cheat Sheet</a></p>
-<p><a href="cheatsheets/Authorization_Cheat_Sheet.html">Authorization Cheat Sheet</a></p>
-<p><a href="cheatsheets/Session_Management_Cheat_Sheet.html">Session Management Cheat Sheet</a></p>
-<p><a href="cheatsheets/Transaction_Authorization_Cheat_Sheet.html">Transaction Authorization Cheat Sheet</a></p>
-<p><a href="cheatsheets/Access_Control_Cheat_Sheet.html">Access Control Cheat Sheet</a></p>
-<p><a href="cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html">JSON Web Token Cheat Sheet for Java</a></p>
-<p><a href="cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.html">Credential Stuffing Prevention Cheat Sheet</a></p>
-<h2 id="masvs-network">MASVS-NETWORK<a class="headerlink" href="#masvs-network" title="Permanent link">&para;</a></h2>
-<p><a href="cheatsheets/Transport_Layer_Security_Cheat_Sheet.html">Transport Layer Security Cheat Sheet</a></p>
-<p><a href="cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html">HTTP Strict Transport Security Cheat Sheet</a></p>
-<p><a href="cheatsheets/REST_Security_Cheat_Sheet.html">REST Security Cheat Sheet</a></p>
-<p><a href="cheatsheets/Web_Service_Security_Cheat_Sheet.html">Web Service Security Cheat Sheet</a></p>
-<p><a href="cheatsheets/Pinning_Cheat_Sheet.html">Pinning Cheat Sheet</a></p>
-<h2 id="masvs-platform">MASVS-PLATFORM<a class="headerlink" href="#masvs-platform" title="Permanent link">&para;</a></h2>
-<p><a href="cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.html">Attack Surface Analysis Cheat Sheet</a></p>
-<h2 id="masvs-code">MASVS-CODE<a class="headerlink" href="#masvs-code" title="Permanent link">&para;</a></h2>
-<p><a href="cheatsheets/Vulnerable_Dependency_Management_Cheat_Sheet.html">Vulnerable Dependency Management Cheat Sheet</a></p>
-<p><a href="cheatsheets/Error_Handling_Cheat_Sheet.html">Error Handling Cheat Sheet</a></p>
-<p><a href="cheatsheets/Deserialization_Cheat_Sheet.html">Deserialization Cheat Sheet</a></p>
-<p><a href="cheatsheets/Logging_Cheat_Sheet.html">Logging Cheat Sheet</a></p>
-<p><a href="cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">Insecure Direct Object Reference Prevention Cheat Sheet</a></p>
-<p><a href="cheatsheets/Input_Validation_Cheat_Sheet.html">Input Validation Cheat Sheet</a></p>
-<p><a href="cheatsheets/Injection_Prevention_Cheat_Sheet.html">Injection Prevention Cheat Sheet</a></p>
-<p><a href="cheatsheets/Injection_Prevention_in_Java_Cheat_Sheet.html">Injection Prevention Cheat Sheet in Java</a></p>
-<p><a href="cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.html">OS Command Injection Defense Cheat Sheet</a></p>
-<p><a href="cheatsheets/Query_Parameterization_Cheat_Sheet.html">Query Parameterization Cheat Sheet</a></p>
-<p><a href="cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html">SQL Injection Prevention Cheat Sheet</a></p>
-<p><a href="cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.html">XXE Prevention Cheat Sheet</a></p>
-<p><a href="cheatsheets/XML_Security_Cheat_Sheet.html">XML Security Cheat Sheet</a></p>
-<h2 id="masvs-resilience">MASVS-RESILIENCE<a class="headerlink" href="#masvs-resilience" title="Permanent link">&para;</a></h2>
-<p><a href="cheatsheets/Threat_Modeling_Cheat_Sheet.html">Threat Modeling Cheat Sheet</a></p>
-<p><a href="cheatsheets/Abuse_Case_Cheat_Sheet.html">Abuse Case Cheat Sheet</a></p>
-<p><a href="cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.html">Attack Surface Analysis Cheat Sheet</a></p>
-<p><a href="cheatsheets/Mobile_Application_Security_Cheat_Sheet.html">Mobile Application Security Cheat Sheet</a></p>
-<h2 id="masvs-privacy">MASVS-PRIVACY<a class="headerlink" href="#masvs-privacy" title="Permanent link">&para;</a></h2>
-<p><a href="cheatsheets/User_Privacy_Protection_Cheat_Sheet.html">User Privacy Protection Cheat Sheet</a></p>
+<h1 id="browser-extension-security-vulnerabilities">Browser Extension Security Vulnerabilities<a class="headerlink" href="#browser-extension-security-vulnerabilities" title="Permanent link">&para;</a></h1>
+<p>This document outlines common security vulnerabilities found in browser extensions and provides examples of how attackers can exploit these vulnerabilities.</p>
+<h2 id="1-permissions-overreach">1. Permissions Overreach<a class="headerlink" href="#1-permissions-overreach" title="Permanent link">&para;</a></h2>
+<p>An extension with broad permissions can access all tabs and browsing data. If the extension is compromised, an attacker can capture sensitive information from any website the user visits, including passwords and personal data.</p>
+<h2 id="2-data-leakage">2. Data Leakage<a class="headerlink" href="#2-data-leakage" title="Permanent link">&para;</a></h2>
+<p>An extension sending the URLs of all visited pages to a remote server can inadvertently leak sensitive information, especially if users visit banking or personal sites.</p>
+<h2 id="3-cross-site-scripting-xss">3. Cross-Site Scripting (XSS)<a class="headerlink" href="#3-cross-site-scripting-xss" title="Permanent link">&para;</a></h2>
+<p>User inputs can execute scripts in the page's context. An attacker could inject scripts that steal cookies, session tokens, or sensitive data.</p>
+<h2 id="4-insecure-communication">4. Insecure Communication<a class="headerlink" href="#4-insecure-communication" title="Permanent link">&para;</a></h2>
+<p>Data sent over insecure HTTP can be intercepted by attackers on the same network, allowing them to capture sensitive information, such as tokens or personal data.</p>
+<h2 id="5-code-injection">5. Code Injection<a class="headerlink" href="#5-code-injection" title="Permanent link">&para;</a></h2>
+<p>If an attacker controls the script URL, they can inject malicious code into the page, leading to data theft or manipulation of the page’s functionality.</p>
+<h2 id="6-malicious-updates">6. Malicious Updates<a class="headerlink" href="#6-malicious-updates" title="Permanent link">&para;</a></h2>
+<p>If the update mechanism is compromised, attackers can push malicious code to users without their knowledge, potentially gaining control over their browsers.</p>
+<h2 id="7-third-party-dependencies">7. Third-Party Dependencies<a class="headerlink" href="#7-third-party-dependencies" title="Permanent link">&para;</a></h2>
+<p>An extension relying on outdated third-party libraries may become vulnerable if those libraries have known security flaws that attackers can exploit.</p>
+<h2 id="8-lack-of-content-security-policy-csp">8. Lack of Content Security Policy (CSP)<a class="headerlink" href="#8-lack-of-content-security-policy-csp" title="Permanent link">&para;</a></h2>
+<p>Without a strong CSP, attackers can inject untrusted content, increasing the risk of XSS and other attacks that manipulate the extension’s behavior.</p>
+<h2 id="9-insecure-storage">9. Insecure Storage<a class="headerlink" href="#9-insecure-storage" title="Permanent link">&para;</a></h2>
+<p>If an attacker gains access to the local storage, they can easily retrieve sensitive information, such as tokens or user credentials, leading to unauthorized access.</p>
+<h2 id="10-insufficient-privacy-controls">10. Insufficient Privacy Controls<a class="headerlink" href="#10-insufficient-privacy-controls" title="Permanent link">&para;</a></h2>
+<p>Users may be unaware of how their data is being collected or used, leading to potential abuse of their information without consent or awareness.</p>
 
 
 
@@ -2767,10 +2728,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": ".", "features": ["navigation.sections", "navigation.expand"], "search": "assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.sections", "navigation.expand"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="assets/javascripts/bundle.83f73b43.min.js"></script>
+      <script src="../assets/javascripts/bundle.83f73b43.min.js"></script>
       
     
   </body>
