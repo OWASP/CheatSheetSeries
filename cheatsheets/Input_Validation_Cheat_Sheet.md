@@ -239,7 +239,7 @@ Because it could allow users to register multiple accounts with a single email a
 
 ## References
 
-- [OWASP Top 10 Proactive Controls 2024: C3: Validate all Input & Handle Exceptions](https://owasp.org/www-project-proactive-controls/v4/en/c3-validate-all-input)
+- [OWASP Top 10 Proactive Controls 2024: C3: Validate all Input & Handle Exceptions](https://top10proactive.owasp.org/the-top-10/c3-validate-input-and-handle-exceptions)
 - [CWE-20 Improper Input Validation](https://cwe.mitre.org/data/definitions/20.html)
 - [OWASP Top 10 2021: A03:2021-Injection](https://owasp.org/Top10/A03_2021-Injection/)
 - [Snyk: Improper Input Validation](https://learn.snyk.io/lesson/improper-input-validation/)
