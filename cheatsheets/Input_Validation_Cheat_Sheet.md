@@ -31,7 +31,7 @@ Input validation can be implemented using any programming technique that allows 
 - Minimum and maximum value range check for numerical parameters and dates, minimum and maximum length check for strings.
 - Array of allowed values for small sets of string parameters (e.g. days of week).
 - Regular expressions for any other structured data covering the whole input string `(^...$)` and **not** using "any character" wildcard (such as `.` or `\S`)
-- Denylisting known dangerous patterns can be used as an additional layer of defense, but it should supplement—not replace—allowlisting, to help catch some commonly observed attacks or patterns without relying on it as the main validation method.
+- Denylisting known dangerous patterns can be used as an additional layer of defense, but it should supplement - not replace - allowlisting, to help catch some commonly observed attacks or patterns without relying on it as the main validation method.
 
 ### Allowlist vs Denylist
 
