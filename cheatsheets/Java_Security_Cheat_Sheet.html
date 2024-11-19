@@ -1708,18 +1708,18 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#example-using-log4j2" class="md-nav__link">
+  <a href="#example-using-log4j-core-2" class="md-nav__link">
     <span class="md-ellipsis">
-      Example using Log4j2
+      Example using Log4j Core 2
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#example-using-logback-with-the-owasp-security-logging-library" class="md-nav__link">
+  <a href="#example-using-logback" class="md-nav__link">
     <span class="md-ellipsis">
-      Example using Logback with the OWASP Security Logging library
+      Example using Logback
     </span>
   </a>
   
@@ -3355,18 +3355,18 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#example-using-log4j2" class="md-nav__link">
+  <a href="#example-using-log4j-core-2" class="md-nav__link">
     <span class="md-ellipsis">
-      Example using Log4j2
+      Example using Log4j Core 2
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#example-using-logback-with-the-owasp-security-logging-library" class="md-nav__link">
+  <a href="#example-using-logback" class="md-nav__link">
     <span class="md-ellipsis">
-      Example using Logback with the OWASP Security Logging library
+      Example using Logback
     </span>
   </a>
   
@@ -3823,99 +3823,124 @@
 <h4 id="how-to-prevent_6">How to prevent<a class="headerlink" href="#how-to-prevent_6" title="Permanent link">&para;</a></h4>
 <p>To prevent an attacker from writing malicious content into the application log, apply defenses such as:</p>
 <ul>
-<li>Filter the user input used to prevent injection of <strong>C</strong>arriage <strong>R</strong>eturn (CR) or <strong>L</strong>ine <strong>F</strong>eed (LF) characters.</li>
+<li>Use structured log formats, such as JSON, instead of unstructured text formats.
+  Unstructured formats are susceptible to <strong>C</strong>arriage <strong>R</strong>eturn (CR) and <strong>L</strong>ine <strong>F</strong>eed (LF) injection (see <a href="https://cwe.mitre.org/data/definitions/93.html">CWE-93</a>).</li>
 <li>Limit the size of the user input value used to create the log message.</li>
 <li>Make sure <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">all XSS defenses</a> are applied when viewing log files in a web browser.</li>
 </ul>
-<h4 id="example-using-log4j2">Example using Log4j2<a class="headerlink" href="#example-using-log4j2" title="Permanent link">&para;</a></h4>
-<p>Configuration of a logging policy to roll on 10 files of 5MB each, and encode/limit the log message using the <a href="https://logging.apache.org/log4j/2.x/manual/layouts.html#PatternLayout\%7CLog4j2">Pattern <em>encode{}{CRLF}</em></a>, introduced in <a href="https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api">Log4j2 v2.10.0</a>, and the <em>-500m</em> message size limit.:</p>
+<h4 id="example-using-log4j-core-2">Example using Log4j Core 2<a class="headerlink" href="#example-using-log4j-core-2" title="Permanent link">&para;</a></h4>
+<p>The recommended logging policy for a production environment is sending logs to a network socket using the structured
+<a href="https://logging.apache.org/log4j/2.x/manual/json-template-layout.html">JSON Template Layout</a>
+introduced in
+<a href="https://logging.apache.org/log4j/2.x/release-notes.html#release-notes-2-14-0">Log4j 2.14.0</a>
+and limit the size of strings to 500 bytes using the
+<a href="https://logging.apache.org/log4j/2.x/manual/json-template-layout.html#plugin-attr-maxStringLength"><code>maxStringLength</code> configuration attrribute</a>:</p>
 <div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span class="nt">&lt;Configuration</span><span class="w"> </span><span class="na">status=</span><span class="s">&quot;error&quot;</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;SecureLoggingPolicy&quot;</span><span class="nt">&gt;</span>
-<span class="w">    </span><span class="nt">&lt;Appenders&gt;</span>
-<span class="w">        </span><span class="nt">&lt;RollingFile</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;RollingFile&quot;</span><span class="w"> </span><span class="na">fileName=</span><span class="s">&quot;App.log&quot;</span><span class="w"> </span><span class="na">filePattern=</span><span class="s">&quot;App-%i.log&quot;</span><span class="w"> </span><span class="na">ignoreExceptions=</span><span class="s">&quot;false&quot;</span><span class="nt">&gt;</span>
-<span class="w">            </span><span class="nt">&lt;PatternLayout&gt;</span>
-<span class="w">                </span><span class="cm">&lt;!-- Encode any CRLF chars in the message and limit its</span>
-<span class="cm">                     maximum size to 500 characters --&gt;</span>
-<span class="w">                </span><span class="nt">&lt;Pattern&gt;</span>%d{ISO8601}<span class="w"> </span>%-5p<span class="w"> </span>-<span class="w"> </span>%encode{<span class="w"> </span>%.-500m<span class="w"> </span>}{CRLF}%n<span class="nt">&lt;/Pattern&gt;</span>
-<span class="w">            </span><span class="nt">&lt;/PatternLayout&gt;</span>
-<span class="w">            </span><span class="nt">&lt;Policies&gt;</span>
-<span class="w">                </span><span class="nt">&lt;SizeBasedTriggeringPolicy</span><span class="w"> </span><span class="na">size=</span><span class="s">&quot;5MB&quot;</span><span class="nt">/&gt;</span>
-<span class="w">            </span><span class="nt">&lt;/Policies&gt;</span>
-<span class="w">            </span><span class="nt">&lt;DefaultRolloverStrategy</span><span class="w"> </span><span class="na">max=</span><span class="s">&quot;10&quot;</span><span class="nt">/&gt;</span>
-<span class="w">        </span><span class="nt">&lt;/RollingFile&gt;</span>
-<span class="w">    </span><span class="nt">&lt;/Appenders&gt;</span>
-<span class="w">    </span><span class="nt">&lt;Loggers&gt;</span>
-<span class="w">        </span><span class="nt">&lt;Root</span><span class="w"> </span><span class="na">level=</span><span class="s">&quot;debug&quot;</span><span class="nt">&gt;</span>
-<span class="w">            </span><span class="nt">&lt;AppenderRef</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;RollingFile&quot;</span><span class="nt">/&gt;</span>
-<span class="w">        </span><span class="nt">&lt;/Root&gt;</span>
-<span class="w">    </span><span class="nt">&lt;/Loggers&gt;</span>
+<span class="nt">&lt;Configuration</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;https://logging.apache.org/xml/ns&quot;</span>
+<span class="w">               </span><span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+<span class="w">               </span><span class="na">xsi:schemaLocation=</span><span class="s">&quot;</span>
+<span class="s">                   https://logging.apache.org/xml/ns</span>
+<span class="s">                   https://logging.apache.org/xml/ns/log4j-config-2.xsd&quot;</span><span class="nt">&gt;</span>
+<span class="w">  </span><span class="nt">&lt;Appenders&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Socket</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;SOCKET&quot;</span>
+<span class="w">            </span><span class="na">host=</span><span class="s">&quot;localhost&quot;</span>
+<span class="w">            </span><span class="na">port=</span><span class="s">&quot;12345&quot;</span><span class="nt">&gt;</span>
+<span class="w">      </span><span class="cm">&lt;!-- Limit the size of any string field in the produced JSON document to 500 bytes --&gt;</span>
+<span class="w">      </span><span class="nt">&lt;JsonTemplateLayout</span><span class="w"> </span><span class="na">maxStringLength=</span><span class="s">&quot;500&quot;</span>
+<span class="w">                          </span><span class="na">nullEventDelimiterEnabled=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/Socket&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/Appenders&gt;</span>
+<span class="w">  </span><span class="nt">&lt;Loggers&gt;</span>
+<span class="w">    </span><span class="nt">&lt;Root</span><span class="w"> </span><span class="na">level=</span><span class="s">&quot;DEBUG&quot;</span><span class="nt">&gt;</span>
+<span class="w">      </span><span class="nt">&lt;AppenderRef</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;SOCKET&quot;</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/Root&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/Loggers&gt;</span>
 <span class="nt">&lt;/Configuration&gt;</span>
 </code></pre></div>
+<p>See
+<a href="https://logging.apache.org/log4j/2.x/soa.html">Integration with service-oriented architectures</a>
+on
+<a href="https://logging.apache.org/log4j/2.x/index.html">Log4j website</a>
+for more tips.</p>
 <p>Usage of the logger at code level:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.logging.log4j.LogManager</span><span class="p">;</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.logging.log4j.Logger</span><span class="p">;</span>
 <span class="p">...</span>
-<span class="c1">// No special action needed because security actions are</span>
-<span class="c1">// performed at the logging policy level</span>
-<span class="n">Logger</span><span class="w"> </span><span class="n">logger</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LogManager</span><span class="p">.</span><span class="na">getLogger</span><span class="p">(</span><span class="n">MyClass</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
-<span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="n">logMessage</span><span class="p">);</span>
+<span class="c1">// Most common way to declare a logger</span>
+<span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">LOGGER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LogManager</span><span class="p">.</span><span class="na">getLogger</span><span class="p">();</span>
+<span class="c1">// GOOD!</span>
+<span class="c1">//</span>
+<span class="c1">// Use parameterized logging to add user data to a message</span>
+<span class="c1">// The pattern should be a compile-time constant</span>
+<span class="n">logger</span><span class="p">.</span><span class="na">warn</span><span class="p">(</span><span class="s">&quot;Login failed for user {}.&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">username</span><span class="p">);</span>
+<span class="c1">// BAD!</span>
+<span class="c1">//</span>
+<span class="c1">// Don&#39;t mix string concatenation and parameters</span>
+<span class="c1">// If `username` contains `{}`, the exception will leak into the message</span>
+<span class="n">logger</span><span class="p">.</span><span class="na">warn</span><span class="p">(</span><span class="s">&quot;Failure for user &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot; and role {}.&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">role</span><span class="p">,</span><span class="w"> </span><span class="n">ex</span><span class="p">);</span>
 <span class="p">...</span>
 </code></pre></div>
-<h4 id="example-using-logback-with-the-owasp-security-logging-library">Example using Logback with the OWASP Security Logging library<a class="headerlink" href="#example-using-logback-with-the-owasp-security-logging-library" title="Permanent link">&para;</a></h4>
-<p>Configuration of a logging policy to roll on 10 files of 5MB each, and encode/limit the log message using the <a href="https://github.com/augustd/owasp-security-logging/wiki/Log-Forging">CRLFConverter</a>, provided by the <strong>no longer active</strong> <a href="https://github.com/augustd/owasp-security-logging/wiki">OWASP Security Logging Project</a>, and the <em>-500msg</em> message size limit:</p>
-<div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<p>See
+<a href="https://logging.apache.org/log4j/2.x/manual/api.html#best-practice">Log4j API Best Practices</a>
+for more information.</p>
+<h4 id="example-using-logback">Example using Logback<a class="headerlink" href="#example-using-logback" title="Permanent link">&para;</a></h4>
+<p>The recommended logging policy for a production environment is using the structured
+<a href="https://logback.qos.ch/manual/encoders.html#JsonEncoder">JsonEncoder</a>
+introduced in
+<a href="https://logback.qos.ch/news.html#1.3.8">Logback 1.3.8</a>.
+In the example below, Logback is configured to roll on 10 log files of 5 MiB each:</p>
+<div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
+<span class="cp">&lt;!DOCTYPE configuration&gt;</span>
 <span class="nt">&lt;configuration&gt;</span>
-<span class="w">    </span><span class="cm">&lt;!-- Define the CRLFConverter --&gt;</span>
-<span class="w">    </span><span class="nt">&lt;conversionRule</span><span class="w"> </span><span class="na">conversionWord=</span><span class="s">&quot;crlf&quot;</span><span class="w"> </span><span class="na">converterClass=</span><span class="s">&quot;org.owasp.security.logging.mask.CRLFConverter&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
-<span class="w">    </span><span class="nt">&lt;appender</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;RollingFile&quot;</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;</span><span class="nt">&gt;</span>
-<span class="w">        </span><span class="nt">&lt;file&gt;</span>App.log<span class="nt">&lt;/file&gt;</span>
-<span class="w">        </span><span class="nt">&lt;rollingPolicy</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;ch.qos.logback.core.rolling.FixedWindowRollingPolicy&quot;</span><span class="nt">&gt;</span>
-<span class="w">            </span><span class="nt">&lt;fileNamePattern&gt;</span>App-%i.log<span class="nt">&lt;/fileNamePattern&gt;</span>
-<span class="w">            </span><span class="nt">&lt;minIndex&gt;</span>1<span class="nt">&lt;/minIndex&gt;</span>
-<span class="w">            </span><span class="nt">&lt;maxIndex&gt;</span>10<span class="nt">&lt;/maxIndex&gt;</span>
-<span class="w">        </span><span class="nt">&lt;/rollingPolicy&gt;</span>
-<span class="w">        </span><span class="nt">&lt;triggeringPolicy</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy&quot;</span><span class="nt">&gt;</span>
-<span class="w">            </span><span class="nt">&lt;maxFileSize&gt;</span>5MB<span class="nt">&lt;/maxFileSize&gt;</span>
-<span class="w">        </span><span class="nt">&lt;/triggeringPolicy&gt;</span>
-<span class="w">        </span><span class="nt">&lt;encoder&gt;</span>
-<span class="w">            </span><span class="cm">&lt;!-- Encode any CRLF chars in the message and limit</span>
-<span class="cm">                 its maximum size to 500 characters --&gt;</span>
-<span class="w">            </span><span class="nt">&lt;pattern&gt;</span>%relative<span class="w"> </span>[%thread]<span class="w"> </span>%-5level<span class="w"> </span>%logger{35}<span class="w"> </span>-<span class="w"> </span>%crlf(%.-500msg)<span class="w"> </span>%n<span class="nt">&lt;/pattern&gt;</span>
-<span class="w">        </span><span class="nt">&lt;/encoder&gt;</span>
-<span class="w">    </span><span class="nt">&lt;/appender&gt;</span>
-<span class="w">    </span><span class="nt">&lt;root</span><span class="w"> </span><span class="na">level=</span><span class="s">&quot;debug&quot;</span><span class="nt">&gt;</span>
-<span class="w">        </span><span class="nt">&lt;appender-ref</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;RollingFile&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
-<span class="w">    </span><span class="nt">&lt;/root&gt;</span>
+<span class="w">  </span><span class="nt">&lt;import</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;ch.qos.logback.classic.encoder.JsonEncoder&quot;</span><span class="nt">/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;import</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;ch.qos.logback.core.rolling.FixedWindowRollingPolicy&quot;</span><span class="nt">/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;import</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;</span><span class="nt">/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;import</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy&quot;</span><span class="nt">/&gt;</span>
+
+<span class="w">  </span><span class="nt">&lt;appender</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;RollingFile&quot;</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;RollingFileAppender&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;file&gt;</span>app.log<span class="nt">&lt;/file&gt;</span>
+<span class="w">    </span><span class="nt">&lt;rollingPolicy</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;FixedWindowRollingPolicy&quot;</span><span class="nt">&gt;</span>
+<span class="w">      </span><span class="nt">&lt;fileNamePattern&gt;</span>app-%i.log<span class="nt">&lt;/fileNamePattern&gt;</span>
+<span class="w">      </span><span class="nt">&lt;minIndex&gt;</span>1<span class="nt">&lt;/minIndex&gt;</span>
+<span class="w">      </span><span class="nt">&lt;maxIndex&gt;</span>10<span class="nt">&lt;/maxIndex&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/rollingPolicy&gt;</span>
+<span class="w">    </span><span class="nt">&lt;triggeringPolicy</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;SizeBasedTriggeringPolicy&quot;</span><span class="nt">&gt;</span>
+<span class="w">      </span><span class="nt">&lt;maxFileSize&gt;</span>5MB<span class="nt">&lt;/maxFileSize&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/triggeringPolicy&gt;</span>
+<span class="w">    </span><span class="nt">&lt;encoder</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;JsonEncoder&quot;</span><span class="nt">/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/appender&gt;</span>
+
+<span class="w">  </span><span class="nt">&lt;root</span><span class="w"> </span><span class="na">level=</span><span class="s">&quot;DEBUG&quot;</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;appender-ref</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;SOCKET&quot;</span><span class="nt">/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/root&gt;</span>
 <span class="nt">&lt;/configuration&gt;</span>
 </code></pre></div>
-<p>You also have to add the <a href="https://github.com/augustd/owasp-security-logging/wiki/Usage-with-Logback">OWASP Security Logging</a> dependency to your project.</p>
 <p>Usage of the logger at code level:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">org.slf4j.Logger</span><span class="p">;</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">org.slf4j.LoggerFactory</span><span class="p">;</span>
 <span class="p">...</span>
-<span class="c1">// No special action needed because security actions</span>
-<span class="c1">// are performed at the logging policy level</span>
+<span class="c1">// Most common way to declare a logger</span>
 <span class="n">Logger</span><span class="w"> </span><span class="n">logger</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LoggerFactory</span><span class="p">.</span><span class="na">getLogger</span><span class="p">(</span><span class="n">MyClass</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
-<span class="n">logger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="n">logMessage</span><span class="p">);</span>
+<span class="c1">// GOOD!</span>
+<span class="c1">//</span>
+<span class="c1">// Use parameterized logging to add user data to a message</span>
+<span class="c1">// The pattern should be a compile-time constant</span>
+<span class="n">logger</span><span class="p">.</span><span class="na">warn</span><span class="p">(</span><span class="s">&quot;Login failed for user {}.&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">username</span><span class="p">);</span>
+<span class="c1">// BAD!</span>
+<span class="c1">//</span>
+<span class="c1">// Don&#39;t mix string concatenation and parameters</span>
+<span class="c1">// If `username` contains `{}`, the exception will leak into the message</span>
+<span class="n">logger</span><span class="p">.</span><span class="na">warn</span><span class="p">(</span><span class="s">&quot;Failure for user &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot; and role {}.&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">role</span><span class="p">,</span><span class="w"> </span><span class="n">ex</span><span class="p">);</span>
 <span class="p">...</span>
 </code></pre></div>
 <h4 id="references_6">References<a class="headerlink" href="#references_6" title="Permanent link">&para;</a></h4>
 <ul>
-<li><a href="https://logging.apache.org/log4j/2.x/manual/layouts.html#PatternLayout">PatternLayout</a> (See the <code>encode{}{CRLF}</code> function)</li>
-</ul>
-<div class="highlight"><pre><span></span><code>Note that the default Log4j2 encode{} encoder is HTML, which does NOT prevent log injection.
-
-It prevents XSS attacks against viewing logs using a browser.
-
-OWASP recommends defending against XSS attacks in such situations in the log viewer application itself,
-not by preencoding all the log messages with HTML encoding as such log entries may be used/viewed in many
-other log viewing/analysis tools that don&#39;t expect the log data to be pre-HTML encoded.
-</code></pre></div>
-<ul>
-<li><a href="https://logging.apache.org/log4j/2.x/manual/configuration.html">LOG4J Configuration</a></li>
-<li><a href="https://logging.apache.org/log4j/2.x/manual/appenders.html">LOG4J Appender</a></li>
-<li><a href="https://github.com/javabeanz/owasp-security-logging/wiki/Log-Forging">Log Forging</a> - See the Logback section about the <code>CRLFConverter</code> this library provides.</li>
-<li><a href="https://github.com/javabeanz/owasp-security-logging/wiki/Usage-with-Logback">Usage of OWASP Security Logging with Logback</a></li>
+<li><a href="https://logging.apache.org/log4j/2.x/manual/configuration.html">Log4j Core Configuration File</a></li>
+<li><a href="https://logging.apache.org/log4j/2.x/manual/json-template-layout.html">Log4j JSON Template Layout</a></li>
+<li><a href="https://logging.apache.org/log4j/2.x/manual/appenders.html">Log4j Appenders</a></li>
+<li><a href="https://logback.qos.ch/manual/configuration.html">Logback Configuration File</a></li>
+<li><a href="https://logback.qos.ch/manual/encoders.html#JsonEncoder">Logback JsonEncoder</a></li>
+<li><a href="https://logback.qos.ch/manual/appenders.html">Logback Appenders</a></li>
 </ul>
 <h2 id="cryptography">Cryptography<a class="headerlink" href="#cryptography" title="Permanent link">&para;</a></h2>
 <h3 id="general-cryptography-guidance">General cryptography guidance<a class="headerlink" href="#general-cryptography-guidance" title="Permanent link">&para;</a></h3>
