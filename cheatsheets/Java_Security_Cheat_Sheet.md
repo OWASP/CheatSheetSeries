@@ -391,37 +391,49 @@ try(MongoClient mongoClient = new MongoClient()){
 
 To prevent an attacker from writing malicious content into the application log, apply defenses such as:
 
-- Filter the user input used to prevent injection of **C**arriage **R**eturn (CR) or **L**ine **F**eed (LF) characters.
+- Use structured log formats, such as JSON, instead of unstructured text formats.
+  Unstructured formats are susceptible to **C**arriage **R**eturn (CR) and **L**ine **F**eed (LF) injection (see [CWE-93](https://cwe.mitre.org/data/definitions/93.html)).
 - Limit the size of the user input value used to create the log message.
 - Make sure [all XSS defenses](Cross_Site_Scripting_Prevention_Cheat_Sheet.md) are applied when viewing log files in a web browser.
 
-#### Example using Log4j2
+#### Example using Log4j Core 2
 
-Configuration of a logging policy to roll on 10 files of 5MB each, and encode/limit the log message using the [Pattern *encode{}{CRLF}*](https://logging.apache.org/log4j/2.x/manual/layouts.html#PatternLayout\%7CLog4j2), introduced in [Log4j2 v2.10.0](https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api), and the *-500m* message size limit.:
+The recommended logging policy for a production environment is sending logs to a network socket using the structured
+[JSON Template Layout](https://logging.apache.org/log4j/2.x/manual/json-template-layout.html)
+introduced in
+[Log4j 2.14.0](https://logging.apache.org/log4j/2.x/release-notes.html#release-notes-2-14-0)
+and limit the size of strings to 500 bytes using the
+[`maxStringLength` configuration attrribute](https://logging.apache.org/log4j/2.x/manual/json-template-layout.html#plugin-attr-maxStringLength):
 
-``` xml
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="error" name="SecureLoggingPolicy">
-    <Appenders>
-        <RollingFile name="RollingFile" fileName="App.log" filePattern="App-%i.log" ignoreExceptions="false">
-            <PatternLayout>
-                <!-- Encode any CRLF chars in the message and limit its
-                     maximum size to 500 characters -->
-                <Pattern>%d{ISO8601} %-5p - %encode{ %.-500m }{CRLF}%n</Pattern>
-            </PatternLayout>
-            <Policies>
-                <SizeBasedTriggeringPolicy size="5MB"/>
-            </Policies>
-            <DefaultRolloverStrategy max="10"/>
-        </RollingFile>
-    </Appenders>
-    <Loggers>
-        <Root level="debug">
-            <AppenderRef ref="RollingFile"/>
-        </Root>
-    </Loggers>
+<Configuration xmlns="https://logging.apache.org/xml/ns"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="
+                   https://logging.apache.org/xml/ns
+                   https://logging.apache.org/xml/ns/log4j-config-2.xsd">
+  <Appenders>
+    <Socket name="SOCKET"
+            host="localhost"
+            port="12345">
+      <!-- Limit the size of any string field in the produced JSON document to 500 bytes -->
+      <JsonTemplateLayout maxStringLength="500"
+                          nullEventDelimiterEnabled="true"/>
+    </Socket>
+  </Appenders>
+  <Loggers>
+    <Root level="DEBUG">
+      <AppenderRef ref="SOCKET"/>
+    </Root>
+  </Loggers>
 </Configuration>
 ```
+
+See
+[Integration with service-oriented architectures](https://logging.apache.org/log4j/2.x/soa.html)
+on
+[Log4j website](https://logging.apache.org/log4j/2.x/index.html)
+for more tips.
 
 Usage of the logger at code level:
 
@@ -429,45 +441,60 @@ Usage of the logger at code level:
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 ...
-// No special action needed because security actions are
-// performed at the logging policy level
-Logger logger = LogManager.getLogger(MyClass.class);
-logger.info(logMessage);
+// Most common way to declare a logger
+private static final LOGGER = LogManager.getLogger();
+// GOOD!
+//
+// Use parameterized logging to add user data to a message
+// The pattern should be a compile-time constant
+logger.warn("Login failed for user {}.", username);
+// BAD!
+//
+// Don't mix string concatenation and parameters
+// If `username` contains `{}`, the exception will leak into the message
+logger.warn("Failure for user " + username + " and role {}.", role, ex);
 ...
 ```
 
-#### Example using Logback with the OWASP Security Logging library
+See
+[Log4j API Best Practices](https://logging.apache.org/log4j/2.x/manual/api.html#best-practice)
+for more information.
 
-Configuration of a logging policy to roll on 10 files of 5MB each, and encode/limit the log message using the [CRLFConverter](https://github.com/augustd/owasp-security-logging/wiki/Log-Forging), provided by the **no longer active** [OWASP Security Logging Project](https://github.com/augustd/owasp-security-logging/wiki), and the *-500msg* message size limit:
+#### Example using Logback
+
+The recommended logging policy for a production environment is using the structured
+[JsonEncoder](https://logback.qos.ch/manual/encoders.html#JsonEncoder)
+introduced in
+[Logback 1.3.8](https://logback.qos.ch/news.html#1.3.8).
+In the example below, Logback is configured to roll on 10 log files of 5 MiB each:
 
 ``` xml
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration>
 <configuration>
-    <!-- Define the CRLFConverter -->
-    <conversionRule conversionWord="crlf" converterClass="org.owasp.security.logging.mask.CRLFConverter" />
-    <appender name="RollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>App.log</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-            <fileNamePattern>App-%i.log</fileNamePattern>
-            <minIndex>1</minIndex>
-            <maxIndex>10</maxIndex>
-        </rollingPolicy>
-        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-            <maxFileSize>5MB</maxFileSize>
-        </triggeringPolicy>
-        <encoder>
-            <!-- Encode any CRLF chars in the message and limit
-                 its maximum size to 500 characters -->
-            <pattern>%relative [%thread] %-5level %logger{35} - %crlf(%.-500msg) %n</pattern>
-        </encoder>
-    </appender>
-    <root level="debug">
-        <appender-ref ref="RollingFile" />
-    </root>
+  <import class="ch.qos.logback.classic.encoder.JsonEncoder"/>
+  <import class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy"/>
+  <import class="ch.qos.logback.core.rolling.RollingFileAppender"/>
+  <import class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy"/>
+
+  <appender name="RollingFile" class="RollingFileAppender">
+    <file>app.log</file>
+    <rollingPolicy class="FixedWindowRollingPolicy">
+      <fileNamePattern>app-%i.log</fileNamePattern>
+      <minIndex>1</minIndex>
+      <maxIndex>10</maxIndex>
+    </rollingPolicy>
+    <triggeringPolicy class="SizeBasedTriggeringPolicy">
+      <maxFileSize>5MB</maxFileSize>
+    </triggeringPolicy>
+    <encoder class="JsonEncoder"/>
+  </appender>
+
+  <root level="DEBUG">
+    <appender-ref ref="SOCKET"/>
+  </root>
 </configuration>
 ```
-
-You also have to add the [OWASP Security Logging](https://github.com/augustd/owasp-security-logging/wiki/Usage-with-Logback) dependency to your project.
 
 Usage of the logger at code level:
 
@@ -475,31 +502,29 @@ Usage of the logger at code level:
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 ...
-// No special action needed because security actions
-// are performed at the logging policy level
+// Most common way to declare a logger
 Logger logger = LoggerFactory.getLogger(MyClass.class);
-logger.info(logMessage);
+// GOOD!
+//
+// Use parameterized logging to add user data to a message
+// The pattern should be a compile-time constant
+logger.warn("Login failed for user {}.", username);
+// BAD!
+//
+// Don't mix string concatenation and parameters
+// If `username` contains `{}`, the exception will leak into the message
+logger.warn("Failure for user " + username + " and role {}.", role, ex);
 ...
 ```
 
 #### References
 
-- [PatternLayout](https://logging.apache.org/log4j/2.x/manual/layouts.html#PatternLayout) (See the `encode{}{CRLF}` function)
-
-```text
-Note that the default Log4j2 encode{} encoder is HTML, which does NOT prevent log injection.
-
-It prevents XSS attacks against viewing logs using a browser.
-
-OWASP recommends defending against XSS attacks in such situations in the log viewer application itself,
-not by preencoding all the log messages with HTML encoding as such log entries may be used/viewed in many
-other log viewing/analysis tools that don't expect the log data to be pre-HTML encoded.
-```
-
-- [LOG4J Configuration](https://logging.apache.org/log4j/2.x/manual/configuration.html)
-- [LOG4J Appender](https://logging.apache.org/log4j/2.x/manual/appenders.html)
-- [Log Forging](https://github.com/javabeanz/owasp-security-logging/wiki/Log-Forging) - See the Logback section about the `CRLFConverter` this library provides.
-- [Usage of OWASP Security Logging with Logback](https://github.com/javabeanz/owasp-security-logging/wiki/Usage-with-Logback)
+- [Log4j Core Configuration File](https://logging.apache.org/log4j/2.x/manual/configuration.html)
+- [Log4j JSON Template Layout](https://logging.apache.org/log4j/2.x/manual/json-template-layout.html)
+- [Log4j Appenders](https://logging.apache.org/log4j/2.x/manual/appenders.html)
+- [Logback Configuration File](https://logback.qos.ch/manual/configuration.html)
+- [Logback JsonEncoder](https://logback.qos.ch/manual/encoders.html#JsonEncoder)
+- [Logback Appenders](https://logback.qos.ch/manual/appenders.html)
 
 ## Cryptography
 
