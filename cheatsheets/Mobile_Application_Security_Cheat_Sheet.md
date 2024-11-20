@@ -15,8 +15,8 @@ developers to consider security in their mobile app development.
 - Keep in mind security principles like least privilege, defense in depth, and
   separation of concerns.
 - Follow industry standards and best practices, such as:
-    - National Institute of Standards and Technology (NIST)
-    - Internet Engineering Task Force (IETF)
+  - National Institute of Standards and Technology (NIST)
+  - Internet Engineering Task Force (IETF)
 
 For more information, see the
 [Secure Product Design Cheat Sheet](Secure_Product_Design_Cheat_Sheet.md).
@@ -204,8 +204,8 @@ examples of data that should not be logged.
 
 - Perform ethical hacking to identify vulnerabilities.
 - Example tests:
-    - Cryptographic vulnerability assessment.
-    - Attempt to execute backend server functionality anonymously by removing any session tokens from POST/GET requests.
+  - Cryptographic vulnerability assessment.
+  - Attempt to execute backend server functionality anonymously by removing any session tokens from POST/GET requests.
 
 ### 2. Automated Tests
 
@@ -247,17 +247,22 @@ examples of data that should not be logged.
 - Disable backup mode to prevent sensitive data being stored in backups.
 
 ### iOS and iPadOS
+
 #### Shortcuts Permissions
 
 - iOS/iPadOS Shortcuts allow for automation of app functions, which may enable sensitive actions even when the device is locked.
+
 - There are several scenarios in which a user can execute a Shortcut while the device is locked:
+
 1. If a Shortcut is added as a widget to Today View, it can be accessed and executed while the device is locked.
 2. If a Shortcut is assigned to the Action Button (on iPhone 15 Pro and iPhone 16 Pro models), it can be executed by pressing the Action Button while the device is locked.
 3. If a Shortcut is assigned to the Control Center (on iOS/iPadOS 18+), it can be executed by pulling up the Control Center and pressing the Shortcut button while the device is locked.
 4. A Shortcut can be invoked via Siri while the device is locked.
 5. If a Shortcut is added to the user's Home Screen (on iOS/iPadOS 18+), it can be directly executed by tapping the Shortcut button on the user's lock screen while the device is locked.
-6. If a Shortcut is set to run at a specific interval or a specific time, it can execute even if the device is locked. 
+6. If a Shortcut is set to run at a specific interval or a specific time, it can execute even if the device is locked.
+
 - Sensitive app functionalities triggered via Shortcuts should always require device unlock before execution.
+
 - **How**: Store secure tokens in Keychain that the app validates before executing sensitive shortcuts. Implement checks with `UIApplication.shared.isProtectedDataAvailable` to restrict execution of sensitive actions when the device is locked.
 
 #### Siri Permissions
@@ -266,6 +271,7 @@ examples of data that should not be logged.
 - **How**: Configure `requiresUserAuthentication` to `true` on intents that expose sensitive information or functionality. Additionally, set `INIntent.userConfirmationRequired = true` for operations requiring explicit user confirmation. These settings ensure proper authentication (e.g., Face ID or PIN) and explicit approval before Siri can execute sensitive commands. (For more information, see Apple Developer's [SiriKit](https://developer.apple.com/documentation/sirikit) documentation.)
 
 #### Deep Link Security
+
 - Deep links offer direct access to specific app screens, which could potentially bypass authentication if not secured, allowing unauthorized users access to secure sections of the app.
 - An example of this on Microsoft Authenticator for iOS (which was remediated in July 2024) allowed users to bypass App Lock by simply navigating to `msauth://microsoft.aad.brokerplugin/?`, which would open Authenticator and dismiss the Face ID/Touch ID/passcode prompt.
 - **How**: Implement authentication checks on any view controllers or endpoints accessed via deep links. Configure and validate Universal Links using apple-app-site-association files for secure deep linking. Sanitize and validate all parameters received through deep links to prevent injection attacks. Ensure unauthorized users are redirected to the login screen, preventing direct access to sensitive parts of the app without proper authentication. (See Apple Developer's [Supporting universal links in your app](https://developer.apple.com/documentation/xcode/supporting-universal-links-in-your-app) documentation for more information.)
@@ -276,6 +282,7 @@ examples of data that should not be logged.
 - **How**: For iOS/iPadOS versions 17 and higher, use `WidgetInfo.isLocked` to detect lock screen state. For earlier iOS versions, implement custom logic based on available widget states since `widgetFamily` alone doesn't directly provide lock screen information. Apply conditional logic to mask or restrict sensitive widget content when appropriate security conditions aren't met. (See Apple's [WidgetKit security](https://support.apple.com/guide/security/widgetkit-security-secbb0a1f9b4/web) for more information.)
 
 #### Additional Security Considerations
+
 - Configure appropriate background refresh policies to prevent sensitive data updates while the device is locked.
 - Implement proper privacy-related configurations in `Info.plist` for features requiring user permissions.
 - Use App Groups with appropriate security configurations when sharing data between app and widgets.
