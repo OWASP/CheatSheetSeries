@@ -15,8 +15,8 @@ developers to consider security in their mobile app development.
 - Keep in mind security principles like least privilege, defense in depth, and
   separation of concerns.
 - Follow industry standards and best practices, such as:
-    - National Institute of Standards and Technology (NIST)
-    - Internet Engineering Task Force (IETF)
+  - National Institute of Standards and Technology (NIST)
+  - Internet Engineering Task Force (IETF)
 
 For more information, see the
 [Secure Product Design Cheat Sheet](Secure_Product_Design_Cheat_Sheet.md).
@@ -204,8 +204,8 @@ examples of data that should not be logged.
 
 - Perform ethical hacking to identify vulnerabilities.
 - Example tests:
-    - Cryptographic vulnerability assessment.
-    - Attempt to execute backend server functionality anonymously by removing any session tokens from POST/GET requests.
+  - Cryptographic vulnerability assessment.
+  - Attempt to execute backend server functionality anonymously by removing any session tokens from POST/GET requests.
 
 ### 2. Automated Tests
 
@@ -251,14 +251,18 @@ examples of data that should not be logged.
 #### Shortcuts Permissions
 
 - iOS/iPadOS Shortcuts allow for automation of app functions, which may enable sensitive actions even when the device is locked.
+
 - There are several scenarios in which a user can execute a Shortcut while the device is locked:
+
 1. If a Shortcut is added as a widget to Today View, it can be accessed and executed while the device is locked.
 2. If a Shortcut is assigned to the Action Button (on iPhone 15 Pro and iPhone 16 Pro models), it can be executed by pressing the Action Button while the device is locked.
 3. If a Shortcut is assigned to the Control Center (on iOS/iPadOS 18+), it can be executed by pulling up the Control Center and pressing the Shortcut button while the device is locked.
 4. A Shortcut can be invoked via Siri while the device is locked.
 5. If a Shortcut is added to the user's Home Screen (on iOS/iPadOS 18+), it can be directly executed by tapping the Shortcut button on the user's lock screen while the device is locked.
-6. If a Shortcut is set to run at a specific interval or a specific time, it can execute even if the device is locked. 
+6. If a Shortcut is set to run at a specific interval or a specific time, it can execute even if the device is locked.
+
 - Sensitive app functionalities triggered via Shortcuts should always require device unlock before execution.
+
 - **How**: Store secure tokens in Keychain that the app validates before executing sensitive shortcuts. Implement checks with `UIApplication.shared.isProtectedDataAvailable` to restrict execution of sensitive actions when the device is locked.
 
 #### Siri Permissions
