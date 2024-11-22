@@ -141,7 +141,7 @@ As this headers are very related to browsers, it may not make sense to be applie
 #### Recommendation
 
 Isolates the browsing context exclusively to same-origin documents.
-> `HTTP Cross-Origin-Opener-Policy: same-origin`
+> `Cross-Origin-Opener-Policy: same-origin`
 
 ### Cross-Origin-Embedder-Policy (COEP)
 
