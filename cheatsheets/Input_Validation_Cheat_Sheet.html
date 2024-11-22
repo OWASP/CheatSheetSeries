@@ -2958,10 +2958,12 @@
 <li>Minimum and maximum value range check for numerical parameters and dates, minimum and maximum length check for strings.</li>
 <li>Array of allowed values for small sets of string parameters (e.g. days of week).</li>
 <li>Regular expressions for any other structured data covering the whole input string <code>(^...$)</code> and <strong>not</strong> using "any character" wildcard (such as <code>.</code> or <code>\S</code>)</li>
+<li>Denylisting known dangerous patterns can be used as an additional layer of defense, but it should supplement - not replace - allowlisting, to help catch some commonly observed attacks or patterns without relying on it as the main validation method.</li>
 </ul>
 <h3 id="allowlist-vs-denylist">Allowlist vs Denylist<a class="headerlink" href="#allowlist-vs-denylist" title="Permanent link">&para;</a></h3>
 <p>It is a common mistake to use denylist validation in order to try to detect possibly dangerous characters and patterns like the apostrophe <code>'</code> character, the string <code>1=1</code>, or the <code>&lt;script&gt;</code> tag, but this is a massively flawed approach as it is trivial for an attacker to bypass such filters.</p>
 <p>Plus, such filters frequently prevent authorized input, like <code>O'Brian</code>, where the <code>'</code> character is fully legitimate. For more information on XSS filter evasion please see <a href="https://owasp.org/www-community/xss-filter-evasion-cheatsheet">this wiki page</a>.</p>
+<p>While denylisting can be useful as an additional layer of defense to catch some common malicious patterns, it should not be relied upon as the primary method. Allowlisting remains the more robust and secure approach for preventing potentially harmful input.</p>
 <p>Allowlist validation is appropriate for all input fields provided by the user. allowlist validation involves defining exactly what IS authorized, and by definition, everything else is not authorized.</p>
 <p>If it's well structured data, like dates, social security numbers, zip codes, email addresses, etc. then the developer should be able to define a very strong validation pattern, usually based on regular expressions, for validating such input.</p>
 <p>If the input field comes from a fixed set of options, like a drop down list or radio buttons, then the input needs to match exactly one of the values offered to the user in the first place.</p>
