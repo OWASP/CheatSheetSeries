@@ -31,12 +31,15 @@ Input validation can be implemented using any programming technique that allows 
 - Minimum and maximum value range check for numerical parameters and dates, minimum and maximum length check for strings.
 - Array of allowed values for small sets of string parameters (e.g. days of week).
 - Regular expressions for any other structured data covering the whole input string `(^...$)` and **not** using "any character" wildcard (such as `.` or `\S`)
+- Denylisting known dangerous patterns can be used as an additional layer of defense, but it should supplement - not replace - allowlisting, to help catch some commonly observed attacks or patterns without relying on it as the main validation method.
 
 ### Allowlist vs Denylist
 
 It is a common mistake to use denylist validation in order to try to detect possibly dangerous characters and patterns like the apostrophe `'` character, the string `1=1`, or the `<script>` tag, but this is a massively flawed approach as it is trivial for an attacker to bypass such filters.
 
 Plus, such filters frequently prevent authorized input, like `O'Brian`, where the `'` character is fully legitimate. For more information on XSS filter evasion please see [this wiki page](https://owasp.org/www-community/xss-filter-evasion-cheatsheet).
+
+While denylisting can be useful as an additional layer of defense to catch some common malicious patterns, it should not be relied upon as the primary method. Allowlisting remains the more robust and secure approach for preventing potentially harmful input.
 
 Allowlist validation is appropriate for all input fields provided by the user. allowlist validation involves defining exactly what IS authorized, and by definition, everything else is not authorized.
 
