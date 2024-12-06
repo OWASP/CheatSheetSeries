@@ -102,16 +102,7 @@ Offline methods differ from other methods by allowing the user to reset their pa
 
 These identifiers should be stored offline and in a secure fashion (*e.g.* password managers), and the backend should properly follow the [general security practices](#general-security-practices). Some implementations are built on [hardware OTP tokens](Multifactor_Authentication_Cheat_Sheet.md#hardware-otp-tokens), [certificates](Multifactor_Authentication_Cheat_Sheet.md#certificates), or any other implementation that could be used inside of an enterprise. These are out of scope for this cheat sheet.
 
-#### Backup Codes
-
-Backup codes should be provided to the user upon registering where the user should store them offline in a secure place (such as their password manager). Some companies that implement this method are [Google](https://support.google.com/accounts/answer/1187538), [GitHub](https://help.github.com/en/github/authenticating-to-github/recovering-your-account-if-you-lose-your-2fa-credentials), and [Auth0](https://auth0.com/docs/mfa/guides/reset-user-mfa#recovery-codes).
-
-While implementing this method, the following practices should be followed:
-
-- Minimum length of 8 digits, 12 for improved security.
-- A user should have multiple recovery codes at any given time to ensure that one of them works (most services provide the user with ten backup codes).
-- A process should be implemented to allow the user to invalidate all existing recovery codes, in case they are compromised by a third party.
-- Rate limiting and other protections should be implemented to prevent an attacker from brute-forcing the backup codes.
+If account has MFA enabled, and you are looking for MFA recovery, different methods can be found in the corresponding [Multifactor Authentication cheat sheet](Multifactor_Authentication_Cheat_Sheet.md#resetting-mfa).
 
 ### Security Questions
 
