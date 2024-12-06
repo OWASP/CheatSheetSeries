@@ -66,19 +66,11 @@ By default, protection against XSS comes as the default behavior. When string da
 
 # Wrong! Do not do this!
 <%= @product.name.html_safe %>
-
-# Wrong! Do not do this!
-<%= content_tag @product.name %>
 ```
 
-Unfortunately, any field that uses `raw`, `html_safe`, `content_tag` or similar like this will be a potential XSS target. Note that there are also widespread misunderstandings about `html_safe()`.
+Unfortunately, any field that uses `raw`, `html_safe` or similar like this will be a potential XSS target. Note that there are also widespread misunderstandings about `html_safe()`.
 
-[This writeup](https://stackoverflow.com/questions/4251284/raw-vs-html-safe-vs-h-to-unescape-html) describes the underlying SafeBuffer mechanism in detail. Other tags that change the way strings are prepared for output can introduce similar issues, including content_tag.
-
-``` ruby
-content_tag("/><script>alert('hack!');</script>") # XSS example
-# produces: </><script>alert('hack!');</script>><//><script>alert('hack!');</script>>
-```
+[This writeup](https://stackoverflow.com/questions/4251284/raw-vs-html-safe-vs-h-to-unescape-html) describes the underlying SafeBuffer mechanism in detail. Other tags that change the way strings are prepared for output can introduce similar issues.
 
 The method `html_safe` of String is somewhat confusingly named. It means that we know for sure the content of the string is safe to include in HTML without escaping. **This method itself is un-safe!**
 
