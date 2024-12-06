@@ -314,7 +314,7 @@ GraphQL APIs in production shouldn't return stack traces or be in debug mode. Do
 
 ### Tools
 
-- [InQL Scanner](https://github.com/doyensec/inql) - Security scanner for GraphQL. Particularly useful for generating queries and mutations automatically from given schema and them feeding them to scanner.
+- [InQL Scanner](https://github.com/doyensec/inql) - Security scanner for GraphQL. Particularly useful for generating queries and mutations automatically from given schema and then feeding them to scanner.
 - [GraphiQL](https://github.com/graphql/graphiql) - Schema/object exploration
 - [GraphQL Voyager](https://github.com/APIs-guru/graphql-voyager) - Schema/object exploration
 
