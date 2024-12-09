@@ -2924,15 +2924,9 @@ redirect_from: "/cheatsheets/Ruby_on_Rails_Cheatsheet.html"
 
 <span class="sx"># Wrong! Do not do this!</span>
 <span class="sx">&lt;%= @product.name.html_safe %&gt;</span>
-
-<span class="c1"># Wrong! Do not do this!</span>
-<span class="o">&lt;%=</span><span class="w"> </span><span class="n">content_tag</span><span class="w"> </span><span class="vi">@product</span><span class="o">.</span><span class="n">name</span><span class="w"> </span><span class="o">%&gt;</span>
 </code></pre></div>
-<p>Unfortunately, any field that uses <code>raw</code>, <code>html_safe</code>, <code>content_tag</code> or similar like this will be a potential XSS target. Note that there are also widespread misunderstandings about <code>html_safe()</code>.</p>
-<p><a href="https://stackoverflow.com/questions/4251284/raw-vs-html-safe-vs-h-to-unescape-html">This writeup</a> describes the underlying SafeBuffer mechanism in detail. Other tags that change the way strings are prepared for output can introduce similar issues, including content_tag.</p>
-<div class="highlight"><pre><span></span><code><span class="n">content_tag</span><span class="p">(</span><span class="s2">&quot;/&gt;&lt;script&gt;alert(&#39;hack!&#39;);&lt;/script&gt;&quot;</span><span class="p">)</span><span class="w"> </span><span class="c1"># XSS example</span>
-<span class="c1"># produces: &lt;/&gt;&lt;script&gt;alert(&#39;hack!&#39;);&lt;/script&gt;&gt;&lt;//&gt;&lt;script&gt;alert(&#39;hack!&#39;);&lt;/script&gt;&gt;</span>
-</code></pre></div>
+<p>Unfortunately, any field that uses <code>raw</code>, <code>html_safe</code> or similar like this will be a potential XSS target. Note that there are also widespread misunderstandings about <code>html_safe()</code>.</p>
+<p><a href="https://stackoverflow.com/questions/4251284/raw-vs-html-safe-vs-h-to-unescape-html">This writeup</a> describes the underlying SafeBuffer mechanism in detail. Other tags that change the way strings are prepared for output can introduce similar issues.</p>
 <p>The method <code>html_safe</code> of String is somewhat confusingly named. It means that we know for sure the content of the string is safe to include in HTML without escaping. <strong>This method itself is un-safe!</strong></p>
 <p>If you must accept HTML content from users, consider a markup language for rich text in an application (Examples include: Markdown and textile) and disallow HTML tags. This helps ensures that the input accepted doesn't include HTML content that could be malicious.</p>
 <p>If you cannot restrict your users from entering HTML, consider implementing content security policy to disallow the execution of any JavaScript. And finally, consider using the <code>#sanitize</code> method that lets you list allowed tags. Be careful, this method has been shown to be flawed numerous times and will never be a complete solution.</p>
