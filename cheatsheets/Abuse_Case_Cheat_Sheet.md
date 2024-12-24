@@ -126,13 +126,13 @@ First, even if it seems obvious, the key business people must be sure to know, u
 Secondly, create a new Microsoft Excel file (you can also use Google Sheets or any other similar software) with the following sheets (or tabs):
 
 - **FEATURES**
-  - Will contain a table with the list of business features planned for the workshop.
+- Will contain a table with the list of business features planned for the workshop.
 - **ABUSE CASES**
-  - Will contain a table with all abuse cases identified during the workshop.
+- Will contain a table with all abuse cases identified during the workshop.
 - **COUNTERMEASURES**
-  - Will contain a table with the list of possible countermeasures (light description) imagined for the abuse cases identified.
-  - This sheet is not mandatory, but it can be useful (for an abuse case to know), if a fix is easy to implement and then can impact the risk rating.
-  - Countermeasures can be identified by the AppSec profile during the workshop, because an AppSec person must be able to perform attacks but also to build or identify defenses (it is not always the case for the Pentester profile because this person's focus is generally on the attack side only, so, the combination Pentester + AppSec is very efficient to have a 360 degree view).
+- Will contain a table with the list of possible countermeasures (light description) imagined for the abuse cases identified.
+- This sheet is not mandatory, but it can be useful (for an abuse case to know), if a fix is easy to implement and then can impact the risk rating.
+- Countermeasures can be identified by the AppSec profile during the workshop, because an AppSec person must be able to perform attacks but also to build or identify defenses (it is not always the case for the Pentester profile because this person's focus is generally on the attack side only, so, the combination Pentester + AppSec is very efficient to have a 360 degree view).
 
 This is the representation of each sheet along with an example of content that will be filled during the workshop:
 
@@ -208,10 +208,10 @@ In order to track the handling of all the abuse cases, the following approach ca
 If one or several abuse cases are handled at:
 
 - **Design, Infrastructure or Network level**
-  - Make a note in the documentation or schema to indicate that _This design/network/infrastructure takes into account the abuse cases ABUSE_CASE_001, ABUSE_CASE_002, ABUSE_CASE_xxx_.
+- Make a note in the documentation or schema to indicate that _This design/network/infrastructure takes into account the abuse cases ABUSE_CASE_001, ABUSE_CASE_002, ABUSE_CASE_xxx_.
 - **Code level**
-  - Put a special comment in the classes/scripts/modules to indicate that _This class/module/script takes into account the abuse cases ABUSE_CASE_001, ABUSE_CASE_002, ABUSE_CASE_xxx_.
-  - Dedicated annotation like `@AbuseCase(ids={"ABUSE_CASE_001","ABUSE_CASE_002"})` can be used to facilitate tracking and allow identification into integrated development environment.
+- Put a special comment in the classes/scripts/modules to indicate that _This class/module/script takes into account the abuse cases ABUSE_CASE_001, ABUSE_CASE_002, ABUSE_CASE_xxx_.
+- Dedicated annotation like `@AbuseCase(ids={"ABUSE_CASE_001","ABUSE_CASE_002"})` can be used to facilitate tracking and allow identification into integrated development environment.
 
 Using this way, it becomes possible (via some minor scripting) to identify where abuse cases are addressed.
 
@@ -225,13 +225,13 @@ As abuse cases are defined, it is possible to put in place automated or manual v
 Validations can be of the following varieties:
 
 - Automated (run regularly at commit, daily or weekly in the Continuous Integration Jobs of the project):
-  - Custom audit rules in Static Application Security Testing (SAST) or Dynamic Application Security Testing (DAST) tools.
-  - Dedicated unit, integration or functional security oriented tests.
-  - ...
+- Custom audit rules in Static Application Security Testing (SAST) or Dynamic Application Security Testing (DAST) tools.
+- Dedicated unit, integration or functional security oriented tests.
+- ...
 - Manual:
-  - Security code review between project's peers during the design or implementation.
-  - Provide the list of all abuse cases addressed to pentesters so that they may validate the protection efficiency for each abuse case during an intrusion test against the application (the pentester will validate that the attacks identified are no longer effective and will also try to find other possible attacks).
-  - ...
+- Security code review between project's peers during the design or implementation.
+- Provide the list of all abuse cases addressed to pentesters so that they may validate the protection efficiency for each abuse case during an intrusion test against the application (the pentester will validate that the attacks identified are no longer effective and will also try to find other possible attacks).
+- ...
 
 Adding automated tests also allow teams to track the effectiveness of countermeasures against abuse cases and determine if the countermeasures are still in place during a maintenance or bug fixing phase of a project (to prevent accidental removal/disabling). It is also useful when a [Continuous Delivery](https://continuousdelivery.com/) approach is used, to ensure that all abuse cases protections are in place before opening access to the application.
 
