@@ -38,6 +38,7 @@ A key concern when using passwords for authentication is password strength. A "s
 - Do not silently truncate passwords. The [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.md#maximum-password-lengths) provides further guidance on how to handle passwords that are longer than the maximum length.
 - Allow usage of **all** characters including unicode and whitespace. There should be no password composition rules limiting the type of characters permitted. There should be no requirement for upper or lower case or numbers or special characters.
 - Avoid requiring periodic password changes; instead, encourage users to pick strong passwords and enable **Multi-Factor Authentication (MFA)**. Consider password rotation only in case of compromise or when authenticator technology is changed.
+According to [NIST guidelines](https://pages.nist.gov/800-63-3/sp800-63b.html), verifiers should not mandate arbitrary password changes (e.g., periodically).
 - Include a password strength meter to help users create a more complex password and block common and previously breached passwords
     - [zxcvbn-ts library](https://github.com/zxcvbn-ts/zxcvbn) can be used for this purpose.
     - [Pwned Passwords](https://haveibeenpwned.com/Passwords) is a service where passwords can be checked against previously breached passwords. You can host it yourself or use the [API](https://haveibeenpwned.com/API/v3#PwnedPasswords).
