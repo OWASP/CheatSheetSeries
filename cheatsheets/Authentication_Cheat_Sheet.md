@@ -1,4 +1,3 @@
-
 # Authentication Cheat Sheet
 
 ## Introduction
