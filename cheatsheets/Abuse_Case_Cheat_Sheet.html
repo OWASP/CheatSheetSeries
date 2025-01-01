@@ -520,9 +520,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#notion-of-abuse-case" class="md-nav__link">
+  <a href="#notion-of-abuse-cases" class="md-nav__link">
     <span class="md-ellipsis">
-      Notion of Abuse Case
+      Notion of Abuse Cases
     </span>
   </a>
   
@@ -2743,9 +2743,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#notion-of-abuse-case" class="md-nav__link">
+  <a href="#notion-of-abuse-cases" class="md-nav__link">
     <span class="md-ellipsis">
-      Notion of Abuse Case
+      Notion of Abuse Cases
     </span>
   </a>
   
@@ -2983,7 +2983,7 @@
 <p>These security requirements are too generic, and thus useless for a development team...</p>
 <p>In order to build a secure application, from a pragmatic point of view, it is important to identify the attacks which the application must defend against, according to its business and technical context.</p>
 <h3 id="objective">Objective<a class="headerlink" href="#objective" title="Permanent link">&para;</a></h3>
-<p>The objective of this cheat sheet is to provide an explanation of what an <strong>Abuse Case</strong> is, why abuse cases are important when considering the security of an application, and finally to provide a proposal for a pragmatic approach to building  a list of abuse cases and tracking them for every feature planned for implementation as part of an application. The cheat sheet may be used for this purpose regardless of the project methodology used (waterfall or agile).</p>
+<p>The objective of this cheat sheet is to provide an explanation of what an <strong>Abuse Case</strong> is, why abuse cases are important when considering the security of an application, and finally to provide a proposal for a pragmatic approach to building a list of abuse cases and tracking them for every feature planned for implementation as part of an application. The cheat sheet may be used for this purpose regardless of the project methodology used (waterfall or agile).</p>
 <p><strong>Important note about this Cheat Sheet:</strong></p>
 <div class="highlight"><pre><span></span><code>The main objective is to provide a pragmatic approach in order to allow a company or a project team
 to start building and handling the list of abuse cases and then customize the elements
@@ -2998,9 +2998,9 @@ This cheat sheet can be seen as a getting-started tutorial.
 <li>Evaluate the business risk for each of the identified attacks in order to perform a selection according to the business risk and the project/sprint budget.</li>
 <li>Derive security requirements and add them into the project specification or sprint's user stories and acceptance criteria.</li>
 <li>Estimate the overhead of provision in the initial project/sprint charge that will be necessary to implement the countermeasures.</li>
-<li>About countermeasures: Allow the project team to define them, and to determine in which location they are appropriate (network, infrastructure, code...) to be located.</li>
+<li>About countermeasures: Allow the project team to define them, and to determine in which location (network, infrastructure, code...) they should be located.</li>
 </ul>
-<h4 id="notion-of-abuse-case">Notion of Abuse Case<a class="headerlink" href="#notion-of-abuse-case" title="Permanent link">&para;</a></h4>
+<h4 id="notion-of-abuse-cases">Notion of Abuse Cases<a class="headerlink" href="#notion-of-abuse-cases" title="Permanent link">&para;</a></h4>
 <p>In order to help build the list of attacks, the notion of <strong>Abuse Cases</strong> is helpful.</p>
 <p>An <strong>Abuse Case</strong> can be defined as:</p>
 <div class="highlight"><pre><span></span><code>A way to use a feature that was not expected by the implementer,
@@ -3142,14 +3142,12 @@ Abuse of functionality, sometimes referred to as a “business logic attack”, 
 <ol>
 <li>Key business people explain the current feature from a business point of view.</li>
 <li>Penetration testers propose and explain a set of attacks that they can perform against the feature.</li>
-<li>
-<p>For each attack proposed:</p>
-<ol>
+<li>For each attack proposed:</li>
 <li>Appsec proposes a countermeasure and a preferred set up location (infrastructure, network, code, design...).</li>
 <li>Technical people give feedback about the feasibility of the proposed countermeasure.</li>
 <li>Penetration testers use the CVSS v3 (or other standard) calculator to determine a risk rating. (ex: <a href="https://www.first.org/cvss/calculator/3.0">CVSS V3 calculator</a>)</li>
-<li>Risk leaders should accept or modify the risk rating to determine the final risk score which accurately reflects the real business impact for the company.</li>
-</ol>
+<li>
+<p>Risk leaders should accept or modify the risk rating to determine the final risk score which accurately reflects the real business impact for the company.</p>
 </li>
 <li>
 <p>Business, Risk, and Technical leaders should find a consensus and filter the list of abuses for the current feature to keep the ones that must be addressed, and then flag them accordingly in the <em>ABUSE CASES</em> sheet (<strong>if risk is accepted then add a comment to explain why</strong>).</p>
