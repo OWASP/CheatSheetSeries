@@ -40,7 +40,7 @@ Clearly identifying the attacks against which the application must defend is ess
 
 #### Notion of Abuse Cases
 
-You can think of **Abuse cases** in two ways. The first is to discover attacks (answer the question `what can go wrong'), and the second is to help record those attacks (informally, this includes threats, issues, risks) in a form that may be less intimidating to developers.
+You can think of **Abuse cases** in two ways. The first is to discover attacks (answer the question "what can go wrong"), and the second is to help record those attacks (informally, this includes threats, issues, risks) in a form that may be less intimidating to developers.
 
 An **Abuse Case** can be defined as:
 
