@@ -70,7 +70,7 @@ that lead to proper protection of these critical business use cases.
 
 There are many different ways to define the list of abuse cases for a feature (that can be mapped to a user story in agile projects).
 
-[Threat Modeling](https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html) is a set of techniques for anticipating what can go wrong, and ensuring we do something about each. Taking each item on the list of 'what are we going to do about it' and writing an abuse case may help your engineering teams process the output.
+[Threat Modeling](https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html) is a set of techniques for anticipating what can go wrong, and ensuring we do something about each identified possible scenario. Taking each item on the list of "what are we going to do about it" and writing an abuse case may help your engineering teams process the output.
 
 The project [OWASP Open SAMM](https://owasp.org/www-project-samm/) proposes the following approach in the _Stream B_ of the Security Practice _Requirements Driven Testing_ for the Maturity level 2:
 
