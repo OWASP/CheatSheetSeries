@@ -11,11 +11,11 @@ Often when the security level of an application is mentioned in requirements, th
 
 These security requirements are too generic, and thus useless for a development team...
 
-In order to build a secure application, from a pragmatic point of view, it is important to identify the attacks which the application must defend against, according to its business and technical context.
+In order to build a secure application, from a pragmatic point of view, it is important to identify the attacks which the application must defend against, according to its business and technical context. Abuse cases are a frequently recommended _threat modeling_ tool, and reviewing the [threat modeling](https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html) cheat sheet may be helpful.
 
 ### Objective
 
-The objective of this cheat sheet is to provide an explanation of what an **Abuse Case** is, why abuse cases are important when considering the security of an application, and finally to provide a proposal for a pragmatic approach to building a list of abuse cases and tracking them for every feature planned for implementation as part of an application. The cheat sheet may be used for this purpose regardless of the project methodology used (waterfall or agile).
+The objective of this cheat sheet is to provide an explanation of what an **Abuse Case** is, how abuse cases can be important when considering the security of an application, and finally to provide a proposal for a pragmatic approach to building a list of abuse cases and tracking them for every feature planned for implementation as part of an application. The cheat sheet may be used for this purpose regardless of the project methodology used (waterfall or agile).
 
 **Important note about this Cheat Sheet:**
 
@@ -40,7 +40,7 @@ Clearly identifying the attacks against which the application must defend is ess
 
 #### Notion of Abuse Cases
 
-In order to help build the list of attacks, the notion of **Abuse Cases** is helpful.
+You can think of **Abuse cases** in two ways. The first is to discover attacks (answer the question "what can go wrong"), and the second is to help record those attacks (informally, this includes threats, issues, risks) in a form that may be less intimidating to developers.
 
 An **Abuse Case** can be defined as:
 
@@ -69,6 +69,8 @@ that lead to proper protection of these critical business use cases.
 #### How to define the list of Abuse Cases
 
 There are many different ways to define the list of abuse cases for a feature (that can be mapped to a user story in agile projects).
+
+[Threat Modeling](https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html) is a set of techniques for anticipating what can go wrong, and ensuring we do something about each identified possible scenario. Taking each item on the list of "what are we going to do about it" and writing an abuse case may help your engineering teams process the output.
 
 The project [OWASP Open SAMM](https://owasp.org/www-project-samm/) proposes the following approach in the _Stream B_ of the Security Practice _Requirements Driven Testing_ for the Maturity level 2:
 
