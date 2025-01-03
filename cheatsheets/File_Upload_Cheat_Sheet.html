@@ -1152,9 +1152,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#filename-sanitization" class="md-nav__link">
+  <a href="#filename-safety" class="md-nav__link">
     <span class="md-ellipsis">
-      Filename Sanitization
+      Filename Safety
     </span>
   </a>
   
@@ -2730,9 +2730,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#filename-sanitization" class="md-nav__link">
+  <a href="#filename-safety" class="md-nav__link">
     <span class="md-ellipsis">
-      Filename Sanitization
+      Filename Safety
     </span>
   </a>
   
@@ -2886,12 +2886,15 @@ to bypass such a check.</p>
 <blockquote>
 <p>This should not be used on its own, as bypassing it is pretty common and easy.</p>
 </blockquote>
-<h3 id="filename-sanitization">Filename Sanitization<a class="headerlink" href="#filename-sanitization" title="Permanent link">&para;</a></h3>
+<h3 id="filename-safety">Filename Safety<a class="headerlink" href="#filename-safety" title="Permanent link">&para;</a></h3>
 <p>Filenames can endanger the system in multiple ways, either by using non acceptable characters, or by using special and restricted filenames. For Windows, refer to the following <a href="https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file?redirectedfrom=MSDN#naming-conventions">MSDN guide</a>. For a wider overview on different filesystems and how they treat files, refer to <a href="https://en.wikipedia.org/wiki/Filename">Wikipedia's Filename page</a>.</p>
 <p>In order to avoid the above mentioned threat, creating a <strong>random string</strong> as a file-name, such as generating a UUID/GUID, is essential. If the filename is required by the business needs, proper input validation should be done for client-side (<em>e.g.</em> active content that results in XSS and CSRF attacks) and back-end side (<em>e.g.</em> special files overwrite or creation) attack vectors. Filename length limits should be taken into consideration based on the system storing the files, as each system has its own filename length limit. If user filenames are required, consider implementing the following:</p>
 <ul>
 <li>Implement a maximum length</li>
 <li>Restrict characters to an allowed subset specifically, such as alphanumeric characters, hyphen, spaces, and periods<ul>
+<li>Consider telling the user what an acceptable filename is.</li>
+<li>Restrict use of leading periods (hidden files) and sequential periods (directory traversal).</li>
+<li>Restrict the use of a leading hyphen or spaces to make it safer to use shell scripts to process files.</li>
 <li>If this is not possible, block-list dangerous characters that could endanger the framework and system that is storing and using the files.</li>
 </ul>
 </li>
