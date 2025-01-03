@@ -2981,9 +2981,9 @@
 <li>...</li>
 </ul>
 <p>These security requirements are too generic, and thus useless for a development team...</p>
-<p>In order to build a secure application, from a pragmatic point of view, it is important to identify the attacks which the application must defend against, according to its business and technical context.</p>
+<p>In order to build a secure application, from a pragmatic point of view, it is important to identify the attacks which the application must defend against, according to its business and technical context. Abuse cases are a frequently recommended <em>threat modeling</em> tool, and reviewing the <a href="https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html">threat modeling</a> cheat sheet may be helpful.</p>
 <h3 id="objective">Objective<a class="headerlink" href="#objective" title="Permanent link">&para;</a></h3>
-<p>The objective of this cheat sheet is to provide an explanation of what an <strong>Abuse Case</strong> is, why abuse cases are important when considering the security of an application, and finally to provide a proposal for a pragmatic approach to building a list of abuse cases and tracking them for every feature planned for implementation as part of an application. The cheat sheet may be used for this purpose regardless of the project methodology used (waterfall or agile).</p>
+<p>The objective of this cheat sheet is to provide an explanation of what an <strong>Abuse Case</strong> is, how abuse cases can be important when considering the security of an application, and finally to provide a proposal for a pragmatic approach to building a list of abuse cases and tracking them for every feature planned for implementation as part of an application. The cheat sheet may be used for this purpose regardless of the project methodology used (waterfall or agile).</p>
 <p><strong>Important note about this Cheat Sheet:</strong></p>
 <div class="highlight"><pre><span></span><code>The main objective is to provide a pragmatic approach in order to allow a company or a project team
 to start building and handling the list of abuse cases and then customize the elements
@@ -3001,7 +3001,7 @@ This cheat sheet can be seen as a getting-started tutorial.
 <li>About countermeasures: Allow the project team to define them, and to determine in which location (network, infrastructure, code...) they should be located.</li>
 </ul>
 <h4 id="notion-of-abuse-cases">Notion of Abuse Cases<a class="headerlink" href="#notion-of-abuse-cases" title="Permanent link">&para;</a></h4>
-<p>In order to help build the list of attacks, the notion of <strong>Abuse Cases</strong> is helpful.</p>
+<p>You can think of <strong>Abuse cases</strong> in two ways. The first is to discover attacks (answer the question "what can go wrong"), and the second is to help record those attacks (informally, this includes threats, issues, risks) in a form that may be less intimidating to developers.</p>
 <p>An <strong>Abuse Case</strong> can be defined as:</p>
 <div class="highlight"><pre><span></span><code>A way to use a feature that was not expected by the implementer,
 allowing an attacker to influence the feature or outcome of use of
@@ -3021,6 +3021,7 @@ that lead to proper protection of these critical business use cases.
 <p><a href="https://www.synopsys.com/blogs/software-security/abuse-cases-can-drive-security-requirements.html">Synopsis source</a></p>
 <h4 id="how-to-define-the-list-of-abuse-cases">How to define the list of Abuse Cases<a class="headerlink" href="#how-to-define-the-list-of-abuse-cases" title="Permanent link">&para;</a></h4>
 <p>There are many different ways to define the list of abuse cases for a feature (that can be mapped to a user story in agile projects).</p>
+<p><a href="https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html">Threat Modeling</a> is a set of techniques for anticipating what can go wrong, and ensuring we do something about each identified possible scenario. Taking each item on the list of "what are we going to do about it" and writing an abuse case may help your engineering teams process the output.</p>
 <p>The project <a href="https://owasp.org/www-project-samm/">OWASP Open SAMM</a> proposes the following approach in the <em>Stream B</em> of the Security Practice <em>Requirements Driven Testing</em> for the Maturity level 2:</p>
 <div class="highlight"><pre><span></span><code>Misuse and abuse cases describe unintended and malicious use scenarios of the application, describing how an attacker could do this. Create misuse and abuse cases to misuse or exploit the weaknesses of controls in software features to attack an application. Use abuse-case models for an application to serve as fuel for identification of concrete security tests that directly or indirectly exploit the abuse scenarios.
 
