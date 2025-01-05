@@ -86,7 +86,7 @@ In conjunction with [content-type validation](#content-type-validation), validat
 
 > This should not be used on its own, as bypassing it is pretty common and easy.
 
-### Filename Sanitization
+### Filename Safety
 
 Filenames can endanger the system in multiple ways, either by using non acceptable characters, or by using special and restricted filenames. For Windows, refer to the following [MSDN guide](https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file?redirectedfrom=MSDN#naming-conventions). For a wider overview on different filesystems and how they treat files, refer to [Wikipedia's Filename page](https://en.wikipedia.org/wiki/Filename).
 
@@ -94,6 +94,9 @@ In order to avoid the above mentioned threat, creating a **random string** as a 
 
 - Implement a maximum length
 - Restrict characters to an allowed subset specifically, such as alphanumeric characters, hyphen, spaces, and periods
+    - Consider telling the user what an acceptable filename is.
+    - Restrict use of leading periods (hidden files) and sequential periods (directory traversal).
+    - Restrict the use of a leading hyphen or spaces to make it safer to use shell scripts to process files.
     - If this is not possible, block-list dangerous characters that could endanger the framework and system that is storing and using the files.
 
 ### File Content Validation
