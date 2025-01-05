@@ -33,7 +33,7 @@ With this approach, you don't need to understand every endpoint in order to unde
 
 ### Microservice and Cloud Native Applications
 
-Microservice and Cloud Native applications are comprised of multiple smaller components, loosely coupled using APIs and independently scalable.  When assessing the attack surface for applications of this architectural style, you should prioritize the components that are reachable from an attack source (e.g. external traffic from the Internet).  Such components may be located behind tiers of proxies, load balancers and ingress controllers, and may auto-scale without warning.
+Microservice and Cloud Native applications are comprised of multiple smaller components, loosely coupled using APIs and independently scalable. When assessing the attack surface for applications of this architectural style, you should prioritize the components that are reachable from an attack source (e.g. external traffic from the Internet). Such components may be located behind tiers of proxies, load balancers and ingress controllers, and may auto-scale without warning.
 
 Open source tooling such as [Scope](https://github.com/weaveworks/scope) or [ThreatMapper](https://github.com/deepfence/ThreatMapper) assist in visualizing the attack surface.
 
@@ -65,7 +65,7 @@ The total number of different attack points can easily add up into the thousands
 
 You also need to identify the valuable data (e.g. confidential, sensitive, regulated) in the application, by interviewing developers and users of the system, and again by reviewing the source code.
 
-You can also build up a picture of the Attack Surface by scanning the application. For web apps you can use a tool like the [OWASP ZAP](https://www.zaproxy.org/) or [Arachni](http://arachni-scanner.com/) or [Skipfish](http://code.google.com/p/skipfish/) or [w3af](http://w3af.sourceforge.net/) or one of the many commercial dynamic testing and vulnerability scanning tools or services to crawl your app and map the parts of the application that are accessible over the web. Some web application firewalls (WAFs) may also be able to export a model of the application's entry points.
+You can also build up a picture of the Attack Surface by scanning the application. For web apps you can use a tool like the [OWASP ZAP](https://www.zaproxy.org/) or [Arachni](http://arachni-scanner.com/) or [Skipfish](http://code.google.com/p/skipfish/) or [w3af](https://docs.w3af.org) or one of the many commercial dynamic testing and vulnerability scanning tools or services to crawl your app and map the parts of the application that are accessible over the web. Some web application firewalls (WAFs) may also be able to export a model of the application's entry points.
 
 Validate and fill in your understanding of the Attack Surface by walking through some of the main use cases in the system: signing up and creating a user profile, logging in, searching for an item, placing an order, changing an order, and so on. Follow the flow of control and data through the system, see how information is validated and where it is stored, what resources are touched and what other systems are involved. There is a recursive relationship between Attack Surface Analysis and [Application Threat Modeling](https://owasp.org/www-community/Application_Threat_Modeling): changes to the Attack Surface should trigger threat modeling, and threat modeling helps you to understand the Attack Surface of the application.
 
