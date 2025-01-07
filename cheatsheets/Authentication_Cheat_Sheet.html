@@ -3322,7 +3322,7 @@
 </li>
 <li>Do not silently truncate passwords. The <a href="Password_Storage_Cheat_Sheet.html#maximum-password-lengths">Password Storage Cheat Sheet</a> provides further guidance on how to handle passwords that are longer than the maximum length.</li>
 <li>Allow usage of <strong>all</strong> characters including unicode and whitespace. There should be no password composition rules limiting the type of characters permitted. There should be no requirement for upper or lower case or numbers or special characters.</li>
-<li>Ensure credential rotation when a password leak occurs, or at the time of compromise identification.</li>
+<li>Ensure credential rotation when a password leak occurs, at the time of compromise identification or when authenticator technology changes. Avoid requiring periodic password changes; instead, encourage users to pick strong passwords and enable <a href="Multifactor_Authentication_Cheat_Sheet.html">Multifactor Authentication Cheat Sheet (MFA)</a>. According to NIST guidelines, verifiers should not mandate arbitrary password changes (e.g., periodically).</li>
 <li>Include a password strength meter to help users create a more complex password and block common and previously breached passwords<ul>
 <li><a href="https://github.com/zxcvbn-ts/zxcvbn">zxcvbn-ts library</a> can be used for this purpose.</li>
 <li><a href="https://haveibeenpwned.com/Passwords">Pwned Passwords</a> is a service where passwords can be checked against previously breached passwords. You can host it yourself or use the <a href="https://haveibeenpwned.com/API/v3#PwnedPasswords">API</a>.</li>
