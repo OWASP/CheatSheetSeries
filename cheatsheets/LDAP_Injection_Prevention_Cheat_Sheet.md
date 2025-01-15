@@ -41,7 +41,7 @@ or
 
 `uid=inewton, ou=Mathematics Department, dc=Cambridge, dc=com`
 
-A whitelist can be used to restrict input to a list of valid characters. Characters and character sequences that must be excluded from whitelists — including
+An allowlist can be used to restrict input to a list of valid characters. Characters and character sequences that must be excluded from allowlists — including
 Java Naming and Directory Interface (JNDI) metacharacters and LDAP special characters — are listed in the following list.
 
 The [exhaustive list](https://ldapwiki.com/wiki/Wiki.jsp?page=DN%20Escape%20Values) is the following: `\ # + < > , ; " =` and leading or trailing spaces.
@@ -79,7 +79,7 @@ For more information on search filter escaping visit [RFC4515](https://datatrack
 
 #### Safe Java Escaping Example
 
-The following solution uses a whitelist to sanitize user input so that the filter string contains only valid characters. In this code, userSN may contain
+The following solution uses an allowlist to sanitize user input so that the filter string contains only valid characters. In this code, userSN may contain
 only letters and spaces, whereas a password may contain only alphanumeric characters:
 
 ```java
@@ -99,8 +99,8 @@ String filter = "(&(sn = " + userSN + ")(userPassword=" + userPassword + "))";
 
 When a database field such as a password must include special characters, it is critical to ensure that the authentic data is stored in sanitized form in the
 database and also that any user input is normalized before the validation or comparison takes place. Using characters that have special meanings in JNDI
-and LDAP in the absence of a comprehensive normalization and whitelisting-based routine is discouraged. Special characters must be transformed to
-sanitized, safe values before they are added to the whitelist expression against which input will be validated. Likewise, normalization of user input should
+and LDAP in the absence of a comprehensive normalization and allowlisting-based routine is discouraged. Special characters must be transformed to
+sanitized, safe values before they are added to the allowlist expression against which input will be validated. Likewise, normalization of user input should
 occur before the validation step (source: [Prevent LDAP injection](https://wiki.sei.cmu.edu/confluence/spaces/flyingpdf/pdfpageexport.action?pageId=88487534)).
 
 For further information visit [OWASP ESAPI Java Encoder Project which includes encodeForLDAP(String) and encodeForDN(String)](https://owasp.org/www-project-java-encoder/).
