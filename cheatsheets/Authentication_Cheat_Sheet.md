@@ -90,7 +90,7 @@ TLS Client Authentication, also known as two-way TLS authentication, consists of
 It is a good idea to do this when:
 
 - It is acceptable (or even preferred) that the user has access to the website only from a single computer/browser.
-- The user is not easily scared by the process of installing TLS certificates on his browser, or there will be someone, probably from IT support, who will do this for the user.
+- The user is not easily scared by the process of installing TLS certificates on their browser, or there will be someone, probably from IT support, who will do this for the user.
 - The website requires an extra step of security.
 - It is also a good thing to use when the website is for an intranet of a company or organization.
 
