@@ -220,7 +220,7 @@ If your development framework supports suitable logging mechanisms, use or build
 
 Document the interface referencing the organisation-specific event classification and description syntax requirements.
 
-If possible create this log handler as a standard module that can be thoroughly tested, deployed in multiple applications, and added to a list of approved & recommended modules.
+If possible create this log handler as a standard module that can be thoroughly tested, deployed in multiple applications, and added to a list of approved and recommended modules.
 
 - Perform input validation on event data from other trust zones to ensure it is in the correct format (and consider alerting and not logging if there is an input validation failure)
 - Perform sanitization on all event data to prevent log injection attacks e.g. carriage return (CR), line feed (LF) and delimiter characters (and optionally to remove sensitive data)
