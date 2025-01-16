@@ -54,7 +54,7 @@ This XML structure has three main sections (or nodes):
 
       The tests will use this as a input source for the different test cases by:
       1) Defining legitimate access and the correct implementation
-      2) Identifing illegitimate access (authorization definition issue
+      2) Identifying illegitimate access (authorization definition issue
       on service implementation)
 
       The "name" attribute is used to uniquely identify a SERVICE or a ROLE.
