@@ -41,7 +41,7 @@ Developing with third-party libraries and components introduces the possibility
 of security unknowns.
 
 - Ensure app signing.
-- Use only trusted and validated third-party libraries & components.
+- Use only trusted and validated third-party libraries and components.
 - Establish security controls for app updates, patches, and releases.
 - Monitor and detect security incidents of used third-party products.
 
