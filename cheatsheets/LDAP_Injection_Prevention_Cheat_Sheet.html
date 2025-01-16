@@ -2803,7 +2803,7 @@ directory service. For general information about LDAP please visit <a href="http
 <p><code>cn=Richard Feynman, ou=Physics Department, dc=Caltech, dc=edu</code></p>
 <p>or</p>
 <p><code>uid=inewton, ou=Mathematics Department, dc=Cambridge, dc=com</code></p>
-<p>A whitelist can be used to restrict input to a list of valid characters. Characters and character sequences that must be excluded from whitelists — including
+<p>An allowlist can be used to restrict input to a list of valid characters. Characters and character sequences that must be excluded from allowlists — including
 Java Naming and Directory Interface (JNDI) metacharacters and LDAP special characters — are listed in the following list.</p>
 <p>The <a href="https://ldapwiki.com/wiki/Wiki.jsp?page=DN%20Escape%20Values">exhaustive list</a> is the following: <code>\ # + &lt; &gt; , ; " =</code> and leading or trailing spaces.</p>
 <p>Some "special" characters that are allowed in Distinguished Names and do not need to be escaped include:</p>
@@ -2824,7 +2824,7 @@ Java Naming and Directory Interface (JNDI) metacharacters and LDAP special chara
 </code></pre></div>
 <p>For more information on search filter escaping visit <a href="https://datatracker.ietf.org/doc/html/rfc4515#section-3">RFC4515</a>.</p>
 <h4 id="safe-java-escaping-example">Safe Java Escaping Example<a class="headerlink" href="#safe-java-escaping-example" title="Permanent link">&para;</a></h4>
-<p>The following solution uses a whitelist to sanitize user input so that the filter string contains only valid characters. In this code, userSN may contain
+<p>The following solution uses an allowlist to sanitize user input so that the filter string contains only valid characters. In this code, userSN may contain
 only letters and spaces, whereas a password may contain only alphanumeric characters:</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// String userSN = &quot;Sherlock Holmes&quot;; // Valid</span>
 <span class="c1">// String userPassword = &quot;secret2&quot;; // Valid</span>
@@ -2841,8 +2841,8 @@ only letters and spaces, whereas a password may contain only alphanumeric charac
 </code></pre></div>
 <p>When a database field such as a password must include special characters, it is critical to ensure that the authentic data is stored in sanitized form in the
 database and also that any user input is normalized before the validation or comparison takes place. Using characters that have special meanings in JNDI
-and LDAP in the absence of a comprehensive normalization and whitelisting-based routine is discouraged. Special characters must be transformed to
-sanitized, safe values before they are added to the whitelist expression against which input will be validated. Likewise, normalization of user input should
+and LDAP in the absence of a comprehensive normalization and allowlisting-based routine is discouraged. Special characters must be transformed to
+sanitized, safe values before they are added to the allowlist expression against which input will be validated. Likewise, normalization of user input should
 occur before the validation step (source: <a href="https://wiki.sei.cmu.edu/confluence/spaces/flyingpdf/pdfpageexport.action?pageId=88487534">Prevent LDAP injection</a>).</p>
 <p>For further information visit <a href="https://owasp.org/www-project-java-encoder/">OWASP ESAPI Java Encoder Project which includes encodeForLDAP(String) and encodeForDN(String)</a>.</p>
 <h4 id="safe-c-sharp-net-tba-example">Safe C Sharp .NET TBA Example<a class="headerlink" href="#safe-c-sharp-net-tba-example" title="Permanent link">&para;</a></h4>
