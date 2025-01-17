@@ -3139,7 +3139,7 @@
 <h3 id="event-collection">Event collection<a class="headerlink" href="#event-collection" title="Permanent link">&para;</a></h3>
 <p>If your development framework supports suitable logging mechanisms, use or build upon that. Otherwise, implement an application-wide log handler which can be called from other modules/components.</p>
 <p>Document the interface referencing the organisation-specific event classification and description syntax requirements.</p>
-<p>If possible create this log handler as a standard module that can be thoroughly tested, deployed in multiple applications, and added to a list of approved &amp; recommended modules.</p>
+<p>If possible create this log handler as a standard module that can be thoroughly tested, deployed in multiple applications, and added to a list of approved and recommended modules.</p>
 <ul>
 <li>Perform input validation on event data from other trust zones to ensure it is in the correct format (and consider alerting and not logging if there is an input validation failure)</li>
 <li>Perform sanitization on all event data to prevent log injection attacks e.g. carriage return (CR), line feed (LF) and delimiter characters (and optionally to remove sensitive data)</li>
