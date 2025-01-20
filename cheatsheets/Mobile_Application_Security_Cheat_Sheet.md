@@ -45,11 +45,7 @@ of security unknowns.
 - Establish security controls for app updates, patches, and releases.
 - Monitor and detect security incidents of used third-party products.
 
-See the [Vulnerable Dependency Management Cheat Sheet](
-Vulnerable_Dependency_Management_Cheat_Sheet.md)
-
-for recommendations on managing third-party dependencies when
-vulnerabilities are discovered.
+See the [Vulnerable Dependency Management Cheat Sheet](Vulnerable_Dependency_Management_Cheat_Sheet.md) for recommendations on managing third-party dependencies when vulnerabilities are discovered.
 
 ## Authentication & Authorization
 
