@@ -1989,11 +1989,62 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#ios" class="md-nav__link">
+  <a href="#ios-and-ipados" class="md-nav__link">
     <span class="md-ellipsis">
-      iOS
+      iOS and iPadOS
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="iOS and iPadOS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#shortcuts-permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Shortcuts Permissions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#siri-permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Siri Permissions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deep-link-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deep Link Security
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#widgetkit-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      WidgetKit Security
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#additional-security-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Additional Security Considerations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -3342,11 +3393,62 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#ios" class="md-nav__link">
+  <a href="#ios-and-ipados" class="md-nav__link">
     <span class="md-ellipsis">
-      iOS
+      iOS and iPadOS
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="iOS and iPadOS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#shortcuts-permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Shortcuts Permissions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#siri-permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Siri Permissions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deep-link-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deep Link Security
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#widgetkit-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      WidgetKit Security
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#additional-security-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Additional Security Considerations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -3417,34 +3519,40 @@ of security unknowns.</p>
 <li>Establish security controls for app updates, patches, and releases.</li>
 <li>Monitor and detect security incidents of used third-party products.</li>
 </ul>
-<p>See the <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html">Vulnerable Dependency Management Cheat Sheet</a>
-for recommendations on managing third-party dependencies when vulnerabilities are discovered.</p>
+<p>See the <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html">Vulnerable Dependency Management Cheat Sheet</a> for recommendations on managing third-party dependencies when vulnerabilities are discovered.</p>
 <h2 id="authentication-authorization">Authentication &amp; Authorization<a class="headerlink" href="#authentication-authorization" title="Permanent link">&para;</a></h2>
 <p>Authentication is a complex topic and there are many pitfalls. Authentication
 logic must be written and tested with extreme care. The tips here are only a
 starting point and barely scratch the surface. For more information, see the
 <a href="Authentication_Cheat_Sheet.html">Authentication Cheat Sheet</a> and
-<a href="https://owasp.org/www-project-mobile-top-10/2023-risks/m1-insecure-authentication-authorization.html">M1: Insecure Authentication/Authorization</a> from the OWASP Mobile Top 10.</p>
+<a href="https://owasp.org/www-project-mobile-top-10/2023-risks/m1-insecure-authentication-authorization.html">M1: Insecure Authentication/Authorization</a>
+from the OWASP Mobile Top 10.</p>
 <h3 id="1-dont-trust-the-client">1. Don't Trust the Client<a class="headerlink" href="#1-dont-trust-the-client" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Perform authentication/authorization server-side and only load data on the device after successful authentication.</li>
-<li>If storing data locally, encrypt it using a key derived from the user’s login credentials.</li>
-<li>Do not store user passwords on the device; use device-specific tokens that can be revoked.</li>
+<li>Perform authentication/authorization server-side and only load data on
+the device after successful authentication.</li>
+<li>If storing data locally, encrypt it using a key derived from the user’s
+login credentials.</li>
+<li>Do not store user passwords on the device; use device-specific tokens
+that can be revoked.</li>
 <li>Avoid using spoofable values like device identifiers for authentication.</li>
-<li>Assume all client-side controls can be bypassed and perform them server-side as well.</li>
+<li>Assume all client-side controls can be bypassed and perform them
+server-side as well.</li>
 <li>Include client side code to detect code/binary tampering.</li>
 </ul>
 <h3 id="2-credential-handling">2. Credential Handling<a class="headerlink" href="#2-credential-handling" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Do not hardcode credentials in the mobile app.</li>
 <li>Encrypt credentials in transmission.</li>
-<li>Do not store user credentials on the device. Consider using secure, revocable access tokens.</li>
+<li>Do not store user credentials on the device. Consider using
+secure, revocable access tokens.</li>
 </ul>
 <h3 id="3-passwords-and-pin-policy">3. Passwords and PIN Policy<a class="headerlink" href="#3-passwords-and-pin-policy" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Require password complexity.</li>
 <li>Do not allow short PINs such as 4 digits.</li>
-<li>Use platform specific secure storage mechanisms, such as Keychain (iOS) or Keystore (Android).</li>
+<li>Use platform specific secure storage mechanisms, such as
+Keychain (iOS) or Keystore (Android).</li>
 </ul>
 <h3 id="4-biometric-authentication">4. Biometric Authentication<a class="headerlink" href="#4-biometric-authentication" title="Permanent link">&para;</a></h3>
 <ul>
@@ -3568,7 +3676,8 @@ examples of data that should not be logged.</p>
 <li>Perform ethical hacking to identify vulnerabilities.</li>
 <li>Example tests:<ul>
 <li>Cryptographic vulnerability assessment.</li>
-<li>Attempt to execute backend server functionality anonymously by removing any session tokens from POST/GET requests.</li>
+<li>Attempt to execute backend server functionality anonymously by removing any
+  session tokens from POST/GET requests.</li>
 </ul>
 </li>
 </ul>
@@ -3612,11 +3721,101 @@ examples of data that should not be logged.</p>
   on working with data securely for more details.</li>
 <li>Disable backup mode to prevent sensitive data being stored in backups.</li>
 </ul>
-<h3 id="ios">iOS<a class="headerlink" href="#ios" title="Permanent link">&para;</a></h3>
+<h3 id="ios-and-ipados">iOS and iPadOS<a class="headerlink" href="#ios-and-ipados" title="Permanent link">&para;</a></h3>
+<h4 id="shortcuts-permissions">Shortcuts Permissions<a class="headerlink" href="#shortcuts-permissions" title="Permanent link">&para;</a></h4>
 <ul>
+<li>
+<p>iOS/iPadOS Shortcuts allow for automation of app functions, which may
+enable sensitive actions even when the device is locked.</p>
+</li>
+<li>
+<p>There are several scenarios in which a user can execute a Shortcut
+while the device is locked:</p>
+</li>
+</ul>
+<ol>
+<li>If a Shortcut is added as a widget to Today View, it can be accessed
+and executed while the device is locked.</li>
+<li>If a Shortcut is assigned to the Action Button (on iPhone 15 Pro and
+iPhone 16 Pro models), it can be executed by pressing the Action Button
+while the device is locked.</li>
+<li>If a Shortcut is assigned to the Control Center (on iOS/iPadOS 18+),
+it can be executed by pulling up the Control Center and pressing the
+Shortcut button while the device is locked.</li>
+<li>A Shortcut can be invoked via Siri while the device is locked.</li>
+<li>If a Shortcut is added to the user's Home Screen (on iOS/iPadOS 18+),
+it can be directly executed by tapping the Shortcut button on the user's
+lock screen while the device is locked.</li>
+<li>If a Shortcut is set to run at a specific interval or a specific time,
+it can execute even if the device is locked.</li>
+</ol>
+<ul>
+<li>
+<p>Sensitive app functionalities triggered via Shortcuts should always
+require device unlock before execution.</p>
+</li>
+<li>
+<p><strong>How</strong>: Store secure tokens in Keychain that the app validates before
+executing sensitive shortcuts. Implement checks with
+<code>UIApplication.shared.isProtectedDataAvailable</code> to restrict execution
+of sensitive actions when the device is locked.</p>
+</li>
+</ul>
+<h4 id="siri-permissions">Siri Permissions<a class="headerlink" href="#siri-permissions" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Siri can access app functionalities through voice or <a href="https://support.apple.com/guide/iphone/change-siri-accessibility-settings-iphaff1d606/ios.">Type to Siri</a>
+  commands, which is by default accessible even when the device is locked
+  potentially enabling unauthorized actions.</li>
+<li><strong>How</strong>: Configure <code>requiresUserAuthentication</code> to <code>true</code> on intents that expose
+sensitive information or functionality. Additionally, set
+<code>INIntent.userConfirmationRequired = true</code> for operations requiring explicit
+user confirmation. These settings ensure proper authentication
+(e.g., Face ID or PIN) and explicit approval before Siri can
+execute sensitive commands. (For more information, see Apple Developer's
+<a href="https://developer.apple.com/documentation/sirikit">SiriKit</a> documentation.)</li>
+</ul>
+<h4 id="deep-link-security">Deep Link Security<a class="headerlink" href="#deep-link-security" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Deep links offer direct access to specific app screens, which could
+potentially bypass authentication if not secured, allowing unauthorized
+users access to secure sections of the app.</li>
+<li>An example of this on Microsoft Authenticator for iOS (which was
+remediated in July 2024) allowed users to bypass App Lock by simply
+navigating to <code>msauth://microsoft.aad.brokerplugin/?</code>, which would
+open Authenticator and dismiss the Face ID/Touch ID/passcode prompt.</li>
+<li><strong>How</strong>: Implement authentication checks on any view controllers
+or endpoints accessed via deep links. Configure and validate Universal
+Links using apple-app-site-association files for secure deep linking.
+Sanitize and validate all parameters received through deep links to
+prevent injection attacks. Ensure unauthorized users are redirected
+to the login screen, preventing direct access to sensitive parts of
+the app without proper authentication. (See Apple Developer's
+<a href="https://developer.apple.com/documentation/xcode/supporting-universal-links-in-your-app">Supporting universal links in your app</a>
+documentation for more information.)</li>
+</ul>
+<h4 id="widgetkit-security">WidgetKit Security<a class="headerlink" href="#widgetkit-security" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Widgets on the lock screen may display sensitive data, potentially
+exposing it without the device being unlocked.</li>
+<li><strong>How</strong>: For iOS/iPadOS versions 17 and higher, use <code>WidgetInfo.isLocked</code>
+to detect lock screen state. For earlier iOS versions, implement custom
+logic based on available widget states since <code>widgetFamily</code> alone doesn't
+directly provide lock screen information. Apply conditional logic to mask
+or restrict sensitive widget content when appropriate security conditions
+aren't met. (See Apple's <a href="https://support.apple.com/guide/security/widgetkit-security-secbb0a1f9b4/web">WidgetKit security</a>
+for more information.)</li>
+</ul>
+<h4 id="additional-security-considerations">Additional Security Considerations<a class="headerlink" href="#additional-security-considerations" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Configure appropriate background refresh policies to prevent sensitive data
+updates while the device is locked.</li>
+<li>Implement proper privacy-related configurations in <code>Info.plist</code> for
+features requiring user permissions.</li>
+<li>Use App Groups with appropriate security configurations when sharing data
+between app and widgets.</li>
 <li>Use ATS (App Transport Security) to enforce strong security policies for
-  network communication.</li>
-<li>Do not store sensitive data in plist files.</li>
+network communication.</li>
+<li>Do not store sensitive data in <code>plist</code> files.</li>
 </ul>
 <p>For further reading, visit the
 <a href="https://owasp.org/www-project-mobile-top-10/">OWASP Mobile Top 10 Project</a>.
