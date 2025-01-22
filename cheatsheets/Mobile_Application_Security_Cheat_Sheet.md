@@ -45,8 +45,7 @@ of security unknowns.
 - Establish security controls for app updates, patches, and releases.
 - Monitor and detect security incidents of used third-party products.
 
-See the [Vulnerable Dependency Management Cheat Sheet](Vulnerable_Dependency_Management_Cheat_Sheet.md)
-for recommendations on managing third-party dependencies when vulnerabilities are discovered.
+See the [Vulnerable Dependency Management Cheat Sheet](Vulnerable_Dependency_Management_Cheat_Sheet.md) for recommendations on managing third-party dependencies when vulnerabilities are discovered.
 
 ## Authentication & Authorization
 
@@ -54,28 +53,36 @@ Authentication is a complex topic and there are many pitfalls. Authentication
 logic must be written and tested with extreme care. The tips here are only a
 starting point and barely scratch the surface. For more information, see the
 [Authentication Cheat Sheet](Authentication_Cheat_Sheet.md) and
-[M1: Insecure Authentication/Authorization](https://owasp.org/www-project-mobile-top-10/2023-risks/m1-insecure-authentication-authorization.html) from the OWASP Mobile Top 10.
+[M1: Insecure Authentication/Authorization](
+https://owasp.org/www-project-mobile-top-10/2023-risks/m1-insecure-authentication-authorization.html)
+from the OWASP Mobile Top 10.
 
 ### 1. Don't Trust the Client
 
-- Perform authentication/authorization server-side and only load data on the device after successful authentication.
-- If storing data locally, encrypt it using a key derived from the user’s login credentials.
-- Do not store user passwords on the device; use device-specific tokens that can be revoked.
+- Perform authentication/authorization server-side and only load data on
+the device after successful authentication.
+- If storing data locally, encrypt it using a key derived from the user’s
+login credentials.
+- Do not store user passwords on the device; use device-specific tokens
+that can be revoked.
 - Avoid using spoofable values like device identifiers for authentication.
-- Assume all client-side controls can be bypassed and perform them server-side as well.
+- Assume all client-side controls can be bypassed and perform them
+server-side as well.
 - Include client side code to detect code/binary tampering.
 
 ### 2. Credential Handling
 
 - Do not hardcode credentials in the mobile app.
 - Encrypt credentials in transmission.
-- Do not store user credentials on the device. Consider using secure, revocable access tokens.
+- Do not store user credentials on the device. Consider using
+secure, revocable access tokens.
 
 ### 3. Passwords and PIN Policy
 
 - Require password complexity.
 - Do not allow short PINs such as 4 digits.
-- Use platform specific secure storage mechanisms, such as Keychain (iOS) or Keystore (Android).
+- Use platform specific secure storage mechanisms, such as
+Keychain (iOS) or Keystore (Android).
 
 ### 4. Biometric Authentication
 
@@ -205,7 +212,8 @@ examples of data that should not be logged.
 - Perform ethical hacking to identify vulnerabilities.
 - Example tests:
     - Cryptographic vulnerability assessment.
-    - Attempt to execute backend server functionality anonymously by removing any session tokens from POST/GET requests.
+    - Attempt to execute backend server functionality anonymously by removing any
+      session tokens from POST/GET requests.
 
 ### 2. Automated Tests
 
@@ -246,11 +254,97 @@ examples of data that should not be logged.
   on working with data securely for more details.
 - Disable backup mode to prevent sensitive data being stored in backups.
 
-### iOS
+### iOS and iPadOS
 
+#### Shortcuts Permissions
+
+- iOS/iPadOS Shortcuts allow for automation of app functions, which may
+enable sensitive actions even when the device is locked.
+
+- There are several scenarios in which a user can execute a Shortcut
+while the device is locked:
+
+  1. If a Shortcut is added as a widget to Today View, it can be accessed
+and executed while the device is locked.
+  2. If a Shortcut is assigned to the Action Button (on iPhone 15 Pro and
+iPhone 16 Pro models), it can be executed by pressing the Action Button
+while the device is locked.
+  3. If a Shortcut is assigned to the Control Center (on iOS/iPadOS 18+),
+it can be executed by pulling up the Control Center and pressing the
+Shortcut button while the device is locked.
+  4. A Shortcut can be invoked via Siri while the device is locked.
+  5. If a Shortcut is added to the user's Home Screen (on iOS/iPadOS 18+),
+it can be directly executed by tapping the Shortcut button on the user's
+lock screen while the device is locked.
+  6. If a Shortcut is set to run at a specific interval or a specific time,
+it can execute even if the device is locked.
+
+- Sensitive app functionalities triggered via Shortcuts should always
+require device unlock before execution.
+
+- **How**: Store secure tokens in Keychain that the app validates before
+executing sensitive shortcuts. Implement checks with
+`UIApplication.shared.isProtectedDataAvailable` to restrict execution
+of sensitive actions when the device is locked.
+
+#### Siri Permissions
+
+- Siri can access app functionalities through voice or [Type to Siri](
+  https://support.apple.com/guide/iphone/change-siri-accessibility-settings-iphaff1d606/ios.)
+  commands, which is by default accessible even when the device is locked
+  potentially enabling unauthorized actions.
+- **How**: Configure `requiresUserAuthentication` to `true` on intents that expose
+sensitive information or functionality. Additionally, set
+`INIntent.userConfirmationRequired = true` for operations requiring explicit
+user confirmation. These settings ensure proper authentication
+(e.g., Face ID or PIN) and explicit approval before Siri can
+execute sensitive commands. (For more information, see Apple Developer's
+[SiriKit](https://developer.apple.com/documentation/sirikit) documentation.)
+
+#### Deep Link Security
+
+- Deep links offer direct access to specific app screens, which could
+potentially bypass authentication if not secured, allowing unauthorized
+users access to secure sections of the app.
+- An example of this on Microsoft Authenticator for iOS (which was
+remediated in July 2024) allowed users to bypass App Lock by simply
+navigating to `msauth://microsoft.aad.brokerplugin/?`, which would
+open Authenticator and dismiss the Face ID/Touch ID/passcode prompt.
+- **How**: Implement authentication checks on any view controllers
+or endpoints accessed via deep links. Configure and validate Universal
+Links using apple-app-site-association files for secure deep linking.
+Sanitize and validate all parameters received through deep links to
+prevent injection attacks. Ensure unauthorized users are redirected
+to the login screen, preventing direct access to sensitive parts of
+the app without proper authentication. (See Apple Developer's
+[Supporting universal links in your app](
+https://developer.apple.com/documentation/xcode/supporting-universal-links-in-your-app)
+documentation for more information.)
+
+#### WidgetKit Security
+
+- Widgets on the lock screen may display sensitive data, potentially
+exposing it without the device being unlocked.
+- **How**: For iOS/iPadOS versions 17 and higher, use `WidgetInfo.isLocked`
+to detect lock screen state. For earlier iOS versions, implement custom
+logic based on available widget states since `widgetFamily` alone doesn't
+directly provide lock screen information. Apply conditional logic to mask
+or restrict sensitive widget content when appropriate security conditions
+aren't met. (See Apple's [WidgetKit security](
+https://support.apple.com/guide/security/widgetkit-security-secbb0a1f9b4/web)
+for more information.)
+
+#### Additional Security Considerations
+
+- Configure appropriate background refresh policies to prevent sensitive data
+updates while the device is locked.
+- Implement proper privacy-related configurations in `Info.plist` for
+features requiring user permissions.
+- Use App Groups with appropriate security configurations when sharing data
+between app and widgets.
 - Use ATS (App Transport Security) to enforce strong security policies for
-  network communication.
-- Do not store sensitive data in plist files.
+network communication.
+- Do not store sensitive data in `plist` files.
 
 For further reading, visit the
 [OWASP Mobile Top 10 Project](https://owasp.org/www-project-mobile-top-10/).
