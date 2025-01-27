@@ -232,7 +232,7 @@ INFO
 An attempt to change a password that failed. May also trigger other events such as `authn_login_lock`.
 
 **Level:**
-INFO
+WARN
 
 **Example:**
 
