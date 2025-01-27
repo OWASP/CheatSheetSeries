@@ -512,15 +512,6 @@ The above code sets Cache-Control, Surrogate-Control, Pragma and Expires headers
 app.use(helmet.ieNoOpen());
 ```
 
-- **[Expect-CT](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Expect-CT):** Certificate Transparency is a new mechanism developed to fix some structural problems regarding current SSL infrastructure. Expect-CT header may enforce certificate transparency requirements. It can be implemented in your application as follows:
-
-```JavaScript
-const expectCt = require('expect-ct');
-app.use(expectCt({ maxAge: 123 }));
-app.use(expectCt({ enforce: true, maxAge: 123 }));
-app.use(expectCt({ enforce: true, maxAge: 123, reportUri: 'http://example.com'}));
-```
-
 - **X-Powered-By:** X-Powered-By header is used to inform what technology is used in the server side. This is an unnecessary header causing information leakage, so it should be removed from your application. To do so, you can use the `hidePoweredBy` as follows:
 
 ```JavaScript
