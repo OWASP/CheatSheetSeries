@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Threat modeling is an important concept for modern application developers to understand. This goal of this cheatsheet is provide a concise, but actionable, reference for both those new to threat modeling and those seeking a refresher. The official project page is [https://owasp.org/www-project-threat-model/](https://owasp.org/www-project-threat-model/).
+Threat modeling is an important concept for modern application developers to understand. The goal of this cheatsheet is to provide a concise, but actionable, reference for both those new to threat modeling and those seeking a refresher. The official project page is [https://owasp.org/www-project-threat-model/](https://owasp.org/www-project-threat-model/).
 
 ## Overview
 
