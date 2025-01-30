@@ -1,6 +1,6 @@
 # Index Alphabetical
 
-**91** cheat sheets available.
+**94** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -23,6 +23,8 @@
 [Authorization Testing Automation Cheat Sheet](cheatsheets/Authorization_Testing_Automation_Cheat_Sheet.md) ![Java](assets/Index_Java.svg) ![Xml](assets/Index_Xml.svg)
 
 ## B
+
+[Browser Extension Vulnerabilities Cheat Sheet](cheatsheets/Browser_Extension_Vulnerabilities_Cheat_Sheet.md)
 
 [Bean Validation Cheat Sheet](cheatsheets/Bean_Validation_Cheat_Sheet.md) ![Java](assets/Index_Java.svg) ![Xml](assets/Index_Xml.svg)
 
@@ -120,9 +122,11 @@
 
 [Laravel Cheat Sheet](cheatsheets/Laravel_Cheat_Sheet.md) ![Html](assets/Index_Html.svg) ![Php](assets/Index_Php.svg) ![Sql](assets/Index_Sql.svg) ![Bash](assets/Index_Bash.svg)
 
-[LDAP Injection Prevention Cheat Sheet](cheatsheets/LDAP_Injection_Prevention_Cheat_Sheet.md)
+[LDAP Injection Prevention Cheat Sheet](cheatsheets/LDAP_Injection_Prevention_Cheat_Sheet.md) ![Java](assets/Index_Java.svg)
 
 [Logging Vocabulary Cheat Sheet](cheatsheets/Logging_Vocabulary_Cheat_Sheet.md)
+
+[Legacy Application Management Cheat Sheet](cheatsheets/Legacy_Application_Management_Cheat_Sheet.md)
 
 ## M
 
@@ -190,6 +194,8 @@
 
 [Session Management Cheat Sheet](cheatsheets/Session_Management_Cheat_Sheet.md)
 
+[Software Supply Chain Security Cheat Sheet](cheatsheets/Software_Supply_Chain_Security_Cheat_Sheet.md)
+
 [Secrets Management Cheat Sheet](cheatsheets/Secrets_Management_Cheat_Sheet.md)
 
 [Symfony Cheat Sheet](cheatsheets/Symfony_Cheat_Sheet.md) ![Php](assets/Index_Php.svg) ![Bash](assets/Index_Bash.svg)
@@ -200,7 +206,7 @@
 
 [TLS Cipher String Cheat Sheet](cheatsheets/TLS_Cipher_String_Cheat_Sheet.md)
 
-[Transport Layer Security Cheat Sheet](cheatsheets/Transport_Layer_Security_Cheat_Sheet.md) ![Bash](assets/Index_Bash.svg)
+[Transport Layer Security Cheat Sheet](cheatsheets/Transport_Layer_Security_Cheat_Sheet.md)
 
 [Transport Layer Protection Cheat Sheet](cheatsheets/Transport_Layer_Protection_Cheat_Sheet.md)
 
