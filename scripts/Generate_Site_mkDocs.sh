@@ -95,53 +95,91 @@ if ! python -m mkdocs build; then
     exit 1
 fi
 
-echo "Step 6/7: Handling redirect for files that have changed"
-#Authorization_Testing_Automation.md -> Authorization_Testing_Automation_Cheat_Sheet.md
-#Injection_Prevention_Cheat_Sheet_in_Java.md -> Injection_Prevention_in_Java_Cheat_Sheet.md
-#JSON_WEB_Token_Cheat_Sheet_for_Java.md -> JSON_WEB_Token_for_Java_Cheat_Sheet.md
-#Ruby_on_Rails_Cheatsheet.md -> Ruby_on_Rails_Cheat_Sheet.md
-#Nodejs_security_cheat_sheet.html -> Nodejs_security_Cheat_Sheet.html
+echo "Step 6/7: Generate URL shortcuts for all cheat sheets"
 
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    # MacOS
-    sed -i '' "1i\\
-        ---\\
-        redirect_from: \"/cheatsheets/Authorization_Testing_Automation.html\"\\
-        ---\\
-        " "$WORK/$GENERATED_SITE/cheatsheets/Authorization_Testing_Automation_Cheat_Sheet.html"
-    sed -i '' "1i\\
-        ---\\
-        redirect_from: \"/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html\"\\
-        ---\\
-        " "$WORK/$GENERATED_SITE/cheatsheets/Injection_Prevention_in_Java_Cheat_Sheet.html"
-    sed -i '' "1i\\
-        ---\\
-        redirect_from: \"/cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.html\"\\
-        ---\\
-        " "$WORK/$GENERATED_SITE/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html"
-    sed -i '' "1i\\
-        ---\\
-        redirect_from: \"/cheatsheets/Ruby_on_Rails_Cheatsheet.html\"\\
-        ---\\
-        " "$WORK/$GENERATED_SITE/cheatsheets/Ruby_on_Rails_Cheat_Sheet.html"
-    sed -i '' "1i\\
-        ---\\
-        redirect_from: \"/cheatsheets/Nodejs_security_cheat_sheet.html\"\\
-        ---\\
-        " "$WORK/$GENERATED_SITE/cheatsheets/Nodejs_Security_Cheat_Sheet.html"
-    sed -i '' "1i\\
-        ---\\
-        redirect_from: \"/cheatsheets/Application_Logging_Vocabulary_Cheat_Sheet.html\"\\
-        ---\\
-        " "$WORK/$GENERATED_SITE/cheatsheets/Logging_Vocabulary_Cheat_Sheet.html"
-else
-    sed -i "1i---\nredirect_from: \"/cheatsheets/Authorization_Testing_Automation.html\"\n---\n" $WORK/$GENERATED_SITE/cheatsheets/Authorization_Testing_Automation_Cheat_Sheet.html
-    sed -i "1i---\nredirect_from: \"/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html\"\n---\n" $WORK/$GENERATED_SITE/cheatsheets/Injection_Prevention_in_Java_Cheat_Sheet.html
-    sed -i "1i---\nredirect_from: \"/cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.html\"\n---\n" $WORK/$GENERATED_SITE/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html
-    sed -i "1i---\nredirect_from: \"/cheatsheets/Ruby_on_Rails_Cheatsheet.html\"\n---\n" $WORK/$GENERATED_SITE/cheatsheets/Ruby_on_Rails_Cheat_Sheet.html
-    sed -i "1i---\nredirect_from: \"/cheatsheets/Nodejs_security_cheat_sheet.html\"\n---\n" $WORK/$GENERATED_SITE/cheatsheets/Nodejs_Security_Cheat_Sheet.html
-    sed -i "1i---\nredirect_from: \"/cheatsheets/Application_Logging_Vocabulary_Cheat_Sheet.html\"\n---\n" $WORK/$GENERATED_SITE/cheatsheets/Logging_Vocabulary_Cheat_Sheet.html
-fi
+# Debug current location
+echo "Current directory: $(pwd)"
+echo "WORK directory: $WORK"
+
+# Function to generate shortcut name from filename
+generate_shortcut() {
+    local filename=$1
+    local shortcut=""
+    
+    # Remove file extension and common suffixes
+    local basename=${filename%%.html}
+    basename=${basename%%_Cheat_Sheet}
+    
+    # For cheat sheets, use first letters of each word
+    shortcut=$(echo "$basename" | awk -F'_' '{for(i=1;i<=NF;i++)printf "%s", substr($i,1,1)}')
+    
+   # echo "$shortcut"
+}
+
+# Function to create redirect file
+create_redirect() {
+    local shortcut=$1
+    local target=$2
+    local redirect_file="$WORK/site/${shortcut}"
+    
+    #echo "Creating redirect: /${shortcut} -> ${target}"
+    
+    # Create the redirect HTML file
+    cat > "$redirect_file" << EOF
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="refresh" content="0; url=/${target}">
+</head>
+<body>
+    Redirecting to <a href="/${target}">${target}</a>...
+</body>
+</html>
+EOF
+    
+    # Also create .html version
+    cp "$redirect_file" "${redirect_file}.html"
+    
+    # Verify creation
+    if [ -f "$redirect_file" ] && [ -f "${redirect_file}.html" ]; then
+       # echo "✅ Created shortcuts:"
+        echo "  - /${shortcut}"
+        echo "  - /${shortcut}.html"
+    else
+        #echo "❌ Failed to create shortcuts for ${shortcut}"
+    fi
+}
+
+# Process all cheat sheet files
+echo "Processing all cheat sheet files..."
+find "$WORK/site/cheatsheets" -type f -name "*_Cheat_Sheet.html" | while read -r file; do
+    filename=$(basename "$file")
+    filepath=${file#"$WORK/site/"}
+    
+    #echo "Processing: $filename"
+    
+    # Generate shortcut name
+    shortcut=$(generate_shortcut "$filename")
+    
+    # Skip if no shortcut generated
+    [ -z "$shortcut" ] && continue
+    
+    # Convert to uppercase
+    #shortcut=$(echo "$shortcut" | tr '[:lower:]' '[:upper:]')
+    
+    # Create redirect
+    create_redirect "$shortcut" "$filepath"
+done
+
+# Print all available shortcuts
+#echo "Available shortcuts:"
+for file in "$WORK"/site/[A-Z]*; do
+    if [ -f "$file" ] && [[ ! "$file" =~ \.(html|xml|gz)$ ]]; then
+        shortcut=$(basename "$file")
+        target=$(grep -o 'url=/[^"]*' "$file" | cut -d'=' -f2)
+        #echo "- /${shortcut} -> ${target}"
+    fi
+done
 
 echo "Step 7/7 Cleanup."
 rm -rf cheatsheets
