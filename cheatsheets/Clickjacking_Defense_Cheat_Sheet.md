@@ -1,9 +1,10 @@
-# Clickjacking Defense Cheat Sheet
+# Clickjacking and Double Clickjacking Defense Cheat Sheet
 
 ## Introduction
 
-This cheat sheet is intended to provide guidance for developers on how to defend against [Clickjacking](https://owasp.org/www-community/attacks/Clickjacking), also known as UI redress attacks.
+This cheat sheet is intended to provide guidance for developers on how to defend against [Clickjacking](https://owasp.org/www-community/attacks/Clickjacking), also known as UI redress attacks and Double Click Jacking. 
 
+# Clickjacking 
 There are three main mechanisms that can be used to defend against these attacks:
 
 - Preventing the browser from loading the page in frame using the [X-Frame-Options](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options) or [Content Security Policy (frame-ancestors)](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors) HTTP headers.
@@ -311,3 +312,125 @@ Activate [designMode](https://developer.mozilla.org/en-US/docs/Web/API/Document/
 ```javascript
 document.designMode = "on";
 ```
+ # Double Clickjacking 
+
+## Introduction 
+
+Double Clickjacking is an advanced form of Clickjacking that exploits user interactions by requiring two consecutive clicks to execute a malicious action. Attackers use this technique to bypass security mechanisms that rely on single-click protections, making it more difficult to detect and prevent. Unlike traditional Clickjacking, which usually relies on a single user action, Double Clickjacking introduces an additional interaction to increase the success rate of the attack and evade common security measures.
+
+## Attack Scenario
+
+1. The attacker loads a malicious webpage that contains a transparent iframe overlaying a legitimate website.
+
+2. The user is tricked into clicking an element, such as a button or link, thinking it belongs to the attacker's site.
+
+3. The first click moves the transparent iframe into position over a critical UI element of the target website.
+
+4. The second click executes the action, such as transferring funds, changing security settings, or posting content without user consent.
+
+## Mitigation Strategies
+
+To defend against Double Clickjacking, implement the following strategies:
+
+### 1. Frame Busting
+
+Prevent your site from being embedded within an iframe by using frame-busting techniques, such as:
+
+<script>
+if (self !== top) {
+    top.location = self.location;
+}
+</script>
+
+#### Considerations:
+
+Frame-busting scripts help prevent iframes but can be bypassed in some cases using JavaScript modifications.
+
+Attackers may use techniques like dynamically injecting iframes post-load to evade frame-busting mechanisms.
+
+### 2. X-Frame-Options Header
+
+Use the X-Frame-Options HTTP header to restrict iframe embedding:
+
+X-Frame-Options: DENY
+
+Alternatively, allow only trusted domains:
+
+X-Frame-Options: SAMEORIGIN
+
+#### Limitations:
+
+Some browsers do not support X-Frame-Options.
+
+Attackers can still use UI redressing techniques to manipulate users into clicking unintended elements.
+
+### 3. Content Security Policy (CSP) Frame-Ancestors
+
+Use CSP to control which domains can embed your site:
+
+Content-Security-Policy: frame-ancestors 'self' https://trusted.example.com;
+
+#### Limitations:
+
+CSP-based protections only work when enforced properly and do not protect against all forms of Clickjacking.
+
+Attackers can still use overlays or timing-based click manipulation to deceive users.
+
+### 4. Double-Click Confirmation
+
+Implement a double-click confirmation mechanism for critical actions to prevent unintended interactions.
+#### Example:
+
+<button onclick="confirmAction()">Submit</button>
+<script>
+function confirmAction() {
+    if (!this.clickedOnce) {
+        this.clickedOnce = true;
+        alert('Click again to confirm action.');
+    } else {
+        // Proceed with the action
+    }
+}
+</script>
+
+#### Effectiveness:
+
+Adds an extra layer of user verification.
+
+However, attackers could mimic this behavior to trick users into clicking twice unintentionally.
+
+### 5. Visual Feedback Mechanisms
+
+Ensure that users receive immediate visual feedback on interactions to prevent hidden UI manipulation. Techniques include:
+
+Highlighting clicked elements.
+
+Requiring explicit user confirmation through modal dialogs.
+
+Disabling buttons for a short time after the first click to prevent rapid unintended actions.
+
+Implementing progressive disclosure, where critical actions require an additional confirmation step.
+
+## Additional Considerations
+
+Security research has shown that some traditional defenses, such as X-Frame-Options, Content-Security-Policy (frame-ancestors directive), and the SameSite cookie attribute, may not be effective against all advanced Clickjacking attacks. Attackers can use sophisticated techniques such as dynamic iframe injections, CSS manipulations, and JavaScript-based click tracking to circumvent protections.
+
+- **To improve security:**
+
+Combine multiple defenses rather than relying on a single approach.
+
+Implement real-time click behavior analysis to detect rapid or suspicious interactions.
+
+Use server-side logging to track click patterns and identify potential clickjacking attempts.
+
+Educate users about deceptive UI elements and how to recognize malicious behavior.
+
+## Conclusion
+
+Double Clickjacking is a sophisticated attack that leverages multiple user interactions to bypass traditional Clickjacking defenses. Implementing a combination of X-Frame-Options, Content-Security-Policy, JavaScript-based frame-busting techniques, UI feedback mechanisms, and real-time user behavior analysis can help mitigate this risk effectively. Organizations should adopt a layered security approach to protect against evolving threats and continuously assess the effectiveness of their Clickjacking defenses.
+
+### For a more in-depth understanding of double-click jacking and its implications, you can refer to the following articles:
+
+- [New "DoubleClickjacking" Exploit Bypasses Clickjacking Protections](https://thehackernews.com/2025/01/new-doubleclickjacking-exploit-bypasses.html)
+- [Don’t Click Twice—New Chrome, Edge, Safari Hack Attack Warning](https://www.forbes.com/sites/daveywinder/2025/01/05/dont-click-twice-new-chrome-edge-safari-hack-attack-warning/)
+- [Emerging ‘DoubleClickjacking’ Threat Exploits Double-Clicks for Account Hijacking](https://www.bitdefender.com/en-us/blog/hotforsecurity/emerging-doubleclickjacking-threat-exploits-double-clicks-for-account-hijacking)
