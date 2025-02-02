@@ -3415,8 +3415,10 @@ override<span class="w"> </span>LDFLAGS<span class="w"> </span>:<span class="o">
 <h4 id="windows">Windows<a class="headerlink" href="#windows" title="Permanent link">&para;</a></h4>
 <p>Visual Studio offers a number of debugging aids for use during development. The aids are called <a href="https://docs.microsoft.com/en-us/dotnet/framework/debug-trace-profile/diagnosing-errors-with-managed-debugging-assistants">Managed Debugging Assistants (MDAs)</a>. You can find the MDAs on the <em>Debug</em> menu, then <em>Exceptions</em> submenu. MDAs allow you to tune your debugging experience by, for example, filtering exceptions for which the debugger should snap. For more details, see Stephen Toub's <em><a href="https://docs.microsoft.com/en-us/archive/msdn-magazine/2006/may/let-the-clr-find-bugs-for-you-with-managed-debugging-assistants">Let The CLR Find Bugs For You With Managed Debugging Assistants</a></em>.</p>
 <p><img alt="Windows1" src="../assets/C-Based_Toolchain_Hardening_Windows1.png" /></p>
-<p>Finally, for runtime hardening, Microsoft has a helpful tool called EMET. EMET is the <a href="https://en.wikipedia.org/wiki/Enhanced_Mitigation_Experience_Toolkit">Enhanced Mitigation Experience Toolkit</a>, and allows you to apply runtime hardening to an executable which was built without it. It's very useful for utilities and other programs that were built without an SDLC.</p>
-<p><img alt="Windows2" src="../assets/C-Based_Toolchain_Hardening_Windows2.png" /></p>
+<p>Finally, for runtime hardening, Microsoft provides <strong>Windows Defender Exploit Guard</strong> and the <strong>Process Mitigation Management Tool</strong>.<br />
+<a href="https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-defender-exploit-guard/exploit-protection">Windows Defender Exploit Guard</a> replaces EMET and offers advanced exploit protection features.  </p>
+<p>Additionally, the <a href="https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-defender-exploit-guard/customize-exploit-protection">Process Mitigation Management Tool</a> (<code>ProcessMitigations</code> module) allows administrators to configure exploit mitigation policies via PowerShell and Group Policy.</p>
+<p><img alt="Windows2" src="exploit-protection-guard.png" /></p>
 
 
 
