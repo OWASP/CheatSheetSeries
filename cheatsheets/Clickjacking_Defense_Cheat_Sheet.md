@@ -1,9 +1,10 @@
-# Clickjacking Defense Cheat Sheet
+# Clickjacking and Double Clickjacking Defense Cheat Sheet
 
 ## Introduction
 
-This cheat sheet is intended to provide guidance for developers on how to defend against [Clickjacking](https://owasp.org/www-community/attacks/Clickjacking), also known as UI redress attacks.
+This cheat sheet is intended to provide guidance for developers on how to defend against [Clickjacking](https://owasp.org/www-community/attacks/Clickjacking) (also known as UI redress attacks) and [Double Clickjacking](https://www.paulosyibelo.com/2024/12/doubleclickjacking-what.html?m=1) (also called forced multi-click exploitation)
 
+# Clickjacking 
 There are three main mechanisms that can be used to defend against these attacks:
 
 - Preventing the browser from loading the page in frame using the [X-Frame-Options](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options) or [Content Security Policy (frame-ancestors)](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors) HTTP headers.
@@ -311,3 +312,161 @@ Activate [designMode](https://developer.mozilla.org/en-US/docs/Web/API/Document/
 ```javascript
 document.designMode = "on";
 ```
+ # Double Clickjacking 
+
+## Introduction
+**Double Clickjacking** is an advanced variant of Clickjacking that exploits rapid user interactions by requiring two consecutive clicks to execute a malicious action. Unlike traditional Clickjacking, which typically relies on a single deceptive click, Double Clickjacking increases the attack success rate by bypassing single-click protections and evading common security measures.
+
+## Attack Scenario
+
+1. The attacker loads a malicious webpage containing a transparent iframe overlaying a legitimate website.
+
+2. The user is tricked into clicking an element (e.g., a button or link), thinking it belongs to the attacker’s site.
+
+3. The first click moves the transparent iframe into position over a critical UI element of the target website.
+
+4. The second click executes a malicious action, such as transferring funds, changing security settings, or posting content without user consent.
+
+
+## Ineffective Defenses
+
+Traditional Clickjacking protections are ineffective against Double Clickjacking, as noted in research by Paulos Yibelo:
+
+ ### 1. **X-Frame-Options:**
+  Attackers manipulate iframe positions dynamically, making this defense ineffective.
+
+### 2. **Content Security Policy (CSP) Frame-Ancestors:** 
+This protection does not prevent UI manipulation via JavaScript or CSS.
+
+### 3. **SameSite Cookies:** 
+Attackers do not need cross-site requests, rendering this defense ineffective.
+
+## Advanced Mitigation Strategies
+
+Given the shortcomings of traditional defenses, the following advanced approaches offer stronger protection against Double Clickjacking:
+
+#### **1. Detect Hidden Iframes Using Intersection Observer**
+**Concept:**  Attackers often use transparent or off-screen iframes. This detects and alerts users if such an iframe is capturing interactions.
+
+```javascript
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (!entry.isIntersecting) {
+            alert("Warning: A hidden iframe may be attempting a Clickjacking attack!");
+        }
+    });
+}, { threshold: 0.5 });
+
+document.querySelectorAll("iframe").forEach(iframe => observer.observe(iframe));
+```
+✅ Prevents hidden iframe overlays from capturing clicks.
+
+✅ Ensures users interact only with visible elements.
+
+#### **2. Enforce Click-Only on Trusted Domains**
+
+**Concept:** Attackers host iframes on malicious domains. This script ensures actions only occur if the request comes from a trusted domain.
+
+```javascript
+if (document.referrer && !document.referrer.includes("your-website.com")) {
+    alert("Warning: Clicks from an untrusted source detected!");
+}
+```
+
+✅ Blocks interactions initiated from untrusted sites.
+
+✅ Prevents attacks executed via external embedding.
+
+ #### **3. Delayed Click Action (Click Delay)**
+**Concept:** Prevents rapid unintended double-clicks by enforcing a minimum delay between clicks.
+```javascript
+let lastClickTime = 0;
+document.getElementById("submitButton").addEventListener("click", function (event) {
+  const now = Date.now();
+  if (now - lastClickTime < 500) {  // 500ms delay
+    event.preventDefault();
+    alert("Double-click detected! Please click only once.");
+  } else {
+    lastClickTime = now;
+    // Proceed with the action
+  }
+});
+```
+✅ Makes it harder for attackers to exploit timing tricks.
+
+✅ Prevents unintended double-clicks on sensitive actions.
+
+#### **4. Trusted Interaction Verification**
+
+**Concept:**  Adds an explicit user confirmation step before executing sensitive actions.
+```javascript
+function confirmAction() {
+  let confirmation = confirm("Are you sure you want to proceed?");
+  if (confirmation) {
+    // Perform action
+  }
+}
+```
+✅ Requires user intent verification before execution.
+
+✅ Reduces accidental malicious actions.
+ #### **5. Prevent Rapid UI Manipulation Using Mutation Observers**
+
+**Concept:** Monitors for sudden UI changes (such as iframe repositioning) and blocks suspicious activity.
+```javascript
+const observer = new MutationObserver(mutations => {
+  mutations.forEach(mutation => {
+    if (mutation.type === "childList" || mutation.type === "attributes") {
+      alert("Suspicious UI changes detected!");
+    }
+  });
+});
+observer.observe(document.body, { childList: true, subtree: true, attributes: true });
+```
+
+✅ Detects hidden UI manipulations in real time.
+
+✅ Prevents attackers from dynamically repositioning elements for Clickjacking attacks.
+
+#### **6. Require Intent-Based Gestures for Critical Actions**
+
+**Concept:** Instead of a simple click, users must perform a deliberate gesture, like dragging a slider, before confirming actions.
+```html
+<label for="secureAction">Slide to confirm:</label>
+<input type="range" id="secureAction" min="0" max="100" oninput="checkGesture(this.value)">
+<script>
+function checkGesture(value) {
+    if (value == 100) {
+        alert("Confirmed! Action executed.");
+    }
+}
+</script>
+```
+
+**How the Slider Works:**
+Below is an example of how a slider can be used to prevent double-click jacking by requiring the user to slide to 100 to confirm an action.
+
+<label for="secureAction">**Slide to confirm:**</label>
+<input type="range" id="secureAction" min="0" max="100" oninput="checkGesture(this.value)">
+<script>
+function checkGesture(value) {
+    if (value == 100) {
+        alert("Confirmed! Action executed.");
+    }
+}
+</script>
+
+
+✅ Users must actively confirm before execution.
+
+✅ Prevents forced clicks leading to unintended actions.
+
+## Conclusion
+
+**Double Clickjacking** is a sophisticated attack that evades traditional Clickjacking defenses. Implementing a combination of Intersection Observer detection, Click Delay, Pointer Events, Trusted Domain Enforcement, Trusted Interaction Verification, Mutation Observers, and Gesture-Based Confirmations provides robust protection against this emerging threat. A layered security approach is essential to safeguarding users from evolving Clickjacking techniques.
+
+### For a more in-depth understanding of double-click jacking and its implications, you can refer to the following articles:
+
+- [New "DoubleClickjacking" Exploit Bypasses Clickjacking Protections](https://thehackernews.com/2025/01/new-doubleclickjacking-exploit-bypasses.html)
+- [Don’t Click Twice—New Chrome, Edge, Safari Hack Attack Warning](https://www.forbes.com/sites/daveywinder/2025/01/05/dont-click-twice-new-chrome-edge-safari-hack-attack-warning/)
+- [Emerging ‘DoubleClickjacking’ Threat Exploits Double-Clicks for Account Hijacking](https://www.bitdefender.com/en-us/blog/hotforsecurity/emerging-doubleclickjacking-threat-exploits-double-clicks-for-account-hijacking)
