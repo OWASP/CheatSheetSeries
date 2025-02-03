@@ -62,7 +62,7 @@ To improve usability, it may be desirable to only require the user solve a CAPTC
 
 ### IP Mitigation and Intelligence
 
-Blocking IP addresses may be sufficent to stop less sophisticated attacks, but should not be used as the primary defense due to the ease in circumvention.  It is more effective to have a graduated response to abuse that leverages multiple defensive measures depending on different factors of the attack.
+Blocking IP addresses may be sufficent to stop less sophisticated attacks, but should not be used as the sole or primary defense due to the ease in circumvention.  It is more effective to have a graduated response to abuse that leverages multiple defensive measures depending on different factors of the attack.
 
 Any process or decision to mitigate (including blocking and CAPTCHA) credential stuffing traffic from an IP address should consider a multitude of abuse scenarios, and not rely on a single predictable volume limit.  Short (i.e. burst) and long time periods should be considered, as well as high request volume and instances where one IP address, likely in concert with _many_ other IP addresses, generates low but consistent volumes of traffic.  Additionally, mitigation decisions should consider factors such as IP address classification (ex: residential vs hosting) and geolocation.  These factors may be leveraged to raise or lower mitigation thresholds in order to reduce potential impact on legitimate users or more aggresively mitigate abuse originating from abnormal sources.  Mitigations, especially blocking an IP address, should be temporary and processes should be in place to remove an IP address from a mitigated state as abuse declines or stops.
 
