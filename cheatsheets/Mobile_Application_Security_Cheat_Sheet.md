@@ -105,7 +105,7 @@ Keychain (iOS) or Keystore (Android).
 
 - Require users to re-authenticate for sensitive operations like changing
   passwords or updating payment information.
-- Consider requring re-authentication before displaying highly sensitive
+- Consider requiring re-authentication before displaying highly sensitive
   information as well.
 - Require authorization checks on any backend functionality.
 
@@ -136,7 +136,7 @@ examples of data that should not be logged.
 
 ### 5. Personally Identifiable Information (PII)
 
-- Minimise any PII to neccessity.
+- Minimise any PII to necessity.
 - Attempt to replace PII with less critical information if possible.
 - Reduce PII, e.g. less frequent location updates.
 - Implement automatic expiration and deletion of PII to minimize retention.
