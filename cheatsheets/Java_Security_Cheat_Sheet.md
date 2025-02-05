@@ -12,18 +12,18 @@ Sample code used in tips is located [here](https://github.com/righettod/injectio
 
 *Consider anyone who can send untrusted data to the system, including external users, internal users, and administrators.*
 
-### General advices to prevent Injection
+### General advice to prevent Injection
 
 The following point can be applied, in a general way, to prevent *Injection* issue:
 
 1. Apply **Input Validation** (using allowlist approach) combined with **Output Sanitizing+Escaping** on user input/output.
 2. If you need to interact with system, try to use API features provided by your technology stack (Java / .Net / PHP...) instead of building command.
 
-Additional advices are provided on this [cheatsheet](Input_Validation_Cheat_Sheet.md).
+Additional advice is provided on this [cheatsheet](Input_Validation_Cheat_Sheet.md).
 
 ## Specific Injection types
 
-*Examples in this section will be provided in Java technology (see Maven project associated) but advices are applicable to others technologies like .Net / PHP / Ruby / Python...*
+*Examples in this section will be provided in Java technology (see Maven project associated) but advice is applicable to others technologies like .Net / PHP / Ruby / Python...*
 
 ### SQL
 
@@ -403,7 +403,7 @@ The recommended logging policy for a production environment is sending logs to a
 introduced in
 [Log4j 2.14.0](https://logging.apache.org/log4j/2.x/release-notes.html#release-notes-2-14-0)
 and limit the size of strings to 500 bytes using the
-[`maxStringLength` configuration attrribute](https://logging.apache.org/log4j/2.x/manual/json-template-layout.html#plugin-attr-maxStringLength):
+[`maxStringLength` configuration attribute](https://logging.apache.org/log4j/2.x/manual/json-template-layout.html#plugin-attr-maxStringLength):
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -856,7 +856,7 @@ class HybridSimple {
 
 If you absolutely cannot use a separate library, it is still possible to use the built JCA/JCE classes but it is strongly recommended to have a cryptography expert review the full design and code, as even the most trivial error can severely weaken your encryption.
 
-The following code snippet shows an example of using Eliptic Curve/Diffie Helman (ECDH) together with AES-GCM to perform encryption/decryption of data between two different sides without the need the transfer the symmetric key between the two sides. Instead, the sides exchange public keys and can then use ECDH to generate a shared secret which can be used for the symmetric encryption.
+The following code snippet shows an example of using Elliptic Curve/Diffie Helman (ECDH) together with AES-GCM to perform encryption/decryption of data between two different sides without the need the transfer the symmetric key between the two sides. Instead, the sides exchange public keys and can then use ECDH to generate a shared secret which can be used for the symmetric encryption.
 
 Note that this code sample relies on the AesGcmSimple class from the [previous section](#symmetric-example-using-built-in-jcajce-classes).
 
