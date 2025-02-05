@@ -3058,7 +3058,7 @@ it can change the value of a variable that the web application relies on due to 
 <h3 id="1-html-sanitization">#1: HTML Sanitization<a class="headerlink" href="#1-html-sanitization" title="Permanent link">&para;</a></h3>
 <p>Robust HTML sanitizers can prevent or restrict the risk of DOM Clobbering. They can do so in multiple ways. For example:</p>
 <ul>
-<li>completely remove named properties like <code>id</code> and <code>name</code>. While effective, this may hinder the usability when named properties are needed for legitimate functionalties.</li>
+<li>completely remove named properties like <code>id</code> and <code>name</code>. While effective, this may hinder the usability when named properties are needed for legitimate functionalities.</li>
 <li>namespace isolation, which can be, for example, prefixing the value of named properties by a constant string to limit the risk of naming collisions.</li>
 <li>dynamically checking if named properties of the input mark has collisions with the existing DOM tree, and if that is the case, then remove named properties of the input markup.</li>
 </ul>
@@ -3090,7 +3090,7 @@ it can change the value of a variable that the web application relies on due to 
 <h3 id="4-validate-all-inputs-to-dom-tree">#4: Validate All Inputs to DOM Tree<a class="headerlink" href="#4-validate-all-inputs-to-dom-tree" title="Permanent link">&para;</a></h3>
 <p>Before inserting any markup into the webpage's DOM tree, sanitize <code>id</code> and <code>name</code> attributes (see <a href="#html-sanitization">HTML sanitization</a>).</p>
 <h3 id="5-use-explicit-variable-declarations">#5: Use Explicit Variable Declarations<a class="headerlink" href="#5-use-explicit-variable-declarations" title="Permanent link">&para;</a></h3>
-<p>When initializing varibles, always use a variable declarator like <code>var</code>, <code>let</code> or <code>const</code>, which prevents clobbering of the variable.</p>
+<p>When initializing variables, always use a variable declarator like <code>var</code>, <code>let</code> or <code>const</code>, which prevents clobbering of the variable.</p>
 <p><strong>Note:</strong> Declaring a variable with <code>let</code> does not create a property on <code>window</code>, unlike <code>var</code>. Therefore, <code>window.VARNAME</code> can still be clobbered (assuming <code>VARNAME</code> is the name of the variable).</p>
 <h3 id="6-do-not-use-document-and-window-for-global-variables">#6: Do Not Use Document and Window for Global Variables<a class="headerlink" href="#6-do-not-use-document-and-window-for-global-variables" title="Permanent link">&para;</a></h3>
 <p>Avoid using objects like <code>document</code> and <code>window</code> for storing global variables, because they can be easily manipulated. (see, e.g., <a href="https://domclob.xyz/domc_wiki/indicators/patterns.html#do-not-use-document-for-global-variables">here</a>).</p>

@@ -1341,9 +1341,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#general-advices-to-prevent-injection" class="md-nav__link">
+  <a href="#general-advice-to-prevent-injection" class="md-nav__link">
     <span class="md-ellipsis">
-      General advices to prevent Injection
+      General advice to prevent Injection
     </span>
   </a>
   
@@ -2988,9 +2988,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#general-advices-to-prevent-injection" class="md-nav__link">
+  <a href="#general-advice-to-prevent-injection" class="md-nav__link">
     <span class="md-ellipsis">
-      General advices to prevent Injection
+      General advice to prevent Injection
     </span>
   </a>
   
@@ -3506,15 +3506,15 @@
 <h3 id="what-is-injection">What is Injection<a class="headerlink" href="#what-is-injection" title="Permanent link">&para;</a></h3>
 <p><a href="https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A1-Injection">Injection</a> in OWASP Top 10 is defined as following:</p>
 <p><em>Consider anyone who can send untrusted data to the system, including external users, internal users, and administrators.</em></p>
-<h3 id="general-advices-to-prevent-injection">General advices to prevent Injection<a class="headerlink" href="#general-advices-to-prevent-injection" title="Permanent link">&para;</a></h3>
+<h3 id="general-advice-to-prevent-injection">General advice to prevent Injection<a class="headerlink" href="#general-advice-to-prevent-injection" title="Permanent link">&para;</a></h3>
 <p>The following point can be applied, in a general way, to prevent <em>Injection</em> issue:</p>
 <ol>
 <li>Apply <strong>Input Validation</strong> (using allowlist approach) combined with <strong>Output Sanitizing+Escaping</strong> on user input/output.</li>
 <li>If you need to interact with system, try to use API features provided by your technology stack (Java / .Net / PHP...) instead of building command.</li>
 </ol>
-<p>Additional advices are provided on this <a href="Input_Validation_Cheat_Sheet.html">cheatsheet</a>.</p>
+<p>Additional advice is provided on this <a href="Input_Validation_Cheat_Sheet.html">cheatsheet</a>.</p>
 <h2 id="specific-injection-types">Specific Injection types<a class="headerlink" href="#specific-injection-types" title="Permanent link">&para;</a></h2>
-<p><em>Examples in this section will be provided in Java technology (see Maven project associated) but advices are applicable to others technologies like .Net / PHP / Ruby / Python...</em></p>
+<p><em>Examples in this section will be provided in Java technology (see Maven project associated) but advice is applicable to others technologies like .Net / PHP / Ruby / Python...</em></p>
 <h3 id="sql">SQL<a class="headerlink" href="#sql" title="Permanent link">&para;</a></h3>
 <h4 id="symptom">Symptom<a class="headerlink" href="#symptom" title="Permanent link">&para;</a></h4>
 <p>Injection of this type occur when the application uses untrusted user input to build an SQL query using a String and execute it.</p>
@@ -3834,7 +3834,7 @@
 introduced in
 <a href="https://logging.apache.org/log4j/2.x/release-notes.html#release-notes-2-14-0">Log4j 2.14.0</a>
 and limit the size of strings to 500 bytes using the
-<a href="https://logging.apache.org/log4j/2.x/manual/json-template-layout.html#plugin-attr-maxStringLength"><code>maxStringLength</code> configuration attrribute</a>:</p>
+<a href="https://logging.apache.org/log4j/2.x/manual/json-template-layout.html#plugin-attr-maxStringLength"><code>maxStringLength</code> configuration attribute</a>:</p>
 <div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
 <span class="nt">&lt;Configuration</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;https://logging.apache.org/xml/ns&quot;</span>
 <span class="w">               </span><span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
@@ -4250,7 +4250,7 @@ In the example below, Logback is configured to roll on 10 log files of 5 MiB eac
 
 <h4 id="asymmetric-example-using-built-in-jcajce-classes">Asymmetric example using built-in JCA/JCE classes<a class="headerlink" href="#asymmetric-example-using-built-in-jcajce-classes" title="Permanent link">&para;</a></h4>
 <p>If you absolutely cannot use a separate library, it is still possible to use the built JCA/JCE classes but it is strongly recommended to have a cryptography expert review the full design and code, as even the most trivial error can severely weaken your encryption.</p>
-<p>The following code snippet shows an example of using Eliptic Curve/Diffie Helman (ECDH) together with AES-GCM to perform encryption/decryption of data between two different sides without the need the transfer the symmetric key between the two sides. Instead, the sides exchange public keys and can then use ECDH to generate a shared secret which can be used for the symmetric encryption.</p>
+<p>The following code snippet shows an example of using Elliptic Curve/Diffie Helman (ECDH) together with AES-GCM to perform encryption/decryption of data between two different sides without the need the transfer the symmetric key between the two sides. Instead, the sides exchange public keys and can then use ECDH to generate a shared secret which can be used for the symmetric encryption.</p>
 <p>Note that this code sample relies on the AesGcmSimple class from the <a href="#symmetric-example-using-built-in-jcajce-classes">previous section</a>.</p>
 <p>A few constraints/pitfalls with this code:</p>
 <ul>

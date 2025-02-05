@@ -3141,10 +3141,10 @@
 
 <h1 id="cloud-architecture-security-cheat-sheet">Cloud Architecture Security Cheat Sheet<a class="headerlink" href="#cloud-architecture-security-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>This cheat sheet will discuss common and necessary security patterns to follow when creating and reviewing cloud architectures. Each section will cover a specific security guideline or cloud design decision to consider. This sheet is written for a medium to large scale enterprise system, so additional overhead elements will be discussed, which may be unecessary for smaller organizations.</p>
+<p>This cheat sheet will discuss common and necessary security patterns to follow when creating and reviewing cloud architectures. Each section will cover a specific security guideline or cloud design decision to consider. This sheet is written for a medium to large scale enterprise system, so additional overhead elements will be discussed, which may be unnecessary for smaller organizations.</p>
 <h2 id="risk-analysis-threat-modeling-and-attack-surface-assessments">Risk Analysis, Threat Modeling, and Attack Surface Assessments<a class="headerlink" href="#risk-analysis-threat-modeling-and-attack-surface-assessments" title="Permanent link">&para;</a></h2>
 <p>With any application architecture, understanding the risks and threats is extremely important for proper security. No one can spend their entire budget or bandwidth focused on security, so properly allocating security resources is necessary.
-Therefore, enterprises must perform risk assessments, threat modeling activites, and attack surface assessments to identify the following:</p>
+Therefore, enterprises must perform risk assessments, threat modeling activities, and attack surface assessments to identify the following:</p>
 <ul>
 <li>What threats an application might face</li>
 <li>The likelihood of those threats actualizing as attacks</li>
@@ -3238,7 +3238,7 @@ Therefore, enterprises must perform risk assessments, threat modeling activites,
 </tr>
 <tr>
 <td style="text-align: center;"></td>
-<td style="text-align: center;">Accidently leak stored info</td>
+<td style="text-align: center;">Accidentally leak stored info</td>
 </tr>
 </tbody>
 </table>
@@ -3463,7 +3463,7 @@ Therefore, enterprises must perform risk assessments, threat modeling activites,
 <li>Application software</li>
 <li>External data storage</li>
 </ul>
-<p>It provides neatly packaged code hosting and containerized options, which allow smaller development teams or less experienced developers a way to get started with their applications while ignoring more complex or superfluous computing tasks. It is generally less expensive than IaaS, while still retaining some control over elements that a SaaS system does not provide. However, developers could have problems with the specific limitations of the offering used, or issues with compatability, as the code must work with the correct container, framework or language version.</p>
+<p>It provides neatly packaged code hosting and containerized options, which allow smaller development teams or less experienced developers a way to get started with their applications while ignoring more complex or superfluous computing tasks. It is generally less expensive than IaaS, while still retaining some control over elements that a SaaS system does not provide. However, developers could have problems with the specific limitations of the offering used, or issues with compatibility, as the code must work with the correct container, framework or language version.</p>
 <p>Also, while scalability is very dependent on provider and setup, PaaS usually provides higher scalability due to containerization options and common, repeatable base OS systems. Compared to IaaS, where scalability must be built by the developer, and SaaS, where the performance is very platform specific.</p>
 <table>
 <thead>
@@ -3475,7 +3475,7 @@ Therefore, enterprises must perform risk assessments, threat modeling activites,
 <tbody>
 <tr>
 <td style="text-align: center;">Easier to onboard and maintain</td>
-<td style="text-align: center;">Potential compatability issues</td>
+<td style="text-align: center;">Potential compatibility issues</td>
 </tr>
 <tr>
 <td style="text-align: center;">Better scalability</td>
@@ -3483,7 +3483,7 @@ Therefore, enterprises must perform risk assessments, threat modeling activites,
 </tr>
 </tbody>
 </table>
-<p>Manual security in PaaS solutions is similary less extensive (compared to IaaS). Application specific authentication and authorization must still be handled by the developer, along with any access to external data systems. However, the CSP is responsible for securing containerized instances, operating systems, ephemeral files systems, and certain networking controls.</p>
+<p>Manual security in PaaS solutions is similarly less extensive (compared to IaaS). Application specific authentication and authorization must still be handled by the developer, along with any access to external data systems. However, the CSP is responsible for securing containerized instances, operating systems, ephemeral files systems, and certain networking controls.</p>
 <h3 id="saas">SaaS<a class="headerlink" href="#saas" title="Permanent link">&para;</a></h3>
 <p>The Software as a Service model is identified by a nearly complete product, where the end user only has to configure or customize small details in order to meet their needs. The user generally controls:</p>
 <ul>
@@ -3527,7 +3527,7 @@ Therefore, enterprises must perform risk assessments, threat modeling activites,
 <p><img alt="Shared Responsibility Model" src="../assets/Secure_Cloud_Architecture_Shared_Responsibility_Model.png" /></p>
 <p><em>Note: It is hard to indicate exactly which offerings are considered what type of service (Ex: IaaS vs PaaS). Developers should look to understand the model which applies to the specific tool they are using.</em></p>
 <h4 id="update-strategy-for-self-managed-services">Update Strategy for Self-managed Services<a class="headerlink" href="#update-strategy-for-self-managed-services" title="Permanent link">&para;</a></h4>
-<p>Self-managed tooling will require additional overhead by developers and support engineers. Depending on the tool, basic version updates, upgrades to images like <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html">AMIs</a> or <a href="https://cloud.google.com/compute/docs/images">Compute Images</a>, or other operating system level maintence will be required. Use automation to regularly update minor versions or <a href="https://docs.aws.amazon.com/systems-manager/latest/userguide/automation-tutorial-update-patch-golden-ami.html">images</a>, and schedule time in development cycles for refreshing stale resources.</p>
+<p>Self-managed tooling will require additional overhead by developers and support engineers. Depending on the tool, basic version updates, upgrades to images like <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html">AMIs</a> or <a href="https://cloud.google.com/compute/docs/images">Compute Images</a>, or other operating system level maintenance will be required. Use automation to regularly update minor versions or <a href="https://docs.aws.amazon.com/systems-manager/latest/userguide/automation-tutorial-update-patch-golden-ami.html">images</a>, and schedule time in development cycles for refreshing stale resources.</p>
 <h4 id="avoid-gaps-in-managed-service-security">Avoid Gaps in Managed Service Security<a class="headerlink" href="#avoid-gaps-in-managed-service-security" title="Permanent link">&para;</a></h4>
 <p>Managed services will offer some level of security, like updating and securing the underlying hardware which runs application code. However, the development team are still responsible for many aspects of security in the system. Ensure developers understand what security will be their responsibility based on tool selection. Likely the following will be partially or wholly the responsibility of the developer:</p>
 <ul>

@@ -3068,7 +3068,7 @@
 </ol>
 <h3 id="java">Java<a class="headerlink" href="#java" title="Permanent link">&para;</a></h3>
 <p>The following techniques are all good for preventing attacks against deserialization against <a href="https://docs.oracle.com/javase/7/docs/api/java/io/Serializable.html">Java's Serializable format</a>.</p>
-<p>Implementation advices:</p>
+<p>Implementation advice:</p>
 <ul>
 <li>In your code, override the <code>ObjectInputStream#resolveClass()</code> method to prevent arbitrary classes from being deserialized. This safe behavior can be wrapped in a library like <a href="https://github.com/ikkisoft/SerialKiller">SerialKiller</a>.</li>
 <li>Use a safe replacement for the generic <code>readObject()</code> method as seen here. Note that this addresses "<a href="https://en.wikipedia.org/wiki/Billion_laughs_attack">billion laughs</a>" type attacks by checking input length and number of objects deserialized.</li>

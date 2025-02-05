@@ -2815,7 +2815,7 @@
 <ul>
 <li>Include the <code>django.middleware.security.SecurityMiddleware</code> module in the <code>MIDDLEWARE</code> setting in your project's <code>settings.py</code> if not already added.</li>
 <li>Set the <code>SECURE_SSL_REDIRECT = True</code> in the <code>settings.py</code> file to ensure that all communication is over HTTPS. This will redirect any HTTP requests automatically to HTTPS. This is also a 301 (permanent) redirect, so your browser will remember the redirect for subsequent requests.</li>
-<li>If your Django application is behind a proxy or load balancer, set the <code>SECURE_PROXY_SSL_HEADER</code> setting to <code>TRUE</code> so that Django can detect the original request's protocol. For futher details refer to <a href="https://docs.djangoproject.com/en/3.2/ref/settings/#secure-proxy-ssl-header">SECURE_PROXY_SSL_HEADER documentation</a>.</li>
+<li>If your Django application is behind a proxy or load balancer, set the <code>SECURE_PROXY_SSL_HEADER</code> setting to <code>TRUE</code> so that Django can detect the original request's protocol. For further details refer to <a href="https://docs.djangoproject.com/en/3.2/ref/settings/#secure-proxy-ssl-header">SECURE_PROXY_SSL_HEADER documentation</a>.</li>
 </ul>
 <h2 id="admin-panel-url">Admin panel URL<a class="headerlink" href="#admin-panel-url" title="Permanent link">&para;</a></h2>
 <p>It is advisable to modify the default URL leading to the admin panel (example.com/admin/), in order to slightly increase the difficulty for automated attacks. Here’s how to do it:</p>
