@@ -1,11 +1,27 @@
+# Common cheatsheet shortcuts
+xss: cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
+auth: cheatsheets/Authentication_Cheat_Sheet.html
+injection: cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html
+csrf: cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html
+
+# Common guide shortcuts
+newdev: cheatsheets/Guide_for_New_Developers.html
+secarch: cheatsheets/Security_Architecture_Cheat_Sheet.html
+
+# Tool shortcuts
+webgoat: https://owasp.org/www-project-webgoat/
+juice: https://owasp.org/www-project-juice-shop/
+
+# Legacy redirects
+old_xss: cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html  # Maintain backwards compatibility
+
 # Direct topic shortcuts
 SSRF: cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html
 XSS: cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 SQLi: cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html
 JWT: cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html
 DOS: cheatsheets/Denial_of_Service_Cheat_Sheet.html
-Auth: cheatsheets/Authentication_Cheat_Sheet.html
-CSRF: cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html
+XSRF: cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html
 Docker: cheatsheets/Docker_Security_Cheat_Sheet.html
 GraphQL: cheatsheets/GraphQL_Cheat_Sheet.html
 K8S: cheatsheets/Kubernetes_Security_Cheat_Sheet.html
