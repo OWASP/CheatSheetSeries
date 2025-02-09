@@ -24,11 +24,11 @@ DOS: cheatsheets/Denial_of_Service_Cheat_Sheet.html
 XSRF: cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html
 Docker: cheatsheets/Docker_Security_Cheat_Sheet.html
 GraphQL: cheatsheets/GraphQL_Cheat_Sheet.html
-K8S: cheatsheets/Kubernetes_Security_Cheat_Sheet.html
+Kubernetes: cheatsheets/Kubernetes_Security_Cheat_Sheet.html
 LDAP: cheatsheets/LDAP_Injection_Prevention_Cheat_Sheet.html
 OAuth: cheatsheets/OAuth_2.0_Cheat_Sheet.html
 SAML: cheatsheets/SAML_Security_Cheat_Sheet.html
-TLS: cheatsheets/Transport_Layer_Protection_Cheat_Sheet.html
+TLP: cheatsheets/Transport_Layer_Protection_Cheat_Sheet.html
 
 # Language-specific shortcuts
 Java: cheatsheets/Java_Security_Cheat_Sheet.html
@@ -40,7 +40,7 @@ DotNet: cheatsheets/DotNet_Security_Cheat_Sheet.html
 
 # Category-based shortcuts
 Mobile: cheatsheets/Mobile_Application_Security_Cheat_Sheet.html
-API: cheatsheets/REST_Security_Cheat_Sheet.html
+REST: cheatsheets/REST_Security_Cheat_Sheet.html
 Cloud: cheatsheets/Cloud_Security_Cheat_Sheet.html
 Crypto: cheatsheets/Cryptographic_Storage_Cheat_Sheet.html
 Password: cheatsheets/Password_Storage_Cheat_Sheet.html
