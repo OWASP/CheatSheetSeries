@@ -30,7 +30,7 @@ The communication between the drone and the GCS is vulnerable to interception an
 
 - **Wi-Fi Weaknesses** – Weak authentication or unprotected channels can allow unauthorized access. This is even possible through simple [microcontrollers like ESP8266](https://github.com/SpacehuhnTech/esp8266_deauther)!
 
-    - Use **802.11w MFP (Management Frame Protection)** to prevent WiFi deauthentication attacks. Don't worry, if your Wi-Fi systems are up to date, then this is a default protocol now.
+    - Use **802.11w MFP (Management Frame Protection)** to prevent Wi-Fi deauthentication attacks. Don't worry, if your Wi-Fi systems are up to date, then this is a default protocol now.
 
 ### 2. Authentication & Access Control
 
@@ -108,7 +108,7 @@ Below are some protocols used by drone systems to communicate. This can be eithe
 
    - Pairing methods such as [_Just works_](https://devzone.nordicsemi.com/f/nordic-q-a/17165/ble-just-works-pairing) are vulnerable to MITM attacks! Do not use them if you're setting up your own Bluetooth adapters.
 
-5. **WiFi (802.11a/b/g/n/ac/ax)** – A common method for FPV (First Person View) video transmission and drone control.
+5. **Wi-Fi (802.11a/b/g/n/ac/ax)** – A common method for FPV (First Person View) video transmission and drone control.
 
    - Make sure that you are using **WPA3 encryption** for the highest level of security. Note that protocols like **WEP** are vulnerable!
 
@@ -128,7 +128,7 @@ There are multiple GitHub repos that help with drone attack [simulations](https:
 
 ## References
 
-- [ESP8266 WiFi deauther](https://github.com/SpacehuhnTech/esp8266_deauther)
+- [ESP8266 Wi-Fi deauther](https://github.com/SpacehuhnTech/esp8266_deauther)
 
 - [Command Injection explanation](https://owasp.org/www-community/attacks/Command_Injection)
 
