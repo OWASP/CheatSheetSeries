@@ -114,7 +114,7 @@ Below are some protocols used by drone systems to communicate. This can be eithe
 
    - Use **802.11w Management Frame Protection (MFP)** to mitigate deauthentication attacks (these are crafted packets that emulate a server and cause deauthentication).
 
-   - Disable **SSID broadcasting** and use **MAC filtering** where feasible. This is advisable because it essentially hides your drone's wifi adapters from simple scans.
+   - Disable **SSID broadcasting** and use **MAC filtering** where feasible. This is advisable because it essentially hides your drone's Wi-Fi adapters from simple scans.
 
 By implementing these security measures, drone operators can significantly reduce the risks of cyberattacks and unauthorized access to UAV communication systems.
 
