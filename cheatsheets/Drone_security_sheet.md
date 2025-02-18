@@ -122,7 +122,32 @@ By implementing these security measures, drone operators can significantly reduc
 
 The following table summaries the different attack vectors for a drone system.
 
-![Table showing attack vectors](../assets/Drone_attack_scenarios_table.png)
+| Attack |  | Targets | | | | | | Security Measures | |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Type | Nature | Privacy| Data Confidentiality | Integrity | Accessibility | Authentication|Non-Cryptographic | Cryptographic |
+| Malware | Infection | x | x |x |x |x | Control access, system integrity solutions and multi-factor authentication | Hybrid lightweight IDS |
+| BackDoor Access | Infection |x|x|x| x|x | Multi-factor robust authentication scheme | Hybrid lightweight IDS, vulnerability assessment |
+| Social Engineering | Exploitation | x|x |- |- |x | N/A | Raising awareness, training operators |
+| Baiting | Exploitation |x| x| x|- |x | N/A | Raising awareness, training operators |
+| Injection/Modification | Exploitation |x |- |x |- |- | Message authentication or digital signature | Machine-Learning hybrid IDS, time stamps |
+| Fabrication | Exploitation |x |- |x |- |x | Multi-factor authentication, message authentication or digital signature | , Assigning privilege |
+| Reconnaissance | Information gathering | x| x| -|- |- | Encrypted traffic/stream | Hybrid lightweight IDS |
+| Scanning | Information gathering | x|x |x |- |- | Encrypted traffic/stream | Hybrid lightweight IDS or Honeypot |
+| Three-Way Handshake | Interception | -|- |- |x |x | - | Traffic filtering, close unused TCP/FTP ports |
+| Eavesdropping | Interception | x| x| -| -| -| Securing communication/traffic, secure connection | N/A |
+| Traffic Analysis | Interception | x|- |- |- |- | Securing communication/traffic, secure connection | N/A |
+| Man-in-the-Middle | Authentication |x |x |x |- |- | Multi-factor authentication & lightweight strong cryptographic authentication protocol | Lightweight hybrid IDS |
+| Password Breaking | Cracking | x|x |x |x |- | Strong periodic passwords, strong encryption | Lightweight IDS |
+| Wi-Fi Aircrack | Cracking | x|x |x |x |- | Strong & periodic passwords, strong encryption algorithm | Lightweight IDS at the physical layer |
+| Wi-Fi Jamming | Jamming | x| x| x| x|- | N/A | Frequency hopping, frequency range variation |
+| De-Authentication | Jamming | x| x| x| x| -| N/A | Frequency hopping, frequency range variation |
+| Replay | Jamming | x| x| x| x| -| N/A | Frequency hopping, time stamps |
+| Buffer Overflow | Jamming |x |x | x| x|- | N/A | Frequency hopping, frequency range variation |
+| Denial of Service | Jamming |x |x |x |x |- | N/A | Frequency hopping, frequency range variation |
+| ARP Cache Poison | Jamming |x |x | x| x|- | N/A | Frequency hopping, frequency range variation |
+| Ping-of-Death | Jamming | x| x| x| x| -| N/A | Frequency range variation |
+| GPS Spoofing | Jamming | x| x| x| x| -| N/A | Return-to-base, frequency range variation |
+
 
 There are multiple GitHub repos that help with drone attack [simulations](https://github.com/nicholasaleks/Damn-Vulnerable-Drone) and [actual exploits](https://github.com/dhondta/dronesploit). Be sure to check them out too for a deeper understanding of drone security.
 
