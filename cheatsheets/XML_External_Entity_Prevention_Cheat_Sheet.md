@@ -455,6 +455,7 @@ try {
 Unmarshaller um = jc.createUnmarshaller();
 um.unmarshal(xsr);
 ```
+
 Note that both the `createXMLStreamReader` and `unmarshal` methods have several overloads with various source types, so you need to pick the right one and do a possible conversion.
 
 ### XPathExpression
