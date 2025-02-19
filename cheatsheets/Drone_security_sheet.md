@@ -122,8 +122,8 @@ By implementing these security measures, drone operators can significantly reduc
 
 The following table summaries the different attack vectors for a drone system.
 
-| Attack |  | Targets | | | | | | Security Measures | |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Attack |  | Targets | | | | | Security Measures | |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | Type | Nature | Privacy| Data Confidentiality | Integrity | Accessibility | Authentication|Non-Cryptographic | Cryptographic |
 | Malware | Infection | x | x |x |x |x | Control access, system integrity solutions and multi-factor authentication | Hybrid lightweight IDS |
 | BackDoor Access | Infection |x|x|x| x|x | Multi-factor robust authentication scheme | Hybrid lightweight IDS, vulnerability assessment |
@@ -147,7 +147,6 @@ The following table summaries the different attack vectors for a drone system.
 | ARP Cache Poison | Jamming |x |x | x| x|- | N/A | Frequency hopping, frequency range variation |
 | Ping-of-Death | Jamming | x| x| x| x| -| N/A | Frequency range variation |
 | GPS Spoofing | Jamming | x| x| x| x| -| N/A | Return-to-base, frequency range variation |
-
 
 There are multiple GitHub repos that help with drone attack [simulations](https://github.com/nicholasaleks/Damn-Vulnerable-Drone) and [actual exploits](https://github.com/dhondta/dronesploit). Be sure to check them out too for a deeper understanding of drone security.
 
