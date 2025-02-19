@@ -439,30 +439,24 @@ documentBuilder.setEntityResolver(noop);
 
 ### JAXB Unmarshaller
 
-**Because `javax.xml.bind.Unmarshaller` parses XML but does not support any flags for disabling XXE, you must parse the untrusted XML through a configurable secure parser first, generate a source object as a result, and pass the source object to the Unmarshaller.** For example:
+**You should ensure that the source to the `unmarshal` function of `javax.xml.bind.Unmarshaller` is `javax.xml.stream.XMLStreamReader` that was generated using `javax.xml.stream.XMLInputFactory` with safe properties, i.e. `XMLInputFactory.SUPPORT_DTD` and `XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES` set to `false`.** For example:
 
 ``` java
-SAXParserFactory spf = SAXParserFactory.newInstance();
-
-//Option 1: This is the PRIMARY defense against XXE
-spf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
-spf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-spf.setXIncludeAware(false);
-
-//Option 2: If disabling doctypes is not possible
-spf.setFeature("http://xml.org/sax/features/external-general-entities", false);
-spf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
-spf.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
-spf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-spf.setXIncludeAware(false);
-
-//Do unmarshall operation
-Source xmlSource = new SAXSource(spf.newSAXParser().getXMLReader(),
-                                new InputSource(new StringReader(xml)));
-JAXBContext jc = JAXBContext.newInstance(Object.class);
+File file = new File(xmlPath);
+XMLInputFactory xif = XMLInputFactory.newFactory();
+xif.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+xif.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
+XMLStreamReader xsr = null;
+try {
+    xsr = xif.createXMLStreamReader(new StreamSource(file));
+} catch (XMLStreamException e) {
+    throw new RuntimeException(e);
+}  
 Unmarshaller um = jc.createUnmarshaller();
-um.unmarshal(xmlSource);
+um.unmarshal(xsr);
 ```
+
+Note that both the `createXMLStreamReader` and `unmarshal` methods have several overloads with various source types, so you need to pick the right one and do a possible conversion.
 
 ### XPathExpression
 
