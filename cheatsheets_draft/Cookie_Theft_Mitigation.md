@@ -110,7 +110,7 @@ app.post("/users/delete", cookieTheftDetectionMiddleware, (req, res) => {
 })
 ```
 
-Usually, such functions are provided as middleware, or they are provided by WAF (Web Application Framework) installed in front of the server itself.
+Usually, such functions are provided as middleware, or they are provided by WAF (Web Application Firewall) installed in front of the web server.
 
 If this comparison has a significant impact on performance, it may be possible to tune it so that the priority is set for each path and only the endpoints that view or modify important information are checked intensively.
 
