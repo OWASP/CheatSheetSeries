@@ -25,7 +25,7 @@ If you save this information when establishing a session and compare it in each 
 
 Of course, it is difficult to make a judgment based on simple comparison alone. For example, if the user changes the WiFi network they are connected to, their IP address will change. If the user updates their browser, User-Agent will change. So it is necessary not only to compare the values, but also to check whether the meaning of the values has not changed significantly.
 
-### False negative/positive -ness
+### False negatives/positives
 
 Suppose that a session cookie that has been granted access in a certain country is used from another country. This could be an attack, or it could simply be that the user has traveled.
 
