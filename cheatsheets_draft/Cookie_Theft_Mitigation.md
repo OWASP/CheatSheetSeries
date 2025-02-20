@@ -87,7 +87,7 @@ However, as mentioned earlier, monitoring sessions has the potential for false p
 
 An alternative would be to use a CAPTCHA or similar to make a decision. This is particularly useful when a stolen session cookie is being used by a bot or other malicious program.
 
-Basically, if there is a suspicion of session hijacking, it would be good to display a CAPTCHA for normal browsing, and to use re-authentication to provide reliable protection before accessing confidential information or performing processes with side effects.
+As a compromise, if there is a suspicion of session hijacking, it could be good practice to display a CAPTCHA for normal browsing, and to use re-authentication to provide reliable protection before accessing confidential information or performing actions with side effects.
 
 ```js
 function cookieTheftDetectionMiddleware(req, res) {
