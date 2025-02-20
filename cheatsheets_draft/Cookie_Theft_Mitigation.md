@@ -49,7 +49,7 @@ In addition, the following headers, which can be change depending on the Device 
 - Accept
 - Accept-Encoding
 
-Also, recent browsers sends request headers called `Sec-Fetch-*` that provides information about the browsing contexts, so these values can also be used as a reference. It's not sent by the every browser, and it's not always sent even if browser supported. so it should be covered as Opt-In manner.
+Also, recent browsers sends request headers called `Sec-Fetch-*` that provides information about the browsing contexts, so these values can also be used as a reference. It's not sent by every browser, and it's not always sent even if browser supported, so it should not be relied upon.
 
 - sec-ch-prefers-color-scheme
 - sec-ch-ua
