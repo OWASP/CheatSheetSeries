@@ -8,7 +8,7 @@ However, if attacker can steal a valid session cookie instead, it is possible to
 
 Generally, cookie theft is carried out directly against users through malware or phishing attacks. Therefore, the only thing a service can do is to _detect as quickly as possible when a stolen cookie is used_.
 
-## Main Section
+## Cookie Theft Mitigation
 
 Session Cookies are given to users when they log in. If these are stolen by an attacker and used to hijack the session from the attacker's device, certain environment information used in the connection for session will change.
 
