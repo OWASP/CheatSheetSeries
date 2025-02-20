@@ -83,7 +83,7 @@ If a large change is detected when comparing these informations each time a requ
 
 If there is a possibility that a session has been hijacked, the most reliable verification method is to re-authenticate. If you temporarily invalidate the user's session, ask them to authenticate again, and then give them a new session cookie, the attacker will no longer be able to do anything with the stolen cookie.
 
-However, as I mentioned earlier, monitoring sessions has the potential for false positives, so if you have to re-authenticate too often, it will be a bad experience for the user.
+However, as mentioned earlier, monitoring sessions has the potential for false positives, so if you have to re-authenticate too often, it will be a poor experience for the user.
 
 An alternative would be to use a CAPTCHA or similar to make a decision. This is particularly useful when a stolen session cookie is being used by a bot or other malicious program.
 
