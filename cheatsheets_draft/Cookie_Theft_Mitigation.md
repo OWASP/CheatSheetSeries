@@ -23,7 +23,7 @@ In this way, there are multiple vectors that can be used to detect that the user
 
 If you save this information when establishing a session and compare it in each request, you can detect if the user environment has changed.
 
-Of course, it is difficult to make a judgment based on simple comparison alone. For example, if the user changes the WiFi network they are connected to, their IP address will change. If the user updates browser, User-Agent will change. So it is necessary not only to compare the values, but also to check whether the meaning of the values has not changed significantly.
+Of course, it is difficult to make a judgment based on simple comparison alone. For example, if the user changes the WiFi network they are connected to, their IP address will change. If the user updates their browser, User-Agent will change. So it is necessary not only to compare the values, but also to check whether the meaning of the values has not changed significantly.
 
 ### False negative/positive -ness
 
