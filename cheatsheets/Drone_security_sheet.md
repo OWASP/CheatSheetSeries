@@ -14,7 +14,7 @@ A typical drone architecture consists of three main components:
 
 1. **Unmanned Aircraft (UmA)** – The physical drone itself, including its sensors and onboard systems.
 2. **Ground Control Station (GCS)** – The interface used to control and monitor drone operations.
-3. **Communication Data-Link (CDL)** – The network connection between the drone and the GCS
+3. **Communication Data-Link (CDL)** – The network connection between the drone and the GCS.
 
 The communication between the drone and the GCS is vulnerable to interception and attacks. This will be made evident in the future sections as well. It is important to understand that peripherals attached to drone may be vulnerable too! To explain this, we have made a list of **vulnerable endpoints** below.
 
@@ -48,7 +48,7 @@ Thus, it becomes very important to maintain their security as well. The possible
 
 ### 3. Physical Security
 
-If you're done is ever captured or lost, you should ensure that its not physically possible to steal data from it. This may happen under the following conditions:
+If your drone is ever captured or lost, you should ensure that its not physically possible to steal data from it. This may happen under the following conditions:
 
 - **Insufficient Physical Security** – Unsecured USB ports or exposed hardware can lead to data theft or tampering.
 
@@ -58,9 +58,9 @@ If you're done is ever captured or lost, you should ensure that its not physical
 
 ### 4. Sensor Security
 
-With drones implementing control logic depending on how close they are to other drones or aerial vehicles, manipulating sensor data is extremely disastrous!
+With drones implementing control logic depending on how close they are to other drones or aerial vehicles, manipulating sensor data can be disastrous!
 
-Yes, attackers can manipulate drone sensors (GPS, cameras, altimeters) to feed incorrect data. Think of this more like how [struxnet](https://en.wikipedia.org/wiki/Stuxnet) changed the temperatures of the Uranium holdings in Iran.
+Attackers can manipulate drone sensors (GPS, cameras, altimeters) to feed incorrect data. Think of this more like how [stuxnet](https://en.wikipedia.org/wiki/Stuxnet) changed the speed of the Uranium centrifuges in Iran while still reporting the speed as normal.
 
 To prevent this, there is new research being developed involving **watermarked signals** whose **entropy** can be used to determine if the sensor values are correct of not. Read more about this method [here](https://ieeexplore.ieee.org/abstract/document/9994719).
 
@@ -68,9 +68,9 @@ To prevent this, there is new research being developed involving **watermarked s
 
 - **Inadequate Logging and Monitoring** – Without sufficient monitoring, security breaches or operational anomalies may go undetected.
 
-- **Integration Issues** – The cameras require webserver configurations, and if poorly integrated, these web servers on cameras or telemetry systems may expose vulnerabilities that can be used to gather sensitive information.
+- **Integration Issues** – Some cameras require webserver configurations, and if poorly integrated, these web servers on cameras or telemetry systems may expose vulnerabilities that can be used to gather sensitive information.
 
-To prevent this, ensure that your credentials are strong! Additionally you may choose to implement SecOps softwares like [DefectDojo](https://github.com/DefectDojo/django-DefectDojo) for continous monitoring of your systems.
+To prevent this, ensure that your credentials are strong!
 
 ---
 
@@ -90,7 +90,7 @@ Below are some protocols used by drone systems to communicate. This can be eithe
 
 2. **CAN (Controller Area Network) Bus** – A communication protocol used between internal drone system components (e.g., flight controllers, ESCs, GPS modules).
 
-   - Most attacks require **physical access** to exploit CAN. It works on differentially signals and hardware hacking may be possible by tapping into them.
+   - Most attacks require **physical access** to exploit CAN. It works on a differential signal and hardware hacking may be possible by tapping into them.
 
    - There exist tools like **DroneCAN** which make using secure CAN communications easy.
 
@@ -130,7 +130,7 @@ The following table summaries the different attack vectors for a drone system.
 | Social Engineering | Exploitation | x|x |- |- |x | N/A | Raising awareness, training operators |
 | Baiting | Exploitation |x| x| x|- |x | N/A | Raising awareness, training operators |
 | Injection/Modification | Exploitation |x |- |x |- |- | Message authentication or digital signature | Machine-Learning hybrid Intrusion Detection System, timestamps |
-| Fabrication | Exploitation |x |- |x |- |x | Multi-factor authentication, message authentication or digital signature | , Assigning privilege |
+| Fabrication | Exploitation |x |- |x |- |x | Multi-factor authentication, message authentication or digital signature | Assigning privilege |
 | Reconnaissance | Information gathering | x| x| -|- |- | Encrypted traffic/stream | Hybrid lightweight Intrusion Detection System |
 | Scanning | Information gathering | x|x |x |- |- | Encrypted traffic/stream | Hybrid lightweight Intrusion Detection System or Honeypot |
 | Three-Way Handshake | Interception | -|- |- |x |x | - | Traffic filtering, close unused TCP/FTP ports |
@@ -167,7 +167,5 @@ There are multiple GitHub repos that help with drone attack [simulations](https:
 - [Drones from a Cybersecurity Perspective](https://dronewolf.darkwolf.io/intro)
 
 - [Dynamic Watermarking in UAVs](https://ieeexplore.ieee.org/abstract/document/9994719)
-
-- [django-DefectDojo GitHub](https://github.com/DefectDojo/django-DefectDojo)
 
 - [GPS spoofing and prevention](https://www.okta.com/identity-101/gps-spoofing/)
