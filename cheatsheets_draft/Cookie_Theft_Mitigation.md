@@ -77,7 +77,7 @@ session.save({
 })
 ```
 
-If a large change is detected when comparing these informations each time a request is received, it is possible that the session has been hijacked.
+If a large change is detected when comparing this information each time a request is received, it is possible that the session has been hijacked.
 
 ### Session Validation
 
