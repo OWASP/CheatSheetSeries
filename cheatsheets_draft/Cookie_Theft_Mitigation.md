@@ -12,7 +12,7 @@ Generally, cookie theft is carried out directly against users through malware or
 
 Session Cookies are given to users when they logged in. If these are stolen by an attacker and used to hijack session from attackers device, several of the environment informations used in the connection for session will change.
 
-For example, if a stolen cookies are used by an attacker from another country, you can detect this by detecting a large change in the IP address.
+For example, if stolen cookies are used by an attacker from another country, you can detect this by detecting a significant change in the IP address.
 
 In this way, there are multiple vectors that can be used to detect that the user environments has changed.
 
