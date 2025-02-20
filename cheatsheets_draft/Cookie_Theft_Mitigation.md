@@ -95,7 +95,7 @@ function cookieTheftDetectionMiddleware(req, res) {
   const expectedIP = req.session.ip
   if (checkGeoIPRange(currentIP, expected) === false) {
      // Validation
-
+  }
   const currentUA = req.userAgent
   const expectedUA = req.session.ua
   if (checkUserAgent(currentUA, expectedUA)) {
