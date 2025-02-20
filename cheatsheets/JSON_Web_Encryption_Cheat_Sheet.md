@@ -14,7 +14,7 @@ JSON Web Encryption (JWE) is a standard for encrypting JSON-based tokens, ensuri
 | **Protection**      | Uses digital signatures for integrity (but payload is visible) | Encrypts payload to ensure confidentiality        |
 | **Example Use Case**| Identity claims in OAuth                             | Protecting sensitive user data                   |
 
-> **Note:** JWT ensures authenticity but does NOT encrypt data, while JWE provides full confidentiality.
+> **Note:** JWT ensures authenticity but does NOT encrypt data, while JWE provides full confidentiality and also ensures integrity through authenticated encryption (AEAD).
 
 ### ***Using JWE-Only JWTs: Is It Secure?***
 
