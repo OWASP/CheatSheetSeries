@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Infrastructure_as_Code_Security_Cheat_Sheet.html">
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Drone_security_sheet.html">
       
       
-        <link rel="prev" href="HTTP_Strict_Transport_Security_Cheat_Sheet.html">
+        <link rel="prev" href="DotNet_Security_Cheat_Sheet.html">
       
       
-        <link rel="next" href="Injection_Prevention_Cheat_Sheet.html">
+        <link rel="next" href="Error_Handling_Cheat_Sheet.html">
       
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
@@ -24,7 +24,7 @@
     
     
       
-        <title>Infrastructure as Code Security - OWASP Cheat Sheet Series</title>
+        <title>Drone security sheet.md - OWASP Cheat Sheet Series</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#infrastructure-as-code-security-cheatsheet" class="md-skip">
+        <a href="#drone-security-cheat-sheet" class="md-skip">
           Skip to content
         </a>
       
@@ -111,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Infrastructure as Code Security
+              Drone security sheet.md
             
           </span>
         </div>
@@ -979,10 +979,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="Drone_security_sheet.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Drone security sheet.md
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="Drone_security_sheet.html" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -991,6 +1011,131 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#drone-system-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Drone System Components
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vulnerable-endpoints-security-risks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Vulnerable Endpoints &amp; Security Risks
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Vulnerable Endpoints & Security Risks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-communication-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Communication Security
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-authentication-access-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Authentication &amp; Access Control
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-physical-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Physical Security
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-sensor-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Sensor Security
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-logging-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Logging &amp; Monitoring
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#secure-communication-protocols" class="md-nav__link">
+    <span class="md-ellipsis">
+      Secure Communication Protocols
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1147,30 +1292,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Infrastructure as Code Security
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="Infrastructure_as_Code_Security_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="Infrastructure_as_Code_Security_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1179,86 +1304,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    <span class="md-ellipsis">
-      Introduction
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Introduction">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#security-best-practices" class="md-nav__link">
-    <span class="md-ellipsis">
-      Security best practices
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#develop-and-distribute" class="md-nav__link">
-    <span class="md-ellipsis">
-      Develop and Distribute
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#deploy" class="md-nav__link">
-    <span class="md-ellipsis">
-      Deploy
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#runtime" class="md-nav__link">
-    <span class="md-ellipsis">
-      Runtime
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#references" class="md-nav__link">
-    <span class="md-ellipsis">
-      References
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -2543,40 +2588,67 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Introduction">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#drone-system-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Drone System Components
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vulnerable-endpoints-security-risks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Vulnerable Endpoints &amp; Security Risks
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Vulnerable Endpoints & Security Risks">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#security-best-practices" class="md-nav__link">
+  <a href="#1-communication-security" class="md-nav__link">
     <span class="md-ellipsis">
-      Security best practices
+      1. Communication Security
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#develop-and-distribute" class="md-nav__link">
+  <a href="#2-authentication-access-control" class="md-nav__link">
     <span class="md-ellipsis">
-      Develop and Distribute
+      2. Authentication &amp; Access Control
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#deploy" class="md-nav__link">
+  <a href="#3-physical-security" class="md-nav__link">
     <span class="md-ellipsis">
-      Deploy
+      3. Physical Security
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#runtime" class="md-nav__link">
+  <a href="#4-sensor-security" class="md-nav__link">
     <span class="md-ellipsis">
-      Runtime
+      4. Sensor Security
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-logging-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Logging &amp; Monitoring
     </span>
   </a>
   
@@ -2584,6 +2656,24 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#secure-communication-protocols" class="md-nav__link">
+    <span class="md-ellipsis">
+      Secure Communication Protocols
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
   
 </li>
       
@@ -2614,60 +2704,455 @@
   
 
 
-<!---
-Copyright 2021 Nokia
-Licensed under the Creative Commons Attribution-ShareAlike 3.0 Unported License
-SPDX-License-Identifier: CC-BY-SA-3.0
---->
-
-<h1 id="infrastructure-as-code-security-cheatsheet">Infrastructure as Code Security Cheatsheet<a class="headerlink" href="#infrastructure-as-code-security-cheatsheet" title="Permanent link">&para;</a></h1>
+<h1 id="drone-security-cheat-sheet">Drone Security Cheat Sheet<a class="headerlink" href="#drone-security-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>Infrastructure as code (IaC), also known as software-defined infrastructure, allows the configuration and deployment of infrastructure components faster with consistency by allowing them to be defined as a code and also enables repeatable deployments across environments.</p>
-<h3 id="security-best-practices">Security best practices<a class="headerlink" href="#security-best-practices" title="Permanent link">&para;</a></h3>
-<p>Here are some of the security best practices for IaC that can be easily integrated into the Software Development Lifecycle:</p>
-<h3 id="develop-and-distribute">Develop and Distribute<a class="headerlink" href="#develop-and-distribute" title="Permanent link">&para;</a></h3>
+<p>Drone security is crucial due to their widespread adoption in industries such as military, construction, and community services. With the increasing use of drone swarms, even minor security lapses can lead to significant risks.</p>
+<p>This cheat sheet provides an overview of vulnerable endpoints in drone systems and strategies to mitigate security threats.</p>
+<hr />
+<h2 id="drone-system-components">Drone System Components<a class="headerlink" href="#drone-system-components" title="Permanent link">&para;</a></h2>
+<p>A typical drone architecture consists of three main components:</p>
+<ol>
+<li><strong>Unmanned Aircraft (UmA)</strong> – The physical drone itself, including its sensors and onboard systems.</li>
+<li><strong>Ground Control Station (GCS)</strong> – The interface used to control and monitor drone operations.</li>
+<li><strong>Communication Data-Link (CDL)</strong> – The network connection between the drone and the GCS.</li>
+</ol>
+<p>The communication between the drone and the GCS is vulnerable to interception and attacks. This will be made evident in the future sections as well. It is important to understand that peripherals attached to drone may be vulnerable too! To explain this, we have made a list of <strong>vulnerable endpoints</strong> below.</p>
+<hr />
+<h2 id="vulnerable-endpoints-security-risks">Vulnerable Endpoints &amp; Security Risks<a class="headerlink" href="#vulnerable-endpoints-security-risks" title="Permanent link">&para;</a></h2>
+<h3 id="1-communication-security">1. Communication Security<a class="headerlink" href="#1-communication-security" title="Permanent link">&para;</a></h3>
 <ul>
-<li>IDE plugins - Leverage standard security plug-ins in the integrated development environment (IDE) which helps in the early detection of potential risks and drastically reduces the time to address any issues later in the development cycle. Plugins such as TFLint, Checkov, Docker Linter, docker-vulnerability-extension, Security Scan, Contrast Security, etc., help in the security assessment of the IaC.</li>
-<li>Threat modelling - Build the threat modelling landscape earlier in the development cycle to ensure there is enough visibility of the high-risk, high-volume aspects of the code and flexibility to include security throughout to ensure the assets are safely managed.</li>
-<li>Managing secrets -  Secrets are confidential data and information such as application tokens required for authentication, passwords, and SSH (Secure Shell) keys. The problem is not the secrets, but where you store them. If you are using a simple text file or SCMs like Git, then the secrets can be easily exposed. Open-source tools such as truffleHog, git-secrets, GitGuardian and similar can be utilized to detect such vulnerable management of secrets. See the <a href="Secrets_Management_Cheat_Sheet.html">Secrets Management Cheat Sheet</a> for more information.</li>
-<li>Version control - Version control is the practice of tracking and managing changes to software code. Ensure all the changes to the IaC are tracked with the right set of information that helps in any revert operation. The important part is that you’re checking in those changes alongside the features they support and not separately. A feature’s infrastructure requirements should be a part of a feature’s branch or merge request. Git is generally used as the source code version control system.</li>
 <li>
-<p>Principle of least privilege - define the access management policies based on the principle of least privilege with the following priority items:</p>
-<ul>
-<li>Defining who is and is not authorized to create/update/run/delete the scripts and inventory.</li>
-<li>Limiting the permissions of authorized IaC users to what is necessary to perform their tasks. The IaC scripts should ensure that the permissions granted to the various resources it creates are limited to what is required for them to perform their work.</li>
-</ul>
+<p><strong>Insecure Communication Links</strong> – Data transmitted between the drone and GCS can be intercepted if not properly encrypted. Use standard protocols for encryption of any data being sent over.</p>
 </li>
 <li>
-<p>Static analysis - Analyzes code in isolation, identifying risks, misconfigurations, and compliance faults only relevant to the IaC itself. Tools such as kubescan, Snyk, Coverity etc, can be leveraged for static analysis of IaC.</p>
+<p><strong>Spoofing and Replay Attacks</strong> – If the drone uses a GPS module then data spoofing and command replay attacks can also become a reality. Again encrpyted data transfer is the best way to go forward. There are many more methods, which have been discussed <a href="https://www.okta.com/identity-101/gps-spoofing/">here</a></p>
 </li>
-<li>Open Source dependency check - Analyzes the open source dependencies such as OS packages, libraries, etc., to identify potential risks. Tools such as BlackDuck, Snyk, WhiteSource Bolt for GitHub, and similar can be leveraged for open source dependency analysis of IaC.</li>
-<li>Container image scan - Image scanning refers to the process of analyzing the contents and the build process of a container image in order to detect security issues, vulnerabilities or potential risks. Open-source tools such as Dagda, Clair, Trivy, Anchore, etc., can be leveraged for container image analysis.
-CI/CD pipeline and Consolidated reporting - enabling the security checks to be made available in the CI/CD pipeline enables the analysis of each of the code changes, excludes the need for manual intervention, and enables maintaining the history of compliance. Along with consolidated reporting, these integrations enhance the speed of development of a secure IaC codebase. Open-source tools such as Jenkins, etc., can be leveraged to build the CI/CD pipelines, and DefectDojo and OWASP Glue can help in tying the checks together and visualizing the check results in a single dashboard.</li>
-<li>Artifact signing - Digital signing of artifacts at build time and validation of the signed data before use protects artifacts from tampering between build and runtime, thus ensuring the integrity and provenance of an artifact. Open-source tools such as TUF helps in the digital signing of artifacts.</li>
-</ul>
-<h3 id="deploy">Deploy<a class="headerlink" href="#deploy" title="Permanent link">&para;</a></h3>
+<li>
+<p><strong>Wi-Fi Weaknesses</strong> – Weak authentication or unprotected channels can allow unauthorized access. This is even possible through simple <a href="https://github.com/SpacehuhnTech/esp8266_deauther">microcontrollers like ESP8266</a>!</p>
 <ul>
-<li>Inventory management:<ul>
-<li>Commissioning - whenever a resource is deployed, ensure the resource is labeled, tracked and logged as part of the inventory management.</li>
-<li>Decommissioning - whenever a resource deletion is initiated, ensure the underlying configurations are erased, data is securely deleted and the resource is completely removed from the runtime as well as from the inventory management.</li>
-<li>Tagging - It is essential to tag cloud assets properly. During IaC operations, untagged assets are most likely to result in ghost resources that make it difficult to detect, visualize, and gain observability within the cloud environment and can affect the posture causing a drift. These ghost resources can add to billing costs, make maintenance difficult, and affect the reliability. The only solution to this is careful tagging and monitoring for untagged resources.</li>
+<li>Use <strong>802.11w MFP (Management Frame Protection)</strong> to prevent Wi-Fi deauthentication attacks. Don't worry, if your Wi-Fi systems are up to date, then this is a default protocol now.</li>
 </ul>
 </li>
-<li>Dynamic analysis - Dynamic analysis helps in evaluating any existing environments and services that it will interoperate with or run on. This helps in uncovering potential risks due to the interoperability. Open-source tools such as ZAP, Burp, GVM, etc., can be leveraged for dynamic analysis.</li>
 </ul>
-<h3 id="runtime">Runtime<a class="headerlink" href="#runtime" title="Permanent link">&para;</a></h3>
+<h3 id="2-authentication-access-control">2. Authentication &amp; Access Control<a class="headerlink" href="#2-authentication-access-control" title="Permanent link">&para;</a></h3>
+<p>Most drone controllers use 2 sets of computers,</p>
+<ol>
+<li>
+<p>The main chip that performs the PID control and handles motors</p>
+</li>
+<li>
+<p>An additional SoC (called the <strong>companion computer</strong>) to manage peripherals (like the cameras, LiDARs etc.) and send telemetry data.</p>
+</li>
+</ol>
+<p>Thus, it becomes very important to maintain their security as well. The possible risks in this case are:</p>
 <ul>
-<li>Immutability of infrastructure - The idea behind immutable infrastructure is to build the infrastructure components to an exact set of specifications. No deviation, no changes. If a change to a specification is required, then a whole new set of infrastructure is provisioned based on the updated requirements, and the previous infrastructure is taken out of service as obsolete.</li>
-<li>Logging - Keeping a record is a critical aspect to keeping an eye on risks. You should enable logging - both security logs and audit logs - while provisioning infrastructure, as they help assess the security risks related to sensitive assets. They also assist in analyzing the root cause of incidents and in identifying potential threats. Open-source tools such as ELK, etc., can be leveraged for log analysis.</li>
-<li>Monitoring - Continuous monitoring assists in looking out for any security and compliance violations, helps in identifying attacks and also provides alerts upon such incidents. Certain solutions also incorporate new technologies like AI to identify potential threats early. Open-source tools such as Prometheus, Grafana, etc., can be leveraged for monitoring of cloud infrastructure.</li>
-<li>Runtime threat detection: Implementing a runtime threat detection solution helps in recognizing unexpected application behavior and alerts on threats at runtime. Open-source tools such as Falco, etc., can be leveraged for runtime threat detection. Certain application such as Contrast (Contrast Community Edition) can also detect OWASP Top 10 attacks on the application during runtime and help block them in order to protect and secure the application.</li>
+<li>
+<p><strong>Companion Computers</strong> – Open ports (e.g., SSH, FTP) can be exploited if not securely configured.</p>
+</li>
+<li>
+<p><strong>User Error and Misconfiguration</strong> – Misconfigured security settings can expose the drone to risks.</p>
+</li>
 </ul>
+<h3 id="3-physical-security">3. Physical Security<a class="headerlink" href="#3-physical-security" title="Permanent link">&para;</a></h3>
+<p>If your drone is ever captured or lost, you should ensure that its not physically possible to steal data from it. This may happen under the following conditions:</p>
+<ul>
+<li>
+<p><strong>Insufficient Physical Security</strong> – Unsecured USB ports or exposed hardware can lead to data theft or tampering.</p>
+</li>
+<li>
+<p><strong>Insecure Supply Chain</strong> – Compromised components from suppliers can introduce hidden vulnerabilities.</p>
+</li>
+<li>
+<p><strong>End-of-Life Decommissioning Risks</strong> – Improperly decommissioned drones may retain sensitive data or be repurposed maliciously.</p>
+</li>
+</ul>
+<h3 id="4-sensor-security">4. Sensor Security<a class="headerlink" href="#4-sensor-security" title="Permanent link">&para;</a></h3>
+<p>With drones implementing control logic depending on how close they are to other drones or aerial vehicles, manipulating sensor data can be disastrous!</p>
+<p>Attackers can manipulate drone sensors (GPS, cameras, altimeters) to feed incorrect data. Think of this more like how <a href="https://en.wikipedia.org/wiki/Stuxnet">stuxnet</a> changed the speed of the Uranium centrifuges in Iran while still reporting the speed as normal.</p>
+<p>To prevent this, there is new research being developed involving <strong>watermarked signals</strong> whose <strong>entropy</strong> can be used to determine if the sensor values are correct of not. Read more about this method <a href="https://ieeexplore.ieee.org/abstract/document/9994719">here</a>.</p>
+<h3 id="5-logging-monitoring">5. Logging &amp; Monitoring<a class="headerlink" href="#5-logging-monitoring" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p><strong>Inadequate Logging and Monitoring</strong> – Without sufficient monitoring, security breaches or operational anomalies may go undetected.</p>
+</li>
+<li>
+<p><strong>Integration Issues</strong> – Some cameras require webserver configurations, and if poorly integrated, these web servers on cameras or telemetry systems may expose vulnerabilities that can be used to gather sensitive information.</p>
+</li>
+</ul>
+<p>To prevent this, ensure that your credentials are strong!</p>
+<hr />
+<h2 id="secure-communication-protocols">Secure Communication Protocols<a class="headerlink" href="#secure-communication-protocols" title="Permanent link">&para;</a></h2>
+<p>Below are some protocols used by drone systems to communicate. This can be either between each other (if in a horde) or with the ground stations. We have mentioned what can go wrong with each protocol and also provided recommendations.</p>
+<ol>
+<li><strong>MAVLink 2.0</strong> – A widely used protocol for communication between drones and ground control stations (GCS).</li>
+</ol>
+<ul>
+<li>
+<p>Implement <strong>message signing</strong> to prevent spoofing and replay attacks.</p>
+</li>
+<li>
+<p>You must secure <strong>heartbeat messages</strong> to avoid <a href="https://owasp.org/www-community/attacks/Command_Injection">command injection vulnerabilities</a>. A heartbeat message is usually a single byte that is sent at a certain frequency to all other nodes, informing of the device's existence. The frequency is important here!</p>
+</li>
+<li>
+<p>Tools like <strong>ArduPilot</strong> and <strong>PX4</strong> support MAVLink 2.0 security enhancements. There are thoroughly tested softwares and hence recommended.</p>
+</li>
+<li>
+<p>Utilize <strong>end-to-end encryption</strong>! Either through TLS or DTLS is fine and good.</p>
+</li>
+</ul>
+<ol start="2">
+<li><strong>CAN (Controller Area Network) Bus</strong> – A communication protocol used between internal drone system components (e.g., flight controllers, ESCs, GPS modules).</li>
+</ol>
+<ul>
+<li>
+<p>Most attacks require <strong>physical access</strong> to exploit CAN. It works on a differential signal and hardware hacking may be possible by tapping into them.</p>
+</li>
+<li>
+<p>There exist tools like <strong>DroneCAN</strong> which make using secure CAN communications easy.</p>
+</li>
+</ul>
+<ol start="3">
+<li><strong>ZigBee</strong> – A low-power wireless protocol often used for telemetry and sensor communication in backup systems.</li>
+</ol>
+<ul>
+<li>
+<p>This has a way to enable <strong>AES-128 encryption</strong> to secure transmissions. Make sure you do that.</p>
+</li>
+<li>
+<p>Deploy <strong>network keys with frequent rotation</strong> to prevent key compromise. Read more about <a href="https://cloud.google.com/kms/docs/key-rotation#:~:text=A%20rotation%20schedule%20defines%20the,require%20periodic%2C%20automatic%20key%20rotation.">key rotations here</a>.</p>
+</li>
+<li>
+<p>Monitor for <strong>ZigBee packet sniffing attacks</strong> using SDR-based tools like <strong>HackRF</strong> or <strong>YARD Stick One</strong>.</p>
+</li>
+</ul>
+<ol start="4">
+<li><strong>Bluetooth</strong> – Used for device connections, such as drone controllers or mobile applications.</li>
+</ol>
+<ul>
+<li>
+<p>You must enforce <strong>Strict Pairing Modes</strong> that is LE (Low Energy) Secure Connections over Bluetooth 4.2+. This uses the Elliptic curve Diffie-Hellman cryptosystem to generate keys. Essentially, its state of the art.</p>
+</li>
+<li>
+<p>Pairing methods such as <a href="https://devzone.nordicsemi.com/f/nordic-q-a/17165/ble-just-works-pairing"><em>Just works</em></a> are vulnerable to MITM attacks! Do not use them if you're setting up your own Bluetooth adapters.</p>
+</li>
+</ul>
+<ol start="5">
+<li><strong>Wi-Fi (802.11a/b/g/n/ac/ax)</strong> – A common method for FPV (First Person View) video transmission and drone control.</li>
+</ol>
+<ul>
+<li>
+<p>Make sure that you are using <strong>WPA3 encryption</strong> for the highest level of security. Note that protocols like <strong>WEP</strong> are vulnerable!</p>
+</li>
+<li>
+<p>Use <strong>802.11w Management Frame Protection (MFP)</strong> to mitigate deauthentication attacks (these are crafted packets that emulate a server and cause deauthentication).</p>
+</li>
+<li>
+<p>Disable <strong>SSID broadcasting</strong> and use <strong>MAC filtering</strong> where feasible. This is advisable because it essentially hides your drone's Wi-Fi adapters from simple scans.</p>
+</li>
+</ul>
+<p>By implementing these security measures, drone operators can significantly reduce the risks of cyberattacks and unauthorized access to UAV communication systems.</p>
+<h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
+<p>The following table summaries the different attack vectors for a drone system.</p>
+<table>
+<thead>
+<tr>
+<th>Attack</th>
+<th></th>
+<th>Targets</th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th>Security Measures</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Type</td>
+<td>Nature</td>
+<td>Privacy</td>
+<td>Data Confidentiality</td>
+<td>Integrity</td>
+<td>Accessibility</td>
+<td>Authentication</td>
+<td>Non-Cryptographic</td>
+<td>Cryptographic</td>
+</tr>
+<tr>
+<td>Malware</td>
+<td>Infection</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>Control access, system integrity solutions and multi-factor authentication</td>
+<td>Hybrid lightweight Intrusion Detection System</td>
+</tr>
+<tr>
+<td>BackDoor Access</td>
+<td>Infection</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>Multi-factor robust authentication scheme</td>
+<td>Hybrid lightweight Intrusion Detection System, vulnerability assessment</td>
+</tr>
+<tr>
+<td>Social Engineering</td>
+<td>Exploitation</td>
+<td>x</td>
+<td>x</td>
+<td>-</td>
+<td>-</td>
+<td>x</td>
+<td>N/A</td>
+<td>Raising awareness, training operators</td>
+</tr>
+<tr>
+<td>Baiting</td>
+<td>Exploitation</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>-</td>
+<td>x</td>
+<td>N/A</td>
+<td>Raising awareness, training operators</td>
+</tr>
+<tr>
+<td>Injection/Modification</td>
+<td>Exploitation</td>
+<td>x</td>
+<td>-</td>
+<td>x</td>
+<td>-</td>
+<td>-</td>
+<td>Message authentication or digital signature</td>
+<td>Machine-Learning hybrid Intrusion Detection System, timestamps</td>
+</tr>
+<tr>
+<td>Fabrication</td>
+<td>Exploitation</td>
+<td>x</td>
+<td>-</td>
+<td>x</td>
+<td>-</td>
+<td>x</td>
+<td>Multi-factor authentication, message authentication or digital signature</td>
+<td>Assigning privilege</td>
+</tr>
+<tr>
+<td>Reconnaissance</td>
+<td>Information gathering</td>
+<td>x</td>
+<td>x</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>Encrypted traffic/stream</td>
+<td>Hybrid lightweight Intrusion Detection System</td>
+</tr>
+<tr>
+<td>Scanning</td>
+<td>Information gathering</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>-</td>
+<td>-</td>
+<td>Encrypted traffic/stream</td>
+<td>Hybrid lightweight Intrusion Detection System or Honeypot</td>
+</tr>
+<tr>
+<td>Three-Way Handshake</td>
+<td>Interception</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>x</td>
+<td>x</td>
+<td>-</td>
+<td>Traffic filtering, close unused TCP/FTP ports</td>
+</tr>
+<tr>
+<td>Eavesdropping</td>
+<td>Interception</td>
+<td>x</td>
+<td>x</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>Securing communication/traffic, secure connection</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>Traffic Analysis</td>
+<td>Interception</td>
+<td>x</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>Securing communication/traffic, secure connection</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>Man-in-the-Middle</td>
+<td>Authentication</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>-</td>
+<td>-</td>
+<td>Multi-factor authentication &amp; lightweight strong cryptographic authentication protocol</td>
+<td>Lightweight hybrid Intrusion Detection System</td>
+</tr>
+<tr>
+<td>Password Breaking</td>
+<td>Cracking</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>-</td>
+<td>Strong periodic passwords, strong encryption</td>
+<td>Lightweight Intrusion Detection System</td>
+</tr>
+<tr>
+<td>Wi-Fi Aircrack</td>
+<td>Cracking</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>-</td>
+<td>Strong &amp; periodic passwords, strong encryption algorithm</td>
+<td>Lightweight Intrusion Detection System at the physical layer</td>
+</tr>
+<tr>
+<td>Wi-Fi Jamming</td>
+<td>Jamming</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>-</td>
+<td>N/A</td>
+<td>Frequency hopping, frequency range variation</td>
+</tr>
+<tr>
+<td>De-Authentication</td>
+<td>Jamming</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>-</td>
+<td>N/A</td>
+<td>Frequency hopping, frequency range variation</td>
+</tr>
+<tr>
+<td>Replay</td>
+<td>Jamming</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>-</td>
+<td>N/A</td>
+<td>Frequency hopping, timestamps</td>
+</tr>
+<tr>
+<td>Buffer Overflow</td>
+<td>Jamming</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>-</td>
+<td>N/A</td>
+<td>Frequency hopping, frequency range variation</td>
+</tr>
+<tr>
+<td>Denial of Service</td>
+<td>Jamming</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>-</td>
+<td>N/A</td>
+<td>Frequency hopping, frequency range variation</td>
+</tr>
+<tr>
+<td>ARP Cache Poison</td>
+<td>Jamming</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>-</td>
+<td>N/A</td>
+<td>Frequency hopping, frequency range variation</td>
+</tr>
+<tr>
+<td>Ping-of-Death</td>
+<td>Jamming</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>-</td>
+<td>N/A</td>
+<td>Frequency range variation</td>
+</tr>
+<tr>
+<td>GPS Spoofing</td>
+<td>Jamming</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+<td>-</td>
+<td>N/A</td>
+<td>Return-to-base, frequency range variation</td>
+</tr>
+</tbody>
+</table>
+<p>There are multiple GitHub repos that help with drone attack <a href="https://github.com/nicholasaleks/Damn-Vulnerable-Drone">simulations</a> and <a href="https://github.com/dhondta/dronesploit">actual exploits</a>. Be sure to check them out too for a deeper understanding of drone security.</p>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Securing Infrastructure as code: <a href="https://www.opcito.com/blogs/securing-infrastructure-as-code">https://www.opcito.com/blogs/securing-infrastructure-as-code</a></li>
-<li>Infrastructure as code security: <a href="https://dzone.com/articles/infrastructure-as-code-security">https://dzone.com/articles/infrastructure-as-code-security</a></li>
-<li>Shifting cloud security left with infrastructure as code: <a href="https://securityboulevard.com/2020/04/shifting-cloud-security-left-with-infrastructure-as-code/">https://securityboulevard.com/2020/04/shifting-cloud-security-left-with-infrastructure-as-code/</a></li>
+<li>
+<p><a href="https://github.com/SpacehuhnTech/esp8266_deauther">ESP8266 Wi-Fi deauther</a></p>
+</li>
+<li>
+<p><a href="https://owasp.org/www-community/attacks/Command_Injection">Command Injection explanation</a></p>
+</li>
+<li>
+<p><a href="https://cloud.google.com/kms/docs/key-rotation#:~:text=A%20rotation%20schedule%20defines%20the,require%20periodic%2C%20automatic%20key%20rotation.">key rotations at certain frequencies</a></p>
+</li>
+<li>
+<p><a href="https://devzone.nordicsemi.com/f/nordic-q-a/17165/ble-just-works-pairing">Vulnerable Just works bluetooth protocol</a></p>
+</li>
+<li>
+<p><a href="https://github.com/dhondta/dronesploit">Drone Exploit Module</a></p>
+</li>
+<li>
+<p><a href="https://github.com/nicholasaleks/Damn-Vulnerable-Drone">Vulnerable Drone System Simulation</a></p>
+</li>
+<li>
+<p><a href="https://dronewolf.darkwolf.io/intro">Drones from a Cybersecurity Perspective</a></p>
+</li>
+<li>
+<p><a href="https://ieeexplore.ieee.org/abstract/document/9994719">Dynamic Watermarking in UAVs</a></p>
+</li>
+<li>
+<p><a href="https://www.okta.com/identity-101/gps-spoofing/">GPS spoofing and prevention</a></p>
+</li>
 </ul>
 
 
