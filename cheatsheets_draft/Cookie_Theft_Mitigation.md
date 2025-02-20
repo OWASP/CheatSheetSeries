@@ -10,7 +10,7 @@ Generally, cookie theft is carried out directly against users through malware or
 
 ## Main Section
 
-Session Cookies are given to users when they logged in. If these are stolen by an attacker and used to hijack session from attackers device, several of the environment informations used in the connection for session will change.
+Session Cookies are given to users when they log in. If these are stolen by an attacker and used to hijack the session from the attacker's device, certain environment information used in the connection for session will change.
 
 For example, if stolen cookies are used by an attacker from another country, you can detect this by detecting a significant change in the IP address.
 
