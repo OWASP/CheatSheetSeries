@@ -223,15 +223,15 @@ References:
 Container scanning tools are especially important as part of a successful security strategy. They can detect known vulnerabilities, secrets and misconfigurations in container images and provide a report of the findings with recommendations on how to fix them. Some examples of popular container scanning tools are:
 
 - Free
-  - [Clair](https://github.com/coreos/clair)
-  - [ThreatMapper](https://github.com/deepfence/ThreatMapper)
-  - [Trivy](https://github.com/aquasecurity/trivy)
+    - [Clair](https://github.com/coreos/clair)
+    - [ThreatMapper](https://github.com/deepfence/ThreatMapper)
+    - [Trivy](https://github.com/aquasecurity/trivy)
 - Commercial
-  - [Snyk](https://snyk.io/) **(open source and free option available)**
-  - [Anchore](https://github.com/anchore/grype/) **(open source and free option available)**
-  - [Docker Scout](https://www.docker.com/products/docker-scout/) **(open source and free option available)**
-  - [JFrog XRay](https://jfrog.com/xray/)
-  - [Qualys](https://www.qualys.com/apps/container-security/)
+    - [Snyk](https://snyk.io/) **(open source and free option available)**
+    - [Anchore](https://github.com/anchore/grype/) **(open source and free option available)**
+    - [Docker Scout](https://www.docker.com/products/docker-scout/) **(open source and free option available)**
+    - [JFrog XRay](https://jfrog.com/xray/)
+    - [Qualys](https://www.qualys.com/apps/container-security/)
 
 To detect secrets in images:
 
