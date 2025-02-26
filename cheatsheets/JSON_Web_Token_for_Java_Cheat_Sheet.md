@@ -475,14 +475,9 @@ By storing the token in browser *sessionStorage* container it exposes the token 
 
 But, we know that *sessionStorage* is not always practical due to its per-tab scope, and the storage method for tokens should balance *security* and *usability*.
 
-Developers should carefully evaluate the following options:
-
-*SessionStorage* prevents tokens from persisting beyond a single session but does not persist across tabs, which may lead to usability issues.
-
 *LocalStorage* is a better method than *sessionStorage* for usability because it allows the session to persist between browser restarts and across tabs, but you must use strict security controls:
 - Tokens stored in *localStorage* should have *short expiration times* (e.g., *15-30 minutes idle timeout, 8-hour absolute timeout*).
 - Implement mechanisms such as *token rotation* and *refresh tokens* to minimize risk.
-- Apply a strong *Content Security Policy (CSP)* to mitigate XSS risks.
 
 If *session persistence across tabs* and *sessionStorage* are required, consider using *BroadcastChannel API* or *Single Sign-On (SSO)* to re-authenticate users automatically when they open new tabs.
 
