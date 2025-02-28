@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Cookie_Theft_Mitigation_Cheat_Sheet.html">
       
       
-        <link rel="prev" href="Transport_Layer_Security_Cheat_Sheet.html">
+        <link rel="prev" href="Content_Security_Policy_Cheat_Sheet.html">
       
       
-        <link rel="next" href="User_Privacy_Protection_Cheat_Sheet.html">
+        <link rel="next" href="Credential_Stuffing_Prevention_Cheat_Sheet.html">
       
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
@@ -24,7 +24,7 @@
     
     
       
-        <title>Unvalidated Redirects and Forwards - OWASP Cheat Sheet Series</title>
+        <title>Cookie Theft Mitigation - OWASP Cheat Sheet Series</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#unvalidated-redirects-and-forwards-cheat-sheet" class="md-skip">
+        <a href="#cookie-theft-mitigation-cheat-sheet" class="md-skip">
           Skip to content
         </a>
       
@@ -111,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Unvalidated Redirects and Forwards
+              Cookie Theft Mitigation
             
           </span>
         </div>
@@ -706,10 +706,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="Cookie_Theft_Mitigation_Cheat_Sheet.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Cookie Theft Mitigation
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="Cookie_Theft_Mitigation_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -718,6 +738,95 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cookie-theft-mitigation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cookie Theft Mitigation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cookie Theft Mitigation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#false-negativespositives" class="md-nav__link">
+    <span class="md-ellipsis">
+      False negatives/positives
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cookie-theft-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cookie Theft Detection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#session-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Session Validation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#device-bound-session-credentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      Device Bound Session Credentials
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2218,30 +2327,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Unvalidated Redirects and Forwards
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2250,119 +2339,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    <span class="md-ellipsis">
-      Introduction
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#safe-url-redirects" class="md-nav__link">
-    <span class="md-ellipsis">
-      Safe URL Redirects
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#dangerous-url-redirects" class="md-nav__link">
-    <span class="md-ellipsis">
-      Dangerous URL Redirects
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Dangerous URL Redirects">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#dangerous-url-redirect-example-1" class="md-nav__link">
-    <span class="md-ellipsis">
-      Dangerous URL Redirect Example 1
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dangerous-url-redirect-example-2" class="md-nav__link">
-    <span class="md-ellipsis">
-      Dangerous URL Redirect Example 2
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dangerous-forward-example" class="md-nav__link">
-    <span class="md-ellipsis">
-      Dangerous Forward Example
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#preventing-unvalidated-redirects-and-forwards" class="md-nav__link">
-    <span class="md-ellipsis">
-      Preventing Unvalidated Redirects and Forwards
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Preventing Unvalidated Redirects and Forwards">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#validating-urls" class="md-nav__link">
-    <span class="md-ellipsis">
-      Validating URLs
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#references" class="md-nav__link">
-    <span class="md-ellipsis">
-      References
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -2600,46 +2576,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#safe-url-redirects" class="md-nav__link">
+  <a href="#cookie-theft-mitigation" class="md-nav__link">
     <span class="md-ellipsis">
-      Safe URL Redirects
+      Cookie Theft Mitigation
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#dangerous-url-redirects" class="md-nav__link">
-    <span class="md-ellipsis">
-      Dangerous URL Redirects
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Dangerous URL Redirects">
+    <nav class="md-nav" aria-label="Cookie Theft Mitigation">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#dangerous-url-redirect-example-1" class="md-nav__link">
+  <a href="#false-negativespositives" class="md-nav__link">
     <span class="md-ellipsis">
-      Dangerous URL Redirect Example 1
+      False negatives/positives
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#dangerous-url-redirect-example-2" class="md-nav__link">
+  <a href="#cookie-theft-detection" class="md-nav__link">
     <span class="md-ellipsis">
-      Dangerous URL Redirect Example 2
+      Cookie Theft Detection
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#dangerous-forward-example" class="md-nav__link">
+  <a href="#session-validation" class="md-nav__link">
     <span class="md-ellipsis">
-      Dangerous Forward Example
+      Session Validation
     </span>
   </a>
   
@@ -2651,26 +2618,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#preventing-unvalidated-redirects-and-forwards" class="md-nav__link">
+  <a href="#device-bound-session-credentials" class="md-nav__link">
     <span class="md-ellipsis">
-      Preventing Unvalidated Redirects and Forwards
+      Device Bound Session Credentials
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Preventing Unvalidated Redirects and Forwards">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#validating-urls" class="md-nav__link">
-    <span class="md-ellipsis">
-      Validating URLs
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -2701,145 +2653,103 @@
   
 
 
-<h1 id="unvalidated-redirects-and-forwards-cheat-sheet">Unvalidated Redirects and Forwards Cheat Sheet<a class="headerlink" href="#unvalidated-redirects-and-forwards-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h1 id="cookie-theft-mitigation-cheat-sheet">Cookie Theft Mitigation Cheat Sheet<a class="headerlink" href="#cookie-theft-mitigation-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>Unvalidated redirects and forwards are possible when a web application accepts untrusted input that could cause the web application to redirect the request to a URL contained within untrusted input. By modifying untrusted URL input to a malicious site, an attacker may successfully launch a phishing scam and steal user credentials.</p>
-<p>Because the server name in the modified link is identical to the original site, phishing attempts may have a more trustworthy appearance. Unvalidated redirect and forward attacks can also be used to maliciously craft a URL that would pass the application's access control check and then forward the attacker to privileged functions that they would normally not be able to access.</p>
-<h2 id="safe-url-redirects">Safe URL Redirects<a class="headerlink" href="#safe-url-redirects" title="Permanent link">&para;</a></h2>
-<p>When we want to redirect a user automatically to another page (without an action of the visitor such as clicking on a hyperlink) you might implement a code such as the following:</p>
-<p>Java</p>
-<div class="highlight"><pre><span></span><code><span class="n">response</span><span class="p">.</span><span class="na">sendRedirect</span><span class="p">(</span><span class="s">&quot;http://www.mysite.com&quot;</span><span class="p">);</span>
-</code></pre></div>
-<p>PHP</p>
-<div class="highlight"><pre><span></span><code><span class="cp">&lt;?php</span>
-<span class="cm">/* Redirect browser */</span>
-<span class="nb">header</span><span class="p">(</span><span class="s2">&quot;Location: http://www.mysite.com&quot;</span><span class="p">);</span>
-<span class="cm">/* Exit to prevent the rest of the code from executing */</span>
-<span class="k">exit</span><span class="p">;</span>
-<span class="cp">?&gt;</span>
-</code></pre></div>
-<p>ASP .NET</p>
-<div class="highlight"><pre><span></span><code><span class="n">Response</span><span class="p">.</span><span class="n">Redirect</span><span class="p">(</span><span class="s">&quot;~/folder/Login.aspx&quot;</span><span class="p">)</span>
-</code></pre></div>
-<p>Rails</p>
-<div class="highlight"><pre><span></span><code><span class="n">redirect_to</span><span class="w"> </span><span class="n">login_path</span>
-</code></pre></div>
-<p>Rust actix web</p>
-<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="nb">Ok</span><span class="p">(</span><span class="n">HttpResponse</span><span class="p">::</span><span class="n">Found</span><span class="p">()</span>
-<span class="w">        </span><span class="p">.</span><span class="n">insert_header</span><span class="p">((</span><span class="n">header</span><span class="p">::</span><span class="n">LOCATION</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;https://mysite.com/&quot;</span><span class="p">))</span>
-<span class="w">        </span><span class="p">.</span><span class="n">finish</span><span class="p">())</span>
-</code></pre></div>
-<p>In the examples above, the URL is being explicitly declared in the code and cannot be manipulated by an attacker.</p>
-<h2 id="dangerous-url-redirects">Dangerous URL Redirects<a class="headerlink" href="#dangerous-url-redirects" title="Permanent link">&para;</a></h2>
-<p>The following examples demonstrate unsafe redirect and forward code.</p>
-<h3 id="dangerous-url-redirect-example-1">Dangerous URL Redirect Example 1<a class="headerlink" href="#dangerous-url-redirect-example-1" title="Permanent link">&para;</a></h3>
-<p>The following Java code receives the URL from the parameter named <code>url</code> (<a href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequest.html#getParameter-java.lang.String-">GET or POST</a>) and redirects to that URL:</p>
-<div class="highlight"><pre><span></span><code><span class="n">response</span><span class="p">.</span><span class="na">sendRedirect</span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;url&quot;</span><span class="p">));</span>
-</code></pre></div>
-<p>The following PHP code obtains a URL from the query string (via the parameter named <code>url</code>) and then redirects the user to that URL. Additionally, the PHP code after this <code>header()</code> function will continue to execute, so if the user configures their browser to ignore the redirect, they may be able to access the rest of the page.</p>
-<div class="highlight"><pre><span></span><code><span class="x">$redirect_url = $_GET[&#39;url&#39;];</span>
-<span class="x">header(&quot;Location: &quot; . $redirect_url);</span>
-</code></pre></div>
-<p>A similar example of C# .NET Vulnerable Code:</p>
-<div class="highlight"><pre><span></span><code><span class="kt">string</span><span class="w"> </span><span class="n">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="n">QueryString</span><span class="p">[</span><span class="s">&quot;url&quot;</span><span class="p">];</span>
-<span class="n">Response</span><span class="p">.</span><span class="n">Redirect</span><span class="p">(</span><span class="n">url</span><span class="p">);</span>
-</code></pre></div>
-<p>And in Rails:</p>
-<div class="highlight"><pre><span></span><code><span class="n">redirect_to</span><span class="w"> </span><span class="n">params</span><span class="o">[</span><span class="ss">:url</span><span class="o">]</span>
-</code></pre></div>
-<p>Rust actix web</p>
-<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="nb">Ok</span><span class="p">(</span><span class="n">HttpResponse</span><span class="p">::</span><span class="n">Found</span><span class="p">()</span>
-<span class="w">        </span><span class="p">.</span><span class="n">insert_header</span><span class="p">((</span><span class="n">header</span><span class="p">::</span><span class="n">LOCATION</span><span class="p">,</span><span class="w"> </span><span class="n">query_string</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">as_str</span><span class="p">()))</span>
-<span class="w">        </span><span class="p">.</span><span class="n">finish</span><span class="p">())</span>
-</code></pre></div>
-<p>The above code is vulnerable to an attack if no validation or extra method controls are applied to verify the certainty of the URL. This vulnerability could be used as part of a phishing scam by redirecting users to a malicious site.</p>
-<p>If no validation is applied, a malicious user could create a hyperlink to redirect your users to an unvalidated malicious website, for example:</p>
-<div class="highlight"><pre><span></span><code> http://example.com/example.php?url=http://malicious.example.com
-</code></pre></div>
-<p>The user sees the link directing to the original trusted site (<code>example.com</code>) and does not realize the redirection that could take place</p>
-<h3 id="dangerous-url-redirect-example-2">Dangerous URL Redirect Example 2<a class="headerlink" href="#dangerous-url-redirect-example-2" title="Permanent link">&para;</a></h3>
-<p><a href="https://docs.microsoft.com/en-us/aspnet/mvc/overview/security/preventing-open-redirection-attacks">ASP .NET MVC 1 &amp; 2 websites</a> are particularly vulnerable to open redirection attacks. In order to avoid this vulnerability, you need to apply MVC 3.</p>
-<p>The code for the LogOn action in an ASP.NET MVC 2 application is shown below. After a successful login, the controller returns a redirect to the returnUrl. You can see that no validation is being performed against the returnUrl parameter.</p>
-<p>ASP.NET MVC 2 LogOn action in <code>AccountController.cs</code> (see Microsoft Docs link provided above for the context):</p>
-<div class="highlight"><pre><span></span><code><span class="na">[HttpPost]</span>
-<span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">ActionResult</span><span class="w"> </span><span class="nf">LogOn</span><span class="p">(</span><span class="n">LogOnModel</span><span class="w"> </span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">returnUrl</span><span class="p">)</span>
-<span class="w"> </span><span class="p">{</span>
-<span class="w">   </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ModelState</span><span class="p">.</span><span class="n">IsValid</span><span class="p">)</span>
-<span class="w">   </span><span class="p">{</span>
-<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">MembershipService</span><span class="p">.</span><span class="n">ValidateUser</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">UserName</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="n">Password</span><span class="p">))</span>
-<span class="w">     </span><span class="p">{</span>
-<span class="w">       </span><span class="n">FormsService</span><span class="p">.</span><span class="n">SignIn</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">UserName</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="n">RememberMe</span><span class="p">);</span>
-<span class="w">       </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">String</span><span class="p">.</span><span class="n">IsNullOrEmpty</span><span class="p">(</span><span class="n">returnUrl</span><span class="p">))</span>
-<span class="w">       </span><span class="p">{</span>
-<span class="w">         </span><span class="k">return</span><span class="w"> </span><span class="nf">Redirect</span><span class="p">(</span><span class="n">returnUrl</span><span class="p">);</span>
-<span class="w">       </span><span class="p">}</span>
-<span class="w">       </span><span class="k">else</span>
-<span class="w">       </span><span class="p">{</span>
-<span class="w">         </span><span class="k">return</span><span class="w"> </span><span class="nf">RedirectToAction</span><span class="p">(</span><span class="s">&quot;Index&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Home&quot;</span><span class="p">);</span>
-<span class="w">       </span><span class="p">}</span>
-<span class="w">     </span><span class="p">}</span>
-<span class="w">     </span><span class="k">else</span>
-<span class="w">     </span><span class="p">{</span>
-<span class="w">       </span><span class="n">ModelState</span><span class="p">.</span><span class="n">AddModelError</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;The user name or password provided is incorrect.&quot;</span><span class="p">);</span>
-<span class="w">     </span><span class="p">}</span>
-<span class="w">   </span><span class="p">}</span>
-
-<span class="w">   </span><span class="c1">// If we got this far, something failed, redisplay form</span>
-<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="nf">View</span><span class="p">(</span><span class="n">model</span><span class="p">);</span>
-<span class="w"> </span><span class="p">}</span>
-</code></pre></div>
-<h3 id="dangerous-forward-example">Dangerous Forward Example<a class="headerlink" href="#dangerous-forward-example" title="Permanent link">&para;</a></h3>
-<p>When applications allow user input to forward requests between different parts of the site, the application must check that the user is authorized to access the URL, perform the functions it provides, and it is an appropriate URL request.</p>
-<p>If the application fails to perform these checks, an attacker crafted URL may pass the application's access control check and then forward the attacker to an administrative function that is not normally permitted.</p>
-<p>Example:</p>
-<div class="highlight"><pre><span></span><code>http://www.example.com/function.jsp?fwd=admin.jsp
-</code></pre></div>
-<p>The following code is a Java servlet that will receive a <code>GET</code> request with a URL parameter named <code>fwd</code> in the request to forward to the address specified in the URL parameter. The servlet will retrieve the URL parameter value <a href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequest.html#getParameter-java.lang.String-">from the request</a> and complete the server-side forward processing before responding to the browser.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ForwardServlet</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">HttpServlet</span>
-<span class="p">{</span>
-<span class="w">  </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">doGet</span><span class="p">(</span><span class="n">HttpServletRequest</span><span class="w"> </span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="n">HttpServletResponse</span><span class="w"> </span><span class="n">response</span><span class="p">)</span>
-<span class="w">                    </span><span class="kd">throws</span><span class="w"> </span><span class="n">ServletException</span><span class="p">,</span><span class="w"> </span><span class="n">IOException</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getQueryString</span><span class="p">();</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">query</span><span class="p">.</span><span class="na">contains</span><span class="p">(</span><span class="s">&quot;fwd&quot;</span><span class="p">))</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="n">String</span><span class="w"> </span><span class="n">fwd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;fwd&quot;</span><span class="p">);</span>
-<span class="w">      </span><span class="k">try</span>
-<span class="w">      </span><span class="p">{</span>
-<span class="w">        </span><span class="n">request</span><span class="p">.</span><span class="na">getRequestDispatcher</span><span class="p">(</span><span class="n">fwd</span><span class="p">).</span><span class="na">forward</span><span class="p">(</span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="n">response</span><span class="p">);</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">      </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">ServletException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span>
-<span class="w">      </span><span class="p">{</span>
-<span class="w">        </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-<h2 id="preventing-unvalidated-redirects-and-forwards">Preventing Unvalidated Redirects and Forwards<a class="headerlink" href="#preventing-unvalidated-redirects-and-forwards" title="Permanent link">&para;</a></h2>
-<p>Safe use of redirects and forwards can be done in a number of ways:</p>
+<p>With the spread of 2FA and Passkey, the login process has become more robust, and even if an attacker steals only the password, it has become difficult to do a spoofing attack.</p>
+<p>However, if attacker can steal a valid session cookie instead, it is possible to hijack the user session for the duration of the session lifetime period. In other words, stealing a session cookie has the same impact as stealing authentication credentials until it expires. No matter how robust your authentication process is, it will not be a sufficient countermeasure for Cookie Theft.</p>
+<p>Generally, cookie theft is carried out directly against users through malware or phishing attacks. Therefore, the only thing a service can do is to <em>detect as quickly as possible when a stolen cookie is used</em>.</p>
+<h2 id="cookie-theft-mitigation">Cookie Theft Mitigation<a class="headerlink" href="#cookie-theft-mitigation" title="Permanent link">&para;</a></h2>
+<p>Session Cookies are given to users when they log in. If these are stolen by an attacker and used to hijack the session from the attacker's device, certain environment information used in the connection for session will change.</p>
+<p>For example, if stolen cookies are used by an attacker from another country, you can detect this by detecting a significant change in the IP address.</p>
+<p>In this way, there are multiple vectors that can be used to detect that the user environments has changed.</p>
 <ul>
-<li>Simply avoid using redirects and forwards.</li>
-<li>If used, do not allow the URL as user input for the destination.</li>
-<li>Where possible, have the user provide short name, ID or token which is mapped server-side to a full target URL.<ul>
-<li>This provides the highest degree of protection against the attack tampering with the URL.</li>
-<li>Be careful that this doesn't introduce an enumeration vulnerability where a user could cycle through IDs to find all possible redirect targets</li>
+<li>Access from different region (IP Address)</li>
+<li>Access from different device (User-Agent)</li>
+<li>Access from different language setting (Accept-Language)</li>
+<li>Access at different time of day (Date)</li>
 </ul>
-</li>
-<li>If user input can’t be avoided, ensure that the supplied <strong>value</strong> is valid, appropriate for the application, and is <strong>authorized</strong> for the user.</li>
-<li>Sanitize input by creating a list of trusted URLs (lists of hosts or a regex).<ul>
-<li>This should be based on an allow-list approach, rather than a denylist.</li>
+<p>If you save this information when establishing a session and compare it in each request, you can detect if the user environment has changed.</p>
+<p>Of course, it is difficult to make a judgment based on simple comparison alone. For example, if the user changes the Wi-Fi network they are connected to, their IP address will change. If the user updates their browser, User-Agent will change. So it is necessary not only to compare the values, but also to check whether the meaning of the values has not changed significantly.</p>
+<h3 id="false-negativespositives">False negatives/positives<a class="headerlink" href="#false-negativespositives" title="Permanent link">&para;</a></h3>
+<p>Suppose that a session cookie that has been granted access in a certain country is used from another country. This could be an attack, or it could simply be that the user has traveled.</p>
+<p>In other words, it is not possible to say with certainty that it is an attack just because the IP-Geo has changed. This means that there are <strong>False Negatives</strong> (it seems to be an attack, but it is not) in this detection method.</p>
+<p>At the same time, even if the IP-Geo does not change, there is also the possibility that the attacker is attacking from within the same country. This means that this detection method has a <strong>False positives</strong> (it seems not to be an attack, but it is).</p>
+<h3 id="cookie-theft-detection">Cookie Theft Detection<a class="headerlink" href="#cookie-theft-detection" title="Permanent link">&para;</a></h3>
+<p>By storing session information on the server side when a session is established, it is possible to detect session hijacking when that information is significantly changed.</p>
+<p>The following are the core information that should be saved.</p>
+<ul>
+<li>IP Address</li>
+<li>User-Agent</li>
+<li>Accept-Language</li>
+<li>Date</li>
 </ul>
-</li>
-<li>Force all redirects to first go through a page notifying users that they are going off of your site, with the destination clearly displayed, and have them click a link to confirm.</li>
+<p>In addition, the following headers, which can be change depending on the Device and OS, are also effective as monitoring targets.</p>
+<ul>
+<li>Accept</li>
+<li>Accept-Encoding</li>
 </ul>
-<h3 id="validating-urls">Validating URLs<a class="headerlink" href="#validating-urls" title="Permanent link">&para;</a></h3>
-<p>Validating and sanitising user-input to determine whether the URL is safe is not a trivial task. Detailed instructions how to implement URL validation is described <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html#application-layer">in Server Side Request Forgery Prevention Cheat Sheet</a></p>
+<p>Also, recent browsers sends request headers called <code>Sec-Fetch-*</code> that provides information about the browsing contexts, so these values can also be used as a reference. It's not sent by every browser, and it's not always sent even if browser supported, so it should not be relied upon.</p>
+<ul>
+<li>sec-ch-prefers-color-scheme</li>
+<li>sec-ch-ua</li>
+<li>sec-ch-ua-arch</li>
+<li>sec-ch-ua-bitness</li>
+<li>sec-ch-ua-form-factors</li>
+<li>sec-ch-ua-full-version</li>
+<li>sec-ch-ua-full-version-list</li>
+<li>sec-ch-ua-mobile</li>
+<li>sec-ch-ua-model</li>
+<li>sec-ch-ua-platform</li>
+<li>sec-ch-ua-platform-version</li>
+<li>sec-ch-ua-wow64</li>
+</ul>
+<p>When a session is established on the server, this information is collected and saved in association with the session like below.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">session</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">SessionStorage</span><span class="p">.</span><span class="nx">create</span><span class="p">()</span>
+<span class="nx">session</span><span class="p">.</span><span class="nx">save</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">ip</span><span class="o">:</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">clientIP</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">user_agent</span><span class="o">:</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">userAgent</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">date</span><span class="o">:</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">date</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">accept_language</span><span class="o">:</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">acceptLanguage</span><span class="p">,</span>
+<span class="w">  </span><span class="c1">// ...</span>
+<span class="p">})</span>
+</code></pre></div>
+<p>If a large change is detected when comparing this information each time a request is received, it is possible that the session has been hijacked.</p>
+<h3 id="session-validation">Session Validation<a class="headerlink" href="#session-validation" title="Permanent link">&para;</a></h3>
+<p>If there is a possibility that a session has been hijacked, the most reliable verification method is to re-authenticate. If you temporarily invalidate the user's session, ask them to authenticate again, and then give them a new session cookie, the attacker will no longer be able to do anything with the stolen cookie.</p>
+<p>However, as mentioned earlier, monitoring sessions has the potential for false positives, so if you have to re-authenticate too often, it will be a poor experience for the user.</p>
+<p>An alternative would be to use a CAPTCHA or similar to make a decision. This is particularly useful when a stolen session cookie is being used by a bot or other malicious program.</p>
+<p>As a compromise, if there is a suspicion of session hijacking, it could be good practice to display a CAPTCHA for normal browsing, and to use re-authentication to provide reliable protection before accessing confidential information or performing actions with side effects.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">cookieTheftDetectionMiddleware</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">currentIP</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">clientIP</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">expectedIP</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">ip</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">checkGeoIPRange</span><span class="p">(</span><span class="nx">currentIP</span><span class="p">,</span><span class="w"> </span><span class="nx">expected</span><span class="p">)</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="kc">false</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="c1">// Validation</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">currentUA</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">userAgent</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">expectedUA</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">ua</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">checkUserAgent</span><span class="p">(</span><span class="nx">currentUA</span><span class="p">,</span><span class="w"> </span><span class="nx">expectedUA</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Validation</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="c1">// ...</span>
+<span class="p">}</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s2">&quot;/users/delete&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">cookieTheftDetectionMiddleware</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w"> </span><span class="c1">// ...</span>
+<span class="p">})</span>
+</code></pre></div>
+<p>Usually, such functions are provided as middleware, or they are provided by WAF (Web Application Firewall) installed in front of the web server.</p>
+<p>If this comparison has a significant impact on performance, it may be possible to tune it so that the priority is set for each path and only the endpoints that view or modify important information are checked intensively.</p>
+<h2 id="device-bound-session-credentials">Device Bound Session Credentials<a class="headerlink" href="#device-bound-session-credentials" title="Permanent link">&para;</a></h2>
+<p>The fundamental problem that leads to Cookie Theft attack is that the session cookies are accepted without checking who sent them. Servers only check whether the values are valid. Such values are generally referred to as "Bearer Token".</p>
+<p>To solve this problem, it is effective to make the Session Cookie itself as "Sender Constrained Token". The Device Bound Session Credentials API was proposed for this purpose.</p>
+<p><a href="https://github.com/WICG/dbsc/blob/main/README.md">Device Bound Session Credentials explainer</a></p>
+<p>This API combines the Public Key Encryption with the owner verification of Session Cookies. By verifying the owner using the private key generated internally by the browser, even if an attacker succeeded to steal the session cookie, they will not be able to impersonate the user unless they also steal the private key that the browser keeping secret internally.</p>
+<p>This specification is still in the drafting stages, but it's considered that it will be possible to solve the Cookie Theft Attack in the future.</p>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="http://cwe.mitre.org/data/definitions/601.html">CWE Entry 601 on Open Redirects</a>.</li>
-<li><a href="http://projects.webappsec.org/w/page/13246981/URL%20Redirector%20Abuse">WASC Article on URL Redirector Abuse</a></li>
-<li><a href="http://googlewebmastercentral.blogspot.com/2009/01/open-redirect-urls-is-your-site-being.html">Google blog article on the dangers of open redirects</a>.</li>
-<li><a href="http://www.asp.net/mvc/tutorials/security/preventing-open-redirection-attacks">Preventing Open Redirection Attacks (C#)</a>.</li>
+<li><a href="https://slack.engineering/catching-compromised-cookies/">Catching Compromised Cookies - Engineering at Slack</a></li>
+<li><a href="https://github.com/WICG/dbsc/blob/main/README.md">Device Bound Session Credentials explainer</a></li>
 </ul>
 
 
