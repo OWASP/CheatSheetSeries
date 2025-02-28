@@ -2837,14 +2837,14 @@
 <h2 id="rules">Rules<a class="headerlink" href="#rules" title="Permanent link">&para;</a></h2>
 <h3 id="rule-0-keep-host-and-docker-up-to-date">RULE #0 - Keep Host and Docker up to date<a class="headerlink" href="#rule-0-keep-host-and-docker-up-to-date" title="Permanent link">&para;</a></h3>
 <p>To protect against known container escape vulnerabilities like <a href="https://snyk.io/blog/cve-2024-21626-runc-process-cwd-container-breakout/">Leaky Vessels</a>, which typically result in the attacker gaining root access to the host, it's vital to keep both the host and Docker up to date. This includes regularly updating the host kernel as well as the Docker Engine.</p>
-<p>This is due to the fact that containers share the host's kernel. If the host's kernel is vulnerable, the containers are also vulnerable. For example, the kernel privilege escalation exploit <a href="https://github.com/scumjr/dirtycow-vdso">Dirty COW</a> executed inside a well-insulated container would still result in root access on a vulnerable host.</p>
+<p>This is due to the fact that containers share the host's kernel. If the host's kernel is vulnerable, the containers are also vulnerable. For example, the kernel privilege escalation exploit, <a href="https://github.com/scumjr/dirtycow-vdso">Dirty COW</a>, executed inside a well-insulated container would still result in root access on a vulnerable host.</p>
 <h3 id="rule-1-do-not-expose-the-docker-daemon-socket-even-to-the-containers">RULE #1 - Do not expose the Docker daemon socket (even to the containers)<a class="headerlink" href="#rule-1-do-not-expose-the-docker-daemon-socket-even-to-the-containers" title="Permanent link">&para;</a></h3>
 <p>Docker socket <em>/var/run/docker.sock</em> is the UNIX socket that Docker is listening to. This is the primary entry point for the Docker API. The owner of this socket is root. Giving someone access to it is equivalent to giving unrestricted root access to your host.</p>
-<p><strong>Do not enable <em>tcp</em> Docker daemon socket.</strong> If you are running docker daemon with <code>-H tcp://0.0.0.0:XXX</code> or similar you are exposing un-encrypted and unauthenticated direct access to the Docker daemon, if the host is internet connected this means the docker daemon on your computer can be used by anyone from the public internet.
-If you really, <strong>really</strong> have to do this, you should secure it. Check how to do this <a href="https://docs.docker.com/engine/reference/commandline/dockerd/#daemon-socket-option">following Docker official documentation</a>.</p>
+<p><strong>Do not enable <em>tcp</em> Docker daemon socket.</strong> If you are running docker daemon with <code>-H tcp://0.0.0.0:XXX</code> or similar you are exposing unencrypted and unauthenticated direct access to the Docker daemon, if the host is internet connected this means the docker daemon on your computer can be used by anyone from the public internet.
+If you really, <strong>really</strong> have to do this, you should secure it. Check how to do this following <a href="https://docs.docker.com/engine/reference/commandline/dockerd/#daemon-socket-option">Docker official documentation</a>.</p>
 <p><strong>Do not expose <em>/var/run/docker.sock</em> to other containers</strong>. If you are running your docker image with <code>-v /var/run/docker.sock://var/run/docker.sock</code> or similar, you should change it. Remember that mounting the socket read-only is not a solution but only makes it harder to exploit. Equivalent in the docker compose file is something like this:</p>
-<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;/var/run/docker.sock:/var/run/docker.sock&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">volumes</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;/var/run/docker.sock:/var/run/docker.sock&quot;</span>
 </code></pre></div>
 <h3 id="rule-2-set-a-user">RULE #2 - Set a user<a class="headerlink" href="#rule-2-set-a-user" title="Permanent link">&para;</a></h3>
 <p>Configuring the container to use an unprivileged user is the best way to prevent privilege escalation attacks. This can be accomplished in three different ways as follows:</p>
@@ -2872,14 +2872,14 @@ If you really, <strong>really</strong> have to do this, you should secure it. Ch
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example</span>
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">containers</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example</span>
-<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gcr.io/google-samples/node-hello:1.0</span>
-<span class="w">    </span><span class="nt">securityContext</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">runAsUser</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4000</span><span class="w"> </span><span class="c1"># &lt;-- This is the pod user ID</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example</span>
+<span class="w">      </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gcr.io/google-samples/node-hello:1.0</span>
+<span class="w">      </span><span class="nt">securityContext</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">runAsUser</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4000</span><span class="w"> </span><span class="c1"># &lt;-- This is the pod user ID</span>
 </code></pre></div>
 <p>As a Kubernetes cluster administrator, you can configure a hardened default using the <a href="https://kubernetes.io/docs/concepts/security/pod-security-standards/#restricted"><code>Restricted</code> level</a> with built-in <a href="https://kubernetes.io/docs/concepts/security/pod-security-admission/">Pod Security admission controller</a>, if greater customization is desired consider using <a href="https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#what-are-admission-webhooks">Admission Webhooks</a> or a <a href="https://kubernetes.io/docs/concepts/security/pod-security-standards/#alternatives">third party alternative</a>.</p>
 <h3 id="rule-3-limit-capabilities-grant-only-specific-capabilities-needed-by-a-container">RULE #3 - Limit capabilities (Grant only specific capabilities, needed by a container)<a class="headerlink" href="#rule-3-limit-capabilities-grant-only-specific-capabilities-needed-by-a-container" title="Permanent link">&para;</a></h3>
-<p><a href="http://man7.org/linux/man-pages/man7/capabilities.7.html">Linux kernel capabilities</a> are a set of privileges that can be used by privileged. Docker, by default, runs with only a  subset of capabilities.
+<p><a href="http://man7.org/linux/man-pages/man7/capabilities.7.html">Linux kernel capabilities</a> are a set of privileges that can be used by privileged. Docker, by default, runs with only a subset of capabilities.
 You can change it and drop some capabilities (using <code>--cap-drop</code>) to harden your docker containers, or add some capabilities (using <code>--cap-add</code>) if needed.
 Remember not to run containers with the <code>--privileged</code> flag - this will add ALL Linux kernel capabilities to the container.</p>
 <p>The most secure setup is to drop all capabilities <code>--cap-drop all</code> and then add only required ones. For example:</p>
@@ -2893,13 +2893,13 @@ Remember not to run containers with the <code>--privileged</code> flag - this wi
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example</span>
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">containers</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example</span>
-<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gcr.io/google-samples/node-hello:1.0</span>
-<span class="w">    </span><span class="nt">securityContext</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example</span>
+<span class="w">      </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gcr.io/google-samples/node-hello:1.0</span>
+<span class="w">      </span><span class="nt">securityContext</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">capabilities</span><span class="p">:</span>
-<span class="w">            </span><span class="nt">drop</span><span class="p">:</span>
-<span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ALL</span>
-<span class="w">            </span><span class="nt">add</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;CHOWN&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">          </span><span class="nt">drop</span><span class="p">:</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ALL</span>
+<span class="w">          </span><span class="nt">add</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;CHOWN&quot;</span><span class="p p-Indicator">]</span>
 </code></pre></div>
 <p>As a Kubernetes cluster administrator, you can configure a hardened default using the <a href="https://kubernetes.io/docs/concepts/security/pod-security-standards/#restricted"><code>Restricted</code> level</a> with built-in <a href="https://kubernetes.io/docs/concepts/security/pod-security-admission/">Pod Security admission controller</a>, if greater customization is desired consider using <a href="https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#what-are-admission-webhooks">Admission Webhooks</a> or a <a href="https://kubernetes.io/docs/concepts/security/pod-security-standards/#alternatives">third party alternative</a>.</p>
 <h3 id="rule-4-prevent-in-container-privilege-escalation">RULE #4 - Prevent in-container privilege escalation<a class="headerlink" href="#rule-4-prevent-in-container-privilege-escalation" title="Permanent link">&para;</a></h3>
@@ -2911,10 +2911,10 @@ Remember not to run containers with the <code>--privileged</code> flag - this wi
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example</span>
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">containers</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example</span>
-<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gcr.io/google-samples/node-hello:1.0</span>
-<span class="w">    </span><span class="nt">securityContext</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">allowPrivilegeEscalation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example</span>
+<span class="w">      </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gcr.io/google-samples/node-hello:1.0</span>
+<span class="w">      </span><span class="nt">securityContext</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">allowPrivilegeEscalation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 </code></pre></div>
 <p>As a Kubernetes cluster administrator, you can configure a hardened default using the <a href="https://kubernetes.io/docs/concepts/security/pod-security-standards/#restricted"><code>Restricted</code> level</a> with built-in <a href="https://kubernetes.io/docs/concepts/security/pod-security-admission/">Pod Security admission controller</a>, if greater customization is desired consider using <a href="https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#what-are-admission-webhooks">Admission Webhooks</a> or a <a href="https://kubernetes.io/docs/concepts/security/pod-security-standards/#alternatives">third party alternative</a>.</p>
 <h3 id="rule-5-be-mindful-of-inter-container-connectivity">RULE #5 - Be mindful of Inter-Container Connectivity<a class="headerlink" href="#rule-5-be-mindful-of-inter-container-connectivity" title="Permanent link">&para;</a></h3>
@@ -2950,10 +2950,10 @@ Remember not to run containers with the <code>--privileged</code> flag - this wi
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example</span>
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">containers</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example</span>
-<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gcr.io/google-samples/node-hello:1.0</span>
-<span class="w">    </span><span class="nt">securityContext</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">readOnlyRootFilesystem</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example</span>
+<span class="w">      </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gcr.io/google-samples/node-hello:1.0</span>
+<span class="w">      </span><span class="nt">securityContext</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">readOnlyRootFilesystem</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </code></pre></div>
 <p>In addition, if the volume is mounted only for reading <strong>mount them as a read-only</strong>
 It can be done by appending <code>:ro</code> to the <code>-v</code> like this:</p>
@@ -3034,15 +3034,15 @@ Rootless mode does not require root privileges even during the installation of t
 docker<span class="w"> </span>service<span class="w"> </span>create<span class="w"> </span>--name<span class="w"> </span>web<span class="w"> </span>--secret<span class="w"> </span>my_secret<span class="w"> </span>nginx:latest
 </code></pre></div>
 <p>Or for Docker Compose:</p>
-<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;3.8&quot;</span>
-<span class="w">  </span><span class="nt">secrets</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">my_secret</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./super-secret-data.txt</span>
-<span class="w">  </span><span class="nt">services</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">web</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx:latest</span>
-<span class="w">      </span><span class="nt">secrets</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my_secret</span>
+<div class="highlight"><pre><span></span><code><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;3.8&quot;</span>
+<span class="nt">secrets</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">my_secret</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./super-secret-data.txt</span>
+<span class="nt">services</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">web</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx:latest</span>
+<span class="w">    </span><span class="nt">secrets</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my_secret</span>
 </code></pre></div>
 <p>While Docker Secrets generally provide a secure way to manage sensitive data in Docker environments, this approach is not recommended for Kubernetes, where secrets are stored in plaintext by default. In Kubernetes, consider using additional security measures such as etcd encryption, or third-party tools. Refer to the <a href="Secrets_Management_Cheat_Sheet.html">Secrets Management Cheat Sheet</a> for more information.</p>
 <h3 id="rule-13-enhance-supply-chain-security">RULE #13 - Enhance Supply Chain Security<a class="headerlink" href="#rule-13-enhance-supply-chain-security" title="Permanent link">&para;</a></h3>
