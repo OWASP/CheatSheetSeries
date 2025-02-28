@@ -12,20 +12,20 @@ The aim of this cheat sheet is to provide a straightforward list of common secur
 
 To protect against known container escape vulnerabilities like [Leaky Vessels](https://snyk.io/blog/cve-2024-21626-runc-process-cwd-container-breakout/), which typically result in the attacker gaining root access to the host, it's vital to keep both the host and Docker up to date. This includes regularly updating the host kernel as well as the Docker Engine.
 
-This is due to the fact that containers share the host's kernel. If the host's kernel is vulnerable, the containers are also vulnerable. For example, the kernel privilege escalation exploit [Dirty COW](https://github.com/scumjr/dirtycow-vdso) executed inside a well-insulated container would still result in root access on a vulnerable host.
+This is due to the fact that containers share the host's kernel. If the host's kernel is vulnerable, the containers are also vulnerable. For example, the kernel privilege escalation exploit, [Dirty COW](https://github.com/scumjr/dirtycow-vdso), executed inside a well-insulated container would still result in root access on a vulnerable host.
 
 ### RULE \#1 - Do not expose the Docker daemon socket (even to the containers)
 
-Docker socket */var/run/docker.sock* is the UNIX socket that Docker is listening to. This is the primary entry point for the Docker API. The owner of this socket is root. Giving someone access to it is equivalent to giving unrestricted root access to your host.
+Docker socket _/var/run/docker.sock_ is the UNIX socket that Docker is listening to. This is the primary entry point for the Docker API. The owner of this socket is root. Giving someone access to it is equivalent to giving unrestricted root access to your host.
 
-**Do not enable *tcp* Docker daemon socket.** If you are running docker daemon with `-H tcp://0.0.0.0:XXX` or similar you are exposing un-encrypted and unauthenticated direct access to the Docker daemon, if the host is internet connected this means the docker daemon on your computer can be used by anyone from the public internet.
-If you really, **really** have to do this, you should secure it. Check how to do this [following Docker official documentation](https://docs.docker.com/engine/reference/commandline/dockerd/#daemon-socket-option).
+**Do not enable _tcp_ Docker daemon socket.** If you are running docker daemon with `-H tcp://0.0.0.0:XXX` or similar you are exposing unencrypted and unauthenticated direct access to the Docker daemon, if the host is internet connected this means the docker daemon on your computer can be used by anyone from the public internet.
+If you really, **really** have to do this, you should secure it. Check how to do this following [Docker official documentation](https://docs.docker.com/engine/reference/commandline/dockerd/#daemon-socket-option).
 
-**Do not expose */var/run/docker.sock* to other containers**. If you are running your docker image with `-v /var/run/docker.sock://var/run/docker.sock` or similar, you should change it. Remember that mounting the socket read-only is not a solution but only makes it harder to exploit. Equivalent in the docker compose file is something like this:
+**Do not expose _/var/run/docker.sock_ to other containers**. If you are running your docker image with `-v /var/run/docker.sock://var/run/docker.sock` or similar, you should change it. Remember that mounting the socket read-only is not a solution but only makes it harder to exploit. Equivalent in the docker compose file is something like this:
 
 ```yaml
-    volumes:
-    - "/var/run/docker.sock:/var/run/docker.sock"
+volumes:
+  - "/var/run/docker.sock:/var/run/docker.sock"
 ```
 
 ### RULE \#2 - Set a user
@@ -60,17 +60,17 @@ metadata:
   name: example
 spec:
   containers:
-  - name: example
-    image: gcr.io/google-samples/node-hello:1.0
-    securityContext:
-      runAsUser: 4000 # <-- This is the pod user ID
+    - name: example
+      image: gcr.io/google-samples/node-hello:1.0
+      securityContext:
+        runAsUser: 4000 # <-- This is the pod user ID
 ```
 
 As a Kubernetes cluster administrator, you can configure a hardened default using the [`Restricted` level](https://kubernetes.io/docs/concepts/security/pod-security-standards/#restricted) with built-in [Pod Security admission controller](https://kubernetes.io/docs/concepts/security/pod-security-admission/), if greater customization is desired consider using [Admission Webhooks](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#what-are-admission-webhooks) or a [third party alternative](https://kubernetes.io/docs/concepts/security/pod-security-standards/#alternatives).
 
 ### RULE \#3 - Limit capabilities (Grant only specific capabilities, needed by a container)
 
-[Linux kernel capabilities](http://man7.org/linux/man-pages/man7/capabilities.7.html) are a set of privileges that can be used by privileged. Docker, by default, runs with only a  subset of capabilities.
+[Linux kernel capabilities](http://man7.org/linux/man-pages/man7/capabilities.7.html) are a set of privileges that can be used by privileged. Docker, by default, runs with only a subset of capabilities.
 You can change it and drop some capabilities (using `--cap-drop`) to harden your docker containers, or add some capabilities (using `--cap-add`) if needed.
 Remember not to run containers with the `--privileged` flag - this will add ALL Linux kernel capabilities to the container.
 
@@ -80,7 +80,7 @@ The most secure setup is to drop all capabilities `--cap-drop all` and then add 
 docker run --cap-drop all --cap-add CHOWN alpine
 ```
 
-**And remember: Do not run containers with the *--privileged* flag!!!**
+**And remember: Do not run containers with the _--privileged_ flag!!!**
 
 In Kubernetes this can be configured in [Security Context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) using `capabilities` field e.g:
 
@@ -91,13 +91,13 @@ metadata:
   name: example
 spec:
   containers:
-  - name: example
-    image: gcr.io/google-samples/node-hello:1.0
-    securityContext:
+    - name: example
+      image: gcr.io/google-samples/node-hello:1.0
+      securityContext:
         capabilities:
-            drop:
-                - ALL
-            add: ["CHOWN"]
+          drop:
+            - ALL
+          add: ["CHOWN"]
 ```
 
 As a Kubernetes cluster administrator, you can configure a hardened default using the [`Restricted` level](https://kubernetes.io/docs/concepts/security/pod-security-standards/#restricted) with built-in [Pod Security admission controller](https://kubernetes.io/docs/concepts/security/pod-security-admission/), if greater customization is desired consider using [Admission Webhooks](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#what-are-admission-webhooks) or a [third party alternative](https://kubernetes.io/docs/concepts/security/pod-security-standards/#alternatives).
@@ -115,10 +115,10 @@ metadata:
   name: example
 spec:
   containers:
-  - name: example
-    image: gcr.io/google-samples/node-hello:1.0
-    securityContext:
-      allowPrivilegeEscalation: false
+    - name: example
+      image: gcr.io/google-samples/node-hello:1.0
+      securityContext:
+        allowPrivilegeEscalation: false
 ```
 
 As a Kubernetes cluster administrator, you can configure a hardened default using the [`Restricted` level](https://kubernetes.io/docs/concepts/security/pod-security-standards/#restricted) with built-in [Pod Security admission controller](https://kubernetes.io/docs/concepts/security/pod-security-admission/), if greater customization is desired consider using [Admission Webhooks](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#what-are-admission-webhooks) or a [third party alternative](https://kubernetes.io/docs/concepts/security/pod-security-standards/#alternatives).
@@ -180,10 +180,10 @@ metadata:
   name: example
 spec:
   containers:
-  - name: example
-    image: gcr.io/google-samples/node-hello:1.0
-    securityContext:
-      readOnlyRootFilesystem: true
+    - name: example
+      image: gcr.io/google-samples/node-hello:1.0
+      securityContext:
+        readOnlyRootFilesystem: true
 ```
 
 In addition, if the volume is mounted only for reading **mount them as a read-only**
@@ -220,7 +220,7 @@ References:
 - [View logs for a container or service](https://docs.docker.com/config/containers/logging/)
 - [Dockerfile Security Best Practices](https://cloudberry.engineering/article/dockerfile-security-best-practices/)
 
- Container scanning tools are especially important as part of a successful security strategy. They can detect known vulnerabilities, secrets and misconfigurations in container images and provide a report of the findings with recommendations on how to fix them. Some examples of popular container scanning tools are:
+Container scanning tools are especially important as part of a successful security strategy. They can detect known vulnerabilities, secrets and misconfigurations in container images and provide a report of the findings with recommendations on how to fix them. Some examples of popular container scanning tools are:
 
 - Free
     - [Clair](https://github.com/coreos/clair)
@@ -283,15 +283,15 @@ docker service create --name web --secret my_secret nginx:latest
 Or for Docker Compose:
 
 ```yaml
-  version: "3.8"
-  secrets:
-    my_secret:
-      file: ./super-secret-data.txt
-  services:
-    web:
-      image: nginx:latest
-      secrets:
-        - my_secret
+version: "3.8"
+secrets:
+  my_secret:
+    file: ./super-secret-data.txt
+services:
+  web:
+    image: nginx:latest
+    secrets:
+      - my_secret
 ```
 
 While Docker Secrets generally provide a secure way to manage sensitive data in Docker environments, this approach is not recommended for Kubernetes, where secrets are stored in plaintext by default. In Kubernetes, consider using additional security measures such as etcd encryption, or third-party tools. Refer to the [Secrets Management Cheat Sheet](Secrets_Management_Cheat_Sheet.md) for more information.
