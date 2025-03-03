@@ -330,6 +330,33 @@ Do NOT use CAPTCHA because it is specifically designed to protect against bots. 
 
 While these are very strong CSRF defenses, it can create a significant impact on the user experience. As such, they would generally only be used for security critical operations (such as password changes, money transfers, etc.), alongside the other defences discussed in this cheat sheet.
 
+## Alternative Approach – Avoiding "Special" Request Qualities
+
+Most CSRF mitigation techniques rely on the assumption that a request is "special" if it includes cookies, basic authentication credentials, or relies on network properties such as IP addresses. However, an alternative way to defend against CSRF is to avoid treating such request attributes as special in the first place.
+
+This approach is most suitable for API-driven applications that primarily interact with clients via AJAX-based calls instead of traditional HTML `<form>` submissions.
+
+### How It Works
+
+A server that authenticates users using only custom request headers or request bodies—without relying on cookies, basic authentication, or network-based trust—can be considered naturally resistant to CSRF. This is because browsers do not automatically attach custom headers or request bodies to cross-site requests.
+
+For example, an API that authenticates users via:
+
+- A custom HTTP header containing a token stored in `localStorage`
+- A value included in the request body of a `POST` request
+
+By ensuring that authentication credentials are always explicitly sent as part of the request, CSRF attacks are inherently prevented since a malicious website cannot generate a valid authenticated request without access to these credentials.
+
+### Drawbacks of This Approach
+
+While effective in many API-driven scenarios, this approach has limitations:
+
+1. **Does not support HTML `<form>`-based authentication**  
+   If your application allows users to log in or make authenticated requests via standard HTML forms, this technique alone will not provide CSRF protection.
+
+2. **Requires additional security controls**  
+   If authentication tokens are stored in `localStorage`, they are vulnerable to **Cross-Site Scripting (XSS) attacks**, which could allow an attacker to steal authentication credentials.
+
 ## Possible CSRF Vulnerabilities in Login Forms
 
 Most developers tend to ignore CSRF vulnerabilities on login forms as they assume that CSRF would not be applicable on login forms because user is not authenticated at that stage, however this assumption is not always true. CSRF vulnerabilities can still occur on login forms where the user is not authenticated, but the impact and risk is different.
