@@ -338,24 +338,37 @@ This approach is most suitable for API-driven applications that primarily intera
 
 ### How It Works
 
-A server that authenticates users using only custom request headers or request bodies—without relying on cookies, basic authentication, or network-based trust—can be considered naturally resistant to CSRF. This is because browsers do not automatically attach custom headers or request bodies to cross-site requests.
+By ensuring that authentication credentials are always explicitly sent as part of the request, CSRF attacks are inherently prevented since a malicious website cannot generate a valid authenticated request without access to these credentials. Since browsers do not allow cross-site requests with custom headers without an explicit CORS preflight check, CSRF attacks are prevented.
 
 For example, an API that authenticates users via:
 
 - A custom HTTP header containing a token stored in `localStorage`
 - A value included in the request body of a `POST` request
 
-By ensuring that authentication credentials are always explicitly sent as part of the request, CSRF attacks are inherently prevented since a malicious website cannot generate a valid authenticated request without access to these credentials.
-
 ### Drawbacks of This Approach
 
 While effective in many API-driven scenarios, this approach has limitations:
 
-1. **Does not support HTML `<form>`-based authentication**  
-   If your application allows users to log in or make authenticated requests via standard HTML forms, this technique alone will not provide CSRF protection.
+1. **Not helpful if HTML `<form>`-based authentication**  
+   If your application allows users to log in or make authenticated requests via HTML forms, this technique will not provide CSRF protection.
 
 2. **Requires additional security controls**  
    If authentication tokens are stored in `localStorage`, they are vulnerable to **Cross-Site Scripting (XSS) attacks**, which could allow an attacker to steal authentication credentials.
+   According to this [document](JSON_Web_Token_for_Java_Cheat_Sheet.md#token-storage-on-client-side), you must use strict security controls:
+
+    - Tokens stored in *localStorage* should have *short expiration times* (e.g., *15-30 minutes idle timeout, 8-hour absolute timeout*).
+    - Implement mechanisms such as *token rotation* and *refresh tokens* to minimize risk.
+    - Each authentication token should be long (e.g., 32+ characters), random, and unique.
+
+### Implementing Custom Headers for CSRF Protection
+
+One method is to enforce the presence of a *custom authentication token* in the HTTP headers. If a evil site forces a user's browser to do a HTTP POST, then the custom authentification token won't be included and the request will fail.
+
+#### **Example: Adding a Token to a Custom HTTP Header**
+
+```http
+X-CSRF-Token: 123456789abcdef...
+```
 
 ## Possible CSRF Vulnerabilities in Login Forms
 
