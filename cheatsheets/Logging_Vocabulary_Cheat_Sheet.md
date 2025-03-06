@@ -232,7 +232,7 @@ INFO
 An attempt to change a password that failed. May also trigger other events such as `authn_login_lock`.
 
 **Level:**
-WARN
+CRITICAL
 
 **Example:**
 
@@ -241,8 +241,8 @@ WARN
     "datetime": "2019-01-01 00:00:00,000",
     "appid": "foobar.netportal_auth",
     "event": "authn_password_change_fail:joebob1",
-    "level": "INFO",
-    "description": "User joebob1 failed to changing their password",
+    "level": "CRITICAL",
+    "description": "User joebob1 failed to change their password",
     ...
 }
 ```
