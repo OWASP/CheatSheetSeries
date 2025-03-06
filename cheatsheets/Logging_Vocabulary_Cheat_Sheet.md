@@ -232,7 +232,7 @@ INFO
 An attempt to change a password that failed. May also trigger other events such as `authn_login_lock`.
 
 **Level:**
-WARN
+CRITICAL
 
 **Example:**
 
@@ -241,8 +241,8 @@ WARN
     "datetime": "2019-01-01 00:00:00,000",
     "appid": "foobar.netportal_auth",
     "event": "authn_password_change_fail:joebob1",
-    "level": "INFO",
-    "description": "User joebob1 failed to changing their password",
+    "level": "CRITICAL",
+    "description": "User joebob1 failed to change their password",
     ...
 }
 ```
@@ -608,7 +608,7 @@ CRITICAL
     "datetime": "2019-01-01 00:00:00,000",
     "appid": "foobar.netportal_auth",
     "event": "malicious_extraneous:dr@evil.com,creditcardnum,Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0",
-    "level": "WARN",
+    "level": "CRITICAL",
     "description": "User dr@evil.com included field creditcardnum in the request which is not handled by this service.",
     ...
 }
@@ -621,7 +621,7 @@ CRITICAL
 **Description**
 When obvious attack tools are identified either by signature or by user agent they should be logged.
 
-**TODO:** A future version of this standard should link to known attack tools, signatures and user-agent strings. For instance, the tool "Nikto" leaves behind its user agent by default with a string like **_"Mozilla/5.00 (Nikto/2.1.6) (Evasions:None) (Test:Port Check)"_**
+For example, the tool "Nikto" leaves behind its user agent by default with a string like **_"Mozilla/5.00 (Nikto/2.1.6) (Evasions:None) (Test:Port Check)"_**
 
 **Level:**
 CRITICAL
@@ -633,7 +633,7 @@ CRITICAL
     "datetime": "2019-01-01 00:00:00,000",
     "appid": "foobar.netportal_auth",
     "event": "malicious_attack_tool:127.0.0.1,nikto,Mozilla/5.00 (Nikto/2.1.6) (Evasions:None) (Test:Port Check)",
-    "level": "WARN",
+    "level": "CRITICAL",
     "description": "Attack traffic indicating use of Nikto coming from 127.0.0.1",
     ...
 }
@@ -658,7 +658,7 @@ CRITICAL
     "datetime": "2019-01-01 00:00:00,000",
     "appid": "foobar.netportal_auth",
     "event": "malicious_cors:127.0.0.1,Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0,attack.evil.com",
-    "level": "WARN",
+    "level": "CRITICAL",
     "description": "An illegal cross-origin request from 127.0.0.1 was referred from attack.evil.com"
     ...
 }
@@ -681,7 +681,7 @@ CRITICAL
     "datetime": "2019-01-01 00:00:00,000",
     "appid": "foobar.netportal_auth",
     "event": "malicious_direct:joebob1, Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0",
-    "level": "WARN",
+    "level": "CRITICAL",
     "description": "User joebob1 attempted to access an object to which they are not authorized",
     ...
 }
@@ -711,7 +711,7 @@ WARN
 {
     "datetime": "2019-01-01 00:00:00,000",
     "appid": "foobar.netportal_auth",
-    "event": "malicious_direct:joebob1, /users/admin/some/important/path,0511,0777",
+    "event": "permissions_changed:joebob1, /users/admin/some/important/path,0511,0777",
     "level": "WARN",
     "description": "User joebob1 changed permissions on /users/admin/some/important/path",
     ...
@@ -830,7 +830,7 @@ Also called a **_business logic attack_**, if a specific path is expected throug
 When a user reaches a part of the application out of sequence it may indicate intentional abuse of the business logic and should be tracked.
 
 **Level:**
-WARN
+CRITICAL
 
 **Example:**
 
@@ -839,7 +839,7 @@ WARN
     "datetime": "2019-01-01 00:00:00,000",
     "appid": "foobar.netportal_auth",
     "event": "sequence_fail:joebob1",
-    "level": "WARN",
+    "level": "CRITICAL",
     "description": "User joebob1 has reached a part of the application out of the normal application flow.",
     ...
 }
@@ -887,7 +887,7 @@ INFO
     "datetime": "2019-01-01 00:00:00,000",
     "appid": "foobar.netportal_auth",
     "event": "session_renewed:joebob1",
-    "level": "WARN",
+    "level": "INFO",
     "description": "User joebob1 was warned of expiring session and extended.",
     ...
 }
@@ -910,7 +910,7 @@ INFO
     "datetime": "2019-01-01 00:00:00,000",
     "appid": "foobar.netportal_auth",
     "event": "session_expired:joebob1,revoked",
-    "level": "WARN",
+    "level": "INFO",
     "description": "User joebob1 session expired due to administrator revocation.",
     ...
 }
@@ -924,7 +924,7 @@ INFO
 In the case a user attempts to access systems with an expire session it may be helpful to log, especially if combined with subsequent login failure. This could identify a case where a malicious user is attempting a session hijack or directly accessing another person's machine/browser.
 
 **Level:**
-WARN
+CRITICAL
 
 **Example:**
 
@@ -933,7 +933,7 @@ WARN
     "datetime": "2019-01-01 00:00:00,000",
     "appid": "foobar.netportal_auth",
     "event": "session_use_after_expire:joebob1",
-    "level": "WARN",
+    "level": "CRITICAL",
     "description": "User joebob1 attempted access after session expired.",
     ...
 }
