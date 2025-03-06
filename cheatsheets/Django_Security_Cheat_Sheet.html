@@ -2816,12 +2816,11 @@
 <p>Include the <code>django.middleware.security.SecurityMiddleware</code> module in the <code>MIDDLEWARE</code> setting in your project's <code>settings.py</code> to add security-related headers to your responses. This module is used to set the following parameters:</p>
 <ul>
 <li><code>SECURE_CONTENT_TYPE_NOSNIFF</code>: Set this key to <code>True</code>. Protects against MIME type sniffing attacks by enabling the header <code>X-Content-Type-Options: nosniff</code>.</li>
-<li><code>SECURE_BROWSER_XSS_FILTER</code>: Set this key to <code>True</code>. Enables the browser’s XSS filter by setting the header <code>X-XSS-Protection: 1; mode=block</code>.</li>
 <li><code>SECURE_HSTS_SECONDS</code>: Ensures the site is only accessible via HTTPS.</li>
 </ul>
 <p>Include the <code>django.middleware.clickjacking.XFrameOptionsMiddleware</code> module in the <code>MIDDLEWARE</code> setting in your project's <code>settings.py</code> (This module should be listed after the <code>django.middleware.security.SecurityMiddleware</code> module as ordering is important). This module is used to set the following parameters:</p>
 <ul>
-<li><code>X_FRAME_OPTIONS</code>: Set this key to to 'DENY' or 'SAMEORIGIN'. This setting adds the <code>X-Frame-Options</code> header to all HTTP responses. This protects against clickjacking attacks.</li>
+<li><code>X_FRAME_OPTIONS</code>: Set this key to 'DENY' or 'SAMEORIGIN'. This setting adds the <code>X-Frame-Options</code> header to all HTTP responses. This protects against clickjacking attacks.</li>
 </ul>
 <h2 id="cookies">Cookies<a class="headerlink" href="#cookies" title="Permanent link">&para;</a></h2>
 <ul>
