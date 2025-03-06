@@ -4022,14 +4022,14 @@ INFO</p>
 <p><strong>Description</strong>
 An attempt to change a password that failed. May also trigger other events such as <code>authn_login_lock</code>.</p>
 <p><strong>Level:</strong>
-WARN</p>
+CRITICAL</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
     &quot;event&quot;: &quot;authn_password_change_fail:joebob1&quot;,
-    &quot;level&quot;: &quot;INFO&quot;,
-    &quot;description&quot;: &quot;User joebob1 failed to changing their password&quot;,
+    &quot;level&quot;: &quot;CRITICAL&quot;,
+    &quot;description&quot;: &quot;User joebob1 failed to change their password&quot;,
     ...
 }
 </code></pre></div>
@@ -4277,7 +4277,7 @@ CRITICAL</p>
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
     &quot;event&quot;: &quot;malicious_extraneous:dr@evil.com,creditcardnum,Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0&quot;,
-    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;level&quot;: &quot;CRITICAL&quot;,
     &quot;description&quot;: &quot;User dr@evil.com included field creditcardnum in the request which is not handled by this service.&quot;,
     ...
 }
@@ -4286,7 +4286,7 @@ CRITICAL</p>
 <h3 id="malicious_attack_tooluseridiptoolnameuseragent">malicious_attack_tool:[userid|IP,toolname,useragent]<a class="headerlink" href="#malicious_attack_tooluseridiptoolnameuseragent" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
 When obvious attack tools are identified either by signature or by user agent they should be logged.</p>
-<p><strong>TODO:</strong> A future version of this standard should link to known attack tools, signatures and user-agent strings. For instance, the tool "Nikto" leaves behind its user agent by default with a string like <strong><em>"Mozilla/5.00 (Nikto/2.1.6) (Evasions:None) (Test:Port Check)"</em></strong></p>
+<p>For example, the tool "Nikto" leaves behind its user agent by default with a string like <strong><em>"Mozilla/5.00 (Nikto/2.1.6) (Evasions:None) (Test:Port Check)"</em></strong></p>
 <p><strong>Level:</strong>
 CRITICAL</p>
 <p><strong>Example:</strong></p>
@@ -4294,7 +4294,7 @@ CRITICAL</p>
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
     &quot;event&quot;: &quot;malicious_attack_tool:127.0.0.1,nikto,Mozilla/5.00 (Nikto/2.1.6) (Evasions:None) (Test:Port Check)&quot;,
-    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;level&quot;: &quot;CRITICAL&quot;,
     &quot;description&quot;: &quot;Attack traffic indicating use of Nikto coming from 127.0.0.1&quot;,
     ...
 }
@@ -4311,7 +4311,7 @@ CRITICAL</p>
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
     &quot;event&quot;: &quot;malicious_cors:127.0.0.1,Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0,attack.evil.com&quot;,
-    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;level&quot;: &quot;CRITICAL&quot;,
     &quot;description&quot;: &quot;An illegal cross-origin request from 127.0.0.1 was referred from attack.evil.com&quot;
     ...
 }
@@ -4327,7 +4327,7 @@ CRITICAL</p>
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
     &quot;event&quot;: &quot;malicious_direct:joebob1, Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0&quot;,
-    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;level&quot;: &quot;CRITICAL&quot;,
     &quot;description&quot;: &quot;User joebob1 attempted to access an object to which they are not authorized&quot;,
     ...
 }
@@ -4346,7 +4346,7 @@ WARN</p>
 <div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;malicious_direct:joebob1, /users/admin/some/important/path,0511,0777&quot;,
+    &quot;event&quot;: &quot;permissions_changed:joebob1, /users/admin/some/important/path,0511,0777&quot;,
     &quot;level&quot;: &quot;WARN&quot;,
     &quot;description&quot;: &quot;User joebob1 changed permissions on /users/admin/some/important/path&quot;,
     ...
@@ -4427,13 +4427,13 @@ WARN</p>
 <p><strong>Description</strong>
 When a user reaches a part of the application out of sequence it may indicate intentional abuse of the business logic and should be tracked.</p>
 <p><strong>Level:</strong>
-WARN</p>
+CRITICAL</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
     &quot;event&quot;: &quot;sequence_fail:joebob1&quot;,
-    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;level&quot;: &quot;CRITICAL&quot;,
     &quot;description&quot;: &quot;User joebob1 has reached a part of the application out of the normal application flow.&quot;,
     ...
 }
@@ -4466,7 +4466,7 @@ INFO</p>
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
     &quot;event&quot;: &quot;session_renewed:joebob1&quot;,
-    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;level&quot;: &quot;INFO&quot;,
     &quot;description&quot;: &quot;User joebob1 was warned of expiring session and extended.&quot;,
     ...
 }
@@ -4482,7 +4482,7 @@ INFO</p>
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
     &quot;event&quot;: &quot;session_expired:joebob1,revoked&quot;,
-    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;level&quot;: &quot;INFO&quot;,
     &quot;description&quot;: &quot;User joebob1 session expired due to administrator revocation.&quot;,
     ...
 }
@@ -4492,13 +4492,13 @@ INFO</p>
 <p><strong>Description</strong>
 In the case a user attempts to access systems with an expire session it may be helpful to log, especially if combined with subsequent login failure. This could identify a case where a malicious user is attempting a session hijack or directly accessing another person's machine/browser.</p>
 <p><strong>Level:</strong>
-WARN</p>
+CRITICAL</p>
 <p><strong>Example:</strong></p>
 <div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
     &quot;event&quot;: &quot;session_use_after_expire:joebob1&quot;,
-    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;level&quot;: &quot;CRITICAL&quot;,
     &quot;description&quot;: &quot;User joebob1 attempted access after session expired.&quot;,
     ...
 }
