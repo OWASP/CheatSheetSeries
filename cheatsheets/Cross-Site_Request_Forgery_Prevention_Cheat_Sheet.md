@@ -356,13 +356,13 @@ While effective in many API-driven scenarios, this approach has limitations:
    If authentication tokens are stored in `localStorage`, they are vulnerable to **Cross-Site Scripting (XSS) attacks**, which could allow an attacker to steal authentication credentials.
    According to this [document](JSON_Web_Token_for_Java_Cheat_Sheet.md#token-storage-on-client-side), you must use strict security controls:
 
-    - Tokens stored in *localStorage* should have *short expiration times* (e.g., *15-30 minutes idle timeout, 8-hour absolute timeout*).
-    - Implement mechanisms such as *token rotation* and *refresh tokens* to minimize risk.
+    - Tokens stored in _localStorage_ should have _short expiration times_ (e.g., _15-30 minutes idle timeout, 8-hour absolute timeout_).
+    - Implement mechanisms such as _token rotation_ and _refresh tokens_ to minimize risk.
     - Each authentication token should be long (e.g., 32+ characters), random, and unique.
 
 ### Implementing Custom Headers for CSRF Protection
 
-One method is to enforce the presence of a *custom authentication token* in the HTTP headers. If a evil site forces a user's browser to do a HTTP POST, then the custom authentification token won't be included and the request will fail.
+One method is to enforce the presence of a _custom authentication token_ in the HTTP headers. If a evil site forces a user's browser to do a HTTP POST, then the custom authentification token won't be included and the request will fail.
 
 #### **Example: Adding a Token to a Custom HTTP Header**
 
