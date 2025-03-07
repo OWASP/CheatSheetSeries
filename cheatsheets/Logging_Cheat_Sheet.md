@@ -108,7 +108,7 @@ Where possible, always log:
     - Deserialization failures
     - Network connections and associated failures such as backend TLS failures (including certificate validation failures), or requests with an unexpected HTTP verb
 - Legal and other opt-ins e.g. permissions for mobile phone capabilities, terms of use, terms & conditions, personal data usage consent, permission to receive marketing communications
-- Suspicous business logic activities such as:
+- Suspicious business logic activities such as:
     - Attempts to perform a set actions out of order/bypass flow control
     - Actions which don't make sense in the business context
     - Attempts to exceed limitations for particular actions

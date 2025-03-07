@@ -443,7 +443,7 @@ app.use(helmet()); // Add various HTTP headers
 ```
 
 The top-level `helmet` function is a wrapper around 14 smaller middlewares.
-Bellow is a list of HTTP security headers covered by `helmet` middlewares:
+Below is a list of HTTP security headers covered by `helmet` middlewares:
 
 - **[Strict-Transport-Security](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security)**: [HTTP Strict Transport Security (HSTS)](https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html) dictates browsers that the application can only be accessed via HTTPS connections. In order to use it in your application, add the following codes:
 

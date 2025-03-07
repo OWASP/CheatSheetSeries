@@ -81,7 +81,7 @@ Checklist
 -   Automated Tests
     \* Tools
     \*\* SoapUI Pro
-    \*\* OWASP ZAP
+    \*\* ZAP
     \*\* IBM AppScan
     \*\* HP Webinspect
     \*\* WSBang
