@@ -1,0 +1,49 @@
+# Common cheatsheet shortcuts
+xss: cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
+auth: cheatsheets/Authentication_Cheat_Sheet.html
+injection: cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html
+csrf: cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html
+
+# Common guide shortcuts
+newdev: cheatsheets/Guide_for_New_Developers.html
+secarch: cheatsheets/Security_Architecture_Cheat_Sheet.html
+
+# Tool shortcuts
+webgoat: https://owasp.org/www-project-webgoat/
+juice: https://owasp.org/www-project-juice-shop/
+
+# Legacy redirects
+old_xss: cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html  # Maintain backwards compatibility
+
+# Direct topic shortcuts
+SSRF: cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html
+XSS: cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
+SQLi: cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html
+JWT: cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html
+DOS: cheatsheets/Denial_of_Service_Cheat_Sheet.html
+XSRF: cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html
+Docker: cheatsheets/Docker_Security_Cheat_Sheet.html
+GraphQL: cheatsheets/GraphQL_Cheat_Sheet.html
+Kubernetes: cheatsheets/Kubernetes_Security_Cheat_Sheet.html
+LDAP: cheatsheets/LDAP_Injection_Prevention_Cheat_Sheet.html
+OAuth: cheatsheets/OAuth_2.0_Cheat_Sheet.html
+SAML: cheatsheets/SAML_Security_Cheat_Sheet.html
+TLP: cheatsheets/Transport_Layer_Protection_Cheat_Sheet.html
+
+# Language-specific shortcuts
+Java: cheatsheets/Java_Security_Cheat_Sheet.html
+NodeJS: cheatsheets/Nodejs_Security_Cheat_Sheet.html
+PHP: cheatsheets/PHP_Security_Cheat_Sheet.html
+Python: cheatsheets/Python_Security_Cheat_Sheet.html
+Ruby: cheatsheets/Ruby_on_Rails_Cheat_Sheet.html
+DotNet: cheatsheets/DotNet_Security_Cheat_Sheet.html
+
+# Category-based shortcuts
+Mobile: cheatsheets/Mobile_Application_Security_Cheat_Sheet.html
+REST: cheatsheets/REST_Security_Cheat_Sheet.html
+Cloud: cheatsheets/Cloud_Security_Cheat_Sheet.html
+Crypto: cheatsheets/Cryptographic_Storage_Cheat_Sheet.html
+Password: cheatsheets/Password_Storage_Cheat_Sheet.html
+Session: cheatsheets/Session_Management_Cheat_Sheet.html
+
+# Add more redirects as needed 
