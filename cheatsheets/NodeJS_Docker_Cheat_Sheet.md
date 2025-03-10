@@ -101,8 +101,6 @@ Some frameworks and libraries may only turn on the optimized configuration that 
 
 As an example, the [Express documentation](https://expressjs.com/en/advanced/best-practice-performance.html#set-node_env-to-production) outlines the importance of setting this environment variable for enabling performance and security related optimizations:
 
-![Express documentation screenshot](https://lh3.googleusercontent.com/idNDKUUyML-rRpnNYmOo4eNBimq-u343401spkAdKWWKjNt0c_xux2Aw1W2r64qWGEcvxfQRkosPcO339g5DzQk0snm1nr6MupSPNB_zAtGgLsr3lp1L-tia4KgHwvOXMW1jT0J-)
-
 The performance impact of the `NODE_ENV` variable could be very significant.
 
 Many of the other libraries that you are relying on may also expect this variable to be set, so we should set this in our Dockerfile.
