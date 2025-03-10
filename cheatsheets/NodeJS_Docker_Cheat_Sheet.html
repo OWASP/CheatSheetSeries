@@ -2866,7 +2866,6 @@ CMD &quot;npm&quot; &quot;start&quot;
 <p>Developers mostly associate the <code>NODE_ENV=production</code> environment variable setting with the installation of production-related dependencies, however, this setting also has other effects which we need to be aware of.</p>
 <p>Some frameworks and libraries may only turn on the optimized configuration that is suited to production if that <code>NODE_ENV</code> environment variable is set to <code>production</code>. Putting aside our opinion on whether this is a good or bad practice for frameworks to take, it is important to know this.</p>
 <p>As an example, the <a href="https://expressjs.com/en/advanced/best-practice-performance.html#set-node_env-to-production">Express documentation</a> outlines the importance of setting this environment variable for enabling performance and security related optimizations:</p>
-<p><img alt="Express documentation screenshot" src="https://lh3.googleusercontent.com/idNDKUUyML-rRpnNYmOo4eNBimq-u343401spkAdKWWKjNt0c_xux2Aw1W2r64qWGEcvxfQRkosPcO339g5DzQk0snm1nr6MupSPNB_zAtGgLsr3lp1L-tia4KgHwvOXMW1jT0J-" /></p>
 <p>The performance impact of the <code>NODE_ENV</code> variable could be very significant.</p>
 <p>Many of the other libraries that you are relying on may also expect this variable to be set, so we should set this in our Dockerfile.</p>
 <p>The updated Dockerfile should now read as follows with the <code>NODE_ENV</code> environment variable setting baked in:</p>
