@@ -330,6 +330,46 @@ Do NOT use CAPTCHA because it is specifically designed to protect against bots. 
 
 While these are very strong CSRF defenses, it can create a significant impact on the user experience. As such, they would generally only be used for security critical operations (such as password changes, money transfers, etc.), alongside the other defences discussed in this cheat sheet.
 
+## Alternative Approach – Avoiding "Special" Request Qualities
+
+Most CSRF mitigation techniques rely on the assumption that a request is "special" if it includes cookies, basic authentication credentials, or relies on network properties such as IP addresses. However, an alternative way to defend against CSRF is to avoid treating such request attributes as special in the first place.
+
+This approach is most suitable for API-driven applications that primarily interact with clients via AJAX-based calls instead of traditional HTML `<form>` submissions.
+
+### How It Works
+
+By ensuring that authentication credentials are always explicitly sent as part of the request, CSRF attacks are inherently prevented since a malicious website cannot generate a valid authenticated request without access to these credentials. Since browsers do not allow cross-site requests with custom headers without an explicit CORS preflight check, CSRF attacks are prevented.
+
+For example, an API that authenticates users via:
+
+- A custom HTTP header containing a token stored in `localStorage`
+- A value included in the request body of a `POST` request
+
+### Drawbacks of This Approach
+
+While effective in many API-driven scenarios, this approach has limitations:
+
+1. **Not helpful if HTML `<form>`-based authentication**  
+   If your application allows users to log in or make authenticated requests via HTML forms, this technique will not provide CSRF protection.
+
+2. **Requires additional security controls**  
+   If authentication tokens are stored in `localStorage`, they are vulnerable to **Cross-Site Scripting (XSS) attacks**, which could allow an attacker to steal authentication credentials.
+   According to this [document](JSON_Web_Token_for_Java_Cheat_Sheet.md#token-storage-on-client-side), you must use strict security controls:
+
+    - Tokens stored in _localStorage_ should have _short expiration times_ (e.g., _15-30 minutes idle timeout, 8-hour absolute timeout_).
+    - Implement mechanisms such as _token rotation_ and _refresh tokens_ to minimize risk.
+    - Each authentication token should be long (e.g., 32+ characters), random, and unique.
+
+### Implementing Custom Headers for CSRF Protection
+
+One method is to enforce the presence of a _custom authentication token_ in the HTTP headers. If a evil site forces a user's browser to do a HTTP POST, then the custom authentification token won't be included and the request will fail.
+
+#### **Example: Adding a Token to a Custom HTTP Header**
+
+```http
+X-CSRF-Token: 123456789abcdef...
+```
+
 ## Possible CSRF Vulnerabilities in Login Forms
 
 Most developers tend to ignore CSRF vulnerabilities on login forms as they assume that CSRF would not be applicable on login forms because user is not authenticated at that stage, however this assumption is not always true. CSRF vulnerabilities can still occur on login forms where the user is not authenticated, but the impact and risk is different.
