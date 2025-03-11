@@ -97,6 +97,7 @@ fi
 
 echo "Step 6/7: Handling redirect for files that have changed"
 #Authorization_Testing_Automation.md -> Authorization_Testing_Automation_Cheat_Sheet.md
+#Drone_security_sheet.html -> Drone_Security_Cheat_Sheet.html
 #Injection_Prevention_Cheat_Sheet_in_Java.md -> Injection_Prevention_in_Java_Cheat_Sheet.md
 #JSON_WEB_Token_Cheat_Sheet_for_Java.md -> JSON_WEB_Token_for_Java_Cheat_Sheet.md
 #Ruby_on_Rails_Cheatsheet.md -> Ruby_on_Rails_Cheat_Sheet.md
@@ -109,6 +110,11 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         redirect_from: \"/cheatsheets/Authorization_Testing_Automation.html\"\\
         ---\\
         " "$WORK/$GENERATED_SITE/cheatsheets/Authorization_Testing_Automation_Cheat_Sheet.html"
+    sed -i '' "1i\\
+        ---\\
+        redirect_from: \"/cheatsheets/Drone_security_sheet.html\"\\
+        ---\\
+        " "$WORK/$GENERATED_SITE/cheatsheets/Drone_Security_Cheat_Sheet.html"
     sed -i '' "1i\\
         ---\\
         redirect_from: \"/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html\"\\
@@ -136,6 +142,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         " "$WORK/$GENERATED_SITE/cheatsheets/Logging_Vocabulary_Cheat_Sheet.html"
 else
     sed -i "1i---\nredirect_from: \"/cheatsheets/Authorization_Testing_Automation.html\"\n---\n" $WORK/$GENERATED_SITE/cheatsheets/Authorization_Testing_Automation_Cheat_Sheet.html
+    sed -i "1i---\nredirect_from: \"/cheatsheets/Drone_security_sheet.html\"\n---\n" $WORK/$GENERATED_SITE/cheatsheets/Drone_Security_Cheat_Sheet.html
     sed -i "1i---\nredirect_from: \"/cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java.html\"\n---\n" $WORK/$GENERATED_SITE/cheatsheets/Injection_Prevention_in_Java_Cheat_Sheet.html
     sed -i "1i---\nredirect_from: \"/cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.html\"\n---\n" $WORK/$GENERATED_SITE/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html
     sed -i "1i---\nredirect_from: \"/cheatsheets/Ruby_on_Rails_Cheatsheet.html\"\n---\n" $WORK/$GENERATED_SITE/cheatsheets/Ruby_on_Rails_Cheat_Sheet.html
