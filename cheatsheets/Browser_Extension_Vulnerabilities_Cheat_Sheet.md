@@ -202,4 +202,3 @@ By following these security best practices, developers can build safer browser e
 🔹 References:
 [Google Chrome Extension Security Guide](https://developer.chrome.com/docs/extensions/mv3/security/)  
 [Mozilla Firefox Extension Security Best Practices](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Security_best_practices)
-
