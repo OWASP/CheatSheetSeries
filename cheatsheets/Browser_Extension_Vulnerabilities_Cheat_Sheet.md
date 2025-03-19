@@ -38,7 +38,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   if (changeInfo.status === 'complete') {
     fetch('http://example.com/track', {
       method: 'POST',
-      body: JSON.stringify({ url: tab.url })
+      body: JSON.stringify({ URL: tab.url })
     });
   }
 });
