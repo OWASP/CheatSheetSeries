@@ -13,6 +13,7 @@ Application logging should be consistent within the application, consistent acro
 Application logging should always be included for security events. Application logs are invaluable data for both security and operational use cases.
 
 ### Operational use cases
+
 - General debugging
 - Establishing baselines
 - Business process monitoring e.g. sales process abandonment, transactions, connections
