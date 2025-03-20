@@ -10,7 +10,7 @@ Browser extensions sometimes request more permissions than they actually need. T
 json
 Copy code
 {
-  "manifest_version": 2,
+  ""manifest_version": 3,
   "name": "My Extension",
   "permissions": [
     "tabs",
@@ -150,7 +150,7 @@ Without a strict CSP, attackers can inject scripts into an extension’s web pag
 json
 Copy code
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "My Extension",
   "content_security_policy": "default-src 'self'"
 }
@@ -186,7 +186,7 @@ If an extension does not clearly define how it collects and handles user data, i
 json
 Copy code
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "My Extension",
   "description": "A cool extension with no privacy policy."
 }
