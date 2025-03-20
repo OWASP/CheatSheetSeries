@@ -22,6 +22,7 @@ Application logging should always be included for security events. Application l
 - Other business-specific requirements
 
 ### Security use cases
+
 Application logging might also be used to record other types of events too such as:
 
 - Anti-automation monitoring
