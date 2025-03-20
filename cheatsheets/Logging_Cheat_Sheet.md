@@ -10,27 +10,31 @@ Application logging should be consistent within the application, consistent acro
 
 ## Purpose
 
-Application logging should always be included for security events. Application logs are invaluable data for:
+Application logging should always be included for security events. Application logs are invaluable data for both security and operational use cases.
 
-- Identifying security incidents
-- Monitoring policy violations
+### Operational use cases
+
+- General debugging
 - Establishing baselines
-- Assisting non-repudiation controls (note that the trait non-repudiation is hard to achieve for logs because their trustworthiness is often just based on the logging party being audited properly while mechanisms like digital signatures are hard to utilize here)
+- Business process monitoring e.g. sales process abandonment, transactions, connections
 - Providing information about problems and unusual conditions
-- Contributing additional application-specific data for incident investigation which is lacking in other log sources
-- Helping defend against vulnerability identification and exploitation through attack detection
+- Performance monitoring e.g. data load time, page timeouts
+- Other business-specific requirements
+
+### Security use cases
 
 Application logging might also be used to record other types of events too such as:
 
-- Security events
-- Business process monitoring e.g. sales process abandonment, transactions, connections
 - Anti-automation monitoring
+- Identifying security incidents
+- Monitoring policy violations
+- Assisting non-repudiation controls (note that the trait non-repudiation is hard to achieve for logs because their trustworthiness is often just based on the logging party being audited properly while mechanisms like digital signatures are hard to utilize here)
 - Audit trails e.g. data addition, modification and deletion, data exports
-- Performance monitoring e.g. data load time, page timeouts
 - Compliance monitoring
 - Data for subsequent requests for information e.g. data subject access, freedom of information, litigation, police and other regulatory investigations
 - Legally sanctioned interception of data e.g. application-layer wire-tapping
-- Other business-specific requirements
+- Contributing additional application-specific data for incident investigation which is lacking in other log sources
+- Helping defend against vulnerability identification and exploitation through attack detection
 
 Process monitoring, audit, and transaction logs/trails etc. are usually collected for different purposes than security event logging, and this often means they should be kept separate.
 
