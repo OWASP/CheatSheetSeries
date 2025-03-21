@@ -2,10 +2,11 @@
 
 1. Permissions Overreach
 
-### Vulnerability
+## Vulnerability
+
 Browser extensions sometimes request more permissions than they actually need. This can grant them access to all tabs, browsing history, and even sensitive user data. If an extension is compromised, it could lead to serious privacy risks.
 
-### Example
+## Example
 
 {
   ""manifest_version": 3,
@@ -17,7 +18,8 @@ Browser extensions sometimes request more permissions than they actually need. T
     "storage"
   ]
 }
-### Mitigation
+
+## Mitigation
 
 Follow the Principle of Least Privilege (PoLP) and request only the permissions that are absolutely necessary.
 Use optional permissions whenever possible instead of granting full access upfront.
@@ -25,10 +27,11 @@ Regularly audit and remove any permissions that are no longer needed.
 
 2. Data Leakage
 
-### Vulnerability
+## Vulnerability
+
 Some extensions unintentionally expose user data by sending browsing activity or personal details to external servers without proper security measures.
 
-### Example
+## Example
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   if (changeInfo.status === 'complete') {
@@ -38,7 +41,8 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     });
   }
 });
-### Mitigation
+
+## Mitigation
 
 Always use HTTPS for all communications to prevent data interception.
 Limit data collection and be transparent by clearly stating what data is collected in a Privacy Policy.
@@ -46,14 +50,16 @@ Implement user consent mechanisms before collecting or sending any personal data
 
 3. Cross-Site Scripting (XSS)
 
-### Vulnerability
+## Vulnerability
+
 If user input is not properly sanitized, attackers can inject malicious scripts into web pages, potentially stealing user data or performing unauthorized actions.
 
-### Example
+## Example
 
 let userInput = document.getElementById('input').value;
 document.getElementById('output').innerHTML = userInput; // No sanitization
-### Mitigation
+
+## Mitigation
 
 Implement Content Security Policy (CSP) to block inline scripts.
 Use libraries like DOMPurify to sanitize user input before displaying it.
@@ -61,28 +67,32 @@ Avoid using innerHTML and instead use textContent to prevent execution of inject
 
 4. Insecure Communication
 
-### Vulnerability
+## Vulnerability
+
 Some extensions send sensitive data over unsecured HTTP connections, making it vulnerable to interception by attackers.
 
-### Example
+## Example
 
 fetch('http://example.com/api/data');
-### Mitigation
+
+## Mitigation
 
 Always use HTTPS for external communications to prevent data theft.
 Validate server responses before processing them to ensure data integrity.
 
 5. Code Injection
 
-### Vulnerability
+## Vulnerability
+
 An extension that dynamically loads scripts from an untrusted source can be exploited to inject and execute malicious code.
 
-### Example
+## Example
 
 let script = document.createElement('script');
 script.src = 'http://example.com/malicious.js';
 document.body.appendChild(script);
-### Mitigation
+
+## Mitigation
 
 Use CSP (Content Security Policy) to restrict script sources.
 For more details, refer to the [CSP Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html).
@@ -91,17 +101,19 @@ Prefer using extension messaging APIs instead of injecting scripts into web page
 
 6. Malicious Updates
 
-### Vulnerability
+## Vulnerability
+
 If an extension fetches updates from an untrusted server, an attacker could push malicious updates to all users.
 
-### Example
+## Example
 
 chrome.runtime.onInstalled.addListener(() => {
   fetch('http://example.com/update-script.js')
     .then(response => response.text())
     .then(eval); // Unsafe!
 });
-### Mitigation
+
+## Mitigation
 
 Sign extension updates with digital signatures to ensure authenticity.
 Instead of fetching updates within the extension, rely on updates from the extension marketplace.
@@ -110,17 +122,19 @@ Implement integrity checks before executing any fetched code.
 
 7. Third-Party Dependencies
 
-### Vulnerability
+## Vulnerability
+
 Using outdated or vulnerable third-party libraries in an extension can introduce security risks if those libraries have known exploits.
 
-### Example
+## Example
 
 {
   "dependencies": {
     "vulnerable-lib": "1.0.0"
   }
 }
-### Mitigation
+
+## Mitigation
 
 Regularly audit third-party dependencies for security vulnerabilities.
 Use tools like npm audit or OWASP Dependency-Check to detect risks.
@@ -128,17 +142,19 @@ Prefer actively maintained libraries with frequent security updates.
 
 8. Lack of Content Security Policy (CSP)
 
-### Vulnerability
+## Vulnerability
+
 Without a strict CSP, attackers can inject scripts into an extension’s web pages, increasing the risk of cross-site scripting (XSS) attacks.
 
-### Example
+## Example
 
 {
   "manifest_version": 3,
   "name": "My Extension",
   "content_security_policy": "default-src 'self'"
 }
-### Mitigation
+
+## Mitigation
 
 Define a strict CSP in the extension’s manifest.json file.
 Use nonce-based or hash-based policies to allow only trusted scripts.
@@ -146,13 +162,15 @@ Block execution of inline scripts and restrict third-party content sources.
 
 9. Insecure Storage
 
-### Vulnerability
+## Vulnerability
+
 Storing sensitive data like authentication tokens in localStorage or other unsecured locations makes it easy for attackers to access.
 
-### Example
+## Example
 
 localStorage.setItem('token', 'my-secret-token'); // No encryption
-### Mitigation
+
+## Mitigation
 
 Store sensitive data in Chrome Storage API, which provides better security than localStorage.
 Encrypt stored data before saving it locally.
@@ -160,23 +178,26 @@ Never hardcode API keys or credentials within the extension code.
 
 10. Insufficient Privacy Controls
 
-### Vulnerability
+## Vulnerability
+
 If an extension does not clearly define how it collects and handles user data, it could lead to privacy violations and unauthorized data usage.
 
-### Example
+## Example
 
 {
   "manifest_version": 3,
   "name": "My Extension",
   "description": "A cool extension with no privacy policy."
 }
-### Mitigation
+
+## Mitigation
 
 Implement a clear privacy policy that explains data collection practices.
 Allow users to opt out of data collection.
 Disclose data-sharing practices to comply with GDPR, CCPA, and other privacy regulations.
 
-### Conclusion
+## Conclusion
+
 By following these security best practices, developers can build safer browser extensions and protect users from privacy and security threats. Always prioritize least privilege, encryption, and secure coding principles when developing extensions.
 
 🔹 References:
