@@ -107,6 +107,36 @@ csrfToken = hmac + "." + randomValue // Add the `randomValue` to the HMAC hash t
 response.setCookie("csrf_token=" + csrfToken + "; Secure") // Set Cookie without HttpOnly flag
 ```
 
+And the following code demonstrates validation of the CSRF token that is sent back from the client:
+
+```code
+// Get the CSRF token from the request
+csrfToken = request.getParameter("csrf_token") // From form field or header
+
+// Split the token to get the randomValue
+const [hmacFromRequest, randomValue] = csrfToken.split(".");
+
+// Recreate the HMAC with the current session and the randomValue from the request
+secret = readEnvironmentVariable("CSRF_SECRET") // HMAC secret key
+sessionID = session.sessionID // Current authenticated user session
+message = sessionID.length + "!" + sessionID + "!" + randomValue.length + "!" + randomValue
+
+// Generate the expected HMAC
+expectedHmac = hmac("SHA256", secret, message)
+
+// Compare the HMAC from the request with the expected HMAC
+if (!constantTimeEquals(hmacFromRequest, expectedHmac)) {
+    // HMAC validation failed, reject the request
+    response.sendError(403, "Invalid CSRF token")
+    return
+}
+
+// CSRF validation passed, continue processing the request
+// ...
+```
+
+Note: The `constantTimeEquals` function should be used to compare the HMACs to prevent timing attacks. This function compares two strings in constant time, regardless of how many characters match.
+
 ### Naive Double-Submit Cookie Pattern (DISCOURAGED)
 
 The _Naive Double-Submit Cookie_ method is a scalable and easy-to-implement technique which uses a cryptographically strong random value as a cookie and as a request parameter (even before user authentication). Then the server verifies if the cookie value and request value match. The site must require that every transaction request from the user includes this random value as a hidden form value or inside the request header. If the value matches at server side, the server accepts it as a legitimate request and if they don't, it rejects the request.
