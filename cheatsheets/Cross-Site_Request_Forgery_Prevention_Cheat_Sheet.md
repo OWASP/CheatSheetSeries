@@ -114,7 +114,9 @@ And the following code demonstrates validation of the CSRF token that is sent ba
 csrfToken = request.getParameter("csrf_token") // From form field or header
 
 // Split the token to get the randomValue
-const [hmacFromRequest, randomValue] = csrfToken.split(".");
+const tokenParts = csrfToken.split(".");
+const hmacFromRequest = tokenParts[0];
+const randomValue = tokenParts[1];
 
 // Recreate the HMAC with the current session and the randomValue from the request
 secret = readEnvironmentVariable("CSRF_SECRET") // HMAC secret key
