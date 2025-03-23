@@ -13,7 +13,7 @@ risks.
 
 ```json
 {
-  ""manifest_version": 3,
+  "manifest_version": 3,
   "name": "My Extension",
   "permissions": [
     "tabs",
@@ -22,6 +22,7 @@ risks.
     "storage"
   ]
 }
+```
 
 ### Mitigation: Permissions Overreach
 
