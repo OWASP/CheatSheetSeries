@@ -107,11 +107,11 @@ csrfToken = hmac + "." + randomValue // Add the `randomValue` to the HMAC hash t
 response.setCookie("csrf_token=" + csrfToken + "; Secure") // Set Cookie without HttpOnly flag
 ```
 
-And the following code demonstrates validation of the CSRF token that is sent back from the client:
+Below is an example in psuedo-code that demonstrates validation of the CSRF token once it is sent back from the client:
 
 ```code
 // Get the CSRF token from the request
-csrfToken = request.getParameter("csrf_token") // From form field or header
+csrfToken = request.getParameter("csrf_token") // From form field, cookie, or header
 
 // Split the token to get the randomValue
 const tokenParts = csrfToken.split(".");
