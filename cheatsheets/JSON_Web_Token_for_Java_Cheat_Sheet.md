@@ -471,7 +471,7 @@ This occurs when an application stores the token in a manner exhibiting the foll
 1. Add it as a *Bearer* HTTP `Authentication` header with JavaScript when calling services.
 1. Add [fingerprint](JSON_Web_Token_for_Java_Cheat_Sheet.md#token-sidejacking) information to the token.
 
-By storing the token in browser *sessionStorage* container it exposes the token to being stolen through a XSS attack. However, fingerprints added to the token prevent reuse of the stolen token by the attacker on their machine. To close a maximum of exploitation surfaces for an attacker, add a browser [Content Security Policy](https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html) to harden the execution context.
+By storing the token in browser *sessionStorage* container it exposes the token to being stolen through an XSS attack. However, fingerprints added to the token prevent reuse of the stolen token by the attacker on their machine. To close a maximum of exploitation surfaces for an attacker, add a browser [Content Security Policy](https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html) to harden the execution context.
 
 But, we know that *sessionStorage* is not always practical due to its per-tab scope, and the storage method for tokens should balance *security* and *usability*.
 
