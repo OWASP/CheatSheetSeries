@@ -49,6 +49,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     });
   }
 });
+```
 
 ### Mitigation: Data Leakage
 
@@ -70,6 +71,7 @@ unauthorized actions.
 ```javascript
 let userInput = document.getElementById('input').value;
 document.getElementById('output').innerHTML = userInput; // No sanitization
+```
 
 ### Mitigation: Cross-Site Scripting (XSS)
 
@@ -89,6 +91,7 @@ making it vulnerable to interception by attackers.
 
 ```javascript
 fetch('http://example.com/api/data');
+```
 
 ### Mitigation: Insecure Communication
 
@@ -108,6 +111,7 @@ exploited to inject and execute malicious code.
 let script = document.createElement('script');
 script.src = 'http://example.com/malicious.js';
 document.body.appendChild(script);
+```
 
 ### Mitigation: Code Injection
 
@@ -132,6 +136,7 @@ chrome.runtime.onInstalled.addListener(() => {
     .then(response => response.text())
     .then(eval); // Unsafe!
 });
+```
 
 ### Mitigation: Malicious Updates
 
@@ -156,6 +161,7 @@ introduce security risks if those libraries have known exploits.
     "vulnerable-lib": "1.0.0"
   }
 }
+```
 
 ### Mitigation: Third-Party Dependencies
 
@@ -178,6 +184,7 @@ web pages, increasing the risk of cross-site scripting (XSS) attacks.
   "name": "My Extension",
   "content_security_policy": "default-src 'self'"
 }
+```
 
 ### Mitigation: Lack of Content Security Policy (CSP)
 
@@ -196,6 +203,7 @@ unsecured locations makes it easy for attackers to access.
 
 ```javascript
 localStorage.setItem('token', 'my-secret-token'); // No encryption
+```
 
 ### Mitigation: Insecure Storage
 
@@ -219,6 +227,7 @@ it could lead to privacy violations and unauthorized data usage.
   "name": "My Extension",
   "description": "A cool extension with no privacy policy."
 }
+```
 
 ### Mitigation: Insufficient Privacy Controls
 
