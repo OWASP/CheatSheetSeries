@@ -3597,7 +3597,7 @@ See RFC5116: https://tools.ietf.org/html/rfc5116
 <li>Add it as a <em>Bearer</em> HTTP <code>Authentication</code> header with JavaScript when calling services.</li>
 <li>Add <a href="JSON_Web_Token_for_Java_Cheat_Sheet.html#token-sidejacking">fingerprint</a> information to the token.</li>
 </ol>
-<p>By storing the token in browser <em>sessionStorage</em> container it exposes the token to being stolen through a XSS attack. However, fingerprints added to the token prevent reuse of the stolen token by the attacker on their machine. To close a maximum of exploitation surfaces for an attacker, add a browser <a href="https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html">Content Security Policy</a> to harden the execution context.</p>
+<p>By storing the token in browser <em>sessionStorage</em> container it exposes the token to being stolen through an XSS attack. However, fingerprints added to the token prevent reuse of the stolen token by the attacker on their machine. To close a maximum of exploitation surfaces for an attacker, add a browser <a href="https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html">Content Security Policy</a> to harden the execution context.</p>
 <p>But, we know that <em>sessionStorage</em> is not always practical due to its per-tab scope, and the storage method for tokens should balance <em>security</em> and <em>usability</em>.</p>
 <p><em>LocalStorage</em> is a better method than <em>sessionStorage</em> for usability because it allows the session to persist between browser restarts and across tabs, but you must use strict security controls:</p>
 <ul>
