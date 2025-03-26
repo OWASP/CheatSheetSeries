@@ -1505,6 +1505,30 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Purpose">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#operational-use-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Operational use cases
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-use-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Security use cases
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2747,6 +2771,30 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Purpose">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#operational-use-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Operational use cases
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-use-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Security use cases
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2989,27 +3037,29 @@
 <p>Many systems enable network device, operating system, web server, mail server and database server logging, but often custom application event logging is missing, disabled or poorly configured. It provides much greater insight than infrastructure logging alone. Web application (e.g. web site or web service) logging is much more than having web server logs enabled (e.g. using Extended Log File Format).</p>
 <p>Application logging should be consistent within the application, consistent across an organization's application portfolio and use industry standards where relevant, so the logged event data can be consumed, correlated, analyzed and managed by a wide variety of systems.</p>
 <h2 id="purpose">Purpose<a class="headerlink" href="#purpose" title="Permanent link">&para;</a></h2>
-<p>Application logging should always be included for security events. Application logs are invaluable data for:</p>
+<p>Application logging should always be included for security events. Application logs are invaluable data for both security and operational use cases.</p>
+<h3 id="operational-use-cases">Operational use cases<a class="headerlink" href="#operational-use-cases" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Identifying security incidents</li>
-<li>Monitoring policy violations</li>
+<li>General debugging</li>
 <li>Establishing baselines</li>
-<li>Assisting non-repudiation controls (note that the trait non-repudiation is hard to achieve for logs because their trustworthiness is often just based on the logging party being audited properly while mechanisms like digital signatures are hard to utilize here)</li>
+<li>Business process monitoring e.g. sales process abandonment, transactions, connections</li>
 <li>Providing information about problems and unusual conditions</li>
-<li>Contributing additional application-specific data for incident investigation which is lacking in other log sources</li>
-<li>Helping defend against vulnerability identification and exploitation through attack detection</li>
+<li>Performance monitoring e.g. data load time, page timeouts</li>
+<li>Other business-specific requirements</li>
 </ul>
+<h3 id="security-use-cases">Security use cases<a class="headerlink" href="#security-use-cases" title="Permanent link">&para;</a></h3>
 <p>Application logging might also be used to record other types of events too such as:</p>
 <ul>
-<li>Security events</li>
-<li>Business process monitoring e.g. sales process abandonment, transactions, connections</li>
 <li>Anti-automation monitoring</li>
+<li>Identifying security incidents</li>
+<li>Monitoring policy violations</li>
+<li>Assisting non-repudiation controls (note that the trait non-repudiation is hard to achieve for logs because their trustworthiness is often just based on the logging party being audited properly while mechanisms like digital signatures are hard to utilize here)</li>
 <li>Audit trails e.g. data addition, modification and deletion, data exports</li>
-<li>Performance monitoring e.g. data load time, page timeouts</li>
 <li>Compliance monitoring</li>
 <li>Data for subsequent requests for information e.g. data subject access, freedom of information, litigation, police and other regulatory investigations</li>
 <li>Legally sanctioned interception of data e.g. application-layer wire-tapping</li>
-<li>Other business-specific requirements</li>
+<li>Contributing additional application-specific data for incident investigation which is lacking in other log sources</li>
+<li>Helping defend against vulnerability identification and exploitation through attack detection</li>
 </ul>
 <p>Process monitoring, audit, and transaction logs/trails etc. are usually collected for different purposes than security event logging, and this often means they should be kept separate.</p>
 <p>The types of events and details collected will tend to be different.</p>
