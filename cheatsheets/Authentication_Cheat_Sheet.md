@@ -235,7 +235,7 @@ Rather than implementing a fixed lockout duration (e.g., ten minutes), some appl
 
 - Amount of time to delay after each account lockout (max 2-3, after that permanent account lockout).
 
-When designing an account lockout system, care must be taken to prevent it from being used to cause a denial of service by locking out other users' accounts. One way this could be performed is to allow the user of the forgotten password functionality to log in, even if the account is locked out.
+When designing an account lockout system, care must be taken to prevent it from being used to cause a denial of service by locking out other users' accounts. One way this could be performed is to allow the use of the forgotten password functionality to log in, even if the account is locked out.
 
 #### CAPTCHA
 
