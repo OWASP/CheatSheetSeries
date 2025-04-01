@@ -3533,7 +3533,7 @@ ENDIF
 <ul>
 <li>Amount of time to delay after each account lockout (max 2-3, after that permanent account lockout).</li>
 </ul>
-<p>When designing an account lockout system, care must be taken to prevent it from being used to cause a denial of service by locking out other users' accounts. One way this could be performed is to allow the user of the forgotten password functionality to log in, even if the account is locked out.</p>
+<p>When designing an account lockout system, care must be taken to prevent it from being used to cause a denial of service by locking out other users' accounts. One way this could be performed is to allow the use of the forgotten password functionality to log in, even if the account is locked out.</p>
 <h4 id="captcha">CAPTCHA<a class="headerlink" href="#captcha" title="Permanent link">&para;</a></h4>
 <p>The use of an effective CAPTCHA can help to prevent automated login attempts against accounts. However, many CAPTCHA implementations have weaknesses that allow them to be solved using automated techniques or can be outsourced to services that can solve them. As such, the use of CAPTCHA should be viewed as a defense-in-depth control to make brute-force attacks more time-consuming and expensive, rather than as a preventative.</p>
 <p>It may be more user-friendly to only require a CAPTCHA be solved after a small number of failed login attempts, rather than requiring it from the very first login.</p>
