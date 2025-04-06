@@ -44,9 +44,8 @@ A key concern when using passwords for authentication is password strength. A "s
     - [Pwned Passwords](https://haveibeenpwned.com/Passwords) is a service where passwords can be checked against previously breached passwords. Details on the API [are here](https://haveibeenpwned.com/API/v3#PwnedPasswords).
     - Alternatively, you can download the [Pwned Passwords](https://haveibeenpwned.com/Passwords) database [using this mechanism](https://github.com/HaveIBeenPwned/PwnedPasswordsDownloader?tab=readme-ov-file#what-is-haveibeenpwned-downloader) to host it yourself.
     - Other top password lists are available but there is no guarantee as to how updated they are:
-        - <https://github.com/danielmiessler/SecLists/tree/master/Passwords>
-        - <https://www.ncsc.gov.uk/static-assets/documents/PwnedPasswordsTop100k.txt>
-    
+        - [Various password lists](https://github.com/danielmiessler/SecLists/tree/master/Passwords) hosted by SecLists from Daniel Miessler.
+        - Static copy of the top 100,000 passwords from "Have I Been Pwned" hosted by NCSC in [text](https://www.ncsc.gov.uk/static-assets/documents/PwnedPasswordsTop100k.txt) and [json](https://www.ncsc.gov.uk/static-assets/documents/PwnedPasswordsTop100k.json) format.
 
 #### For more detailed information check
 
