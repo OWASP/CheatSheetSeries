@@ -3365,9 +3365,19 @@
 <li>Do not silently truncate passwords. The <a href="Password_Storage_Cheat_Sheet.html#maximum-password-lengths">Password Storage Cheat Sheet</a> provides further guidance on how to handle passwords that are longer than the maximum length.</li>
 <li>Allow usage of <strong>all</strong> characters including unicode and whitespace. There should be no password composition rules limiting the type of characters permitted. There should be no requirement for upper or lower case or numbers or special characters.</li>
 <li>Ensure credential rotation when a password leak occurs, at the time of compromise identification or when authenticator technology changes. Avoid requiring periodic password changes; instead, encourage users to pick strong passwords and enable <a href="Multifactor_Authentication_Cheat_Sheet.html">Multifactor Authentication Cheat Sheet (MFA)</a>. According to NIST guidelines, verifiers should not mandate arbitrary password changes (e.g., periodically).</li>
-<li>Include a password strength meter to help users create a more complex password and block common and previously breached passwords<ul>
+<li>Include a password strength meter to help users create a more complex password<ul>
 <li><a href="https://github.com/zxcvbn-ts/zxcvbn">zxcvbn-ts library</a> can be used for this purpose.</li>
-<li><a href="https://haveibeenpwned.com/Passwords">Pwned Passwords</a> is a service where passwords can be checked against previously breached passwords. You can host it yourself or use the <a href="https://haveibeenpwned.com/API/v3#PwnedPasswords">API</a>.</li>
+<li>Other language implementations of zxcvbn <a href="https://github.com/dropbox/zxcvbn?tab=readme-ov-file">listed here</a> but check the age and maturity of each example before use.</li>
+</ul>
+</li>
+<li>Block common and previously breached passwords<ul>
+<li><a href="https://haveibeenpwned.com/Passwords">Pwned Passwords</a> is a service where passwords can be checked against previously breached passwords. Details on the API <a href="https://haveibeenpwned.com/API/v3#PwnedPasswords">are here</a>.</li>
+<li>Alternatively, you can download the <a href="https://haveibeenpwned.com/Passwords">Pwned Passwords</a> database <a href="https://github.com/HaveIBeenPwned/PwnedPasswordsDownloader?tab=readme-ov-file#what-is-haveibeenpwned-downloader">using this mechanism</a> to host it yourself.</li>
+<li>Other top password lists are available but there is no guarantee as to how updated they are:<ul>
+<li><a href="https://github.com/danielmiessler/SecLists/tree/master/Passwords">Various password lists</a> hosted by SecLists from Daniel Miessler.</li>
+<li>Static copy of the top 100,000 passwords from "Have I Been Pwned" hosted by NCSC in <a href="https://www.ncsc.gov.uk/static-assets/documents/PwnedPasswordsTop100k.txt">text</a> and <a href="https://www.ncsc.gov.uk/static-assets/documents/PwnedPasswordsTop100k.json">json</a> format.</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
