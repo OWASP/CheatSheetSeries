@@ -2672,8 +2672,8 @@
 <p>Of course, it is difficult to make a judgment based on simple comparison alone. For example, if the user changes the Wi-Fi network they are connected to, their IP address will change. If the user updates their browser, User-Agent will change. So it is necessary not only to compare the values, but also to check whether the meaning of the values has not changed significantly.</p>
 <h3 id="false-negativespositives">False negatives/positives<a class="headerlink" href="#false-negativespositives" title="Permanent link">&para;</a></h3>
 <p>Suppose that a session cookie that has been granted access in a certain country is used from another country. This could be an attack, or it could simply be that the user has traveled.</p>
-<p>In other words, it is not possible to say with certainty that it is an attack just because the IP-Geo has changed. This means that there are <strong>False Negatives</strong> (it seems to be an attack, but it is not) in this detection method.</p>
-<p>At the same time, even if the IP-Geo does not change, there is also the possibility that the attacker is attacking from within the same country. This means that this detection method has a <strong>False positives</strong> (it seems not to be an attack, but it is).</p>
+<p>In other words, it is not possible to say with certainty that it is an attack just because the IP-Geo has changed. This means that there are <strong>False Positives</strong> (it seems to be an attack, but it is not) in this detection method.</p>
+<p>At the same time, even if the IP-Geo does not change, there is also the possibility that the attacker is attacking from within the same country. This means that this detection method has a <strong>False Negatives</strong> (it seems not to be an attack, but it is).</p>
 <h3 id="cookie-theft-detection">Cookie Theft Detection<a class="headerlink" href="#cookie-theft-detection" title="Permanent link">&para;</a></h3>
 <p>By storing session information on the server side when a session is established, it is possible to detect session hijacking when that information is significantly changed.</p>
 <p>The following are the core information that should be saved.</p>
