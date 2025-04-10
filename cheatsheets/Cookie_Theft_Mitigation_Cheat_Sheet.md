@@ -31,7 +31,7 @@ Suppose that a session cookie that has been granted access in a certain country 
 
 In other words, it is not possible to say with certainty that it is an attack just because the IP-Geo has changed. This means that there are **False Positives** (it seems to be an attack, but it is not) in this detection method.
 
-At the same time, even if the IP-Geo does not change, there is also the possibility that the attacker is attacking from within the same country. This means that this detection method has a **False Negatives** (it seems not to be an attack, but it is).
+At the same time, even if the IP-Geo does not change, there is also the possibility that the attacker is attacking from within the same country. This means that this detection method has **False Negatives** (it seems not to be an attack, but it is).
 
 ### Cookie Theft Detection
 
