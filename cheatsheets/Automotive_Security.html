@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html">
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Automotive_Security.html">
       
       
-        <link rel="prev" href="Error_Handling_Cheat_Sheet.html">
+        <link rel="prev" href="Authorization_Testing_Automation_Cheat_Sheet.html">
       
       
-        <link rel="next" href="Forgot_Password_Cheat_Sheet.html">
+        <link rel="next" href="Bean_Validation_Cheat_Sheet.html">
       
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
@@ -24,7 +24,7 @@
     
     
       
-        <title>File Upload - OWASP Cheat Sheet Series</title>
+        <title>Automotive Security.md - OWASP Cheat Sheet Series</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#file-upload-cheat-sheet" class="md-skip">
+        <a href="#top-10-automotive-security-vulnerabilities" class="md-skip">
           Skip to content
         </a>
       
@@ -111,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              File Upload
+              Automotive Security.md
             
           </span>
         </div>
@@ -559,10 +559,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="Automotive_Security.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Automotive Security.md
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="Automotive_Security.html" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -571,6 +591,116 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-weak-vehicle-communication-protocols" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Weak Vehicle Communication Protocols
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-insecure-over-the-air-ota-updates" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Insecure Over-the-Air (OTA) Updates
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-insecure-telematics-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Insecure Telematics Systems
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-software-supply-chain-vulnerabilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Software Supply Chain Vulnerabilities
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-physical-access-exploits" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Physical Access Exploits
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-inadequate-access-control-mechanisms" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Inadequate Access Control Mechanisms
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-poorly-implemented-authentication-mechanisms" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Poorly Implemented Authentication Mechanisms
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-data-leakage-and-privacy-violations" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Data Leakage and Privacy Violations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-lack-of-security-in-integrated-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Lack of Security in Integrated Systems
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-insecure-legacy-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. Insecure Legacy Systems
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1063,30 +1193,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    File Upload
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="File_Upload_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="File_Upload_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1095,197 +1205,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    <span class="md-ellipsis">
-      Introduction
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#file-upload-threats" class="md-nav__link">
-    <span class="md-ellipsis">
-      File Upload Threats
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="File Upload Threats">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#malicious-files" class="md-nav__link">
-    <span class="md-ellipsis">
-      Malicious Files
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#public-file-retrieval" class="md-nav__link">
-    <span class="md-ellipsis">
-      Public File Retrieval
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#file-upload-protection" class="md-nav__link">
-    <span class="md-ellipsis">
-      File Upload Protection
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="File Upload Protection">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#extension-validation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Extension Validation
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Extension Validation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#list-allowed-extensions" class="md-nav__link">
-    <span class="md-ellipsis">
-      List Allowed Extensions
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#block-extensions" class="md-nav__link">
-    <span class="md-ellipsis">
-      Block Extensions
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#content-type-validation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Content-Type Validation
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#file-signature-validation" class="md-nav__link">
-    <span class="md-ellipsis">
-      File Signature Validation
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#filename-safety" class="md-nav__link">
-    <span class="md-ellipsis">
-      Filename Safety
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#file-content-validation" class="md-nav__link">
-    <span class="md-ellipsis">
-      File Content Validation
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#file-storage-location" class="md-nav__link">
-    <span class="md-ellipsis">
-      File Storage Location
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#user-permissions" class="md-nav__link">
-    <span class="md-ellipsis">
-      User Permissions
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#filesystem-permissions" class="md-nav__link">
-    <span class="md-ellipsis">
-      Filesystem Permissions
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#upload-and-download-limits" class="md-nav__link">
-    <span class="md-ellipsis">
-      Upload and Download Limits
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#java-code-snippets" class="md-nav__link">
-    <span class="md-ellipsis">
-      Java Code Snippets
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -2690,171 +2609,90 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
+  <a href="#1-weak-vehicle-communication-protocols" class="md-nav__link">
     <span class="md-ellipsis">
-      Introduction
+      1. Weak Vehicle Communication Protocols
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#file-upload-threats" class="md-nav__link">
+  <a href="#2-insecure-over-the-air-ota-updates" class="md-nav__link">
     <span class="md-ellipsis">
-      File Upload Threats
+      2. Insecure Over-the-Air (OTA) Updates
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="File Upload Threats">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#malicious-files" class="md-nav__link">
-    <span class="md-ellipsis">
-      Malicious Files
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#public-file-retrieval" class="md-nav__link">
-    <span class="md-ellipsis">
-      Public File Retrieval
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#file-upload-protection" class="md-nav__link">
+  <a href="#3-insecure-telematics-systems" class="md-nav__link">
     <span class="md-ellipsis">
-      File Upload Protection
+      3. Insecure Telematics Systems
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="File Upload Protection">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#extension-validation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Extension Validation
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Extension Validation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#list-allowed-extensions" class="md-nav__link">
-    <span class="md-ellipsis">
-      List Allowed Extensions
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#block-extensions" class="md-nav__link">
-    <span class="md-ellipsis">
-      Block Extensions
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#content-type-validation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Content-Type Validation
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#file-signature-validation" class="md-nav__link">
-    <span class="md-ellipsis">
-      File Signature Validation
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#filename-safety" class="md-nav__link">
-    <span class="md-ellipsis">
-      Filename Safety
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#file-content-validation" class="md-nav__link">
-    <span class="md-ellipsis">
-      File Content Validation
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#file-storage-location" class="md-nav__link">
-    <span class="md-ellipsis">
-      File Storage Location
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#user-permissions" class="md-nav__link">
-    <span class="md-ellipsis">
-      User Permissions
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#filesystem-permissions" class="md-nav__link">
-    <span class="md-ellipsis">
-      Filesystem Permissions
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#upload-and-download-limits" class="md-nav__link">
-    <span class="md-ellipsis">
-      Upload and Download Limits
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#java-code-snippets" class="md-nav__link">
+  <a href="#4-software-supply-chain-vulnerabilities" class="md-nav__link">
     <span class="md-ellipsis">
-      Java Code Snippets
+      4. Software Supply Chain Vulnerabilities
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-physical-access-exploits" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Physical Access Exploits
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-inadequate-access-control-mechanisms" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Inadequate Access Control Mechanisms
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-poorly-implemented-authentication-mechanisms" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Poorly Implemented Authentication Mechanisms
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-data-leakage-and-privacy-violations" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Data Leakage and Privacy Violations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-lack-of-security-in-integrated-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Lack of Security in Integrated Systems
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-insecure-legacy-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. Insecure Legacy Systems
     </span>
   </a>
   
@@ -2878,142 +2716,48 @@
   
 
 
-<h1 id="file-upload-cheat-sheet">File Upload Cheat Sheet<a class="headerlink" href="#file-upload-cheat-sheet" title="Permanent link">&para;</a></h1>
-<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>File upload is becoming a more and more essential part of any application, where the user is able to upload their photo, their CV, or a video showcasing a project they are working on. The application should be able to fend off bogus and malicious files in a way to keep the application and the users safe.</p>
-<p>In short, the following principles should be followed to reach a secure file upload implementation:</p>
-<ul>
-<li><strong>List allowed extensions. Only allow safe and critical extensions for business functionality</strong><ul>
-<li><strong>Ensure that <a href="Input_Validation_Cheat_Sheet.html#file-upload-validation">input validation</a> is applied before validating the extensions.</strong></li>
-</ul>
-</li>
-<li><strong>Validate the file type, don't trust the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type">Content-Type header</a> as it can be spoofed</strong></li>
-<li><strong>Change the filename to something generated by the application</strong></li>
-<li><strong>Set a filename length limit. Restrict the allowed characters if possible</strong></li>
-<li><strong>Set a file size limit</strong></li>
-<li><strong>Only allow authorized users to upload files</strong></li>
-<li><strong>Store the files on a different server. If that's not possible, store them outside of the webroot</strong><ul>
-<li><strong>In the case of public access to the files, use a handler that gets mapped to filenames inside the application (someid -&gt; file.ext)</strong></li>
-</ul>
-</li>
-<li><strong>Run the file through an antivirus or a sandbox if available to validate that it doesn't contain malicious data</strong></li>
-<li><strong>Run the file through CDR (Content Disarm &amp; Reconstruct) if applicable type (PDF, DOCX, etc...)</strong></li>
-<li><strong>Ensure that any libraries used are securely configured and kept up to date</strong></li>
-<li><strong>Protect the file upload from <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">CSRF</a> attacks</strong></li>
-</ul>
-<h2 id="file-upload-threats">File Upload Threats<a class="headerlink" href="#file-upload-threats" title="Permanent link">&para;</a></h2>
-<p>In order to assess and know exactly what controls to implement, knowing what you're facing is essential to protect your assets. The following sections will hopefully showcase the risks accompanying the file upload functionality.</p>
-<h3 id="malicious-files">Malicious Files<a class="headerlink" href="#malicious-files" title="Permanent link">&para;</a></h3>
-<p>The attacker delivers a file for malicious intent, such as:</p>
-<ol>
-<li>Exploit vulnerabilities in the file parser or processing module (<em>e.g.</em> <a href="https://imagetragick.com/">ImageTrick Exploit</a>, <a href="https://owasp.org/www-community/vulnerabilities/XML_External_Entity_%28XXE%29_Processing">XXE</a>)</li>
-<li>Use the file for phishing (<em>e.g.</em> careers form)</li>
-<li>Send ZIP bombs, XML bombs (otherwise known as billion laughs attack), or simply huge files in a way to fill the server storage which hinders and damages the server's availability</li>
-<li>Overwrite an existing file on the system</li>
-<li>Client-side active content (XSS, CSRF, etc.) that could endanger other users if the files are publicly retrievable.</li>
-</ol>
-<h3 id="public-file-retrieval">Public File Retrieval<a class="headerlink" href="#public-file-retrieval" title="Permanent link">&para;</a></h3>
-<p>If the file uploaded is publicly retrievable, additional threats can be addressed:</p>
-<ol>
-<li>Public disclosure of other files</li>
-<li>Initiate a DoS attack by requesting lots of files. Requests are small, yet responses are much larger</li>
-<li>File content that could be deemed as illegal, offensive, or dangerous (<em>e.g.</em> personal data, copyrighted data, etc.) which will make you a host for such malicious files.</li>
-</ol>
-<h2 id="file-upload-protection">File Upload Protection<a class="headerlink" href="#file-upload-protection" title="Permanent link">&para;</a></h2>
-<p>There is no silver bullet in validating user content. Implementing a defense in depth approach is key to make the upload process harder and more locked down to the needs and requirements for the service. Implementing multiple techniques is key and recommended, as no one technique is enough to secure the service.</p>
-<h3 id="extension-validation">Extension Validation<a class="headerlink" href="#extension-validation" title="Permanent link">&para;</a></h3>
-<p>Ensure that the validation occurs after decoding the file name, and that a proper filter is set in place in order to avoid certain known bypasses, such as the following:</p>
-<ul>
-<li>Double extensions, <em>e.g.</em> <code>.jpg.php</code>, where it circumvents easily the regex <code>\.jpg</code></li>
-<li>Null bytes, <em>e.g.</em> <code>.php%00.jpg</code>, where <code>.jpg</code> gets truncated and <code>.php</code> becomes the new extension</li>
-<li>Generic bad regex that isn't properly tested and well reviewed. Refrain from building your own logic unless you have enough knowledge on this topic.</li>
-</ul>
-<p>Refer to the <a href="Input_Validation_Cheat_Sheet.html">Input Validation CS</a> to properly parse and process the extension.</p>
-<h4 id="list-allowed-extensions">List Allowed Extensions<a class="headerlink" href="#list-allowed-extensions" title="Permanent link">&para;</a></h4>
-<p>Ensure the usage of <em>business-critical</em> extensions only, without allowing any type of <em>non-required</em> extensions. For example if the system requires:</p>
-<ul>
-<li>image upload, allow one type that is agreed upon to fit the business requirement;</li>
-<li>cv upload, allow <code>docx</code> and <code>pdf</code> extensions.</li>
-</ul>
-<p>Based on the needs of the application, ensure the <strong>least harmful</strong> and the <strong>lowest risk</strong> file types to be used.</p>
-<h4 id="block-extensions">Block Extensions<a class="headerlink" href="#block-extensions" title="Permanent link">&para;</a></h4>
-<p>Identify potentially harmful file types and block extensions that you regard harmful to your service.</p>
-<p>Please be aware that blocking specific extensions is a weak protection method on its own. The <a href="https://owasp.org/www-community/vulnerabilities/Unrestricted_File_Upload">Unrestricted File Upload vulnerability</a> article describes how attackers may attempt
-to bypass such a check.</p>
-<h3 id="content-type-validation">Content-Type Validation<a class="headerlink" href="#content-type-validation" title="Permanent link">&para;</a></h3>
-<p><em>The Content-Type for uploaded files is provided by the user, and as such cannot be trusted, as it is trivial to spoof. Although it should not be relied upon for security, it provides a quick check to prevent users from unintentionally uploading files with the incorrect type.</em></p>
-<p>Other than defining the extension of the uploaded file, its MIME-type can be checked for a quick protection against simple file upload attacks.</p>
-<p>This can be done preferably in an allowlist approach; otherwise, this can be done in a denylist approach.</p>
-<h3 id="file-signature-validation">File Signature Validation<a class="headerlink" href="#file-signature-validation" title="Permanent link">&para;</a></h3>
-<p>In conjunction with <a href="#content-type-validation">content-type validation</a>, validating the file's signature can be checked and verified against the expected file that should be received.</p>
-<blockquote>
-<p>This should not be used on its own, as bypassing it is pretty common and easy.</p>
-</blockquote>
-<h3 id="filename-safety">Filename Safety<a class="headerlink" href="#filename-safety" title="Permanent link">&para;</a></h3>
-<p>Filenames can endanger the system in multiple ways, either by using non acceptable characters, or by using special and restricted filenames. For Windows, refer to the following <a href="https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file?redirectedfrom=MSDN#naming-conventions">MSDN guide</a>. For a wider overview on different filesystems and how they treat files, refer to <a href="https://en.wikipedia.org/wiki/Filename">Wikipedia's Filename page</a>.</p>
-<p>In order to avoid the above mentioned threat, creating a <strong>random string</strong> as a file-name, such as generating a UUID/GUID, is essential. If the filename is required by the business needs, proper input validation should be done for client-side (<em>e.g.</em> active content that results in XSS and CSRF attacks) and back-end side (<em>e.g.</em> special files overwrite or creation) attack vectors. Filename length limits should be taken into consideration based on the system storing the files, as each system has its own filename length limit. If user filenames are required, consider implementing the following:</p>
-<ul>
-<li>Implement a maximum length</li>
-<li>Restrict characters to an allowed subset specifically, such as alphanumeric characters, hyphen, spaces, and periods<ul>
-<li>Consider telling the user what an acceptable filename is.</li>
-<li>Restrict use of leading periods (hidden files) and sequential periods (directory traversal).</li>
-<li>Restrict the use of a leading hyphen or spaces to make it safer to use shell scripts to process files.</li>
-<li>If this is not possible, block-list dangerous characters that could endanger the framework and system that is storing and using the files.</li>
-</ul>
-</li>
-</ul>
-<h3 id="file-content-validation">File Content Validation<a class="headerlink" href="#file-content-validation" title="Permanent link">&para;</a></h3>
-<p>As mentioned in the <a href="#public-file-retrieval">Public File Retrieval</a> section, file content can contain malicious, inappropriate, or illegal data.</p>
-<p>Based on the expected type, special file content validation can be applied:</p>
-<ul>
-<li>For <strong>images</strong>, applying image rewriting techniques destroys any kind of malicious content injected in an image; this could be done through <a href="https://security.stackexchange.com/a/8625/118367">randomization</a>.</li>
-<li>For <strong>Microsoft documents</strong>, the usage of <a href="https://poi.apache.org/">Apache POI</a> helps validating the uploaded documents.</li>
-<li><strong>ZIP files</strong> are not recommended since they can contain all types of files, and the attack vectors pertaining to them are numerous.</li>
-</ul>
-<p>The File Upload service should allow users to report illegal content, and copyright owners to report abuse.</p>
-<p>If there are enough resources, manual file review should be conducted in a sandboxed environment before releasing the files to the public.</p>
-<p>Adding some automation to the review could be helpful, which is a harsh process and should be well studied before its usage. Some services (<em>e.g.</em> Virus Total) provide APIs to scan files against well known malicious file hashes. Some frameworks can check and validate the raw content type and validating it against predefined file types, such as in <a href="https://docs.microsoft.com/en-us/dotnet/api/system.drawing.imaging.imageformat">ASP.NET Drawing Library</a>. Beware of data leakage threats and information gathering by public services.</p>
-<h3 id="file-storage-location">File Storage Location<a class="headerlink" href="#file-storage-location" title="Permanent link">&para;</a></h3>
-<p>The location where the files should be stored must be chosen based on security and business requirements. The following points are set by security priority, and are inclusive:</p>
-<ol>
-<li>Store the files on a <strong>different host</strong>, which allows for complete segregation of duties between the application serving the user, and the host handling file uploads and their storage.</li>
-<li>Store the files <strong>outside the webroot</strong>, where only administrative access is allowed.</li>
-<li>Store the files <strong>inside the webroot</strong>, and set them in write permissions only.
-   - If read access is required, setting proper controls is a must (<em>e.g.</em> internal IP, authorized user, etc.)</li>
-</ol>
-<p>Storing files in a studied manner in databases is one additional technique. This is sometimes used for automatic backup processes, non file-system attacks, and permissions issues. In return, this opens up the door to performance issues (in some cases), storage considerations for the database and its backups, and this opens up the door to SQLi attack. This is advised only when a DBA is on the team and that this process shows to be an improvement on storing them on the file-system.</p>
-<blockquote>
-<p>Some files are emailed or processed once they are uploaded, and are not stored on the server. It is essential to conduct the security measures discussed in this sheet before doing any actions on them.</p>
-</blockquote>
-<h3 id="user-permissions">User Permissions<a class="headerlink" href="#user-permissions" title="Permanent link">&para;</a></h3>
-<p>Before any file upload service is accessed, proper validation should occur on two levels for the user uploading a file:</p>
-<ul>
-<li>Authentication level<ul>
-<li>The user should be a registered user, or an identifiable user, in order to set restrictions and limitations for their upload capabilities</li>
-</ul>
-</li>
-<li>Authorization level<ul>
-<li>The user should have appropriate permissions to access or modify the files</li>
-</ul>
-</li>
-</ul>
-<h3 id="filesystem-permissions">Filesystem Permissions<a class="headerlink" href="#filesystem-permissions" title="Permanent link">&para;</a></h3>
-<blockquote>
-<p>Set the files permissions on the principle of least privilege.</p>
-</blockquote>
-<p>Files should be stored in a way that ensures:</p>
-<ul>
-<li>Allowed system users are the only ones capable of reading the files</li>
-<li>Required modes only are set for the file<ul>
-<li>If execution is required, scanning the file before running it is required as a security best practice, to ensure that no macros or hidden scripts are available.</li>
-</ul>
-</li>
-</ul>
-<h3 id="upload-and-download-limits">Upload and Download Limits<a class="headerlink" href="#upload-and-download-limits" title="Permanent link">&para;</a></h3>
-<p>The application should set proper size limits for the upload service in order to protect the file storage capacity. If the system is going to extract the files or process them, the file size limit should be considered after file decompression is conducted and by using secure methods to calculate zip files size. For more on this, see how to <a href="https://wiki.sei.cmu.edu/confluence/display/java/IDS04-J.+Safely+extract+files+from+ZipInputStream">Safely extract files from ZipInputStream</a>, Java's input stream to handle ZIP files.</p>
-<p>The application should set proper request limits as well for the download service if available to protect the server from DoS attacks.</p>
-<h2 id="java-code-snippets">Java Code Snippets<a class="headerlink" href="#java-code-snippets" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/righettod/document-upload-protection">Document Upload Protection</a> repository written by Dominique for certain document types in Java.</p>
+<h1 id="top-10-automotive-security-vulnerabilities">Top 10 Automotive Security Vulnerabilities<a class="headerlink" href="#top-10-automotive-security-vulnerabilities" title="Permanent link">&para;</a></h1>
+<p>This document outlines common security vulnerabilities found in automotive security and provides examples of how attackers can exploit these vulnerabilities.</p>
+<h2 id="1-weak-vehicle-communication-protocols">1. Weak Vehicle Communication Protocols<a class="headerlink" href="#1-weak-vehicle-communication-protocols" title="Permanent link">&para;</a></h2>
+<p><strong>Vulnerability</strong>: Many vehicles use communication protocols like CAN (Controller Area Network) without adequate security measures.<br />
+<strong>Example</strong>: An attacker could intercept messages on the CAN bus, leading to unauthorized commands being sent to critical vehicle systems (e.g., brakes, steering).<br />
+<strong>Attack Surface</strong>: In-vehicle networks and any exposed diagnostic ports.</p>
+<h2 id="2-insecure-over-the-air-ota-updates">2. Insecure Over-the-Air (OTA) Updates<a class="headerlink" href="#2-insecure-over-the-air-ota-updates" title="Permanent link">&para;</a></h2>
+<p><strong>Vulnerability</strong>: OTA updates may lack proper authentication and encryption, allowing attackers to inject malicious firmware.<br />
+<strong>Example</strong>: An attacker could spoof an update server and deliver a malicious update that compromises the vehicle's control systems.<br />
+<strong>Attack Surface</strong>: Wireless communication channels, including cellular and Wi-Fi.</p>
+<h2 id="3-insecure-telematics-systems">3. Insecure Telematics Systems<a class="headerlink" href="#3-insecure-telematics-systems" title="Permanent link">&para;</a></h2>
+<p><strong>Vulnerability</strong>: Telematics units that connect vehicles to cloud services may have insufficient security controls.<br />
+<strong>Example</strong>: An attacker exploiting weak API security could access sensitive vehicle data or manipulate vehicle settings remotely.<br />
+<strong>Attack Surface</strong>: Cloud interfaces, telematics gateways, and mobile applications.</p>
+<h2 id="4-software-supply-chain-vulnerabilities">4. Software Supply Chain Vulnerabilities<a class="headerlink" href="#4-software-supply-chain-vulnerabilities" title="Permanent link">&para;</a></h2>
+<p><strong>Vulnerability</strong>: Third-party software components may have known vulnerabilities that can be exploited.<br />
+<strong>Example</strong>: If a vehicle’s infotainment system relies on a vulnerable third-party library, an attacker could exploit that vulnerability to execute arbitrary code.<br />
+<strong>Attack Surface</strong>: Infotainment systems, vehicle software updates, and any integrated third-party applications.</p>
+<h2 id="5-physical-access-exploits">5. Physical Access Exploits<a class="headerlink" href="#5-physical-access-exploits" title="Permanent link">&para;</a></h2>
+<p><strong>Vulnerability</strong>: Physical access to the vehicle can allow attackers to manipulate systems directly.<br />
+<strong>Example</strong>: An attacker with physical access could connect a malicious device to the OBD-II port to alter vehicle settings or firmware.<br />
+<strong>Attack Surface</strong>: Diagnostic ports, service stations, and unsecured vehicle access.</p>
+<h2 id="6-inadequate-access-control-mechanisms">6. Inadequate Access Control Mechanisms<a class="headerlink" href="#6-inadequate-access-control-mechanisms" title="Permanent link">&para;</a></h2>
+<p><strong>Vulnerability</strong>: Weak or poorly implemented access control measures can allow unauthorized access to vehicle systems.<br />
+<strong>Example</strong>: A driver might gain unauthorized access to administrative functions through a poorly secured mobile app.<br />
+<strong>Attack Surface</strong>: Mobile applications, vehicle interfaces, and internal network connections.</p>
+<h2 id="7-poorly-implemented-authentication-mechanisms">7. Poorly Implemented Authentication Mechanisms<a class="headerlink" href="#7-poorly-implemented-authentication-mechanisms" title="Permanent link">&para;</a></h2>
+<p><strong>Vulnerability</strong>: Many automotive systems use weak authentication methods, making it easier for attackers to gain unauthorized access.<br />
+<strong>Example</strong>: If a vehicle’s mobile app uses easily guessable passwords, an attacker could log in and change vehicle settings or track location.<br />
+<strong>Attack Surface</strong>: Mobile applications, web interfaces, and vehicle systems that allow remote access.</p>
+<h2 id="8-data-leakage-and-privacy-violations">8. Data Leakage and Privacy Violations<a class="headerlink" href="#8-data-leakage-and-privacy-violations" title="Permanent link">&para;</a></h2>
+<p><strong>Vulnerability</strong>: Vehicles often collect extensive data, which can be inadequately protected.<br />
+<strong>Example</strong>: An unsecured data transmission channel could expose sensitive user data, such as location history and personal preferences, to eavesdroppers.<br />
+<strong>Attack Surface</strong>: Data transmission channels, cloud storage, and interfaces with third-party services.</p>
+<h2 id="9-lack-of-security-in-integrated-systems">9. Lack of Security in Integrated Systems<a class="headerlink" href="#9-lack-of-security-in-integrated-systems" title="Permanent link">&para;</a></h2>
+<p><strong>Vulnerability</strong>: The integration of various systems (e.g., infotainment, navigation) can create vulnerabilities if not properly secured.<br />
+<strong>Example</strong>: An attacker could exploit a vulnerability in the infotainment system to gain access to the vehicle’s control systems through interconnected components.<br />
+<strong>Attack Surface</strong>: Interconnected vehicle systems, APIs, and communication channels between systems.</p>
+<h2 id="10-insecure-legacy-systems">10. Insecure Legacy Systems<a class="headerlink" href="#10-insecure-legacy-systems" title="Permanent link">&para;</a></h2>
+<p><strong>Vulnerability</strong>: Many vehicles still use legacy systems with outdated security protocols.<br />
+<strong>Example</strong>: An attacker could exploit known vulnerabilities in older vehicle models that have not been patched, gaining control over critical systems.<br />
+<strong>Attack Surface</strong>: Older vehicle models, diagnostic tools, and maintenance interfaces.</p>
 
 
 
