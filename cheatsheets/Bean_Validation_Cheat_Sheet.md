@@ -26,7 +26,7 @@ Add Hibernate Validator to your **pom.xml**:
 <dependency>
    <groupId>org.hibernate</groupId>
    <artifactId>hibernate-validator</artifactId>
-   <version>USE_LATES_VERSION</version>
+   <version>USE_LATEST_VERSION</version>
 </dependency>
 ```
 
