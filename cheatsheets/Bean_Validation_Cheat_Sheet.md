@@ -4,7 +4,7 @@
 
 This article is focused on providing clear, simple, actionable guidance for providing Java Bean Validation security functionality in your applications.
 
-Bean validation (JSR303 aka [Bean Validation 1.0](https://beanvalidation.org/1.0/spec/) /JSR349 aka [Bean Validation 1.1](https://beanvalidation.org/1.1/spec/)) is one of the most common ways to perform [input validation](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html) in Java. It is an application layer agnostic validation spec which provides the developer with the means to define a set of validation constraints on a domain model and then perform validation of those constraints through out the various application tiers.
+Bean validation (aka [Jakarta Validation](https://beanvalidation.org/)) is one of the most common ways to perform [input validation](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html) in Java. It is an application layer agnostic validation spec which provides the developer with the means to define a set of validation constraints on a domain model and then perform validation of those constraints through out the various application tiers.
 
 One advantage of this approach is that the validation constraints and the corresponding validators are only written once, thus reducing duplication of effort and ensuring uniformity:
 
@@ -18,7 +18,7 @@ One advantage of this approach is that the validation constraints and the corres
 
 ## Setup
 
-The examples in this guide use Hibernate Validator (the reference implementation for Bean Validation 1.1).
+The examples in this guide use Hibernate Validator.
 
 Add Hibernate Validator to your **pom.xml**:
 
@@ -26,7 +26,7 @@ Add Hibernate Validator to your **pom.xml**:
 <dependency>
    <groupId>org.hibernate</groupId>
    <artifactId>hibernate-validator</artifactId>
-   <version>5.2.4.Final</version>
+   <version>USE_LATEST_VERSION</version>
 </dependency>
 ```
 
@@ -378,7 +378,7 @@ Checks whether the annotated value is higher/lower than or equal to the specifie
 
 **Reference:**
 
-[Documentation](https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints)
+[Documentation](https://docs.jboss.org/hibernate/validator/9.0/reference/en-US/html_single/#section-builtin-constraints)
 
 **Model**:
 
@@ -437,7 +437,7 @@ public class ReviewController {
 
 ### Cascading Constraints
 
-Validating one bean is a good start, but often, beans are nested or in a complete graph of beans. To validate that graph in one go, apply cascading validation with [@Valid](https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch03.html#_cascaded_validation)
+Validating one bean is a good start, but often, beans are nested or in a complete graph of beans. To validate that graph in one go, apply cascading validation with [@Valid](https://docs.jboss.org/hibernate/validator/9.0/reference/en-US/html_single/#_cascaded_validation)
 
 ### Additional Constraints
 
@@ -451,7 +451,7 @@ In addition to providing the complete set of JSR303 constraints, Hibernate Valid
 - `@ScriptAssert`
 - `@URL`
 
-Take a look at this [table](https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#table-custom-constraints) for the complete list.
+Take a look at this [list](https://docs.jboss.org/hibernate/validator/9.0/reference/en-US/html_single/#validator-defineconstraints-hv-constraints) for the complete list.
 
 Note that `@SafeHtml`, a previously valid constraint, has been deprecated according to the [Hibernate Validator 6.1.0.Final and 6.0.18.Final release blogpost](https://in.relation.to/2019/11/20/hibernate-validator-610-6018-released/). Please refrain from using the `@SafeHtml` constraint.
 
@@ -459,7 +459,7 @@ Note that `@SafeHtml`, a previously valid constraint, has been deprecated accord
 
 One of the most powerful features of bean validation is the ability to define your own constraints that go beyond the simple validation offered by built-in constraints.
 
-Creating custom constraints is beyond the scope of this guide. Please see this [documentation](https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch06.html).
+Creating custom constraints is beyond the scope of this guide. Please see this [documentation](https://docs.jboss.org/hibernate/validator/).
 
 ## Error Messages
 
