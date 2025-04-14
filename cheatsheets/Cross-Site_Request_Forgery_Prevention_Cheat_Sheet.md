@@ -163,11 +163,7 @@ Access-Control-Allow-Credentials=true
 
 A less secure configuration would be to configure your backend server to allow CORS from all subdomains of your site using a regular expression. If an attacker is able to [take over a subdomain](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/10-Test_for_Subdomain_Takeover) (not uncommon with cloud services) your CORS configuration would allow them to bypass the same origin policy and forge a request with your custom header.
 
-#### Avoiding "Special" Request Qualities
-
-This approach is most suitable for API-driven applications that primarily interact with clients via AJAX-based calls instead of traditional HTML `<form>` submissions.
-
-##### How It Works
+#### Explicit Authentication
 
 By ensuring that authentication credentials are always explicitly sent as part of the request, CSRF attacks are inherently prevented since a malicious website cannot generate a valid authenticated request without access to these credentials. Since browsers do not allow cross-site requests with custom headers without an explicit CORS preflight check, CSRF attacks are prevented.
 
