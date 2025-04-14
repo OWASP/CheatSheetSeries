@@ -2833,19 +2833,19 @@
 <h1 id="bean-validation-cheat-sheet">Bean Validation Cheat Sheet<a class="headerlink" href="#bean-validation-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>This article is focused on providing clear, simple, actionable guidance for providing Java Bean Validation security functionality in your applications.</p>
-<p>Bean validation (JSR303 aka <a href="https://beanvalidation.org/1.0/spec/">Bean Validation 1.0</a> /JSR349 aka <a href="https://beanvalidation.org/1.1/spec/">Bean Validation 1.1</a>) is one of the most common ways to perform <a href="https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html">input validation</a> in Java. It is an application layer agnostic validation spec which provides the developer with the means to define a set of validation constraints on a domain model and then perform validation of those constraints through out the various application tiers.</p>
+<p>Bean validation (aka <a href="https://beanvalidation.org/">Jakarta Validation</a>) is one of the most common ways to perform <a href="https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html">input validation</a> in Java. It is an application layer agnostic validation spec which provides the developer with the means to define a set of validation constraints on a domain model and then perform validation of those constraints through out the various application tiers.</p>
 <p>One advantage of this approach is that the validation constraints and the corresponding validators are only written once, thus reducing duplication of effort and ensuring uniformity:</p>
 <h3 id="typical-validation">Typical Validation<a class="headerlink" href="#typical-validation" title="Permanent link">&para;</a></h3>
 <p><img alt="Typical" src="../assets/Bean_Validation_Cheat_Sheet_Typical.png" /></p>
 <h3 id="bean-validation">Bean Validation<a class="headerlink" href="#bean-validation" title="Permanent link">&para;</a></h3>
 <p><img alt="JSR" src="../assets/Bean_Validation_Cheat_Sheet_JSR.png" /></p>
 <h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h2>
-<p>The examples in this guide use Hibernate Validator (the reference implementation for Bean Validation 1.1).</p>
+<p>The examples in this guide use Hibernate Validator.</p>
 <p>Add Hibernate Validator to your <strong>pom.xml</strong>:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">&lt;dependency&gt;</span>
 <span class="w">   </span><span class="nt">&lt;groupId&gt;</span>org.hibernate<span class="nt">&lt;/groupId&gt;</span>
 <span class="w">   </span><span class="nt">&lt;artifactId&gt;</span>hibernate-validator<span class="nt">&lt;/artifactId&gt;</span>
-<span class="w">   </span><span class="nt">&lt;version&gt;</span>5.2.4.Final<span class="nt">&lt;/version&gt;</span>
+<span class="w">   </span><span class="nt">&lt;version&gt;</span>USE_LATEST_VERSION<span class="nt">&lt;/version&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </code></pre></div>
 <p>Enable bean validation support in Spring's <strong>context.xml</strong>:</p>
@@ -3118,7 +3118,7 @@
 <p><strong>Use</strong>:</p>
 <p>Checks whether the annotated value is higher/lower than or equal to the specified minimum</p>
 <p><strong>Reference:</strong></p>
-<p><a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#section-builtin-constraints">Documentation</a></p>
+<p><a href="https://docs.jboss.org/hibernate/validator/9.0/reference/en-US/html_single/#section-builtin-constraints">Documentation</a></p>
 <p><strong>Model</strong>:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">org.hibernate.validator.constraints.Min</span><span class="p">;</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">org.hibernate.validator.constraints.Max</span><span class="p">;</span>
@@ -3169,7 +3169,7 @@
 <span class="p">}</span>
 </code></pre></div>
 <h3 id="cascading-constraints">Cascading Constraints<a class="headerlink" href="#cascading-constraints" title="Permanent link">&para;</a></h3>
-<p>Validating one bean is a good start, but often, beans are nested or in a complete graph of beans. To validate that graph in one go, apply cascading validation with <a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch03.html#_cascaded_validation">@Valid</a></p>
+<p>Validating one bean is a good start, but often, beans are nested or in a complete graph of beans. To validate that graph in one go, apply cascading validation with <a href="https://docs.jboss.org/hibernate/validator/9.0/reference/en-US/html_single/#_cascaded_validation">@Valid</a></p>
 <h3 id="additional-constraints">Additional Constraints<a class="headerlink" href="#additional-constraints" title="Permanent link">&para;</a></h3>
 <p>In addition to providing the complete set of JSR303 constraints, Hibernate Validator also defines some additional constraints for convenience:</p>
 <ul>
@@ -3181,11 +3181,11 @@
 <li><code>@ScriptAssert</code></li>
 <li><code>@URL</code></li>
 </ul>
-<p>Take a look at this <a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch02.html#table-custom-constraints">table</a> for the complete list.</p>
+<p>Take a look at this <a href="https://docs.jboss.org/hibernate/validator/9.0/reference/en-US/html_single/#validator-defineconstraints-hv-constraints">list</a> for the complete list.</p>
 <p>Note that <code>@SafeHtml</code>, a previously valid constraint, has been deprecated according to the <a href="https://in.relation.to/2019/11/20/hibernate-validator-610-6018-released/">Hibernate Validator 6.1.0.Final and 6.0.18.Final release blogpost</a>. Please refrain from using the <code>@SafeHtml</code> constraint.</p>
 <h2 id="custom-constraints">Custom Constraints<a class="headerlink" href="#custom-constraints" title="Permanent link">&para;</a></h2>
 <p>One of the most powerful features of bean validation is the ability to define your own constraints that go beyond the simple validation offered by built-in constraints.</p>
-<p>Creating custom constraints is beyond the scope of this guide. Please see this <a href="https://docs.jboss.org/hibernate/validator/5.2/reference/en-US/html/ch06.html">documentation</a>.</p>
+<p>Creating custom constraints is beyond the scope of this guide. Please see this <a href="https://docs.jboss.org/hibernate/validator/">documentation</a>.</p>
 <h2 id="error-messages">Error Messages<a class="headerlink" href="#error-messages" title="Permanent link">&para;</a></h2>
 <p>It is possible to specify a message ID with the validation annotation, so that error messages are customized :</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@Pattern</span><span class="p">(</span><span class="n">regexp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;[a-zA-Z0-9 ]&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="o">=</span><span class="s">&quot;article.title.error&quot;</span><span class="p">)</span>
