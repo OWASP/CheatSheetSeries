@@ -165,8 +165,6 @@ A less secure configuration would be to configure your backend server to allow C
 
 #### Avoiding "Special" Request Qualities
 
-Most CSRF mitigation techniques rely on the assumption that a request is "special" if it includes cookies, basic authentication credentials, or relies on network properties such as IP addresses. However, an alternative way to defend against CSRF is to avoid treating such request attributes as special in the first place.
-
 This approach is most suitable for API-driven applications that primarily interact with clients via AJAX-based calls instead of traditional HTML `<form>` submissions.
 
 ##### How It Works
