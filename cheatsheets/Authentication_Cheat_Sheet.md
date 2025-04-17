@@ -65,7 +65,7 @@ It is critical for an application to store a password using the right cryptograp
 Where possible, the user-supplied password should be compared to the stored password hash using a secure password comparison function provided by the language or framework, such as the [password_verify()](https://www.php.net/manual/en/function.password-verify.php) function in PHP. Where this is not possible, ensure that the comparison function:
 
 - Has a maximum input length, to protect against denial of service attacks with very long inputs.
-- Explicitly sets the type of both variables, to protect against type confusion attacks such as [Magic Hashes](https://www.whitehatsec.com/blog/magic-hashes/) in PHP.
+- Explicitly sets the type of both variables, to protect against type confusion attacks such as Magic Hashes in PHP.
 - Returns in constant time, to protect against timing attacks.
 
 ### Change Password Feature
