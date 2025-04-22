@@ -66,7 +66,7 @@
 
 [DOM Clobbering Prevention Cheat Sheet](cheatsheets/DOM_Clobbering_Prevention_Cheat_Sheet.md) ![Javascript](assets/Index_Javascript.svg) ![Html](assets/Index_Html.svg)
 
-[Drone Security Cheat Sheet](cheatsheets/Drone_security_sheet.md)
+[Drone Security Cheat Sheet](cheatsheets/Drone_Security_Cheat_Sheet.md)
 
 ## E
 
