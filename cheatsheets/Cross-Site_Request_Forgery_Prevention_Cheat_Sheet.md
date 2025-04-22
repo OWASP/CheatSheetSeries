@@ -94,18 +94,54 @@ Below is an example in pseudo-code that demonstrates the implementation steps de
 
 ```code
 // Gather the values
-secret = readEnvironmentVariable("CSRF_SECRET") // HMAC secret key
+secret = getSecretSecurely("CSRF_SECRET") // HMAC secret key
 sessionID = session.sessionID // Current authenticated user session
-randomValue = cryptographic.randomValue() // Cryptographic random value
+randomValue = cryptographic.randomValue(64) // Cryptographic random value
 
 // Create the CSRF Token
-message = sessionID.length + "!" + sessionID + "!" + randomValue.length + "!" + randomValue // HMAC message payload
+message = sessionID.length + "!" + sessionID + "!" + randomValue.length + "!" + randomValue.toHex() // HMAC message payload
 hmac = hmac("SHA256", secret, message) // Generate the HMAC hash
-csrfToken = hmac + "." + randomValue // Add the `randomValue` to the HMAC hash to create the final CSRF token. Avoid using the `message` because it contains the sessionID in plain text, which the server already stores separately.
+// Add the `randomValue` to the HMAC hash to create the final CSRF token.
+// Avoid using the `message` because it contains the sessionID in plain text,
+// which the server already stores separately.
+csrfToken = hmac.toHex() + "." + randomValue.toHex()
 
 // Store the CSRF Token in a cookie
 response.setCookie("csrf_token=" + csrfToken + "; Secure") // Set Cookie without HttpOnly flag
 ```
+
+Below is an example in pseudo-code that demonstrates validation of the CSRF token once it is sent back from the client:
+
+```code
+// Get the CSRF token from the request
+csrfToken = request.getParameter("csrf_token") // From form field, cookie, or header
+
+// Split the token to get the randomValue
+const tokenParts = csrfToken.split(".");
+const hmacFromRequest = tokenParts[0];
+const randomValue = tokenParts[1];
+
+// Recreate the HMAC with the current session and the randomValue from the request
+secret = getSecretSecurely("CSRF_SECRET") // HMAC secret key
+sessionID = session.sessionID // Current authenticated user session
+message = sessionID.length + "!" + sessionID + "!" + randomValue.length + "!" + randomValue
+
+// Generate the expected HMAC
+expectedHmac = hmac("SHA256", secret, message)
+
+// Compare the HMAC from the request with the expected HMAC
+if (!constantTimeEquals(hmacFromRequest, expectedHmac)) {
+    // HMAC validation failed, reject the request
+    response.sendError(403, "Invalid CSRF token")
+    logError("Invalid CSRF token", hmacFromRequest, expectedHmac)
+    return
+}
+
+// CSRF validation passed, continue processing the request
+// ...
+```
+
+Note: The `constantTimeEquals` function should be used to compare the HMACs to prevent timing attacks. This function compares two strings in constant time, regardless of how many characters match.
 
 ### Naive Double-Submit Cookie Pattern (DISCOURAGED)
 
