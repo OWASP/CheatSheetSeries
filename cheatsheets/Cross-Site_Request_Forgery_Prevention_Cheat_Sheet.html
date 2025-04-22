@@ -3424,18 +3424,50 @@
 <h5 id="pseudo-code-for-implementing-hmac-csrf-tokens">Pseudo-Code For Implementing HMAC CSRF Tokens<a class="headerlink" href="#pseudo-code-for-implementing-hmac-csrf-tokens" title="Permanent link">&para;</a></h5>
 <p>Below is an example in pseudo-code that demonstrates the implementation steps described above:</p>
 <div class="highlight"><pre><span></span><code>// Gather the values
-secret = readEnvironmentVariable(&quot;CSRF_SECRET&quot;) // HMAC secret key
+secret = getSecretSecurely(&quot;CSRF_SECRET&quot;) // HMAC secret key
 sessionID = session.sessionID // Current authenticated user session
-randomValue = cryptographic.randomValue() // Cryptographic random value
+randomValue = cryptographic.randomValue(64) // Cryptographic random value
 
 // Create the CSRF Token
-message = sessionID.length + &quot;!&quot; + sessionID + &quot;!&quot; + randomValue.length + &quot;!&quot; + randomValue // HMAC message payload
+message = sessionID.length + &quot;!&quot; + sessionID + &quot;!&quot; + randomValue.length + &quot;!&quot; + randomValue.toHex() // HMAC message payload
 hmac = hmac(&quot;SHA256&quot;, secret, message) // Generate the HMAC hash
-csrfToken = hmac + &quot;.&quot; + randomValue // Add the `randomValue` to the HMAC hash to create the final CSRF token. Avoid using the `message` because it contains the sessionID in plain text, which the server already stores separately.
+// Add the `randomValue` to the HMAC hash to create the final CSRF token.
+// Avoid using the `message` because it contains the sessionID in plain text,
+// which the server already stores separately.
+csrfToken = hmac.toHex() + &quot;.&quot; + randomValue.toHex()
 
 // Store the CSRF Token in a cookie
 response.setCookie(&quot;csrf_token=&quot; + csrfToken + &quot;; Secure&quot;) // Set Cookie without HttpOnly flag
 </code></pre></div>
+<p>Below is an example in pseudo-code that demonstrates validation of the CSRF token once it is sent back from the client:</p>
+<div class="highlight"><pre><span></span><code>// Get the CSRF token from the request
+csrfToken = request.getParameter(&quot;csrf_token&quot;) // From form field, cookie, or header
+
+// Split the token to get the randomValue
+const tokenParts = csrfToken.split(&quot;.&quot;);
+const hmacFromRequest = tokenParts[0];
+const randomValue = tokenParts[1];
+
+// Recreate the HMAC with the current session and the randomValue from the request
+secret = getSecretSecurely(&quot;CSRF_SECRET&quot;) // HMAC secret key
+sessionID = session.sessionID // Current authenticated user session
+message = sessionID.length + &quot;!&quot; + sessionID + &quot;!&quot; + randomValue.length + &quot;!&quot; + randomValue
+
+// Generate the expected HMAC
+expectedHmac = hmac(&quot;SHA256&quot;, secret, message)
+
+// Compare the HMAC from the request with the expected HMAC
+if (!constantTimeEquals(hmacFromRequest, expectedHmac)) {
+    // HMAC validation failed, reject the request
+    response.sendError(403, &quot;Invalid CSRF token&quot;)
+    logError(&quot;Invalid CSRF token&quot;, hmacFromRequest, expectedHmac)
+    return
+}
+
+// CSRF validation passed, continue processing the request
+// ...
+</code></pre></div>
+<p>Note: The <code>constantTimeEquals</code> function should be used to compare the HMACs to prevent timing attacks. This function compares two strings in constant time, regardless of how many characters match.</p>
 <h3 id="naive-double-submit-cookie-pattern-discouraged">Naive Double-Submit Cookie Pattern (DISCOURAGED)<a class="headerlink" href="#naive-double-submit-cookie-pattern-discouraged" title="Permanent link">&para;</a></h3>
 <p>The <em>Naive Double-Submit Cookie</em> method is a scalable and easy-to-implement technique which uses a cryptographically strong random value as a cookie and as a request parameter (even before user authentication). Then the server verifies if the cookie value and request value match. The site must require that every transaction request from the user includes this random value as a hidden form value or inside the request header. If the value matches at server side, the server accepts it as a legitimate request and if they don't, it rejects the request.</p>
 <p>Since an attacker is unable to access the cookie value during a cross-site request, they cannot include a matching value in the hidden form value or as a request parameter/header.</p>
