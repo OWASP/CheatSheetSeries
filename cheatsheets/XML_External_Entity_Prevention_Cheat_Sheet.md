@@ -542,7 +542,7 @@ Previously, this information was based on some older articles which may not be 1
 
 **Below is an overview of all supported .NET XML parsers and their default safety levels. More details about each parser are included after this list.
 
-**XDocument (Ling to XML)
+**XDocument (LINQ to XML)
 
 This parser is protected from external entities at .NET Framework version 4.5.2 and protected from Billion Laughs at version 4.5.2 or greater, but it is uncertain if this parser is protected from Billion Laughs before version 4.5.2.
 
