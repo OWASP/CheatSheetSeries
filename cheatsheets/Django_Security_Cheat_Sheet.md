@@ -151,7 +151,8 @@ Include the `django.middleware.clickjacking.XFrameOptionsMiddleware` module in t
 The recommendations in this section are in addition to XSS recommendations already mentioned previously.
 
 - Use the built-in template system to render templates in Django. Refer to Django's [Automatic HTML escaping](https://docs.djangoproject.com/en/3.2/ref/templates/language/#automatic-html-escaping) documentation to learn more.
-- Avoid using `safe`, `mark_safe`, or `json_script` filters for disabling Django's automatic template escaping. The equivalent function in Python is the `make_safe()` function. Refer to the [json_script](https://docs.djangoproject.com/en/3.2/ref/templates/builtins/#json-script0) template filter documentation to learn more.
+- Try to avoid using the `safe` filter (or `mark_safe` function) to disable Django's automatic template escaping. If you do need to use it, make sure the input is from a trusted source. Extra caution is required when handling user-controlled inputs.
+- Use the [`json_script`](https://docs.djangoproject.com/en/5.2/ref/templates/builtins/#json-script) template filter for passing data to JavaScript in Django templates.
 - Refer to Django's [Cross Site Scripting (XSS) protection](https://docs.djangoproject.com/en/3.2/topics/security/#cross-site-scripting-xss-protection) documentation to learn more.
 
 ## HTTPS
