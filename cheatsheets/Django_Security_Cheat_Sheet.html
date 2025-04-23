@@ -2870,7 +2870,8 @@
 <p>The recommendations in this section are in addition to XSS recommendations already mentioned previously.</p>
 <ul>
 <li>Use the built-in template system to render templates in Django. Refer to Django's <a href="https://docs.djangoproject.com/en/3.2/ref/templates/language/#automatic-html-escaping">Automatic HTML escaping</a> documentation to learn more.</li>
-<li>Avoid using <code>safe</code>, <code>mark_safe</code>, or <code>json_script</code> filters for disabling Django's automatic template escaping. The equivalent function in Python is the <code>make_safe()</code> function. Refer to the <a href="https://docs.djangoproject.com/en/3.2/ref/templates/builtins/#json-script0">json_script</a> template filter documentation to learn more.</li>
+<li>Try to avoid using the <code>safe</code> filter (or <code>mark_safe</code> function) to disable Django's automatic template escaping. If you do need to use it, make sure the input is from a trusted source. Extra caution is required when handling user-controlled inputs.</li>
+<li>Use the <a href="https://docs.djangoproject.com/en/5.2/ref/templates/builtins/#json-script"><code>json_script</code></a> template filter for passing data to JavaScript in Django templates.</li>
 <li>Refer to Django's <a href="https://docs.djangoproject.com/en/3.2/topics/security/#cross-site-scripting-xss-protection">Cross Site Scripting (XSS) protection</a> documentation to learn more.</li>
 </ul>
 <h2 id="https">HTTPS<a class="headerlink" href="#https" title="Permanent link">&para;</a></h2>
