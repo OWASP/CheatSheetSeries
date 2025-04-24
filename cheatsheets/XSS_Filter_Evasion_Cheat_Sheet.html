@@ -4598,7 +4598,7 @@
 </code></pre></div>
 <p>(Based on this <a href="https://twitter.com/garethheyes/status/997466212190781445">tweet</a> by <a href="https://twitter.com/garethheyes">Gareth Heyes</a>).</p>
 <h3 id="malformed-a-tags">Malformed A Tags<a class="headerlink" href="#malformed-a-tags" title="Permanent link">&para;</a></h3>
-<p>This test skips the <code>[href](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#href)</code> attribute to demonstrate an XSS attack using event handlers:</p>
+<p>This test skips the <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#href"><code>href</code></a> attribute to demonstrate an XSS attack using event handlers:</p>
 <div class="highlight"><pre><span></span><code><span class="err">\</span><span class="o">&lt;</span><span class="nx">a</span><span class="w"> </span><span class="nx">onmouseover</span><span class="o">=</span><span class="s2">&quot;alert(document.cookie)&quot;</span><span class="err">\</span><span class="o">&gt;</span><span class="nx">xxs</span><span class="w"> </span><span class="nx">link</span><span class="err">\</span><span class="o">&lt;</span><span class="err">/a\&gt;</span>
 </code></pre></div>
 <p>Chrome automatically inserts missing quotes for you. If you encounter issues, try omitting them and Chrome will correctly place the missing quotes in URLs or scripts for you:</p>
