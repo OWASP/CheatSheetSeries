@@ -144,22 +144,22 @@ Include the `django.middleware.clickjacking.XFrameOptionsMiddleware` module in t
   ```
 
 - For AJAX calls, the CSRF token for the request has to be extracted prior to being used in the the AJAX call.  
-- Additional recommendations and controls can be found at Django's [Cross Site Request Forgery protection](https://docs.djangoproject.com/en/3.2/ref/csrf/) documentation.
+- Additional recommendations and controls can be found at Django's [Cross Site Request Forgery protection](https://docs.djangoproject.com/en/5.2/ref/csrf/) documentation.
 
 ## Cross Site Scripting (XSS)
 
 The recommendations in this section are in addition to XSS recommendations already mentioned previously.
 
-- Use the built-in template system to render templates in Django. Refer to Django's [Automatic HTML escaping](https://docs.djangoproject.com/en/3.2/ref/templates/language/#automatic-html-escaping) documentation to learn more.
+- Use the built-in template system to render templates in Django. Refer to Django's [Automatic HTML escaping](https://docs.djangoproject.com/en/5.2/ref/templates/language/#automatic-html-escaping) documentation to learn more.
 - Try to avoid using the `safe` filter (or `mark_safe` function) to disable Django's automatic template escaping. If you do need to use it, make sure the input is from a trusted source. Extra caution is required when handling user-controlled inputs.
 - Use the [`json_script`](https://docs.djangoproject.com/en/5.2/ref/templates/builtins/#json-script) template filter for passing data to JavaScript in Django templates.
-- Refer to Django's [Cross Site Scripting (XSS) protection](https://docs.djangoproject.com/en/3.2/topics/security/#cross-site-scripting-xss-protection) documentation to learn more.
+- Refer to Django's [Cross Site Scripting (XSS) protection](https://docs.djangoproject.com/en/5.2/topics/security/#cross-site-scripting-xss-protection) documentation to learn more.
 
 ## HTTPS
 
 - Include the `django.middleware.security.SecurityMiddleware` module in the `MIDDLEWARE` setting in your project's `settings.py` if not already added.
 - Set the `SECURE_SSL_REDIRECT = True` in the `settings.py` file to ensure that all communication is over HTTPS. This will redirect any HTTP requests automatically to HTTPS. This is also a 301 (permanent) redirect, so your browser will remember the redirect for subsequent requests.
-- If your Django application is behind a proxy or load balancer, set the `SECURE_PROXY_SSL_HEADER` setting to `TRUE` so that Django can detect the original request's protocol. For further details refer to [SECURE_PROXY_SSL_HEADER documentation](https://docs.djangoproject.com/en/3.2/ref/settings/#secure-proxy-ssl-header).
+- If your Django application is behind a proxy or load balancer, set the `SECURE_PROXY_SSL_HEADER` setting so that Django can detect the original request's protocol. For further details refer to [SECURE_PROXY_SSL_HEADER documentation](https://docs.djangoproject.com/en/5.2/ref/settings/#secure-proxy-ssl-header).
 
 ## Admin panel URL
 
@@ -171,5 +171,5 @@ In the default app folder within your project, locate the `urls.py` file managin
 
 Additional documentation -
 
-- [Clickjacking Protection](https://docs.djangoproject.com/en/3.2/topics/security/#clickjacking-protection)
-- [Security Middleware](https://docs.djangoproject.com/en/3.2/topics/security/#module-django.middleware.security)
+- [Clickjacking Protection](https://docs.djangoproject.com/en/5.2/topics/security/#clickjacking-protection)
+- [Security Middleware](https://docs.djangoproject.com/en/5.2/ref/middleware/#module-django.middleware.security)
