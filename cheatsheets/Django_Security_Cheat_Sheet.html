@@ -2864,21 +2864,21 @@
 </code></pre></div>
 <ul>
 <li>For AJAX calls, the CSRF token for the request has to be extracted prior to being used in the the AJAX call.  </li>
-<li>Additional recommendations and controls can be found at Django's <a href="https://docs.djangoproject.com/en/3.2/ref/csrf/">Cross Site Request Forgery protection</a> documentation.</li>
+<li>Additional recommendations and controls can be found at Django's <a href="https://docs.djangoproject.com/en/5.2/ref/csrf/">Cross Site Request Forgery protection</a> documentation.</li>
 </ul>
 <h2 id="cross-site-scripting-xss">Cross Site Scripting (XSS)<a class="headerlink" href="#cross-site-scripting-xss" title="Permanent link">&para;</a></h2>
 <p>The recommendations in this section are in addition to XSS recommendations already mentioned previously.</p>
 <ul>
-<li>Use the built-in template system to render templates in Django. Refer to Django's <a href="https://docs.djangoproject.com/en/3.2/ref/templates/language/#automatic-html-escaping">Automatic HTML escaping</a> documentation to learn more.</li>
+<li>Use the built-in template system to render templates in Django. Refer to Django's <a href="https://docs.djangoproject.com/en/5.2/ref/templates/language/#automatic-html-escaping">Automatic HTML escaping</a> documentation to learn more.</li>
 <li>Try to avoid using the <code>safe</code> filter (or <code>mark_safe</code> function) to disable Django's automatic template escaping. If you do need to use it, make sure the input is from a trusted source. Extra caution is required when handling user-controlled inputs.</li>
 <li>Use the <a href="https://docs.djangoproject.com/en/5.2/ref/templates/builtins/#json-script"><code>json_script</code></a> template filter for passing data to JavaScript in Django templates.</li>
-<li>Refer to Django's <a href="https://docs.djangoproject.com/en/3.2/topics/security/#cross-site-scripting-xss-protection">Cross Site Scripting (XSS) protection</a> documentation to learn more.</li>
+<li>Refer to Django's <a href="https://docs.djangoproject.com/en/5.2/topics/security/#cross-site-scripting-xss-protection">Cross Site Scripting (XSS) protection</a> documentation to learn more.</li>
 </ul>
 <h2 id="https">HTTPS<a class="headerlink" href="#https" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Include the <code>django.middleware.security.SecurityMiddleware</code> module in the <code>MIDDLEWARE</code> setting in your project's <code>settings.py</code> if not already added.</li>
 <li>Set the <code>SECURE_SSL_REDIRECT = True</code> in the <code>settings.py</code> file to ensure that all communication is over HTTPS. This will redirect any HTTP requests automatically to HTTPS. This is also a 301 (permanent) redirect, so your browser will remember the redirect for subsequent requests.</li>
-<li>If your Django application is behind a proxy or load balancer, set the <code>SECURE_PROXY_SSL_HEADER</code> setting to <code>TRUE</code> so that Django can detect the original request's protocol. For further details refer to <a href="https://docs.djangoproject.com/en/3.2/ref/settings/#secure-proxy-ssl-header">SECURE_PROXY_SSL_HEADER documentation</a>.</li>
+<li>If your Django application is behind a proxy or load balancer, set the <code>SECURE_PROXY_SSL_HEADER</code> setting so that Django can detect the original request's protocol. For further details refer to <a href="https://docs.djangoproject.com/en/5.2/ref/settings/#secure-proxy-ssl-header">SECURE_PROXY_SSL_HEADER documentation</a>.</li>
 </ul>
 <h2 id="admin-panel-url">Admin panel URL<a class="headerlink" href="#admin-panel-url" title="Permanent link">&para;</a></h2>
 <p>It is advisable to modify the default URL leading to the admin panel (example.com/admin/), in order to slightly increase the difficulty for automated attacks. Here’s how to do it:</p>
@@ -2886,8 +2886,8 @@
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <p>Additional documentation -</p>
 <ul>
-<li><a href="https://docs.djangoproject.com/en/3.2/topics/security/#clickjacking-protection">Clickjacking Protection</a></li>
-<li><a href="https://docs.djangoproject.com/en/3.2/topics/security/#module-django.middleware.security">Security Middleware</a></li>
+<li><a href="https://docs.djangoproject.com/en/5.2/topics/security/#clickjacking-protection">Clickjacking Protection</a></li>
+<li><a href="https://docs.djangoproject.com/en/5.2/ref/middleware/#module-django.middleware.security">Security Middleware</a></li>
 </ul>
 
 
