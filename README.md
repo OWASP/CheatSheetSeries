@@ -15,8 +15,11 @@ In order to read the cheat sheets and **reference** them, use the project [offic
 
 - [Jim Manico](https://github.com/jmanico)
 - [Jakub Maćkowski](https://github.com/mackowski)
-- [Kevin W. Wall](https://github.com/kwwall)
 - [Shlomo Zalman Heigh](https://github.com/szh)
+
+### Core team
+
+- [Kevin W. Wall](https://github.com/kwwall)
 
 ## Chat With Us
 
