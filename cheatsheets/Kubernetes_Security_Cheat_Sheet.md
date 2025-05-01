@@ -138,20 +138,23 @@ An overview of the default ports used in Kubernetes is provided below. Make sure
 
 | Protocol | Port Range | Purpose                 |
 | -------- | ---------- | ----------------------- |
-| TCP      | 6443-      | Kubernetes API Server   |
+| TCP      | 6443       | Kubernetes API Server   |
 | TCP      | 2379-2380  | etcd server client API  |
 | TCP      | 10250      | Kubelet API             |
-| TCP      | 10251      | kube-scheduler          |
-| TCP      | 10252      | kube-controller-manager |
+| TCP      | 10259      | kube-scheduler          |
+| TCP      | 10257      | kube-controller-manager |
 | TCP      | 10255      | Read-Only Kubelet API   |
 
 **Worker nodes:**
 
-| Protocol | Port Range  | Purpose               |
-| -------- | ----------- | --------------------- |
-| TCP      | 10250       | Kubelet API           |
-| TCP      | 10255       | Read-Only Kubelet API |
-| TCP      | 30000-32767 | NodePort Services     |
+| Protocol | Port Range  | Purpose                |
+| -------- | ----------- | ---------------------- |
+| TCP      | 10248       | Kubelet Healthz API    |
+| TCP      | 10249       | Kube-proxy Metrics API |
+| TCP      | 10250       | Kubelet API            |
+| TCP      | 10255       | Read-Only Kubelet API  |
+| TCP      | 10256       | Kube-proxy Healthz API |
+| TCP      | 30000-32767 | NodePort Services      |
 
 --
 
