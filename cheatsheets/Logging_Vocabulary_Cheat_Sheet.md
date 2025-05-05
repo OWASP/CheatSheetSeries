@@ -1180,3 +1180,7 @@ WARN
 As important as what you DO log is what you DON'T log. Private or secret information, source code, keys, certs, etc. should never be logged.
 
 For comprehensive overview of items that should be excluded from logging, please see the [OWASP Logging Cheat Sheet](../cheatsheets/Logging_Cheat_Sheet.md#data-to-exclude).
+
+## TODO
+- Update IBM Cost of Data Breach to newer version
+- Add new event type for failure to encrypt/decrypt. One use case might be decryption fail because of wrong key/passphrase used. Another could be failure related to authorization failure to grab the related key from vault. 
