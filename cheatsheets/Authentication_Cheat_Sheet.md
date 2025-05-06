@@ -365,8 +365,11 @@ A feature of more advanced applications is the ability to require different auth
 
 For example, an application may require MFA for the first login from a particular device but not for subsequent logins from that device. Alternatively, a single sign-on solution may authenticate the user and allow them to remain logged in for a day but require a reauthentication if they try and access their profile page.
 
+Another option is the opposite approach where an application allows low risk access with just something that identify the device (e.g., a specific mobile device fingerprint, a persist cookie and browser fingerprint, etc. from the previous IP address) and then gradually requires stronger authentication for more sensitive operations. An example might be to allow someone to trigger something to see their current bank balance, but not the account number or anything else. If they need to see transactions, then the application puts them through some base level authentication and if they want to do any money movement, then MFA is required.
+
 Questions that should be considered when implementing a mechanism like this include:
 
+- Are the policies being put in place in line with any corporate policies and especially any regulatory policy.
 - Which user‑ or device‑attributes (IP, geolocation, device fingerprint, time‑of‑day, behavioral biometrics, etc.) will we monitor at session start?
 - Which of those signals need to be refreshed during an active session, and at what cadence?
 - How will we ensure each signal’s accuracy and handle missing or low‑confidence data?
@@ -378,3 +381,4 @@ Questions that should be considered when implementing a mechanism like this incl
 - How do we propagate decisions consistently across web, mobile, and API clients?
 - How do we mutate, extend, or revoke tokens/cookies when a mid‑session risk check escalates?
 - How do we synchronize state across multiple concurrent devices or browser tabs?
+- What monitoring and alerting will be in place for potentially suspicious activity, including how the user is notified.
