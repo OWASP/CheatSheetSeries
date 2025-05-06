@@ -8,9 +8,9 @@ Each year IBM Security commissions the Ponemon Institute to survey companies aro
 
 In addition to the millions of dollars lost due to breaches the report finds that the **mean time to identify** a breach continues to hover around **200 days**. Clearly our ability to monitor applications and alert on anomalous behavior would improve our time to identify and mitigate an attack against our applications.
 
-![IBM Cost of Data Breach Report 2020](../assets/cost-of-breach-2020.png)
+![IBM Cost of Data Breach Report 2020](../assets/cost-of-breach-2024.png)
 
-> IBM Cost of a Data Breach Study 2020, Fig.34, pg.52, [https://www.ibm.com/security/data-breach]
+> IBM Cost of a Data Breach Study 2020, Fig.4, pg.10, [https://www.ibm.com/security/data-breach]
 
 This logging standard would seek to define specific keywords which, when applied consistently across software, would allow groups to simply monitor for these events terms across all applications and respond quickly in the event of attack.
 
@@ -73,9 +73,13 @@ _NOTE: All dates should be logged in [ISO 8601](https://en.wikipedia.org/wiki/IS
 
 ## The Vocabulary
 
-What follows are the various event types that should be captured. For each event type there is a prefix like "authn" and additional data that should be included for that event.
+What follows are the various event types that should be captured. For each event type there is a prefix like "authn" and additional data that may be included for that event.
 
 Portions of the full logging format are included for example, but a complete event log should follow the format above.
+
+**Note on Data Privacy:**
+
+All fields logged after event type should be considered optional. Businesses implementing this logging method should consider value of the fields being logged vs. responsibility as a data steward for the data logged. For example: logging user IP address may be useful for detection and response, but may be considered personally identifiable information when combined with other data and subject to regulation or deletion requests.
 
 ---
 
@@ -429,6 +433,52 @@ All activity by privileged users such as admin should be recorded.
 
 ---
 
+## Encryption/Decryption [CRYPT]
+
+### crypt_decrypt_fail[userid]
+
+**Description**
+Failure to perform encryption and decryption could be simply due to a system error, or it may be related to authorization failures where a user lacks permissions on the related data.
+
+**Level:**: WARN
+
+**Example:**
+
+```
+{
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "crypt_decrypt_fail:joebob1",
+    "level": "WARN",
+    "description": "User joebob1 was unable to perform decryption" + err,
+    ...
+}
+```
+
+---
+
+### crypt_encrypt_fail[userid]
+
+**Description**
+Failure to perform encryption and decryption could be simply due to a system error, or it may be related to authorization failures where a user lacks permissions on the related data.
+
+**Level:**: WARN
+
+**Example:**
+
+```
+{
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "crypt_encrypt_fail:joebob1",
+    "level": "WARN",
+    "description": "User joebob1 was unable to perform encryption" + err,
+    ...
+}
+```
+
+---
+
 ## Excessive Use [EXCESS]
 
 ### excess_rate_limit_exceeded[userid,max]
@@ -545,7 +595,7 @@ When a file is deleted for normal reasons it should be recorded.
 
 ## Input Validation [INPUT]
 
-### input_validation_fail[:field,userid]
+### input_validation_fail:[(fieldone,fieldtwo...),userid]
 
 **Description**
 When input validation fails on the server-side it must either be because a) sufficient validation was not provided on the client, or b) client-side validation was bypassed. In either case it's an opportunity for attack and should be mitigated quickly.
@@ -559,7 +609,7 @@ WARN
 {
     "datetime": "2019-01-01 00:00:00,000",
     "appid": "foobar.netportal_auth",
-    "event": "input_validation_fail:date_of_birth,joebob1",
+    "event": "input_validation_fail:(zip,date_of_birth),joebob1",
     "level": "WARN",
     "description": "User joebob1 submitted data that failed validation.",
     ...
