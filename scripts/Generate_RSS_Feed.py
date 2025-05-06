@@ -8,7 +8,7 @@ Dependencies: pip install requests feedgen
 """
 import sys
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 
 import requests
 from feedgen.feed import FeedGenerator
@@ -29,7 +29,7 @@ pull_requests = response.json()
 # Process the obtained list and generate the feed in memory
 print("[+] Process the obtained list and generate the feed in memory (%s) items)..." % len(pull_requests))
 feed_generator = FeedGenerator()
-current_date = datetime.utcnow().strftime("%a, %d %B %Y %H:%M:%S GMT")  # Sun, 19 May 2002 15:21:36 GMT
+current_date = datetime.now(timezone.utc).strftime("%a, %d %B %Y %H:%M:%S GMT")  # Sun, 19 May 2002 15:21:36 GMT
 feed_generator.id("https://cheatsheetseries.owasp.org/")
 feed_generator.title("OWASP Cheat Sheet Series update")
 feed_generator.description("List of the last updates on the content")
