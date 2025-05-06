@@ -1761,6 +1761,39 @@ redirect_from: "/cheatsheets/Application_Logging_Vocabulary_Cheat_Sheet.html"
 </li>
       
         <li class="md-nav__item">
+  <a href="#encryptiondecryption-crypt" class="md-nav__link">
+    <span class="md-ellipsis">
+      Encryption/Decryption [CRYPT]
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Encryption/Decryption [CRYPT]">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#crypt_decrypt_failuserid" class="md-nav__link">
+    <span class="md-ellipsis">
+      crypt_decrypt_fail[userid]
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#crypt_encrypt_failuserid" class="md-nav__link">
+    <span class="md-ellipsis">
+      crypt_encrypt_fail[userid]
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#excessive-use-excess" class="md-nav__link">
     <span class="md-ellipsis">
       Excessive Use [EXCESS]
@@ -1846,9 +1879,9 @@ redirect_from: "/cheatsheets/Application_Logging_Vocabulary_Cheat_Sheet.html"
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#input_validation_failfielduserid" class="md-nav__link">
+  <a href="#input_validation_failfieldonefieldtwouserid" class="md-nav__link">
     <span class="md-ellipsis">
-      input_validation_fail[:field,userid]
+      input_validation_fail:[(fieldone,fieldtwo...),userid]
     </span>
   </a>
   
@@ -3411,6 +3444,39 @@ redirect_from: "/cheatsheets/Application_Logging_Vocabulary_Cheat_Sheet.html"
 </li>
       
         <li class="md-nav__item">
+  <a href="#encryptiondecryption-crypt" class="md-nav__link">
+    <span class="md-ellipsis">
+      Encryption/Decryption [CRYPT]
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Encryption/Decryption [CRYPT]">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#crypt_decrypt_failuserid" class="md-nav__link">
+    <span class="md-ellipsis">
+      crypt_decrypt_fail[userid]
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#crypt_encrypt_failuserid" class="md-nav__link">
+    <span class="md-ellipsis">
+      crypt_encrypt_fail[userid]
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#excessive-use-excess" class="md-nav__link">
     <span class="md-ellipsis">
       Excessive Use [EXCESS]
@@ -3496,9 +3562,9 @@ redirect_from: "/cheatsheets/Application_Logging_Vocabulary_Cheat_Sheet.html"
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#input_validation_failfielduserid" class="md-nav__link">
+  <a href="#input_validation_failfieldonefieldtwouserid" class="md-nav__link">
     <span class="md-ellipsis">
-      input_validation_fail[:field,userid]
+      input_validation_fail:[(fieldone,fieldtwo...),userid]
     </span>
   </a>
   
@@ -3871,9 +3937,9 @@ redirect_from: "/cheatsheets/Application_Logging_Vocabulary_Cheat_Sheet.html"
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
 <p>Each year IBM Security commissions the Ponemon Institute to survey companies around the world for information related to security breaches, mitigation, and the associated costs; the result is called the Cost of a Data Breach Report.</p>
 <p>In addition to the millions of dollars lost due to breaches the report finds that the <strong>mean time to identify</strong> a breach continues to hover around <strong>200 days</strong>. Clearly our ability to monitor applications and alert on anomalous behavior would improve our time to identify and mitigate an attack against our applications.</p>
-<p><img alt="IBM Cost of Data Breach Report 2020" src="../assets/cost-of-breach-2020.png" /></p>
+<p><img alt="IBM Cost of Data Breach Report 2020" src="../assets/cost-of-breach-2024.png" /></p>
 <blockquote>
-<p>IBM Cost of a Data Breach Study 2020, Fig.34, pg.52, [https://www.ibm.com/security/data-breach]</p>
+<p>IBM Cost of a Data Breach Study 2020, Fig.4, pg.10, [https://www.ibm.com/security/data-breach]</p>
 </blockquote>
 <p>This logging standard would seek to define specific keywords which, when applied consistently across software, would allow groups to simply monitor for these events terms across all applications and respond quickly in the event of attack.</p>
 <h2 id="assumptions">Assumptions<a class="headerlink" href="#assumptions" title="Permanent link">&para;</a></h2>
@@ -3932,8 +3998,10 @@ redirect_from: "/cheatsheets/Application_Logging_Vocabulary_Cheat_Sheet.html"
 }
 </code></pre></div>
 <h2 id="the-vocabulary">The Vocabulary<a class="headerlink" href="#the-vocabulary" title="Permanent link">&para;</a></h2>
-<p>What follows are the various event types that should be captured. For each event type there is a prefix like "authn" and additional data that should be included for that event.</p>
+<p>What follows are the various event types that should be captured. For each event type there is a prefix like "authn" and additional data that may be included for that event.</p>
 <p>Portions of the full logging format are included for example, but a complete event log should follow the format above.</p>
+<p><strong>Note on Data Privacy:</strong></p>
+<p>All fields logged after event type should be considered optional. Businesses implementing this logging method should consider value of the fields being logged vs. responsibility as a data steward for the data logged. For example: logging user IP address may be useful for detection and response, but may be considered personally identifiable information when combined with other data and subject to regulation or deletion requests.</p>
 <hr />
 <h2 id="authentication-authn">Authentication [AUTHN]<a class="headerlink" href="#authentication-authn" title="Permanent link">&para;</a></h2>
 <h3 id="authn_login_successuserid">authn_login_success[:userid]<a class="headerlink" href="#authn_login_successuserid" title="Permanent link">&para;</a></h3>
@@ -4177,6 +4245,37 @@ All activity by privileged users such as admin should be recorded.</p>
 }
 </code></pre></div>
 <hr />
+<h2 id="encryptiondecryption-crypt">Encryption/Decryption [CRYPT]<a class="headerlink" href="#encryptiondecryption-crypt" title="Permanent link">&para;</a></h2>
+<h3 id="crypt_decrypt_failuserid">crypt_decrypt_fail[userid]<a class="headerlink" href="#crypt_decrypt_failuserid" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+Failure to perform encryption and decryption could be simply due to a system error, or it may be related to authorization failures where a user lacks permissions on the related data.</p>
+<p><strong>Level:</strong>: WARN</p>
+<p><strong>Example:</strong></p>
+<div class="highlight"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;crypt_decrypt_fail:joebob1&quot;,
+    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;description&quot;: &quot;User joebob1 was unable to perform decryption&quot; + err,
+    ...
+}
+</code></pre></div>
+<hr />
+<h3 id="crypt_encrypt_failuserid">crypt_encrypt_fail[userid]<a class="headerlink" href="#crypt_encrypt_failuserid" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+Failure to perform encryption and decryption could be simply due to a system error, or it may be related to authorization failures where a user lacks permissions on the related data.</p>
+<p><strong>Level:</strong>: WARN</p>
+<p><strong>Example:</strong></p>
+<div class="highlight"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;crypt_encrypt_fail:joebob1&quot;,
+    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;description&quot;: &quot;User joebob1 was unable to perform encryption&quot; + err,
+    ...
+}
+</code></pre></div>
+<hr />
 <h2 id="excessive-use-excess">Excessive Use [EXCESS]<a class="headerlink" href="#excessive-use-excess" title="Permanent link">&para;</a></h2>
 <h3 id="excess_rate_limit_exceededuseridmax">excess_rate_limit_exceeded[userid,max]<a class="headerlink" href="#excess_rate_limit_exceededuseridmax" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
@@ -4255,7 +4354,7 @@ When a file is deleted for normal reasons it should be recorded.</p>
 </code></pre></div>
 <hr />
 <h2 id="input-validation-input">Input Validation [INPUT]<a class="headerlink" href="#input-validation-input" title="Permanent link">&para;</a></h2>
-<h3 id="input_validation_failfielduserid">input_validation_fail[:field,userid]<a class="headerlink" href="#input_validation_failfielduserid" title="Permanent link">&para;</a></h3>
+<h3 id="input_validation_failfieldonefieldtwouserid">input_validation_fail:[(fieldone,fieldtwo...),userid]<a class="headerlink" href="#input_validation_failfieldonefieldtwouserid" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
 When input validation fails on the server-side it must either be because a) sufficient validation was not provided on the client, or b) client-side validation was bypassed. In either case it's an opportunity for attack and should be mitigated quickly.</p>
 <p><strong>Level:</strong>
@@ -4264,7 +4363,7 @@ WARN</p>
 <div class="highlight"><pre><span></span><code>{
     &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
     &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
-    &quot;event&quot;: &quot;input_validation_fail:date_of_birth,joebob1&quot;,
+    &quot;event&quot;: &quot;input_validation_fail:(zip,date_of_birth),joebob1&quot;,
     &quot;level&quot;: &quot;WARN&quot;,
     &quot;description&quot;: &quot;User joebob1 submitted data that failed validation.&quot;,
     ...
