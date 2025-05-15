@@ -208,10 +208,10 @@ examples of data that should not be logged.
 - Include code to validate integrity of application code.
 - Obfuscate the app binary.
 - Implement runtime anti-tampering controls:
-  - Check for signs of debugging, hooking, or code injection.
-  - Detect if the app is running in an emulator or rooted/jailbroken device.
-  - Verify app signatures at runtime.
-  - Apply appropriate responses to detected tampering (e.g., limiting functionality).
+    - Check for signs of debugging, hooking, or code injection.
+    - Detect if the app is running in an emulator or rooted/jailbroken device.
+    - Verify app signatures at runtime.
+    - Apply appropriate responses to detected tampering (e.g., limiting functionality).
 
 ## Testing
 
@@ -264,20 +264,20 @@ examples of data that should not be logged.
 
 - Use Android Keystore with hardware backing (TEE or StrongBox) to securely store
   cryptographic keys.
-  - **How**: Generate keys with hardware backing by specifying
-    `.setIsStrongBoxBacked(true)` in `KeyGenParameterSpec.Builder` when available (Android 9+).
-  - Verify hardware-backed storage via `KeyInfo.isInsideSecureHardware()`.
-  - Fall back to regular hardware-backed keystore if Strongbox isn't available.
-  - Configure key usage restrictions with `.setUserAuthenticationRequired(true)`
-    for sensitive operations.
-  - See [Hardware-backed Keystore documentation](https://developer.android.com/training/articles/keystore).
+    - **How**: Generate keys with hardware backing by specifying
+      `.setIsStrongBoxBacked(true)` in `KeyGenParameterSpec.Builder` when available (Android 9+).
+    - Verify hardware-backed storage via `KeyInfo.isInsideSecureHardware()`.
+    - Fall back to regular hardware-backed keystore if Strongbox isn't available.
+    - Configure key usage restrictions with `.setUserAuthenticationRequired(true)`
+      for sensitive operations.
+    - See [Hardware-backed Keystore documentation](https://developer.android.com/training/articles/keystore).
 
 - Implement Google's [Play Integrity API](https://developer.android.com/google/play/integrity) for device and app integrity checks.
-  - **How**: Obtain an integrity verdict from the device, validate server-side,
-    and take action if integrity checks fail.
-  - The SafetyNet Attestation API was was fully turned down in January 2025. All
-    developers must migrate to Play Integrity API.
-  - See [Play Integrity API documentation](https://developer.android.com/google/play/integrity/overview).
+    - **How**: Obtain an integrity verdict from the device, validate server-side,
+      and take action if integrity checks fail.
+    - The SafetyNet Attestation API was fully turned down in January 2025. All
+      developers must migrate to Play Integrity API.
+    - See [Play Integrity API documentation](https://developer.android.com/google/play/integrity/overview).
 
 ### iOS and iPadOS
 
@@ -373,23 +373,23 @@ network communication.
 
 - Use Apple's Secure Enclave for secure cryptographic key storage and
   sensitive operations.
-  - **How**: Create keys using `SecKeyCreateRandomKey` with `kSecAttrTokenID`
-    set to `kSecAttrTokenIDSecureEnclave`.
-  - Keys created in the Secure Enclave never leave the secure hardware -
-    only the operations using those keys are performed there.
-  - For biometric operations, use `LAContext` with `evaluatePolicy` to
-    perform authentication directly through the Secure Enclave without
-    exposing biometric data to your application.
-  - Consider access control options like `kSecAccessControlBiometryAny` or
-    `kSecAccessControlUserPresence` to require user authentication before
-    key usage.
-  - See [Secure Enclave documentation](https://support.apple.com/guide/security/secure-enclave-sec59b0b31ff/web).
+    - **How**: Create keys using `SecKeyCreateRandomKey` with `kSecAttrTokenID`
+      set to `kSecAttrTokenIDSecureEnclave`.
+    - Keys created in the Secure Enclave never leave the secure hardware -
+      only the operations using those keys are performed there.
+    - For biometric operations, use `LAContext` with `evaluatePolicy` to
+      perform authentication directly through the Secure Enclave without
+      exposing biometric data to your application.
+    - Consider access control options like `kSecAccessControlBiometryAny` or
+      `kSecAccessControlUserPresence` to require user authentication before
+      key usage.
+    - See [Secure Enclave documentation](https://support.apple.com/guide/security/secure-enclave-sec59b0b31ff/web).
 
 - Use Apple's [App Attest API](https://developer.apple.com/documentation/devicecheck/establishing_your_app_s_integrity) (iOS 14+) to validate app integrity.
-  - **How**: Generate attestation keys and assertions with `DCAppAttestService`
-    and verify assertions server-side.
-  - Complement with Apple's [DeviceCheck API](https://developer.apple.com/documentation/devicecheck) for persistent device state tracking.
-  - See [App Attest documentation](https://developer.apple.com/documentation/devicecheck/dcappattestservice).
+    - **How**: Generate attestation keys and assertions with `DCAppAttestService`
+      and verify assertions server-side.
+    - Complement with Apple's [DeviceCheck API](https://developer.apple.com/documentation/devicecheck) for persistent device state tracking.
+    - See [App Attest documentation](https://developer.apple.com/documentation/devicecheck/dcappattestservice).
 
 ## Advanced Hardware Security & Monitoring
 
