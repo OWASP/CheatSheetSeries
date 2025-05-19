@@ -2116,6 +2116,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#advanced-hardware-security-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advanced Hardware Security &amp; Monitoring
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3520,6 +3529,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#advanced-hardware-security-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advanced Hardware Security &amp; Monitoring
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3594,7 +3612,7 @@ from the OWASP Mobile Top 10.</p>
 <ul>
 <li>Perform authentication/authorization server-side and only load data on
 the device after successful authentication.</li>
-<li>If storing data locally, encrypt it using a key derived from the user’s
+<li>If storing data locally, encrypt it using a key derived from the user's
 login credentials.</li>
 <li>Do not store user passwords on the device; use device-specific tokens
 that can be revoked.</li>
@@ -3649,6 +3667,9 @@ Keychain (iOS) or Keystore (Android).</li>
 <li>Store private data on the device's internal storage.</li>
 <li>Use platform APIs for encryption. Do not attempt to implement your own
   encryption algorithms.</li>
+<li>Leverage hardware-based security features when available (e.g., Secure Enclave on iOS,
+  Strongbox on Android) for key storage and cryptographic operations
+  whenever available.</li>
 </ul>
 <h3 id="2-data-leakage">2. Data Leakage<a class="headerlink" href="#2-data-leakage" title="Permanent link">&para;</a></h3>
 <ul>
@@ -3732,6 +3753,13 @@ examples of data that should not be logged.</p>
 <li>Disable debugging.</li>
 <li>Include code to validate integrity of application code.</li>
 <li>Obfuscate the app binary.</li>
+<li>Implement runtime anti-tampering controls:<ul>
+<li>Check for signs of debugging, hooking, or code injection.</li>
+<li>Detect if the app is running in an emulator or rooted/jailbroken device.</li>
+<li>Verify app signatures at runtime.</li>
+<li>Apply appropriate responses to detected tampering (e.g., limiting functionality).</li>
+</ul>
+</li>
 </ul>
 <h2 id="testing">Testing<a class="headerlink" href="#testing" title="Permanent link">&para;</a></h2>
 <h3 id="1-penetration-testing">1. Penetration Testing<a class="headerlink" href="#1-penetration-testing" title="Permanent link">&para;</a></h3>
@@ -3778,11 +3806,36 @@ examples of data that should not be logged.</p>
 <h2 id="platform-specific-guidance">Platform-Specific Guidance<a class="headerlink" href="#platform-specific-guidance" title="Permanent link">&para;</a></h2>
 <h3 id="android">Android<a class="headerlink" href="#android" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Use Android’s ProGuard for code obfuscation.</li>
+<li>Use Android's ProGuard for code obfuscation.</li>
 <li>Avoid storing sensitive data in SharedPreferences. See the
   <a href="https://developer.android.com/topic/security/data">Android docs</a>
   on working with data securely for more details.</li>
-<li>Disable backup mode to prevent sensitive data being stored in backups.</li>
+<li>
+<p>Disable backup mode to prevent sensitive data being stored in backups.</p>
+</li>
+<li>
+<p>Use Android Keystore with hardware backing (TEE or StrongBox) to securely store
+  cryptographic keys.</p>
+<ul>
+<li><strong>How</strong>: Generate keys with hardware backing by specifying
+  <code>.setIsStrongBoxBacked(true)</code> in <code>KeyGenParameterSpec.Builder</code> when available (Android 9+).</li>
+<li>Verify hardware-backed storage via <code>KeyInfo.isInsideSecureHardware()</code>.</li>
+<li>Fall back to regular hardware-backed keystore if Strongbox isn't available.</li>
+<li>Configure key usage restrictions with <code>.setUserAuthenticationRequired(true)</code>
+  for sensitive operations.</li>
+<li>See <a href="https://developer.android.com/training/articles/keystore">Hardware-backed Keystore documentation</a>.</li>
+</ul>
+</li>
+<li>
+<p>Implement Google's <a href="https://developer.android.com/google/play/integrity">Play Integrity API</a> for device and app integrity checks.</p>
+<ul>
+<li><strong>How</strong>: Obtain an integrity verdict from the device, validate server-side,
+  and take action if integrity checks fail.</li>
+<li>The SafetyNet Attestation API was fully turned down in January 2025. All
+  developers must migrate to Play Integrity API.</li>
+<li>See <a href="https://developer.android.com/google/play/integrity/overview">Play Integrity API documentation</a>.</li>
+</ul>
+</li>
 </ul>
 <h3 id="ios-and-ipados">iOS and iPadOS<a class="headerlink" href="#ios-and-ipados" title="Permanent link">&para;</a></h3>
 <h4 id="shortcuts-permissions">Shortcuts Permissions<a class="headerlink" href="#shortcuts-permissions" title="Permanent link">&para;</a></h4>
@@ -3878,7 +3931,43 @@ features requiring user permissions.</li>
 between app and widgets.</li>
 <li>Use ATS (App Transport Security) to enforce strong security policies for
 network communication.</li>
-<li>Do not store sensitive data in <code>plist</code> files.</li>
+<li>
+<p>Do not store sensitive data in <code>plist</code> files.</p>
+</li>
+<li>
+<p>Use Apple's Secure Enclave for secure cryptographic key storage and
+  sensitive operations.</p>
+<ul>
+<li><strong>How</strong>: Create keys using <code>SecKeyCreateRandomKey</code> with <code>kSecAttrTokenID</code>
+  set to <code>kSecAttrTokenIDSecureEnclave</code>.</li>
+<li>Keys created in the Secure Enclave never leave the secure hardware -
+  only the operations using those keys are performed there.</li>
+<li>For biometric operations, use <code>LAContext</code> with <code>evaluatePolicy</code> to
+  perform authentication directly through the Secure Enclave without
+  exposing biometric data to your application.</li>
+<li>Consider access control options like <code>kSecAccessControlBiometryAny</code> or
+  <code>kSecAccessControlUserPresence</code> to require user authentication before
+  key usage.</li>
+<li>See <a href="https://support.apple.com/guide/security/secure-enclave-sec59b0b31ff/web">Secure Enclave documentation</a>.</li>
+</ul>
+</li>
+<li>
+<p>Use Apple's <a href="https://developer.apple.com/documentation/devicecheck/establishing_your_app_s_integrity">App Attest API</a> (iOS 14+) to validate app integrity.</p>
+<ul>
+<li><strong>How</strong>: Generate attestation keys and assertions with <code>DCAppAttestService</code>
+  and verify assertions server-side.</li>
+<li>Complement with Apple's <a href="https://developer.apple.com/documentation/devicecheck">DeviceCheck API</a> for persistent device state tracking.</li>
+<li>See <a href="https://developer.apple.com/documentation/devicecheck/dcappattestservice">App Attest documentation</a>.</li>
+</ul>
+</li>
+</ul>
+<h2 id="advanced-hardware-security-monitoring">Advanced Hardware Security &amp; Monitoring<a class="headerlink" href="#advanced-hardware-security-monitoring" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Modern devices typically provide Trusted Execution Environments (TEE) or
+  secure hardware modules. Leverage these through standard OS APIs.</li>
+<li>Consider additional runtime security measures (behavioral anomaly
+  detection, runtime monitoring) to complement built-in OS protections
+  in higher-risk scenarios.</li>
 </ul>
 <p>For further reading, visit the
 <a href="https://owasp.org/www-project-mobile-top-10/">OWASP Mobile Top 10 Project</a>.
