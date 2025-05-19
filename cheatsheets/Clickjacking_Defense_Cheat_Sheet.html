@@ -924,24 +924,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#exploiting-xss-filters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Exploiting XSS filters
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#clobbering-toplocation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Clobbering top.location
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#restricted-zones" class="md-nav__link">
     <span class="md-ellipsis">
       Restricted zones
@@ -2931,24 +2913,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#exploiting-xss-filters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Exploiting XSS filters
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#clobbering-toplocation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Clobbering top.location
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#restricted-zones" class="md-nav__link">
     <span class="md-ellipsis">
       Restricted zones
@@ -3016,9 +2980,7 @@
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors">https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors</a></li>
 </ul>
 <h3 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong>X-Frame-Options takes priority:</strong> <a href="https://w3c.github.io/webappsec/specs/content-security-policy/#frame-ancestors-and-frame-options">Section "Relation to X-Frame-Options" of the CSP Spec</a> says: "<em>If a resource is delivered with an policy that includes a directive named frame-ancestors and whose disposition is "enforce", then the X-Frame-Options header MUST be ignored</em>", but Chrome 40 &amp; Firefox 35 ignore the frame-ancestors directive and follow the X-Frame-Options header instead.</li>
-</ul>
+<p><strong>X-Frame-Options takes priority:</strong> <a href="https://w3c.github.io/webappsec-csp/#frame-ancestors-and-frame-options">Section "Relation to X-Frame-Options" of the CSP Spec</a> says: "<em>If a resource is delivered with a policy that includes a directive named frame-ancestors and whose disposition is "enforce", then the X-Frame-Options header MUST be ignored</em>", but older browser versions (e.g., Chrome 40 &amp; Firefox 35) ignored this requirement and followed the X-Frame-Options header instead.</p>
 <h3 id="browser-support">Browser Support<a class="headerlink" href="#browser-support" title="Permanent link">&para;</a></h3>
 <p>The following <a href="https://caniuse.com/?search=frame-ancestors">browsers</a> support CSP frame-ancestors.</p>
 <p>References:</p>
@@ -3082,25 +3044,25 @@
 </code></pre></div>
 <p>Then, delete that style by its ID immediately after in the script:</p>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">self</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">top</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">antiClickjack</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;antiClickjack&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">self</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">top</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">antiClickjack</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;antiClickjack&quot;</span><span class="p">);</span>
 <span class="w">        </span><span class="nx">antiClickjack</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">removeChild</span><span class="p">(</span><span class="nx">antiClickjack</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">top</span><span class="p">.</span><span class="nx">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">self</span><span class="p">.</span><span class="nx">location</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">top</span><span class="p">.</span><span class="nx">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">self</span><span class="p">.</span><span class="nx">location</span><span class="p">;</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
 <p>This way, everything can be in the document HEAD and you only need one method/taglib in your API.</p>
 <h2 id="windowconfirm-protection">window.confirm() Protection<a class="headerlink" href="#windowconfirm-protection" title="Permanent link">&para;</a></h2>
 <p>The use of X-Frame-Options or a frame-breaking script is a more fail-safe method of clickjacking protection. However, in scenarios where content must be frameable, then a <code>window.confirm()</code> can be used to help mitigate Clickjacking by informing the user of the action they are about to perform.</p>
-<p>Invoking <code>window.confirm()</code> will display a popup that cannot be framed. If the <code>window.confirm()</code> originates from within an iframe with a different domain than the parent, then the dialog box will display what domain the <code>window.confirm()</code> originated from. In this scenario the browser is displaying the origin of the dialog box to help mitigate Clickjacking attacks. It should be noted that Internet Explorer is the only known browser that does not display the domain that the <code>window.confirm()</code> dialog box originated from, to address this issue with Internet Explorer insure that the message within the dialog box contains contextual information about the type of action being performed. For example:</p>
+<p>Invoking <code>window.confirm()</code> will display a popup that cannot be framed. If the <code>window.confirm()</code> originates from within an iframe with a different domain than the parent, then the dialog box will display what domain the <code>window.confirm()</code> originated from. In this scenario the browser is displaying the origin of the dialog box to help mitigate Clickjacking attacks. For example:</p>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
-<span class="w">   </span><span class="kd">var</span><span class="w"> </span><span class="nx">action_confirm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">confirm</span><span class="p">(</span><span class="s2">&quot;Are you sure you want to delete your youtube account?&quot;</span><span class="p">)</span>
-<span class="w">   </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">action_confirm</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">       </span><span class="c1">//... Perform action</span>
-<span class="w">   </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">       </span><span class="c1">//... The user does not want to perform the requested action.`</span>
-<span class="w">   </span><span class="p">}</span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">action_confirm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">confirm</span><span class="p">(</span><span class="s2">&quot;Are you sure you want to delete your youtube account?&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">action_confirm</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">//... Perform action</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">//... The user does not want to perform the requested action.`</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
 <h2 id="insecure-non-working-scripts-do-not-use">Insecure Non-Working Scripts DO NOT USE<a class="headerlink" href="#insecure-non-working-scripts-do-not-use" title="Permanent link">&para;</a></h2>
@@ -3135,7 +3097,7 @@
 </code></pre></div>
 <p>PayPal's frame busting code will generate a <code>BeforeUnload</code> event activating our function and prompting the user to cancel the navigation event.</p>
 <h3 id="no-content-flushing">No-Content Flushing<a class="headerlink" href="#no-content-flushing" title="Permanent link">&para;</a></h3>
-<p>While the previous attack requires user interaction, the same attack can be done without prompting the user. Most browsers (IE7, IE8, Google Chrome, and Firefox) enable an attacker to automatically cancel the incoming navigation request in an <code>onBeforeUnload</code> event handler by repeatedly submitting a navigation request to a site responding with "<em>204 - No Content</em>".</p>
+<p>While the previous attack requires user interaction, the same attack can be done without prompting the user. Modern browsers enable an attacker to automatically cancel the incoming navigation request in an <code>onBeforeUnload</code> event handler by repeatedly submitting a navigation request to a site responding with "<em>204 - No Content</em>".</p>
 <p>Navigating to a No Content site is effectively a NOP, but flushes the request pipeline, thus canceling the original navigation request. Here is sample code to do this:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">preventbust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span>
 <span class="nb">window</span><span class="p">.</span><span class="nx">onbeforeunload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">killbust</span><span class="o">++</span><span class="w"> </span><span class="p">}</span>
@@ -3148,49 +3110,13 @@
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;http://www.victim.com&quot;</span><span class="p">&gt;</span>
 </code></pre></div>
-<h3 id="exploiting-xss-filters">Exploiting XSS filters<a class="headerlink" href="#exploiting-xss-filters" title="Permanent link">&para;</a></h3>
-<p>IE8 and Google Chrome introduced reflective XSS filters that help protect web pages from certain types of XSS attacks. Nava and Lindsay (at "Blackhat") observed that these filters can be used to circumvent frame busting code. The IE8 XSS filter compares given request parameters to a set of regular expressions in order to look for obvious attempts at cross-site scripting. Using "induced false positives", the filter can be used to disable selected scripts. By matching the beginning of any script tag in the request parameters, the XSS filter will disable all inline scripts within the page, including frame busting scripts. External scripts can also be targeted by matching an external include, effectively disabling all external scripts. Since subsets of the JavaScript loaded is still functional (inline or external) and cookies are still available, this attack is effective for clickjacking.</p>
-<p><strong>Victim frame busting code:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="nx">top</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nx">self</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">top</span><span class="p">.</span><span class="nx">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">self</span><span class="p">.</span><span class="nx">location</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</code></pre></div>
-<p><strong>Attacker:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;http://www.victim.com/?v=&lt;script</span><span class="p">&gt;</span>if&#39;&#39;&gt;
-</code></pre></div>
-<p>The XSS filter will match that parameter <code>&lt;script&gt;if</code> to the beginning of the frame busting script on the victim and will consequently disable all inline scripts in the victim's page, including the frame busting script. The XSSAuditor filter available for Google Chrome enables the same exploit.</p>
-<h3 id="clobbering-toplocation">Clobbering top.location<a class="headerlink" href="#clobbering-toplocation" title="Permanent link">&para;</a></h3>
-<p>Several modern browsers treat the location variable as a special immutable attribute across all contexts. However, this is not the case in IE7 and Safari 4.0.4 where the location variable can be redefined.</p>
-<p><strong>IE7</strong>: Once the framing page redefines location, any frame busting code in a subframe that tries to read <code>top.location</code> will commit a security violation by trying to read a local variable in another domain. Similarly, any attempt to navigate by assigning <code>top.location</code> will fail.</p>
-<p><strong>Victim frame busting code:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="p">(</span><span class="nx">top</span><span class="p">.</span><span class="nx">location</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nx">self</span><span class="p">.</span><span class="nx">location</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">top</span><span class="p">.</span><span class="nx">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">self</span><span class="p">.</span><span class="nx">location</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-<p><strong>Attacker:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="kd">var</span><span class="w"> </span><span class="nx">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;clobbered&quot;</span><span class="p">;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;http://www.victim.com&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">iframe</span><span class="p">&gt;</span>
-</code></pre></div>
-<p><strong>Safari 4.0.4:</strong></p>
-<p>We observed that although location is kept immutable in most circumstances, when a custom location setter is defined via <code>defineSetter</code> (through window) the object location becomes undefined.</p>
-<p>The framing page simply does:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="nb">window</span><span class="p">.</span><span class="nx">defineSetter</span><span class="p">(</span><span class="s2">&quot;location&quot;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">(){});</span>
-<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</code></pre></div>
-<p>Now any attempt to read or navigate the top frame's location will fail.</p>
 <h3 id="restricted-zones">Restricted zones<a class="headerlink" href="#restricted-zones" title="Permanent link">&para;</a></h3>
 <p>Most frame busting relies on JavaScript in the framed page to detect framing and bust itself out. If JavaScript is disabled in the context of the subframe, the frame busting code will not run. There are unfortunately several ways of restricting JavaScript in a subframe:</p>
-<p><strong>In IE 8:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;http://www.victim.com&quot;</span> <span class="na">security</span><span class="o">=</span><span class="s">&quot;restricted&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">iframe</span><span class="p">&gt;</span>
-</code></pre></div>
 <p><strong>In Chrome:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;http://www.victim.com&quot;</span> <span class="na">sandbox</span><span class="p">&gt;&lt;/</span><span class="nt">iframe</span><span class="p">&gt;</span>
 </code></pre></div>
-<p><strong>Firefox and IE:</strong></p>
-<p>Activate <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/designMode">designMode</a> in parent page.</p>
+<p><strong>Firefox:</strong></p>
+<p>Activate <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/designMode">designMode</a> in parent page. While designMode is still supported in modern browsers, its effectiveness as a clickjacking attack vector may vary in current browser versions.</p>
 <div class="highlight"><pre><span></span><code><span class="nb">document</span><span class="p">.</span><span class="nx">designMode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;on&quot;</span><span class="p">;</span>
 </code></pre></div>
 
