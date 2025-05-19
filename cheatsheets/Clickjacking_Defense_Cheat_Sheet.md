@@ -38,7 +38,7 @@ See the following documentation for further details and more complex examples:
 
 ### Limitations
 
-- **X-Frame-Options takes priority:** [Section "Relation to X-Frame-Options" of the CSP Spec](https://w3c.github.io/webappsec/specs/content-security-policy/#frame-ancestors-and-frame-options) says: "*If a resource is delivered with an policy that includes a directive named frame-ancestors and whose disposition is "enforce", then the X-Frame-Options header MUST be ignored*", but Chrome 40 & Firefox 35 ignore the frame-ancestors directive and follow the X-Frame-Options header instead.
+**X-Frame-Options takes priority:** [Section "Relation to X-Frame-Options" of the CSP Spec](https://w3c.github.io/webappsec-csp/#frame-ancestors-and-frame-options) says: "*If a resource is delivered with a policy that includes a directive named frame-ancestors and whose disposition is "enforce", then the X-Frame-Options header MUST be ignored*", but older browser versions (e.g., Chrome 40 & Firefox 35) ignored this requirement and followed the X-Frame-Options header instead.
 
 ### Browser Support
 
@@ -128,11 +128,11 @@ Then, delete that style by its ID immediately after in the script:
 
 ```html
 <script type="text/javascript">
-    if (self === top) {
-        var antiClickjack = document.getElementById("antiClickjack");
+    if (self === top) {
+        var antiClickjack = document.getElementById("antiClickjack");
         antiClickjack.parentNode.removeChild(antiClickjack);
-    } else {
-        top.location = self.location;
+    } else {
+        top.location = self.location;
     }
 </script>
 ```
@@ -143,16 +143,16 @@ This way, everything can be in the document HEAD and you only need one method/ta
 
 The use of X-Frame-Options or a frame-breaking script is a more fail-safe method of clickjacking protection. However, in scenarios where content must be frameable, then a `window.confirm()` can be used to help mitigate Clickjacking by informing the user of the action they are about to perform.
 
-Invoking `window.confirm()` will display a popup that cannot be framed. If the `window.confirm()` originates from within an iframe with a different domain than the parent, then the dialog box will display what domain the `window.confirm()` originated from. In this scenario the browser is displaying the origin of the dialog box to help mitigate Clickjacking attacks. It should be noted that Internet Explorer is the only known browser that does not display the domain that the `window.confirm()` dialog box originated from, to address this issue with Internet Explorer insure that the message within the dialog box contains contextual information about the type of action being performed. For example:
+Invoking `window.confirm()` will display a popup that cannot be framed. If the `window.confirm()` originates from within an iframe with a different domain than the parent, then the dialog box will display what domain the `window.confirm()` originated from. In this scenario the browser is displaying the origin of the dialog box to help mitigate Clickjacking attacks. For example:
 
 ```html
 <script type="text/javascript">
-   var action_confirm = window.confirm("Are you sure you want to delete your youtube account?")
-   if (action_confirm) {
-       //... Perform action
-   } else {
-       //... The user does not want to perform the requested action.`
-   }
+    var action_confirm = window.confirm("Are you sure you want to delete your youtube account?")
+    if (action_confirm) {
+        //... Perform action
+    } else {
+        //... The user does not want to perform the requested action.`
+    }
 </script>
 ```
 
@@ -212,7 +212,7 @@ PayPal's frame busting code will generate a `BeforeUnload` event activating our 
 
 ### No-Content Flushing
 
-While the previous attack requires user interaction, the same attack can be done without prompting the user. Most browsers (IE7, IE8, Google Chrome, and Firefox) enable an attacker to automatically cancel the incoming navigation request in an `onBeforeUnload` event handler by repeatedly submitting a navigation request to a site responding with "*204 - No Content*".
+While the previous attack requires user interaction, the same attack can be done without prompting the user. Modern browsers enable an attacker to automatically cancel the incoming navigation request in an `onBeforeUnload` event handler by repeatedly submitting a navigation request to a site responding with "*204 - No Content*".
 
 Navigating to a No Content site is effectively a NOP, but flushes the request pipeline, thus canceling the original navigation request. Here is sample code to do this:
 
@@ -231,72 +231,9 @@ setInterval( function() {
 <iframe src="http://www.victim.com">
 ```
 
-### Exploiting XSS filters
-
-IE8 and Google Chrome introduced reflective XSS filters that help protect web pages from certain types of XSS attacks. Nava and Lindsay (at "Blackhat") observed that these filters can be used to circumvent frame busting code. The IE8 XSS filter compares given request parameters to a set of regular expressions in order to look for obvious attempts at cross-site scripting. Using "induced false positives", the filter can be used to disable selected scripts. By matching the beginning of any script tag in the request parameters, the XSS filter will disable all inline scripts within the page, including frame busting scripts. External scripts can also be targeted by matching an external include, effectively disabling all external scripts. Since subsets of the JavaScript loaded is still functional (inline or external) and cookies are still available, this attack is effective for clickjacking.
-
-**Victim frame busting code:**
-
-```html
-<script>
-    if(top != self) {
-        top.location = self.location;
-    }
-</script>
-```
-
-**Attacker:**
-
-```html
-<iframe src="http://www.victim.com/?v=<script>if''>
-```
-
-The XSS filter will match that parameter `<script>if` to the beginning of the frame busting script on the victim and will consequently disable all inline scripts in the victim's page, including the frame busting script. The XSSAuditor filter available for Google Chrome enables the same exploit.
-
-### Clobbering top.location
-
-Several modern browsers treat the location variable as a special immutable attribute across all contexts. However, this is not the case in IE7 and Safari 4.0.4 where the location variable can be redefined.
-
-**IE7**: Once the framing page redefines location, any frame busting code in a subframe that tries to read `top.location` will commit a security violation by trying to read a local variable in another domain. Similarly, any attempt to navigate by assigning `top.location` will fail.
-
-**Victim frame busting code:**
-
-```javascript
-if(top.location != self.location) {
-    top.location = self.location;
-}
-```
-
-**Attacker:**
-
-```html
-<script>var location = "clobbered";</script>
-<iframe src="http://www.victim.com"></iframe>
-```
-
-**Safari 4.0.4:**
-
-We observed that although location is kept immutable in most circumstances, when a custom location setter is defined via `defineSetter` (through window) the object location becomes undefined.
-
-The framing page simply does:
-
-```html
-<script>
-    window.defineSetter("location", function(){});
-</script>
-```
-
-Now any attempt to read or navigate the top frame's location will fail.
-
 ### Restricted zones
 
 Most frame busting relies on JavaScript in the framed page to detect framing and bust itself out. If JavaScript is disabled in the context of the subframe, the frame busting code will not run. There are unfortunately several ways of restricting JavaScript in a subframe:
-
-**In IE 8:**
-
-```html
-<iframe src="http://www.victim.com" security="restricted"></iframe>
-```
 
 **In Chrome:**
 
@@ -304,9 +241,9 @@ Most frame busting relies on JavaScript in the framed page to detect framing and
 <iframe src="http://www.victim.com" sandbox></iframe>
 ```
 
-**Firefox and IE:**
+**Firefox:**
 
-Activate [designMode](https://developer.mozilla.org/en-US/docs/Web/API/Document/designMode) in parent page.
+Activate [designMode](https://developer.mozilla.org/en-US/docs/Web/API/Document/designMode) in parent page. While designMode is still supported in modern browsers, its effectiveness as a clickjacking attack vector may vary in current browser versions.
 
 ```javascript
 document.designMode = "on";
