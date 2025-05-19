@@ -358,3 +358,27 @@ User email addresses often change. The following process is recommended to handl
 - It's worth noting that Google adopts a different approach with accounts secured only by a password -- [where the current email address receives a notification-only email](https://support.google.com/accounts/answer/55393?hl=en). This method carries risks and requires user vigilance.
 
 - Regular social engineering training is crucial. System administrators and help desk staff should be trained to follow the prescribed process and recognize and respond to social engineering attacks. Refer to [CISA's "Avoiding Social Engineering and Phishing Attacks"](https://www.cisa.gov/news-events/news/avoiding-social-engineering-and-phishing-attacks) for guidance.
+
+## Adaptive or Risk Based Authentication
+
+A feature of more advanced applications is the ability to require different authentication stages depending on various environmental and contextual attributes (including but not limited to, the sensitivity of the data for which access is being requested, time of day, user location, IP address, or device fingerprint).
+
+For example, an application may require MFA for the first login from a particular device but not for subsequent logins from that device. Alternatively, a single sign-on solution may authenticate the user and allow them to remain logged in for a day but require a reauthentication if they try and access their profile page.
+
+Another option is the opposite approach where an application allows low risk access with just something that identifies the device (e.g., a specific mobile device fingerprint, a persist cookie and browser fingerprint, etc. from the previous IP address) and then gradually requires stronger authentication for more sensitive operations. An example might be to allow someone to trigger something to see their current bank balance, but not the account number or anything else. If they need to see transactions, then the application puts them through some base level authentication and if they want to do any money movement, then MFA is required.
+
+Questions that should be considered when implementing a mechanism like this include:
+
+- Are the policies being put in place in line with any corporate policies and especially any regulatory policy.
+- Which user‑ or device‑attributes (IP, geolocation, device fingerprint, time‑of‑day, behavioral biometrics, etc.) will we monitor at session start?
+- Which of those signals need to be refreshed during an active session, and at what cadence?
+- How will we ensure each signal’s accuracy and handle missing or low‑confidence data?
+- What scoring model (weights, thresholds, ML, rule‑based, hybrid) will convert raw signals into a risk tier?
+- Where will the model run (edge, API gateway, central service), and what is our latency budget?
+- What action maps to each risk tier (allow, CAPTCHA, step‑up MFA, block, revoke session)?
+- What user‑facing messages and error codes will accompany each action?
+- At which exact code or platform layers will we invoke the risk engine (login controller, middleware, API gateway, service mesh)?
+- How do we propagate decisions consistently across web, mobile, and API clients?
+- How do we mutate, extend, or revoke tokens/cookies when a mid‑session risk check escalates?
+- How do we synchronize state across multiple concurrent devices or browser tabs?
+- What monitoring and alerting will be in place for potentially suspicious activity, including how the user is notified.
