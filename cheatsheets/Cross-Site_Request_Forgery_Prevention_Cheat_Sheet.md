@@ -433,34 +433,33 @@ This can be done as demonstrated in the following code snippet:
  </script>
 ```
 
-#### AngularJS
+#### CSRF Prevention in modern Frameworks
 
-AngularJS allows for setting default headers for HTTP operations. Further documentation can be found at AngularJS's documentation for [$httpProvider](https://docs.angularjs.org/api/ng/provider/$httpProvider#defaults).
+Modern Single Page Application (SPA) frameworks like Angular, React, and Vue typically rely on the cookie-to-header pattern to mitigate Cross-Site Request Forgery (CSRF) attacks. This approach leverages the fact that browsers automatically attach cookies to cross-origin requests, but only JavaScript running on the same origin can read values and set custom headers—making it possible to detect and block forged requests. The cookie-to-header pattern works as follows:
 
-```html
-<script>
-    var csrf_token = document.querySelector("meta[name='csrf-token']").getAttribute("content");
+1. Server generates a CSRF token: When a user authenticates or loads the app, the server sets a CSRF token in a cookie (e.g., `XSRF-TOKEN`). This cookie is accessible via JavaScript (i.e., not `HttpOnly`) and typically has `SameSite=Lax` or `Strict`.
+2. Client reads the token: The SPA (often using a library like Angular’s HttpClient or axios in React/Vue) reads the CSRF token from the cookie.
+3. Client attaches the token to a custom header: For each state-changing request (`POST`, `PUT`, `DELETE`, etc.), the client sets the token as a custom HTTP header (commonly `X-XSRF-TOKEN` or `X-CSRF-TOKEN`).
+4. Server validates the token: The server checks whether the token from the header matches the one from the cookie. If they match, the request is accepted; if not, it is rejected as potentially forged.
 
-    var app = angular.module("app", []);
+Angular provides this pattern out of the box, automatically handling steps 2 and 3 via its HttpClient.
+In contrast, frameworks like React and Vue require developers to implement this logic manually or with helper libraries such as axios interceptors. This pattern ensures that even if a browser includes cookies with a forged request, the attacker cannot set the matching custom header from another origin.
 
-    app.config(['$httpProvider', function ($httpProvider) {
-        $httpProvider.defaults.headers.post["anti-csrf-token"] = csrf_token;
-        $httpProvider.defaults.headers.put["anti-csrf-token"] = csrf_token;
-        $httpProvider.defaults.headers.patch["anti-csrf-token"] = csrf_token;
-        // AngularJS does not create an object for DELETE and TRACE methods by default, and has to be manually created.
-        $httpProvider.defaults.headers.delete = {
-            "Content-Type" : "application/json;charset=utf-8",
-            "anti-csrf-token" : csrf_token
-        };
-        $httpProvider.defaults.headers.trace = {
-            "Content-Type" : "application/json;charset=utf-8",
-            "anti-csrf-token" : csrf_token
-        };
-      }]);
- </script>
+#### Angular
+
+Angular's HttpClient supports the Cookie-to-Header Pattern used to prevent XSRF attacks. When performing HTTP requests, an interceptor reads a token from a cookie, by default `XSRF-TOKEN`, and sets it as an HTTP header, `X-XSRF-TOKEN`. Further documentation can be found at Angular's documentation for [HttpClient XSRF/CSRF security](https://angular.dev/best-practices/security#httpclient-xsrf-csrf-security).
+
+```typescript
+// app.config.ts
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideHttpClient(withXsrfConfiguration({})),
+    provideRouter(routes, withComponentInputBinding()),
+  ],
+};
 ```
 
-This code snippet has been tested with AngularJS version 1.7.7.
+This code snippet has been tested with Angular version 19.2.11.
 
 #### Axios
 
@@ -521,4 +520,4 @@ This code snippet has been tested with jQuery version 3.3.1.
 - [Robust Defenses for Cross-Site Request Forgery](https://seclab.stanford.edu/websec/csrf/csrf.pdf)
 - For Java: OWASP [CSRF Guard](https://owasp.org/www-project-csrfguard/) or [Spring Security](https://docs.spring.io/spring-security/site/docs/5.5.x-SNAPSHOT/reference/html5/#csrf)
 - For PHP and Apache: [CSRFProtector Project](https://github.com/OWASP/www-project-csrfprotector )
-- For AngularJS: [Cross-Site Request Forgery (XSRF) Protection](https://docs.angularjs.org/api/ng/service/$http#cross-site-request-forgery-xsrf-protection)
+- For Angular: [Cross-Site Request Forgery (XSRF) Protection](https://angular.dev/best-practices/security#httpclient-xsrf-csrf-security)
