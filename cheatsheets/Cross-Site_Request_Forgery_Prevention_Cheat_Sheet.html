@@ -1168,9 +1168,18 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#angularjs" class="md-nav__link">
+  <a href="#csrf-prevention-in-modern-frameworks" class="md-nav__link">
     <span class="md-ellipsis">
-      AngularJS
+      CSRF Prevention in modern Frameworks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#angular" class="md-nav__link">
+    <span class="md-ellipsis">
+      Angular
     </span>
   </a>
   
@@ -3280,9 +3289,18 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#angularjs" class="md-nav__link">
+  <a href="#csrf-prevention-in-modern-frameworks" class="md-nav__link">
     <span class="md-ellipsis">
-      AngularJS
+      CSRF Prevention in modern Frameworks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#angular" class="md-nav__link">
+    <span class="md-ellipsis">
+      Angular
     </span>
   </a>
   
@@ -3666,30 +3684,27 @@ In all other cases, using the <code>__Host-</code> prefix in addition to the <co
 <span class="w">    </span><span class="p">};</span>
 <span class="w"> </span><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
-<h4 id="angularjs">AngularJS<a class="headerlink" href="#angularjs" title="Permanent link">&para;</a></h4>
-<p>AngularJS allows for setting default headers for HTTP operations. Further documentation can be found at AngularJS's documentation for <a href="https://docs.angularjs.org/api/ng/provider/$httpProvider#defaults">$httpProvider</a>.</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">csrf_token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;meta[name=&#39;csrf-token&#39;]&quot;</span><span class="p">).</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">);</span>
-
-<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s2">&quot;app&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[]);</span>
-
-<span class="w">    </span><span class="nx">app</span><span class="p">.</span><span class="nx">config</span><span class="p">([</span><span class="s1">&#39;$httpProvider&#39;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">$httpProvider</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">$httpProvider</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">post</span><span class="p">[</span><span class="s2">&quot;anti-csrf-token&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">csrf_token</span><span class="p">;</span>
-<span class="w">        </span><span class="nx">$httpProvider</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">put</span><span class="p">[</span><span class="s2">&quot;anti-csrf-token&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">csrf_token</span><span class="p">;</span>
-<span class="w">        </span><span class="nx">$httpProvider</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">patch</span><span class="p">[</span><span class="s2">&quot;anti-csrf-token&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">csrf_token</span><span class="p">;</span>
-<span class="w">        </span><span class="c1">// AngularJS does not create an object for DELETE and TRACE methods by default, and has to be manually created.</span>
-<span class="w">        </span><span class="nx">$httpProvider</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="ow">delete</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="s2">&quot;Content-Type&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;application/json;charset=utf-8&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="s2">&quot;anti-csrf-token&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nx">csrf_token</span>
-<span class="w">        </span><span class="p">};</span>
-<span class="w">        </span><span class="nx">$httpProvider</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">trace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="s2">&quot;Content-Type&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;application/json;charset=utf-8&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="s2">&quot;anti-csrf-token&quot;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nx">csrf_token</span>
-<span class="w">        </span><span class="p">};</span>
-<span class="w">      </span><span class="p">}]);</span>
-<span class="w"> </span><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<h4 id="csrf-prevention-in-modern-frameworks">CSRF Prevention in modern Frameworks<a class="headerlink" href="#csrf-prevention-in-modern-frameworks" title="Permanent link">&para;</a></h4>
+<p>Modern Single Page Application (SPA) frameworks like Angular, React, and Vue typically rely on the cookie-to-header pattern to mitigate Cross-Site Request Forgery (CSRF) attacks. This approach leverages the fact that browsers automatically attach cookies to cross-origin requests, but only JavaScript running on the same origin can read values and set custom headers—making it possible to detect and block forged requests. The cookie-to-header pattern works as follows:</p>
+<ol>
+<li>Server generates a CSRF token: When a user authenticates or loads the app, the server sets a CSRF token in a cookie (e.g., <code>XSRF-TOKEN</code>). This cookie is accessible via JavaScript (i.e., not <code>HttpOnly</code>) and typically has <code>SameSite=Lax</code> or <code>Strict</code>.</li>
+<li>Client reads the token: The SPA (often using a library like Angular’s HttpClient or axios in React/Vue) reads the CSRF token from the cookie.</li>
+<li>Client attaches the token to a custom header: For each state-changing request (<code>POST</code>, <code>PUT</code>, <code>DELETE</code>, etc.), the client sets the token as a custom HTTP header (commonly <code>X-XSRF-TOKEN</code> or <code>X-CSRF-TOKEN</code>).</li>
+<li>Server validates the token: The server checks whether the token from the header matches the one from the cookie. If they match, the request is accepted; if not, it is rejected as potentially forged.</li>
+</ol>
+<p>Angular provides this pattern out of the box, automatically handling steps 2 and 3 via its HttpClient.
+In contrast, frameworks like React and Vue require developers to implement this logic manually or with helper libraries such as axios interceptors. This pattern ensures that even if a browser includes cookies with a forged request, the attacker cannot set the matching custom header from another origin.</p>
+<h4 id="angular">Angular<a class="headerlink" href="#angular" title="Permanent link">&para;</a></h4>
+<p>Angular's HttpClient supports the Cookie-to-Header Pattern used to prevent XSRF attacks. When performing HTTP requests, an interceptor reads a token from a cookie, by default <code>XSRF-TOKEN</code>, and sets it as an HTTP header, <code>X-XSRF-TOKEN</code>. Further documentation can be found at Angular's documentation for <a href="https://angular.dev/best-practices/security#httpclient-xsrf-csrf-security">HttpClient XSRF/CSRF security</a>.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// app.config.ts</span>
+<span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">appConfig</span><span class="o">:</span><span class="w"> </span><span class="kt">ApplicationConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">providers</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="nx">provideHttpClient</span><span class="p">(</span><span class="nx">withXsrfConfiguration</span><span class="p">({})),</span>
+<span class="w">    </span><span class="nx">provideRouter</span><span class="p">(</span><span class="nx">routes</span><span class="p">,</span><span class="w"> </span><span class="nx">withComponentInputBinding</span><span class="p">()),</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="p">};</span>
 </code></pre></div>
-<p>This code snippet has been tested with AngularJS version 1.7.7.</p>
+<p>This code snippet has been tested with Angular version 19.2.11.</p>
 <h4 id="axios">Axios<a class="headerlink" href="#axios" title="Permanent link">&para;</a></h4>
 <p><a href="https://github.com/axios/axios">Axios</a> allows us to set default headers for the POST, PUT, DELETE and PATCH actions.</p>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
@@ -3737,7 +3752,7 @@ In all other cases, using the <code>__Host-</code> prefix in addition to the <co
 <li><a href="https://seclab.stanford.edu/websec/csrf/csrf.pdf">Robust Defenses for Cross-Site Request Forgery</a></li>
 <li>For Java: OWASP <a href="https://owasp.org/www-project-csrfguard/">CSRF Guard</a> or <a href="https://docs.spring.io/spring-security/site/docs/5.5.x-SNAPSHOT/reference/html5/#csrf">Spring Security</a></li>
 <li>For PHP and Apache: <a href="https://github.com/OWASP/www-project-csrfprotector">CSRFProtector Project</a></li>
-<li>For AngularJS: <a href="https://docs.angularjs.org/api/ng/service/$http#cross-site-request-forgery-xsrf-protection">Cross-Site Request Forgery (XSRF) Protection</a></li>
+<li>For Angular: <a href="https://angular.dev/best-practices/security#httpclient-xsrf-csrf-security">Cross-Site Request Forgery (XSRF) Protection</a></li>
 </ul>
 
 
