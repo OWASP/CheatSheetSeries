@@ -173,6 +173,7 @@ X-CSRF-Token: RANDOM-TOKEN-VALUE
 ```
 
 Many popular frameworks use standardized header names for CSRF protection:
+
 - `X-CSRF-Token` - Ruby on Rails, Laravel, Django
 - `X-XSRF-Token` - AngularJS
 - `CSRF-Token` - Express.js (csurf middleware)
