@@ -72,7 +72,7 @@ If maintaining the state for CSRF token on the server is problematic, you can us
 
 The most secure implementation of the Double Submit Cookie pattern is the _Signed Double-Submit Cookie_, which explicitly ties tokens to the user's authenticated session (e.g., session ID). Simply signing tokens without session binding provides minimal protection and remains vulnerable to cookie injection attacks. Always bind the CSRF token explicitly to session-specific data.
 
-If the token uses a session ID known only to the server, a secure hash (e.g., SHA-256) is sufficient. If the token uses JWT claims or publicly-known identifiers, always use HMAC to prevent forgery. If confidentiality is also required, use authenticated encryption.
+If the token contains sensitive information (like session IDs or claims), always use HMAC with a server-side secret key. This prevents token forgery while ensuring integrity. HMAC is preferred over simple hashing in all cases as it protects against various cryptographic attacks. For scenarios requiring confidentiality of token contents, use authenticated encryption instead.
 
 ##### Employing HMAC CSRF Tokens
 
