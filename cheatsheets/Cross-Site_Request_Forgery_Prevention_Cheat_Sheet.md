@@ -509,6 +509,347 @@ You can configure jQuery to automatically add the token to all request headers b
 
 This code snippet has been tested with jQuery version 3.3.1.
 
+### TypeScript Utilities for CSRF Protection
+
+TypeScript allows you to create strongly typed utilities for CSRF protection. Here's a reusable utility module for CSRF token management:
+
+```typescript
+// csrf-protection.ts
+
+/**
+ * Configuration options for CSRF protection
+ */
+interface CSRFOptions {
+  /** Cookie name where the CSRF token is stored */
+  cookieName: string;
+  /** HTTP header name to use when sending the token */
+  headerName: string;
+  /** HTTP methods that require CSRF protection */
+  unsafeMethods: string[];
+}
+
+/**
+ * Default configuration for CSRF protection
+ */
+const DEFAULT_CSRF_OPTIONS: CSRFOptions = {
+  cookieName: 'XSRF-TOKEN',
+  headerName: 'X-CSRF-Token',
+  unsafeMethods: ['POST', 'PUT', 'PATCH', 'DELETE']
+};
+
+/**
+ * CSRF Protection utility class
+ */
+export class CSRFProtection {
+  private options: CSRFOptions;
+
+  constructor(options: Partial<CSRFOptions> = {}) {
+    this.options = { ...DEFAULT_CSRF_OPTIONS, ...options };
+  }
+
+  /**
+   * Extract CSRF token from cookies
+   * @returns The CSRF token or empty string if not found
+   */
+  public getToken(): string {
+    const cookieValue = document.cookie
+      .split('; ')
+      .find(cookie => cookie.startsWith(`${this.options.cookieName}=`));
+
+    return cookieValue ? cookieValue.split('=')[1] : '';
+  }
+
+  /**
+   * Check if the given HTTP method requires CSRF protection
+   */
+  public requiresProtection(method: string): boolean {
+    return this.options.unsafeMethods.includes(method.toUpperCase());
+  }
+
+  /**
+   * Add CSRF token to the provided headers object if needed
+   */
+  public addTokenToHeaders(method: string, headers: Record<string, string>): Record<string, string> {
+    if (this.requiresProtection(method)) {
+      const token = this.getToken();
+      if (token) {
+        headers[this.options.headerName] = token;
+      }
+    }
+    return headers;
+  }
+}
+
+// Usage example:
+// const csrfProtection = new CSRFProtection();
+// const headers = csrfProtection.addTokenToHeaders('POST', {});
+```
+
+#### Angular with TypeScript
+
+Angular is built with TypeScript, making it a natural fit for strongly-typed CSRF protection. The example below shows how to configure Angular's CSRF protection with TypeScript:
+
+```typescript
+// app.config.ts
+import { ApplicationConfig } from '@angular/core';
+import { provideRouter } from '@angular/router';
+import { provideHttpClient, withXsrfConfiguration } from '@angular/common/http';
+
+import { routes } from './app.routes';
+
+// Configure CSRF protection with custom options
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideHttpClient(
+      withXsrfConfiguration({
+        cookieName: 'XSRF-TOKEN', // Name of cookie containing token
+        headerName: 'X-XSRF-TOKEN' // Header name for token submission
+      })
+    ),
+    provideRouter(routes)
+  ]
+};
+```
+
+For a custom HTTP interceptor that handles CSRF tokens:
+
+```typescript
+// csrf.interceptor.ts
+import { Injectable } from '@angular/core';
+import {
+  HttpRequest,
+  HttpHandler,
+  HttpEvent,
+  HttpInterceptor
+} from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+@Injectable()
+export class CsrfInterceptor implements HttpInterceptor {
+  private readonly TOKEN_HEADER_NAME = 'X-CSRF-Token';
+  private readonly SAFE_METHODS = ['GET', 'HEAD', 'OPTIONS'];
+
+  constructor() {}
+
+  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    // Skip CSRF protection for safe methods
+    if (this.SAFE_METHODS.includes(request.method)) {
+      return next.handle(request);
+    }
+
+    // Get token from cookie
+    const token = this.getTokenFromCookie();
+
+    if (token) {
+      // Clone the request and add the CSRF token header
+      const modifiedRequest = request.clone({
+        headers: request.headers.set(this.TOKEN_HEADER_NAME, token)
+      });
+      return next.handle(modifiedRequest);
+    }
+
+    return next.handle(request);
+  }
+
+  private getTokenFromCookie(): string {
+    const tokenCookie = document.cookie
+      .split('; ')
+      .find(cookie => cookie.startsWith('XSRF-TOKEN='));
+
+    return tokenCookie ? tokenCookie.split('=')[1] : '';
+  }
+}
+```
+
+#### React with TypeScript
+
+Here's a TypeScript implementation for React applications using axios:
+
+```typescript
+// csrf-axios.ts
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+
+/**
+ * Create an axios instance with CSRF protection
+ */
+export function createCSRFProtectedAxios(
+  options: {
+    baseURL?: string;
+    csrfHeaderName?: string;
+    csrfCookieName?: string;
+  } = {}
+): AxiosInstance {
+  const {
+    baseURL = '',
+    csrfHeaderName = 'X-CSRF-Token',
+    csrfCookieName = 'XSRF-TOKEN'
+  } = options;
+
+  // Create axios instance
+  const instance = axios.create({ baseURL });
+
+  // Add CSRF token interceptor
+  instance.interceptors.request.use((config: AxiosRequestConfig) => {
+    // Only add for non-GET requests
+    if (config.method && !['get', 'head', 'options'].includes(config.method.toLowerCase())) {
+      const token = getCsrfToken(csrfCookieName);
+
+      if (token && config.headers) {
+        config.headers[csrfHeaderName] = token;
+      }
+    }
+    return config;
+  });
+
+  return instance;
+}
+
+/**
+ * Extract CSRF token from cookies
+ */
+function getCsrfToken(cookieName: string): string {
+  const tokenCookie = document.cookie
+    .split('; ')
+    .find(cookie => cookie.startsWith(`${cookieName}=`));
+  
+  return tokenCookie ? tokenCookie.split('=')[1] : '';
+}
+
+// USAGE EXAMPLE
+
+// Define api.ts
+// import { createCSRFProtectedAxios } from './csrf-axios';
+// export const api = createCSRFProtectedAxios({
+//   baseURL: '/api',
+//   csrfHeaderName: 'X-CSRF-Token'
+// });
+
+// In a React component:
+// import { api } from './api';
+// 
+// function UserProfile() {
+//   const updateUser = async (userData: UserData) => {
+//     try {
+//       // CSRF token is automatically added
+//       const response = await api.post('/users/profile', userData);
+//       return response.data;
+//     } catch (error) {
+//       console.error('Failed to update profile', error);
+//     }
+//   };
+//   
+//   // Rest of component...
+// }
+```
+
+For React applications using fetch API with TypeScript:
+
+```typescript
+// csrf-fetch.ts
+
+/**
+ * Interface for CSRF protection options
+ */
+interface CSRFFetchOptions {
+  csrfHeaderName: string;
+  csrfCookieName: string;
+  baseUrl: string;
+}
+
+/**
+ * A wrapper around fetch API with CSRF protection
+ */
+export class CSRFProtectedFetch {
+  private options: CSRFFetchOptions;
+
+  constructor(options: Partial<CSRFFetchOptions> = {}) {
+    this.options = {
+      csrfHeaderName: 'X-CSRF-Token',
+      csrfCookieName: 'XSRF-TOKEN',
+      baseUrl: '',
+      ...options
+    };
+  }
+
+  /**
+   * Performs a fetch request with CSRF protection
+   */
+  public async fetch<T>(
+    url: string, 
+    options: RequestInit = {}
+  ): Promise<T> {
+    const { method = 'GET' } = options;
+    const fullUrl = `${this.options.baseUrl}${url}`;
+
+    // Create headers with CSRF token for unsafe methods
+    const headers = new Headers(options.headers);
+
+    if (!['GET', 'HEAD', 'OPTIONS'].includes(method.toUpperCase())) {
+      const token = this.getCsrfToken();
+      if (token) {
+        headers.append(this.options.csrfHeaderName, token);
+      }
+    }
+
+    // Perform request
+    const response = await fetch(fullUrl, {
+      ...options,
+      headers
+    });
+
+    if (!response.ok) {
+      throw new Error(`Request failed with status ${response.status}`);
+    }
+
+    return response.json();
+  }
+
+  /**
+   * Shorthand for POST requests
+   */
+  public async post<T>(url: string, data: any, options: RequestInit = {}): Promise<T> {
+    return this.fetch<T>(url, {
+      ...options,
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        ...options.headers,
+        'Content-Type': 'application/json'
+      }
+    });
+  }
+
+  /**
+   * Extract CSRF token from cookies
+   */
+  private getCsrfToken(): string {
+    const tokenCookie = document.cookie
+      .split('; ')
+      .find(cookie => cookie.startsWith(`${this.options.csrfCookieName}=`));
+
+    return tokenCookie ? tokenCookie.split('=')[1] : '';
+  }
+}
+
+// USAGE EXAMPLE
+
+// Create an instance
+// const api = new CSRFProtectedFetch({
+//   baseUrl: '/api',
+//   csrfHeaderName: 'X-CSRF-Token'
+// });
+// 
+// // In React component
+// const updateUser = async (userData: UserData) => {
+//   try {
+//     // CSRF token is automatically added
+//     return await api.post('/users/profile', userData);
+//   } catch (error) {
+//     console.error('Failed to update profile', error);
+//   }
+// };
+```
+
 ## References in Related Cheat Sheets
 
 ### CSRF
