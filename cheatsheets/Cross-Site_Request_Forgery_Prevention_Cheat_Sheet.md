@@ -149,7 +149,7 @@ The _Naive Double-Submit Cookie_ method is a scalable and easy-to-implement tech
 
 Since an attacker is unable to access the cookie value during a cross-site request, they cannot include a matching value in the hidden form value or as a request parameter/header.
 
-The Naive Double-Submit Cookie method remains [vulnerable to cookie injection attacks](https://owasp.org/www-chapter-london/assets/slides/David_Johansson-Double_Defeat_of_Double-Submit_Cookie.pdf) (e.g., attacker-controlled subdomains or network attackers who can set cookies). Attackers can inject matching cookies and bypass CSRF protections. Thus, we strongly recommend that you use the _Signed Double-Submit Cookie_ pattern.
+Though the Naive Double-Submit Cookie method is simple and scalable, it remains vulnerable to cookie injection attacks, especially when attackers control subdomains or network environments allowing them to plant or overwrite cookies. For instance, an attacker-controlled subdomain (e.g., via DNS takeover) could inject a matching cookie and thus forge a valid request token. [This resource](https://owasp.org/www-chapter-london/assets/slides/David_Johansson-Double_Defeat_of_Double-Submit_Cookie.pdf) details these vulnerabilities. Therefore, always prefer the _Signed Double-Submit Cookie_ pattern with session-bound HMAC tokens to mitigate these threats.
 
 ## Disallowing simple requests
 
