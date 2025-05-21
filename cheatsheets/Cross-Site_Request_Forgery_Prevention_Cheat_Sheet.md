@@ -169,8 +169,16 @@ Both the synchronizer token and the double-submit cookie are used to prevent for
 In this pattern, the client appends a custom header to requests that require CSRF protection. The header can be any arbitrary key-value pair, as long as it does not conflict with existing headers.
 
 ```
-X-YOURSITE-CSRF-PROTECTION=1
+X-CSRF-Token: RANDOM-TOKEN-VALUE
 ```
+
+Many popular frameworks use standardized header names for CSRF protection:
+- `X-CSRF-Token` - Ruby on Rails, Laravel, Django
+- `X-XSRF-Token` - AngularJS
+- `CSRF-Token` - Express.js (csurf middleware)
+- `X-CSRFToken` - Django
+
+While any arbitrary header name will work, using one of these standard names can improve compatibility with existing tools and developer expectations.
 
 When handling the request, the API checks for the existence of this header. If the header does not exist, the backend rejects the request as potential forgery. This approach has several advantages:
 
@@ -201,7 +209,7 @@ A less secure configuration would be to configure your backend server to allow C
 
 ## Dealing with Client-Side CSRF Attacks (IMPORTANT)
 
-[Client-side CSRF](https://soheilkhodayari.github.io/same-site-wiki/docs/attacks/csrf.html#client-side-csrf) is a new variant of CSRF attacks where the attacker tricks the client-side JavaScript code to send a forged HTTP request to a vulnerable target site by manipulating the program’s input parameters. Client-side CSRF originates when the JavaScript program uses attacker-controlled inputs, such as the URL, for the generation of asynchronous HTTP requests.
+[Client-side CSRF](https://soheilkhodayari.github.io/same-site-wiki/docs/attacks/csrf.html#client-side-csrf) is a new variant of CSRF attacks where the attacker tricks the client-side JavaScript code to send a forged HTTP request to a vulnerable target site by manipulating the program's input parameters. Client-side CSRF originates when the JavaScript program uses attacker-controlled inputs, such as the URL, for the generation of asynchronous HTTP requests.
 
 **Note:** These variants of CSRF are particularly important as they can bypass some of the common anti-CSRF countermeasures like [token-based mitigations](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#token-based-mitigation) and [SameSite cookies](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#samesite-cookie-attribute). For example, when [synchronizer tokens](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#synchronizer-token-pattern) or [custom HTTP request headers](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#use-of-custom-request-headers) are used, the JavaScript program will include them in the asynchronous requests. Also, web browsers will include cookies in same-site request contexts initiated by JavaScript programs, circumventing the [SameSite cookie policies](https://soheilkhodayari.github.io/same-site-wiki/docs/policies/overview.html).
 
@@ -232,7 +240,7 @@ The following code snippet demonstrates a simple example of a client-side CSRF v
                 fetch(request_endpoint, {
                     method: request_method,
                     headers: {
-                        'XSRF-TOKEN': csrf_token,
+                        'X-CSRF-Token': csrf_token,
                         // [...]
                     },
                     // [...]
@@ -410,7 +418,7 @@ Several JavaScript libraries allow you to overriding default settings to have a 
 
 #### XMLHttpRequest (Native JavaScript)
 
-XMLHttpRequest's open() method can be overridden to set the `anti-csrf-token` header whenever the `open()` method is invoked next. The function `csrfSafeMethod()` defined below will filter out the safe HTTP methods and only add the header to unsafe HTTP methods.
+XMLHttpRequest's open() method can be overridden to set the `X-CSRF-Token` header whenever the `open()` method is invoked next. The function `csrfSafeMethod()` defined below will filter out the safe HTTP methods and only add the header to unsafe HTTP methods.
 
 This can be done as demonstrated in the following code snippet:
 
@@ -426,40 +434,41 @@ This can be done as demonstrated in the following code snippet:
         var res = o.apply(this, arguments);
         var err = new Error();
         if (!csrfSafeMethod(arguments[0])) {
-            this.setRequestHeader('anti-csrf-token', csrf_token);
+            this.setRequestHeader('X-CSRF-Token', csrf_token);
         }
         return res;
     };
  </script>
 ```
 
-#### CSRF Prevention in modern Frameworks
+#### AngularJS
 
-Modern Single Page Application (SPA) frameworks like Angular, React, and Vue typically rely on the cookie-to-header pattern to mitigate Cross-Site Request Forgery (CSRF) attacks. This approach leverages the fact that browsers automatically attach cookies to cross-origin requests, but only JavaScript running on the same origin can read values and set custom headers—making it possible to detect and block forged requests. The cookie-to-header pattern works as follows:
+AngularJS allows for setting default headers for HTTP operations. Further documentation can be found at AngularJS's documentation for [$httpProvider](https://docs.angularjs.org/api/ng/provider/$httpProvider#defaults).
 
-1. Server generates a CSRF token: When a user authenticates or loads the app, the server sets a CSRF token in a cookie (e.g., `XSRF-TOKEN`). This cookie is accessible via JavaScript (i.e., not `HttpOnly`) and typically has `SameSite=Lax` or `Strict`.
-2. Client reads the token: The SPA (often using a library like Angular’s HttpClient or axios in React/Vue) reads the CSRF token from the cookie.
-3. Client attaches the token to a custom header: For each state-changing request (`POST`, `PUT`, `DELETE`, etc.), the client sets the token as a custom HTTP header (commonly `X-XSRF-TOKEN` or `X-CSRF-TOKEN`).
-4. Server validates the token: The server checks whether the token from the header matches the one from the cookie. If they match, the request is accepted; if not, it is rejected as potentially forged.
+```html
+<script>
+    var csrf_token = document.querySelector("meta[name='csrf-token']").getAttribute("content");
 
-Angular provides this pattern out of the box, automatically handling steps 2 and 3 via its HttpClient.
-In contrast, frameworks like React and Vue require developers to implement this logic manually or with helper libraries such as axios interceptors. This pattern ensures that even if a browser includes cookies with a forged request, the attacker cannot set the matching custom header from another origin.
+    var app = angular.module("app", []);
 
-#### Angular
-
-Angular's HttpClient supports the Cookie-to-Header Pattern used to prevent XSRF attacks. When performing HTTP requests, an interceptor reads a token from a cookie, by default `XSRF-TOKEN`, and sets it as an HTTP header, `X-XSRF-TOKEN`. Further documentation can be found at Angular's documentation for [HttpClient XSRF/CSRF security](https://angular.dev/best-practices/security#httpclient-xsrf-csrf-security).
-
-```typescript
-// app.config.ts
-export const appConfig: ApplicationConfig = {
-  providers: [
-    provideHttpClient(withXsrfConfiguration({})),
-    provideRouter(routes, withComponentInputBinding()),
-  ],
-};
+    app.config(['$httpProvider', function ($httpProvider) {
+        $httpProvider.defaults.headers.post["X-CSRF-Token"] = csrf_token;
+        $httpProvider.defaults.headers.put["X-CSRF-Token"] = csrf_token;
+        $httpProvider.defaults.headers.patch["X-CSRF-Token"] = csrf_token;
+        // AngularJS does not create an object for DELETE and TRACE methods by default, and has to be manually created.
+        $httpProvider.defaults.headers.delete = {
+            "Content-Type" : "application/json;charset=utf-8",
+            "X-CSRF-Token" : csrf_token
+        };
+        $httpProvider.defaults.headers.trace = {
+            "Content-Type" : "application/json;charset=utf-8",
+            "X-CSRF-Token" : csrf_token
+        };
+      }]);
+ </script>
 ```
 
-This code snippet has been tested with Angular version 19.2.11.
+This code snippet has been tested with AngularJS version 1.7.7.
 
 #### Axios
 
@@ -469,14 +478,14 @@ This code snippet has been tested with Angular version 19.2.11.
 <script type="text/javascript">
     var csrf_token = document.querySelector("meta[name='csrf-token']").getAttribute("content");
 
-    axios.defaults.headers.post['anti-csrf-token'] = csrf_token;
-    axios.defaults.headers.put['anti-csrf-token'] = csrf_token;
-    axios.defaults.headers.delete['anti-csrf-token'] = csrf_token;
-    axios.defaults.headers.patch['anti-csrf-token'] = csrf_token;
+    axios.defaults.headers.post['X-CSRF-Token'] = csrf_token;
+    axios.defaults.headers.put['X-CSRF-Token'] = csrf_token;
+    axios.defaults.headers.delete['X-CSRF-Token'] = csrf_token;
+    axios.defaults.headers.patch['X-CSRF-Token'] = csrf_token;
 
     // Axios does not create an object for TRACE method by default, and has to be created manually.
     axios.defaults.headers.trace = {}
-    axios.defaults.headers.trace['anti-csrf-token'] = csrf_token
+    axios.defaults.headers.trace['X-CSRF-Token'] = csrf_token
 </script>
 ```
 
@@ -484,7 +493,7 @@ This code snippet has been tested with Axios version 0.18.0.
 
 #### JQuery
 
-JQuery exposes an API called `$.ajaxSetup()` which can be used to add the `anti-csrf-token` header to the AJAX request. API documentation for `$.ajaxSetup()` can be found here. The function `csrfSafeMethod()` defined below will filter out the safe HTTP methods and only add the header to unsafe HTTP methods.
+JQuery exposes an API called `$.ajaxSetup()` which can be used to add the `X-CSRF-Token` header to the AJAX request. API documentation for `$.ajaxSetup()` can be found here. The function `csrfSafeMethod()` defined below will filter out the safe HTTP methods and only add the header to unsafe HTTP methods.
 
 You can configure jQuery to automatically add the token to all request headers by adopting the following code snippet. This provides a simple and convenient CSRF protection for your AJAX based applications:
 
@@ -500,7 +509,7 @@ You can configure jQuery to automatically add the token to all request headers b
     $.ajaxSetup({
         beforeSend: function(xhr, settings) {
             if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-                xhr.setRequestHeader("anti-csrf-token", csrf_token);
+                xhr.setRequestHeader("X-CSRF-Token", csrf_token);
             }
         }
     });
@@ -520,4 +529,4 @@ This code snippet has been tested with jQuery version 3.3.1.
 - [Robust Defenses for Cross-Site Request Forgery](https://seclab.stanford.edu/websec/csrf/csrf.pdf)
 - For Java: OWASP [CSRF Guard](https://owasp.org/www-project-csrfguard/) or [Spring Security](https://docs.spring.io/spring-security/site/docs/5.5.x-SNAPSHOT/reference/html5/#csrf)
 - For PHP and Apache: [CSRFProtector Project](https://github.com/OWASP/www-project-csrfprotector )
-- For Angular: [Cross-Site Request Forgery (XSRF) Protection](https://angular.dev/best-practices/security#httpclient-xsrf-csrf-security)
+- For AngularJS: [Cross-Site Request Forgery (XSRF) Protection](https://docs.angularjs.org/api/ng/service/$http#cross-site-request-forgery-xsrf-protection)
