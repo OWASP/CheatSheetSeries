@@ -215,34 +215,38 @@ The following code snippet demonstrates a simple example of a client-side CSRF v
 
 ```html
 <script type="text/javascript">
-    var csrf_token = document.querySelector("meta[name='csrf-token']").getAttribute("content");
-    function ajaxLoad(){
+    const csrf_token = document.querySelector("meta[name='csrf-token']").getAttribute("content");
+
+    const ajaxLoad = () => {
         // process the URL hash fragment
-        let hash_fragment = window.location.hash.slice(1);
+        const hashFragment = window.location.hash.slice(1);
 
         // hash fragment should be of the format: /^(get|post);(.*)$/
         // e.g., https://site.com/index/#post;/profile
-        if(hash_fragment.length > 0 && hash_fragment.indexOf(';') > 0 ){
+        if (hashFragment.length > 0 && hashFragment.includes(';')) {
+            const params = hashFragment.match(/^(get|post);(.*)$/);
 
-            let params = hash_fragment.match(/^(get|post);(.*)$/);
-            if(params && params.length){
-                let request_method = params[1];
-                let request_endpoint = params[3];
+            if (params && params.length) {
+                const requestMethod = params[1];
+                const requestEndpoint = params[3];
 
-                fetch(request_endpoint, {
-                    method: request_method,
+                fetch(requestEndpoint, {
+                    method: requestMethod,
                     headers: {
                         'XSRF-TOKEN': csrf_token,
                         // [...]
                     },
                     // [...]
-                }).then(response => { /* [...] */ });
+                })
+                .then(response => { /* [...] */ })
+                .catch(error => console.error('Request failed:', error));
             }
         }
-    }
-    // trigger the async request on page load
-    window.onload = ajaxLoad();
- </script>
+    };
+
+    // trigger the async request on page load - better practice is to use event listeners
+    window.addEventListener('DOMContentLoaded', ajaxLoad);
+</script>
 ```
 
 **Vulnerability:** In this snippet, the program invokes a function `ajaxLoad()` upon the page load, which is responsible for loading various webpage elements. The function reads the value of the [URL hash fragment](https://developer.mozilla.org/en-US/docs/Web/API/Location/hash) (line 4), and extracts two pieces of information from it (i.e., request method and endpoint) to generate an asynchronous HTTP request (lines 11-13). The vulnerability occurs in lines 15-22, when the JavaScript program uses URL fragments to obtain the server-side endpoint for the asynchronous HTTP request (line 15) and the request method. However, both inputs can be controlled by web attackers, who can pick the value of their choosing, and craft a malicious URL containing the attack payload.
@@ -416,21 +420,24 @@ This can be done as demonstrated in the following code snippet:
 
 ```html
 <script type="text/javascript">
-    var csrf_token = document.querySelector("meta[name='csrf-token']").getAttribute("content");
-    function csrfSafeMethod(method) {
+    const csrf_token = document.querySelector("meta[name='csrf-token']").getAttribute("content");
+
+    const csrfSafeMethod = (method) => {
         // these HTTP methods do not require CSRF protection
-        return (/^(GET|HEAD|OPTIONS)$/.test(method));
-    }
-    var o = XMLHttpRequest.prototype.open;
-    XMLHttpRequest.prototype.open = function(){
-        var res = o.apply(this, arguments);
-        var err = new Error();
-        if (!csrfSafeMethod(arguments[0])) {
+        return /^(GET|HEAD|OPTIONS)$/.test(method);
+    };
+
+    const originalOpen = XMLHttpRequest.prototype.open;
+    XMLHttpRequest.prototype.open = function(...args) {
+        const result = originalOpen.apply(this, args);
+
+        if (!csrfSafeMethod(args[0])) {
             this.setRequestHeader('anti-csrf-token', csrf_token);
         }
-        return res;
+
+        return result;
     };
- </script>
+</script>
 ```
 
 #### CSRF Prevention in modern Frameworks
@@ -461,28 +468,71 @@ export const appConfig: ApplicationConfig = {
 
 This code snippet has been tested with Angular version 19.2.11.
 
+#### React
+
+For React applications, you can use axios interceptors to implement the cookie-to-header pattern:
+
+```jsx
+// csrf-protection.js
+import axios from 'axios';
+
+// Function to get the CSRF token from cookies
+const getCsrfToken = () => {
+  const tokenCookie = document.cookie
+    .split('; ')
+    .find(cookie => cookie.startsWith('XSRF-TOKEN='));
+  
+  return tokenCookie ? tokenCookie.split('=')[1] : '';
+};
+
+// Create an axios instance with interceptors
+const api = axios.create();
+
+// Add a request interceptor to include the CSRF token in headers
+api.interceptors.request.use(config => {
+  // Only add for state-changing methods
+  if (!/^(GET|HEAD|OPTIONS)$/i.test(config.method)) {
+    config.headers['X-CSRF-Token'] = getCsrfToken();
+  }
+  return config;
+});
+
+export default api;
+```
+
 #### Axios
 
 [Axios](https://github.com/axios/axios) allows us to set default headers for the POST, PUT, DELETE and PATCH actions.
 
 ```html
 <script type="text/javascript">
-    var csrf_token = document.querySelector("meta[name='csrf-token']").getAttribute("content");
+    const csrf_token = document.querySelector("meta[name='csrf-token']").getAttribute("content");
 
+    // Set CSRF token for state-changing methods
     axios.defaults.headers.post['anti-csrf-token'] = csrf_token;
     axios.defaults.headers.put['anti-csrf-token'] = csrf_token;
     axios.defaults.headers.delete['anti-csrf-token'] = csrf_token;
     axios.defaults.headers.patch['anti-csrf-token'] = csrf_token;
 
-    // Axios does not create an object for TRACE method by default, and has to be created manually.
-    axios.defaults.headers.trace = {}
-    axios.defaults.headers.trace['anti-csrf-token'] = csrf_token
+    // For TRACE method
+    axios.defaults.headers.trace = {
+        'X-CSRF-Token': csrf_token
+    };
+
+    // Alternative: Using interceptors for all requests
+    axios.interceptors.request.use(config => {
+        // Only add for state-changing methods
+        if (!/^(GET|HEAD|OPTIONS)$/i.test(config.method)) {
+            config.headers['X-CSRF-Token'] = csrf_token;
+        }
+        return config;
+    });
 </script>
 ```
 
 This code snippet has been tested with Axios version 0.18.0.
 
-#### JQuery
+#### jQuery
 
 JQuery exposes an API called `$.ajaxSetup()` which can be used to add the `anti-csrf-token` header to the AJAX request. API documentation for `$.ajaxSetup()` can be found here. The function `csrfSafeMethod()` defined below will filter out the safe HTTP methods and only add the header to unsafe HTTP methods.
 
@@ -490,16 +540,16 @@ You can configure jQuery to automatically add the token to all request headers b
 
 ```html
 <script type="text/javascript">
-    var csrf_token = $('meta[name="csrf-token"]').attr('content');
+    const csrf_token = $('meta[name="csrf-token"]').attr('content');
 
-    function csrfSafeMethod(method) {
+    const csrfSafeMethod = method => {
         // these HTTP methods do not require CSRF protection
-        return (/^(GET|HEAD|OPTIONS)$/.test(method));
-    }
+        return /^(GET|HEAD|OPTIONS)$/i.test(method);
+    };
 
     $.ajaxSetup({
-        beforeSend: function(xhr, settings) {
-            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+        beforeSend: (xhr, settings) => {
+            if (!csrfSafeMethod(settings.type) && !settings.crossDomain) {
                 xhr.setRequestHeader("anti-csrf-token", csrf_token);
             }
         }
