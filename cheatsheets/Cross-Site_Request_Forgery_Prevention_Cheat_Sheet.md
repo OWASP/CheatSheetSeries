@@ -70,9 +70,9 @@ If maintaining the state for CSRF token on the server is problematic, you can us
 
 #### Signed Double-Submit Cookie (RECOMMENDED)
 
-The most secure implementation of the Double Submit Cookie pattern is the _Signed Double-Submit Cookie_, which uses a secret key known only to the server. This ensures that an attacker cannot create and inject their own, known, CSRF token into the victim's authenticated session. The system's tokens should be secured by hashing or encrypting them.
+The most secure implementation of the Double Submit Cookie pattern is the _Signed Double-Submit Cookie_, which explicitly ties tokens to the user's authenticated session (e.g., session ID). Simply signing tokens without session binding provides minimal protection and remains vulnerable to cookie injection attacks. Always bind the CSRF token explicitly to session-specific data.
 
-We strongly recommend that you use the Hash-based Message Authentication (HMAC) algorithm because it is less computationally intensive than encrypting and decrypting the cookie. You should also bind the CSRF token with the user's current session to even further enhance security.
+If the token contains sensitive information (like session IDs or claims), always use Hash-based Message Authentication (HMAC) with a server-side secret key. This prevents token forgery while ensuring integrity. HMAC is preferred over simple hashing in all cases as it protects against various cryptographic attacks. For scenarios requiring confidentiality of token contents, use authenticated encryption instead.
 
 ##### Employing HMAC CSRF Tokens
 
@@ -149,7 +149,7 @@ The _Naive Double-Submit Cookie_ method is a scalable and easy-to-implement tech
 
 Since an attacker is unable to access the cookie value during a cross-site request, they cannot include a matching value in the hidden form value or as a request parameter/header.
 
-Though the Naive Double-Submit Cookie method is a good initial step to counter CSRF, it still remains vulnerable to certain attacks. [This resource](https://owasp.org/www-chapter-london/assets/slides/David_Johansson-Double_Defeat_of_Double-Submit_Cookie.pdf) provides more information on some vulnerabilities. Thus, we strongly recommend that you use the _Signed Double-Submit Cookie_ pattern.
+Though the Naive Double-Submit Cookie method is simple and scalable, it remains vulnerable to cookie injection attacks, especially when attackers control subdomains or network environments allowing them to plant or overwrite cookies. For instance, an attacker-controlled subdomain (e.g., via DNS takeover) could inject a matching cookie and thus forge a valid request token. [This resource](https://owasp.org/www-chapter-london/assets/slides/David_Johansson-Double_Defeat_of_Double-Submit_Cookie.pdf) details these vulnerabilities. Therefore, always prefer the _Signed Double-Submit Cookie_ pattern with session-bound HMAC tokens to mitigate these threats.
 
 ## Disallowing simple requests
 
