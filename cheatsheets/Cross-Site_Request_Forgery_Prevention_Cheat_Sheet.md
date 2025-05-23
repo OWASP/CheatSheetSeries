@@ -480,7 +480,7 @@ This code snippet has been tested with Angular version 19.2.11.
 </script>
 ```
 
-This code snippet has been tested with Axios version 0.18.0.
+This code snippet has been tested with Axios version 1.9.0.
 
 #### JQuery
 
