@@ -8,9 +8,9 @@ From [JWT.IO](https://jwt.io/introduction):
 
 > JSON Web Token (JWT) is an open standard (RFC 7519) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed. JWTs can be signed using a secret (with the HMAC algorithm) or a public/private key pair using RSA.
 
-JSON Web Token is used to carry information related to the identity and characteristics (claims) of a client. This information is signed by the server in order for it to detect whether it was tampered with after sending it to the client. This will prevent an attacker from changing the identity or any characteristics (for example, changing the role from simple user to admin or change the client login).
+JWTs are used to carry information related to the identity and characteristics (claims) of a client. This information is signed by the server to ensure it has not been tampered with after being sent to the client. This prevents an attacker from modifying the identity or characteristics — for example, changing the role from a simple user to an admin or altering the client's login.
 
-This token is created during authentication (is provided in case of successful authentication) and is verified by the server before any processing. It is used by an application to allow a client to present a token representing the user's "identity card" to the server and allow the server to verify the validity and integrity of the token in a secure way, all of this in a stateless and portable approach (portable in the way that client and server technologies can be different including also the transport channel even if HTTP is the most often used).
+The token is created during authentication (it is issued upon successful authentication) and is verified by the server before any processing. Applications use the token to allow a client to present what is essentially an "identity card" to the server. The server can then securely verify the token's validity and integrity. This approach is stateless and portable, meaning it works across different client and server technologies, and over various transport channels — although HTTP is the most commonly used.
 
 ## Token Structure
 
