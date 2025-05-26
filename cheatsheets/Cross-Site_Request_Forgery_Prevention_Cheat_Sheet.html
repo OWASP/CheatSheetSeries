@@ -1186,6 +1186,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#react" class="md-nav__link">
+    <span class="md-ellipsis">
+      React
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#axios" class="md-nav__link">
     <span class="md-ellipsis">
       Axios
@@ -1197,7 +1206,7 @@
           <li class="md-nav__item">
   <a href="#jquery" class="md-nav__link">
     <span class="md-ellipsis">
-      JQuery
+      jQuery
     </span>
   </a>
   
@@ -3328,6 +3337,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#react" class="md-nav__link">
+    <span class="md-ellipsis">
+      React
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#axios" class="md-nav__link">
     <span class="md-ellipsis">
       Axios
@@ -3339,7 +3357,7 @@
           <li class="md-nav__item">
   <a href="#jquery" class="md-nav__link">
     <span class="md-ellipsis">
-      JQuery
+      jQuery
     </span>
   </a>
   
@@ -3542,41 +3560,45 @@ Access-Control-Allow-Credentials=true
 </code></pre></div>
 <p>A less secure configuration would be to configure your backend server to allow CORS from all subdomains of your site using a regular expression. If an attacker is able to <a href="https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/10-Test_for_Subdomain_Takeover">take over a subdomain</a> (not uncommon with cloud services) your CORS configuration would allow them to bypass the same origin policy and forge a request with your custom header.</p>
 <h2 id="dealing-with-client-side-csrf-attacks-important">Dealing with Client-Side CSRF Attacks (IMPORTANT)<a class="headerlink" href="#dealing-with-client-side-csrf-attacks-important" title="Permanent link">&para;</a></h2>
-<p><a href="https://soheilkhodayari.github.io/same-site-wiki/docs/attacks/csrf.html#client-side-csrf">Client-side CSRF</a> is a new variant of CSRF attacks where the attacker tricks the client-side JavaScript code to send a forged HTTP request to a vulnerable target site by manipulating the program’s input parameters. Client-side CSRF originates when the JavaScript program uses attacker-controlled inputs, such as the URL, for the generation of asynchronous HTTP requests.</p>
+<p><a href="https://soheilkhodayari.github.io/same-site-wiki/docs/attacks/csrf.html#client-side-csrf">Client-side CSRF</a> is a new variant of CSRF attacks where the attacker tricks the client-side JavaScript code to send a forged HTTP request to a vulnerable target site by manipulating the program's input parameters. Client-side CSRF originates when the JavaScript program uses attacker-controlled inputs, such as the URL, for the generation of asynchronous HTTP requests.</p>
 <p><strong>Note:</strong> These variants of CSRF are particularly important as they can bypass some of the common anti-CSRF countermeasures like <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#token-based-mitigation">token-based mitigations</a> and <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#samesite-cookie-attribute">SameSite cookies</a>. For example, when <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#synchronizer-token-pattern">synchronizer tokens</a> or <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#use-of-custom-request-headers">custom HTTP request headers</a> are used, the JavaScript program will include them in the asynchronous requests. Also, web browsers will include cookies in same-site request contexts initiated by JavaScript programs, circumventing the <a href="https://soheilkhodayari.github.io/same-site-wiki/docs/policies/overview.html">SameSite cookie policies</a>.</p>
 <p><strong>Client-Side vs. Classical CSRF:</strong> In the classical CSRF model, the server-side program is the most vulnerable component, because it cannot distinguish whether the incoming authenticated request was performed <strong>intentionally</strong>, also known as the confused deputy problem. In the client-side CSR model, the most vulnerable component is the client-side JavaScript program because an attacker can use it to generate arbitrary asynchronous requests by manipulating the request endpoint and/or its parameters. Client-side CSRF is due to an input validation problem and it reintroduces the confused deputy flaw, that is, the server-side won't, again, be able to distinguish if the request was performed intentionally or not.</p>
 <p>For more information about client-side CSRF vulnerabilities, see Sections 2 and 5 of this <a href="https://www.usenix.org/system/files/sec21-khodayari.pdf">paper</a>, the <a href="https://soheilkhodayari.github.io/same-site-wiki/docs/attacks/csrf.html">CSRF chapter</a> of the <a href="https://soheilkhodayari.github.io/same-site-wiki">SameSite wiki</a>, and <a href="https://www.facebook.com/notes/facebook-bug-bounty/client-side-csrf/2056804174333798/">this post</a> by the <a href="https://www.facebook.com/whitehat">Meta Bug Bounty Program</a>.</p>
 <h3 id="client-side-csrf-example">Client-side CSRF Example<a class="headerlink" href="#client-side-csrf-example" title="Permanent link">&para;</a></h3>
 <p>The following code snippet demonstrates a simple example of a client-side CSRF vulnerability.</p>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">csrf_token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;meta[name=&#39;csrf-token&#39;]&quot;</span><span class="p">).</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="kd">function</span><span class="w"> </span><span class="nx">ajaxLoad</span><span class="p">(){</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">csrf_token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;meta[name=&#39;csrf-token&#39;]&quot;</span><span class="p">).</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">);</span>
+
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">ajaxLoad</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="c1">// process the URL hash fragment</span>
-<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nx">hash_fragment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">hash</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mf">1</span><span class="p">);</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">hashFragment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">hash</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mf">1</span><span class="p">);</span>
 
 <span class="w">        </span><span class="c1">// hash fragment should be of the format: /^(get|post);(.*)$/</span>
 <span class="w">        </span><span class="c1">// e.g., https://site.com/index/#post;/profile</span>
-<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="nx">hash_fragment</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">hash_fragment</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0</span><span class="w"> </span><span class="p">){</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">hashFragment</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">hashFragment</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="kd">const</span><span class="w"> </span><span class="nx">params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">hashFragment</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/^(get|post);(.*)$/</span><span class="p">);</span>
 
-<span class="w">            </span><span class="kd">let</span><span class="w"> </span><span class="nx">params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">hash_fragment</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/^(get|post);(.*)$/</span><span class="p">);</span>
-<span class="w">            </span><span class="k">if</span><span class="p">(</span><span class="nx">params</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">params</span><span class="p">.</span><span class="nx">length</span><span class="p">){</span>
-<span class="w">                </span><span class="kd">let</span><span class="w"> </span><span class="nx">request_method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">params</span><span class="p">[</span><span class="mf">1</span><span class="p">];</span>
-<span class="w">                </span><span class="kd">let</span><span class="w"> </span><span class="nx">request_endpoint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">params</span><span class="p">[</span><span class="mf">3</span><span class="p">];</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">params</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">params</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="kd">const</span><span class="w"> </span><span class="nx">requestMethod</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">params</span><span class="p">[</span><span class="mf">1</span><span class="p">];</span>
+<span class="w">                </span><span class="kd">const</span><span class="w"> </span><span class="nx">requestEndpoint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">params</span><span class="p">[</span><span class="mf">3</span><span class="p">];</span>
 
-<span class="w">                </span><span class="nx">fetch</span><span class="p">(</span><span class="nx">request_endpoint</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                    </span><span class="nx">method</span><span class="o">:</span><span class="w"> </span><span class="nx">request_method</span><span class="p">,</span>
+<span class="w">                </span><span class="nx">fetch</span><span class="p">(</span><span class="nx">requestEndpoint</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nx">method</span><span class="o">:</span><span class="w"> </span><span class="nx">requestMethod</span><span class="p">,</span>
 <span class="w">                    </span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                        </span><span class="s1">&#39;XSRF-TOKEN&#39;</span><span class="o">:</span><span class="w"> </span><span class="nx">csrf_token</span><span class="p">,</span>
 <span class="w">                        </span><span class="c1">// [...]</span>
 <span class="w">                    </span><span class="p">},</span>
 <span class="w">                    </span><span class="c1">// [...]</span>
-<span class="w">                </span><span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* [...] */</span><span class="w"> </span><span class="p">});</span>
+<span class="w">                </span><span class="p">})</span>
+<span class="w">                </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* [...] */</span><span class="w"> </span><span class="p">})</span>
+<span class="w">                </span><span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">error</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;Request failed:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">));</span>
 <span class="w">            </span><span class="p">}</span>
 <span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">    </span><span class="c1">// trigger the async request on page load</span>
-<span class="w">    </span><span class="nb">window</span><span class="p">.</span><span class="nx">onload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">ajaxLoad</span><span class="p">();</span>
-<span class="w"> </span><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="w">    </span><span class="p">};</span>
+
+<span class="w">    </span><span class="c1">// trigger the async request on page load - better practice is to use event listeners</span>
+<span class="w">    </span><span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;DOMContentLoaded&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">ajaxLoad</span><span class="p">);</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
 <p><strong>Vulnerability:</strong> In this snippet, the program invokes a function <code>ajaxLoad()</code> upon the page load, which is responsible for loading various webpage elements. The function reads the value of the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Location/hash">URL hash fragment</a> (line 4), and extracts two pieces of information from it (i.e., request method and endpoint) to generate an asynchronous HTTP request (lines 11-13). The vulnerability occurs in lines 15-22, when the JavaScript program uses URL fragments to obtain the server-side endpoint for the asynchronous HTTP request (line 15) and the request method. However, both inputs can be controlled by web attackers, who can pick the value of their choosing, and craft a malicious URL containing the attack payload.</p>
 <p><strong>Attack:</strong> Usually, attackers share a malicious URL with the victim (through elements such as spear-phishing emails) and because the malicious URL appears to be from an honest, reputable (but vulnerable) website, the user often clicks on it. Alternatively, the attackers can create an attack page to abuse browser APIs (e.g., the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/open"><code>window.open()</code></a> API) and trick the vulnerable JavaScript of the target page to send the HTTP request, which closely resembles the attack model of the classical CSRF attacks.</p>
@@ -3595,7 +3617,7 @@ Access-Control-Allow-Credentials=true
 <div class="highlight"><pre><span></span><code>Set-Cookie: JSESSIONID=xxxxx; SameSite=Strict
 Set-Cookie: JSESSIONID=xxxxx; SameSite=Lax
 </code></pre></div>
-<p>All desktop browsers and almost all mobile browsers now support the <code>SameSite</code> attribute. To track the browsers implementing it and know how the attribute is used, refer to the following <a href="https://caniuse.com/#feat=same-site-cookie-attribute">service</a>. Note that Chrome has <a href="https://blog.chromium.org/2019/10/developers-get-ready-for-new.html">announced</a> that they will mark cookies as <code>SameSite=Lax</code> by default from Chrome 80 (due in February 2020), and Firefox and Edge are both planning to follow suit. Additionally, the <code>Secure</code> flag will be required for cookies that are marked as <code>SameSite=None</code>.</p>
+<p>All modern desktop and mobile browsers support the <code>SameSite</code> attribute. The main exceptions are legacy browsers including Opera Mini (all versions), UC Browser for Android, and older mobile browsers (iOS Safari &lt; 13.2, Android Browser &lt; 97). To track the browsers implementing it and know how the attribute is used, refer to the following <a href="https://caniuse.com/#feat=same-site-cookie-attribute">service</a>. Chrome implemented <code>SameSite=Lax</code> as the default behavior in 2020, and Firefox and Edge have followed suit. Additionally, the <code>Secure</code> flag is required for cookies that are marked as <code>SameSite=None</code>.</p>
 <p>It is important to note that this attribute should be implemented as an additional layer <em>defense in depth</em> concept. This attribute protects the user through the browsers supporting it, and it contains as well 2 ways to bypass it as mentioned in the following <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7.1">section</a>. This attribute should not replace a CSRF Token. Instead, it should co-exist with that token to protect  the user in a more robust way.</p>
 <h3 id="using-standard-headers-to-verify-origin">Using Standard Headers to Verify Origin<a class="headerlink" href="#using-standard-headers-to-verify-origin" title="Permanent link">&para;</a></h3>
 <p>There are two steps to this mitigation method, both of which examine an HTTP request header value:</p>
@@ -3651,7 +3673,7 @@ It relaxes the restrictions on domain overwrites, i.e., they</p>
 <p>This relaxed variant can be used as an alternative to the "domain locked" <code>__Host-</code> prefix,
 if authenticated users would need to visit different (sub-)domains.
 In all other cases, using the <code>__Host-</code> prefix in addition to the <code>SameSite</code> attribute is recommended.</p>
-<p>As of July 2020 cookie prefixes <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Browser_compatibility">are supported by all major browsers</a>.</p>
+<p>Cookie prefixes <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Browser_compatibility">are supported by all major browsers</a>.</p>
 <p>See the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Directives">Mozilla Developer Network</a> and <a href="https://tools.ietf.org/html/draft-west-cookie-prefixes-05">IETF Draft</a> for further information about cookie prefixes.</p>
 <h3 id="user-interaction-based-csrf-defense">User Interaction-Based CSRF Defense<a class="headerlink" href="#user-interaction-based-csrf-defense" title="Permanent link">&para;</a></h3>
 <p>While all the techniques referenced here do not require any user interaction, sometimes it's easier or more appropriate to involve the user in the transaction to prevent unauthorized operations (forged via CSRF or otherwise). The following are some examples of techniques that can act as strong CSRF defense when implemented correctly.</p>
@@ -3689,27 +3711,30 @@ In all other cases, using the <code>__Host-</code> prefix in addition to the <co
 <p>XMLHttpRequest's open() method can be overridden to set the <code>anti-csrf-token</code> header whenever the <code>open()</code> method is invoked next. The function <code>csrfSafeMethod()</code> defined below will filter out the safe HTTP methods and only add the header to unsafe HTTP methods.</p>
 <p>This can be done as demonstrated in the following code snippet:</p>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">csrf_token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;meta[name=&#39;csrf-token&#39;]&quot;</span><span class="p">).</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="kd">function</span><span class="w"> </span><span class="nx">csrfSafeMethod</span><span class="p">(</span><span class="nx">method</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">csrf_token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;meta[name=&#39;csrf-token&#39;]&quot;</span><span class="p">).</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">);</span>
+
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">csrfSafeMethod</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">method</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="c1">// these HTTP methods do not require CSRF protection</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="sr">/^(GET|HEAD|OPTIONS)$/</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">method</span><span class="p">));</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">o</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">XMLHttpRequest</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">open</span><span class="p">;</span>
-<span class="w">    </span><span class="nx">XMLHttpRequest</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">open</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="p">(){</span>
-<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">res</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">o</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="nx">arguments</span><span class="p">);</span>
-<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="ne">Error</span><span class="p">();</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">csrfSafeMethod</span><span class="p">(</span><span class="nx">arguments</span><span class="p">[</span><span class="mf">0</span><span class="p">]))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="sr">/^(GET|HEAD|OPTIONS)$/</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">method</span><span class="p">);</span>
+<span class="w">    </span><span class="p">};</span>
+
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">originalOpen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">XMLHttpRequest</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">open</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">XMLHttpRequest</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">open</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="p">(...</span><span class="nx">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">originalOpen</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="nx">args</span><span class="p">);</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">csrfSafeMethod</span><span class="p">(</span><span class="nx">args</span><span class="p">[</span><span class="mf">0</span><span class="p">]))</span><span class="w"> </span><span class="p">{</span>
 <span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="nx">setRequestHeader</span><span class="p">(</span><span class="s1">&#39;anti-csrf-token&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">csrf_token</span><span class="p">);</span>
 <span class="w">        </span><span class="p">}</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">res</span><span class="p">;</span>
+
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">result</span><span class="p">;</span>
 <span class="w">    </span><span class="p">};</span>
-<span class="w"> </span><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
 <h4 id="csrf-prevention-in-modern-frameworks">CSRF Prevention in modern Frameworks<a class="headerlink" href="#csrf-prevention-in-modern-frameworks" title="Permanent link">&para;</a></h4>
 <p>Modern Single Page Application (SPA) frameworks like Angular, React, and Vue typically rely on the cookie-to-header pattern to mitigate Cross-Site Request Forgery (CSRF) attacks. This approach leverages the fact that browsers automatically attach cookies to cross-origin requests, but only JavaScript running on the same origin can read values and set custom headers—making it possible to detect and block forged requests. The cookie-to-header pattern works as follows:</p>
 <ol>
 <li>Server generates a CSRF token: When a user authenticates or loads the app, the server sets a CSRF token in a cookie (e.g., <code>XSRF-TOKEN</code>). This cookie is accessible via JavaScript (i.e., not <code>HttpOnly</code>) and typically has <code>SameSite=Lax</code> or <code>Strict</code>.</li>
-<li>Client reads the token: The SPA (often using a library like Angular’s HttpClient or axios in React/Vue) reads the CSRF token from the cookie.</li>
+<li>Client reads the token: The SPA (often using a library like Angular's HttpClient or axios in React/Vue) reads the CSRF token from the cookie.</li>
 <li>Client attaches the token to a custom header: For each state-changing request (<code>POST</code>, <code>PUT</code>, <code>DELETE</code>, etc.), the client sets the token as a custom HTTP header (commonly <code>X-XSRF-TOKEN</code> or <code>X-CSRF-TOKEN</code>).</li>
 <li>Server validates the token: The server checks whether the token from the header matches the one from the cookie. If they match, the request is accepted; if not, it is rejected as potentially forged.</li>
 </ol>
@@ -3726,43 +3751,82 @@ In contrast, frameworks like React and Vue require developers to implement this 
 <span class="p">};</span>
 </code></pre></div>
 <p>This code snippet has been tested with Angular version 19.2.11.</p>
+<h4 id="react">React<a class="headerlink" href="#react" title="Permanent link">&para;</a></h4>
+<p>For React applications, you can use axios interceptors to implement the cookie-to-header pattern:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// csrf-protection.js</span>
+<span class="k">import</span><span class="w"> </span><span class="nx">axios</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;axios&#39;</span><span class="p">;</span>
+
+<span class="c1">// Function to get the CSRF token from cookies</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">getCsrfToken</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">tokenCookie</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">cookie</span>
+<span class="w">    </span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;; &#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">cookie</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">cookie</span><span class="p">.</span><span class="nx">startsWith</span><span class="p">(</span><span class="s1">&#39;XSRF-TOKEN=&#39;</span><span class="p">));</span>
+
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">tokenCookie</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="nx">tokenCookie</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)[</span><span class="mf">1</span><span class="p">]</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="c1">// Create an axios instance with interceptors</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">api</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">axios</span><span class="p">.</span><span class="nx">create</span><span class="p">();</span>
+
+<span class="c1">// Add a request interceptor to include the CSRF token in headers</span>
+<span class="nx">api</span><span class="p">.</span><span class="nx">interceptors</span><span class="p">.</span><span class="nx">request</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">config</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// Only add for state-changing methods</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="sr">/^(GET|HEAD|OPTIONS)$/i</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">config</span><span class="p">.</span><span class="nx">method</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">config</span><span class="p">.</span><span class="nx">headers</span><span class="p">[</span><span class="s1">&#39;X-CSRF-Token&#39;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">getCsrfToken</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">config</span><span class="p">;</span>
+<span class="p">});</span>
+
+<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">api</span><span class="p">;</span>
+</code></pre></div>
 <h4 id="axios">Axios<a class="headerlink" href="#axios" title="Permanent link">&para;</a></h4>
 <p><a href="https://github.com/axios/axios">Axios</a> allows us to set default headers for the POST, PUT, DELETE and PATCH actions.</p>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">csrf_token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;meta[name=&#39;csrf-token&#39;]&quot;</span><span class="p">).</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">csrf_token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;meta[name=&#39;csrf-token&#39;]&quot;</span><span class="p">).</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">);</span>
 
+<span class="w">    </span><span class="c1">// Set CSRF token for state-changing methods</span>
 <span class="w">    </span><span class="nx">axios</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">post</span><span class="p">[</span><span class="s1">&#39;anti-csrf-token&#39;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">csrf_token</span><span class="p">;</span>
 <span class="w">    </span><span class="nx">axios</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">put</span><span class="p">[</span><span class="s1">&#39;anti-csrf-token&#39;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">csrf_token</span><span class="p">;</span>
 <span class="w">    </span><span class="nx">axios</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="ow">delete</span><span class="p">[</span><span class="s1">&#39;anti-csrf-token&#39;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">csrf_token</span><span class="p">;</span>
 <span class="w">    </span><span class="nx">axios</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">patch</span><span class="p">[</span><span class="s1">&#39;anti-csrf-token&#39;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">csrf_token</span><span class="p">;</span>
 
-<span class="w">    </span><span class="c1">// Axios does not create an object for TRACE method by default, and has to be created manually.</span>
-<span class="w">    </span><span class="nx">axios</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">trace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{}</span>
-<span class="w">    </span><span class="nx">axios</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">trace</span><span class="p">[</span><span class="s1">&#39;anti-csrf-token&#39;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">csrf_token</span>
+<span class="w">    </span><span class="c1">// For TRACE method</span>
+<span class="w">    </span><span class="nx">axios</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">trace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="s1">&#39;X-CSRF-Token&#39;</span><span class="o">:</span><span class="w"> </span><span class="nx">csrf_token</span>
+<span class="w">    </span><span class="p">};</span>
+
+<span class="w">    </span><span class="c1">// Alternative: Using interceptors for all requests</span>
+<span class="w">    </span><span class="nx">axios</span><span class="p">.</span><span class="nx">interceptors</span><span class="p">.</span><span class="nx">request</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">config</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Only add for state-changing methods</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="sr">/^(GET|HEAD|OPTIONS)$/i</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">config</span><span class="p">.</span><span class="nx">method</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">config</span><span class="p">.</span><span class="nx">headers</span><span class="p">[</span><span class="s1">&#39;X-CSRF-Token&#39;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">csrf_token</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">config</span><span class="p">;</span>
+<span class="w">    </span><span class="p">});</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
-<p>This code snippet has been tested with Axios version 0.18.0.</p>
-<h4 id="jquery">JQuery<a class="headerlink" href="#jquery" title="Permanent link">&para;</a></h4>
+<p>This code snippet has been tested with Axios version 1.9.0.</p>
+<h4 id="jquery">jQuery<a class="headerlink" href="#jquery" title="Permanent link">&para;</a></h4>
 <p>JQuery exposes an API called <code>$.ajaxSetup()</code> which can be used to add the <code>anti-csrf-token</code> header to the AJAX request. API documentation for <code>$.ajaxSetup()</code> can be found here. The function <code>csrfSafeMethod()</code> defined below will filter out the safe HTTP methods and only add the header to unsafe HTTP methods.</p>
 <p>You can configure jQuery to automatically add the token to all request headers by adopting the following code snippet. This provides a simple and convenient CSRF protection for your AJAX based applications:</p>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">csrf_token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;meta[name=&quot;csrf-token&quot;]&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;content&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">csrf_token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;meta[name=&quot;csrf-token&quot;]&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;content&#39;</span><span class="p">);</span>
 
-<span class="w">    </span><span class="kd">function</span><span class="w"> </span><span class="nx">csrfSafeMethod</span><span class="p">(</span><span class="nx">method</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">csrfSafeMethod</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">method</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="c1">// these HTTP methods do not require CSRF protection</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="sr">/^(GET|HEAD|OPTIONS)$/</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">method</span><span class="p">));</span>
-<span class="w">    </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="sr">/^(GET|HEAD|OPTIONS)$/i</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">method</span><span class="p">);</span>
+<span class="w">    </span><span class="p">};</span>
 
 <span class="w">    </span><span class="nx">$</span><span class="p">.</span><span class="nx">ajaxSetup</span><span class="p">({</span>
-<span class="w">        </span><span class="nx">beforeSend</span><span class="o">:</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">xhr</span><span class="p">,</span><span class="w"> </span><span class="nx">settings</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">csrfSafeMethod</span><span class="p">(</span><span class="nx">settings</span><span class="p">.</span><span class="nx">type</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">crossDomain</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">beforeSend</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">xhr</span><span class="p">,</span><span class="w"> </span><span class="nx">settings</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">csrfSafeMethod</span><span class="p">(</span><span class="nx">settings</span><span class="p">.</span><span class="nx">type</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="nx">settings</span><span class="p">.</span><span class="nx">crossDomain</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                </span><span class="nx">xhr</span><span class="p">.</span><span class="nx">setRequestHeader</span><span class="p">(</span><span class="s2">&quot;anti-csrf-token&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">csrf_token</span><span class="p">);</span>
 <span class="w">            </span><span class="p">}</span>
 <span class="w">        </span><span class="p">}</span>
 <span class="w">    </span><span class="p">});</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
-<p>This code snippet has been tested with jQuery version 3.3.1.</p>
+<p>This code snippet has been tested with jQuery version 3.7.1.</p>
 <h2 id="references-in-related-cheat-sheets">References in Related Cheat Sheets<a class="headerlink" href="#references-in-related-cheat-sheets" title="Permanent link">&para;</a></h2>
 <h3 id="csrf">CSRF<a class="headerlink" href="#csrf" title="Permanent link">&para;</a></h3>
 <ul>
