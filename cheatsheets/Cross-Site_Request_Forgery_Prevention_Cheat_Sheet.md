@@ -70,9 +70,9 @@ If maintaining the state for CSRF token on the server is problematic, you can us
 
 #### Signed Double-Submit Cookie (RECOMMENDED)
 
-The most secure implementation of the Double Submit Cookie pattern is the _Signed Double-Submit Cookie_, which uses a secret key known only to the server. This ensures that an attacker cannot create and inject their own, known, CSRF token into the victim's authenticated session. The system's tokens should be secured by hashing or encrypting them.
+The most secure implementation of the Double Submit Cookie pattern is the _Signed Double-Submit Cookie_, which explicitly ties tokens to the user's authenticated session (e.g., session ID). Simply signing tokens without session binding provides minimal protection and remains vulnerable to cookie injection attacks. Always bind the CSRF token explicitly to session-specific data.
 
-We strongly recommend that you use the Hash-based Message Authentication (HMAC) algorithm because it is less computationally intensive than encrypting and decrypting the cookie. You should also bind the CSRF token with the user's current session to even further enhance security.
+If the token contains sensitive information (like session IDs or claims), always use Hash-based Message Authentication (HMAC) with a server-side secret key. This prevents token forgery while ensuring integrity. HMAC is preferred over simple hashing in all cases as it protects against various cryptographic attacks. For scenarios requiring confidentiality of token contents, use authenticated encryption instead.
 
 ##### Employing HMAC CSRF Tokens
 
@@ -149,7 +149,7 @@ The _Naive Double-Submit Cookie_ method is a scalable and easy-to-implement tech
 
 Since an attacker is unable to access the cookie value during a cross-site request, they cannot include a matching value in the hidden form value or as a request parameter/header.
 
-Though the Naive Double-Submit Cookie method is a good initial step to counter CSRF, it still remains vulnerable to certain attacks. [This resource](https://owasp.org/www-chapter-london/assets/slides/David_Johansson-Double_Defeat_of_Double-Submit_Cookie.pdf) provides more information on some vulnerabilities. Thus, we strongly recommend that you use the _Signed Double-Submit Cookie_ pattern.
+Though the Naive Double-Submit Cookie method is simple and scalable, it remains vulnerable to cookie injection attacks, especially when attackers control subdomains or network environments allowing them to plant or overwrite cookies. For instance, an attacker-controlled subdomain (e.g., via DNS takeover) could inject a matching cookie and thus forge a valid request token. [This resource](https://owasp.org/www-chapter-london/assets/slides/David_Johansson-Double_Defeat_of_Double-Submit_Cookie.pdf) details these vulnerabilities. Therefore, always prefer the _Signed Double-Submit Cookie_ pattern with session-bound HMAC tokens to mitigate these threats.
 
 ## Disallowing simple requests
 
@@ -224,34 +224,38 @@ The following code snippet demonstrates a simple example of a client-side CSRF v
 
 ```html
 <script type="text/javascript">
-    var csrf_token = document.querySelector("meta[name='csrf-token']").getAttribute("content");
-    function ajaxLoad(){
+    const csrf_token = document.querySelector("meta[name='csrf-token']").getAttribute("content");
+
+    const ajaxLoad = () => {
         // process the URL hash fragment
-        let hash_fragment = window.location.hash.slice(1);
+        const hashFragment = window.location.hash.slice(1);
 
         // hash fragment should be of the format: /^(get|post);(.*)$/
         // e.g., https://site.com/index/#post;/profile
-        if(hash_fragment.length > 0 && hash_fragment.indexOf(';') > 0 ){
+        if (hashFragment.length > 0 && hashFragment.includes(';')) {
+            const params = hashFragment.match(/^(get|post);(.*)$/);
 
-            let params = hash_fragment.match(/^(get|post);(.*)$/);
-            if(params && params.length){
-                let request_method = params[1];
-                let request_endpoint = params[3];
+            if (params && params.length) {
+                const requestMethod = params[1];
+                const requestEndpoint = params[3];
 
-                fetch(request_endpoint, {
-                    method: request_method,
+                fetch(requestEndpoint, {
+                    method: requestMethod,
                     headers: {
                         'X-CSRF-Token': csrf_token,
                         // [...]
                     },
                     // [...]
-                }).then(response => { /* [...] */ });
+                })
+                .then(response => { /* [...] */ })
+                .catch(error => console.error('Request failed:', error));
             }
         }
-    }
-    // trigger the async request on page load
-    window.onload = ajaxLoad();
- </script>
+    };
+
+    // trigger the async request on page load - better practice is to use event listeners
+    window.addEventListener('DOMContentLoaded', ajaxLoad);
+</script>
 ```
 
 **Vulnerability:** In this snippet, the program invokes a function `ajaxLoad()` upon the page load, which is responsible for loading various webpage elements. The function reads the value of the [URL hash fragment](https://developer.mozilla.org/en-US/docs/Web/API/Location/hash) (line 4), and extracts two pieces of information from it (i.e., request method and endpoint) to generate an asynchronous HTTP request (lines 11-13). The vulnerability occurs in lines 15-22, when the JavaScript program uses URL fragments to obtain the server-side endpoint for the asynchronous HTTP request (line 15) and the request method. However, both inputs can be controlled by web attackers, who can pick the value of their choosing, and craft a malicious URL containing the attack payload.
@@ -287,7 +291,7 @@ Set-Cookie: JSESSIONID=xxxxx; SameSite=Strict
 Set-Cookie: JSESSIONID=xxxxx; SameSite=Lax
 ```
 
-All desktop browsers and almost all mobile browsers now support the `SameSite` attribute. To track the browsers implementing it and know how the attribute is used, refer to the following [service](https://caniuse.com/#feat=same-site-cookie-attribute). Note that Chrome has [announced](https://blog.chromium.org/2019/10/developers-get-ready-for-new.html) that they will mark cookies as `SameSite=Lax` by default from Chrome 80 (due in February 2020), and Firefox and Edge are both planning to follow suit. Additionally, the `Secure` flag will be required for cookies that are marked as `SameSite=None`.
+All modern desktop and mobile browsers support the `SameSite` attribute. The main exceptions are legacy browsers including Opera Mini (all versions), UC Browser for Android, and older mobile browsers (iOS Safari < 13.2, Android Browser < 97). To track the browsers implementing it and know how the attribute is used, refer to the following [service](https://caniuse.com/#feat=same-site-cookie-attribute). Chrome implemented `SameSite=Lax` as the default behavior in 2020, and Firefox and Edge have followed suit. Additionally, the `Secure` flag is required for cookies that are marked as `SameSite=None`.
 
 It is important to note that this attribute should be implemented as an additional layer _defense in depth_ concept. This attribute protects the user through the browsers supporting it, and it contains as well 2 ways to bypass it as mentioned in the following [section](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7.1). This attribute should not replace a CSRF Token. Instead, it should co-exist with that token to protect  the user in a more robust way.
 
@@ -360,7 +364,7 @@ This relaxed variant can be used as an alternative to the "domain locked" `__Hos
 if authenticated users would need to visit different (sub-)domains.
 In all other cases, using the `__Host-` prefix in addition to the `SameSite` attribute is recommended.
 
-As of July 2020 cookie prefixes [are supported by all major browsers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Browser_compatibility).
+Cookie prefixes [are supported by all major browsers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Browser_compatibility).
 
 See the [Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Directives) and [IETF Draft](https://tools.ietf.org/html/draft-west-cookie-prefixes-05) for further information about cookie prefixes.
 
@@ -425,21 +429,24 @@ This can be done as demonstrated in the following code snippet:
 
 ```html
 <script type="text/javascript">
-    var csrf_token = document.querySelector("meta[name='csrf-token']").getAttribute("content");
-    function csrfSafeMethod(method) {
+    const csrf_token = document.querySelector("meta[name='csrf-token']").getAttribute("content");
+
+    const csrfSafeMethod = (method) => {
         // these HTTP methods do not require CSRF protection
-        return (/^(GET|HEAD|OPTIONS)$/.test(method));
-    }
-    var o = XMLHttpRequest.prototype.open;
-    XMLHttpRequest.prototype.open = function(){
-        var res = o.apply(this, arguments);
-        var err = new Error();
-        if (!csrfSafeMethod(arguments[0])) {
+        return /^(GET|HEAD|OPTIONS)$/.test(method);
+    };
+
+    const originalOpen = XMLHttpRequest.prototype.open;
+    XMLHttpRequest.prototype.open = function(...args) {
+        const result = originalOpen.apply(this, args);
+
+        if (!csrfSafeMethod(args[0])) {
             this.setRequestHeader('X-CSRF-Token', csrf_token);
         }
-        return res;
+
+        return result;
     };
- </script>
+</script>
 ```
 
 #### CSRF Prevention in modern Frameworks
@@ -447,7 +454,7 @@ This can be done as demonstrated in the following code snippet:
 Modern Single Page Application (SPA) frameworks like Angular, React, and Vue typically rely on the cookie-to-header pattern to mitigate Cross-Site Request Forgery (CSRF) attacks. This approach leverages the fact that browsers automatically attach cookies to cross-origin requests, but only JavaScript running on the same origin can read values and set custom headers—making it possible to detect and block forged requests. The cookie-to-header pattern works as follows:
 
 1. Server generates a CSRF token: When a user authenticates or loads the app, the server sets a CSRF token in a cookie (e.g., `XSRF-TOKEN`). This cookie is accessible via JavaScript (i.e., not `HttpOnly`) and typically has `SameSite=Lax` or `Strict`.
-2. Client reads the token: The SPA (often using a library like Angular’s HttpClient or axios in React/Vue) reads the CSRF token from the cookie.
+2. Client reads the token: The SPA (often using a library like Angular's HttpClient or axios in React/Vue) reads the CSRF token from the cookie.
 3. Client attaches the token to a custom header: For each state-changing request (`POST`, `PUT`, `DELETE`, etc.), the client sets the token as a custom HTTP header (commonly `X-XSRF-TOKEN` or `X-CSRF-TOKEN`).
 4. Server validates the token: The server checks whether the token from the header matches the one from the cookie. If they match, the request is accepted; if not, it is rejected as potentially forged.
 
@@ -470,28 +477,71 @@ export const appConfig: ApplicationConfig = {
 
 This code snippet has been tested with Angular version 19.2.11.
 
+#### React
+
+For React applications, you can use axios interceptors to implement the cookie-to-header pattern:
+
+```jsx
+// csrf-protection.js
+import axios from 'axios';
+
+// Function to get the CSRF token from cookies
+const getCsrfToken = () => {
+  const tokenCookie = document.cookie
+    .split('; ')
+    .find(cookie => cookie.startsWith('XSRF-TOKEN='));
+  
+  return tokenCookie ? tokenCookie.split('=')[1] : '';
+};
+
+// Create an axios instance with interceptors
+const api = axios.create();
+
+// Add a request interceptor to include the CSRF token in headers
+api.interceptors.request.use(config => {
+  // Only add for state-changing methods
+  if (!/^(GET|HEAD|OPTIONS)$/i.test(config.method)) {
+    config.headers['X-CSRF-Token'] = getCsrfToken();
+  }
+  return config;
+});
+
+export default api;
+```
+
 #### Axios
 
 [Axios](https://github.com/axios/axios) allows us to set default headers for the POST, PUT, DELETE and PATCH actions.
 
 ```html
 <script type="text/javascript">
-    var csrf_token = document.querySelector("meta[name='csrf-token']").getAttribute("content");
+    const csrf_token = document.querySelector("meta[name='csrf-token']").getAttribute("content");
 
+    // Set CSRF token for state-changing methods
     axios.defaults.headers.post['X-CSRF-Token'] = csrf_token;
     axios.defaults.headers.put['X-CSRF-Token'] = csrf_token;
     axios.defaults.headers.delete['X-CSRF-Token'] = csrf_token;
     axios.defaults.headers.patch['X-CSRF-Token'] = csrf_token;
 
-    // Axios does not create an object for TRACE method by default, and has to be created manually.
-    axios.defaults.headers.trace = {}
-    axios.defaults.headers.trace['X-CSRF-Token'] = csrf_token
+    // For TRACE method
+    axios.defaults.headers.trace = {
+        'X-CSRF-Token': csrf_token
+    };
+
+    // Alternative: Using interceptors for all requests
+    axios.interceptors.request.use(config => {
+        // Only add for state-changing methods
+        if (!/^(GET|HEAD|OPTIONS)$/i.test(config.method)) {
+            config.headers['X-CSRF-Token'] = csrf_token;
+        }
+        return config;
+    });
 </script>
 ```
 
-This code snippet has been tested with Axios version 0.18.0.
+This code snippet has been tested with Axios version 1.9.0.
 
-#### JQuery
+#### jQuery
 
 JQuery exposes an API called `$.ajaxSetup()` which can be used to add the `X-CSRF-Token` header to the AJAX request. API documentation for `$.ajaxSetup()` can be found here. The function `csrfSafeMethod()` defined below will filter out the safe HTTP methods and only add the header to unsafe HTTP methods.
 
@@ -499,16 +549,16 @@ You can configure jQuery to automatically add the token to all request headers b
 
 ```html
 <script type="text/javascript">
-    var csrf_token = $('meta[name="csrf-token"]').attr('content');
+    const csrf_token = $('meta[name="csrf-token"]').attr('content');
 
-    function csrfSafeMethod(method) {
+    const csrfSafeMethod = method => {
         // these HTTP methods do not require CSRF protection
-        return (/^(GET|HEAD|OPTIONS)$/.test(method));
-    }
+        return /^(GET|HEAD|OPTIONS)$/i.test(method);
+    };
 
     $.ajaxSetup({
-        beforeSend: function(xhr, settings) {
-            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+        beforeSend: (xhr, settings) => {
+            if (!csrfSafeMethod(settings.type) && !settings.crossDomain) {
                 xhr.setRequestHeader("X-CSRF-Token", csrf_token);
             }
         }
@@ -516,7 +566,7 @@ You can configure jQuery to automatically add the token to all request headers b
 </script>
 ```
 
-This code snippet has been tested with jQuery version 3.3.1.
+This code snippet has been tested with jQuery version 3.7.1.
 
 ## References in Related Cheat Sheets
 
