@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Prompt injection is a vulnerability in Large Language Model (LLM) applications that allows attackers to manipulate the model's behavior by injecting malicious input that changes its intended output. Unlike traditional injection attacks, prompt injection exploits the fundamental design of LLMs where natural language instructions and data are processed together without clear separation.
+Prompt injection is a vulnerability in Large Language Model (LLM) applications that allows attackers to manipulate the model's behavior by injecting malicious input that changes its intended output. Unlike traditional injection attacks, prompt injection exploits the common design of most LLMs where natural language instructions and data are processed together without clear separation.
 
 **Key impacts include:**
 
