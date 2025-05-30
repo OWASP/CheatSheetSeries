@@ -12,7 +12,7 @@ In short, the following principles should be followed to defend against CSRF:
 
 **IMPORTANT: Remember that Cross-Site Scripting (XSS) can defeat all CSRF mitigation techniques!** While Cross-Site Scripting (XSS) vulnerabilities can bypass CSRF protections, CSRF tokens are still essential for web applications that rely on cookies for authentication. Consider the client and authentication method to determine the best approach for CSRF protection in your application.
 
-- **See the OWASP [XSS Prevention Cheat Sheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md) for detailed guidance on how to prevent XSS flaws.**
+- **See the OWASP [XSS Prevention Cheat Sheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md) for detailed guidance on how to prevent XSS flaws.**
 - **First, check if your framework has [built-in CSRF protection](#use-built-in-or-existing-csrf-implementations-for-csrf-protection) and use it**
 - **If the framework does not have built-in CSRF protection, add [CSRF tokens](#token-based-mitigation) to all state changing requests (requests that cause actions on the site) and validate them on the backend**
 - **Stateful software should use the [synchronizer token pattern](#synchronizer-token-pattern)**
@@ -169,8 +169,17 @@ Both the synchronizer token and the double-submit cookie are used to prevent for
 In this pattern, the client appends a custom header to requests that require CSRF protection. The header can be any arbitrary key-value pair, as long as it does not conflict with existing headers.
 
 ```
-X-YOURSITE-CSRF-PROTECTION=1
+X-CSRF-Token: RANDOM-TOKEN-VALUE
 ```
+
+Many popular frameworks use standardized header names for CSRF protection:
+
+- `X-CSRF-Token` - Ruby on Rails, Laravel, Django
+- `X-XSRF-Token` - AngularJS
+- `CSRF-Token` - Express.js (csurf middleware)
+- `X-CSRFToken` - Django
+
+While any arbitrary header name will work, using one of these standard names can improve compatibility with existing tools and developer expectations.
 
 When handling the request, the API checks for the existence of this header. If the header does not exist, the backend rejects the request as potential forgery. This approach has several advantages:
 
@@ -233,7 +242,7 @@ The following code snippet demonstrates a simple example of a client-side CSRF v
                 fetch(requestEndpoint, {
                     method: requestMethod,
                     headers: {
-                        'XSRF-TOKEN': csrf_token,
+                        'X-CSRF-Token': csrf_token,
                         // [...]
                     },
                     // [...]
@@ -414,7 +423,7 @@ Several JavaScript libraries allow you to overriding default settings to have a 
 
 #### XMLHttpRequest (Native JavaScript)
 
-XMLHttpRequest's open() method can be overridden to set the `anti-csrf-token` header whenever the `open()` method is invoked next. The function `csrfSafeMethod()` defined below will filter out the safe HTTP methods and only add the header to unsafe HTTP methods.
+XMLHttpRequest's open() method can be overridden to set the `X-CSRF-Token` header whenever the `open()` method is invoked next. The function `csrfSafeMethod()` defined below will filter out the safe HTTP methods and only add the header to unsafe HTTP methods.
 
 This can be done as demonstrated in the following code snippet:
 
@@ -432,7 +441,7 @@ This can be done as demonstrated in the following code snippet:
         const result = originalOpen.apply(this, args);
 
         if (!csrfSafeMethod(args[0])) {
-            this.setRequestHeader('anti-csrf-token', csrf_token);
+            this.setRequestHeader('X-CSRF-Token', csrf_token);
         }
 
         return result;
@@ -509,10 +518,10 @@ export default api;
     const csrf_token = document.querySelector("meta[name='csrf-token']").getAttribute("content");
 
     // Set CSRF token for state-changing methods
-    axios.defaults.headers.post['anti-csrf-token'] = csrf_token;
-    axios.defaults.headers.put['anti-csrf-token'] = csrf_token;
-    axios.defaults.headers.delete['anti-csrf-token'] = csrf_token;
-    axios.defaults.headers.patch['anti-csrf-token'] = csrf_token;
+    axios.defaults.headers.post['X-CSRF-Token'] = csrf_token;
+    axios.defaults.headers.put['X-CSRF-Token'] = csrf_token;
+    axios.defaults.headers.delete['X-CSRF-Token'] = csrf_token;
+    axios.defaults.headers.patch['X-CSRF-Token'] = csrf_token;
 
     // For TRACE method
     axios.defaults.headers.trace = {
@@ -534,7 +543,7 @@ This code snippet has been tested with Axios version 1.9.0.
 
 #### jQuery
 
-JQuery exposes an API called `$.ajaxSetup()` which can be used to add the `anti-csrf-token` header to the AJAX request. API documentation for `$.ajaxSetup()` can be found here. The function `csrfSafeMethod()` defined below will filter out the safe HTTP methods and only add the header to unsafe HTTP methods.
+JQuery exposes an API called `$.ajaxSetup()` which can be used to add the `X-CSRF-Token` header to the AJAX request. API documentation for `$.ajaxSetup()` can be found here. The function `csrfSafeMethod()` defined below will filter out the safe HTTP methods and only add the header to unsafe HTTP methods.
 
 You can configure jQuery to automatically add the token to all request headers by adopting the following code snippet. This provides a simple and convenient CSRF protection for your AJAX based applications:
 
@@ -550,7 +559,7 @@ You can configure jQuery to automatically add the token to all request headers b
     $.ajaxSetup({
         beforeSend: (xhr, settings) => {
             if (!csrfSafeMethod(settings.type) && !settings.crossDomain) {
-                xhr.setRequestHeader("anti-csrf-token", csrf_token);
+                xhr.setRequestHeader("X-CSRF-Token", csrf_token);
             }
         }
     });
