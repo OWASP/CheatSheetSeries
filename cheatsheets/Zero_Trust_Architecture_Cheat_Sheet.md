@@ -11,24 +11,31 @@ Traditional security works like a castle with walls. Once you're inside, you can
 These principles come from [NIST SP 800-207](https://csrc.nist.gov/publications/detail/sp/800-207/final):
 
 ### 1. All Data Sources and Computing Services are Resources
+
 Everything in your network is a resource that needs protection - servers, databases, cloud services, IoT devices, and user devices. Don't assume anything is safe just because it's "internal" to your network. Each resource needs its own security controls.
 
 ### 2. All Communication is Secured Regardless of Network Location
+
 Every connection must be encrypted and authenticated, whether it's between your office and the cloud, between internal systems, or from home to work. Network location doesn't determine trust level. Use [strong encryption](https://cheatsheetseries.owasp.org/cheatsheets/Transport_Layer_Security_Cheat_Sheet.html) (TLS 1.3 or better) for everything.
 
 ### 3. Access to Resources is Granted on a Per-Session Basis
+
 Don't give permanent access to anything. Each time someone tries to access a resource, evaluate whether they should be allowed. [Sessions](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html) should be short-lived and require re-authentication when they expire. No "set it and forget it" access.
 
 ### 4. Access is Determined by Dynamic Policy
+
 Access decisions consider multiple factors: who's asking, what device they're using, where they're connecting from, what time it is, and how they normally behave. These policies change based on risk. Someone accessing payroll during work hours from their work laptop is low risk. The same person downloading lots of data at 2 AM from a coffee shop is high risk.
 
 ### 5. Monitor and Measure the Security Posture of All Assets
+
 Continuously check the health and security of all devices and systems. If you can't see it, you can't protect it. This includes monitoring for patches, antivirus status, configuration changes, and suspicious behavior. Assets that fall out of compliance lose access.
 
 ### 6. All Authentication and Authorization is Dynamic and Strictly Enforced
+
 Security decisions happen in real-time for every access request. Don't rely on static rules or permanent permissions. The system should automatically adjust access based on current risk levels, revoke access for compromised accounts, and isolate suspicious devices.
 
 ### 7. Collect Information to Improve Security Posture
+
 Gather as much security data as possible about users, devices, network traffic, and system behavior. Use this information to detect threats, improve policies, and make better security decisions. This data is essential for compliance and incident investigation.
 
 ## Core Zero Trust Architecture Components
@@ -272,7 +279,7 @@ Build advanced capabilities:
 
 **Add behavior monitoring** - Use systems that learn how users and devices normally act. When behavior looks weird, the system can automatically change access or ask for more verification. This needs machine learning and lots of data.
 
-**Automate responses** - Build systems that can automatically isolate compromised accounts, quarantine suspicious devices, and update security policies based on new threats. The goal is to respond faster than humans can.
+**Automate responses** - Build tools that can automatically isolate compromised accounts, quarantine suspicious devices, and update security policies based on new threats. The goal is to respond faster than humans can.
 
 **Use your data** - Take all the security data you're collecting and use it to improve your policies. This phase is about fine-tuning rather than building new stuff.
 
