@@ -42,7 +42,7 @@ Gather as much security data as possible about users, devices, network traffic, 
 
 Zero Trust uses three main parts that work together:
 
-**Policy Engine** - This makes decisions about whether to allow or block access. It looks at user identity, device health, location, behavior, and risk scores. Tools like Azure Conditional Access, Okta policies, or AWS IAM policies do this job. The tricky part is making policies that are secure but don't make work impossible.
+**Policy Engine** - This makes decisions about whether to allow or block access. It looks at user identity, device health, location, behavior, and risk scores. The tricky part is making policies that are secure but don't make work impossible.
 
 **Policy Administrator** - This takes the decision from the Policy Engine and tells the enforcement systems what to do. When the Policy Engine says "allow access but require extra verification," the Policy Administrator figures out the details and sends commands to the right systems.
 
@@ -133,13 +133,13 @@ You need [MFA](https://cheatsheetseries.owasp.org/cheatsheets/Multifactor_Authen
 
 **Most Secure (Highly Phishing-Resistant):**
 
-- **FIDO2 hardware security keys**: Physical devices like YubiKeys
+- **FIDO2 hardware security keys**: Physical devices that use public key cryptography
 - **WebAuthn-based platform authenticators**: Passkeys using fingerprints or face recognition
 - **Smart cards or PIV cards**: PKI-based authentication
 
 **Good Options:**
 
-- **Mobile apps**: Google Authenticator or similar TOTP apps
+- **Mobile apps**: TOTP-based authenticator applications
 - **Backup codes**: For when primary methods fail
 
 **Avoid:**
@@ -257,7 +257,7 @@ Before you invest in new Zero Trust technologies, you need to know what you're p
 
 **Figure out what you have** - Make a list of all users, devices, applications, and how data moves around. This sounds easy but takes longer than you think. You'll find forgotten systems, shadow IT, and connections nobody documented.
 
-**Set up strong MFA everywhere** - This provides significant security improvement. Use FIDO2 hardware keys or biometric authentication (like Touch ID). Don't use SMS codes - they're too easy to hack. Plan for user training since this changes how people log in.
+**Set up strong MFA everywhere** - This provides significant security improvement. Use FIDO2 hardware keys or biometric authentication. Don't use SMS codes - they're too easy to hack. Plan for user training since this changes how people log in.
 
 **Replace your VPN** - Regular VPNs give too much access once someone logs in. Switch to Zero Trust Network Access (ZTNA) that only gives access to specific applications. This is usually a significant change users notice.
 
@@ -380,45 +380,23 @@ Zero Trust architecture helps organizations meet various compliance requirements
 | **GDPR** | Privacy-by-design, data access logging, breach detection |
 | **OMB M-22-09** | Phishing-resistant MFA, device certificates, encrypted DNS |
 
-## Tools and Technologies
+## Technology Components
 
-These are the main technology categories you'll need to implement Zero Trust effectively. This isn't an exhaustive list, but it covers the core capabilities:
+Zero Trust requires several technology categories working together:
 
-### Identity and Access Management
+### Core Components
 
-- **Microsoft Entra ID (formerly Azure AD)**: Cloud identity and access management
-- **Okta Workforce Identity**: Enterprise identity platform
-- **Ping Identity**: Comprehensive identity solutions
-- **Google Cloud Identity**: Identity management for Google Cloud
-- **AWS IAM Identity Center**: Centralized access management for AWS
-- **Standards**: SAML, OAuth 2.0, OpenID Connect
-- **Modern authentication**: FIDO2, WebAuthn
+- **Identity and Access Management**: Strong authentication (MFA) and risk-based access decisions
+- **Zero Trust Network Access (ZTNA)**: Application-level access instead of network-level VPNs
+- **Web Application Security**: Protect applications and APIs from OWASP Top 10 attacks
+- **Security Monitoring**: Real-time visibility and automated response to threats
 
-### Network Security and ZTNA
+### Selection Principles
 
-- **Palo Alto Networks Prisma Access**: Secure access service edge (SASE) platform
-- **Zscaler Zero Trust Exchange**: Cloud-native platform connecting users to applications
-- **Cloudflare One**: ZTNA platform replacing traditional VPNs with identity-based access
-- **Cisco Secure Access**: Zero trust network access solution
-- **Fortinet FortiSASE**: Converged networking and security platform
-- **Twingate**: Lightweight ZTNA solution
-- **Appgate SDP**: Software-defined perimeter control
-- **Cisco SD-WAN, VMware NSX**: Network virtualization platforms
-
-**SASE (Secure Access Service Edge)** platforms combine multiple security functions into a single cloud-delivered service, including ZTNA, WAF, DNS filtering, and threat protection. This converged approach simplifies Zero Trust deployment by providing consistent security policies across all locations and users.
-
-### Web Application Firewalls
-
-- **AWS WAF**: Cloud-based application firewall
-- **Cloudflare WAF**: Global edge-based application protection
-- **Azure Application Gateway**: Load balancer with integrated WAF
-- **F5 Advanced WAF**: Enterprise application security platform
-
-### Monitoring and Analytics
-
-- **Splunk, Microsoft Sentinel**: Security information and event management (SIEM)
-- **CrowdStrike, SentinelOne**: Endpoint detection and response (EDR)
-- **Cloud security platforms**: AWS Security Hub, Azure Security Center, Google Security Command Center
+- Use open standards (SAML, OAuth, FIDO2) over proprietary solutions
+- Ensure components integrate well together via APIs
+- Avoid vendor lock-in by maintaining flexibility
+- Start with one area and expand gradually
 
 ## References
 
