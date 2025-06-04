@@ -408,6 +408,7 @@ Alternatively, if DTDs can't be completely disabled, disable external entities a
 SAXBuilder builder = new SAXBuilder();
 builder.setFeature("http://xml.org/sax/features/external-general-entities", false);
 builder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+builder.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
 builder.setExpandEntities(false);
 Document doc = builder.build(new File(fileName));
 ```
