@@ -3489,7 +3489,7 @@
 <p>In short, the following principles should be followed to defend against CSRF:</p>
 <p><strong>IMPORTANT: Remember that Cross-Site Scripting (XSS) can defeat all CSRF mitigation techniques!</strong> While Cross-Site Scripting (XSS) vulnerabilities can bypass CSRF protections, CSRF tokens are still essential for web applications that rely on cookies for authentication. Consider the client and authentication method to determine the best approach for CSRF protection in your application.</p>
 <ul>
-<li><strong>See the OWASP <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">XSS Prevention Cheat Sheet</a> for detailed guidance on how to prevent XSS flaws.</strong></li>
+<li><strong>See the OWASP <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">XSS Prevention Cheat Sheet</a> for detailed guidance on how to prevent XSS flaws.</strong></li>
 <li><strong>First, check if your framework has <a href="#use-built-in-or-existing-csrf-implementations-for-csrf-protection">built-in CSRF protection</a> and use it</strong></li>
 <li><strong>If the framework does not have built-in CSRF protection, add <a href="#token-based-mitigation">CSRF tokens</a> to all state changing requests (requests that cause actions on the site) and validate them on the backend</strong></li>
 <li><strong>Stateful software should use the <a href="#synchronizer-token-pattern">synchronizer token pattern</a></strong></li>
@@ -3606,8 +3606,16 @@ Should a browser bug allow custom HTTP headers, or not enforce preflight on non-
 <h3 id="employing-custom-request-headers-for-ajaxapi">Employing Custom Request Headers for AJAX/API<a class="headerlink" href="#employing-custom-request-headers-for-ajaxapi" title="Permanent link">&para;</a></h3>
 <p>Both the synchronizer token and the double-submit cookie are used to prevent forgery of form data, but they can be tricky to implement and degrade usability. Many modern web applications do not use <code>&lt;form&gt;</code> tags to submit data. A user-friendly defense that is particularly well suited for AJAX or API endpoints is the use of a <strong>custom request header</strong>. No token is needed for this approach.</p>
 <p>In this pattern, the client appends a custom header to requests that require CSRF protection. The header can be any arbitrary key-value pair, as long as it does not conflict with existing headers.</p>
-<div class="highlight"><pre><span></span><code>X-YOURSITE-CSRF-PROTECTION=1
+<div class="highlight"><pre><span></span><code>X-CSRF-Token: RANDOM-TOKEN-VALUE
 </code></pre></div>
+<p>Many popular frameworks use standardized header names for CSRF protection:</p>
+<ul>
+<li><code>X-CSRF-Token</code> - Ruby on Rails, Laravel, Django</li>
+<li><code>X-XSRF-Token</code> - AngularJS</li>
+<li><code>CSRF-Token</code> - Express.js (csurf middleware)</li>
+<li><code>X-CSRFToken</code> - Django</li>
+</ul>
+<p>While any arbitrary header name will work, using one of these standard names can improve compatibility with existing tools and developer expectations.</p>
 <p>When handling the request, the API checks for the existence of this header. If the header does not exist, the backend rejects the request as potential forgery. This approach has several advantages:</p>
 <ul>
 <li>UI changes are not required</li>
@@ -3651,7 +3659,7 @@ Access-Control-Allow-Credentials=true
 <span class="w">                </span><span class="nx">fetch</span><span class="p">(</span><span class="nx">requestEndpoint</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                    </span><span class="nx">method</span><span class="o">:</span><span class="w"> </span><span class="nx">requestMethod</span><span class="p">,</span>
 <span class="w">                    </span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                        </span><span class="s1">&#39;XSRF-TOKEN&#39;</span><span class="o">:</span><span class="w"> </span><span class="nx">csrf_token</span><span class="p">,</span>
+<span class="w">                        </span><span class="s1">&#39;X-CSRF-Token&#39;</span><span class="o">:</span><span class="w"> </span><span class="nx">csrf_token</span><span class="p">,</span>
 <span class="w">                        </span><span class="c1">// [...]</span>
 <span class="w">                    </span><span class="p">},</span>
 <span class="w">                    </span><span class="c1">// [...]</span>
@@ -3774,7 +3782,7 @@ In all other cases, using the <code>__Host-</code> prefix in addition to the <co
 <h3 id="overriding-defaults-to-set-custom-header">Overriding Defaults to Set Custom Header<a class="headerlink" href="#overriding-defaults-to-set-custom-header" title="Permanent link">&para;</a></h3>
 <p>Several JavaScript libraries allow you to overriding default settings to have a header added automatically to all AJAX requests.</p>
 <h4 id="xmlhttprequest-native-javascript">XMLHttpRequest (Native JavaScript)<a class="headerlink" href="#xmlhttprequest-native-javascript" title="Permanent link">&para;</a></h4>
-<p>XMLHttpRequest's open() method can be overridden to set the <code>anti-csrf-token</code> header whenever the <code>open()</code> method is invoked next. The function <code>csrfSafeMethod()</code> defined below will filter out the safe HTTP methods and only add the header to unsafe HTTP methods.</p>
+<p>XMLHttpRequest's open() method can be overridden to set the <code>X-CSRF-Token</code> header whenever the <code>open()</code> method is invoked next. The function <code>csrfSafeMethod()</code> defined below will filter out the safe HTTP methods and only add the header to unsafe HTTP methods.</p>
 <p>This can be done as demonstrated in the following code snippet:</p>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
 <span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">csrf_token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;meta[name=&#39;csrf-token&#39;]&quot;</span><span class="p">).</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">);</span>
@@ -3789,7 +3797,7 @@ In all other cases, using the <code>__Host-</code> prefix in addition to the <co
 <span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">originalOpen</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="nx">args</span><span class="p">);</span>
 
 <span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">csrfSafeMethod</span><span class="p">(</span><span class="nx">args</span><span class="p">[</span><span class="mf">0</span><span class="p">]))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="nx">setRequestHeader</span><span class="p">(</span><span class="s1">&#39;anti-csrf-token&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">csrf_token</span><span class="p">);</span>
+<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="nx">setRequestHeader</span><span class="p">(</span><span class="s1">&#39;X-CSRF-Token&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">csrf_token</span><span class="p">);</span>
 <span class="w">        </span><span class="p">}</span>
 
 <span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">result</span><span class="p">;</span>
@@ -3851,10 +3859,10 @@ In contrast, frameworks like React and Vue require developers to implement this 
 <span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">csrf_token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;meta[name=&#39;csrf-token&#39;]&quot;</span><span class="p">).</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">);</span>
 
 <span class="w">    </span><span class="c1">// Set CSRF token for state-changing methods</span>
-<span class="w">    </span><span class="nx">axios</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">post</span><span class="p">[</span><span class="s1">&#39;anti-csrf-token&#39;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">csrf_token</span><span class="p">;</span>
-<span class="w">    </span><span class="nx">axios</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">put</span><span class="p">[</span><span class="s1">&#39;anti-csrf-token&#39;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">csrf_token</span><span class="p">;</span>
-<span class="w">    </span><span class="nx">axios</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="ow">delete</span><span class="p">[</span><span class="s1">&#39;anti-csrf-token&#39;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">csrf_token</span><span class="p">;</span>
-<span class="w">    </span><span class="nx">axios</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">patch</span><span class="p">[</span><span class="s1">&#39;anti-csrf-token&#39;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">csrf_token</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">axios</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">post</span><span class="p">[</span><span class="s1">&#39;X-CSRF-Token&#39;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">csrf_token</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">axios</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">put</span><span class="p">[</span><span class="s1">&#39;X-CSRF-Token&#39;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">csrf_token</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">axios</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="ow">delete</span><span class="p">[</span><span class="s1">&#39;X-CSRF-Token&#39;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">csrf_token</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">axios</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">patch</span><span class="p">[</span><span class="s1">&#39;X-CSRF-Token&#39;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">csrf_token</span><span class="p">;</span>
 
 <span class="w">    </span><span class="c1">// For TRACE method</span>
 <span class="w">    </span><span class="nx">axios</span><span class="p">.</span><span class="nx">defaults</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">trace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
@@ -3873,7 +3881,7 @@ In contrast, frameworks like React and Vue require developers to implement this 
 </code></pre></div>
 <p>This code snippet has been tested with Axios version 1.9.0.</p>
 <h4 id="jquery">jQuery<a class="headerlink" href="#jquery" title="Permanent link">&para;</a></h4>
-<p>JQuery exposes an API called <code>$.ajaxSetup()</code> which can be used to add the <code>anti-csrf-token</code> header to the AJAX request. API documentation for <code>$.ajaxSetup()</code> can be found here. The function <code>csrfSafeMethod()</code> defined below will filter out the safe HTTP methods and only add the header to unsafe HTTP methods.</p>
+<p>JQuery exposes an API called <code>$.ajaxSetup()</code> which can be used to add the <code>X-CSRF-Token</code> header to the AJAX request. API documentation for <code>$.ajaxSetup()</code> can be found here. The function <code>csrfSafeMethod()</code> defined below will filter out the safe HTTP methods and only add the header to unsafe HTTP methods.</p>
 <p>You can configure jQuery to automatically add the token to all request headers by adopting the following code snippet. This provides a simple and convenient CSRF protection for your AJAX based applications:</p>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
 <span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">csrf_token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;meta[name=&quot;csrf-token&quot;]&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;content&#39;</span><span class="p">);</span>
@@ -3886,7 +3894,7 @@ In contrast, frameworks like React and Vue require developers to implement this 
 <span class="w">    </span><span class="nx">$</span><span class="p">.</span><span class="nx">ajaxSetup</span><span class="p">({</span>
 <span class="w">        </span><span class="nx">beforeSend</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">xhr</span><span class="p">,</span><span class="w"> </span><span class="nx">settings</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
 <span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">csrfSafeMethod</span><span class="p">(</span><span class="nx">settings</span><span class="p">.</span><span class="nx">type</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="nx">settings</span><span class="p">.</span><span class="nx">crossDomain</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nx">xhr</span><span class="p">.</span><span class="nx">setRequestHeader</span><span class="p">(</span><span class="s2">&quot;anti-csrf-token&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">csrf_token</span><span class="p">);</span>
+<span class="w">                </span><span class="nx">xhr</span><span class="p">.</span><span class="nx">setRequestHeader</span><span class="p">(</span><span class="s2">&quot;X-CSRF-Token&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">csrf_token</span><span class="p">);</span>
 <span class="w">            </span><span class="p">}</span>
 <span class="w">        </span><span class="p">}</span>
 <span class="w">    </span><span class="p">});</span>
