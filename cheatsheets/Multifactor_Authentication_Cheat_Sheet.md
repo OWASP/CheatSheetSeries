@@ -430,6 +430,7 @@ Common signals used to determine risk include:
 - Known compromised credentials
 
 If risk is detected, the system may:
+
 - Prompt for an additional factor (e.g., OTP)
 - Enforce re-authentication
 - Deny access and trigger alerting or account protection flows
