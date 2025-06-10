@@ -438,7 +438,6 @@ This method is widely used in modern authentication systems to balance usability
 
 **Example Use Case**: A user logs in from a trusted device in a usual location — no additional prompt is needed. But if they log in from a new country using a Tor exit node, the system requires SMS verification or triggers an account lock until further verification.
 
-
 ## References and Further Reading
 
 - [NIST SP 800-63](https://pages.nist.gov/800-63-3/sp800-63b.html)
