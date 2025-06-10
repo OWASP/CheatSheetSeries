@@ -1217,6 +1217,39 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#typescript-utilities-for-csrf-protection" class="md-nav__link">
+    <span class="md-ellipsis">
+      TypeScript Utilities for CSRF Protection
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TypeScript Utilities for CSRF Protection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#angular-with-typescript" class="md-nav__link">
+    <span class="md-ellipsis">
+      Angular with TypeScript
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#react-with-typescript" class="md-nav__link">
+    <span class="md-ellipsis">
+      React with TypeScript
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3368,6 +3401,39 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#typescript-utilities-for-csrf-protection" class="md-nav__link">
+    <span class="md-ellipsis">
+      TypeScript Utilities for CSRF Protection
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TypeScript Utilities for CSRF Protection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#angular-with-typescript" class="md-nav__link">
+    <span class="md-ellipsis">
+      Angular with TypeScript
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#react-with-typescript" class="md-nav__link">
+    <span class="md-ellipsis">
+      React with TypeScript
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3827,6 +3893,329 @@ In contrast, frameworks like React and Vue require developers to implement this 
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
 <p>This code snippet has been tested with jQuery version 3.7.1.</p>
+<h3 id="typescript-utilities-for-csrf-protection">TypeScript Utilities for CSRF Protection<a class="headerlink" href="#typescript-utilities-for-csrf-protection" title="Permanent link">&para;</a></h3>
+<p>TypeScript allows you to create strongly typed utilities for CSRF protection. Here's a reusable utility module for CSRF token management:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// csrf-protection.ts</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Configuration options for CSRF protection</span>
+<span class="cm"> */</span>
+<span class="kd">interface</span><span class="w"> </span><span class="nx">CSRFOptions</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="cm">/** Cookie name where the CSRF token is stored */</span>
+<span class="w">  </span><span class="nx">cookieName</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">  </span><span class="cm">/** HTTP header name to use when sending the token */</span>
+<span class="w">  </span><span class="nx">headerName</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">  </span><span class="cm">/** HTTP methods that require CSRF protection */</span>
+<span class="w">  </span><span class="nx">unsafeMethods</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">[];</span>
+<span class="p">}</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Default configuration for CSRF protection</span>
+<span class="cm"> */</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">DEFAULT_CSRF_OPTIONS</span><span class="o">:</span><span class="w"> </span><span class="kt">CSRFOptions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">cookieName</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;XSRF-TOKEN&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">headerName</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;X-CSRF-Token&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">unsafeMethods</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;PUT&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;PATCH&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;DELETE&#39;</span><span class="p">]</span>
+<span class="p">};</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * CSRF Protection utility class</span>
+<span class="cm"> */</span>
+<span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">CSRFProtection</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">private</span><span class="w"> </span><span class="nx">options</span><span class="o">:</span><span class="w"> </span><span class="kt">CSRFOptions</span><span class="p">;</span>
+
+<span class="w">  </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">options</span><span class="o">:</span><span class="w"> </span><span class="kt">Partial</span><span class="o">&lt;</span><span class="nx">CSRFOptions</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{})</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">...</span><span class="nx">DEFAULT_CSRF_OPTIONS</span><span class="p">,</span><span class="w"> </span><span class="p">...</span><span class="nx">options</span><span class="w"> </span><span class="p">};</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="cm">/**</span>
+<span class="cm">   * Extract CSRF token from cookies</span>
+<span class="cm">   * @returns The CSRF token or empty string if not found</span>
+<span class="cm">   */</span>
+<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nx">getToken</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">cookieValue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">cookie</span>
+<span class="w">      </span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;; &#39;</span><span class="p">)</span>
+<span class="w">      </span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">cookie</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">cookie</span><span class="p">.</span><span class="nx">startsWith</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">cookieName</span><span class="si">}</span><span class="sb">=`</span><span class="p">));</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">cookieValue</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="nx">cookieValue</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)[</span><span class="mf">1</span><span class="p">]</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="cm">/**</span>
+<span class="cm">   * Check if the given HTTP method requires CSRF protection</span>
+<span class="cm">   */</span>
+<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nx">requiresProtection</span><span class="p">(</span><span class="nx">method</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">unsafeMethods</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="nx">method</span><span class="p">.</span><span class="nx">toUpperCase</span><span class="p">());</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="cm">/**</span>
+<span class="cm">   * Add CSRF token to the provided headers object if needed</span>
+<span class="cm">   */</span>
+<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="nx">addTokenToHeaders</span><span class="p">(</span><span class="nx">method</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="kt">Record</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="o">&gt;</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nx">Record</span><span class="o">&lt;</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">requiresProtection</span><span class="p">(</span><span class="nx">method</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">getToken</span><span class="p">();</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">token</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">headers</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">headerName</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">token</span><span class="p">;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">headers</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// Usage example:</span>
+<span class="c1">// const csrfProtection = new CSRFProtection();</span>
+<span class="c1">// const headers = csrfProtection.addTokenToHeaders(&#39;POST&#39;, {});</span>
+</code></pre></div>
+<h4 id="angular-with-typescript">Angular with TypeScript<a class="headerlink" href="#angular-with-typescript" title="Permanent link">&para;</a></h4>
+<p>Angular is built with TypeScript, making it a natural fit for strongly-typed CSRF protection. The example below shows how to configure Angular's CSRF protection with TypeScript:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// app.config.ts</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">ApplicationConfig</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@angular/core&#39;</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">provideRouter</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@angular/router&#39;</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">provideHttpClient</span><span class="p">,</span><span class="w"> </span><span class="nx">withXsrfConfiguration</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@angular/common/http&#39;</span><span class="p">;</span>
+
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">routes</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;./app.routes&#39;</span><span class="p">;</span>
+
+<span class="c1">// Configure CSRF protection with custom options</span>
+<span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">appConfig</span><span class="o">:</span><span class="w"> </span><span class="kt">ApplicationConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">providers</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="nx">provideHttpClient</span><span class="p">(</span>
+<span class="w">      </span><span class="nx">withXsrfConfiguration</span><span class="p">({</span>
+<span class="w">        </span><span class="nx">cookieName</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;XSRF-TOKEN&#39;</span><span class="p">,</span><span class="w"> </span><span class="c1">// Name of cookie containing token</span>
+<span class="w">        </span><span class="nx">headerName</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;X-XSRF-TOKEN&#39;</span><span class="w"> </span><span class="c1">// Header name for token submission</span>
+<span class="w">      </span><span class="p">})</span>
+<span class="w">    </span><span class="p">),</span>
+<span class="w">    </span><span class="nx">provideRouter</span><span class="p">(</span><span class="nx">routes</span><span class="p">)</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>For a custom HTTP interceptor that handles CSRF tokens:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// csrf.interceptor.ts</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Injectable</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@angular/core&#39;</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">HttpRequest</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">HttpHandler</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">HttpEvent</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">HttpInterceptor</span>
+<span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@angular/common/http&#39;</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Observable</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;rxjs&#39;</span><span class="p">;</span>
+
+<span class="kd">@Injectable</span><span class="p">()</span>
+<span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">CsrfInterceptor</span><span class="w"> </span><span class="k">implements</span><span class="w"> </span><span class="nx">HttpInterceptor</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">private</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="nx">TOKEN_HEADER_NAME</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;X-CSRF-Token&#39;</span><span class="p">;</span>
+<span class="w">  </span><span class="k">private</span><span class="w"> </span><span class="k">readonly</span><span class="w"> </span><span class="nx">SAFE_METHODS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;HEAD&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;OPTIONS&#39;</span><span class="p">];</span>
+
+<span class="w">  </span><span class="kr">constructor</span><span class="p">()</span><span class="w"> </span><span class="p">{}</span>
+
+<span class="w">  </span><span class="nx">intercept</span><span class="p">(</span><span class="nx">request</span><span class="o">:</span><span class="w"> </span><span class="kt">HttpRequest</span><span class="o">&lt;</span><span class="nx">unknown</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="nx">next</span><span class="o">:</span><span class="w"> </span><span class="kt">HttpHandler</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nx">Observable</span><span class="o">&lt;</span><span class="nx">HttpEvent</span><span class="o">&lt;</span><span class="nx">unknown</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Skip CSRF protection for safe methods</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">SAFE_METHODS</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">method</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">next</span><span class="p">.</span><span class="nx">handle</span><span class="p">(</span><span class="nx">request</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Get token from cookie</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">getTokenFromCookie</span><span class="p">();</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">token</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="c1">// Clone the request and add the CSRF token header</span>
+<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">modifiedRequest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">request</span><span class="p">.</span><span class="nx">clone</span><span class="p">({</span>
+<span class="w">        </span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="kt">request.headers.set</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">TOKEN_HEADER_NAME</span><span class="p">,</span><span class="w"> </span><span class="nx">token</span><span class="p">)</span>
+<span class="w">      </span><span class="p">});</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">next</span><span class="p">.</span><span class="nx">handle</span><span class="p">(</span><span class="nx">modifiedRequest</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">next</span><span class="p">.</span><span class="nx">handle</span><span class="p">(</span><span class="nx">request</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="k">private</span><span class="w"> </span><span class="nx">getTokenFromCookie</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">tokenCookie</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">cookie</span>
+<span class="w">      </span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;; &#39;</span><span class="p">)</span>
+<span class="w">      </span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">cookie</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">cookie</span><span class="p">.</span><span class="nx">startsWith</span><span class="p">(</span><span class="s1">&#39;XSRF-TOKEN=&#39;</span><span class="p">));</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">tokenCookie</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="nx">tokenCookie</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)[</span><span class="mf">1</span><span class="p">]</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h4 id="react-with-typescript">React with TypeScript<a class="headerlink" href="#react-with-typescript" title="Permanent link">&para;</a></h4>
+<p>Here's a TypeScript implementation for React applications using axios:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// csrf-axios.ts</span>
+<span class="k">import</span><span class="w"> </span><span class="nx">axios</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">AxiosInstance</span><span class="p">,</span><span class="w"> </span><span class="nx">AxiosRequestConfig</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;axios&#39;</span><span class="p">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Create an axios instance with CSRF protection</span>
+<span class="cm"> */</span>
+<span class="k">export</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">createCSRFProtectedAxios</span><span class="p">(</span>
+<span class="w">  </span><span class="nx">options</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">baseURL?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">csrfHeaderName?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">csrfCookieName?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{}</span>
+<span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nx">AxiosInstance</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">baseURL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">csrfHeaderName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;X-CSRF-Token&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">csrfCookieName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;XSRF-TOKEN&#39;</span>
+<span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">options</span><span class="p">;</span>
+
+<span class="w">  </span><span class="c1">// Create axios instance</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">instance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">axios</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span><span class="w"> </span><span class="nx">baseURL</span><span class="w"> </span><span class="p">});</span>
+
+<span class="w">  </span><span class="c1">// Add CSRF token interceptor</span>
+<span class="w">  </span><span class="nx">instance</span><span class="p">.</span><span class="nx">interceptors</span><span class="p">.</span><span class="nx">request</span><span class="p">.</span><span class="nx">use</span><span class="p">((</span><span class="nx">config</span><span class="o">:</span><span class="w"> </span><span class="kt">AxiosRequestConfig</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Only add for non-GET requests</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">config</span><span class="p">.</span><span class="nx">method</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="p">[</span><span class="s1">&#39;get&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;head&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;options&#39;</span><span class="p">].</span><span class="nx">includes</span><span class="p">(</span><span class="nx">config</span><span class="p">.</span><span class="nx">method</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">getCsrfToken</span><span class="p">(</span><span class="nx">csrfCookieName</span><span class="p">);</span>
+
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">token</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">config</span><span class="p">.</span><span class="nx">headers</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">config</span><span class="p">.</span><span class="nx">headers</span><span class="p">[</span><span class="nx">csrfHeaderName</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">token</span><span class="p">;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">config</span><span class="p">;</span>
+<span class="w">  </span><span class="p">});</span>
+
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">instance</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Extract CSRF token from cookies</span>
+<span class="cm"> */</span>
+<span class="kd">function</span><span class="w"> </span><span class="nx">getCsrfToken</span><span class="p">(</span><span class="nx">cookieName</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">tokenCookie</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">cookie</span>
+<span class="w">    </span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;; &#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">cookie</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">cookie</span><span class="p">.</span><span class="nx">startsWith</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">cookieName</span><span class="si">}</span><span class="sb">=`</span><span class="p">));</span>
+
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">tokenCookie</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="nx">tokenCookie</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)[</span><span class="mf">1</span><span class="p">]</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// USAGE EXAMPLE</span>
+
+<span class="c1">// Define api.ts</span>
+<span class="c1">// import { createCSRFProtectedAxios } from &#39;./csrf-axios&#39;;</span>
+<span class="c1">// export const api = createCSRFProtectedAxios({</span>
+<span class="c1">//   baseURL: &#39;/api&#39;,</span>
+<span class="c1">//   csrfHeaderName: &#39;X-CSRF-Token&#39;</span>
+<span class="c1">// });</span>
+
+<span class="c1">// In a React component:</span>
+<span class="c1">// import { api } from &#39;./api&#39;;</span>
+<span class="c1">// </span>
+<span class="c1">// function UserProfile() {</span>
+<span class="c1">//   const updateUser = async (userData: UserData) =&gt; {</span>
+<span class="c1">//     try {</span>
+<span class="c1">//       // CSRF token is automatically added</span>
+<span class="c1">//       const response = await api.post(&#39;/users/profile&#39;, userData);</span>
+<span class="c1">//       return response.data;</span>
+<span class="c1">//     } catch (error) {</span>
+<span class="c1">//       console.error(&#39;Failed to update profile&#39;, error);</span>
+<span class="c1">//     }</span>
+<span class="c1">//   };</span>
+<span class="c1">//   </span>
+<span class="c1">//   // Rest of component...</span>
+<span class="c1">// }</span>
+</code></pre></div>
+<p>For React applications using fetch API with TypeScript:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// csrf-fetch.ts</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Interface for CSRF protection options</span>
+<span class="cm"> */</span>
+<span class="kd">interface</span><span class="w"> </span><span class="nx">CSRFFetchOptions</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">csrfHeaderName</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">csrfCookieName</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">baseUrl</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * A wrapper around fetch API with CSRF protection</span>
+<span class="cm"> */</span>
+<span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">CSRFProtectedFetch</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">private</span><span class="w"> </span><span class="nx">options</span><span class="o">:</span><span class="w"> </span><span class="kt">CSRFFetchOptions</span><span class="p">;</span>
+
+<span class="w">  </span><span class="kr">constructor</span><span class="p">(</span><span class="nx">options</span><span class="o">:</span><span class="w"> </span><span class="kt">Partial</span><span class="o">&lt;</span><span class="nx">CSRFFetchOptions</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{})</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">csrfHeaderName</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;X-CSRF-Token&#39;</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">csrfCookieName</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;XSRF-TOKEN&#39;</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">baseUrl</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+<span class="w">      </span><span class="p">...</span><span class="nx">options</span>
+<span class="w">    </span><span class="p">};</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="cm">/**</span>
+<span class="cm">   * Performs a fetch request with CSRF protection</span>
+<span class="cm">   */</span>
+<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="nx">fetch</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="p">(</span>
+<span class="w">    </span><span class="nx">url</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span>
+<span class="w">    </span><span class="nx">options</span><span class="o">:</span><span class="w"> </span><span class="kt">RequestInit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{}</span>
+<span class="w">  </span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;GET&#39;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">options</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">fullUrl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`</span><span class="si">${</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">baseUrl</span><span class="si">}${</span><span class="nx">url</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Create headers with CSRF token for unsafe methods</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">headers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Headers</span><span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">headers</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;HEAD&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;OPTIONS&#39;</span><span class="p">].</span><span class="nx">includes</span><span class="p">(</span><span class="nx">method</span><span class="p">.</span><span class="nx">toUpperCase</span><span class="p">()))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">token</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">getCsrfToken</span><span class="p">();</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">token</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">headers</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">csrfHeaderName</span><span class="p">,</span><span class="w"> </span><span class="nx">token</span><span class="p">);</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// Perform request</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="nx">fullUrl</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="p">...</span><span class="nx">options</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">headers</span>
+<span class="w">    </span><span class="p">});</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">response</span><span class="p">.</span><span class="nx">ok</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">throw</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="sb">`Request failed with status </span><span class="si">${</span><span class="nx">response</span><span class="p">.</span><span class="nx">status</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="cm">/**</span>
+<span class="cm">   * Shorthand for POST requests</span>
+<span class="cm">   */</span>
+<span class="w">  </span><span class="k">public</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="nx">post</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">url</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="kt">any</span><span class="p">,</span><span class="w"> </span><span class="nx">options</span><span class="o">:</span><span class="w"> </span><span class="kt">RequestInit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{})</span><span class="o">:</span><span class="w"> </span><span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">fetch</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="p">...</span><span class="nx">options</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">method</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;POST&#39;</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">body</span><span class="o">:</span><span class="w"> </span><span class="kt">JSON.stringify</span><span class="p">(</span><span class="nx">data</span><span class="p">),</span>
+<span class="w">      </span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="p">...</span><span class="nx">options</span><span class="p">.</span><span class="nx">headers</span><span class="p">,</span>
+<span class="w">        </span><span class="s1">&#39;Content-Type&#39;</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;application/json&#39;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">});</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="cm">/**</span>
+<span class="cm">   * Extract CSRF token from cookies</span>
+<span class="cm">   */</span>
+<span class="w">  </span><span class="k">private</span><span class="w"> </span><span class="nx">getCsrfToken</span><span class="p">()</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">tokenCookie</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">cookie</span>
+<span class="w">      </span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;; &#39;</span><span class="p">)</span>
+<span class="w">      </span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">cookie</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">cookie</span><span class="p">.</span><span class="nx">startsWith</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">csrfCookieName</span><span class="si">}</span><span class="sb">=`</span><span class="p">));</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">tokenCookie</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="nx">tokenCookie</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)[</span><span class="mf">1</span><span class="p">]</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// USAGE EXAMPLE</span>
+
+<span class="c1">// Create an instance</span>
+<span class="c1">// const api = new CSRFProtectedFetch({</span>
+<span class="c1">//   baseUrl: &#39;/api&#39;,</span>
+<span class="c1">//   csrfHeaderName: &#39;X-CSRF-Token&#39;</span>
+<span class="c1">// });</span>
+<span class="c1">// </span>
+<span class="c1">// // In React component</span>
+<span class="c1">// const updateUser = async (userData: UserData) =&gt; {</span>
+<span class="c1">//   try {</span>
+<span class="c1">//     // CSRF token is automatically added</span>
+<span class="c1">//     return await api.post(&#39;/users/profile&#39;, userData);</span>
+<span class="c1">//   } catch (error) {</span>
+<span class="c1">//     console.error(&#39;Failed to update profile&#39;, error);</span>
+<span class="c1">//   }</span>
+<span class="c1">// };</span>
+</code></pre></div>
 <h2 id="references-in-related-cheat-sheets">References in Related Cheat Sheets<a class="headerlink" href="#references-in-related-cheat-sheets" title="Permanent link">&para;</a></h2>
 <h3 id="csrf">CSRF<a class="headerlink" href="#csrf" title="Permanent link">&para;</a></h3>
 <ul>
