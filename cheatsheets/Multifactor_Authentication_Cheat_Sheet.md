@@ -417,6 +417,28 @@ Gait analysis is based on the way the user walks using cameras and sensors. They
 - Requires specific hardware to implement.
 - Use outside of physical security systems is not widely tested.
 
+## Adaptive or Risk-Based Authentication
+
+Adaptive (or Risk-Based) Authentication adjusts authentication requirements dynamically based on the context of the login attempt. This technique helps improve user experience while strengthening security by applying additional verification steps only when risk is elevated.
+
+Common signals used to determine risk include:
+
+- Geolocation and IP reputation
+- Device fingerprinting
+- Time of access (e.g., 3 AM login)
+- Behavioral biometrics (e.g., typing speed or mouse movements)
+- Known compromised credentials
+
+If risk is detected, the system may:
+
+- Prompt for an additional factor (e.g., OTP)
+- Enforce re-authentication
+- Deny access and trigger alerting or account protection flows
+
+This method is widely used in modern authentication systems to balance usability and security. However, developers must ensure that risk signals cannot be spoofed and that fallback mechanisms are not weaker than the primary MFA methods.
+
+**Example Use Case**: A user logs in from a trusted device in a usual location — no additional prompt is needed. But if they log in from a new country using a Tor exit node, the system requires SMS verification or triggers an account lock until further verification.
+
 ## References and Further Reading
 
 - [NIST SP 800-63](https://pages.nist.gov/800-63-3/sp800-63b.html)
