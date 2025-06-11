@@ -336,9 +336,6 @@ Requiring reauthentication helps mitigate session hijacking and unauthorized acc
 
 ## Additional Client-Side Defenses for Session Management
 
-
-## Additional Client-Side Defenses for Session Management
-
 Web applications can complement the previously described session management defenses with additional countermeasures on the client side. Client-side protections, typically in the form of JavaScript checks and verifications, are not bullet proof and can easily be defeated by a skilled attacker, but can introduce another layer of defense that has to be bypassed by intruders.
 
 ### Initial Login Timeout
