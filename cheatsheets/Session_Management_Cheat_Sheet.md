@@ -334,8 +334,6 @@ Requiring reauthentication helps mitigate session hijacking and unauthorized acc
 - Prompt users for primary credentials (e.g., password) or enforce MFA
 - Provide clear messaging explaining the need to reauthenticate
 
----
-
 ## Additional Client-Side Defenses for Session Management
 
 
