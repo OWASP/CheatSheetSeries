@@ -2405,6 +2405,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#adaptive-or-risk-based-authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      Adaptive or Risk-Based Authentication
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#references-and-further-reading" class="md-nav__link">
     <span class="md-ellipsis">
       References and Further Reading
@@ -4064,6 +4073,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#adaptive-or-risk-based-authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      Adaptive or Risk-Based Authentication
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#references-and-further-reading" class="md-nav__link">
     <span class="md-ellipsis">
       References and Further Reading
@@ -4462,6 +4480,24 @@
 <li>Requires specific hardware to implement.</li>
 <li>Use outside of physical security systems is not widely tested.</li>
 </ul>
+<h2 id="adaptive-or-risk-based-authentication">Adaptive or Risk-Based Authentication<a class="headerlink" href="#adaptive-or-risk-based-authentication" title="Permanent link">&para;</a></h2>
+<p>Adaptive (or Risk-Based) Authentication adjusts authentication requirements dynamically based on the context of the login attempt. This technique helps improve user experience while strengthening security by applying additional verification steps only when risk is elevated.</p>
+<p>Common signals used to determine risk include:</p>
+<ul>
+<li>Geolocation and IP reputation</li>
+<li>Device fingerprinting</li>
+<li>Time of access (e.g., 3 AM login)</li>
+<li>Behavioral biometrics (e.g., typing speed or mouse movements)</li>
+<li>Known compromised credentials</li>
+</ul>
+<p>If risk is detected, the system may:</p>
+<ul>
+<li>Prompt for an additional factor (e.g., OTP)</li>
+<li>Enforce re-authentication</li>
+<li>Deny access and trigger alerting or account protection flows</li>
+</ul>
+<p>This method is widely used in modern authentication systems to balance usability and security. However, developers must ensure that risk signals cannot be spoofed and that fallback mechanisms are not weaker than the primary MFA methods.</p>
+<p><strong>Example Use Case</strong>: A user logs in from a trusted device in a usual location — no additional prompt is needed. But if they log in from a new country using a Tor exit node, the system requires SMS verification or triggers an account lock until further verification.</p>
 <h2 id="references-and-further-reading">References and Further Reading<a class="headerlink" href="#references-and-further-reading" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://pages.nist.gov/800-63-3/sp800-63b.html">NIST SP 800-63</a></li>
