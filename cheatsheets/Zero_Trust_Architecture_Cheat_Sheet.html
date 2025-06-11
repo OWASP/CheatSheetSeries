@@ -1,0 +1,4106 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Website with the collection of all the cheat sheets of the project.">
+      
+      
+      
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Zero_Trust_Architecture_Cheat_Sheet.html">
+      
+      
+        <link rel="prev" href="XS_Leaks_Cheat_Sheet.html">
+      
+      
+      
+      <link rel="icon" href="../assets/WebSite_Favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.42">
+    
+    
+      
+        <title>Zero Trust Architecture - OWASP Cheat Sheet Series</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#zero-trust-architecture-cheat-sheet" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../index.html" title="OWASP Cheat Sheet Series" class="md-header__button md-logo" aria-label="OWASP Cheat Sheet Series" data-md-component="logo">
+      
+  <img src="../assets/OWASP_Logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OWASP Cheat Sheet Series
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Zero Trust Architecture
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="OWASP Cheat Sheet Series" class="md-nav__button md-logo" aria-label="OWASP Cheat Sheet Series" data-md-component="logo">
+      
+  <img src="../assets/OWASP_Logo.svg" alt="logo">
+
+    </a>
+    OWASP Cheat Sheet Series
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Glossary.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Index Alphabetical
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IndexASVS.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Index ASVS
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IndexMASVS.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Index MASVS
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IndexProactiveControls.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Index Proactive Controls
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IndexTopTen.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Index Top 10
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Cheatsheets
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Cheatsheets
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="AJAX_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AJAX Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Abuse_Case_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Abuse Case
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Access_Control_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Access Control
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Attack_Surface_Analysis_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Attack Surface Analysis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Authentication_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Authentication
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Authorization_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Authorization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Authorization_Testing_Automation_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Authorization Testing Automation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Automotive_Security.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Automotive Security.md
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Bean_Validation_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bean Validation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Browser_Extension_Vulnerabilities_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Browser Extension Vulnerabilities
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    C-Based Toolchain Hardening
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="CI_CD_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CI CD Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Choosing and Using Security Questions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Clickjacking_Defense_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Clickjacking Defense
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Content_Security_Policy_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Content Security Policy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Cookie_Theft_Mitigation_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cookie Theft Mitigation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Credential Stuffing Prevention
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cross-Site Request Forgery Prevention
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cross Site Scripting Prevention
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Cryptographic_Storage_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cryptographic Storage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="DOM_Clobbering_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DOM Clobbering Prevention
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DOM based XSS Prevention
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Database_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Database Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Denial_of_Service_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Denial of Service
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Deserialization_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Deserialization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Django_REST_Framework_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Django REST Framework
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Django_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Django Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Docker_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Docker Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="DotNet_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DotNet Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Drone_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Drone Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Error_Handling_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Error Handling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="File_Upload_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    File Upload
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Forgot_Password_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Forgot Password
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="GraphQL_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GraphQL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="HTML5_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HTML5 Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="HTTP_Headers_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HTTP Headers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HTTP Strict Transport Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Infrastructure_as_Code_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Infrastructure as Code Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Injection Prevention
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Injection_Prevention_in_Java_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Injection Prevention in Java
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Input_Validation_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Input Validation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Insecure Direct Object Reference Prevention
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="JAAS_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    JAAS
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="JSON_Web_Token_for_Java_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    JSON Web Token for Java
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Java_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Java Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Key_Management_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Key Management
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Kubernetes_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kubernetes Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="LDAP_Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LDAP Injection Prevention
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="LLM_Prompt_Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LLM Prompt Injection Prevention
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Laravel_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Laravel
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Legacy_Application_Management_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Legacy Application Management
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Logging_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Logging
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Logging_Vocabulary_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Logging Vocabulary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Mass_Assignment_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mass Assignment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Microservices_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Microservices Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Microservices based Security Arch Doc
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Mobile_Application_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mobile Application Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Multifactor_Authentication_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Multifactor Authentication
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="NPM_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    NPM Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Network_Segmentation_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Network Segmentation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="NodeJS_Docker_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    NodeJS Docker
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Nodejs_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Nodejs Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="OAuth2_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OAuth2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="OS_Command_Injection_Defense_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OS Command Injection Defense
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="PHP_Configuration_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PHP Configuration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Password_Storage_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Password Storage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Pinning_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pinning
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Prototype_Pollution_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Prototype Pollution Prevention
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Query_Parameterization_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Query Parameterization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="REST_Assessment_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    REST Assessment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="REST_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    REST Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ruby_on_Rails_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ruby on Rails
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="SAML_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SAML Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="SQL_Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SQL Injection Prevention
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Secrets_Management_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Secrets Management
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Secure_Cloud_Architecture_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Secure Cloud Architecture
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Secure_Product_Design_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Secure Product Design
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Securing Cascading Style Sheets
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Server Side Request Forgery Prevention
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Session_Management_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Session Management
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Software_Supply_Chain_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Software Supply Chain Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Symfony_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Symfony
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="TLS_Cipher_String_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TLS Cipher String
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Third_Party_Javascript_Management_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Third Party Javascript Management
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Threat_Modeling_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Threat Modeling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Transaction_Authorization_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Transaction Authorization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Transport_Layer_Protection_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Transport Layer Protection
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Transport_Layer_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Transport Layer Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Unvalidated Redirects and Forwards
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="User_Privacy_Protection_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Privacy Protection
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Virtual_Patching_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Virtual Patching
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Vulnerability_Disclosure_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Vulnerability Disclosure
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Vulnerable Dependency Management
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Web_Service_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Web Service Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="XML_External_Entity_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    XML External Entity Prevention
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="XML_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    XML Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="XSS_Filter_Evasion_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    XSS Filter Evasion
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="XS_Leaks_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    XS Leaks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Zero Trust Architecture
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="Zero_Trust_Architecture_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Zero Trust Architecture
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-zero-trust-principles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Core Zero Trust Principles
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core Zero Trust Principles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-all-data-sources-and-computing-services-are-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. All Data Sources and Computing Services are Resources
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-all-communication-is-secured-regardless-of-network-location" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. All Communication is Secured Regardless of Network Location
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-access-to-resources-is-granted-on-a-per-session-basis" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Access to Resources is Granted on a Per-Session Basis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-access-is-determined-by-dynamic-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Access is Determined by Dynamic Policy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-monitor-and-measure-the-security-posture-of-all-assets" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Monitor and Measure the Security Posture of All Assets
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-all-authentication-and-authorization-is-dynamic-and-strictly-enforced" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. All Authentication and Authorization is Dynamic and Strictly Enforced
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-collect-information-to-improve-security-posture" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Collect Information to Improve Security Posture
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-zero-trust-architecture-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Core Zero Trust Architecture Components
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-zero-trust-addresses-modern-security-challenges" class="md-nav__link">
+    <span class="md-ellipsis">
+      How Zero Trust Addresses Modern Security Challenges
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How Zero Trust Addresses Modern Security Challenges">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#traditional-vs-zero-trust-responses" class="md-nav__link">
+    <span class="md-ellipsis">
+      Traditional vs. Zero Trust Responses
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modern-threats-that-require-zero-trust" class="md-nav__link">
+    <span class="md-ellipsis">
+      Modern Threats That Require Zero Trust
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#zta-decision-making-in-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      ZTA Decision-Making in Action
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ZTA Decision-Making in Action">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#case-study-1-working-late-from-home" class="md-nav__link">
+    <span class="md-ellipsis">
+      Case Study 1: Working Late from Home
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#case-study-2-new-contractor-laptop" class="md-nav__link">
+    <span class="md-ellipsis">
+      Case Study 2: New Contractor Laptop
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#case-study-3-cross-team-project-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      Case Study 3: Cross-Team Project Access
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-these-cases-show" class="md-nav__link">
+    <span class="md-ellipsis">
+      What These Cases Show
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#identity-and-access-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      Identity and Access Management
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Identity and Access Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#multi-factor-authentication-mfa" class="md-nav__link">
+    <span class="md-ellipsis">
+      Multi-Factor Authentication (MFA)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#managing-user-accounts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Managing User Accounts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#access-controls" class="md-nav__link">
+    <span class="md-ellipsis">
+      Access Controls
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#device-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      Device Security
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Device Security">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#trusting-devices" class="md-nav__link">
+    <span class="md-ellipsis">
+      Trusting Devices
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#protecting-endpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      Protecting Endpoints
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network Architecture
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Network Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#micro-segmentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Micro-Segmentation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-controls" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network Controls
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#application-and-data-protection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Application and Data Protection
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Application and Data Protection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#securing-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      Securing Applications
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#protecting-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      Protecting Data
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#monitoring-and-analytics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Monitoring and Analytics
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Monitoring and Analytics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#security-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Security Operations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-metrics-to-track" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Metrics to Track
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementation Steps
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation Steps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-get-the-basics-right-months-1-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Phase 1: Get the Basics Right (Months 1-6)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-add-real-zero-trust-controls-months-6-18" class="md-nav__link">
+    <span class="md-ellipsis">
+      Phase 2: Add Real Zero Trust Controls (Months 6-18)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-3-advanced-capabilities-months-18-36" class="md-nav__link">
+    <span class="md-ellipsis">
+      Phase 3: Advanced Capabilities (Months 18-36)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-4-keep-getting-better-ongoing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Phase 4: Keep Getting Better (Ongoing)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#legacy-system-challenges" class="md-nav__link">
+    <span class="md-ellipsis">
+      Legacy System Challenges
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Legacy System Challenges">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#common-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Problems
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#solutions-that-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      Solutions That Work
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cloud-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cloud Security
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cloud Security">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#multi-cloud-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Multi-Cloud Considerations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#container-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      Container Security
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-mistakes-to-avoid" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Mistakes to Avoid
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Mistakes to Avoid">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#technical-mistakes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Technical Mistakes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#organizational-mistakes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Organizational Mistakes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compliance-benefits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compliance Benefits
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Compliance Benefits">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#framework-mapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      Framework Mapping
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#technology-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Technology Components
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Technology Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Core Components
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#selection-principles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Selection Principles
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-zero-trust-principles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Core Zero Trust Principles
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core Zero Trust Principles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-all-data-sources-and-computing-services-are-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. All Data Sources and Computing Services are Resources
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-all-communication-is-secured-regardless-of-network-location" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. All Communication is Secured Regardless of Network Location
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-access-to-resources-is-granted-on-a-per-session-basis" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Access to Resources is Granted on a Per-Session Basis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-access-is-determined-by-dynamic-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Access is Determined by Dynamic Policy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-monitor-and-measure-the-security-posture-of-all-assets" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Monitor and Measure the Security Posture of All Assets
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-all-authentication-and-authorization-is-dynamic-and-strictly-enforced" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. All Authentication and Authorization is Dynamic and Strictly Enforced
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-collect-information-to-improve-security-posture" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Collect Information to Improve Security Posture
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-zero-trust-architecture-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Core Zero Trust Architecture Components
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-zero-trust-addresses-modern-security-challenges" class="md-nav__link">
+    <span class="md-ellipsis">
+      How Zero Trust Addresses Modern Security Challenges
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How Zero Trust Addresses Modern Security Challenges">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#traditional-vs-zero-trust-responses" class="md-nav__link">
+    <span class="md-ellipsis">
+      Traditional vs. Zero Trust Responses
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modern-threats-that-require-zero-trust" class="md-nav__link">
+    <span class="md-ellipsis">
+      Modern Threats That Require Zero Trust
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#zta-decision-making-in-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      ZTA Decision-Making in Action
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ZTA Decision-Making in Action">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#case-study-1-working-late-from-home" class="md-nav__link">
+    <span class="md-ellipsis">
+      Case Study 1: Working Late from Home
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#case-study-2-new-contractor-laptop" class="md-nav__link">
+    <span class="md-ellipsis">
+      Case Study 2: New Contractor Laptop
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#case-study-3-cross-team-project-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      Case Study 3: Cross-Team Project Access
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-these-cases-show" class="md-nav__link">
+    <span class="md-ellipsis">
+      What These Cases Show
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#identity-and-access-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      Identity and Access Management
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Identity and Access Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#multi-factor-authentication-mfa" class="md-nav__link">
+    <span class="md-ellipsis">
+      Multi-Factor Authentication (MFA)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#managing-user-accounts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Managing User Accounts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#access-controls" class="md-nav__link">
+    <span class="md-ellipsis">
+      Access Controls
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#device-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      Device Security
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Device Security">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#trusting-devices" class="md-nav__link">
+    <span class="md-ellipsis">
+      Trusting Devices
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#protecting-endpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      Protecting Endpoints
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network Architecture
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Network Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#micro-segmentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Micro-Segmentation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-controls" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network Controls
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#application-and-data-protection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Application and Data Protection
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Application and Data Protection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#securing-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      Securing Applications
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#protecting-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      Protecting Data
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#monitoring-and-analytics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Monitoring and Analytics
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Monitoring and Analytics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#security-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Security Operations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-metrics-to-track" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Metrics to Track
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementation Steps
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation Steps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-get-the-basics-right-months-1-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Phase 1: Get the Basics Right (Months 1-6)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-add-real-zero-trust-controls-months-6-18" class="md-nav__link">
+    <span class="md-ellipsis">
+      Phase 2: Add Real Zero Trust Controls (Months 6-18)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-3-advanced-capabilities-months-18-36" class="md-nav__link">
+    <span class="md-ellipsis">
+      Phase 3: Advanced Capabilities (Months 18-36)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-4-keep-getting-better-ongoing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Phase 4: Keep Getting Better (Ongoing)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#legacy-system-challenges" class="md-nav__link">
+    <span class="md-ellipsis">
+      Legacy System Challenges
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Legacy System Challenges">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#common-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Problems
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#solutions-that-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      Solutions That Work
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cloud-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cloud Security
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cloud Security">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#multi-cloud-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Multi-Cloud Considerations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#container-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      Container Security
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-mistakes-to-avoid" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Mistakes to Avoid
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Mistakes to Avoid">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#technical-mistakes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Technical Mistakes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#organizational-mistakes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Organizational Mistakes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compliance-benefits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compliance Benefits
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Compliance Benefits">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#framework-mapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      Framework Mapping
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#technology-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Technology Components
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Technology Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Core Components
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#selection-principles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Selection Principles
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="zero-trust-architecture-cheat-sheet">Zero Trust Architecture Cheat Sheet<a class="headerlink" href="#zero-trust-architecture-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>This cheat sheet will help you implement Zero Trust Architecture (ZTA) in your organization. Zero Trust means "never trust, always verify" - you don't trust anyone or anything by default, even if they're inside your network.</p>
+<p>Traditional security works like a castle with walls. Once you're inside, you can access everything. Zero Trust is different - it checks every person and device every time they try to access something, just like having security guards at every door. This approach prevents attackers who get inside your network from moving around and stealing data.</p>
+<h2 id="core-zero-trust-principles">Core Zero Trust Principles<a class="headerlink" href="#core-zero-trust-principles" title="Permanent link">&para;</a></h2>
+<p>These principles come from <a href="https://csrc.nist.gov/publications/detail/sp/800-207/final">NIST SP 800-207</a>:</p>
+<h3 id="1-all-data-sources-and-computing-services-are-resources">1. All Data Sources and Computing Services are Resources<a class="headerlink" href="#1-all-data-sources-and-computing-services-are-resources" title="Permanent link">&para;</a></h3>
+<p>Everything in your network is a resource that needs protection - servers, databases, cloud services, IoT devices, and user devices. Don't assume anything is safe just because it's "internal" to your network. Each resource needs its own security controls.</p>
+<h3 id="2-all-communication-is-secured-regardless-of-network-location">2. All Communication is Secured Regardless of Network Location<a class="headerlink" href="#2-all-communication-is-secured-regardless-of-network-location" title="Permanent link">&para;</a></h3>
+<p>Every connection must be encrypted and authenticated, whether it's between your office and the cloud, between internal systems, or from home to work. Network location doesn't determine trust level. Use <a href="https://cheatsheetseries.owasp.org/cheatsheets/Transport_Layer_Security_Cheat_Sheet.html">strong encryption</a> (TLS 1.3 or better) for everything.</p>
+<h3 id="3-access-to-resources-is-granted-on-a-per-session-basis">3. Access to Resources is Granted on a Per-Session Basis<a class="headerlink" href="#3-access-to-resources-is-granted-on-a-per-session-basis" title="Permanent link">&para;</a></h3>
+<p>Don't give permanent access to anything. Each time someone tries to access a resource, evaluate whether they should be allowed. <a href="https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html">Sessions</a> should be short-lived and require re-authentication when they expire. No "set it and forget it" access.</p>
+<h3 id="4-access-is-determined-by-dynamic-policy">4. Access is Determined by Dynamic Policy<a class="headerlink" href="#4-access-is-determined-by-dynamic-policy" title="Permanent link">&para;</a></h3>
+<p>Access decisions consider multiple factors: who's asking, what device they're using, where they're connecting from, what time it is, and how they normally behave. These policies change based on risk. Someone accessing payroll during work hours from their work laptop is low risk. The same person downloading lots of data at 2 AM from a coffee shop is high risk.</p>
+<h3 id="5-monitor-and-measure-the-security-posture-of-all-assets">5. Monitor and Measure the Security Posture of All Assets<a class="headerlink" href="#5-monitor-and-measure-the-security-posture-of-all-assets" title="Permanent link">&para;</a></h3>
+<p>Continuously check the health and security of all devices and systems. If you can't see it, you can't protect it. This includes monitoring for patches, antivirus status, configuration changes, and suspicious behavior. Assets that fall out of compliance lose access.</p>
+<h3 id="6-all-authentication-and-authorization-is-dynamic-and-strictly-enforced">6. All Authentication and Authorization is Dynamic and Strictly Enforced<a class="headerlink" href="#6-all-authentication-and-authorization-is-dynamic-and-strictly-enforced" title="Permanent link">&para;</a></h3>
+<p>Security decisions happen in real-time for every access request. Don't rely on static rules or permanent permissions. The system should automatically adjust access based on current risk levels, revoke access for compromised accounts, and isolate suspicious devices.</p>
+<h3 id="7-collect-information-to-improve-security-posture">7. Collect Information to Improve Security Posture<a class="headerlink" href="#7-collect-information-to-improve-security-posture" title="Permanent link">&para;</a></h3>
+<p>Gather as much security data as possible about users, devices, network traffic, and system behavior. Use this information to detect threats, improve policies, and make better security decisions. This data is essential for compliance and incident investigation.</p>
+<h2 id="core-zero-trust-architecture-components">Core Zero Trust Architecture Components<a class="headerlink" href="#core-zero-trust-architecture-components" title="Permanent link">&para;</a></h2>
+<p>Zero Trust uses three main parts that work together:</p>
+<p><strong>Policy Engine</strong> - This makes decisions about whether to allow or block access. It looks at user identity, device health, location, behavior, and risk scores. The tricky part is making policies that are secure but don't make work impossible.</p>
+<p><strong>Policy Administrator</strong> - This takes the decision from the Policy Engine and tells the enforcement systems what to do. When the Policy Engine says "allow access but require extra verification," the Policy Administrator figures out the details and sends commands to the right systems.</p>
+<p><strong>Policy Enforcement Point</strong> - These actually block or allow access attempts. This includes firewalls, proxy servers, application gateways, and API gateways. The important thing is that enforcement happens everywhere, not just at your network edge.</p>
+<p>These three parts work together on every access request in real time, creating security that adapts to changing situations.</p>
+<h2 id="how-zero-trust-addresses-modern-security-challenges">How Zero Trust Addresses Modern Security Challenges<a class="headerlink" href="#how-zero-trust-addresses-modern-security-challenges" title="Permanent link">&para;</a></h2>
+<p>Zero Trust tackles security problems that traditional approaches can't handle effectively. Here's how it works in practice:</p>
+<h3 id="traditional-vs-zero-trust-responses">Traditional vs. Zero Trust Responses<a class="headerlink" href="#traditional-vs-zero-trust-responses" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Attack Scenario</th>
+<th>Traditional Security Response</th>
+<th>Zero Trust Response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Stolen credentials</strong></td>
+<td>Reset password, add basic MFA</td>
+<td>Continuous risk assessment, device verification, behavioral analysis - access denied even with valid credentials if risk is high</td>
+</tr>
+<tr>
+<td><strong>Insider threat</strong></td>
+<td>Trust employees inside network perimeter</td>
+<td>Verify every action regardless of user location, role, or tenure - no implicit trust</td>
+</tr>
+<tr>
+<td><strong>Lateral movement</strong></td>
+<td>Perimeter security with flat internal network</td>
+<td>Micro-segmentation blocks movement between systems, each connection verified</td>
+</tr>
+<tr>
+<td><strong>Compromised device</strong></td>
+<td>VPN access grants network access</td>
+<td>Device health continuously monitored, access immediately revoked if compromise detected</td>
+</tr>
+<tr>
+<td><strong>Privileged account abuse</strong></td>
+<td>Permanent admin rights with periodic reviews</td>
+<td>Just-in-time access with automatic expiration and continuous monitoring</td>
+</tr>
+<tr>
+<td><strong>Data exfiltration</strong></td>
+<td>Network monitoring and DLP at perimeter</td>
+<td>Data-level access controls with real-time behavior analysis</td>
+</tr>
+</tbody>
+</table>
+<h3 id="modern-threats-that-require-zero-trust">Modern Threats That Require Zero Trust<a class="headerlink" href="#modern-threats-that-require-zero-trust" title="Permanent link">&para;</a></h3>
+<p>Some contemporary attack patterns are specifically designed to bypass traditional security. Zero Trust provides the advanced capabilities needed to defend against them:</p>
+<p><strong>Supply Chain Attacks</strong> - Malicious code hidden in trusted software (like SolarWinds) bypasses perimeter security completely. Zero Trust responds with application-level identity verification, runtime behavior monitoring, and micro-segmentation to limit damage.</p>
+<p><strong>Cloud Configuration Drift</strong> - Misconfigured cloud resources expose data outside traditional network boundaries. Zero Trust uses policy-as-code, continuous compliance monitoring, and resource-level access controls to prevent unauthorized data access.</p>
+<p><strong>API-First Attacks</strong> - Direct attacks on APIs bypass network security entirely. Zero Trust requires authentication and authorization for every API call, validates request schemas, and uses behavioral analysis to detect abuse patterns.</p>
+<p><strong>Identity-Based Attacks</strong> - Sophisticated attacks like Pass-the-Hash and Golden Ticket steal identity tokens to impersonate legitimate users. Zero Trust uses short-lived tokens with continuous validation, device binding, and behavioral analysis to detect unusual access patterns.</p>
+<h3 id="zta-decision-making-in-action">ZTA Decision-Making in Action<a class="headerlink" href="#zta-decision-making-in-action" title="Permanent link">&para;</a></h3>
+<p>Here are three examples that show how Zero Trust actually works when it's set up correctly:</p>
+<h4 id="case-study-1-working-late-from-home">Case Study 1: Working Late from Home<a class="headerlink" href="#case-study-1-working-late-from-home" title="Permanent link">&para;</a></h4>
+<p><strong>What happened:</strong> A finance manager needed to check payroll data from home at 11:30 PM to prepare for an early morning meeting. She'd never accessed payroll outside normal work hours before.</p>
+<p><strong>How Zero Trust handled it:</strong></p>
+<p>The system noticed several risk factors: weird time (way outside 9-5), home network instead of office, and sensitive data (payroll has personal info and salaries). But it also saw good signs: company laptop with current security, valid device certificate, and the right job role.</p>
+<p>Instead of just blocking her, the system asked for extra verification - she had to use her hardware security key and approve a notification on her phone. Then it let her in but with limits: 90-minute session, detailed logging of everything she did, and extra verification needed if she tried to download large amounts of data.</p>
+<p><strong>Why this worked:</strong> She could finish her urgent work without calling IT, but the system kept strong security controls that matched the risk level.</p>
+<h4 id="case-study-2-new-contractor-laptop">Case Study 2: New Contractor Laptop<a class="headerlink" href="#case-study-2-new-contractor-laptop" title="Permanent link">&para;</a></h4>
+<p><strong>What happened:</strong> An external contractor working on a software project needed to access the development systems from a brand-new laptop that had never connected before.</p>
+<p><strong>How Zero Trust handled it:</strong></p>
+<p>The system saw an unknown device trying to connect and immediately blocked direct network access. But instead of just saying "no," it sent the contractor to a secure browser platform where he could access only the development tools he needed.</p>
+<p>All his work happened in an isolated cloud environment - he could write code, read documentation, and work with the team, but nothing actually touched his laptop. The whole session was recorded for security review, and he couldn't download files or access anything outside his project.</p>
+<p><strong>Why this worked:</strong> The contractor stayed productive without creating security risks, and the company kept complete control over its code and data.</p>
+<h4 id="case-study-3-cross-team-project-access">Case Study 3: Cross-Team Project Access<a class="headerlink" href="#case-study-3-cross-team-project-access" title="Permanent link">&para;</a></h4>
+<p><strong>What happened:</strong> A marketing manager suddenly started looking at engineering documents she'd never accessed before. The access was legitimate (for a cross-team project), but the system couldn't know that automatically.</p>
+<p><strong>How Zero Trust handled it:</strong></p>
+<p>The unusual access pattern triggered a medium-risk alert. Instead of blocking her right away, the system required manager approval through an automated workflow. It sent notifications to her boss and the engineering team lead explaining what she wanted to access.</p>
+<p>Once approved, she got temporary access that would expire in 24 hours. During that time, everything she viewed was logged in detail, and the security team got a summary of what she accessed. If she needed more time, she'd have to request an extension with a business reason.</p>
+<p><strong>Why this worked:</strong> Cross-team collaboration wasn't blocked by security rules, but the company maintained visibility and control over sensitive technical information.</p>
+<h4 id="what-these-cases-show">What These Cases Show<a class="headerlink" href="#what-these-cases-show" title="Permanent link">&para;</a></h4>
+<p>In each situation, Zero Trust didn't just say "yes" or "no" - it made smart decisions that balanced security with business needs. The system looked at multiple risk factors, applied appropriate controls, and kept detailed records for compliance and investigation.</p>
+<p>This smart approach is what separates good Zero Trust implementations from basic access control. The technology adapts to the situation instead of forcing users to work around rigid security rules.</p>
+<p>Now that you understand the principles and approach, let's get into the practical details of implementation. Start with identity and access management - this is the foundation everything else builds on.</p>
+<h2 id="identity-and-access-management">Identity and Access Management<a class="headerlink" href="#identity-and-access-management" title="Permanent link">&para;</a></h2>
+<h3 id="multi-factor-authentication-mfa">Multi-Factor Authentication (MFA)<a class="headerlink" href="#multi-factor-authentication-mfa" title="Permanent link">&para;</a></h3>
+<p>You need <a href="https://cheatsheetseries.owasp.org/cheatsheets/Multifactor_Authentication_Cheat_Sheet.html">MFA</a> for everyone - employees, contractors, and partners. Here's what works best:</p>
+<p><strong>Most Secure (Highly Phishing-Resistant):</strong></p>
+<ul>
+<li><strong>FIDO2 hardware security keys</strong>: Physical devices that use public key cryptography</li>
+<li><strong>WebAuthn-based platform authenticators</strong>: Passkeys using fingerprints or face recognition</li>
+<li><strong>Smart cards or PIV cards</strong>: PKI-based authentication</li>
+</ul>
+<p><strong>Good Options:</strong></p>
+<ul>
+<li><strong>Mobile apps</strong>: TOTP-based authenticator applications</li>
+<li><strong>Backup codes</strong>: For when primary methods fail</li>
+</ul>
+<p><strong>Avoid:</strong></p>
+<ul>
+<li><strong>SMS-based MFA</strong>: Vulnerable to SIM swapping and phishing attacks</li>
+</ul>
+<p>Set up conditional access so high-risk situations require stronger authentication. <a href="https://www.whitehouse.gov/wp-content/uploads/2022/01/M-22-09.pdf">OMB M-22-09</a> mandates phishing-resistant MFA for U.S. federal agencies.</p>
+<h3 id="managing-user-accounts">Managing User Accounts<a class="headerlink" href="#managing-user-accounts" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Use one identity system</strong>: Don't have multiple user databases</li>
+<li><strong>Automate account creation</strong>: Set up role-based access automatically</li>
+<li><strong>Review access regularly</strong>: Check who has access every quarter</li>
+<li><strong>Separate admin accounts</strong>: Don't use regular accounts for administration</li>
+</ul>
+<p>Follow comprehensive <a href="https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html">authentication best practices</a> when implementing user account management.</p>
+<h3 id="access-controls">Access Controls<a class="headerlink" href="#access-controls" title="Permanent link">&para;</a></h3>
+<p>Follow these rules for giving people <a href="https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html">access</a>:</p>
+<ul>
+<li><strong>Least privilege</strong>: Give the minimum access needed to do the job</li>
+<li><strong>Just-in-time access</strong>: Provide elevated access only when needed for a specific task</li>
+<li><strong>No permanent admin rights</strong>: Remove always-on administrative privileges</li>
+<li><strong>Smart decisions</strong>: Consider user role, location, and device when granting access</li>
+</ul>
+<h2 id="device-security">Device Security<a class="headerlink" href="#device-security" title="Permanent link">&para;</a></h2>
+<h3 id="trusting-devices">Trusting Devices<a class="headerlink" href="#trusting-devices" title="Permanent link">&para;</a></h3>
+<p>Before you trust any device, make sure it meets your standards:</p>
+<ul>
+<li><strong>Register all devices</strong>: Keep a list of approved devices with unique certificates</li>
+<li><strong>Continuous health assessment</strong>: Real-time monitoring of antivirus status, OS patches, security configurations, and device security posture</li>
+<li><strong>Certificate-based device identity</strong>: Use PKI certificates to uniquely identify and authenticate each device</li>
+<li><strong>Vulnerability scanning</strong>: Regular assessment of device security posture and patch levels</li>
+<li><strong>Revoke trust when compromised</strong>: Automatically remove access if device security is compromised</li>
+</ul>
+<h3 id="protecting-endpoints">Protecting Endpoints<a class="headerlink" href="#protecting-endpoints" title="Permanent link">&para;</a></h3>
+<p>Every device needs these protections:</p>
+<ul>
+<li><strong>Anti-malware software</strong>: Real-time protection against viruses and malware</li>
+<li><strong>Behavior monitoring</strong>: Watch for suspicious device activity</li>
+<li><strong>Full disk encryption</strong>: Encrypt all data on the device</li>
+<li><strong>Remote wipe</strong>: Ability to erase lost or stolen devices</li>
+</ul>
+<h2 id="network-architecture">Network Architecture<a class="headerlink" href="#network-architecture" title="Permanent link">&para;</a></h2>
+<h3 id="micro-segmentation">Micro-Segmentation<a class="headerlink" href="#micro-segmentation" title="Permanent link">&para;</a></h3>
+<p>Instead of one big network, create small isolated segments:</p>
+<ul>
+<li><strong>Separate by application</strong>: Each app gets its own network segment</li>
+<li><strong>Block by default</strong>: Don't allow traffic unless specifically permitted</li>
+<li><strong>Monitor internal traffic</strong>: Watch data moving between systems</li>
+<li><strong>Use encrypted communications</strong>: All communication between systems must be encrypted</li>
+</ul>
+<h3 id="network-controls">Network Controls<a class="headerlink" href="#network-controls" title="Permanent link">&para;</a></h3>
+<p>Implement these network protections:</p>
+<ul>
+<li><strong>DNS filtering</strong>: Block access to malicious websites</li>
+<li><strong>Web filtering</strong>: Control what websites users can visit</li>
+<li><strong>Replace VPNs</strong>: Use Zero Trust Network Access (ZTNA) instead</li>
+<li><strong>Monitor traffic</strong>: Analyze all network connections</li>
+</ul>
+<h2 id="application-and-data-protection">Application and Data Protection<a class="headerlink" href="#application-and-data-protection" title="Permanent link">&para;</a></h2>
+<h3 id="securing-applications">Securing Applications<a class="headerlink" href="#securing-applications" title="Permanent link">&para;</a></h3>
+<p>Protect your applications with these controls:</p>
+<ul>
+<li><strong>Identity-aware proxy</strong>: Check user identity before allowing app access</li>
+<li><strong>Web Application Firewalls (WAFs)</strong>: Block OWASP Top 10 attacks at the application layer. Deploy at network edge, internal segments, or as part of API gateways</li>
+<li><strong>API security gateways</strong>: Authenticate every API call, validate request schemas, and enforce rate limits for microservices communication using <a href="https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html">REST security best practices</a></li>
+<li><strong>Secure development</strong>: Build security into your development process</li>
+</ul>
+<h3 id="protecting-data">Protecting Data<a class="headerlink" href="#protecting-data" title="Permanent link">&para;</a></h3>
+<p>Keep your data safe with these methods:</p>
+<ul>
+<li><strong>Classify data</strong>: Label data by sensitivity level</li>
+<li><strong>Use encryption</strong>: Protect data whether it's stored or moving with proper <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html">cryptographic storage</a></li>
+<li><strong>Prevent data loss</strong>: Monitor and block unauthorized data transfers</li>
+<li><strong>Log all access</strong>: Record who accesses what data and when</li>
+</ul>
+<h2 id="monitoring-and-analytics">Monitoring and Analytics<a class="headerlink" href="#monitoring-and-analytics" title="Permanent link">&para;</a></h2>
+<h3 id="security-operations">Security Operations<a class="headerlink" href="#security-operations" title="Permanent link">&para;</a></h3>
+<p>Set up these monitoring capabilities:</p>
+<ul>
+<li><strong>SIEM integration</strong>: Collect and analyze logs from all systems</li>
+<li><strong>Threat hunting</strong>: Actively look for signs of attack</li>
+<li><strong>Automated response</strong>: Automatically block suspicious activity</li>
+<li><strong>Behavior analysis</strong>: Learn normal patterns and detect anomalies</li>
+</ul>
+<h3 id="key-metrics-to-track">Key Metrics to Track<a class="headerlink" href="#key-metrics-to-track" title="Permanent link">&para;</a></h3>
+<p>Monitor these important numbers:</p>
+<ul>
+<li>How often authentication succeeds vs. fails</li>
+<li>Number of security policy violations</li>
+<li>How quickly you detect threats (MTTD)</li>
+<li>How quickly you respond to incidents (MTTR)</li>
+</ul>
+<h2 id="implementation-steps">Implementation Steps<a class="headerlink" href="#implementation-steps" title="Permanent link">&para;</a></h2>
+<p>Zero Trust implementation requires a structured approach. It's not like installing one security tool - it's more like updating your entire security approach while keeping everything running. Here's what actually works:</p>
+<h3 id="phase-1-get-the-basics-right-months-1-6">Phase 1: Get the Basics Right (Months 1-6)<a class="headerlink" href="#phase-1-get-the-basics-right-months-1-6" title="Permanent link">&para;</a></h3>
+<p>Before you invest in new Zero Trust technologies, you need to know what you're protecting:</p>
+<p><strong>Figure out what you have</strong> - Make a list of all users, devices, applications, and how data moves around. This sounds easy but takes longer than you think. You'll find forgotten systems, shadow IT, and connections nobody documented.</p>
+<p><strong>Set up strong MFA everywhere</strong> - This provides significant security improvement. Use FIDO2 hardware keys or biometric authentication. Don't use SMS codes - they're too easy to hack. Plan for user training since this changes how people log in.</p>
+<p><strong>Replace your VPN</strong> - Regular VPNs give too much access once someone logs in. Switch to Zero Trust Network Access (ZTNA) that only gives access to specific applications. This is usually a significant change users notice.</p>
+<p><strong>Control admin access</strong> - Set up privileged access management (PAM) for administrative accounts. Remove permanent admin rights and switch to temporary access. This may slow some processes initially.</p>
+<h3 id="phase-2-add-real-zero-trust-controls-months-6-18">Phase 2: Add Real Zero Trust Controls (Months 6-18)<a class="headerlink" href="#phase-2-add-real-zero-trust-controls-months-6-18" title="Permanent link">&para;</a></h3>
+<p>Now you start building actual Zero Trust capabilities:</p>
+<p><strong>Break up your network</strong> - Split your flat network into smaller, separate segments. Start with your most important applications. This is technically hard and network teams might not like the extra work.</p>
+<p><strong>Monitor devices constantly</strong> - Set up systems that continuously check device health, updates, and security. Devices that aren't secure automatically lose access or get limited access. This creates pressure for people to keep their devices updated.</p>
+<p><strong>Secure applications properly</strong> - Add identity-aware proxies and web application firewalls (WAFs) that make security decisions based on who's trying to access what, not just where they're connecting from.</p>
+<h3 id="phase-3-advanced-capabilities-months-18-36">Phase 3: Advanced Capabilities (Months 18-36)<a class="headerlink" href="#phase-3-advanced-capabilities-months-18-36" title="Permanent link">&para;</a></h3>
+<p>Build advanced capabilities:</p>
+<p><strong>Add behavior monitoring</strong> - Use systems that learn how users and devices normally act. When behavior looks weird, the system can automatically change access or ask for more verification. This needs machine learning and lots of data.</p>
+<p><strong>Automate responses</strong> - Build tools that can automatically isolate compromised accounts, quarantine suspicious devices, and update security policies based on new threats. The goal is to respond faster than humans can.</p>
+<p><strong>Use your data</strong> - Take all the security data you're collecting and use it to improve your policies. This phase is about fine-tuning rather than building new stuff.</p>
+<h3 id="phase-4-keep-getting-better-ongoing">Phase 4: Keep Getting Better (Ongoing)<a class="headerlink" href="#phase-4-keep-getting-better-ongoing" title="Permanent link">&para;</a></h3>
+<p>Zero Trust is never done:</p>
+<p><strong>Stay current</strong> - Update threat intelligence, adjust risk scoring, and change policies based on new attack methods. What worked last year might not work now.</p>
+<p><strong>Plan ahead</strong> - Start thinking about post-quantum cryptography, new authentication methods, and AI-powered security tools.</p>
+<p><strong>Measure what matters</strong> - Track how fast you detect threats, how fast you respond, how many policy violations happen, and whether users are happy. Use this data to keep improving.</p>
+<p><strong>Reality check:</strong> Most organizations take 3-5 years to fully implement Zero Trust, and that's with dedicated teams and management support. Don't expect quick results - this takes time.</p>
+<p>These phases line up with the <a href="https://www.cisa.gov/zero-trust-maturity-model">CISA Zero Trust Maturity Model v2.0</a>, but your timeline will depend on your organization's size and resources.</p>
+<h2 id="legacy-system-challenges">Legacy System Challenges<a class="headerlink" href="#legacy-system-challenges" title="Permanent link">&para;</a></h2>
+<h3 id="common-problems">Common Problems<a class="headerlink" href="#common-problems" title="Permanent link">&para;</a></h3>
+<p>Legacy systems present some of the biggest challenges in Zero Trust implementations, and they're often where attackers focus their efforts because these systems are harder to secure.</p>
+<p><strong>Weak authentication</strong> is probably the most common issue. Many older systems only support basic username/password authentication with no option for multi-factor authentication. Some were built when passwords were considered sufficient, and adding modern authentication requires significant modification or replacement. This creates a security gap where your most sensitive systems often have the weakest authentication.</p>
+<p><strong>Network dependencies</strong> are another major problem. Older systems were designed for flat, trusted networks where everything inside the perimeter was considered safe. These systems often require direct network access between components and can't work properly when you implement micro-segmentation. They expect to communicate freely with other systems without going through identity checks.</p>
+<p><strong>No encryption</strong> is unfortunately common in legacy environments. Many older systems send data in plain text because they were designed for internal networks that were considered secure. Adding encryption often requires significant changes to both the systems and the network infrastructure they depend on.</p>
+<p><strong>Limited logging</strong> makes it hard to monitor legacy systems for security threats. Older systems often don't provide the detailed security logs you need for modern threat detection and compliance requirements. You can't manage what you can't measure, and poor logging leaves blind spots in your security monitoring.</p>
+<h3 id="solutions-that-work">Solutions That Work<a class="headerlink" href="#solutions-that-work" title="Permanent link">&para;</a></h3>
+<p>You can protect legacy systems without completely replacing them, though it requires creative approaches:</p>
+<p><strong>Security proxies and wrappers</strong> let you add modern authentication and security controls in front of systems that can't support them natively. The proxy handles strong authentication, multi-factor verification, session management, and other Zero Trust verification, then passes authenticated requests to the legacy system using whatever method it understands. This might include identity-aware proxies, application firewalls, or API gateways. This approach works particularly well for web-based legacy applications.</p>
+<p><strong>Network isolation</strong> puts legacy systems in separate, heavily monitored network zones with very restricted access. You can't apply Zero Trust principles directly to these systems, but you can control how they communicate with everything else. Monitor all traffic to and from these zones and require modern authentication for any access to the zone itself.</p>
+<p><strong>Protocol translation</strong> helps when you have systems that use old authentication methods but can't be modified. Translation gateways can convert modern authentication tokens (like SAML or OAuth) to whatever format the legacy system expects (like Kerberos or basic auth), bridging the gap between old and new security approaches.</p>
+<p><strong>Enhanced monitoring</strong> becomes critical for systems that can't log properly on their own. Use network-based detection tools to monitor traffic patterns, connection attempts, and data flows for systems that don't provide detailed security logs. This won't give you the same visibility as modern applications, but it's better than having no monitoring at all.</p>
+<h2 id="cloud-security">Cloud Security<a class="headerlink" href="#cloud-security" title="Permanent link">&para;</a></h2>
+<h3 id="multi-cloud-considerations">Multi-Cloud Considerations<a class="headerlink" href="#multi-cloud-considerations" title="Permanent link">&para;</a></h3>
+<p>When using multiple cloud providers:</p>
+<ul>
+<li><strong>Connect identities</strong>: Use the same login across all clouds</li>
+<li><strong>Secure connections</strong>: Encrypt communication between cloud environments</li>
+<li><strong>Consistent policies</strong>: Apply the same security rules everywhere</li>
+<li><strong>Centralized monitoring</strong>: See security events from all clouds in one place</li>
+</ul>
+<h3 id="container-security">Container Security<a class="headerlink" href="#container-security" title="Permanent link">&para;</a></h3>
+<p>For containerized applications:</p>
+<ul>
+<li><strong>Service mesh</strong>: Automatically handle identity and encryption between containers</li>
+<li><strong>Network policies</strong>: Control which containers can talk to each other</li>
+<li><strong>Scan images</strong>: Check container images for vulnerabilities</li>
+<li><strong>Runtime protection</strong>: Monitor container behavior for threats</li>
+</ul>
+<h2 id="common-mistakes-to-avoid">Common Mistakes to Avoid<a class="headerlink" href="#common-mistakes-to-avoid" title="Permanent link">&para;</a></h2>
+<h3 id="technical-mistakes">Technical Mistakes<a class="headerlink" href="#technical-mistakes" title="Permanent link">&para;</a></h3>
+<p><strong>Relying only on network security</strong> - Many organizations think they can just add network controls and call it Zero Trust. But Zero Trust is fundamentally about identity-based security, not network security. If you're still thinking in terms of "inside" and "outside" the network, you're missing the point. Focus on verifying identity and device health for every access request, regardless of where it comes from.</p>
+<p><strong>Not monitoring enough</strong> - Zero Trust generates massive amounts of security data, and some organizations get overwhelmed and don't use it effectively. You need comprehensive logging and analysis capabilities, not just basic monitoring. Without proper visibility, you can't detect threats, tune policies, or prove compliance. Invest in SIEM tools and security analytics platforms that can handle the data volume, following <a href="https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html">comprehensive logging practices</a>.</p>
+<p><strong>Making security too hard for users</strong> - If your Zero Trust implementation makes it painful for people to do their jobs, they'll find workarounds that bypass your security. The key is balancing security with user experience. Use risk-based authentication so low-risk activities are seamless, and only add friction when the risk level justifies it. Test your policies with real users before rolling them out.</p>
+<p><strong>Forgetting about legacy systems</strong> - Many Zero Trust projects focus on new, cloud-native applications and ignore older systems that can't support modern authentication. These legacy systems often contain your most sensitive data and become the weakest links in your security chain. You need a strategy for protecting systems that can't be easily upgraded.</p>
+<h3 id="organizational-mistakes">Organizational Mistakes<a class="headerlink" href="#organizational-mistakes" title="Permanent link">&para;</a></h3>
+<p><strong>No executive support</strong> - Zero Trust implementation requires significant changes to how people work, substantial budget for new tools, and coordination across multiple teams. Without strong leadership commitment and budget approval, your project will stall when it encounters resistance or resource constraints. Get executive sponsorship before you start, not after you run into problems.</p>
+<p><strong>Skipping user training</strong> - Zero Trust changes how people authenticate, access applications, and handle security alerts. If you don't invest in educating your staff about why these changes are necessary and how to work with them, you'll face constant resistance and support tickets. Plan for comprehensive training programs, not just email announcements.</p>
+<p><strong>Moving too fast</strong> - Some organizations try to implement Zero Trust in a few months, which usually leads to broken workflows, user frustration, and incomplete security coverage. Zero Trust is a multi-year journey that requires careful planning and phased implementation. Rushing the process often means having to redo work later when problems surface.</p>
+<p><strong>Vendor lock-in</strong> - Zero Trust involves many different technologies, and some vendors will try to sell you a complete "Zero Trust platform" that locks you into their ecosystem. Keep your options open by choosing solutions that support open standards and can integrate with multiple vendors. Your security architecture should be flexible enough to adapt as threats and technologies evolve.</p>
+<h2 id="compliance-benefits">Compliance Benefits<a class="headerlink" href="#compliance-benefits" title="Permanent link">&para;</a></h2>
+<p>Zero Trust architecture helps organizations meet various compliance requirements:</p>
+<h3 id="framework-mapping">Framework Mapping<a class="headerlink" href="#framework-mapping" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Compliance Standard</th>
+<th>Zero Trust Controls That Help</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SOC 2</strong></td>
+<td>Strong access controls, continuous monitoring, audit logging</td>
+</tr>
+<tr>
+<td><strong>ISO 27001</strong></td>
+<td>Risk-based access decisions, information security management</td>
+</tr>
+<tr>
+<td><strong>PCI DSS</strong></td>
+<td>Network segmentation, encrypted communications, access monitoring</td>
+</tr>
+<tr>
+<td><strong>HIPAA</strong></td>
+<td>Granular access controls, data encryption, audit trails</td>
+</tr>
+<tr>
+<td><strong>GDPR</strong></td>
+<td>Privacy-by-design, data access logging, breach detection</td>
+</tr>
+<tr>
+<td><strong>OMB M-22-09</strong></td>
+<td>Phishing-resistant MFA, device certificates, encrypted DNS</td>
+</tr>
+</tbody>
+</table>
+<h2 id="technology-components">Technology Components<a class="headerlink" href="#technology-components" title="Permanent link">&para;</a></h2>
+<p>Zero Trust requires several technology categories working together:</p>
+<h3 id="core-components">Core Components<a class="headerlink" href="#core-components" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Identity and Access Management</strong>: Strong authentication (MFA) and risk-based access decisions</li>
+<li><strong>Zero Trust Network Access (ZTNA)</strong>: Application-level access instead of network-level VPNs</li>
+<li><strong>Web Application Security</strong>: Protect applications and APIs from OWASP Top 10 attacks</li>
+<li><strong>Security Monitoring</strong>: Real-time visibility and automated response to threats</li>
+</ul>
+<h3 id="selection-principles">Selection Principles<a class="headerlink" href="#selection-principles" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Use open standards (SAML, OAuth, FIDO2) over proprietary solutions</li>
+<li>Ensure components integrate well together via APIs</li>
+<li>Avoid vendor lock-in by maintaining flexibility</li>
+<li>Start with one area and expand gradually</li>
+</ul>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://owasp.org/www-project-application-security-verification-standard/">OWASP Application Security Verification Standard (ASVS)</a></li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      ©Copyright <script>document.write(new Date().getFullYear())</script> - Cheat Sheets Series Team - This work is licensed under <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a>.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.sections", "navigation.expand"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+    
+  </body>
+</html>
