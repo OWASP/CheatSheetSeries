@@ -211,6 +211,12 @@ A secret management solution should provide the capability to store at least the
 
 Note: if you don't store metadata about the secret nor prepare to move, you will increase the probability of vendor lock-in.
 
+## 2.12 Network segmentation of Secrets Management System
+
+Placing the Key Management System in your own infrastructure means that all of its elements must be located in isolated networks (VLAN). Other network devices must not be located in networks where the Key Management System servers are located. Each element (application) must be located in a separate suitable network according to the [Network Segmentation Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Network_Segmentation_Cheat_Sheet.md). Access to secrets must be carried out exclusively through the System's front-end server and only via a secure protocol.
+
+! [Scheme](https://raw.githubusercontent.com/OWASP/CheatSheetSeries/master/assets/Secrets_Management_Cheat_Sheet_Vault_scheme.drawio.png)
+
 ## 3 Continuous Integration (CI) and Continuous Deployment (CD)
 
 Building, testing and deploying changes generally requires access to many systems. Continuous Integration (CI) and Continuous Deployment (CD) tools typically store secrets to provide configuration to the application or during deployment. Alternatively, they interact heavily with the secrets management system. Various best practices can help smooth out secret management in CI/CD; we will deal with some of them in this section.
