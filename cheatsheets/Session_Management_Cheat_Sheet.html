@@ -2573,6 +2573,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#reauthentication-after-risk-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reauthentication After Risk Events
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#additional-client-side-defenses-for-session-management" class="md-nav__link">
     <span class="md-ellipsis">
       Additional Client-Side Defenses for Session Management
@@ -3587,6 +3596,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#reauthentication-after-risk-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reauthentication After Risk Events
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#additional-client-side-defenses-for-session-management" class="md-nav__link">
     <span class="md-ellipsis">
       Additional Client-Side Defenses for Session Management
@@ -3911,6 +3929,19 @@ This provides similar access to this data as would be achieved by using the <cod
 <p><strong>Note:</strong> The directive <code>Cache-Control: no-cache="Set-Cookie, Set-Cookie2"</code> is sometimes suggested to prevent session ID caching. However, this syntax is not widely supported and may lead to unintended behavior. Instead, use <code>Cache-Control: no-store</code> for stronger protection.
 <strong>Reference:</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control">MDN - Cache-Control</a></p>
 </blockquote>
+<h2 id="reauthentication-after-risk-events">Reauthentication After Risk Events<a class="headerlink" href="#reauthentication-after-risk-events" title="Permanent link">&para;</a></h2>
+<p>To ensure session integrity and account protection, applications should require reauthentication when specific high-risk events are detected. These may include:</p>
+<ul>
+<li>Attempted or completed password changes</li>
+<li>Login from a new or suspicious IP address or device</li>
+<li>Completion of account recovery or challenge flows (e.g., hacked-lock scenarios)</li>
+</ul>
+<p>Requiring reauthentication helps mitigate session hijacking and unauthorized access—especially when long-lived sessions or external identity providers are in use.</p>
+<p><strong>Recommended Practices:</strong></p>
+<ul>
+<li>Prompt users for primary credentials (e.g., password) or enforce MFA</li>
+<li>Provide clear messaging explaining the need to reauthenticate</li>
+</ul>
 <h2 id="additional-client-side-defenses-for-session-management">Additional Client-Side Defenses for Session Management<a class="headerlink" href="#additional-client-side-defenses-for-session-management" title="Permanent link">&para;</a></h2>
 <p>Web applications can complement the previously described session management defenses with additional countermeasures on the client side. Client-side protections, typically in the form of JavaScript checks and verifications, are not bullet proof and can easily be defeated by a skilled attacker, but can introduce another layer of defense that has to be bypassed by intruders.</p>
 <h3 id="initial-login-timeout">Initial Login Timeout<a class="headerlink" href="#initial-login-timeout" title="Permanent link">&para;</a></h3>
