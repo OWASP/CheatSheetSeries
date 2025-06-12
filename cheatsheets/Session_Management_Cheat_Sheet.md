@@ -319,6 +319,21 @@ Session identifiers must never be cached. To prevent this, it is highly recommen
 > **Note:** The directive `Cache-Control: no-cache="Set-Cookie, Set-Cookie2"` is sometimes suggested to prevent session ID caching. However, this syntax is not widely supported and may lead to unintended behavior. Instead, use `Cache-Control: no-store` for stronger protection.
 > **Reference:** [MDN - Cache-Control](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control)
 
+## Reauthentication After Risk Events
+
+To ensure session integrity and account protection, applications should require reauthentication when specific high-risk events are detected. These may include:
+
+- Attempted or completed password changes
+- Login from a new or suspicious IP address or device
+- Completion of account recovery or challenge flows (e.g., hacked-lock scenarios)
+
+Requiring reauthentication helps mitigate session hijacking and unauthorized access—especially when long-lived sessions or external identity providers are in use.
+
+**Recommended Practices:**
+
+- Prompt users for primary credentials (e.g., password) or enforce MFA
+- Provide clear messaging explaining the need to reauthenticate
+
 ## Additional Client-Side Defenses for Session Management
 
 Web applications can complement the previously described session management defenses with additional countermeasures on the client side. Client-side protections, typically in the form of JavaScript checks and verifications, are not bullet proof and can easily be defeated by a skilled attacker, but can introduce another layer of defense that has to be bypassed by intruders.
