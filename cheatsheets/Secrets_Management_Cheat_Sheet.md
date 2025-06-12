@@ -213,7 +213,7 @@ Note: if you don't store metadata about the secret nor prepare to move, you will
 
 ### 2.12 Network segmentation of Secrets Management System
 
-Placing the Key Management System in your own infrastructure means that all of its elements must be located in isolated networks (VLAN). Other network devices must not be located in networks where the Key Management System servers are located. Each element (application) must be located in a separate suitable network according to the [Network Segmentation Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Network_Segmentation_Cheat_Sheet.md). 
+Placing the Secret Management System in your own infrastructure means that all of its elements must be located in isolated networks (VLAN). Other network devices must not be located in networks where the Secret Management System servers are located. Each element (application) must be located in a separate suitable network according to the [Network Segmentation Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Network_Segmentation_Cheat_Sheet.md). 
 
 Access to secrets must be carried out exclusively through the System's front-end server and only via a secure protocol.
 
