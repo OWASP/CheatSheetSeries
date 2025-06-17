@@ -3193,7 +3193,7 @@ it can change the value of a variable that the web application relies on due to 
 <h2 id="secure-coding-guidelines">Secure Coding Guidelines<a class="headerlink" href="#secure-coding-guidelines" title="Permanent link">&para;</a></h2>
 <p>DOM Clobbering can be avoided by defensive programming and adhering to a few coding patterns and guidelines.</p>
 <h3 id="4-validate-all-inputs-to-dom-tree">#4: Validate All Inputs to DOM Tree<a class="headerlink" href="#4-validate-all-inputs-to-dom-tree" title="Permanent link">&para;</a></h3>
-<p>Before inserting any markup into the webpage's DOM tree, sanitize <code>id</code> and <code>name</code> attributes (see <a href="#html-sanitization">HTML sanitization</a>).</p>
+<p>Before inserting any markup into the webpage's DOM tree, sanitize <code>id</code> and <code>name</code> attributes (see <a href="#1-html-sanitization">HTML sanitization</a>).</p>
 <h3 id="5-use-explicit-variable-declarations">#5: Use Explicit Variable Declarations<a class="headerlink" href="#5-use-explicit-variable-declarations" title="Permanent link">&para;</a></h3>
 <p>When initializing variables, always use a variable declarator like <code>var</code>, <code>let</code> or <code>const</code>, which prevents clobbering of the variable.</p>
 <p><strong>Note:</strong> Declaring a variable with <code>let</code> does not create a property on <code>window</code>, unlike <code>var</code>. Therefore, <code>window.VARNAME</code> can still be clobbered (assuming <code>VARNAME</code> is the name of the variable).</p>

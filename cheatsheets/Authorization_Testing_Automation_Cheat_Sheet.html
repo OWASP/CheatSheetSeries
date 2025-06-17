@@ -3133,7 +3133,10 @@ redirect_from: "/cheatsheets/Authorization_Testing_Automation.html"
 </code></pre></div>
 <h2 id="rendering-the-authorization-matrix-for-an-audit-review">Rendering the authorization matrix for an audit / review<a class="headerlink" href="#rendering-the-authorization-matrix-for-an-audit-review" title="Permanent link">&para;</a></h2>
 <p>Even if the authorization matrix is stored in a human-readable format (XML), you might want to show an on-the-fly rendered representation of the XML file to spot potential inconsistencies and facilitate the review, audit and discussion about the authorization matrix.</p>
+<!-- textlint-disable -->
 <p>To achieve this task, you could use the following XSL stylesheet:</p>
+<!-- textlint-enable -->
+
 <div class="highlight"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
 <span class="k">&lt;xsl:stylesheet</span><span class="w"> </span><span class="na">xmlns:xsl=</span><span class="s">&quot;http://www.w3.org/1999/XSL/Transform&quot;</span><span class="w"> </span><span class="na">version=</span><span class="s">&quot;1.0&quot;</span><span class="nt">&gt;</span>
 <span class="w">  </span><span class="k">&lt;xsl:template</span><span class="w"> </span><span class="na">match=</span><span class="s">&quot;/&quot;</span><span class="nt">&gt;</span>

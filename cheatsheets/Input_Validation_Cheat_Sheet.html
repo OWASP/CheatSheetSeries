@@ -3154,7 +3154,7 @@ TX|UT|VT|VI|VA|WA|WV|WI|WY)$
 </ul>
 <h3 id="public-serving-of-uploaded-content">Public Serving of Uploaded Content<a class="headerlink" href="#public-serving-of-uploaded-content" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Ensure uploaded images are served with the correct content-type (e.g. image/jpeg, application/x-xpinstall)</li>
+<li>Ensure uploaded images are served with the correct content-type (e.g. <code>image/jpeg</code>, <code>application/x-xpinstall</code>)</li>
 </ul>
 <h3 id="beware-of-specific-file-types">Beware of Specific File Types<a class="headerlink" href="#beware-of-specific-file-types" title="Permanent link">&para;</a></h3>
 <p>The upload feature should be using an allowlist approach to only allow specific file types and extensions. However, it is important to be aware of the following file types that, if allowed, could result in security vulnerabilities:</p>
@@ -3167,7 +3167,7 @@ TX|UT|VT|VI|VA|WA|WV|WI|WY)$
 <ul>
 <li>Use image rewriting libraries to verify the image is valid and to strip away extraneous content.</li>
 <li>Set the extension of the stored image to be a valid image extension based on the detected content type of the image from image processing (e.g. do not just trust the header from the upload).</li>
-<li>Ensure the detected content type of the image is within a list of defined image types (jpg, png, etc)</li>
+<li>Ensure the detected content type of the image is within a list of defined image types (jpg, PNG, etc)</li>
 </ul>
 <h2 id="email-address-validation">Email Address Validation<a class="headerlink" href="#email-address-validation" title="Permanent link">&para;</a></h2>
 <h3 id="syntactic-validation">Syntactic Validation<a class="headerlink" href="#syntactic-validation" title="Permanent link">&para;</a></h3>

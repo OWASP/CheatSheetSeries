@@ -3075,7 +3075,7 @@
 <li>...</li>
 </ul>
 <h3 id="risk-3-disclosure-of-sensitive-information-to-3rd-parties">Risk 3: Disclosure of sensitive information to 3rd parties<a class="headerlink" href="#risk-3-disclosure-of-sensitive-information-to-3rd-parties" title="Permanent link">&para;</a></h3>
-<p>When a third-party script is invoked in a website/application, the browser directly contacts the third-party servers. By default, the request includes all regular HTTP headers. In addition to the originating IP address of the browser, the third-party also obtains other data such as the referrer (in non-https requests) and any cookies previously set by the 3rd party, for example when visiting another organization's website that also invokes the third-party script.</p>
+<p>When a third-party script is invoked in a website/application, the browser directly contacts the third-party servers. By default, the request includes all regular HTTP headers. In addition to the originating IP address of the browser, the third-party also obtains other data such as the referrer (in non-https requests) and any cookies previously set by the third-party, for example when visiting another organization's website that also invokes the third-party script.</p>
 <p>In many cases, this grants the third-party primary access to information on the organization's users / customers / clients. Additionally, if the third-party is sharing the script with other entities, it also collects secondary data from all the other entities, thus knowing who the organization's visitors are but also what other organizations they interact with.</p>
 <p>A typical case is the current situation with major news/press sites that invoke third-party code (typically for ad engines, statistics and JavaScript APIs): any user visiting any of these websites also informs the 3rd parties of the visit. In many cases, the third-party also gets to know what news articles each individual user is clicking specifically (leakage occurs through the HTTP referrer field) and thus can establish deeper personality profiles.</p>
 <p>Typical defenses include, but are not restricted to: in-house script mirroring (to prevent leakage of HTTP requests to 3rd parties). Users can reduce their profiling by random clicking links on leaking websites/applications (such as press/news websites) to reduce profiling. See below for more details.</p>
@@ -3093,7 +3093,7 @@
 <span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
 </code></pre></div>
 <h3 id="javascript-request-to-vendor">JavaScript Request to Vendor<a class="headerlink" href="#javascript-request-to-vendor" title="Permanent link">&para;</a></h3>
-<p>This is where one or a few lines of code on the host page each request a JavaScript file or URL directly from the vendor site. When the host page is being created, the developer includes the lines of code provided by the vendor that will request the vendor JavaScript. Each time the page is accessed the requests are made to the vendor site for the javascript, which then executes on the user browser.</p>
+<p>This is where one or a few lines of code on the host page each request a JavaScript file or URL directly from the vendor site. When the host page is being created, the developer includes the lines of code provided by the vendor that will request the vendor JavaScript. Each time the page is accessed the requests are made to the vendor site for the JavaScript, which then executes on the user browser.</p>
 <div class="highlight"><pre><span></span><code><span class="cm">&lt;!-- Some host, e.g. foobar.com, HTML code here --&gt;</span>`
 <span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
@@ -3163,7 +3163,7 @@
 <p>For example user actions in pages about specified cities, from specified locations on specified days should send data layer elements 1, 2 and 3. User actions in pages about other cities should send data layer elements 2 and 3 only. Since the event handler code to send data layer data on each page is controlled by the host developers or marketing technologists using the tag manager developer interface, the business logic about when and what data layer elements are sent to the tag manager server, can be changed and deployed in minutes. No interaction is needed with the third parties; they continue getting the data they expect but now it comes from different contexts that the host marketing technologists have chosen.</p>
 <p>Changing third party vendors just means changing the data dissemination rules at the tag manager server, no changes are needed in the host code. The data also goes directly only to the tag manager so the execution is fast. The event handler JavaScript does not have to connect to multiple third party sites.</p>
 <h3 id="indirect-requests">Indirect Requests<a class="headerlink" href="#indirect-requests" title="Permanent link">&para;</a></h3>
-<p>For indirect requests to tag manager/aggregator sites that offer the GUI to configure the javascript, they may also implement:</p>
+<p>For indirect requests to tag manager/aggregator sites that offer the GUI to configure the JavaScript, they may also implement:</p>
 <ul>
 <li>Technical controls such as only allowing the JavaScript to access the data layer values, no other DOM element</li>
 <li>Restricting the tag types deployed on a host site, e.g. disabling of custom HTML tags and JavaScript code</li>
@@ -3177,7 +3177,7 @@
 <li><a href="https://github.com/hackvertor/MentalJS">MentalJS</a> is a JavaScript parser and sandbox. It allow-lists JavaScript code by adding a "$" suffix to variables and accessors.</li>
 </ul>
 <h3 id="subresource-integrity">Subresource Integrity<a class="headerlink" href="#subresource-integrity" title="Permanent link">&para;</a></h3>
-<p><a href="https://www.w3.org/TR/SRI/">Subresource Integrity</a> will ensure that only the code that has been reviewed is executed. The developer generates integrity metadata for the vendor javascript, and adds it to the script element like this:</p>
+<p><a href="https://www.w3.org/TR/SRI/">Subresource Integrity</a> will ensure that only the code that has been reviewed is executed. The developer generates integrity metadata for the vendor JavaScript, and adds it to the script element like this:</p>
 <div class="highlight"><pre><span></span><code><span class="o">&lt;</span><span class="nx">script</span><span class="w"> </span><span class="nx">src</span><span class="o">=</span><span class="s2">&quot;https://analytics.vendor.com/v1.1/script.js&quot;</span>
 <span class="w">   </span><span class="nx">integrity</span><span class="o">=</span><span class="s2">&quot;sha384-MBO5IDfYaE6c6Aao94oZrIOiC7CGiSNE64QUbHNPhzk8Xhm0djE6QqTpL0HzTUxk&quot;</span>
 <span class="w">   </span><span class="nx">crossorigin</span><span class="o">=</span><span class="s2">&quot;anonymous&quot;</span><span class="o">&gt;</span>

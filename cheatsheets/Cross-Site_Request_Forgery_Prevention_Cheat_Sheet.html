@@ -3519,7 +3519,7 @@
 <li><strong>Implement at least one mitigation from <a href="#defense-in-depth-techniques">Defense in Depth Mitigations</a> section</strong></li>
 <li><strong><a href="#samesite-cookie-attribute">SameSite Cookie Attribute</a> can be used for session cookies</strong> but be careful to NOT set a cookie specifically for a domain. This action introduces a security vulnerability because all subdomains of that domain will share the cookie, and this is particularly an issue if a subdomain has a CNAME to domains not in your control.</li>
 <li><strong>Consider implementing <a href="#user-interaction-based-csrf-defense">user interaction based protection</a> for highly sensitive operations</strong></li>
-<li><strong>Consider <a href="#verifying-origin-with-standard-headers">verifying the origin with standard headers</a></strong></li>
+<li><strong>Consider <a href="#using-standard-headers-to-verify-origin">verifying the origin with standard headers</a></strong></li>
 <li><strong>Do not use GET requests for state changing operations.</strong></li>
 <li><strong>If for any reason you do it, protect those resources against CSRF</strong></li>
 </ul>

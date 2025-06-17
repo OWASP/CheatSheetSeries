@@ -3249,7 +3249,7 @@
 <h4 id="timeouts">Timeouts<a class="headerlink" href="#timeouts" title="Permanent link">&para;</a></h4>
 <p>Adding timeouts can be a simple way to limit how many resources any single request can consume. But timeouts are not always effective since they may not activate until a malicious query has already consumed excessive resources. Timeout requirements will differ by API and data fetching mechanism; there isn't one timeout value that will work across the board.</p>
 <p>At the application level, timeouts can be added for queries and resolver functions. This option is usually more effective since the query/resolution can be stopped once the timeout is reached. GraphQL does not natively support query timeouts so custom code is required. See <a href="https://medium.com/workflowgen/graphql-query-timeout-and-complexity-management-fab4d7315d8d">this blog post</a> for more about using timeouts with GraphQL or the two examples below.</p>
-<p><strong><em>JavaScript Timeout Example</em></strong></p>
+<p><em><strong>JavaScript Timeout Example</strong></em></p>
 <p>Code snippet from <a href="https://stackoverflow.com/a/53277955/1200388">this SO answer</a>:</p>
 <div class="highlight"><pre><span></span><code><span class="nx">request</span><span class="p">.</span><span class="nx">incrementResolverCount</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="kd">function</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">runTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">startTime</span><span class="p">;</span>
@@ -3263,7 +3263,7 @@
 <span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">resolverCount</span><span class="o">++</span><span class="p">;</span>
 <span class="w">  </span><span class="p">};</span>
 </code></pre></div>
-<p><strong><em>Java Timeout Example using <a href="https://www.graphql-java.com/documentation/instrumentation">Instrumentation</a></em></strong></p>
+<p><em><strong>Java Timeout Example using <a href="https://www.graphql-java.com/documentation/instrumentation">Instrumentation</a></strong></em></p>
 <div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">TimeoutInstrumentation</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">SimpleInstrumentation</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nd">@Override</span>
 <span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">DataFetcher</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">instrumentDataFetcher</span><span class="p">(</span>
@@ -3277,7 +3277,7 @@
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-<p><strong><em>Infrastructure Timeout</em></strong></p>
+<p><em><strong>Infrastructure Timeout</strong></em></p>
 <p>Another option to add a timeout that is usually easier is adding a timeout on an HTTP server (<a href="https://httpd.apache.org/docs/2.4/mod/core.html#timeout">Apache/httpd</a>, <a href="http://nginx.org/en/docs/http/ngx_http_core_module.html#send_timeout">nginx</a>), reverse proxy, or load balancer. However, infrastructure timeouts are often inaccurate and can be bypassed more easily than application-level ones.</p>
 <h4 id="query-cost-analysis">Query Cost Analysis<a class="headerlink" href="#query-cost-analysis" title="Permanent link">&para;</a></h4>
 <p>Query cost analysis involves assigning costs to the resolution of fields or types in incoming queries so that the server can reject queries that cost too much to run or will consume too many resources. This is not easy to implement and may not always be necessary but it is the most thorough approach to preventing DoS. See "Query Cost Analysis" in <a href="https://www.apollographql.com/blog/securing-your-graphql-api-from-malicious-queries-16130a324a6b">this blog post</a> for more details on implementing this control.</p>
@@ -3376,13 +3376,13 @@
 If your API is publicly consumed, you might want to consider disabling it for not authenticated or unauthorized users.</p>
 <p>For internal API, the easiest approach is to just disable introspection system-wide. See <a href="https://lab.wallarm.com/why-and-how-to-disable-introspection-query-for-graphql-apis/">this page</a> or consult your GraphQL implementation's documentation to learn how to disable introspection altogether. If your implementation does not natively support disabling introspection or if you would like to allow some consumers/roles to have this access, you can build a filter in your service to only allow approved consumers to access the introspection system.</p>
 <p>Keep in mind that even if introspection is disabled, attackers can still guess fields by brute forcing them. Furthermore, GraphQL has a built-in feature to return a hint when a field name that the requester provides is similar (but incorrect) to an existing field (<em>e.g.</em> request has <code>usr</code> and the response will ask <code>Did you mean "user?"</code>). You should consider disabling this feature if you have disabled the introspection, to decrease the exposure, but not all implementations of GraphQL support doing so. <a href="https://github.com/szski/shapeshifter">Shapeshifter</a> is one tool that <a href="https://www.youtube.com/watch?v=NPDp7GHmMa0&amp;t=2580">should be able to do this</a>.</p>
-<p><strong><em>Disable Introspection - Java</em></strong></p>
+<p><em><strong>Disable Introspection - Java</strong></em></p>
 <div class="highlight"><pre><span></span><code><span class="n">GraphQLSchema</span><span class="w"> </span><span class="n">schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GraphQLSchema</span><span class="p">.</span><span class="na">newSchema</span><span class="p">()</span>
 <span class="w">    </span><span class="p">.</span><span class="na">query</span><span class="p">(</span><span class="n">StarWarsSchema</span><span class="p">.</span><span class="na">queryType</span><span class="p">)</span>
 <span class="w">    </span><span class="p">.</span><span class="na">fieldVisibility</span><span class="p">(</span><span class="w"> </span><span class="n">NoIntrospectionGraphqlFieldVisibility</span><span class="p">.</span><span class="na">NO_INTROSPECTION_FIELD_VISIBILITY</span><span class="w"> </span><span class="p">)</span>
 <span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
 </code></pre></div>
-<p><strong><em>Disable Introspection &amp; GraphiQL - JavaScript</em></strong></p>
+<p><em><strong>Disable Introspection &amp; GraphiQL - JavaScript</strong></em></p>
 <div class="highlight"><pre><span></span><code><span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s1">&#39;/graphql&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">graphqlHTTP</span><span class="p">({</span>
 <span class="w">  </span><span class="nx">schema</span><span class="o">:</span><span class="w"> </span><span class="nx">MySessionAwareGraphQLSchema</span><span class="p">,</span>
 <span class="o">+</span><span class="w"> </span><span class="nx">validationRules</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="nx">NoIntrospection</span><span class="p">]</span>

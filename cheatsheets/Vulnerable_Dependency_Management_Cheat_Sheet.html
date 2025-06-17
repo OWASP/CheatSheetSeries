@@ -3085,7 +3085,7 @@
 <h1 id="vulnerable-dependency-management-cheat-sheet">Vulnerable Dependency Management Cheat Sheet<a class="headerlink" href="#vulnerable-dependency-management-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>The objective of the cheat sheet is to provide a proposal of approach regarding the handling of vulnerable third-party dependencies when they are detected, and this, depending on different situation.</p>
-<p>The cheat sheet is not tools oriented but it contains a <a href="#Tools">tools</a> section informing the reader about free and commercial solutions that can be used to detect vulnerable dependencies, depending on the level of support on the technologies at hand</p>
+<p>The cheat sheet is not tools oriented but it contains a <a href="#tools">tools</a> section informing the reader about free and commercial solutions that can be used to detect vulnerable dependencies, depending on the level of support on the technologies at hand</p>
 <p><strong>Note:</strong></p>
 <p>Proposals mentioned in this cheat sheet are not silver-bullet (recipes that work in all situations) yet can be used as a foundation and adapted to your context.</p>
 <h2 id="context">Context<a class="headerlink" href="#context" title="Permanent link">&para;</a></h2>
@@ -3108,7 +3108,7 @@
 <p>If in case the provider doesn't properly cooperate with the researcher, the following results are expected:</p>
 <ul>
 <li>CVE gets accepted by the vendor yet the provider <a href="https://www.excellium-services.com/cert-xlm-advisory/cve-2019-7161/">refuses to fix the issue</a>.</li>
-<li>Most of the time, if the researcher doesn't receive back a response in 30 days, they go ahead and do a <a href="#2.-full-disclosure">full disclosure</a> of the vulnerability.</li>
+<li>Most of the time, if the researcher doesn't receive back a response in 30 days, they go ahead and do a <a href="#2-full-disclosure">full disclosure</a> of the vulnerability.</li>
 </ul>
 <p>Here, the vulnerability is always referenced in the <a href="https://nvd.nist.gov/vuln/data-feeds">CVE global database</a> used, generally, by the detection tools as one of the several input sources used.</p>
 <h3 id="2-full-disclosure">2. Full disclosure<a class="headerlink" href="#2-full-disclosure" title="Permanent link">&para;</a></h3>
@@ -3169,7 +3169,7 @@
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>If the provider has provided nothing about the vulnerability, <a href="#-case-3">Case 3</a> can be applied skipping the <em>step 2</em> of this case. We assume here that, at least, the <a href="https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures">CVE</a> has been provided.</p>
+<p>If the provider has provided nothing about the vulnerability, <a href="#case-3">Case 3</a> can be applied skipping the <em>step 2</em> of this case. We assume here that, at least, the <a href="https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures">CVE</a> has been provided.</p>
 <p><strong>Step 2:</strong></p>
 <p>If the provider has provided the team with the exploitation code, and the team made a security wrapper around the vulnerable library/code, execute the exploitation code in order to ensure that the library is now secure and doesn't affect the application.</p>
 <p>If you have a set of automated unit or integration or functional or security tests that exist for the application, run them to verify that the protection code added does not impact the stability of the application.</p>

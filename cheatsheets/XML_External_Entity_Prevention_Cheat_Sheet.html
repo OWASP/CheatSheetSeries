@@ -3958,7 +3958,7 @@ Example code disabling DTDs (doctypes) altogether:</p>
 <span class="c1">// disable external entities</span>
 <span class="n">xmlInputFactory</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="s">&quot;javax.xml.stream.isSupportingExternalEntities&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
 </code></pre></div>
-<p>The setting <code>xmlInputFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");</code> is not required, as XMLInputFactory is dependent on Validator to perform XML validation against Schemas. Check the <a href="#Validator">Validator</a> section for the specific configuration.</p>
+<p>The setting <code>xmlInputFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");</code> is not required, as XMLInputFactory is dependent on Validator to perform XML validation against Schemas. Check the <a href="#validator">Validator</a> section for the specific configuration.</p>
 <h3 id="oracle-dom-parser">Oracle DOM Parser<a class="headerlink" href="#oracle-dom-parser" title="Permanent link">&para;</a></h3>
 <p>Follow <a href="https://docs.oracle.com/en/database/oracle/oracle-database/18/adxdk/security-considerations-oracle-xml-developers-kit.html#GUID-45303542-41DE-4455-93B3-854A826EF8BB">Oracle recommendation</a> e.g.:</p>
 <div class="highlight"><pre><span></span><code><span class="w">    </span><span class="c1">// Extend oracle.xml.parser.v2.XMLParser</span>
