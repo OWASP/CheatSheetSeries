@@ -158,7 +158,7 @@ Check the [File Upload Cheat Sheet](File_Upload_Cheat_Sheet.md).
 
 ### Public Serving of Uploaded Content
 
-- Ensure uploaded images are served with the correct content-type (e.g. image/jpeg, application/x-xpinstall)
+- Ensure uploaded images are served with the correct content-type (e.g. `image/jpeg`, `application/x-xpinstall`)
 
 ### Beware of Specific File Types
 
@@ -172,7 +172,7 @@ The upload feature should be using an allowlist approach to only allow specific 
 
 - Use image rewriting libraries to verify the image is valid and to strip away extraneous content.
 - Set the extension of the stored image to be a valid image extension based on the detected content type of the image from image processing (e.g. do not just trust the header from the upload).
-- Ensure the detected content type of the image is within a list of defined image types (jpg, png, etc)
+- Ensure the detected content type of the image is within a list of defined image types (jpg, PNG, etc)
 
 ## Email Address Validation
 

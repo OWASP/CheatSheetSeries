@@ -145,7 +145,7 @@ Isolates the browsing context exclusively to same-origin documents.
 
 ### Cross-Origin-Embedder-Policy (COEP)
 
-The HTTP `Cross-Origin-Embedder-Policy` (COEP) response header prevents a document from loading any cross-origin resources that don't explicitly grant the document permission (using [CORP](#cross-origin-resource-policy) or CORS).
+The HTTP `Cross-Origin-Embedder-Policy` (COEP) response header prevents a document from loading any cross-origin resources that don't explicitly grant the document permission (using [CORP](#cross-origin-resource-policy-corp) or CORS).
 
 - *NOTE*: Enabling this will block cross-origin resources not configured correctly from loading.
 

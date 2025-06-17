@@ -54,7 +54,7 @@ The application has the most information about the user (e.g. identity, roles, p
 
 Other sources of information about application usage that could also be considered are:
 
-- Client software e.g. actions on desktop software and mobile devices in local logs or using messaging technologies, JavaScript exception handler via Ajax, web browser such as using Content Security Policy (CSP) reporting mechanism
+- Client software e.g. actions on desktop software and mobile devices in local logs or using messaging technologies, JavaScript exception handler via AJAX, web browser such as using Content Security Policy (CSP) reporting mechanism
 - Embedded instrumentation code
 - Network firewalls
 - Network and host intrusion detection systems (NIDS and HIDS)
@@ -148,7 +148,7 @@ The properties for these will be different depending on the architecture, class 
     - Code location e.g. script name, module name
 - Who (human or machine user)
     - Source address e.g. user's device/machine identifier, user's IP address, cell/RF tower ID, mobile telephone number
-    - User identity (if authenticated or otherwise known) e.g. user database table primary key value, user name, license number
+    - User identity (if authenticated or otherwise known) e.g. user database table primary key-value, username, license number
 - What
     - Type of event `Note B`
     - Severity of event `Note B` e.g. `{0=emergency, 1=alert, ..., 7=debug}, {fatal, error, warning, info, debug, trace}`

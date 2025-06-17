@@ -138,7 +138,7 @@ DOM Clobbering can be avoided by defensive programming and adhering to a few cod
 
 ### \#4: Validate All Inputs to DOM Tree
 
-Before inserting any markup into the webpage's DOM tree, sanitize `id` and `name` attributes (see [HTML sanitization](#html-sanitization)).
+Before inserting any markup into the webpage's DOM tree, sanitize `id` and `name` attributes (see [HTML sanitization](#1-html-sanitization)).
 
 ### \#5: Use Explicit Variable Declarations
 

@@ -116,7 +116,7 @@ Adding timeouts can be a simple way to limit how many resources any single reque
 
 At the application level, timeouts can be added for queries and resolver functions. This option is usually more effective since the query/resolution can be stopped once the timeout is reached. GraphQL does not natively support query timeouts so custom code is required. See [this blog post](https://medium.com/workflowgen/graphql-query-timeout-and-complexity-management-fab4d7315d8d) for more about using timeouts with GraphQL or the two examples below.
 
-***JavaScript Timeout Example***
+_**JavaScript Timeout Example**_
 
 Code snippet from [this SO answer](https://stackoverflow.com/a/53277955/1200388):
 
@@ -134,7 +134,7 @@ request.incrementResolverCount =  function () {
   };
 ```
 
-***Java Timeout Example using [Instrumentation](https://www.graphql-java.com/documentation/instrumentation)***
+_**Java Timeout Example using [Instrumentation](https://www.graphql-java.com/documentation/instrumentation)**_
 
 ```java
 public class TimeoutInstrumentation extends SimpleInstrumentation {
@@ -151,7 +151,7 @@ public class TimeoutInstrumentation extends SimpleInstrumentation {
 }
 ```
 
-***Infrastructure Timeout***
+_**Infrastructure Timeout**_
 
 Another option to add a timeout that is usually easier is adding a timeout on an HTTP server ([Apache/httpd](https://httpd.apache.org/docs/2.4/mod/core.html#timeout), [nginx](http://nginx.org/en/docs/http/ngx_http_core_module.html#send_timeout)), reverse proxy, or load balancer. However, infrastructure timeouts are often inaccurate and can be bypassed more easily than application-level ones.
 
@@ -287,7 +287,7 @@ For internal API, the easiest approach is to just disable introspection system-w
 
 Keep in mind that even if introspection is disabled, attackers can still guess fields by brute forcing them. Furthermore, GraphQL has a built-in feature to return a hint when a field name that the requester provides is similar (but incorrect) to an existing field (_e.g._ request has `usr` and the response will ask `Did you mean "user?"`). You should consider disabling this feature if you have disabled the introspection, to decrease the exposure, but not all implementations of GraphQL support doing so. [Shapeshifter](https://github.com/szski/shapeshifter) is one tool that [should be able to do this](https://www.youtube.com/watch?v=NPDp7GHmMa0&t=2580).
 
-***Disable Introspection - Java***
+_**Disable Introspection - Java**_
 
 ```Java
 GraphQLSchema schema = GraphQLSchema.newSchema()
@@ -296,7 +296,7 @@ GraphQLSchema schema = GraphQLSchema.newSchema()
     .build();
 ```
 
-***Disable Introspection & GraphiQL - JavaScript***
+_**Disable Introspection & GraphiQL - JavaScript**_
 
 ```javascript
 app.use('/graphql', graphqlHTTP({

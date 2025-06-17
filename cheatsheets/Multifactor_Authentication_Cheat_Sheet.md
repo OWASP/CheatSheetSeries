@@ -250,7 +250,7 @@ Smartcards are credit-card size cards with a chip containing a digital certifica
 
 - Managing and distributing smartcards has the same costs and overheads as hardware tokens.
 - Smartcards are not natively supported by modern browsers, so require third party software.
-- Although most business-class laptops have smartcard readers built in, home systems often do not.
+- Although most business-class laptops have smartcard readers built-in, home systems often do not.
 - The use of smartcards requires backend PKIs.
 
 ### SMS Messages and Phone Calls

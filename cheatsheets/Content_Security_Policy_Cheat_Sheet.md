@@ -73,11 +73,11 @@ Historically the `X-Frame-Options` header has been used for this, but it has bee
 
 ### Defense in Depth
 
-A strong CSP provides an effective **second layer** of protection against various types of vulnerabilities, especially XSS. Although CSP doesn't prevent web applications from *containing* vulnerabilities, it can make those vulnerabilities significantly more difficult for an attacker to exploit.
+A strong CSP provides an effective __second layer__ of protection against various types of vulnerabilities, especially XSS. Although CSP doesn't prevent web applications from *containing* vulnerabilities, it can make those vulnerabilities significantly more difficult for an attacker to exploit.
 
 Even on a fully static website, which does not accept any user input, a CSP can be used to enforce the use of [Subresource Integrity (SRI)](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity). This can help prevent malicious code from being loaded on the website if one of the third-party sites hosting JavaScript files (such as analytics scripts) is compromised.
 
-With all that being said, CSP **should not** be relied upon as the only defensive mechanism against XSS. You must still follow good development practices such as the ones described in [Cross-Site Scripting Prevention Cheat Sheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md), and then deploy CSP on top of that as a bonus security layer.
+With all that being said, CSP __should not__ be relied upon as the only defensive mechanism against XSS. You must still follow good development practices such as the ones described in [Cross-Site Scripting Prevention Cheat Sheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md), and then deploy CSP on top of that as a bonus security layer.
 
 ## Policy Delivery
 
@@ -123,7 +123,7 @@ Almost everything is still supported, including full XSS defenses. However, you 
 
 ### WARNING
 
-**DO NOT** use `X-Content-Security-Policy` or `X-WebKit-CSP`. Their implementations are obsolete (since Firefox 23, Chrome 25), limited, inconsistent, and incredibly buggy.
+__DO NOT__ use `X-Content-Security-Policy` or `X-WebKit-CSP`. Their implementations are obsolete (since Firefox 23, Chrome 25), limited, inconsistent, and incredibly buggy.
 
 ## CSP Types (granular/allowlist based or strict)
 
@@ -142,7 +142,7 @@ The `strict-dynamic` directive can optionally also be used to make it easier to 
 
 The following sections will provide some basic guidance to these mechanisms but it is strongly recommended to follow Google's detailed and methodological instructions for creating a Strict CSP:
 
-**[Mitigate cross-site scripting (XSS) with a strict Content Security Policy (CSP)](https://web.dev/strict-csp/)**
+__[Mitigate cross-site scripting (XSS) with a strict Content Security Policy (CSP)](https://web.dev/strict-csp/)__
 
 ### Nonce based
 
@@ -163,7 +163,7 @@ You would then pass this nonce to your view (using nonces requires a non-static 
 
 #### Warning
 
-**Don't** create a middleware that replaces all script tags with "script nonce=..." because attacker-injected scripts will then get the nonces as well. You need an actual HTML templating engine to use nonces.
+__Don't__ create a middleware that replaces all script tags with "script nonce=..." because attacker-injected scripts will then get the nonces as well. You need an actual HTML templating engine to use nonces.
 
 ### Hashes
 
@@ -175,7 +175,7 @@ Content-Security-Policy: script-src 'sha256-V2kaaafImTjn8RQTWZmF4IfGfQ7Qsqsw9GWa
 
 To get the hash, look at Google Chrome developer tools for violations like this:
 
-> ❌ Refused to execute inline script because it violates the following Content Security Policy directive: "..." Either the 'unsafe-inline' keyword, a hash (**'sha256-V2kaaafImTjn8RQTWZmF4IfGfQ7Qsqsw9GWaFjzFNPg='**), or a nonce...
+> ❌ Refused to execute inline script because it violates the following Content Security Policy directive: "..." Either the 'unsafe-inline' keyword, a hash (__'sha256-V2kaaafImTjn8RQTWZmF4IfGfQ7Qsqsw9GWaFjzFNPg='__), or a nonce...
 
 You can also use this [hash generator](https://report-uri.com/home/hash). This is a great [example](https://csp.withgoogle.com/docs/faq.html#static-content) of using hashes.
 
@@ -224,7 +224,7 @@ Most fetch directives have a certain [fallback list specified in w3](https://www
 Document directives instruct the browser about the properties of the document to which the policies will apply to.
 
 - `base-uri` specifies the possible URLs that the `<base>` element can use.
-- `plugin-types` limits the types of resources that can be loaded into the document (*e.g.* application/pdf). 3 rules apply to the affected elements, `<embed>` and `<object>`:
+- `plugin-types` limits the types of resources that can be loaded into the document (*e.g.* `application/pdf`). 3 rules apply to the affected elements, `<embed>` and `<object>`:
     - The element needs to explicitly declare its type.
     - The element's type needs to match the declared type.
     - The element's resource needs to match the declared type.

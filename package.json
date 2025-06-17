@@ -3,13 +3,11 @@
   "version": "1.0.1",
   "description": "OWASP CSS Project",
   "main": "index.js",
-  "dependencies": {},
   "devDependencies": {
-    "markdownlint-cli": "^0.26.0",
-    "textlint": "^11.6.3",
+    "markdownlint-cli": "^0.45.0",
+    "textlint": "^14.8.4",
     "textlint-filter-rule-comments": "^1.2.2",
-    "textlint-filter-rule-whitelist": "^2.0.0",
-    "textlint-rule-terminology": "^2.1.4"
+    "textlint-rule-terminology": "^5.2.12"
   },
   "scripts": {
     "test": "npm run lint-markdown && npm run lint-terminology",

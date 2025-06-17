@@ -21,7 +21,7 @@ In short, the following principles should be followed to defend against CSRF:
 - **Implement at least one mitigation from [Defense in Depth Mitigations](#defense-in-depth-techniques) section**
 - **[SameSite Cookie Attribute](#samesite-cookie-attribute) can be used for session cookies** but be careful to NOT set a cookie specifically for a domain. This action introduces a security vulnerability because all subdomains of that domain will share the cookie, and this is particularly an issue if a subdomain has a CNAME to domains not in your control.
 - **Consider implementing [user interaction based protection](#user-interaction-based-csrf-defense) for highly sensitive operations**
-- **Consider [verifying the origin with standard headers](#verifying-origin-with-standard-headers)**
+- **Consider [verifying the origin with standard headers](#using-standard-headers-to-verify-origin)**
 - **Do not use GET requests for state changing operations.**
 - **If for any reason you do it, protect those resources against CSRF**
 

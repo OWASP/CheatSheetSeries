@@ -191,8 +191,8 @@ as long as class registration is not turned **off** ([see documentation](https:/
 and [this issue](https://github.com/EsotericSoftware/kryo/issues/929))
 - **[YamlBeans v1.16+](https://github.com/EsotericSoftware/yamlbeans)** (YAML) - can be used safely
 as long as the **UnsafeYamlConfig** class isn't used (see [this commit](https://github.com/EsotericSoftware/yamlbeans/commit/b1122588e7610ae4e0d516c50d08c94ee87946e6))
-    - _NOTE: because these versions are not available in Maven Central,
-[a fork exists](https://github.com/Contrast-Security-OSS/yamlbeans) that can be used instead._
+    - *NOTE: because these versions are not available in Maven Central,
+[a fork exists](https://github.com/Contrast-Security-OSS/yamlbeans) that can be used instead.*
 - **[XStream v1.4.17+](https://x-stream.github.io/)** (JSON and XML) - can be used safely
 as long as the allowlist and other security controls are not relaxed ([see documentation](https://x-stream.github.io/security.html))
 
@@ -211,8 +211,8 @@ JSON allows deserialization of any class. Can only be used safely in following s
 - **[Kryo < v5.0.0](https://github.com/EsotericSoftware/kryo)** (custom format) - cannot be used safely unless class registration is turned **on**,
 which disables deserialization of any class ([see documentation](https://github.com/EsotericSoftware/kryo#optional-registration)
 and [this issue](https://github.com/EsotericSoftware/kryo/issues/929))
-    - _NOTE: other wrappers exist around Kryo such as [Chill](https://github.com/twitter/chill), which may also have class registration
-not required by default regardless of the underlying version of Kryo being used_
+    - *NOTE: other wrappers exist around Kryo such as [Chill](https://github.com/twitter/chill), which may also have class registration
+not required by default regardless of the underlying version of Kryo being used*
 - **[SnakeYAML](https://bitbucket.org/snakeyaml/snakeyaml/src)** (YAML) - cannot be used safely unless
 the **org.yaml.snakeyaml.constructor.SafeConstructor** class is used, which disables
 deserialization of any class ([see docs](https://bitbucket.org/snakeyaml/snakeyaml/wiki/CVE-2022-1471))
@@ -224,7 +224,7 @@ The following libraries are either no longer maintained or cannot be used safely
 - **[Castor](https://github.com/castor-data-binding/castor)** (XML) - appears to be abandoned with no commits since 2016
 - **[fastjson < v1.2.68](https://github.com/alibaba/fastjson)** (JSON) - these versions allows deserialization of any class
 ([see documentation](https://github.com/alibaba/fastjson/wiki/enable_autotype))
-- **[XMLDecoder in the JDK](https://docs.oracle.com/javase/8/docs/api/java/beans/XMLDecoder.html)** (XML) - _"close to impossible to securely deserialize Java objects in this format from untrusted inputs"_
+- **[XMLDecoder in the JDK](https://docs.oracle.com/javase/8/docs/api/java/beans/XMLDecoder.html)** (XML) - *"close to impossible to securely deserialize Java objects in this format from untrusted inputs"*
 ("Red Hat Defensive Coding Guide", [end of section 2.6.5](https://redhat-crypto.gitlab.io/defensive-coding-guide/#sect-Defensive_Coding-Tasks-Serialization-XML))
 - **[XStream < v1.4.17](https://x-stream.github.io/)** (JSON and XML) - these versions allows deserialization of any class (see [documentation](https://x-stream.github.io/security.html#explicit))
 - **[YamlBeans < v1.16](https://github.com/EsotericSoftware/yamlbeans)** (YAML) - these versions allows deserialization of any class
