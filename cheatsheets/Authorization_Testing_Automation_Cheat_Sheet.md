@@ -394,7 +394,9 @@ Access issues detected using the BASIC USER point of view:
 
 Even if the authorization matrix is stored in a human-readable format (XML), you might want to show an on-the-fly rendered representation of the XML file to spot potential inconsistencies and facilitate the review, audit and discussion about the authorization matrix.
 
+<!-- textlint-disable -->
 To achieve this task, you could use the following XSL stylesheet:
+<!-- textlint-enable -->
 
 ``` xslt
 <?xml version="1.0" encoding="UTF-8"?>
