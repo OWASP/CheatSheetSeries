@@ -100,7 +100,7 @@ generally is much more difficult.
     use Java's
     [GuardedString](https://docs.oracle.com/html/E28160_01/org/identityconnectors/common/security/GuardedString.html)
     or .NET's
-    [SecureString](https://learn.microsoft.com/en-us/dotnet/api/system.security.securestring#string-versus-securestring)
+    [SecureString](https://learn.microsoft.com/dotnet/api/system.security.securestring#string-versus-securestring)
     which are designed to solve precisely this problem.
 
 - **Zeroing Memory:** After a secret has been used, the memory it occupied
@@ -217,7 +217,7 @@ Placing the Secret Management System in your own infrastructure means that all o
 
 Access to secrets must be carried out exclusively through the System's front-end server and only via a secure protocol.
 
-! [Scheme](https://raw.githubusercontent.com/OWASP/CheatSheetSeries/master/assets/Secrets_Management_Cheat_Sheet_Vault_scheme.drawio.png)
+![Scheme](https://raw.githubusercontent.com/OWASP/CheatSheetSeries/master/assets/Secrets_Management_Cheat_Sheet_Vault_scheme.drawio.png)
 
 ## 3 Continuous Integration (CI) and Continuous Deployment (CD)
 
@@ -261,7 +261,7 @@ These secrets are often configurable/viewable by people who have the authorizati
 
 #### 3.2.2 Storing it in a secrets management system
 
-Naturally, you can store secrets in a designated secrets management solution. For example, you can use a solution offered by your (cloud) infrastructure provider, such as [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/), [Google Secrets Manager](https://cloud.google.com/secret-manager), or [Azure KeyVault](https://azure.microsoft.com/nl-nl/services/key-vault/). You can find more information about these in [section 4](#4-cloud-providers) of this cheat sheet. Another option is a dedicated secrets management system, such as [Hashicorp Vault](https://www.vaultproject.io/), [Keeper](https://www.keepersecurity.com/), [Conjur](https://www.conjur.org/).
+Naturally, you can store secrets in a designated secrets management solution. For example, you can use a solution offered by your (cloud) infrastructure provider, such as [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/), [Google Secrets Manager](https://cloud.google.com/secret-manager), or [Azure KeyVault](https://azure.microsoft.com/services/key-vault/). You can find more information about these in [section 4](#4-cloud-providers) of this cheat sheet. Another option is a dedicated secrets management system, such as [Hashicorp Vault](https://www.vaultproject.io/), [Keeper](https://www.keepersecurity.com/), [Conjur](https://www.conjur.org/).
 Here are a few do's and don'ts for the CI/CD interaction with these systems. Make sure that the following is taken care of:
 
 - Rotation/Temporality: credentials used by the CI/CD tooling to authenticate against the secret management system are rotated frequently and expire after a job completes.
@@ -347,19 +347,19 @@ Check out the [Secret Manager best practices](https://cloud.google.com/secret-ma
 
 #### 4.1.3 Azure
 
-For Azure, the recommended service is [Key Vault](https://docs.microsoft.com/en-us/azure/key-vault/).
+For Azure, the recommended service is [Key Vault](https://docs.microsoft.com/azure/key-vault/).
 
 Contrary to other clouds, permissions are granted at the _**Key Vault**_ level. This means secrets for separate workloads and separate sensitivity levels should be in separated Key Vaults accordingly.
 
-Check out the [Key Vault best practices](https://docs.microsoft.com/en-us/azure/key-vault/general/best-practices).
+Check out the [Key Vault best practices](https://docs.microsoft.com/azure/key-vault/general/best-practices).
 
 ##### 4.1.3.1 Azure Confidential Computing
 
-With [Azure Confidential Computing](https://azure.microsoft.com/en-us/solutions/confidential-compute/#overview), you can create trusted execution environments. Thus, every application will be executed in an encrypted enclave that protects the data and code consumed by the application is protected end-to-end. Furthermore, any application running inside enclaves is not accessible by any tool or human.
+With [Azure Confidential Computing](https://azure.microsoft.com/solutions/confidential-compute/#overview), you can create trusted execution environments. Thus, every application will be executed in an encrypted enclave that protects the data and code consumed by the application is protected end-to-end. Furthermore, any application running inside enclaves is not accessible by any tool or human.
 
 ##### 4.1.3.2 Azure Dedicated HSM
 
-For secrets being used in Azure environments and requiring special security considerations, Azure offers [Azure Dedicated HSM](https://azure.microsoft.com/en-us/services/azure-dedicated-hsm/). This allows you more control over the secrets stored on it, including enhanced administrative and cryptographic control. The cloud service provider, Microsoft, will not have any access to the key material stored in Azure Dedicated HSM.
+For secrets being used in Azure environments and requiring special security considerations, Azure offers [Azure Dedicated HSM](https://azure.microsoft.com/services/azure-dedicated-hsm/). This allows you more control over the secrets stored on it, including enhanced administrative and cryptographic control. The cloud service provider, Microsoft, will not have any access to the key material stored in Azure Dedicated HSM.
 
 #### 4.1.4 Other clouds, Multi-cloud, and Cloud agnostic
 
@@ -388,7 +388,7 @@ When you encrypt a secret at rest, the question is: which key do you want to use
 Often, you can either encrypt a secret with a key managed at the secrets management service or use a key management solution from the cloud provider to encrypt the secret. The key offered through the key management solution of the cloud provider can be either managed by the cloud provider or by yourself. Industry standards call the latter "bring your own key" (BYOK). You can either directly import or generate this key at the key management solution or using cloud HSM supported by the cloud provider.
 You can then either use your key or the customer main key from the provider to encrypt the data key of the secrets management solution. The data key, in turn, encrypts the secret. By managing the CMK, you have control over the data key at the secrets management solution.
 
-While importing your own key material can generally be done with all providers ([AWS](https://docs.aws.amazon.com/kms/latest/developerguide/importing-keys.html), [Azure](https://docs.microsoft.com/en-us/azure/key-vault/keys/byok-specification), [GCP](https://cloud.google.com/kms/docs/key-import)), unless you know what you are doing and your threat model and policy require this, this is not a recommended solution due to its complexity and difficulty of use.
+While importing your own key material can generally be done with all providers ([AWS](https://docs.aws.amazon.com/kms/latest/developerguide/importing-keys.html), [Azure](https://docs.microsoft.com/azure/key-vault/keys/byok-specification), [GCP](https://cloud.google.com/kms/docs/key-import)), unless you know what you are doing and your threat model and policy require this, this is not a recommended solution due to its complexity and difficulty of use.
 
 ### 4.3 Identity and Access Management (IAM)
 
@@ -623,7 +623,7 @@ Managing secrets in a multi-cloud environment presents unique challenges due to 
 - [HashiCorp Vault](https://www.vaultproject.io/)
 - [CyberArk Conjur](https://www.conjur.org/)
 - [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/)
-- [Azure Key Vault](https://azure.microsoft.com/en-us/services/key-vault/)
+- [Azure Key Vault](https://azure.microsoft.com/services/key-vault/)
 - [Google Cloud Secret Manager](https://cloud.google.com/secret-manager)
 
 ## 11 Related Cheat Sheets & further reading
