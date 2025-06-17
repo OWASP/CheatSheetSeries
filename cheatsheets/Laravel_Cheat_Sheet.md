@@ -49,7 +49,7 @@ protected $middlewareGroups = [
 ];
 ```
 
-- Enable the `HttpOnly` attribute on your session cookies via your `config/session.php` file, so that your session cookies are inaccessible from Javascript:
+- Enable the `HttpOnly` attribute on your session cookies via your `config/session.php` file, so that your session cookies are inaccessible from JavaScript:
 
 ```php
 'http_only' => true,

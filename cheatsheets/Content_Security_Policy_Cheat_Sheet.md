@@ -224,7 +224,7 @@ Most fetch directives have a certain [fallback list specified in w3](https://www
 Document directives instruct the browser about the properties of the document to which the policies will apply to.
 
 - `base-uri` specifies the possible URLs that the `<base>` element can use.
-- `plugin-types` limits the types of resources that can be loaded into the document (*e.g.* application/pdf). 3 rules apply to the affected elements, `<embed>` and `<object>`:
+- `plugin-types` limits the types of resources that can be loaded into the document (*e.g.* `application/pdf`). 3 rules apply to the affected elements, `<embed>` and `<object>`:
     - The element needs to explicitly declare its type.
     - The element's type needs to match the declared type.
     - The element's resource needs to match the declared type.
