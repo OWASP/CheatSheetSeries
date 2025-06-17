@@ -16,6 +16,8 @@ A typical drone architecture consists of three main components:
 2. **Ground Control Station (GCS)** – The interface used to control and monitor drone operations.
 3. **Communication Data-Link (CDL)** – The network connection between the drone and the GCS.
 
+![Drone](https://raw.githubusercontent.com/OWASP/CheatSheetSeries/master/assets/Drone_Security_Cheat_Sheet.png)
+
 The communication between the drone and the GCS is vulnerable to interception and attacks. This will be made evident in the future sections as well. It is important to understand that peripherals attached to drone may be vulnerable too! To explain this, we have made a list of **vulnerable endpoints** below.
 
 ---
