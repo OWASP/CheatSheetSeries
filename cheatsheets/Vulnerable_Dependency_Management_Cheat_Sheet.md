@@ -4,7 +4,7 @@
 
 The objective of the cheat sheet is to provide a proposal of approach regarding the handling of vulnerable third-party dependencies when they are detected, and this, depending on different situation.
 
-The cheat sheet is not tools oriented but it contains a [tools](#Tools) section informing the reader about free and commercial solutions that can be used to detect vulnerable dependencies, depending on the level of support on the technologies at hand
+The cheat sheet is not tools oriented but it contains a [tools](#tools) section informing the reader about free and commercial solutions that can be used to detect vulnerable dependencies, depending on the level of support on the technologies at hand
 
 **Note:**
 
@@ -18,8 +18,8 @@ It's a good approach because it allows the development team to focus on the real
 
 This aspect is referenced in the following projects:
 
-- [OWASP TOP 10 2017](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/) under the point *[A9 - Using Components with Known Vulnerabilities](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A9-Using_Components_with_Known_Vulnerabilities.html)*.
-- [OWASP Application Security Verification Standard Project](https://owasp.org/www-project-application-security-verification-standard/) under the section *V14.2 Dependency*.
+- [OWASP TOP 10 2017](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/) under the point _[A9 - Using Components with Known Vulnerabilities](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A9-Using_Components_with_Known_Vulnerabilities.html)_.
+- [OWASP Application Security Verification Standard Project](https://owasp.org/www-project-application-security-verification-standard/) under the section _V14.2 Dependency_.
 
 Based on this context, it's important for a project to ensure that all the third-party dependencies implemented are clean of any security issue, and if they happen to contain any security issues, the development team needs to be aware of it and apply the required mitigation measures to secure the affected application.
 
@@ -27,7 +27,7 @@ It's highly recommended to perform automated analysis of the dependencies from t
 
 **Note:**
 
-In the rest of the cheat sheet, when we refer to *development team* then we assume that the team contains a member with the required application security skills or can refer to someone in the company having these kind of skills to analyse the vulnerability impacting the dependency.
+In the rest of the cheat sheet, when we refer to _development team_ then we assume that the team contains a member with the required application security skills or can refer to someone in the company having these kind of skills to analyse the vulnerability impacting the dependency.
 
 ## Remark about the detection
 
@@ -42,7 +42,7 @@ A researcher discovers a vulnerability in a component, and after collaboration w
 If in case the provider doesn't properly cooperate with the researcher, the following results are expected:
 
 - CVE gets accepted by the vendor yet the provider [refuses to fix the issue](https://www.excellium-services.com/cert-xlm-advisory/cve-2019-7161/).
-- Most of the time, if the researcher doesn't receive back a response in 30 days, they go ahead and do a [full disclosure](#2.-full-disclosure) of the vulnerability.
+- Most of the time, if the researcher doesn't receive back a response in 30 days, they go ahead and do a [full disclosure](#2-full-disclosure) of the vulnerability.
 
 Here, the vulnerability is always referenced in the [CVE global database](https://nvd.nist.gov/vuln/data-feeds) used, generally, by the detection tools as one of the several input sources used.
 
@@ -56,11 +56,11 @@ Here a CVE is not always created then the vulnerability is not always in the CVE
 
 ## Remark about the security issue handling decision
 
-When a security issue is detected, it's possible to decide to accept the risk represented by the security issue. However, this decision must be taken by the [Chief Risk Officer](https://en.wikipedia.org/wiki/Chief_risk_officer) (fallback possible to [Chief Information Security Officer](https://en.wikipedia.org/wiki/Chief_information_security_officer)) of the company based on technical feedback from the development team that have analyzed the issue (see the *[Cases](#cases)* section) as well as the CVEs [CVSS](https://www.first.org/cvss/user-guide) score indicators.
+When a security issue is detected, it's possible to decide to accept the risk represented by the security issue. However, this decision must be taken by the [Chief Risk Officer](https://en.wikipedia.org/wiki/Chief_risk_officer) (fallback possible to [Chief Information Security Officer](https://en.wikipedia.org/wiki/Chief_information_security_officer)) of the company based on technical feedback from the development team that have analyzed the issue (see the _[Cases](#cases)_ section) as well as the CVEs [CVSS](https://www.first.org/cvss/user-guide) score indicators.
 
 ## Cases
 
-When a security issue is detected, the development team can meet one of the situations (named *Case* in the rest of the cheat sheet) presented in the sub sections below.
+When a security issue is detected, the development team can meet one of the situations (named _Case_ in the rest of the cheat sheet) presented in the sub sections below.
 
 If the vulnerably impact a [transitive dependency](https://en.wikipedia.org/wiki/Transitive_dependency) then the action will be taken on the direct dependency of the project because acting on a transitive dependency often impact the stability of the application.
 
@@ -117,7 +117,7 @@ If the provider has given the team a list of the impacted functions, protective 
 
 Moreover, security devices, such as the Web Application Firewall (WAF), can handle such issues by protecting the internal applications through parameter validation and by generating detection rules for those specific libraries. Yet, in this cheat sheet, the focus is set on the application level in order to patch the vulnerability as close as possible to the source.
 
-*Example using java code in which the impacted function suffers from a [Remote Code Execution](https://www.netsparker.com/blog/web-security/remote-code-evaluation-execution/) issue:*
+_Example using java code in which the impacted function suffers from a [Remote Code Execution](https://www.netsparker.com/blog/web-security/remote-code-evaluation-execution/) issue:_
 
 ```java
 public void callFunctionWithRCEIssue(String externalInput){
@@ -133,7 +133,7 @@ public void callFunctionWithRCEIssue(String externalInput){
 }
 ```
 
-If the provider has provided nothing about the vulnerability, [Case 3](#-case-3) can be applied skipping the *step 2* of this case. We assume here that, at least, the [CVE](https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures) has been provided.
+If the provider has provided nothing about the vulnerability, [Case 3](#case-3) can be applied skipping the _step 2_ of this case. We assume here that, at least, the [CVE](https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures) has been provided.
 
 **Step 2:**
 
@@ -141,7 +141,7 @@ If the provider has provided the team with the exploitation code, and the team m
 
 If you have a set of automated unit or integration or functional or security tests that exist for the application, run them to verify that the protection code added does not impact the stability of the application.
 
-Add a comment in the project *README* explaining that the issue (specify the related [CVE](https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures)) is handled during the waiting time of a patched version because the detection tool will continue to raise an alert on this dependency.
+Add a comment in the project _README_ explaining that the issue (specify the related [CVE](https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures)) is handled during the waiting time of a patched version because the detection tool will continue to raise an alert on this dependency.
 
 **Note:** You can add the dependency to the ignore list but the ignore scope for this dependency must only cover the [CVE](https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures) related to the vulnerability because a dependency can be impacted by several vulnerabilities having each one its own [CVE](https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures).
 
@@ -160,7 +160,7 @@ In this case the only information given to the development team is the [CVE](htt
 
 #### Ideal condition of application of the approach
 
-Nothing specific because here we are in a *patch yourself* condition.
+Nothing specific because here we are in a _patch yourself_ condition.
 
 #### Approach
 
@@ -183,7 +183,7 @@ To obtain these information, the team uses the CVE content to know which kind of
 
 After identifying the above 2 points, the team is aware of the type of patching that needs to be taken ([Case 2](#case-2) with the protective code) and where to add it.
 
-*Example:*
+_Example:_
 
 The team has an application using the Jackson API in a version exposed to the [CVE-2016-3720](https://nvd.nist.gov/vuln/detail/CVE-2016-3720).
 

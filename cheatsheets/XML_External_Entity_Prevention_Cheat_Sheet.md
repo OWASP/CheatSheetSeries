@@ -295,7 +295,7 @@ xmlInputFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
 xmlInputFactory.setProperty("javax.xml.stream.isSupportingExternalEntities", false);
 ```
 
-The setting `xmlInputFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");` is not required, as XMLInputFactory is dependent on Validator to perform XML validation against Schemas. Check the [Validator](#Validator) section for the specific configuration.
+The setting `xmlInputFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");` is not required, as XMLInputFactory is dependent on Validator to perform XML validation against Schemas. Check the [Validator](#validator) section for the specific configuration.
 
 ### Oracle DOM Parser
 

@@ -35,12 +35,12 @@ Application-functionality services implement one or several business process or 
 
 | Parameter name | Description |
 | :--- | :--- |
-| Service name (ID) | Unique service name or ID
-| Short description | Short description of business process or functionality implemented by the microservice
-| Link to source code repository | Specify a link to service source code repository
-| Development Team | Specify development team which develops the microservice
-| API definition | If microservice exposes external interface specify a link to the interface description (e.g., OpenAPI specification). It is advisable to define used security scheme, e.g. define scopes or API keys needed to invoke dedicated endpoint (e.g., [see](https://swagger.io/docs/specification/authentication/)).
-| The microservice architecture description | Specify a link to the microservice architecture diagram, description (if available)|
+| Service name (ID) | Unique service name or ID |
+| Short description | Short description of business process or functionality implemented by the microservice |
+| Link to source code repository | Specify a link to service source code repository |
+| Development Team | Specify development team which develops the microservice |
+| API definition | If microservice exposes external interface specify a link to the interface description (e.g., OpenAPI specification). It is advisable to define used security scheme, e.g. define scopes or API keys needed to invoke dedicated endpoint (e.g., [see](https://swagger.io/docs/specification/authentication/)). |
+| The microservice architecture description | Specify a link to the microservice architecture diagram, description (if available) |
 | Link to runbook | Specify a link to the microservice runbook |
 
 #### Identify and describe infrastructure services
@@ -49,10 +49,10 @@ Infrastructure services including remote services may implement authentication, 
 
 | Parameter name | Description |
 | :--- | :--- |
-|Service name (ID) | Unique service name or ID
-|Short description | Short description of functionality implemented by the service (e.g., authentication, authorization, service registration and discovery, logging, security monitoring, API gateway).
-|Link to source code repository | Specify a link to service source code repository (if applicable)
-|Link to the service documentation | Specify a link to the service documentation that includes service API definition, operational guidance/runbook, etc.
+|Service name (ID) | Unique service name or ID |
+|Short description | Short description of functionality implemented by the service (e.g., authentication, authorization, service registration and discovery, logging, security monitoring, API gateway). |
+|Link to source code repository | Specify a link to service source code repository (if applicable) |
+|Link to the service documentation | Specify a link to the service documentation that includes service API definition, operational guidance/runbook, etc. |
 
 #### Identify and describe data storages
 
@@ -60,8 +60,8 @@ Collect information on the parameters listed below related to each data storage.
 
 | Parameter name | Description |
 | :--- | :--- |
-|Storage name (ID) | Unique storage name or ID
-|Software type | Specify software that implements the data storage (e.g., PostgreSQL, Redis, Apache Cassandra).
+|Storage name (ID) | Unique storage name or ID |
+|Software type | Specify software that implements the data storage (e.g., PostgreSQL, Redis, Apache Cassandra). |
 
 #### Identify and describe message queues
 
@@ -69,8 +69,8 @@ Messaging systems (e.g., RabbitMQ or Apache Kafka) are used to implement asynchr
 
 | Parameter name | Description |
 | :--- | :--- |
-|Message queue (ID) | Unique message queue name or ID
-|Software type | Specify software that implements the message queue (e.g., RabbitMQ, Apache Kafka).
+|Message queue (ID) | Unique message queue name or ID |
+|Software type | Specify software that implements the message queue (e.g., RabbitMQ, Apache Kafka). |
 
 #### Identify and describe data assets
 
@@ -78,9 +78,9 @@ Identify and describe data assets that processed by system microservices/service
 
 | Parameter name | Description |
 | :--- | :--- |
-| Asset name (ID) | Unique asset name or ID
-| Protection level | Specify asset protection level (e.g., PII, confidential)
-| Additional info | Add clarifying information
+| Asset name (ID) | Unique asset name or ID |
+| Protection level | Specify asset protection level (e.g., PII, confidential) |
+| Additional info | Add clarifying information |
 
 ### Collect information on relations between building blocks
 
@@ -90,9 +90,9 @@ Collect information on the parameters listed below related to each "service-to-s
 
 | Parameter name | Description |
 | :--- | :--- |
-| Service name (ID) | Specify service name (ID) defined above
-| Storage name (ID) | Specify storage name (ID) defined above
-| Access type | Specify access type, e.g. "Read" or "Read/Write"
+| Service name (ID) | Specify service name (ID) defined above |
+| Storage name (ID) | Specify storage name (ID) defined above |
+| Access type | Specify access type, e.g. "Read" or "Read/Write" |
 
 #### Identify "service-to-service" synchronous communications
 
@@ -100,10 +100,10 @@ Collect information on the parameters listed below related to each "service-to-s
 
 | Parameter name | Description |
 | :--- | :--- |
-| Caller service name (ID) | Specify caller service name (ID) defined above
-| Called service name (ID) | Specify called service name (ID) defined above
-| Protocol/framework used| Specify protocol/framework used for communication, e.g. HTTP (REST, SOAP), Apache Thrift, gRPC
-| Short description | Shortly describe the purpose of communication (requests for query of information or request/commands for a state-changing business function) and data passed between services (if possible, in therms of assets defined above)
+| Caller service name (ID) | Specify caller service name (ID) defined above |
+| Called service name (ID) | Specify called service name (ID) defined above |
+| Protocol/framework used| Specify protocol/framework used for communication, e.g. HTTP (REST, SOAP), Apache Thrift, gRPC |
+| Short description | Shortly describe the purpose of communication (requests for query of information or request/commands for a state-changing business function) and data passed between services (if possible, in therms of assets defined above) |
 
 #### Identify "service-to-service" asynchronous communications
 
@@ -111,10 +111,10 @@ Collect information on the parameters listed below related to each "service-to-s
 
 | Parameter name | Description |
 | :--- | :--- |
-| Publisher service name (ID) | Specify publisher service name (ID) defined above
-| Subscriber service name (ID) | Specify subscriber service name (ID) defined above
-| Message queue (ID) | Specify message queue (ID) defined above
-| Short description | Shortly describe the purpose of communication (receiving of information or commands for a state-changing business function) and data passed between services (if possible, in therms of assets defined above)
+| Publisher service name (ID) | Specify publisher service name (ID) defined above |
+| Subscriber service name (ID) | Specify subscriber service name (ID) defined above |
+| Message queue (ID) | Specify message queue (ID) defined above |
+| Short description | Shortly describe the purpose of communication (receiving of information or commands for a state-changing business function) and data passed between services (if possible, in therms of assets defined above) |
 
 #### Identify "asset-to-storage" relations
 
@@ -122,9 +122,9 @@ Collect information on the parameters listed below related to each "asset-to-sto
 
 | Parameter name | Description |
 | :--- | :--- |
-| Asset name (ID) | Asset name (ID) defined above
-| Storage name (ID) | Specify storage name (ID) defined above
-| Storage type | Specify storage type for the asset, e.g. "golden source" or "cache"
+| Asset name (ID) | Asset name (ID) defined above |
+| Storage name (ID) | Specify storage name (ID) defined above |
+| Storage type | Specify storage type for the asset, e.g. "golden source" or "cache" |
 
 ### Create a graphical presentation of application architecture
 
