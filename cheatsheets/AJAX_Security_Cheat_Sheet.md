@@ -4,7 +4,7 @@
 
 This document will provide a starting point for AJAX security and will hopefully be updated and expanded reasonably often to provide more detailed information about specific frameworks and technologies.
 
-### Client Side (JavaScript)
+### Client-Side (JavaScript)
 
 #### Use `.innerText` instead of `.innerHTML`
 
@@ -12,11 +12,11 @@ The use of `.innerText` will prevent most XSS problems as it will automatically 
 
 #### Don't use `eval()`, `new Function()` or other code evaluation tools
 
-`eval()` function is evil, never use it. Needing to use eval usually indicates a problem in your design.
+`eval()` function is evil, never use it. Needing to use eval() usually indicates a problem in your design.
 
-#### Canonicalize data to consumer (read: encode before use)
+#### Encode Data Before Use in an Output Context
 
-When using data to build HTML, script, CSS, XML, JSON, etc. make sure you take into account how that data must be presented in a literal sense to keep its logical meaning.
+When using data to build HTML, script, CSS, XML, JSON, etc., make sure you take into account how that data must be presented in a literal sense to keep its logical meaning.
 
 Data should be properly encoded before used in this manner to prevent injection style issues, and to make sure the logical meaning is preserved.
 
@@ -28,7 +28,7 @@ Don't forget that the user controls the client-side logic. A number of browser p
 
 #### Don't rely on client business logic
 
-Just like the security one, make sure any interesting business rules/logic is duplicated on the server side lest a user bypasses needed logic and does something silly, or worse, costly.
+Just like the security one, make sure any interesting business rules/logic is duplicated on the server-side lest a user bypass this logic, leading to unexpected or costly behavior.
 
 #### Avoid writing serialization code
 
@@ -47,27 +47,27 @@ Just like building HTML or SQL you will cause XML injection bugs, so stay away f
 
 Anything the client knows the user will also know, so keep all that secret stuff on the server please.
 
-#### Don't perform encryption in client side code
+#### Don't perform encryption in client-side code
 
 Use TLS/SSL and encrypt on the server!
 
-#### Don't perform security impacting logic on client side
+#### Don't perform security impacting logic on client-side
 
-This is the overall one that gets me out of trouble in case I missed something :)
+This principle serves as a fail-safe—if a security decision is ambiguous, default to performing it on the server.
 
-### Server Side
+### Server-Side
 
 #### Use CSRF Protection
 
 Take a look at the [Cross-Site Request Forgery (CSRF) Prevention](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md) cheat sheet.
 
-#### Protect against JSON Hijacking for Older Browsers
+#### Protect against JSON hijacking for older browsers
 
-##### Review AngularJS JSON Hijacking Defense Mechanism
+##### Review AngularJS JSON hijacking defense mechanism
 
 See the [JSON Vulnerability Protection](https://docs.angularjs.org/api/ng/service/$http#json-vulnerability-protection) section of the AngularJS documentation.
 
-##### Always return JSON with an Object on the outside
+##### Always return JSON with an object on the outside
 
 Always have the outside primitive be an object for JSON strings:
 
@@ -89,13 +89,13 @@ Always have the outside primitive be an object for JSON strings:
 {"result": [{"object": "inside an array"}]}
 ```
 
-#### Avoid writing serialization code Server Side
+#### Avoid writing serialization code server-side
 
 Remember ref vs. value types! Look for an existing library that has been reviewed.
 
 #### Services can be called by users directly
 
-Even though you only expect your AJAX client side code to call those services the users can too.
+Even though you only expect your AJAX client-side code to call those services, a malicious user can also call them directly.
 
 Make sure you validate inputs and treat them like they are under user control (because they are!).
 
@@ -103,6 +103,6 @@ Make sure you validate inputs and treat them like they are under user control (b
 
 Use the framework and be safe, do it by hand and have security issues.
 
-#### Use JSON And XML Schema for Webservices
+#### Use JSON and XML schema for web services
 
 You need to use a third-party library to validate web services.
