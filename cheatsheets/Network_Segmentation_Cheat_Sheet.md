@@ -4,7 +4,7 @@
 
 Network segmentation is the core of multi-layer defense in depth for modern services. Segmentation slow down an attacker if he cannot implement attacks such as:
 
-- SQL-injections, see [SQL Injection Prevention Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.md);
+- SQL-injections, see [SQL Injection Prevention Cheat Sheet](SQL_Injection_Prevention_Cheat_Sheet.md);
 - compromise of workstations of employees with elevated privileges;
 - compromise of another server in the perimeter of the organization;
 - compromise of the target service through the compromise of the LDAP directory, DNS server, and other corporate services and sites published on the Internet.
@@ -45,9 +45,9 @@ Further, the schemes do not contain firewall icons so as not to overload the sch
 
 By default, developed information systems should consist of at least three components (**security zones**):
 
-1. [FRONTEND](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Network_Segmentation_Cheat_Sheet.md#FRONTEND);
-2. [MIDDLEWARE](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Network_Segmentation_Cheat_Sheet.md#MIDDLEWARE);
-3. [BACKEND](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Network_Segmentation_Cheat_Sheet.md#BACKEND).
+1. [FRONTEND](Network_Segmentation_Cheat_Sheet.md#FRONTEND);
+2. [MIDDLEWARE](Network_Segmentation_Cheat_Sheet.md#MIDDLEWARE);
+3. [BACKEND](Network_Segmentation_Cheat_Sheet.md#BACKEND).
 
 ### FRONTEND
 
