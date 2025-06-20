@@ -215,7 +215,7 @@ Context: HTML Body
 Code: `<span>UNTRUSTED DATA </span>`
 Sample Defense: HTML Entity Encoding (rule \#1)
 
-Data Type: Strong
+Data Type: String
 Context: Safe HTML Attributes
 Code: `<input type="text" name="fname" value="UNTRUSTED DATA ">`
 Sample Defense: Aggressive HTML Entity Encoding (rule \#2), Only place untrusted data into a list of safe attributes (listed below), Strictly validate unsafe attributes such as background, ID and name.
