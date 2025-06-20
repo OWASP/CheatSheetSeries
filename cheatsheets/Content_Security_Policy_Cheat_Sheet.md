@@ -133,7 +133,7 @@ However, current leading practice is to create a "Strict" CSP which is much easi
 
 ## Strict CSP
 
-A strict CSP can be created by using a limited number of the granular [Fetch Directives listed below](#fetch-directives) listed below along with one of two mechanisms:
+A strict CSP can be created by using a limited number of the granular [Fetch Directives listed below](#fetch-directives) along with one of two mechanisms:
 
 - Nonce based
 - Hash based
