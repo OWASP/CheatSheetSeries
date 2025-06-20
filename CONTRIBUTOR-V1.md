@@ -33,6 +33,7 @@ Sorting applied on the name is an alphabetical one.
 - Jim Manico - [jim@owasp.org](mailto:jim@owasp.org)
 - Manuel Aude Morales
 - Pawel Krawczyk
+- Pankaj Taneja
 - Sven Neuhaus
 - Timo Goosen
 
