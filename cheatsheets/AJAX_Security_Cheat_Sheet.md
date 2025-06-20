@@ -61,13 +61,13 @@ This is the overall one that gets me out of trouble in case I missed something :
 
 Take a look at the [Cross-Site Request Forgery (CSRF) Prevention](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md) cheat sheet.
 
-#### Protect against JSON Hijacking for Older Browsers
+#### Protect against JSON hijacking for older browsers
 
-##### Review AngularJS JSON Hijacking Defense Mechanism
+##### Review AngularJS JSON hijacking defense mechanism
 
 See the [JSON Vulnerability Protection](https://docs.angularjs.org/api/ng/service/$http#json-vulnerability-protection) section of the AngularJS documentation.
 
-##### Always return JSON with an Object on the outside
+##### Always return JSON with an object on the outside
 
 Always have the outside primitive be an object for JSON strings:
 
@@ -103,6 +103,6 @@ Make sure you validate inputs and treat them like they are under user control (b
 
 Use the framework and be safe, do it by hand and have security issues.
 
-#### Use JSON And XML Schema for Webservices
+#### Use JSON and XML schema for web services
 
 You need to use a third-party library to validate web services.
