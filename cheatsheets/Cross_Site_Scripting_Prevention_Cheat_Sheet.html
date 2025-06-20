@@ -3273,7 +3273,7 @@ This is a <strong>Safe Sink</strong> and will automatically CSS encode data in i
 Context: HTML Body
 Code: <code>&lt;span&gt;UNTRUSTED DATA &lt;/span&gt;</code>
 Sample Defense: HTML Entity Encoding (rule #1)</p>
-<p>Data Type: Strong
+<p>Data Type: String
 Context: Safe HTML Attributes
 Code: <code>&lt;input type="text" name="fname" value="UNTRUSTED DATA "&gt;</code>
 Sample Defense: Aggressive HTML Entity Encoding (rule #2), Only place untrusted data into a list of safe attributes (listed below), Strictly validate unsafe attributes such as background, ID and name.</p>
