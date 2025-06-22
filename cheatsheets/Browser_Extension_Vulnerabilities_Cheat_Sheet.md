@@ -199,7 +199,7 @@ If an extension does not clearly define how it collects and handles user data, i
 
 Implement a clear privacy policy that explains data collection practices. Allow users to opt out of data collection. Disclose data-sharing practices to comply with GDPR, CCPA, and other privacy regulations.
 
-## 11.	DOM-based Data Skimming
+## 11. DOM-based Data Skimming
 
 ### Vulnerability: DOM-based Data Skimming
 
