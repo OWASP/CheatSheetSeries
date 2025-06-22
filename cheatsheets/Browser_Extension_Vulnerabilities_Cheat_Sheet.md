@@ -232,9 +232,9 @@ Avoid rendering any sensitive information directly into a web page's DOM. Instea
 
 Use secure alternatives such as:
 
-- Action Popups: Display information in a popup UI that appears when the user clicks the extension's icon.
-- Side Panels: Use the side panel to show a persistent UI in a separate pane, isolated from the page content.
-- Options Pages: Use a dedicated options page for displaying user-specific data or settings.
+- Popup: Display information in a popup UI that appears when the user clicks the extension's icon.
+- Options Page: Use a dedicated options page for displaying user-specific data or settings.
+- Side Panel: Use the side panel to show a persistent UI in a separate pane, isolated from the page content. (FYI, "Side Panel" is a Chromium term. Firefox calls it "Sidebar".)
 
 It is important to note that even using a Shadow DOM for encapsulation may not be a sufficient safeguard, as page scripts can still query an 'open' Shadow DOM.
 
