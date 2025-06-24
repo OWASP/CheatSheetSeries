@@ -1070,6 +1070,48 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#11-dom-based-data-skimming" class="md-nav__link">
+    <span class="md-ellipsis">
+      11. DOM-based Data Skimming
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. DOM-based Data Skimming">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vulnerability-dom-based-data-skimming" class="md-nav__link">
+    <span class="md-ellipsis">
+      Vulnerability: DOM-based Data Skimming
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-dom-based-data-skimming" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example: DOM-based Data Skimming
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mitigation-dom-based-data-skimming" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mitigation: DOM-based Data Skimming
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#conclusion" class="md-nav__link">
     <span class="md-ellipsis">
       Conclusion
@@ -3410,6 +3452,48 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#11-dom-based-data-skimming" class="md-nav__link">
+    <span class="md-ellipsis">
+      11. DOM-based Data Skimming
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. DOM-based Data Skimming">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vulnerability-dom-based-data-skimming" class="md-nav__link">
+    <span class="md-ellipsis">
+      Vulnerability: DOM-based Data Skimming
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-dom-based-data-skimming" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example: DOM-based Data Skimming
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mitigation-dom-based-data-skimming" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mitigation: DOM-based Data Skimming
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#conclusion" class="md-nav__link">
     <span class="md-ellipsis">
       Conclusion
@@ -3556,6 +3640,35 @@ Never hardcode API keys or credentials within the extension code.</p>
 </code></pre></div>
 <h3 id="mitigation-insufficient-privacy-controls">Mitigation: Insufficient Privacy Controls<a class="headerlink" href="#mitigation-insufficient-privacy-controls" title="Permanent link">&para;</a></h3>
 <p>Implement a clear privacy policy that explains data collection practices. Allow users to opt out of data collection. Disclose data-sharing practices to comply with GDPR, CCPA, and other privacy regulations.</p>
+<h2 id="11-dom-based-data-skimming">11. DOM-based Data Skimming<a class="headerlink" href="#11-dom-based-data-skimming" title="Permanent link">&para;</a></h2>
+<h3 id="vulnerability-dom-based-data-skimming">Vulnerability: DOM-based Data Skimming<a class="headerlink" href="#vulnerability-dom-based-data-skimming" title="Permanent link">&para;</a></h3>
+<p>When an extension renders sensitive user information directly into DOM of a web page, this data becomes accessible to the page's own scripts.</p>
+<p>This risk applies regardless of the method used, including plain JavaScript DOM manipulation or injecting components built with frameworks like React.</p>
+<p>A malicious or compromised web page can inspect the DOM, read the sensitive data (e.g., personally identifiable information, financial details, AI chat histories), and exfiltrate it.</p>
+<h3 id="example-dom-based-data-skimming">Example: DOM-based Data Skimming<a class="headerlink" href="#example-dom-based-data-skimming" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// content-script.js</span>
+
+<span class="c1">// Sensitive data fetched from the extension&#39;s background service</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">userData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Jane Doe&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">email</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;jane.doe@example.com&quot;</span>
+<span class="p">};</span>
+
+<span class="c1">// This injects sensitive data directly into the page&#39;s DOM</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">userInfoDiv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">);</span>
+<span class="nx">userInfoDiv</span><span class="p">.</span><span class="nx">innerText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`name: </span><span class="si">${</span><span class="nx">userData</span><span class="p">.</span><span class="nx">name</span><span class="si">}</span><span class="sb">, email: </span><span class="si">${</span><span class="nx">userData</span><span class="p">.</span><span class="nx">email</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">userInfoDiv</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="mitigation-dom-based-data-skimming">Mitigation: DOM-based Data Skimming<a class="headerlink" href="#mitigation-dom-based-data-skimming" title="Permanent link">&para;</a></h3>
+<p>Avoid rendering any sensitive information directly into a web page's DOM. Instead, display sensitive data in UI elements that are isolated from the web page's context and controlled by the extension.</p>
+<p>Use secure alternatives such as:</p>
+<ul>
+<li>Popup: Display information in a popup UI that appears when the user clicks the extension's icon.</li>
+<li>Options Page: Use a dedicated options page for displaying user-specific data or settings.</li>
+<li>Side Panel: Use the side panel to show a persistent UI in a separate pane, isolated from the page content. (FYI, "Side Panel" is a Chromium term. Firefox calls it "Sidebar".)</li>
+</ul>
+<p>It is important to note that even using a Shadow DOM for encapsulation may not be a sufficient safeguard, as page scripts can still query an 'open' Shadow DOM.</p>
+<p>Therefore, using truly separate extension-controlled UIs is the most reliable mitigation.</p>
 <h2 id="conclusion">Conclusion<a class="headerlink" href="#conclusion" title="Permanent link">&para;</a></h2>
 <p>By following these security best practices, developers can build safer browser extensions and protect users from privacy and security threats. Always prioritize least privilege, encryption, and secure coding principles when developing extensions.</p>
 <p>🔹 References:
