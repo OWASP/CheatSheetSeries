@@ -199,6 +199,47 @@ If an extension does not clearly define how it collects and handles user data, i
 
 Implement a clear privacy policy that explains data collection practices. Allow users to opt out of data collection. Disclose data-sharing practices to comply with GDPR, CCPA, and other privacy regulations.
 
+## 11. DOM-based Data Skimming
+
+### Vulnerability: DOM-based Data Skimming
+
+When an extension renders sensitive user information directly into DOM of a web page, this data becomes accessible to the page's own scripts.
+
+This risk applies regardless of the method used, including plain JavaScript DOM manipulation or injecting components built with frameworks like React.
+
+A malicious or compromised web page can inspect the DOM, read the sensitive data (e.g., personally identifiable information, financial details, AI chat histories), and exfiltrate it.
+
+### Example: DOM-based Data Skimming
+
+```javascript
+// content-script.js
+
+// Sensitive data fetched from the extension's background service
+const userData = {
+  name: "Jane Doe",
+  email: "jane.doe@example.com"
+};
+
+// This injects sensitive data directly into the page's DOM
+const userInfoDiv = document.createElement('div');
+userInfoDiv.innerText = `name: ${userData.name}, email: ${userData.email}`;
+document.body.appendChild(userInfoDiv);
+```
+
+### Mitigation: DOM-based Data Skimming
+
+Avoid rendering any sensitive information directly into a web page's DOM. Instead, display sensitive data in UI elements that are isolated from the web page's context and controlled by the extension.
+
+Use secure alternatives such as:
+
+- Popup: Display information in a popup UI that appears when the user clicks the extension's icon.
+- Options Page: Use a dedicated options page for displaying user-specific data or settings.
+- Side Panel: Use the side panel to show a persistent UI in a separate pane, isolated from the page content. (FYI, "Side Panel" is a Chromium term. Firefox calls it "Sidebar".)
+
+It is important to note that even using a Shadow DOM for encapsulation may not be a sufficient safeguard, as page scripts can still query an 'open' Shadow DOM.
+
+Therefore, using truly separate extension-controlled UIs is the most reliable mitigation.
+
 ## Conclusion
 
 By following these security best practices, developers can build safer browser extensions and protect users from privacy and security threats. Always prioritize least privilege, encryption, and secure coding principles when developing extensions.
