@@ -262,6 +262,10 @@ Web applications should require reauthentication after high-risk events such as:
 
 For best practices on implementing reauthentication after these events, see the [Reauthentication After Risk Events](#reauthentication-after-risk-events) section in the Authentication Cheat Sheet
 
+### Additional Resources
+
+- [Why Frequent Reauthentication Can Be a UX Pitfall](https://tailscale.com/blog/frequent-reauth-security?lid=5wso20mx4knj) by Tailscale
+
 ### Considerations When Using Multiple Cookies
 
 If the web application uses cookies as the session ID exchange mechanism, and multiple cookies are set for a given session, the web application must verify all cookies (and enforce relationships between them) before allowing access to the user session.
