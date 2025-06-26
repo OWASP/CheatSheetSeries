@@ -260,7 +260,7 @@ Web applications should require reauthentication after high-risk events such as:
 - Login attempts from new or suspicious IP addresses or devices
 - Account recovery flows (e.g., password reset or compromised-account detection)
 
-For best practices on implementing reauthentication after these events, see the [Reauthentication After Risk Events](#reauthentication-after-risk-events) section in the Authentication Cheat Sheet
+For best practices on implementing reauthentication after these events, see the [Reauthentication After Risk Events](Authentication_Cheat_Sheet.md#reauthentication-after-risk-events) section in the Authentication Cheat Sheet
 
 ### Additional Resources
 
