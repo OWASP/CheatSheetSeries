@@ -3150,7 +3150,7 @@ TX|UT|VT|VI|VA|WA|WV|WI|WY)$
 <li>Use a new filename to store the file on the OS. Do not use any user controlled text for this filename or for the temporary filename.</li>
 <li>When the file is uploaded to web, it's suggested to rename the file on storage. For example, the uploaded filename is <em>test.JPG</em>, rename it to <em>JAI1287uaisdjhf.JPG</em> with a random filename. The purpose of doing it to prevent the risks of direct file access and ambiguous filename to evade the filter, such as <code>test.jpg;.asp or /../../../../../test.jpg</code>.</li>
 <li>Uploaded files should be analyzed for malicious content (anti-malware, static analysis, etc).</li>
-<li>The file path should not be able to specify by client-side. It's decided by server-side.</li>
+<li>The client should not be able to specify the file path; it should be defined by the server.</li>
 </ul>
 <h3 id="public-serving-of-uploaded-content">Public Serving of Uploaded Content<a class="headerlink" href="#public-serving-of-uploaded-content" title="Permanent link">&para;</a></h3>
 <ul>
