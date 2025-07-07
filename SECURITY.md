@@ -6,7 +6,10 @@ The OWASP Cheat Sheet Series is primarily documentation, but some in-scope examp
 - Leaks GitHub Actions secrets
 - Tampers with our build pipeline
 
-Example snippets that are intentionally vulnerable for demonstration are out of scope unless they can be exploited on the live site.
+The following are out of scope unless they are directly exploitable on the live site:
+
+- Snippets that are intentionally vulnerable for demonstration
+- Third-party dependencies (automatically handled by Dependabot)
 
 ## Reporting a Vulnerability
 
@@ -14,5 +17,6 @@ Example snippets that are intentionally vulnerable for demonstration are out of 
 
 Instead, submit a private report including clear steps to reproduce and details about potential impact to:
 
-- jim.manico@owasp.org
-- jakub.mackowski@owasp.org
+- <jim.manico@owasp.org>
+- <jakub.mackowski@owasp.org>
+- <shlomo.heigh@owasp.org>
