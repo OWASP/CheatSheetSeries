@@ -3429,17 +3429,17 @@
 <p>The primary function of a User ID is to uniquely identify a user within a system. Ideally, User IDs should be randomly generated to prevent the creation of predictable or sequential IDs, which could pose a security risk, especially in systems where User IDs might be exposed or inferred from external sources.</p>
 <h3 id="usernames">Usernames<a class="headerlink" href="#usernames" title="Permanent link">&para;</a></h3>
 <p>Usernames are easy-to-remember identifiers chosen by the user and used for identifying themselves when logging into a system or service. The terms User ID and username might be used interchangeably if the username chosen by the user also serves as their unique identifier within the system.</p>
-<p>Users should be permitted to use their email address as a username, provided the email is verified during signup. Additionally, they should have the option to choose a username other than an email address. For information on validating email addresses, please visit the <a href="Input_Validation_Cheat_Sheet.html#email-address-validation">input validation cheatsheet email discussion</a>.</p>
+<p>Users should be permitted to use their email address as a username, provided the email is verified during sign-up. Additionally, they should have the option to choose a username other than an email address. For information on validating email addresses, please visit the <a href="Input_Validation_Cheat_Sheet.html#email-address-validation">input validation cheat sheet email discussion</a>.</p>
 <h3 id="authentication-solution-and-sensitive-accounts">Authentication Solution and Sensitive Accounts<a class="headerlink" href="#authentication-solution-and-sensitive-accounts" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Do <strong>NOT</strong> allow login with sensitive accounts (i.e. accounts that can be used internally within the solution such as to a back-end / middle-ware / DB) to any front-end user interface</li>
-<li>Do <strong>NOT</strong> use the same authentication solution (e.g. IDP / AD) used internally for unsecured access (e.g. public access / DMZ)</li>
+<li>Do <strong>NOT</strong> allow login with sensitive accounts (i.e. accounts that can be used internally within the solution such as to a backend / middleware / database) to any front-end user interface</li>
+<li>Do <strong>NOT</strong> use the same authentication solution (e.g. IDP / AD) used internally for unsecured access (e.g., public access / DMZ)</li>
 </ul>
 <h3 id="implement-proper-password-strength-controls">Implement Proper Password Strength Controls<a class="headerlink" href="#implement-proper-password-strength-controls" title="Permanent link">&para;</a></h3>
 <p>A key concern when using passwords for authentication is password strength. A "strong" password policy makes it difficult or even improbable for one to guess the password through either manual or automated means. The following characteristics define a strong password:</p>
 <ul>
 <li>Password Length<ul>
-<li><strong>Minimum</strong> length of the passwords should be <strong>enforced</strong> by the application. Passwords <strong>shorter than 8 characters</strong> are considered to be weak (<a href="https://pages.nist.gov/800-63-3/sp800-63b.html">NIST SP800-63B</a>).</li>
+<li><strong>Minimum</strong> length for passwords should be enforced by the application. Passwords <strong>shorter than 8 characters</strong> are considered to be weak (<a href="https://pages.nist.gov/800-63-3/sp800-63b.html">NIST SP800-63B</a>).</li>
 <li><strong>Maximum</strong> password length should be <strong>at least 64 characters</strong> to allow passphrases (<a href="https://pages.nist.gov/800-63-3/sp800-63b.html">NIST SP800-63B</a>). Note that certain implementations of hashing algorithms may cause <a href="https://www.acunetix.com/vulnerabilities/web/long-password-denial-of-service/">long password denial of service</a>.</li>
 </ul>
 </li>
@@ -3448,7 +3448,7 @@
 <li>Ensure credential rotation when a password leak occurs, at the time of compromise identification or when authenticator technology changes. Avoid requiring periodic password changes; instead, encourage users to pick strong passwords and enable <a href="Multifactor_Authentication_Cheat_Sheet.html">Multifactor Authentication Cheat Sheet (MFA)</a>. According to NIST guidelines, verifiers should not mandate arbitrary password changes (e.g., periodically).</li>
 <li>Include a password strength meter to help users create a more complex password<ul>
 <li><a href="https://github.com/zxcvbn-ts/zxcvbn">zxcvbn-ts library</a> can be used for this purpose.</li>
-<li>Other language implementations of zxcvbn <a href="https://github.com/dropbox/zxcvbn?tab=readme-ov-file">listed here</a> but check the age and maturity of each example before use.</li>
+<li>Other language implementations of zxcvbn <a href="https://github.com/dropbox/zxcvbn?tab=readme-ov-file">listed here</a>; however check the age and maturity of each example before use.</li>
 </ul>
 </li>
 <li>Block common and previously breached passwords<ul>
@@ -3456,7 +3456,7 @@
 <li>Alternatively, you can download the <a href="https://haveibeenpwned.com/Passwords">Pwned Passwords</a> database <a href="https://github.com/HaveIBeenPwned/PwnedPasswordsDownloader?tab=readme-ov-file#what-is-haveibeenpwned-downloader">using this mechanism</a> to host it yourself.</li>
 <li>Other top password lists are available but there is no guarantee as to how updated they are:<ul>
 <li><a href="https://github.com/danielmiessler/SecLists/tree/master/Passwords">Various password lists</a> hosted by SecLists from Daniel Miessler.</li>
-<li>Static copy of the top 100,000 passwords from "Have I Been Pwned" hosted by NCSC in <a href="https://www.ncsc.gov.uk/static-assets/documents/PwnedPasswordsTop100k.txt">text</a> and <a href="https://www.ncsc.gov.uk/static-assets/documents/PwnedPasswordsTop100k.json">json</a> format.</li>
+<li>Static copy of the top 100,000 passwords from "Have I Been Pwned" hosted by NCSC in <a href="https://www.ncsc.gov.uk/static-assets/documents/PwnedPasswordsTop100k.txt">text</a> and <a href="https://www.ncsc.gov.uk/static-assets/documents/PwnedPasswordsTop100k.json">JSON</a> format.</li>
 </ul>
 </li>
 </ul>
@@ -3464,7 +3464,7 @@
 </ul>
 <h4 id="for-more-detailed-information-check">For more detailed information check<a class="headerlink" href="#for-more-detailed-information-check" title="Permanent link">&para;</a></h4>
 <ul>
-<li><a href="https://github.com/OWASP/ASVS/blob/master/4.0/en/0x11-V2-Authentication.md#v21-password-security-requirements">ASVS v4.0 Password Security Requirements</a></li>
+<li><a href="https://github.com/OWASP/ASVS/blob/master/5.0/en/0x15-V6-Authentication.md#v62-password-security">ASVS v5.0 Password Security Requirements</a></li>
 <li><a href="https://www.troyhunt.com/passwords-evolved-authentication-guidance-for-the-modern-era/">Passwords Evolved: Authentication Guidance for the Modern Era</a></li>
 </ul>
 <h3 id="implement-secure-password-recovery-mechanism">Implement Secure Password Recovery Mechanism<a class="headerlink" href="#implement-secure-password-recovery-mechanism" title="Permanent link">&para;</a></h3>
@@ -3481,7 +3481,7 @@
 <h3 id="change-password-feature">Change Password Feature<a class="headerlink" href="#change-password-feature" title="Permanent link">&para;</a></h3>
 <p>When developing a change password feature, ensure to have:</p>
 <ul>
-<li>User is authenticated with active session.</li>
+<li>The user is authenticated with an active session.</li>
 <li>Current password verification. This is to ensure that it's the legitimate user who is changing the password. The abuse case is this: a legitimate user is using a public computer to log in. This user forgets to log out. Then another person is using this public computer. If we don't verify the current password, this other person may be able to change the password.</li>
 </ul>
 <h3 id="transmit-passwords-only-over-tls-or-other-strong-transport">Transmit Passwords Only Over TLS or Other Strong Transport<a class="headerlink" href="#transmit-passwords-only-over-tls-or-other-strong-transport" title="Permanent link">&para;</a></h3>
@@ -3493,7 +3493,7 @@
 <p>Some applications should use a second factor to check whether a user may perform sensitive operations. For more information, see the <a href="Transaction_Authorization_Cheat_Sheet.html">Transaction Authorization Cheat Sheet</a>.</p>
 <h4 id="tls-client-authentication">TLS Client Authentication<a class="headerlink" href="#tls-client-authentication" title="Permanent link">&para;</a></h4>
 <p>TLS Client Authentication, also known as two-way TLS authentication, consists of both, browser and server, sending their respective TLS certificates during the TLS handshake process. Just as you can validate the authenticity of a server by using the certificate and asking a verifiably-valid Certificate Authority (CA) if the certificate is valid, the server can authenticate the user by receiving a certificate from the client and validating against a third-party CA or its own CA. To do this, the server must provide the user with a certificate generated specifically for him, assigning values to the subject so that these can be used to determine what user the certificate should validate. The user installs the certificate on a browser and now uses it for the website.</p>
-<p>It is a good idea to do this when:</p>
+<p>This approach is appropriate when:</p>
 <ul>
 <li>It is acceptable (or even preferred) that the user has access to the website only from a single computer/browser.</li>
 <li>The user is not easily scared by the process of installing TLS certificates on their browser, or there will be someone, probably from IT support, who will do this for the user.</li>
@@ -3608,7 +3608,7 @@ ENDIF
 <p>Multi-factor authentication (MFA) is by far the best defense against the majority of password-related attacks, including brute-force attacks, with analysis by Microsoft suggesting that it would have stopped <a href="https://techcommunity.microsoft.com/t5/Azure-Active-Directory-Identity/Your-Pa-word-doesn-t-matter/ba-p/731984">99.9% of account compromises</a>. As such, it should be implemented wherever possible; however, depending on the audience of the application, it may not be practical or feasible to enforce the use of MFA.</p>
 <p>The <a href="Multifactor_Authentication_Cheat_Sheet.html">Multifactor Authentication Cheat Sheet</a> contains further guidance on implementing MFA.</p>
 <h4 id="login-throttling">Login Throttling<a class="headerlink" href="#login-throttling" title="Permanent link">&para;</a></h4>
-<p>Login Throttling is a protocol used to prevent an attacker from making too many attempts at guessing a password through normal interactive means, it includes:</p>
+<p>Login Throttling is a protocol used to prevent an attacker from making too many attempts at guessing a password through normal interactive means, it includes the following controls:</p>
 <ul>
 <li>Maximum number of attempts.</li>
 </ul>
@@ -3644,7 +3644,7 @@ ENDIF
 <p>The recommendation is to use and implement <a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics">OAuth 2.0</a> since the very first version (OAuth1.0) has been found to be vulnerable to session fixation.</p>
 <p>OAuth 2.0 relies on HTTPS for security and is currently used and implemented by APIs from companies such as Facebook, Google, Twitter, and Microsoft. OAuth 1.0a is more difficult to use because it requires the use of cryptographic libraries for digital signatures. However, since OAuth 1.0a does not rely on HTTPS for security, it can be more suited for higher-risk transactions.</p>
 <h3 id="openid">OpenId<a class="headerlink" href="#openid" title="Permanent link">&para;</a></h3>
-<p>OpenId is an HTTP-based protocol that uses identity providers to validate that a user is who they say they are. It is a very simple protocol that allows a service-provider-initiated way for single sign-on (SSO). This allows the user to re-use a single identity given to a trusted OpenId identity provider and be the same user on multiple websites, without the need to provide any website with the password, except for the OpenId identity provider.</p>
+<p>OpenId is an HTTP-based protocol that uses identity providers to validate that a user is who they say they are. It is a very simple protocol that allows a service-provider-initiated way for single sign-on (SSO). This allows the user to reuse a single identity given to a trusted OpenId identity provider and be the same user on multiple websites, without the need to provide any website with the password, except for the OpenId identity provider.</p>
 <p>Due to its simplicity and that it provides protection of passwords, OpenId has been well adopted. Some of the well-known identity providers for OpenId are Stack Exchange, Google, Facebook, and Yahoo!</p>
 <p>For non-enterprise environments, OpenId is considered a secure and often better choice, as long as the identity provider is of trust.</p>
 <h3 id="saml">SAML<a class="headerlink" href="#saml" title="Permanent link">&para;</a></h3>
@@ -3685,7 +3685,7 @@ ENDIF
 <p>Send two email messages with links that include those nonces:</p>
 <ul>
 <li>
-<p>A <strong>notification-only email message</strong> to the current address, alerting the user to the impending change and providing a link for an unexpected situation.</p>
+<p>A <strong>notification-only email message</strong> to the current address, alerting the user to the impending change and providing a link to report unexpected activity.</p>
 </li>
 <li>
 <p>A <strong>confirmation-required email message</strong> to the proposed new address, instructing the user to confirm the change and providing a link for unexpected situations.</p>
