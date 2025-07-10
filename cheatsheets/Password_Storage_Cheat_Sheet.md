@@ -58,14 +58,22 @@ Salting also protects against an attacker's pre-computing hashes using rainbow t
 
 ### Peppering
 
-A [pepper](https://datatracker.ietf.org/doc/html/draft-ietf-kitten-password-storage-07#section-4.2) can be used in addition to salting to provide an additional layer of protection. It prevents an attacker from being able to crack any of the hashes if they only have access to the database, for example, if they have exploited a SQL injection vulnerability or obtained a backup of the database. Peppering strategies do not affect the password hashing function in any way.
+[Peppering](https://datatracker.ietf.org/doc/html/draft-ietf-kitten-password-storage-07#section-4.2) is a class of strategies that can be used in addition to salting to provide an additional layer of protection. It prevents an attacker from being able to crack any of the hashes if they only have access to the database, for example, if they have exploited a SQL injection vulnerability or obtained a backup of the database.
 
-For example, one peppering strategy is hashing the passwords as usual (using a password hashing algorithm) and then using an HMAC (e.g., HMAC-SHA256, HMAC-SHA512, depending on the desired output length) on the original password hash before storing the password hash in the database, with the pepper acting as the HMAC  key.
+#### Common requirements for peppering strategies
 
-- The pepper is **shared between stored passwords**, rather than being *unique* like a salt.
-- Unlike a password salt, the pepper **should not be stored in the database**.
+- A pepper is **shared between stored passwords**, rather than being *unique* to an individual password like a password salt.
+- Unlike a password salt, the pepper should not be public and **should not be stored along with the generated hash**. The pepper should be stored separately from the password database.
 - Peppers are secrets and should be stored in "secrets vaults" or HSMs (Hardware Security Modules). See the [Secrets Management Cheat Sheet](Secrets_Management_Cheat_Sheet.md) for more information on securely storing secrets.
-- Like any other cryptographic key, a pepper rotation strategy should be considered.
+- In the event of a pepper's compromise, the pepper will have to be changed. Peppers cannot be changed without knowledge of a user's password. Therefore changing a pepper will require forcing all users whose passwords were protected by the previous pepper to reset their passwords.
+
+#### Pre-hashing peppers
+
+In this strategy, a pepper is added to a password before being hashed by a password hashing algorithm. The computed hash is then stored in the database. In this case the pepper should be a random value generated securely. See the [Cryptographic_Storage_Cheat_Sheet](Cryptographic_Storage_Cheat_Sheet.html#secure-random-number-generation) for more information on securely generating random values.
+
+#### Post-hashing peppers
+
+In this strategy, a password is hashed as usual using a password hashing algorithm. The resulting password hash is then hashed again using an HMAC (e.g., HMAC-SHA256, HMAC-SHA512, depending on the desired output length) before storing the resulting hash in the database. In this case the pepper is acting as the HMAC key and should be generated as per requirements of the HMAC algorithm.
 
 ### Using Work Factors
 
