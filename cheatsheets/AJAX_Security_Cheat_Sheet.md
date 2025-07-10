@@ -68,7 +68,7 @@ document.getElementById('content').textContent = userInput; // Displays plain te
 
 ##### What is `innerText`?
 
-The `innerText` property sets or gets the visible text content of an element, respecting CSS styling (e.g., ignores text in display: none elements), It also reflects rendered text formatting, such as line breaks or spacing.
+The `innerText` property sets or gets the visible text content of an element, respecting CSS styling (e.g., ignoring text in `display: none` elements), it also reflects rendered text formatting, such as line breaks or spacing.
 
 ```javascript
 const userInput = 'OWASP'; 
