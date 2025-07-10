@@ -42,6 +42,29 @@ document.getElementById('content').innerHTML = DOMPurify.sanitize(userInput); //
 * Use Templating Engines (with auto-escaping) for reusable, structured HTML snippets.
 * Use Modern Frameworks (React, Vue, Angular, Svelte) for complex applications. They standardize DOM manipulation, provide reactivity, and inherently handle sanitization for dynamic data. However, developers must avoid unsafe APIs (e.g., dangerouslySetInnerHTML in React,[innerHTML] in Angular) to prevent XSS vulnerabilities.
 
+#### Use of `textContent` or `innerText` for DOM updates (for text-only content)
+In Ajax and monolithic server-side rendering applications (e.g., PHP, ASP.NET), dynamic Document Object Model (DOM) updates are common for rendering text-only content from APIs or user inputs. 
+##### What is `textContent`?
+The `textContent` property sets or gets the plain text content of an element, It treats inserted HTML tags as literal text and does not parse them. Ideal for most text-only updates, such as displaying user comments, etc.
+```javascript
+const userInput = '<script>alert("OWASP")</script>';
+document.getElementById('content').textContent = userInput; // Displays plain text
+```
+
+##### What is `innerText`?
+The `innerText` property sets or gets the visible text content of an element, respecting CSS styling (e.g., ignores text in display: none elements), 
+It also reflects rendered text formatting, such as line breaks or spacing.
+```javascript
+const userInput = 'OWASP'; 
+document.getElementById('content').innerText = userInput;
+```
+##### When to Use `textContent` vs. `innerText`
+* **Use `textContent`**: Use textContent in monolithic applications to safely insert plain text content returned from APIs.
+* **Use `innerText`**: Only when CSS visibility or rendered text formatting (e.g. ignoring text in display: none elements) is required.
+
+**Note**:
+• While `textContent` and `innerText` are safe for inserting plain text into the DOM, they do not protect against XSS in other contexts such as HTML attributes, JavaScript event handlers, or URLs. Always validate and sanitize untrusted input.
+• Modern Frameworks like React, Vue, Angular, or Svelte automatically update the text-only content there is no need to manually use `textContent` or `innerText`. 
 
 
 #### Don't use `eval()`, `new Function()` or other code evaluation tools
