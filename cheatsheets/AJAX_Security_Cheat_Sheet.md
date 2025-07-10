@@ -6,9 +6,43 @@ This document will provide a starting point for AJAX security and will hopefully
 
 ### Client-Side (JavaScript)
 
-#### Use `.innerText` instead of `.innerHTML`
+#### Use of `innerHTML` with extreme caution
 
-The use of `.innerText` will prevent most XSS problems as it will automatically encode the text.
+Manipulating the Document Object Model (DOM) is common in web applications, especially in monolithic server-side rendering (e.g., PHP, ASP.NET) and Ajax-driven applications. While `innerHTML` seems like a convenient way to inject HTML content, but it poses significant security risks on untrusted-data, particularly cross-site scripting (XSS).
+
+##### What is `innerHTML`?
+The `innerHTML` property sets or gets the HTML content of an element, including tags, which the browser parses and renders as part of the DOM. For example, setting `innerHTML = "<p>Hello</p>"` creates a paragraph element.
+
+##### Why `innerHTML` requires extreme cautions?
+Using `innerHTML` with untrusted data (e.g., from API responses in Ajax ) allows malicious JavaScript to execute in the user’s browser, leading to XSS vulnerabilities. Potential risks include:
+- Stealing user session cookies.
+- Defacing the website.
+- Redirecting users to malicious sites.
+- Performing unauthorized actions (e.g., API calls on behalf of the user).
+
+###### Vulnerable Example 
+```javascript
+    document.getElementById('content').innerHTML = data; 
+    // DANGER! The server returned a payload that executes scripts, for example: <img src=abc onerror=alert('xss!')>.
+```
+
+##### When `innerHTML` is acceptable?
+The fundamental security rule is to never use innerHTML with untrusted data. However, in limited cases, such as legacy monolithic applications with no viable alternatives, innerHTML may be used cautiously:
+* **Static, Hardcoded HTML**: For small, fixed HTML snippets that are part of your application’s source code and contain no user input:
+```javascript
+document.getElementById('footer').innerHTML = '<p>© 2025 My Company. All rights reserved.</p>';
+```
+* **Sanitized HTML**: For user-generated HTML (e.g., in rich text editors), sanitize with a library like [DOMPurify ](https://cheatsheetseries.owasp.org/cheatsheets/DOM_Clobbering_Prevention_Cheat_Sheet.html#1-html-sanitization)before using innerHTML:
+```javascript
+import DOMPurify from 'dompurify';
+const userInput = '<img src=abc onerror=alert("xss")>';
+document.getElementById('content').innerHTML = DOMPurify.sanitize(userInput); // Safe, removes malicious code
+```
+##### Alternatives:
+* Use Templating Engines (with auto-escaping) for reusable, structured HTML snippets.
+* Use Modern Frameworks (React, Vue, Angular, Svelte) for complex applications. They standardize DOM manipulation, provide reactivity, and inherently handle sanitization for dynamic data. However, developers must avoid unsafe APIs (e.g., dangerouslySetInnerHTML in React,[innerHTML] in Angular) to prevent XSS vulnerabilities.
+
+
 
 #### Don't use `eval()`, `new Function()` or other code evaluation tools
 
