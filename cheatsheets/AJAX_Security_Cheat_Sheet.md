@@ -14,7 +14,7 @@ Manipulating the Document Object Model (DOM) is common in web applications, espe
 
 The `innerHTML` property sets or gets the HTML content of an element, including tags, which the browser parses and renders as part of the DOM. For example, setting `innerHTML = "<p>Hello</p>"` creates a paragraph element.
 
-##### Why `innerHTML` requires extreme cautions?
+##### Why does `innerHTML` requires extreme cautions?
 
 Using `innerHTML` with untrusted data (e.g., from API responses in AJAX) can allow malicious JavaScript to execute in the user’s browser, leading to XSS vulnerabilities. Potential risks include:
 
@@ -30,7 +30,7 @@ Using `innerHTML` with untrusted data (e.g., from API responses in AJAX) can all
     // DANGER! The server may have returned a payload that executes scripts, for example: <img src=abc onerror=alert('xss!')>.
 ```
 
-##### When `innerHTML` is acceptable?
+##### When is `innerHTML` acceptable?
 
 The fundamental security rule is to never use innerHTML with untrusted data. However, in limited cases, such as legacy monolithic applications with no viable alternatives, innerHTML may be used cautiously:
 
