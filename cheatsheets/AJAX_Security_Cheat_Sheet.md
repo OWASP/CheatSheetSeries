@@ -16,7 +16,7 @@ The `innerHTML` property sets or gets the HTML content of an element, including 
 
 ##### Why `innerHTML` requires extreme cautions?
 
-Using `innerHTML` with untrusted data (e.g., from API responses in AJAX ) allows malicious JavaScript to execute in the user’s browser, leading to XSS vulnerabilities. Potential risks include:
+Using `innerHTML` with untrusted data (e.g., from API responses in AJAX) can allow malicious JavaScript to execute in the user’s browser, leading to XSS vulnerabilities. Potential risks include:
 
 - Stealing user session cookies.
 - Defacing the website.
