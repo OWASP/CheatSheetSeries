@@ -83,7 +83,7 @@ document.getElementById('content').innerText = userInput;
 ##### Note
 
 - While `textContent` and `innerText` are safe for inserting plain text into the DOM, they do not protect against XSS in other contexts such as HTML attributes, JavaScript event handlers, or URLs. Always validate and sanitize untrusted input.
-- Modern Frameworks like React, Vue, Angular, or Svelte automatically update the text-only content there is no need to manually use `textContent` or `innerText`.
+- Modern Frameworks like React, Vue, Angular, or Svelte automatically update text-only content so there is no need to manually use `textContent` or `innerText`.
 
 #### Don't use `eval()`, `new Function()` or other code evaluation tools
 
