@@ -78,7 +78,7 @@ document.getElementById('content').innerText = userInput;
 ##### When to Use `textContent` vs. `innerText`
 
 - **Use `textContent`**: Use textContent in monolithic applications to safely insert plain text content returned from APIs.
-- **Use `innerText`**: Only when CSS visibility or rendered text formatting (e.g. ignoring text in display: none elements) is required.
+- **Use `innerText`**: Only when CSS visibility or rendered text formatting (e.g. ignoring text in `display: none` elements) is required.
 
 ##### Note
 
