@@ -8,7 +8,7 @@ This document will provide a starting point for AJAX security and will hopefully
 
 #### Use `innerHTML` with extreme caution
 
-Manipulating the Document Object Model (DOM) is common in web applications, especially in monolithic server-side rendering (e.g., PHP, ASP.NET) and AJAX-driven applications. While `innerHTML` seems like a convenient way to inject HTML content, but it poses significant security risks on untrusted-data, particularly cross-site scripting (XSS).
+Manipulating the Document Object Model (DOM) is common in web applications, especially in monolithic server-side rendering (e.g., PHP, ASP.NET) and AJAX-driven applications. While `innerHTML` seems like a convenient way to inject HTML content, it poses significant security risks on untrusted-data, particularly cross-site scripting (XSS).
 
 ##### What is `innerHTML`?
 
