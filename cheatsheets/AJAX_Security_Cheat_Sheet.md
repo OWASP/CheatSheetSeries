@@ -27,7 +27,7 @@ Using `innerHTML` with untrusted data (e.g., from API responses in AJAX) can all
 
 ```javascript
     document.getElementById('content').innerHTML = data; 
-    // DANGER! The server returned a payload that executes scripts, for example: <img src=abc onerror=alert('xss!')>.
+    // DANGER! The server may have returned a payload that executes scripts, for example: <img src=abc onerror=alert('xss!')>.
 ```
 
 ##### When `innerHTML` is acceptable?
