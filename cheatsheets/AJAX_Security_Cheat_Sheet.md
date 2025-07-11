@@ -59,7 +59,7 @@ In AJAX and monolithic server-side rendering applications (e.g., PHP, ASP.NET), 
 
 ##### What is `textContent`?
 
-The `textContent` property sets or gets the plain text content of an element, It treats inserted HTML tags as literal text and does not parse them. Ideal for most text-only updates, such as displaying user comments, etc.
+The `textContent` property sets or gets the plain text content of an element. It treats inserted HTML tags as literal text and does not parse them. It is ideal for most text-only updates, such as displaying user comments, etc.
 
 ```javascript
 const userInput = '<script>alert("OWASP")</script>';
