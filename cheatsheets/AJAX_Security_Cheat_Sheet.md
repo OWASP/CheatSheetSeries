@@ -40,7 +40,7 @@ The fundamental security rule is to never use innerHTML with untrusted data. How
 document.getElementById('footer').innerHTML = '<p>© 2025 My Company. All rights reserved.</p>';
 ```
 
-- **Sanitized HTML**: For user-generated HTML (e.g., in rich text editors), sanitize with a library like [DOMPurify](https://cheatsheetseries.owasp.org/cheatsheets/DOM_Clobbering_Prevention_Cheat_Sheet.html#1-html-sanitization)before using innerHTML:
+- **Sanitized HTML**: For user-generated HTML (e.g., in rich text editors), sanitize with a library like [DOMPurify](DOM_Clobbering_Prevention_Cheat_Sheet.md#1-html-sanitization) before using innerHTML:
 
 ```javascript
 import DOMPurify from 'dompurify';
