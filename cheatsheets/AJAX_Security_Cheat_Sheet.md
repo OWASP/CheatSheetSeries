@@ -51,7 +51,7 @@ document.getElementById('content').innerHTML = DOMPurify.sanitize(userInput); //
 ##### Alternatives
 
 - Use Templating Engines (with auto-escaping) for reusable, structured HTML snippets.
-- Use Modern Frameworks (React, Vue, Angular, Svelte) for complex applications. They standardize DOM manipulation, provide reactivity, and inherently handle sanitization for dynamic data. However, developers must avoid unsafe APIs (e.g., dangerouslySetInnerHTML in React,[innerHTML] in Angular) to prevent XSS vulnerabilities.
+- Use Modern Frameworks (React, Vue, Angular, Svelte) for complex applications. They standardize DOM manipulation, provide reactivity, and inherently handle sanitization for dynamic data. However, developers must avoid unsafe APIs (e.g., `dangerouslySetInnerHTML` in React, `[innerHTML]` in Angular) to prevent XSS vulnerabilities.
 
 #### Use of `textContent` or `innerText` for DOM updates (for text-only content)
 
