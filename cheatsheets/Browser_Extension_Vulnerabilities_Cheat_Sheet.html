@@ -3667,7 +3667,7 @@ Never hardcode API keys or credentials within the extension code.</p>
 <li>Options Page: Use a dedicated options page for displaying user-specific data or settings.</li>
 <li>Side Panel: Use the side panel to show a persistent UI in a separate pane, isolated from the page content. (FYI, "Side Panel" is a Chromium term. Firefox calls it "Sidebar".)</li>
 </ul>
-<p>It is important to note that even using a Shadow DOM for encapsulation may not be a sufficient safeguard, as page scripts can still query an 'open' Shadow DOM.</p>
+<p>It is important to note that even using a Shadow DOM for encapsulation may not be a sufficient safeguard, as page scripts can still query an 'open' Shadow DOM. Moreover, even a 'closed' Shadow DOM is not safe, if you consider other browser extensions as threats under your security model. This is because extensions can spear through a 'closed' Shadow DOM using <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/dom/openOrClosedShadowRoot"><code>openOrClosedShadowRoot()</code> API</a>.</p>
 <p>Therefore, using truly separate extension-controlled UIs is the most reliable mitigation.</p>
 <h2 id="conclusion">Conclusion<a class="headerlink" href="#conclusion" title="Permanent link">&para;</a></h2>
 <p>By following these security best practices, developers can build safer browser extensions and protect users from privacy and security threats. Always prioritize least privilege, encryption, and secure coding principles when developing extensions.</p>
