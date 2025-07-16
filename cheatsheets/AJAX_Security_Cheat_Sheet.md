@@ -6,9 +6,84 @@ This document will provide a starting point for AJAX security and will hopefully
 
 ### Client-Side (JavaScript)
 
-#### Use `.innerText` instead of `.innerHTML`
+#### Use `innerHTML` with extreme caution
 
-The use of `.innerText` will prevent most XSS problems as it will automatically encode the text.
+Manipulating the Document Object Model (DOM) is common in web applications, especially in monolithic server-side rendering (e.g., PHP, ASP.NET) and AJAX-driven applications. While `innerHTML` seems like a convenient way to inject HTML content, it poses significant security risks on untrusted-data, particularly cross-site scripting (XSS).
+
+##### What is `innerHTML`?
+
+The `innerHTML` property sets or gets the HTML content of an element, including tags, which the browser parses and renders as part of the DOM. For example, setting `innerHTML = "<p>Hello</p>"` creates a paragraph element.
+
+##### Why does `innerHTML` requires extreme cautions?
+
+Using `innerHTML` with untrusted data (e.g., from API responses in AJAX) can allow malicious JavaScript to execute in the user’s browser, leading to XSS vulnerabilities. Potential risks include:
+
+- Stealing user session cookies.
+- Defacing the website.
+- Redirecting users to malicious sites.
+- Performing unauthorized actions (e.g., API calls on behalf of the user).
+
+###### Vulnerable Example
+
+```javascript
+    document.getElementById('content').innerHTML = data; 
+    // DANGER! The server may have returned a payload that executes scripts, for example: <img src=abc onerror=alert('xss!')>.
+```
+
+##### When is `innerHTML` acceptable?
+
+The fundamental security rule is to never use innerHTML with untrusted data. However, in limited cases, such as legacy monolithic applications with no viable alternatives, innerHTML may be used cautiously:
+
+- **Static, Hardcoded HTML**: For small, fixed HTML snippets that are part of your application’s source code and contain no user input:
+
+```javascript
+document.getElementById('footer').innerHTML = '<p>© 2025 My Company. All rights reserved.</p>';
+```
+
+- **Sanitized HTML**: For user-generated HTML (e.g., in rich text editors), sanitize with a library like [DOMPurify](DOM_Clobbering_Prevention_Cheat_Sheet.md#1-html-sanitization) before using innerHTML:
+
+```javascript
+import DOMPurify from 'dompurify';
+const userInput = '<img src=abc onerror=alert("xss")>';
+document.getElementById('content').innerHTML = DOMPurify.sanitize(userInput); // Safe, removes malicious code
+```
+
+##### Alternatives
+
+- Use Templating Engines (with auto-escaping) for reusable, structured HTML snippets.
+- Use Modern Frameworks (React, Vue, Angular, Svelte) for complex applications. They standardize DOM manipulation, provide reactivity, and inherently handle sanitization for dynamic data. However, developers must avoid unsafe APIs (e.g., `dangerouslySetInnerHTML` in React, `[innerHTML]` in Angular) to prevent XSS vulnerabilities.
+
+#### Use of `textContent` or `innerText` for DOM updates (for text-only content)
+
+In AJAX and monolithic server-side rendering applications (e.g., PHP, ASP.NET), dynamic Document Object Model (DOM) updates are common for rendering text-only content from APIs or user inputs.
+
+##### What is `textContent`?
+
+The `textContent` property sets or gets the plain text content of an element. It treats inserted HTML tags as literal text and does not parse them. It is ideal for most text-only updates, such as displaying user comments, etc.
+
+```javascript
+const userInput = '<script>alert("OWASP")</script>';
+document.getElementById('content').textContent = userInput; // Displays plain text
+```
+
+##### What is `innerText`?
+
+The `innerText` property sets or gets the visible text content of an element, respecting CSS styling (e.g., ignoring text in `display: none` elements). It also reflects rendered text formatting, such as line breaks or spacing.
+
+```javascript
+const userInput = 'OWASP'; 
+document.getElementById('content').innerText = userInput;
+```
+
+##### When to Use `textContent` vs. `innerText`
+
+- **Use `textContent`**: Use textContent in monolithic applications to safely insert plain text content returned from APIs.
+- **Use `innerText`**: Only when CSS visibility or rendered text formatting (e.g. ignoring text in `display: none` elements) is required.
+
+##### Note
+
+- While `textContent` and `innerText` are safe for inserting plain text into the DOM, they do not protect against XSS in other contexts such as HTML attributes, JavaScript event handlers, or URLs. Always validate and sanitize untrusted input.
+- Modern Frameworks like React, Vue, Angular, or Svelte automatically update text-only content so there is no need to manually use `textContent` or `innerText`.
 
 #### Don't use `eval()`, `new Function()` or other code evaluation tools
 
