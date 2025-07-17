@@ -96,24 +96,15 @@ generally is much more difficult.
 - **Structures and Classes:** In .NET and Java, do not use immutable structures
     such as Strings to store secrets, since it is impossible to force them to
     be garbage collected. Instead use primitive types such as byte arrays or
-    char arrays, where the memory can be directly overwritten. You can also
-    use Java's
-    [GuardedString](https://docs.oracle.com/html/E28160_01/org/identityconnectors/common/security/GuardedString.html)
-    or .NET's
-    [SecureString](https://learn.microsoft.com/en-us/dotnet/api/system.security.securestring#string-versus-securestring)
-    which are designed to solve precisely this problem.
+    char arrays, where the memory can be directly overwritten.
 
 - **Zeroing Memory:** After a secret has been used, the memory it occupied
   should be zeroed out to prevent it from lingering in memory where it could
   potentially be accessed.
-    - If using Java's GuardedString, call the `dispose()` method.
-    - If using .NET's SecureString, call the `Dispose()` method.
 
 - **Memory Encryption:** In some cases, it may be possible to use hardware or
   operating system features to encrypt the entire memory space of the process
-  handling the secret. This can provide an additional layer of security. For
-  example, GuardedString in Java encrypts the values in memory, and SecureString
-  in .NET does so on Windows.
+  handling the secret. This can provide an additional layer of security.
 
 Remember, the goal is to minimize the time window where the secret is in
 plaintext in memory as much as possible.
