@@ -428,6 +428,77 @@ extract($request->all());
 
 In general, avoid passing any untrusted input data to these dangerous functions.
 
+## Rate Limiting
+
+Laravel provides built-in mechanisms to protect your routes from excessive requests and potential abuse.
+
+The two main ways to implement rate limiting are:
+
+1. **`throttle` middleware** – A built-in middleware that you can apply directly to routes or route groups.
+2. **`RateLimiter::for()`** – Allows you to define custom rate limiting rules with more flexibility.
+
+Below are the main ways to apply rate limiting effectively:
+
+### 1. Per Route
+
+Apply a limit directly to a single route using the `throttle` middleware:
+
+```php
+Route::get('/profile', function () {
+    return 'User profile';
+})->middleware('throttle:10,1'); // 10 requests per minute
+```
+
+### 2. Per Route Group
+
+Apply a limit to a group of routes:
+
+```php
+Route::middleware('throttle:20,1')->group(function () {
+    Route::get('/posts', fn () => 'Posts');
+    Route::get('/comments', fn () => 'Comments');
+});
+```
+
+### 3. Custom Rate Limiter
+
+Define a custom rate limiter in `RouteServiceProvider` using `RateLimiter::for()`:
+
+```php
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Support\Facades\RateLimiter;
+
+RateLimiter::for('custom-limit', function ($request) {
+    return Limit::perMinute(5)->by($request->user()?->id ?: $request->ip());
+});
+```
+
+Apply the custom limiter to your routes:
+
+```php
+Route::middleware('throttle:custom-limit')->get('/dashboard', fn () => 'Dashboard');
+```
+
+### 4. Global API / Web Rate Limiting
+
+Laravel allows you to apply global rate limiting to entire route groups like `api` or `web` by including the `throttle` middleware in `Kernel.php` (note that the `api` group is rate-limited by default).
+
+```php
+protected $middlewareGroups = [
+    'api' => [
+        'throttle:60,1', // 60 requests per minute globally for API
+        // ...
+    ],
+
+    'web' => [
+        'throttle:30,1', // 30 requests per minute globally for web
+        // ...
+    ],
+];
+```
+
+For more details, see the official Laravel documentation on [rate limiting](https://laravel.com/docs/12.x/routing#rate-limiting).
+
 ## Security Headers
 
 You should consider adding the following security headers to your web server or Laravel application middleware:
