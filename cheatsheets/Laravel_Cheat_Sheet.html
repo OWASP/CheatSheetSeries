@@ -1715,6 +1715,57 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#rate-limiting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rate Limiting
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Rate Limiting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-per-route" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Per Route
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-per-route-group" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Per Route Group
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-custom-rate-limiter" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Custom Rate Limiter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-global-api-web-rate-limiting" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Global API / Web Rate Limiting
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#security-headers" class="md-nav__link">
     <span class="md-ellipsis">
       Security Headers
@@ -3038,6 +3089,57 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#rate-limiting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rate Limiting
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Rate Limiting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-per-route" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Per Route
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-per-route-group" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Per Route Group
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-custom-rate-limiter" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Custom Rate Limiter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-global-api-web-rate-limiting" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Global API / Web Rate Limiting
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#security-headers" class="md-nav__link">
     <span class="md-ellipsis">
       Security Headers
@@ -3368,6 +3470,54 @@
 <span class="x">extract($request-&gt;all());</span>
 </code></pre></div>
 <p>In general, avoid passing any untrusted input data to these dangerous functions.</p>
+<h2 id="rate-limiting">Rate Limiting<a class="headerlink" href="#rate-limiting" title="Permanent link">&para;</a></h2>
+<p>Laravel provides built-in mechanisms to protect your routes from excessive requests and potential abuse.</p>
+<p>The two main ways to implement rate limiting are:</p>
+<ol>
+<li><strong><code>throttle</code> middleware</strong> – A built-in middleware that you can apply directly to routes or route groups.</li>
+<li><strong><code>RateLimiter::for()</code></strong> – Allows you to define custom rate limiting rules with more flexibility.</li>
+</ol>
+<p>Below are the main ways to apply rate limiting effectively:</p>
+<h3 id="1-per-route">1. Per Route<a class="headerlink" href="#1-per-route" title="Permanent link">&para;</a></h3>
+<p>Apply a limit directly to a single route using the <code>throttle</code> middleware:</p>
+<div class="highlight"><pre><span></span><code><span class="x">Route::get(&#39;/profile&#39;, function () {</span>
+<span class="x">    return &#39;User profile&#39;;</span>
+<span class="x">})-&gt;middleware(&#39;throttle:10,1&#39;); // 10 requests per minute</span>
+</code></pre></div>
+<h3 id="2-per-route-group">2. Per Route Group<a class="headerlink" href="#2-per-route-group" title="Permanent link">&para;</a></h3>
+<p>Apply a limit to a group of routes:</p>
+<div class="highlight"><pre><span></span><code><span class="x">Route::middleware(&#39;throttle:20,1&#39;)-&gt;group(function () {</span>
+<span class="x">    Route::get(&#39;/posts&#39;, fn () =&gt; &#39;Posts&#39;);</span>
+<span class="x">    Route::get(&#39;/comments&#39;, fn () =&gt; &#39;Comments&#39;);</span>
+<span class="x">});</span>
+</code></pre></div>
+<h3 id="3-custom-rate-limiter">3. Custom Rate Limiter<a class="headerlink" href="#3-custom-rate-limiter" title="Permanent link">&para;</a></h3>
+<p>Define a custom rate limiter in <code>RouteServiceProvider</code> using <code>RateLimiter::for()</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="x">use Illuminate\Cache\RateLimiting\Limit;</span>
+<span class="x">use Illuminate\Support\Facades\RateLimiter;</span>
+
+<span class="x">RateLimiter::for(&#39;custom-limit&#39;, function ($request) {</span>
+<span class="x">    return Limit::perMinute(5)-&gt;by($request-&gt;user()?-&gt;id ?: $request-&gt;ip());</span>
+<span class="x">});</span>
+</code></pre></div>
+<p>Apply the custom limiter to your routes:</p>
+<div class="highlight"><pre><span></span><code><span class="x">Route::middleware(&#39;throttle:custom-limit&#39;)-&gt;get(&#39;/dashboard&#39;, fn () =&gt; &#39;Dashboard&#39;);</span>
+</code></pre></div>
+<h3 id="4-global-api-web-rate-limiting">4. Global API / Web Rate Limiting<a class="headerlink" href="#4-global-api-web-rate-limiting" title="Permanent link">&para;</a></h3>
+<p>Laravel allows you to apply global rate limiting to entire route groups like <code>api</code> or <code>web</code> by including the <code>throttle</code> middleware in <code>Kernel.php</code> (note that the <code>api</code> group is rate-limited by default).</p>
+<div class="highlight"><pre><span></span><code><span class="x">protected $middlewareGroups = [</span>
+<span class="x">    &#39;api&#39; =&gt; [</span>
+<span class="x">        &#39;throttle:60,1&#39;, // 60 requests per minute globally for API</span>
+<span class="x">        // ...</span>
+<span class="x">    ],</span>
+
+<span class="x">    &#39;web&#39; =&gt; [</span>
+<span class="x">        &#39;throttle:30,1&#39;, // 30 requests per minute globally for web</span>
+<span class="x">        // ...</span>
+<span class="x">    ],</span>
+<span class="x">];</span>
+</code></pre></div>
+<p>For more details, see the official Laravel documentation on <a href="https://laravel.com/docs/12.x/routing#rate-limiting">rate limiting</a>.</p>
 <h2 id="security-headers">Security Headers<a class="headerlink" href="#security-headers" title="Permanent link">&para;</a></h2>
 <p>You should consider adding the following security headers to your web server or Laravel application middleware:</p>
 <ul>
