@@ -12,7 +12,7 @@ The use of `.innerText` will prevent most XSS problems as it will automatically 
 
 #### Don't use `eval()`, `new Function()` or other code evaluation tools
 
-`eval()` function is evil, never use it. Needing to use eval() usually indicates a problem in your design.
+`eval()` function is dangerous, never use it. Needing to use eval() usually indicates a problem in your design.
 
 #### Encode Data Before Use in an Output Context
 
@@ -34,18 +34,18 @@ Just like the security one, make sure any interesting business rules/logic is du
 
 This is hard and even a small mistake can cause large security issues. There are already a lot of frameworks to provide this functionality.
 
-Take a look at the [JSON page](http://www.json.org/) for links.
+Refer to the [JSON page](https://www.json.org/) for more info.
 
 #### Avoid building XML or JSON dynamically
 
-Just like building HTML or SQL you will cause XML injection bugs, so stay away from this or at least use an encoding library or safe JSON or XML library to make attributes and element data safe.
+Just like building HTML or SQL you may cause XML injection bugs, so stay away from this or at least use an encoding library or safe JSON or XML library to make attributes and element data safe.
 
 - [XSS (Cross Site Scripting) Prevention](Cross_Site_Scripting_Prevention_Cheat_Sheet.md)
 - [SQL Injection Prevention](SQL_Injection_Prevention_Cheat_Sheet.md)
 
 #### Never transmit secrets to the client
 
-Anything the client knows the user will also know, so keep all that secret stuff on the server please.
+Anything sent to the client can be read or modified by the user, so keep all that secret stuff on the server please.
 
 #### Don't perform encryption in client-side code
 
