@@ -36,7 +36,6 @@ This is hard and even a small mistake can cause large security issues. There are
 
 Refer to the [JSON page](https://www.json.org/) for more info.
 
-
 #### Avoid building XML or JSON dynamically
 
 Just like building HTML or SQL you may cause XML injection bugs, so stay away from this or at least use an encoding library or safe JSON or XML library to make attributes and element data safe.
