@@ -3011,7 +3011,7 @@
 <h4 id="use-innertext-instead-of-innerhtml">Use <code>.innerText</code> instead of <code>.innerHTML</code><a class="headerlink" href="#use-innertext-instead-of-innerhtml" title="Permanent link">&para;</a></h4>
 <p>The use of <code>.innerText</code> will prevent most XSS problems as it will automatically encode the text.</p>
 <h4 id="dont-use-eval-new-function-or-other-code-evaluation-tools">Don't use <code>eval()</code>, <code>new Function()</code> or other code evaluation tools<a class="headerlink" href="#dont-use-eval-new-function-or-other-code-evaluation-tools" title="Permanent link">&para;</a></h4>
-<p><code>eval()</code> function is evil, never use it. Needing to use eval() usually indicates a problem in your design.</p>
+<p><code>eval()</code> function is dangerous, never use it. Needing to use eval() usually indicates a problem in your design.</p>
 <h4 id="encode-data-before-use-in-an-output-context">Encode Data Before Use in an Output Context<a class="headerlink" href="#encode-data-before-use-in-an-output-context" title="Permanent link">&para;</a></h4>
 <p>When using data to build HTML, script, CSS, XML, JSON, etc., make sure you take into account how that data must be presented in a literal sense to keep its logical meaning.</p>
 <p>Data should be properly encoded before used in this manner to prevent injection style issues, and to make sure the logical meaning is preserved.</p>
@@ -3022,15 +3022,15 @@
 <p>Just like the security one, make sure any interesting business rules/logic is duplicated on the server-side lest a user bypass this logic, leading to unexpected or costly behavior.</p>
 <h4 id="avoid-writing-serialization-code">Avoid writing serialization code<a class="headerlink" href="#avoid-writing-serialization-code" title="Permanent link">&para;</a></h4>
 <p>This is hard and even a small mistake can cause large security issues. There are already a lot of frameworks to provide this functionality.</p>
-<p>Take a look at the <a href="http://www.json.org/">JSON page</a> for links.</p>
+<p>Refer to the <a href="https://www.json.org/">JSON page</a> for more info.</p>
 <h4 id="avoid-building-xml-or-json-dynamically">Avoid building XML or JSON dynamically<a class="headerlink" href="#avoid-building-xml-or-json-dynamically" title="Permanent link">&para;</a></h4>
-<p>Just like building HTML or SQL you will cause XML injection bugs, so stay away from this or at least use an encoding library or safe JSON or XML library to make attributes and element data safe.</p>
+<p>Just like building HTML or SQL you may cause XML injection bugs, so stay away from this or at least use an encoding library or safe JSON or XML library to make attributes and element data safe.</p>
 <ul>
 <li><a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">XSS (Cross Site Scripting) Prevention</a></li>
 <li><a href="SQL_Injection_Prevention_Cheat_Sheet.html">SQL Injection Prevention</a></li>
 </ul>
 <h4 id="never-transmit-secrets-to-the-client">Never transmit secrets to the client<a class="headerlink" href="#never-transmit-secrets-to-the-client" title="Permanent link">&para;</a></h4>
-<p>Anything the client knows the user will also know, so keep all that secret stuff on the server please.</p>
+<p>Anything sent to the client can be read or modified by the user, so keep all that secret stuff on the server please.</p>
 <h4 id="dont-perform-encryption-in-client-side-code">Don't perform encryption in client-side code<a class="headerlink" href="#dont-perform-encryption-in-client-side-code" title="Permanent link">&para;</a></h4>
 <p>Use TLS/SSL and encrypt on the server!</p>
 <h4 id="dont-perform-security-impacting-logic-on-client-side">Don't perform security impacting logic on client-side<a class="headerlink" href="#dont-perform-security-impacting-logic-on-client-side" title="Permanent link">&para;</a></h4>
