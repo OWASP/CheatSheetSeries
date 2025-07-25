@@ -420,4 +420,8 @@
          <loc>https://cheatsheetseries.owasp.org/cheatsheets/Zero_Trust_Architecture_Cheat_Sheet.html</loc>
          <lastmod>2025-07-25</lastmod>
     </url>
+    <url>
+         <loc>https://cheatsheetseries.owasp.org/cheatsheets/gRPC_Security_Cheat_Sheet.html</loc>
+         <lastmod>2025-07-25</lastmod>
+    </url>
 </urlset>
