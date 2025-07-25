@@ -1924,6 +1924,39 @@ redirect_from: "/cheatsheets/Nodejs_security_cheat_sheet.html"
 </li>
         
           <li class="md-nav__item">
+  <a href="#permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Permissions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Permissions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Usage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#error-exception-handling" class="md-nav__link">
     <span class="md-ellipsis">
       Error &amp; Exception Handling
@@ -3079,6 +3112,39 @@ redirect_from: "/cheatsheets/Nodejs_security_cheat_sheet.html"
 </li>
         
           <li class="md-nav__item">
+  <a href="#permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Permissions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Permissions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Usage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#error-exception-handling" class="md-nav__link">
     <span class="md-ellipsis">
       Error &amp; Exception Handling
@@ -3579,6 +3645,36 @@ For detailed information on input validation, please refer to <a href="https://c
 <p>Apart from these, there are some special functions for object attributes. <code>Object.preventExtensions()</code> prevents new properties from being added to the object.</p>
 <h4 id="use-access-control-lists">Use access control lists<a class="headerlink" href="#use-access-control-lists" title="Permanent link">&para;</a></h4>
 <p>Authorization prevents users from acting outside of their intended permissions. In order to do so, users and their roles should be determined with consideration of the principle of least privilege. Each user role should only have access to the resources they must use. For your Node.js applications, you can use the <a href="https://www.npmjs.com/package/acl">acl</a> module to provide ACL (access control list) implementation. With this module, you can create roles and assign users to these roles.</p>
+<h3 id="permissions">Permissions<a class="headerlink" href="#permissions" title="Permanent link">&para;</a></h3>
+<p>Starting with Node.js v20, a Permission Model is available to restrict application privileges. As of Node.js v23.5.0, the model is considered stable and can be enabled using the <code>--permission</code> flag (earlier versions require <code>--experimental-permission</code>).</p>
+<h4 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>node<span class="w"> </span>--permission<span class="w"> </span><span class="o">[</span>--allow-&lt;type&gt;<span class="o">=</span>...<span class="o">]</span><span class="w"> </span>app.js
+</code></pre></div>
+<h4 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h4>
+<p>Use only <code>--permission</code> to restrict all permissions by default:</p>
+<div class="highlight"><pre><span></span><code>node<span class="w"> </span>--permission<span class="w"> </span>index.js
+</code></pre></div>
+<p>Use <code>--allow‑fs‑read</code> to specify which files or directories Node.js is allowed to read. This is especially useful to prevent Local File Inclusion (LFI) vulnerabilities:</p>
+<div class="highlight"><pre><span></span><code>node<span class="w"> </span>--permission<span class="w"> </span>--allow-fs-read<span class="o">=</span>/uploads/<span class="w"> </span>index.js
+</code></pre></div>
+<p>Use <code>--allow-fs-write</code> to specify where Node.js is allowed to write files:</p>
+<div class="highlight"><pre><span></span><code>node<span class="w"> </span>--permission<span class="w"> </span>--allow-fs-write<span class="o">=</span>/uploads/<span class="w"> </span>index.js
+</code></pre></div>
+<p>Unauthorized access triggers a runtime error:</p>
+<div class="highlight"><pre><span></span><code>Error: Access to this API has been restricted
+code: &#39;ERR_ACCESS_DENIED&#39;
+permission: &#39;FileSystemRead&#39;
+resource: &#39;/path/to/file&#39;
+</code></pre></div>
+<p>Other flags:</p>
+<ul>
+<li><code>--allow-child-process</code> — allows using <code>child_process</code> APIs</li>
+<li><code>--allow-worker</code> — allows usage of <code>worker_threads</code> APIs</li>
+<li><code>--allow-addons</code> — enables loading native addons</li>
+<li><code>--allow-wasi</code> — enables usage of WASI modules</li>
+</ul>
+<p><strong>Important note:</strong> Symbolic links are followed even if they point outside the allowed paths. This means that relative symlinks can bypass restrictions and grant unintended access. To stay secure make sure no allowed paths include relative symbolic links when using the permission model.</p>
+<p>For more details refer to the <a href="https://nodejs.org/api/permissions.html">official documentation</a>.</p>
 <h3 id="error-exception-handling">Error &amp; Exception Handling<a class="headerlink" href="#error-exception-handling" title="Permanent link">&para;</a></h3>
 <h4 id="handle-uncaughtexception">Handle uncaughtException<a class="headerlink" href="#handle-uncaughtexception" title="Permanent link">&para;</a></h4>
 <p>Node.js behavior for uncaught exceptions is to print current stack trace and then terminate the thread. However, Node.js allows customization of this behavior. It provides a global object named process that is available to all Node.js applications. It is an EventEmitter object and in case of an uncaught exception, uncaughtException event is emitted and it is brought up to the main event loop. In order to provide a custom behavior for uncaught exceptions, you can bind to this event. However, resuming the application after such an uncaught exception can lead to further problems. Therefore, if you do not want to miss any uncaught exception, you should bind to uncaughtException event and cleanup any allocated resources like file descriptors, handles and similar before shutting down the process. Resuming the application is strongly discouraged as the application will be in an unknown state. It is important to note that when displaying error messages to the user in case of an uncaught exception, detailed information like stack traces should not be revealed to the user. Instead, custom error messages should be shown to the users in order not to cause any information leakage.</p>
