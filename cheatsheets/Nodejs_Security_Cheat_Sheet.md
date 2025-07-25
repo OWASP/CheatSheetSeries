@@ -373,6 +373,56 @@ Apart from these, there are some special functions for object attributes. `Objec
 
 Authorization prevents users from acting outside of their intended permissions. In order to do so, users and their roles should be determined with consideration of the principle of least privilege. Each user role should only have access to the resources they must use. For your Node.js applications, you can use the [acl](https://www.npmjs.com/package/acl) module to provide ACL (access control list) implementation. With this module, you can create roles and assign users to these roles.
 
+### Permissions
+
+Starting with Node.js v20, a Permission Model is available to restrict application privileges. As of Node.js v23.5.0, the model is considered stable and can be enabled using the `--permission` flag (earlier versions require `--experimental-permission`).
+
+#### Usage
+
+```bash
+node --permission [--allow-<type>=...] app.js
+```
+
+#### Examples
+
+Use only `--permission` to restrict all permissions by default:
+
+```bash
+node --permission index.js
+```
+
+Use `--allow‑fs‑read` to specify which files or directories Node.js is allowed to read. This is especially useful to prevent Local File Inclusion (LFI) vulnerabilities:
+
+```bash
+node --permission --allow-fs-read=/uploads/ index.js
+```
+
+Use `--allow-fs-write` to specify where Node.js is allowed to write files:
+
+```bash
+node --permission --allow-fs-write=/uploads/ index.js
+```
+
+Unauthorized access triggers a runtime error:
+
+```text
+Error: Access to this API has been restricted
+code: 'ERR_ACCESS_DENIED'
+permission: 'FileSystemRead'
+resource: '/path/to/file'
+```
+
+Other flags:
+
+- `--allow-child-process` — allows using `child_process` APIs
+- `--allow-worker` — allows usage of `worker_threads` APIs
+- `--allow-addons` — enables loading native addons
+- `--allow-wasi` — enables usage of WASI modules
+
+**Important note:** Symbolic links are followed even if they point outside the allowed paths. This means that relative symlinks can bypass restrictions and grant unintended access. To stay secure make sure no allowed paths include relative symbolic links when using the permission model.
+
+For more details refer to the [official documentation](https://nodejs.org/api/permissions.html).
+
 ### Error & Exception Handling
 
 #### Handle uncaughtException
