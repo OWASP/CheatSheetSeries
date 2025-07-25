@@ -391,7 +391,7 @@ Use only `--permission` to restrict all permissions by default:
 node --permission index.js
 ```
 
-Use `--allow-fs-read` to specify which files Node.js is allowed to read. This is especially useful to prevent Local File Inclusion (LFI) vulnerabilities:
+Use `--allow‑fs‑read` to specify which files or directories Node.js is allowed to read. This is especially useful to prevent Local File Inclusion (LFI) vulnerabilities:
 
 ```bash
 node --permission --allow-fs-read=/uploads/ index.js
