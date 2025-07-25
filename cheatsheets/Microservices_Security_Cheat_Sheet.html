@@ -3159,13 +3159,13 @@ In most cases, token-based authentication works over TLS, which provides confide
 <li>this allows mitigating the threat of microservice elevation of privileges</li>
 </ul>
 </li>
-<li>Logging agent shall filter/sanitize output log messages to make sure that sensitive data (e.g., PII, passwords, API keys) is never sent to the central logging subsystem (data minimization principle). For a comprehensive overview of items that should be excluded from logging, please see the <a href="https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Logging_Cheat_Sheet.md#data-to-exclude">OWASP Logging Cheat Sheet</a>.</li>
+<li>Logging agent shall filter/sanitize output log messages to make sure that sensitive data (e.g., PII, passwords, API keys) is never sent to the central logging subsystem (data minimization principle). For a comprehensive overview of items that should be excluded from logging, please see the <a href="Logging_Cheat_Sheet.html#data-to-exclude">OWASP Logging Cheat Sheet</a>.</li>
 <li>Microservices shall generate a correlation ID that uniquely identifies every call chain and helps group log messages to investigate them. The logging agent shall include a correlation ID in every log message.</li>
 <li>The logging agent shall periodically provide health and status data to indicate its availability or non-availability.</li>
 <li>The logging agent shall publish log messages in a structured logs format (e.g., JSON, CSV).</li>
 <li>The logging agent shall append log messages with context data, e.g., platform context (hostname, container name), runtime context (class name, filename).</li>
 </ol>
-<p>For a comprehensive overview of events that should be logged and possible data format, please see the <a href="https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Logging_Cheat_Sheet.md#which-events-to-log">OWASP Logging Cheat Sheet</a> and <a href="https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Logging_Vocabulary_Cheat_Sheet.md">Application Logging Vocabulary Cheat Sheet</a></p>
+<p>For a comprehensive overview of events that should be logged and possible data format, please see the <a href="Logging_Cheat_Sheet.html#which-events-to-log">OWASP Logging Cheat Sheet</a> and <a href="Logging_Vocabulary_Cheat_Sheet.html">Application Logging Vocabulary Cheat Sheet</a></p>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-204.pdf">NIST Special Publication 800-204</a> “Security Strategies for Microservices-based Application Systems”</li>
