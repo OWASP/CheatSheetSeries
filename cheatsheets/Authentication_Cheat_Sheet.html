@@ -669,6 +669,57 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#reauthentication-after-risk-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reauthentication After Risk Events
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Reauthentication After Risk Events">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#when-to-trigger-reauthentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      When to Trigger Reauthentication
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reauthentication-mechanisms" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reauthentication Mechanisms
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implementation-recommendations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementation Recommendations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#consider-strong-transaction-authentication" class="md-nav__link">
     <span class="md-ellipsis">
       Consider Strong Transaction Authentication
@@ -3126,6 +3177,57 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#reauthentication-after-risk-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reauthentication After Risk Events
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Reauthentication After Risk Events">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#when-to-trigger-reauthentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      When to Trigger Reauthentication
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reauthentication-mechanisms" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reauthentication Mechanisms
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implementation-recommendations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementation Recommendations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#consider-strong-transaction-authentication" class="md-nav__link">
     <span class="md-ellipsis">
       Consider Strong Transaction Authentication
@@ -3510,6 +3612,42 @@
 <p>The login page and all subsequent authenticated pages must be exclusively accessed over TLS or other strong transport. Failure to utilize TLS or other strong transport for the login page allows an attacker to modify the login form action, causing the user's credentials to be posted to an arbitrary location. Failure to utilize TLS or other strong transport for authenticated pages after login enables an attacker to view the unencrypted session ID and compromise the user's authenticated session.</p>
 <h3 id="require-re-authentication-for-sensitive-features">Require Re-authentication for Sensitive Features<a class="headerlink" href="#require-re-authentication-for-sensitive-features" title="Permanent link">&para;</a></h3>
 <p>In order to mitigate CSRF and session hijacking, it's important to require the current credentials for an account before updating sensitive account information such as the user's password or email address -- or before sensitive transactions, such as shipping a purchase to a new address. Without this countermeasure, an attacker may be able to execute sensitive transactions through a CSRF or XSS attack without needing to know the user's current credentials. Additionally, an attacker may get temporary physical access to a user's browser or steal their session ID to take over the user's session.</p>
+<h3 id="reauthentication-after-risk-events">Reauthentication After Risk Events<a class="headerlink" href="#reauthentication-after-risk-events" title="Permanent link">&para;</a></h3>
+<p><strong>Overview:</strong><br />
+Reauthentication is critical when an account has experienced high-risk activity such as account recovery, password resets, or suspicious behavior patterns. This section outlines when and how to trigger reauthentication to protect users and prevent unauthorized access. For further details, see the <a href="#require-re-authentication-for-sensitive-features">Require Re-authentication for Sensitive Features</a> section.</p>
+<h4 id="when-to-trigger-reauthentication">When to Trigger Reauthentication<a class="headerlink" href="#when-to-trigger-reauthentication" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Suspicious Account Activity</strong><br />
+  When unusual login patterns, IP address changes, or device enrollments occur</li>
+<li><strong>Account Recovery</strong><br />
+  After users reset their passwords or change sensitive account details</li>
+<li><strong>Critical Actions</strong><br />
+  For high-risk actions like changing payment details or adding new trusted devices</li>
+</ul>
+<h4 id="reauthentication-mechanisms">Reauthentication Mechanisms<a class="headerlink" href="#reauthentication-mechanisms" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Adaptive Authentication</strong><br />
+  Use risk-based authentication models that adapt to the user's behavior and context</li>
+<li><strong>Multi-Factor Authentication (MFA)</strong><br />
+  Require an additional layer of verification for sensitive actions or events</li>
+<li><strong>Challenge-Based Verification</strong><br />
+  Prompt users to confirm their identity with a challenge question or secondary method</li>
+</ul>
+<h4 id="implementation-recommendations">Implementation Recommendations<a class="headerlink" href="#implementation-recommendations" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Minimize User Friction</strong><br />
+  Ensure that reauthentication does not disrupt the user experience unnecessarily</li>
+<li><strong>Context-Aware Decisions</strong><br />
+  Make reauthentication decisions based on context (e.g., geolocation, device type, prior patterns)</li>
+<li><strong>Secure Session Management</strong><br />
+  Invalidate sessions after reauthentication and rotate tokens—see the <a href="https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html">OWASP Session Management Cheat Sheet</a></li>
+</ul>
+<h4 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h4>
+<ul>
+<li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html">OWASP Session Management Cheat Sheet</a></li>
+<li>OWASP ASVS – 2.2.2: Reauthentication requirements</li>
+<li>NIST 800-63B: Digital Identity Guidelines – Authentication Assurance Levels</li>
+</ul>
 <h3 id="consider-strong-transaction-authentication">Consider Strong Transaction Authentication<a class="headerlink" href="#consider-strong-transaction-authentication" title="Permanent link">&para;</a></h3>
 <p>Some applications should use a second factor to check whether a user may perform sensitive operations. For more information, see the <a href="Transaction_Authorization_Cheat_Sheet.html">Transaction Authorization Cheat Sheet</a>.</p>
 <h4 id="tls-client-authentication">TLS Client Authentication<a class="headerlink" href="#tls-client-authentication" title="Permanent link">&para;</a></h4>

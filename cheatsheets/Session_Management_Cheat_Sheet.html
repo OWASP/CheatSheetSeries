@@ -2469,6 +2469,24 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#reauthentication-after-risk-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reauthentication After Risk Events
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#additional-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Additional Resources
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#considerations-when-using-multiple-cookies" class="md-nav__link">
     <span class="md-ellipsis">
       Considerations When Using Multiple Cookies
@@ -2573,7 +2591,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#reauthentication-after-risk-events" class="md-nav__link">
+  <a href="#reauthentication-after-risk-events_1" class="md-nav__link">
     <span class="md-ellipsis">
       Reauthentication After Risk Events
     </span>
@@ -3513,6 +3531,24 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#reauthentication-after-risk-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reauthentication After Risk Events
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#additional-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Additional Resources
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#considerations-when-using-multiple-cookies" class="md-nav__link">
     <span class="md-ellipsis">
       Considerations When Using Multiple Cookies
@@ -3617,7 +3653,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#reauthentication-after-risk-events" class="md-nav__link">
+  <a href="#reauthentication-after-risk-events_1" class="md-nav__link">
     <span class="md-ellipsis">
       Reauthentication After Risk Events
     </span>
@@ -3914,6 +3950,18 @@ This provides similar access to this data as would be achieved by using the <cod
 <p>The most common web development frameworks provide session functions and methods to renew the session ID, such as <code>request.getSession(true)</code> &amp; <code>HttpSession.invalidate()</code> (J2EE), <code>Session.Abandon()</code> &amp; <code>Response.Cookies.Add(new...)</code> (ASP .NET), or <code>session_start()</code> &amp; <code>session_regenerate_id(true)</code> (PHP).</p>
 <p>The session ID regeneration is mandatory to prevent <a href="http://www.acrossecurity.com/papers/session_fixation.pdf">session fixation attacks</a>, where an attacker sets the session ID on the victim user's web browser instead of gathering the victim's session ID, as in most of the other session-based attacks, and independently of using HTTP or HTTPS. This protection mitigates the impact of other web-based vulnerabilities that can also be used to launch session fixation attacks, such as HTTP response splitting or XSS (see <a href="https://media.blackhat.com/bh-eu-11/Raul_Siles/BlackHat_EU_2011_Siles_SAP_Session-Slides.pdf">here</a> and <a href="https://media.blackhat.com/bh-eu-11/Raul_Siles/BlackHat_EU_2011_Siles_SAP_Session-WP.pdf">here</a>).</p>
 <p>A complementary recommendation is to use a different session ID or token name (or set of session IDs) pre and post authentication, so that the web application can keep track of anonymous users and authenticated users without the risk of exposing or binding the user session between both states.</p>
+<h3 id="reauthentication-after-risk-events">Reauthentication After Risk Events<a class="headerlink" href="#reauthentication-after-risk-events" title="Permanent link">&para;</a></h3>
+<p>Web applications should require reauthentication after high-risk events such as:</p>
+<ul>
+<li>Changes to critical user information (e.g., password, email address)</li>
+<li>Login attempts from new or suspicious IP addresses or devices</li>
+<li>Account recovery flows (e.g., password reset or compromised-account detection)</li>
+</ul>
+<p>For best practices on implementing reauthentication after these events, see the <a href="Authentication_Cheat_Sheet.html#reauthentication-after-risk-events">Reauthentication After Risk Events</a> section in the Authentication Cheat Sheet</p>
+<h3 id="additional-resources">Additional Resources<a class="headerlink" href="#additional-resources" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://tailscale.com/blog/frequent-reauth-security?lid=5wso20mx4knj">Why Frequent Reauthentication Can Be a UX Pitfall</a> by Tailscale</li>
+</ul>
 <h3 id="considerations-when-using-multiple-cookies">Considerations When Using Multiple Cookies<a class="headerlink" href="#considerations-when-using-multiple-cookies" title="Permanent link">&para;</a></h3>
 <p>If the web application uses cookies as the session ID exchange mechanism, and multiple cookies are set for a given session, the web application must verify all cookies (and enforce relationships between them) before allowing access to the user session.</p>
 <p>It is very common for web applications to set a user cookie pre-authentication over HTTP to keep track of unauthenticated (or anonymous) users. Once the user authenticates in the web application, a new post-authentication secure cookie is set over HTTPS, and a binding between both cookies and the user session is established. If the web application does not verify both cookies for authenticated sessions, an attacker can make use of the pre-authentication unprotected cookie to get access to the authenticated user session (see <a href="https://media.blackhat.com/bh-eu-11/Raul_Siles/BlackHat_EU_2011_Siles_SAP_Session-Slides.pdf">here</a> and <a href="https://media.blackhat.com/bh-eu-11/Raul_Siles/BlackHat_EU_2011_Siles_SAP_Session-WP.pdf">here</a>).</p>
@@ -3950,7 +3998,7 @@ This provides similar access to this data as would be achieved by using the <cod
 <p><strong>Note:</strong> The directive <code>Cache-Control: no-cache="Set-Cookie, Set-Cookie2"</code> is sometimes suggested to prevent session ID caching. However, this syntax is not widely supported and may lead to unintended behavior. Instead, use <code>Cache-Control: no-store</code> for stronger protection.
 <strong>Reference:</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control">MDN - Cache-Control</a></p>
 </blockquote>
-<h2 id="reauthentication-after-risk-events">Reauthentication After Risk Events<a class="headerlink" href="#reauthentication-after-risk-events" title="Permanent link">&para;</a></h2>
+<h2 id="reauthentication-after-risk-events_1">Reauthentication After Risk Events<a class="headerlink" href="#reauthentication-after-risk-events_1" title="Permanent link">&para;</a></h2>
 <p>To ensure session integrity and account protection, applications should require reauthentication when specific high-risk events are detected. These may include:</p>
 <ul>
 <li>Attempted or completed password changes</li>
