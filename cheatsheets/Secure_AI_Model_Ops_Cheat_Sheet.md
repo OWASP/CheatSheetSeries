@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This cheat sheet provides practical security guidance for operating and deploying AI/ML systems—including traditional machine learning models and large language models (LLMs). 
+This cheat sheet provides practical security guidance for operating and deploying AI/ML systems—including traditional machine learning models and large language models (LLMs).
 It helps MLOps, DevOps, and security teams protect the model lifecycle from development to production, covering threats like data poisoning, adversarial input, model theft, and operational abuse.
 
 ## Common Security Issues
@@ -101,4 +101,4 @@ Orphaned Deployments – Test or deprecated models still accessible online witho
 - [NIST AI Risk Management Framework (AI RMF)](https://www.nist.gov/itl/ai-risk-management-framework)  
 - [Microsoft Responsible AI Guidelines](https://www.microsoft.com/en-us/ai/principles-and-approach)  
 - [Google Threat Modeling](https://services.google.com/fh/files/misc/ds-threat-modeling-security-service-en.pdf)  
-- [MITRE ATLAS Framework](https://atlas.mitre.org/)  
+- [MITRE ATLAS Framework](https://atlas.mitre.org/)
