@@ -65,7 +65,7 @@ Orphaned Deployments – Test or deprecated models still accessible online witho
 
 - Apply authentication and authorization (OAuth, API tokens).
 - Validate and sanitize all inputs.
-- Use rate limiting and abuse detection (e.g., CAPTCHA, anomaly scoring).
+- Use rate limiting and abuse detection (e.g., CAPTCHA (drag-and-drop puzzles which has bot detection techniques), anomaly scoring).
 - Use structured prompt templates for LLMs to separate instructions from user input.
 
 ### 5. Deployment & Infrastructure
