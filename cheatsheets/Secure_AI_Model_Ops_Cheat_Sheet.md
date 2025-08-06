@@ -96,9 +96,9 @@ Orphaned Deployments – Test or deprecated models still accessible online witho
 
 ## References
 
-- [OWASP LLM Prompt Injection Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html)  
+- [OWASP LLM Prompt Injection Cheat Sheet](LLM_Prompt_Injection_Prevention_Cheat_Sheet.md)  
 - [OWASP ASVS / Proactive Controls](https://owasp.org/www-project-application-security-verification-standard/)  
 - [NIST AI Risk Management Framework (AI RMF)](https://www.nist.gov/itl/ai-risk-management-framework)  
-- [Microsoft Responsible AI Guidelines](https://learn.microsoft.com/en-us/azure/ai/responsible-ai/)  
-- [Google PAIR AI Threat Modeling](https://pair.withgoogle.com/ai-threat-modeling)  
+- [Microsoft Responsible AI Guidelines](https://www.microsoft.com/en-us/ai/principles-and-approach)  
+- [Google Threat Modeling](https://services.google.com/fh/files/misc/ds-threat-modeling-security-service-en.pdf)  
 - [MITRE ATLAS Framework](https://atlas.mitre.org/)  
