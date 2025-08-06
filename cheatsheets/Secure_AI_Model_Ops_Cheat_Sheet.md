@@ -3,7 +3,6 @@
 ## Introduction
 
 This cheat sheet provides practical security guidance for operating and deploying AI/ML systems—including traditional machine learning models and large language models (LLMs). 
-
 It helps MLOps, DevOps, and security teams protect the model lifecycle from development to production, covering threats like data poisoning, adversarial input, model theft, and operational abuse.
 
 ## Common Security Issues
