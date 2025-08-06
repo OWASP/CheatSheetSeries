@@ -1,21 +1,32 @@
 # Secure AI/ML Model Ops Cheat Sheet
 
-## Objective
+## Introduction
 
-This cheat sheet provides practical security guidance for operating and deploying AI/ML systems—including traditional machine learning models and large language models (LLMs). It helps MLOps, DevOps, and security teams protect the model lifecycle from development to production, covering threats like data poisoning, adversarial input, model theft, and operational abuse.
+This cheat sheet provides practical security guidance for operating and deploying AI/ML systems—including traditional machine learning models and large language models (LLMs). 
+
+It helps MLOps, DevOps, and security teams protect the model lifecycle from development to production, covering threats like data poisoning, adversarial input, model theft, and operational abuse.
 
 ## Common Security Issues
 
-1. **Data Poisoning** – Insertion of malicious data during training to manipulate model behavior.
-2. **Model Inversion & Extraction** – Reconstructing training data or cloning the model via inference queries.
-3. **Adversarial Examples** – Slightly altered inputs that mislead model predictions.
-4. **Prompt Injection** – Manipulating LLMs via user inputs to override instructions or leak data.
-5. **Unsecured APIs** – Inference endpoints exposed without authentication, rate limits, or input validation.
-6. **Hardcoded Secrets** – Storing access tokens, database credentials, or API keys in code or notebooks.
-7. **Unvalidated Third-party Models** – Risks from importing untrusted pre-trained models.
-8. **Open Artifact Stores** – Unrestricted access to model weights, datasets, or evaluation results.
-9. **Lack of Monitoring & Drift Detection** – Inability to detect changes in model behavior or input distributions.
-10. **Orphaned Deployments** – Test or deprecated models still accessible online without controls.
+**Data Poisoning** – Insertion of malicious data during training to manipulate model behavior.
+
+**Model Inversion & Extraction** – Reconstructing training data or cloning the model via inference queries.
+
+**Adversarial Examples** – Slightly altered inputs that mislead model predictions.
+
+**Prompt Injection** – Manipulating LLMs via user inputs to override instructions or leak data.
+
+**Unsecured APIs** – Inference endpoints exposed without authentication, rate limits, or input validation.
+
+**Hardcoded Secrets** – Storing access tokens, database credentials, or API keys in code or notebooks.
+
+**Unvalidated Third-party Models** – Risks from importing untrusted pre-trained models.
+
+**Open Artifact Stores** – Unrestricted access to model weights, datasets, or evaluation results.
+
+**Lack of Monitoring & Drift Detection** – Inability to detect changes in model behavior or input distributions.
+
+**Orphaned Deployments** – Test or deprecated models still accessible online without controls.
 
 ## Real-World Examples
 
@@ -85,12 +96,12 @@ This cheat sheet provides practical security guidance for operating and deployin
 
 ## References
 
-* OWASP LLM Prompt Injection Cheat Sheet
-* OWASP ASVS / Proactive Controls
-* NIST AI RMF
-* Microsoft Responsible AI Guidelines
-* Google PAIR AI Threat Modeling
-* MITRE ATLAS Framework
+- [OWASP LLM Prompt Injection Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html)  
+- [OWASP ASVS / Proactive Controls](https://owasp.org/www-project-application-security-verification-standard/)  
+- [NIST AI Risk Management Framework (AI RMF)](https://www.nist.gov/itl/ai-risk-management-framework)  
+- [Microsoft Responsible AI Guidelines](https://learn.microsoft.com/en-us/azure/ai/responsible-ai/)  
+- [Google PAIR AI Threat Modeling](https://pair.withgoogle.com/ai-threat-modeling)  
+- [MITRE ATLAS Framework](https://atlas.mitre.org/)  
 
 ---
 
