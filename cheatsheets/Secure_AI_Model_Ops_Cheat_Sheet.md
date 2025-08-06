@@ -8,91 +8,91 @@ It helps MLOps, DevOps, and security teams protect the model lifecycle from deve
 
 ## Common Security Issues
 
-**Data Poisoning** – Insertion of malicious data during training to manipulate model behavior.
+Data Poisoning – Insertion of malicious data during training to manipulate model behavior.
 
-**Model Inversion & Extraction** – Reconstructing training data or cloning the model via inference queries.
+Model Inversion & Extraction – Reconstructing training data or cloning the model via inference queries.
 
-**Adversarial Examples** – Slightly altered inputs that mislead model predictions.
+Adversarial Examples – Slightly altered inputs that mislead model predictions.
 
-**Prompt Injection** – Manipulating LLMs via user inputs to override instructions or leak data.
+Prompt Injection – Manipulating LLMs via user inputs to override instructions or leak data.
 
-**Unsecured APIs** – Inference endpoints exposed without authentication, rate limits, or input validation.
+Unsecured APIs – Inference endpoints exposed without authentication, rate limits, or input validation.
 
-**Hardcoded Secrets** – Storing access tokens, database credentials, or API keys in code or notebooks.
+Hardcoded Secrets – Storing access tokens, database credentials, or API keys in code or notebooks.
 
-**Unvalidated Third-party Models** – Risks from importing untrusted pre-trained models.
+Unvalidated Third-party Models – Risks from importing untrusted pre-trained models.
 
-**Open Artifact Stores** – Unrestricted access to model weights, datasets, or evaluation results.
+Open Artifact Stores – Unrestricted access to model weights, datasets, or evaluation results.
 
-**Lack of Monitoring & Drift Detection** – Inability to detect changes in model behavior or input distributions.
+Lack of Monitoring & Drift Detection – Inability to detect changes in model behavior or input distributions.
 
-**Orphaned Deployments** – Test or deprecated models still accessible online without controls.
+Orphaned Deployments – Test or deprecated models still accessible online without controls.
 
 ## Real-World Examples
 
-* **Data Poisoning via Public Dataset Manipulation**: Attackers inject mislabeled samples into open-source datasets. These poisoned samples, when used during training, degrade model accuracy or introduce bias.
-* **Model Inversion in Healthcare ML**: An attacker infers whether a specific individual’s data was part of a medical model’s training dataset.
-* **Malicious Model Files**: A `.pt` or `.pkl` file embedded with malware is uploaded to a pipeline and executed during deserialization.
-* **Insecure LLM Prompt Injection**: Inputs like `"Ignore all previous instructions..."` manipulate chatbot behavior and may leak internal system prompts.
-* **Leaked API Keys on GitHub**: OpenAI or Hugging Face API keys accidentally committed and exploited for free access or abuse.
-* **Open MLFlow Instance**: No authentication on MLFlow or similar tool exposes all models and training logs.
-* **Adversarial Input Attacks in Vision Systems**: Altering a few pixels causes an image classifier to mislabel a stop sign as a speed limit sign.
-* **Legacy Test Models in Production**: Old staging models left running in public cloud endpoints, vulnerable to extraction.
+- Data Poisoning via Public Dataset Manipulation: Attackers inject mislabeled samples into open-source datasets. These poisoned samples, when used during training, degrade model accuracy or introduce bias.
+- Model Inversion in Healthcare ML: An attacker infers whether a specific individual’s data was part of a medical model’s training dataset.
+- Malicious Model Files: A `.pt` or `.pkl` file embedded with malware is uploaded to a pipeline and executed during deserialization.
+- Insecure LLM Prompt Injection: Inputs like `"Ignore all previous instructions..."` manipulate chatbot behavior and may leak internal system prompts.
+- Leaked API Keys on GitHub: OpenAI or Hugging Face API keys accidentally committed and exploited for free access or abuse.
+- Open MLFlow Instance: No authentication on MLFlow or similar tool exposes all models and training logs.
+- Adversarial Input Attacks in Vision Systems: Altering a few pixels causes an image classifier to mislabel a stop sign as a speed limit sign.
+- Legacy Test Models in Production: Old staging models left running in public cloud endpoints, vulnerable to extraction.
 
 ## Security Recommendations
 
 ### 1. Model Development & Training
 
-* Use version-controlled, auditable training pipelines (e.g., MLFlow, DVC).
-* Validate and sanitize training data.
-* Employ differential privacy or data anonymization if training on sensitive data.
-* Train using reproducible environments (e.g., containers, virtualenv).
+- Use version-controlled, auditable training pipelines (e.g., MLFlow, DVC).
+- Validate and sanitize training data.
+- Employ differential privacy or data anonymization if training on sensitive data.
+- Train using reproducible environments (e.g., containers, virtualenv).
 
 ### 2. Secrets & Configurations
 
-* Never hardcode secrets in source code or notebooks.
-* Use secret managers (e.g., AWS Secrets Manager, HashiCorp Vault).
-* Use environment variables or CI secrets injection.
+- Never hardcode secrets in source code or notebooks.
+- Use secret managers (e.g., AWS Secrets Manager, HashiCorp Vault).
+- Use environment variables or CI secrets injection.
 
 ### 3. Model Storage & Artifacts
 
-* Store models in access-controlled registries.
-* Sign model binaries with digital signatures.
-* Ensure encryption at rest for model weights and datasets.
-* Restrict access to training logs and intermediate outputs.
+- Store models in access-controlled registries.
+- Sign model binaries with digital signatures.
+- Ensure encryption at rest for model weights and datasets.
+- Restrict access to training logs and intermediate outputs.
 
 ### 4. Inference API Security
 
-* Apply authentication and authorization (OAuth, API tokens).
-* Validate and sanitize all inputs.
-* Use rate limiting and abuse detection (e.g., CAPTCHA, anomaly scoring).
-* Use structured prompt templates for LLMs to separate instructions from user input.
+- Apply authentication and authorization (OAuth, API tokens).
+- Validate and sanitize all inputs.
+- Use rate limiting and abuse detection (e.g., CAPTCHA, anomaly scoring).
+- Use structured prompt templates for LLMs to separate instructions from user input.
 
 ### 5. Deployment & Infrastructure
 
-* Harden containers and limit capabilities (use distroless images, AppArmor).
-* Use CI/CD pipelines that include security scanning.
-* Minimize permissions for training and inference jobs (least privilege).
-* Isolate environments for development, staging, and production.
+- Harden containers and limit capabilities (use distroless images, AppArmor).
+- Use CI/CD pipelines that include security scanning.
+- Minimize permissions for training and inference jobs (least privilege).
+- Isolate environments for development, staging, and production.
 
 ### 6. Monitoring & Logging
 
-* Monitor input distribution, output entropy, and latency.
-* Detect drift via statistical analysis or shadow models.
-* Log requests and access with traceability (avoid logging sensitive data).
-* Alert on unusual usage patterns (e.g., scraping, injection attempts).
+- Monitor input distribution, output entropy, and latency.
+- Detect drift via statistical analysis or shadow models.
+- Log requests and access with traceability (avoid logging sensitive data).
+- Alert on unusual usage patterns (e.g., scraping, injection attempts).
 
 ### 7. Adversarial Robustness
 
-* Include adversarial examples in testing and evaluation.
-* Use robust training techniques (e.g., adversarial training, input denoising).
-* Monitor model confidence thresholds to identify out-of-distribution inputs.
+- Include adversarial examples in testing and evaluation.
+- Use robust training techniques (e.g., adversarial training, input denoising).
+- Monitor model confidence thresholds to identify out-of-distribution inputs.
 
 ### 8. Incident Response & Governance
 
-* Define escalation procedures for model abuse or drift.
-* Implement rollback mechanisms for model deployments.
-* Map threats to OWASP ASVS or Proactive Controls for AI/ML.
+- Define escalation procedures for model abuse or drift.
+- Implement rollback mechanisms for model deployments.
+- Map threats to OWASP ASVS or Proactive Controls for AI/ML.
 
 ## References
 
@@ -102,7 +102,3 @@ It helps MLOps, DevOps, and security teams protect the model lifecycle from deve
 - [Microsoft Responsible AI Guidelines](https://learn.microsoft.com/en-us/azure/ai/responsible-ai/)  
 - [Google PAIR AI Threat Modeling](https://pair.withgoogle.com/ai-threat-modeling)  
 - [MITRE ATLAS Framework](https://atlas.mitre.org/)  
-
----
-
-*Last updated: August 2025*
