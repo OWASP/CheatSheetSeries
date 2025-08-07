@@ -7,25 +7,25 @@ It helps MLOps, DevOps, and security teams protect the model lifecycle from deve
 
 ## Common Security Issues
 
-Data Poisoning – Insertion of malicious data during training to manipulate model behavior.
+Data Poisoning – A threat where attackers inject malicious data into training datasets to manipulate model behavior.
 
-Model Inversion & Extraction – Reconstructing training data or cloning the model via inference queries.
+Model Inversion & Extraction – Techniques that allow attackers to reconstruct training data or extract model parameters via inference queries.
 
-Adversarial Examples – Slightly altered inputs that mislead model predictions.
+Adversarial Examples – Slightly modified inputs crafted to mislead model predictions without obvious changes to human observers.
 
-Prompt Injection – Manipulating LLMs via user inputs to override instructions or leak data.
+Prompt Injection – A manipulation technique that breaks LLM outputs by injecting malicious input to override or hijack intended behavior.
 
-Unsecured APIs – Inference endpoints exposed without authentication, rate limits, or input validation.
+Unsecured APIs – Publicly exposed inference endpoints lacking authentication, rate limiting, or input validation.
 
-Hardcoded Secrets – Storing access tokens, database credentials, or API keys in code or notebooks.
+Hardcoded Secrets – The inclusion of sensitive credentials (e.g., API keys, tokens) in source code or notebooks.
 
-Unvalidated Third-party Models – Risks from importing untrusted pre-trained models.
+Unvalidated Third-party Models – Use of external pre-trained models without verifying integrity, provenance, or trustworthiness.
 
-Open Artifact Stores – Unrestricted access to model weights, datasets, or evaluation results.
+Open Artifact Stores – Public access to model binaries, datasets, or logs due to misconfigured storage or missing access controls.
 
-Lack of Monitoring & Drift Detection – Inability to detect changes in model behavior or input distributions.
+Lack of Monitoring & Drift Detection – Absence of systems to detect shifts in model behavior, data distribution, or performance.
 
-Orphaned Deployments – Test or deprecated models still accessible online without controls.
+Orphaned Deployments – Test or deprecated models left accessible in production environments, often unprotected.
 
 ## Real-World Examples
 
