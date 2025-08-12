@@ -115,7 +115,7 @@ These configuration settings provide an equal level of defense, and the only dif
 
 [scrypt](http://www.tarsnap.com/scrypt/scrypt.pdf) is a password-based key derivation function created by [Colin Percival](https://twitter.com/cperciva). While [Argon2id](#argon2id) should be the best choice for password hashing, [scrypt](#scrypt) should be used when the former is not available.
 
-Like [Argon2id](#argon2id), scrypt has three different parameters that can be configured: the minimum CPU/memory cost parameter (N), the blocksize (r) and the degree of parallelism (p). Use one of the following settings:
+Like [Argon2id](#argon2id), scrypt has three different parameters that can be configured: the minimum memory cost parameter (N), the blocksize (r), and the degree of parallelism (p). Use one of the following settings:
 
 - N=2^17 (128 MiB), r=8 (1024 bytes), p=1
 - N=2^16 (64 MiB), r=8 (1024 bytes), p=2
@@ -123,7 +123,7 @@ Like [Argon2id](#argon2id), scrypt has three different parameters that can be co
 - N=2^14 (16 MiB), r=8 (1024 bytes), p=5
 - N=2^13 (8 MiB), r=8 (1024 bytes), p=10
 
-These configuration settings provide an equal level of defense. The only difference is a trade off between CPU and RAM usage.
+These configuration settings provide a minimal level of defense. The only difference is a trade off between CPU and RAM usage.
 
 ### bcrypt
 
@@ -188,8 +188,4 @@ Upgrade Method One: Expire and delete the password hashes of users who have been
 
 Upgrade Method Two: Use the existing password hashes as inputs for a more secure algorithm. For example, if the application originally stored passwords as `md5($password)`, this could be easily upgraded to `bcrypt(md5($password))`. Layering the hashes avoids the need to know the original password; however, it can make the hashes easier to crack. These hashes should be replaced with direct hashes of the users' passwords next time the user logs in.
 
-Remember that once your password hashing method is selected, it will have to be upgraded in the future, so ensure that upgrading your hashing algorithm is as easy as possible. During the transition period, allow for a mix of old and new hashing algorithms. Using a mix of hashing algorithms is easier if the password hashing algorithm and work factor are stored with the password using a standard format, for example, the [modular PHC string format](https://github.com/P-H-C/phc-string-format/blob/master/phc-sf-spec.md).
-
-### International Characters
-
-Your hashing library must be able to accept a wide range of characters and should be compatible with all Unicode codepoints, so users can use the full range of characters available on modern devices - especially mobile keyboards. They should be able to select passwords from various languages and include pictograms. Prior to hashing the entropy of the user's entry should not be reduced, and password hashing libraries need to be able to use input that may contain a NULL byte.
+Remember that once your password hashing method is selected, it will have to be upgraded in the future, so ensure that upgrading your hashing algorithm is as easy as possible. During the transition period, allow for a mix of old and new hashing algorithms. Using a mix of hashing algorithms is easier if the password hashing algorithm and
