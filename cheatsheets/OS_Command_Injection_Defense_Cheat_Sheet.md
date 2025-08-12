@@ -84,8 +84,8 @@ If calling a system command that incorporates user-supplied cannot be avoided, t
 
 - When it comes to the **commands** used, these must be validated against a list of allowed commands.
 - In regards to the **arguments** used for these commands, they should be validated using the following options:
-  - **Positive or allowlist input validation**: Where are the arguments allowed explicitly defined.
-  - **Allowlist Regular Expression**: Where a list of good, allowed characters and the maximum length of the string are defined. Ensure that metacharacters like ones specified in `Note A` and whitespaces are not part of the Regular Expression. For example, the following regular expression only allows lowercase letters and numbers and does not contain metacharacters. The length is also being limited to 3-10 characters: `^[a-z0-9]{3,10}$`
+    - **Positive or allowlist input validation**: Where are the arguments allowed explicitly defined.
+    - **Allowlist Regular Expression**: Where a list of good, allowed characters and the maximum length of the string are defined. Ensure that metacharacters like ones specified in `Note A` and whitespaces are not part of the Regular Expression. For example, the following regular expression only allows lowercase letters and numbers and does not contain metacharacters. The length is also being limited to 3-10 characters: `^[a-z0-9]{3,10}$`
 - According to **Guideline 10** of this [POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap12.html), *The first -- argument that is not an option-argument should be accepted as a delimiter indicating the end of options. Any following arguments should be treated as operands, even if they begin with the '-' character.* For example, `curl -- $url` will prevent an argument injection even if the `$url` is malformed and contains an additional argument.
 
 **Note A:**
@@ -260,7 +260,7 @@ In addition, it is good security practice to follow these recommendations:
 
 - **Hardcode the command**: never allow the user to choose which executable to run.  
 - **Hardcode options**: required flags (e.g., `--directory-prefix`) should be in the code, not in user input.  
-- **Validate and restrict input as much as possible**: apply strict validation rules, whitelists, and format checks to minimize the attack surface.  
+- **Validate and restrict input as much as possible**: apply strict validation rules, whitelists, and format checks to minimize the attack surface.
 
 ## Related articles
 
