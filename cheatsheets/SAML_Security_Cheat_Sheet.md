@@ -201,7 +201,6 @@ extendedKeyUsage = 1.3.6.1.5.5.7.3.36
 3. Generate the Self-Signed Certificate:
 openssl req -x509 -new -nodes -key private.key -sha256 -days 365 -out certificate.crt -config cert.cnf -extensions v3_ca
 
-
 #### Certificate Metadata URLs
 
 Many IdPs publish a metadata URL that contains basic configuration information including the SAML signing certificate. Many SPs can consume the data from the IdP, updating the Signing certificate information in near real-time. Using these options is ideal. This model matches exactly the intent of the [Certificate and Public Key Pinning](https://owasp.org/www-community/controls/Certificate_and_Public_Key_Pinning) when pinning must be used.
