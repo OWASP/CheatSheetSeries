@@ -161,11 +161,11 @@ When an IdP rotates its SAML Signing certificate, each SP must simultaneously up
 
 ##### Private CA Signed
 
-As most IdPs and SPs treat the X.509 certificates as an explicit trust, private CAs and PKI could be used. How private CAs are designed, built, and run varies wildly and ultimately running CAs well is very costly. In order to trust a 3rd party's CAs, one would need to clearly understand the lifecycle of the CA. There are two audit types that would cover this, both of which are very costly, on top of building and running the CAs. If you rely on 3rd party CAs, they should be [WebTrust](http://www.webtrust.org/) or [ETSI](http://www.etsi.org/technologies-clusters/technologies/security/certification-authorities-and-other-certification-service-providers) audited.
+As most IdPs and SPs treat the X.509 certificates as an explicit trust, private CAs and PKI could be used. How private CAs are designed, built, and run varies wildly and ultimately running CAs well is very costly. In order to trust a third-party's CAs, one would need to clearly understand the lifecycle of the CA. There are two audit types that would cover this, both of which are very costly, on top of building and running the CAs. If you rely on third-party CAs, they should be [WebTrust](http://www.webtrust.org/) or [ETSI](http://www.etsi.org/technologies-clusters/technologies/security/certification-authorities-and-other-certification-service-providers) audited.
 
-Trusting 3rd party CAs, if done improperly, could result in unintended over trust, for things such as TLS and code signing. If you choose to trust 3rd party CAs, make sure they are only trusted for the process of IdP signature validation.
+Trusting third-party CAs, if done improperly, could result in unintended over trust, for things such as TLS and code signing. If you choose to trust third-party CAs, make sure they are only trusted for the process of IdP signature validation.
 
-If 3rd party CAs are used they still should not issue SAML signing certificates where the lifetime of the certificate exceeds that of the underlying key pair, based on guidance from a standards organization such as [NIST, NSA, etc.](https://www.keylength.com/en/). If using the strongest private key types, this puts the upper limit at two years.
+If third-party CAs are used they still should not issue SAML signing certificates where the lifetime of the certificate exceeds that of the underlying key pair, based on guidance from a standards organization such as [NIST, NSA, etc.](https://www.keylength.com/en/). If using the strongest private key types, this puts the upper limit at two years.
 
 ##### Self-Signed
 
