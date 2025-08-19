@@ -114,6 +114,8 @@ Typically the security association between the Identity Provider (IdP) and Servi
 
 In many cases, the method of manually setting the association is akin to [Certificate Pinning](https://cheatsheetseries.owasp.org/cheatsheets/Pinning_Cheat_Sheet.html), which is not ideal. Depending on the IdP and SP software, or various design considerations, this may be unavoidable.
 
+Keep in mind that the certificate's key type and signing can be different than that of the XML document signing. The certificate's key is the only key that can be use to sign the XML document, but the signing algorithm is chosen at the IdP's discretion. The most commonly supported signing algorithm is SHA-256.
+
 #### Certificate Contents
 
 In the context of SAML signing and encryption, X.509 certificates are most often treated simply as a wrapper to hold a public key that is used to verify a signature, or to wrap a symmetric key for SAML encryption. Nonetheless, a certificate can contain attributes that can be used to further enhance security.
@@ -133,7 +135,7 @@ No IdP should use a certificate signed with SHA-1. SHA-256 is the minimum bar. T
 
 ##### Certificate Lifetime
 
-Certificates contain a NotBefore and NotOnorAfter attribute. Most IdPs ignore these in favor of guaranteeing uptime if certificate rotation does not happen on time. The SAML certificate lifetime should be handled well enough that ignoring these is not needed. The maximum lifetime of a SAML signing certificate should be two years. If the private key is not well protected, that may be too long to be safe.
+Certificates contain a NotBefore and NotOnorAfter attribute. Most IdPs ignore these in favor of guaranteeing uptime if certificate rotation does not happen on time. The SAML certificate lifetime should be handled well enough that ignoring these is not needed. While [NIST SP 800-57 (Part 1, Rev. 5)](https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final) allows RSA 2048 bit keys to last for 3 years, the maximum lifetime of a SAML signing certificate should be two years. If the private key is not well protected, such as in a Hardware Security Module (HSM), that may be too long to be safe.
 
 ##### Extended Key Usage (EKU) and Key Usage (KU)
 
@@ -145,9 +147,13 @@ Certificates contain a NotBefore and NotOnorAfter attribute. Most IdPs ignore th
 
 [Certificate Revocation List (CRL) Distribution Point](https://www.rfc-editor.org/rfc/rfc5280#section-4.2.1.13) are a list of certificates that the CA says should no longer be trusted. They are most often delivered over HTTP and the CRL URLs are generally embedded in each CA issued certificate. The [CRL](https://www.rfc-editor.org/rfc/rfc5280#appendix-C.4) is signed by the CA, so a man-in-the-middle attack against the HTTP cannot harm the integrity of the list, other than to tamper with, and thus invalidate, it. That is, it can't be altered by an attacker. Only CA signed certificates can have a CRL. If the SAML certificate has a CRL listed, it should be reachable by the validating party and the party should [validate](https://www.rfc-editor.org/rfc/rfc5280#section-6.3) it.
 
+##### Online Certificate Status Protocol (OCSP)
+
+[OCSP](https://datatracker.ietf.org/doc/html/rfc6960) is another way of checking to see if a certificate  is revoked. The OCSP URL is embedded in the certificate , like a CRL, and should be reacable over HTTP. The response is signed, so MITM attacks are not an integrity concern. OCSP is becoming less favored, as the exchange creates privacy concerns. The caller's IP address can be seen and the certificate that is being used is disclosed. This is less of a concern for SAML, as this does not disclose a destination website, use overall has declined. If an OCSP URL is present on any certificate in the chain, it should be used to check if the certificate is revoked. 
+
 #### Certificate Hierarchy
 
-The SAML signing certificate can be signed by one of three things. The certificate can be self-signed, public CA signed, or private CA signed. Each has pros and cons, however, given the current state of WebPKI (public) and private PKI, using self-signed SAML certificates are the clear winner.
+The SAML signing certificate can be signed by one of three things. The certificate can be self-signed, public CA signed, or private CA signed. Each has pros and cons, however, given the current state of WebPKI (public) and private PKI, using self-signed SAML certificates are the clear winner when proper precatuions are taken for exchanging the certificates.
 
 ##### Certificate Issuer
 
@@ -159,9 +165,13 @@ With this certificate type, a Public CA issues the certificate, in accordance wi
 
 When an IdP rotates its SAML Signing certificate, each SP must simultaneously update its explicit trust of that certificate. This can be challenging with only a few SPs. With many, it is nearly impossible. This pain has led to the use of SAML signing certificates with the longest possible lifetimes. This used to be two years with public CAs, then 398 days. The focus of WebPKI standards and the CABF is on server certificates for TLS. Recent and ongoing changes in certificate lifetimes make Public CA issued certificates less appealing. This is because the CABF has a path to making public CA issued certificates last only [47 days](https://cabforum.org/2025/04/11/ballot-sc081v3-introduce-schedule-of-reducing-validity-and-data-reuse-periods/). As the IdP must get the certificate, announce the change for a reasonable amount of time, and then execute the change, this would mean IdPs and SPs would be in a perpetual state of certificate updates.
 
+It is worth noting that the CABF does not have governance around the use or acquisition of SAML certificates, certificates from their member CAs are what are widely considered Public CAs. That is, they are widely trusted by browsers, operating systems, and various development frameworks. 
+
+Using Public CA signed certificates allows for revocation checking, which can increase security, but if the certificate exchange is not secured, this could lead to a false sense of security. 
+
 ##### Private CA Signed
 
-As most IdPs and SPs treat the X.509 certificates as an explicit trust, private CAs and PKI could be used. How private CAs are designed, built, and run varies wildly and ultimately running CAs well is very costly. In order to trust a third-party's CAs, one would need to clearly understand the lifecycle of the CA. There are two audit types that would cover this, both of which are very costly, on top of building and running the CAs. If you rely on third-party CAs, they should be [WebTrust](http://www.webtrust.org/) or [ETSI](http://www.etsi.org/technologies-clusters/technologies/security/certification-authorities-and-other-certification-service-providers) audited.
+As most IdPs and SPs treat the X.509 certificates as an explicit trust, private CAs and PKI could be used. How private CAs are designed, built, and run varies wildly and ultimately running CAs well is very costly. In order to trust a third-party's CAs, one would need to clearly understand the lifecycle of the CA. There are two audit types that would cover this, both of which are very costly, on top of building and running the CAs. If you rely on third-party CAs, they should be [WebTrust](http://www.webtrust.org/), [ETSI](http://www.etsi.org/technologies-clusters/technologies/security/certification-authorities-and-other-certification-service-providers), or [SOC 2 Type II ](https://www.aicpa-cima.com/topic/audit-assurance/audit-and-assurance-greater-than-soc-2) audited.
 
 Trusting third-party CAs, if done improperly, could result in unintended over trust, for things such as TLS and code signing. If you choose to trust third-party CAs, make sure they are only trusted for the process of IdP signature validation.
 
