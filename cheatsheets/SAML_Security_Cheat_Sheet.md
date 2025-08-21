@@ -137,7 +137,7 @@ It is a best practice, though not required, that SPs and IdPs not allow IdP Init
 
 ##### SP Encryption
 
-It is a best practice to avoid placing sensitive data in the IdP’s SAML response, but sometimes it is unavoidable. This could be user names or other PII. When information disclosure is a consideration, an SP will have a SAML encryption certificate. The IdP will use this and the embedded public key, in order to encrypt the SAML response. The SP must use a separate certificate and key pair for SAML signing and encryption.
+It is a best practice to avoid placing sensitive data in the IdP’s SAML response, but sometimes it is unavoidable. This could be usernames or other PII. When information disclosure is a consideration, an SP will have a SAML encryption certificate. The IdP will use this and the embedded public key, in order to encrypt the SAML response. The SP must use a separate certificate and key pair for SAML signing and encryption.
 
 #### Certificate Contents
 
