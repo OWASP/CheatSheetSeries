@@ -119,7 +119,7 @@ Keep in mind that the certificate's signature type can be different from that of
 
 The most common SAML use cases are those of business-to-business (B2B). This means that the two parties have different security polices, practices, and risk tolerances. This guidance focuses mainly on the B2B use case. However SAML based federation or SSO is commonly used inside of an organization. In this case the term third-party CA does not apply. It is likely that the CA has been built and run to company standards and it poses no more or less risk to the SAML systems. The term third-party CA is meant to indicate a private CA run by a third-party.
 
-####  Certificate Use Cases
+#### Certificate Use Cases
 
 There are actually 5 separate use cases for certificates in a SAML system. While this document mainly talks about the IdP’s SAML signing certificate, the security considerations apply to all four SAML related certificates. The fifth certificate, the IdP’s TLS server certificate is no more or less special than any other server certificate.
 
