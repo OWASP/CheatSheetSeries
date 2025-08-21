@@ -43,14 +43,13 @@ Vulnerabilities in SAML implementations due to XML Signature Wrapping attacks we
 
 The following recommendations were proposed in response ([Secure SAML validation to prevent XML signature wrapping attacks](https://arxiv.org/pdf/1401.7483v1.pdf)):
 
-- Always perform schema validation on the XML document prior to using it for any security-related purposes:
+- Without exception, always perform schema validation on the XML document prior to using it for any security-related purposes::
     - Always use local, trusted copies of schemas for validation.
     - Never allow automatic download of schemas from third party locations.
     - If possible, inspect schemas and perform schema hardening, to disable possible wildcard type or relaxed processing statements.
 - Securely validate the digital signature:
-    - If you expect only one signing key, use `StaticKeySelector`. Obtain the key directly from the identity provider, store it in local file and ignore any `KeyInfo` elements in the document.
-    - If you expect more than one signing key, use `X509KeySelector` (the JKS variant). Obtain these keys directly form the identity providers, store them in local JKS and ignore any `KeyInfo` elements in the document.
-    - If you expect a heterogeneous signed documents (many certificates from many identity providers, multilevel validation paths), implement full trust establishment model based on PKIX and trusted root certificates.
+    - If you expect only one signing key, use `StaticKeySelector`. Obtain the key directly from the identity provider, store it in a local file and ignore any `KeyInfo` elements in the document.
+    - If you expect more than one signing key, use `X509KeySelector` (the JKS variant). Obtain these keys directly from the identity providers, store them in local JKS and ignore any `KeyInfo` elements in the document.
 - Avoid signature-wrapping attacks.
     - Never use `getElementsByTagName` to select security related elements in an XML document without prior validation.
     - Always use absolute XPath expressions to select elements, unless a hardened schema is used for validation.
@@ -94,7 +93,7 @@ Need an architectural diagram? The [SAML technical overview](https://www.oasis-o
 
 ## Unsolicited Response (ie. IdP Initiated SSO) Considerations for Service Providers
 
-Unsolicited Response is inherently [less secure](https://www.identityserver.com/articles/the-dangers-of-saml-idp-initiated-sso) by design due to the lack of [CSRF](https://owasp.org/www-community/attacks/csrf) protection. However, it is supported by many due to the backwards compatibility feature of SAML 1.1. The general security recommendation is to not support this type of authentication, but if it must be enabled, the following steps (in additional to everything mentioned above) should help you secure this flow:
+Unsolicited Response is inherently [less secure](https://www.identityserver.com/articles/the-dangers-of-saml-idp-initiated-sso) by design due to the lack of [CSRF](https://owasp.org/www-community/attacks/csrf) protection. However, it is supported by many due to the backwards compatibility feature of SAML 1.1. The general security recommendation is to not support this type of authentication, but if it must be enabled, the following steps (in addition to everything mentioned above) should help you secure this flow:
 
 - Follow the validation process mentioned in [SAML Profiles (section 4.1.5)](https://docs.oasis-open.org/security/saml/v2.0/saml-profiles-2.0-os.pdf). This step will help counter the following attacks:
     - Replay (6.1.2)
@@ -110,11 +109,35 @@ The SAML protocol is rarely the attack vector of choice, though it's important t
 
 ### X.509 Certificate Considerations
 
-Typically the security association between the Identity Provider (IdP) and Service Provider (SP) is created when the SP explicitly chooses to trust the IdP's X.509 signing certificate. Exactly how this occurs can have a strong bearing on overall security posture. How the certificate is generated, what the contents of the certificate are, and how the certificate's corresponding private key is protected all have strong bearing on security posture. e.g. if an attacker has access to use the IdP’s signing key, they can mint SAML responses containing any assertion they wish.
+Typically the security association between the Identity Provider (IdP) and Service Provider (SP) is created when the SP explicitly chooses to trust the IdP's X.509 signing certificate. Exactly how this occurs can have a strong bearing on overall security posture. How the certificate is generated, what the contents of the certificate are, and how the certificate's corresponding private key is protected all have strong bearing on security posture. e.g., if an attacker has access to use the IdP’s signing key, they can mint SAML responses containing any assertion they wish.
 
 In many cases, the method of manually setting the association is akin to [Certificate Pinning](https://cheatsheetseries.owasp.org/cheatsheets/Pinning_Cheat_Sheet.html), which is not ideal. Depending on the IdP and SP software, or various design considerations, this may be unavoidable.
 
-Keep in mind that the certificate's key type and signing can be different than that of the XML document signing. The certificate's key is the only key that can be use to sign the XML document, but the signing algorithm is chosen at the IdP's discretion. The most commonly supported signing algorithm is SHA-256.
+Keep in mind that the certificate's signature type can be different from that of the XML document signing type. The certificate's corresponding private key is the only key that can be used to sign the XML document, but the signing algorithm is chosen at the IdP's discretion. The most commonly supported signing algorithm is SHA-256.
+
+#### SAML Parties vs Organizations
+
+The most common SAML use cases are those of business-to-business (B2B). This means that the two parties have different security polices, practices, and risk tolerances. This guidance focuses mainly on the B2B use case. However SAML based federation or SSO is commonly used inside of an organization. In this case the term third-party CA does not apply. It is likely that the CA has been built and run to company standards and it poses no more or less risk to the SAML systems. The term third-party CA is meant to indicate a private CA run by a third-party.
+
+####  Certificate Use Cases
+
+There are actually 5 separate use cases for certificates in a SAML system. While this document mainly talks about the IdP’s SAML signing certificate, the security considerations apply to all four SAML related certificates. The fifth certificate, the IdP’s TLS server certificate is no more or less special than any other server certificate.
+
+##### IdP SAML Signing
+
+This is the certificate that an SP uses to validate an IdD’s SAML response. The IdP signs that response with the certificate’s corresponding private key. This is often the most important certificate and private key, as this protects the identity assertions being sent to the SP.
+
+##### IdP SAML Encryption
+
+This is less commonly used, as this is used when the SP wants to protect the SAML request sent to the IdP, not just from tampering, but from information disclosure. There should be no sensitive information in the SAML request, so it is less commonly used. If used, the certificate and private key must be different from that of the SAML signing certificate.
+
+##### SP Signing
+
+It is a best practice, though not required, that SPs and IdPs not allow IdP Initiated SSO. This means that the caller starts their SAML flow at the SP, which produces and signed SAML request intended for the IdP.
+
+##### SP Encryption
+
+It is a best practice to avoid placing sensitive data in the IdP’s SAML response, but sometimes it is unavoidable. This could be user names or other PII. When information disclosure is a consideration, an SP will have a SAML encryption certificate. The IdP will use this and the embedded public key, in order to encrypt the SAML response. The SP must use a separate certificate and key pair for SAML signing and encryption.
 
 #### Certificate Contents
 
@@ -123,6 +146,8 @@ In the context of SAML signing and encryption, X.509 certificates are most often
 ##### Keys and Signing Algorithms
 
 The key pair size and type and signing algorithm choice has strong bearing on security and interoperability.  Not all IdP and SP software packages or libraries support all combinations of options. As one IdP often has many SPs associated with it, the only option is to pick the least secure option that is still considered secure. The most supported and currently secure combination is using RSA 2048 bit keys and SHA-256 signing. This is referring to the certificate’s signing algorithm and not the SAML XML signing.
+
+As post-quantum algorithms become more prevalent, and ultimately required, this becomes even more complex. Those writing SAML SP and IdP software should begin looking at options to support more key and signing algorithms.
 
 ###### Keys
 
@@ -135,17 +160,19 @@ No IdP should use a certificate signed with SHA-1. SHA-256 is the minimum bar. T
 
 ##### Certificate Lifetime
 
-Certificates contain a NotBefore and NotOnorAfter attribute. Most IdPs ignore these in favor of guaranteeing uptime if certificate rotation does not happen on time. The SAML certificate lifetime should be handled well enough that ignoring these is not needed. While [NIST SP 800-57 (Part 1, Rev. 5)](https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final) allows RSA 2048 bit keys to last for 3 years, the maximum lifetime of a SAML signing certificate should be two years. If the private key is not well protected, such as in a Hardware Security Module (HSM), that may be too long to be safe.
+Certificates contain a NotBefore and NotOnorAfter attribute. Most IdPs ignore these in favor of guaranteeing uptime if certificate rotation does not happen on time. The SAML certificate lifetime should be handled well enough that ignoring these is not needed. Ignoring the certificate's validity period is fundamentally a bad idea. a  While [NIST SP 800-57 (Part 1, Rev. 5)](https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final) allows RSA 2048 bit keys to last for 3 years, the maximum lifetime of a SAML signing certificate should be two years. If the private key is not well protected, such as in a Hardware Security Module (HSM), that may be too long to be safe.
 
 ##### Extended Key Usage (EKU) and Key Usage (KU)
 
-[EKU](https://www.rfc-editor.org/rfc/rfc5280#section-4.2.1.12) describes a specific use case that the certificate is intended for. These are use cases like server authentication, client authentication, and code signing. There is no widely accepted EKU for SAML signing, but [RFC 9336](https://www.rfc-editor.org/rfc/rfc9336.txt) defines one that is ideal, id-kp-documentSigning (1.3.6.1.5.5.7.3.36). IdPs and SPs may consider standardizing on this EKU.
+[EKU](https://www.rfc-editor.org/rfc/rfc5280#section-4.2.1.12) describes a specific use case that the certificate is intended for. These are use cases like server authentication, client authentication, and code signing, which are not appropriate for SAML signing. There is no widely accepted EKU for SAML signing, but [RFC 9336](https://www.rfc-editor.org/rfc/rfc9336.txt) defines one that is ideal, id-kp-documentSigning (1.3.6.1.5.5.7.3.36). IdPs and SPs may consider standardizing on this EKU.
 
-[KU](https://www.rfc-editor.org/rfc/rfc5280#section-4.2.1.3) describes the underlying cryptographic operations that the private key is meant for. There are things like digitalSignature, nonRepudiation, keyEncipherment, etc. IdPs and SPs may consider requiring digitalSignature and further, disallowing certificates that have other KUs, as certificates should only be used for one use case. e.g. The IdP's TLS server certificate must never be the SAML signing certificate.
+[KU](https://www.rfc-editor.org/rfc/rfc5280#section-4.2.1.3) describes the underlying cryptographic operations that the private key is meant for. There are things like digitalSignature, nonRepudiation, keyEncipherment, etc. IdPs and SPs may consider requiring digitalSignature and further, disallowing certificates that have other KUs, as certificates should only be used for one use case. e.g. the IdP's TLS server certificate must never be the SAML signing certificate.
 
 ##### CRL Distribution Point (CDP)
 
 [Certificate Revocation List (CRL) Distribution Point](https://www.rfc-editor.org/rfc/rfc5280#section-4.2.1.13) are a list of certificates that the CA says should no longer be trusted. They are most often delivered over HTTP and the CRL URLs are generally embedded in each CA issued certificate. The [CRL](https://www.rfc-editor.org/rfc/rfc5280#appendix-C.4) is signed by the CA, so a man-in-the-middle attack against the HTTP cannot harm the integrity of the list, other than to tamper with, and thus invalidate, it. That is, it can't be altered by an attacker. Only CA signed certificates can have a CRL. If the SAML certificate has a CRL listed, it should be reachable by the validating party and the party should [validate](https://www.rfc-editor.org/rfc/rfc5280#section-6.3) it.
+
+Considering the level or risk, if a private key is compromised, and the smaller scale of IdP to SP relationships, parties in a SAML system should establish a plan with contact lists to notify and rotate certificates rapidly in case of an incident. Many SAML products and libraries don’t support revocation checking, and simply revoking the certificate, without coordinated replacement, means there is an outage.
 
 ##### Online Certificate Status Protocol (OCSP)
 
@@ -153,11 +180,11 @@ Certificates contain a NotBefore and NotOnorAfter attribute. Most IdPs ignore th
 
 #### Certificate Hierarchy
 
-The SAML signing certificate can be signed by one of three things. The certificate can be self-signed, public CA signed, or private CA signed. Each has pros and cons, however, given the current state of WebPKI (public) and private PKI, using self-signed SAML certificates are the clear winner when proper precatuions are taken for exchanging the certificates.
+The SAML signing certificate can be signed by one of three things. The certificate can be self-signed, public CA signed, or private CA signed. Each has pros and cons, however, given the current state of WebPKI (public) and private PKI, using self-signed SAML certificates are the clear winner when proper precautions are taken for exchanging the certificates.
 
 ##### Certificate Issuer
 
-All X.509 certificates are signed, using a private key, by an authority known as an [Issuer](https://www.rfc-editor.org/rfc/rfc5280#section-4.1.2.4). This may be a CA or in the case of a self-signed certificate the certificate's private key. In the case of a CA signed certificate, the signer may also have a certificate that has an Issuer, and so on. This is called chain, or path, and should terminate in a Root CA (which is self-signed by definition). The issuer should be inspected. If the issuer is a CA, its attributes, such as EKU, KU, and CRLs, may also be validated. This should happen for each certificate in the [path](https://datatracker.ietf.org/doc/html/rfc5280#section-3.2) all the way to the root.
+All X.509 certificates are signed, using a private key, by an authority known as an [Issuer](https://www.rfc-editor.org/rfc/rfc5280#section-4.1.2.4). This may be a CA or in the case of a self-signed certificate the certificate's corresponding private key. In the case of a CA signed certificate, the signer may also have a certificate that has an Issuer, and so on. This is called chain, or path, and should terminate in a Root CA (which is self-signed by definition). The issuer should be inspected. If the issuer is a CA, its attributes, such as EKU, KU, and CRLs, may also be validated. This should happen for each certificate in the [path](https://datatracker.ietf.org/doc/html/rfc5280#section-3.2) all the way to the root.
 
 ##### Public Certificate Authority (CA) Signed
 
@@ -173,7 +200,7 @@ Using Public CA signed certificates allows for revocation checking, which can in
 
 As most IdPs and SPs treat the X.509 certificates as an explicit trust, private CAs and PKI could be used. How private CAs are designed, built, and run varies wildly and ultimately running CAs well is very costly. In order to trust a third-party's CAs, one would need to clearly understand the lifecycle of the CA. There are two audit types that would cover this, both of which are very costly, on top of building and running the CAs. If you rely on third-party CAs, they should be [WebTrust](http://www.webtrust.org/), [ETSI](http://www.etsi.org/technologies-clusters/technologies/security/certification-authorities-and-other-certification-service-providers), or [SOC 2 Type II](https://www.aicpa-cima.com/topic/audit-assurance/audit-and-assurance-greater-than-soc-2) audited.
 
-Trusting third-party CAs, if done improperly, could result in unintended over trust, for things such as TLS and code signing. If you choose to trust third-party CAs, make sure they are only trusted for the process of IdP signature validation.
+Trusting third-party CAs, if done improperly, could result in unintended over-trust, for things such as TLS and code signing. If you choose to trust third-party CAs, make sure they are only trusted for the process of IdP signature validation.
 
 If third-party CAs are used they still should not issue SAML signing certificates where the lifetime of the certificate exceeds that of the underlying key pair, based on guidance from a standards organization such as [NIST, NSA, etc.](https://www.keylength.com/en/). If using the strongest private key types, this puts the upper limit at two years.
 
@@ -183,10 +210,12 @@ Due to the explicit nature of most SAML security associations, self-signed certi
 
 ###### Creating a Self-Signed SAML Certificate
 
-If you are using a Hardware Security Module (HSM), follow the vendor's instructions. This process uses openssl.
+If you are using a Hardware Security Module (HSM), follow the vendor's instructions. This process uses openssl. The example uses an overly generic distinguished name. Your Common Name (CN) should be meaningful and specific.
 
 1. Generate a Private Key:
 openssl genrsa -out private.key 2048
+or
+openssl ecparam -genkey -name prime256v1 -out private.pem
 
 2. Create a Configuration File (e.g., cert.cnf):
 
@@ -239,7 +268,7 @@ SAML Signing keys are a top security asset and [target of attackers](https://www
 - Level of granularity in setting authorization context when consuming SAML token (do you use groups, roles, attributes)
 - Ensure each Assertion or the entire Response element is signed
 - [Validate Signatures](#validate-signatures)
-- Validate if signed by an authorized IDP
+- Validate if signed by an authorized IdP
 - Validate IDP certificates for revocation against CRL/OCSP if they are present
 - Validate NotBefore and NotOnorAfter
 - Validate Recipient attribute
