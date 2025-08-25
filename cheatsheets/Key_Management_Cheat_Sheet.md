@@ -254,5 +254,4 @@ Use only reputable crypto libraries that are well maintained and updated, as wel
 
 ## Documentation
 
-- [The definitive guide to encryption key management fundamentals](https://downloads.townsendsecurity.com/ebooks/EKM-Definitive-Guide.pdf).
 - [Practical cryptography for developers](https://cryptobook.nakov.com/).
