@@ -157,6 +157,7 @@ ECC Keys can be much smaller while providing more security than RSA keys and the
 At least one major vendor [Microsoft Entra](https://learn.microsoft.com/en-us/entra/identity/hybrid/connect/how-to-connect-fed-saml-idp) doesn’t support ECC keys.
 
 ###### Signing Algorithms
+
 When public key cryptography is used for signing data, the data is first hashed with an chosen algorithm and then the hash is signed using the private key.
 
 No IdP should use SHA-1 as the certificate signing hash. SHA-256 is the minimum bar. That said, if possible moving to larger hash algorithms like SHA-384 or SHA-512 means you are better future-proofing your service. In this context we are talking about the certificate’s signing algorithm and not the one used to sign the SAML response XML.
