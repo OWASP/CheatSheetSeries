@@ -113,7 +113,7 @@ Typically the security association between the Identity Provider (IdP) and Servi
 
 In many cases, the method of manually setting the association is akin to [Certificate Pinning](https://cheatsheetseries.owasp.org/cheatsheets/Pinning_Cheat_Sheet.html), which is not ideal. Depending on the IdP and SP software, or various design considerations, this may be unavoidable.
 
-Keep in mind that the certificate's signature type can be different from that of the XML document signing type. The certificate's corresponding private key is the only key that can be used to sign the XML document, but the signing algorithm is chosen at the IdP's discretion. The most commonly supported signing algorithm is SHA-256.
+Keep in mind that the certificate's signature type can be different from that of the XML document signing type. The certificate's corresponding private key is the only key that can be used to sign the XML document, but the signing algorithm is chosen at the IdP's discretion. The most commonly supported signing algorithm is rsa-sha256.
 
 #### SAML Parties vs Organizations
 
@@ -133,7 +133,7 @@ This is less commonly used, as this is used when the SP wants to protect the SAM
 
 ##### SP Signing
 
-It is a best practice, though not required, that SPs and IdPs not allow IdP Initiated SSO. This means that the caller starts their SAML flow at the SP, which produces and signed SAML request intended for the IdP.
+It is a best practice, though not required, that SPs and IdPs not allow IdP Initiated SSO. This means that the caller starts their SAML flow at the SP, which produces a signed SAML request intended for the IdP.
 
 ##### SP Encryption
 
@@ -143,9 +143,11 @@ It is a best practice to avoid placing sensitive data in the IdP’s SAML respon
 
 In the context of SAML signing and encryption, X.509 certificates are most often treated simply as a wrapper to hold a public key that is used to verify a signature, or to wrap a symmetric key for SAML encryption. Nonetheless, a certificate can contain attributes that can be used to further enhance security.
 
+OWASP recommends that IdPs and SPs move to adopt the EKU, KU, and key lifetimes mentioned below. These legitimately enhance security and allow the verifying party to further protect themselves. They also help show compliance with PKI norms.
+
 ##### Keys and Signing Algorithms
 
-The key pair size and type and signing algorithm choice has strong bearing on security and interoperability.  Not all IdP and SP software packages or libraries support all combinations of options. As one IdP often has many SPs associated with it, the only option is to pick the least secure option that is still considered secure. The most supported and currently secure combination is using RSA 2048 bit keys and SHA-256 signing. This is referring to the certificate’s signing algorithm and not the SAML XML signing.
+The key pair size and type and signing algorithm choice has strong bearing on security and interoperability.  Not all IdP and SP software packages or libraries support all combinations of options. As one IdP often has many SPs associated with it, the only option is to pick the least secure option that is still considered secure. The most supported and currently secure combination is using RSA 2048 bit keys and SHA-256 hashing/signing. This is referring to the certificate’s signing algorithm and not the SAML XML signing.
 
 As post-quantum algorithms become more prevalent, and ultimately required, this becomes even more complex. Those writing SAML SP and IdP software should begin looking at options to support more key and signing algorithms.
 
@@ -155,12 +157,13 @@ ECC Keys can be much smaller while providing more security than RSA keys and the
 At least one major vendor [Microsoft Entra](https://learn.microsoft.com/en-us/entra/identity/hybrid/connect/how-to-connect-fed-saml-idp) doesn’t support ECC keys.
 
 ###### Signing Algorithms
+When public key cryptography is used for signing data, the data is first hashed with an chosen algorithm and then the hash is signed using the private key.
 
-No IdP should use a certificate signed with SHA-1. SHA-256 is the minimum bar. That said, if possible moving to larger hash algorithms like SHA-384 or SHA-512 means you are better future-proofing your service. In this context we are talking about the certificate’s signing algorithm and not the one used to sign the SAML response XML.
+No IdP should use SHA-1 as the certificate signing hash. SHA-256 is the minimum bar. That said, if possible moving to larger hash algorithms like SHA-384 or SHA-512 means you are better future-proofing your service. In this context we are talking about the certificate’s signing algorithm and not the one used to sign the SAML response XML.
 
 ##### Certificate Lifetime
 
-Certificates contain a NotBefore and NotOnorAfter attribute. Most IdPs ignore these in favor of guaranteeing uptime if certificate rotation does not happen on time. The SAML certificate lifetime should be handled well enough that ignoring these is not needed. Ignoring the certificate's validity period is fundamentally a bad idea. a  While [NIST SP 800-57 (Part 1, Rev. 5)](https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final) allows RSA 2048 bit keys to last for 3 years, the maximum lifetime of a SAML signing certificate should be two years. If the private key is not well protected, such as in a Hardware Security Module (HSM), that may be too long to be safe.
+Certificates contain a NotBefore and NotOnorAfter attribute. Most IdPs ignore these in favor of guaranteeing uptime if certificate rotation does not happen on time. The SAML certificate lifetime should be handled well enough that ignoring these is not needed. Ignoring the certificate's validity period is fundamentally a bad idea. While [NIST SP 800-57 (Part 1, Rev. 5)](https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final) allows RSA 2048 bit keys to last for 3 years, the maximum lifetime of a SAML signing certificate should be two years. If the private key is not well protected, such as in a Hardware Security Module (HSM), that may be too long to be safe.
 
 ##### Extended Key Usage (EKU) and Key Usage (KU)
 
@@ -172,11 +175,11 @@ Certificates contain a NotBefore and NotOnorAfter attribute. Most IdPs ignore th
 
 [Certificate Revocation List (CRL) Distribution Point](https://www.rfc-editor.org/rfc/rfc5280#section-4.2.1.13) are a list of certificates that the CA says should no longer be trusted. They are most often delivered over HTTP and the CRL URLs are generally embedded in each CA issued certificate. The [CRL](https://www.rfc-editor.org/rfc/rfc5280#appendix-C.4) is signed by the CA, so a man-in-the-middle attack against the HTTP cannot harm the integrity of the list, other than to tamper with, and thus invalidate, it. That is, it can't be altered by an attacker. Only CA signed certificates can have a CRL. If the SAML certificate has a CRL listed, it should be reachable by the validating party and the party should [validate](https://www.rfc-editor.org/rfc/rfc5280#section-6.3) it.
 
-Considering the level or risk, if a private key is compromised, and the smaller scale of IdP to SP relationships, parties in a SAML system should establish a plan with contact lists to notify and rotate certificates rapidly in case of an incident. Many SAML products and libraries don’t support revocation checking, and simply revoking the certificate, without coordinated replacement, means there is an outage.
+Considering the level of risk, if a private key is compromised, and the smaller scale of IdP to SP relationships, parties in a SAML system should establish a plan with contact lists to notify and rotate certificates rapidly in case of an incident. Many SAML products and libraries don’t support revocation checking, and simply revoking the certificate, without coordinated replacement, means there is an outage.
 
 ##### Online Certificate Status Protocol (OCSP)
 
-[OCSP](https://datatracker.ietf.org/doc/html/rfc6960) is another way of checking to see if a certificate  is revoked. The OCSP URL is embedded in the certificate , like a CRL, and should be reacable  over HTTP. The response is signed, so MITM attacks are not an integrity concern. OCSP is becoming less favored, as the exchange creates privacy concerns. The caller's IP address can be seen and the certificate that is being used is disclosed. This is less of a concern for SAML, as this does not disclose a destination website, use overall has declined. If an OCSP URL is present on any certificate in the chain, it should be used to check if the certificate is revoked.
+[OCSP](https://datatracker.ietf.org/doc/html/rfc6960) is another way of checking to see if a certificate  is revoked. The OCSP URL is embedded in the certificate , like a CRL, and should be reachable  over HTTP. The response is signed, so MITM attacks are not an integrity concern. OCSP is becoming less favored, as the exchange creates privacy concerns. The caller's IP address can be seen and the certificate that is being used is disclosed. This is less of a concern for SAML, as this does not disclose a destination website, use overall has declined. If an OCSP URL is present on any certificate in the chain, it should be used to check if the certificate is revoked.
 
 #### Certificate Hierarchy
 
