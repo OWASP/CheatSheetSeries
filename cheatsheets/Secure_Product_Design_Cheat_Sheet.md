@@ -1,52 +1,52 @@
 # Secure Product Design Cheat Sheet
 
 ## Introduction
-**Version:** 2025-08  
 
-This cheat sheet provides guidance for designing software products with security in mind. It aligns with the **CISA Secure by Design principles**, focusing on practical, actionable steps to embed security into your products.  
-
----
-
-## Core Principles
+Secure product design helps ensure systems are built with security in mind from the start. This cheat sheet provides practical guidelines.
 
 ### 1. Establish Secure Defaults
-- Configure systems, frameworks, and libraries to be secure by default.  
-- Avoid optional security features; defaults should minimize risk.  
+
+- Configure systems, frameworks, and applications with secure default settings.
+- Disable unnecessary features or services.
+- Ensure default passwords or keys are changed.
 
 ### 2. Minimize Attack Surface
-- Limit exposed APIs, endpoints, and interfaces.  
-- Remove unnecessary functionality or permissions.  
-- Follow the principle of least privilege.  
+
+- Limit exposed APIs, endpoints, and services.
+- Remove unused code and dependencies.
+- Apply network segmentation where applicable.
 
 ### 3. Fail Securely
-- Design systems to handle errors safely.  
-- Avoid exposing sensitive information in error messages.  
-- Ensure failures do not weaken security controls.  
+
+- Design systems to handle errors safely.
+- Avoid exposing sensitive information in error messages.
+- Ensure failover mechanisms do not compromise security.
 
 ### 4. Ensure Transparency
-- Maintain clear, documented design decisions regarding security.  
-- Provide traceability for security-related changes.  
-- Enable auditing where appropriate.  
+
+- Maintain clear, documented design and security decisions.
+- Communicate security responsibilities across teams.
+- Log significant actions for audit and review.
 
 ### 5. Leadership Commitment
-- Security should be supported at the organizational leadership level.  
-- Decisions around design and architecture must consider long-term security implications.  
+
+- Security should be supported and enforced by leadership.
+- Allocate resources for secure design and development.
+- Promote security policies and governance.
 
 ### 6. Foster a Security Culture
-- Encourage security awareness throughout the development team.  
-- Include security discussions in design reviews and planning.  
-- Provide training and resources for secure coding and design practices.  
+
+- Encourage security awareness training.
+- Reward secure behavior and reporting of issues.
+- Include security goals in team metrics.
 
 ### 7. Continuous Improvement
-- Regularly review design patterns and update them based on new threats.  
-- Monitor product security in production and incorporate feedback into design.  
 
----
+- Regularly review design patterns and security controls.
+- Conduct periodic security audits and assessments.
+- Update processes based on emerging threats and lessons learned.
 
 ## References
-- [CISA: Shifting the Balance of Cybersecurity Risk](https://www.cisa.gov/shifting-balance-cybersecurity-risk)  
-- [OWASP Cheat Sheet Series](https://cheatsheetseries.owasp.org/)  
 
----
-
-*This cheat sheet focuses strictly on secure design principles and does not cover secure software development lifecycle (SSDLC) processes.*
+- [CISA: Shifting the Balance Towards Secure Design](https://www.cisa.gov)
+- [OWASP Secure Product Design Principles](https://owasp.org)
