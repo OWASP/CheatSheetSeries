@@ -1504,6 +1504,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#insecure-vs-secure-java-ldap-query-construction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Insecure vs Secure Java LDAP Query Construction
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#safe-c-sharp-net-tba-example" class="md-nav__link">
     <span class="md-ellipsis">
       Safe C Sharp .NET TBA Example
@@ -2809,6 +2818,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#insecure-vs-secure-java-ldap-query-construction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Insecure vs Secure Java LDAP Query Construction
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#safe-c-sharp-net-tba-example" class="md-nav__link">
     <span class="md-ellipsis">
       Safe C Sharp .NET TBA Example
@@ -2992,6 +3010,21 @@ and LDAP in the absence of a comprehensive normalization and allowlisting-based 
 sanitized, safe values before they are added to the allowlist expression against which input will be validated. Likewise, normalization of user input should
 occur before the validation step (source: <a href="https://wiki.sei.cmu.edu/confluence/spaces/flyingpdf/pdfpageexport.action?pageId=88487534">Prevent LDAP injection</a>).</p>
 <p>For further information visit <a href="https://owasp.org/www-project-java-encoder/">OWASP ESAPI Java Encoder Project which includes encodeForLDAP(String) and encodeForDN(String)</a>.</p>
+<h4 id="insecure-vs-secure-java-ldap-query-construction">Insecure vs Secure Java LDAP Query Construction<a class="headerlink" href="#insecure-vs-secure-java-ldap-query-construction" title="Permanent link">&para;</a></h4>
+<p>❌ <strong>Insecure Example (vulnerable to LDAP Injection)</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1">// User input directly concatenated into the filter</span>
+<span class="n">String</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;(&amp;(uid=&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">userInput</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;)(objectClass=person))&quot;</span><span class="p">;</span>
+<span class="n">NamingEnumeration</span><span class="o">&lt;</span><span class="n">SearchResult</span><span class="o">&gt;</span><span class="w"> </span><span class="n">results</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="n">ctx</span><span class="p">.</span><span class="na">search</span><span class="p">(</span><span class="s">&quot;ou=users,dc=example,dc=com&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">filter</span><span class="p">,</span><span class="w"> </span><span class="n">controls</span><span class="p">);</span>
+
+
+<span class="err">✅</span><span class="w"> </span><span class="n">Secure</span><span class="w"> </span><span class="nf">Example</span><span class="w"> </span><span class="p">(</span><span class="n">using</span><span class="w"> </span><span class="n">parameterized</span><span class="w"> </span><span class="n">filter</span><span class="p">)</span>
+
+<span class="c1">// User input safely passed as a parameter</span>
+<span class="n">String</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;(&amp;(uid={0})(objectClass=person))&quot;</span><span class="p">;</span>
+<span class="n">NamingEnumeration</span><span class="o">&lt;</span><span class="n">SearchResult</span><span class="o">&gt;</span><span class="w"> </span><span class="n">results</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="n">ctx</span><span class="p">.</span><span class="na">search</span><span class="p">(</span><span class="s">&quot;ou=users,dc=example,dc=com&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">filter</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="o">[]</span><span class="p">{</span><span class="w"> </span><span class="n">userInput</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="n">controls</span><span class="p">);</span>
+</code></pre></div>
 <h4 id="safe-c-sharp-net-tba-example">Safe C Sharp .NET TBA Example<a class="headerlink" href="#safe-c-sharp-net-tba-example" title="Permanent link">&para;</a></h4>
 <p><a href="https://blogs.msdn.microsoft.com/securitytools/2010/09/30/antixss-4-0-released/">.NET AntiXSS</a> (now the Encoder class) has LDAP encoding functions including <code>Encoder.LdapFilterEncode(string)</code>, <code>Encoder.LdapDistinguishedNameEncode(string)</code> and <code>Encoder.LdapDistinguishedNameEncode(string, bool, bool)</code>.</p>
 <p><code>Encoder.LdapFilterEncode</code> encodes input according to <a href="https://tools.ietf.org/search/rfc4515">RFC4515</a> where unsafe values are converted to <code>\XX</code> where <code>XX</code> is the representation of the unsafe character.</p>
