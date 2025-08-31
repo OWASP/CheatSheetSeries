@@ -313,8 +313,6 @@ See also: [OAuth 2.0 Cheat Sheet](OAuth2_Cheat_Sheet.md)
 
 **OpenID Connect 1.0 (OIDC)** is an identity layer built **on top of OAuth 2.0**. It defines how a client (Relying Party) verifies the end-user’s identity using an **ID Token** (a signed JWT) and how to obtain user claims in an interoperable way. Use OIDC when you need **authentication/SSO**; use OAuth 2.0 for **authorization** to APIs. Validate ID Tokens (issuer, audience, signature, expiry) on the relying party and prefer well-maintained libraries or provider SDKs.
 
-See also: [OAuth 2.0 Cheat Sheet](OAuth2_Cheat_Sheet.md)
-
 ### SAML
 
 Security Assertion Markup Language (SAML) is often considered to compete with OpenId. The most recommended version is 2.0 since it is very feature-complete and provides strong security. Like OpenId, SAML uses identity providers, but unlike OpenId, it is XML-based and provides more flexibility. SAML is based on browser redirects which send XML data. Furthermore, SAML isn't only initiated by a service provider; it can also be initiated from the identity provider. This allows the user to navigate through different portals while still being authenticated without having to do anything, making the process transparent.
