@@ -305,7 +305,7 @@ While authentication through a combination of username, password, and multi-fact
 
 ### OAuth 2.0
 
-**OAuth 2.0 is an authorization framework**, not an authentication protocol. It enables a client to obtain scoped, time-limited access to protected resources via access tokens issued by an authorization server. Use OAuth 2.0 for **authorization** (delegating access to APIs and resources). For end-user authentication/SSO, use **OpenID Connect (OIDC)** (see below).
+**OAuth 2.0 is an authorization framework**, not an authentication protocol. It enables a client to obtain scoped, time-limited access to protected resources via access tokens issued by an authorization server. Use OAuth 2.0 for **authorization** (delegating access to APIs and resources). For end user authentication/SSO, use **OpenID Connect (OIDC)** (see below).
 
 See also: [OAuth 2.0 Cheat Sheet](OAuth2_Cheat_Sheet.md)
 
