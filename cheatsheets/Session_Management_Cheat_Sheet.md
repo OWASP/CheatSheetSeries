@@ -252,6 +252,20 @@ The session ID regeneration is mandatory to prevent [session fixation attacks](h
 
 A complementary recommendation is to use a different session ID or token name (or set of session IDs) pre and post authentication, so that the web application can keep track of anonymous users and authenticated users without the risk of exposing or binding the user session between both states.
 
+### Reauthentication After Risk Events
+
+Web applications should require reauthentication after high-risk events such as:
+
+- Changes to critical user information (e.g., password, email address)
+- Login attempts from new or suspicious IP addresses or devices
+- Account recovery flows (e.g., password reset or compromised-account detection)
+
+For best practices on implementing reauthentication after these events, see the [Reauthentication After Risk Events](Authentication_Cheat_Sheet.md#reauthentication-after-risk-events) section in the Authentication Cheat Sheet
+
+### Additional Resources
+
+- [Why Frequent Reauthentication Can Be a UX Pitfall](https://tailscale.com/blog/frequent-reauth-security?lid=5wso20mx4knj) by Tailscale
+
 ### Considerations When Using Multiple Cookies
 
 If the web application uses cookies as the session ID exchange mechanism, and multiple cookies are set for a given session, the web application must verify all cookies (and enforce relationships between them) before allowing access to the user session.

@@ -105,6 +105,25 @@ occur before the validation step (source: [Prevent LDAP injection](https://wiki.
 
 For further information visit [OWASP ESAPI Java Encoder Project which includes encodeForLDAP(String) and encodeForDN(String)](https://owasp.org/www-project-java-encoder/).
 
+#### Insecure vs Secure Java LDAP Query Construction
+
+❌ **Insecure Example (vulnerable to LDAP Injection)**
+
+```java
+// User input directly concatenated into the filter
+String filter = "(&(uid=" + userInput + ")(objectClass=person))";
+NamingEnumeration<SearchResult> results =
+    ctx.search("ou=users,dc=example,dc=com", filter, controls);
+
+
+✅ Secure Example (using parameterized filter)
+
+// User input safely passed as a parameter
+String filter = "(&(uid={0})(objectClass=person))";
+NamingEnumeration<SearchResult> results =
+    ctx.search("ou=users,dc=example,dc=com", filter, new Object[]{ userInput }, controls);
+```
+
 #### Safe C Sharp .NET TBA Example
 
 [.NET AntiXSS](https://blogs.msdn.microsoft.com/securitytools/2010/09/30/antixss-4-0-released/) (now the Encoder class) has LDAP encoding functions including `Encoder.LdapFilterEncode(string)`, `Encoder.LdapDistinguishedNameEncode(string)` and `Encoder.LdapDistinguishedNameEncode(string, bool, bool)`.

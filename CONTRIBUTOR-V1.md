@@ -88,7 +88,7 @@ Sorting applied on the name is an alphabetical one.
 - Dominique Righetto - [dominique.righetto@owasp.org](mailto:dominique.righetto@owasp.org)
 - Eric Sheridan - [eric.sheridan@owasp.org](mailto:eric.sheridan@owasp.org)
 - Paul Petefish
-- [Manideep Konakandla (Amazon Application Security Team)](http://www.manideepk.com)
+- [Manideep Konakandla (Amazon Application Security Team)](https://www.manideepk.com)
 
 ## [Cross Site Scripting Prevention Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/tree/master/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md)
 
@@ -299,7 +299,7 @@ Sorting applied on the name is an alphabetical one.
 
 - Gunnar Peterson
 - James McGovern
-- [Brad Broulik](http://bradbroulik.blogspot.dk/2010/01/bulletproof-sso-with-saml-20.html)
+- [Brad Broulik](https://bradbroulik.blogspot.com/2010/01/bulletproof-sso-with-saml-20.html)
 - [Paweł Krawczyk](https://ipsec.pl/)
 
 ## [SQL Injection Prevention Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/tree/master/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.md)
