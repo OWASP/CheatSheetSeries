@@ -121,43 +121,43 @@ Brief overview of the topic, its importance, and target audience.
 
 #### **Core Content Sections**
 
-**1. Background & Context**
+##### 1. Background & Context
 
 - Problem statement
 - Why this matters
 - Current threat landscape
 
-**2. Threat Analysis**
+##### 2. Threat Analysis
 
 - Attack vectors
 - Vulnerability types
 - Risk assessment
 
-**3. Prevention Strategies**
+##### 3. Prevention Strategies
 
 - Defense in depth approach
 - Multiple control layers
 - Best practices
 
-**4. Implementation Guide**
+##### 4. Implementation Guide
 
 - Step-by-step instructions
 - Code examples
 - Configuration samples
 
-**5. Testing & Validation**
+##### 5. Testing & Validation
 
 - Verification methods
 - Testing tools
 - Success criteria
 
-**6. Monitoring & Maintenance**
+##### 6. Monitoring & Maintenance
 
 - Ongoing security measures
 - Detection capabilities
 - Update procedures
 
-**7. References & Resources**
+##### 7. References & Resources
 
 - Further reading
 - Tools and utilities
@@ -282,8 +282,8 @@ Good: Secure password hashing with PBKDF2
 ```java
 public String hashPassword(String password, String salt) {
     PBEKeySpec spec = new PBEKeySpec(
-        password.toCharArray(), 
-        salt.getBytes(), 
+        password.toCharArray(),
+        salt.getBytes(),
         100000,  // iterations
         256      // key length
     );
@@ -310,10 +310,10 @@ Code Example Guidelines:
 
 Configuration Example Format:
 
-```markdown
 ### Security Configuration
 
 Apache Security Headers
+
 ```apache
 # Security headers configuration
 Header always set X-Frame-Options DENY
@@ -323,6 +323,7 @@ Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains
 ```
 
 Nginx Security Headers
+
 ```nginx
 # Security headers configuration
 add_header X-Frame-Options DENY;
@@ -910,6 +911,7 @@ Overview of current threats and attack vectors.
 - [Related Cheat Sheet 1](link): Description
 - [Related Cheat Sheet 2](link): Description
 - [Related Cheat Sheet 3](link): Description
+
 ```
 
 ### 7.2 Advanced Template Features
@@ -1014,4 +1016,4 @@ The goal is to create **practical, actionable security guidance** that helps pra
 
 ---
 
-*This guide is based on analysis of 100+ OWASP cheat sheets and represents best practices for creating comprehensive security documentation.* 
+*This guide is based on analysis of 100+ OWASP cheat sheets and represents best practices for creating comprehensive security documentation.*
