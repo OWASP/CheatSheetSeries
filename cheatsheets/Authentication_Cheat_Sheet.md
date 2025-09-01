@@ -303,23 +303,26 @@ Enable logging and monitoring of authentication functions to detect attacks/fail
 
 While authentication through a combination of username, password, and multi-factor authentication is considered generally secure, there are use cases where it isn't considered the best option or even safe. Examples of this are third-party applications that desire to connect to the web application, either from a mobile device, another website, desktop, or other situations. When this happens, it is NOT considered safe to allow the third-party application to store the user/password combo, since then it extends the attack surface into their hands, where it isn't in your control. For this and other use cases, there are several authentication protocols that can protect you from exposing your users' data to attackers.
 
-diff --git a/cheatsheets/Authentication_Cheat_Sheet.md b/cheatsheets/Authentication_Cheat_Sheet.md
-@@
--### OAuth 2.0
-+### OAuth 2.0 and 2.1
-@@
--See also: [OAuth 2.0 Cheat Sheet](OAuth2_Cheat_Sheet.md)
-+See also: [OAuth 2.0 Cheat Sheet](OAuth2_Cheat_Sheet.md).
-+
-+> **Note on OAuth 2.1:** OAuth 2.1 is an IETF Working Group draft that consolidates OAuth 2.0 and common best practices and is expected to obsolete RFC 6749/6750. Guidance in this cheat sheet applies to both OAuth 2.0 and 2.1. See the [OAuth 2.1 draft](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-13) and [oauth.net/2.1](https://oauth.net/2.1/).
-@@
--### OpenID Connect (OIDC)
-+### OpenID Connect (OIDC)
-@@
--**OpenID Connect 1.0 (OIDC)** is an identity layer built **on top of OAuth 2.0**. It defines how a client (Relying Party) verifies the end user’s identity using an **ID Token** (a signed JWT) and how to obtain user claims in an interoperable way. Use OIDC when you need **authentication/SSO**; use OAuth 2.0 for **authorization** to APIs. Validate ID Tokens (issuer, audience, signature, expiry) on the relying party and prefer well-maintained libraries or provider SDKs.
-+**OpenID Connect 1.0 (OIDC)** is an identity layer built **on top of OAuth 2.0**. It defines how a client (Relying Party) verifies the end user’s identity using an **ID Token** (a signed JWT) and how to obtain user claims in an interoperable way. Use OIDC when you need **authentication/SSO**; use OAuth for **authorization** to APIs. Validate ID Tokens (issuer, audience, signature, expiry) on the relying party and prefer well-maintained libraries or provider SDKs.
-+
-+> **Avoid confusion:** **OpenID 2.0 (“OpenID”)** was a separate, legacy authentication protocol that has been **superseded by OpenID Connect** and is considered obsolete. New systems should not implement OpenID 2.0. See the OpenID Foundation’s note on [obsolete OpenID 2.0](https://openid.net/developers/libraries-for-obsolete-specifications/) and the [OpenID 2.0 → OIDC migration spec](https://openid.net/specs/openid-connect-migration-1_0.html).
+### OAuth 2.0 and 2.1
+
+OAuth is an **authorization** framework for delegated access to APIs.
+
+See also: [OAuth 2.0 Cheat Sheet](OAuth2_Cheat_Sheet.md).
+
+> **Note on OAuth 2.1:** OAuth 2.1 is an IETF Working Group draft that consolidates OAuth 2.0 and widely adopted best practices and is intended to replace the core OAuth 2.0 RFCs. Guidance in this cheat sheet applies to both OAuth 2.0 and OAuth 2.1.  
+> References: [draft-ietf-oauth-v2-1-13](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-13), [oauth.net/2.1](https://oauth.net/2.1/)
+
+### OpenID Connect (OIDC)
+
+**OpenID Connect 1.0 (OIDC)** is an identity layer **on top of OAuth**. It defines how a client (**relying party**) verifies the **end user’s** identity using an **ID Token** (a signed JWT) and how to obtain user claims in an interoperable way. Use **OIDC for authentication/SSO**; use **OAuth for authorization** to APIs.
+
+**Implementation guidance**
+- **Validate ID Tokens** on the relying party: issuer (`iss`), audience (`aud`), signature (per provider JWKs), expiration (`exp`).
+- Prefer **well-maintained libraries/SDKs** and provider discovery/JWKS endpoints.
+- Use the **UserInfo** endpoint when additional claims beyond the ID Token are required.
+
+> **Avoid confusion:** **OpenID 2.0 (“OpenID”)** was a separate, legacy authentication protocol that has been **superseded by OpenID Connect** and is considered obsolete. New systems should not implement OpenID 2.0.  
+> References: [OpenID Foundation — obsolete OpenID 2.0 libraries](https://openid.net/developers/libraries-for-obsolete-specifications/), [OpenID 2.0 → OIDC migration](https://openid.net/specs/openid-connect-migration-1_0.html)
 
 ### SAML
 
