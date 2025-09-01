@@ -87,34 +87,34 @@ In order to mitigate CSRF and session hijacking, it's important to require the c
 
 ### Reauthentication After Risk Events
 
-**Overview:**  
+**Overview:**
 Reauthentication is critical when an account has experienced high-risk activity such as account recovery, password resets, or suspicious behavior patterns. This section outlines when and how to trigger reauthentication to protect users and prevent unauthorized access. For further details, see the [Require Re-authentication for Sensitive Features](#require-re-authentication-for-sensitive-features) section.
 
 #### When to Trigger Reauthentication
 
-- **Suspicious Account Activity**  
+- **Suspicious Account Activity**
   When unusual login patterns, IP address changes, or device enrollments occur
-- **Account Recovery**  
+- **Account Recovery**
   After users reset their passwords or change sensitive account details
-- **Critical Actions**  
+- **Critical Actions**
   For high-risk actions like changing payment details or adding new trusted devices
 
 #### Reauthentication Mechanisms
 
-- **Adaptive Authentication**  
+- **Adaptive Authentication**
   Use risk-based authentication models that adapt to the user's behavior and context
-- **Multi-Factor Authentication (MFA)**  
+- **Multi-Factor Authentication (MFA)**
   Require an additional layer of verification for sensitive actions or events
-- **Challenge-Based Verification**  
+- **Challenge-Based Verification**
   Prompt users to confirm their identity with a challenge question or secondary method
 
 #### Implementation Recommendations
 
-- **Minimize User Friction**  
+- **Minimize User Friction**
   Ensure that reauthentication does not disrupt the user experience unnecessarily
-- **Context-Aware Decisions**  
+- **Context-Aware Decisions**
   Make reauthentication decisions based on context (e.g., geolocation, device type, prior patterns)
-- **Secure Session Management**  
+- **Secure Session Management**
   Invalidate sessions after reauthentication and rotate tokens—see the [OWASP Session Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html)
 
 #### References
@@ -305,24 +305,21 @@ While authentication through a combination of username, password, and multi-fact
 
 ### OAuth 2.0 and 2.1
 
-OAuth is an **authorization** framework for delegated access to APIs.
+OAuth is an **authorization** framework for delegated access to APIs. See also: [OAuth 2.0 Cheat Sheet](OAuth2_Cheat_Sheet.md).
 
-See also: [OAuth 2.0 Cheat Sheet](OAuth2_Cheat_Sheet.md).
-
-> **Note on OAuth 2.1:** OAuth 2.1 is an IETF Working Group draft that consolidates OAuth 2.0 and widely adopted best practices and is intended to replace the core OAuth 2.0 RFCs. Guidance in this cheat sheet applies to both OAuth 2.0 and OAuth 2.1.  
-> References: [draft-ietf-oauth-v2-1-13](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-13), [oauth.net/2.1](https://oauth.net/2.1/)
+> **Note:** OAuth 2.1 is an IETF Working Group draft that consolidates OAuth 2.0 and widely adopted best practices and is intended to replace RFC 6749/6750; guidance in this cheat sheet applies to both OAuth 2.0 and OAuth 2.1. References: [draft-ietf-oauth-v2-1-13](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-13), [oauth.net/2.1](https://oauth.net/2.1/)
 
 ### OpenID Connect (OIDC)
 
-**OpenID Connect 1.0 (OIDC)** is an identity layer **on top of OAuth**. It defines how a client (**relying party**) verifies the **end user’s** identity using an **ID Token** (a signed JWT) and how to obtain user claims in an interoperable way. Use **OIDC for authentication/SSO**; use **OAuth for authorization** to APIs.
+**OpenID Connect 1.0 (OIDC)** is an identity layer **on top of OAuth**. It defines how a client (**relying party**) verifies the **end user's** identity using an **ID Token** (a signed JWT) and how to obtain user claims in an interoperable way. Use **OIDC for authentication/SSO**; use **OAuth for authorization** to APIs.
 
-**Implementation guidance**
+#### OIDC implementation guidance
+
 - **Validate ID Tokens** on the relying party: issuer (`iss`), audience (`aud`), signature (per provider JWKs), expiration (`exp`).
 - Prefer **well-maintained libraries/SDKs** and provider discovery/JWKS endpoints.
 - Use the **UserInfo** endpoint when additional claims beyond the ID Token are required.
 
-> **Avoid confusion:** **OpenID 2.0 (“OpenID”)** was a separate, legacy authentication protocol that has been **superseded by OpenID Connect** and is considered obsolete. New systems should not implement OpenID 2.0.  
-> References: [OpenID Foundation — obsolete OpenID 2.0 libraries](https://openid.net/developers/libraries-for-obsolete-specifications/), [OpenID 2.0 → OIDC migration](https://openid.net/specs/openid-connect-migration-1_0.html)
+> **Avoid confusion:** **OpenID 2.0 ("OpenID")** was a separate, legacy authentication protocol that has been **superseded by OpenID Connect** and is considered obsolete. New systems should not implement OpenID 2.0. References: [OpenID Foundation — obsolete OpenID 2.0 libraries](https://openid.net/developers/libraries-for-obsolete-specifications/), [OpenID 2.0 → OIDC migration](https://openid.net/specs/ope)
 
 ### SAML
 
