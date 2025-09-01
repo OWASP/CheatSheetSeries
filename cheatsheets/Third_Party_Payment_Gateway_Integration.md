@@ -55,7 +55,7 @@ The following sequence diagram explains the steps above.
 - Processing orders before verifying payment status.
 - Race conditions from multiple callbacks.
 - Replaying callbacks to trigger repeated fulfillment (e.g., multiple shipments, account credits).
-- Assuming user redirection parameters are trustworthy (these are untrusted and can be manipulated). Only server-to-server callbacks should be trusted for payment verification and order fulfillment.
+- Assuming user redirection parameters are trustworthy (these are untrusted and can be manipulated).
 
 **Mitigations:**
 
@@ -65,6 +65,7 @@ The following sequence diagram explains the steps above.
 - Validate the authenticity of callbacks (e.g., HMAC signatures, secret tokens).
 - Implement idempotency: only process an order once regardless of how many times the callback is received.
 - Use a unique transaction ID with an expiry timestamp to mitigate callback replay attacks. Reject any callback with expired or reused transaction IDs.
+- Only server-to-server callbacks should be trusted for payment verification and order fulfillment.
 - Log all callback attempts for forensic analysis.
 
 ## Logging and Monitoring
