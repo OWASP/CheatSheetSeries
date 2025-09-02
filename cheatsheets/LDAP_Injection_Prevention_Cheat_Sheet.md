@@ -103,7 +103,8 @@ and LDAP in the absence of a comprehensive normalization and allowlisting-based 
 sanitized, safe values before they are added to the allowlist expression against which input will be validated. Likewise, normalization of user input should
 occur before the validation step (source: [Prevent LDAP injection](https://wiki.sei.cmu.edu/confluence/spaces/flyingpdf/pdfpageexport.action?pageId=88487534)).
 
-For further information visit [OWASP ESAPI Java Encoder Project which includes encodeForLDAP(String) and encodeForDN(String)](https://owasp.org/www-project-java-encoder/).
+For further information visit [OWASP ESAPI](https://owasp.org/www-project-esapi/) which includes encodeForLDAP(String) and encodeForDN(String).
+
 
 #### Safe C Sharp .NET TBA Example
 
