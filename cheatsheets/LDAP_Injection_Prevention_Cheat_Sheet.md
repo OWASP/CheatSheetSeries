@@ -104,8 +104,6 @@ sanitized, safe values before they are added to the allowlist expression against
 occur before the validation step (source: [Prevent LDAP injection](https://wiki.sei.cmu.edu/confluence/spaces/flyingpdf/pdfpageexport.action?pageId=88487534)).
 
 For further information visit [OWASP ESAPI](https://owasp.org/www-project-esapi/) which includes encodeForLDAP(String) and encodeForDN(String).
-
-
 #### Safe C Sharp .NET TBA Example
 
 [.NET AntiXSS](https://blogs.msdn.microsoft.com/securitytools/2010/09/30/antixss-4-0-released/) (now the Encoder class) has LDAP encoding functions including `Encoder.LdapFilterEncode(string)`, `Encoder.LdapDistinguishedNameEncode(string)` and `Encoder.LdapDistinguishedNameEncode(string, bool, bool)`.
