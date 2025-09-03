@@ -2946,13 +2946,11 @@
 <p>Naming a module is the first thing you might do when creating a package, but before defining a final name, npm defines some rules that a package name must follow:</p>
 <ul>
 <li>It is limited to 214 characters</li>
-<li>It cannot start with dot or underscore</li>
 <li>No uppercase letters in the name</li>
 <li>No trailing spaces</li>
-<li>Only lowercase</li>
-<li>Some special characters are not allowed: “~\’!()*”)’</li>
+<li>Some special characters are not allowed: “~\’!()*”</li>
 <li>Can’t start with . or _</li>
-<li>Can’t use node_modules or favicon.ico due are banned</li>
+<li>Can’t use node_modules or favicon.ico in the name</li>
 <li>Even if you follow these rules, be aware that npm uses a spam detection mechanism when publishing new packages, based on score and whether a package name violates the terms of the service. If conditions are violated, the registry might deny the request.</li>
 </ul>
 <p>Typosquatting is an attack that relies on mistakes made by users, such as typos. With typosquatting, bad actors could publish malicious modules to the npm registry with names that look much like existing popular modules.</p>
