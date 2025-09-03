@@ -141,13 +141,11 @@ Ensure you are following this npm security best practice by protecting and minim
 Naming a module is the first thing you might do when creating a package, but before defining a final name, npm defines some rules that a package name must follow:
 
 - It is limited to 214 characters
-- It cannot start with dot or underscore
 - No uppercase letters in the name
 - No trailing spaces
-- Only lowercase
-- Some special characters are not allowed: “~\’!()*”)’
+- Some special characters are not allowed: “~\’!()*”
 - Can’t start with . or _
-- Can’t use node_modules or favicon.ico due are banned
+- Can’t use node_modules or favicon.ico in the name
 - Even if you follow these rules, be aware that npm uses a spam detection mechanism when publishing new packages, based on score and whether a package name violates the terms of the service. If conditions are violated, the registry might deny the request.
 
 Typosquatting is an attack that relies on mistakes made by users, such as typos. With typosquatting, bad actors could publish malicious modules to the npm registry with names that look much like existing popular modules.
