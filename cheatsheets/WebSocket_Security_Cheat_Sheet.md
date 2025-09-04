@@ -80,7 +80,7 @@ CSWSH allows attackers to hijack authenticated WebSocket connections from malici
 
 #### Origin Header Validation
 
-The primary CSWSH defense is validating the `Origin` header during handshake. Browsers include this header and malicious JavaScript cannot override it.
+Validate the `Origin` header on every handshake. Always use an explicit allowlist of trusted origins. Browsers include this header and malicious JavaScript cannot override it.
 
 ```javascript
 const wss = new WebSocket.Server({
@@ -95,15 +95,17 @@ const wss = new WebSocket.Server({
 });
 ```
 
-**Important:** Be specific with origins. Don't use wildcards or substring matching.
+**Important:** Use an allowlist, not a denylist. Avoid wildcards or substring matching which are error-prone.
 
 #### Additional CSWSH Protections
 
-Beyond Origin validation, use **SameSite cookies** (`SameSite=Lax` or `Strict`) to prevent cross-site cookie transmission. Consider **token-based authentication** using one-time tokens instead of relying solely on cookies. For applications already using CSRF protection, include **CSRF tokens** in WebSocket handshakes.
+For applications already using CSRF protection, include **CSRF tokens** in WebSocket handshakes.
 
 #### Session Management
 
 WebSocket connections often outlive normal sessions, requiring special handling.
+
+**Use SameSite cookies** (`SameSite=Lax` or `Strict`) to prevent cross-site cookie transmission and strengthen CSWSH defenses.
 
 **Handle session expiration** by implementing server-side validation for long-running connections. Close WebSocket connections when sessions expire. Re-validate user sessions periodically (every 30 minutes is common) to ensure they remain valid.
 
@@ -119,6 +121,10 @@ function validateSession(ws, sessionId) {
 ```
 
 **When users log out**, close all their WebSocket connections immediately. Maintain a mapping of sessions to active connections so you can invalidate WebSocket access the moment logout occurs.
+
+**Token-based authentication:**
+
+For enhanced security, use token-based authentication instead of relying solely on cookies. Tokens can be passed in query strings (note: tokens will appear in access logs and should be redacted) or as part of WebSocket messages after connection establishment. Message-based token passing avoids log exposure but requires protocol design considerations.
 
 **Token refresh:**
 
@@ -184,20 +190,21 @@ See the [Input Validation Cheat Sheet](Input_Validation_Cheat_Sheet.md) for more
 
 ### Service Tunneling Risks
 
-Don't tunnel TCP services (VNC, FTP, SSH) through WebSockets. If your application has XSS vulnerabilities, attackers could access these services directly from victims' browsers.
+While WebSockets can tunnel TCP services (VNC, FTP, SSH), this creates security risks. If your application has XSS vulnerabilities, attackers could access these services directly from victims' browsers. If tunneling is necessary, implement additional authentication and access controls beyond the WebSocket layer.
 
 ### Denial-of-Service Protection
 
 Persistent WebSocket connections increase DoS risk.
 
-**Limit connections and resources** by restricting total connections and implementing per-IP limits. Set **message size limits** (typically 64KB or less) and implement **rate limiting** to prevent message flooding - 100 messages per minute is a common starting point.
+**Limit connections and resources** by restricting total connections and implementing per-user limits (preferred) or per-IP limits where user identification isn't available. Set **message size limits** (typically 64KB or less) and implement **rate limiting** to prevent message flooding - 100 messages per minute is a common starting point.
 
 **Handle idle and dead connections** by implementing idle timeouts to close inactive connections. Use **heartbeat monitoring** with ping/pong frames to detect and clean up dead connections.
 
+**Implement backpressure controls** to prevent memory exhaustion from fast message producers. Many WebSocket implementations lack proper flow control, allowing attackers to overwhelm server memory by sending messages faster than they can be processed.
+
 ```javascript
 const wss = new WebSocket.Server({
-  maxPayload: 64 * 1024,
-  perMessageDeflate: false // Disable compression for security
+  maxPayload: 64 * 1024
 });
 ```
 
