@@ -126,7 +126,7 @@ The following table summaries the different attack vectors for a drone system.
 
 | Attack |  | Targets | | | | | Security Measures | |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Type | Nature | Privacy| Data Confidentiality | Integrity | Accessibility | Authentication|Non-Cryptographic | Cryptographic |
+| Type | Nature | Privacy| Data Confidentiality | Integrity | Accessibility | Authentication | Cryptographic | Non-Cryptographic |
 | Malware | Infection | x | x |x |x |x | Control access, system integrity solutions and multi-factor authentication | Hybrid lightweight Intrusion Detection System |
 | BackDoor Access | Infection |x|x|x| x|x | Multi-factor robust authentication scheme | Hybrid lightweight Intrusion Detection System, vulnerability assessment |
 | Social Engineering | Exploitation | x|x |- |- |x | N/A | Raising awareness, training operators |
