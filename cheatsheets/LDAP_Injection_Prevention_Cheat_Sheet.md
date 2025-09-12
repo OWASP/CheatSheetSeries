@@ -176,7 +176,7 @@ NamingEnumeration<SearchResult> results =
 
 [.NET AntiXSS](https://blogs.msdn.microsoft.com/securitytools/2010/09/30/antixss-4-0-released/) (now the Encoder class) has LDAP encoding functions including `Encoder.LdapFilterEncode(string)`, `Encoder.LdapDistinguishedNameEncode(string)` and `Encoder.LdapDistinguishedNameEncode(string, bool, bool)`.
 
-`Encoder.LdapFilterEncode` encodes input according to [RFC4515](https://tools.ietf.org/search/rfc4515) where unsafe values are converted to `\XX` where `XX` is the representation of the unsafe character.
+`Encoder.LdapFilterEncode` encodes input according to [RFC4515](https://tools.ietf.org/html/rfc4515) where unsafe values are converted to `\XX` where `XX` is the representation of the unsafe character.
 
 `Encoder.LdapDistinguishedNameEncode` encodes input according to [RFC2253](https://tools.ietf.org/html/rfc2253) where unsafe characters are converted to `#XX` where `XX` is the representation of the unsafe character and the comma, plus, quote, slash, less than and great than signs are escaped using slash notation (`\X`). In addition to this a space or octothorpe (`#`) at the beginning of the input string is `\` escaped as is a space at the end of a string.
 
