@@ -105,6 +105,54 @@ occur before the validation step (source: [Prevent LDAP injection](https://wiki.
 
 For further information visit [OWASP ESAPI Java Encoder Project which includes encodeForLDAP(String) and encodeForDN(String)](https://owasp.org/www-project-java-encoder/).
 
+#### Safe Java Authentication Example
+
+The previous example showed input allow-listing with regex and concatenating into a filter string.  
+While that approach may seem to prevent injection, it is **not a secure pattern** and should not be used for password validation.  
+Instead, applications should:
+
+1. Use parameterized LDAP filters to safely look up a user’s DN.  
+2. Perform authentication using an LDAP **bind** operation with the DN and provided password.  
+
+This ensures that password checking is handled securely by the LDAP server and avoids insecure string comparisons.
+
+✅ **Revised Secure Example (Java search + bind)**
+
+```java
+// Step 1: Look up the user DN with a parameterized search
+String searchFilter = "(&(uid={0})(objectClass=person))";
+SearchControls controls = new SearchControls();
+controls.setSearchScope(SearchControls.SUBTREE_SCOPE);
+
+NamingEnumeration<SearchResult> results = ctx.search(
+    "ou=users,dc=example,dc=com",
+    searchFilter,
+    new Object[]{ username },
+    controls
+);
+
+if (!results.hasMore()) {
+    throw new AuthenticationException("User not found");
+}
+
+SearchResult result = results.next();
+String userDN = result.getNameInNamespace();
+
+// Step 2: Bind with the DN and provided password
+Hashtable<String, String> env = new Hashtable<>();
+env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
+env.put(Context.PROVIDER_URL, "ldap://example.com:389");
+env.put(Context.SECURITY_AUTHENTICATION, "simple");
+env.put(Context.SECURITY_PRINCIPAL, userDN);
+env.put(Context.SECURITY_CREDENTIALS, password);
+
+DirContext userCtx = new InitialDirContext(env);
+// If bind succeeds → authentication successful
+```
+
+For cases where you must include user input in other LDAP query contexts, ensure values are escaped with the
+[OWASP ESAPI Java Encoder Project which includes encodeForLDAP(String) and encodeForDN(String)](https://owasp.org/www-project-java-encoder/) rather than relying on regex allow-lists.
+
 #### Insecure vs Secure Java LDAP Query Construction
 
 ❌ **Insecure Example (vulnerable to LDAP Injection)**
