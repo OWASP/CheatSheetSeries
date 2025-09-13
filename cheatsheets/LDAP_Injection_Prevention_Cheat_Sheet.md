@@ -119,12 +119,19 @@ This ensures that password checking is handled securely by the LDAP server and a
 ✅ **Revised Secure Example (Java search + bind)**
 
 ```java
-// Step 1: Look up the user DN with a parameterized search
-String searchFilter = "(&(uid={0})(objectClass=person))";
+// Step 1: Perform an anonymous search to find the user's DN
+Hashtable<String, String> anonEnv = new Hashtable<>();
+anonEnv.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
+anonEnv.put(Context.PROVIDER_URL, "ldaps://example.com:636"); // Use ldaps (secure) for directory communication
+anonEnv.put(Context.SECURITY_AUTHENTICATION, "none");
+
+DirContext anonCtx = new InitialDirContext(anonEnv);
+
+String searchFilter = "(uid={0})"; // No assumption about objectClass
 SearchControls controls = new SearchControls();
 controls.setSearchScope(SearchControls.SUBTREE_SCOPE);
 
-NamingEnumeration<SearchResult> results = ctx.search(
+NamingEnumeration<SearchResult> results = anonCtx.search(
     "ou=users,dc=example,dc=com",
     searchFilter,
     new Object[]{ username },
@@ -132,21 +139,23 @@ NamingEnumeration<SearchResult> results = ctx.search(
 );
 
 if (!results.hasMore()) {
-    throw new AuthenticationException("User not found");
+    throw new AuthenticationException("User not found"); // Obscure to invalid username and/or password client side
 }
 
 SearchResult result = results.next();
 String userDN = result.getNameInNamespace();
+anonCtx.close(); // Don't forget to close that anonymous context ;)
 
-// Step 2: Bind with the DN and provided password
+// Step 2: Bind with the DN and provided password over LDAPS
 Hashtable<String, String> env = new Hashtable<>();
 env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-env.put(Context.PROVIDER_URL, "ldap://example.com:389");
+env.put(Context.PROVIDER_URL, "ldaps://example.com:636"); // Use ldaps (secure) for directory communication
 env.put(Context.SECURITY_AUTHENTICATION, "simple");
 env.put(Context.SECURITY_PRINCIPAL, userDN);
 env.put(Context.SECURITY_CREDENTIALS, password);
 
 DirContext userCtx = new InitialDirContext(env);
+
 // If bind succeeds → authentication successful
 ```
 
