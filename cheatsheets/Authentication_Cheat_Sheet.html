@@ -915,20 +915,35 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#oauth" class="md-nav__link">
+  <a href="#oauth-20-and-21" class="md-nav__link">
     <span class="md-ellipsis">
-      OAuth
+      OAuth 2.0 and 2.1
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#openid" class="md-nav__link">
+  <a href="#openid-connect-oidc" class="md-nav__link">
     <span class="md-ellipsis">
-      OpenId
+      OpenID Connect (OIDC)
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="OpenID Connect (OIDC)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#oidc-implementation-guidance" class="md-nav__link">
+    <span class="md-ellipsis">
+      OIDC implementation guidance
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -3486,20 +3501,35 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#oauth" class="md-nav__link">
+  <a href="#oauth-20-and-21" class="md-nav__link">
     <span class="md-ellipsis">
-      OAuth
+      OAuth 2.0 and 2.1
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#openid" class="md-nav__link">
+  <a href="#openid-connect-oidc" class="md-nav__link">
     <span class="md-ellipsis">
-      OpenId
+      OpenID Connect (OIDC)
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="OpenID Connect (OIDC)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#oidc-implementation-guidance" class="md-nav__link">
+    <span class="md-ellipsis">
+      OIDC implementation guidance
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -3680,33 +3710,33 @@
 <h3 id="require-re-authentication-for-sensitive-features">Require Re-authentication for Sensitive Features<a class="headerlink" href="#require-re-authentication-for-sensitive-features" title="Permanent link">&para;</a></h3>
 <p>In order to mitigate CSRF and session hijacking, it's important to require the current credentials for an account before updating sensitive account information such as the user's password or email address -- or before sensitive transactions, such as shipping a purchase to a new address. Without this countermeasure, an attacker may be able to execute sensitive transactions through a CSRF or XSS attack without needing to know the user's current credentials. Additionally, an attacker may get temporary physical access to a user's browser or steal their session ID to take over the user's session.</p>
 <h3 id="reauthentication-after-risk-events">Reauthentication After Risk Events<a class="headerlink" href="#reauthentication-after-risk-events" title="Permanent link">&para;</a></h3>
-<p><strong>Overview:</strong><br />
+<p><strong>Overview:</strong>
 Reauthentication is critical when an account has experienced high-risk activity such as account recovery, password resets, or suspicious behavior patterns. This section outlines when and how to trigger reauthentication to protect users and prevent unauthorized access. For further details, see the <a href="#require-re-authentication-for-sensitive-features">Require Re-authentication for Sensitive Features</a> section.</p>
 <h4 id="when-to-trigger-reauthentication">When to Trigger Reauthentication<a class="headerlink" href="#when-to-trigger-reauthentication" title="Permanent link">&para;</a></h4>
 <ul>
-<li><strong>Suspicious Account Activity</strong><br />
+<li><strong>Suspicious Account Activity</strong>
   When unusual login patterns, IP address changes, or device enrollments occur</li>
-<li><strong>Account Recovery</strong><br />
+<li><strong>Account Recovery</strong>
   After users reset their passwords or change sensitive account details</li>
-<li><strong>Critical Actions</strong><br />
+<li><strong>Critical Actions</strong>
   For high-risk actions like changing payment details or adding new trusted devices</li>
 </ul>
 <h4 id="reauthentication-mechanisms">Reauthentication Mechanisms<a class="headerlink" href="#reauthentication-mechanisms" title="Permanent link">&para;</a></h4>
 <ul>
-<li><strong>Adaptive Authentication</strong><br />
+<li><strong>Adaptive Authentication</strong>
   Use risk-based authentication models that adapt to the user's behavior and context</li>
-<li><strong>Multi-Factor Authentication (MFA)</strong><br />
+<li><strong>Multi-Factor Authentication (MFA)</strong>
   Require an additional layer of verification for sensitive actions or events</li>
-<li><strong>Challenge-Based Verification</strong><br />
+<li><strong>Challenge-Based Verification</strong>
   Prompt users to confirm their identity with a challenge question or secondary method</li>
 </ul>
 <h4 id="implementation-recommendations">Implementation Recommendations<a class="headerlink" href="#implementation-recommendations" title="Permanent link">&para;</a></h4>
 <ul>
-<li><strong>Minimize User Friction</strong><br />
+<li><strong>Minimize User Friction</strong>
   Ensure that reauthentication does not disrupt the user experience unnecessarily</li>
-<li><strong>Context-Aware Decisions</strong><br />
+<li><strong>Context-Aware Decisions</strong>
   Make reauthentication decisions based on context (e.g., geolocation, device type, prior patterns)</li>
-<li><strong>Secure Session Management</strong><br />
+<li><strong>Secure Session Management</strong>
   Invalidate sessions after reauthentication and rotate tokens—see the <a href="https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html">OWASP Session Management Cheat Sheet</a></li>
 </ul>
 <h4 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h4>
@@ -3865,14 +3895,22 @@ ENDIF
 </ul>
 <h2 id="use-of-authentication-protocols-that-require-no-password">Use of authentication protocols that require no password<a class="headerlink" href="#use-of-authentication-protocols-that-require-no-password" title="Permanent link">&para;</a></h2>
 <p>While authentication through a combination of username, password, and multi-factor authentication is considered generally secure, there are use cases where it isn't considered the best option or even safe. Examples of this are third-party applications that desire to connect to the web application, either from a mobile device, another website, desktop, or other situations. When this happens, it is NOT considered safe to allow the third-party application to store the user/password combo, since then it extends the attack surface into their hands, where it isn't in your control. For this and other use cases, there are several authentication protocols that can protect you from exposing your users' data to attackers.</p>
-<h3 id="oauth">OAuth<a class="headerlink" href="#oauth" title="Permanent link">&para;</a></h3>
-<p>Open Authorization (OAuth) is a protocol that allows an application to authenticate against a server as a user, without requiring passwords or any third-party server that acts as an identity provider. It uses a server-generated token and defines how authorization flows must occur, so that a client, such as a mobile application, can tell the server what user is using the service.</p>
-<p>The recommendation is to use and implement <a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics">OAuth 2.0</a> since the very first version (OAuth1.0) has been found to be vulnerable to session fixation.</p>
-<p>OAuth 2.0 relies on HTTPS for security and is currently used and implemented by APIs from companies such as Facebook, Google, Twitter, and Microsoft. OAuth 1.0a is more difficult to use because it requires the use of cryptographic libraries for digital signatures. However, since OAuth 1.0a does not rely on HTTPS for security, it can be more suited for higher-risk transactions.</p>
-<h3 id="openid">OpenId<a class="headerlink" href="#openid" title="Permanent link">&para;</a></h3>
-<p>OpenId is an HTTP-based protocol that uses identity providers to validate that a user is who they say they are. It is a very simple protocol that allows a service-provider-initiated way for single sign-on (SSO). This allows the user to reuse a single identity given to a trusted OpenId identity provider and be the same user on multiple websites, without the need to provide any website with the password, except for the OpenId identity provider.</p>
-<p>Due to its simplicity and that it provides protection of passwords, OpenId has been well adopted. Some of the well-known identity providers for OpenId are Stack Exchange, Google, Facebook, and Yahoo!</p>
-<p>For non-enterprise environments, OpenId is considered a secure and often better choice, as long as the identity provider is of trust.</p>
+<h3 id="oauth-20-and-21">OAuth 2.0 and 2.1<a class="headerlink" href="#oauth-20-and-21" title="Permanent link">&para;</a></h3>
+<p>OAuth is an <strong>authorization</strong> framework for delegated access to APIs. See also: <a href="OAuth2_Cheat_Sheet.html">OAuth 2.0 Cheat Sheet</a>.</p>
+<blockquote>
+<p><strong>Note:</strong> OAuth 2.1 is an IETF Working Group draft that consolidates OAuth 2.0 and widely adopted best practices and is intended to replace RFC 6749/6750; guidance in this cheat sheet applies to both OAuth 2.0 and OAuth 2.1. References: <a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-13">draft-ietf-oauth-v2-1-13</a>, <a href="https://oauth.net/2.1/">oauth.net/2.1</a></p>
+</blockquote>
+<h3 id="openid-connect-oidc">OpenID Connect (OIDC)<a class="headerlink" href="#openid-connect-oidc" title="Permanent link">&para;</a></h3>
+<p><strong>OpenID Connect 1.0 (OIDC)</strong> is an identity layer <strong>on top of OAuth</strong>. It defines how a client (<strong>relying party</strong>) verifies the <strong>end user's</strong> identity using an <strong>ID Token</strong> (a signed JWT) and how to obtain user claims in an interoperable way. Use <strong>OIDC for authentication/SSO</strong>; use <strong>OAuth for authorization</strong> to APIs.</p>
+<h4 id="oidc-implementation-guidance">OIDC implementation guidance<a class="headerlink" href="#oidc-implementation-guidance" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Validate ID Tokens</strong> on the relying party: issuer (<code>iss</code>), audience (<code>aud</code>), signature (per provider JWKs), expiration (<code>exp</code>).</li>
+<li>Prefer <strong>well-maintained libraries/SDKs</strong> and provider discovery/JWKS endpoints.</li>
+<li>Use the <strong>UserInfo</strong> endpoint when additional claims beyond the ID Token are required.</li>
+</ul>
+<blockquote>
+<p><strong>Avoid confusion:</strong> <strong>OpenID 2.0 ("OpenID")</strong> was a separate, legacy authentication protocol that has been <strong>superseded by OpenID Connect</strong> and is considered obsolete. New systems should not implement OpenID 2.0. References: <a href="https://openid.net/developers/libraries-for-obsolete-specifications/">OpenID Foundation — obsolete OpenID 2.0 libraries</a>, <a href="https://openid.net/specs/ope">OpenID 2.0 → OIDC migration</a></p>
+</blockquote>
 <h3 id="saml">SAML<a class="headerlink" href="#saml" title="Permanent link">&para;</a></h3>
 <p>Security Assertion Markup Language (SAML) is often considered to compete with OpenId. The most recommended version is 2.0 since it is very feature-complete and provides strong security. Like OpenId, SAML uses identity providers, but unlike OpenId, it is XML-based and provides more flexibility. SAML is based on browser redirects which send XML data. Furthermore, SAML isn't only initiated by a service provider; it can also be initiated from the identity provider. This allows the user to navigate through different portals while still being authenticated without having to do anything, making the process transparent.</p>
 <p>While OpenId has taken most of the consumer market, SAML is often the choice for enterprise applications because there are few OpenId identity providers which are considered enterprise-class (meaning that the way they validate the user identity doesn't have high standards required for enterprise identity). It is more common to see SAML being used inside of intranet websites, sometimes even using a server from the intranet as the identity provider.</p>
