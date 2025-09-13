@@ -676,35 +676,35 @@ Overview of current threats and attack vectors.
 
 #### Step 1: Preparation
 
-```language
+language
 // Code example for step 1
-```
+
 
 #### Step 2: Configuration
 
-```language
+language
 // Code example for step 2
-```
+
 
 #### Step 3: Validation
 
-```language
+language
 // Code example for step 3
-```
+
 
 ### Framework-Specific Implementation
 
 #### Framework A
 
-```language
+language
 // Framework A specific implementation
-```
+
 
 #### Framework B
 
-```language
+language
 // Framework B specific implementation
-```
+
 
 ## Testing & Validation
 
