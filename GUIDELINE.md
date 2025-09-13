@@ -441,13 +441,6 @@ Structure:
 #### Document Metadata
 
 ```markdown
----
-title: "[Topic] Cheat Sheet"
-description: "Comprehensive guide for [topic] security"
-author: "OWASP Cheat Sheets Series"
-date: "2025"
-version: "1.0"
----
 
 # [Topic] Cheat Sheet
 
