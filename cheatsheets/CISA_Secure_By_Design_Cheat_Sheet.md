@@ -20,6 +20,7 @@ This cheat sheet provides practical guidance for implementing the [CISA Secure b
 **Principle**: Software manufacturers should take ownership of security outcomes for their customers, rather than treating security as an optional feature or the customer's responsibility.
 
 **Implementation Guidance**:
+
 - **Security as Default**: Enable security features by default, don't make customers configure them
 - **Transparent Security**: Clearly document security features and their status
 - **Accountability**: Take responsibility when security issues occur in your products
@@ -30,6 +31,7 @@ This cheat sheet provides practical guidance for implementing the [CISA Secure b
 **Principle**: Be transparent about security practices, vulnerabilities, and incidents. Hold the organization accountable for security outcomes.
 
 **Implementation Guidance**:
+
 - **Vulnerability Disclosure**: Establish clear processes for vulnerability reporting and disclosure
 - **Incident Transparency**: Communicate security incidents openly with customers
 - **Metrics Publishing**: Share security metrics and improvement progress
@@ -40,6 +42,7 @@ This cheat sheet provides practical guidance for implementing the [CISA Secure b
 **Principle**: Establish organizational structures and leadership that prioritize security throughout the product lifecycle.
 
 **Implementation Guidance**:
+
 - **Security Champions**: Appoint security champions in development teams
 - **Executive Ownership**: Ensure C-level executives own security outcomes
 - **Cross-functional Teams**: Create teams with both development and security expertise
@@ -50,6 +53,7 @@ This cheat sheet provides practical guidance for implementing the [CISA Secure b
 **Principle**: Integrate security practices throughout the entire software development process.
 
 **Implementation Guidance**:
+
 - **Threat Modeling**: Conduct threat modeling during design phase
 - **Secure Coding Standards**: Establish and enforce secure coding guidelines
 - **Automated Security Testing**: Integrate SAST, DAST, and SCA tools into CI/CD
@@ -60,6 +64,7 @@ This cheat sheet provides practical guidance for implementing the [CISA Secure b
 **Principle**: Ensure products are secure in their default configuration without requiring customer intervention.
 
 **Implementation Guidance**:
+
 - **Default-Deny**: Implement principle of least privilege by default
 - **Automatic Updates**: Enable automatic security updates by default
 - **No Default Credentials**: Eliminate default passwords and credentials
@@ -70,6 +75,7 @@ This cheat sheet provides practical guidance for implementing the [CISA Secure b
 **Principle**: Dedicate appropriate resources to maintaining product security throughout its lifecycle.
 
 **Implementation Guidance**:
+
 - **Patch Management**: Establish robust patch development and distribution processes
 - **Vulnerability Management**: Maintain systems for tracking and addressing vulnerabilities
 - **Long-term Support**: Provide security support for products throughout their lifecycle
@@ -80,6 +86,7 @@ This cheat sheet provides practical guidance for implementing the [CISA Secure b
 **Principle**: Prioritize memory-safe programming languages to eliminate entire classes of vulnerabilities.
 
 **Implementation Guidance**:
+
 - **Language Selection**: Choose memory-safe languages (Rust, Go, Java, C#, Python) for new projects
 - **Legacy Code Mitigation**: Use security tools and practices for memory-unsafe languages
 - **Training Investment**: Provide training on memory-safe language alternatives
@@ -113,5 +120,4 @@ This cheat sheet provides practical guidance for implementing the [CISA Secure b
 
 ## Contributors
 
-- [Your Name]
-- [Other Contributors]
+- Prasad-JB
