@@ -12,8 +12,8 @@ As a basic start, establish secure defaults, minimise the attack surface area, a
 
 Secure Product Design comes about through two processes:
 
-1. **_Product Inception_**; and
-2. **_Product Design_**
+1.  **_Product Inception_**; and
+2.  **_Product Design_**
 
 The first process happens when a product is conceived, or when an existing product is being re-invented. The latter is continuous, evolutionary, and done in an agile way, close to where the code is being written.
 
@@ -65,16 +65,16 @@ Code is the ultimate expression of the intention for a product and as such it mu
 
 Some basics of secure coding include:
 
-   1. Input validation: Verify that all input data is valid and of the expected type, format, and length before processing it. This can help prevent attacks such as SQL injection and buffer overflows.
-   2. Error handling: Handle errors and exceptions in a secure manner, such as by logging them in a secure way and not disclosing sensitive information to an attacker.
-   3. Authentication and Authorization: Implement strong authentication and authorization mechanisms to ensure that only authorized users can access sensitive data and resources.
-   4. Cryptography: Use cryptographic functions and protocols to protect data in transit and at rest, such as HTTPS and encryption - the expected levels for a given Product Security Level can often be found by reviewing your Golden Path / Paved Road documentation.
-   5. Least privilege: Use the principle of the least privilege when writing code, such that the code and the system it runs on are given the minimum access rights necessary to perform their functions.
-   6. Secure memory management: Use high-level languages recommended in your Golden Path / Paved Road documentation or properly manage memory to prevent memory-related vulnerabilities such as buffer overflows and use-after-free.
-   7. Avoiding hardcoded secrets: Hardcoded secrets such as passwords and encryption keys should be avoided in the code and should be stored in a secure storage.
-   8. Security testing: Test the software for security vulnerabilities during development and just prior to deployment.
-   9. Auditing and reviewing the code: Regularly audit and review the code for security vulnerabilities, such as by using automated tools or having a third party review the code.
-   10. Keeping up-to-date: Keep the code up-to-date with the latest security best practices and vulnerability fixes to ensure that the software is as secure as possible.
+1.  Input validation: Verify that all input data is valid and of the expected type, format, and length before processing it. This can help prevent attacks such as SQL injection and buffer overflows.
+2.  Error handling: Handle errors and exceptions in a secure manner, such as by logging them in a secure way and not disclosing sensitive information to an attacker.
+3.  Authentication and Authorization: Implement strong authentication and authorization mechanisms to ensure that only authorized users can access sensitive data and resources.
+4.  Cryptography: Use cryptographic functions and protocols to protect data in transit and at rest, such as HTTPS and encryption - the expected levels for a given Product Security Level can often be found by reviewing your Golden Path / Paved Road documentation.
+5.  Least privilege: Use the principle of the least privilege when writing code, such that the code and the system it runs on are given the minimum access rights necessary to perform their functions.
+6.  Secure memory management: Use high-level languages recommended in your Golden Path / Paved Road documentation or properly manage memory to prevent memory-related vulnerabilities such as buffer overflows and use-after-free.
+7.  Avoiding hardcoded secrets: Hardcoded secrets such as passwords and encryption keys should be avoided in the code and should be stored in a secure storage.
+8.  Security testing: Test the software for security vulnerabilities during development and just prior to deployment.
+9.  Auditing and reviewing the code: Regularly audit and review the code for security vulnerabilities, such as by using automated tools or having a third party review the code.
+10. Keeping up-to-date: Keep the code up-to-date with the latest security best practices and vulnerability fixes to ensure that the software is as secure as possible.
 
 Ensure that you integrate plausibility checks at each tier of your application (e.g., from frontend to backend) and ensure that you write unit and integration tests to validate that all threats discovered during [Threat Modeling](Threat_Modeling_Cheat_Sheet.md) have been mitigated to a level of risk acceptable to the organization. Use that to compile use-cases and [abuse-cases](Abuse_Case_Cheat_Sheet.md) for each tier of your application.
 
@@ -82,33 +82,35 @@ Ensure that you integrate plausibility checks at each tier of your application (
 
 Building an application securely can all too easily be undone if it's not securely configured. At a minimum we should ensure the following:
 
-1. Bearing in mind the principle of Least Privilege: Limit the access and permissions of system components and users to the minimum required to perform their tasks.
-2. Remembering Defense-in-Depth: Implement multiple layers of security controls to protect against a wide range of threats.
-3. Ensuring Secure by Default: Configure systems and software to be secure by default, with minimal manual setup or configuration required.
-4. Secure Data: Protect sensitive data, such as personal information and financial data, by encrypting it in transit and at rest. Protecting that data also means ensuring it's correctly backed up and that the data retention is set correctly for the desired Product Security Level.
-5. Plan to have the configuration Fail Securely: Design systems to fail in a secure state, rather than exposing vulnerabilities when they malfunction.
-6. Always use Secure Communications: Use secure protocols for communication, such as HTTPS, to protect against eavesdropping and tampering.
-7. Perform regular updates - or leverage [maintained images](https://www.cisecurity.org/cis-hardened-images): Keeping software, docker images and base operating systems up-to-date with the [latest security patches](https://csrc.nist.gov/publications/detail/sp/800-40/rev-4/final) is an essential part of maintaining a secure system.
-8. Have a practiced Security Incident response plan: Having a plan in place for how to respond to a security incident is essential for minimizing the damage caused by any successful attack and a crucial part of the Product Support Model.
+1.  Bearing in mind the principle of Least Privilege: Limit the access and permissions of system components and users to the minimum required to perform their tasks.
+2.  Remembering Defense-in-Depth: Implement multiple layers of security controls to protect against a wide range of threats.
+3.  Ensuring Secure by Default: Configure systems and software to be secure by default, with minimal manual setup or configuration required.
+4.  Secure Data: Protect sensitive data, such as personal information and financial data, by encrypting it in transit and at rest. Protecting that data also means ensuring it's correctly backed up and that the data retention is set correctly for the desired Product Security Level.
+5.  Plan to have the configuration Fail Securely: Design systems to fail in a secure state, rather than exposing vulnerabilities when they malfunction.
+6.  Always use Secure Communications: Use secure protocols for communication, such as HTTPS, to protect against eavesdropping and tampering.
+7.  Perform regular updates - or leverage [maintained images](https://www.cisecurity.org/cis-hardened-images): Keeping software, docker images and base operating systems up-to-date with the [latest security patches](https://csrc.nist.gov/publications/detail/sp/800-40/rev-4/final) is an essential part of maintaining a secure system.
+8.  Have a practiced Security Incident response plan: Having a plan in place for how to respond to a security incident is essential for minimizing the damage caused by any successful attack and a crucial part of the Product Support Model.
 
 Details of how to precisely ensure secure configuration can be found in [Infrastructure as Code Security Cheat Sheet](Infrastructure_as_Code_Security_Cheat_Sheet.md)
 
 ## Security Definitions
 
-**Encoding vs. Escaping**: 
-- **Encoding** transforms data into a different format using a scheme that is publicly available (e.g., URL encoding, Base64 encoding). It is often used to ensure data integrity and proper interpretation across different systems.
-- **Escaping** involves adding special characters or sequences to prevent interpretation of data as code (e.g., HTML escaping to prevent XSS, SQL escaping to prevent injection). It is context-specific and used for security purposes.
+**Encoding vs. Escaping**:
+
+-   **Encoding** transforms data into a different format using a scheme that is publicly available (e.g., URL encoding, Base64 encoding). It is often used to ensure data integrity and proper interpretation across different systems.
+-   **Escaping** involves adding special characters or sequences to prevent interpretation of data as code (e.g., HTML escaping to prevent XSS, SQL escaping to prevent injection). It is context-specific and used for security purposes.
 
 **Encryption vs. Signature**:
-- **Encryption** provides confidentiality by transforming data into ciphertext to hide its content from unauthorized parties. Only authorized parties with the correct key can decrypt and read the original data.
-- **Signature** provides integrity and authenticity. It verifies that data has not been tampered with and confirms the identity of the sender. Signatures do not hide the data content.
+
+-   **Encryption** provides confidentiality by transforming data into ciphertext to hide its content from unauthorized parties. Only authorized parties with the correct key can decrypt and read the original data.
+-   **Signature** provides integrity and authenticity. It verifies that data has not been tampered with and confirms the identity of the sender. Signatures do not hide the data content.
 
 ## References
 
-- [CISA Secure by Design](https://www.cisa.gov/securebydesign)
-- [CISA Secure by Design Principles (PDF)](https://www.cisa.gov/sites/default/files/2023-04/secure_by_design_042023.pdf)
-- [OWASP Secure Coding Practices](https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/)
+-   [CISA Secure by Design](https://www.cisa.gov/securebydesign)
+-   [CISA Secure by Design Principles (PDF)](https://www.cisa.gov/sites/default/files/2023-04/secure_by_design_042023.pdf)
+-   [OWASP Secure Coding Practices](https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/)
 
 ## Contributors
 
-- Prasad-JB
+-   Prasad-JB
