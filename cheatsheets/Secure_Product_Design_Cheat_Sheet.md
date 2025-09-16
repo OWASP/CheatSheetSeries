@@ -2,6 +2,8 @@
 
 ## Introduction
 
+This cheat sheet provides guidance for implementing secure design principles throughout the product development lifecycle. These practices align with and support the broader [CISA Secure by Design](https://www.cisa.gov/securebydesign) principles, which encourage manufacturers to take ownership of customer security outcomes by building security into products from the foundation.
+
 The purpose of Secure Product Design is to ensure that all products meet or exceed the security requirements laid down by the organization as part of the development lifecycle and to ensure that all security decisions made about the product being developed are explicit choices and result in the correct level of security for the product being developed.
 
 ## Methodology
@@ -25,11 +27,11 @@ Separation of duties is a fundamental principle of internal control in business 
 
 ### 2. The principle of Defense-in-Depth
 
-The principle of Defense-in-Depth is a security strategy that involves multiple layers of security controls to protect an organization’s assets. It is based on the idea that if one layer of security fails, the other layers will still be able to protect the asset. The layers of security can include physical security, network security, application security, and data security. The goal of Defense-in-Depth is to create a secure environment that is resilient to attack and can quickly detect and respond to any security incidents. By implementing multiple layers of security, organizations can reduce the risk of a successful attack and minimize the damage caused by any successful attack.
+The principle of Defense-in-Depth is a security strategy that involves multiple layers of security controls to protect an organization's assets. It is based on the idea that if one layer of security fails, the other layers will still be able to protect the asset. The layers of security can include physical security, network security, application security, and data security. The goal of Defense-in-Depth is to create a secure environment that is resilient to attack and can quickly detect and respond to any security incidents. By implementing multiple layers of security, organizations can reduce the risk of a successful attack and minimize the damage caused by any successful attack.
 
 ### 3. The principle of Zero Trust
 
-Zero Trust is a security model that assumes that all users, devices, and networks are untrusted and must be verified before access is granted. It is based on the idea that organizations should not trust any user, device, or network, even if they are inside the organization’s network. Instead, all requests for access must be authenticated and authorized before access is granted. Zero Trust also requires organizations to continuously monitor and audit user activity to ensure that access is only granted to those who need it. This model is designed to reduce the risk of data breaches and other security incidents by ensuring that only authorized users have access to sensitive data.
+Zero Trust is a security model that assumes that all users, devices, and networks are untrusted and must be verified before access is granted. It is based on the idea that organizations should not trust any user, device, or network, even if they are inside the organization's network. Instead, all requests for access must be authenticated and authorized before access is granted. Zero Trust also requires organizations to continuously monitor and audit user activity to ensure that access is only granted to those who need it. This model is designed to reduce the risk of data breaches and other security incidents by ensuring that only authorized users have access to sensitive data.
 
 ### 4. The principle of Security-in-the-Open
 
@@ -90,3 +92,23 @@ Building an application securely can all too easily be undone if it's not secure
 8. Have a practiced Security Incident response plan: Having a plan in place for how to respond to a security incident is essential for minimizing the damage caused by any successful attack and a crucial part of the Product Support Model.
 
 Details of how to precisely ensure secure configuration can be found in [Infrastructure as Code Security Cheat Sheet](Infrastructure_as_Code_Security_Cheat_Sheet.md)
+
+## Security Definitions
+
+**Encoding vs. Escaping**: 
+- **Encoding** transforms data into a different format using a scheme that is publicly available (e.g., URL encoding, Base64 encoding). It is often used to ensure data integrity and proper interpretation across different systems.
+- **Escaping** involves adding special characters or sequences to prevent interpretation of data as code (e.g., HTML escaping to prevent XSS, SQL escaping to prevent injection). It is context-specific and used for security purposes.
+
+**Encryption vs. Signature**:
+- **Encryption** provides confidentiality by transforming data into ciphertext to hide its content from unauthorized parties. Only authorized parties with the correct key can decrypt and read the original data.
+- **Signature** provides integrity and authenticity. It verifies that data has not been tampered with and confirms the identity of the sender. Signatures do not hide the data content.
+
+## References
+
+- [CISA Secure by Design](https://www.cisa.gov/securebydesign)
+- [CISA Secure by Design Principles (PDF)](https://www.cisa.gov/sites/default/files/2023-04/secure_by_design_042023.pdf)
+- [OWASP Secure Coding Practices](https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/)
+
+## Contributors
+
+- Prasad-JB
