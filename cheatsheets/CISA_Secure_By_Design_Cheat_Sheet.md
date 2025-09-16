@@ -7,8 +7,6 @@ type: cheatsheet
 pitch: Practical guidance for implementing CISA's Secure by Design principles in software development.
 ---
 
-# CISA Secure by Design Cheat Sheet
-
 ## Introduction
 
 This cheat sheet provides practical guidance for implementing the [CISA Secure by Design](https://www.cisa.gov/securebydesign) principles in software development. These principles encourage software manufacturers to prioritize security throughout the product lifecycle rather than treating it as an add-on or customer responsibility.

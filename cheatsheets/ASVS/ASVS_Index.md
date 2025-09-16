@@ -7,8 +7,6 @@ type: cheatsheet
 pitch: Index of OWASP Application Security Verification Standard (ASVS) related cheat sheets
 ---
 
-# OWASP ASVS Cheat Sheet Index
-
 ## Introduction
 
 This index provides quick access to OWASP Cheat Sheets that align with the [OWASP Application Security Verification Standard (ASVS)](https://owasp.org/www-project-application-security-verification-standard/). The ASVS provides a basis for testing web application technical security controls and provides developers with a list of requirements for secure development.
@@ -45,7 +43,7 @@ This index provides quick access to OWASP Cheat Sheets that align with the [OWAS
 **Related Cheat Sheets**:
 
 - [Authorization Cheat Sheet](../Authorization_Cheat_Sheet.md)
-- [Access Control Cheat Sheet](../Access__Control_Cheat_Sheet.md)
+- [Access Control Cheat Sheet](../Access_Control_Cheat_Sheet.md)
 - [Least Privilege Cheat Sheet](../Least_Privilege_Cheat_Sheet.md)
 
 ### V5: Validation, Sanitization and Encoding Verification Requirements
@@ -53,7 +51,7 @@ This index provides quick access to OWASP Cheat Sheets that align with the [OWAS
 **Related Cheat Sheets**:
 
 - [Input Validation Cheat Sheet](../Input_Validation_Cheat_Sheet.md)
-- [Output Encoding Cheat Sheet](../Output_Encoding_Cheat_Sheet.md)
+- [Output Encoding Cheat Sheet../Output_Encoding_Cheat_Sheet.md)
 - [XSS Prevention Cheat Sheet](../XSS_Prevention_Cheat_Sheet.md)
 - [SQL Injection Prevention Cheat Sheet](../SQL_Injection_Prevention_Cheat_Sheet.md)
 
