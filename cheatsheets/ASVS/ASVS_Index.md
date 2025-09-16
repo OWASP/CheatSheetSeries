@@ -45,7 +45,7 @@ This index provides quick access to OWASP Cheat Sheets that align with the [OWAS
 **Related Cheat Sheets**:
 
 - [Authorization Cheat Sheet](../Authorization_Cheat_Sheet.md)
-- [Access Control Cheat Sheet../Access_Control_Cheat_Sheet.md)
+- [Access Control Cheat Sheet](../Access_Control_Cheat_Sheet.md)
 - [Least Privilege Cheat Sheet](../Least_Privilege_Cheat_Sheet.md)
 
 ### V5: Validation, Sanitization and Encoding Verification Requirements
@@ -136,7 +136,9 @@ This index provides quick access to OWASP Cheat Sheets that align with the [OWAS
 
 ## Contributors
 
-- [List of contributors]
+- Prasad-JB
+- OWASP Cheat Sheets Team
+- ASVS Working Group
 
 ## References
 
