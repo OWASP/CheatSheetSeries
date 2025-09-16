@@ -96,10 +96,12 @@ Details of how to precisely ensure secure configuration can be found in [Infrast
 ## Security Terminology
 
 **Encoding vs. Escaping**:
+
 - **Encoding** transforms data into a different format using a scheme that is publicly available (e.g., URL encoding, Base64 encoding). It is often used to ensure data integrity and proper interpretation across different systems.
 - **Escaping** involves adding special characters or sequences to prevent interpretation of data as code (e.g., HTML escaping to prevent XSS, SQL escaping to prevent injection). It is context-specific and used for security purposes.
 
 **Encryption vs. Signature**:
+
 - **Encryption** provides confidentiality by transforming data into ciphertext to hide its content from unauthorized parties. Only authorized parties with the correct key can decrypt and read the original data.
 - **Signature** provides integrity and authenticity. It verifies that data has not been tampered with and confirms the identity of the sender. Signatures do not hide the data content.
 

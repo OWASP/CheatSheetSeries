@@ -58,7 +58,7 @@ should not be required to add security features or change settings to be secure.
 
 - Eliminate default passwords and require them to be changed on first use.
 - Enable important security features (like MFA, encryption) by default.
-- Adopt a "zero-ttrust" architecture mindset for product design.
+- Adopt a "zero-trust" architecture mindset for product design.
 
 ### 5. Implement Security Measures That Don't Rely on Customer Configuration
 
