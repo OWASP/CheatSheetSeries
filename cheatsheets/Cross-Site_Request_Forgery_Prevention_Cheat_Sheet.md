@@ -442,7 +442,7 @@ Sec-Fetch-Site is the most useful Fetch Metadata header for blocking CSRF-like c
 
 - Not universal. Some older browsers, webviews, bots, and non-browser HTTP clients do not send Sec-Fetch-*. Do not assume presence on every request — implement fallbacks.
 - May break legitimate cross-origin integrations. A global Sec-Fetch policy can unintentionally block legitimate CORS or third-party flows; plan explicit whitelisting.
-- One limitation is that Fetch Metadata request headers are only sent to [potentially trustworthy URLs](https://www.w3.org/TR/secure-contexts/#is-url-trustworthy). This means the headers will generally be present for requests to origins whose scheme is "https", "wss", or "file", and for "localhost" (hosts in the "127.0.0.0/8" or "::1/128" ranges). For the full rules and additional edge cases (the algorithm the user agent uses to decide trustworthiness), see the [W3C Secure Contexts spec](https://www.w3.org/TR/secure-contexts/#is-origin-trustworthy).
+- One limitation is that Fetch Metadata request headers are only sent to [potentially trustworthy URLs](https://www.w3.org/TR/secure-contexts/#is-url-trustworthy). This means the headers will generally be present for requests to origins whose scheme is `https`, `wss`, or `file`, and for `localhost` (hosts in the `127.0.0.0/8` or `::1/128` ranges). For the full rules and additional edge cases (the algorithm the user agent uses to decide trustworthiness), see the [W3C Secure Contexts spec](https://www.w3.org/TR/secure-contexts/#is-origin-trustworthy).
 
 #### Rollout & testing recommendations
 
