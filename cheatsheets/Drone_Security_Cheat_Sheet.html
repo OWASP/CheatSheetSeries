@@ -1120,27 +1120,36 @@ redirect_from: "/cheatsheets/Drone_security_sheet.html"
 </li>
         
           <li class="md-nav__item">
-  <a href="#3-physical-security" class="md-nav__link">
+  <a href="#3-data-protection" class="md-nav__link">
     <span class="md-ellipsis">
-      3. Physical Security
+      3. Data Protection
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#4-sensor-security" class="md-nav__link">
+  <a href="#4-physical-security" class="md-nav__link">
     <span class="md-ellipsis">
-      4. Sensor Security
+      4. Physical Security
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#5-logging-monitoring" class="md-nav__link">
+  <a href="#5-sensor-security" class="md-nav__link">
     <span class="md-ellipsis">
-      5. Logging &amp; Monitoring
+      5. Sensor Security
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-logging-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Logging &amp; Monitoring
     </span>
   </a>
   
@@ -2800,27 +2809,36 @@ redirect_from: "/cheatsheets/Drone_security_sheet.html"
 </li>
         
           <li class="md-nav__item">
-  <a href="#3-physical-security" class="md-nav__link">
+  <a href="#3-data-protection" class="md-nav__link">
     <span class="md-ellipsis">
-      3. Physical Security
+      3. Data Protection
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#4-sensor-security" class="md-nav__link">
+  <a href="#4-physical-security" class="md-nav__link">
     <span class="md-ellipsis">
-      4. Sensor Security
+      4. Physical Security
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#5-logging-monitoring" class="md-nav__link">
+  <a href="#5-sensor-security" class="md-nav__link">
     <span class="md-ellipsis">
-      5. Logging &amp; Monitoring
+      5. Sensor Security
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-logging-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Logging &amp; Monitoring
     </span>
   </a>
   
@@ -2926,7 +2944,13 @@ redirect_from: "/cheatsheets/Drone_security_sheet.html"
 <p><strong>User Error and Misconfiguration</strong> – Misconfigured security settings can expose the drone to risks.</p>
 </li>
 </ul>
-<h3 id="3-physical-security">3. Physical Security<a class="headerlink" href="#3-physical-security" title="Permanent link">&para;</a></h3>
+<h3 id="3-data-protection">3. Data Protection<a class="headerlink" href="#3-data-protection" title="Permanent link">&para;</a></h3>
+<p>Drones often handle sensitive information (e.g., mission details, sensor logs, or edge AI models) and face a high risk of being lost or captured. Therefore, it's important to protect the onboard data:</p>
+<ul>
+<li><strong>Storage Encryption</strong> - Ensures data is secure at rest, even if someone gains physical access to the drone while it's powered off. Examples: <a href="https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/8/html/security_hardening/encrypting-block-devices-using-luks_security-hardening">LUKS</a> for block-level encryption, <a href="https://nuetzlich.net/gocryptfs/">gocryptfs</a> for filesystem in userspace, <a href="https://github.com/FiloSottile/age">age</a> for file encryption.</li>
+<li><strong>Sensitive Data in RAM</strong> - Store highly sensitive information (e.g, encryption keys, credentials, intellectual property) in RAM and clear after use. Provide this data before mission start using secure channels.</li>
+</ul>
+<h3 id="4-physical-security">4. Physical Security<a class="headerlink" href="#4-physical-security" title="Permanent link">&para;</a></h3>
 <p>If your drone is ever captured or lost, you should ensure that its not physically possible to steal data from it. This may happen under the following conditions:</p>
 <ul>
 <li>
@@ -2939,11 +2963,11 @@ redirect_from: "/cheatsheets/Drone_security_sheet.html"
 <p><strong>End-of-Life Decommissioning Risks</strong> – Improperly decommissioned drones may retain sensitive data or be repurposed maliciously.</p>
 </li>
 </ul>
-<h3 id="4-sensor-security">4. Sensor Security<a class="headerlink" href="#4-sensor-security" title="Permanent link">&para;</a></h3>
+<h3 id="5-sensor-security">5. Sensor Security<a class="headerlink" href="#5-sensor-security" title="Permanent link">&para;</a></h3>
 <p>With drones implementing control logic depending on how close they are to other drones or aerial vehicles, manipulating sensor data can be disastrous!</p>
 <p>Attackers can manipulate drone sensors (GPS, cameras, altimeters) to feed incorrect data. Think of this more like how <a href="https://en.wikipedia.org/wiki/Stuxnet">stuxnet</a> changed the speed of the Uranium centrifuges in Iran while still reporting the speed as normal.</p>
 <p>To prevent this, there is new research being developed involving <strong>watermarked signals</strong> whose <strong>entropy</strong> can be used to determine if the sensor values are correct of not. Read more about this method <a href="https://ieeexplore.ieee.org/abstract/document/9994719">here</a>.</p>
-<h3 id="5-logging-monitoring">5. Logging &amp; Monitoring<a class="headerlink" href="#5-logging-monitoring" title="Permanent link">&para;</a></h3>
+<h3 id="6-logging-monitoring">6. Logging &amp; Monitoring<a class="headerlink" href="#6-logging-monitoring" title="Permanent link">&para;</a></h3>
 <ul>
 <li>
 <p><strong>Inadequate Logging and Monitoring</strong> – Without sufficient monitoring, security breaches or operational anomalies may go undetected.</p>
