@@ -368,6 +368,89 @@ Cookie prefixes [are supported by all major browsers](https://developer.mozilla.
 
 See the [Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Directives) and [IETF Draft](https://tools.ietf.org/html/draft-west-cookie-prefixes-05) for further information about cookie prefixes.
 
+### Use Fetch Metadata headers to verify nature of the request
+
+Fetch Metadata request headers provide extra context about how an HTTP request was made, and how the resource will be used, enabling servers to reject suspicious cross-site requests. Servers can use these headers — most importantly `Sec-Fetch-Site` — as a lightweight method to block obvious cross-site requests. See the [Fetch Metadata specification](https://www.w3.org/TR/fetch-metadata/) for details.
+
+It is important to note that Fetch Metadata headers should be implemented as an additional layer defense in depth concept. This attribute should not replace a CSRF tokens (or equivalent framework protections).
+
+The Fetch Metadata request headers are:
+
+- Sec-Fetch-Site — indicates relationship between request initiator’s origin and it's target's origin: `same-origin`, `same-site`, `cross-site`, or `none`.
+- Sec-Fetch-Mode — indicates the request's [mode](https://fetch.spec.whatwg.org/#concept-request-mode)(e.g., `navigate`, `no-cors`, `cors`, `same-origin`, and `websocket`), which allows to distinguish between requests originating from a user navigating between HTML pages, and requests to load images and other resources.
+- Sec-Fetch-Dest — indicates the [destination](https://fetch.spec.whatwg.org/#concept-request-destination) for the requested resource (e.g., `document`, `image`, `script`, etc.).
+- Sec-Fetch-User — present only for navigation requests initiated by user. When sent value is `?1`, meaning `true`.
+
+If any of headers above contain values not listed in the specification, in order to support forward-compatibility, servers should ignore those headers.
+
+Browser compatability: Fetch Metadata request headers are supported in most modern browsers on both desktop and mobile (Chrome, Edge, Firefox, Safari 16.4+, and even in webviews on both iOS and Android). For compatibility detail, see the [browser support table](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Sec-Fetch-Site#browser_compatibility).
+
+#### How to treat Fetch Metadata headers on the server-side
+
+Sec-Fetch-Site is the most useful Fetch Metadata header for blocking CSRF-like cross-origin requests and should be the primary signal in a Fetch-Metadata-based policy. Use other Fetch Metadata headers (Sec-Fetch-Mode, Sec-Fetch-Dest, Sec-Fetch-User) to further refine or tailor policies to your application (for example, allowing navigate mode top-level requests or permitting specific Dest values for resource endpoints).
+**Policy (high level)**
+
+1. If Sec-Fetch-Site is present:
+    1.1. Treat cross-site as untrusted for state-changing actions. By default, reject non-safe methods (POST / PUT / PATCH / DELETE) when `Sec-Fetch-Site: cross-site`.
+
+    ```JavaScript
+    const SAFE = new Set(['GET','HEAD','OPTIONS']);
+    const site = req.get('Sec-Fetch-Site'); // e.g. 'cross-site','same-site','same-origin','none'
+    
+    if (site === 'cross-site' && !SAFE.has(req.method)) {
+      return false; // forbid this request
+    }
+    ```
+
+    1.2. Allow `same-origin`. Treat `same-site` as allowed only if your threat model trusts sibling subdomains; otherwise handle `same-site` conservatively (for example, require additional validation).
+
+    ```JavaScript
+    const trustSameSite = false; // set true only if you trust sibling subdomains
+    
+    if (site === 'same-origin') {
+      return true;
+    } else if (site === 'same-site') {
+      // handle same-site separately so the subcondition is clearly scoped to same-site
+      if (!trustSameSite && !SAFE.has(req.method)) {
+        return false; // treat same-site as untrusted for state-changing methods
+      }
+      return true;
+    }
+    ```
+
+    1.3. Allow none for user-driven top-level navigations (bookmarks, typed URLs, explicit form submits) where appropriate.
+
+2. If Sec-Fetch-* headers are absent: choose a fallback based on risk and compatibility requirements:
+    2.1. Fail-safe (recommended for sensitive endpoints): treat absence as unknown and block the request.
+    2.2. Fail-open (compatibility-first): fallback to other security measure (CSRF tokens, validate Origin/Referer, and/or require additional validation).
+
+3. Additionall options
+    3.1 To ensure that your site can still be linked from other sites, you have to allow simple (HTTP GET) top-level navigation.
+
+    ```JavaScript
+    if (req.get('Sec-Fetch-Mode') === 'navigate' &&
+        req.method === 'GET' &&
+        req.get('Sec-Fetch-Dest') !== 'object' &&
+        req.get('Sec-Fetch-Dest') !== 'embed') {
+      return true; // Allow this request
+    }
+    ```
+
+    3.2 Whitelist explicit cross-origin flows. If certain endpoints intentionally accept cross-origin requests (CORS JSON APIs, third-party integrations, webhooks), explicitly exempt those endpoints from the global Sec-Fetch deny policy and secure them with proper CORS configuration, authentication, and logging.
+
+#### Limitations and gotchas
+
+- Not universal. Some older browsers, webviews, bots, and non-browser HTTP clients do not send Sec-Fetch-*. Do not assume presence on every request — implement fallbacks.
+- May break legitimate cross-origin integrations. A global Sec-Fetch policy can unintentionally block legitimate CORS or third-party flows; plan explicit whitelisting.
+- One limitation is that Fetch Metadata request headers are only sent to [potentially trustworthy URLs](https://www.w3.org/TR/secure-contexts/#is-url-trustworthy). This means the headers will generally be present for requests to origins whose scheme is `https`, `wss`, or `file`, and for `localhost` (hosts in the `127.0.0.0/8` or `::1/128` ranges). For the full rules and additional edge cases (the algorithm the user agent uses to decide trustworthiness), see the [W3C Secure Contexts spec](https://www.w3.org/TR/secure-contexts/#is-origin-trustworthy).
+
+#### Rollout & testing recommendations
+
+- Include an appropriate Vary header [RFC9110], in order to ensure that caches handle the response appropriately. For example, `Vary: Accept-Encoding, Sec-Fetch-Site`. See more [Fetch Metadata specification](https://w3c.github.io/webappsec-fetch-metadata/#vary).
+- Start in “log only” mode. Record requests that would be blocked and review for false positives before enforcing. This is the safest way to discover legitimate flows that need whitelisting.
+- Monitor UA coverage. Track which user agents include Sec-Fetch-* and which don’t; ensure your fallback logic covers missing-header cases. Use metrics to decide when to enforce stricter policies.
+- Document exceptions. Keep an explicit list of endpoints whitelisted for cross-origin access.
+
 ### User Interaction-Based CSRF Defense
 
 While all the techniques referenced here do not require any user interaction, sometimes it's easier or more appropriate to involve the user in the transaction to prevent unauthorized operations (forged via CSRF or otherwise). The following are some examples of techniques that can act as strong CSRF defense when implemented correctly.
