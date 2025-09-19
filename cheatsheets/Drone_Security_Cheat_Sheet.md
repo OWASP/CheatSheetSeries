@@ -48,7 +48,14 @@ Thus, it becomes very important to maintain their security as well. The possible
 
 - **User Error and Misconfiguration** – Misconfigured security settings can expose the drone to risks.
 
-### 3. Physical Security
+### 3. Data Protection
+
+Drones often handle sensitive information (e.g., mission details, sensor logs, or edge AI models) and face a high risk of being lost or captured. Therefore, it's important to protect the onboard data:
+
+- **Storage Encryption** - Ensures data is secure at rest, even if someone gains physical access to the drone while it's powered off. Examples: [LUKS](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/8/html/security_hardening/encrypting-block-devices-using-luks_security-hardening) for block-level encryption, [gocryptfs](https://nuetzlich.net/gocryptfs/) for filesystem in userspace, [age](https://github.com/FiloSottile/age) for file encryption.
+- **Sensitive Data in RAM** - Store highly sensitive information (e.g, encryption keys, credentials, intellectual property) in RAM and clear after use. Provide this data before mission start using secure channels.
+
+### 4. Physical Security
 
 If your drone is ever captured or lost, you should ensure that its not physically possible to steal data from it. This may happen under the following conditions:
 
@@ -58,7 +65,7 @@ If your drone is ever captured or lost, you should ensure that its not physicall
 
 - **End-of-Life Decommissioning Risks** – Improperly decommissioned drones may retain sensitive data or be repurposed maliciously.
 
-### 4. Sensor Security
+### 5. Sensor Security
 
 With drones implementing control logic depending on how close they are to other drones or aerial vehicles, manipulating sensor data can be disastrous!
 
@@ -66,7 +73,7 @@ Attackers can manipulate drone sensors (GPS, cameras, altimeters) to feed incorr
 
 To prevent this, there is new research being developed involving **watermarked signals** whose **entropy** can be used to determine if the sensor values are correct of not. Read more about this method [here](https://ieeexplore.ieee.org/abstract/document/9994719).
 
-### 5. Logging & Monitoring
+### 6. Logging & Monitoring
 
 - **Inadequate Logging and Monitoring** – Without sufficient monitoring, security breaches or operational anomalies may go undetected.
 
