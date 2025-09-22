@@ -2950,7 +2950,7 @@
 <h3 id="from-node">FROM node<a class="headerlink" href="#from-node" title="Permanent link">&para;</a></h3>
 <p>The shortcomings of building based on the default <code>node</code> image are as follows:</p>
 <ol>
-<li>Docker image builds are inconsistent. Just like we’re using <code>lockfiles</code> to get a deterministic <code>npm install</code> behavior every time we install npm packages, we’d also like to get deterministic docker image builds. If we build the image from node—which effectively means the <code>node:latest</code> tag—then every build will pull a newly built Docker image of <code>node</code>. We don’t want to introduce this sort of non-deterministic behavior.</li>
+<li>Docker image builds are inconsistent. Just like we’re using <code>lockfiles</code> to get a deterministic <a href="https://cheatsheetseries.owasp.org/cheatsheets/NPM_Security_Cheat_Sheet.html#2-enforce-the-lockfile"><code>npm ci</code></a> behavior every time we install npm packages, we’d also like to get deterministic docker image builds. If we build the image from node—which effectively means the <code>node:latest</code> tag—then every build will pull a newly built Docker image of <code>node</code>. We don’t want to introduce this sort of non-deterministic behavior.</li>
 <li>The node Docker image is based on a full-fledged operating system, full of libraries and tools that you may or may not need to run your Node.js web application. This has two downsides. Firstly a bigger image means a bigger download size which, besides increasing the storage requirement, means more time to download and re-build the image. Secondly, it means you’re potentially introducing security vulnerabilities, that may exist in all of these libraries and tools, into the image.</li>
 </ol>
 <p>In fact, the <code>node</code> Docker image is quite big and includes hundreds of security vulnerabilities of different types and severities. If you’re using it, then by default your starting point is going to be a baseline of 642 security vulnerabilities, and hundreds of megabytes of image data that is downloaded on every pull and build.</p>
@@ -2981,7 +2981,7 @@ node                           lts-alpine       sha256:b2da3316acdc2bec442190a1f
 <div class="highlight"><pre><span></span><code>FROM node@sha256:b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a
 WORKDIR /usr/src/app
 COPY . /usr/src/app
-RUN npm install
+RUN npm ci
 CMD &quot;npm&quot; &quot;start&quot;
 </code></pre></div>
 <p>However, the Dockerfile above, only specifies the Node.js Docker image name without an image tag which creates ambiguity for which exact image tag is being used—it’s not readable, hard to maintain and doesn’t create a good developer experience.</p>
@@ -2989,12 +2989,12 @@ CMD &quot;npm&quot; &quot;start&quot;
 <div class="highlight"><pre><span></span><code>FROM node:lts-alpine@sha256:b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a
 WORKDIR /usr/src/app
 COPY . /usr/src/app
-RUN npm install
+RUN npm ci
 CMD &quot;npm&quot; &quot;start&quot;
 </code></pre></div>
 <h2 id="2-install-only-production-dependencies-in-the-nodejs-docker-image">2) Install only production dependencies in the Node.js Docker image<a class="headerlink" href="#2-install-only-production-dependencies-in-the-nodejs-docker-image" title="Permanent link">&para;</a></h2>
 <p>The following Dockerfile directive installs all dependencies in the container, including <code>devDependencies</code>, which aren’t needed for a functional application to work. It adds an unneeded security risk from packages used as development dependencies, as well as inflating the image size unnecessarily.</p>
-<p><strong><code>RUN npm install</code></strong></p>
+<p><strong><code>RUN npm ci</code></strong></p>
 <p>Enforce deterministic builds with <code>npm ci</code>. This prevents surprises in a continuous integration (CI) flow because it halts if any deviations from the lockfile are made.</p>
 <p>In the case of building a Docker image for production we want to ensure that we only install production dependencies in a deterministic way, and this brings us to the following recommendation for the best practice for installing npm dependencies in a container image:</p>
 <p><strong><code>RUN npm ci --omit=dev</code></strong></p>
@@ -3009,7 +3009,7 @@ CMD &quot;npm&quot; &quot;start&quot;
 <p>When you build your Node.js Docker image for production, you want to ensure that all frameworks and libraries are using the optimal settings for performance and security.</p>
 <p>This brings us to add the following Dockerfile directive:</p>
 <p><strong><code>ENV NODE_ENV production</code></strong></p>
-<p>At first glance, this looks redundant, since we already specified only production dependencies in the <code>npm install</code> phase—so why is this necessary?</p>
+<p>At first glance, this looks redundant, since we already specified only production dependencies in the <code>npm ci</code> phase—so why is this necessary?</p>
 <p>Developers mostly associate the <code>NODE_ENV=production</code> environment variable setting with the installation of production-related dependencies, however, this setting also has other effects which we need to be aware of.</p>
 <p>Some frameworks and libraries may only turn on the optimized configuration that is suited to production if that <code>NODE_ENV</code> environment variable is set to <code>production</code>. Putting aside our opinion on whether this is a good or bad practice for frameworks to take, it is important to know this.</p>
 <p>As an example, the <a href="https://expressjs.com/en/advanced/best-practice-performance.html#set-node_env-to-production">Express documentation</a> outlines the importance of setting this environment variable for enabling performance and security related optimizations:</p>
@@ -3238,7 +3238,7 @@ Dockerfile
 <div class="highlight"><pre><span></span><code>FROM node@sha256:b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a
 WORKDIR /usr/src/app
 COPY . /usr/src/app
-RUN npm install
+RUN npm ci
 CMD &quot;npm&quot; &quot;start&quot;
 </code></pre></div>
 <p>In fact, it’s even more important to have a <code>.dockerignore</code> file when you are practicing multi-stage Docker builds. To refresh your memory on how the 2nd stage Docker build looks like:</p>
