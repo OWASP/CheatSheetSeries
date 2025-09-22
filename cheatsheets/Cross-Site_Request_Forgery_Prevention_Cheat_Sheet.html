@@ -1098,6 +1098,48 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#use-fetch-metadata-headers-to-verify-nature-of-the-request" class="md-nav__link">
+    <span class="md-ellipsis">
+      Use Fetch Metadata headers to verify nature of the request
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Use Fetch Metadata headers to verify nature of the request">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-to-treat-fetch-metadata-headers-on-the-server-side" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to treat Fetch Metadata headers on the server-side
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitations-and-gotchas" class="md-nav__link">
+    <span class="md-ellipsis">
+      Limitations and gotchas
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rollout-testing-recommendations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rollout &amp; testing recommendations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#user-interaction-based-csrf-defense" class="md-nav__link">
     <span class="md-ellipsis">
       User Interaction-Based CSRF Defense
@@ -3387,6 +3429,48 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#use-fetch-metadata-headers-to-verify-nature-of-the-request" class="md-nav__link">
+    <span class="md-ellipsis">
+      Use Fetch Metadata headers to verify nature of the request
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Use Fetch Metadata headers to verify nature of the request">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-to-treat-fetch-metadata-headers-on-the-server-side" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to treat Fetch Metadata headers on the server-side
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitations-and-gotchas" class="md-nav__link">
+    <span class="md-ellipsis">
+      Limitations and gotchas
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rollout-testing-recommendations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rollout &amp; testing recommendations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#user-interaction-based-csrf-defense" class="md-nav__link">
     <span class="md-ellipsis">
       User Interaction-Based CSRF Defense
@@ -3854,6 +3938,78 @@ if authenticated users would need to visit different (sub-)domains.
 In all other cases, using the <code>__Host-</code> prefix in addition to the <code>SameSite</code> attribute is recommended.</p>
 <p>Cookie prefixes <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Browser_compatibility">are supported by all major browsers</a>.</p>
 <p>See the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Directives">Mozilla Developer Network</a> and <a href="https://tools.ietf.org/html/draft-west-cookie-prefixes-05">IETF Draft</a> for further information about cookie prefixes.</p>
+<h3 id="use-fetch-metadata-headers-to-verify-nature-of-the-request">Use Fetch Metadata headers to verify nature of the request<a class="headerlink" href="#use-fetch-metadata-headers-to-verify-nature-of-the-request" title="Permanent link">&para;</a></h3>
+<p>Fetch Metadata request headers provide extra context about how an HTTP request was made, and how the resource will be used, enabling servers to reject suspicious cross-site requests. Servers can use these headers — most importantly <code>Sec-Fetch-Site</code> — as a lightweight method to block obvious cross-site requests. See the <a href="https://www.w3.org/TR/fetch-metadata/">Fetch Metadata specification</a> for details.</p>
+<p>It is important to note that Fetch Metadata headers should be implemented as an additional layer defense in depth concept. This attribute should not replace a CSRF tokens (or equivalent framework protections).</p>
+<p>The Fetch Metadata request headers are:</p>
+<ul>
+<li>Sec-Fetch-Site — indicates relationship between request initiator’s origin and it's target's origin: <code>same-origin</code>, <code>same-site</code>, <code>cross-site</code>, or <code>none</code>.</li>
+<li>Sec-Fetch-Mode — indicates the request's <a href="https://fetch.spec.whatwg.org/#concept-request-mode">mode</a>(e.g., <code>navigate</code>, <code>no-cors</code>, <code>cors</code>, <code>same-origin</code>, and <code>websocket</code>), which allows to distinguish between requests originating from a user navigating between HTML pages, and requests to load images and other resources.</li>
+<li>Sec-Fetch-Dest — indicates the <a href="https://fetch.spec.whatwg.org/#concept-request-destination">destination</a> for the requested resource (e.g., <code>document</code>, <code>image</code>, <code>script</code>, etc.).</li>
+<li>Sec-Fetch-User — present only for navigation requests initiated by user. When sent value is <code>?1</code>, meaning <code>true</code>.</li>
+</ul>
+<p>If any of headers above contain values not listed in the specification, in order to support forward-compatibility, servers should ignore those headers.</p>
+<p>Browser compatability: Fetch Metadata request headers are supported in most modern browsers on both desktop and mobile (Chrome, Edge, Firefox, Safari 16.4+, and even in webviews on both iOS and Android). For compatibility detail, see the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Sec-Fetch-Site#browser_compatibility">browser support table</a>.</p>
+<h4 id="how-to-treat-fetch-metadata-headers-on-the-server-side">How to treat Fetch Metadata headers on the server-side<a class="headerlink" href="#how-to-treat-fetch-metadata-headers-on-the-server-side" title="Permanent link">&para;</a></h4>
+<p>Sec-Fetch-Site is the most useful Fetch Metadata header for blocking CSRF-like cross-origin requests and should be the primary signal in a Fetch-Metadata-based policy. Use other Fetch Metadata headers (Sec-Fetch-Mode, Sec-Fetch-Dest, Sec-Fetch-User) to further refine or tailor policies to your application (for example, allowing navigate mode top-level requests or permitting specific Dest values for resource endpoints).
+<strong>Policy (high level)</strong></p>
+<ol>
+<li>
+<p>If Sec-Fetch-Site is present:
+    1.1. Treat cross-site as untrusted for state-changing actions. By default, reject non-safe methods (POST / PUT / PATCH / DELETE) when <code>Sec-Fetch-Site: cross-site</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">SAFE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Set</span><span class="p">([</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span><span class="s1">&#39;HEAD&#39;</span><span class="p">,</span><span class="s1">&#39;OPTIONS&#39;</span><span class="p">]);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">site</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;Sec-Fetch-Site&#39;</span><span class="p">);</span><span class="w"> </span><span class="c1">// e.g. &#39;cross-site&#39;,&#39;same-site&#39;,&#39;same-origin&#39;,&#39;none&#39;</span>
+
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">site</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;cross-site&#39;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="nx">SAFE</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">method</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w"> </span><span class="c1">// forbid this request</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>1.2. Allow <code>same-origin</code>. Treat <code>same-site</code> as allowed only if your threat model trusts sibling subdomains; otherwise handle <code>same-site</code> conservatively (for example, require additional validation).</p>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">trustSameSite</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w"> </span><span class="c1">// set true only if you trust sibling subdomains</span>
+
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">site</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;same-origin&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">site</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;same-site&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// handle same-site separately so the subcondition is clearly scoped to same-site</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">trustSameSite</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="nx">SAFE</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">method</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w"> </span><span class="c1">// treat same-site as untrusted for state-changing methods</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>1.3. Allow none for user-driven top-level navigations (bookmarks, typed URLs, explicit form submits) where appropriate.</p>
+</li>
+<li>
+<p>If Sec-Fetch-* headers are absent: choose a fallback based on risk and compatibility requirements:
+    2.1. Fail-safe (recommended for sensitive endpoints): treat absence as unknown and block the request.
+    2.2. Fail-open (compatibility-first): fallback to other security measure (CSRF tokens, validate Origin/Referer, and/or require additional validation).</p>
+</li>
+<li>
+<p>Additionall options
+    3.1 To ensure that your site can still be linked from other sites, you have to allow simple (HTTP GET) top-level navigation.</p>
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;Sec-Fetch-Mode&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;navigate&#39;</span><span class="w"> </span><span class="o">&amp;&amp;</span>
+<span class="w">    </span><span class="nx">req</span><span class="p">.</span><span class="nx">method</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;GET&#39;</span><span class="w"> </span><span class="o">&amp;&amp;</span>
+<span class="w">    </span><span class="nx">req</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;Sec-Fetch-Dest&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="s1">&#39;object&#39;</span><span class="w"> </span><span class="o">&amp;&amp;</span>
+<span class="w">    </span><span class="nx">req</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;Sec-Fetch-Dest&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="s1">&#39;embed&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span><span class="w"> </span><span class="c1">// Allow this request</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>3.2 Whitelist explicit cross-origin flows. If certain endpoints intentionally accept cross-origin requests (CORS JSON APIs, third-party integrations, webhooks), explicitly exempt those endpoints from the global Sec-Fetch deny policy and secure them with proper CORS configuration, authentication, and logging.</p>
+</li>
+</ol>
+<h4 id="limitations-and-gotchas">Limitations and gotchas<a class="headerlink" href="#limitations-and-gotchas" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Not universal. Some older browsers, webviews, bots, and non-browser HTTP clients do not send Sec-Fetch-*. Do not assume presence on every request — implement fallbacks.</li>
+<li>May break legitimate cross-origin integrations. A global Sec-Fetch policy can unintentionally block legitimate CORS or third-party flows; plan explicit whitelisting.</li>
+<li>One limitation is that Fetch Metadata request headers are only sent to <a href="https://www.w3.org/TR/secure-contexts/#is-url-trustworthy">potentially trustworthy URLs</a>. This means the headers will generally be present for requests to origins whose scheme is <code>https</code>, <code>wss</code>, or <code>file</code>, and for <code>localhost</code> (hosts in the <code>127.0.0.0/8</code> or <code>::1/128</code> ranges). For the full rules and additional edge cases (the algorithm the user agent uses to decide trustworthiness), see the <a href="https://www.w3.org/TR/secure-contexts/#is-origin-trustworthy">W3C Secure Contexts spec</a>.</li>
+</ul>
+<h4 id="rollout-testing-recommendations">Rollout &amp; testing recommendations<a class="headerlink" href="#rollout-testing-recommendations" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Include an appropriate Vary header [RFC9110], in order to ensure that caches handle the response appropriately. For example, <code>Vary: Accept-Encoding, Sec-Fetch-Site</code>. See more <a href="https://w3c.github.io/webappsec-fetch-metadata/#vary">Fetch Metadata specification</a>.</li>
+<li>Start in “log only” mode. Record requests that would be blocked and review for false positives before enforcing. This is the safest way to discover legitimate flows that need whitelisting.</li>
+<li>Monitor UA coverage. Track which user agents include Sec-Fetch-* and which don’t; ensure your fallback logic covers missing-header cases. Use metrics to decide when to enforce stricter policies.</li>
+<li>Document exceptions. Keep an explicit list of endpoints whitelisted for cross-origin access.</li>
+</ul>
 <h3 id="user-interaction-based-csrf-defense">User Interaction-Based CSRF Defense<a class="headerlink" href="#user-interaction-based-csrf-defense" title="Permanent link">&para;</a></h3>
 <p>While all the techniques referenced here do not require any user interaction, sometimes it's easier or more appropriate to involve the user in the transaction to prevent unauthorized operations (forged via CSRF or otherwise). The following are some examples of techniques that can act as strong CSRF defense when implemented correctly.</p>
 <ul>
