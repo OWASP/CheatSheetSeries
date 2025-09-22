@@ -2916,12 +2916,12 @@ redirect_from: "/cheatsheets/Drone_security_sheet.html"
 <p><strong>Insecure Communication Links</strong> – Data transmitted between the drone and GCS can be intercepted if not properly encrypted. Use standard protocols for encryption of any data being sent over.</p>
 </li>
 <li>
-<p><strong>Spoofing and Replay Attacks</strong> – If the drone uses a GPS module then data spoofing and command replay attacks can also become a reality. Again encrpyted data transfer is the best way to go forward. There are many more methods, which have been discussed <a href="https://www.okta.com/identity-101/gps-spoofing/">here</a></p>
+<p><strong>Spoofing and Replay Attacks</strong> – If the drone uses a GPS module then data spoofing and command replay attacks can also become a reality. Again encrypted data transfer is the best way to go forward. There are many more methods, which have been discussed <a href="https://www.okta.com/identity-101/gps-spoofing/">here</a></p>
 </li>
 <li>
 <p><strong>Wi-Fi Weaknesses</strong> – Weak authentication or unprotected channels can allow unauthorized access. This is even possible through simple <a href="https://github.com/SpacehuhnTech/esp8266_deauther">microcontrollers like ESP8266</a>!</p>
 <ul>
-<li>Use <strong>802.11w MFP (Management Frame Protection)</strong> to prevent Wi-Fi deauthentication attacks. Don't worry, if your Wi-Fi systems are up to date, then this is a default protocol now.</li>
+<li>Use <strong>802.11w MFP (Management Frame Protection)</strong> to prevent Wi-Fi deauthentication attacks. Don't worry, if your Wi-Fi systems are up-to-date, then this is a default protocol now.</li>
 </ul>
 </li>
 </ul>
@@ -2951,7 +2951,7 @@ redirect_from: "/cheatsheets/Drone_security_sheet.html"
 <li><strong>Sensitive Data in RAM</strong> - Store highly sensitive information (e.g, encryption keys, credentials, intellectual property) in RAM and clear after use. Provide this data before mission start using secure channels.</li>
 </ul>
 <h3 id="4-physical-security">4. Physical Security<a class="headerlink" href="#4-physical-security" title="Permanent link">&para;</a></h3>
-<p>If your drone is ever captured or lost, you should ensure that its not physically possible to steal data from it. This may happen under the following conditions:</p>
+<p>If your drone is ever captured or lost, you should ensure that it's not physically possible to steal data from it. This may happen under the following conditions:</p>
 <ul>
 <li>
 <p><strong>Insufficient Physical Security</strong> – Unsecured USB ports or exposed hardware can lead to data theft or tampering.</p>
@@ -2991,7 +2991,7 @@ redirect_from: "/cheatsheets/Drone_security_sheet.html"
 <p>You must secure <strong>heartbeat messages</strong> to avoid <a href="https://owasp.org/www-community/attacks/Command_Injection">command injection vulnerabilities</a>. A heartbeat message is usually a single byte that is sent at a certain frequency to all other nodes, informing of the device's existence. The frequency is important here!</p>
 </li>
 <li>
-<p>Tools like <strong>ArduPilot</strong> and <strong>PX4</strong> support MAVLink 2.0 security enhancements. There are thoroughly tested softwares and hence recommended.</p>
+<p>Tools like <strong>ArduPilot</strong> and <strong>PX4</strong> support MAVLink 2.0 security enhancements. They have been thoroughly tested and are therefore recommended.</p>
 </li>
 <li>
 <p>Utilize <strong>end-to-end encryption</strong>! Either through TLS or DTLS is fine and good.</p>
@@ -3073,8 +3073,8 @@ redirect_from: "/cheatsheets/Drone_security_sheet.html"
 <td>Integrity</td>
 <td>Accessibility</td>
 <td>Authentication</td>
-<td>Non-Cryptographic</td>
 <td>Cryptographic</td>
+<td>Non-Cryptographic</td>
 </tr>
 <tr>
 <td>Malware</td>
