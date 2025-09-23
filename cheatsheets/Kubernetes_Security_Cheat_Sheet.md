@@ -902,8 +902,8 @@ Events:
 
 There are few open source tools that can help you on securing your managed-service Kubernetes on AWS [(EKS)](https://aws.amazon.com/eks/)
 
-* [hardeneks](https://github.com/aws-samples/hardeneks)
-* [MKAD](https://github.com/DataDog/managed-kubernetes-auditing-toolkit) (Managed Kubernetes Auditing Toolkit) from DataDog
+- [hardeneks](https://github.com/aws-samples/hardeneks)
+- [MKAD](https://github.com/DataDog/managed-kubernetes-auditing-toolkit) (Managed Kubernetes Auditing Toolkit) from DataDog
 
 ## SECTION 6: Final Thoughts
 
@@ -949,3 +949,4 @@ Control plane documentation - <https://kubernetes.io>
 18. Open Policy Agent: What Is OPA and How It Works (Examples) - <https://spacelift.io/blog/what-is-open-policy-agent-and-how-it-works>
 19. Send Kubernetes Metrics To Kibana and Elasticsearch - <https://logit.io/sources/configure/kubernetes/>
 20. Kubernetes Security Checklist - <https://kubernetes.io/docs/concepts/security/security-checklist/>
+
