@@ -43,49 +43,47 @@ Use *Query Parameterization* in order to prevent injection.
 /*Open connection with H2 database and use it*/
 Class.forName("org.h2.Driver");
 String jdbcUrl = "jdbc:h2:file:" + new File(".").getAbsolutePath() + "/target/db";
-try (Connection con = DriverManager.getConnection(jdbcUrl)) {
 
-    /* Sample A: Select data using Prepared Statement*/
-    String query = "select * from color where friendly_name = ?";
+try (Connection con = DriverManager.getConnection(jdbcUrl)) {
+    
+    // SELECT using PreparedStatement
+    String query = "SELECT * FROM color WHERE friendly_name = ?";
     List<String> colors = new ArrayList<>();
-    try (PreparedStatement pStatement = con.prepareStatement(query)) {
-        pStatement.setString(1, "yellow");
-        try (ResultSet rSet = pStatement.executeQuery()) {
-            while (rSet.next()) {
-                colors.add(rSet.getString(1));
+    try (PreparedStatement ps = con.prepareStatement(query)) {
+        ps.setString(1, "yellow");
+        try (ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                colors.add(rs.getString(1));
             }
         }
     }
 
-    /* Sample B: Insert data using Prepared Statement*/
-    query = "insert into color(friendly_name, red, green, blue) values(?, ?, ?, ?)";
-    int insertedRecordCount;
-    try (PreparedStatement pStatement = con.prepareStatement(query)) {
-        pStatement.setString(1, "orange");
-        pStatement.setInt(2, 239);
-        pStatement.setInt(3, 125);
-        pStatement.setInt(4, 11);
-        insertedRecordCount = pStatement.executeUpdate();
+    // INSERT using PreparedStatement
+    query = "INSERT INTO color(friendly_name, red, green, blue) VALUES(?, ?, ?, ?)";
+    try (PreparedStatement ps = con.prepareStatement(query)) {
+        ps.setString(1, "orange");
+        ps.setInt(2, 239);
+        ps.setInt(3, 125);
+        ps.setInt(4, 11);
+        ps.executeUpdate();
     }
 
-   /* Sample C: Update data using Prepared Statement*/
-    query = "update color set blue = ? where friendly_name = ?";
-    int updatedRecordCount;
-    try (PreparedStatement pStatement = con.prepareStatement(query)) {
-        pStatement.setInt(1, 10);
-        pStatement.setString(2, "orange");
-        updatedRecordCount = pStatement.executeUpdate();
+    // UPDATE using PreparedStatement
+    query = "UPDATE color SET blue = ? WHERE friendly_name = ?";
+    try (PreparedStatement ps = con.prepareStatement(query)) {
+        ps.setInt(1, 10);
+        ps.setString(2, "orange");
+        ps.executeUpdate();
     }
 
-   /* Sample D: Delete data using Prepared Statement*/
-    query = "delete from color where friendly_name = ?";
-    int deletedRecordCount;
-    try (PreparedStatement pStatement = con.prepareStatement(query)) {
-        pStatement.setString(1, "orange");
-        deletedRecordCount = pStatement.executeUpdate();
+    // DELETE using PreparedStatement
+    query = "DELETE FROM color WHERE friendly_name = ?";
+    try (PreparedStatement ps = con.prepareStatement(query)) {
+        ps.setString(1, "orange");
+        ps.executeUpdate();
     }
-
 }
+
 ```
 
 #### References
@@ -105,18 +103,13 @@ Use Java Persistence Query Language **Query Parameterization** in order to preve
 #### Example
 
 ``` java
-EntityManager entityManager = null;
+EntityManager entityManager = Persistence.createEntityManagerFactory("testJPA").createEntityManager();
+
 try {
-    /* Get a ref on EntityManager to access DB */
-    entityManager = Persistence.createEntityManagerFactory("testJPA").createEntityManager();
-
-    /* Define parameterized query prototype using named parameter to enhance readability */
-    String queryPrototype = "select c from Color c where c.friendlyName = :colorName";
-
-    /* Create the query, set the named parameter and execute the query */
-    Query queryObject = entityManager.createQuery(queryPrototype);
-    Color c = (Color) queryObject.setParameter("colorName", "yellow").getSingleResult();
-
+    String queryPrototype = "SELECT c FROM Color c WHERE c.friendlyName = :colorName";
+    Query query = entityManager.createQuery(queryPrototype);
+    query.setParameter("colorName", "yellow");
+    Color c = (Color) query.getSingleResult();
 } finally {
     if (entityManager != null && entityManager.isOpen()) {
         entityManager.close();
@@ -145,7 +138,7 @@ Use technology stack **API** in order to prevent injection.
 * The prevention is to use the feature provided by the Java API instead of building
 * a system command as String and execute it */
 InetAddress host = InetAddress.getByName("localhost");
-var reachable = host.isReachable(5000);
+boolean reachable = host.isReachable(5000);
 ```
 
 #### References
@@ -172,24 +165,13 @@ Use **XPath Variable Resolver** in order to prevent injection.
  *
  */
 public class SimpleVariableResolver implements XPathVariableResolver {
+    private final Map<QName, Object> vars = new HashMap<>();
 
-    private final Map<QName, Object> vars = new HashMap<QName, Object>();
-
-    /**
-     * External methods to add parameter
-     *
-     * @param name Parameter name
-     * @param value Parameter value
-     */
     public void addVariable(QName name, Object value) {
         vars.put(name, value);
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @see javax.xml.xpath.XPathVariableResolver#resolveVariable(javax.xml.namespace.QName)
-     */
+    @Override
     public Object resolveVariable(QName variableName) {
         return vars.get(variableName);
     }
@@ -218,7 +200,8 @@ variableResolver.addVariable(new QName("bookId"), bid);
 /*Create and configure XPATH expression*/
 XPath xpath = XPathFactory.newInstance().newXPath();
 xpath.setXPathVariableResolver(variableResolver);
-XPathExpression xPathExpression = xpath.compile("//book[@id=$bookId]");
+XPathExpression expr = xpath.compile("//book[@id=$bookId]");
+NodeList nodes = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
 
 /* Apply expression on XML document */
 Object nodes = xPathExpression.evaluate(doc, XPathConstants.NODESET);
@@ -244,54 +227,52 @@ Either apply strict input validation (allowlist approach) or use output sanitizi
 #### Example
 
 ``` java
-/*
-INPUT WAY: Receive data from user
-Here it's recommended to use strict input validation using allowlist approach.
-In fact, you ensure that only allowed characters are part of the input received.
-*/
+import java.util.regex.Pattern;
+import org.apache.commons.lang3.StringUtils;
+import org.owasp.html.HtmlPolicyBuilder;
+import org.owasp.html.PolicyFactory;
 
-String userInput = "You user login is owasp-user01";
+public class SafeOutputExample {
 
-/* First we check that the value contains only expected character*/
-if (!Pattern.matches("[a-zA-Z0-9\\s\\-]{1,50}", userInput))
-{
-    return false;
-}
+    public static boolean validateAndSanitize() {
+        String userInput = "You user login is owasp-user01";
 
-/* If the first check pass then ensure that potential dangerous character
-that we have allowed for business requirement are not used in a dangerous way.
-For example here we have allowed the character '-', and, this can
-be used in SQL injection so, we
-ensure that this character is not used is a continuous form.
-Use the API COMMONS LANG v3 to help in String analysis...
-*/
-If (0 != StringUtils.countMatches(userInput.replace(" ", ""), "--"))
-{
-    return false;
-}
+        /* 1. Input Validation: allow only letters, numbers, spaces, and '-' */
+        if (!Pattern.matches("[a-zA-Z0-9\\s\\-]{1,50}", userInput)) {
+            return false;
+        }
 
-/*
-OUTPUT WAY: Send data to user
-Here we escape + sanitize any data sent to user
-Use the OWASP Java HTML Sanitizer API to handle sanitizing
-Use the OWASP Java Encoder API to handle HTML tag encoding (escaping)
-*/
+        /* 2. Disallow consecutive '-' */
+        if (0 != StringUtils.countMatches(userInput.replace(" ", ""), "--")) {
+            return false;
+        }
 
-String outputToUser = "You <p>user login</p> is <strong>owasp-user01</strong>";
-outputToUser += "<script>alert(22);</script><img src='#' onload='javascript:alert(23);'>";
+        /* 3. Output construction */
+        String outputToUser = "You <p>user login</p> is <strong>owasp-user01</strong>";
+        outputToUser += "<script>alert(22);</script><img src='#' onload='javascript:alert(23);'>";
 
-/* Create a sanitizing policy that only allow tag '<p>' and '<strong>'*/
-PolicyFactory policy = new HtmlPolicyBuilder().allowElements("p", "strong").toFactory();
+        /* 4. HTML Sanitization: allow only <p> and <strong> tags */
+        PolicyFactory policy = new HtmlPolicyBuilder()
+                .allowElements("p", "strong")
+                .toFactory();
 
-/* Sanitize the output that will be sent to user*/
-String safeOutput = policy.sanitize(outputToUser);
+        String safeOutput = policy.sanitize(outputToUser);
 
-/* Encode HTML Tag*/
-safeOutput = Encode.forHtml(safeOutput);
-String finalSafeOutputExpected = "You <p>user login</p> is <strong>owasp-user01</strong>";
-if (!finalSafeOutputExpected.equals(safeOutput))
-{
-    return false;
+        /* 5. Verify sanitized output matches expected safe output */
+        String finalSafeOutputExpected = "You <p>user login</p> is <strong>owasp-user01</strong>";
+        if (!finalSafeOutputExpected.equals(safeOutput)) {
+            System.out.println("Sanitized output: " + safeOutput);
+            return false;
+        }
+
+        System.out.println("Sanitized output: " + safeOutput);
+        return true;
+    }
+
+    public static void main(String[] args) {
+        boolean result = validateAndSanitize();
+        System.out.println("Validation result: " + result);
+    }
 }
 ```
 
@@ -319,59 +300,70 @@ As there many NoSQL database system and each one use an API for call, it's impor
 #### Example - MongoDB
 
 ``` java
- /* Here use MongoDB as target NoSQL DB */
-String userInput = "Brooklyn";
+ import com.mongodb.client.*;
+import com.mongodb.client.model.Filters;
+import com.mongodb.Block;
+import org.bson.Document;
+import org.bson.conversions.Bson;
 
-/* First ensure that the input do no contains any special characters
-for the current NoSQL DB call API,
-here they are: ' " \ ; { } $
-*/
-//Avoid regexp this time in order to made validation code
-//more easy to read and understand...
-ArrayList < String > specialCharsList = new ArrayList < String > () {
-    {
-        add("'");
-        add("\"");
-        add("\\");
-        add(";");
-        add("{");
-        add("}");
-        add("$");
-    }
-};
+import java.util.ArrayList;
 
-for (String specChar: specialCharsList) {
-    if (userInput.contains(specChar)) {
-        return false;
-    }
-}
+public class MongoDBSafeQuery {
 
-//Add also a check on input max size
-if (!userInput.length() <= 50)
-{
-    return false;
-}
+    public static boolean queryMongoDB(String userInput) {
+        /* First ensure that the input does not contain any special characters */
+        ArrayList<String> specialCharsList = new ArrayList<>() {{
+            add("'");
+            add("\"");
+            add("\\");
+            add(";");
+            add("{");
+            add("}");
+            add("$");
+        }};
 
-/* Then perform query on database using API to build expression */
-//Connect to the local MongoDB instance
-try(MongoClient mongoClient = new MongoClient()){
-    MongoDatabase db = mongoClient.getDatabase("test");
-    //Use API query builder to create call expression
-    //Create expression
-    Bson expression = eq("borough", userInput);
-    //Perform call
-    FindIterable<org.bson.Document> restaurants = db.getCollection("restaurants").find(expression);
-    //Verify result consistency
-    restaurants.forEach(new Block<org.bson.Document>() {
-        @Override
-        public void apply(final org.bson.Document doc) {
-            String restBorough = (String)doc.get("borough");
-            if (!"Brooklyn".equals(restBorough))
-            {
+        for (String specChar : specialCharsList) {
+            if (userInput.contains(specChar)) {
                 return false;
             }
         }
-    });
+
+        // Check input max size
+        if (userInput.length() > 50) {
+            return false;
+        }
+
+        /* Then perform query on database using API to build expression */
+        try (MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017")) {
+            MongoDatabase db = mongoClient.getDatabase("test");
+
+            // Use API query builder to create call expression
+            Bson expression = Filters.eq("borough", userInput);
+
+            // Perform call
+            MongoCollection<Document> collection = db.getCollection("restaurants");
+            FindIterable<Document> restaurants = collection.find(expression);
+
+            // Verify result consistency
+            for (Document doc : restaurants) {
+                String restBorough = doc.getString("borough");
+                if (!"Brooklyn".equals(restBorough)) {
+                    return false;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
+
+    public static void main(String[] args) {
+        String userInput = "Brooklyn";
+        boolean result = queryMongoDB(userInput);
+        System.out.println("Query result is valid: " + result);
+    }
 }
 ```
 
