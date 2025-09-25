@@ -949,4 +949,3 @@ Control plane documentation - <https://kubernetes.io>
 18. Open Policy Agent: What Is OPA and How It Works (Examples) - <https://spacelift.io/blog/what-is-open-policy-agent-and-how-it-works>
 19. Send Kubernetes Metrics To Kibana and Elasticsearch - <https://logit.io/sources/configure/kubernetes/>
 20. Kubernetes Security Checklist - <https://kubernetes.io/docs/concepts/security/security-checklist/>
-
