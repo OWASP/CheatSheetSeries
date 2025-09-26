@@ -149,4 +149,3 @@ Text areas and input fields for PII (name, email, address, phone number) and log
 ## HTTP Headers to enhance security
 
 Consult the project [OWASP Secure Headers](https://owasp.org/www-project-secure-headers/) in order to obtains the list of HTTP security headers that an application should use to enable defenses at browser level.
-
