@@ -151,7 +151,7 @@ Minimum policy items:
 - **Signing & attestation requirement** (e.g., all public releases must be signed)
 - **SLA for vulnerability response** based on severity and impact
 - **Supplier SBOM acceptance rules** (e.g., third-party vendors must supply SBOMs in a supported spec)
-- **Access controls** for SBOMs containing sensitive metadata (avoid leaking internal repo URLs if not necessary)
+- **Access controls** for SBOMs containing sensitive metadata (avoid leaking internal repository URLs if not necessary)
 
 ## 13. Contractual & procurement considerations
 
