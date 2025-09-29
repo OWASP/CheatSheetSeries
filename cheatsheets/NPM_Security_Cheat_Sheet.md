@@ -17,9 +17,7 @@ Another good practice to adopt is making use of the `files` property in package.
 
 When a package is published, the npm CLI will verbosely display the archive being created. To be extra careful, add a `--dry-run` command-line argument to your publish command in order to first review how the tarball is created without actually publishing it to the registry.
 
-In January 2019, npm introduced a mechanism that automatically revokes a token if they detect that one has been published with a package. For more details, see the official documentation: [Revoking access tokens](https://docs.npmjs.com/revoking-access-tokens).
-
-> Note: The npm blog has been discontinued. Updates from the npm team are now published on the [GitHub Blog](https://github.blog/) and the [GitHub Changelog](https://github.blog/changelog/).
+For details about revoking access token, see the official documentation: [Revoking access tokens](https://docs.npmjs.com/revoking-access-tokens).
 
 ## 2) Enforce the lockfile
 
