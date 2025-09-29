@@ -3,6 +3,7 @@
 **Status:** Updated to modern guidance; removed obsolete references (e.g., `dotnet_security_unit_testing`), flagged legacy iOS content, and aligned examples with current secure practices and supported framework versions.
 
 ---
+
 ## Table of Contents
 
 1. Introduction
@@ -50,6 +51,7 @@
 13. Appendix: Quick reference cheat sheet (one-page)
 
 ---
+
 ## 1. Introduction
 
 XML External Entity (XXE) injection is an input-based vulnerability that affects applications processing XML. An attacker crafts XML containing external entity references or doctypes to cause the XML parser to fetch local files, remote resources, trigger denial of service (entity expansion), or perform SSRF/port scanning.
@@ -65,6 +67,7 @@ This document provides concrete, modern examples and configuration guidance for 
 - Mark iOS / macOS sections that reference iOS 6 as outdated and either remove or request an iOS expert to update to current APIs (iOS 17+) — this change was applied below: legacy notes flagged.
 
 ---
+
 ## 2. Threat overview and XXE types
 
 **XXE categories:**
@@ -90,6 +93,7 @@ This document provides concrete, modern examples and configuration guidance for 
 - Data leakage and escalated compromise
 
 ---
+
 ## 3. Core mitigations (applied across languages)
 
 1. **Disable DTDs (doctypes) completely** where not required. DTD processing is the most common vector.
@@ -113,6 +117,7 @@ This document provides concrete, modern examples and configuration guidance for 
 10. **Use network controls** (egress filtering, internal DNS monitoring) to detect/prevent OOB callbacks.
 
 ---
+
 ## 4. Secure-by-default parser configuration checklist
 
 For each XML parser in your stack, check and apply:
@@ -140,6 +145,7 @@ For each XML parser in your stack, check and apply:
 - [ ] Add unit tests that assert safe behavior against known XXE payloads
 
 ---
+
 ## 5. Language-specific guidance and examples
 
 > Each language section below includes: a short description, recommended configuration, **vulnerable** snippet (what NOT to do), and **safe** snippet (copy-paste-ready).
@@ -149,14 +155,19 @@ For each XML parser in your stack, check and apply:
 **Why Java is high risk:** Many JAXP processors enable entity resolution by default, and behavior varies by provider and JDK version. Use explicit `setFeature` calls and `XMLConstants.ACCESS_EXTERNAL_*` settings introduced in JAXP 1.5.
 
 #### Vulnerable example (do NOT use)
+
+
 ```java
 import javax.xml.parsers.DocumentBuilderFactory;
 DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 DocumentBuilder db = dbf.newDocumentBuilder();
 Document doc = db.parse(new File("input.xml")); // vulnerable by default in many environments
+
 ```
 
 #### Safe example — DocumentBuilderFactory (recommended)
+
+
 ```java
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
@@ -192,9 +203,12 @@ public class SafeDocParser {
         return builder.parse(xmlFile);
     }
 }
+
 ```
 
 #### Safe example — XMLInputFactory (StAX)
+
+
 ```java
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamReader;
@@ -207,9 +221,12 @@ XMLInputFactory xif = XMLInputFactory.newFactory();
 xif.setProperty(XMLInputFactory.SUPPORT_DTD, false);
 xif.setProperty("javax.xml.stream.isSupportingExternalEntities", false);
 // When creating readers, the factory already blocks DTDs/external entities
+
 ```
 
 #### TransformerFactory and Validator
+
+
 ```java
 TransformerFactory tf = TransformerFactory.newInstance();
 tf.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
@@ -218,6 +235,7 @@ tf.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
 SchemaFactory sf = SchemaFactory.newInstance("http://www.w3.org/2001/XMLSchema");
 sf.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
 sf.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
+
 ```
 
 #### Notes
@@ -233,13 +251,18 @@ sf.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
 **High-level guidance:** Prefer `XmlReader` with `XmlReaderSettings` configured securely, or `XDocument.Load(XmlReader)` to ensure safe parsing. On modern .NET (Core/5/6/7) most readers are secure by default, but always set `DtdProcessing` and `XmlResolver` explicitly when consuming untrusted input.
 
 #### Vulnerable example (do NOT use)
+
+
 ```csharp
 // Using XmlDocument without disabling XmlResolver
 var xmlDoc = new XmlDocument();
 xmlDoc.Load("input.xml"); // may be vulnerable in older frameworks or if XmlResolver is set
+
 ```
 
 #### Safe example — XmlReaderSettings (recommended)
+
+
 ```csharp
 using System.Xml;
 
@@ -254,9 +277,12 @@ var settings = new XmlReaderSettings
 using var reader = XmlReader.Create("input.xml", settings);
 var doc = new System.Xml.XmlDocument();
 doc.Load(reader);
+
 ```
 
 #### Safe example — XDocument with XmlReader
+
+
 ```csharp
 using System.Xml;
 using System.Xml.Linq;
@@ -264,6 +290,7 @@ using System.Xml.Linq;
 var settings = new XmlReaderSettings { DtdProcessing = DtdProcessing.Prohibit, XmlResolver = null };
 using var r = XmlReader.Create("input.xml", settings);
 var xdoc = XDocument.Load(r);
+
 ```
 
 #### ASP.NET considerations
@@ -285,19 +312,25 @@ var xdoc = XDocument.Load(r);
 **Guidance:** Use `defusedxml` wrappers for stdlib modules. Avoid `xml.sax`, `xml.dom.minidom`, and `xml.parsers.expat` directly for untrusted input unless using defused wrappers.
 
 #### Safe example — defusedxml.ElementTree
+
+
 ```python
 from defusedxml.ElementTree import parse
 
 with open('input.xml', 'rb') as f:
     tree = parse(f)  # defusedxml blocks external entities and entity expansion
+
 ```
 
 #### Safe example — lxml with disabled resolve/entities
+
+
 ```python
 from lxml import etree
 
 parser = etree.XMLParser(resolve_entities=False, load_dtd=False, no_network=True)
 tree = etree.parse('input.xml', parser)
+
 ```
 
 #### Notes
@@ -313,17 +346,23 @@ tree = etree.parse('input.xml', parser)
 **Modern PHP:** PHP 8 makes some behavior safer, but do not rely on defaults for older versions.
 
 #### Vulnerable example
+
+
 ```php
 $xml = simplexml_load_file('input.xml'); // prior to PHP 8, may be vulnerable
+
 ```
 
 #### Safe example
+
+
 ```php
 libxml_disable_entity_loader(true); // deprecated in PHP 8.0, but needed in older versions
 $dom = new DOMDocument();
 $dom->loadXML(file_get_contents('input.xml'), LIBXML_NONET); // prevents network access
 // or
 $xml = simplexml_load_string(file_get_contents('input.xml'), null, LIBXML_NONET);
+
 ```
 
 #### Notes
@@ -339,6 +378,8 @@ $xml = simplexml_load_string(file_get_contents('input.xml'), null, LIBXML_NONET)
 **Guidance:** Many Node XML parsers do not evaluate external entities by default; however, always verify library behavior and use safe config.
 
 #### xml2js (example)
+
+
 ```javascript
 const fs = require('fs');
 const xml2js = require('xml2js');
@@ -349,13 +390,17 @@ const xml = fs.readFileSync('input.xml', 'utf8');
 parser.parseString(xml, function(err, result) {
     // handle result
 });
+
 ```
 
 #### fast-xml-parser (example)
+
+
 ```javascript
 const { XMLParser } = require('fast-xml-parser');
 const parser = new XMLParser({ ignoreAttributes: false, allowBooleanAttributes: true });
 // fast-xml-parser is non-validating and does not process external entities
+
 ```
 
 #### Notes
@@ -371,12 +416,17 @@ const parser = new XMLParser({ ignoreAttributes: false, allowBooleanAttributes: 
 **REXML:** historically vulnerable. Prefer disabling entity expansion or using safe parsers.
 
 #### vulnerable - REXML (do not use for untrusted input)
+
+
 ```ruby
 require 'rexml/document'
 doc = REXML::Document.new(File.read('input.xml')) # REXML will expand entities by default
+
 ```
 
 #### safe - Nokogiri
+
+
 ```ruby
 require 'nokogiri'
 xml = File.read('input.xml')
@@ -384,6 +434,7 @@ xml = File.read('input.xml')
 doc = Nokogiri::XML(xml) { |config| config.nonet.nonet.noent.nonet }
 # preferred
 doc = Nokogiri::XML(xml, nil, nil, Nokogiri::XML::ParseOptions::NONET)
+
 ```
 
 #### Notes
@@ -401,18 +452,23 @@ doc = Nokogiri::XML(xml, nil, nil, Nokogiri::XML::ParseOptions::NONET)
 - Avoid enabling `XML_PARSE_NOENT` or `XML_PARSE_DTDLOAD`.
 
 - Use `xmlReadMemory`/`xmlReadFile` with options that disable DTD and external entities:
+
 ```c
 xmlReadFile("input.xml", NULL, XML_PARSE_NONET | XML_PARSE_NOENT); // caution with NOENT
 // Instead:
 xmlReadFile("input.xml", NULL, XML_PARSE_NONET);
+
 ```
 
 - Use `XML_PARSE_NONET` to block network access.
 
 #### Xerces-C++
+
+
 ```cpp
 parser->setDisableDefaultEntityResolution(true);
 parser->setFeature(XMLUni::fgXercesDisableDefaultEntityResolution, true);
+
 ```
 
 ---
@@ -432,22 +488,28 @@ parser->setFeature(XMLUni::fgXercesDisableDefaultEntityResolution, true);
 ### ColdFusion / Lucee
 
 #### Adobe ColdFusion (example)
+
+
 ```cfml
 <cfset parserOptions = structNew()>
 <cfset parserOptions.ALLOWEXTERNALENTITIES = false>
 <cfscript>
   doc = XmlParse(FileRead("input.xml"), false, parserOptions);
 </cfscript>
+
 ```
 
 #### Lucee
+
 Set in `Application.cfc`:
+
 ```cfml
 this.xmlFeatures = {
     externalGeneralEntities: false,
     secure: true,
     disallowDoctypeDecl: true
 };
+
 ```
 
 ---
@@ -477,15 +539,18 @@ this.xmlFeatures = {
 ### Sample payloads
 
 **File disclosure (classic):**
+
 ```xml
 <?xml version="1.0"?>
 <!DOCTYPE foo [
   <!ENTITY xxe SYSTEM "file:///etc/passwd">
 ]>
 <foo>&xxe;</foo>
+
 ```
 
 **OOB exfiltration (HTTP):**
+
 ```xml
 <?xml version="1.0"?>
 <!DOCTYPE foo [
@@ -493,9 +558,11 @@ this.xmlFeatures = {
   %remote;
 ]>
 <foo>&exfil;</foo>
+
 ```
 
 **Billion Laughs (entity expansion):**
+
 ```xml
 <?xml version="1.0"?>
 <!DOCTYPE lolz [
@@ -511,6 +578,7 @@ this.xmlFeatures = {
  <!ENTITY lol9 "&lol8;&lol8;&lol8;&lol8;&lol8;&lol8;&lol8;&lol8;&lol8;&lol8;">
 ]>
 <lolz>&lol9;</lolz>
+
 ```
 
 ### Automated tests
@@ -526,6 +594,7 @@ this.xmlFeatures = {
 Create semgrep rules to detect unsafe usage patterns: calls to `DocumentBuilderFactory.newInstance()` without subsequent secure `setFeature` calls; `XmlDocument.Load` in .NET without XmlResolver nulling; use of `simplexml_load_file` without `LIBXML_NONET`, etc.
 
 **Example Semgrep (pseudo-rule):**
+
 ```yaml
 rules:
 
@@ -541,6 +610,7 @@ rules:
           DocumentBuilderFactory.newInstance();
     message: "DocumentBuilderFactory instantiation detected — ensure FEATURES to disable DTDs and external entities are set"
     severity: ERROR
+
 ```
 
 Semgrep rules for most languages are recommended and linked in references (see Semgrep rules list in original cheat sheet).
@@ -607,8 +677,6 @@ Semgrep rules for most languages are recommended and linked in references (see S
 
 ---
 
-# Maintainer/PR note
-
 This update:
 
 - Replaces outdated .NET examples and removes references to `dotnet_security_unit_testing` from the main text (do not rely on that project for security testing).
@@ -620,4 +688,3 @@ This update:
 - Includes testing payloads and guidance for Semgrep/static analysis.
 
 ---
-# End of updated cheat sheet
