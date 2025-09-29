@@ -32,9 +32,7 @@ Users should be permitted to use their email address as a username, provided the
 A key concern when using passwords for authentication is password strength. A "strong" password policy makes it difficult or even improbable for one to guess the password through either manual or automated means. The following characteristics define a strong password:
 
 - Password Length
-    - **Minimum** length for passwords should be enforced by the application.
-        - If MFA is enabled passwords **shorter than 8 characters** are considered to be weak ([NIST SP800-63B](https://pages.nist.gov/800-63-4/sp800-63b.html#passwordver)).
-        - If MFA is not enabled passwords **shorter than 15 characters** are considered to be weak ([NIST SP800-63B](https://pages.nist.gov/800-63-4/sp800-63b.html#passwordver)).
+    - **Minimum** length for passwords should be enforced by the application. Passwords **shorter than 8 characters** are considered to be weak ([NIST SP800-63B](https://pages.nist.gov/800-63-3/sp800-63b.html)).
     - **Maximum** password length should be **at least 64 characters** to allow passphrases ([NIST SP800-63B](https://pages.nist.gov/800-63-3/sp800-63b.html)). Note that certain implementations of hashing algorithms may cause [long password denial of service](https://www.acunetix.com/vulnerabilities/web/long-password-denial-of-service/).
 - Do not silently truncate passwords. The [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.md#maximum-password-lengths) provides further guidance on how to handle passwords that are longer than the maximum length.
 - Allow usage of **all** characters including unicode and whitespace. There should be no password composition rules limiting the type of characters permitted. There should be no requirement for upper or lower case or numbers or special characters.
@@ -75,7 +73,7 @@ Where possible, the user-supplied password should be compared to the stored pass
 When developing a change password feature, ensure to have:
 
 - The user is authenticated with an active session.
-- Current password verification. This is to ensure that it's the legitimate user who is changing the password. Consider this abuse case: a user logs in on a public computer and forgets to log out. Another person could then use that active session. If we don't verify the current password, this other person may be able to change the password.
+- Current password verification. This is to ensure that it's the legitimate user who is changing the password. The abuse case is this: a legitimate user is using a public computer to log in. This user forgets to log out. Then another person is using this public computer. If we don't verify the current password, this other person may be able to change the password.
 
 ### Transmit Passwords Only Over TLS or Other Strong Transport
 
@@ -89,34 +87,34 @@ In order to mitigate CSRF and session hijacking, it's important to require the c
 
 ### Reauthentication After Risk Events
 
-**Overview:**
+**Overview:**  
 Reauthentication is critical when an account has experienced high-risk activity such as account recovery, password resets, or suspicious behavior patterns. This section outlines when and how to trigger reauthentication to protect users and prevent unauthorized access. For further details, see the [Require Re-authentication for Sensitive Features](#require-re-authentication-for-sensitive-features) section.
 
 #### When to Trigger Reauthentication
 
-- **Suspicious Account Activity**
+- **Suspicious Account Activity**  
   When unusual login patterns, IP address changes, or device enrollments occur
-- **Account Recovery**
+- **Account Recovery**  
   After users reset their passwords or change sensitive account details
-- **Critical Actions**
+- **Critical Actions**  
   For high-risk actions like changing payment details or adding new trusted devices
 
 #### Reauthentication Mechanisms
 
-- **Adaptive Authentication**
+- **Adaptive Authentication**  
   Use risk-based authentication models that adapt to the user's behavior and context
-- **Multi-Factor Authentication (MFA)**
+- **Multi-Factor Authentication (MFA)**  
   Require an additional layer of verification for sensitive actions or events
-- **Challenge-Based Verification**
+- **Challenge-Based Verification**  
   Prompt users to confirm their identity with a challenge question or secondary method
 
 #### Implementation Recommendations
 
-- **Minimize User Friction**
+- **Minimize User Friction**  
   Ensure that reauthentication does not disrupt the user experience unnecessarily
-- **Context-Aware Decisions**
+- **Context-Aware Decisions**  
   Make reauthentication decisions based on context (e.g., geolocation, device type, prior patterns)
-- **Secure Session Management**
+- **Secure Session Management**  
   Invalidate sessions after reauthentication and rotate tokens—see the [OWASP Session Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html)
 
 #### References
@@ -131,7 +129,7 @@ Some applications should use a second factor to check whether a user may perform
 
 #### TLS Client Authentication
 
-TLS Client Authentication, also known as two-way TLS authentication, consists of both browser and server sending their respective TLS certificates during the TLS handshake process. Just as you can validate the authenticity of a server by using the certificate and asking a verifiably-valid Certificate Authority (CA) if the certificate is valid, the server can authenticate the user by receiving a certificate from the client and validating against a third-party CA or its own CA. To do this, the server must provide the user with a certificate generated specifically for him, assigning values to the subject so that these can be used to determine what user the certificate should validate. The user installs the certificate on a browser and now uses it for the website.
+TLS Client Authentication, also known as two-way TLS authentication, consists of both, browser and server, sending their respective TLS certificates during the TLS handshake process. Just as you can validate the authenticity of a server by using the certificate and asking a verifiably-valid Certificate Authority (CA) if the certificate is valid, the server can authenticate the user by receiving a certificate from the client and validating against a third-party CA or its own CA. To do this, the server must provide the user with a certificate generated specifically for him, assigning values to the subject so that these can be used to determine what user the certificate should validate. The user installs the certificate on a browser and now uses it for the website.
 
 This approach is appropriate when:
 
@@ -305,23 +303,21 @@ Enable logging and monitoring of authentication functions to detect attacks/fail
 
 While authentication through a combination of username, password, and multi-factor authentication is considered generally secure, there are use cases where it isn't considered the best option or even safe. Examples of this are third-party applications that desire to connect to the web application, either from a mobile device, another website, desktop, or other situations. When this happens, it is NOT considered safe to allow the third-party application to store the user/password combo, since then it extends the attack surface into their hands, where it isn't in your control. For this and other use cases, there are several authentication protocols that can protect you from exposing your users' data to attackers.
 
-### OAuth 2.0 and 2.1
+### OAuth
 
-OAuth is an **authorization** framework for delegated access to APIs. See also: [OAuth 2.0 Cheat Sheet](OAuth2_Cheat_Sheet.md).
+Open Authorization (OAuth) is a protocol that allows an application to authenticate against a server as a user, without requiring passwords or any third-party server that acts as an identity provider. It uses a token generated by the server and provides how the authorization flows most occur, so that a client, such as a mobile application, can tell the server what user is using the service.
 
-> **Note:** OAuth 2.1 is an IETF Working Group draft that consolidates OAuth 2.0 and widely adopted best practices and is intended to replace RFC 6749/6750; guidance in this cheat sheet applies to both OAuth 2.0 and OAuth 2.1. References: [draft-ietf-oauth-v2-1-13](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-13), [oauth.net/2.1](https://oauth.net/2.1/)
+The recommendation is to use and implement [OAuth 2.0](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics) since the very first version (OAuth1.0) has been found to be vulnerable to session fixation.
 
-### OpenID Connect (OIDC)
+OAuth 2.0 relies on HTTPS for security and is currently used and implemented by APIs from companies such as Facebook, Google, Twitter, and Microsoft. OAuth 1.0a is more difficult to use because it requires the use of cryptographic libraries for digital signatures. However, since OAuth 1.0a does not rely on HTTPS for security, it can be more suited for higher-risk transactions.
 
-**OpenID Connect 1.0 (OIDC)** is an identity layer **on top of OAuth**. It defines how a client (**relying party**) verifies the **end user's** identity using an **ID Token** (a signed JWT) and how to obtain user claims in an interoperable way. Use **OIDC for authentication/SSO**; use **OAuth for authorization** to APIs.
+### OpenId
 
-#### OIDC implementation guidance
+OpenId is an HTTP-based protocol that uses identity providers to validate that a user is who they say they are. It is a very simple protocol that allows a service-provider-initiated way for single sign-on (SSO). This allows the user to reuse a single identity given to a trusted OpenId identity provider and be the same user on multiple websites, without the need to provide any website with the password, except for the OpenId identity provider.
 
-- **Validate ID Tokens** on the relying party: issuer (`iss`), audience (`aud`), signature (per provider JWKs), expiration (`exp`).
-- Prefer **well-maintained libraries/SDKs** and provider discovery/JWKS endpoints.
-- Use the **UserInfo** endpoint when additional claims beyond the ID Token are required.
+Due to its simplicity and that it provides protection of passwords, OpenId has been well adopted. Some of the well-known identity providers for OpenId are Stack Exchange, Google, Facebook, and Yahoo!
 
-> **Avoid confusion:** **OpenID 2.0 ("OpenID")** was a separate, legacy authentication protocol that has been **superseded by OpenID Connect** and is considered obsolete. New systems should not implement OpenID 2.0. References: [OpenID Foundation — obsolete OpenID 2.0 libraries](https://openid.net/developers/libraries-for-obsolete-specifications/), [OpenID 2.0 → OIDC migration](https://openid.net/specs/ope)
+For non-enterprise environments, OpenId is considered a secure and often better choice, as long as the identity provider is of trust.
 
 ### SAML
 
@@ -405,13 +401,13 @@ User email addresses often change. The following process is recommended to handl
 
 A feature of more advanced applications is the ability to require different authentication stages depending on various environmental and contextual attributes (including but not limited to, the sensitivity of the data for which access is being requested, time of day, user location, IP address, or device fingerprint).
 
-For example, an application may require MFA for the first login from a particular device but not for subsequent logins from that device. Alternatively, a single sign-on solution may authenticate the user and allow them to remain logged in for a day but require a reauthentication if they try to access their profile page.
+For example, an application may require MFA for the first login from a particular device but not for subsequent logins from that device. Alternatively, a single sign-on solution may authenticate the user and allow them to remain logged in for a day but require a reauthentication if they try and access their profile page.
 
-Another option is the opposite approach where an application allows low risk access with just something that identifies the device (e.g., a specific mobile device fingerprint, a persistent cookie and browser fingerprint, etc. from the previous IP address) and then gradually requires stronger authentication for more sensitive operations. An example might be to allow someone to trigger something to see their current bank balance, but not the account number or anything else. If they need to see transactions, then the application puts them through some base level authentication and if they want to do any money movement, then MFA is required.
+Another option is the opposite approach where an application allows low risk access with just something that identifies the device (e.g., a specific mobile device fingerprint, a persist cookie and browser fingerprint, etc. from the previous IP address) and then gradually requires stronger authentication for more sensitive operations. An example might be to allow someone to trigger something to see their current bank balance, but not the account number or anything else. If they need to see transactions, then the application puts them through some base level authentication and if they want to do any money movement, then MFA is required.
 
 Questions that should be considered when implementing a mechanism like this include:
 
-- Are the policies being put in place in line with any corporate policies and especially any regulatory policy?
+- Are the policies being put in place in line with any corporate policies and especially any regulatory policy.
 - Which user‑ or device‑attributes (IP, geolocation, device fingerprint, time‑of‑day, behavioral biometrics, etc.) will we monitor at session start?
 - Which of those signals need to be refreshed during an active session, and at what cadence?
 - How will we ensure each signal’s accuracy and handle missing or low‑confidence data?

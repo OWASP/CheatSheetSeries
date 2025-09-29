@@ -90,3 +90,8 @@ Building an application securely can all too easily be undone if it's not secure
 8. Have a practiced Security Incident response plan: Having a plan in place for how to respond to a security incident is essential for minimizing the damage caused by any successful attack and a crucial part of the Product Support Model.
 
 Details of how to precisely ensure secure configuration can be found in [Infrastructure as Code Security Cheat Sheet](Infrastructure_as_Code_Security_Cheat_Sheet.md)
+
+### Supplementary CISA Secure by Design Notes
+- **Cross-functional Teams**: Include both development and security expertise.
+- **Security Training**: Provide ongoing security education for developers.
+- **Memory Safety**: Implement memory safety measures and secure coding practices.
