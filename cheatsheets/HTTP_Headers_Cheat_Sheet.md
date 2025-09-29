@@ -95,7 +95,7 @@ The HTTP `Strict-Transport-Security` response header (often abbreviated as HSTS)
 
 - *NOTE*: Read carefully how this header works before using it. If the HSTS header is misconfigured or if there is a problem with the SSL/TLS certificate being used, legitimate users might be unable to access the website. For example, if the HSTS header is set to a very long duration and the SSL/TLS certificate expires or is revoked, legitimate users might be unable to access the website until the HSTS header duration has expired.
 
-Please checkout [HTTP Strict Transport Security Cheat Sheet](HTTP_Strict_Transport_Security_Cheat_Sheet.md) for more information.
+Please check out [HTTP Strict Transport Security Cheat Sheet](HTTP_Strict_Transport_Security_Cheat_Sheet.md) for more information.
 
 ### Expect-CT ❌
 
@@ -107,7 +107,7 @@ Do not use it. Mozilla [recommends](https://developer.mozilla.org/en-US/docs/Web
 
 ### Content-Security-Policy (CSP)
 
-Content Security Policy (CSP) is a security feature that is used to specify the origin of content that is allowed to be loaded on a website or in a web applications. It is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross-Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement to distribution of malware.
+Content Security Policy (CSP) is a security feature that is used to specify the origin of content that is allowed to be loaded on a website or in a web application. It is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross-Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement to distribution of malware.
 
 - *NOTE*: This header is relevant to be applied in pages which can load and interpret scripts and code, but might be meaningless in the response of a REST API that returns content that is not going to be rendered.
 
@@ -123,7 +123,7 @@ The `Access-Control-Allow-Origin` is a CORS (cross-origin resource sharing) head
 
 #### Recommendation
 
-If you use it, set specific [origins](https://developer.mozilla.org/en-US/docs/Glossary/Origin) instead of `*`. Checkout [Access-Control-Allow-Origin](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin) for details.
+If you use it, set specific [origins](https://developer.mozilla.org/en-US/docs/Glossary/Origin) instead of `*`. Check out [Access-Control-Allow-Origin](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin) for details.
 > `Access-Control-Allow-Origin: https://yoursite.com`
 
 - *NOTE*: The use of '\*' might be necessary depending on your needs. For example, for a public API that should be accessible from any origin, it might be necessary to allow '\*'.
@@ -136,7 +136,7 @@ This header works together with Cross-Origin-Embedder-Policy (COEP) and Cross-Or
 
 This mechanism protects against attacks like Spectre which can cross the security boundary established by Same Origin Policy (SOP) for resources in the same browsing context group.
 
-As this headers are very related to browsers, it may not make sense to be applied to REST APIs or clients that are not browsers.
+As these headers are very related to browsers, it may not make sense to be applied to REST APIs or clients that are not browsers.
 
 #### Recommendation
 
@@ -250,7 +250,7 @@ If you do not control links on your website, you might want to set `off` as a va
 
 > `X-DNS-Prefetch-Control: off`
 
-- *NOTE*: Do not rely in this functionality for anything production sensitive: it is not standard or fully supported and implementation may vary among browsers.
+- *NOTE*: Do not rely on this functionality for anything production sensitive: it is not standard or fully supported and implementation may vary among browsers.
 
 ### Public-Key-Pins (HPKP)
 
@@ -314,7 +314,7 @@ add_header "X-Frame-Options" "DENY" always;
 
 ### Express
 
-You can use [helmet](https://www.npmjs.com/package/helmet) to setup HTTP headers in Express. The code below is sample for adding the `X-Frame-Options` header.
+You can use [helmet](https://www.npmjs.com/package/helmet) to setup HTTP headers in Express. The code below is a sample for adding the `X-Frame-Options` header.
 
 ```javascript
 const helmet = require('helmet');
