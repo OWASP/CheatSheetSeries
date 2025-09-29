@@ -17,7 +17,7 @@ Another good practice to adopt is making use of the `files` property in package.
 
 When a package is published, the npm CLI will verbosely display the archive being created. To be extra careful, add a `--dry-run` command-line argument to your publish command in order to first review how the tarball is created without actually publishing it to the registry.
 
-In January 2019, npm shared on their blog that they added a [mechanism that automatically revokes a token](https://blog.npmjs.org/post/182015409750/automated-token-revocation-for-when-you) if they detect that one has been published with a package.
+For details about revoking access token, see the official documentation: [Revoking access tokens](https://docs.npmjs.com/revoking-access-tokens).
 
 ## 2) Enforce the lockfile
 
@@ -105,14 +105,12 @@ It is recommended that security researchers follow a responsible disclosure prog
 
 ## 8) Enable 2FA
 
-In October 2017, npm officially announced support for two-factor authentication (2FA) for developers using the npm registry to host their closed and open source packages.
-
-Even though 2FA has been supported on the npm registry for a while now, it seems to be slowly adopted with one example being the eslint-scope incident in mid-2018 when a stolen developer account on the ESLint team lead to a [malicious version of eslint-scope](https://snyk.io/vuln/npm:eslint-scope) being published by bad actors.
-
-Enabling 2FA is an easy and significant win for an npm security best practices. The registry supports two modes for enabling 2FA in a user’s account:
+Enabling two-factor authentication (2FA) is a critical npm security best practice. The npm registry supports two modes for enabling 2FA in a user’s account:
 
 - Authorization-only—when a user logs in to npm via the website or the CLI, or performs other sets of actions such as changing profile information.
 - Authorization and write-mode—profile and log-in actions, as well as write actions such as managing tokens and packages, and minor support for team and package visibility information.
+
+To get started, see the official documentation: [Requiring 2FA](https://docs.npmjs.com/requiring-2fa-for-package-publishing-and-settings-modification).
 
 Equip yourself with an authentication application, such as Google Authentication, which you can install on a mobile device, and you’re ready to get started. One easy way to get started with the 2FA extended protection for your account is through npm’s user interface, which allows enabling it very easily. If you’re a command-line person, it’s also easy to enable 2FA when using a supported npm client version (>=5.5.1):
 
@@ -121,6 +119,11 @@ npm profile enable-2fa auth-and-writes
 ```
 
 Follow the command-line instructions to enable 2FA, and to save emergency authentication codes. If you wish to enable 2FA mode for login and profile changes only, you may replace the `auth-and-writes` with `auth-only` in the code as it appears above.
+
+## Additional Security Resources
+
+- [About secret scanning](https://docs.github.com/en/code-security/secret-scanning/introduction/about-secret-scanning)
+- [Best practices for securing accounts](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure)
 
 ## 9) Use npm author tokens
 
