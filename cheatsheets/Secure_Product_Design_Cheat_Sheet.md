@@ -19,57 +19,57 @@ Secure Product Design ensures that security is integrated into the design phase 
 ## Secure Design Steps
 
 1. **Threat Modeling**
-   
-   - Identify assets, threats, and vulnerabilities.
-   - Use STRIDE or PASTA methodologies.
+
+    - Identify assets, threats, and vulnerabilities.
+    - Use STRIDE or PASTA methodologies.
 
 2. **Security Requirements**
-   
-   - Define security goals.
-   - Map requirements to functionality.
+
+    - Define security goals.
+    - Map requirements to functionality.
 
 3. **Architecture Design**
-   
-   - Use secure patterns (e.g., MVC, layered architecture).
-   - Apply secure communication protocols (TLS, HTTPS).
+
+    - Use secure patterns (e.g., MVC, layered architecture).
+    - Apply secure communication protocols (TLS, HTTPS).
 
 4. **Design Review**
-   
-   - Conduct peer and expert reviews.
-   - Use checklists based on OWASP and CISA guidelines.
+
+    - Conduct peer and expert reviews.
+    - Use checklists based on OWASP and CISA guidelines.
 
 5. **Implementation Guidelines**
-   
-   - Use secure coding standards.
-   - Validate all inputs.
-   - Encrypt sensitive data at rest and in transit.
+
+    - Use secure coding standards.
+    - Validate all inputs.
+    - Encrypt sensitive data at rest and in transit.
 
 ## Security Controls
 
 - **Authentication & Authorization**
-  
-  - Multi-factor authentication.
-  - Role-based access control (RBAC).
+
+    - Multi-factor authentication.
+    - Role-based access control (RBAC).
 
 - **Data Protection**
-  
-  - Encrypt sensitive information.
-  - Use secure storage mechanisms.
+
+    - Encrypt sensitive information.
+    - Use secure storage mechanisms.
 
 - **Error Handling**
-  
-  - Do not reveal sensitive information in error messages.
-  - Log errors securely.
+
+    - Do not reveal sensitive information in error messages.
+    - Log errors securely.
 
 - **Session Management**
-  
-  - Use secure, HTTP-only cookies.
-  - Implement session timeout.
+
+    - Use secure, HTTP-only cookies.
+    - Implement session timeout.
 
 - **Logging & Monitoring**
-  
-  - Centralize logs.
-  - Monitor for suspicious activity.
+
+    - Centralize logs.
+    - Monitor for suspicious activity.
 
 ## References
 
