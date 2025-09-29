@@ -1775,6 +1775,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#additional-security-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Additional Security Resources
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#9-use-npm-author-tokens" class="md-nav__link">
     <span class="md-ellipsis">
       9) Use npm author tokens
@@ -2876,6 +2885,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#additional-security-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Additional Security Resources
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#9-use-npm-author-tokens" class="md-nav__link">
     <span class="md-ellipsis">
       9) Use npm author tokens
@@ -2923,7 +2941,7 @@
 <p>Developers may end up updating the <code>.gitignore</code> file, but forget to update <code>.npmignore</code> as well, which can lead to a potentially sensitive file not being pushed to source control, but still being included in the npm package.</p>
 <p>Another good practice to adopt is making use of the <code>files</code> property in package.json, which works as an allowlist and specifies the array of files to be included in the package that is to be created and installed (while the ignore file functions as a denylist). The <code>files</code> property and an ignore file can both be used together to determine which files should explicitly be included, as well as excluded, from the package. When using both, the former the <code>files</code> property in package.json takes precedence over the ignore file.</p>
 <p>When a package is published, the npm CLI will verbosely display the archive being created. To be extra careful, add a <code>--dry-run</code> command-line argument to your publish command in order to first review how the tarball is created without actually publishing it to the registry.</p>
-<p>In January 2019, npm shared on their blog that they added a <a href="https://blog.npmjs.org/post/182015409750/automated-token-revocation-for-when-you">mechanism that automatically revokes a token</a> if they detect that one has been published with a package.</p>
+<p>For details about revoking access token, see the official documentation: <a href="https://docs.npmjs.com/revoking-access-tokens">Revoking access tokens</a>.</p>
 <h2 id="2-enforce-the-lockfile">2) Enforce the lockfile<a class="headerlink" href="#2-enforce-the-lockfile" title="Permanent link">&para;</a></h2>
 <p>We embraced the birth of package lockfiles with open arms, which introduced: deterministic installations across different environments, and enforced dependency expectations across team collaboration. Life is good! Or so I thought… what would have happened had I slipped a change into the project’s <code>package.json</code> file but had forgotten to commit the lockfile alongside of it?</p>
 <p>Both Yarn, and npm act the same during dependency installation . When they detect an inconsistency between the project’s <code>package.json</code> and the lockfile, they compensate for such change based on the <code>package.json</code> manifest by installing different versions than those that were recorded in the lockfile.</p>
@@ -2987,17 +3005,21 @@
 <p>When security vulnerabilities are found, they pose a potentially serious threat if they are publicised without prior warning or appropriate remedial action for users who cannot protect themselves.</p>
 <p>It is recommended that security researchers follow a responsible disclosure program, which is a set of processes and guidelines that aims to connect the researchers with the vendor or maintainer of the vulnerable asset, in order to convey the vulnerability, it’s impact and applicability. Once the vulnerability is correctly triaged, the vendor and researcher coordinate a fix and a publication date for the vulnerability in an effort to provide an upgrade-path or remediation for affected users before the security issue is made public.</p>
 <h2 id="8-enable-2fa">8) Enable 2FA<a class="headerlink" href="#8-enable-2fa" title="Permanent link">&para;</a></h2>
-<p>In October 2017, npm officially announced support for two-factor authentication (2FA) for developers using the npm registry to host their closed and open source packages.</p>
-<p>Even though 2FA has been supported on the npm registry for a while now, it seems to be slowly adopted with one example being the eslint-scope incident in mid-2018 when a stolen developer account on the ESLint team lead to a <a href="https://snyk.io/vuln/npm:eslint-scope">malicious version of eslint-scope</a> being published by bad actors.</p>
-<p>Enabling 2FA is an easy and significant win for an npm security best practices. The registry supports two modes for enabling 2FA in a user’s account:</p>
+<p>Enabling two-factor authentication (2FA) is a critical npm security best practice. The npm registry supports two modes for enabling 2FA in a user’s account:</p>
 <ul>
 <li>Authorization-only—when a user logs in to npm via the website or the CLI, or performs other sets of actions such as changing profile information.</li>
 <li>Authorization and write-mode—profile and log-in actions, as well as write actions such as managing tokens and packages, and minor support for team and package visibility information.</li>
 </ul>
+<p>To get started, see the official documentation: <a href="https://docs.npmjs.com/requiring-2fa-for-package-publishing-and-settings-modification">Requiring 2FA</a>.</p>
 <p>Equip yourself with an authentication application, such as Google Authentication, which you can install on a mobile device, and you’re ready to get started. One easy way to get started with the 2FA extended protection for your account is through npm’s user interface, which allows enabling it very easily. If you’re a command-line person, it’s also easy to enable 2FA when using a supported npm client version (&gt;=5.5.1):</p>
 <div class="highlight"><pre><span></span><code>npm<span class="w"> </span>profile<span class="w"> </span>enable-2fa<span class="w"> </span>auth-and-writes
 </code></pre></div>
 <p>Follow the command-line instructions to enable 2FA, and to save emergency authentication codes. If you wish to enable 2FA mode for login and profile changes only, you may replace the <code>auth-and-writes</code> with <code>auth-only</code> in the code as it appears above.</p>
+<h2 id="additional-security-resources">Additional Security Resources<a class="headerlink" href="#additional-security-resources" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://docs.github.com/en/code-security/secret-scanning/introduction/about-secret-scanning">About secret scanning</a></li>
+<li><a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure">Best practices for securing accounts</a></li>
+</ul>
 <h2 id="9-use-npm-author-tokens">9) Use npm author tokens<a class="headerlink" href="#9-use-npm-author-tokens" title="Permanent link">&para;</a></h2>
 <p>Every time you log in with the npm CLI, a token is generated for your user and authenticates you to the npm registry. Tokens make it easy to perform npm registry-related actions during CI and automated procedures, such as accessing private modules on the registry or publishing new versions from a build step.</p>
 <p>Tokens can be managed through the npm registry website, as well as using the npm command-line client. An example of using the CLI to create  a read-only token that is restricted to a specific IPv4 address range is as follows:</p>
