@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Web_Service_Security_Cheat_Sheet.html">
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Serverless_FaaS_Security_Cheat_Sheet.html">
       
       
-        <link rel="prev" href="WebSocket_Security_Cheat_Sheet.html">
+        <link rel="prev" href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html">
       
       
-        <link rel="next" href="XML_External_Entity_Prevention_Cheat_Sheet.html">
+        <link rel="next" href="Session_Management_Cheat_Sheet.html">
       
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
@@ -24,7 +24,7 @@
     
     
       
-        <title>Web Service Security - OWASP Cheat Sheet Series</title>
+        <title>Serverless FaaS Security - OWASP Cheat Sheet Series</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#web-service-security-cheat-sheet" class="md-skip">
+        <a href="#serverless-faas-security-cheat-sheet" class="md-skip">
           Skip to content
         </a>
       
@@ -111,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Web Service Security
+              Serverless FaaS Security
             
           </span>
         </div>
@@ -2092,10 +2092,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="Serverless_FaaS_Security_Cheat_Sheet.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Serverless FaaS Security
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="Serverless_FaaS_Security_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -2104,6 +2124,149 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-risks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Risks
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      Best Practices
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Best Practices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-principle-of-least-privilege" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Principle of Least Privilege
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-environment-isolation" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Environment Isolation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-secure-function-invocation" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Secure Function Invocation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-event-data-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Event Data Validation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-cold-start-execution-context-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Cold Start &amp; Execution Context Security
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-secrets-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Secrets Management
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-monitoring-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Monitoring &amp; Logging
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-supply-chain-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Supply Chain Security
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dos-and-donts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Do’s and Don’ts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2449,30 +2612,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Web Service Security
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="Web_Service_Security_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="Web_Service_Security_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2481,194 +2624,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    <span class="md-ellipsis">
-      Introduction
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#transport-confidentiality" class="md-nav__link">
-    <span class="md-ellipsis">
-      Transport Confidentiality
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#server-authentication" class="md-nav__link">
-    <span class="md-ellipsis">
-      Server Authentication
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#user-authentication" class="md-nav__link">
-    <span class="md-ellipsis">
-      User Authentication
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#transport-encoding" class="md-nav__link">
-    <span class="md-ellipsis">
-      Transport Encoding
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#message-integrity" class="md-nav__link">
-    <span class="md-ellipsis">
-      Message Integrity
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#message-confidentiality" class="md-nav__link">
-    <span class="md-ellipsis">
-      Message Confidentiality
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#authorization" class="md-nav__link">
-    <span class="md-ellipsis">
-      Authorization
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#schema-validation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Schema Validation
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#content-validation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Content Validation
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#output-encoding" class="md-nav__link">
-    <span class="md-ellipsis">
-      Output Encoding
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#virus-protection" class="md-nav__link">
-    <span class="md-ellipsis">
-      Virus Protection
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#message-size" class="md-nav__link">
-    <span class="md-ellipsis">
-      Message Size
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#availability" class="md-nav__link">
-    <span class="md-ellipsis">
-      Availability
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Availability">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#resources-limiting" class="md-nav__link">
-    <span class="md-ellipsis">
-      Resources Limiting
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#message-throughput" class="md-nav__link">
-    <span class="md-ellipsis">
-      Message Throughput
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#xml-denial-of-service-protection" class="md-nav__link">
-    <span class="md-ellipsis">
-      XML Denial of Service Protection
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#endpoint-security-profile" class="md-nav__link">
-    <span class="md-ellipsis">
-      Endpoint Security Profile
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -2843,145 +2798,91 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#transport-confidentiality" class="md-nav__link">
+  <a href="#key-risks" class="md-nav__link">
     <span class="md-ellipsis">
-      Transport Confidentiality
+      Key Risks
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#server-authentication" class="md-nav__link">
+  <a href="#best-practices" class="md-nav__link">
     <span class="md-ellipsis">
-      Server Authentication
+      Best Practices
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#user-authentication" class="md-nav__link">
-    <span class="md-ellipsis">
-      User Authentication
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#transport-encoding" class="md-nav__link">
-    <span class="md-ellipsis">
-      Transport Encoding
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#message-integrity" class="md-nav__link">
-    <span class="md-ellipsis">
-      Message Integrity
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#message-confidentiality" class="md-nav__link">
-    <span class="md-ellipsis">
-      Message Confidentiality
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#authorization" class="md-nav__link">
-    <span class="md-ellipsis">
-      Authorization
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#schema-validation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Schema Validation
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#content-validation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Content Validation
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#output-encoding" class="md-nav__link">
-    <span class="md-ellipsis">
-      Output Encoding
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#virus-protection" class="md-nav__link">
-    <span class="md-ellipsis">
-      Virus Protection
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#message-size" class="md-nav__link">
-    <span class="md-ellipsis">
-      Message Size
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#availability" class="md-nav__link">
-    <span class="md-ellipsis">
-      Availability
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Availability">
+    <nav class="md-nav" aria-label="Best Practices">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#resources-limiting" class="md-nav__link">
+  <a href="#1-principle-of-least-privilege" class="md-nav__link">
     <span class="md-ellipsis">
-      Resources Limiting
+      1. Principle of Least Privilege
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#message-throughput" class="md-nav__link">
+  <a href="#2-environment-isolation" class="md-nav__link">
     <span class="md-ellipsis">
-      Message Throughput
+      2. Environment Isolation
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#xml-denial-of-service-protection" class="md-nav__link">
+  <a href="#3-secure-function-invocation" class="md-nav__link">
     <span class="md-ellipsis">
-      XML Denial of Service Protection
+      3. Secure Function Invocation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-event-data-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Event Data Validation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-cold-start-execution-context-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Cold Start &amp; Execution Context Security
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-secrets-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Secrets Management
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-monitoring-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Monitoring &amp; Logging
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-supply-chain-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Supply Chain Security
     </span>
   </a>
   
@@ -2993,9 +2894,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#endpoint-security-profile" class="md-nav__link">
+  <a href="#dos-and-donts" class="md-nav__link">
     <span class="md-ellipsis">
-      Endpoint Security Profile
+      Do’s and Don’ts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
     </span>
   </a>
   
@@ -3019,75 +2929,171 @@
   
 
 
-<h1 id="web-service-security-cheat-sheet">Web Service Security Cheat Sheet<a class="headerlink" href="#web-service-security-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h1 id="serverless-faas-security-cheat-sheet">Serverless / FaaS Security Cheat Sheet<a class="headerlink" href="#serverless-faas-security-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>This article is focused on providing guidance for securing web services and preventing web services related attacks.</p>
-<p>Please notice that due to the difference in implementation between different frameworks, this cheat sheet is kept at a high level.</p>
-<h2 id="transport-confidentiality">Transport Confidentiality<a class="headerlink" href="#transport-confidentiality" title="Permanent link">&para;</a></h2>
-<p>Transport confidentiality protects against eavesdropping and man-in-the-middle attacks against web service communications to/from the server.</p>
-<p><strong>Rule</strong>: All communication with and between web services containing sensitive features, an authenticated session, or transfer of sensitive data must be encrypted using well-configured <a href="https://en.wikipedia.org/wiki/Transport_Layer_Security">TLS</a>. This is recommended even if the messages themselves are encrypted because <a href="https://en.wikipedia.org/wiki/Transport_Layer_Security">TLS</a> provides numerous benefits beyond traffic confidentiality including integrity protection, replay defenses, and server authentication. For more information on how to do this properly see the <a href="Transport_Layer_Security_Cheat_Sheet.html">Transport Layer Security Cheat Sheet</a>.</p>
-<h2 id="server-authentication">Server Authentication<a class="headerlink" href="#server-authentication" title="Permanent link">&para;</a></h2>
-<p><strong>Rule</strong>: TLS must be used to authenticate the service provider to the service consumer. The service consumer should verify the server certificate is issued by a trusted provider, is not expired, is not revoked, matches the domain name of the service, and that the server has proven that it has the private key associated with the public key certificate (by properly signing something or successfully decrypting something encrypted with the associated public key).</p>
-<h2 id="user-authentication">User Authentication<a class="headerlink" href="#user-authentication" title="Permanent link">&para;</a></h2>
-<p>User authentication verifies the identity of the user or the system trying to connect to the service. Such authentication is usually a function of the container of the web service.</p>
-<p><strong>Rule</strong>: If used, Basic Authentication must be conducted over <a href="https://en.wikipedia.org/wiki/Transport_Layer_Security">TLS</a>, but Basic Authentication is not recommended because it discloses secrets in plan text (base64 encoded) in HTTP Headers.</p>
-<p><strong>Rule</strong>: Client Certificate Authentication using <a href="https://en.wikipedia.org/wiki/Transport_Layer_Security">Mutual-TLS</a> is a common form of authentication that is recommended where appropriate. See: <a href="Authentication_Cheat_Sheet.html">Authentication Cheat Sheet</a>.</p>
-<h2 id="transport-encoding">Transport Encoding<a class="headerlink" href="#transport-encoding" title="Permanent link">&para;</a></h2>
-<p><a href="https://en.wikipedia.org/wiki/SOAP">SOAP</a> encoding styles are meant to move data between software objects into XML format and back again.</p>
-<p><strong>Rule</strong>: Enforce the same encoding style between the client and the server.</p>
-<h2 id="message-integrity">Message Integrity<a class="headerlink" href="#message-integrity" title="Permanent link">&para;</a></h2>
-<p>This is for data at rest. The integrity of data in transit can easily be provided by <a href="https://en.wikipedia.org/wiki/Transport_Layer_Security">TLS</a>.</p>
-<p>When using <a href="https://en.wikipedia.org/wiki/Public-key_cryptography">public key cryptography</a>, encryption does guarantee confidentiality but it does not guarantee integrity since the receiver's public key is public. For the same reason, encryption does not ensure the identity of the sender.</p>
-<p><strong>Rule</strong>: For XML data, use XML digital signatures to provide message integrity using the sender's private key. This signature can be validated by the recipient using the sender's digital certificate (public key).</p>
-<h2 id="message-confidentiality">Message Confidentiality<a class="headerlink" href="#message-confidentiality" title="Permanent link">&para;</a></h2>
-<p>Data elements meant to be kept confidential must be encrypted using a strong encryption cipher with an adequate key length to deter brute-forcing.</p>
-<p><strong>Rule</strong>: Messages containing sensitive data must be encrypted using a strong encryption cipher. This could be transport encryption or message encryption.</p>
-<p><strong>Rule</strong>: Messages containing sensitive data that must remain encrypted at rest after receipt must be encrypted with strong data encryption, not just transport encryption.</p>
-<h2 id="authorization">Authorization<a class="headerlink" href="#authorization" title="Permanent link">&para;</a></h2>
-<p>Web services need to authorize web service clients the same way web applications authorize users. A web service needs to make sure a web service client is authorized to perform a certain action (coarse-grained) on the requested data (fine-grained).</p>
-<p><strong>Rule</strong>: A web service should authorize its clients whether they have access to the method in question. Following an authentication challenge, the web service should check the privileges of the requesting entity whether they have access to the requested resource. This should be done on every request, and a challenge-response Authorization mechanism added to sensitive resources like password changes, primary contact details such as email, physical address, payment or delivery instructions.</p>
-<p><strong>Rule</strong>: Ensure access to administration and management functions within the Web Service Application is limited to web service administrators. Ideally, any administrative capabilities would be in an application that is completely separate from the web services being managed by these capabilities, thus completely separating normal users from these sensitive functions.</p>
-<h2 id="schema-validation">Schema Validation<a class="headerlink" href="#schema-validation" title="Permanent link">&para;</a></h2>
-<p>Schema validation enforces constraints and syntax defined by the schema.</p>
-<p><strong>Rule</strong>: Web services must validate <a href="https://en.wikipedia.org/wiki/SOAP">SOAP</a> payloads against their associated XML schema definition (<a href="https://www.w3schools.com/xml/schema_intro.asp">XSD</a>).</p>
-<p><strong>Rule</strong>: The <a href="https://www.w3schools.com/xml/schema_intro.asp">XSD</a> defined for a <a href="https://en.wikipedia.org/wiki/SOAP">SOAP</a> web service should, at a minimum, define the maximum length and character set of every parameter allowed to pass into and out of the web service.</p>
-<p><strong>Rule</strong>: The <a href="https://www.w3schools.com/xml/schema_intro.asp">XSD</a> defined for a <a href="https://en.wikipedia.org/wiki/SOAP">SOAP</a> web service should define strong (ideally allow-list) validation patterns for all fixed format parameters (e.g., zip codes, phone numbers, list values, etc.).</p>
-<h2 id="content-validation">Content Validation<a class="headerlink" href="#content-validation" title="Permanent link">&para;</a></h2>
-<p><strong>Rule</strong>: Like any web application, web services need to validate input before consuming it. Content validation for XML input should include:</p>
+<p>Serverless computing (Functions as a Service — FaaS) platforms such as AWS Lambda, Azure Functions, and Google Cloud Functions simplify application development and scaling.
+However, the execution model (short-lived, event-driven functions running in managed environments) introduces unique security risks compared to traditional architectures.</p>
+<p>This cheat sheet provides best practices to secure serverless applications and minimize attack surfaces.</p>
+<h2 id="key-risks">Key Risks<a class="headerlink" href="#key-risks" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Validation against malformed XML entities.</li>
-<li>Validation against <a href="https://en.wikipedia.org/wiki/Billion_laughs_attack">XML Bomb attacks</a>.</li>
-<li>Validating inputs using a strong allowlist.</li>
-<li>Validating against <a href="https://owasp.org/www-community/vulnerabilities/XML_External_Entity_%28XXE%29_Processing">external entity attacks</a>.</li>
+<li>Over-permissioned functions (broad IAM roles, <code>*</code> policies).</li>
+<li>Unvalidated event inputs (API Gateway, S3, Pub/Sub, IoT).</li>
+<li>Cold start data leakage (persistent state, side-channel timing).</li>
+<li>Function chaining abuse (compromised function invoking others).</li>
+<li>Shared environment risks (multi-tenant leakage, <code>/tmp</code> reuse).</li>
+<li>Hardcoded secrets in code or env vars.</li>
+<li>Excessive network access.</li>
 </ul>
-<h2 id="output-encoding">Output Encoding<a class="headerlink" href="#output-encoding" title="Permanent link">&para;</a></h2>
-<p>Web services need to ensure that the output sent to clients is encoded to be consumed as data and not as scripts. This gets pretty important when web service clients use the output to render HTML pages either directly or indirectly using AJAX objects.</p>
-<p><strong>Rule</strong>: All the rules of output encoding applies as per <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">Cross Site Scripting Prevention Cheat Sheet</a>.</p>
-<h2 id="virus-protection">Virus Protection<a class="headerlink" href="#virus-protection" title="Permanent link">&para;</a></h2>
-<p><a href="https://en.wikipedia.org/wiki/SOAP">SOAP</a> provides the ability to attach files and documents to <a href="https://en.wikipedia.org/wiki/SOAP">SOAP</a> messages. This gives the opportunity for hackers to attach viruses and malware to these <a href="https://en.wikipedia.org/wiki/SOAP">SOAP</a> messages.</p>
-<p><strong>Rule</strong>: Ensure Virus Scanning technology is installed and preferably inline so files and attachments could be checked before being saved on disk.</p>
-<p><strong>Rule</strong>: Ensure Virus Scanning technology is regularly updated with the latest virus definitions/rules.</p>
-<h2 id="message-size">Message Size<a class="headerlink" href="#message-size" title="Permanent link">&para;</a></h2>
-<p>Web services like web applications could be a target for DOS attacks by automatically sending the web services thousands of large size <a href="https://en.wikipedia.org/wiki/SOAP">SOAP</a> messages. This either cripples the application making it unable to respond to legitimate messages or it could take it down entirely.</p>
-<p><strong>Rule</strong>: <a href="https://en.wikipedia.org/wiki/SOAP">SOAP</a> Messages size should be limited to an appropriate size limit. Larger size limit (or no limit at all) increases the chances of a successful DoS attack.</p>
-<h2 id="availability">Availability<a class="headerlink" href="#availability" title="Permanent link">&para;</a></h2>
-<h3 id="resources-limiting">Resources Limiting<a class="headerlink" href="#resources-limiting" title="Permanent link">&para;</a></h3>
-<p>During regular operation, web services require computational power such as CPU cycles and memory. Due to malfunctioning or while under attack, a web service may required too much resources, leaving the host system unstable.</p>
-<p><strong>Rule</strong>: Limit the amount of CPU cycles the web service can use based on expected service rate, in order to have a stable system.</p>
-<p><strong>Rule</strong>: Limit the amount of memory the web service can use to avoid system running out of memory. In some cases the host system may start killing processes to free up memory.</p>
-<p><strong>Rule</strong>: Limit the number of simultaneous open files, network connections and started processes.</p>
-<h3 id="message-throughput">Message Throughput<a class="headerlink" href="#message-throughput" title="Permanent link">&para;</a></h3>
-<p>Throughput represents the number of web service requests served during a specific amount of time.</p>
-<p><strong>Rule</strong>: Configuration should be optimized for maximum message throughput to avoid running into DoS-like situations.</p>
-<h3 id="xml-denial-of-service-protection">XML Denial of Service Protection<a class="headerlink" href="#xml-denial-of-service-protection" title="Permanent link">&para;</a></h3>
-<p>XML Denial of Service is probably the most serious attack against web services. So the web service must provide the following validation:</p>
-<p><strong>Rule</strong>: Validation against recursive payloads.</p>
-<p><strong>Rule</strong>: Validation against oversized payloads.</p>
-<p><strong>Rule</strong>: Protection against <a href="https://www.ws-attacks.org/XML_Entity_Expansion">XML entity expansion</a>.</p>
-<p><strong>Rule</strong>: Validating against overlong element names. If you are working with <a href="https://en.wikipedia.org/wiki/SOAP">SOAP</a>-based Web Services, the element names are those <a href="https://en.wikipedia.org/wiki/SOAP">SOAP</a> Actions.</p>
-<p>This protection should be provided by your XML parser/schema validator. To verify, build test cases to make sure your parser to resistant to these types of attacks.</p>
-<h2 id="endpoint-security-profile">Endpoint Security Profile<a class="headerlink" href="#endpoint-security-profile" title="Permanent link">&para;</a></h2>
-<p><strong>Rule</strong>: Web services must be compliant with <a href="https://en.wikipedia.org/wiki/Web_Services_Interoperability">Web Services-Interoperability (WS-I)</a> Basic Profile at minimum.</p>
+<h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">&para;</a></h2>
+<h3 id="1-principle-of-least-privilege">1. Principle of Least Privilege<a class="headerlink" href="#1-principle-of-least-privilege" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Assign minimal IAM permissions to each function.</li>
+<li>Use role-per-function (avoid shared high-privilege roles).</li>
+<li>Scope database/API keys to the smallest set of actions needed.</li>
+</ul>
+<p><strong>Bad IAM Policy (too broad):</strong></p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;Effect&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;Action&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;*&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;Resource&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;*&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>Good IAM Policy (scoped):</strong></p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;Effect&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;Action&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;dynamodb:GetItem&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;dynamodb:PutItem&quot;</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;Resource&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;arn:aws:dynamodb:us-east-1:123456789012:table/Orders&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="2-environment-isolation">2. Environment Isolation<a class="headerlink" href="#2-environment-isolation" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Disable default network access unless required (e.g. outbound internet access).</li>
+<li>Place functions in private subnets with controlled egress.</li>
+<li>Isolate sensitive functions (e.g. payment, auth) from general-purpose ones.</li>
+<li>Separate production vs. staging environments with strict boundaries.</li>
+</ul>
+<p><strong>AWS Lambda VPC Config (restrictive):</strong></p>
+<div class="highlight"><pre><span></span><code><span class="nt">VpcConfig</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">SubnetIds</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">subnet-123456</span>
+<span class="w">  </span><span class="nt">SecurityGroupIds</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sg-restrict-outbound</span>
+</code></pre></div>
+<h3 id="3-secure-function-invocation">3. Secure Function Invocation<a class="headerlink" href="#3-secure-function-invocation" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Enforce authentication and authorization on all triggers (API Gateway, Pub/Sub, S3, IoT).</li>
+<li>Validate function-to-function calls with signed tokens or workload identities.</li>
+<li>Apply rate limiting and throttling to mitigate DoS and abuse.</li>
+</ul>
+<p><strong>API Gateway Authorizer Example (JWT validation):</strong></p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;Type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;JWT&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;IdentitySource&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;$request.header.Authorization&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;Issuer&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://secure-idp.example.com/&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;Audience&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;my-api-client&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="4-event-data-validation">4. Event Data Validation<a class="headerlink" href="#4-event-data-validation" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Treat all event payloads as untrusted input.</li>
+<li>Apply strong input validation &amp; sanitization (length, type, format).</li>
+<li>Protect against common injection attacks (SQLi, XSS, JSON injection, deserialization).</li>
+<li>Strip unnecessary fields and metadata before processing.</li>
+</ul>
+<p>Example: Python input validation for Lambda</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="n">body</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s2">&quot;body&quot;</span><span class="p">])</span>
+    <span class="n">email</span> <span class="o">=</span> <span class="n">body</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;email&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[^@]+@[^@]+\.[^@]+&quot;</span><span class="p">,</span> <span class="n">email</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;statusCode&quot;</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span> <span class="s2">&quot;body&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid email&quot;</span><span class="p">}</span>
+
+    <span class="c1"># process safely</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;statusCode&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span> <span class="s2">&quot;body&quot;</span><span class="p">:</span> <span class="s2">&quot;OK&quot;</span><span class="p">}</span>
+</code></pre></div>
+<h3 id="5-cold-start-execution-context-security">5. Cold Start &amp; Execution Context Security<a class="headerlink" href="#5-cold-start-execution-context-security" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Do not assume function runtime context is clean between invocations.</li>
+<li>Avoid storing secrets or temporary sensitive data in global/static variables.</li>
+<li>Protect against side-channel leaks (timing differences, leftover files in /tmp).</li>
+<li>For sensitive workloads, enforce single-use execution environments if the platform supports it.</li>
+</ul>
+<p><strong>Bad:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Secret stays in global variable across invocations</span>
+<span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s2">&quot;hardcoded-secret&quot;</span>
+</code></pre></div>
+<p><strong>Good:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">my_secrets_lib</span> <span class="kn">import</span> <span class="n">get_secret</span>
+
+<span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="n">secret</span> <span class="o">=</span> <span class="n">get_secret</span><span class="p">(</span><span class="s2">&quot;db-password&quot;</span><span class="p">)</span>  <span class="c1"># fetch fresh each time</span>
+    <span class="o">...</span>
+</code></pre></div>
+<h3 id="6-secrets-management">6. Secrets Management<a class="headerlink" href="#6-secrets-management" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Avoid storing secrets in environment variables.</li>
+<li>Fetch secrets from secure stores (AWS Secrets Manager, Azure Key Vault, GCP Secret Manager).</li>
+<li>Use ephemeral credentials (STS, workload identity federation).</li>
+<li>Rotate secrets automatically.</li>
+</ul>
+<p><strong>AWS Lambda Secret Fetch (Python Boto3):</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span><span class="o">,</span> <span class="nn">json</span>
+
+<span class="k">def</span> <span class="nf">get_secret</span><span class="p">(</span><span class="n">secret_name</span><span class="p">):</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s2">&quot;secretsmanager&quot;</span><span class="p">)</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_secret_value</span><span class="p">(</span><span class="n">SecretId</span><span class="o">=</span><span class="n">secret_name</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="s2">&quot;SecretString&quot;</span><span class="p">])</span>
+</code></pre></div>
+<h3 id="7-monitoring-logging">7. Monitoring &amp; Logging<a class="headerlink" href="#7-monitoring-logging" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Use centralized logging (CloudWatch, Azure Monitor, GCP Logging).</li>
+<li>Mask secrets and PII.</li>
+</ul>
+<p>Example: Redacting fields</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="k">def</span> <span class="nf">log_event</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+    <span class="n">safe_event</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;***&quot;</span> <span class="k">if</span> <span class="s2">&quot;password&quot;</span> <span class="ow">in</span> <span class="n">k</span> <span class="k">else</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">event</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">safe_event</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="8-supply-chain-security">8. Supply Chain Security<a class="headerlink" href="#8-supply-chain-security" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Scan dependencies (<code>npm audit</code>, <code>pip-audit</code>, <code>safety</code>).</li>
+<li>Use minimal deployment packages.</li>
+<li>Sign packages with checksums.</li>
+</ul>
+<p><strong>AWS Lambda Layer Hash Validation:</strong></p>
+<div class="highlight"><pre><span></span><code>shasum<span class="w"> </span>-a<span class="w"> </span><span class="m">256</span><span class="w"> </span>layer.zip
+</code></pre></div>
+<h2 id="dos-and-donts">Do’s and Don’ts<a class="headerlink" href="#dos-and-donts" title="Permanent link">&para;</a></h2>
+<p><strong>Do</strong>:</p>
+<ul>
+<li>Enforce least privilege per function.</li>
+<li>Validate all event inputs.</li>
+<li>Fetch secrets from vaults, not env vars.</li>
+<li>Restrict network egress.</li>
+<li>Monitor invocations and logs.</li>
+</ul>
+<p><strong>Don’t</strong>:</p>
+<ul>
+<li>Hardcode secrets in code or configs.</li>
+<li>Assume clean runtime between invocations.</li>
+<li>Give <code>*</code> IAM permissions.</li>
+<li>Leave sensitive data in <code>/tmp</code> or globals.</li>
+<li>Trust event sources blindly.</li>
+</ul>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://owasp.org/www-project-serverless-top-10/">OWASP Serverless Top 10</a></li>
+<li><a href="https://docs.aws.amazon.com/lambda/latest/dg/best-practices.html">AWS Lambda Security Best Practices</a></li>
+<li><a href="https://learn.microsoft.com/en-us/azure/azure-functions/security-concepts">Azure Functions Security</a></li>
+<li><a href="https://cloud.google.com/run/docs/securing/security">Google Cloud Functions Security</a></li>
+<li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html">OWASP Secrets Management Cheat Sheet</a></li>
+</ul>
 
 
 
