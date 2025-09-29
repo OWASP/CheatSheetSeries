@@ -91,10 +91,8 @@ Building an application securely can all too easily be undone if it's not secure
 
 Details of how to precisely ensure secure configuration can be found in [Infrastructure as Code Security Cheat Sheet](Infrastructure_as_Code_Security_Cheat_Sheet.md)
 
-
 ### Supplementary CISA Secure by Design Notes
 
 - **Cross-functional Teams**: Include both development and security expertise.
 - **Security Training**: Provide ongoing security education for developers.
 - **Memory Safety**: Implement memory safety measures and secure coding practices.
-
