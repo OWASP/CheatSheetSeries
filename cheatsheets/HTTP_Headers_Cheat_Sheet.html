@@ -4031,13 +4031,13 @@
 <ul>
 <li><em>NOTE</em>: Read carefully how this header works before using it. If the HSTS header is misconfigured or if there is a problem with the SSL/TLS certificate being used, legitimate users might be unable to access the website. For example, if the HSTS header is set to a very long duration and the SSL/TLS certificate expires or is revoked, legitimate users might be unable to access the website until the HSTS header duration has expired.</li>
 </ul>
-<p>Please checkout <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html">HTTP Strict Transport Security Cheat Sheet</a> for more information.</p>
+<p>Please check out <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html">HTTP Strict Transport Security Cheat Sheet</a> for more information.</p>
 <h3 id="expect-ct">Expect-CT ❌<a class="headerlink" href="#expect-ct" title="Permanent link">&para;</a></h3>
 <p>The <code>Expect-CT</code> header lets sites opt-in to reporting of Certificate Transparency (CT) requirements. Given that mainstream clients now require CT qualification, the only remaining value is reporting such occurrences to the nominated report-uri value in the header. The header is now less about enforcement and more about detection/reporting.</p>
 <h4 id="recommendation_7">Recommendation<a class="headerlink" href="#recommendation_7" title="Permanent link">&para;</a></h4>
 <p>Do not use it. Mozilla <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Expect-CT">recommends</a> avoiding it, and removing it from existing code if possible.</p>
 <h3 id="content-security-policy-csp">Content-Security-Policy (CSP)<a class="headerlink" href="#content-security-policy-csp" title="Permanent link">&para;</a></h3>
-<p>Content Security Policy (CSP) is a security feature that is used to specify the origin of content that is allowed to be loaded on a website or in a web applications. It is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross-Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement to distribution of malware.</p>
+<p>Content Security Policy (CSP) is a security feature that is used to specify the origin of content that is allowed to be loaded on a website or in a web application. It is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross-Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement to distribution of malware.</p>
 <ul>
 <li><em>NOTE</em>: This header is relevant to be applied in pages which can load and interpret scripts and code, but might be meaningless in the response of a REST API that returns content that is not going to be rendered.</li>
 </ul>
@@ -4047,7 +4047,7 @@
 <p>If you don't use this header, your site is protected by default by the Same Origin Policy (SOP). What this header does is relax this control in specified circumstances.</p>
 <p>The <code>Access-Control-Allow-Origin</code> is a CORS (cross-origin resource sharing) header. This header indicates whether the response it is related to can be shared with requesting code from the given origin. In other words, if siteA requests a resource from siteB, siteB should indicate in its <code>Access-Control-Allow-Origin</code> header that siteA is allowed to fetch that resource, if not, the access is blocked due to Same Origin Policy (SOP).</p>
 <h4 id="recommendation_9">Recommendation<a class="headerlink" href="#recommendation_9" title="Permanent link">&para;</a></h4>
-<p>If you use it, set specific <a href="https://developer.mozilla.org/en-US/docs/Glossary/Origin">origins</a> instead of <code>*</code>. Checkout <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin">Access-Control-Allow-Origin</a> for details.</p>
+<p>If you use it, set specific <a href="https://developer.mozilla.org/en-US/docs/Glossary/Origin">origins</a> instead of <code>*</code>. Check out <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin">Access-Control-Allow-Origin</a> for details.</p>
 <blockquote>
 <p><code>Access-Control-Allow-Origin: https://yoursite.com</code></p>
 </blockquote>
@@ -4058,7 +4058,7 @@
 <p>The HTTP <code>Cross-Origin-Opener-Policy</code> (COOP) response header allows you to ensure a top-level document does not share a browsing context group with cross-origin documents.</p>
 <p>This header works together with Cross-Origin-Embedder-Policy (COEP) and Cross-Origin-Resource-Policy (CORP) explained below.</p>
 <p>This mechanism protects against attacks like Spectre which can cross the security boundary established by Same Origin Policy (SOP) for resources in the same browsing context group.</p>
-<p>As this headers are very related to browsers, it may not make sense to be applied to REST APIs or clients that are not browsers.</p>
+<p>As these headers are very related to browsers, it may not make sense to be applied to REST APIs or clients that are not browsers.</p>
 <h4 id="recommendation_10">Recommendation<a class="headerlink" href="#recommendation_10" title="Permanent link">&para;</a></h4>
 <p>Isolates the browsing context exclusively to same-origin documents.</p>
 <blockquote>
@@ -4148,7 +4148,7 @@ If you do not control links on your website, you might want to set <code>off</co
 <p><code>X-DNS-Prefetch-Control: off</code></p>
 </blockquote>
 <ul>
-<li><em>NOTE</em>: Do not rely in this functionality for anything production sensitive: it is not standard or fully supported and implementation may vary among browsers.</li>
+<li><em>NOTE</em>: Do not rely on this functionality for anything production sensitive: it is not standard or fully supported and implementation may vary among browsers.</li>
 </ul>
 <h3 id="public-key-pins-hpkp">Public-Key-Pins (HPKP)<a class="headerlink" href="#public-key-pins-hpkp" title="Permanent link">&para;</a></h3>
 <p>The HTTP <code>Public-Key-Pins</code> response header is used to associate a specific cryptographic public key with a certain web server to decrease the risk of MITM attacks with forged certificates.</p>
@@ -4186,7 +4186,7 @@ Header always set X-Frame-Options &quot;DENY&quot;
 <div class="highlight"><pre><span></span><code>add_header &quot;X-Frame-Options&quot; &quot;DENY&quot; always;
 </code></pre></div>
 <h3 id="express">Express<a class="headerlink" href="#express" title="Permanent link">&para;</a></h3>
-<p>You can use <a href="https://www.npmjs.com/package/helmet">helmet</a> to setup HTTP headers in Express. The code below is sample for adding the <code>X-Frame-Options</code> header.</p>
+<p>You can use <a href="https://www.npmjs.com/package/helmet">helmet</a> to setup HTTP headers in Express. The code below is a sample for adding the <code>X-Frame-Options</code> header.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">helmet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;helmet&#39;</span><span class="p">);</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">app</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">express</span><span class="p">();</span>
 <span class="c1">// Sets &quot;X-Frame-Options: SAMEORIGIN&quot;</span>
