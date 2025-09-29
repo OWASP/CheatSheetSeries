@@ -50,7 +50,7 @@ This cheat sheet covers how to securely configure XML parsers, provides language
 
 ## 5. Language-specific guidance and examples
 
-#### Vulnerable example (do NOT use)
+### Vulnerable example (do NOT use)
 
 ```java
 DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
