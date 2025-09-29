@@ -1,4 +1,8 @@
-# Abuse Case Cheat Sheet
+# Abuse Case Cheat Sheet (Historical)
+
+## Archive Statement
+
+Reviewers have identified that abuse cases are rarely used in practice. Additionally, the material is presented as a "getting started tutorial" which isn't appropriate for the cheat sheet series.
 
 ## Introduction
 
