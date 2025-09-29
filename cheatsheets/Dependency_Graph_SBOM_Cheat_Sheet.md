@@ -136,7 +136,7 @@ cyclonedx-bom -o bom.xml --input-pkg target/my-app.jar
 ## 11. SBOM quality — common pitfalls & how to avoid them
 
 - **Incomplete generation**: running SBOM tooling in the wrong directory or before dependency resolution -> generate in build after resolution.
-- **Missing metadat**A: no timestamps, missing checksums, or no tool metadata. Always include generator tooling metadata.
+- **Missing metadat**: no timestamps, missing checksums, or no tool metadata. Always include generator tooling metadata.
 - **Inconsistent formats**: mixing custom fields that break parsers — stick to SPDX/CycloneDX fields and use extensions only when necessary.
 - **Unsigned SBOMs and no provenance**: makes SBOMs less trustworthy. Sign and attestate.
 - **No versioning or archival**: losing historical SBOMs hinders incident response — enforce retention.
