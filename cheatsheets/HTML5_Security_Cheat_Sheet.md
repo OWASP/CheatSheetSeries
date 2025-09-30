@@ -32,7 +32,7 @@ Web Messaging (also known as Cross Domain Messaging) provides a means of messagi
 
 ### WebSockets
 
- - Check out [WebSocket Security Cheat Sheet](WebSocket_Security_Cheat_Sheet.md) to learn about WebSocket specific protections.
+- Check out [WebSocket Security Cheat Sheet](WebSocket_Security_Cheat_Sheet.md) to learn about WebSocket specific protections.
 
 ### Server-Sent Events
 
