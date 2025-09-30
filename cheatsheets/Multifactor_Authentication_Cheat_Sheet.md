@@ -113,7 +113,7 @@ Some suggestions of possible methods include:
 
 ### Changing MFA Factors
 
-Users may need to update their authentication factors over time—for example, changing a registered phone number, migrating to a new authenticator app, or replacing a lost hardware token. Since this process can be abused by attackers to take over accounts, it must be carefully secured.
+Users may need to update their authentication factors, such as changing a phone number, migrating to a new authenticator app, or replacing a lost hardware token. Because attackers can exploit this process to take over accounts, it must be strictly secured.
 
 Best practices include:
 
