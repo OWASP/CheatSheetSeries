@@ -30,6 +30,10 @@ Web Messaging (also known as Cross Domain Messaging) provides a means of messagi
 - Discard requests received over plain HTTP with HTTPS origins to prevent mixed content bugs.
 - Don't rely only on the Origin header for Access Control checks. Browser always sends this header in CORS requests, but may be spoofed outside the browser. Application-level protocols should be used to protect sensitive data.
 
+### WebSockets
+
+ - Check out [WebSocket Security Cheat Sheet](WebSocket_Security_Cheat_Sheet.md) to learn about WebSocket specific protections.
+
 ### Server-Sent Events
 
 - Validate URLs passed to the `EventSource` constructor, even though only same-origin URLs are allowed.
