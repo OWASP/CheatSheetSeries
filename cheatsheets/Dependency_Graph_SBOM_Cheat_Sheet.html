@@ -3004,6 +3004,7 @@
 <li><strong>Component</strong> — A package, library, container image layer, binary, or module included in the product.</li>
 <li><strong>Dependency graph</strong> — Directed graph of components showing dependency relationships.</li>
 <li><strong>Provenance / Attestation</strong> — Evidence that the SBOM was produced by the claimed build process and is bound to the artifact.</li>
+<li><strong>VEX (Vulnerability Exploitability eXchange)</strong> — A machine-readable document that states whether a known vulnerability actually affects a given product/component, and under what conditions.</li>
 </ul>
 <h2 id="minimum-sbom-elements-you-should-capture-practical">Minimum SBOM elements you should capture (practical)<a class="headerlink" href="#minimum-sbom-elements-you-should-capture-practical" title="Permanent link">&para;</a></h2>
 <p>At a minimum capture:</p>
@@ -3073,9 +3074,10 @@
 <h2 id="vulnerability-triage-remediation-workflow">Vulnerability triage &amp; remediation workflow<a class="headerlink" href="#vulnerability-triage-remediation-workflow" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Map CVE → SBOM component(s)</strong> to see direct vs transitive exposure.</li>
+<li><strong>Use VEX</strong> where available to understand exploitability — suppliers or tooling may provide VEX documents that indicate whether a CVE is relevant, non-exploitable, or has available mitigations.</li>
 <li><strong>Prioritize</strong> direct dependencies and high-severity runtime libraries.</li>
 <li><strong>Patch or Mitigate</strong>: patch if possible; otherwise upgrade, isolate, or apply runtime controls.</li>
-<li><strong>Track</strong> issues in your system with SBOM evidence (component, version, digest).</li>
+<li><strong>Track</strong> issues in your system with SBOM + VEX evidence (component, version, digest, exploitability status)</li>
 <li><strong>Verify</strong> by regenerating SBOM to confirm the vulnerable component is gone.</li>
 </ul>
 <h2 id="handling-transitive-dependencies-and-supply-chain-depth">Handling transitive dependencies and supply chain depth<a class="headerlink" href="#handling-transitive-dependencies-and-supply-chain-depth" title="Permanent link">&para;</a></h2>
@@ -3139,6 +3141,7 @@
 <li><a href="https://www.cisa.gov/sbom">CISA SBOM guidance</a></li>
 <li><a href="https://owasp.org/www-project-sbom-forum/">OWASP SBOM Forum</a></li>
 <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Software_Supply_Chain_Security_Cheat_Sheet.html">Software Supply Chain Security Cheat Sheet</a></li>
+<li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Vulnerable_Dependency_Management_Cheat_Sheet.html">Vulnerable Dependency Management Cheat Sheet</a></li>
 </ul>
 
 

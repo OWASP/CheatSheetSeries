@@ -3292,7 +3292,10 @@
 <p>There is no one size fits all solution, and a blind checklist approach can lead to unnecessary "alarm fog" that means real problems go undetected.</p>
 <p>Where possible, always log:</p>
 <ul>
-<li>Input validation failures e.g. protocol violations, unacceptable encodings, invalid parameter names and values</li>
+<li>Input validation failures e.g. protocol violations, unacceptable encodings, invalid parameter names and values<ul>
+<li>A specific event for failures to validate a value against a discrete and finite list of valid values (e.g. a country from a dropdown). This is a high security event as it can only be attack activity. For example <code>input_validation_fail[:field,userid]</code>.</li>
+</ul>
+</li>
 <li>Output validation failures e.g. database record set mismatch, invalid data encoding</li>
 <li>Authentication successes and failures</li>
 <li>Authorization (access control) failures</li>

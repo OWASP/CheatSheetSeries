@@ -1929,6 +1929,15 @@ redirect_from: "/cheatsheets/Application_Logging_Vocabulary_Cheat_Sheet.html"
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#input_validation_discrete_failfielduserid" class="md-nav__link">
+    <span class="md-ellipsis">
+      input_validation_discrete_fail[:field,userid]
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3738,6 +3747,15 @@ redirect_from: "/cheatsheets/Application_Logging_Vocabulary_Cheat_Sheet.html"
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#input_validation_discrete_failfielduserid" class="md-nav__link">
+    <span class="md-ellipsis">
+      input_validation_discrete_fail[:field,userid]
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -4536,6 +4554,22 @@ WARN</p>
     &quot;description&quot;: &quot;User joebob1 submitted data that failed validation.&quot;,
     ...
 }
+</code></pre></div>
+<hr />
+<h3 id="input_validation_discrete_failfielduserid">input_validation_discrete_fail[:field,userid]<a class="headerlink" href="#input_validation_discrete_failfielduserid" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+When server-side validation of a value against a discrete list of options (e.g. drop down list, radio buttons) fails, it is a strong indication of malicious activity as this indicates the client-side code has been tampered with.</p>
+<p><strong>Level:</strong>
+WARN</p>
+<p><strong>Example:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;datetime&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2021-02-01T08:30:00-0500&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;appid&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;foobar.netportal_auth&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;event&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;input_validation_discrete_fail:country,joebob1&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;WARN&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;User joebob1 submitted an invalid value for the &#39;country&#39; field.&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="err">...</span>
+<span class="p">}</span>
 </code></pre></div>
 <hr />
 <h2 id="malicious-behavior-malicious">Malicious Behavior [MALICIOUS<a class="headerlink" href="#malicious-behavior-malicious" title="Permanent link">&para;</a></h2>
