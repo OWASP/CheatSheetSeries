@@ -19,6 +19,7 @@ Modern software relies on hundreds of third-party components. A Software Bill of
 - **Component** — A package, library, container image layer, binary, or module included in the product.
 - **Dependency graph** — Directed graph of components showing dependency relationships.
 - **Provenance / Attestation** — Evidence that the SBOM was produced by the claimed build process and is bound to the artifact.
+- **VEX (Vulnerability Exploitability eXchange)** — A machine-readable document that states whether a known vulnerability actually affects a given product/component, and under what conditions.
 
 ## Minimum SBOM elements you should capture (practical)
 
@@ -104,9 +105,10 @@ Enrich with vulnerability, license, and policy data for automated triage.
 ## Vulnerability triage & remediation workflow
 
 - **Map CVE → SBOM component(s)** to see direct vs transitive exposure.
+- **Use VEX** where available to understand exploitability — suppliers or tooling may provide VEX documents that indicate whether a CVE is relevant, non-exploitable, or has available mitigations.
 - **Prioritize** direct dependencies and high-severity runtime libraries.
 - **Patch or Mitigate**: patch if possible; otherwise upgrade, isolate, or apply runtime controls.
-- **Track** issues in your system with SBOM evidence (component, version, digest).
+- **Track** issues in your system with SBOM + VEX evidence (component, version, digest, exploitability status)
 - **Verify** by regenerating SBOM to confirm the vulnerable component is gone.
 
 ## Handling transitive dependencies and supply chain depth
@@ -185,3 +187,4 @@ jobs:
 - [CISA SBOM guidance](https://www.cisa.gov/sbom)
 - [OWASP SBOM Forum](https://owasp.org/www-project-sbom-forum/)
 - [Software Supply Chain Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Software_Supply_Chain_Security_Cheat_Sheet.html)
+- [Vulnerable Dependency Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Vulnerable_Dependency_Management_Cheat_Sheet.html)
