@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html">
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Dependency_Graph_SBOM_Cheat_Sheet.html">
       
       
-        <link rel="prev" href="Third_Party_Payment_Gateway_Integration.html">
+        <link rel="prev" href="Denial_of_Service_Cheat_Sheet.html">
       
       
-        <link rel="next" href="Transaction_Authorization_Cheat_Sheet.html">
+        <link rel="next" href="Deserialization_Cheat_Sheet.html">
       
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
@@ -24,7 +24,7 @@
     
     
       
-        <title>Threat Modeling - OWASP Cheat Sheet Series</title>
+        <title>Dependency Graph SBOM - OWASP Cheat Sheet Series</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#threat-modeling-cheat-sheet" class="md-skip">
+        <a href="#dependency-graph-sbom-best-practices-cheat-sheet" class="md-skip">
           Skip to content
         </a>
       
@@ -111,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Threat Modeling
+              Dependency Graph SBOM
             
           </span>
         </div>
@@ -916,10 +916,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="Dependency_Graph_SBOM_Cheat_Sheet.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Dependency Graph SBOM
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="Dependency_Graph_SBOM_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -928,6 +948,167 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Introduction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tldr-quick-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      TL;DR — Quick checklist
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#definitions-short" class="md-nav__link">
+    <span class="md-ellipsis">
+      Definitions (short)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#minimum-sbom-elements-you-should-capture-practical" class="md-nav__link">
+    <span class="md-ellipsis">
+      Minimum SBOM elements you should capture (practical)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sbom-formats-generations" class="md-nav__link">
+    <span class="md-ellipsis">
+      SBOM Formats &amp; Generations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tooling-automation-pragmatic-recommendations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tooling &amp; automation — pragmatic recommendations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bind-sbom-to-artifacts-signing-provenance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bind SBOM to artifacts (signing &amp; provenance)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ingesting-managing-sboms-at-scale" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ingesting &amp; managing SBOMs at scale
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vulnerability-triage-remediation-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Vulnerability triage &amp; remediation workflow
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#handling-transitive-dependencies-and-supply-chain-depth" class="md-nav__link">
+    <span class="md-ellipsis">
+      Handling transitive dependencies and supply chain depth
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sbom-quality-common-pitfalls-how-to-avoid-them" class="md-nav__link">
+    <span class="md-ellipsis">
+      SBOM quality — common pitfalls &amp; how to avoid them
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#policy-governance-what-to-write-into-your-sbom-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Policy &amp; governance (what to write into your SBOM policy)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-cicd-snippets-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical CI/CD snippets &amp; patterns
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-workflows-short" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example workflows (short)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2260,30 +2441,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Threat Modeling
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="Threat_Modeling_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="Threat_Modeling_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2292,212 +2453,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    <span class="md-ellipsis">
-      Introduction
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
-    <span class="md-ellipsis">
-      Overview
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#advantages" class="md-nav__link">
-    <span class="md-ellipsis">
-      Advantages
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Advantages">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#identify-risks-early-on" class="md-nav__link">
-    <span class="md-ellipsis">
-      Identify Risks Early On
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#increased-security-awareness" class="md-nav__link">
-    <span class="md-ellipsis">
-      Increased Security Awareness
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#improved-visibility-of-target-of-evaluation-toe" class="md-nav__link">
-    <span class="md-ellipsis">
-      Improved Visibility of Target of Evaluation (TOE)
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#addressing-each-question" class="md-nav__link">
-    <span class="md-ellipsis">
-      Addressing Each Question
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Addressing Each Question">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#system-modeling" class="md-nav__link">
-    <span class="md-ellipsis">
-      System Modeling
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#threat-identification" class="md-nav__link">
-    <span class="md-ellipsis">
-      Threat Identification
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#response-and-mitigations" class="md-nav__link">
-    <span class="md-ellipsis">
-      Response and Mitigations
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#review-and-validation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Review and Validation
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#threat-modeling-and-the-development-team" class="md-nav__link">
-    <span class="md-ellipsis">
-      Threat Modeling and the Development Team
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Threat Modeling and the Development Team">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#challenges" class="md-nav__link">
-    <span class="md-ellipsis">
-      Challenges
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#addressing-the-challenges" class="md-nav__link">
-    <span class="md-ellipsis">
-      Addressing the Challenges
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#references" class="md-nav__link">
-    <span class="md-ellipsis">
-      References
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="References">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#methods-and-techniques" class="md-nav__link">
-    <span class="md-ellipsis">
-      Methods and Techniques
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#tools" class="md-nav__link">
-    <span class="md-ellipsis">
-      Tools
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#general-reference" class="md-nav__link">
-    <span class="md-ellipsis">
-      General Reference
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -2879,49 +2834,13 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
-    <span class="md-ellipsis">
-      Overview
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#advantages" class="md-nav__link">
-    <span class="md-ellipsis">
-      Advantages
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Advantages">
+    <nav class="md-nav" aria-label="Introduction">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#identify-risks-early-on" class="md-nav__link">
+  <a href="#tldr-quick-checklist" class="md-nav__link">
     <span class="md-ellipsis">
-      Identify Risks Early On
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#increased-security-awareness" class="md-nav__link">
-    <span class="md-ellipsis">
-      Increased Security Awareness
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#improved-visibility-of-target-of-evaluation-toe" class="md-nav__link">
-    <span class="md-ellipsis">
-      Improved Visibility of Target of Evaluation (TOE)
+      TL;DR — Quick checklist
     </span>
   </a>
   
@@ -2933,86 +2852,110 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#addressing-each-question" class="md-nav__link">
+  <a href="#definitions-short" class="md-nav__link">
     <span class="md-ellipsis">
-      Addressing Each Question
+      Definitions (short)
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Addressing Each Question">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#system-modeling" class="md-nav__link">
-    <span class="md-ellipsis">
-      System Modeling
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#threat-identification" class="md-nav__link">
-    <span class="md-ellipsis">
-      Threat Identification
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#response-and-mitigations" class="md-nav__link">
-    <span class="md-ellipsis">
-      Response and Mitigations
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#review-and-validation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Review and Validation
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#threat-modeling-and-the-development-team" class="md-nav__link">
+  <a href="#minimum-sbom-elements-you-should-capture-practical" class="md-nav__link">
     <span class="md-ellipsis">
-      Threat Modeling and the Development Team
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Threat Modeling and the Development Team">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#challenges" class="md-nav__link">
-    <span class="md-ellipsis">
-      Challenges
+      Minimum SBOM elements you should capture (practical)
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#addressing-the-challenges" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#sbom-formats-generations" class="md-nav__link">
     <span class="md-ellipsis">
-      Addressing the Challenges
+      SBOM Formats &amp; Generations
     </span>
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#tooling-automation-pragmatic-recommendations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tooling &amp; automation — pragmatic recommendations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bind-sbom-to-artifacts-signing-provenance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bind SBOM to artifacts (signing &amp; provenance)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ingesting-managing-sboms-at-scale" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ingesting &amp; managing SBOMs at scale
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vulnerability-triage-remediation-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Vulnerability triage &amp; remediation workflow
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#handling-transitive-dependencies-and-supply-chain-depth" class="md-nav__link">
+    <span class="md-ellipsis">
+      Handling transitive dependencies and supply chain depth
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sbom-quality-common-pitfalls-how-to-avoid-them" class="md-nav__link">
+    <span class="md-ellipsis">
+      SBOM quality — common pitfalls &amp; how to avoid them
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#policy-governance-what-to-write-into-your-sbom-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Policy &amp; governance (what to write into your SBOM policy)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-cicd-snippets-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical CI/CD snippets &amp; patterns
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-workflows-short" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example workflows (short)
+    </span>
+  </a>
   
 </li>
       
@@ -3022,39 +2965,6 @@
       References
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="References">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#methods-and-techniques" class="md-nav__link">
-    <span class="md-ellipsis">
-      Methods and Techniques
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#tools" class="md-nav__link">
-    <span class="md-ellipsis">
-      Tools
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#general-reference" class="md-nav__link">
-    <span class="md-ellipsis">
-      General Reference
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -3076,141 +2986,159 @@
   
 
 
-<h1 id="threat-modeling-cheat-sheet">Threat Modeling Cheat Sheet<a class="headerlink" href="#threat-modeling-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h1 id="dependency-graph-sbom-best-practices-cheat-sheet">Dependency Graph &amp; SBOM Best Practices Cheat Sheet<a class="headerlink" href="#dependency-graph-sbom-best-practices-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>Threat modeling is an important concept for modern application developers to understand. The goal of this cheatsheet is to provide a concise, but actionable, reference for both those new to threat modeling and those seeking a refresher. The official project page is <a href="https://owasp.org/www-project-threat-model/">https://owasp.org/www-project-threat-model/</a>.</p>
-<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
-<p>In the context of application security, threat modeling is a structured, repeatable process used to gain actionable insights into the security characteristics of a particular system. It involves modeling a system from a security perspective, identifying applicable threats based on this model, and determining responses to these threats. Threat modeling analyzes a system from an adversarial perspective, focusing on ways in which an attacker can exploit a system.</p>
-<p>Threat modeling is ideally performed early in the SDLC, such as during the design phase. Moreover, it is not something that is performed once and never again. A threat model is something that should be maintained, updated and refined alongside the system. Ideally, threat modeling should be integrated seamlessly into a team's normal SDLC process; it should be treated as standard and necessary step in the process, not an add-on.</p>
-<p>According to the <a href="https://www.threatmodelingmanifesto.org/">Threat Modeling Manifesto</a>, the threat modeling process should answer the following four questions:</p>
+<p>Modern software relies on hundreds of third-party components. A Software Bill of Materials (SBOM) provides a machine-readable inventory of those components, while a dependency graph shows how they relate. Together, they enable accurate vulnerability management, compliance checks, and faster incident response.</p>
+<h3 id="tldr-quick-checklist">TL;DR — Quick checklist<a class="headerlink" href="#tldr-quick-checklist" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Generate SBOMs <strong>during build</strong> (not ad-hoc) to capture exact resolved dependencies and metadata.</li>
+<li>Use standard formats (SPDX or CycloneDX) and publish at least one machine-readable SBOM per release.</li>
+<li>Sign SBOMs and artifacts (cosign / sigstore / in-toto) to bind SBOMs to the built artifact.</li>
+<li>Version and store SBOMs in a trusted artifact store or SBOM management system (e.g., Dependency-Track).</li>
+<li>Automate vulnerability enrichment &amp; triage (Grype, OSS Index, Snyk, commercial feeds) and integrate with ticketing/incident flows.</li>
+<li>Maintain a policy that defines required SBOM elements, retention, and sharing rules.</li>
+</ul>
+<h2 id="definitions-short">Definitions (short)<a class="headerlink" href="#definitions-short" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>SBOM</strong> — Software Bill of Materials; machine-readable list of components, versions, checksums, and metadata.</li>
+<li><strong>Component</strong> — A package, library, container image layer, binary, or module included in the product.</li>
+<li><strong>Dependency graph</strong> — Directed graph of components showing dependency relationships.</li>
+<li><strong>Provenance / Attestation</strong> — Evidence that the SBOM was produced by the claimed build process and is bound to the artifact.</li>
+</ul>
+<h2 id="minimum-sbom-elements-you-should-capture-practical">Minimum SBOM elements you should capture (practical)<a class="headerlink" href="#minimum-sbom-elements-you-should-capture-practical" title="Permanent link">&para;</a></h2>
+<p>At a minimum capture:</p>
 <ol>
-<li>What are we working on?</li>
-<li>What can go wrong?</li>
-<li>What are we going to do about it?</li>
-<li>Did we do a good enough job?</li>
+<li>Component name and version (canonicalized)</li>
+<li>Unique package identifiers (purl / package URL) where available</li>
+<li>Package type/ecosystem (npm, maven, pypi, deb, rpm, apk, OS image)</li>
+<li>Checksum(s) (SHA256 preferred) of the package or artifact</li>
+<li>Component supplier / origin (URL or VCS) where known</li>
+<li>License information (if available)</li>
+<li>Timestamps (generation time) and build identifiers (CI run ID)</li>
+<li>Relationship edges: direct vs transitive dependency</li>
+<li>SBOM generator metadata (tool, version, command)</li>
 </ol>
-<p>These four questions will act as the foundation for the four major phases described below.</p>
-<h2 id="advantages">Advantages<a class="headerlink" href="#advantages" title="Permanent link">&para;</a></h2>
-<p>Before turning to an overview of the process, it may be worth addressing the question: why threat model? Why bother adding more work to the development process? What are the benefits? The following section will briefly outline some answers to these questions.</p>
-<h3 id="identify-risks-early-on">Identify Risks Early On<a class="headerlink" href="#identify-risks-early-on" title="Permanent link">&para;</a></h3>
-<p>Threat modeling seeks to identify potential security issues during the design phase. This allows security to be "built-into" a system rather than "bolted-on". This is far more efficient than having to identify and resolve security flaws after a system is in production.</p>
-<h3 id="increased-security-awareness">Increased Security Awareness<a class="headerlink" href="#increased-security-awareness" title="Permanent link">&para;</a></h3>
-<p>Proper threat modeling requires participants to think creatively and critically about the security and threat landscape of a specific application. It challenges individuals to "think like an attacker" and apply general security knowledge to a specific context. Threat modeling is also typically a team effort with members being encouraged to share ideas and provide feedback on others. Overall, threat modeling can prove to be a highly educational activity that benefits participants.</p>
-<h3 id="improved-visibility-of-target-of-evaluation-toe">Improved Visibility of Target of Evaluation (TOE)<a class="headerlink" href="#improved-visibility-of-target-of-evaluation-toe" title="Permanent link">&para;</a></h3>
-<p>Threat modeling requires a deep understanding of the system being evaluated. To properly threat model, one must understand data flows, trust boundaries, and other characteristics of the system. Thus, <a href="https://securityintelligence.com/threat-modeling-in-the-enterprise-part-1-understanding-the-basics/">Stiliyana Simeonova</a> asserts that improved visibility into a system and its interactions is one advantage of threat modeling.</p>
-<h2 id="addressing-each-question">Addressing Each Question<a class="headerlink" href="#addressing-each-question" title="Permanent link">&para;</a></h2>
-<p>There is no universally accepted industry standard for the threat modeling process, no "right" answer for every use case. However, despite this diversity, most approaches do include the processes of system modeling, threat identification, and risk response in some form. Inspired by these commonalities and guided by the four key questions of threat modeling discussed above, this cheatsheet will break the threat modeling down into four basic steps: application decomposition, threat identification and ranking, mitigations, and review and validation. There are processes that are less aligned to this, including PASTA and OCTAVE, each of which has passionate advocates.</p>
-<h3 id="system-modeling">System Modeling<a class="headerlink" href="#system-modeling" title="Permanent link">&para;</a></h3>
-<p>The step of system modeling seeks to answer the question "what are we building"? Without understanding a system, one cannot truly understand what threats are most applicable to it; thus, this step provides a critical foundation for subsequent activities. Although different techniques may be used in this first step of threat modeling, data flow diagrams (DFDs) are arguably the most common approach.</p>
-<p>DFDs allow one to visually model a system and its interactions with data and other entities; they are created using a <a href="https://github.com/adamshostack/DFD3">small number of simple symbols</a>. DFDs may be created within dedicated threat modeling tools such as <a href="https://github.com/OWASP/threat-dragon">OWASP's Threat Dragon</a> or <a href="https://learn.microsoft.com/en-us/azure/security/develop/threat-modeling-tool">Microsoft's Threat Modeling Tool</a> or using general purpose diagraming solutions such as <a href="https://draw.io">draw.io</a>. If you prefer an -as-code approach, <a href="https://owasp.org/www-project-pytm/">OWASP's pytm</a> can help there. Depending on the scale and complexity of the system being modeled, multiple DFDs may be required. For example, one could create a DFD representing a high-level overview of the entire system along with a number of more focused DFDs which detail sub-systems. Technical tools are not strictly necessary; whiteboarding may be sufficient in some instances, though it is preferable to have the DFDs in a form that can be easily stored, referenced, and updated as needed.</p>
-<p>Regardless of how a DFD or comparable model is generated, it is important that the solution provides a clear view of trust boundaries, data flows, data stores, processes, and the external entities which may interact with the system. These often represent possible attack points and provide crucial input for the subsequent steps.</p>
-<p>Another approach to Data Flow Diagrams (DFD) could be the brainstorming technique, which is an effective method for generating ideas and discovering the project's domain. Applying brainstorming in this context can bring numerous benefits, such as increased team engagement, unification of knowledge and terminology, a shared understanding of the domain, and quick identification of key processes and dependencies. One of the main arguments for using brainstorming is its flexibility and adaptability to almost any scenario, including business logic. Additionally, this technique is particularly useful when less technical individuals participate in the session, as it eliminates barriers related to understanding and applying the components of DFD models and their correctness.</p>
-<p>Brainstorming engages all participants, fostering better communication and mutual understanding of issues. Every team member has the opportunity to contribute, which increases the sense of responsibility and involvement. During a brainstorming session, participants can collaboratively define and agree on key terms and concepts, leading to a unified language used in the project. This is especially important in complex projects where different teams might have different approaches to terminology. Due to the dynamic nature of brainstorming, the team can quickly identify key business processes and their interrelations.</p>
-<p>Integrating the results of brainstorming with formal modeling techniques can lead to a better understanding of the domain and more effective system design.</p>
-<h3 id="threat-identification">Threat Identification<a class="headerlink" href="#threat-identification" title="Permanent link">&para;</a></h3>
-<p>After the system has been modeled, it is now time to address the question of "what can go wrong?". This question must be explored with the inputs from the first step in mind; that is, it should focus on identifying and ranking threats within the context of the specific system being evaluated. In attempting to answer this question, threat modelers have a wealth of data sources and techniques at their disposal. For illustration purposes, this cheatsheet will leverage STRIDE; however, in practice, other approaches may be used alongside or instead of STRIDE.</p>
-<p>STRIDE is a mature and popular threat modeling technique and mnemonic originally developed by Microsoft employees. To facilitate threat identification, STRIDE groups threats into one of six general prompts and engineers are encouraged to systematically consider how these general threats may materialize within the context of the specific system being evaluated. Each STRIDE threat may be considered a violation of a desirable security attribute; the categories and associated desirable attributes are are as follows:</p>
-<table>
-<thead>
-<tr>
-<th>Threat Category</th>
-<th>Violates</th>
-<th>Examples</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>S</strong>poofing</td>
-<td>Authenticity</td>
-<td>An attacker steals the authentication token of a legitimate user and uses it to impersonate the user.</td>
-</tr>
-<tr>
-<td><strong>T</strong>ampering</td>
-<td>Integrity</td>
-<td>An attacker abuses the application to perform unintended updates to a database.</td>
-</tr>
-<tr>
-<td><strong>R</strong>epudiation</td>
-<td>Non-repudiability</td>
-<td>An attacker manipulates logs to cover their actions.</td>
-</tr>
-<tr>
-<td><strong>I</strong>nformation Disclosure</td>
-<td>Confidentiality</td>
-<td>An attacker extracts data from a database containing user account info.</td>
-</tr>
-<tr>
-<td><strong>D</strong>enial of Service</td>
-<td>Availability</td>
-<td>An attacker locks a legitimate user out of their account by performing many failed authentication attempts.</td>
-</tr>
-<tr>
-<td><strong>E</strong>levation of Privileges</td>
-<td>Authorization</td>
-<td>An attacker tampers with a JWT to change their role.</td>
-</tr>
-</tbody>
-</table>
-<p>STRIDE provides valuable structure for responding to the question of "what can go wrong". It is also a highly flexible approach and getting started need not be complex. Simple techniques such as brainstorming and whiteboarding or even <a href="https://github.com/adamshostack/eop/">games</a> may be used initially. STRIDE is also incorporated into popular threat modeling tools such as <a href="https://github.com/OWASP/threat-dragon">OWASP's Threat Dragon</a> and <a href="https://learn.microsoft.com/en-us/azure/security/develop/threat-modeling-tool">Microsoft's Threat Modeling Tool</a>. Additionally, as a relatively high-level process, STRIDE pairs well with more tactical approaches such as kill chains or <a href="https://attack.mitre.org/">MITRE's ATT&amp;CK</a> (please refer to <a href="https://web.isc2ncrchapter.org/under-attck-how-mitres-methodology-to-find-threats-and-embed-counter-measures-might-work-in-your-organization/">this article</a> for an overview of how STRIDE and ATT&amp;CK can work together).</p>
-<p>After possible threats have been identified, people will frequently rank them. In theory, ranking should be based on the mathematical product of an identified threat's likelihood and its impact. A threat that is likely to occur and result in serious damage would be prioritized much higher than one that is unlikely to occur and would only have a moderate impact. However, these both can be challenging to calculate, and they ignore the work to fix a problem. Some advocate for including that in a single prioritization.</p>
-<h3 id="response-and-mitigations">Response and Mitigations<a class="headerlink" href="#response-and-mitigations" title="Permanent link">&para;</a></h3>
-<p>Equipped with an understanding of both the system and applicable threats, it is now time to answer "what are we going to do about it"?. Each threat identified earlier must have a response. Threat responses are similar, but not identical, to risk responses. <a href="https://shostack.org/resources/threat-modeling">Adam Shostack</a> lists the following responses:</p>
+<h2 id="sbom-formats-generations">SBOM Formats &amp; Generations<a class="headerlink" href="#sbom-formats-generations" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Mitigate:</strong> Take action to reduce the likelihood that the threat will materialize.</li>
-<li><strong>Eliminate:</strong> Simply remove the feature or component that is causing the threat.</li>
-<li><strong>Transfer:</strong> Shift responsibility to another entity such as the customer.</li>
-<li><strong>Accept:</strong> Do not mitigate, eliminate, or transfer the risk because none of the above options are acceptable given business requirements or constraints.</li>
+<li>Generate SBOMs during build (after dependency resolution, before packaging) to capture exact versions and metadata.</li>
+<li>Use standard formats:<ol>
+<li>CycloneDX — lightweight, widely supported in SCA and Dependency-Track.</li>
+<li>SPDX — rich, common in compliance/legal workflows.</li>
+</ol>
+</li>
+<li>Other useful points of generation:<ol>
+<li>Local/dev for early validation (best-effort).</li>
+<li>Container images: build-time + image scan to catch injected content.</li>
+<li>Runtime/deployed: telemetry to validate what executes in production.</li>
+</ol>
+</li>
 </ul>
-<p>If one decides to mitigate a threat, mitigation strategies must be formulated and documented as requirements. Depending on the complexity of the system, nature of threats identified, and the process used for identifying threats (STRIDE or another method), mitigation responses may be applied at either the category or individual threat level. In the former case, the mitigation would apply to all threats within that category. Mitigation strategies must be actionable not hypothetical; they must be something that can actually be built into to the system being developed. Although mitigation strategies must be tailored to the particular application, resources such as as <a href="https://owasp.org/www-project-application-security-verification-standard/">OWASP's ASVS</a> and <a href="https://cwe.mitre.org/index.html">MITRE's CWE list</a> can prove valuable when formulating these responses.</p>
-<h3 id="review-and-validation">Review and Validation<a class="headerlink" href="#review-and-validation" title="Permanent link">&para;</a></h3>
-<p>Finally, it is time to answer the question "did we do a good enough job"? The threat model must be reviewed by all stakeholders, not just the development or security teams. Areas to focus on include:</p>
+<h2 id="tooling-automation-pragmatic-recommendations">Tooling &amp; automation — pragmatic recommendations<a class="headerlink" href="#tooling-automation-pragmatic-recommendations" title="Permanent link">&para;</a></h2>
+<p><strong>Generate</strong>: Syft, CycloneDX CLI, SPDX tools, or ecosystem exporters. Run in build container/agent.</p>
+<p><strong>Sign / Attest</strong>: Cosign, Sigstore, in-toto — bind SBOM ↔ artifact to prevent tampering.</p>
+<p><strong>Scan / Enrich</strong>: Grype, OSS Index, Snyk, Dependabot — map CVEs to SBOM components.</p>
+<p><strong>Store &amp; Analyze</strong>: Dependency-Track, SBOM managers, or registries with SBOM support.</p>
+<p><strong>Example commands (generation):</strong></p>
 <ul>
-<li>Does the DFD (or comparable) accurately reflect the system?</li>
-<li>Have all threats been identified?</li>
-<li>For each identified threat, has a response strategy been agreed upon?</li>
-<li>For identified threats for which mitigation is the desired response, have mitigation strategies been developed which reduce risk to an acceptable level?</li>
-<li>Has the threat model been formally documented? Are artifacts from the threat model process stored in such a way that it can be accessed by those with "need to know"?</li>
-<li>Can the agreed upon mitigations be tested? Can success or failure of the requirements and recommendations from the threat model be measured?</li>
+<li>Syft to CycloneDX JSON:</li>
 </ul>
-<h2 id="threat-modeling-and-the-development-team">Threat Modeling and the Development Team<a class="headerlink" href="#threat-modeling-and-the-development-team" title="Permanent link">&para;</a></h2>
-<h3 id="challenges">Challenges<a class="headerlink" href="#challenges" title="Permanent link">&para;</a></h3>
-<p>Threat modeling can be challenging for development teams for several key reasons. Firstly, many developers lack sufficient knowledge and experience in the field of security, which hinders their ability to effectively use methodologies and frameworks, identify, and model threats. Without proper training and understanding of basic security principles, developers may overlook potential threats or incorrectly assess their risks.</p>
-<p>Additionally, the threat modeling process can be complex and time-consuming. It requires a systematic approach and in-depth analysis, which is often difficult to reconcile with tight schedules and the pressure to deliver new functionalities. Development teams may feel a lack of tools and resources to support them in this task, leading to frustration and discouragement.</p>
-<p>Another challenge is the communication and collaboration between different departments within the organization. Without effective communication between development teams, security teams, and other stakeholders, threat modeling can be incomplete or misdirected.</p>
-<h3 id="addressing-the-challenges">Addressing the Challenges<a class="headerlink" href="#addressing-the-challenges" title="Permanent link">&para;</a></h3>
-<p>In many cases, the solution lies in inviting members of the security teams to threat modeling sessions, which can significantly improve the process. Security specialists bring essential knowledge about potential threats that is crucial for effective identification, risk analysis, and mitigation. Their experience and understanding of the latest trends and techniques used by cybercriminals can provide key insights for learning and developing the competencies of development teams. Such joint sessions not only enhance developers' knowledge but also build a culture of collaboration and mutual support within the organization, leading to a more comprehensive approach to security.</p>
-<p>To change the current situation, organizations should invest in regular IT security training for their development teams. These training sessions should be conducted by experts and tailored to the specific needs of the team. Additionally, it is beneficial to implement processes and tools that simplify and automate threat modeling. These tools can help in identifying and assessing threats, making the process more accessible and less time-consuming.</p>
-<p>It is also important to promote a culture of security throughout the organization, where threat modeling is seen as an integral part of the Software Development Life Cycle (SDLC), rather than an additional burden. Regular review sessions and cross-team workshops can improve collaboration and communication, leading to a more effective and comprehensive approach to security. Through these actions, organizations can make threat modeling a less burdensome and more efficient process, bringing real benefits to the security of their systems.</p>
+<div class="highlight"><pre><span></span><code>syft<span class="w"> </span>packages<span class="w"> </span>dir:.<span class="w"> </span>-o<span class="w"> </span>cyclonedx-json<span class="w"> </span>&gt;<span class="w"> </span>sbom-cyclonedx.json
+</code></pre></div>
+<ul>
+<li>Syft to SPDX JSON:</li>
+</ul>
+<div class="highlight"><pre><span></span><code>syft<span class="w"> </span>packages<span class="w"> </span>dir:.<span class="w"> </span>-o<span class="w"> </span>spdx-json<span class="w"> </span>&gt;<span class="w"> </span>sbom-spdx.json
+</code></pre></div>
+<ul>
+<li>CycloneDX CLI (from a built artifact):</li>
+</ul>
+<div class="highlight"><pre><span></span><code>cyclonedx-bom<span class="w"> </span>-o<span class="w"> </span>bom.xml<span class="w"> </span>--input-pkg<span class="w"> </span>target/my-app.jar
+</code></pre></div>
+<p>(Place generator commands in your build scripts or CI job and fail the build if SBOM generation fails.)</p>
+<h2 id="bind-sbom-to-artifacts-signing-provenance">Bind SBOM to artifacts (signing &amp; provenance)<a class="headerlink" href="#bind-sbom-to-artifacts-signing-provenance" title="Permanent link">&para;</a></h2>
+<p><strong>Why:</strong> Unsigned SBOMs can be forged; signing/attestation proves they come from the same trusted build.</p>
+<p><strong>How:</strong></p>
+<ul>
+<li>Generate artifact + SBOM in the same CI job.</li>
+<li>Use Cosign/Sigstore to sign both; optionally add in-toto/SLSA provenance.</li>
+<li>Push artifact, SBOM, and signatures/attestations to your registry.</li>
+</ul>
+<p><strong>Practical flow:</strong></p>
+<p>build → generate SBOM → compute digests → sign/attest → publish.</p>
+<h2 id="ingesting-managing-sboms-at-scale">Ingesting &amp; managing SBOMs at scale<a class="headerlink" href="#ingesting-managing-sboms-at-scale" title="Permanent link">&para;</a></h2>
+<p>Centralize in an SBOM manager (e.g., Dependency-Track) or registry with SBOM support.</p>
+<p>Version &amp; retain SBOMs like code for audit/incident response.</p>
+<p>Normalize/deduplicate package IDs (purl) across suppliers.</p>
+<p>Enrich with vulnerability, license, and policy data for automated triage.</p>
+<h2 id="vulnerability-triage-remediation-workflow">Vulnerability triage &amp; remediation workflow<a class="headerlink" href="#vulnerability-triage-remediation-workflow" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Map CVE → SBOM component(s)</strong> to see direct vs transitive exposure.</li>
+<li><strong>Prioritize</strong> direct dependencies and high-severity runtime libraries.</li>
+<li><strong>Patch or Mitigate</strong>: patch if possible; otherwise upgrade, isolate, or apply runtime controls.</li>
+<li><strong>Track</strong> issues in your system with SBOM evidence (component, version, digest).</li>
+<li><strong>Verify</strong> by regenerating SBOM to confirm the vulnerable component is gone.</li>
+</ul>
+<h2 id="handling-transitive-dependencies-and-supply-chain-depth">Handling transitive dependencies and supply chain depth<a class="headerlink" href="#handling-transitive-dependencies-and-supply-chain-depth" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Visualize</strong> with dependency graphs to show why a vulnerable transitive package is included.</li>
+<li><strong>Prefer explicit direct upgrades</strong> where possible (bump direct dependency to a version that pulls a fixed transitive release).</li>
+<li><strong>Consider mitigation patterns</strong>: dependency replacement, patching (if legal and feasible), or runtime limitations.</li>
+<li><strong>Long-lived third-party binaries</strong>: include policy to monitor and re-evaluate older dependencies that receive no updates.</li>
+</ul>
+<h2 id="sbom-quality-common-pitfalls-how-to-avoid-them">SBOM quality — common pitfalls &amp; how to avoid them<a class="headerlink" href="#sbom-quality-common-pitfalls-how-to-avoid-them" title="Permanent link">&para;</a></h2>
+<p>Incomplete generation → generate SBOM in build after dependency resolution.</p>
+<p>Missing metadata → always include timestamps, checksums, and tool info.</p>
+<p>Inconsistent formats → stick to SPDX/CycloneDX; use extensions sparingly.</p>
+<p>Unsigned SBOMs / no provenance → sign and attest artifacts.</p>
+<p>No versioning or archival → retain historical SBOMs for audit/incident response.</p>
+<h2 id="policy-governance-what-to-write-into-your-sbom-policy">Policy &amp; governance (what to write into your SBOM policy)<a class="headerlink" href="#policy-governance-what-to-write-into-your-sbom-policy" title="Permanent link">&para;</a></h2>
+<p>Minimum policy items:</p>
+<ul>
+<li><strong>Required formats</strong> (CycloneDX vX or SPDX vY), and acceptable alternates</li>
+<li><strong>Required fields</strong> (see section 3)</li>
+<li><strong>Where to store</strong> (artifact registry, SBOM manager) and retention policy</li>
+<li><strong>Signing &amp; attestation requirement</strong> (e.g., all public releases must be signed)</li>
+<li><strong>SLA for vulnerability response</strong> based on severity and impact</li>
+<li><strong>Supplier SBOM acceptance rules</strong> (e.g., third-party vendors must supply SBOMs in a supported spec)</li>
+<li><strong>Access controls</strong> for SBOMs containing sensitive metadata (avoid leaking internal repository URLs if not necessary)</li>
+</ul>
+<h2 id="practical-cicd-snippets-patterns">Practical CI/CD snippets &amp; patterns<a class="headerlink" href="#practical-cicd-snippets-patterns" title="Permanent link">&para;</a></h2>
+<p><strong>GitHub Actions (example)</strong> — generate CycloneDX and upload as artifact, then sign with cosign.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Build and SBOM</span>
+<span class="nt">on</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">push</span><span class="p p-Indicator">]</span>
+<span class="nt">jobs</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">build</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Build</span>
+<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./gradlew assemble</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Generate SBOM</span>
+<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">          </span><span class="no">syft packages dir:./build/libs -o cyclonedx-json &gt; sbom.json</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Upload SBOM</span>
+<span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/upload-artifact@v4</span>
+<span class="w">        </span><span class="nt">with</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sbom</span>
+<span class="w">          </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sbom.json</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sign Artifact &amp; SBOM</span>
+<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">          </span><span class="no">cosign sign --key ${{ secrets.COSIGN_KEY }} my-registry/my-app:${{ github.sha }}</span>
+<span class="w">          </span><span class="no">cosign sign-blob --key ${{ secrets.COSIGN_KEY }} --output-signature sbom.json.sig sbom.json</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Push image</span>
+<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./push-image.sh</span>
+</code></pre></div>
+<p><strong>Fail-fast vs Warn</strong>: In CI, fail the pipeline if SBOM generation fails, but avoid failing builds on non-actionable low-severity findings — instead surface results to triage dashboards.</p>
+<h2 id="example-workflows-short">Example workflows (short)<a class="headerlink" href="#example-workflows-short" title="Permanent link">&para;</a></h2>
+<p><strong>Supplier intake</strong>: Vendor provides signed SBOM -&gt; ingest into DT -&gt; auto-enrich -&gt; if critical CVE found, create ticket and notify procurement + security.</p>
+<p><strong>Internal release</strong>: CI builds artifact + sbom -&gt; sign &amp; push -&gt; SBOM ingested to DT -&gt; scheduled scan enrich -&gt; policy engine flags high-sev/forbidden licenses -&gt; create PR to remediate.</p>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
-<h3 id="methods-and-techniques">Methods and Techniques<a class="headerlink" href="#methods-and-techniques" title="Permanent link">&para;</a></h3>
-<p>An alphabetical list of techniques:</p>
 <ul>
-<li><a href="https://linddun.org/">LINDDUN</a></li>
-<li><a href="https://cdn2.hubspot.net/hubfs/4598121/Content%20PDFs/VerSprite-PASTA-Threat-Modeling-Process-for-Attack-Simulation-Threat-Analysis.pdf">PASTA</a></li>
-<li><a href="https://learn.microsoft.com/en-us/previous-versions/commerce-server/ee823878(v=cs.20)?redirectedfrom=MSDN">STRIDE</a></li>
-<li><a href="https://insights.sei.cmu.edu/library/introduction-to-the-octave-approach/">OCTAVE</a></li>
-<li><a href="https://go.threatmodeler.com/vast-methodology-data-sheet">VAST</a></li>
-</ul>
-<h3 id="tools">Tools<a class="headerlink" href="#tools" title="Permanent link">&para;</a></h3>
-<ul>
-<li><a href="https://github.com/cairis-platform/cairis">Cairis</a></li>
-<li><a href="https://draw.io">draw.io</a> - see also <a href="https://github.com/michenriksen/drawio-threatmodeling">threat modeling libraries</a> for the tool</li>
-<li><a href="https://www.iriusrisk.com/">IriusRisk</a> - offers a free Community Edition</li>
-<li><a href="https://learn.microsoft.com/en-us/azure/security/develop/threat-modeling-tool">Microsoft Threat Modeling Tool</a></li>
-<li><a href="https://github.com/OWASP/threat-dragon">OWASP's Threat Dragon</a></li>
-<li><a href="https://owasp.org/www-project-pytm/">OWASP's pytm</a></li>
-<li><a href="https://github.com/yevh/TaaC-AI">TaaC-AI</a> - AI-driven Threat modeling-as-a-Code (TaaC)</li>
-<li>Threat Composer - <a href="https://awslabs.github.io/threat-composer">Demo</a>, <a href="https://github.com/awslabs/threat-composer/">Repository</a></li>
-</ul>
-<h3 id="general-reference">General Reference<a class="headerlink" href="#general-reference" title="Permanent link">&para;</a></h3>
-<ul>
-<li><a href="https://github.com/hysnsec/awesome-threat-modelling">Awesome Threat Modeling</a> - resource list</li>
-<li><a href="https://safecode.org/wp-content/uploads/2017/05/SAFECode_TM_Whitepaper.pdf">Tactical Threat Modeling</a></li>
-<li><a href="https://insights.sei.cmu.edu/library/threat-modeling-a-summary-of-available-methods/">Threat Modeling: A Summary of Available Methods</a></li>
-<li>Threat modeling for builders, free online training available on <a href="https://explore.skillbuilder.aws/learn/course/external/view/elearning/13274/threat-modeling-for-builders-workshop">AWS SkillBuilder</a>, and <a href="https://catalog.workshops.aws/threatmodel/en-US">AWS Workshop Studio</a></li>
-<li><a href="https://security.cms.gov/policy-guidance/threat-modeling-handbook">Threat Modeling Handbook</a></li>
-<li><a href="https://owasp.org/www-community/Threat_Modeling_Process">Threat Modeling Process</a></li>
-<li><a href="https://shostack.org/resources/threat-modeling">The Ultimate Beginner's Guide to Threat Modeling</a></li>
+<li><a href="https://cyclonedx.org/guides/OWASP_CycloneDX-Authoritative-Guide-to-SBOM-en.pdf">CycloneDX specification and Authoritative Guide</a></li>
+<li><a href="https://spdx.github.io/spdx-ntia-sbom-howto/">SPDX and NTIA Minimum Elements for SBOM HOWTO</a></li>
+<li><a href="https://www.cisa.gov/sbom">CISA SBOM guidance</a></li>
+<li><a href="https://owasp.org/www-project-sbom-forum/">OWASP SBOM Forum</a></li>
+<li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Software_Supply_Chain_Security_Cheat_Sheet.html">Software Supply Chain Security Cheat Sheet</a></li>
 </ul>
 
 
