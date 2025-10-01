@@ -19,4 +19,13 @@ If your PR is related to an issue, please finish your PR text with the following
 
 This PR fixes issue #`<REPLACE WITH ISSUE NUMBER>`.
 
+## AI Tool Usage Disclosure (required for all PRs)
+
+Please select one of the following options:
+
+- [ ] I have NOT used any AI tool to generate the contents of this PR.
+- [ ] I have used AI tools to generate the contents of this PR. I have verified
+    the contents and I affirm the results. The LLM used is `[llm name and version]`
+    and the prompt used is `[your prompt here]`. [Feel free to add more details if needed]
+
 Thank you again for your contribution :smiley:

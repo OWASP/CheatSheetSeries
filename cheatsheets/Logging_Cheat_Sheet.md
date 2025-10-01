@@ -94,6 +94,7 @@ There is no one size fits all solution, and a blind checklist approach can lead 
 Where possible, always log:
 
 - Input validation failures e.g. protocol violations, unacceptable encodings, invalid parameter names and values
+    - A specific event for failures to validate a value against a discrete and finite list of valid values (e.g. a country from a dropdown). This is a high security event as it can only be attack activity. For example `input_validation_fail[:field,userid]`.
 - Output validation failures e.g. database record set mismatch, invalid data encoding
 - Authentication successes and failures
 - Authorization (access control) failures
