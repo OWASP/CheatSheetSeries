@@ -61,11 +61,11 @@ To illustrate how to design systems that support automated secret rotation, here
 In a Kubernetes environment, a common pattern is to use a sidecar container that is responsible for retrieving secrets from a secrets manager and making them available to the main application container. This decouples the application from the specifics of the secrets management solution.
 
 - **Architecture:**
-  - A Pod contains two containers: the main application container and a sidecar container (e.g., HashiCorp Vault Agent, CyberArk Conjur Secrets Provider).
-  - The sidecar container authenticates with the secrets manager (e.g., using a Kubernetes Service Account).
-  - It retrieves the secret and writes it to a shared in-memory volume.
-  - The application container reads the secret from the shared volume.
-  - The sidecar container can periodically refresh the secret, ensuring the application always has a valid, short-lived credential.
+    - A Pod contains two containers: the main application container and a sidecar container (e.g., HashiCorp Vault Agent, CyberArk Conjur Secrets Provider).
+    - The sidecar container authenticates with the secrets manager (e.g., using a Kubernetes Service Account).
+    - It retrieves the secret and writes it to a shared in-memory volume.
+    - The application container reads the secret from the shared volume.
+    - The sidecar container can periodically refresh the secret, ensuring the application always has a valid, short-lived credential.
 - **Kubernetes Manifest Snippet:**
 
     ```yaml
@@ -99,10 +99,10 @@ In a Kubernetes environment, a common pattern is to use a sidecar container that
 Cloud-native secret managers often provide built-in support for automated rotation using serverless functions (e.g., AWS Lambda, Azure Functions).
 
 - **Architecture:**
-  - A secret is stored in a cloud secrets manager (e.g., AWS Secrets Manager).
-  - The secrets manager is configured to trigger a rotation Lambda function on a schedule.
-  - The Lambda function has the necessary permissions to update the database password and the secret value in the secrets manager.
-  - The rotation process typically involves multiple steps (create new secret, set new secret, test new secret, finish rotation) to ensure a safe transition.
+    - A secret is stored in a cloud secrets manager (e.g., AWS Secrets Manager).
+    - The secrets manager is configured to trigger a rotation Lambda function on a schedule.
+    - The Lambda function has the necessary permissions to update the database password and the secret value in the secrets manager.
+    - The rotation process typically involves multiple steps (create new secret, set new secret, test new secret, finish rotation) to ensure a safe transition.
 - **AWS Lambda Rotation Function (Conceptual Python Code):**
 
     ```python
