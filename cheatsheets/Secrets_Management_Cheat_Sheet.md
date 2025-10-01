@@ -560,21 +560,21 @@ Continually monitor who/what, from which IP, and what methodology accesses the s
 For a secrets management solution to be effective, it must be easy for developers to adopt and use. If the process is too complex, developers may resort to insecure practices. A focus on usability and a smooth onboarding experience is critical.
 
 - **Clear and Comprehensive Documentation:**
-  - Provide clear, concise, and easy-to-find documentation. This should include tutorials for common use cases, detailed API references, and practical examples.
-  - Maintain a "getting started" guide that walks new users through the process of obtaining their first secret.
+    - Provide clear, concise, and easy-to-find documentation. This should include tutorials for common use cases, detailed API references, and practical examples.
+    - Maintain a "getting started" guide that walks new users through the process of obtaining their first secret.
 - **Developer-Friendly Tooling and SDKs:**
-  - Offer well-maintained SDKs for various programming languages to simplify integration.
-  - Provide a command-line interface (CLI) that allows developers to manage secrets from their local development environment.
-  - Develop plugins for common IDEs, CI/CD systems, and infrastructure-as-code (IaC) tools like Terraform and Pulumi.
+    - Offer well-maintained SDKs for various programming languages to simplify integration.
+    - Provide a command-line interface (CLI) that allows developers to manage secrets from their local development environment.
+    - Develop plugins for common IDEs, CI/CD systems, and infrastructure-as-code (IaC) tools like Terraform and Pulumi.
 - **Streamlined Workflows:**
-  - Implement self-service workflows that enable developers to request and receive secrets with minimal manual intervention.
-  - Use GitOps principles to manage secrets as code, allowing developers to define secret needs in a declarative manner alongside their application code.
-  - Automate the approval process for low-risk secrets while maintaining appropriate controls for more sensitive ones.
+    - Implement self-service workflows that enable developers to request and receive secrets with minimal manual intervention.
+    - Use GitOps principles to manage secrets as code, allowing developers to define secret needs in a declarative manner alongside their application code.
+    - Automate the approval process for low-risk secrets while maintaining appropriate controls for more sensitive ones.
 - **Actionable Feedback and Support:**
-  - Provide clear error messages that help developers troubleshoot issues independently.
-  - Establish dedicated support channels (e.g., a Slack channel, a ticketing system) where developers can get help from the security or platform team.
+    - Provide clear error messages that help developers troubleshoot issues independently.
+    - Establish dedicated support channels (e.g., a Slack channel, a ticketing system) where developers can get help from the security or platform team.
 - **Easy Integration:**
-  - Ensure the secrets management solution can be easily integrated with existing applications. Sidecar containers, such as the [Vault Agent Sidecar Injector](https://developer.hashicorp.com/vault/docs/platform/k8s/injector) or the [Conjur Secrets Provider](https://github.com/cyberark/secrets-provider-for-k8s), can help decouple applications from the secrets management system.
+    - Ensure the secrets management solution can be easily integrated with existing applications. Sidecar containers, such as the [Vault Agent Sidecar Injector](https://developer.hashicorp.com/vault/docs/platform/k8s/injector) or the [Conjur Secrets Provider](https://github.com/cyberark/secrets-provider-for-k8s), can help decouple applications from the secrets management system.
 
 ## 7 Encryption
 
