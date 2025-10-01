@@ -68,7 +68,6 @@ Although this pattern significantly improves the maintainability and consistency
 
 **NOTE:** Due to these remaining gaps, "accept by default" behaviors remain a real risk, leading to broken access control vulnerabilities.
 
-
 ## Edge-Level Authorization (Classic)
 
 This pattern aims to address several shortcomings of service-level access control patterns, particularly inconsistent enforcement, policy sprawl, and limited observability. Instead of tying PEP related logic in each service, access control is moved to the system’s perimeter — typically implemented via API gateways, ingress controllers, or reverse proxies.
@@ -131,7 +130,6 @@ The choice of PDP deployment — embedded, as a sidecar, or external — signifi
 | Before the Fact Audit | limited               | limited                   | possible system wide                               |
 | Access Control Models | PBAC, e.g. Casbin     | PBAC, e.g. OPA            | PBAC, ReBAC, and NGAC (e.g. OPA, OpenFGA, SpiceDB) |
 | Dependencies          | none (self-contained) | none (self-contained)     | Relies on PDP service availability                 |
-
 
 ### On Data Source Integration
 
