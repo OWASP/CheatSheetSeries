@@ -1,6 +1,6 @@
 # Authorization Patterns
 
-While some basic access control can be applied to anonymous or unauthenticated subjects, the most meaningful authorization requires a reliable understanding of the subject’s identities and associated attributes, both covered in [Authentication Patterns](Authentication_Patterns_Cheat_Sheet.md) and [Identity Propagation Patterns](Identity_Propagation_Patterns_Cheat_Sheet.d) Cheat Sheets.
+While some basic access control can be applied to anonymous or unauthenticated subjects, the most meaningful authorization requires a reliable understanding of the subject’s identities and associated attributes, both covered in [Authentication Patterns](Authentication_Patterns_Cheat_Sheet.md) and [Identity Propagation Patterns](Identity_Propagation_Patterns_Cheat_Sheet.md) Cheat Sheets.
 
 The corresponding architectural approaches can be described by authorization patterns. These patterns define where Policy Decision Points (PDPs), Policy Enforcement Points (PEPs), and Policy Information Points (PIPs) are placed within a system and how they interact. They also govern how subject and object identities, along with related attributes, flow between these components — and where policies are stored and accessed.
 
