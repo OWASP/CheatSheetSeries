@@ -618,6 +618,29 @@ WARN
 
 ---
 
+### input_validation_discrete_fail[:field,userid]
+
+**Description**
+When server-side validation of a value against a discrete list of options (e.g. drop down list, radio buttons) fails, it is a strong indication of malicious activity as this indicates the client-side code has been tampered with.
+
+**Level:**
+WARN
+
+**Example:**
+
+```json
+{
+    "datetime": "2021-02-01T08:30:00-0500",
+    "appid": "foobar.netportal_auth",
+    "event": "input_validation_discrete_fail:country,joebob1",
+    "level": "WARN",
+    "description": "User joebob1 submitted an invalid value for the 'country' field.",
+    ...
+}
+```
+
+---
+
 ## Malicious Behavior [MALICIOUS
 
 ### malicious_excess_404:[userid|IP,useragent]
