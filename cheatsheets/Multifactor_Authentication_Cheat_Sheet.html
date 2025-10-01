@@ -1794,6 +1794,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#changing-mfa-factors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Changing MFA Factors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#consider-using-a-third-party-service" class="md-nav__link">
     <span class="md-ellipsis">
       Consider Using a Third Party Service
@@ -3567,6 +3576,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#changing-mfa-factors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Changing MFA Factors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#consider-using-a-third-party-service" class="md-nav__link">
     <span class="md-ellipsis">
       Consider Using a Third Party Service
@@ -4347,6 +4365,17 @@
 <li>Requiring the user contact the support team and having a rigorous process in place to verify their identity.</li>
 <li>Requiring another trusted user to vouch for them.</li>
 </ul>
+<h3 id="changing-mfa-factors">Changing MFA Factors<a class="headerlink" href="#changing-mfa-factors" title="Permanent link">&para;</a></h3>
+<p>Users may need to update their authentication factors, such as changing a phone number, migrating to a new authenticator app, or replacing a lost hardware token. Because attackers can exploit this process to take over accounts, it must be strictly secured.</p>
+<p>Best practices include:</p>
+<ul>
+<li>Require reauthentication with an existing enrolled factor before allowing changes.</li>
+<li>Do not rely solely on the active session, as it may be hijacked.</li>
+<li>Treat factor replacement as a high-risk action and apply risk-based checks (e.g., new device, unusual location).</li>
+<li>Notify the user through out-of-band channels (such as email or push notification) whenever an MFA factor is changed.</li>
+<li>Consider applying delays or step-up verification for high-value accounts.</li>
+</ul>
+<p>This ensures that even if a session is compromised, attackers cannot silently replace the user’s MFA factors and lock the legitimate user out.</p>
 <h3 id="consider-using-a-third-party-service">Consider Using a Third Party Service<a class="headerlink" href="#consider-using-a-third-party-service" title="Permanent link">&para;</a></h3>
 <p>There are a number of third party services that provide MFA as a service. These can be a good option for applications that don't have the resources to implement MFA themselves, or for applications that require a high level of assurance in their MFA. However, it is important to consider the security of the third party service, and the implications of using it. For example, if the third party service is compromised, it could allow an attacker to bypass MFA on all of the applications that use it.</p>
 <h2 id="something-you-know">Something You Know<a class="headerlink" href="#something-you-know" title="Permanent link">&para;</a></h2>
