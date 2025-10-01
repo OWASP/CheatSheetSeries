@@ -56,18 +56,17 @@ Rotating certain keys, such as encryption keys, might trigger full or partial da
 
 To illustrate how to design systems that support automated secret rotation, here are a few architectural patterns:
 
-**Example 1: Kubernetes with a Sidecar Container**
+##### Example 1: Kubernetes with a Sidecar Container
 
 In a Kubernetes environment, a common pattern is to use a sidecar container that is responsible for retrieving secrets from a secrets manager and making them available to the main application container. This decouples the application from the specifics of the secrets management solution.
 
-*   **Architecture:**
-    *   A Pod contains two containers: the main application container and a sidecar container (e.g., HashiCorp Vault Agent, CyberArk Conjur Secrets Provider).
-    *   The sidecar container authenticates with the secrets manager (e.g., using a Kubernetes Service Account).
-    *   It retrieves the secret and writes it to a shared in-memory volume.
-    *   The application container reads the secret from the shared volume.
-    *   The sidecar container can periodically refresh the secret, ensuring the application always has a valid, short-lived credential.
-
-*   **Kubernetes Manifest Snippet:**
+- **Architecture:**
+  - A Pod contains two containers: the main application container and a sidecar container (e.g., HashiCorp Vault Agent, CyberArk Conjur Secrets Provider).
+  - The sidecar container authenticates with the secrets manager (e.g., using a Kubernetes Service Account).
+  - It retrieves the secret and writes it to a shared in-memory volume.
+  - The application container reads the secret from the shared volume.
+  - The sidecar container can periodically refresh the secret, ensuring the application always has a valid, short-lived credential.
+- **Kubernetes Manifest Snippet:**
 
     ```yaml
     apiVersion: v1
@@ -95,17 +94,16 @@ In a Kubernetes environment, a common pattern is to use a sidecar container that
           medium: "Memory"
     ```
 
-**Example 2: Serverless Function for Database Credential Rotation**
+##### Example 2: Serverless Function for Database Credential Rotation
 
 Cloud-native secret managers often provide built-in support for automated rotation using serverless functions (e.g., AWS Lambda, Azure Functions).
 
-*   **Architecture:**
-    *   A secret is stored in a cloud secrets manager (e.g., AWS Secrets Manager).
-    *   The secrets manager is configured to trigger a rotation Lambda function on a schedule.
-    *   The Lambda function has the necessary permissions to update the database password and the secret value in the secrets manager.
-    *   The rotation process typically involves multiple steps (create new secret, set new secret, test new secret, finish rotation) to ensure a safe transition.
-
-*   **AWS Lambda Rotation Function (Conceptual Python Code):**
+- **Architecture:**
+  - A secret is stored in a cloud secrets manager (e.g., AWS Secrets Manager).
+  - The secrets manager is configured to trigger a rotation Lambda function on a schedule.
+  - The Lambda function has the necessary permissions to update the database password and the secret value in the secrets manager.
+  - The rotation process typically involves multiple steps (create new secret, set new secret, test new secret, finish rotation) to ensure a safe transition.
+- **AWS Lambda Rotation Function (Conceptual Python Code):**
 
     ```python
     import boto3
@@ -302,18 +300,18 @@ While not a direct replacement for all types of secrets (e.g., API keys, databas
 
 **How it helps:**
 
-*   **Reduces Password-Related Risks:** Eliminates threats like phishing, credential stuffing, and weak password practices.
-*   **Centralized Identity Management:** Authentication is handled by a specialized IdP, which can enforce strong authentication policies (e.g., MFA).
-*   **Short-Lived Sessions:** OIDC tokens are typically short-lived, limiting the window of opportunity for an attacker if a token is compromised.
+- **Reduces Password-Related Risks:** Eliminates threats like phishing, credential stuffing, and weak password practices.
+- **Centralized Identity Management:** Authentication is handled by a specialized IdP, which can enforce strong authentication policies (e.g., MFA).
+- **Short-Lived Sessions:** OIDC tokens are typically short-lived, limiting the window of opportunity for an attacker if a token is compromised.
 
 **Token Security is Crucial:**
 
 Adopting passwordless authentication shifts the security focus from protecting static passwords to protecting dynamic tokens (e.g., ID tokens, access tokens, refresh tokens). These tokens are bearer tokens, meaning anyone who possesses one can use it. Therefore, it is critical to:
 
-*   **Secure Token Transmission:** Always transmit tokens over TLS.
-*   **Protect Tokens in Storage:** Do not store tokens in insecure locations like local storage in a browser. Use secure, HTTP-only cookies or appropriate secure storage mechanisms for mobile applications.
-*   **Validate Tokens Correctly:** Always validate the signature, issuer, and audience of a token to ensure it is legitimate.
-*   **Manage Token Lifetime:** Use short-lived access tokens and implement a secure refresh token rotation strategy.
+- **Secure Token Transmission:** Always transmit tokens over TLS.
+- **Protect Tokens in Storage:** Do not store tokens in insecure locations like local storage in a browser. Use secure, HTTP-only cookies or appropriate secure storage mechanisms for mobile applications.
+- **Validate Tokens Correctly:** Always validate the signature, issuer, and audience of a token to ensure it is legitimate.
+- **Manage Token Lifetime:** Use short-lived access tokens and implement a secure refresh token rotation strategy.
 
 For more detailed guidance on securing OAuth 2.0 and OpenID Connect implementations, refer to the [OAuth2 Cheat Sheet](OAuth2_Cheat_Sheet.md).
 
@@ -561,26 +559,22 @@ Continually monitor who/what, from which IP, and what methodology accesses the s
 
 For a secrets management solution to be effective, it must be easy for developers to adopt and use. If the process is too complex, developers may resort to insecure practices. A focus on usability and a smooth onboarding experience is critical.
 
--   **Clear and Comprehensive Documentation:**
-    *   Provide clear, concise, and easy-to-find documentation. This should include tutorials for common use cases, detailed API references, and practical examples.
-    *   Maintain a "getting started" guide that walks new users through the process of obtaining their first secret.
-
--   **Developer-Friendly Tooling and SDKs:**
-    *   Offer well-maintained SDKs for various programming languages to simplify integration.
-    *   Provide a command-line interface (CLI) that allows developers to manage secrets from their local development environment.
-    *   Develop plugins for common IDEs, CI/CD systems, and infrastructure-as-code (IaC) tools like Terraform and Pulumi.
-
--   **Streamlined Workflows:**
-    *   Implement self-service workflows that enable developers to request and receive secrets with minimal manual intervention.
-    *   Use GitOps principles to manage secrets as code, allowing developers to define secret needs in a declarative manner alongside their application code.
-    *   Automate the approval process for low-risk secrets while maintaining appropriate controls for more sensitive ones.
-
--   **Actionable Feedback and Support:**
-    *   Provide clear error messages that help developers troubleshoot issues independently.
-    *   Establish dedicated support channels (e.g., a Slack channel, a ticketing system) where developers can get help from the security or platform team.
-
--   **Easy Integration:**
-    *   Ensure the secrets management solution can be easily integrated with existing applications. Sidecar containers, such as the [Vault Agent Sidecar Injector](https://developer.hashicorp.com/vault/docs/platform/k8s/injector) or the [Conjur Secrets Provider](https://github.com/cyberark/secrets-provider-for-k8s), can help decouple applications from the secrets management system.
+- **Clear and Comprehensive Documentation:**
+  - Provide clear, concise, and easy-to-find documentation. This should include tutorials for common use cases, detailed API references, and practical examples.
+  - Maintain a "getting started" guide that walks new users through the process of obtaining their first secret.
+- **Developer-Friendly Tooling and SDKs:**
+  - Offer well-maintained SDKs for various programming languages to simplify integration.
+  - Provide a command-line interface (CLI) that allows developers to manage secrets from their local development environment.
+  - Develop plugins for common IDEs, CI/CD systems, and infrastructure-as-code (IaC) tools like Terraform and Pulumi.
+- **Streamlined Workflows:**
+  - Implement self-service workflows that enable developers to request and receive secrets with minimal manual intervention.
+  - Use GitOps principles to manage secrets as code, allowing developers to define secret needs in a declarative manner alongside their application code.
+  - Automate the approval process for low-risk secrets while maintaining appropriate controls for more sensitive ones.
+- **Actionable Feedback and Support:**
+  - Provide clear error messages that help developers troubleshoot issues independently.
+  - Establish dedicated support channels (e.g., a Slack channel, a ticketing system) where developers can get help from the security or platform team.
+- **Easy Integration:**
+  - Ensure the secrets management solution can be easily integrated with existing applications. Sidecar containers, such as the [Vault Agent Sidecar Injector](https://developer.hashicorp.com/vault/docs/platform/k8s/injector) or the [Conjur Secrets Provider](https://github.com/cyberark/secrets-provider-for-k8s), can help decouple applications from the secrets management system.
 
 ## 7 Encryption
 
