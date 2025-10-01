@@ -112,6 +112,16 @@ See the OWASP [Transport Layer Security Cheat Sheet](Transport_Layer_Security_Ch
 
 It is important to emphasize that TLS does not protect against session ID prediction, brute force, client-side tampering or fixation; however, it does provide effective protection against an attacker intercepting or stealing session IDs through a man in the middle attack.
 
+### Token Storage and Validation on the Server-Side
+
+How to store and validate session tokens on the server-side is a critical aspect of session management. Here are some of the most common methods:
+
+*   **Store the session token server-side**: The session token is stored on the server-side in a session store (e.g., a database or a key-value store). The session token is then sent to the client as a cookie. When the client sends a request, the server looks up the session token in the session store to validate the session.
+*   **Store hash of the session token server-side**: The session token is stored on the server-side, but it is hashed before being stored. This is a good practice to prevent session hijacking if the session store is compromised. When the client sends a request, the server hashes the session token and compares it to the stored hash.
+*   **Use `(session_id, MAC-or-sign(session_id))` as cookie and store `session_id` server-side**: In this method, the cookie contains the session ID and a MAC (or a signature) of the session ID. The server stores the session ID and validates the MAC (or signature) to ensure the session ID has not been tampered with.
+*   **Use `session_id` as cookie and store `hash(session_id)` server-side**: This is a variation of the previous method. The cookie contains the session ID, and the server stores a hash of the session ID. When the client sends a request, the server hashes the session ID and compares it to the stored hash.
+*   **Use `(session_id, session_verifier)` as cookie and store `(session_id, hash(session_verifier))` server-side**: In this method, the cookie contains the session ID and a session verifier. The server stores the session ID and a hash of the session verifier. When the client sends a request, the server looks up the session ID and compares the hash of the session verifier to the stored hash.
+
 ## Cookies
 
 The session ID exchange mechanism based on cookies provides multiple security features in the form of cookie attributes that can be used to protect the exchange of the session ID:
