@@ -10,8 +10,8 @@ As a basic start, establish secure defaults, minimise the attack surface area, a
 
 Secure Product Design comes about through two processes:
 
-1. **_Product Inception_**; and
-2. **_Product Design_**
+1. __Product Inception__; and  
+2. __Product Design__
 
 The first process happens when a product is conceived, or when an existing product is being re-invented. The latter is continuous, evolutionary, and done in an agile way, close to where the code is being written.
 
@@ -41,13 +41,13 @@ Security-in-the-Open is a concept that emphasizes the importance of security in 
 
 Where does this application under consideration fit into the ecosystem of the organization, which departments use it and for what reason? What kinds of data might it contain, and what is the risk profile as a result?
 
-The processes employed to build the security context for an application include [Threat Modeling](Threat_Modeling_Cheat_Sheet.md) - which results in security related stories being added during **_Product Design_** at every iteration of _product delivery_ - and when performing a Business Impact Assessment - which results in setting the correct Product Security Levels for a given product during **_Product Inception_**.
+The processes employed to build the security context for an application include [Threat Modeling](Threat_Modeling_Cheat_Sheet.md) — which results in security related stories being added during __Product Design__ at every iteration of _product delivery_ — and when performing a Business Impact Assessment — which results in setting the correct Product Security Levels for a given product during __Product Inception__.
 
 Context is all important because over-engineering for security can have even greater cost implications than over-engineering for scale or performance, but under-engineering can have devastating consequences too.
 
 ### 2. Components
 
-From libraries in use by the application (selected during any **_Product Design_** stage) through to external services it might make use of (changing of which happen during **_Product Inception_**), what makes up this application and how are those parts kept secure? In order to do this we leverage a library of secure design patterns and ready to use components defined in your Golden Path / Paved Road documentation and by analyzing those choices through [Threat Modeling](Threat_Modeling_Cheat_Sheet.md).
+From libraries in use by the application (selected during any __Product Design__ stage) through to external services it might make use of (changing of which happen during __Product Inception__), what makes up this application and how are those parts kept secure? In order to do this we leverage a library of secure design patterns and ready to use components defined in your Golden Path / Paved Road documentation and by analyzing those choices through [Threat Modeling](Threat_Modeling_Cheat_Sheet.md).
 
 A part of this component review must also include the more commercial aspects of selecting the right components (licensing and maintenance) as well as the limits on usage that might be required.
 
@@ -55,7 +55,7 @@ A part of this component review must also include the more commercial aspects of
 
 How do you interact with this application and how does it connect to those components and services mentioned before? Where is the data stored and how is it accessed? Connections can also describe any intentional lack of connections. Think about the segregation of tiers that might be required depending on the Product Security Levels required and the potential segregation of data or whole environments if required for different tenants.
 
-Adding (or removing) connections is probably a sign that **_Product Inception_** is happening.
+Adding (or removing) connections is probably a sign that __Product Inception__ is happening.
 
 ### 4. Code
 
@@ -63,16 +63,16 @@ Code is the ultimate expression of the intention for a product and as such it mu
 
 Some basics of secure coding include:
 
-1. Input validation: Verify that all input data is valid and of the expected type, format, and length before processing it. This can help prevent attacks such as SQL injection and buffer overflows.
-2. Error handling: Handle errors and exceptions in a secure manner, such as by logging them in a secure way and not disclosing sensitive information to an attacker.
-3. Authentication and Authorization: Implement strong authentication and authorization mechanisms to ensure that only authorized users can access sensitive data and resources.
-4. Cryptography: Use cryptographic functions and protocols to protect data in transit and at rest, such as HTTPS and encryption - the expected levels for a given Product Security Level can often be found by reviewing your Golden Path / Paved Road documentation.
-5. Least privilege: Use the principle of the least privilege when writing code, such that the code and the system it runs on are given the minimum access rights necessary to perform their functions.
-6. Secure memory management: Use high-level languages recommended in your Golden Path / Paved Road documentation or properly manage memory to prevent memory-related vulnerabilities such as buffer overflows and use-after-free.
-7. Avoiding hardcoded secrets: Hardcoded secrets such as passwords and encryption keys should be avoided in the code and should be stored in a secure storage.
-8. Security testing: Test the software for security vulnerabilities during development and just prior to deployment.
-9. Auditing and reviewing the code: Regularly audit and review the code for security vulnerabilities, such as by using automated tools or having a third party review the code.
-10. Keeping up-to-date: Keep the code up-to-date with the latest security best practices and vulnerability fixes to ensure that the software is as secure as possible.
+1. Input validation: Verify that all input data is valid and of the expected type, format, and length before processing it. This can help prevent attacks such as SQL injection and buffer overflows.  
+2. Error handling: Handle errors and exceptions in a secure manner, such as by logging them in a secure way and not disclosing sensitive information to an attacker.  
+3. Authentication and Authorization: Implement strong authentication and authorization mechanisms to ensure that only authorized users can access sensitive data and resources.  
+4. Cryptography: Use cryptographic functions and protocols to protect data in transit and at rest, such as HTTPS and encryption — the expected levels for a given Product Security Level can often be found by reviewing your Golden Path / Paved Road documentation.  
+5. Least privilege: Use the principle of the least privilege when writing code, such that the code and the system it runs on are given the minimum access rights necessary to perform their functions.  
+6. Secure memory management: Use high-level languages recommended in your Golden Path / Paved Road documentation or properly manage memory to prevent memory-related vulnerabilities such as buffer overflows and use-after-free.  
+7. Avoiding hardcoded secrets: Hardcoded secrets such as passwords and encryption keys should be avoided in the code and should be stored in a secure storage.  
+8. Security testing: Test the software for security vulnerabilities during development and just prior to deployment.  
+9. Auditing and reviewing the code: Regularly audit and review the code for security vulnerabilities, such as by using automated tools or having a third party review the code.  
+10. Keeping up-to-date: Keep the code up-to-date with the latest security best practices and vulnerability fixes to ensure that the software is as secure as possible.  
 
 Ensure that you integrate plausibility checks at each tier of your application (e.g., from frontend to backend) and ensure that you write unit and integration tests to validate that all threats discovered during [Threat Modeling](Threat_Modeling_Cheat_Sheet.md) have been mitigated to a level of risk acceptable to the organization. Use that to compile use-cases and [abuse-cases](Abuse_Case_Cheat_Sheet.md) for each tier of your application.
 
@@ -80,18 +80,18 @@ Ensure that you integrate plausibility checks at each tier of your application (
 
 Building an application securely can all too easily be undone if it's not securely configured. At a minimum we should ensure the following:
 
-1. Bearing in mind the principle of Least Privilege: Limit the access and permissions of system components and users to the minimum required to perform their tasks.
-2. Remembering Defense-in-Depth: Implement multiple layers of security controls to protect against a wide range of threats.
-3. Ensuring Secure by Default: Configure systems and software to be secure by default, with minimal manual setup or configuration required.
-4. Secure Data: Protect sensitive data, such as personal information and financial data, by encrypting it in transit and at rest. Protecting that data also means ensuring it's correctly backed up and that the data retention is set correctly for the desired Product Security Level.
-5. Plan to have the configuration Fail Securely: Design systems to fail in a secure state, rather than exposing vulnerabilities when they malfunction.
-6. Always use Secure Communications: Use secure protocols for communication, such as HTTPS, to protect against eavesdropping and tampering.
-7. Perform regular updates - or leverage [maintained images](https://www.cisecurity.org/cis-hardened-images): Keeping software, docker images and base operating systems up-to-date with the [latest security patches](https://csrc.nist.gov/publications/detail/sp/800-40/rev-4/final) is an essential part of maintaining a secure system.
-8. Have a practiced Security Incident response plan: Having a plan in place for how to respond to a security incident is essential for minimizing the damage caused by any successful attack and a crucial part of the Product Support Model.
+1. Bearing in mind the principle of Least Privilege: Limit the access and permissions of system components and users to the minimum required to perform their tasks.  
+2. Remembering Defense-in-Depth: Implement multiple layers of security controls to protect against a wide range of threats.  
+3. Ensuring Secure by Default: Configure systems and software to be secure by default, with minimal manual setup or configuration required.  
+4. Secure Data: Protect sensitive data, such as personal information and financial data, by encrypting it in transit and at rest. Protecting that data also means ensuring it's correctly backed up and that the data retention is set correctly for the desired Product Security Level.  
+5. Plan to have the configuration Fail Securely: Design systems to fail in a secure state, rather than exposing vulnerabilities when they malfunction.  
+6. Always use Secure Communications: Use secure protocols for communication, such as HTTPS, to protect against eavesdropping and tampering.  
+7. Perform regular updates — or leverage [maintained images](https://www.cisecurity.org/cis-hardened-images): Keeping software, docker images and base operating systems up-to-date with the [latest security patches](https://csrc.nist.gov/publications/detail/sp/800-40/rev-4/final) is an essential part of maintaining a secure system.  
+8. Have a practiced Security Incident response plan: Having a plan in place for how to respond to a security incident is essential for minimizing the damage caused by any successful attack and a crucial part of the Product Support Model.  
 
-Details of how to precisely ensure secure configuration can be found in [Infrastructure as Code Security Cheat Sheet](Infrastructure_as_Code_Security_Cheat_Sheet.md)
+Details of how to precisely ensure secure configuration can be found in [Infrastructure as Code Security Cheat Sheet](Infrastructure_as_Code_Security_Cheat_Sheet.md).
 
 ## References
 
-- [CISA Secure by Design Guidelines](https://www.cisa.gov/secure-design)
-- [OWASP Top Ten Security Risks](https://owasp.org/www-project-top-ten/)
+- [CISA Secure by Design Guidelines](https://www.cisa.gov/secure-design)  
+- [OWASP Top Ten Security Risks](https://owasp.org/www-project-top-ten/)  
