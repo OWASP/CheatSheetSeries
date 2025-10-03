@@ -186,7 +186,7 @@ language
 
 ```
 
-### 6.2 Advanced Template Features
+### Advanced Template Features
 
 ```markdown
 
