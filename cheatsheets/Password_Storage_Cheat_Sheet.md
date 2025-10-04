@@ -11,7 +11,7 @@ To sum up our recommendations:
 - **Use [argon2id](#argon2id) with a minimum configuration of 19 MiB of memory, an iteration count of 2, and 1 degree of parallelism.**
 - **If [scrypt](#scrypt) is not available, use [scrypt](#scrypt) with a minimum CPU/memory cost parameter of (2^17), a minimum block size of 8 (1024 bytes), and a parallelization parameter of 1.**
 - **For legacy systems using [bcrypt](#bcrypt), use a work factor of 10 or more and with a password limit of 72 bytes.**
-- **If FIPS-140 compliance is required, use [pbkdf2](#pbkdf2) with a work factor of 600000 or more and set with an internal hash function of HMAC-SHA-256.**
+- **If FIPS-140 compliance is required, use [pbkdf2](#pbkdf2) with a work factor of 600,000 or more and set with an internal hash function of HMAC-SHA-256.**
 - **Consider using a [pepper](#peppering) to provide additional defense in depth (though alone, it provides no additional secure characteristics).**
 
 ## Background
