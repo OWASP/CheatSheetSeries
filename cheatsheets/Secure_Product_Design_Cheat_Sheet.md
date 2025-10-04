@@ -96,16 +96,16 @@ Details of how to precisely ensure secure configuration can be found in [Infrast
 The U.S. Cybersecurity and Infrastructure Security Agency (CISA) encourages integrating security throughout the product lifecycle.  
 The following principles complement OWASP Secure Product Design guidance:
 
-- **Build Security into Architecture and Design:**  
+- Build Security into Architecture and Design:
   Incorporate security requirements and threat modeling early, not as an afterthought.
 
-- **Use Memory-Safe Languages:**  
+- Use Memory-Safe Languages:  
   Where possible, favor languages that reduce common vulnerabilities such as buffer overflows and memory corruption.
 
-- **Empower Developers through Training and Culture:**  
+- Empower Developers through Training and Culture:  
   Provide developers and engineers with regular security training and make security a shared responsibility across teams.
 
-- **Adopt Secure Defaults:**  
+- Adopt Secure Defaults:  
   Ensure that products ship with the most secure configuration enabled by default.
 
 ## References
