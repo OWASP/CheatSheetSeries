@@ -49,6 +49,8 @@ CookieHttpOnly = true,
 
 Reduce the time period a session can be stolen in by reducing session timeout and removing sliding expiration:
 
+The decision to use sliding expiration depends on your application's threat model. Setting `SlidingExpiration` to `false` enforces an absolute session lifetime, which limits how long a stolen session can be reused, at the cost of reduced usability for long-lived interactive sessions. For some applications, enabling sliding expiration (`true`) may be preferred for user experience, as it keeps the session alive as long as the user is active. This convenience comes with increased risk if a session is compromised.
+
 ```csharp
 ExpireTimeSpan = TimeSpan.FromMinutes(60),
 SlidingExpiration = false
@@ -775,8 +777,9 @@ e.g
 services.ConfigureApplicationCookie(options =>
 {
  options.Cookie.HttpOnly = true;
- options.Cookie.Expiration = TimeSpan.FromHours(1)
- options.SlidingExpiration = true;
+ options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+ // See the discussion in A01 for trade-offs on using sliding expiration.
+ options.SlidingExpiration = false;
 });
 ```
 
