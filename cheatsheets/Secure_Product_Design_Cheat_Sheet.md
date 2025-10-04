@@ -91,7 +91,25 @@ Building an application securely can all too easily be undone if it's not secure
 
 Details of how to precisely ensure secure configuration can be found in [Infrastructure as Code Security Cheat Sheet](Infrastructure_as_Code_Security_Cheat_Sheet.md).
 
+## CISA Secure by Design Alignment
+
+The U.S. Cybersecurity and Infrastructure Security Agency (CISA) encourages integrating security throughout the product lifecycle.  
+The following principles complement OWASP Secure Product Design guidance:
+
+- **Build Security into Architecture and Design:**  
+  Incorporate security requirements and threat modeling early, not as an afterthought.
+
+- **Use Memory-Safe Languages:**  
+  Where possible, favor languages that reduce common vulnerabilities such as buffer overflows and memory corruption.
+
+- **Empower Developers through Training and Culture:**  
+  Provide developers and engineers with regular security training and make security a shared responsibility across teams.
+
+- **Adopt Secure Defaults:**  
+  Ensure that products ship with the most secure configuration enabled by default.
+
 ## References
 
-- [CISA Secure by Design Guidelines](https://www.cisa.gov/secure-design)  
-- [OWASP Top Ten Security Risks](https://owasp.org/www-project-top-ten/)  
+- [CISA Secure by Design Guidelines](https://www.cisa.gov/securebydesign)
+- [OWASP Top Ten](https://owasp.org/www-project-top-ten/)
+- [OWASP SAMM](https://owaspsamm.org/)
