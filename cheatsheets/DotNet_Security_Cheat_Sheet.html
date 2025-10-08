@@ -3779,6 +3779,7 @@ to assess for other threats or get a professionally completed Penetration Test.<
 <div class="highlight"><pre><span></span><code><span class="n">CookieHttpOnly</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">,</span>
 </code></pre></div>
 <p>Reduce the time period a session can be stolen in by reducing session timeout and removing sliding expiration:</p>
+<p>The decision to use sliding expiration depends on your application's threat model. Setting <code>SlidingExpiration</code> to <code>false</code> enforces an absolute session lifetime, which limits how long a stolen session can be reused, at the cost of reduced usability for long-lived interactive sessions. For some applications, enabling sliding expiration (<code>true</code>) may be preferred for user experience, as it keeps the session alive as long as the user is active. This convenience comes with increased risk if a session is compromised.</p>
 <div class="highlight"><pre><span></span><code><span class="n">ExpireTimeSpan</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TimeSpan</span><span class="p">.</span><span class="n">FromMinutes</span><span class="p">(</span><span class="m">60</span><span class="p">),</span>
 <span class="n">SlidingExpiration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">false</span>
 </code></pre></div>
@@ -4345,8 +4346,9 @@ ASP.NET Core Identity framework is well configured by default, where it uses sec
 <span class="n">services</span><span class="p">.</span><span class="n">ConfigureApplicationCookie</span><span class="p">(</span><span class="n">options</span><span class="w"> </span><span class="o">=&gt;</span>
 <span class="p">{</span>
 <span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">Cookie</span><span class="p">.</span><span class="n">HttpOnly</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
-<span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">Cookie</span><span class="p">.</span><span class="n">Expiration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TimeSpan</span><span class="p">.</span><span class="n">FromHours</span><span class="p">(</span><span class="m">1</span><span class="p">)</span>
-<span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">SlidingExpiration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
+<span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">ExpireTimeSpan</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TimeSpan</span><span class="p">.</span><span class="n">FromMinutes</span><span class="p">(</span><span class="m">60</span><span class="p">);</span>
+<span class="w"> </span><span class="c1">// See the discussion in A01 for trade-offs on using sliding expiration.</span>
+<span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">SlidingExpiration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">false</span><span class="p">;</span>
 <span class="p">});</span>
 </code></pre></div>
 <h3 id="a08-software-and-data-integrity-failures">A08 Software and Data Integrity Failures<a class="headerlink" href="#a08-software-and-data-integrity-failures" title="Permanent link">&para;</a></h3>
