@@ -161,9 +161,9 @@ document.getElementById("bb").onmouseover = "testIt";
 document.getElementById("bb").onmouseover = \u0061\u006c\u0065\u0072\u0074\u0028\u0037\u0037\u0029;
 
 //The following example is tricky
-// first testIt will be assigned as onmousehiver event handler, The second testIt will fire while parsing
-// becasue second testIt is a seperate js statement
-// this happen because of ; seperator
+// first testIt will be assigned as an onmousehover event handler, The second testIt will fire while parsing.
+// becasue second testIt is a separate js statement
+// this happen because of ; separator
 //"testIt;testIt" is JavaScript encoded.
 document.getElementById("bb").onmouseover = \u0074\u0065\u0073\u0074\u0049\u0074\u003b\u0074\u0065\u0073
                                             \u0074\u0049\u0074;
