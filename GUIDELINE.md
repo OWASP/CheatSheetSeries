@@ -216,7 +216,7 @@ language
 
 ## Conclusion
 
-Creating security cheat sheets requires planning, research, and maintenance. This guideline helps you to create security guidance that helps practitioners implement effective security controls.
+This guideline helps you to create security guidance that helps practitioners implement effective security controls.
 
 ### Key Success Factors
 
