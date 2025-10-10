@@ -241,23 +241,31 @@ MvcHandler.DisableMvcResponseHeader = true;
 
 ### X-Robots-Tag
 
-The HTTP `X-Robots-Tag` response header helps control how search engines and AI bots index and show files like PDFs, images, and other non-webpage content. It works like the robots meta tag but is set in the server response, giving more control and flexibility.
+The HTTP `X-Robots-Tag` response header controls how search engines and other automated crawlers index and display resources such as PDFs, images, and other non-HTML content.  
+It functions similarly to the `<meta name="robots">` tag, but is applied via the HTTP response header, allowing greater flexibility (e.g., for non-HTML files or server-wide rules).
 
-```lang-none
+```none
 X-Robots-Tag: noindex, nofollow
-```
+````
 
-- *NOTE*: Only well-behaved crawlers follow these rules, and they must first access the resource to read its headers and meta tags.
-  
+* **Note:** Only compliant crawlers respect these directives, and they must still make an HTTP request to read the headers before deciding how to handle the content.
+
 #### Recommendation
 
-Set the `X-Robots-Tag` header to control how search engines and bots index your content. For example:
+Use the `X-Robots-Tag` header to control crawler behavior:
 
-> `X-Robots-Tag: noindex, nofollow`
+* For **private or sensitive content** you don’t want indexed:
 
-This will prevent search engines from indexing the resource and following links on it. Adjust the value as needed for your use case (e.g., `index, follow`, `noarchive`, etc.).
+  > `X-Robots-Tag: noindex, nofollow`
+  > This prevents compliant search engines from indexing the resource or following links on it.
 
-You can also use this header to control indexing of specific file types (like PDFs or images) by configuring your web server to send the header only for those resources.
+* For **public content** you want indexed and discoverable (e.g., documentation, datasets):
+
+  > `X-Robots-Tag: index, follow`
+  > This allows search engines to index the resource and follow its links.
+
+You can also use other directives such as `noarchive`, `nosnippet`, or `noimageindex` depending on your needs.
+Server configuration can apply this header selectively — for example, only on specific file types (like PDFs or images).
 
 ### X-DNS-Prefetch-Control
 
