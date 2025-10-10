@@ -216,7 +216,7 @@ language
 
 ## Conclusion
 
-Creating comprehensive security cheat sheets requires careful planning, thorough research, and ongoing maintenance. By following this guide, you can create authoritative, practical, and valuable security guidance that helps practitioners implement effective security controls.
+Creating security cheat sheets requires planning, research, and maintenance. This guideline helps you to create security guidance that helps practitioners implement effective security controls.
 
 ### Key Success Factors
 
