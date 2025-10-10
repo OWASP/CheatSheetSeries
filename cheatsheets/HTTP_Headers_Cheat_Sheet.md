@@ -239,6 +239,34 @@ MvcHandler.DisableMvcResponseHeader = true;
 
 - *NOTE*: Remember that attackers have other means of fingerprinting your tech stack.
 
+### X-Robots-Tag
+
+The HTTP `X-Robots-Tag` response header controls how search engines and other automated crawlers index and display resources such as PDFs, images, and other non-HTML content.  
+It functions similarly to the `<meta name="robots">` tag, but is applied via the HTTP response header, allowing greater flexibility (e.g., for non-HTML files or server-wide rules).
+
+```none
+X-Robots-Tag: noindex, nofollow
+````
+
+- **Note:** Only compliant crawlers respect these directives, and they must still make an HTTP request to read the headers before deciding how to handle the content.
+
+#### Recommendation
+
+Use the `X-Robots-Tag` header to control crawler behavior:
+
+- For **private or sensitive content** you don’t want indexed:
+
+  > `X-Robots-Tag: noindex, nofollow`
+  > This prevents compliant search engines from indexing the resource or following links on it.
+
+- For **public content** you want indexed and discoverable (e.g., documentation, datasets):
+
+  > `X-Robots-Tag: index, follow`
+  > This allows search engines to index the resource and follow its links.
+
+You can also use other directives such as `noarchive`, `nosnippet`, or `noimageindex` depending on your needs.
+Server configuration can apply this header selectively — for example, only on specific file types (like PDFs or images).
+
 ### X-DNS-Prefetch-Control
 
 The `X-DNS-Prefetch-Control` HTTP response header controls DNS prefetching, a feature by which browsers proactively perform domain name resolution on both links that the user may choose to follow as well as URLs for items referenced by the document, including images, CSS, JavaScript, and so forth.
