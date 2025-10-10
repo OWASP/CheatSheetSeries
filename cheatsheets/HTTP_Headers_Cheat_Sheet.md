@@ -248,18 +248,18 @@ It functions similarly to the `<meta name="robots">` tag, but is applied via the
 X-Robots-Tag: noindex, nofollow
 ````
 
-* **Note:** Only compliant crawlers respect these directives, and they must still make an HTTP request to read the headers before deciding how to handle the content.
+- **Note:** Only compliant crawlers respect these directives, and they must still make an HTTP request to read the headers before deciding how to handle the content.
 
 #### Recommendation
 
 Use the `X-Robots-Tag` header to control crawler behavior:
 
-* For **private or sensitive content** you don’t want indexed:
+- For **private or sensitive content** you don’t want indexed:
 
   > `X-Robots-Tag: noindex, nofollow`
   > This prevents compliant search engines from indexing the resource or following links on it.
 
-* For **public content** you want indexed and discoverable (e.g., documentation, datasets):
+- For **public content** you want indexed and discoverable (e.g., documentation, datasets):
 
   > `X-Robots-Tag: index, follow`
   > This allows search engines to index the resource and follow its links.
