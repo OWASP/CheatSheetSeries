@@ -3509,7 +3509,10 @@
 <span class="c1">//&quot;alert(77)&quot; is JavaScript encoded.</span>
 <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;bb&quot;</span><span class="p">).</span><span class="nx">onmouseover</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">\u0061\u006c\u0065\u0072\u0074\u0028\u0037\u0037\u0029</span><span class="p">;</span>
 
-<span class="c1">//The following does NOT work because of the encoded &quot;;&quot;.</span>
+<span class="c1">//The following example is tricky</span>
+<span class="c1">// first testIt will be assigned as an onmousehover event handler, The second testIt will fire while parsing.</span>
+<span class="c1">// becasue second testIt is a separate js statement</span>
+<span class="c1">// this happen because of ; separator</span>
 <span class="c1">//&quot;testIt;testIt&quot; is JavaScript encoded.</span>
 <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;bb&quot;</span><span class="p">).</span><span class="nx">onmouseover</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">\u0074\u0065\u0073\u0074\u0049\u0074\u003b\u0074\u0065\u0073</span>
 <span class="w">                                            </span><span class="nx">\u0074\u0049\u0074</span><span class="p">;</span>
