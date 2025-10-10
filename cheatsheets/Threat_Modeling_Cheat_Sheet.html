@@ -2388,6 +2388,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#cloud-threat-modeling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cloud Threat Modeling
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#threat-identification" class="md-nav__link">
     <span class="md-ellipsis">
       Threat Identification
@@ -2952,6 +2961,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#cloud-threat-modeling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cloud Threat Modeling
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#threat-identification" class="md-nav__link">
     <span class="md-ellipsis">
       Threat Identification
@@ -3107,6 +3125,22 @@
 <p>Another approach to Data Flow Diagrams (DFD) could be the brainstorming technique, which is an effective method for generating ideas and discovering the project's domain. Applying brainstorming in this context can bring numerous benefits, such as increased team engagement, unification of knowledge and terminology, a shared understanding of the domain, and quick identification of key processes and dependencies. One of the main arguments for using brainstorming is its flexibility and adaptability to almost any scenario, including business logic. Additionally, this technique is particularly useful when less technical individuals participate in the session, as it eliminates barriers related to understanding and applying the components of DFD models and their correctness.</p>
 <p>Brainstorming engages all participants, fostering better communication and mutual understanding of issues. Every team member has the opportunity to contribute, which increases the sense of responsibility and involvement. During a brainstorming session, participants can collaboratively define and agree on key terms and concepts, leading to a unified language used in the project. This is especially important in complex projects where different teams might have different approaches to terminology. Due to the dynamic nature of brainstorming, the team can quickly identify key business processes and their interrelations.</p>
 <p>Integrating the results of brainstorming with formal modeling techniques can lead to a better understanding of the domain and more effective system design.</p>
+<h3 id="cloud-threat-modeling">Cloud Threat Modeling<a class="headerlink" href="#cloud-threat-modeling" title="Permanent link">&para;</a></h3>
+<p>Most modern systems are cloud-native or hybrid. Traditional threat modeling techniques (like STRIDE or DFDs) often need adaptation for cloud architectures, which introduce:</p>
+<ul>
+<li>Shared responsibility models</li>
+<li>Managed services and APIs</li>
+<li>Multi-tenant and identity federation considerations</li>
+<li>Dynamic infrastructure (IaC, serverless, containers)</li>
+</ul>
+<p>Cloud-native systems introduce unique considerations for threat modeling due to their distributed, service-oriented nature and shared responsibility model. In this context, the threat modeling process should account for:</p>
+<ul>
+<li><strong>Cloud architecture components:</strong> virtual networks, IAM roles, managed services, and storage buckets.</li>
+<li><strong>Shared responsibility:</strong> understanding which security controls are managed by the provider vs. the customer.</li>
+<li><strong>Dynamic environments:</strong> container orchestration, serverless functions, and ephemeral infrastructure.</li>
+<li><strong>Compliance and data residency:</strong> ensuring that workloads meet jurisdictional and privacy requirements.</li>
+</ul>
+<p>Cloud threat modeling frameworks such as <a href="https://learn.microsoft.com/en-us/azure/security/develop/threat-modeling-tool-cloud">Microsoft’s Cloud Security Threat Modeling</a>, <a href="https://owasp.org/www-project-cloud-security/">OWASP Cloud Security Project</a>, and AWS’s <a href="https://docs.aws.amazon.com/wellarchitected/latest/security-pillar/welcome.html">Well-Architected Framework – Security Pillar</a> can serve as references.</p>
 <h3 id="threat-identification">Threat Identification<a class="headerlink" href="#threat-identification" title="Permanent link">&para;</a></h3>
 <p>After the system has been modeled, it is now time to address the question of "what can go wrong?". This question must be explored with the inputs from the first step in mind; that is, it should focus on identifying and ranking threats within the context of the specific system being evaluated. In attempting to answer this question, threat modelers have a wealth of data sources and techniques at their disposal. For illustration purposes, this cheatsheet will leverage STRIDE; however, in practice, other approaches may be used alongside or instead of STRIDE.</p>
 <p>STRIDE is a mature and popular threat modeling technique and mnemonic originally developed by Microsoft employees. To facilitate threat identification, STRIDE groups threats into one of six general prompts and engineers are encouraged to systematically consider how these general threats may materialize within the context of the specific system being evaluated. Each STRIDE threat may be considered a violation of a desirable security attribute; the categories and associated desirable attributes are are as follows:</p>
