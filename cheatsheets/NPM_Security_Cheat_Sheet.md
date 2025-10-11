@@ -162,3 +162,19 @@ Closing our list of ten npm security best practices are the following tips to re
 - Be extra-careful when copy-pasting package installation instructions into the terminal. Make sure to verify in the source code repository as well as on the npm registry that this is indeed the package you are intending to install. You might verify the metadata of the package with `npm info` to fetch more information about contributors and latest versions.
 - Default to having an npm logged-out user in your daily work routines so your credentials won’t be the weak spot that would lead to easily compromising your account.
 - When installing packages, append the `--ignore-scripts` to reduce the risk of arbitrary command execution. For example: `npm install my-malicious-package --ignore-scripts`
+
+## 11) Use trusted publishers for secure package publishing
+
+Traditional npm publishing relies on long-lived tokens that can be compromised or accidentally exposed. Trusted publishing with OpenID Connect (OIDC) provides a more secure alternative by using short-lived, workflow-specific credentials that are automatically generated during CI/CD processes. Trusted publishing currently supports GitHub Actions and GitLab CI/CD Pipelines.
+
+### How trusted publishing works
+
+Trusted publishing creates a trust relationship between npm and your CI/CD provider using OIDC. When you configure a trusted publisher for your package, npm will accept publishes from the specific workflow you've authorized, in addition to traditional authentication methods like npm tokens and manual publishes. The npm CLI automatically detects OIDC environments and uses them for authentication before falling back to traditional tokens.
+
+This approach eliminates the security risks associated with long-lived write tokens, which can be compromised, accidentally exposed in logs, or require manual rotation. Instead, each publish uses short-lived, cryptographically-signed tokens that are specific to your workflow and cannot be extracted or reused.
+
+### Automatic provenance generation
+
+When publishing via trusted publishing, npm automatically generates provenance attestations that provide cryptographic proof of package authenticity. This helps users verify that packages come from legitimate sources and haven't been tampered with.
+
+For more information, see the [npm trusted publishing documentation](https://docs.npmjs.com/trusted-publishers).
