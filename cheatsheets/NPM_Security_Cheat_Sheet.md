@@ -139,29 +139,27 @@ To verify which tokens are created for your user or to revoke tokens in cases of
 
 Ensure you are following this npm security best practice by protecting and minimizing the exposure of your npm tokens.
 
-## 10) Understand module naming conventions and typosquatting attacks
+## 10) Understanding typosquatting and slopsquatting attacks
 
-Naming a module is the first thing you might do when creating a package, but before defining a final name, npm defines some rules that a package name must follow:
+### Typosquatting attacks
 
-- It is limited to 214 characters
-- No uppercase letters in the name
-- No trailing spaces
-- Some special characters are not allowed: “~\’!()*”
-- Can’t start with . or _
-- Can’t use node_modules or favicon.ico in the name
-- Even if you follow these rules, be aware that npm uses a spam detection mechanism when publishing new packages, based on score and whether a package name violates the terms of the service. If conditions are violated, the registry might deny the request.
+Typosquatting is an attack that relies on mistakes made by users, such as typos. With typosquatting, bad actors publish malicious modules to the npm registry with names that look much like existing popular modules. These malicious packages exploit common typing errors or visual similarities to trick developers into installing them instead of the legitimate packages they intended to use.
 
-Typosquatting is an attack that relies on mistakes made by users, such as typos. With typosquatting, bad actors could publish malicious modules to the npm registry with names that look much like existing popular modules.
+We have been tracking tens of malicious packages in the npm ecosystem; similar attacks have been seen on the PyPi Python registry as well. Some of the most notable incidents include [cross-env](https://snyk.io/vuln/npm:crossenv:20170802), [event-stream](https://snyk.io/vuln/SNYK-JS-EVENTSTREAM-72638), and [eslint-scope](https://snyk.io/vuln/npm:eslint-scope:20180712).
 
-We have been tracking tens of malicious packages in the npm ecosystem; they have been seen on the PyPi Python registry as well. Perhaps some of the most popular incidents have been for [cross-env](https://snyk.io/vuln/npm:crossenv:20170802), [event-stream](https://snyk.io/vuln/SNYK-JS-EVENTSTREAM-72638), and [eslint-scope](https://snyk.io/vuln/npm:eslint-scope:20180712).
+One of the main targets for typosquatting attacks are user credentials, since any package has access to environment variables via the global variable `process.env`. Other examples include the event-stream case, where attackers targeted developers in the hopes of [injecting malicious code](https://snyk.io/blog/a-post-mortem-of-the-malicious-event-stream-backdoor) into an application's source code.
 
-One of the main targets for typosquatting attacks are the user credentials, since any package has access to environment variables via the global variable process.env. Other examples we’ve seen in the past include the case with event-stream, where the attack targeted developers in the hopes of [injecting malicious code](https://snyk.io/blog/a-post-mortem-of-the-malicious-event-stream-backdoor) into an application’s source code.
+### Slopsquatting attacks
 
-Closing our list of ten npm security best practices are the following tips to reduce the risk of such attacks:
+Slopsquatting is a newer attack vector that exploits AI-powered coding assistants and Large Language Models (LLMs). When developers use AI tools to generate code or package recommendations, these models may occasionally "hallucinate" package names that don't actually exist. Attackers monitor these hallucinations and create malicious packages with those exact names, knowing that developers may blindly trust and install packages suggested by their AI assistants.
 
-- Be extra-careful when copy-pasting package installation instructions into the terminal. Make sure to verify in the source code repository as well as on the npm registry that this is indeed the package you are intending to install. You might verify the metadata of the package with `npm info` to fetch more information about contributors and latest versions.
-- Default to having an npm logged-out user in your daily work routines so your credentials won’t be the weak spot that would lead to easily compromising your account.
-- When installing packages, append the `--ignore-scripts` to reduce the risk of arbitrary command execution. For example: `npm install my-malicious-package --ignore-scripts`
+To protect against slopsquatting:
+
+- Always verify that packages suggested by AI tools actually exist and are legitimate
+- Check the package's repository, download statistics, and maintainer information
+- Cross-reference AI suggestions with official documentation
+- Be skeptical of packages with very low download counts or recent creation dates
+- Review the package source code before installing, especially for AI-suggested packages
 
 ## 11) Use trusted publishers for secure package publishing
 
@@ -178,3 +176,11 @@ This approach eliminates the security risks associated with long-lived write tok
 When publishing via trusted publishing, npm automatically generates provenance attestations that provide cryptographic proof of package authenticity. This helps users verify that packages come from legitimate sources and haven't been tampered with.
 
 For more information, see the [npm trusted publishing documentation](https://docs.npmjs.com/trusted-publishers).
+
+## Final Recommendations
+
+Closing our list of npm security best practices are the following tips to reduce the risk of such attacks:
+
+- Be extra-careful when copy-pasting package installation instructions into the terminal. Make sure to verify in the source code repository as well as on the npm registry that this is indeed the package you are intending to install. You might verify the metadata of the package with `npm info` to fetch more information about contributors and latest versions.
+- Default to having an npm logged-out user in your daily work routines so your credentials won’t be the weak spot that would lead to easily compromising your account.
+- When installing packages, append the `--ignore-scripts` to reduce the risk of arbitrary command execution. For example: `npm install my-malicious-package --ignore-scripts`
