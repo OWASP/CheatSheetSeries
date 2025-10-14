@@ -1,6 +1,6 @@
 # NPM Security best practices
 
-In the following npm cheatsheet, we’re going to focus on [10 npm security best practices](https://snyk.io/blog/ten-npm-security-best-practices) and productivity tips, useful for JavaScript and Node.js developers.
+The following cheatsheet covers several NPM security best practices and productivity tips, useful for JavaScript and Node.js developers. This list was originally based on the [10 npm security best practices](https://snyk.io/blog/ten-npm-security-best-practices) from the Snyk blog.
 
 ## 1) Avoid publishing secrets to the npm registry
 
@@ -46,6 +46,22 @@ Apply these npm security best practices in order to minimize the malicious modul
 - When installing packages make sure to add the `--ignore-scripts` suffix to disable the execution of any scripts by third-party packages.
 - Consider adding `ignore-scripts` to your `.npmrc` project file, or to your global npm configuration.
 
+### Using an allowlist for lifecycle scripts
+
+Disabling lifecycle scripts by default by adding `ignore-script` to your `.npmrc` file is the safest option. If you use packages that rely on lifecycle scripts for legitimate reasons, you can use a plugin like [`@lavamoat/allow-scripts`](https://github.com/LavaMoat/LavaMoat/tree/main/packages/allow-scripts) to create an _allowlist_ of packages authorized to run lifecylce scripts.
+
+Here's how the allowlist would look like in the `package.json` file on a project using the popular image processing package [sharp](https://www.npmjs.com/package/sharp):
+
+```json
+{
+  "lavamoat": {
+    "allowScripts": {
+      "sharp": true
+    }
+  }
+}
+```
+
 ## 4) Assess npm project health
 
 ### npm outdated command
@@ -70,7 +86,7 @@ Call the doctor! The npm CLI incorporates a health assessment tool to diagnose y
 
 The npm ecosystem is the single largest repository of application libraries amongst all the other language ecosystems. The registry and the libraries in it are at the core for JavaScript developers as they are able to leverage work that others have already built and incorporate it into their codebase. With that said, the increasing adoption of open source libraries in applications brings with it an increased risk of introducing security vulnerabilities.
 
-Many popular npm packages have been found to be vulnerable and may carry a significant risk without proper security auditing of your project’s dependencies. Some examples are npm [request](https://snyk.io/vuln/npm:request:20160119), [superagent](https://snyk.io/vuln/search?q=superagent&type=npm), [mongoose](https://snyk.io/vuln/search?q=mongoose&type=npm), and even security-related packages like [jsonwebtoken](https://snyk.io/vuln/npm:jsonwebtoken:20150331), and  [validator](https://snyk.io/vuln/search?q=validator&type=npm).
+Many popular npm packages have been found to be vulnerable and may carry a significant risk without proper security auditing of your project’s dependencies. Some examples are npm [request](https://snyk.io/vuln/npm:request:20160119), [superagent](https://snyk.io/vuln/search?q=superagent&type=npm), [mongoose](https://snyk.io/vuln/search?q=mongoose&type=npm), and even security-related packages like [jsonwebtoken](https://snyk.io/vuln/npm:jsonwebtoken:20150331), and [validator](https://snyk.io/vuln/search?q=validator&type=npm).
 
 Security doesn’t end by just scanning for security vulnerabilities when installing a package but should also be streamlined with developer workflows to be effectively adopted throughout the entire lifecycle of software development, and monitored continuously when code is deployed:
 
@@ -129,7 +145,7 @@ Follow the command-line instructions to enable 2FA, and to save emergency authen
 
 Every time you log in with the npm CLI, a token is generated for your user and authenticates you to the npm registry. Tokens make it easy to perform npm registry-related actions during CI and automated procedures, such as accessing private modules on the registry or publishing new versions from a build step.
 
-Tokens can be managed through the npm registry website, as well as using the npm command-line client. An example of using the CLI to create  a read-only token that is restricted to a specific IPv4 address range is as follows:
+Tokens can be managed through the npm registry website, as well as using the npm command-line client. An example of using the CLI to create a read-only token that is restricted to a specific IPv4 address range is as follows:
 
 ```sh
 npm token create --read-only --cidr=192.0.2.0/24
