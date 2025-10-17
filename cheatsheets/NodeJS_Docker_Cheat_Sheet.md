@@ -15,7 +15,7 @@ So, in fact, by specifying the following in your Dockerfile, you always build th
 
 The shortcomings of building based on the default `node` image are as follows:
 
-1. Docker image builds are inconsistent. Just like we’re using `lockfiles` to get a deterministic `npm install` behavior every time we install npm packages, we’d also like to get deterministic docker image builds. If we build the image from node—which effectively means the `node:latest` tag—then every build will pull a newly built Docker image of `node`. We don’t want to introduce this sort of non-deterministic behavior.
+1. Docker image builds are inconsistent. Just like we’re using `lockfiles` to get a deterministic [`npm ci`](https://cheatsheetseries.owasp.org/cheatsheets/NPM_Security_Cheat_Sheet.html#2-enforce-the-lockfile) behavior every time we install npm packages, we’d also like to get deterministic docker image builds. If we build the image from node—which effectively means the `node:latest` tag—then every build will pull a newly built Docker image of `node`. We don’t want to introduce this sort of non-deterministic behavior.
 2. The node Docker image is based on a full-fledged operating system, full of libraries and tools that you may or may not need to run your Node.js web application. This has two downsides. Firstly a bigger image means a bigger download size which, besides increasing the storage requirement, means more time to download and re-build the image. Secondly, it means you’re potentially introducing security vulnerabilities, that may exist in all of these libraries and tools, into the image.
 
 In fact, the `node` Docker image is quite big and includes hundreds of security vulnerabilities of different types and severities. If you’re using it, then by default your starting point is going to be a baseline of 642 security vulnerabilities, and hundreds of megabytes of image data that is downloaded on every pull and build.
@@ -52,7 +52,7 @@ Now we can update the Dockerfile for this Node.js Docker image as follows:
     FROM node@sha256:b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a
     WORKDIR /usr/src/app
     COPY . /usr/src/app
-    RUN npm install
+    RUN npm ci
     CMD "npm" "start"
 
 However, the Dockerfile above, only specifies the Node.js Docker image name without an image tag which creates ambiguity for which exact image tag is being used—it’s not readable, hard to maintain and doesn’t create a good developer experience.
@@ -62,14 +62,14 @@ Let’s fix it by updating the Dockerfile, providing the full base image tag for
     FROM node:lts-alpine@sha256:b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a
     WORKDIR /usr/src/app
     COPY . /usr/src/app
-    RUN npm install
+    RUN npm ci
     CMD "npm" "start"
 
 ## 2) Install only production dependencies in the Node.js Docker image
 
 The following Dockerfile directive installs all dependencies in the container, including `devDependencies`, which aren’t needed for a functional application to work. It adds an unneeded security risk from packages used as development dependencies, as well as inflating the image size unnecessarily.
 
-**`RUN npm install`**
+**`RUN npm ci`**
 
 Enforce deterministic builds with `npm ci`. This prevents surprises in a continuous integration (CI) flow because it halts if any deviations from the lockfile are made.
 
@@ -93,7 +93,7 @@ This brings us to add the following Dockerfile directive:
 
 **`ENV NODE_ENV production`**
 
-At first glance, this looks redundant, since we already specified only production dependencies in the `npm install` phase—so why is this necessary?
+At first glance, this looks redundant, since we already specified only production dependencies in the `npm ci` phase—so why is this necessary?
 
 Developers mostly associate the `NODE_ENV=production` environment variable setting with the installation of production-related dependencies, however, this setting also has other effects which we need to be aware of.
 
@@ -397,7 +397,7 @@ As you can see, the `node_modules/` is actually quite important to skip because 
     FROM node@sha256:b2da3316acdc2bec442190a1fe10dc094e7ba4121d029cb32075ff59bb27390a
     WORKDIR /usr/src/app
     COPY . /usr/src/app
-    RUN npm install
+    RUN npm ci
     CMD "npm" "start"
 
 In fact, it’s even more important to have a `.dockerignore` file when you are practicing multi-stage Docker builds. To refresh your memory on how the 2nd stage Docker build looks like:

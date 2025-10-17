@@ -89,34 +89,34 @@ In order to mitigate CSRF and session hijacking, it's important to require the c
 
 ### Reauthentication After Risk Events
 
-**Overview:**  
+**Overview:**
 Reauthentication is critical when an account has experienced high-risk activity such as account recovery, password resets, or suspicious behavior patterns. This section outlines when and how to trigger reauthentication to protect users and prevent unauthorized access. For further details, see the [Require Re-authentication for Sensitive Features](#require-re-authentication-for-sensitive-features) section.
 
 #### When to Trigger Reauthentication
 
-- **Suspicious Account Activity**  
+- **Suspicious Account Activity**
   When unusual login patterns, IP address changes, or device enrollments occur
-- **Account Recovery**  
+- **Account Recovery**
   After users reset their passwords or change sensitive account details
-- **Critical Actions**  
+- **Critical Actions**
   For high-risk actions like changing payment details or adding new trusted devices
 
 #### Reauthentication Mechanisms
 
-- **Adaptive Authentication**  
+- **Adaptive Authentication**
   Use risk-based authentication models that adapt to the user's behavior and context
-- **Multi-Factor Authentication (MFA)**  
+- **Multi-Factor Authentication (MFA)**
   Require an additional layer of verification for sensitive actions or events
-- **Challenge-Based Verification**  
+- **Challenge-Based Verification**
   Prompt users to confirm their identity with a challenge question or secondary method
 
 #### Implementation Recommendations
 
-- **Minimize User Friction**  
+- **Minimize User Friction**
   Ensure that reauthentication does not disrupt the user experience unnecessarily
-- **Context-Aware Decisions**  
+- **Context-Aware Decisions**
   Make reauthentication decisions based on context (e.g., geolocation, device type, prior patterns)
-- **Secure Session Management**  
+- **Secure Session Management**
   Invalidate sessions after reauthentication and rotate tokens—see the [OWASP Session Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html)
 
 #### References
@@ -305,21 +305,23 @@ Enable logging and monitoring of authentication functions to detect attacks/fail
 
 While authentication through a combination of username, password, and multi-factor authentication is considered generally secure, there are use cases where it isn't considered the best option or even safe. Examples of this are third-party applications that desire to connect to the web application, either from a mobile device, another website, desktop, or other situations. When this happens, it is NOT considered safe to allow the third-party application to store the user/password combo, since then it extends the attack surface into their hands, where it isn't in your control. For this and other use cases, there are several authentication protocols that can protect you from exposing your users' data to attackers.
 
-### OAuth
+### OAuth 2.0 and 2.1
 
-Open Authorization (OAuth) is a protocol that allows an application to authenticate against a server as a user, without requiring passwords or any third-party server that acts as an identity provider. It uses a server-generated token and defines how authorization flows must occur, so that a client, such as a mobile application, can tell the server what user is using the service.
+OAuth is an **authorization** framework for delegated access to APIs. See also: [OAuth 2.0 Cheat Sheet](OAuth2_Cheat_Sheet.md).
 
-The recommendation is to use and implement [OAuth 2.0](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics) since the very first version (OAuth1.0) has been found to be vulnerable to session fixation.
+> **Note:** OAuth 2.1 is an IETF Working Group draft that consolidates OAuth 2.0 and widely adopted best practices and is intended to replace RFC 6749/6750; guidance in this cheat sheet applies to both OAuth 2.0 and OAuth 2.1. References: [draft-ietf-oauth-v2-1-13](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-13), [oauth.net/2.1](https://oauth.net/2.1/)
 
-OAuth 2.0 relies on HTTPS for security and is currently used and implemented by APIs from companies such as Facebook, Google, Twitter, and Microsoft. OAuth 1.0a is more difficult to use because it requires the use of cryptographic libraries for digital signatures. However, since OAuth 1.0a does not rely on HTTPS for security, it can be more suited for higher-risk transactions.
+### OpenID Connect (OIDC)
 
-### OpenId
+**OpenID Connect 1.0 (OIDC)** is an identity layer **on top of OAuth**. It defines how a client (**relying party**) verifies the **end user's** identity using an **ID Token** (a signed JWT) and how to obtain user claims in an interoperable way. Use **OIDC for authentication/SSO**; use **OAuth for authorization** to APIs.
 
-OpenId is an HTTP-based protocol that uses identity providers to validate that a user is who they say they are. It is a very simple protocol that allows a service-provider-initiated way for single sign-on (SSO). This allows the user to reuse a single identity given to a trusted OpenId identity provider and be the same user on multiple websites, without the need to provide any website with the password, except for the OpenId identity provider.
+#### OIDC implementation guidance
 
-Due to its simplicity and that it provides protection of passwords, OpenId has been well adopted. Some of the well-known identity providers for OpenId are Stack Exchange, Google, Facebook, and Yahoo!
+- **Validate ID Tokens** on the relying party: issuer (`iss`), audience (`aud`), signature (per provider JWKs), expiration (`exp`).
+- Prefer **well-maintained libraries/SDKs** and provider discovery/JWKS endpoints.
+- Use the **UserInfo** endpoint when additional claims beyond the ID Token are required.
 
-For non-enterprise environments, OpenId is considered a secure and often better choice, as long as the identity provider is of trust.
+> **Avoid confusion:** **OpenID 2.0 ("OpenID")** was a separate, legacy authentication protocol that has been **superseded by OpenID Connect** and is considered obsolete. New systems should not implement OpenID 2.0. References: [OpenID Foundation — obsolete OpenID 2.0 libraries](https://openid.net/developers/libraries-for-obsolete-specifications/), [OpenID 2.0 → OIDC migration](https://openid.net/specs/ope)
 
 ### SAML
 

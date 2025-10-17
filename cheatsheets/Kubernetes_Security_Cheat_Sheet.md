@@ -896,7 +896,16 @@ Events:
   Normal  Started    13m   kubelet, aks-agentpool-42213468-1  Started container coredns
 ```
 
-## SECTION 5: Final Thoughts
+## SECTION 5: Securing a managed-service Kubernetes on Cloud Service Provider
+
+### AWS
+
+There are few open source tools that can help you on securing your managed-service Kubernetes on AWS [(EKS)](https://aws.amazon.com/eks/)
+
+- [hardeneks](https://github.com/aws-samples/hardeneks)
+- [MKAD](https://github.com/DataDog/managed-kubernetes-auditing-toolkit) (Managed Kubernetes Auditing Toolkit) from DataDog
+
+## SECTION 6: Final Thoughts
 
 ### Embed security into the container lifecycle as early as possible
 

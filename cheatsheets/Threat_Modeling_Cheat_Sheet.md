@@ -53,6 +53,24 @@ Brainstorming engages all participants, fostering better communication and mutua
 
 Integrating the results of brainstorming with formal modeling techniques can lead to a better understanding of the domain and more effective system design.
 
+### Cloud Threat Modeling
+
+Most modern systems are cloud-native or hybrid. Traditional threat modeling techniques (like STRIDE or DFDs) often need adaptation for cloud architectures, which introduce:
+
+- Shared responsibility models
+- Managed services and APIs
+- Multi-tenant and identity federation considerations
+- Dynamic infrastructure (IaC, serverless, containers)
+
+Cloud-native systems introduce unique considerations for threat modeling due to their distributed, service-oriented nature and shared responsibility model. In this context, the threat modeling process should account for:
+
+- **Cloud architecture components:** virtual networks, IAM roles, managed services, and storage buckets.
+- **Shared responsibility:** understanding which security controls are managed by the provider vs. the customer.
+- **Dynamic environments:** container orchestration, serverless functions, and ephemeral infrastructure.
+- **Compliance and data residency:** ensuring that workloads meet jurisdictional and privacy requirements.
+
+Cloud threat modeling frameworks such as [Microsoft’s Cloud Security Threat Modeling](https://learn.microsoft.com/en-us/azure/security/develop/threat-modeling-tool-cloud), [OWASP Cloud Security Project](https://owasp.org/www-project-cloud-security/), and AWS’s [Well-Architected Framework – Security Pillar](https://docs.aws.amazon.com/wellarchitected/latest/security-pillar/welcome.html) can serve as references.
+
 ### Threat Identification
 
 After the system has been modeled, it is now time to address the question of "what can go wrong?". This question must be explored with the inputs from the first step in mind; that is, it should focus on identifying and ranking threats within the context of the specific system being evaluated. In attempting to answer this question, threat modelers have a wealth of data sources and techniques at their disposal. For illustration purposes, this cheatsheet will leverage STRIDE; however, in practice, other approaches may be used alongside or instead of STRIDE.
