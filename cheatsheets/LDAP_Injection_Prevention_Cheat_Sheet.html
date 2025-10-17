@@ -3074,21 +3074,20 @@ Java Naming and Directory Interface (JNDI) metacharacters and LDAP special chara
 <p>For more information on search filter escaping visit <a href="https://datatracker.ietf.org/doc/html/rfc4515#section-3">RFC4515</a>.</p>
 <h4 id="safe-java-escaping-example">Safe Java Escaping Example<a class="headerlink" href="#safe-java-escaping-example" title="Permanent link">&para;</a></h4>
 <p>The following solution uses an allowlist to sanitize user input so that the filter string contains only valid characters. In this code, userSN may contain
-only letters and spaces, whereas a password may contain only alphanumeric characters:</p>
+only letters and spaces.</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// String userSN = &quot;Sherlock Holmes&quot;; // Valid</span>
-<span class="c1">// String userPassword = &quot;secret2&quot;; // Valid</span>
 <span class="c1">// ... beginning of LDAPInjection.searchRecord()...</span>
 <span class="n">sc</span><span class="p">.</span><span class="na">setSearchScope</span><span class="p">(</span><span class="n">SearchControls</span><span class="p">.</span><span class="na">SUBTREE_SCOPE</span><span class="p">);</span>
 <span class="n">String</span><span class="w"> </span><span class="n">base</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;dc=example,dc=com&quot;</span><span class="p">;</span>
 
-<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">userSN</span><span class="p">.</span><span class="na">matches</span><span class="p">(</span><span class="s">&quot;[\\w\\s]*&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">!</span><span class="n">userPassword</span><span class="p">.</span><span class="na">matches</span><span class="p">(</span><span class="s">&quot;[\\w]*&quot;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">userSN</span><span class="p">.</span><span class="na">matches</span><span class="p">(</span><span class="s">&quot;[\\w\\s]*&quot;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
 <span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalArgumentException</span><span class="p">(</span><span class="s">&quot;Invalid input&quot;</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="n">String</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;(&amp;(sn = &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">userSN</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;)(userPassword=&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">userPassword</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;))&quot;</span><span class="p">;</span>
+<span class="n">String</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;(sn = &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">userSN</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;)&quot;</span><span class="p">;</span>
 <span class="c1">// ... remainder of LDAPInjection.searchRecord()... </span>
 </code></pre></div>
-<p>When a database field such as a password must include special characters, it is critical to ensure that the authentic data is stored in sanitized form in the
+<p>When a database field must include special characters, it is critical to ensure that the authentic data is stored in sanitized form in the
 database and also that any user input is normalized before the validation or comparison takes place. Using characters that have special meanings in JNDI
 and LDAP in the absence of a comprehensive normalization and allowlisting-based routine is discouraged. Special characters must be transformed to
 sanitized, safe values before they are added to the allowlist expression against which input will be validated. Likewise, normalization of user input should
@@ -3111,7 +3110,7 @@ occur before the validation step (source: <a href="https://wiki.sei.cmu.edu/conf
 </code></pre></div>
 <h4 id="safe-c-sharp-net-tba-example">Safe C Sharp .NET TBA Example<a class="headerlink" href="#safe-c-sharp-net-tba-example" title="Permanent link">&para;</a></h4>
 <p><a href="https://blogs.msdn.microsoft.com/securitytools/2010/09/30/antixss-4-0-released/">.NET AntiXSS</a> (now the Encoder class) has LDAP encoding functions including <code>Encoder.LdapFilterEncode(string)</code>, <code>Encoder.LdapDistinguishedNameEncode(string)</code> and <code>Encoder.LdapDistinguishedNameEncode(string, bool, bool)</code>.</p>
-<p><code>Encoder.LdapFilterEncode</code> encodes input according to <a href="https://tools.ietf.org/search/rfc4515">RFC4515</a> where unsafe values are converted to <code>\XX</code> where <code>XX</code> is the representation of the unsafe character.</p>
+<p><code>Encoder.LdapFilterEncode</code> encodes input according to <a href="https://datatracker.ietf.org/doc/html/rfc4515">RFC4515</a> where unsafe values are converted to <code>\XX</code> where <code>XX</code> is the representation of the unsafe character.</p>
 <p><code>Encoder.LdapDistinguishedNameEncode</code> encodes input according to <a href="https://tools.ietf.org/html/rfc2253">RFC2253</a> where unsafe characters are converted to <code>#XX</code> where <code>XX</code> is the representation of the unsafe character and the comma, plus, quote, slash, less than and great than signs are escaped using slash notation (<code>\X</code>). In addition to this a space or octothorpe (<code>#</code>) at the beginning of the input string is <code>\</code> escaped as is a space at the end of a string.</p>
 <p><code>LdapDistinguishedNameEncode(string, bool, bool)</code> is also provided so you may turn off the initial or final character escaping rules, for example if you are concatenating the escaped distinguished name fragment into the midst of a complete distinguished name.</p>
 <h3 id="defense-option-2-use-frameworks-that-automatically-protect-from-ldap-injection">Defense Option 2: Use Frameworks that Automatically Protect from LDAP Injection<a class="headerlink" href="#defense-option-2-use-frameworks-that-automatically-protect-from-ldap-injection" title="Permanent link">&para;</a></h3>
