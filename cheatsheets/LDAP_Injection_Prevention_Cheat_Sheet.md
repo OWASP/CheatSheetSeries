@@ -80,87 +80,29 @@ For more information on search filter escaping visit [RFC4515](https://datatrack
 #### Safe Java Escaping Example
 
 The following solution uses an allowlist to sanitize user input so that the filter string contains only valid characters. In this code, userSN may contain
-only letters and spaces, whereas a password may contain only alphanumeric characters:
+only letters and spaces.
 
 ```java
 // String userSN = "Sherlock Holmes"; // Valid
-// String userPassword = "secret2"; // Valid
 // ... beginning of LDAPInjection.searchRecord()...
 sc.setSearchScope(SearchControls.SUBTREE_SCOPE);
 String base = "dc=example,dc=com";
 
-if (!userSN.matches("[\\w\\s]*") || !userPassword.matches("[\\w]*")) {
+if (!userSN.matches("[\\w\\s]*")) {
  throw new IllegalArgumentException("Invalid input");
 }
 
-String filter = "(&(sn = " + userSN + ")(userPassword=" + userPassword + "))";
+String filter = "(sn = " + userSN + ")";
 // ... remainder of LDAPInjection.searchRecord()... 
 ```
 
-When a database field such as a password must include special characters, it is critical to ensure that the authentic data is stored in sanitized form in the
+When a database field must include special characters, it is critical to ensure that the authentic data is stored in sanitized form in the
 database and also that any user input is normalized before the validation or comparison takes place. Using characters that have special meanings in JNDI
 and LDAP in the absence of a comprehensive normalization and allowlisting-based routine is discouraged. Special characters must be transformed to
 sanitized, safe values before they are added to the allowlist expression against which input will be validated. Likewise, normalization of user input should
 occur before the validation step (source: [Prevent LDAP injection](https://wiki.sei.cmu.edu/confluence/spaces/flyingpdf/pdfpageexport.action?pageId=88487534)).
 
 For further information visit [OWASP ESAPI Java Encoder Project which includes encodeForLDAP(String) and encodeForDN(String)](https://owasp.org/www-project-java-encoder/).
-
-#### Safe Java Authentication Example
-
-The previous example showed input allow-listing with regex and concatenating into a filter string.  
-While that approach may seem to prevent injection, it is **not a secure pattern** and should not be used for password validation.  
-Instead, applications should:
-
-1. Use parameterized LDAP filters to safely look up a user’s DN.  
-2. Perform authentication using an LDAP **bind** operation with the DN and provided password.  
-
-This ensures that password checking is handled securely by the LDAP server and avoids insecure string comparisons.
-
-✅ **Revised Secure Example (Java search + bind)**
-
-```java
-// Step 1: Perform an anonymous search to find the user's DN
-Hashtable<String, String> anonEnv = new Hashtable<>();
-anonEnv.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-anonEnv.put(Context.PROVIDER_URL, "ldaps://example.com:636"); // Use ldaps (secure) for directory communication
-anonEnv.put(Context.SECURITY_AUTHENTICATION, "none");
-
-DirContext anonCtx = new InitialDirContext(anonEnv);
-
-String searchFilter = "(uid={0})"; // No assumption about objectClass
-SearchControls controls = new SearchControls();
-controls.setSearchScope(SearchControls.SUBTREE_SCOPE);
-
-NamingEnumeration<SearchResult> results = anonCtx.search(
-    "ou=users,dc=example,dc=com",
-    searchFilter,
-    new Object[]{ username },
-    controls
-);
-
-if (!results.hasMore()) {
-    throw new AuthenticationException("User not found"); // Obscure to invalid username and/or password client side
-}
-
-SearchResult result = results.next();
-String userDN = result.getNameInNamespace();
-anonCtx.close(); // Don't forget to close that anonymous context ;)
-
-// Step 2: Bind with the DN and provided password over LDAPS
-Hashtable<String, String> env = new Hashtable<>();
-env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-env.put(Context.PROVIDER_URL, "ldaps://example.com:636"); // Use ldaps (secure) for directory communication
-env.put(Context.SECURITY_AUTHENTICATION, "simple");
-env.put(Context.SECURITY_PRINCIPAL, userDN);
-env.put(Context.SECURITY_CREDENTIALS, password);
-
-DirContext userCtx = new InitialDirContext(env);
-
-// If bind succeeds → authentication successful
-```
-
-For cases where you must include user input in other LDAP query contexts, ensure values are escaped with the
-[OWASP ESAPI Java Encoder Project which includes encodeForLDAP(String) and encodeForDN(String)](https://owasp.org/www-project-java-encoder/) rather than relying on regex allow-lists.
 
 #### Insecure vs Secure Java LDAP Query Construction
 
@@ -185,7 +127,7 @@ NamingEnumeration<SearchResult> results =
 
 [.NET AntiXSS](https://blogs.msdn.microsoft.com/securitytools/2010/09/30/antixss-4-0-released/) (now the Encoder class) has LDAP encoding functions including `Encoder.LdapFilterEncode(string)`, `Encoder.LdapDistinguishedNameEncode(string)` and `Encoder.LdapDistinguishedNameEncode(string, bool, bool)`.
 
-`Encoder.LdapFilterEncode` encodes input according to [RFC4515](https://tools.ietf.org/html/rfc4515) where unsafe values are converted to `\XX` where `XX` is the representation of the unsafe character.
+`Encoder.LdapFilterEncode` encodes input according to [RFC4515](https://datatracker.ietf.org/doc/html/rfc4515) where unsafe values are converted to `\XX` where `XX` is the representation of the unsafe character.
 
 `Encoder.LdapDistinguishedNameEncode` encodes input according to [RFC2253](https://tools.ietf.org/html/rfc2253) where unsafe characters are converted to `#XX` where `XX` is the representation of the unsafe character and the comma, plus, quote, slash, less than and great than signs are escaped using slash notation (`\X`). In addition to this a space or octothorpe (`#`) at the beginning of the input string is `\` escaped as is a space at the end of a string.
 
