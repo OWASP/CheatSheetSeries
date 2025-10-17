@@ -1,6 +1,6 @@
 # NPM Security best practices
 
-The following cheatsheet covers several NPM security best practices and productivity tips, useful for JavaScript and Node.js developers. This list was originally based on the [10 npm security best practices](https://snyk.io/blog/ten-npm-security-best-practices) from the Snyk blog.
+The following cheatsheet covers several npm security best practices and productivity tips, useful for JavaScript and Node.js developers. This list was originally based on the [10 npm security best practices](https://snyk.io/blog/ten-npm-security-best-practices) from the Snyk blog.
 
 ## 1) Avoid publishing secrets to the npm registry
 
