@@ -75,9 +75,11 @@ Many popular npm packages have been found to be vulnerable and may carry a signi
 Security doesn’t end by just scanning for security vulnerabilities when installing a package but should also be streamlined with developer workflows to be effectively adopted throughout the entire lifecycle of software development, and monitored continuously when code is deployed:
 
 - Scan for security vulnerabilities in [third-party open source projects](https://owasp.org/www-community/Component_Analysis)
-- Monitor snapshots of your project's manifests so you can receive alerts when new CVEs impact them
+- Monitor snapshots of your project's manifests so you can receive alerts when new CVEs impact them [OWASP Dependency-Track](https://owasp.org/www-project-dependency-track/)
 
-## 6) Use a local npm proxy
+## 6) Artifact governance and supply chain protections
+
+### Use a local npm proxy
 
 The npm registry is the biggest collection of packages that is available for all JavaScript developers and is also the home of the most of the Open Source projects for web developers. But sometimes you might have different needs in terms of security, deployments or performance. When this is true, npm allows you to switch to a different registry:
 
@@ -96,6 +98,52 @@ Hosting your own registry was never so easy! Let’s check the most important fe
 - It’s easy to scale using a different storage provider.
 - If your project is based in Docker, using the official image is the best choice.
 - It enables really fast bootstrap for testing environments, and is handy for testing big mono-repos projects.
+
+### Governance & Verification Steps
+
+Supply-chain attacks increasingly target build artifacts, registries and CI credentials. Add lightweight governance and verification steps to reduce risk and improve response time:
+
+- Track provenance and produce an SBOM for builds (CycloneDX/SPDX) so you can trace what was built and where inputs originated.
+
+  CycloneDX Example:
+
+  ```bash
+  # Generate SBOM
+  npm install @cyclonedx/cyclonedx-npm
+  npx @cyclonedx/cyclonedx-npm --validate > sbom.json # Use the flag `--omit dev` to exclude dev dependencies from SBOM if needed
+  ```
+
+- Sign artifacts and build provenance (for example, use Sigstore / cosign or similar signing tools) so consumers can verify integrity before installing.
+
+  Sigstore Example:
+
+  ```javascript
+  // sign-and-verify.js
+  // npm install sigstore fs
+
+  import * as fs from 'fs';
+  import * as sigstore from 'sigstore';
+
+  // Path to your built npm package (via `npm pack`)
+  const artifact = 'my-lib-1.0.0.tgz';
+
+  // --- Sign ---
+  const payload = fs.readFileSync(artifact);
+  const bundle = await sigstore.sign(payload);
+  fs.writeFileSync(`${artifact}.sigstore.json`, JSON.stringify(bundle, null, 2));
+  console.log('Signed:', artifact);
+
+  // --- Verify ---
+  await sigstore.verify(payload, bundle);
+  console.log('Verified OK!');
+  ```
+
+- Prefer immutable, access-controlled registries or vetted mirrors (private registries, Verdaccio with an upstream cache, or [approved mirrors](#use-a-local-npm-proxy)) and enable retention / immutability policies where available.
+- Restrict, scope and rotate CI and publisher tokens. Bind publisher tokens to workflows or IP ranges and minimize privileges.
+- Verify packages during CI: check signatures or provenance, validate the SBOM, [run SCA and static analysis](#5-audit-for-vulnerabilities-in-open-source-dependencies), and [install from pinned lockfile resolutions](#2-enforce-the-lockfile).
+- Automate monitoring and alerts for unusual publishes, token usage or dependency changes and keep a documented remediation playbook (revoke tokens, deprecate/yank compromised packages, publish fixes and notify consumers).
+
+These measures are incremental and low-risk to adopt. Combined they make supply-chain attacks harder and speed up identification & recovery if a compromise occurs.
 
 ## 7) Responsibly disclose security vulnerabilities
 
