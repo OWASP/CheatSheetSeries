@@ -1769,11 +1769,35 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#6-use-a-local-npm-proxy" class="md-nav__link">
+  <a href="#6-artifact-governance-and-supply-chain-protections" class="md-nav__link">
     <span class="md-ellipsis">
-      6) Use a local npm proxy
+      6) Artifact governance and supply chain protections
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="6) Artifact governance and supply chain protections">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-a-local-npm-proxy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Use a local npm proxy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#governance-verification-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Governance &amp; Verification Steps
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2900,11 +2924,35 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#6-use-a-local-npm-proxy" class="md-nav__link">
+  <a href="#6-artifact-governance-and-supply-chain-protections" class="md-nav__link">
     <span class="md-ellipsis">
-      6) Use a local npm proxy
+      6) Artifact governance and supply chain protections
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="6) Artifact governance and supply chain protections">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-a-local-npm-proxy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Use a local npm proxy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#governance-verification-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Governance &amp; Verification Steps
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -3024,9 +3072,10 @@
 <p>Security doesn’t end by just scanning for security vulnerabilities when installing a package but should also be streamlined with developer workflows to be effectively adopted throughout the entire lifecycle of software development, and monitored continuously when code is deployed:</p>
 <ul>
 <li>Scan for security vulnerabilities in <a href="https://owasp.org/www-community/Component_Analysis">third-party open source projects</a></li>
-<li>Monitor snapshots of your project's manifests so you can receive alerts when new CVEs impact them</li>
+<li>Monitor snapshots of your project's manifests so you can receive alerts when new CVEs impact them <a href="https://owasp.org/www-project-dependency-track/">OWASP Dependency-Track</a></li>
 </ul>
-<h2 id="6-use-a-local-npm-proxy">6) Use a local npm proxy<a class="headerlink" href="#6-use-a-local-npm-proxy" title="Permanent link">&para;</a></h2>
+<h2 id="6-artifact-governance-and-supply-chain-protections">6) Artifact governance and supply chain protections<a class="headerlink" href="#6-artifact-governance-and-supply-chain-protections" title="Permanent link">&para;</a></h2>
+<h3 id="use-a-local-npm-proxy">Use a local npm proxy<a class="headerlink" href="#use-a-local-npm-proxy" title="Permanent link">&para;</a></h3>
 <p>The npm registry is the biggest collection of packages that is available for all JavaScript developers and is also the home of the most of the Open Source projects for web developers. But sometimes you might have different needs in terms of security, deployments or performance. When this is true, npm allows you to switch to a different registry:</p>
 <p>When you run <code>npm install</code>, it automatically starts a communication with the main registry to resolve all your dependencies; if you wish to use a different registry, that too is pretty straightforward:</p>
 <ul>
@@ -3043,6 +3092,46 @@
 <li>If your project is based in Docker, using the official image is the best choice.</li>
 <li>It enables really fast bootstrap for testing environments, and is handy for testing big mono-repos projects.</li>
 </ul>
+<h3 id="governance-verification-steps">Governance &amp; Verification Steps<a class="headerlink" href="#governance-verification-steps" title="Permanent link">&para;</a></h3>
+<p>Supply-chain attacks increasingly target build artifacts, registries and CI credentials. Add lightweight governance and verification steps to reduce risk and improve response time:</p>
+<ul>
+<li>Track provenance and produce an SBOM for builds (CycloneDX/SPDX) so you can trace what was built and where inputs originated.</li>
+</ul>
+<p>CycloneDX Example:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Generate SBOM</span>
+npm<span class="w"> </span>install<span class="w"> </span>@cyclonedx/cyclonedx-npm
+npx<span class="w"> </span>@cyclonedx/cyclonedx-npm<span class="w"> </span>--validate<span class="w"> </span>&gt;<span class="w"> </span>sbom.json<span class="w"> </span><span class="c1"># Use the flag `--omit dev` to exclude dev dependencies from SBOM if needed</span>
+</code></pre></div>
+<ul>
+<li>Sign artifacts and build provenance (for example, use Sigstore / cosign or similar signing tools) so consumers can verify integrity before installing.</li>
+</ul>
+<p>Sigstore Example:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// sign-and-verify.js</span>
+<span class="c1">// npm install sigstore fs</span>
+
+<span class="k">import</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kr">as</span><span class="w"> </span><span class="nx">fs</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;fs&#39;</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kr">as</span><span class="w"> </span><span class="nx">sigstore</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;sigstore&#39;</span><span class="p">;</span>
+
+<span class="c1">// Path to your built npm package (via `npm pack`)</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">artifact</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;my-lib-1.0.0.tgz&#39;</span><span class="p">;</span>
+
+<span class="c1">// --- Sign ---</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">payload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="nx">artifact</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">bundle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">sigstore</span><span class="p">.</span><span class="nx">sign</span><span class="p">(</span><span class="nx">payload</span><span class="p">);</span>
+<span class="nx">fs</span><span class="p">.</span><span class="nx">writeFileSync</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">artifact</span><span class="si">}</span><span class="sb">.sigstore.json`</span><span class="p">,</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">bundle</span><span class="p">,</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">));</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Signed:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">artifact</span><span class="p">);</span>
+
+<span class="c1">// --- Verify ---</span>
+<span class="k">await</span><span class="w"> </span><span class="nx">sigstore</span><span class="p">.</span><span class="nx">verify</span><span class="p">(</span><span class="nx">payload</span><span class="p">,</span><span class="w"> </span><span class="nx">bundle</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Verified OK!&#39;</span><span class="p">);</span>
+</code></pre></div>
+<ul>
+<li>Prefer immutable, access-controlled registries or vetted mirrors (private registries, Verdaccio with an upstream cache, or <a href="#use-a-local-npm-proxy">approved mirrors</a>) and enable retention / immutability policies where available.</li>
+<li>Restrict, scope and rotate CI and publisher tokens. Bind publisher tokens to workflows or IP ranges and minimize privileges.</li>
+<li>Verify packages during CI: check signatures or provenance, validate the SBOM, <a href="#5-audit-for-vulnerabilities-in-open-source-dependencies">run SCA and static analysis</a>, and <a href="#2-enforce-the-lockfile">install from pinned lockfile resolutions</a>.</li>
+<li>Automate monitoring and alerts for unusual publishes, token usage or dependency changes and keep a documented remediation playbook (revoke tokens, deprecate/yank compromised packages, publish fixes and notify consumers).</li>
+</ul>
+<p>These measures are incremental and low-risk to adopt. Combined they make supply-chain attacks harder and speed up identification &amp; recovery if a compromise occurs.</p>
 <h2 id="7-responsibly-disclose-security-vulnerabilities">7) Responsibly disclose security vulnerabilities<a class="headerlink" href="#7-responsibly-disclose-security-vulnerabilities" title="Permanent link">&para;</a></h2>
 <p>When security vulnerabilities are found, they pose a potentially serious threat if they are publicised without prior warning or appropriate remedial action for users who cannot protect themselves.</p>
 <p>It is recommended that security researchers follow a responsible disclosure program, which is a set of processes and guidelines that aims to connect the researchers with the vendor or maintainer of the vulnerable asset, in order to convey the vulnerability, it’s impact and applicability. Once the vulnerability is correctly triaged, the vendor and researcher coordinate a fix and a publication date for the vulnerability in an effort to provide an upgrade-path or remediation for affected users before the security issue is made public.</p>
