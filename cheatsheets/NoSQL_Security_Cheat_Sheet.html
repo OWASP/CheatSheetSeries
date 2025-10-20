@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/NoSQL_Security_Cheat_Sheet.html">
       
       
-        <link rel="prev" href="Transport_Layer_Security_Cheat_Sheet.html">
+        <link rel="prev" href="Network_Segmentation_Cheat_Sheet.html">
       
       
-        <link rel="next" href="User_Privacy_Protection_Cheat_Sheet.html">
+        <link rel="next" href="NodeJS_Docker_Cheat_Sheet.html">
       
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
@@ -24,7 +24,7 @@
     
     
       
-        <title>Unvalidated Redirects and Forwards - OWASP Cheat Sheet Series</title>
+        <title>NoSQL Security - OWASP Cheat Sheet Series</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#unvalidated-redirects-and-forwards-cheat-sheet" class="md-skip">
+        <a href="#nosql-security-cheat-sheet" class="md-skip">
           Skip to content
         </a>
       
@@ -111,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Unvalidated Redirects and Forwards
+              NoSQL Security
             
           </span>
         </div>
@@ -1693,10 +1693,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="NoSQL_Security_Cheat_Sheet.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    NoSQL Security
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="NoSQL_Security_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -1705,6 +1725,191 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#threats-common-failure-modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Threats &amp; Common Failure Modes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#secure-by-design-principles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Secure-by-Design Principles
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-defenses-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical Defenses &amp; Examples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Practical Defenses & Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prevent-nosql-injection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prevent NoSQL Injection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-secure-driver-odm-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Use Secure Driver / ODM Patterns
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Use Secure Driver / ODM Patterns">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-pymongo-safe-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example — PyMongo safe usage
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authentication-authorization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Authentication &amp; Authorization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-transport-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network &amp; Transport Security
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration-hardening" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration Hardening
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#secrets-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      Secrets Management
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logging-monitoring-auditing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Logging, Monitoring &amp; Auditing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backups-snapshots" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backups &amp; Snapshots
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-nosql-security-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick NoSQL Security Checklist
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dos-and-donts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Do’s and Don’ts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples-of-dangerous-patterns-brief" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples of Dangerous Patterns (brief)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2365,30 +2570,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Unvalidated Redirects and Forwards
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2397,119 +2582,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    <span class="md-ellipsis">
-      Introduction
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#safe-url-redirects" class="md-nav__link">
-    <span class="md-ellipsis">
-      Safe URL Redirects
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#dangerous-url-redirects" class="md-nav__link">
-    <span class="md-ellipsis">
-      Dangerous URL Redirects
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Dangerous URL Redirects">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#dangerous-url-redirect-example-1" class="md-nav__link">
-    <span class="md-ellipsis">
-      Dangerous URL Redirect Example 1
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dangerous-url-redirect-example-2" class="md-nav__link">
-    <span class="md-ellipsis">
-      Dangerous URL Redirect Example 2
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dangerous-forward-example" class="md-nav__link">
-    <span class="md-ellipsis">
-      Dangerous Forward Example
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#preventing-unvalidated-redirects-and-forwards" class="md-nav__link">
-    <span class="md-ellipsis">
-      Preventing Unvalidated Redirects and Forwards
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Preventing Unvalidated Redirects and Forwards">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#validating-urls" class="md-nav__link">
-    <span class="md-ellipsis">
-      Validating URLs
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#references" class="md-nav__link">
-    <span class="md-ellipsis">
-      References
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -2810,46 +2882,115 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#safe-url-redirects" class="md-nav__link">
+  <a href="#threats-common-failure-modes" class="md-nav__link">
     <span class="md-ellipsis">
-      Safe URL Redirects
+      Threats &amp; Common Failure Modes
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#dangerous-url-redirects" class="md-nav__link">
+  <a href="#secure-by-design-principles" class="md-nav__link">
     <span class="md-ellipsis">
-      Dangerous URL Redirects
+      Secure-by-Design Principles
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Dangerous URL Redirects">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-defenses-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical Defenses &amp; Examples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Practical Defenses & Examples">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#dangerous-url-redirect-example-1" class="md-nav__link">
+  <a href="#prevent-nosql-injection" class="md-nav__link">
     <span class="md-ellipsis">
-      Dangerous URL Redirect Example 1
+      Prevent NoSQL Injection
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#dangerous-url-redirect-example-2" class="md-nav__link">
+  <a href="#use-secure-driver-odm-patterns" class="md-nav__link">
     <span class="md-ellipsis">
-      Dangerous URL Redirect Example 2
+      Use Secure Driver / ODM Patterns
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Use Secure Driver / ODM Patterns">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-pymongo-safe-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example — PyMongo safe usage
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authentication-authorization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Authentication &amp; Authorization
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#dangerous-forward-example" class="md-nav__link">
+  <a href="#network-transport-security" class="md-nav__link">
     <span class="md-ellipsis">
-      Dangerous Forward Example
+      Network &amp; Transport Security
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration-hardening" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration Hardening
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#secrets-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      Secrets Management
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logging-monitoring-auditing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Logging, Monitoring &amp; Auditing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backups-snapshots" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backups &amp; Snapshots
     </span>
   </a>
   
@@ -2861,26 +3002,29 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#preventing-unvalidated-redirects-and-forwards" class="md-nav__link">
+  <a href="#quick-nosql-security-checklist" class="md-nav__link">
     <span class="md-ellipsis">
-      Preventing Unvalidated Redirects and Forwards
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Preventing Unvalidated Redirects and Forwards">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#validating-urls" class="md-nav__link">
-    <span class="md-ellipsis">
-      Validating URLs
+      Quick NoSQL Security Checklist
     </span>
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#dos-and-donts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Do’s and Don’ts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples-of-dangerous-patterns-brief" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples of Dangerous Patterns (brief)
+    </span>
+  </a>
   
 </li>
       
@@ -2911,145 +3055,151 @@
   
 
 
-<h1 id="unvalidated-redirects-and-forwards-cheat-sheet">Unvalidated Redirects and Forwards Cheat Sheet<a class="headerlink" href="#unvalidated-redirects-and-forwards-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h1 id="nosql-security-cheat-sheet">NoSQL Security Cheat Sheet<a class="headerlink" href="#nosql-security-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>Unvalidated redirects and forwards are possible when a web application accepts untrusted input that could cause the web application to redirect the request to a URL contained within untrusted input. By modifying untrusted URL input to a malicious site, an attacker may successfully launch a phishing scam and steal user credentials.</p>
-<p>Because the server name in the modified link is identical to the original site, phishing attempts may have a more trustworthy appearance. Unvalidated redirect and forward attacks can also be used to maliciously craft a URL that would pass the application's access control check and then forward the attacker to privileged functions that they would normally not be able to access.</p>
-<h2 id="safe-url-redirects">Safe URL Redirects<a class="headerlink" href="#safe-url-redirects" title="Permanent link">&para;</a></h2>
-<p>When we want to redirect a user automatically to another page (without an action of the visitor such as clicking on a hyperlink) you might implement a code such as the following:</p>
-<p>Java</p>
-<div class="highlight"><pre><span></span><code><span class="n">response</span><span class="p">.</span><span class="na">sendRedirect</span><span class="p">(</span><span class="s">&quot;http://www.mysite.com&quot;</span><span class="p">);</span>
-</code></pre></div>
-<p>PHP</p>
-<div class="highlight"><pre><span></span><code><span class="cp">&lt;?php</span>
-<span class="cm">/* Redirect browser */</span>
-<span class="nb">header</span><span class="p">(</span><span class="s2">&quot;Location: http://www.mysite.com&quot;</span><span class="p">);</span>
-<span class="cm">/* Exit to prevent the rest of the code from executing */</span>
-<span class="k">exit</span><span class="p">;</span>
-<span class="cp">?&gt;</span>
-</code></pre></div>
-<p>ASP .NET</p>
-<div class="highlight"><pre><span></span><code><span class="n">Response</span><span class="p">.</span><span class="n">Redirect</span><span class="p">(</span><span class="s">&quot;~/folder/Login.aspx&quot;</span><span class="p">)</span>
-</code></pre></div>
-<p>Rails</p>
-<div class="highlight"><pre><span></span><code><span class="n">redirect_to</span><span class="w"> </span><span class="n">login_path</span>
-</code></pre></div>
-<p>Rust actix web</p>
-<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="nb">Ok</span><span class="p">(</span><span class="n">HttpResponse</span><span class="p">::</span><span class="n">Found</span><span class="p">()</span>
-<span class="w">        </span><span class="p">.</span><span class="n">insert_header</span><span class="p">((</span><span class="n">header</span><span class="p">::</span><span class="n">LOCATION</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;https://mysite.com/&quot;</span><span class="p">))</span>
-<span class="w">        </span><span class="p">.</span><span class="n">finish</span><span class="p">())</span>
-</code></pre></div>
-<p>In the examples above, the URL is being explicitly declared in the code and cannot be manipulated by an attacker.</p>
-<h2 id="dangerous-url-redirects">Dangerous URL Redirects<a class="headerlink" href="#dangerous-url-redirects" title="Permanent link">&para;</a></h2>
-<p>The following examples demonstrate unsafe redirect and forward code.</p>
-<h3 id="dangerous-url-redirect-example-1">Dangerous URL Redirect Example 1<a class="headerlink" href="#dangerous-url-redirect-example-1" title="Permanent link">&para;</a></h3>
-<p>The following Java code receives the URL from the parameter named <code>url</code> (<a href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequest.html#getParameter-java.lang.String-">GET or POST</a>) and redirects to that URL:</p>
-<div class="highlight"><pre><span></span><code><span class="n">response</span><span class="p">.</span><span class="na">sendRedirect</span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;url&quot;</span><span class="p">));</span>
-</code></pre></div>
-<p>The following PHP code obtains a URL from the query string (via the parameter named <code>url</code>) and then redirects the user to that URL. Additionally, the PHP code after this <code>header()</code> function will continue to execute, so if the user configures their browser to ignore the redirect, they may be able to access the rest of the page.</p>
-<div class="highlight"><pre><span></span><code><span class="x">$redirect_url = $_GET[&#39;url&#39;];</span>
-<span class="x">header(&quot;Location: &quot; . $redirect_url);</span>
-</code></pre></div>
-<p>A similar example of C# .NET Vulnerable Code:</p>
-<div class="highlight"><pre><span></span><code><span class="kt">string</span><span class="w"> </span><span class="n">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="n">QueryString</span><span class="p">[</span><span class="s">&quot;url&quot;</span><span class="p">];</span>
-<span class="n">Response</span><span class="p">.</span><span class="n">Redirect</span><span class="p">(</span><span class="n">url</span><span class="p">);</span>
-</code></pre></div>
-<p>And in Rails:</p>
-<div class="highlight"><pre><span></span><code><span class="n">redirect_to</span><span class="w"> </span><span class="n">params</span><span class="o">[</span><span class="ss">:url</span><span class="o">]</span>
-</code></pre></div>
-<p>Rust actix web</p>
-<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="nb">Ok</span><span class="p">(</span><span class="n">HttpResponse</span><span class="p">::</span><span class="n">Found</span><span class="p">()</span>
-<span class="w">        </span><span class="p">.</span><span class="n">insert_header</span><span class="p">((</span><span class="n">header</span><span class="p">::</span><span class="n">LOCATION</span><span class="p">,</span><span class="w"> </span><span class="n">query_string</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">as_str</span><span class="p">()))</span>
-<span class="w">        </span><span class="p">.</span><span class="n">finish</span><span class="p">())</span>
-</code></pre></div>
-<p>The above code is vulnerable to an attack if no validation or extra method controls are applied to verify the certainty of the URL. This vulnerability could be used as part of a phishing scam by redirecting users to a malicious site.</p>
-<p>If no validation is applied, a malicious user could create a hyperlink to redirect your users to an unvalidated malicious website, for example:</p>
-<div class="highlight"><pre><span></span><code> http://example.com/example.php?url=http://malicious.example.com
-</code></pre></div>
-<p>The user sees the link directing to the original trusted site (<code>example.com</code>) and does not realize the redirection that could take place</p>
-<h3 id="dangerous-url-redirect-example-2">Dangerous URL Redirect Example 2<a class="headerlink" href="#dangerous-url-redirect-example-2" title="Permanent link">&para;</a></h3>
-<p><a href="https://docs.microsoft.com/en-us/aspnet/mvc/overview/security/preventing-open-redirection-attacks">ASP .NET MVC 1 &amp; 2 websites</a> are particularly vulnerable to open redirection attacks. In order to avoid this vulnerability, you need to apply MVC 3.</p>
-<p>The code for the LogOn action in an ASP.NET MVC 2 application is shown below. After a successful login, the controller returns a redirect to the returnUrl. You can see that no validation is being performed against the returnUrl parameter.</p>
-<p>ASP.NET MVC 2 LogOn action in <code>AccountController.cs</code> (see Microsoft Docs link provided above for the context):</p>
-<div class="highlight"><pre><span></span><code><span class="na">[HttpPost]</span>
-<span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">ActionResult</span><span class="w"> </span><span class="nf">LogOn</span><span class="p">(</span><span class="n">LogOnModel</span><span class="w"> </span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">returnUrl</span><span class="p">)</span>
-<span class="w"> </span><span class="p">{</span>
-<span class="w">   </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ModelState</span><span class="p">.</span><span class="n">IsValid</span><span class="p">)</span>
-<span class="w">   </span><span class="p">{</span>
-<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">MembershipService</span><span class="p">.</span><span class="n">ValidateUser</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">UserName</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="n">Password</span><span class="p">))</span>
-<span class="w">     </span><span class="p">{</span>
-<span class="w">       </span><span class="n">FormsService</span><span class="p">.</span><span class="n">SignIn</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">UserName</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="n">RememberMe</span><span class="p">);</span>
-<span class="w">       </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">String</span><span class="p">.</span><span class="n">IsNullOrEmpty</span><span class="p">(</span><span class="n">returnUrl</span><span class="p">))</span>
-<span class="w">       </span><span class="p">{</span>
-<span class="w">         </span><span class="k">return</span><span class="w"> </span><span class="nf">Redirect</span><span class="p">(</span><span class="n">returnUrl</span><span class="p">);</span>
-<span class="w">       </span><span class="p">}</span>
-<span class="w">       </span><span class="k">else</span>
-<span class="w">       </span><span class="p">{</span>
-<span class="w">         </span><span class="k">return</span><span class="w"> </span><span class="nf">RedirectToAction</span><span class="p">(</span><span class="s">&quot;Index&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Home&quot;</span><span class="p">);</span>
-<span class="w">       </span><span class="p">}</span>
-<span class="w">     </span><span class="p">}</span>
-<span class="w">     </span><span class="k">else</span>
-<span class="w">     </span><span class="p">{</span>
-<span class="w">       </span><span class="n">ModelState</span><span class="p">.</span><span class="n">AddModelError</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;The user name or password provided is incorrect.&quot;</span><span class="p">);</span>
-<span class="w">     </span><span class="p">}</span>
-<span class="w">   </span><span class="p">}</span>
-
-<span class="w">   </span><span class="c1">// If we got this far, something failed, redisplay form</span>
-<span class="w">   </span><span class="k">return</span><span class="w"> </span><span class="nf">View</span><span class="p">(</span><span class="n">model</span><span class="p">);</span>
-<span class="w"> </span><span class="p">}</span>
-</code></pre></div>
-<h3 id="dangerous-forward-example">Dangerous Forward Example<a class="headerlink" href="#dangerous-forward-example" title="Permanent link">&para;</a></h3>
-<p>When applications allow user input to forward requests between different parts of the site, the application must check that the user is authorized to access the URL, perform the functions it provides, and it is an appropriate URL request.</p>
-<p>If the application fails to perform these checks, an attacker crafted URL may pass the application's access control check and then forward the attacker to an administrative function that is not normally permitted.</p>
-<p>Example:</p>
-<div class="highlight"><pre><span></span><code>http://www.example.com/function.jsp?fwd=admin.jsp
-</code></pre></div>
-<p>The following code is a Java servlet that will receive a <code>GET</code> request with a URL parameter named <code>fwd</code> in the request to forward to the address specified in the URL parameter. The servlet will retrieve the URL parameter value <a href="https://docs.oracle.com/javaee/7/api/javax/servlet/ServletRequest.html#getParameter-java.lang.String-">from the request</a> and complete the server-side forward processing before responding to the browser.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ForwardServlet</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">HttpServlet</span>
-<span class="p">{</span>
-<span class="w">  </span><span class="kd">protected</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">doGet</span><span class="p">(</span><span class="n">HttpServletRequest</span><span class="w"> </span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="n">HttpServletResponse</span><span class="w"> </span><span class="n">response</span><span class="p">)</span>
-<span class="w">                    </span><span class="kd">throws</span><span class="w"> </span><span class="n">ServletException</span><span class="p">,</span><span class="w"> </span><span class="n">IOException</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getQueryString</span><span class="p">();</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">query</span><span class="p">.</span><span class="na">contains</span><span class="p">(</span><span class="s">&quot;fwd&quot;</span><span class="p">))</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="n">String</span><span class="w"> </span><span class="n">fwd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;fwd&quot;</span><span class="p">);</span>
-<span class="w">      </span><span class="k">try</span>
-<span class="w">      </span><span class="p">{</span>
-<span class="w">        </span><span class="n">request</span><span class="p">.</span><span class="na">getRequestDispatcher</span><span class="p">(</span><span class="n">fwd</span><span class="p">).</span><span class="na">forward</span><span class="p">(</span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="n">response</span><span class="p">);</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">      </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">ServletException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span>
-<span class="w">      </span><span class="p">{</span>
-<span class="w">        </span><span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-<h2 id="preventing-unvalidated-redirects-and-forwards">Preventing Unvalidated Redirects and Forwards<a class="headerlink" href="#preventing-unvalidated-redirects-and-forwards" title="Permanent link">&para;</a></h2>
-<p>Safe use of redirects and forwards can be done in a number of ways:</p>
+<p>NoSQL databases (MongoDB, CouchDB, Cassandra etc.) power many modern applications with flexible schemas and horizontal scale. But their different query models and deployment patterns create <strong>more security risks</strong> compared with relational databases.
+This cheat sheet summarizes guidance to reduce risk when using NoSQL systems.</p>
+<h2 id="threats-common-failure-modes">Threats &amp; Common Failure Modes<a class="headerlink" href="#threats-common-failure-modes" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Simply avoid using redirects and forwards.</li>
-<li>If used, do not allow the URL as user input for the destination.</li>
-<li>Where possible, have the user provide short name, ID or token which is mapped server-side to a full target URL.<ul>
-<li>This provides the highest degree of protection against the attack tampering with the URL.</li>
-<li>Be careful that this doesn't introduce an enumeration vulnerability where a user could cycle through IDs to find all possible redirect targets</li>
+<li><strong>NoSQL Injection</strong> — Unsafe construction of query objects or query strings from untrusted input.</li>
+<li><strong>Exposed Management Interfaces</strong> — Admin GUIs, database ports or REST endpoints exposed to the internet.</li>
+<li><strong>Weak/No Authentication &amp; Authorization</strong> — Default open access or excessive privileges for clients.</li>
+<li><strong>Insecure Network Exposure</strong> — No TLS, open ports, insufficient network segmentation.</li>
+<li><strong>Insecure Defaults</strong> — Default admin accounts, default passwords, unsecured configs.</li>
+<li><strong>Poor Access Control Models</strong> — Coarse roles allowing lateral abuse.</li>
+<li><strong>Insecure Serialization / Deserialization</strong> — Remote code execution via unsafe object deserialization.</li>
+<li><strong>Misconfigured CORS / Public APIs</strong> — APIs accidentally allow cross-origin requests or wide access.</li>
+<li><strong>Credential &amp; Secret Leaks</strong> — Hardcoded DB credentials in code, images, CI logs.</li>
+<li><strong>Unsafe Backup Exposure</strong> — Backups left unencrypted or publicly accessible.</li>
+<li><strong>Supply-chain / Dependency Risks</strong> — Vulnerable drivers, ORMs/ODMs, or plugins.</li>
 </ul>
-</li>
-<li>If user input can’t be avoided, ensure that the supplied <strong>value</strong> is valid, appropriate for the application, and is <strong>authorized</strong> for the user.</li>
-<li>Sanitize input by creating a list of trusted URLs (lists of hosts or a regex).<ul>
-<li>This should be based on an allow-list approach, rather than a denylist.</li>
+<h2 id="secure-by-design-principles">Secure-by-Design Principles<a class="headerlink" href="#secure-by-design-principles" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Treat all input as untrusted</strong> — validate, sanitize, and normalize.</li>
+<li><strong>Use least privilege</strong> — narrow roles for users, services, and operators.</li>
+<li><strong>Defense in depth</strong> — combine network controls, auth, input validation, and monitoring.</li>
+<li><strong>Secure defaults</strong> — change default ports/accounts, enable auth and TLS by default.</li>
+<li><strong>Automate secrets &amp; rotation</strong> — vaults and short-lived credentials.</li>
+<li><strong>Monitor &amp; audit</strong> — log access and detect anomalies.</li>
 </ul>
-</li>
-<li>Force all redirects to first go through a page notifying users that they are going off of your site, with the destination clearly displayed, and have them click a link to confirm.</li>
+<h2 id="practical-defenses-examples">Practical Defenses &amp; Examples<a class="headerlink" href="#practical-defenses-examples" title="Permanent link">&para;</a></h2>
+<h3 id="prevent-nosql-injection">Prevent NoSQL Injection<a class="headerlink" href="#prevent-nosql-injection" title="Permanent link">&para;</a></h3>
+<p><strong>Unsafe (string-based filter building — Node.js / MongoDB):</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1">// DANGEROUS: building query from untrusted input</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;{ name: &#39;&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">name</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot;&#39; }&quot;</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">eval</span><span class="p">(</span><span class="s2">&quot;(&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">q</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot;)&quot;</span><span class="p">);</span><span class="w"> </span><span class="c1">// NEVER do this</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">collection</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="nx">filter</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Safe (use driver query objects / parameterization):</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1">// SAFE: let driver handle query structure</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">name</span><span class="w"> </span><span class="p">};</span>
+<span class="nx">db</span><span class="p">.</span><span class="nx">collection</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="nx">filter</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Safe (whitelisting for operators):</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Reject operator injection by disallowing $ in keys or operator values</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">).</span><span class="nx">includes</span><span class="p">(</span><span class="s1">&#39;&quot;$&#39;</span><span class="p">))</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="s2">&quot;Invalid input&quot;</span><span class="p">);</span>
+</code></pre></div>
+<p>Notes:</p>
+<ul>
+<li>Do <strong>not</strong> accept raw JSON fragments from the client to execute as queries.</li>
+<li>Disallow client-controlled query operators (like <code>$where</code>, <code>$regex</code>, or <code>$expr</code>) unless strictly required and validated.</li>
+<li>For text-based search parameters, use safe driver APIs (e.g., <code>$text</code> with controlled input).</li>
 </ul>
-<h3 id="validating-urls">Validating URLs<a class="headerlink" href="#validating-urls" title="Permanent link">&para;</a></h3>
-<p>Validating and sanitising user-input to determine whether the URL is safe is not a trivial task. Detailed instructions how to implement URL validation is described <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html#application-layer">in Server Side Request Forgery Prevention Cheat Sheet</a></p>
+<h3 id="use-secure-driver-odm-patterns">Use Secure Driver / ODM Patterns<a class="headerlink" href="#use-secure-driver-odm-patterns" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Prefer high-level APIs (ODM/ORM) that build queries safely (e.g., Mongoose, Spring Data, Datastax driver patterns).</li>
+<li>Avoid <code>.eval()</code>-like functionality and raw query execution from untrusted data.</li>
+<li>Sanitize and validate any raw expressions before passing to the DB.</li>
+</ul>
+<h4 id="example-pymongo-safe-usage">Example — PyMongo safe usage<a class="headerlink" href="#example-pymongo-safe-usage" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">pymongo</span> <span class="kn">import</span> <span class="n">MongoClient</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">MongoClient</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">tls</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">collection</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">mydb</span><span class="o">.</span><span class="n">users</span>
+<span class="n">user</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">find_one</span><span class="p">({</span><span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="n">email_input</span><span class="p">})</span>
+</code></pre></div>
+<h3 id="authentication-authorization">Authentication &amp; Authorization<a class="headerlink" href="#authentication-authorization" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Enable authentication</strong> (do not run databases unauthenticated).</li>
+<li>Use <strong>role-based access control (RBAC)</strong>, least privilege for service accounts.</li>
+<li>Use <strong>separate users</strong> for admin/backup/readonly/application.</li>
+<li>Use identity federation or short-lived credentials when supported (e.g., AWS IAM -&gt; DynamoDB).</li>
+</ul>
+<p>For more information please check following cheat sheets:</p>
+<p><a href="https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html">Authentication Cheat Sheet</a></p>
+<p><a href="https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html">Authorization Cheat Sheet</a></p>
+<h3 id="network-transport-security">Network &amp; Transport Security<a class="headerlink" href="#network-transport-security" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Bind services to internal interfaces</strong>, not <code>0.0.0.0</code>.</li>
+<li>Use <strong>network segmentation / private subnets</strong> and security groups.</li>
+<li><strong>Enforce TLS</strong> (in transit encryption) for driver connections and admin consoles.</li>
+<li>Turn off remote management or restrict it to admin networks/VPNs.</li>
+</ul>
+<h3 id="configuration-hardening">Configuration Hardening<a class="headerlink" href="#configuration-hardening" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Change default ports and disable sample/demo users.</li>
+<li>Turn off or restrict features that execute code on the server (e.g., MongoDB <code>db.eval</code>, server-side scripting).</li>
+<li>Require TLS for internal replication links where supported.</li>
+</ul>
+<h3 id="secrets-management">Secrets Management<a class="headerlink" href="#secrets-management" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Do <strong>not</strong> hardcode DB credentials — use a secret manager (Vault, AWS Secrets Manager, Azure Key Vault).</li>
+<li>Avoid baking credentials into container images or environment variables in CI logs.</li>
+<li>Rotate credentials regularly and use ephemeral tokens when possible.</li>
+</ul>
+<h3 id="logging-monitoring-auditing">Logging, Monitoring &amp; Auditing<a class="headerlink" href="#logging-monitoring-auditing" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Enable audit logging (connection attempts, admin actions, failed auth).</li>
+<li>Send logs to a tamper-evident SIEM.</li>
+<li>Alert on anomalous patterns (spike in queries, slow queries, large data exports).</li>
+<li>Monitor for suspicious commands (e.g., admin actions, <code>$where</code>, map-reduce jobs).</li>
+</ul>
+<h3 id="backups-snapshots">Backups &amp; Snapshots<a class="headerlink" href="#backups-snapshots" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Encrypt backups at rest and during transfer.</li>
+<li>Restrict access to backup storage.</li>
+<li>Sanitize backups for PII as required by policy.</li>
+<li>Validate restore procedures regularly.</li>
+</ul>
+<h2 id="quick-nosql-security-checklist">Quick NoSQL Security Checklist<a class="headerlink" href="#quick-nosql-security-checklist" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Enable authentication &amp; RBAC</li>
+<li>Enforce TLS for client and node communication</li>
+<li>Bind DB to internal IPs / use private networks</li>
+<li>Use least privilege service accounts</li>
+<li>Disallow client-controlled query operators unless validated</li>
+<li>Avoid raw query execution / eval on server</li>
+<li>Store credentials in secret manager &amp; rotate them</li>
+<li>Harden configs (disable unsafe defaults)</li>
+<li>Encrypt and secure backups</li>
+<li>Monitor/audit DB access and admin actions</li>
+<li>Keep DB and drivers patched</li>
+</ul>
+<h2 id="dos-and-donts">Do’s and Don’ts<a class="headerlink" href="#dos-and-donts" title="Permanent link">&para;</a></h2>
+<p><strong>Do</strong>:</p>
+<ul>
+<li>Use driver query objects rather than building query strings.</li>
+<li>Validate and whitelist user-supplied fields (columns/keys).</li>
+<li>Restrict management interfaces and require MFA for admin access.</li>
+<li>Automate security testing in CI/CD pipelines.</li>
+</ul>
+<p><strong>Don’t</strong>:</p>
+<ul>
+<li>Expose DB ports/admin consoles to the public Internet.</li>
+<li>Accept raw JSON queries from clients or eval untrusted strings.</li>
+<li>Use root/admin DB accounts for application connections.</li>
+<li>Rely only on network controls to protect badly written queries.</li>
+</ul>
+<h2 id="examples-of-dangerous-patterns-brief">Examples of Dangerous Patterns (brief)<a class="headerlink" href="#examples-of-dangerous-patterns-brief" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Allowing client to submit <code>{ "$where": "this.balance &gt; 0" }</code> → remote code execution or heavy CPU.</li>
+<li>Concatenating user input into query language strings or shell commands for DB tools.</li>
+<li>Leaving MongoDB unsecured (no auth) listening on public IP.</li>
+</ul>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="http://cwe.mitre.org/data/definitions/601.html">CWE Entry 601 on Open Redirects</a>.</li>
-<li><a href="http://projects.webappsec.org/w/page/13246981/URL%20Redirector%20Abuse">WASC Article on URL Redirector Abuse</a></li>
-<li><a href="http://googlewebmastercentral.blogspot.com/2009/01/open-redirect-urls-is-your-site-being.html">Google blog article on the dangers of open redirects</a>.</li>
-<li><a href="http://www.asp.net/mvc/tutorials/security/preventing-open-redirection-attacks">Preventing Open Redirection Attacks (C#)</a>.</li>
+<li><a href="https://www.mongodb.com/docs/manual/security/">MongoDB Security Official Document</a></li>
+<li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices-security.html">Security best practices for Amazon DynamoDB</a></li>
+<li><a href="https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Input_Validation_Testing/05.6-Testing_for_NoSQL_Injection">WSTG - Testing for NoSQL Injection</a></li>
 </ul>
 
 
