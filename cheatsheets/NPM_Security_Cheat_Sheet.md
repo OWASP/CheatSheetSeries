@@ -161,7 +161,7 @@ Ensure you are following this npm security best practice by protecting and minim
 
 Typosquatting is an attack that relies on mistakes made by users, such as typos. With typosquatting, bad actors publish malicious modules to the npm registry with names that look much like existing popular modules. These malicious packages exploit common typing errors or visual similarities to trick developers into installing them instead of the legitimate packages they intended to use.
 
-We have been tracking tens of malicious packages in the npm ecosystem; similar attacks have been seen on the PyPi Python registry as well. Some of the most notable incidents include [cross-env](https://snyk.io/vuln/npm:crossenv:20170802), [event-stream](https://snyk.io/vuln/SNYK-JS-EVENTSTREAM-72638), and [eslint-scope](https://snyk.io/vuln/npm:eslint-scope:20180712).
+The Snyk security team has tracked tens of malicious packages in the npm ecosystem that used typosquatting to trick users into installing them; similar attacks have been observed on the PyPi Python registry as well. Some of the most notable incidents include [cross-env](https://snyk.io/vuln/npm:crossenv:20170802), [event-stream](https://snyk.io/vuln/SNYK-JS-EVENTSTREAM-72638), and [eslint-scope](https://snyk.io/vuln/npm:eslint-scope:20180712).
 
 One of the main targets for typosquatting attacks are user credentials, since any package has access to environment variables via the global variable `process.env`. Other examples include the event-stream case, where attackers targeted developers in the hopes of [injecting malicious code](https://snyk.io/blog/a-post-mortem-of-the-malicious-event-stream-backdoor) into an application's source code.
 
