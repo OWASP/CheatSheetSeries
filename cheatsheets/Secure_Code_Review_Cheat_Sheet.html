@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html">
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Secure_Code_Review_Cheat_Sheet.html">
       
       
-        <link rel="prev" href="PHP_Configuration_Cheat_Sheet.html">
+        <link rel="prev" href="Secure_Cloud_Architecture_Cheat_Sheet.html">
       
       
-        <link rel="next" href="Pinning_Cheat_Sheet.html">
+        <link rel="next" href="Secure_Product_Design_Cheat_Sheet.html">
       
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
@@ -24,7 +24,7 @@
     
     
       
-        <title>Password Storage - OWASP Cheat Sheet Series</title>
+        <title>Secure Code Review - OWASP Cheat Sheet Series</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#password-storage-cheat-sheet" class="md-skip">
+        <a href="#secure-code-review-cheat-sheet" class="md-skip">
           Skip to content
         </a>
       
@@ -111,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Password Storage
+              Secure Code Review
             
           </span>
         </div>
@@ -1819,30 +1819,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Password Storage
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="Password_Storage_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="Password_Storage_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1851,281 +1831,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    <span class="md-ellipsis">
-      Introduction
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#background" class="md-nav__link">
-    <span class="md-ellipsis">
-      Background
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Background">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#hashing-vs-encryption" class="md-nav__link">
-    <span class="md-ellipsis">
-      Hashing vs Encryption
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#when-password-hashes-can-be-cracked" class="md-nav__link">
-    <span class="md-ellipsis">
-      When Password Hashes Can Be Cracked
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#methods-for-enhancing-password-storage" class="md-nav__link">
-    <span class="md-ellipsis">
-      Methods for Enhancing Password Storage
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Methods for Enhancing Password Storage">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#salting" class="md-nav__link">
-    <span class="md-ellipsis">
-      Salting
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#peppering" class="md-nav__link">
-    <span class="md-ellipsis">
-      Peppering
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Peppering">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#common-requirements-for-peppering-strategies" class="md-nav__link">
-    <span class="md-ellipsis">
-      Common requirements for peppering strategies
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pre-hashing-peppers" class="md-nav__link">
-    <span class="md-ellipsis">
-      Pre-hashing peppers
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#post-hashing-peppers" class="md-nav__link">
-    <span class="md-ellipsis">
-      Post-hashing peppers
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#using-work-factors" class="md-nav__link">
-    <span class="md-ellipsis">
-      Using Work Factors
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Using Work Factors">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#upgrading-the-work-factor" class="md-nav__link">
-    <span class="md-ellipsis">
-      Upgrading the Work Factor
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#password-hashing-algorithms" class="md-nav__link">
-    <span class="md-ellipsis">
-      Password Hashing Algorithms
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Password Hashing Algorithms">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#argon2id" class="md-nav__link">
-    <span class="md-ellipsis">
-      Argon2id
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#scrypt" class="md-nav__link">
-    <span class="md-ellipsis">
-      scrypt
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#bcrypt" class="md-nav__link">
-    <span class="md-ellipsis">
-      bcrypt
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="bcrypt">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#input-limits-of-bcrypt" class="md-nav__link">
-    <span class="md-ellipsis">
-      Input Limits of bcrypt
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pre-hashing-passwords-with-bcrypt" class="md-nav__link">
-    <span class="md-ellipsis">
-      Pre-Hashing Passwords with bcrypt
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pbkdf2" class="md-nav__link">
-    <span class="md-ellipsis">
-      PBKDF2
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#parallel-pbkdf2" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parallel PBKDF2
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Parallel PBKDF2">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#pbkdf2-pre-hashing" class="md-nav__link">
-    <span class="md-ellipsis">
-      PBKDF2 Pre-Hashing
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#upgrading-legacy-hashes" class="md-nav__link">
-    <span class="md-ellipsis">
-      Upgrading Legacy Hashes
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Upgrading Legacy Hashes">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#international-characters" class="md-nav__link">
-    <span class="md-ellipsis">
-      International Characters
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -2366,10 +2071,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="Secure_Code_Review_Cheat_Sheet.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Secure Code Review
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="Secure_Code_Review_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -2378,6 +2103,467 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Introduction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#review-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      Review Types
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#review-methodology" class="md-nav__link">
+    <span class="md-ellipsis">
+      Review Methodology
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Review Methodology">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#preparation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Preparation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#review-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      Review Process
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-vulnerability-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Vulnerability Patterns
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Vulnerability Patterns">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#input-validation-vulnerabilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      Input Validation Vulnerabilities
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#injection-vulnerabilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      Injection Vulnerabilities
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authentication-session-management-vulnerabilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      Authentication &amp; Session Management Vulnerabilities
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#access-control-vulnerabilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      Access Control Vulnerabilities
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deserialization-vulnerabilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deserialization Vulnerabilities
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cryptographic-implementation-flaws" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cryptographic Implementation Flaws
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#review-techniques" class="md-nav__link">
+    <span class="md-ellipsis">
+      Review Techniques
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Review Techniques">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#code-pattern-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Code Pattern Analysis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-flow-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Flow Analysis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#threat-based-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      Threat-Based Review
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#business-logic-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      Business Logic Review
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#review-checklists" class="md-nav__link">
+    <span class="md-ellipsis">
+      Review Checklists
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Review Checklists">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#input-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Input Validation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authentication-session-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      Authentication &amp; Session Management
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authorization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Authorization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cryptography" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cryptography
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#business-logic" class="md-nav__link">
+    <span class="md-ellipsis">
+      Business Logic
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration &amp; Deployment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      Security Monitoring
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tools-and-techniques" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tools and Techniques
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tools and Techniques">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#code-editors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Code Editors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#command-line-pattern-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Command-Line Pattern Detection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#manual-review-focus-areas" class="md-nav__link">
+    <span class="md-ellipsis">
+      Manual Review Focus Areas
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#automated-tool-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Automated Tool Integration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#documentation-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      Documentation Templates
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#integration-with-sdlc" class="md-nav__link">
+    <span class="md-ellipsis">
+      Integration with SDLC
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Integration with SDLC">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#review-timing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Review Timing
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Review Timing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#baseline-review-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Baseline Review Integration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diff-based-review-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diff-Based Review Integration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hybrid-approach" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hybrid Approach
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#team-collaboration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Team Collaboration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-techniques" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advanced Techniques
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced Techniques">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#race-condition-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Race Condition Analysis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#business-logic-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Business Logic Analysis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-architecture-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      Security Architecture Review
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memory-safety" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory Safety
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2990,31 +3176,13 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#background" class="md-nav__link">
-    <span class="md-ellipsis">
-      Background
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Background">
+    <nav class="md-nav" aria-label="Introduction">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#hashing-vs-encryption" class="md-nav__link">
+  <a href="#review-types" class="md-nav__link">
     <span class="md-ellipsis">
-      Hashing vs Encryption
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#when-password-hashes-can-be-cracked" class="md-nav__link">
-    <span class="md-ellipsis">
-      When Password Hashes Can Be Cracked
+      Review Types
     </span>
   </a>
   
@@ -3026,87 +3194,30 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#methods-for-enhancing-password-storage" class="md-nav__link">
+  <a href="#review-methodology" class="md-nav__link">
     <span class="md-ellipsis">
-      Methods for Enhancing Password Storage
+      Review Methodology
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Methods for Enhancing Password Storage">
+    <nav class="md-nav" aria-label="Review Methodology">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#salting" class="md-nav__link">
+  <a href="#preparation" class="md-nav__link">
     <span class="md-ellipsis">
-      Salting
+      Preparation
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#peppering" class="md-nav__link">
+  <a href="#review-process" class="md-nav__link">
     <span class="md-ellipsis">
-      Peppering
+      Review Process
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Peppering">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#common-requirements-for-peppering-strategies" class="md-nav__link">
-    <span class="md-ellipsis">
-      Common requirements for peppering strategies
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pre-hashing-peppers" class="md-nav__link">
-    <span class="md-ellipsis">
-      Pre-hashing peppers
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#post-hashing-peppers" class="md-nav__link">
-    <span class="md-ellipsis">
-      Post-hashing peppers
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#using-work-factors" class="md-nav__link">
-    <span class="md-ellipsis">
-      Using Work Factors
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Using Work Factors">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#upgrading-the-work-factor" class="md-nav__link">
-    <span class="md-ellipsis">
-      Upgrading the Work Factor
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -3116,96 +3227,66 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#password-hashing-algorithms" class="md-nav__link">
+  <a href="#common-vulnerability-patterns" class="md-nav__link">
     <span class="md-ellipsis">
-      Password Hashing Algorithms
+      Common Vulnerability Patterns
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Password Hashing Algorithms">
+    <nav class="md-nav" aria-label="Common Vulnerability Patterns">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#argon2id" class="md-nav__link">
+  <a href="#input-validation-vulnerabilities" class="md-nav__link">
     <span class="md-ellipsis">
-      Argon2id
+      Input Validation Vulnerabilities
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#scrypt" class="md-nav__link">
+  <a href="#injection-vulnerabilities" class="md-nav__link">
     <span class="md-ellipsis">
-      scrypt
+      Injection Vulnerabilities
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#bcrypt" class="md-nav__link">
+  <a href="#authentication-session-management-vulnerabilities" class="md-nav__link">
     <span class="md-ellipsis">
-      bcrypt
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="bcrypt">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#input-limits-of-bcrypt" class="md-nav__link">
-    <span class="md-ellipsis">
-      Input Limits of bcrypt
+      Authentication &amp; Session Management Vulnerabilities
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#pre-hashing-passwords-with-bcrypt" class="md-nav__link">
+  <a href="#access-control-vulnerabilities" class="md-nav__link">
     <span class="md-ellipsis">
-      Pre-Hashing Passwords with bcrypt
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pbkdf2" class="md-nav__link">
-    <span class="md-ellipsis">
-      PBKDF2
+      Access Control Vulnerabilities
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#parallel-pbkdf2" class="md-nav__link">
+  <a href="#deserialization-vulnerabilities" class="md-nav__link">
     <span class="md-ellipsis">
-      Parallel PBKDF2
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Parallel PBKDF2">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#pbkdf2-pre-hashing" class="md-nav__link">
-    <span class="md-ellipsis">
-      PBKDF2 Pre-Hashing
+      Deserialization Vulnerabilities
     </span>
   </a>
   
 </li>
         
-      </ul>
-    </nav>
+          <li class="md-nav__item">
+  <a href="#cryptographic-implementation-flaws" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cryptographic Implementation Flaws
+    </span>
+  </a>
   
 </li>
         
@@ -3215,19 +3296,46 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#upgrading-legacy-hashes" class="md-nav__link">
+  <a href="#review-techniques" class="md-nav__link">
     <span class="md-ellipsis">
-      Upgrading Legacy Hashes
+      Review Techniques
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Upgrading Legacy Hashes">
+    <nav class="md-nav" aria-label="Review Techniques">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#international-characters" class="md-nav__link">
+  <a href="#code-pattern-analysis" class="md-nav__link">
     <span class="md-ellipsis">
-      International Characters
+      Code Pattern Analysis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-flow-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Flow Analysis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#threat-based-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      Threat-Based Review
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#business-logic-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      Business Logic Review
     </span>
   </a>
   
@@ -3235,6 +3343,270 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#review-checklists" class="md-nav__link">
+    <span class="md-ellipsis">
+      Review Checklists
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Review Checklists">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#input-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Input Validation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authentication-session-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      Authentication &amp; Session Management
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authorization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Authorization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cryptography" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cryptography
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#business-logic" class="md-nav__link">
+    <span class="md-ellipsis">
+      Business Logic
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuration &amp; Deployment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      Security Monitoring
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tools-and-techniques" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tools and Techniques
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tools and Techniques">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#code-editors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Code Editors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#command-line-pattern-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Command-Line Pattern Detection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#manual-review-focus-areas" class="md-nav__link">
+    <span class="md-ellipsis">
+      Manual Review Focus Areas
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#automated-tool-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Automated Tool Integration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#documentation-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      Documentation Templates
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#integration-with-sdlc" class="md-nav__link">
+    <span class="md-ellipsis">
+      Integration with SDLC
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Integration with SDLC">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#review-timing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Review Timing
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Review Timing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#baseline-review-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Baseline Review Integration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diff-based-review-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diff-Based Review Integration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hybrid-approach" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hybrid Approach
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#team-collaboration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Team Collaboration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-techniques" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advanced Techniques
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced Techniques">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#race-condition-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Race Condition Analysis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#business-logic-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Business Logic Analysis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-architecture-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      Security Architecture Review
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memory-safety" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory Safety
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
   
 </li>
       
@@ -3256,135 +3628,401 @@
   
 
 
-<h1 id="password-storage-cheat-sheet">Password Storage Cheat Sheet<a class="headerlink" href="#password-storage-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h1 id="secure-code-review-cheat-sheet">Secure Code Review Cheat Sheet<a class="headerlink" href="#secure-code-review-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>This cheat sheet advises you on the proper methods for storing passwords for authentication. When passwords are stored, they must be protected from an attacker even if the application or database is compromised. Fortunately, a majority of modern languages and frameworks provide built-in functionality to help store passwords safely.</p>
-<p>However, once an attacker has acquired stored password hashes, they are always able to brute force hashes offline. Defenders can slow down offline attacks by selecting hash algorithms that are as resource intensive as possible.</p>
-<p>To sum up our recommendations:</p>
+<p><strong>Secure Code Review</strong> is the process of manually examining source code to identify security vulnerabilities that automated tools often miss. It involves analyzing application logic, data flow, and implementation details to detect security flaws that require human expertise and contextual understanding.</p>
+<p><strong>Manual Code Review</strong> complements automated security testing tools (SAST/DAST) by focusing on areas where human analysis provides the most value, including business logic validation, complex security implementations, and context-specific vulnerabilities. While automated tools can assist by highlighting potential areas of concern, the core analysis relies on human judgment and domain expertise.</p>
+<p><strong>Security-Focused Review</strong> differs from functional code review by specifically targeting security concerns such as input validation, authentication mechanisms, authorization controls, cryptographic implementations, and potential attack vectors.</p>
+<h3 id="review-types">Review Types<a class="headerlink" href="#review-types" title="Permanent link">&para;</a></h3>
+<p><strong>Baseline Reviews</strong> examine the entire codebase comprehensively. Use for:</p>
 <ul>
-<li><strong>Use <a href="#argon2id">Argon2id</a> with a minimum configuration of 19 MiB of memory, an iteration count of 2, and 1 degree of parallelism.</strong></li>
-<li><strong>If <a href="#argon2id">Argon2id</a> is not available, use <a href="#scrypt">scrypt</a> with a minimum CPU/memory cost parameter of (2^17), a minimum block size of 8 (1024 bytes), and a parallelization parameter of 1.</strong></li>
-<li><strong>For legacy systems using <a href="#bcrypt">bcrypt</a>, use a work factor of 10 or more and with a password limit of 72 bytes.</strong></li>
-<li><strong>If FIPS-140 compliance is required, use <a href="#pbkdf2">PBKDF2</a> with a work factor of 600,000 or more and set with an internal hash function of HMAC-SHA-256.</strong></li>
-<li><strong>Consider using a <a href="#peppering">pepper</a> to provide additional defense in depth (though alone, it provides no additional secure characteristics).</strong></li>
+<li>New applications or major releases</li>
+<li>Legacy system onboarding</li>
+<li>Compliance requirements</li>
+<li>Post-incident analysis</li>
 </ul>
-<h2 id="background">Background<a class="headerlink" href="#background" title="Permanent link">&para;</a></h2>
-<h3 id="hashing-vs-encryption">Hashing vs Encryption<a class="headerlink" href="#hashing-vs-encryption" title="Permanent link">&para;</a></h3>
-<p>Hashing and encryption can keep sensitive data safe, but in almost all circumstances, <strong>passwords should be hashed, NOT encrypted.</strong></p>
-<p>Because <strong>hashing is a one-way function</strong> (i.e., it is impossible to "decrypt" a hash and obtain the original plaintext value), it is the most appropriate approach for password validation. Even if an attacker obtains the hashed password, they cannot use it to log in as the victim.</p>
-<p>Since <strong>encryption is a two-way function</strong>, attackers can retrieve the original plaintext from the encrypted data. It can be used to store data such as a user's address since this data is displayed in plaintext on the user's profile. Hashing their address would result in a garbled mess.</p>
-<p>The only time encryption should be used in passwords is in edge cases where it is necessary to obtain the original plaintext password. This might be necessary if the application needs to use the password to authenticate with another system that does not support a modern way to programmatically grant access, such as OpenID Connect (OIDC). Wherever possible, an alternative architecture should be used to avoid the need to store passwords in an encrypted form.</p>
-<p>For further guidance on encryption, see the <a href="Cryptographic_Storage_Cheat_Sheet.html">Cryptographic Storage Cheat Sheet</a>.</p>
-<h3 id="when-password-hashes-can-be-cracked">When Password Hashes Can Be Cracked<a class="headerlink" href="#when-password-hashes-can-be-cracked" title="Permanent link">&para;</a></h3>
-<p><strong>Strong passwords stored with modern hashing algorithms and using hashing best practices should be effectively impossible for an attacker to crack.</strong>  It is your responsibility as an application owner to select a modern hashing algorithm.</p>
-<p>However, there are some situations where an attacker can "crack" the hashes in some circumstances by doing the following:</p>
+<p><strong>Diff-Based Reviews</strong> focus on code changes only. Use for:</p>
 <ul>
-<li>Selecting a password you think the victim has chosen (e.g.<code>password1!</code>)</li>
-<li>Calculating the hash</li>
-<li>Comparing the hash you calculated to the hash of the victim. If they match, you have correctly "cracked" the hash and now know the plaintext value of their password.</li>
+<li>Pull requests and commits</li>
+<li>Daily development workflow</li>
+<li>Feature completion</li>
+<li>Continuous security validation</li>
 </ul>
-<p>Usually, the attacker will repeat this process with a list of large number of potential candidate passwords, such as:</p>
+<p>This cheat sheet provides practical guidance for conducting effective manual security code reviews, with emphasis on both baseline and incremental review methodologies.</p>
+<h2 id="review-methodology">Review Methodology<a class="headerlink" href="#review-methodology" title="Permanent link">&para;</a></h2>
+<h3 id="preparation">Preparation<a class="headerlink" href="#preparation" title="Permanent link">&para;</a></h3>
+<p><strong>For All Reviews:</strong></p>
 <ul>
-<li>Lists of passwords obtained from other compromised sites</li>
-<li>Brute force (trying every possible candidate)</li>
-<li>Dictionaries or wordlists of common passwords</li>
+<li>Understand application architecture and business requirements</li>
+<li>Gather threat models and previous security findings</li>
+<li>Identify critical assets and high-risk functions</li>
+<li>Review security requirements and documentation</li>
 </ul>
-<p>While the number of permutations can be enormous, with high speed hardware (such as GPUs) and cloud services with many servers for rent, the cost to an attacker is relatively small to do successful password cracking, especially when best practices for hashing are not followed.</p>
-<h2 id="methods-for-enhancing-password-storage">Methods for Enhancing Password Storage<a class="headerlink" href="#methods-for-enhancing-password-storage" title="Permanent link">&para;</a></h2>
-<h3 id="salting">Salting<a class="headerlink" href="#salting" title="Permanent link">&para;</a></h3>
-<p>A salt is a unique, randomly generated string that is added to each password as part of the hashing process. As the salt is unique for every user, an attacker has to crack hashes one at a time using the respective salt rather than calculating a hash once and comparing it against every stored hash. This makes cracking large numbers of hashes significantly harder, as the time required grows in direct proportion to the number of hashes.</p>
-<p>Salting also protects against an attacker's pre-computing hashes using rainbow tables or database-based lookups. Finally, salting means that it is impossible to determine whether two users have the same password without cracking the hashes, as the different salts will result in different hashes even if the passwords are the same.</p>
-<p><a href="#password-hashing-algorithms">Modern hashing algorithms</a> such as Argon2id, bcrypt, and PBKDF2 automatically salt the passwords, so no additional steps are required when using them.</p>
-<h3 id="peppering">Peppering<a class="headerlink" href="#peppering" title="Permanent link">&para;</a></h3>
-<p><a href="https://datatracker.ietf.org/doc/html/draft-ietf-kitten-password-storage-07#section-4.2">Peppering</a> is a class of strategies that can be used in addition to salting to provide an additional layer of protection. It prevents an attacker from being able to crack any of the hashes if they only have access to the database, for example, if they have exploited a SQL injection vulnerability or obtained a backup of the database.</p>
-<h4 id="common-requirements-for-peppering-strategies">Common requirements for peppering strategies<a class="headerlink" href="#common-requirements-for-peppering-strategies" title="Permanent link">&para;</a></h4>
+<p><strong>Additional for Baseline Reviews:</strong></p>
 <ul>
-<li>A pepper is <strong>shared between stored passwords</strong>, rather than being <em>unique</em> to an individual password like a password salt.</li>
-<li>Unlike a password salt, the pepper should not be public and <strong>should not be stored along with the generated hash</strong>. The pepper should be stored separately from the password database.</li>
-<li>Peppers are secrets and should be stored in "secrets vaults" or HSMs (Hardware Security Modules). See the <a href="Secrets_Management_Cheat_Sheet.html">Secrets Management Cheat Sheet</a> for more information on securely storing secrets.</li>
-<li>In the event of a pepper's compromise, the pepper will have to be changed. Peppers cannot be changed without knowledge of a user's password. Therefore changing a pepper will require forcing all users whose passwords were protected by the previous pepper to reset their passwords.</li>
+<li>Map complete application boundaries and dependencies</li>
+<li>Analyze overall security architecture</li>
+<li>Review security incident history</li>
+<li>Audit all third-party libraries</li>
 </ul>
-<h4 id="pre-hashing-peppers">Pre-hashing peppers<a class="headerlink" href="#pre-hashing-peppers" title="Permanent link">&para;</a></h4>
-<p>In this strategy, a pepper is added to a password before being hashed by a password hashing algorithm. The computed hash is then stored in the database. In this case the pepper should be a random value generated securely. See the <a href="Cryptographic_Storage_Cheat_Sheet.html#secure-random-number-generation">Cryptographic_Storage_Cheat_Sheet</a> for more information on securely generating random values.</p>
-<h4 id="post-hashing-peppers">Post-hashing peppers<a class="headerlink" href="#post-hashing-peppers" title="Permanent link">&para;</a></h4>
-<p>In this strategy, a password is hashed as usual using a password hashing algorithm. The resulting password hash is then hashed again using an HMAC (e.g., HMAC-SHA256, HMAC-SHA512, depending on the desired output length) before storing the resulting hash in the database. In this case the pepper is acting as the HMAC key and should be generated as per requirements of the HMAC algorithm.</p>
-<h3 id="using-work-factors">Using Work Factors<a class="headerlink" href="#using-work-factors" title="Permanent link">&para;</a></h3>
-<p>The work factor is the number of iterations of the hashing algorithm that are performed for each password (usually, it's actually <code>2^work</code> iterations). The work factor is typically stored in the hash output. It makes calculating the hash more computationally expensive, which in turn reduces the speed and/or increases the cost for which an attacker can attempt to crack the password hash.</p>
-<p>When you choose a work factor, strike a balance between security and performance. Though higher work factors make hashes more difficult for an attacker to crack, they will slow down the process of verifying a login attempt. If the work factor is too high, the performance of the application may be degraded, which could be used by an attacker to carry out a denial of service attack by exhausting the server's CPU with a large number of login attempts.</p>
-<p>There is no golden rule for the ideal work factor - it will depend on the performance of the server and the number of users on the application. Determining the optimal work factor will require experimentation on the specific server(s) used by the application. As a general rule, calculating a hash should take less than one second.</p>
-<h4 id="upgrading-the-work-factor">Upgrading the Work Factor<a class="headerlink" href="#upgrading-the-work-factor" title="Permanent link">&para;</a></h4>
-<p>One key advantage of having a work factor is that it can be increased over time as hardware becomes more powerful and cheaper.</p>
-<p>The most common approach to upgrading the work factor is to wait until the user next authenticates, then re-hash their password with the new work factor. The different hashes will have different work factors and hashes may never be upgraded if the user doesn't log back into the application. Depending on the application, it may be appropriate to remove the older password hashes and require users to reset their passwords next time they need to login in order to avoid storing older and less secure hashes.</p>
-<h2 id="password-hashing-algorithms">Password Hashing Algorithms<a class="headerlink" href="#password-hashing-algorithms" title="Permanent link">&para;</a></h2>
-<p>Some modern hashing algorithms have been specifically designed to securely store passwords. This means that they should be slow (unlike algorithms such as MD5 and SHA-1, which were designed to be fast), and you can change how slow they are by changing the work factor.</p>
-<p>You do not need to hide which password hashing algorithm is used by an application. If you utilize a modern password hashing algorithm with proper configuration parameters, it should be safe to state in public which password hashing algorithms are in use and be listed <a href="https://pulse.michalspacek.cz/passwords/storages">here</a>.</p>
-<p>Three hashing algorithms that should be considered:</p>
-<h3 id="argon2id">Argon2id<a class="headerlink" href="#argon2id" title="Permanent link">&para;</a></h3>
-<p><a href="https://en.wikipedia.org/wiki/Argon2">Argon2</a> was the winner of the 2015 <a href="https://en.wikipedia.org/wiki/Password_Hashing_Competition">Password Hashing Competition</a>. Out of the three Argon2 versions, use the  Argon2id variant since it provides a balanced approach to resisting both side-channel and GPU-based attacks.</p>
-<p>Rather than a simple work factor like other algorithms, Argon2id has three different parameters that can be configured: the base minimum of the minimum memory size (m), the minimum number of iterations (t), and the degree of parallelism (p). We recommend the following configuration settings:</p>
+<p><strong>Additional for Diff-Based Reviews:</strong></p>
 <ul>
-<li>m=47104 (46 MiB), t=1, p=1 (Do not use with Argon2i)</li>
-<li>m=19456 (19 MiB), t=2, p=1 (Do not use with Argon2i)</li>
-<li>m=12288 (12 MiB), t=3, p=1</li>
-<li>m=9216 (9 MiB), t=4, p=1</li>
-<li>m=7168 (7 MiB), t=5, p=1</li>
+<li>Identify modified files and affected components</li>
+<li>Assess impact on existing security controls</li>
+<li>Understand purpose of changes</li>
+<li>Prioritize high-risk modifications</li>
 </ul>
-<p>These configuration settings provide an equal level of defense, and the only difference is a trade off between CPU and RAM usage.</p>
-<h3 id="scrypt">scrypt<a class="headerlink" href="#scrypt" title="Permanent link">&para;</a></h3>
-<p><a href="http://www.tarsnap.com/scrypt/scrypt.pdf">scrypt</a> is a password-based key derivation function created by <a href="https://twitter.com/cperciva">Colin Percival</a>. While <a href="#argon2id">Argon2id</a> should be the best choice for password hashing, <a href="#scrypt">scrypt</a> should be used when the former is not available.</p>
-<p>Like <a href="#argon2id">Argon2id</a>, scrypt has three different parameters that can be configured: the minimum CPU/memory cost parameter (N), the blocksize (r) and the degree of parallelism (p). Use one of the following settings:</p>
+<h3 id="review-process">Review Process<a class="headerlink" href="#review-process" title="Permanent link">&para;</a></h3>
+<p><strong>Baseline Review Steps:</strong></p>
+<ol>
+<li>Architecture review for security anti-patterns</li>
+<li>Entry point analysis and input validation</li>
+<li>Authentication and authorization verification</li>
+<li>Data flow tracing</li>
+<li>Business logic analysis</li>
+<li>Cryptographic implementation review</li>
+<li>Error handling verification</li>
+<li>Configuration and deployment review</li>
+</ol>
+<p><strong>Diff-Based Review Steps:</strong></p>
+<ol>
+<li>Analyze impact on existing security controls</li>
+<li>Identify new attack vectors</li>
+<li>Verify security at modified trust boundaries</li>
+<li>Check new integrations</li>
+<li>Ensure no security regression</li>
+<li>Apply relevant security patterns</li>
+</ol>
+<h2 id="common-vulnerability-patterns">Common Vulnerability Patterns<a class="headerlink" href="#common-vulnerability-patterns" title="Permanent link">&para;</a></h2>
+<h3 id="input-validation-vulnerabilities">Input Validation Vulnerabilities<a class="headerlink" href="#input-validation-vulnerabilities" title="Permanent link">&para;</a></h3>
+<p>Check for missing server-side validation, improper sanitization, and weak input filtering. For more information, see <a href="Input_Validation_Cheat_Sheet.html">Input Validation Cheat Sheet</a>.</p>
+<h3 id="injection-vulnerabilities">Injection Vulnerabilities<a class="headerlink" href="#injection-vulnerabilities" title="Permanent link">&para;</a></h3>
+<p><strong>SQL Injection:</strong></p>
+<p>Look for string concatenation in database queries and unsafe query construction. For more information, see <a href="SQL_Injection_Prevention_Cheat_Sheet.html">SQL Injection Prevention Cheat Sheet</a>.</p>
+<p><strong>Cross-Site Scripting (XSS):</strong></p>
+<p>Review output encoding, DOM manipulation, and user input rendering. For more information, see <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">Cross Site Scripting Prevention Cheat Sheet</a>.</p>
+<p><strong>Path Traversal:</strong></p>
+<p>Check for unsafe file path construction and directory traversal vulnerabilities. For more information, see <a href="File_Upload_Cheat_Sheet.html">File Upload Cheat Sheet</a>.</p>
+<p><strong>Command Injection:</strong></p>
+<p>Identify direct command execution with user input and unsafe system calls. For more information, see <a href="OS_Command_Injection_Defense_Cheat_Sheet.html">OS Command Injection Defense Cheat Sheet</a>.</p>
+<p><strong>NoSQL Injection:</strong></p>
+<p>Examine NoSQL query construction and parameter binding. For more information, see <a href="NoSQL_Security_Cheat_Sheet.html">NoSQL Security Cheat Sheet</a>.</p>
+<h3 id="authentication-session-management-vulnerabilities">Authentication &amp; Session Management Vulnerabilities<a class="headerlink" href="#authentication-session-management-vulnerabilities" title="Permanent link">&para;</a></h3>
+<p>Review authentication mechanisms, session token generation, and user credential handling. For more information, refer to <a href="Authentication_Cheat_Sheet.html">Authentication Cheat Sheet</a> and <a href="Session_Management_Cheat_Sheet.html">Session Management Cheat Sheet</a>.</p>
+<h3 id="access-control-vulnerabilities">Access Control Vulnerabilities<a class="headerlink" href="#access-control-vulnerabilities" title="Permanent link">&para;</a></h3>
+<p>Examine authorization checks, role-based access controls, and privilege escalation prevention. For more information, see <a href="Authorization_Cheat_Sheet.html">Authorization Cheat Sheet</a>.</p>
+<h3 id="deserialization-vulnerabilities">Deserialization Vulnerabilities<a class="headerlink" href="#deserialization-vulnerabilities" title="Permanent link">&para;</a></h3>
+<p><strong>Insecure Deserialization:</strong></p>
+<p>Check for unsafe deserialization of untrusted data and object injection vulnerabilities. For more information, see <a href="Deserialization_Cheat_Sheet.html">Deserialization Cheat Sheet</a>.</p>
+<p><strong>XML External Entity (XXE):</strong></p>
+<p>Review XML parsing configurations and external entity processing. For more information, see <a href="XML_External_Entity_Prevention_Cheat_Sheet.html">XML External Entity Prevention Cheat Sheet</a>.</p>
+<h3 id="cryptographic-implementation-flaws">Cryptographic Implementation Flaws<a class="headerlink" href="#cryptographic-implementation-flaws" title="Permanent link">&para;</a></h3>
+<p>Examine encryption algorithms, key management, and cryptographic implementations. For more information, refer to <a href="Cryptographic_Storage_Cheat_Sheet.html">Cryptographic Storage Cheat Sheet</a>.</p>
+<h2 id="review-techniques">Review Techniques<a class="headerlink" href="#review-techniques" title="Permanent link">&para;</a></h2>
+<h3 id="code-pattern-analysis">Code Pattern Analysis<a class="headerlink" href="#code-pattern-analysis" title="Permanent link">&para;</a></h3>
+<p>Focus on high-risk code patterns:</p>
 <ul>
-<li>N=2^17 (128 MiB), r=8 (1024 bytes), p=1</li>
-<li>N=2^16 (64 MiB), r=8 (1024 bytes), p=2</li>
-<li>N=2^15 (32 MiB), r=8 (1024 bytes), p=3</li>
-<li>N=2^14 (16 MiB), r=8 (1024 bytes), p=5</li>
-<li>N=2^13 (8 MiB), r=8 (1024 bytes), p=10</li>
+<li>Input processing and validation functions</li>
+<li>Database query construction and ORM usage</li>
+<li>File operations and path handling</li>
+<li>Authentication and session management logic</li>
+<li>Authorization and access control checks</li>
+<li>Cryptographic operations and key management</li>
+<li>Error handling and logging mechanisms</li>
+<li>Configuration loading and environment variables</li>
 </ul>
-<p>These configuration settings provide an equal level of defense. The only difference is a trade off between CPU and RAM usage.</p>
-<h3 id="bcrypt">bcrypt<a class="headerlink" href="#bcrypt" title="Permanent link">&para;</a></h3>
-<p>The <a href="https://en.wikipedia.org/wiki/bcrypt">bcrypt</a> password hashing function <strong>should only</strong> be used for password storage in legacy systems where Argon2 and scrypt are not available.</p>
-<p>The work factor should be as large as verification server performance will allow, with a minimum of 10.</p>
-<h4 id="input-limits-of-bcrypt">Input Limits of bcrypt<a class="headerlink" href="#input-limits-of-bcrypt" title="Permanent link">&para;</a></h4>
-<p>bcrypt has a maximum length input length of 72 bytes <a href="https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length">for most implementations</a>, so you should enforce a maximum password length of 72 bytes (or less if the bcrypt implementation in use has smaller limits).</p>
-<h4 id="pre-hashing-passwords-with-bcrypt">Pre-Hashing Passwords with bcrypt<a class="headerlink" href="#pre-hashing-passwords-with-bcrypt" title="Permanent link">&para;</a></h4>
-<p>An alternative approach is to pre-hash the user-supplied password with a fast algorithm such as SHA-2, HMAC, or BLAKE3 and then to hash the resulting hash value with bcrypt (i.e., <code>bcrypt(H($password)), $salt, $cost)</code>)..
-This can be <strong>dangerous</strong> because of null bytes in the hash output value and because of <a href="https://www.youtube.com/watch?v=OQD3qDYMyYQ">password shucking</a>.</p>
-<p>The original bcrypt expects a null terminated password string, this means that the hash value will only be used to the first null byte in the hash value. (<code>bcrypt(H($password)), $salt, $cost) == bcrypt("", $salt, $cost)</code> if <code>H($password)[0] == 0</code>)
-This increases the chance of finding a collision when <a href="https://blog.ircmaxell.com/2015/03/security-issue-combining-bcrypt-with.html">combining bcrypt with other hash functions</a> and can be avoided by encoding the hash value to printable string with something like base64.
-base64 can increases the length of the hash value above 72 characters and so there is a bit of truncation for large hash values from hashes like SHA-512, this is <a href="https://soatok.blog/2024/11/27/beyond-bcrypt/">negligible</a>.</p>
-<p>Password shucking uses the fact, that it is easy to check if  <code>bcrypt(base64(H($password))), $salt, $cost) == bcrypt(base64($leaked_hash), $salt, $cost)</code>.
-If the inner hash function <code>H</code> is used with the same password somewhere else and known to an attacker cracking the password can be reduced to breaking the hash function <code>H</code>.
-Just using pure SHA-512, ( i.e. <code>bcrypt(base64(sha512($password))), $salt, $cost)</code>) is a <strong>dangerous practice</strong> and is as secure as just using pure SHA-512.
-Password shucking only works if a leaked hash is known to the attacker, either through a breach database or rainbow tables.
-To mitigate password shucking a <a href="#peppering">pepper</a> can be used.</p>
-<p>To summarize if bcrypt has to be used and the password should to be pre-hashed you should do <code>bcrypt(base64(hmac-sha384(data:$password, key:$pepper)), $salt, $cost)</code> and store the pepper not in the database.</p>
-<h3 id="pbkdf2">PBKDF2<a class="headerlink" href="#pbkdf2" title="Permanent link">&para;</a></h3>
-<p>Since <a href="https://en.wikipedia.org/wiki/PBKDF2">PBKDF2</a> is recommended by <a href="https://pages.nist.gov/800-63-3/sp800-63b.html#memsecretver">NIST</a> and has FIPS-140 validated implementations, so it should be the preferred algorithm when these are required.</p>
-<p>The PBKDF2 algorithm requires that you select an internal hashing algorithm such as an HMAC or a variety of other hashing algorithms. HMAC-SHA-256 is widely supported and is recommended by NIST.</p>
-<p>The work factor for PBKDF2 is implemented through an iteration count, which should set differently based on the internal hashing algorithm used.</p>
+<h3 id="data-flow-analysis">Data Flow Analysis<a class="headerlink" href="#data-flow-analysis" title="Permanent link">&para;</a></h3>
+<p>Trace data through the application:</p>
+<ol>
+<li><strong>Identify Sources</strong>: User inputs, file uploads, API calls, database reads, environment variables</li>
+<li><strong>Follow Processing</strong>: Validation, transformation, business logic, caching</li>
+<li><strong>Check Sinks</strong>: Database queries, file writes, output rendering, logging, external APIs</li>
+<li><strong>Validate Boundaries</strong>: Input validation and output encoding at trust boundaries</li>
+<li><strong>Trust Zones</strong>: Verify security controls at each trust boundary crossing</li>
+<li><strong>Data Classification</strong>: Ensure sensitive data receives appropriate protection</li>
+</ol>
+<h3 id="threat-based-review">Threat-Based Review<a class="headerlink" href="#threat-based-review" title="Permanent link">&para;</a></h3>
+<p>Align review with common attack patterns:</p>
 <ul>
-<li>PBKDF2-HMAC-SHA1: 1,300,000 iterations</li>
-<li>PBKDF2-HMAC-SHA256: 600,000 iterations</li>
-<li>PBKDF2-HMAC-SHA512: 210,000 iterations</li>
+<li><strong>OWASP Top 10</strong>: Focus on prevalent web application risks</li>
+<li><strong>STRIDE Model</strong>: Spoofing, Tampering, Repudiation, Information Disclosure, DoS, Elevation</li>
+<li><strong>Attack Trees</strong>: Map potential attack paths through the application</li>
+<li><strong>Abuse Cases</strong>: Consider how features could be misused by attackers</li>
+<li><strong>Security Controls</strong>: Verify defense-in-depth implementation</li>
 </ul>
-<h3 id="parallel-pbkdf2">Parallel PBKDF2<a class="headerlink" href="#parallel-pbkdf2" title="Permanent link">&para;</a></h3>
+<h3 id="business-logic-review">Business Logic Review<a class="headerlink" href="#business-logic-review" title="Permanent link">&para;</a></h3>
+<p>Analyze application workflows for:</p>
 <ul>
-<li>PPBKDF2-SHA512: cost 2</li>
-<li>PPBKDF2-SHA256: cost 5</li>
-<li>PPBKDF2-SHA1: cost 10</li>
+<li>State management and transition validation</li>
+<li>Race conditions and concurrency issues</li>
+<li>Transaction integrity and rollback mechanisms</li>
+<li>Resource limits and quota enforcement</li>
+<li>Authorization at each workflow step</li>
+<li>Workflow bypass opportunities</li>
 </ul>
-<p>These configuration settings are equivalent in the defense they provide. (<a href="https://tobtu.com/minimum-password-settings/">Number as of december 2022, based on testing of RTX 4000 GPUs</a>)</p>
-<h4 id="pbkdf2-pre-hashing">PBKDF2 Pre-Hashing<a class="headerlink" href="#pbkdf2-pre-hashing" title="Permanent link">&para;</a></h4>
-<p>When PBKDF2 is used with an HMAC, and the password is longer than the hash function's block size (64 bytes for SHA-256), the password will be automatically pre-hashed. For example, the password "This is a password longer than 512 bits which is the block size of SHA-256" is converted to the hash value (in hex): <code>fa91498c139805af73f7ba275cca071e78d78675027000c99a9925e2ec92eedd</code>.</p>
-<p>Good implementations of PBKDF2 perform pre-hashing before the expensive iterated hashing phase. However, some implementations perform the conversion on each iteration, which can make hashing long passwords significantly more expensive than hashing short passwords. When users supply very long passwords, a potential denial of service vulnerability could occur, such as the one published in <a href="https://www.djangoproject.com/weblog/2013/sep/15/security/">Django</a> during 2013. Manual pre-hashing can reduce this risk but requires adding a <a href="#salting">salt</a> to the pre-hash step.</p>
-<h2 id="upgrading-legacy-hashes">Upgrading Legacy Hashes<a class="headerlink" href="#upgrading-legacy-hashes" title="Permanent link">&para;</a></h2>
-<p>Older applications that use less secure hashing algorithms, such as MD5 or SHA-1, can be upgraded to modern password hashing algorithms as described above. When the users enter their password (usually by authenticating on the application), that input should be re-hashed using the new algorithm. Defenders should expire the users' current password and require them to enter a new one, so that any older (less secure) hashes of their password are no longer useful to an attacker.</p>
-<p>However, this means that old (less secure) password hashes will be stored in the database until the user logs in. You can take one of two approaches to avoid this dilemma.</p>
-<p>Upgrade Method One: Expire and delete the password hashes of users who have been inactive for an extended period and require them to reset their passwords to login again. Although secure, this approach is not particularly user-friendly. Expiring the passwords of many users may cause issues for support staff or may be interpreted by users as an indication of a breach.</p>
-<p>Upgrade Method Two: Use the existing password hashes as inputs for a more secure algorithm. For example, if the application originally stored passwords as <code>md5($password)</code>, this could be easily upgraded to <code>bcrypt(md5($password))</code>. Layering the hashes avoids the need to know the original password; however, it can make the hashes easier to crack. These hashes should be replaced with direct hashes of the users' passwords next time the user logs in.</p>
-<p>Remember that once your password hashing method is selected, it will have to be upgraded in the future, so ensure that upgrading your hashing algorithm is as easy as possible. During the transition period, allow for a mix of old and new hashing algorithms. Using a mix of hashing algorithms is easier if the password hashing algorithm and work factor are stored with the password using a standard format, for example, the <a href="https://github.com/P-H-C/phc-string-format/blob/master/phc-sf-spec.md">modular PHC string format</a>.</p>
-<h3 id="international-characters">International Characters<a class="headerlink" href="#international-characters" title="Permanent link">&para;</a></h3>
-<p>Your hashing library must be able to accept a wide range of characters and should be compatible with all Unicode codepoints, so users can use the full range of characters available on modern devices - especially mobile keyboards. They should be able to select passwords from various languages and include pictograms. Prior to hashing the entropy of the user's entry should not be reduced, and password hashing libraries need to be able to use input that may contain a NULL byte.</p>
+<h2 id="review-checklists">Review Checklists<a class="headerlink" href="#review-checklists" title="Permanent link">&para;</a></h2>
+<h3 id="input-validation">Input Validation<a class="headerlink" href="#input-validation" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] <strong>Server-side validation</strong>: All inputs validated on server regardless of client-side checks</li>
+<li>[ ] <strong>Allowlist validation</strong>: Uses allowlists rather than blocklists for input validation</li>
+<li>[ ] <strong>Output encoding</strong>: Context-appropriate encoding (HTML, JavaScript, CSS, URL, SQL)</li>
+<li>[ ] <strong>File upload security</strong>: Content-based validation, size limits, safe storage</li>
+<li>[ ] <strong>SQL injection prevention</strong>: Parameterized queries or stored procedures used</li>
+<li>[ ] <strong>Length limits</strong>: Input length restrictions enforced</li>
+<li>[ ] <strong>Character handling</strong>: Special characters and Unicode properly processed</li>
+<li>[ ] <strong>Error messages</strong>: No sensitive information disclosed in error responses</li>
+</ul>
+<h3 id="authentication-session-management">Authentication &amp; Session Management<a class="headerlink" href="#authentication-session-management" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] <strong>Password security</strong>: Strong hashing algorithms and salt usage (for more information, see <a href="Password_Storage_Cheat_Sheet.html">Password Storage Cheat Sheet</a>)</li>
+<li>[ ] <strong>Account protection</strong>: Lockout mechanisms with appropriate thresholds</li>
+<li>[ ] <strong>Session management</strong>: Secure token generation (≥128 bits entropy)</li>
+<li>[ ] <strong>Session lifecycle</strong>: Proper invalidation on logout/timeout</li>
+<li>[ ] <strong>Re-authentication</strong>: Required for sensitive operations</li>
+<li>[ ] <strong>Multi-factor authentication</strong>: Implementation for high-risk accounts (for more information, see <a href="Multifactor_Authentication_Cheat_Sheet.html">Multifactor Authentication Cheat Sheet</a>)</li>
+<li>[ ] <strong>Password reset</strong>: Secure, time-limited reset mechanisms (for more information, see <a href="Forgot_Password_Cheat_Sheet.html">Forgot Password Cheat Sheet</a>)</li>
+<li>[ ] <strong>Session security</strong>: HttpOnly, Secure, SameSite cookie attributes</li>
+<li>[ ] <strong>Concurrent sessions</strong>: Appropriate limits and monitoring</li>
+</ul>
+<h3 id="authorization">Authorization<a class="headerlink" href="#authorization" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] <strong>Server-side enforcement</strong>: All access controls enforced server-side</li>
+<li>[ ] <strong>Fail-safe defaults</strong>: Default deny access policy</li>
+<li>[ ] <strong>IDOR prevention</strong>: Proper authorization for resource access</li>
+<li>[ ] <strong>Function-level controls</strong>: Administrative functions properly protected</li>
+<li>[ ] <strong>Role validation</strong>: Role assignments cannot be manipulated</li>
+<li>[ ] <strong>Privilege escalation</strong>: Horizontal and vertical escalation prevented</li>
+<li>[ ] <strong>Centralized decisions</strong>: Access control logic centralized</li>
+<li>[ ] <strong>Post-authentication checks</strong>: Authorization verified after authentication</li>
+</ul>
+<h3 id="cryptography">Cryptography<a class="headerlink" href="#cryptography" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] <strong>Strong algorithms</strong>: Modern algorithms (AES-256, RSA-2048+, ECDSA P-256+)</li>
+<li>[ ] <strong>Key management</strong>: Proper key generation, storage, and rotation (for more information, see <a href="Key_Management_Cheat_Sheet.html">Key Management Cheat Sheet</a>)</li>
+<li>[ ] <strong>Certificate validation</strong>: Proper validation including hostname verification</li>
+<li>[ ] <strong>Random generation</strong>: Cryptographically secure random number generation</li>
+<li>[ ] <strong>Data protection</strong>: Encryption at rest and in transit</li>
+<li>[ ] <strong>IV/Nonce handling</strong>: Unique and unpredictable initialization vectors</li>
+<li>[ ] <strong>Library maintenance</strong>: Up-to-date cryptographic libraries</li>
+<li>[ ] <strong>Side-channel protection</strong>: Consideration of timing and other side-channel attacks</li>
+</ul>
+<h3 id="business-logic">Business Logic<a class="headerlink" href="#business-logic" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] <strong>Workflow integrity</strong>: Proper state validation in multi-step processes</li>
+<li>[ ] <strong>Race condition prevention</strong>: Synchronization in concurrent operations</li>
+<li>[ ] <strong>Transaction atomicity</strong>: Proper rollback and consistency mechanisms</li>
+<li>[ ] <strong>Resource limits</strong>: Rate limiting and resource quotas implemented</li>
+<li>[ ] <strong>Business rule enforcement</strong>: Cannot bypass rules through direct API access</li>
+</ul>
+<h3 id="configuration-deployment">Configuration &amp; Deployment<a class="headerlink" href="#configuration-deployment" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] <strong>Secure defaults</strong>: Security-focused default configurations</li>
+<li>[ ] <strong>Environment separation</strong>: Proper isolation between environments</li>
+<li>[ ] <strong>Secrets management</strong>: No hardcoded secrets, proper secret storage and rotation (for more information, see <a href="Secrets_Management_Cheat_Sheet.html">Secrets Management Cheat Sheet</a>)</li>
+<li>[ ] <strong>Error handling</strong>: Graceful error handling without information disclosure (for more information, see <a href="Error_Handling_Cheat_Sheet.html">Error Handling Cheat Sheet</a>)</li>
+<li>[ ] <strong>Logging security</strong>: Sensitive data not logged, proper log protection (for more information, see <a href="Logging_Cheat_Sheet.html">Logging Cheat Sheet</a>)</li>
+<li>[ ] <strong>Security headers</strong>: Appropriate HTTP security headers configured (for more information, see <a href="HTTP_Headers_Cheat_Sheet.html">HTTP Headers Cheat Sheet</a>)</li>
+<li>[ ] <strong>TLS configuration</strong>: Strong cipher suites and protocol versions (for more information, see <a href="Transport_Layer_Security_Cheat_Sheet.html">Transport Layer Security Cheat Sheet</a>)</li>
+<li>[ ] <strong>Dependency management</strong>: Up-to-date libraries without known vulnerabilities (for more information, see <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html">Vulnerable Dependency Management Cheat Sheet</a>)</li>
+</ul>
+<h3 id="security-monitoring">Security Monitoring<a class="headerlink" href="#security-monitoring" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] <strong>Security events</strong>: Authentication failures, authorization violations logged</li>
+<li>[ ] <strong>Anomaly detection</strong>: Unusual patterns and behaviors monitored</li>
+<li>[ ] <strong>Audit trails</strong>: Complete audit logs for sensitive operations</li>
+<li>[ ] <strong>Real-time alerts</strong>: Critical security events trigger immediate notifications</li>
+<li>[ ] <strong>Log integrity</strong>: Logs protected from tampering and unauthorized access</li>
+<li>[ ] <strong>Incident response</strong>: Clear procedures for security incident handling</li>
+</ul>
+<h2 id="tools-and-techniques">Tools and Techniques<a class="headerlink" href="#tools-and-techniques" title="Permanent link">&para;</a></h2>
+<h3 id="code-editors">Code Editors<a class="headerlink" href="#code-editors" title="Permanent link">&para;</a></h3>
+<p>Use editors with security extensions:</p>
+<ul>
+<li>Visual Studio Code with ESLint, SonarLint</li>
+<li>IntelliJ IDEA with SpotBugs, SonarLint</li>
+<li>Eclipse with security plugins</li>
+<li>Vim/Neovim with security linters</li>
+</ul>
+<h3 id="command-line-pattern-detection">Command-Line Pattern Detection<a class="headerlink" href="#command-line-pattern-detection" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Find hardcoded secrets</span>
+grep<span class="w"> </span>-ri<span class="w"> </span><span class="s2">&quot;password\s*=\|api_key\s*=\|secret\s*=&quot;</span><span class="w"> </span>source/
+
+<span class="c1"># Find unsafe functions</span>
+grep<span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;eval(\|exec(\|innerHTML\|document\.write&quot;</span><span class="w"> </span>source/
+
+<span class="c1"># Find potential injections</span>
+grep<span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;SELECT.*+\|executeQuery.*+&quot;</span><span class="w"> </span>source/
+</code></pre></div>
+<h3 id="manual-review-focus-areas">Manual Review Focus Areas<a class="headerlink" href="#manual-review-focus-areas" title="Permanent link">&para;</a></h3>
+<p><strong>Human Expertise Advantages:</strong></p>
+<ul>
+<li><strong>Business Logic Flaws</strong>: Complex workflows and state management issues that require domain understanding</li>
+<li><strong>Context-Specific Vulnerabilities</strong>: Security issues that depend on application-specific business rules</li>
+<li><strong>Authorization Logic</strong>: Complex permission models and access control implementations</li>
+<li><strong>Race Conditions</strong>: Timing-based vulnerabilities in concurrent operations</li>
+<li><strong>Cryptographic Misuse</strong>: Proper implementation of cryptographic primitives and protocols</li>
+<li><strong>Architecture Security</strong>: High-level design flaws and security anti-patterns</li>
+</ul>
+<p><strong>Manual Analysis Techniques:</strong></p>
+<ul>
+<li><strong>Code Path Tracing</strong>: Following execution paths through complex business logic</li>
+<li><strong>State Analysis</strong>: Understanding application state transitions and validation</li>
+<li><strong>Trust Boundary Mapping</strong>: Identifying and analyzing security control points</li>
+<li><strong>Threat Modeling Integration</strong>: Applying threat models to specific code implementations</li>
+<li><strong>Attack Scenario Simulation</strong>: Mentally simulating attack paths through the code</li>
+</ul>
+<h3 id="automated-tool-integration">Automated Tool Integration<a class="headerlink" href="#automated-tool-integration" title="Permanent link">&para;</a></h3>
+<p><strong>Supporting Manual Reviews:</strong></p>
+<ul>
+<li><strong>SAST Tool Triage</strong>: Use automated findings to prioritize manual review areas</li>
+<li><strong>Dependency Scanning</strong>: Identify vulnerable libraries requiring manual assessment</li>
+<li><strong>Code Quality Metrics</strong>: Focus manual effort on complex or frequently changed code</li>
+<li><strong>Pattern Detection</strong>: Use tools to highlight potential security anti-patterns for human analysis</li>
+</ul>
+<p><strong>Tool Integration Strategy:</strong></p>
+<ul>
+<li><strong>Pre-Review Scanning</strong>: Run automated tools before manual review to identify obvious issues</li>
+<li><strong>Complementary Analysis</strong>: Use tool findings to guide deeper manual investigation</li>
+<li><strong>False Positive Filtering</strong>: Apply human judgment to validate automated findings</li>
+<li><strong>Coverage Gaps</strong>: Focus manual review on areas automated tools cannot effectively analyze</li>
+</ul>
+<p><strong>Security Metrics:</strong></p>
+<ul>
+<li><strong>Manual Review Coverage</strong>: Percentage of critical code paths reviewed by humans</li>
+<li><strong>Finding Quality</strong>: Ratio of valid security issues to total findings</li>
+<li><strong>Review Efficiency</strong>: Time spent on manual review vs. security value delivered</li>
+<li><strong>Trend Analysis</strong>: Security posture improvement over time</li>
+</ul>
+<h3 id="documentation-templates">Documentation Templates<a class="headerlink" href="#documentation-templates" title="Permanent link">&para;</a></h3>
+<p><strong>Finding Report Template:</strong></p>
+<div class="highlight"><pre><span></span><code>Title: [Vulnerability Type] in [Component]
+Severity: [Critical/High/Medium/Low]
+CWE: [CWE Number and Name]
+Location: [File:Line or Function]
+Description: [Detailed explanation of the vulnerability]
+Impact: [Security implications and potential attack scenarios]
+Reproduction: [Steps to reproduce or proof of concept]
+Recommendation: [Specific fix guidance with code examples]
+References: [CWE links, OWASP references, vendor documentation]
+Status: [Open/In Progress/Fixed/Accepted Risk]
+Assignee: [Developer responsible for fix]
+Due Date: [Target fix date]
+</code></pre></div>
+<p><strong>Review Summary Template:</strong></p>
+<div class="highlight"><pre><span></span><code>Review Summary
+==============
+Application: [Application Name]
+Version: [Version/Commit Hash]
+Reviewer(s): [Names]
+Review Date: [Date]
+Scope: [Files/Components Reviewed]
+
+Findings Summary:
+- Critical: [Count]
+- High: [Count] 
+- Medium: [Count]
+- Low: [Count]
+- Informational: [Count]
+
+Key Recommendations:
+1. [Priority recommendation]
+2. [Priority recommendation]
+3. [Priority recommendation]
+
+Overall Risk Assessment: [Low/Medium/High/Critical]
+</code></pre></div>
+<h2 id="integration-with-sdlc">Integration with SDLC<a class="headerlink" href="#integration-with-sdlc" title="Permanent link">&para;</a></h2>
+<h3 id="review-timing">Review Timing<a class="headerlink" href="#review-timing" title="Permanent link">&para;</a></h3>
+<h4 id="baseline-review-integration">Baseline Review Integration<a class="headerlink" href="#baseline-review-integration" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Project Initiation</strong>: Comprehensive security assessment of existing codebase</li>
+<li><strong>Major Releases</strong>: Full security review before significant version releases</li>
+<li><strong>Architecture Changes</strong>: Complete review when fundamental design changes occur</li>
+<li><strong>Compliance Cycles</strong>: Periodic comprehensive reviews for regulatory requirements</li>
+<li><strong>Security Incidents</strong>: Thorough review following security breaches or major vulnerabilities</li>
+<li><strong>Onboarding Legacy Systems</strong>: Initial security assessment when bringing existing applications under secure development practices</li>
+</ul>
+<h4 id="diff-based-review-integration">Diff-Based Review Integration<a class="headerlink" href="#diff-based-review-integration" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Pull Requests</strong>: Security-focused review of code changes as part of standard PR process</li>
+<li><strong>Pre-commit Hooks</strong>: Lightweight security checks on developer commits</li>
+<li><strong>Feature Completion</strong>: Security review of completed user stories or features</li>
+<li><strong>Sprint Reviews</strong>: Regular assessment of security implications of sprint deliverables</li>
+<li><strong>Hotfix Reviews</strong>: Rapid security assessment of emergency fixes</li>
+<li><strong>Continuous Integration</strong>: Automated triggering of security reviews based on code changes</li>
+</ul>
+<h4 id="hybrid-approach">Hybrid Approach<a class="headerlink" href="#hybrid-approach" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Risk-Based Scheduling</strong>: Combine baseline reviews for high-risk components with diff-based reviews for routine changes</li>
+<li><strong>Incremental Baseline Updates</strong>: Gradually expand baseline review coverage over multiple development cycles</li>
+<li><strong>Trigger-Based Reviews</strong>: Escalate from diff-based to baseline review when significant security concerns are identified</li>
+</ul>
+<p>For CI/CD integration and automated security testing, for more information see <a href="CI_CD_Security_Cheat_Sheet.html">CI CD Security Cheat Sheet</a>.</p>
+<h3 id="team-collaboration">Team Collaboration<a class="headerlink" href="#team-collaboration" title="Permanent link">&para;</a></h3>
+<p><strong>Roles:</strong></p>
+<ul>
+<li><strong>Security reviewers</strong>: Conduct analysis and provide guidance</li>
+<li><strong>Developers</strong>: Implement fixes and follow secure coding practices</li>
+<li><strong>Security champions</strong>: Bridge security and development teams</li>
+</ul>
+<p><strong>Best Practices:</strong></p>
+<ul>
+<li>Use standardized checklists and templates</li>
+<li>Maintain a knowledge base of common issues</li>
+<li>Track metrics on review effectiveness</li>
+<li>Provide regular security training</li>
+<li>Integrate with existing development workflows</li>
+</ul>
+<h2 id="advanced-techniques">Advanced Techniques<a class="headerlink" href="#advanced-techniques" title="Permanent link">&para;</a></h2>
+<h3 id="race-condition-analysis">Race Condition Analysis<a class="headerlink" href="#race-condition-analysis" title="Permanent link">&para;</a></h3>
+<p>Focus on Time-of-Check vs Time-of-Use (TOCTOU) vulnerabilities and ensure atomic operations.</p>
+<h3 id="business-logic-analysis">Business Logic Analysis<a class="headerlink" href="#business-logic-analysis" title="Permanent link">&para;</a></h3>
+<p>Analyze workflows for:</p>
+<ul>
+<li>State transitions and validation</li>
+<li>Opportunities to bypass steps or validation</li>
+<li>Proper validation at each workflow step</li>
+<li>Rollback mechanisms and cleanup on failures</li>
+<li>Behavior under concurrent access</li>
+<li>Boundary conditions and error scenarios</li>
+</ul>
+<h3 id="security-architecture-review">Security Architecture Review<a class="headerlink" href="#security-architecture-review" title="Permanent link">&para;</a></h3>
+<p>Review architecture patterns for consistent security enforcement and proper API security controls.</p>
+<h3 id="memory-safety">Memory Safety<a class="headerlink" href="#memory-safety" title="Permanent link">&para;</a></h3>
+<p>Review buffer management, integer overflow protection, and resource limits.</p>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<p><strong>OWASP Resources:</strong></p>
+<ul>
+<li><a href="https://owasp.org/www-project-code-review-guide/">OWASP Code Review Guide</a></li>
+<li><a href="https://owasp.org/www-project-web-security-testing-guide/">OWASP Testing Guide</a></li>
+<li><a href="https://owasp.org/www-project-top-ten/">OWASP Top 10</a></li>
+<li><a href="https://owasp.org/www-project-application-security-verification-standard/">OWASP Application Security Verification Standard (ASVS)</a></li>
+<li><a href="https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/">OWASP Secure Coding Practices</a></li>
+</ul>
+<p><strong>Related OWASP Cheat Sheets:</strong></p>
+<ul>
+<li><a href="Threat_Modeling_Cheat_Sheet.html">Threat Modeling Cheat Sheet</a></li>
+<li><a href="Abuse_Case_Cheat_Sheet.html">Abuse Case Cheat Sheet</a></li>
+<li><a href="Attack_Surface_Analysis_Cheat_Sheet.html">Attack Surface Analysis Cheat Sheet</a></li>
+<li><a href="Secure_Product_Design_Cheat_Sheet.html">Secure Product Design Cheat Sheet</a></li>
+<li><a href="Mass_Assignment_Cheat_Sheet.html">Mass Assignment Cheat Sheet</a></li>
+<li><a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">Insecure Direct Object Reference Prevention Cheat Sheet</a></li>
+<li><a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">Cross-Site Request Forgery Prevention Cheat Sheet</a></li>
+<li><a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html">Server Side Request Forgery Prevention Cheat Sheet</a></li>
+<li><a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html">Unvalidated Redirects and Forwards Cheat Sheet</a></li>
+<li><a href="Denial_of_Service_Cheat_Sheet.html">Denial of Service Cheat Sheet</a></li>
+</ul>
+<p><strong>Industry Standards:</strong></p>
+<ul>
+<li><a href="https://cwe.mitre.org/top25/">CWE/SANS Top 25 Most Dangerous Software Errors</a></li>
+<li><a href="https://csrc.nist.gov/Projects/ssdf">NIST Secure Software Development Framework (SSDF)</a></li>
+<li><a href="https://www.iso.org/standard/44378.html">ISO/IEC 27034 - Application Security</a></li>
+</ul>
+<p><strong>Additional Resources:</strong></p>
+<ul>
+<li><a href="https://www.microsoft.com/en-us/securityengineering/sdl/">Microsoft Security Development Lifecycle (SDL)</a></li>
+<li><a href="https://wiki.sei.cmu.edu/confluence/display/seccode">CERT Secure Coding Standards</a></li>
+</ul>
 
 
 
