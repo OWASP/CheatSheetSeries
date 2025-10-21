@@ -458,7 +458,7 @@ Review buffer management, integer overflow protection, and resource limits.
 
 **Additional Resources:**
 
-- [SANS Secure Coding Practices](https://www.sans.org/white-papers/2172/)
+- [Secure Coding Practices](https://www.securecoding.org/)
 - [Microsoft Security Development Lifecycle (SDL)](https://www.microsoft.com/en-us/securityengineering/sdl/)
-- [Google Security Code Review Guidelines](https://google.github.io/eng-practices/review/reviewer/security.html)
+- [Introduction to Secure Code Review](https://www.cobalt.io/learning-center/introduction-to-secure-code-review)
 - [CERT Secure Coding Standards](https://wiki.sei.cmu.edu/confluence/display/seccode)
