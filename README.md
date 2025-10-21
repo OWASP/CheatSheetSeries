@@ -54,6 +54,22 @@ make generate-site
 make serve  # Binds port 8000
 ```
 
+### Linting
+
+To check markdown and terminology:
+
+```sh
+npm run lint-markdown
+npm run lint-terminology
+```
+
+To auto-fix linting issues:
+
+```sh
+npm run lint-markdown-fix
+npm run lint-terminology-fix
+```
+
 ### Container Build
 
 The OWASP Cheat Sheet Series website can be built and tested locally inside a container by issuing the following commands:
