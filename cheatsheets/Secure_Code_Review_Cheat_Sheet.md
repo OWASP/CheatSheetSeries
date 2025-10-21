@@ -458,7 +458,5 @@ Review buffer management, integer overflow protection, and resource limits.
 
 **Additional Resources:**
 
-- [Secure Coding Practices](https://www.securecoding.org/)
 - [Microsoft Security Development Lifecycle (SDL)](https://www.microsoft.com/en-us/securityengineering/sdl/)
-- [Introduction to Secure Code Review](https://www.cobalt.io/learning-center/introduction-to-secure-code-review)
 - [CERT Secure Coding Standards](https://wiki.sei.cmu.edu/confluence/display/seccode)
