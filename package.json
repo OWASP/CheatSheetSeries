@@ -12,7 +12,9 @@
   "scripts": {
     "test": "npm run lint-markdown && npm run lint-terminology",
     "lint-terminology": "textlint ./cheatsheets/",
+    "lint-terminology-fix": "textlint --fix ./cheatsheets/",
     "lint-markdown": "markdownlint ./ -c .markdownlint.json --ignore node_modules --ignore cheatsheets_excluded",
+    "lint-markdown-fix": "markdownlint --fix ./ -c .markdownlint.json --ignore node_modules --ignore cheatsheets_excluded",
     "link-check": "find  cheatsheets -name \\*.md -exec markdown-link-check -c markdown-link-check-config.json 1> log 2> err {} \\; && if [ -e err ] && grep -q  \"ERROR:\" err ; then exit 113  ; else echo -e \"All good\"; fi"
   },
   "repository": {
