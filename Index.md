@@ -1,6 +1,6 @@
 # Index Alphabetical
 
-**93** cheat sheets available.
+**91** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -177,8 +177,6 @@
 [Ruby on Rails Cheat Sheet](cheatsheets/Ruby_on_Rails_Cheat_Sheet.md) ![Html](assets/Index_Html.svg) ![Ruby](assets/Index_Ruby.svg) ![Bash](assets/Index_Bash.svg)
 
 ## S
-
-[Secure Code Review Cheat Sheet](cheatsheets/Secure_Code_Review_Cheat_Sheet.md) ![Java](assets/Index_Java.svg) ![Bash](assets/Index_Bash.svg)
 
 [Secure Product Design Cheat Sheet](cheatsheets/Secure_Product_Design_Cheat_Sheet.md)
 
