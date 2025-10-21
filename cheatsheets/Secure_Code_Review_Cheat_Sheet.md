@@ -11,12 +11,14 @@
 ### Review Types
 
 **Baseline Reviews** examine the entire codebase comprehensively. Use for:
+
 - New applications or major releases
 - Legacy system onboarding
 - Compliance requirements
 - Post-incident analysis
 
 **Diff-Based Reviews** focus on code changes only. Use for:
+
 - Pull requests and commits
 - Daily development workflow
 - Feature completion
@@ -29,18 +31,21 @@ This cheat sheet provides practical guidance for conducting effective manual sec
 ### Preparation
 
 **For All Reviews:**
+
 - Understand application architecture and business requirements
 - Gather threat models and previous security findings
 - Identify critical assets and high-risk functions
 - Review security requirements and documentation
 
 **Additional for Baseline Reviews:**
+
 - Map complete application boundaries and dependencies
 - Analyze overall security architecture
 - Review security incident history
 - Audit all third-party libraries
 
 **Additional for Diff-Based Reviews:**
+
 - Identify modified files and affected components
 - Assess impact on existing security controls
 - Understand purpose of changes
@@ -49,6 +54,7 @@ This cheat sheet provides practical guidance for conducting effective manual sec
 ### Review Process
 
 **Baseline Review Steps:**
+
 1. Architecture review for security anti-patterns
 2. Entry point analysis and input validation
 3. Authentication and authorization verification
@@ -59,6 +65,7 @@ This cheat sheet provides practical guidance for conducting effective manual sec
 8. Configuration and deployment review
 
 **Diff-Based Review Steps:**
+
 1. Analyze impact on existing security controls
 2. Identify new attack vectors
 3. Verify security at modified trust boundaries
