@@ -4,38 +4,67 @@
 
 **Secure Code Review** is the process of manually examining source code to identify security vulnerabilities that automated tools often miss. It involves analyzing application logic, data flow, and implementation details to detect security flaws that require human expertise and contextual understanding.
 
-**Manual Code Review** complements automated security testing tools (SAST/DAST) by focusing on areas where human analysis provides the most value, including business logic validation, complex security implementations, and context-specific vulnerabilities.
+**Manual Code Review** complements automated security testing tools (SAST/DAST) by focusing on areas where human analysis provides the most value, including business logic validation, complex security implementations, and context-specific vulnerabilities. While automated tools can assist by highlighting potential areas of concern, the core analysis relies on human judgment and domain expertise.
 
 **Security-Focused Review** differs from functional code review by specifically targeting security concerns such as input validation, authentication mechanisms, authorization controls, cryptographic implementations, and potential attack vectors.
 
-This cheat sheet provides practical guidance for conducting effective security code reviews, including methodologies, checklists, tools, and integration strategies for incorporating security reviews into the software development lifecycle.
+### Review Types
+
+**Baseline Reviews** examine the entire codebase comprehensively. Use for:
+- New applications or major releases
+- Legacy system onboarding
+- Compliance requirements
+- Post-incident analysis
+
+**Diff-Based Reviews** focus on code changes only. Use for:
+- Pull requests and commits
+- Daily development workflow
+- Feature completion
+- Continuous security validation
+
+This cheat sheet provides practical guidance for conducting effective manual security code reviews, with emphasis on both baseline and incremental review methodologies.
 
 ## Review Methodology
 
 ### Preparation
 
-Before starting the review:
+**For All Reviews:**
+- Understand application architecture and business requirements
+- Gather threat models and previous security findings
+- Identify critical assets and high-risk functions
+- Review security requirements and documentation
 
-- **Understand the Application**: Review architecture diagrams, data flow, and business requirements
-- **Define Review Scope**: Specify boundaries (new code, changed files, or full application)
-- **Gather Context**: Collect threat models, previous security findings, and compliance requirements
-- **Identify Critical Assets**: Focus on sensitive data, high-risk functions, and external interfaces
-- **Review Documentation**: Examine security requirements, design documents, and API specifications
-- **Understand Attack Surface**: Map all entry points, APIs, and external integrations
-- **Check Dependencies**: Review third-party libraries and their known vulnerabilities
+**Additional for Baseline Reviews:**
+- Map complete application boundaries and dependencies
+- Analyze overall security architecture
+- Review security incident history
+- Audit all third-party libraries
+
+**Additional for Diff-Based Reviews:**
+- Identify modified files and affected components
+- Assess impact on existing security controls
+- Understand purpose of changes
+- Prioritize high-risk modifications
 
 ### Review Process
 
-Conduct the review in phases:
+**Baseline Review Steps:**
+1. Architecture review for security anti-patterns
+2. Entry point analysis and input validation
+3. Authentication and authorization verification
+4. Data flow tracing
+5. Business logic analysis
+6. Cryptographic implementation review
+7. Error handling verification
+8. Configuration and deployment review
 
-1. **Architecture Review**: Examine high-level design for security anti-patterns
-2. **Entry Point Analysis**: Review all input vectors and validation mechanisms
-3. **Authentication & Authorization**: Verify access controls and session management
-4. **Data Flow Analysis**: Trace sensitive data through the application
-5. **Business Logic Review**: Analyze workflows for logic flaws and race conditions
-6. **Cryptographic Review**: Check encryption, hashing, and key management
-7. **Error Handling**: Verify proper error handling and information disclosure prevention
-8. **Configuration Review**: Check security configurations and deployment settings
+**Diff-Based Review Steps:**
+1. Analyze impact on existing security controls
+2. Identify new attack vectors
+3. Verify security at modified trust boundaries
+4. Check new integrations
+5. Ensure no security regression
+6. Apply relevant security patterns
 
 ## Common Vulnerability Patterns
 
@@ -233,20 +262,46 @@ grep -r "eval(\|exec(\|innerHTML\|document\.write" source/
 grep -r "SELECT.*+\|executeQuery.*+" source/
 ```
 
-### Automated Security Testing Integration
+### Manual Review Focus Areas
 
-**SAST Tools Integration:**
+**Human Expertise Advantages:**
 
-- **SonarQube**: Integrate security rules into CI/CD pipeline
-- **Checkmarx**: Static analysis for comprehensive vulnerability detection
-- **Veracode**: Cloud-based static analysis platform
-- **Semgrep**: Lightweight static analysis with custom rules
+- **Business Logic Flaws**: Complex workflows and state management issues that require domain understanding
+- **Context-Specific Vulnerabilities**: Security issues that depend on application-specific business rules
+- **Authorization Logic**: Complex permission models and access control implementations
+- **Race Conditions**: Timing-based vulnerabilities in concurrent operations
+- **Cryptographic Misuse**: Proper implementation of cryptographic primitives and protocols
+- **Architecture Security**: High-level design flaws and security anti-patterns
+
+**Manual Analysis Techniques:**
+
+- **Code Path Tracing**: Following execution paths through complex business logic
+- **State Analysis**: Understanding application state transitions and validation
+- **Trust Boundary Mapping**: Identifying and analyzing security control points
+- **Threat Modeling Integration**: Applying threat models to specific code implementations
+- **Attack Scenario Simulation**: Mentally simulating attack paths through the code
+
+### Automated Tool Integration
+
+**Supporting Manual Reviews:**
+
+- **SAST Tool Triage**: Use automated findings to prioritize manual review areas
+- **Dependency Scanning**: Identify vulnerable libraries requiring manual assessment
+- **Code Quality Metrics**: Focus manual effort on complex or frequently changed code
+- **Pattern Detection**: Use tools to highlight potential security anti-patterns for human analysis
+
+**Tool Integration Strategy:**
+
+- **Pre-Review Scanning**: Run automated tools before manual review to identify obvious issues
+- **Complementary Analysis**: Use tool findings to guide deeper manual investigation
+- **False Positive Filtering**: Apply human judgment to validate automated findings
+- **Coverage Gaps**: Focus manual review on areas automated tools cannot effectively analyze
 
 **Security Metrics:**
 
-- **Vulnerability Density**: Number of vulnerabilities per lines of code
-- **Fix Rate**: Time to remediate identified security issues
-- **Coverage**: Percentage of code reviewed for security
+- **Manual Review Coverage**: Percentage of critical code paths reviewed by humans
+- **Finding Quality**: Ratio of valid security issues to total findings
+- **Review Efficiency**: Time spent on manual review vs. security value delivered
 - **Trend Analysis**: Security posture improvement over time
 
 ### Documentation Templates
@@ -298,13 +353,29 @@ Overall Risk Assessment: [Low/Medium/High/Critical]
 
 ### Review Timing
 
-Integrate reviews at key points:
+#### Baseline Review Integration
 
-- **Pre-commit**: Focus on changed code and new features
-- **Pull requests**: Security-focused code review as part of PR process
-- **Sprint completion**: Comprehensive review of completed features
-- **Prerelease**: Security assessment before deployment
-- **Post-incident**: Targeted review after security incidents
+- **Project Initiation**: Comprehensive security assessment of existing codebase
+- **Major Releases**: Full security review before significant version releases
+- **Architecture Changes**: Complete review when fundamental design changes occur
+- **Compliance Cycles**: Periodic comprehensive reviews for regulatory requirements
+- **Security Incidents**: Thorough review following security breaches or major vulnerabilities
+- **Onboarding Legacy Systems**: Initial security assessment when bringing existing applications under secure development practices
+
+#### Diff-Based Review Integration
+
+- **Pull Requests**: Security-focused review of code changes as part of standard PR process
+- **Pre-commit Hooks**: Lightweight security checks on developer commits
+- **Feature Completion**: Security review of completed user stories or features
+- **Sprint Reviews**: Regular assessment of security implications of sprint deliverables
+- **Hotfix Reviews**: Rapid security assessment of emergency fixes
+- **Continuous Integration**: Automated triggering of security reviews based on code changes
+
+#### Hybrid Approach
+
+- **Risk-Based Scheduling**: Combine baseline reviews for high-risk components with diff-based reviews for routine changes
+- **Incremental Baseline Updates**: Gradually expand baseline review coverage over multiple development cycles
+- **Trigger-Based Reviews**: Escalate from diff-based to baseline review when significant security concerns are identified
 
 For CI/CD integration and automated security testing, for more information see [CI CD Security Cheat Sheet](CI_CD_Security_Cheat_Sheet.md).
 

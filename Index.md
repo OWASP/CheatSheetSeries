@@ -1,6 +1,6 @@
 # Index Alphabetical
 
-**93** cheat sheets available.
+**92** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
