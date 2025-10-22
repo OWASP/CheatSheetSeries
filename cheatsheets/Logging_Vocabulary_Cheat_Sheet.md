@@ -50,6 +50,7 @@ In order to better understand security event logging a good high-level understan
 ### Implementation
 
 Some languages have libraries which ease the job of adopting this logging vocabulary in applications:
+
 - Python: [lucabello/owasp-logger](https://github.com/lucabello/owasp-logger)
 
 ## Format
