@@ -47,6 +47,12 @@ In order to better understand security event logging a good high-level understan
 - An employee "testing" how things work.
 - An API coded incorrectly doing things the author did not intend.
 
+### Implementation
+
+Some languages have libraries which ease the job of adopting this logging vocabulary in applications:
+
+- Python: [lucabello/owasp-logger](https://github.com/lucabello/owasp-logger)
+
 ## Format
 
 _NOTE: All dates should be logged in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format **WITH** UTC offset to ensure maximum portability_
