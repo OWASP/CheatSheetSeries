@@ -32,7 +32,7 @@ Feel free to ask questions, suggest ideas, or share your best recipes.
 
 ## Contributions, Feature Requests, and Feedback
 
-We are actively inviting new contributors! To start, please read the [contribution guide](CONTRIBUTING.md).
+We are actively inviting new contributors! To start, please read the [contribution guide](CONTRIBUTING.md) and our [How To Make A Cheatsheet guide](GUIDELINE.md).
 
 This project is only possible thanks to the work of many dedicated volunteers. Everyone is encouraged to help in ways large and small. Here are a few ways you can help:
 

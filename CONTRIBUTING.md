@@ -60,6 +60,8 @@ When submitting changes in a PR, consider the following areas:
 
 ### Structure
 
+> **Need help with content structure?** Check out [How To Make A Cheatsheet guide](GUIDELINE.md) for structured guidelines, content organization, and best practices.
+
 - Start with a H1 of the cheat sheet name
 - The first section of the cheat sheet should be an introduction which briefly sums up the contents, and provides a short list of key bullet points.
 - The table of contents will be automatically generated on the site, so does not need to be added as a section.
