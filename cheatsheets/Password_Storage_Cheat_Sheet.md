@@ -101,15 +101,12 @@ Three hashing algorithms that should be considered:
 
 [Argon2](https://en.wikipedia.org/wiki/Argon2) was the winner of the 2015 [Password Hashing Competition](https://en.wikipedia.org/wiki/Password_Hashing_Competition). Out of the three Argon2 versions, use the  Argon2id variant since it provides a balanced approach to resisting both side-channel and GPU-based attacks.
 
-Rather than a simple work factor like other algorithms, Argon2id has three different parameters that can be configured: the base minimum of the minimum memory size (m), the minimum number of iterations (t), and the degree of parallelism (p). We recommend the following configuration settings:
+Rather than a simple work factor like other algorithms, Argon2id has three different parameters that can be configured: the base minimum of the minimum memory size (m), the minimum number of iterations (t), and the degree of parallelism (p). Following the RFC standardizing Argon2id, [RFC9106](https://datatracker.ietf.org/doc/rfc9106/), we recommend the following configuration settings:
 
-- m=47104 (46 MiB), t=1, p=1 (Do not use with Argon2i)
-- m=19456 (19 MiB), t=2, p=1 (Do not use with Argon2i)
-- m=12288 (12 MiB), t=3, p=1
-- m=9216 (9 MiB), t=4, p=1
-- m=7168 (7 MiB), t=5, p=1
+- m=2097152 (2 GiB), t=1, p=1; for "a default setting for all environments"
+- m=65536 (64 MiB), t=3, p=1; for "memory-constrained environments"
 
-These configuration settings provide an equal level of defense, and the only difference is a trade off between CPU and RAM usage.
+These configuration settings provide different levels of defense, as increasing the memory parameter makes brute-force attacks harder to parallelize due to higher RAM requirements per hash. 
 
 ### scrypt
 
