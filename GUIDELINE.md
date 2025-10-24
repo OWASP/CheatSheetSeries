@@ -1,6 +1,6 @@
 # Cheat Sheet Creation Guide
 
-### Basic Cheat Sheet Template
+## Basic Cheat Sheet Template
 
 ```markdown
 
@@ -241,6 +241,5 @@ This guideline helps you to create security guidance that helps practitioners im
 The goal is to create **practical, concise, and actionable security guidance** that helps practitioners build more secure applications and systems. Focus on providing value to your target audience and maintaining high quality standards.
 
 ---
-
 
 *This guide is based on analysis of existing OWASP cheat sheets to identify common patterns and best practices for creating effective security documentation.*
