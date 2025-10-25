@@ -106,7 +106,7 @@ Rather than a simple work factor like other algorithms, Argon2id has three diffe
 - m=2097152 (2 GiB), t=1, p=1; for "a default setting for all environments"
 - m=65536 (64 MiB), t=3, p=1; for "memory-constrained environments"
 
-These configuration settings provide different levels of defense, as increasing the memory parameter makes brute-force attacks harder to parallelize due to higher RAM requirements per hash. 
+These configuration settings provide different levels of defense, as increasing the memory parameter makes brute-force attacks harder to parallelize due to higher RAM requirements per hash.
 
 ### scrypt
 
