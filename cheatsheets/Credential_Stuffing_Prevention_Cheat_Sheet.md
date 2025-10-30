@@ -62,7 +62,7 @@ Traditional CAPTCHAs use image recognition or text-based challenges, but have be
 
 Ideally, prefer modern CAPTCHA services that:
 
-- use cryptographic or [proof-of-work](https://friendlycaptcha.com/insights/controlling-variance-in-proof-of-work-algorithms/) challenges as they make automation economically impractical while requiring little to no input from legitimate users;
+- use cryptographic or [proof-of-work](https://en.wikipedia.org/wiki/Proof_of_work) challenges as they make automation economically impractical while requiring little to no input from legitimate users;
 - scale the difficulty of the challenge when the request is considered suspicious or high risk;
 - comply with accessibility standards (e.g., WCAG, ADA, EAA) and avoid relying on visual or auditory cues that can exclude users with disabilities;
 - comply with applicable privacy regulations (e.g., CCPA, GDPR) and do not depend on tracking, fingerprinting, or behavioral profiling;
