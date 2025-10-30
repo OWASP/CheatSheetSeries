@@ -52,6 +52,98 @@ Rotating certain keys, such as encryption keys, might trigger full or partial da
 - Scheduled rotation
 - and more...
 
+#### 2.4.1 Architectural Patterns for Automated Rotation
+
+To illustrate how to design systems that support automated secret rotation, here are a few architectural patterns:
+
+##### Example 1: Kubernetes with a Sidecar Container
+
+In a Kubernetes environment, a common pattern is to use a sidecar container that is responsible for retrieving secrets from a secrets manager and making them available to the main application container. This decouples the application from the specifics of the secrets management solution.
+
+- **Architecture:**
+    - A Pod contains two containers: the main application container and a sidecar container (e.g., HashiCorp Vault Agent, CyberArk Conjur Secrets Provider).
+    - The sidecar container authenticates with the secrets manager (e.g., using a Kubernetes Service Account).
+    - It retrieves the secret and writes it to a shared in-memory volume.
+    - The application container reads the secret from the shared volume.
+    - The sidecar container can periodically refresh the secret, ensuring the application always has a valid, short-lived credential.
+- **Kubernetes Manifest Snippet:**
+
+    ```yaml
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: my-app
+    spec:
+      serviceAccountName: my-app-sa
+      containers:
+      - name: my-app-container
+        image: my-app-image
+        volumeMounts:
+        - name: secrets-volume
+          mountPath: "/mnt/secrets"
+          readOnly: true
+      - name: vault-agent-sidecar
+        image: vault:latest
+        args: ["agent", "-config=/etc/vault/vault-agent-config.hcl"]
+        volumeMounts:
+        - name: secrets-volume
+          mountPath: "/mnt/secrets"
+      volumes:
+      - name: secrets-volume
+        emptyDir:
+          medium: "Memory"
+    ```
+
+##### Example 2: Serverless Function for Database Credential Rotation
+
+Cloud-native secret managers often provide built-in support for automated rotation using serverless functions (e.g., AWS Lambda, Azure Functions).
+
+- **Architecture:**
+    - A secret is stored in a cloud secrets manager (e.g., AWS Secrets Manager).
+    - The secrets manager is configured to trigger a rotation Lambda function on a schedule.
+    - The Lambda function has the necessary permissions to update the database password and the secret value in the secrets manager.
+    - The rotation process typically involves multiple steps (create new secret, set new secret, test new secret, finish rotation) to ensure a safe transition.
+- **AWS Lambda Rotation Function (Conceptual Python Code):**
+
+    ```python
+    import boto3
+    import os
+
+    def lambda_handler(event, context):
+        secret_name = event['SecretId']
+        token = event['ClientRequestToken']
+        step = event['Step']
+
+        secrets_manager = boto3.client('secretsmanager')
+        # Get the secret metadata
+        metadata = secrets_manager.describe_secret(SecretId=secret_name)
+
+        if step == "createSecret":
+            # Create a new version of the secret
+            new_password = generate_new_password()
+            secrets_manager.put_secret_value(
+                SecretId=secret_name,
+                ClientRequestToken=token,
+                SecretString=f'{{"password":"{new_password}"}}',
+                VersionStages=['AWSPENDING']
+            )
+        elif step == "setSecret":
+            # Update the database with the new password
+            update_database_password(new_password)
+        elif step == "testSecret":
+            # Test the new secret
+            test_database_connection(new_password)
+        elif step == "finishSecret":
+            # Mark the new version of the secret as current
+            secrets_manager.update_version_stage(
+                SecretId=secret_name,
+                VersionStage="AWSCURRENT",
+                MoveToVersionId=token
+            )
+    ```
+
+These examples demonstrate how you can create architectures that not only manage secrets securely but also automate the rotation process, significantly reducing the risk of compromised credentials.
+
 ### 2.5 Handling Secrets in Memory
 
 An additional level of security can be achieved by minimizing the time window
@@ -202,6 +294,27 @@ A secret management solution should provide the capability to store at least the
 
 Note: if you don't store metadata about the secret nor prepare to move, you will increase the probability of vendor lock-in.
 
+### 2.12 Passwordless Authentication and Token Security
+
+While not a direct replacement for all types of secrets (e.g., API keys, database credentials), passwordless authentication mechanisms like **OpenID Connect (OIDC)** can significantly reduce the attack surface by moving away from user-managed passwords. Instead of passwords, applications rely on trusted identity providers (IdPs) to authenticate users and receive secure tokens.
+
+**How it helps:**
+
+- **Reduces Password-Related Risks:** Eliminates threats like phishing, credential stuffing, and weak password practices.
+- **Centralized Identity Management:** Authentication is handled by a specialized IdP, which can enforce strong authentication policies (e.g., MFA).
+- **Short-Lived Sessions:** OIDC tokens are typically short-lived, limiting the window of opportunity for an attacker if a token is compromised.
+
+**Token Security is Crucial:**
+
+Adopting passwordless authentication shifts the security focus from protecting static passwords to protecting dynamic tokens (e.g., ID tokens, access tokens, refresh tokens). These tokens are bearer tokens, meaning anyone who possesses one can use it. Therefore, it is critical to:
+
+- **Secure Token Transmission:** Always transmit tokens over TLS.
+- **Protect Tokens in Storage:** Do not store tokens in insecure locations like local storage in a browser. Use secure, HTTP-only cookies or appropriate secure storage mechanisms for mobile applications.
+- **Validate Tokens Correctly:** Always validate the signature, issuer, and audience of a token to ensure it is legitimate.
+- **Manage Token Lifetime:** Use short-lived access tokens and implement a secure refresh token rotation strategy.
+
+For more detailed guidance on securing OAuth 2.0 and OpenID Connect implementations, refer to the [OAuth2 Cheat Sheet](OAuth2_Cheat_Sheet.md).
+
 ## 3 Continuous Integration (CI) and Continuous Deployment (CD)
 
 Building, testing and deploying changes generally requires access to many systems. Continuous Integration (CI) and Continuous Deployment (CD) tools typically store secrets to provide configuration to the application or during deployment. Alternatively, they interact heavily with the secrets management system. Various best practices can help smooth out secret management in CI/CD; we will deal with some of them in this section.
@@ -310,11 +423,11 @@ It is also possible to use the [Systems Manager Parameter store](https://docs.aw
 
 ##### 4.1.1.1 AWS Nitro Enclaves
 
-With [AWS Nitro Enclaves](https://aws.amazon.com/ec2/nitro/nitro-enclaves/), you can create trusted execution environments. Thus, no human-based access is possible once the application is running. Additionally, enclaves do not have any permanent storage attached to them. Therefore, secrets and other sensitive data stored on the nitro enclaves have an additional layer of security.
+With [AWS Nitro Enclaves](https://aws.amazon.com/ec2/nitro/nitro-enclaves/), you can create isolated compute environments to further protect and securely process highly sensitive data such as secrets. Enclaves are hardened, and restrict operator access, providing a trusted execution environment. A key feature is cryptographic attestation, which allows you to verify the enclave's identity and ensure only authorized code is running before provisioning secrets to it. This makes it a strong choice for scenarios requiring high assurance in secret handling.
 
 ##### 4.1.1.2 AWS CloudHSM
 
-For secrets being used in highly confidential applications, it may be needed to have more control over the encryption and storage of these keys. AWS offers [CloudHSM](https://aws.amazon.com/cloudhsm/), which lets you bring your own key (BYOK) for AWS services. Thus, you will have more control over keys' creation, lifecycle, and durability. CloudHSM allows automatic scaling and backup of your data. The cloud service provider, Amazon, will not have any access to the key material stored in Azure Dedicated HSM.
+For secrets being used in highly confidential applications, it may be needed to have more control over the encryption and storage of these keys. AWS offers [CloudHSM](https://aws.amazon.com/cloudhsm/), which lets you bring your own key (BYOK) for AWS services. Thus, you will have more control over keys' creation, lifecycle, and durability. CloudHSM allows automatic scaling and backup of your data. The cloud service provider, Amazon, will not have any access to the key material stored in **AWS CloudHSM**.
 
 #### 4.1.2 GCP
 
@@ -326,7 +439,7 @@ Check out the [Secret Manager best practices](https://cloud.google.com/secret-ma
 
 ##### 4.1.2.1 Google Cloud Confidential Computing
 
-[GCP Confidential Computing](https://cloud.google.com/confidential-computing) allows encryption of data during runtime. Thus, application code and data are kept secret, encrypted, and cannot be accessed by humans or tools.
+[GCP Confidential Computing](https://cloud.google.com/confidential-computing) is a technology that encrypts data in-use, while it is being processed. This is achieved through services like **Confidential VMs** and **Confidential GKE Nodes**, which leverage AMD Secure Encrypted Virtualization (SEV). This ensures that even Google personnel cannot view the contents of the memory of your virtual machines, providing a high degree of protection for secrets that must be held in memory.
 
 #### 4.1.3 Azure
 
@@ -338,7 +451,7 @@ Check out the [Key Vault best practices](https://docs.microsoft.com/en-us/azure/
 
 ##### 4.1.3.1 Azure Confidential Computing
 
-With [Azure Confidential Computing](https://azure.microsoft.com/en-us/solutions/confidential-compute/#overview), you can create trusted execution environments. Thus, every application will be executed in an encrypted enclave that protects the data and code consumed by the application is protected end-to-end. Furthermore, any application running inside enclaves is not accessible by any tool or human.
+With [Azure Confidential Computing](https://azure.microsoft.com/en-us/solutions/confidential-compute/#overview), you can create trusted execution environments. This technology isolates sensitive data within a protected container, ensuring that it is encrypted both at rest, in transit, and in use. Services like **Azure Confidential Virtual Machines** and **Confidential Containers on ACI** utilize technologies like Intel SGX and AMD SEV-SNP to create these secure enclaves. This prevents unauthorized access from cloud administrators, malware, or other tenants, making it a robust solution for secret management.
 
 ##### 4.1.3.2 Azure Dedicated HSM
 
@@ -442,13 +555,26 @@ Continually monitor who/what, from which IP, and what methodology accesses the s
 - Monitor who accesses the secret at the secret management system: is this normal behavior? If the CI/CD credentials are used to access the secret management solution from a different IP than where the CI/CD system is running, provide a security alert and assume the secret compromised.
 - Monitor the service requiring the secret (if possible), e.g., whether the user of the secret is coming from an expected IP, with an expected user agent. If not, alert and assume the secret is compromised.
 
-### 6.5 Usability
+### 6.5 Usability and Ease of Onboarding
 
-Ensure that your secrets management solution is easy to use, as you do not want people to work around it or use it ineffectively due to complexity. This usability requires:
+For a secrets management solution to be effective, it must be easy for developers to adopt and use. If the process is too complex, developers may resort to insecure practices. A focus on usability and a smooth onboarding experience is critical.
 
-- Easy onboarding of new secrets and removal of invalidated secrets.
-- Easy integration with the existing software: it should be easy to integrate applications as consumers of the secret management system. For instance, an SDK or simple sidecar container should be available to communicate with the secret management system so that existing software is decoupled and does not need extensive modification. You can find examples of this in the AWS, Google, and Azure SDKs. These SDKs allow an application to interact with the respective secrets management solutions. You can find similar examples in the HashiCorp Vault software integrations and the [Vault Agent Sidecar Injector](https://developer.hashicorp.com/vault/docs/platform/k8s/injector), as well as Conjur integrations and [Conjur Secrets Provider](https://github.com/cyberark/secrets-provider-for-k8s).
-- A clear understanding of the organization of secrets management and its processes is essential.
+- **Clear and Comprehensive Documentation:**
+    - Provide clear, concise, and easy-to-find documentation. This should include tutorials for common use cases, detailed API references, and practical examples.
+    - Maintain a "getting started" guide that walks new users through the process of obtaining their first secret.
+- **Developer-Friendly Tooling and SDKs:**
+    - Offer well-maintained SDKs for various programming languages to simplify integration.
+    - Provide a command-line interface (CLI) that allows developers to manage secrets from their local development environment.
+    - Develop plugins for common IDEs, CI/CD systems, and infrastructure-as-code (IaC) tools like Terraform and Pulumi.
+- **Streamlined Workflows:**
+    - Implement self-service workflows that enable developers to request and receive secrets with minimal manual intervention.
+    - Use GitOps principles to manage secrets as code, allowing developers to define secret needs in a declarative manner alongside their application code.
+    - Automate the approval process for low-risk secrets while maintaining appropriate controls for more sensitive ones.
+- **Actionable Feedback and Support:**
+    - Provide clear error messages that help developers troubleshoot issues independently.
+    - Establish dedicated support channels (e.g., a Slack channel, a ticketing system) where developers can get help from the security or platform team.
+- **Easy Integration:**
+    - Ensure the secrets management solution can be easily integrated with existing applications. Sidecar containers, such as the [Vault Agent Sidecar Injector](https://developer.hashicorp.com/vault/docs/platform/k8s/injector) or the [Conjur Secrets Provider](https://github.com/cyberark/secrets-provider-for-k8s), can help decouple applications from the secrets management system.
 
 ## 7 Encryption
 

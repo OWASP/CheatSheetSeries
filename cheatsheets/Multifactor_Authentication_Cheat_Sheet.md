@@ -111,6 +111,20 @@ Some suggestions of possible methods include:
 - Requiring the user contact the support team and having a rigorous process in place to verify their identity.
 - Requiring another trusted user to vouch for them.
 
+### Changing MFA Factors
+
+Users may need to update their authentication factors, such as changing a phone number, migrating to a new authenticator app, or replacing a lost hardware token. Because attackers can exploit this process to take over accounts, it must be strictly secured.
+
+Best practices include:
+
+- Require reauthentication with an existing enrolled factor before allowing changes.
+- Do not rely solely on the active session, as it may be hijacked.
+- Treat factor replacement as a high-risk action and apply risk-based checks (e.g., new device, unusual location).
+- Notify the user through out-of-band channels (such as email or push notification) whenever an MFA factor is changed.
+- Consider applying delays or step-up verification for high-value accounts.
+
+This ensures that even if a session is compromised, attackers cannot silently replace the user’s MFA factors and lock the legitimate user out.
+
 ### Consider Using a Third Party Service
 
 There are a number of third party services that provide MFA as a service. These can be a good option for applications that don't have the resources to implement MFA themselves, or for applications that require a high level of assurance in their MFA. However, it is important to consider the security of the third party service, and the implications of using it. For example, if the third party service is compromised, it could allow an attacker to bypass MFA on all of the applications that use it.

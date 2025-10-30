@@ -24,5 +24,5 @@ Project links:
 
 - [Homepage](https://owasp.org/www-project-cheat-sheets/)
 - [GitHub repository](https://github.com/OWASP/CheatSheetSeries)
-- [How to contribute?](CONTRIBUTING.md)
+- [How to contribute?](https://github.com/OWASP/CheatSheetSeries/blob/master/CONTRIBUTING.md)
 - [Logo](https://github.com/OWASP/owasp-swag/tree/master/projects/cheat-sheet-series)

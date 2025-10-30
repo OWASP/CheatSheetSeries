@@ -80,24 +80,23 @@ For more information on search filter escaping visit [RFC4515](https://datatrack
 #### Safe Java Escaping Example
 
 The following solution uses an allowlist to sanitize user input so that the filter string contains only valid characters. In this code, userSN may contain
-only letters and spaces, whereas a password may contain only alphanumeric characters:
+only letters and spaces.
 
 ```java
 // String userSN = "Sherlock Holmes"; // Valid
-// String userPassword = "secret2"; // Valid
 // ... beginning of LDAPInjection.searchRecord()...
 sc.setSearchScope(SearchControls.SUBTREE_SCOPE);
 String base = "dc=example,dc=com";
 
-if (!userSN.matches("[\\w\\s]*") || !userPassword.matches("[\\w]*")) {
+if (!userSN.matches("[\\w\\s]*")) {
  throw new IllegalArgumentException("Invalid input");
 }
 
-String filter = "(&(sn = " + userSN + ")(userPassword=" + userPassword + "))";
+String filter = "(sn = " + userSN + ")";
 // ... remainder of LDAPInjection.searchRecord()... 
 ```
 
-When a database field such as a password must include special characters, it is critical to ensure that the authentic data is stored in sanitized form in the
+When a database field must include special characters, it is critical to ensure that the authentic data is stored in sanitized form in the
 database and also that any user input is normalized before the validation or comparison takes place. Using characters that have special meanings in JNDI
 and LDAP in the absence of a comprehensive normalization and allowlisting-based routine is discouraged. Special characters must be transformed to
 sanitized, safe values before they are added to the allowlist expression against which input will be validated. Likewise, normalization of user input should
@@ -128,7 +127,7 @@ NamingEnumeration<SearchResult> results =
 
 [.NET AntiXSS](https://blogs.msdn.microsoft.com/securitytools/2010/09/30/antixss-4-0-released/) (now the Encoder class) has LDAP encoding functions including `Encoder.LdapFilterEncode(string)`, `Encoder.LdapDistinguishedNameEncode(string)` and `Encoder.LdapDistinguishedNameEncode(string, bool, bool)`.
 
-`Encoder.LdapFilterEncode` encodes input according to [RFC4515](https://tools.ietf.org/search/rfc4515) where unsafe values are converted to `\XX` where `XX` is the representation of the unsafe character.
+`Encoder.LdapFilterEncode` encodes input according to [RFC4515](https://datatracker.ietf.org/doc/html/rfc4515) where unsafe values are converted to `\XX` where `XX` is the representation of the unsafe character.
 
 `Encoder.LdapDistinguishedNameEncode` encodes input according to [RFC2253](https://tools.ietf.org/html/rfc2253) where unsafe characters are converted to `#XX` where `XX` is the representation of the unsafe character and the comma, plus, quote, slash, less than and great than signs are escaped using slash notation (`\X`). In addition to this a space or octothorpe (`#`) at the beginning of the input string is `\` escaped as is a space at the end of a string.
 

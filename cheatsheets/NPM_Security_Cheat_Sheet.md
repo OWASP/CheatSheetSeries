@@ -1,6 +1,6 @@
 # NPM Security best practices
 
-In the following npm cheatsheet, we’re going to focus on [10 npm security best practices](https://snyk.io/blog/ten-npm-security-best-practices) and productivity tips, useful for JavaScript and Node.js developers.
+The following cheatsheet covers several npm security best practices and productivity tips, useful for JavaScript and Node.js developers. This list was originally based on the [10 npm security best practices](https://snyk.io/blog/ten-npm-security-best-practices) from the Snyk blog.
 
 ## 1) Avoid publishing secrets to the npm registry
 
@@ -17,7 +17,7 @@ Another good practice to adopt is making use of the `files` property in package.
 
 When a package is published, the npm CLI will verbosely display the archive being created. To be extra careful, add a `--dry-run` command-line argument to your publish command in order to first review how the tarball is created without actually publishing it to the registry.
 
-In January 2019, npm shared on their blog that they added a [mechanism that automatically revokes a token](https://blog.npmjs.org/post/182015409750/automated-token-revocation-for-when-you) if they detect that one has been published with a package.
+For details about revoking access token, see the official documentation: [Revoking access tokens](https://docs.npmjs.com/revoking-access-tokens).
 
 ## 2) Enforce the lockfile
 
@@ -46,6 +46,22 @@ Apply these npm security best practices in order to minimize the malicious modul
 - When installing packages make sure to add the `--ignore-scripts` suffix to disable the execution of any scripts by third-party packages.
 - Consider adding `ignore-scripts` to your `.npmrc` project file, or to your global npm configuration.
 
+### Using an allowlist for lifecycle scripts
+
+Disabling lifecycle scripts by default by adding `ignore-script` to your `.npmrc` file is the safest option. If you use packages that rely on lifecycle scripts for legitimate reasons, you can use a plugin like [`@lavamoat/allow-scripts`](https://github.com/LavaMoat/LavaMoat/tree/main/packages/allow-scripts) to create an _allowlist_ of packages authorized to run lifecylce scripts.
+
+Here's how the allowlist would look like in the `package.json` file on a project using the popular image processing package [sharp](https://www.npmjs.com/package/sharp):
+
+```json
+{
+  "lavamoat": {
+    "allowScripts": {
+      "sharp": true
+    }
+  }
+}
+```
+
 ## 4) Assess npm project health
 
 ### npm outdated command
@@ -70,14 +86,16 @@ Call the doctor! The npm CLI incorporates a health assessment tool to diagnose y
 
 The npm ecosystem is the single largest repository of application libraries amongst all the other language ecosystems. The registry and the libraries in it are at the core for JavaScript developers as they are able to leverage work that others have already built and incorporate it into their codebase. With that said, the increasing adoption of open source libraries in applications brings with it an increased risk of introducing security vulnerabilities.
 
-Many popular npm packages have been found to be vulnerable and may carry a significant risk without proper security auditing of your project’s dependencies. Some examples are npm [request](https://snyk.io/vuln/npm:request:20160119), [superagent](https://snyk.io/vuln/search?q=superagent&type=npm), [mongoose](https://snyk.io/vuln/search?q=mongoose&type=npm), and even security-related packages like [jsonwebtoken](https://snyk.io/vuln/npm:jsonwebtoken:20150331), and  [validator](https://snyk.io/vuln/search?q=validator&type=npm).
+Many popular npm packages have been found to be vulnerable and may carry a significant risk without proper security auditing of your project’s dependencies. Some examples are npm [request](https://snyk.io/vuln/npm:request:20160119), [superagent](https://snyk.io/vuln/search?q=superagent&type=npm), [mongoose](https://snyk.io/vuln/search?q=mongoose&type=npm), and even security-related packages like [jsonwebtoken](https://snyk.io/vuln/npm:jsonwebtoken:20150331), and [validator](https://snyk.io/vuln/search?q=validator&type=npm).
 
 Security doesn’t end by just scanning for security vulnerabilities when installing a package but should also be streamlined with developer workflows to be effectively adopted throughout the entire lifecycle of software development, and monitored continuously when code is deployed:
 
 - Scan for security vulnerabilities in [third-party open source projects](https://owasp.org/www-community/Component_Analysis)
-- Monitor snapshots of your project's manifests so you can receive alerts when new CVEs impact them
+- Monitor snapshots of your project's manifests so you can receive alerts when new CVEs impact them [OWASP Dependency-Track](https://owasp.org/www-project-dependency-track/)
 
-## 6) Use a local npm proxy
+## 6) Artifact governance and supply chain protections
+
+### Use a local npm proxy
 
 The npm registry is the biggest collection of packages that is available for all JavaScript developers and is also the home of the most of the Open Source projects for web developers. But sometimes you might have different needs in terms of security, deployments or performance. When this is true, npm allows you to switch to a different registry:
 
@@ -97,6 +115,52 @@ Hosting your own registry was never so easy! Let’s check the most important fe
 - If your project is based in Docker, using the official image is the best choice.
 - It enables really fast bootstrap for testing environments, and is handy for testing big mono-repos projects.
 
+### Governance & Verification Steps
+
+Supply-chain attacks increasingly target build artifacts, registries and CI credentials. Add lightweight governance and verification steps to reduce risk and improve response time:
+
+- Track provenance and produce an SBOM for builds (CycloneDX/SPDX) so you can trace what was built and where inputs originated.
+
+  CycloneDX Example:
+
+  ```bash
+  # Generate SBOM
+  npm install @cyclonedx/cyclonedx-npm
+  npx @cyclonedx/cyclonedx-npm --validate > sbom.json # Use the flag `--omit dev` to exclude dev dependencies from SBOM if needed
+  ```
+
+- Sign artifacts and build provenance (for example, use Sigstore / cosign or similar signing tools) so consumers can verify integrity before installing.
+
+  Sigstore Example:
+
+  ```javascript
+  // sign-and-verify.js
+  // npm install sigstore fs
+
+  import * as fs from 'fs';
+  import * as sigstore from 'sigstore';
+
+  // Path to your built npm package (via `npm pack`)
+  const artifact = 'my-lib-1.0.0.tgz';
+
+  // --- Sign ---
+  const payload = fs.readFileSync(artifact);
+  const bundle = await sigstore.sign(payload);
+  fs.writeFileSync(`${artifact}.sigstore.json`, JSON.stringify(bundle, null, 2));
+  console.log('Signed:', artifact);
+
+  // --- Verify ---
+  await sigstore.verify(payload, bundle);
+  console.log('Verified OK!');
+  ```
+
+- Prefer immutable, access-controlled registries or vetted mirrors (private registries, Verdaccio with an upstream cache, or [approved mirrors](#use-a-local-npm-proxy)) and enable retention / immutability policies where available.
+- Restrict, scope and rotate CI and publisher tokens. Bind publisher tokens to workflows or IP ranges and minimize privileges.
+- Verify packages during CI: check signatures or provenance, validate the SBOM, [run SCA and static analysis](#5-audit-for-vulnerabilities-in-open-source-dependencies), and [install from pinned lockfile resolutions](#2-enforce-the-lockfile).
+- Automate monitoring and alerts for unusual publishes, token usage or dependency changes and keep a documented remediation playbook (revoke tokens, deprecate/yank compromised packages, publish fixes and notify consumers).
+
+These measures are incremental and low-risk to adopt. Combined they make supply-chain attacks harder and speed up identification & recovery if a compromise occurs.
+
 ## 7) Responsibly disclose security vulnerabilities
 
 When security vulnerabilities are found, they pose a potentially serious threat if they are publicised without prior warning or appropriate remedial action for users who cannot protect themselves.
@@ -105,14 +169,12 @@ It is recommended that security researchers follow a responsible disclosure prog
 
 ## 8) Enable 2FA
 
-In October 2017, npm officially announced support for two-factor authentication (2FA) for developers using the npm registry to host their closed and open source packages.
-
-Even though 2FA has been supported on the npm registry for a while now, it seems to be slowly adopted with one example being the eslint-scope incident in mid-2018 when a stolen developer account on the ESLint team lead to a [malicious version of eslint-scope](https://snyk.io/vuln/npm:eslint-scope) being published by bad actors.
-
-Enabling 2FA is an easy and significant win for an npm security best practices. The registry supports two modes for enabling 2FA in a user’s account:
+Enabling two-factor authentication (2FA) is a critical npm security best practice. The npm registry supports two modes for enabling 2FA in a user’s account:
 
 - Authorization-only—when a user logs in to npm via the website or the CLI, or performs other sets of actions such as changing profile information.
 - Authorization and write-mode—profile and log-in actions, as well as write actions such as managing tokens and packages, and minor support for team and package visibility information.
+
+To get started, see the official documentation: [Requiring 2FA](https://docs.npmjs.com/requiring-2fa-for-package-publishing-and-settings-modification).
 
 Equip yourself with an authentication application, such as Google Authentication, which you can install on a mobile device, and you’re ready to get started. One easy way to get started with the 2FA extended protection for your account is through npm’s user interface, which allows enabling it very easily. If you’re a command-line person, it’s also easy to enable 2FA when using a supported npm client version (>=5.5.1):
 
@@ -122,11 +184,16 @@ npm profile enable-2fa auth-and-writes
 
 Follow the command-line instructions to enable 2FA, and to save emergency authentication codes. If you wish to enable 2FA mode for login and profile changes only, you may replace the `auth-and-writes` with `auth-only` in the code as it appears above.
 
+## Additional Security Resources
+
+- [About secret scanning](https://docs.github.com/en/code-security/secret-scanning/introduction/about-secret-scanning)
+- [Best practices for securing accounts](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure)
+
 ## 9) Use npm author tokens
 
 Every time you log in with the npm CLI, a token is generated for your user and authenticates you to the npm registry. Tokens make it easy to perform npm registry-related actions during CI and automated procedures, such as accessing private modules on the registry or publishing new versions from a build step.
 
-Tokens can be managed through the npm registry website, as well as using the npm command-line client. An example of using the CLI to create  a read-only token that is restricted to a specific IPv4 address range is as follows:
+Tokens can be managed through the npm registry website, as well as using the npm command-line client. An example of using the CLI to create a read-only token that is restricted to a specific IPv4 address range is as follows:
 
 ```sh
 npm token create --read-only --cidr=192.0.2.0/24
@@ -136,25 +203,47 @@ To verify which tokens are created for your user or to revoke tokens in cases of
 
 Ensure you are following this npm security best practice by protecting and minimizing the exposure of your npm tokens.
 
-## 10) Understand module naming conventions and typosquatting attacks
+## 10) Understanding typosquatting and slopsquatting attacks
 
-Naming a module is the first thing you might do when creating a package, but before defining a final name, npm defines some rules that a package name must follow:
+### Typosquatting attacks
 
-- It is limited to 214 characters
-- No uppercase letters in the name
-- No trailing spaces
-- Some special characters are not allowed: “~\’!()*”
-- Can’t start with . or _
-- Can’t use node_modules or favicon.ico in the name
-- Even if you follow these rules, be aware that npm uses a spam detection mechanism when publishing new packages, based on score and whether a package name violates the terms of the service. If conditions are violated, the registry might deny the request.
+Typosquatting is an attack that relies on mistakes made by users, such as typos. With typosquatting, bad actors publish malicious modules to the npm registry with names that look much like existing popular modules. These malicious packages exploit common typing errors or visual similarities to trick developers into installing them instead of the legitimate packages they intended to use.
 
-Typosquatting is an attack that relies on mistakes made by users, such as typos. With typosquatting, bad actors could publish malicious modules to the npm registry with names that look much like existing popular modules.
+The Snyk security team has tracked tens of malicious packages in the npm ecosystem that used typosquatting to trick users into installing them; similar attacks have been observed on the PyPi Python registry as well. Some of the most notable incidents include [cross-env](https://snyk.io/vuln/npm:crossenv:20170802), [event-stream](https://snyk.io/vuln/SNYK-JS-EVENTSTREAM-72638), and [eslint-scope](https://snyk.io/vuln/npm:eslint-scope:20180712).
 
-We have been tracking tens of malicious packages in the npm ecosystem; they have been seen on the PyPi Python registry as well. Perhaps some of the most popular incidents have been for [cross-env](https://snyk.io/vuln/npm:crossenv:20170802), [event-stream](https://snyk.io/vuln/SNYK-JS-EVENTSTREAM-72638), and [eslint-scope](https://snyk.io/vuln/npm:eslint-scope:20180712).
+One of the main targets for typosquatting attacks are user credentials, since any package has access to environment variables via the global variable `process.env`. Other examples include the event-stream case, where attackers targeted developers in the hopes of [injecting malicious code](https://snyk.io/blog/a-post-mortem-of-the-malicious-event-stream-backdoor) into an application's source code.
 
-One of the main targets for typosquatting attacks are the user credentials, since any package has access to environment variables via the global variable process.env. Other examples we’ve seen in the past include the case with event-stream, where the attack targeted developers in the hopes of [injecting malicious code](https://snyk.io/blog/a-post-mortem-of-the-malicious-event-stream-backdoor) into an application’s source code.
+### Slopsquatting attacks
 
-Closing our list of ten npm security best practices are the following tips to reduce the risk of such attacks:
+Slopsquatting is a newer attack vector that exploits AI-powered coding assistants and Large Language Models (LLMs). When developers use AI tools to generate code or package recommendations, these models may occasionally "hallucinate" package names that don't actually exist. Attackers monitor these hallucinations and create malicious packages with those exact names, knowing that developers may blindly trust and install packages suggested by their AI assistants.
+
+To protect against slopsquatting:
+
+- Always verify that packages suggested by AI tools actually exist and are legitimate
+- Check the package's repository, download statistics, and maintainer information
+- Cross-reference AI suggestions with official documentation
+- Be skeptical of packages with very low download counts or recent creation dates
+- Review the package source code before installing, especially for AI-suggested packages
+
+## 11) Use trusted publishers for secure package publishing
+
+Traditional npm publishing relies on long-lived tokens that can be compromised or accidentally exposed. Trusted publishing with OpenID Connect (OIDC) provides a more secure alternative by using short-lived, workflow-specific credentials that are automatically generated during CI/CD processes. Trusted publishing currently supports GitHub Actions and GitLab CI/CD Pipelines.
+
+### How trusted publishing works
+
+Trusted publishing creates a trust relationship between npm and your CI/CD provider using OIDC. When you configure a trusted publisher for your package, npm will accept publishes from the specific workflow you've authorized, in addition to traditional authentication methods like npm tokens and manual publishes. The npm CLI automatically detects OIDC environments and uses them for authentication before falling back to traditional tokens.
+
+This approach eliminates the security risks associated with long-lived write tokens, which can be compromised, accidentally exposed in logs, or require manual rotation. Instead, each publish uses short-lived, cryptographically-signed tokens that are specific to your workflow and cannot be extracted or reused.
+
+### Automatic provenance generation
+
+When publishing via trusted publishing, npm automatically generates provenance attestations that provide cryptographic proof of package authenticity. This helps users verify that packages come from legitimate sources and haven't been tampered with.
+
+For more information, see the [npm trusted publishing documentation](https://docs.npmjs.com/trusted-publishers).
+
+## Final Recommendations
+
+Closing our list of npm security best practices are the following tips to reduce the risk of such attacks:
 
 - Be extra-careful when copy-pasting package installation instructions into the terminal. Make sure to verify in the source code repository as well as on the npm registry that this is indeed the package you are intending to install. You might verify the metadata of the package with `npm info` to fetch more information about contributors and latest versions.
 - Default to having an npm logged-out user in your daily work routines so your credentials won’t be the weak spot that would lead to easily compromising your account.

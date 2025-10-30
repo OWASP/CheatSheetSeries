@@ -47,6 +47,12 @@ In order to better understand security event logging a good high-level understan
 - An employee "testing" how things work.
 - An API coded incorrectly doing things the author did not intend.
 
+### Implementation
+
+Some languages have libraries which ease the job of adopting this logging vocabulary in applications:
+
+- Python: [lucabello/owasp-logger](https://github.com/lucabello/owasp-logger)
+
 ## Format
 
 _NOTE: All dates should be logged in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format **WITH** UTC offset to ensure maximum portability_
@@ -618,6 +624,29 @@ WARN
 
 ---
 
+### input_validation_discrete_fail[:field,userid]
+
+**Description**
+When server-side validation of a value against a discrete list of options (e.g. drop down list, radio buttons) fails, it is a strong indication of malicious activity as this indicates the client-side code has been tampered with.
+
+**Level:**
+WARN
+
+**Example:**
+
+```json
+{
+    "datetime": "2021-02-01T08:30:00-0500",
+    "appid": "foobar.netportal_auth",
+    "event": "input_validation_discrete_fail:country,joebob1",
+    "level": "WARN",
+    "description": "User joebob1 submitted an invalid value for the 'country' field.",
+    ...
+}
+```
+
+---
+
 ## Malicious Behavior [MALICIOUS
 
 ### malicious_excess_404:[userid|IP,useragent]
@@ -730,7 +759,7 @@ CRITICAL
 {
     "datetime": "2019-01-01 00:00:00,000",
     "appid": "foobar.netportal_auth",
-    "event": "malicious_direct:joebob1, Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0",
+    "event": "malicious_direct_reference:joebob1, Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0",
     "level": "CRITICAL",
     "description": "User joebob1 attempted to access an object to which they are not authorized",
     ...

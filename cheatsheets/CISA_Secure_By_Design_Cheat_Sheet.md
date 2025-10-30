@@ -1,23 +1,33 @@
-# CISA Secure By Design Cheat Sheet
+# CISA Secure by Design Cheat Sheet
+
+## Introduction
+This cheat sheet summarizes the key principles from the **CISA Secure by Design** guidance, helping developers and organizations build secure software from the start.
 
 ## Core Principles
 
-- Treat security as a core process, not a feature.  
-- Conduct threat modeling during design.  
-- Make security decisions visible and documented.  
+### 1. Take Ownership of Security Outcomes
+Vendors must take responsibility for customer security outcomes, ensuring defaults are safe and vulnerabilities are minimized.
 
-## Leadership and Accountability
+### 2. Embrace Transparency and Accountability
+Clearly document security decisions, publish vulnerabilities, and share SBOMs (Software Bill of Materials).
 
-- Executive and engineering leaders must ensure secure-by-design principles.  
-- Include security goals in performance reviews.  
+### 3. Lead with Secure by Design Practices
+Embed security considerations into every phase of development, not as an afterthought.
 
-## Technical Practices
+## Implementation Best Practices
+- Conduct **threat modeling** early in development.  
+- Use **multi-factor authentication** and **least privilege access**.  
+- Apply **memory-safe languages** where possible.  
+- Provide **secure configurations by default**.  
+- Maintain a clear **vulnerability disclosure program**.
 
-- Systems should be secure without depending on additional components.  
-- Disable unnecessary features and interfaces.  
-- Security should be integrated throughout the SDLC.  
-- Apply security patterns (e.g., defense-in-depth).  
-- Avoid memory corruption vulnerabilities.  
-- Prefer high-level languages for safer defaults.  
-- Embed security awareness and continuous improvement.  
-- Provide continuous security testing and feedback.  
+## References
+- [CISA Secure by Design Guidance](https://www.cisa.gov/resources-tools/resources/secure-design)
+- [CISA Secure Software Development Attestation Form](https://www.cisa.gov/secure-software-development-attestation-form)
+- [NIST SSDF Framework](https://csrc.nist.gov/publications/detail/white-paper/2022/04/27/ssdf/final)
+
+## Authors
+B Prasad
+
+---
+© 2025 OWASP Foundation. Licensed under CC BY-SA 4.0.
