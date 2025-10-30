@@ -67,7 +67,7 @@ Ideally, prefer modern CAPTCHA services that:
 - comply with accessibility standards (e.g., WCAG, ADA, EAA) and avoid relying on visual or auditory cues that can exclude users with disabilities;
 - comply with applicable privacy regulations (e.g., CCPA, GDPR) and do not depend on tracking, fingerprinting, or behavioral profiling;
 
-Modern CAPTCHAs include open source self-hosted options like [mCaptcha](https://mcaptcha.org/), as well as hosted services with an open source client like [Procaptcha](https://prosopo.io/) or [Friendly Captcha](https://friendlycaptcha.com/).
+Modern CAPTCHAs include open source self-hosted options like [mCaptcha](https://mcaptcha.org/), as well as hosted services with an open source client like [Prosopo Procaptcha](https://prosopo.io/) or [Friendly Captcha](https://friendlycaptcha.com/).
 
 CAPTCHAs are one layer of protection, so your credential stuffing prevention strategy should also include MFA, rate limiting, and breached-credential checks.
 
