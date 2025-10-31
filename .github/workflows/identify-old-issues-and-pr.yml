@@ -1,4 +1,8 @@
 name: Identify old issues and PR
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
 
 on:
   schedule:
