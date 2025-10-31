@@ -56,9 +56,20 @@ It must be emphasised that this **does not** constitute multi-factor authenticat
 
 ### CAPTCHA
 
-Requiring a user to solve a "Completely Automated Public Turing test to tell Computers and Humans Apart" (CAPTCHA) or similar puzzle for each login attempt can help to identify automated/bot attacks and help prevent automated login attempts, and may slow down credential stuffing or password spraying attacks.  However, CAPTCHAs are not perfect, and in many cases tools or services exist that can be used to break them with a reasonably high success rate.  Monitoring CAPTCHA solve rates may help identify impact to good users, as well as automated CAPTCHA breaking technology, possibly indicated by abnormally high solve rates.
+Requiring a user to solve a "Completely Automated Public Turing test to tell Computers and Humans Apart" (CAPTCHA) or similar puzzle for each login attempt can help to identify automated/bot attacks and help prevent automated login attempts, and may slow down credential stuffing or password spraying attacks.
 
-To improve usability, it may be desirable to only require the user solve a CAPTCHA when the login request is considered suspicious or high risk, using the same criteria discussed in the MFA section.
+Traditional CAPTCHAs use image recognition or text-based challenges, but have become ineffective against sophisticated bots, create usability and accessibility barriers, rely on behavioral profiling, and may not meet modern privacy standards. In many cases, tools or services exist that can be used to break them with a reasonably high success rate.
+
+Ideally, prefer modern CAPTCHA services that:
+
+- use cryptographic or [proof-of-work](https://en.wikipedia.org/wiki/Proof_of_work) challenges as they make automation economically impractical while requiring little to no input from legitimate users;
+- scale the difficulty of the challenge when the request is considered suspicious or high risk;
+- comply with accessibility standards (e.g., WCAG, ADA, EAA) and avoid relying on visual or auditory cues that can exclude users with disabilities;
+- comply with applicable privacy regulations (e.g., CCPA, GDPR) and do not depend on tracking, fingerprinting, or behavioral profiling;
+
+Modern CAPTCHAs include open source self-hosted options like [mCaptcha](https://mcaptcha.org/), as well as hosted services with an open source client like [Prosopo Procaptcha](https://prosopo.io/) or [Friendly Captcha](https://friendlycaptcha.com/).
+
+CAPTCHAs are one layer of protection, so your credential stuffing prevention strategy should also include MFA, rate limiting, and breached-credential checks.
 
 ### IP Mitigation and Intelligence
 
