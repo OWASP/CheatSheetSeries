@@ -167,11 +167,11 @@ The Fetch Metadata request headers are:
 
 If any of headers above contain values not listed in the specification, in order to support forward-compatibility, servers should ignore those headers.
 
-**Ease of use**
+#### Ease of use
 
 Unlike [synchronizer tokens](#synchronizer-token-pattern) or [double-submit patterns](#alternative-using-a-double-submit-cookie-pattern) — which require additional client/server coordination and are easy to misimplement — Fetch Metadata checks are straightforward to implement correctly. They typically require only a small amount of server-side logic (inspect Sec-Fetch-Site, optionally refine with Sec-Fetch-Mode/Sec-Fetch-Dest) and no client changes. That simplicity reduces complexity, making the approach attractive for many applications.
 
-**Browser compatability**
+#### Browser compatibility
 
 Fetch Metadata request headers are supported in most modern browsers on both desktop and mobile (Chrome, Edge, Firefox, Safari 16.4+, and even in webviews on both iOS and Android). For compatibility detail, see the [browser support table](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Sec-Fetch-Site#browser_compatibility).
 
