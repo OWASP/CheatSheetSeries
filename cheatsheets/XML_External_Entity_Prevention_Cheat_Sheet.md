@@ -15,6 +15,7 @@ For more information on XXE, please visit [XML External Entity (XXE)](https://en
 
 ## Modern Parser Defaults (IMPORTANT)
 
+
 Many modern platforms now disable XXE by default:
 
 | Platform / Runtime | Default Behavior |
