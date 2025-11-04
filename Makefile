@@ -16,7 +16,7 @@ generate-site: install-python-requirements # Use custom-script to generate the w
 
 serve: # Start's a Python http.server on port 8000 serving the content of ./generated/site
 	# venv not required here as it's simply html
-	python -m http.server -d generated/site
+	python -m http.server -d generated/site 8080
 
 clean: # Clean up ephemeral build directories from the repo
 	rm -rf generated venv

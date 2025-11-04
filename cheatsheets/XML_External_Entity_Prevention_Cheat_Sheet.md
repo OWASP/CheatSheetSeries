@@ -13,15 +13,41 @@ This cheat sheet will help you prevent this vulnerability.
 
 For more information on XXE, please visit [XML External Entity (XXE)](https://en.wikipedia.org/wiki/XML_external_entity_attack).
 
+## Modern Parser Defaults (IMPORTANT)
+
+Many modern platforms now disable XXE by default:
+
+| Platform / Runtime | Default Behavior |
+|---|---|
+Java ≥ 8 | Improved defaults but manual hardening still required |
+.NET ≥ 4.5.2 | XXE & Billion Laughs protections enabled |
+PHP ≥ 8.0 | External entities disabled |
+Python (defusedxml recommended) | Safe parsing libraries available |
+ColdFusion ≥ 2018 U14 | Secure parser options included |
+Lucee ≥ 5.4.2.10 | XXE disabled by default |
+
+### Still vulnerable if:
+
+- Using older XML libraries
+- Re-enabling entity support manually
+- Using custom or embedded XML parsers
+- Legacy enterprise applications / middleware
+
+✅ **Always explicitly disable DTDs/entities**  
+❌ **Never assume defaults are secure without verifying**
+
 ## General Guidance
+
 
 **The safest way to prevent XXE is always to disable DTDs (External Entities) completely.** Depending on the parser, the method should be similar to the following:
 
-``` java
+```java
 factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
 ```
 
-Disabling [DTD](https://www.w3schools.com/xml/xml_dtd.asp)s also makes the parser secure against denial of services (DOS) attacks such as [Billion Laughs](https://en.wikipedia.org/wiki/Billion_laughs_attack). **If it is not possible to disable DTDs completely, then external entities and external document type declarations must be disabled in the way that's specific to each parser.**
+Disabling [DTD](https://www.w3schools.com/xml/xml_dtd.asp)s also makes the parser secure against denial of service (DOS) attacks such as [Billion Laughs](https://en.wikipedia.org/wiki/Billion_laughs_attack).
+
+**If it is not possible to disable DTDs completely, then external entities and external document type declarations must be disabled in the way that's specific to each parser.**
 
 **Detailed XXE Prevention guidance is provided below for multiple languages (C++, Cold Fusion, Java, .NET, iOS, PHP, Python, Semgrep Rules) and their commonly used XML parsers.**
 
@@ -772,9 +798,11 @@ Rule can be played here [https://semgrep.dev/s/salecharohit:xxe-XMLReader](https
 
 ## References
 
+
 - [XXE by InfoSecInstitute](https://resources.infosecinstitute.com/identify-mitigate-xxe-vulnerabilities/)
-- [OWASP Top 10-2017 A4: XML External Entities (XXE)](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A4-XML_External_Entities_%28XXE%29)
 - [Timothy Morgan's 2014 paper: "XML Schema, DTD, and Entity Attacks"](https://vsecurity.com//download/papers/XMLDTDEntityAttacks.pdf)
 - [FindSecBugs XXE Detection](https://find-sec-bugs.github.io/bugs.htm#XXE_SAXPARSER)
 - [XXEbugFind Tool](https://github.com/ssexxe/XXEBugFind)
-- [Testing for XML Injection](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/07-Testing_for_XML_Injection.html)
+- [OWASP WSTG: Testing for XXE](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/07-Testing_for_XML_Injection.html)
+- [OWASP Top 10 – 2021 A05: Security Misconfiguration](https://owasp.org/Top10/A05_2021-Security_Misconfiguration/)
+- [OWASP Top 10 – 2017 A4: XML External Entities](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A4-XML_External_Entities_%28XXE%29)
