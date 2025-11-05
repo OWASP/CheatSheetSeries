@@ -2,7 +2,6 @@
 
 ## Introduction
 
-sujan
 ### Client-Side (JavaScript)
 
 #### Use `innerHTML` with extreme caution
