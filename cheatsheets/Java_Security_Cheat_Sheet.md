@@ -17,7 +17,7 @@ Sample code used in tips is located [here](https://github.com/righettod/injectio
 The following point can be applied, in a general way, to prevent *Injection* issue:
 
 1. Apply **Input Validation** (using allowlist approach) combined with **Output Sanitizing+Escaping** on user input/output.
-2. If you need to interact with system, try to use API features provided by your technology stack (Java / .Net / PHP...) instead of building command.
+2. If you need to interact with system, try to use API features provided by your technology stack (Java / .Net / PHP...) instead of building command
 
 Additional advice is provided on this [cheatsheet](Input_Validation_Cheat_Sheet.md).
 
