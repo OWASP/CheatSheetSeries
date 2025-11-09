@@ -99,7 +99,6 @@ While this design does not make IdP-initiated SSO uniquely vulnerable to Man-in-
 
 Despite these concerns, IdP-initiated SSO remains supported for backward compatibility (notably with SAML 1.1). If it must be enabled, the following steps (in addition to those mentioned above) should help secure this flow:
 
-
 - Follow the validation process mentioned in [SAML Profiles (section 4.1.5)](https://docs.oasis-open.org/security/saml/v2.0/saml-profiles-2.0-os.pdf). This step will help counter the following attacks:
     - Replay (6.1.2)
     - Message Insertion (6.1.3)
