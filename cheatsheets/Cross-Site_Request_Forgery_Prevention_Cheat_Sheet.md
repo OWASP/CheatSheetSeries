@@ -114,7 +114,7 @@ Below is an example in pseudo-code that demonstrates validation of the CSRF toke
 
 ```code
 // Get the CSRF token from the request
-csrfToken = request.getParameter("csrf_token") // From form field, cookie, or header
+csrfToken = request.getParameter("csrf_token") // From header or form field (NOT cookie)
 
 // Split the token to get the randomValue
 const tokenParts = csrfToken.split(".");
