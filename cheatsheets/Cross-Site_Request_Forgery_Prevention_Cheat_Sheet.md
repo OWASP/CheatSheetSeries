@@ -156,7 +156,7 @@ Though the Naive Double-Submit Cookie method is simple and scalable, it remains 
 
 Fetch Metadata request headers provide extra context about how an HTTP request was made, and how the resource will be used, enabling servers to reject suspicious cross-site requests. Servers can use these headers — most importantly `Sec-Fetch-Site` — as a lightweight and reliable method to block obvious cross-site requests. See the [Fetch Metadata specification](https://www.w3.org/TR/fetch-metadata/) for details.
 
-Because some legacy browsers may not send `Sec-Fetch-*` headers, a fallback to [standard origin verification](#using-standard-headers-to-verify-origin) using the `Origin` and `Referer` headers **is a mandatory requirement** for any Fetch Metadata implementation.
+Because some legacy browsers may not send `Sec-Fetch-*` headers, a fallback to [standard origin verification](#using-standard-headers-to-verify-origin) using the `Origin` and `Referer` headers **is a mandatory requirement** for any Fetch Metadata implementation. `Sec-Fetch-*` [is supported](https://caniuse.com/?search=sec-fetch-site) in all desktop browsers since March 2023 (with the exception of IE as it no longer receives updates and does not support `Sec-Fetch-*` headers) and all mobile browsers since October 2025.
 
 The Fetch Metadata request headers are:
 
