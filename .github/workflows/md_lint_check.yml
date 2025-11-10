@@ -8,6 +8,8 @@ on:
 
 jobs:
   lint:
+    permissions:
+      contents: read
     runs-on: ubuntu-24.04
     env:
       CI: true
