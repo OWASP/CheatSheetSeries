@@ -79,7 +79,7 @@ To implement this protection, you need to add the `X-Frame-Options` HTTP Respons
 
 ### Common Defense Mistakes
 
-Meta-tags that attempt to apply the X-Frame-Options directive DO NOT WORK. For example, `<meta http-equiv="X-Frame-Options" content="deny">` will not work. You must apply the X-FRAME-OPTIONS directive as HTTP Response Header as described above.
+Meta-tags that attempt to apply the X-Frame-Options directive DO NOT WORK. For example, `<meta http-equiv="X-Frame-Options" content="deny">` will not work. You must apply the X-FRAME-OPTIONS directive as HTTP Response Header as described above. The same rule also applies to the Content Security Policy (CSP) directive `frame-ancestors`, which must be configured as an HTTP Response Header, not in a `<meta>` tag.
 
 ### Limitations
 
