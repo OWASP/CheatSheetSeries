@@ -29,8 +29,8 @@ In short, the following principles should be followed to defend against CSRF:
 ### Use Built-In Or Existing CSRF Implementations for CSRF Protection
 
 Before building a custom token or Fetch-Metadata implementation, check whether your framework or platform already provides CSRF protection you can use. Built-in defenses are generally preferable because they’re maintained by the framework authors and reduce the risk of subtle implementation mistakes. For example:
- - .NET can use [built-in protection](https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-2.1) to add tokens to CSRF vulnerable resources. If you choose to use this protection, .NET makes you responsible for proper configuration (such as key management and token management).
- - Starting from [1.25](https://pkg.go.dev/net/http@go1.25rc2), Go developers can rely on the built-in [CrossOriginProtection](https://pkg.go.dev/net/http@go1.25rc2#CrossOriginProtection) type. It implements a Fetch-Metadata-based CSRF defense (including validation of Sec-Fetch-Site and related headers) directly in the standard library.
+- .NET can use [built-in protection](https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-2.1) to add tokens to CSRF vulnerable resources. If you choose to use this protection, .NET makes you responsible for proper configuration (such as key management and token management).
+- Starting from [1.25](https://pkg.go.dev/net/http@go1.25rc2), Go developers can rely on the built-in [CrossOriginProtection](https://pkg.go.dev/net/http@go1.25rc2#CrossOriginProtection) type. It implements a Fetch-Metadata-based CSRF defense (including validation of Sec-Fetch-Site and related headers) directly in the standard library.
 
 ## Token-Based Mitigation
 
