@@ -26,13 +26,15 @@ In short, the following principles should be followed to defend against CSRF:
 - **Do not use GET requests for state changing operations.**
 - **If for any reason you do it, protect those resources against CSRF**
 
+### Use Built-In Or Existing CSRF Implementations for CSRF Protection
+
+Before building a custom token or Fetch-Metadata implementation, check whether your framework or platform already provides CSRF protection you can use. Built-in defenses are generally preferable because they’re maintained by the framework authors and reduce the risk of subtle implementation mistakes. For example:
+ - .NET can use [built-in protection](https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-2.1) to add tokens to CSRF vulnerable resources. If you choose to use this protection, .NET makes you responsible for proper configuration (such as key management and token management).
+ - Starting from [1.25](https://pkg.go.dev/net/http@go1.25rc2), Go developers can rely on the built-in [CrossOriginProtection](https://pkg.go.dev/net/http@go1.25rc2#CrossOriginProtection) type. It implements a Fetch-Metadata-based CSRF defense (including validation of Sec-Fetch-Site and related headers) directly in the standard library.
+
 ## Token-Based Mitigation
 
 The [synchronizer token pattern](#synchronizer-token-pattern) is one of the most popular and recommended methods to mitigate CSRF.
-
-### Use Built-In Or Existing CSRF Implementations for CSRF Protection
-
-Since synchronizer token defenses are built into many frameworks, find out if your framework has CSRF protection available by default before you build a custom token generating system. For example, .NET can use [built-in protection](https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-2.1) to add tokens to CSRF vulnerable resources. If you choose to use this protection, .NET makes you responsible for proper configuration (such as key management and token management).
 
 ### Synchronizer Token Pattern
 
@@ -160,10 +162,8 @@ Because some legacy browsers may not send `Sec-Fetch-*` headers, a fallback to [
 
 The Fetch Metadata request headers are:
 
-- Sec-Fetch-Site — indicates relationship between request initiator’s origin and it's target's origin: `same-origin`, `same-site`, `cross-site`, or `none`.
-- Sec-Fetch-Mode — indicates the request's [mode](https://fetch.spec.whatwg.org/#concept-request-mode)(e.g., `navigate`, `no-cors`, `cors`, `same-origin`, and `websocket`), which allows to distinguish between requests originating from a user navigating between HTML pages, and requests to load images and other resources.
-- Sec-Fetch-Dest — indicates the [destination](https://fetch.spec.whatwg.org/#concept-request-destination) for the requested resource (e.g., `document`, `image`, `script`, etc.).
-- Sec-Fetch-User — present only for navigation requests initiated by user. When sent value is `?1`, meaning `true`.
+- Sec-Fetch-Site — the primary signal for CSRF protection. It indicates relationship between request initiator’s origin and it's target's origin: `same-origin`, `same-site`, `cross-site`, or `none`.
+- Sec-Fetch-Mode, Sec-Fetch-Dest, Sec-Fetch-User — additional headers that provide context about the request (such as the request mode, destination type, or whether it was triggered by a user navigation). More details are available in the [MDN documentation](https://developer.mozilla.org/en-US/docs/Glossary/Fetch_metadata_request_header).
 
 If any of headers above contain values not listed in the specification, in order to support forward-compatibility, servers should ignore those headers.
 
@@ -230,10 +230,11 @@ For the rare cases of outdated or embedded browsers that lack `Sec-Fetch-*` supp
 
     3.2 Whitelist explicit cross-origin flows. If certain endpoints intentionally accept cross-origin requests (CORS JSON APIs, third-party integrations, webhooks), explicitly exempt those endpoints from the global Sec-Fetch deny policy and secure them with proper CORS configuration, authentication, and logging.
 
-### Things to consider
+### Requirements
 
-- One limitation is that Fetch Metadata request headers are only sent to [potentially trustworthy URLs](https://www.w3.org/TR/secure-contexts/#is-url-trustworthy). This means the headers will generally be present for requests to origins whose scheme is `https`, `wss`, or `file`, and for `localhost` (hosts in the `127.0.0.0/8` or `::1/128` ranges). For the full rules and additional edge cases (the algorithm the user agent uses to decide trustworthiness), see the [W3C Secure Contexts spec](https://www.w3.org/TR/secure-contexts/#is-origin-trustworthy).
-- To ensure consistent inclusion of Fetch Metadata headers, enforce HTTPS across your site. Enabling [HTTP Strict Transport Security (HSTS)](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Strict-Transport-Security) helps achieve this by automatically upgrading all HTTP requests to HTTPS, ensuring requests are always sent from a secure, trustworthy context.
+- Your application must be served over trustworthy URLs. Fetch Metadata request headers are only sent to [potentially trustworthy URLs](https://www.w3.org/TR/secure-contexts/#is-url-trustworthy). In practice, this includes `https`, `wss`, `file`, and `localhost` (including `127.0.0.0/8` and `::1/128`). See the [W3C Secure Contexts spec](https://www.w3.org/TR/secure-contexts/#is-origin-trustworthy) for full details.
+- HTTPS must be enforced across the entire application. This ensures consistent inclusion of Fetch Metadata headers. Enabling [HTTP Strict Transport Security (HSTS)](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Strict-Transport-Security) helps achieve this by automatically upgrading all HTTP requests to HTTPS.
+- [Safe HTTP methods](https://developer.mozilla.org/en-US/docs/Glossary/Safe/HTTP) must not be used for state-changing requests.
 
 ### Rollout & testing recommendations
 
