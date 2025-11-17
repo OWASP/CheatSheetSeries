@@ -131,13 +131,25 @@ For detailed guidance on configuring Docker networks for container communication
 
 In Kubernetes environments, [Network Policies](https://kubernetes.io/docs/concepts/services-networking/network-policies/) can be used to define rules that regulate pod interactions within the cluster. These policies provide a robust framework to control how pods communicate with each other and with other network endpoints. Additionally, [Network Policy Editor](https://networkpolicy.io/) simplifies the creation and management of network policies, making it more accessible to define complex networking rules through a user-friendly interface.
 
-### RULE \#6 - Use Linux Security Module (seccomp, AppArmor, or SELinux)
+### RULE \#6 - Use Linux Security Module (seccomp, AppArmor, or SELinux) for Runtime Security
 
-**First of all, do not disable default security profile!**
+**First of all, do not disable default security profile!** Always start with Docker’s or your host’s default profile as a baseline.
 
-Consider using security profile like [seccomp](https://docs.docker.com/engine/security/seccomp/) or [AppArmor](https://docs.docker.com/engine/security/apparmor/).
+**Security Profile Recommendations:**
 
-Instructions how to do this inside Kubernetes can be found at [Configure a Security Context for a Pod or Container](https://kubernetes.io/docs/tutorials/security/seccomp/).
+- **Seccomp**: Restrict syscalls to the minimum required for your container. Use Docker’s default seccomp profile as a starting point and customize per workload. [Docker Seccomp](https://docs.docker.com/engine/security/seccomp/)
+
+- **AppArmor**: Apply per-container AppArmor profiles to enforce mandatory access controls. [Docker AppArmor](https://docs.docker.com/engine/security/apparmor/)
+
+- **SELinux**: Enable SELinux on the host and ensure containers are labeled properly. Enforce SELinux policies to prevent unauthorized access to host resources. [SELinux Guide for Docker](https://docs.docker.com/engine/security/selinux/)
+
+**Runtime Security Improvements:**
+
+- **Behavioral Monitoring**: Use tools like [Falco](https://falco.org/), [Tetragon](https://cilium.io/), or [Cilium eBPF](https://cilium.io/) to detect unexpected or malicious container activity. Examples: Unexpected exec calls, privilege escalation attempts, unusual network connections.  
+
+- **Anomaly Detection**: Continuously monitor container processes, filesystem changes, and network activity to identify abnormal patterns in real time.  
+
+- **Kubernetes Security Context**: Configure pods or containers with seccomp and AppArmor profiles in Kubernetes. [Configure a Security Context for a Pod or Container](https://kubernetes.io/docs/tutorials/security/seccomp/)
 
 ### RULE \#7 - Limit resources (memory, CPU, file descriptors, processes, restarts)
 
