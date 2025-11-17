@@ -14,7 +14,7 @@ In short, the following principles should be followed to defend against CSRF:
 
 - **See the OWASP [XSS Prevention Cheat Sheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md) for detailed guidance on how to prevent XSS flaws.**
 - **First, check if your framework has [built-in CSRF protection](#use-built-in-or-existing-csrf-implementations-for-csrf-protection) and use it**
-- **If the framework does not have built-in CSRF protection, add [CSRF tokens](#token-based-mitigation) to all state changing requests (requests that cause actions on the site) and validate them on the backend, or validate [Fetch Metadata headers](#fetch-metadata-headers) on the backend for all state-changing requests.**
+- **If the framework does not have built-in CSRF protection, add [CSRF tokens](#token-based-mitigation) to all state-changing requests (requests that cause actions on the site) and validate them on the backend.**
 - **If your software is intended to be used only on modern browsers, you may rely on [Fetch Metadata headers](#fetch-metadata-headers) to block cross-site state-changing requests, so long as you use the fallback options detailed below.**
 - **Stateful software should use the [synchronizer token pattern](#synchronizer-token-pattern)**
 - **Stateless software should use [double submit cookies](#alternative-using-a-double-submit-cookie-pattern)**
