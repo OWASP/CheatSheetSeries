@@ -67,7 +67,7 @@ If your drone is ever captured or lost, you should ensure that it's not physical
 
 ### 5. System integrity
 
-A drone shares many properties with classical IoT device when it comes to protecting integrity against unauthorised modifications of firmware, software, or configuration. Without these protections, attackers could inject malicious firmware or modify the control stack, gaining persistent and often invisible access - especially if the device is physically accessible to them (e.g., while it is in storage).
+A drone shares many properties with classical a IoT device when it comes to protecting integrity against unauthorized modifications of firmware, software, or configuration. Without these protections, attackers could inject malicious firmware or modify the control stack, gaining persistent and often invisible access - especially if the device is physically accessible to them (e.g., while it is in storage).
 
 Fortunately, IoT also has a number of security controls for such cases:
 
@@ -76,7 +76,7 @@ Fortunately, IoT also has a number of security controls for such cases:
     - A first-stage bootloader is immutable (in ROM or eFuse-locked code). It verifies signature on the second bootloader.
     - Each component verifies the next component (e.g., second stage bootloader -> kernel -> application).
 
-- **Measured Boot** – Measured Boot takes Secure Boot further by recording what software was loaded at each stage. This allows remote systems (like a fleet manager or ground station) to verify that the drone is running only trusted code. It also allows to authorise actions locally, such as releasing decryption keys only when the device boots properly.
+- **Measured Boot** – Measured Boot takes Secure Boot further by recording what software was loaded at each stage. This allows remote systems (like a fleet manager or ground station) to verify that the drone is running only trusted code. It also allows to authorize actions locally, such as releasing decryption keys only when the device boots properly.
 
 - **Firmware Signing** – Ensures that firmware and configuration updates are signed with cryptographic signatures. Implement rollback protection to prevent attackers from loading older, vulnerable firmware versions. It's also a good idea to encrypt firmware packages, especially if they contain sensitive IP.
 
