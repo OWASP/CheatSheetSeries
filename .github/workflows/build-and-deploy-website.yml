@@ -28,7 +28,9 @@ jobs:
     - name: Install Python dependencies
       run: make install-python-requirements
     - name: Run build script
-      run: cd scripts && bash Generate_Site_mkDocs.sh
+      run: |
+        source venv/bin/activate
+        cd scripts && bash Generate_Site_mkDocs.sh
     - name: List generated files
       run: ls -al generated/site/
     - name: Create bundle
