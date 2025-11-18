@@ -238,7 +238,7 @@ During the build phase, you should secure your Kubernetes container images by bu
 
 ### What is a container image?
 
-A container image (CI) is an immutable, lightweight, standalone, executable package of software that includes everything needed to run an application: code, runtime, system tools, system libraries and settings [<https://www.docker.com/resources/what-container>]. Each image shares the kernel of the operating system present in the host machine.
+A container image (CI) is an immutable, lightweight, standalone package that contains everything required to run an application — the application code, runtime, system libraries, configuration and system tools. Images are built as layered, read-only artifacts that are portable between hosts but share the host machine’s operating system kernel. See Docker: What is a container? (<https://www.docker.com/resources/what-container>).
 
 Your CIs must be built on a approved and secure base image. This base image must be scanned and monitored at regular intervals to ensure that all CIs are based on a secure and authentic image. Implement strong governance policies that determine how images are built and stored in trusted image registries.
 
@@ -905,7 +905,31 @@ There are few open source tools that can help you on securing your managed-servi
 - [hardeneks](https://github.com/aws-samples/hardeneks)
 - [MKAD](https://github.com/DataDog/managed-kubernetes-auditing-toolkit) (Managed Kubernetes Auditing Toolkit) from DataDog
 
-## SECTION 6: Final Thoughts
+## SECTION 6: Supply Chain Security
+
+Container supply chain security is critical for preventing attacks that exploit vulnerabilities in the software delivery process. A compromised supply chain can lead to malicious code being deployed into production environments, potentially affecting thousands of containers and applications.
+
+Supply chain attacks in Kubernetes environments typically target:
+
+- Base images and dependencies
+- Build processes and CI/CD pipelines
+- Container registries
+- Deployment manifests and Helm charts
+- Third-party libraries and packages
+
+Recent high-profile attacks (SolarWinds, Codecov, ua-parser-js) demonstrate the severe impact of supply chain compromises.
+
+### Best practices for securing the container supply chain
+
+1. Use trusted base images: Start with minimal, verified base images from reputable sources to reduce vulnerabilities.
+2. Implement image scanning: Regularly scan container images for vulnerabilities using tools like Clair, Trivy, or Aqua Security.
+3. Secure CI/CD pipelines: Ensure that build processes are secure, with proper access controls and monitoring.
+4. Sign and verify images: Use image signing tools like Notary or Cosign to ensure the integrity of container images.
+5. Use private registries: Store container images in private registries with access controls to prevent unauthorized access.
+6. Monitor for vulnerabilities: Continuously monitor for new vulnerabilities in dependencies and base images.
+7. Implement runtime security: Use tools to monitor container behavior at runtime and detect anomalies.
+
+## SECTION 7: Final Thoughts
 
 ### Embed security into the container lifecycle as early as possible
 
