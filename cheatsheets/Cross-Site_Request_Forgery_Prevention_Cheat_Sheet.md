@@ -180,7 +180,7 @@ For the rare cases of outdated or embedded browsers that lack `Sec-Fetch-*` supp
 
 ### How to treat Fetch Metadata headers on the server-side
 
-`Sec-Fetch-Site` is the most useful Fetch Metadata header for blocking CSRF-like cross-origin requests and should be the primary signal in a Fetch-Metadata-based policy. Use other Fetch Metadata headers (`Sec-Fetch-Mode`, `Sec-Fetch-Dest`, `Sec-Fetch-User`) to further refine or tailor policies to your application (for example, allowing navigate mode top-level requests or permitting specific Dest values for resource endpoints).
+`Sec-Fetch-Site` is the most useful Fetch Metadata header for blocking CSRF-like cross-origin requests and should be the primary signal in a Fetch-Metadata-based policy. Use other Fetch Metadata headers (`Sec-Fetch-Mode`, `Sec-Fetch-Dest`, `Sec-Fetch-User`) to further refine or tailor policies to your application's needs (for example, allowing top-level navigation requests or permitting specific Dest values for resource endpoints).
 **Policy (high level)**
 
 1. If `Sec-Fetch-Site` is present:
