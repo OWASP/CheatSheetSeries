@@ -7,11 +7,10 @@ help:
 install-python-requirements:  # Install Python 3 required libraries
 	python -m pip install --user virtualenv; \
 	virtualenv venv; \
-	source venv/bin/activate; \
-	python -m pip install -r requirements.txt
+	venv/bin/pip install -r requirements.txt
 
 generate-site: install-python-requirements # Use custom-script to generate the website
-	source venv/bin/activate; \
+	. venv/bin/activate && \
 	(cd scripts && bash Generate_Site_mkDocs.sh)
 
 serve: # Start's a Python http.server on port 8000 serving the content of ./generated/site
