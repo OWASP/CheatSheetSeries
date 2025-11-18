@@ -183,8 +183,9 @@ For the rare cases of outdated or embedded browsers that lack `Sec-Fetch-*` supp
 `Sec-Fetch-Site` is the most useful Fetch Metadata header for blocking CSRF-like cross-origin requests and should be the primary signal in a Fetch-Metadata-based policy. Use other Fetch Metadata headers (`Sec-Fetch-Mode`, `Sec-Fetch-Dest`, `Sec-Fetch-User`) to further refine or tailor policies to your application's needs (for example, allowing top-level navigation requests or permitting specific Dest values for resource endpoints).
 **Policy (high level)**
 
-1. If `Sec-Fetch-Site` is present:
-    1.1. Treat cross-site as untrusted for state-changing actions. By default, reject non-safe methods (POST / PUT / PATCH / DELETE) when `Sec-Fetch-Site: cross-site`.
+1. If `Sec-Fetch-Site` is present
+
+   1.1. Treat cross-site as untrusted for state-changing actions. By default, reject non-safe methods (POST / PUT / PATCH / DELETE) when `Sec-Fetch-Site: cross-site`.
 
     ```JavaScript
     const SAFE = new Set(['GET','HEAD','OPTIONS']);
@@ -195,7 +196,30 @@ For the rare cases of outdated or embedded browsers that lack `Sec-Fetch-*` supp
     }
     ```
 
-    1.2. Allow `same-origin`. Treat `same-site` as allowed only if your threat model trusts sibling subdomains; otherwise handle `same-site` conservatively (for example, require additional validation).
+    1.2 If your application relies on [safe HTTP methods](https://developer.mozilla.org/en-US/docs/Glossary/Safe/HTTP) (GET, HEAD, or OPTIONS) for state‑changing actions, you should explicitly reflect that in your policy – e.g., by requiring a Fetch‑Metadata header review for requests to those endpoints. This can be enforced with a policy rule like:
+
+    ```JavaScript
+    const SAFE_METHODS = new Set(['GET','HEAD','OPTIONS']);
+    const SENSITIVE_ENDPOINTS = new Set([
+      '/user/profile',
+      '/account/details',
+    ]);
+    
+    const site = req.get('Sec-Fetch-Site');
+    const path = req.path;
+    
+    // Block if cross-site + sensitive endpoint
+    if (site === 'cross-site' && SENSITIVE_ENDPOINTS.has(path)) {
+      return false;
+    }
+    
+    // Block if cross-site + unsafe method
+    if (site === 'cross-site' && !SAFE_METHODS.has(req.method)) {
+      return false;
+    }
+    ```
+
+    1.3. Allow `same-origin`. Treat `same-site` as allowed only if your threat model trusts sibling subdomains; otherwise handle `same-site` conservatively (for example, require additional validation).
 
     ```JavaScript
     const trustSameSite = false; // set true only if you trust sibling subdomains
@@ -211,14 +235,15 @@ For the rare cases of outdated or embedded browsers that lack `Sec-Fetch-*` supp
     }
     ```
 
-    1.3. Allow none for user-driven top-level navigations (bookmarks, typed URLs, explicit form submits) where appropriate.
+    1.4. Allow none for user-driven top-level navigations (bookmarks, typed URLs, explicit form submits) where appropriate.
 
 2. If `Sec-Fetch-*` headers are absent: choose a fallback based on risk and compatibility requirements:
     2.1. Fail-safe (recommended for sensitive endpoints): treat absence as unknown and block the request.
     2.2. Fail-open (compatibility-first): fallback to other security measure ([standard origin verification](#using-standard-headers-to-verify-origin), CSRF tokens, and/or require additional validation).
 
 3. Additional options
-    3.1 To ensure that your site can still be linked from other sites, you have to allow simple (HTTP GET) top-level navigation.
+
+   3.1 To ensure that your site can still be linked from other sites, you have to allow simple (HTTP GET) top-level navigation.
 
     ```JavaScript
     if (req.get('Sec-Fetch-Mode') === 'navigate' &&
@@ -229,7 +254,7 @@ For the rare cases of outdated or embedded browsers that lack `Sec-Fetch-*` supp
     }
     ```
 
-    3.2 Whitelist explicit cross-origin flows. If certain endpoints intentionally accept cross-origin requests (CORS JSON APIs, third-party integrations, webhooks), explicitly exempt those endpoints from the global Sec-Fetch deny policy and secure them with proper CORS configuration, authentication, and logging.
+     3.2 Whitelist explicit cross-origin flows. If certain endpoints intentionally accept cross-origin requests (CORS JSON APIs, third-party integrations, webhooks), explicitly exempt those endpoints from the global Sec-Fetch deny policy and secure them with proper CORS configuration, authentication, and logging.
 
 ### Requirements
 
