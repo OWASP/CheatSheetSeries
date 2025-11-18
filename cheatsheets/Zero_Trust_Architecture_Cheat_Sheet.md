@@ -384,20 +384,83 @@ Zero Trust architecture helps organizations meet various compliance requirements
 
 Zero Trust requires several technology categories working together:
 
-### Core Components
-
 - **Identity and Access Management**: Strong authentication (MFA) and risk-based access decisions
 - **Zero Trust Network Access (ZTNA)**: Application-level access instead of network-level VPNs
 - **Web Application Security**: Protect applications and APIs from OWASP Top 10 attacks
 - **Security Monitoring**: Real-time visibility and automated response to threats
 
-### Selection Principles
+### Policy-as-Code + Continuous Verification + Telemetry Signals
 
-- Use open standards (SAML, OAuth, FIDO2) over proprietary solutions
-- Ensure components integrate well together via APIs
-- Avoid vendor lock-in by maintaining flexibility
-- Start with one area and expand gradually
+#### 1. Policy-as-Code (PaC)
+
+Zero Trust policies should be defined as **code**, not manually, ensuring consistency, reproducibility, and auditability.
+
+**Key principles:**
+
+- Version-controlled policies
+- Tested within CI/CD pipelines
+- Automatically enforced at deployment
+- Traceable via audit logs
+
+**Recommended tools:**
+
+- Open Policy Agent (OPA) / Gatekeeper
+- Kyverno
+- Cilium Network Policies
+- Cloud provider policy engines (AWS SCP, Azure Policy, GCP Org Policy)
+
+**Use cases:**
+
+- Admission control
+- Workload security (privileges, capabilities, runtime profiles)
+- Network segmentation (L3–L7)
+- Image and artifact security
+- RBAC enforcement
+
+#### 2. Continuous Verification
+
+Zero Trust requires **every access, deployment, and configuration change** to be automatically verified.
+
+**Verification examples:**
+
+- Workload identity verification (SPIFFE/SPIRE, IAM)
+- Image signature validation (cosign / sigstore)
+- Security quality gates (SAST, IaC scanning, image scanning)
+- RBAC drift detection
+- Network policy drift detection
+- Automated enforcement at admission
+
+This approach prevents risky components from entering clusters during CI/CD.
+
+#### 3. Telemetry Signals
+
+Zero Trust decisions rely on **telemetry signals** collected continuously across all layers.
+
+**Suggested signals to collect:**
+
+- **Identity telemetry:** user + service + workload identity correlation
+- **Network telemetry:** anomalous east-west traffic, failed login attempts
+- **Runtime telemetry:** syscall anomalies, unauthorized execs, file system changes
+- **Deployment telemetry:** manifest change anomalies, signature mismatches
+- **Vulnerability telemetry:** CVSS, exploitability, runtime reachability
+
+**Recommended tools:**
+
+- Cilium Hubble
+- Falco or Tetragon (eBPF-based runtime signals)
+- OpenTelemetry (OTel)
+- Istio / Linkerd telemetry
+
+#### 4. Zero Trust Security Loop
+
+1. **Policy-as-Code** → Policies are defined in code repositories and tested.
+2. **Continuous Verification** → Every change and deployment is validated against policies.
+3. **Telemetry Signals** → Runtime signals provide continuous monitoring.
+4. **Feedback Loop** → Collected signals are used to refine policies.
+
+This three-part approach makes Zero Trust a **dynamic, continuously adaptive security model**.
 
 ## References
 
 - [OWASP Application Security Verification Standard (ASVS)](https://owasp.org/www-project-application-security-verification-standard/)
+- [NIST SP 800-207: Zero Trust Architecture](https://csrc.nist.gov/pubs/sp/800/207/final)
