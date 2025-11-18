@@ -29,7 +29,7 @@ jobs:
       run: make install-python-requirements
     - name: Run build script
       run: |
-        source venv/bin/activate
+        export PATH="$(pwd)/venv/bin:$PATH"
         cd scripts && bash Generate_Site_mkDocs.sh
     - name: List generated files
       run: ls -al generated/site/
