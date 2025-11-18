@@ -65,9 +65,9 @@ If your drone is ever captured or lost, you should ensure that it's not physical
 
 - **End-of-Life Decommissioning Risks** – Improperly decommissioned drones may retain sensitive data or be repurposed maliciously.
 
-### 5. System integrity
+### 5. System Integrity
 
-A drone shares many properties with classical a IoT device when it comes to protecting integrity against unauthorized modifications of firmware, software, or configuration. Without these protections, attackers could inject malicious firmware or modify the control stack, gaining persistent and often invisible access - especially if the device is physically accessible to them (e.g., while it is in storage).
+A drone shares many properties with a classical IoT device when it comes to protecting integrity against unauthorized modifications of firmware, software, or configuration. Without these protections, attackers could inject malicious firmware or modify the control stack, gaining persistent and often invisible access - especially if the device is physically accessible to them (e.g., while it is in storage).
 
 Fortunately, IoT also has a number of security controls for such cases:
 
