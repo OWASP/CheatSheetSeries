@@ -500,13 +500,13 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#why-does-innerhtml-requires-extreme-cautions" class="md-nav__link">
+  <a href="#why-does-innerhtml-require-extreme-caution" class="md-nav__link">
     <span class="md-ellipsis">
-      Why does innerHTML requires extreme cautions?
+      Why does innerHTML require extreme caution?
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Why does innerHTML requires extreme cautions?">
+    <nav class="md-nav" aria-label="Why does innerHTML require extreme caution?">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -3089,13 +3089,13 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#why-does-innerhtml-requires-extreme-cautions" class="md-nav__link">
+  <a href="#why-does-innerhtml-require-extreme-caution" class="md-nav__link">
     <span class="md-ellipsis">
-      Why does innerHTML requires extreme cautions?
+      Why does innerHTML require extreme caution?
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Why does innerHTML requires extreme cautions?">
+    <nav class="md-nav" aria-label="Why does innerHTML require extreme caution?">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -3396,13 +3396,14 @@
 <p>Manipulating the Document Object Model (DOM) is common in web applications, especially in monolithic server-side rendering (e.g., PHP, ASP.NET) and AJAX-driven applications. While <code>innerHTML</code> seems like a convenient way to inject HTML content, it poses significant security risks on untrusted-data, particularly cross-site scripting (XSS).</p>
 <h5 id="what-is-innerhtml">What is <code>innerHTML</code>?<a class="headerlink" href="#what-is-innerhtml" title="Permanent link">&para;</a></h5>
 <p>The <code>innerHTML</code> property sets or gets the HTML content of an element, including tags, which the browser parses and renders as part of the DOM. For example, setting <code>innerHTML = "&lt;p&gt;Hello&lt;/p&gt;"</code> creates a paragraph element.</p>
-<h5 id="why-does-innerhtml-requires-extreme-cautions">Why does <code>innerHTML</code> requires extreme cautions?<a class="headerlink" href="#why-does-innerhtml-requires-extreme-cautions" title="Permanent link">&para;</a></h5>
+<h5 id="why-does-innerhtml-require-extreme-caution">Why does <code>innerHTML</code> require extreme caution?<a class="headerlink" href="#why-does-innerhtml-require-extreme-caution" title="Permanent link">&para;</a></h5>
 <p>Using <code>innerHTML</code> with untrusted data (e.g., from API responses in AJAX) can allow malicious JavaScript to execute in the user’s browser, leading to XSS vulnerabilities. Potential risks include:</p>
 <ul>
 <li>Stealing user session cookies.</li>
 <li>Defacing the website.</li>
 <li>Redirecting users to malicious sites.</li>
 <li>Performing unauthorized actions (e.g., API calls on behalf of the user).</li>
+<li>Keylogging user inputs.</li>
 </ul>
 <h6 id="vulnerable-example">Vulnerable Example<a class="headerlink" href="#vulnerable-example" title="Permanent link">&para;</a></h6>
 <div class="highlight"><pre><span></span><code><span class="w">    </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;content&#39;</span><span class="p">).</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">data</span><span class="p">;</span><span class="w"> </span>
@@ -3444,6 +3445,9 @@
 <li><strong>Use <code>textContent</code></strong>: Use textContent in monolithic applications to safely insert plain text content returned from APIs.</li>
 <li><strong>Use <code>innerText</code></strong>: Only when CSS visibility or rendered text formatting (e.g. ignoring text in <code>display: none</code> elements) is required.</li>
 </ul>
+<blockquote>
+<p>Note: <code>textContent</code> is slightly faster and more predictable; use it unless you need to respect rendered text formatting (<code>innerText</code>).</p>
+</blockquote>
 <h5 id="note">Note<a class="headerlink" href="#note" title="Permanent link">&para;</a></h5>
 <ul>
 <li>While <code>textContent</code> and <code>innerText</code> are safe for inserting plain text into the DOM, they do not protect against XSS in other contexts such as HTML attributes, JavaScript event handlers, or URLs. Always validate and sanitize untrusted input.</li>
@@ -3451,9 +3455,12 @@
 </ul>
 <h4 id="dont-use-eval-new-function-or-other-code-evaluation-tools">Don't use <code>eval()</code>, <code>new Function()</code> or other code evaluation tools<a class="headerlink" href="#dont-use-eval-new-function-or-other-code-evaluation-tools" title="Permanent link">&para;</a></h4>
 <p><code>eval()</code> function is dangerous, never use it. Needing to use eval() usually indicates a problem in your design.</p>
+<blockquote>
+<p>Note: Using <code>eval()</code> or <code>new Function()</code> opens doors to remote code execution and XSS. Avoid it entirely.</p>
+</blockquote>
 <h4 id="encode-data-before-use-in-an-output-context">Encode Data Before Use in an Output Context<a class="headerlink" href="#encode-data-before-use-in-an-output-context" title="Permanent link">&para;</a></h4>
 <p>When using data to build HTML, script, CSS, XML, JSON, etc., make sure you take into account how that data must be presented in a literal sense to keep its logical meaning.</p>
-<p>Data should be properly encoded before used in this manner to prevent injection style issues, and to make sure the logical meaning is preserved.</p>
+<p>Data should be properly encoded before being used in this manner to prevent injection style issues, and to make sure the logical meaning is preserved.</p>
 <p><a href="https://owasp.org/www-project-java-encoder/">Check out the OWASP Java Encoder Project.</a></p>
 <h4 id="dont-rely-on-client-logic-for-security">Don't rely on client logic for security<a class="headerlink" href="#dont-rely-on-client-logic-for-security" title="Permanent link">&para;</a></h4>
 <p>Don't forget that the user controls the client-side logic. A number of browser plugins are available to set breakpoints, skip code, change values, etc. Never rely on client logic for security.</p>
