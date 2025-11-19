@@ -4,6 +4,46 @@
 
 This article brings forth a way to integrate the __defense in depth__ concept to the client-side of web applications. By injecting the Content-Security-Policy (CSP) headers from the server, the browser is aware and capable of protecting the user from dynamic calls that will load content into the page currently being visited.
 
+## General Principles
+
+Before defining specific Content Security Policy rules, keep these key principles in mind. They form the foundation for a secure and maintainable CSP strategy.
+
+### 1. Defense-in-Depth
+
+- CSP is a secondary layer of security, not a replacement for secure coding practices.
+- Always combine CSP with proper input validation, output encoding, and other security controls.
+
+### 2. Treat All External Content as Untrusted
+
+- Scripts, styles, images, or frames from third-party sources can be compromised.
+- Only allow resources from trusted origins ('self' or verified domains).
+- Consider using Subresource Integrity (SRI) for third-party scripts.
+
+### 3. Minimize Inline Code
+
+- Avoid inline `<script>` or `<style>` whenever possible.
+- Use external files with nonces or hashes for any required inline content.
+
+### 4. Least Privilege
+
+- Only allow the minimum sources and directives needed for your site to function.
+- Limit form submissions, frames, and script sources to essential domains.
+
+### 5. Fail Securely
+
+- In case of policy violations, prefer blocking rather than allowing fallback behavior.
+- Use report-uri or report-to for monitoring violations during policy rollout.
+
+### 6. Keep CSP Dynamic Yet Predictable
+
+- If using nonces or hashes, ensure they are unique per response but predictable for your templating engine.
+- Avoid automated replacement of script tags that could inadvertently whitelist attacker code.
+
+### 7. Test and Monitor
+
+- Use Content-Security-Policy-Report-Only mode to detect violations before enforcing.
+- Regularly review violation reports to adjust your policy safely.
+
 ## Context
 
 The increase in XSS (Cross-Site Scripting), clickjacking, and cross-site leak vulnerabilities demands a more __defense in depth__ security approach.
@@ -34,7 +74,7 @@ will not work.
 
 #### 3. Restricting Unsafe JavaScript
 
-By preventing the page from executing text-to-JavaScript functions like `eval`, the website will be safe from vulnerabilities like the this:
+By preventing the page from executing text-to-JavaScript functions like `eval`, the website will be safe from vulnerabilities like this:
 
 ```js
 // A Simple Calculator
