@@ -264,7 +264,9 @@ For the rare cases of outdated or embedded browsers that lack `Sec-Fetch-*` supp
 
 ### Rollout & testing recommendations
 
-- Include an appropriate `Vary` header, in order to ensure that caches handle the response appropriately. For example, `Vary: Accept-Encoding, Sec-Fetch-Site`. See more [Fetch Metadata specification](https://w3c.github.io/webappsec-fetch-metadata/#vary).
+- Include an appropriate `Vary` header, in order to ensure that caches handle the response appropriately. For example, `Vary: Sec-Fetch-Site, Origin`. See more [Fetch Metadata specification](https://w3c.github.io/webappsec-fetch-metadata/#vary).
+    - Note that the `Vary` header does not impact CSRF defenses in any way. It is a response header, so it is applied after the server has already made its allow/deny decision based on CSRF protections. Its purpose is operational rather than defensive.
+    - If the server responds differently based on HTTP headers (e.g., `Sec-Fetch-Site`, `Origin`), caches must vary on those headers. Without this, CDNs or proxies may reuse a response generated for a different context, causing broken behavior or contributing to cache-poisoning scenarios. Adding the appropriate `Vary` header ensures caches keep these responses separate.
 - Start in “log only” mode. Record requests that would be blocked and review for false positives before enforcing. This is the safest way to discover legitimate flows that need whitelisting.
 - Monitor UA coverage. Track which user agents include `Sec-Fetch-*` and which don’t; ensure your fallback logic covers missing-header cases. Use metrics to decide when to enforce stricter policies.
 - Document exceptions. Keep an explicit list of endpoints whitelisted for cross-origin access.
