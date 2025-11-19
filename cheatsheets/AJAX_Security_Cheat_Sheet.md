@@ -14,7 +14,7 @@ Manipulating the Document Object Model (DOM) is common in web applications, espe
 
 The `innerHTML` property sets or gets the HTML content of an element, including tags, which the browser parses and renders as part of the DOM. For example, setting `innerHTML = "<p>Hello</p>"` creates a paragraph element.
 
-##### Why does `innerHTML` requires extreme cautions?
+##### Why does `innerHTML` require extreme caution?
 
 Using `innerHTML` with untrusted data (e.g., from API responses in AJAX) can allow malicious JavaScript to execute in the user’s browser, leading to XSS vulnerabilities. Potential risks include:
 
@@ -22,6 +22,7 @@ Using `innerHTML` with untrusted data (e.g., from API responses in AJAX) can all
 - Defacing the website.
 - Redirecting users to malicious sites.
 - Performing unauthorized actions (e.g., API calls on behalf of the user).
+- Keylogging user inputs.
 
 ###### Vulnerable Example
 
@@ -80,6 +81,8 @@ document.getElementById('content').innerText = userInput;
 - **Use `textContent`**: Use textContent in monolithic applications to safely insert plain text content returned from APIs.
 - **Use `innerText`**: Only when CSS visibility or rendered text formatting (e.g. ignoring text in `display: none` elements) is required.
 
+> Note: `textContent` is slightly faster and more predictable; use it unless you need to respect rendered text formatting (`innerText`).
+
 ##### Note
 
 - While `textContent` and `innerText` are safe for inserting plain text into the DOM, they do not protect against XSS in other contexts such as HTML attributes, JavaScript event handlers, or URLs. Always validate and sanitize untrusted input.
@@ -89,11 +92,13 @@ document.getElementById('content').innerText = userInput;
 
 `eval()` function is dangerous, never use it. Needing to use eval() usually indicates a problem in your design.
 
+> Note: Using `eval()` or `new Function()` opens doors to remote code execution and XSS. Avoid it entirely.
+
 #### Encode Data Before Use in an Output Context
 
 When using data to build HTML, script, CSS, XML, JSON, etc., make sure you take into account how that data must be presented in a literal sense to keep its logical meaning.
 
-Data should be properly encoded before used in this manner to prevent injection style issues, and to make sure the logical meaning is preserved.
+Data should be properly encoded before being used in this manner to prevent injection style issues, and to make sure the logical meaning is preserved.
 
 [Check out the OWASP Java Encoder Project.](https://owasp.org/www-project-java-encoder/)
 
