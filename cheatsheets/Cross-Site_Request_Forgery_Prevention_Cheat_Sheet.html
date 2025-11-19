@@ -3837,7 +3837,7 @@ response.setCookie(&quot;csrf_token=&quot; + csrfToken + &quot;; Secure&quot;) /
 </code></pre></div>
 <p>Below is an example in pseudo-code that demonstrates validation of the CSRF token once it is sent back from the client:</p>
 <div class="highlight"><pre><span></span><code>// Get the CSRF token from the request
-csrfToken = request.getParameter(&quot;csrf_token&quot;) // From form field, cookie, or header
+csrfToken = request.getParameter(&quot;csrf_token&quot;) // From header or form field (NOT cookie)
 
 // Split the token to get the randomValue
 const tokenParts = csrfToken.split(&quot;.&quot;);

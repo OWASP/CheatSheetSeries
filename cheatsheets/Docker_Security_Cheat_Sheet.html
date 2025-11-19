@@ -1122,9 +1122,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#rule-6-use-linux-security-module-seccomp-apparmor-or-selinux" class="md-nav__link">
+  <a href="#rule-6-use-linux-security-module-seccomp-apparmor-or-selinux-for-runtime-security" class="md-nav__link">
     <span class="md-ellipsis">
-      RULE #6 - Use Linux Security Module (seccomp, AppArmor, or SELinux)
+      RULE #6 - Use Linux Security Module (seccomp, AppArmor, or SELinux) for Runtime Security
     </span>
   </a>
   
@@ -2970,9 +2970,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#rule-6-use-linux-security-module-seccomp-apparmor-or-selinux" class="md-nav__link">
+  <a href="#rule-6-use-linux-security-module-seccomp-apparmor-or-selinux-for-runtime-security" class="md-nav__link">
     <span class="md-ellipsis">
-      RULE #6 - Use Linux Security Module (seccomp, AppArmor, or SELinux)
+      RULE #6 - Use Linux Security Module (seccomp, AppArmor, or SELinux) for Runtime Security
     </span>
   </a>
   
@@ -3173,10 +3173,32 @@ Remember not to run containers with the <code>--privileged</code> flag - this wi
 <p>Inter-Container Connectivity (icc) is enabled by default, allowing all containers to communicate with each other through the <a href="https://docs.docker.com/network/drivers/bridge/"><code>docker0</code> bridged network</a>. Instead of using the <code>--icc=false</code> flag with the Docker daemon, which completely disables inter-container communication, consider defining specific network configurations. This can be achieved by creating custom Docker networks and specifying which containers should be attached to them. This method provides more granular control over container communication.</p>
 <p>For detailed guidance on configuring Docker networks for container communication, refer to the <a href="https://docs.docker.com/network/#communication-between-containers">Docker Documentation</a>.</p>
 <p>In Kubernetes environments, <a href="https://kubernetes.io/docs/concepts/services-networking/network-policies/">Network Policies</a> can be used to define rules that regulate pod interactions within the cluster. These policies provide a robust framework to control how pods communicate with each other and with other network endpoints. Additionally, <a href="https://networkpolicy.io/">Network Policy Editor</a> simplifies the creation and management of network policies, making it more accessible to define complex networking rules through a user-friendly interface.</p>
-<h3 id="rule-6-use-linux-security-module-seccomp-apparmor-or-selinux">RULE #6 - Use Linux Security Module (seccomp, AppArmor, or SELinux)<a class="headerlink" href="#rule-6-use-linux-security-module-seccomp-apparmor-or-selinux" title="Permanent link">&para;</a></h3>
-<p><strong>First of all, do not disable default security profile!</strong></p>
-<p>Consider using security profile like <a href="https://docs.docker.com/engine/security/seccomp/">seccomp</a> or <a href="https://docs.docker.com/engine/security/apparmor/">AppArmor</a>.</p>
-<p>Instructions how to do this inside Kubernetes can be found at <a href="https://kubernetes.io/docs/tutorials/security/seccomp/">Configure a Security Context for a Pod or Container</a>.</p>
+<h3 id="rule-6-use-linux-security-module-seccomp-apparmor-or-selinux-for-runtime-security">RULE #6 - Use Linux Security Module (seccomp, AppArmor, or SELinux) for Runtime Security<a class="headerlink" href="#rule-6-use-linux-security-module-seccomp-apparmor-or-selinux-for-runtime-security" title="Permanent link">&para;</a></h3>
+<p><strong>First of all, do not disable default security profile!</strong> Always start with Docker’s or your host’s default profile as a baseline.</p>
+<p><strong>Security Profile Recommendations:</strong></p>
+<ul>
+<li>
+<p><strong>Seccomp</strong>: Restrict syscalls to the minimum required for your container. Use Docker’s default seccomp profile as a starting point and customize per workload. <a href="https://docs.docker.com/engine/security/seccomp/">Docker Seccomp</a></p>
+</li>
+<li>
+<p><strong>AppArmor</strong>: Apply per-container AppArmor profiles to enforce mandatory access controls. <a href="https://docs.docker.com/engine/security/apparmor/">Docker AppArmor</a></p>
+</li>
+<li>
+<p><strong>SELinux</strong>: Enable SELinux on the host and ensure containers are labeled properly. Enforce SELinux policies to prevent unauthorized access to host resources. <a href="https://docs.docker.com/engine/security/selinux/">SELinux Guide for Docker</a></p>
+</li>
+</ul>
+<p><strong>Runtime Security Improvements:</strong></p>
+<ul>
+<li>
+<p><strong>Behavioral Monitoring</strong>: Use tools like <a href="https://falco.org/">Falco</a>, <a href="https://cilium.io/">Tetragon</a>, or <a href="https://cilium.io/">Cilium eBPF</a> to detect unexpected or malicious container activity. Examples: Unexpected exec calls, privilege escalation attempts, unusual network connections.  </p>
+</li>
+<li>
+<p><strong>Anomaly Detection</strong>: Continuously monitor container processes, filesystem changes, and network activity to identify abnormal patterns in real time.  </p>
+</li>
+<li>
+<p><strong>Kubernetes Security Context</strong>: Configure pods or containers with seccomp and AppArmor profiles in Kubernetes. <a href="https://kubernetes.io/docs/tutorials/security/seccomp/">Configure a Security Context for a Pod or Container</a></p>
+</li>
+</ul>
 <h3 id="rule-7-limit-resources-memory-cpu-file-descriptors-processes-restarts">RULE #7 - Limit resources (memory, CPU, file descriptors, processes, restarts)<a class="headerlink" href="#rule-7-limit-resources-memory-cpu-file-descriptors-processes-restarts" title="Permanent link">&para;</a></h3>
 <p>The best way to avoid DoS attacks is by limiting resources. You can limit <a href="https://docs.docker.com/config/containers/resource_constraints/#memory">memory</a>, <a href="https://docs.docker.com/config/containers/resource_constraints/#cpu">CPU</a>, maximum number of restarts (<code>--restart=on-failure:&lt;number_of_restarts&gt;</code>), maximum number of file descriptors (<code>--ulimit nofile=&lt;number&gt;</code>) and maximum number of processes (<code>--ulimit nproc=&lt;number&gt;</code>).</p>
 <p><a href="https://docs.docker.com/engine/reference/commandline/run/#set-ulimits-in-container---ulimit">Check documentation for more details about ulimits</a></p>

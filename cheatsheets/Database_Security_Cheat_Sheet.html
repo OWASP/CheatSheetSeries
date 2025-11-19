@@ -3000,7 +3000,10 @@
 
 <h1 id="database-security-cheat-sheet">Database Security Cheat Sheet<a class="headerlink" href="#database-security-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>This cheat sheet provides advice for securely configuring SQL and NoSQL databases. It is designed to be used by application developers if they are responsible for managing the databases. For details about protecting against SQL Injection attacks, see the <a href="SQL_Injection_Prevention_Cheat_Sheet.html">SQL Injection Prevention Cheat Sheet</a>.</p>
+<p>This cheat sheet provides guidance for securely configuring SQL databases such as MySQL, PostgreSQL, MariaDB, and Microsoft SQL Server.
+It is designed primarily for application developers and system administrators responsible for managing or interacting with relational databases.</p>
+<p>For application-layer injection defenses, see the <a href="SQL_Injection_Prevention_Cheat_Sheet.html">SQL Injection Prevention Cheat Sheet</a>.
+For guidance on non-relational systems (e.g., MongoDB, Redis, Cassandra, DynamoDB), refer to the <a href="NoSQL_Security_Cheat_Sheet.html">NoSQL Security Cheat Sheet</a></p>
 <h2 id="protecting-the-backend-database">Protecting the Backend Database<a class="headerlink" href="#protecting-the-backend-database" title="Permanent link">&para;</a></h2>
 <p>The application's backend database should be isolated from other servers and only connect with as few hosts as possible. This task will depend on the system and network architecture. Consider these suggestions:</p>
 <ul>
@@ -3008,8 +3011,8 @@
 <li>Configuring the database to only bind on localhost.</li>
 <li>Restricting access to the network port to specific hosts with firewall rules.</li>
 <li>Placing the database server in a separate DMZ isolated from the application server.</li>
+<li>Protect any web-based management tools (e.g., phpMyAdmin, pgAdmin) with authentication, HTTPS, and network restrictions.</li>
 </ul>
-<p>Similar protections should protect any web-based management tools used with the database, such as phpMyAdmin.</p>
 <p>When an application is running on an untrusted system (such as a thick-client), it should always connect to the backend through an API that can enforce appropriate access control and restrictions. Direct connections should <strong>never ever</strong> be made from a thick client to the backend database.</p>
 <h3 id="implementing-transport-layer-protection">Implementing Transport Layer Protection<a class="headerlink" href="#implementing-transport-layer-protection" title="Permanent link">&para;</a></h3>
 <p>Most database default configurations start with unencrypted network connections, though some do encrypt the initial authentication (such as Microsoft SQL Server). Even if the initial authentication is encrypted, the rest of the traffic will be unencrypted and all kinds of sensitive information will be sent across the network in clear text. The following steps should be taken to prevent unencrypted traffic:</p>
@@ -3092,6 +3095,7 @@
 </ul>
 <h3 id="mongodb">MongoDB<a class="headerlink" href="#mongodb" title="Permanent link">&para;</a></h3>
 <ul>
+<li>See the <a href="NoSQL_Security_Cheat_Sheet.html">NoSQL Security Cheat Sheet</a> for general guidance on securing NoSQL databases.</li>
 <li>See the <a href="https://docs.mongodb.com/manual/administration/security-checklist/">MongoDB security checklist</a>.</li>
 </ul>
 <h3 id="redis">Redis<a class="headerlink" href="#redis" title="Permanent link">&para;</a></h3>

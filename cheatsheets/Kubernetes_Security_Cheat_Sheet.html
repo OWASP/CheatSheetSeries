@@ -2228,13 +2228,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#section-6-final-thoughts" class="md-nav__link">
+  <a href="#section-6-supply-chain-security" class="md-nav__link">
     <span class="md-ellipsis">
-      SECTION 6: Final Thoughts
+      SECTION 6: Supply Chain Security
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="SECTION 6: Final Thoughts">
+    <nav class="md-nav" aria-label="SECTION 6: Supply Chain Security">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#best-practices-for-securing-the-container-supply-chain" class="md-nav__link">
+    <span class="md-ellipsis">
+      Best practices for securing the container supply chain
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#section-7-final-thoughts" class="md-nav__link">
+    <span class="md-ellipsis">
+      SECTION 7: Final Thoughts
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SECTION 7: Final Thoughts">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -4340,13 +4364,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#section-6-final-thoughts" class="md-nav__link">
+  <a href="#section-6-supply-chain-security" class="md-nav__link">
     <span class="md-ellipsis">
-      SECTION 6: Final Thoughts
+      SECTION 6: Supply Chain Security
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="SECTION 6: Final Thoughts">
+    <nav class="md-nav" aria-label="SECTION 6: Supply Chain Security">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#best-practices-for-securing-the-container-supply-chain" class="md-nav__link">
+    <span class="md-ellipsis">
+      Best practices for securing the container supply chain
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#section-7-final-thoughts" class="md-nav__link">
+    <span class="md-ellipsis">
+      SECTION 7: Final Thoughts
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SECTION 7: Final Thoughts">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -4635,7 +4683,7 @@
 <p>During the build phase, you should secure your Kubernetes container images by building secure images and scanning those images for any known vulnerabilities.</p>
 <p>--</p>
 <h3 id="what-is-a-container-image">What is a container image?<a class="headerlink" href="#what-is-a-container-image" title="Permanent link">&para;</a></h3>
-<p>A container image (CI) is an immutable, lightweight, standalone, executable package of software that includes everything needed to run an application: code, runtime, system tools, system libraries and settings [<a href="https://www.docker.com/resources/what-container">https://www.docker.com/resources/what-container</a>]. Each image shares the kernel of the operating system present in the host machine.</p>
+<p>A container image (CI) is an immutable, lightweight, standalone package that contains everything required to run an application — the application code, runtime, system libraries, configuration and system tools. Images are built as layered, read-only artifacts that are portable between hosts but share the host machine’s operating system kernel. See Docker: What is a container? (<a href="https://www.docker.com/resources/what-container">https://www.docker.com/resources/what-container</a>).</p>
 <p>Your CIs must be built on a approved and secure base image. This base image must be scanned and monitored at regular intervals to ensure that all CIs are based on a secure and authentic image. Implement strong governance policies that determine how images are built and stored in trusted image registries.</p>
 <p>--</p>
 <h4 id="ensure-that-cis-are-up-to-date">Ensure that CIs are up to date<a class="headerlink" href="#ensure-that-cis-are-up-to-date" title="Permanent link">&para;</a></h4>
@@ -5103,7 +5151,28 @@ Events:
 <li><a href="https://github.com/aws-samples/hardeneks">hardeneks</a></li>
 <li><a href="https://github.com/DataDog/managed-kubernetes-auditing-toolkit">MKAD</a> (Managed Kubernetes Auditing Toolkit) from DataDog</li>
 </ul>
-<h2 id="section-6-final-thoughts">SECTION 6: Final Thoughts<a class="headerlink" href="#section-6-final-thoughts" title="Permanent link">&para;</a></h2>
+<h2 id="section-6-supply-chain-security">SECTION 6: Supply Chain Security<a class="headerlink" href="#section-6-supply-chain-security" title="Permanent link">&para;</a></h2>
+<p>Container supply chain security is critical for preventing attacks that exploit vulnerabilities in the software delivery process. A compromised supply chain can lead to malicious code being deployed into production environments, potentially affecting thousands of containers and applications.</p>
+<p>Supply chain attacks in Kubernetes environments typically target:</p>
+<ul>
+<li>Base images and dependencies</li>
+<li>Build processes and CI/CD pipelines</li>
+<li>Container registries</li>
+<li>Deployment manifests and Helm charts</li>
+<li>Third-party libraries and packages</li>
+</ul>
+<p>Recent high-profile attacks (SolarWinds, Codecov, ua-parser-js) demonstrate the severe impact of supply chain compromises.</p>
+<h3 id="best-practices-for-securing-the-container-supply-chain">Best practices for securing the container supply chain<a class="headerlink" href="#best-practices-for-securing-the-container-supply-chain" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Use trusted base images: Start with minimal, verified base images from reputable sources to reduce vulnerabilities.</li>
+<li>Implement image scanning: Regularly scan container images for vulnerabilities using tools like Clair, Trivy, or Aqua Security.</li>
+<li>Secure CI/CD pipelines: Ensure that build processes are secure, with proper access controls and monitoring.</li>
+<li>Sign and verify images: Use image signing tools like Notary or Cosign to ensure the integrity of container images.</li>
+<li>Use private registries: Store container images in private registries with access controls to prevent unauthorized access.</li>
+<li>Monitor for vulnerabilities: Continuously monitor for new vulnerabilities in dependencies and base images.</li>
+<li>Implement runtime security: Use tools to monitor container behavior at runtime and detect anomalies.</li>
+</ol>
+<h2 id="section-7-final-thoughts">SECTION 7: Final Thoughts<a class="headerlink" href="#section-7-final-thoughts" title="Permanent link">&para;</a></h2>
 <h3 id="embed-security-into-the-container-lifecycle-as-early-as-possible">Embed security into the container lifecycle as early as possible<a class="headerlink" href="#embed-security-into-the-container-lifecycle-as-early-as-possible" title="Permanent link">&para;</a></h3>
 <p>You must integrate security earlier into the container lifecycle and ensure alignment and shared goals between security and DevOps teams. Security can (and should) be an enabler that allows your developers and DevOps teams to confidently build and deploy applications that are production-ready for scale, stability and security.</p>
 <h3 id="use-kubernetes-native-security-controls-to-reduce-operational-risk">Use Kubernetes-native security controls to reduce operational risk<a class="headerlink" href="#use-kubernetes-native-security-controls-to-reduce-operational-risk" title="Permanent link">&para;</a></h3>

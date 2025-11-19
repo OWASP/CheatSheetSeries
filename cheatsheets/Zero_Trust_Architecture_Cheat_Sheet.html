@@ -3204,20 +3204,53 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#core-components" class="md-nav__link">
+  <a href="#policy-as-code-continuous-verification-telemetry-signals" class="md-nav__link">
     <span class="md-ellipsis">
-      Core Components
+      Policy-as-Code + Continuous Verification + Telemetry Signals
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Policy-as-Code + Continuous Verification + Telemetry Signals">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-policy-as-code-pac" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Policy-as-Code (PaC)
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#selection-principles" class="md-nav__link">
+  <a href="#2-continuous-verification" class="md-nav__link">
     <span class="md-ellipsis">
-      Selection Principles
+      2. Continuous Verification
     </span>
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-telemetry-signals" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Telemetry Signals
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-zero-trust-security-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Zero Trust Security Loop
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -3837,20 +3870,53 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#core-components" class="md-nav__link">
+  <a href="#policy-as-code-continuous-verification-telemetry-signals" class="md-nav__link">
     <span class="md-ellipsis">
-      Core Components
+      Policy-as-Code + Continuous Verification + Telemetry Signals
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Policy-as-Code + Continuous Verification + Telemetry Signals">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-policy-as-code-pac" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Policy-as-Code (PaC)
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#selection-principles" class="md-nav__link">
+  <a href="#2-continuous-verification" class="md-nav__link">
     <span class="md-ellipsis">
-      Selection Principles
+      2. Continuous Verification
     </span>
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-telemetry-signals" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Telemetry Signals
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-zero-trust-security-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Zero Trust Security Loop
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -4195,23 +4261,78 @@
 </table>
 <h2 id="technology-components">Technology Components<a class="headerlink" href="#technology-components" title="Permanent link">&para;</a></h2>
 <p>Zero Trust requires several technology categories working together:</p>
-<h3 id="core-components">Core Components<a class="headerlink" href="#core-components" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Identity and Access Management</strong>: Strong authentication (MFA) and risk-based access decisions</li>
 <li><strong>Zero Trust Network Access (ZTNA)</strong>: Application-level access instead of network-level VPNs</li>
 <li><strong>Web Application Security</strong>: Protect applications and APIs from OWASP Top 10 attacks</li>
 <li><strong>Security Monitoring</strong>: Real-time visibility and automated response to threats</li>
 </ul>
-<h3 id="selection-principles">Selection Principles<a class="headerlink" href="#selection-principles" title="Permanent link">&para;</a></h3>
+<h3 id="policy-as-code-continuous-verification-telemetry-signals">Policy-as-Code + Continuous Verification + Telemetry Signals<a class="headerlink" href="#policy-as-code-continuous-verification-telemetry-signals" title="Permanent link">&para;</a></h3>
+<h4 id="1-policy-as-code-pac">1. Policy-as-Code (PaC)<a class="headerlink" href="#1-policy-as-code-pac" title="Permanent link">&para;</a></h4>
+<p>Zero Trust policies should be defined as <strong>code</strong>, not manually, ensuring consistency, reproducibility, and auditability.</p>
+<p><strong>Key principles:</strong></p>
 <ul>
-<li>Use open standards (SAML, OAuth, FIDO2) over proprietary solutions</li>
-<li>Ensure components integrate well together via APIs</li>
-<li>Avoid vendor lock-in by maintaining flexibility</li>
-<li>Start with one area and expand gradually</li>
+<li>Version-controlled policies</li>
+<li>Tested within CI/CD pipelines</li>
+<li>Automatically enforced at deployment</li>
+<li>Traceable via audit logs</li>
 </ul>
+<p><strong>Recommended tools:</strong></p>
+<ul>
+<li>Open Policy Agent (OPA) / Gatekeeper</li>
+<li>Kyverno</li>
+<li>Cilium Network Policies</li>
+<li>Cloud provider policy engines (AWS SCP, Azure Policy, GCP Org Policy)</li>
+</ul>
+<p><strong>Use cases:</strong></p>
+<ul>
+<li>Admission control</li>
+<li>Workload security (privileges, capabilities, runtime profiles)</li>
+<li>Network segmentation (L3–L7)</li>
+<li>Image and artifact security</li>
+<li>RBAC enforcement</li>
+</ul>
+<h4 id="2-continuous-verification">2. Continuous Verification<a class="headerlink" href="#2-continuous-verification" title="Permanent link">&para;</a></h4>
+<p>Zero Trust requires <strong>every access, deployment, and configuration change</strong> to be automatically verified.</p>
+<p><strong>Verification examples:</strong></p>
+<ul>
+<li>Workload identity verification (SPIFFE/SPIRE, IAM)</li>
+<li>Image signature validation (cosign / sigstore)</li>
+<li>Security quality gates (SAST, IaC scanning, image scanning)</li>
+<li>RBAC drift detection</li>
+<li>Network policy drift detection</li>
+<li>Automated enforcement at admission</li>
+</ul>
+<p>This approach prevents risky components from entering clusters during CI/CD.</p>
+<h4 id="3-telemetry-signals">3. Telemetry Signals<a class="headerlink" href="#3-telemetry-signals" title="Permanent link">&para;</a></h4>
+<p>Zero Trust decisions rely on <strong>telemetry signals</strong> collected continuously across all layers.</p>
+<p><strong>Suggested signals to collect:</strong></p>
+<ul>
+<li><strong>Identity telemetry:</strong> user + service + workload identity correlation</li>
+<li><strong>Network telemetry:</strong> anomalous east-west traffic, failed login attempts</li>
+<li><strong>Runtime telemetry:</strong> syscall anomalies, unauthorized execs, file system changes</li>
+<li><strong>Deployment telemetry:</strong> manifest change anomalies, signature mismatches</li>
+<li><strong>Vulnerability telemetry:</strong> CVSS, exploitability, runtime reachability</li>
+</ul>
+<p><strong>Recommended tools:</strong></p>
+<ul>
+<li>Cilium Hubble</li>
+<li>Falco or Tetragon (eBPF-based runtime signals)</li>
+<li>OpenTelemetry (OTel)</li>
+<li>Istio / Linkerd telemetry</li>
+</ul>
+<h4 id="4-zero-trust-security-loop">4. Zero Trust Security Loop<a class="headerlink" href="#4-zero-trust-security-loop" title="Permanent link">&para;</a></h4>
+<ol>
+<li><strong>Policy-as-Code</strong> → Policies are defined in code repositories and tested.</li>
+<li><strong>Continuous Verification</strong> → Every change and deployment is validated against policies.</li>
+<li><strong>Telemetry Signals</strong> → Runtime signals provide continuous monitoring.</li>
+<li><strong>Feedback Loop</strong> → Collected signals are used to refine policies.</li>
+</ol>
+<p>This three-part approach makes Zero Trust a <strong>dynamic, continuously adaptive security model</strong>.</p>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://owasp.org/www-project-application-security-verification-standard/">OWASP Application Security Verification Standard (ASVS)</a></li>
+<li><a href="https://csrc.nist.gov/pubs/sp/800/207/final">NIST SP 800-207: Zero Trust Architecture</a></li>
 </ul>
 
 

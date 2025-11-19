@@ -1159,18 +1159,27 @@ redirect_from: "/cheatsheets/Drone_security_sheet.html"
 </li>
         
           <li class="md-nav__item">
-  <a href="#5-sensor-security" class="md-nav__link">
+  <a href="#5-system-integrity" class="md-nav__link">
     <span class="md-ellipsis">
-      5. Sensor Security
+      5. System Integrity
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#6-logging-monitoring" class="md-nav__link">
+  <a href="#6-sensor-security" class="md-nav__link">
     <span class="md-ellipsis">
-      6. Logging &amp; Monitoring
+      6. Sensor Security
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-logging-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Logging &amp; Monitoring
     </span>
   </a>
   
@@ -2911,18 +2920,27 @@ redirect_from: "/cheatsheets/Drone_security_sheet.html"
 </li>
         
           <li class="md-nav__item">
-  <a href="#5-sensor-security" class="md-nav__link">
+  <a href="#5-system-integrity" class="md-nav__link">
     <span class="md-ellipsis">
-      5. Sensor Security
+      5. System Integrity
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#6-logging-monitoring" class="md-nav__link">
+  <a href="#6-sensor-security" class="md-nav__link">
     <span class="md-ellipsis">
-      6. Logging &amp; Monitoring
+      6. Sensor Security
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-logging-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Logging &amp; Monitoring
     </span>
   </a>
   
@@ -3047,11 +3065,30 @@ redirect_from: "/cheatsheets/Drone_security_sheet.html"
 <p><strong>End-of-Life Decommissioning Risks</strong> – Improperly decommissioned drones may retain sensitive data or be repurposed maliciously.</p>
 </li>
 </ul>
-<h3 id="5-sensor-security">5. Sensor Security<a class="headerlink" href="#5-sensor-security" title="Permanent link">&para;</a></h3>
+<h3 id="5-system-integrity">5. System Integrity<a class="headerlink" href="#5-system-integrity" title="Permanent link">&para;</a></h3>
+<p>A drone shares many properties with a classical IoT device when it comes to protecting integrity against unauthorized modifications of firmware, software, or configuration. Without these protections, attackers could inject malicious firmware or modify the control stack, gaining persistent and often invisible access - especially if the device is physically accessible to them (e.g., while it is in storage).</p>
+<p>Fortunately, IoT also has a number of security controls for such cases:</p>
+<ul>
+<li>
+<p><strong>Secure Boot</strong> – Secure Boot ensures that the drone starts only with trusted software:</p>
+<ul>
+<li>Every piece of firmware is signed with a cryptographic key. Only signed software is allowed to run.</li>
+<li>A first-stage bootloader is immutable (in ROM or eFuse-locked code). It verifies signature on the second bootloader.</li>
+<li>Each component verifies the next component (e.g., second stage bootloader -&gt; kernel -&gt; application).</li>
+</ul>
+</li>
+<li>
+<p><strong>Measured Boot</strong> – Measured Boot takes Secure Boot further by recording what software was loaded at each stage. This allows remote systems (like a fleet manager or ground station) to verify that the drone is running only trusted code. It also allows to authorize actions locally, such as releasing decryption keys only when the device boots properly.</p>
+</li>
+<li>
+<p><strong>Firmware Signing</strong> – Ensures that firmware and configuration updates are signed with cryptographic signatures. Implement rollback protection to prevent attackers from loading older, vulnerable firmware versions. It's also a good idea to encrypt firmware packages, especially if they contain sensitive IP.</p>
+</li>
+</ul>
+<h3 id="6-sensor-security">6. Sensor Security<a class="headerlink" href="#6-sensor-security" title="Permanent link">&para;</a></h3>
 <p>With drones implementing control logic depending on how close they are to other drones or aerial vehicles, manipulating sensor data can be disastrous!</p>
 <p>Attackers can manipulate drone sensors (GPS, cameras, altimeters) to feed incorrect data. Think of this more like how <a href="https://en.wikipedia.org/wiki/Stuxnet">stuxnet</a> changed the speed of the Uranium centrifuges in Iran while still reporting the speed as normal.</p>
 <p>To prevent this, there is new research being developed involving <strong>watermarked signals</strong> whose <strong>entropy</strong> can be used to determine if the sensor values are correct of not. Read more about this method <a href="https://ieeexplore.ieee.org/abstract/document/9994719">here</a>.</p>
-<h3 id="6-logging-monitoring">6. Logging &amp; Monitoring<a class="headerlink" href="#6-logging-monitoring" title="Permanent link">&para;</a></h3>
+<h3 id="7-logging-monitoring">7. Logging &amp; Monitoring<a class="headerlink" href="#7-logging-monitoring" title="Permanent link">&para;</a></h3>
 <ul>
 <li>
 <p><strong>Inadequate Logging and Monitoring</strong> – Without sufficient monitoring, security breaches or operational anomalies may go undetected.</p>
@@ -3433,6 +3470,18 @@ redirect_from: "/cheatsheets/Drone_security_sheet.html"
 </li>
 <li>
 <p><a href="https://www.okta.com/identity-101/gps-spoofing/">GPS spoofing and prevention</a></p>
+</li>
+<li>
+<p><a href="https://csrc.nist.gov/pubs/sp/800/193/final">NIST SP 800-193 Platform Firmware Resiliency Guidelines</a></p>
+</li>
+<li>
+<p><a href="https://www.etsi.org/technologies/consumer-iot-security">ETSI EN 303 645 (Consumer IoT Security)</a></p>
+</li>
+<li>
+<p><a href="https://owasp.org/www-project-internet-of-things/">OWASP Internet of Things</a></p>
+</li>
+<li>
+<p><a href="https://www.trustedfirmware.org/">Trusted Firmware</a></p>
 </li>
 </ul>
 
