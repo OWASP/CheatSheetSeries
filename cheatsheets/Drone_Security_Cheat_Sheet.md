@@ -65,7 +65,22 @@ If your drone is ever captured or lost, you should ensure that it's not physical
 
 - **End-of-Life Decommissioning Risks** – Improperly decommissioned drones may retain sensitive data or be repurposed maliciously.
 
-### 5. Sensor Security
+### 5. System Integrity
+
+A drone shares many properties with a classical IoT device when it comes to protecting integrity against unauthorized modifications of firmware, software, or configuration. Without these protections, attackers could inject malicious firmware or modify the control stack, gaining persistent and often invisible access - especially if the device is physically accessible to them (e.g., while it is in storage).
+
+Fortunately, IoT also has a number of security controls for such cases:
+
+- **Secure Boot** – Secure Boot ensures that the drone starts only with trusted software:
+    - Every piece of firmware is signed with a cryptographic key. Only signed software is allowed to run.
+    - A first-stage bootloader is immutable (in ROM or eFuse-locked code). It verifies signature on the second bootloader.
+    - Each component verifies the next component (e.g., second stage bootloader -> kernel -> application).
+
+- **Measured Boot** – Measured Boot takes Secure Boot further by recording what software was loaded at each stage. This allows remote systems (like a fleet manager or ground station) to verify that the drone is running only trusted code. It also allows to authorize actions locally, such as releasing decryption keys only when the device boots properly.
+
+- **Firmware Signing** – Ensures that firmware and configuration updates are signed with cryptographic signatures. Implement rollback protection to prevent attackers from loading older, vulnerable firmware versions. It's also a good idea to encrypt firmware packages, especially if they contain sensitive IP.
+
+### 6. Sensor Security
 
 With drones implementing control logic depending on how close they are to other drones or aerial vehicles, manipulating sensor data can be disastrous!
 
@@ -73,7 +88,7 @@ Attackers can manipulate drone sensors (GPS, cameras, altimeters) to feed incorr
 
 To prevent this, there is new research being developed involving **watermarked signals** whose **entropy** can be used to determine if the sensor values are correct of not. Read more about this method [here](https://ieeexplore.ieee.org/abstract/document/9994719).
 
-### 6. Logging & Monitoring
+### 7. Logging & Monitoring
 
 - **Inadequate Logging and Monitoring** – Without sufficient monitoring, security breaches or operational anomalies may go undetected.
 
@@ -178,3 +193,11 @@ There are multiple GitHub repos that help with drone attack [simulations](https:
 - [Dynamic Watermarking in UAVs](https://ieeexplore.ieee.org/abstract/document/9994719)
 
 - [GPS spoofing and prevention](https://www.okta.com/identity-101/gps-spoofing/)
+
+- [NIST SP 800-193 Platform Firmware Resiliency Guidelines](https://csrc.nist.gov/pubs/sp/800/193/final)
+
+- [ETSI EN 303 645 (Consumer IoT Security)](https://www.etsi.org/technologies/consumer-iot-security)
+
+- [OWASP Internet of Things](https://owasp.org/www-project-internet-of-things/)
+
+- [Trusted Firmware](https://www.trustedfirmware.org/)
