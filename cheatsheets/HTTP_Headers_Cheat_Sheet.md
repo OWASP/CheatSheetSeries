@@ -73,7 +73,7 @@ Although it is recommended to always set the `Content-Type` header correctly, it
 > `Content-Type: text/html; charset=UTF-8`
 
 - *NOTE:* the `charset` attribute is necessary to prevent XSS in **HTML** pages
-- *NOTE*: the `text/html` can be any of the possible [MIME types](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types)
+- *NOTE*: the `Content-Type` can be any of the possible [MIME types](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types)
 
 ### Set-Cookie
 
