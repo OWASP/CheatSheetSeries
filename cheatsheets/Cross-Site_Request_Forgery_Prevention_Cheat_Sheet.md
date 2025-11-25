@@ -163,7 +163,7 @@ Because some legacy browsers may not send `Sec-Fetch-*` headers, a fallback to [
 
 The Fetch Metadata request headers are:
 
-- Sec-Fetch-Site — the primary signal for CSRF protection. It indicates relationship between request initiator’s origin and it's target's origin: `same-origin`, `same-site`, `cross-site`, or `none`.
+- Sec-Fetch-Site — the primary signal for CSRF protection. It indicates the relationship between the request initiator’s origin and its target's origin: `same-origin`, `same-site`, `cross-site`, or `none`.
 - Sec-Fetch-Mode, Sec-Fetch-Dest, Sec-Fetch-User — additional headers that provide context about the request (such as the request mode, destination type, or whether it was triggered by a user navigation). More details are available in the [MDN documentation](https://developer.mozilla.org/en-US/docs/Glossary/Fetch_metadata_request_header).
 
 If any of headers above contain values not listed in the specification, in order to support forward-compatibility, servers should ignore those headers.
