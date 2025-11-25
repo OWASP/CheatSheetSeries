@@ -239,7 +239,7 @@ For the rare cases of outdated or embedded browsers that lack `Sec-Fetch-*` supp
 
 2. If `Sec-Fetch-*` headers are absent: choose a fallback based on risk and compatibility requirements:
     2.1. Fail-safe (recommended for sensitive endpoints): treat absence as unknown and block the request.
-    2.2. Fail-open (compatibility-first): fallback to other security measure ([standard origin verification](#using-standard-headers-to-verify-origin), CSRF tokens, and/or require additional validation).
+    2.2. Fail-open (compatibility-first): fallback to ([standard origin verification](#using-standard-headers-to-verify-origin), CSRF tokens, and/or require additional validation).
 
 3. Additional options
 
