@@ -208,14 +208,9 @@ For the rare cases of outdated or embedded browsers that lack `Sec-Fetch-*` supp
     const site = req.get('Sec-Fetch-Site');
     const path = req.path;
     
-    // Block if cross-site + sensitive endpoint
-    if (site === 'cross-site' && SENSITIVE_ENDPOINTS.has(path)) {
-      return false;
-    }
-    
-    // Block if cross-site + unsafe method
-    if (site === 'cross-site' && !SAFE_METHODS.has(req.method)) {
-      return false;
+    // Block if cross-site + unsafe method OR cross-site + sensitive endpoint
+    if (site === 'cross-site' && (! SAFE_METHODS.has(req.method) || SENSITIVE_ENDPOINTS.has(path))) {
+      return false; // forbid this request
     }
     ```
 
