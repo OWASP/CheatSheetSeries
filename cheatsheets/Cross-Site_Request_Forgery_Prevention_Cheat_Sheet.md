@@ -188,10 +188,10 @@ For the rare cases of outdated or embedded browsers that lack `Sec-Fetch-*` supp
    1.1. Treat cross-site as untrusted for state-changing actions. By default, reject non-safe methods (POST / PUT / PATCH / DELETE) when `Sec-Fetch-Site: cross-site`.
 
     ```JavaScript
-    const SAFE = new Set(['GET','HEAD','OPTIONS']);
+    const SAFE_METHODS = new Set(['GET','HEAD','OPTIONS']);
     const site = req.get('Sec-Fetch-Site'); // e.g. 'cross-site','same-site','same-origin','none'
     
-    if (site === 'cross-site' && !SAFE.has(req.method)) {
+    if (site === 'cross-site' && !SAFE_METHODS.has(req.method)) {
       return false; // forbid this request
     }
     ```
