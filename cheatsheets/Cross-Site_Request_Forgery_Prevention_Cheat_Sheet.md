@@ -228,7 +228,7 @@ For the rare cases of outdated or embedded browsers that lack `Sec-Fetch-*` supp
       return true;
     } else if (site === 'same-site') {
       // handle same-site separately so the subcondition is clearly scoped to same-site
-      if (!trustSameSite && !SAFE.has(req.method)) {
+      if (!trustSameSite && !SAFE_METHODS.has(req.method)) {
         return false; // treat same-site as untrusted for state-changing methods
       }
       return true;
