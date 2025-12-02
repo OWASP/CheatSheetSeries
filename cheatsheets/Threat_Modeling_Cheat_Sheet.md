@@ -2,7 +2,8 @@
 
 ## Introduction
 
-Threat modeling is an important concept for modern application developers to understand. The goal of this cheatsheet is to provide a concise, but actionable, reference for both those new to threat modeling and those seeking a refresher. The official project page is [https://owasp.org/www-project-threat-model/](https://owasp.org/www-project-threat-model/).
+Threat modeling is an important concept for modern application developers to understand. The goal of this cheatsheet is to provide a concise, but actionable, reference for both those new to threat modeling and those seeking a refresher.
+The OWASP [Threat Modeling project](https://owasp.org/www-project-threat-modeling/) provides further information on various aspects of threat modeling.
 
 ## Overview
 
@@ -69,7 +70,7 @@ Cloud-native systems introduce unique considerations for threat modeling due to 
 - **Dynamic environments:** container orchestration, serverless functions, and ephemeral infrastructure.
 - **Compliance and data residency:** ensuring that workloads meet jurisdictional and privacy requirements.
 
-Cloud threat modeling frameworks such as [Microsoft’s Cloud Security Threat Modeling](https://learn.microsoft.com/en-us/azure/security/develop/threat-modeling-tool-cloud), [OWASP Cloud Security Project](https://owasp.org/www-project-cloud-security/), and AWS’s [Well-Architected Framework – Security Pillar](https://docs.aws.amazon.com/wellarchitected/latest/security-pillar/welcome.html) can serve as references.
+Cloud threat modeling frameworks such as AWS’s [Well-Architected Framework – Security Pillar](https://docs.aws.amazon.com/wellarchitected/latest/security-pillar/welcome.html) can serve as references.
 
 ### Threat Identification
 
