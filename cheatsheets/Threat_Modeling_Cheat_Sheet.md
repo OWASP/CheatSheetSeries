@@ -34,7 +34,7 @@ Proper threat modeling requires participants to think creatively and critically 
 
 ### Improved Visibility of Target of Evaluation (TOE)
 
-Threat modeling requires a deep understanding of the system being evaluated. To properly threat model, one must understand data flows, trust boundaries, and other characteristics of the system. Thus, [Stiliyana Simeonova](https://securityintelligence.com/threat-modeling-in-the-enterprise-part-1-understanding-the-basics/) asserts that improved visibility into a system and its interactions is one advantage of threat modeling.
+Threat modeling requires a deep understanding of the system being evaluated. To properly threat model, one must understand data flows, trust boundaries, and other characteristics of the system. Thus improved visibility into a system and its interactions is one advantage of threat modeling.
 
 ## Addressing Each Question
 
@@ -80,10 +80,10 @@ STRIDE is a mature and popular threat modeling technique and mnemonic originally
 
 | Threat Category             | Violates          | Examples                                                                                                    |
 | --------------------------- | ----------------- | ----------------------------------------------------------------------------------------------------------- |
-| **S**poofing                | Authenticity      | An attacker steals the authentication token of a legitimate user and uses it to impersonate the user.       |
+| **S**poofing                | Authentication    | An attacker steals the authentication token of a legitimate user and uses it to impersonate the user.       |
 | **T**ampering               | Integrity         | An attacker abuses the application to perform unintended updates to a database.                             |
-| **R**epudiation             | Non-repudiability | An attacker manipulates logs to cover their actions.                                                        |
-| **I**nformation Disclosure  | Confidentiality   | An attacker extracts data from a database containing user account info.                                      |
+| **R**epudiation             | Accounting        | An attacker manipulates logs to cover their actions.                                                        |
+| **I**nformation Disclosure  | Confidentiality   | An attacker extracts data from a database containing user account info.                                     |
 | **D**enial of Service       | Availability      | An attacker locks a legitimate user out of their account by performing many failed authentication attempts. |
 | **E**levation of Privileges | Authorization     | An attacker tampers with a JWT to change their role.                                                        |
 
