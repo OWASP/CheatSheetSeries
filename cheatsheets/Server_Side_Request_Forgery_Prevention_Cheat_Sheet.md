@@ -319,8 +319,7 @@ To leverage this protection migrate to IMDSv2 and disable old IMDSv1. Check out 
 ## Semgrep Rules
 
 [Semgrep](https://semgrep.dev/) is a command-line tool for offline static analysis. Use pre-built or custom rules to enforce code and security standards in your codebase.
-Checkout the Semgrep rule for SSRF to identify/investigate for SSRF vulnerabilities in Java
-[https://semgrep.dev/salecharohit:owasp_java_ssrf](https://semgrep.dev/salecharohit:owasp_java_ssrf)
+Explore the [Semgrep rules](https://semgrep.dev/r?q=ssrf) for SSRF to effectively identify and investigate potential SSRF vulnerabilities.
 
 ## References
 
