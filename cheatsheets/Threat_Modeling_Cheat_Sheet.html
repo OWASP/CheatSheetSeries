@@ -3138,7 +3138,8 @@
 
 <h1 id="threat-modeling-cheat-sheet">Threat Modeling Cheat Sheet<a class="headerlink" href="#threat-modeling-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>Threat modeling is an important concept for modern application developers to understand. The goal of this cheatsheet is to provide a concise, but actionable, reference for both those new to threat modeling and those seeking a refresher. The official project page is <a href="https://owasp.org/www-project-threat-model/">https://owasp.org/www-project-threat-model/</a>.</p>
+<p>Threat modeling is an important concept for modern application developers to understand. The goal of this cheatsheet is to provide a concise, but actionable, reference for both those new to threat modeling and those seeking a refresher.
+The OWASP <a href="https://owasp.org/www-project-threat-modeling/">Threat Modeling project</a> provides further information on various aspects of threat modeling.</p>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
 <p>In the context of application security, threat modeling is a structured, repeatable process used to gain actionable insights into the security characteristics of a particular system. It involves modeling a system from a security perspective, identifying applicable threats based on this model, and determining responses to these threats. Threat modeling analyzes a system from an adversarial perspective, focusing on ways in which an attacker can exploit a system.</p>
 <p>Threat modeling is ideally performed early in the SDLC, such as during the design phase. Moreover, it is not something that is performed once and never again. A threat model is something that should be maintained, updated and refined alongside the system. Ideally, threat modeling should be integrated seamlessly into a team's normal SDLC process; it should be treated as standard and necessary step in the process, not an add-on.</p>
@@ -3157,7 +3158,7 @@
 <h3 id="increased-security-awareness">Increased Security Awareness<a class="headerlink" href="#increased-security-awareness" title="Permanent link">&para;</a></h3>
 <p>Proper threat modeling requires participants to think creatively and critically about the security and threat landscape of a specific application. It challenges individuals to "think like an attacker" and apply general security knowledge to a specific context. Threat modeling is also typically a team effort with members being encouraged to share ideas and provide feedback on others. Overall, threat modeling can prove to be a highly educational activity that benefits participants.</p>
 <h3 id="improved-visibility-of-target-of-evaluation-toe">Improved Visibility of Target of Evaluation (TOE)<a class="headerlink" href="#improved-visibility-of-target-of-evaluation-toe" title="Permanent link">&para;</a></h3>
-<p>Threat modeling requires a deep understanding of the system being evaluated. To properly threat model, one must understand data flows, trust boundaries, and other characteristics of the system. Thus, <a href="https://securityintelligence.com/threat-modeling-in-the-enterprise-part-1-understanding-the-basics/">Stiliyana Simeonova</a> asserts that improved visibility into a system and its interactions is one advantage of threat modeling.</p>
+<p>Threat modeling requires a deep understanding of the system being evaluated. To properly threat model, one must understand data flows, trust boundaries, and other characteristics of the system. Thus improved visibility into a system and its interactions is one advantage of threat modeling.</p>
 <h2 id="addressing-each-question">Addressing Each Question<a class="headerlink" href="#addressing-each-question" title="Permanent link">&para;</a></h2>
 <p>There is no universally accepted industry standard for the threat modeling process, no "right" answer for every use case. However, despite this diversity, most approaches do include the processes of system modeling, threat identification, and risk response in some form. Inspired by these commonalities and guided by the four key questions of threat modeling discussed above, this cheatsheet will break the threat modeling down into four basic steps: application decomposition, threat identification and ranking, mitigations, and review and validation. There are processes that are less aligned to this, including PASTA and OCTAVE, each of which has passionate advocates.</p>
 <h3 id="system-modeling">System Modeling<a class="headerlink" href="#system-modeling" title="Permanent link">&para;</a></h3>
@@ -3182,7 +3183,7 @@
 <li><strong>Dynamic environments:</strong> container orchestration, serverless functions, and ephemeral infrastructure.</li>
 <li><strong>Compliance and data residency:</strong> ensuring that workloads meet jurisdictional and privacy requirements.</li>
 </ul>
-<p>Cloud threat modeling frameworks such as <a href="https://learn.microsoft.com/en-us/azure/security/develop/threat-modeling-tool-cloud">Microsoft’s Cloud Security Threat Modeling</a>, <a href="https://owasp.org/www-project-cloud-security/">OWASP Cloud Security Project</a>, and AWS’s <a href="https://docs.aws.amazon.com/wellarchitected/latest/security-pillar/welcome.html">Well-Architected Framework – Security Pillar</a> can serve as references.</p>
+<p>Cloud threat modeling frameworks such as AWS’s <a href="https://docs.aws.amazon.com/wellarchitected/latest/security-pillar/welcome.html">Well-Architected Framework – Security Pillar</a> can serve as references.</p>
 <h3 id="threat-identification">Threat Identification<a class="headerlink" href="#threat-identification" title="Permanent link">&para;</a></h3>
 <p>After the system has been modeled, it is now time to address the question of "what can go wrong?". This question must be explored with the inputs from the first step in mind; that is, it should focus on identifying and ranking threats within the context of the specific system being evaluated. In attempting to answer this question, threat modelers have a wealth of data sources and techniques at their disposal. For illustration purposes, this cheatsheet will leverage STRIDE; however, in practice, other approaches may be used alongside or instead of STRIDE.</p>
 <p>STRIDE is a mature and popular threat modeling technique and mnemonic originally developed by Microsoft employees. To facilitate threat identification, STRIDE groups threats into one of six general prompts and engineers are encouraged to systematically consider how these general threats may materialize within the context of the specific system being evaluated. Each STRIDE threat may be considered a violation of a desirable security attribute; the categories and associated desirable attributes are are as follows:</p>
@@ -3197,7 +3198,7 @@
 <tbody>
 <tr>
 <td><strong>S</strong>poofing</td>
-<td>Authenticity</td>
+<td>Authentication</td>
 <td>An attacker steals the authentication token of a legitimate user and uses it to impersonate the user.</td>
 </tr>
 <tr>
@@ -3207,7 +3208,7 @@
 </tr>
 <tr>
 <td><strong>R</strong>epudiation</td>
-<td>Non-repudiability</td>
+<td>Accounting</td>
 <td>An attacker manipulates logs to cover their actions.</td>
 </tr>
 <tr>
