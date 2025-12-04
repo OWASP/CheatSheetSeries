@@ -13,8 +13,9 @@ In short, the following principles should be followed to defend against CSRF:
 **IMPORTANT: Remember that Cross-Site Scripting (XSS) can defeat all CSRF mitigation techniques!** While Cross-Site Scripting (XSS) vulnerabilities can bypass CSRF protections, CSRF tokens are still essential for web applications that rely on cookies for authentication. Consider the client and authentication method to determine the best approach for CSRF protection in your application.
 
 - **See the OWASP [XSS Prevention Cheat Sheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md) for detailed guidance on how to prevent XSS flaws.**
-- **First, check if your framework has [built-in CSRF protection](#use-built-in-or-existing-csrf-implementations-for-csrf-protection) and use it**
-- **If the framework does not have built-in CSRF protection, add [CSRF tokens](#token-based-mitigation) to all state changing requests (requests that cause actions on the site) and validate them on the backend**
+- **First, check if your framework has [built-in CSRF protection](#built-in-or-existing-csrf-implementations-for-csrf-protection) and use it**
+- **If the framework does not have built-in CSRF protection, add [CSRF tokens](#token-based-mitigation) to all state-changing requests (requests that cause actions on the site) and validate them on the backend.**
+- **If your software targets only modern browsers, you may rely on [Fetch Metadata headers](#fetch-metadata-headers) together with the fallback options described below to block cross-site state-changing requests.**
 - **Stateful software should use the [synchronizer token pattern](#synchronizer-token-pattern)**
 - **Stateless software should use [double submit cookies](#alternative-using-a-double-submit-cookie-pattern)**
 - **If an API-driven site can't use `<form>` tags, consider [using custom request headers](#employing-custom-request-headers-for-ajaxapi)**
@@ -25,13 +26,16 @@ In short, the following principles should be followed to defend against CSRF:
 - **Do not use GET requests for state changing operations.**
 - **If for any reason you do it, protect those resources against CSRF**
 
+### Built-In Or Existing CSRF Implementations for CSRF Protection
+
+Before building a custom token or Fetch-Metadata implementation, check whether your framework or platform already provides CSRF protection you can use. Built-in defenses are generally preferable because they’re maintained by the framework authors and reduce the risk of subtle implementation mistakes. For example:
+
+- .NET can use [built-in protection](https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-2.1) to add tokens to CSRF vulnerable resources. If you choose to use this protection, .NET makes you responsible for proper configuration (such as key management and token management).
+- Starting from [1.25](https://pkg.go.dev/net/http@go1.25rc2), Go developers can rely on the built-in [CrossOriginProtection](https://pkg.go.dev/net/http@go1.25rc2#CrossOriginProtection) type. It implements a Fetch-Metadata-based CSRF defense (including validation of Sec-Fetch-Site and related headers) directly in the standard library.
+
 ## Token-Based Mitigation
 
 The [synchronizer token pattern](#synchronizer-token-pattern) is one of the most popular and recommended methods to mitigate CSRF.
-
-### Use Built-In Or Existing CSRF Implementations for CSRF Protection
-
-Since synchronizer token defenses are built into many frameworks, find out if your framework has CSRF protection available by default before you build a custom token generating system. For example, .NET can use [built-in protection](https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-2.1) to add tokens to CSRF vulnerable resources. If you choose to use this protection, .NET makes you responsible for proper configuration (such as key management and token management).
 
 ### Synchronizer Token Pattern
 
@@ -150,6 +154,122 @@ The _Naive Double-Submit Cookie_ method is a scalable and easy-to-implement tech
 Since an attacker is unable to access the cookie value during a cross-site request, they cannot include a matching value in the hidden form value or as a request parameter/header.
 
 Though the Naive Double-Submit Cookie method is simple and scalable, it remains vulnerable to cookie injection attacks, especially when attackers control subdomains or network environments allowing them to plant or overwrite cookies. For instance, an attacker-controlled subdomain (e.g., via DNS takeover) could inject a matching cookie and thus forge a valid request token. [This resource](https://owasp.org/www-chapter-london/assets/slides/David_Johansson-Double_Defeat_of_Double-Submit_Cookie.pdf) details these vulnerabilities. Therefore, always prefer the _Signed Double-Submit Cookie_ pattern with session-bound HMAC tokens to mitigate these threats.
+
+## Fetch Metadata headers
+
+Fetch Metadata request headers provide extra information about the context from which an HTTP request was made. Servers can use these headers — most importantly `Sec-Fetch-Site` — as a lightweight and reliable method to block obvious cross-site requests. See the [Fetch Metadata specification](https://www.w3.org/TR/fetch-metadata/) for details.
+
+Because some legacy browsers do not send `Sec-Fetch-*` headers, a fallback to [standard origin verification](#using-standard-headers-to-verify-origin) headers **is a mandatory requirement** for any Fetch Metadata implementation. `Sec-Fetch-*` [is supported](https://caniuse.com/mdn-http_headers_sec-fetch-site) in all major browsers since March 2023.
+
+The Fetch Metadata request headers are:
+
+- Sec-Fetch-Site — the primary signal for CSRF protection. It indicates the relationship between the request initiator’s origin and its target's origin: `same-origin`, `same-site`, `cross-site`, or `none`.
+- Sec-Fetch-Mode, Sec-Fetch-Dest, Sec-Fetch-User — additional headers that provide context about the request (such as the request mode, destination type, or whether it was triggered by a user navigation). More details are available in the [MDN documentation](https://developer.mozilla.org/en-US/docs/Glossary/Fetch_metadata_request_header).
+
+If any of headers above contain values not listed in the specification, in order to support forward-compatibility, servers should ignore those headers.
+
+### Ease of use
+
+Unlike [synchronizer tokens](#synchronizer-token-pattern) or [double-submit patterns](#alternative-using-a-double-submit-cookie-pattern) — which require additional client/server coordination and are difficult to implement correctly — Fetch Metadata checks are much more straightforward. They typically require only a small amount of server-side logic (inspect Sec-Fetch-Site, optionally refine with Sec-Fetch-Mode/Sec-Fetch-Dest) and no client changes. That simplicity reduces complexity, making the approach attractive for many applications.
+
+### Browser compatibility
+
+Fetch Metadata request headers are supported in all modern browsers on both desktop and mobile (Chrome, Edge, Firefox, Safari 16.4+, and even in webviews on both iOS and Android), with [over 98% global coverage](https://caniuse.com/mdn-http_headers_sec-fetch-site). For compatibility detail, see the [browser support table](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Sec-Fetch-Site#browser_compatibility).
+
+For the rare cases of outdated or embedded browsers that lack `Sec-Fetch-*` support, a fallback to [standard origin verification](#using-standard-headers-to-verify-origin) should provide the required coverage. If this is acceptable for your project, consider prompting users to update their browsers, as they are running on outdated and potentially insecure versions.
+
+### How to treat Fetch Metadata headers on the server-side
+
+`Sec-Fetch-Site` is the most useful Fetch Metadata header for blocking CSRF-like cross-origin requests and should be the primary signal in a Fetch-Metadata-based policy. Use other Fetch Metadata headers (`Sec-Fetch-Mode`, `Sec-Fetch-Dest`, `Sec-Fetch-User`) to further refine or tailor policies to your application's needs (for example, allowing top-level navigation requests or permitting specific Dest values for resource endpoints).
+**Policy (high level)**
+
+1. If `Sec-Fetch-Site` is present
+
+   1.1. Treat cross-site as untrusted for state-changing actions. By default, reject non-safe methods (POST / PUT / PATCH / DELETE) when `Sec-Fetch-Site: cross-site`.
+
+    ```JavaScript
+    const SAFE_METHODS = new Set(['GET','HEAD','OPTIONS']);
+    const site = req.get('Sec-Fetch-Site'); // e.g. 'cross-site','same-site','same-origin','none'
+    
+    if (site === 'cross-site' && !SAFE_METHODS.has(req.method)) {
+      return false; // forbid this request
+    }
+    ```
+
+    1.2 If your application relies on [safe HTTP methods](https://developer.mozilla.org/en-US/docs/Glossary/Safe/HTTP) (GET, HEAD, or OPTIONS) for state‑changing actions, you should explicitly reflect that in your policy – e.g., by requiring a Fetch‑Metadata header review for requests to those endpoints. This can be enforced with a policy rule like:
+
+    ```JavaScript
+    const SAFE_METHODS = new Set(['GET','HEAD','OPTIONS']);
+    const SENSITIVE_ENDPOINTS = new Set([
+      '/user/profile',
+      '/account/details',
+    ]);
+    
+    const site = req.get('Sec-Fetch-Site');
+    const path = req.path;
+    
+    // Block if cross-site + unsafe method OR cross-site + sensitive endpoint
+    if (site === 'cross-site' && (! SAFE_METHODS.has(req.method) || SENSITIVE_ENDPOINTS.has(path))) {
+      return false; // forbid this request
+    }
+    ```
+
+    1.3. Allow `same-origin`. Treat `same-site` as allowed only if your threat model trusts sibling subdomains; otherwise handle `same-site` conservatively (for example, require additional validation).
+
+    ```JavaScript
+    const trustSameSite = false; // set true only if you trust sibling subdomains
+    
+    if (site === 'same-origin') {
+      return true;
+    } else if (site === 'same-site') {
+      // handle same-site separately so the subcondition is clearly scoped to same-site
+      if (!trustSameSite && !SAFE_METHODS.has(req.method)) {
+        return false; // treat same-site as untrusted for state-changing methods
+      }
+      return true;
+    }
+    ```
+
+    1.4. Allow none for user-driven top-level navigations (bookmarks, typed URLs, explicit form submits) where appropriate.
+
+2. If `Sec-Fetch-*` headers are absent: choose a fallback based on risk and compatibility requirements:
+    2.1. Fail-safe (recommended for sensitive endpoints): treat absence as unknown and block the request.
+    2.2. Fail-open (compatibility-first): fallback to ([standard origin verification](#using-standard-headers-to-verify-origin), CSRF tokens, and/or require additional validation).
+
+3. Additional options
+
+   3.1 To ensure that your site can still be linked from other sites, you have to allow simple (HTTP GET) top-level navigation.
+
+    ```JavaScript
+    if (req.get('Sec-Fetch-Mode') === 'navigate' &&
+        req.method === 'GET' &&
+        req.get('Sec-Fetch-Dest') !== 'object' &&
+        req.get('Sec-Fetch-Dest') !== 'embed') {
+      return true; // Allow this request
+    }
+    ```
+
+     3.2 Whitelist explicit cross-origin flows. If certain endpoints intentionally accept cross-origin requests (CORS JSON APIs, third-party integrations, webhooks), explicitly exempt those endpoints from the global Sec-Fetch deny policy and secure them with proper CORS configuration, authentication, and logging.
+
+### Requirements
+
+- Your application must be served over trustworthy URLs. Fetch Metadata request headers are only sent to [potentially trustworthy URLs](https://www.w3.org/TR/secure-contexts/#is-url-trustworthy). In practice, this includes `https`, `wss`, `file`, and `localhost` (including `127.0.0.0/8` and `::1/128`). See the [W3C Secure Contexts spec](https://www.w3.org/TR/secure-contexts/#is-origin-trustworthy) for full details.
+- HTTPS must be enforced across the entire application. This ensures consistent inclusion of Fetch Metadata headers. Enabling [HTTP Strict Transport Security (HSTS)](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Strict-Transport-Security) helps achieve this by automatically upgrading all HTTP requests to HTTPS.
+- [Safe HTTP methods](https://developer.mozilla.org/en-US/docs/Glossary/Safe/HTTP) should not be used for state-changing requests.
+
+### Concerns
+
+- Prerender/prefetch and other [speculative navigation](https://developer.mozilla.org/en-US/docs/Web/Performance/Guides/Speculative_loading) may send `Sec-Fetch-*` values that don’t match the final navigation, and browser-initiated flows (e.g., [PaymentRequest](https://developer.mozilla.org/en-US/docs/Web/API/Payment_Request_API)) could generate requests without predictable fetch-metadata headers. These behaviors are still being refined, so header propagation isn’t fully stable across all navigation types.
+- Intermediaries (proxies, gateways, load balancers) may remove or modify `Origin` and `Sec-*` headers — whether due to privacy filters, network optimizations, or simple misconfiguration — which can break fetch-metadata-based protections. This kind of header stripping is problematic, but common.
+
+### Rollout & testing recommendations
+
+- Include an appropriate `Vary` header, in order to ensure that caches handle the response appropriately. For example, `Vary: Sec-Fetch-Site, Origin`. See more [Fetch Metadata specification](https://w3c.github.io/webappsec-fetch-metadata/#vary).
+    - Note that the `Vary` header does not impact CSRF defenses in any way. It is a response header, so it is applied after the server has already made its allow/deny decision based on CSRF protections. Its purpose is operational rather than defensive.
+    - If the server responds differently based on HTTP headers (e.g., `Sec-Fetch-Site`, `Origin`), caches must vary on those headers. Without this, CDNs or proxies may reuse a response generated for a different context, causing broken behavior or contributing to cache-poisoning scenarios. Adding the appropriate `Vary` header ensures caches keep these responses separate.
+- Start in “log only” mode. Record requests that would be blocked and review for false positives before enforcing. This is the safest way to discover legitimate flows that need whitelisting.
+- Monitor UA coverage. Track which user agents include `Sec-Fetch-*` and which don’t; ensure your fallback logic covers missing-header cases. Use metrics to decide when to enforce stricter policies.
+- Document exceptions. Keep an explicit list of endpoints whitelisted for cross-origin access.
 
 ## Disallowing simple requests
 
@@ -367,89 +487,6 @@ In all other cases, using the `__Host-` prefix in addition to the `SameSite` att
 Cookie prefixes [are supported by all major browsers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Browser_compatibility).
 
 See the [Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Directives) and [IETF Draft](https://tools.ietf.org/html/draft-west-cookie-prefixes-05) for further information about cookie prefixes.
-
-### Use Fetch Metadata headers to verify nature of the request
-
-Fetch Metadata request headers provide extra context about how an HTTP request was made, and how the resource will be used, enabling servers to reject suspicious cross-site requests. Servers can use these headers — most importantly `Sec-Fetch-Site` — as a lightweight method to block obvious cross-site requests. See the [Fetch Metadata specification](https://www.w3.org/TR/fetch-metadata/) for details.
-
-It is important to note that Fetch Metadata headers should be implemented as an additional layer defense in depth concept. This attribute should not replace a CSRF tokens (or equivalent framework protections).
-
-The Fetch Metadata request headers are:
-
-- Sec-Fetch-Site — indicates relationship between request initiator’s origin and it's target's origin: `same-origin`, `same-site`, `cross-site`, or `none`.
-- Sec-Fetch-Mode — indicates the request's [mode](https://fetch.spec.whatwg.org/#concept-request-mode)(e.g., `navigate`, `no-cors`, `cors`, `same-origin`, and `websocket`), which allows to distinguish between requests originating from a user navigating between HTML pages, and requests to load images and other resources.
-- Sec-Fetch-Dest — indicates the [destination](https://fetch.spec.whatwg.org/#concept-request-destination) for the requested resource (e.g., `document`, `image`, `script`, etc.).
-- Sec-Fetch-User — present only for navigation requests initiated by user. When sent value is `?1`, meaning `true`.
-
-If any of headers above contain values not listed in the specification, in order to support forward-compatibility, servers should ignore those headers.
-
-Browser compatability: Fetch Metadata request headers are supported in most modern browsers on both desktop and mobile (Chrome, Edge, Firefox, Safari 16.4+, and even in webviews on both iOS and Android). For compatibility detail, see the [browser support table](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Sec-Fetch-Site#browser_compatibility).
-
-#### How to treat Fetch Metadata headers on the server-side
-
-Sec-Fetch-Site is the most useful Fetch Metadata header for blocking CSRF-like cross-origin requests and should be the primary signal in a Fetch-Metadata-based policy. Use other Fetch Metadata headers (Sec-Fetch-Mode, Sec-Fetch-Dest, Sec-Fetch-User) to further refine or tailor policies to your application (for example, allowing navigate mode top-level requests or permitting specific Dest values for resource endpoints).
-**Policy (high level)**
-
-1. If Sec-Fetch-Site is present:
-    1.1. Treat cross-site as untrusted for state-changing actions. By default, reject non-safe methods (POST / PUT / PATCH / DELETE) when `Sec-Fetch-Site: cross-site`.
-
-    ```JavaScript
-    const SAFE = new Set(['GET','HEAD','OPTIONS']);
-    const site = req.get('Sec-Fetch-Site'); // e.g. 'cross-site','same-site','same-origin','none'
-    
-    if (site === 'cross-site' && !SAFE.has(req.method)) {
-      return false; // forbid this request
-    }
-    ```
-
-    1.2. Allow `same-origin`. Treat `same-site` as allowed only if your threat model trusts sibling subdomains; otherwise handle `same-site` conservatively (for example, require additional validation).
-
-    ```JavaScript
-    const trustSameSite = false; // set true only if you trust sibling subdomains
-    
-    if (site === 'same-origin') {
-      return true;
-    } else if (site === 'same-site') {
-      // handle same-site separately so the subcondition is clearly scoped to same-site
-      if (!trustSameSite && !SAFE.has(req.method)) {
-        return false; // treat same-site as untrusted for state-changing methods
-      }
-      return true;
-    }
-    ```
-
-    1.3. Allow none for user-driven top-level navigations (bookmarks, typed URLs, explicit form submits) where appropriate.
-
-2. If Sec-Fetch-* headers are absent: choose a fallback based on risk and compatibility requirements:
-    2.1. Fail-safe (recommended for sensitive endpoints): treat absence as unknown and block the request.
-    2.2. Fail-open (compatibility-first): fallback to other security measure (CSRF tokens, validate Origin/Referer, and/or require additional validation).
-
-3. Additionall options
-    3.1 To ensure that your site can still be linked from other sites, you have to allow simple (HTTP GET) top-level navigation.
-
-    ```JavaScript
-    if (req.get('Sec-Fetch-Mode') === 'navigate' &&
-        req.method === 'GET' &&
-        req.get('Sec-Fetch-Dest') !== 'object' &&
-        req.get('Sec-Fetch-Dest') !== 'embed') {
-      return true; // Allow this request
-    }
-    ```
-
-    3.2 Whitelist explicit cross-origin flows. If certain endpoints intentionally accept cross-origin requests (CORS JSON APIs, third-party integrations, webhooks), explicitly exempt those endpoints from the global Sec-Fetch deny policy and secure them with proper CORS configuration, authentication, and logging.
-
-#### Limitations and gotchas
-
-- Not universal. Some older browsers, webviews, bots, and non-browser HTTP clients do not send Sec-Fetch-*. Do not assume presence on every request — implement fallbacks.
-- May break legitimate cross-origin integrations. A global Sec-Fetch policy can unintentionally block legitimate CORS or third-party flows; plan explicit whitelisting.
-- One limitation is that Fetch Metadata request headers are only sent to [potentially trustworthy URLs](https://www.w3.org/TR/secure-contexts/#is-url-trustworthy). This means the headers will generally be present for requests to origins whose scheme is `https`, `wss`, or `file`, and for `localhost` (hosts in the `127.0.0.0/8` or `::1/128` ranges). For the full rules and additional edge cases (the algorithm the user agent uses to decide trustworthiness), see the [W3C Secure Contexts spec](https://www.w3.org/TR/secure-contexts/#is-origin-trustworthy).
-
-#### Rollout & testing recommendations
-
-- Include an appropriate Vary header [RFC9110], in order to ensure that caches handle the response appropriately. For example, `Vary: Accept-Encoding, Sec-Fetch-Site`. See more [Fetch Metadata specification](https://w3c.github.io/webappsec-fetch-metadata/#vary).
-- Start in “log only” mode. Record requests that would be blocked and review for false positives before enforcing. This is the safest way to discover legitimate flows that need whitelisting.
-- Monitor UA coverage. Track which user agents include Sec-Fetch-* and which don’t; ensure your fallback logic covers missing-header cases. Use metrics to decide when to enforce stricter policies.
-- Document exceptions. Keep an explicit list of endpoints whitelisted for cross-origin access.
 
 ### User Interaction-Based CSRF Defense
 
