@@ -122,7 +122,7 @@ LLMs respond non-deterministically to variations. Simple modifications like rand
 
 - Hidden text in images using steganography or invisible characters
 - Malicious instructions in document metadata or hidden layers
-- See [Visual Prompt Injection research](https://arxiv.org/abs/2307.16153) for examples
+- See [Visual Prompt Injection research](https://arxiv.org/abs/2506.02456) for examples
 
 ### RAG Poisoning (Retrieval Attacks)
 
