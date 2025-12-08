@@ -285,6 +285,28 @@ Please note that it's not recommended to try to get native (not-overwritten) pro
 
 Also, please don't assume your extension's script can use native prototypes even if it's executed at `document_start` timing. At least, in the case of Chromium browser extension, it's known that the context of a newly created iframe can be tweaked by a web page's script BEFORE the extension's script starts in the iframe event at `document_start` ([official bug issue](https://issues.chromium.org/issues/40202434)).
 
+## 13. Insecure Message Passing
+
+### Vulnerability: Insecure Message Passing
+
+Browser extensions often rely on message passing (`chrome.runtime.sendMessage/onMessage`) between low-privilege contexts (Content Scripts, Popup) and the high-privilege Service Worker (Background). If the Service Worker fails to validate the sender's origin or URL, a compromised webpage can send malicious messages, tricking the extension into performing privileged actions (e.g., retrieving sensitive data or API keys).
+
+### Example: Insecure Message Passing
+
+```javascript
+// In Service Worker (Background)
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.action === 'fetchSecret') { // No validation of sender
+    // A malicious content script/webpage could trigger this.
+    fetch(SECRET_API_URL);
+  }
+});
+```
+
+### Mitigation: Insecure Message Passing
+
+Always validate the sender's origin or URL within the Service Worker's message listener. Use `sender.url` or `sender.origin` to ensure the message originated from a trusted source (e.g., your own extension's page, or a specific, expected content script running on a limited set of domains). Additionally, validate and strictly sanitize the request object (request).
+
 ## Conclusion
 
 By following these security best practices, developers can build safer browser extensions and protect users from privacy and security threats. Always prioritize least privilege, encryption, and secure coding principles when developing extensions.
