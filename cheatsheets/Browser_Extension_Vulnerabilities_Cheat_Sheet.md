@@ -305,7 +305,26 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 ### Mitigation: Insecure Message Passing
 
-Always validate the sender's origin or URL within the Service Worker's message listener. Use `sender.url` or `sender.origin` to ensure the message originated from a trusted source (e.g., your own extension's page, or a specific, expected content script running on a limited set of domains). Additionally, validate and strictly sanitize the request object (request).
+Treat all incoming messages as untrusted input.
+In Service Workers, always:
+
+- Validate `sender.id` to ensure the message originates from your own extension.
+- Validate `sender.url` or `sender.origin` to restrict which extension pages or content scripts may communicate.
+- Avoid allowing webpages to indirectly influence privileged logic through content scripts.
+- Perform strict validation and allow-listing of `request.action` and all request parameters.
+
+Chrome explicitly states that content scripts are less trustworthy than extension pages and must be treated accordingly. Secure example:
+
+```javascript
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (sender.id !== chrome.runtime.id) return;
+  if (!sender.url?.startsWith('chrome-extension://')) return;
+
+  if (request.action === 'fetchSecret') {
+    fetch(SECRET_API_URL);
+  }
+});
+```
 
 ## Conclusion
 
