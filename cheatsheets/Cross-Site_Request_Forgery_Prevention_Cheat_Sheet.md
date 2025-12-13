@@ -103,7 +103,7 @@ CSRF tokens should be:
 
 CSRF tokens prevent CSRF because without a CSRF token, an attacker cannot create valid requests to the backend server.
 
-#### Transmissing CSRF Tokens in Synchronized Patterns
+#### Transmitting CSRF Tokens in Synchronized Patterns
 
 The CSRF token can be transmitted to the client as part of a response payload, such as a HTML or JSON response, then it can be transmitted back to the server as a hidden field on a form submission or via an AJAX request as a custom header value or part of a JSON payload. A CSRF token should not be transmitted in a cookie for synchronized patterns. A CSRF token must not be leaked in the server logs or in the URL. GET requests can potentially leak CSRF tokens at several locations, such as the browser history, log files, network utilities that log the first line of a HTTP request, and Referer headers if the protected site links to an external site.
 
@@ -732,7 +732,7 @@ If any of headers above contain values not listed in the specification, in order
 
 Browser compatability: Fetch Metadata request headers are supported in most modern browsers on both desktop and mobile (Chrome, Edge, Firefox, Safari 16.4+, and even in webviews on both iOS and Android). For compatibility detail, see the [browser support table](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Sec-Fetch-Site#browser_compatibility).
 
-#### How to treat Fetch Metadata headers on the server-side
+### How to treat Fetch Metadata headers on the server-side
 
 Sec-Fetch-Site is the most useful Fetch Metadata header for blocking CSRF-like cross-origin requests and should be the primary signal in a Fetch-Metadata-based policy. Use other Fetch Metadata headers (Sec-Fetch-Mode, Sec-Fetch-Dest, Sec-Fetch-User) to further refine or tailor policies to your application (for example, allowing navigate mode top-level requests or permitting specific Dest values for resource endpoints).
 **Policy (high level)**
