@@ -341,6 +341,8 @@ UAF takes advantage of existing security technologies present on devices for aut
 
 U2F augments password-based authentication using a hardware token (typically USB) that stores cryptographic authentication keys and uses them for signing. The user can use the same token as a second factor for multiple applications. U2F works with web applications. It provides **protection against phishing** by using the URL of the website to look up the stored authentication key.
 
+**FIDO2**: FIDO2 and WebAuthn, encompassing previous standards (UAF/U2F), form the foundation of modern **Passkeys** technology. Passkeys enable users to securely log in using local user verification (such as biometrics or device PINs) and often supporting cloud synchronization across devices. This technology is widely supported by major platforms. (Windows Hello/Mac Touch ID)
+
 ## Password Managers
 
 Password managers are programs, browser plugins, or web services that automate the management of a large quantity of different credentials. Most password managers have functionality to allow users to easily use them on websites, either:

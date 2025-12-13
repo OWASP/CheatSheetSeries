@@ -40,7 +40,7 @@ Where an application has multiple user roles, it may be appropriate to implement
 
 While not a specific technique, it is important to implement defenses that consider the impact of individual defenses being defeated or otherwise failing.  As an example, client-side defenses, such as device fingerprinting or JavaScript challenges, may be spoofed or bypassed and other layers of defense should be implemented to account for this.
 
-Additionally, each defense should generate volume metrics for use as a detective mechanism. Ideally the metrics will include both detected and mitigated attack volume and allow for filtering on fields such as IP address.  Monitoring and reporting on these metrics may identify defense failures or the presence of unidentified attacks, as well as the impact of new or improved defenses.
+Additionally, each defense should generate volume metrics for use as a detective mechanism. Ideally the metrics will include both detected and mitigated attack volume and allow for filtering on fields such as IP address. Monitoring and reporting on these metrics may identify defense failures or the presence of unidentified attacks, as well as the impact of new or improved defenses.
 
 Finally, when administration of different defenses is performed by multiple teams, care should be taken to ensure there is communication and coordination when separate teams are performing maintenance, deployment or otherwise modifying individual defenses.
 
@@ -56,20 +56,9 @@ It must be emphasised that this **does not** constitute multi-factor authenticat
 
 ### CAPTCHA
 
-Requiring a user to solve a "Completely Automated Public Turing test to tell Computers and Humans Apart" (CAPTCHA) or similar puzzle for each login attempt can help to identify automated/bot attacks and help prevent automated login attempts, and may slow down credential stuffing or password spraying attacks.
+Requiring a user to solve a "Completely Automated Public Turing test to tell Computers and Humans Apart" (CAPTCHA) or similar puzzle for each login attempt can help to identify automated/bot attacks and help prevent automated login attempts, and may slow down credential stuffing or password spraying attacks.  However, CAPTCHAs are not perfect, and in many cases tools or services exist that can be used to break them with a reasonably high success rate.  Monitoring CAPTCHA solve rates may help identify impact to good users, as well as automated CAPTCHA breaking technology, possibly indicated by abnormally high solve rates.
 
-Traditional CAPTCHAs use image recognition or text-based challenges, but have become ineffective against sophisticated bots, create usability and accessibility barriers, rely on behavioral profiling, and may not meet modern privacy standards. In many cases, tools or services exist that can be used to break them with a reasonably high success rate.
-
-Ideally, prefer modern CAPTCHA services that:
-
-- use cryptographic or [proof-of-work](https://en.wikipedia.org/wiki/Proof_of_work) challenges as they make automation economically impractical while requiring little to no input from legitimate users;
-- scale the difficulty of the challenge when the request is considered suspicious or high risk;
-- comply with accessibility standards (e.g., WCAG, ADA, EAA) and avoid relying on visual or auditory cues that can exclude users with disabilities;
-- comply with applicable privacy regulations (e.g., CCPA, GDPR) and do not depend on tracking, fingerprinting, or behavioral profiling;
-
-Modern CAPTCHAs include open source self-hosted options like [mCaptcha](https://mcaptcha.org/), as well as hosted services with an open source client like [Prosopo Procaptcha](https://prosopo.io/) or [Friendly Captcha](https://friendlycaptcha.com/).
-
-CAPTCHAs are one layer of protection, so your credential stuffing prevention strategy should also include MFA, rate limiting, and breached-credential checks.
+To improve usability, it may be desirable to only require the user solve a CAPTCHA when the login request is considered suspicious or high risk, using the same criteria discussed in the MFA section.
 
 ### IP Mitigation and Intelligence
 
@@ -129,9 +118,9 @@ Please note that blocking visitors who have JavaScript disabled will reduce the 
 
 ### Degradation
 
-A more aggressive defense against credential stuffing is to implement measures that increase the amount of time the attack takes to complete.  This may include incrementally increasing the complexity of the JavaScript that must be evaluated, introducing long wait periods before responding to requests, returning overly large HTML assets or returning randomized error messages.
+A more aggressive defense against credential stuffing is to implement measures that increase the amount of time the attack takes to complete. This may include incrementally increasing the complexity of the JavaScript that must be evaluated, requiring users to solve a cryptographic or Proof-of-Work computational puzzle, introducing long wait periods before responding to requests, returning overly large HTML assets or returning randomized error messages.
 
-Due to their potential negative impact on legitimate users, great care must be taken with this type of defense, though it may be needed in order to mitigate more sophisticated credential stuffing attacks.
+These techniques provide some level of security without resorting to user tracking or profiling. They typically do not require a human in the loop, but rather constrain the minimum latency and/or the maximum request rate of a particular client implementation and the attacker's budget and sophistication, and requires a context-dependent risk assessment to gauge their efficacy, resistance to countermeasures and user experience impact.
 
 ### Identifying Leaked Passwords
 
