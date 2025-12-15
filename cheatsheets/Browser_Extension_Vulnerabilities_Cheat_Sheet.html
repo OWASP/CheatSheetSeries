@@ -1154,6 +1154,48 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#13-insecure-message-passing" class="md-nav__link">
+    <span class="md-ellipsis">
+      13. Insecure Message Passing
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. Insecure Message Passing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vulnerability-insecure-message-passing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Vulnerability: Insecure Message Passing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-insecure-message-passing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example: Insecure Message Passing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mitigation-insecure-message-passing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mitigation: Insecure Message Passing
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#conclusion" class="md-nav__link">
     <span class="md-ellipsis">
       Conclusion
@@ -3746,6 +3788,48 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#13-insecure-message-passing" class="md-nav__link">
+    <span class="md-ellipsis">
+      13. Insecure Message Passing
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. Insecure Message Passing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vulnerability-insecure-message-passing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Vulnerability: Insecure Message Passing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-insecure-message-passing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example: Insecure Message Passing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mitigation-insecure-message-passing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mitigation: Insecure Message Passing
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#conclusion" class="md-nav__link">
     <span class="md-ellipsis">
       Conclusion
@@ -3953,6 +4037,37 @@ Never hardcode API keys or credentials within the extension code.</p>
 <p>Please don't use the web page's context when sensitive user information is handled just for a moment. If communication with scripts in the web page's context is necessary, use only non-sensitive, essential information. For example, pass just a result of validation instead of the whole secret token. It's the case even if you use <code>window.postMessage</code>, because it can be overwritten also and malicious scripts can add listeners for <code>message</code> event.</p>
 <p>Please note that it's not recommended to try to get native (not-overwritten) prototypes by some tricks. It's sure that there are some hacks to get native prototypes in a context where other scripts are also executed, but bypasses of these measures, i.e. how to force other scripts to use overwritten prototypes, are often invented.</p>
 <p>Also, please don't assume your extension's script can use native prototypes even if it's executed at <code>document_start</code> timing. At least, in the case of Chromium browser extension, it's known that the context of a newly created iframe can be tweaked by a web page's script BEFORE the extension's script starts in the iframe event at <code>document_start</code> (<a href="https://issues.chromium.org/issues/40202434">official bug issue</a>).</p>
+<h2 id="13-insecure-message-passing">13. Insecure Message Passing<a class="headerlink" href="#13-insecure-message-passing" title="Permanent link">&para;</a></h2>
+<h3 id="vulnerability-insecure-message-passing">Vulnerability: Insecure Message Passing<a class="headerlink" href="#vulnerability-insecure-message-passing" title="Permanent link">&para;</a></h3>
+<p>Browser extensions often rely on message passing (<code>chrome.runtime.sendMessage/onMessage</code>) between low-privilege contexts (Content Scripts, Popup) and the high-privilege Service Worker (Background). If the Service Worker fails to validate the sender's origin or URL, a compromised webpage can send malicious messages, tricking the extension into performing privileged actions (e.g., retrieving sensitive data or API keys).</p>
+<h3 id="example-insecure-message-passing">Example: Insecure Message Passing<a class="headerlink" href="#example-insecure-message-passing" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// In Service Worker (Background)</span>
+<span class="nx">chrome</span><span class="p">.</span><span class="nx">runtime</span><span class="p">.</span><span class="nx">onMessage</span><span class="p">.</span><span class="nx">addListener</span><span class="p">((</span><span class="nx">request</span><span class="p">,</span><span class="w"> </span><span class="nx">sender</span><span class="p">,</span><span class="w"> </span><span class="nx">sendResponse</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">action</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;fetchSecret&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// No validation of sender</span>
+<span class="w">    </span><span class="c1">// A malicious content script/webpage could trigger this.</span>
+<span class="w">    </span><span class="nx">fetch</span><span class="p">(</span><span class="nx">SECRET_API_URL</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
+<h3 id="mitigation-insecure-message-passing">Mitigation: Insecure Message Passing<a class="headerlink" href="#mitigation-insecure-message-passing" title="Permanent link">&para;</a></h3>
+<p>Treat all incoming messages as untrusted input.
+In Service Workers, always:</p>
+<ul>
+<li>Validate <code>sender.id</code> to ensure the message originates from your own extension.</li>
+<li>Validate <code>sender.url</code> or <code>sender.origin</code> to restrict which extension pages or content scripts may communicate.</li>
+<li>Avoid allowing webpages to indirectly influence privileged logic through content scripts.</li>
+<li>Perform strict validation and allow-listing of <code>request.action</code> and all request parameters.</li>
+</ul>
+<p>Chrome explicitly states that content scripts are less trustworthy than extension pages and must be treated accordingly. Secure example:</p>
+<div class="highlight"><pre><span></span><code><span class="nx">chrome</span><span class="p">.</span><span class="nx">runtime</span><span class="p">.</span><span class="nx">onMessage</span><span class="p">.</span><span class="nx">addListener</span><span class="p">((</span><span class="nx">request</span><span class="p">,</span><span class="w"> </span><span class="nx">sender</span><span class="p">,</span><span class="w"> </span><span class="nx">sendResponse</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">sender</span><span class="p">.</span><span class="nx">id</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="nx">chrome</span><span class="p">.</span><span class="nx">runtime</span><span class="p">.</span><span class="nx">id</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">sender</span><span class="p">.</span><span class="nx">url</span><span class="o">?</span><span class="p">.</span><span class="nx">startsWith</span><span class="p">(</span><span class="s1">&#39;chrome-extension://&#39;</span><span class="p">))</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">action</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;fetchSecret&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">fetch</span><span class="p">(</span><span class="nx">SECRET_API_URL</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div>
 <h2 id="conclusion">Conclusion<a class="headerlink" href="#conclusion" title="Permanent link">&para;</a></h2>
 <p>By following these security best practices, developers can build safer browser extensions and protect users from privacy and security threats. Always prioritize least privilege, encryption, and secure coding principles when developing extensions.</p>
 <p>🔹 References:
