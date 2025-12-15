@@ -23,6 +23,42 @@ factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true)
 
 Disabling [DTD](https://www.w3schools.com/xml/xml_dtd.asp)s also makes the parser secure against denial of services (DOS) attacks such as [Billion Laughs](https://en.wikipedia.org/wiki/Billion_laughs_attack). **If it is not possible to disable DTDs completely, then external entities and external document type declarations must be disabled in the way that's specific to each parser.**
 
+### XML Parser Security Features Matrix
+
+| Security Feature                                | Default (Parser-Dependent)  | Purpose                                               | **What Happens If Missing?**                              |
+| ----------------------------------------------- | --------------------------- | ----------------------------------------------------- | --------------------------------------------------------- |
+| **External Entities Disabled**                  | Usually **disabled** (safe) | Blocks external resource loading                      | Full XXE possible → SSRF, file disclosure, internal scans |
+| **Disallow DOCTYPE Declaration**                | Varies                      | Prevents ENTITY definitions                           | Classic XXE payloads become fully functional              |
+| **Disable External DTD Loading**                | Usually **disabled**        | Stops loading remote DTDs                             | Enables Blind XXE, SSRF behind firewalls                  |
+| **Secure Processing Mode**                      | Varies                      | Restricts recursion, network access, entity expansion | Billion Laughs DoS and resource depletion become possible |
+| **Disable Parameter Entities**                  | Varies                      | Prevents `%entity;` injections                        | Advanced XXE payloads bypass simple protections           |
+| **XInclude Disabled**                           | Usually **disabled**        | Prevents including external files                     | File read via `file://` and SSRF becomes possible         |
+| **Limit Entity Expansion Count**                | Usually **enabled**         | Prevents recursive entity abuse                       | Memory exhaustion → parser or server DoS                  |
+| **Schema Validation Without External Fetching** | Usually safe                | Ensures validation does not fetch external URLs       | Silent external HTTP calls triggered during validation    |
+
+### Quick Impact Matrix (What Happens If Missing?)
+
+| Missing Control                         | Resulting Vulnerability                      |
+| --------------------------------------- | -------------------------------------------- |
+| DOCTYPE not disabled                    | Standard XXE fully exploitable               |
+| External entities enabled               | SSRF, file exfiltration, port scanning       |
+| External DTD loading allowed            | Blind XXE → hidden SSRF attacks              |
+| No expansion limits                     | Billion Laughs DoS                           |
+| XInclude enabled                        | Local file disclosure + SSRF                 |
+| Secure processing disabled              | Critical protections bypassed                |
+| Schema validation fetches external URLs | Application makes unwanted outbound requests |
+
+### Minimal XML Hardening Rules
+
+- Disable DOCTYPE
+- Disable external entities
+- Disable external DTD loading
+- Enable secure processing mode
+- Disable XInclude
+- Limit entity expansion
+- Do not use legacy XML parsers
+- Never parse untrusted XML with default settings
+
 **Detailed XXE Prevention guidance is provided below for multiple languages (C++, Cold Fusion, Java, .NET, iOS, PHP, Python, Semgrep Rules) and their commonly used XML parsers.**
 
 ## C/C++
