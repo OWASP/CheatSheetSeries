@@ -1,5 +1,9 @@
 # Contributing Guide
 
+When contributing:
+
+- Follow our restrictions on the [use of (generative) AI](#use-of-ai) for all issues, pull requests, comments and discussions.
+- Follow our [Code of Conduct](code_of_conduct.md).
 - For minor fixes such as a typo in existing cheat sheet, a simple pull request is all that's needed. For more involved changes, please follow the process laid out below.
 - :heavy_exclamation_mark: Focus on updating a single file in a Pull Request to make the review processes simpler for the core team.
 - :warning: Pull Requests marked as **WAITING_UPDATE** (indicating that the core team are waiting for an update from the author of the Pull Request) that do not receive any updates from the author in one month will be closed.
@@ -110,3 +114,16 @@ FILE: cheatsheets/Transaction_Authorization_Cheat_Sheet.md
 ...
 
 ```
+
+### Use of AI
+
+The Cheat Sheet Series is a documentation project, and so the content must be accurate, knowledgeable and concise.
+
+Generative AI can produce content that is general and verbose;
+avoid using it for issues, pull requests, comments and discussions.
+If it is genuinely helpful to use generative AI then it **must** be declared in any pull request,
+failure to do so can result in the contribution being closed or even deleted.
+
+There is no need to use agentic AI to create issues or pull requests;
+templates for all issues and pull requests **must** be used.
+Failure to use the templates can result in the issue or pull request being closed or even deleted.
