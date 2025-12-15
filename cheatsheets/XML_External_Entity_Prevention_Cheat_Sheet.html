@@ -2597,6 +2597,39 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="General Guidance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#xml-parser-security-features-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      XML Parser Security Features Matrix
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quick-impact-matrix-what-happens-if-missing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Impact Matrix (What Happens If Missing?)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#minimal-xml-hardening-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      Minimal XML Hardening Rules
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -3317,6 +3350,39 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="General Guidance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#xml-parser-security-features-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      XML Parser Security Features Matrix
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quick-impact-matrix-what-happens-if-missing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Impact Matrix (What Happens If Missing?)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#minimal-xml-hardening-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      Minimal XML Hardening Rules
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -3908,6 +3974,117 @@
 <div class="highlight"><pre><span></span><code><span class="n">factory</span><span class="p">.</span><span class="na">setFeature</span><span class="p">(</span><span class="s">&quot;http://apache.org/xml/features/disallow-doctype-decl&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
 </code></pre></div>
 <p>Disabling <a href="https://www.w3schools.com/xml/xml_dtd.asp">DTD</a>s also makes the parser secure against denial of services (DOS) attacks such as <a href="https://en.wikipedia.org/wiki/Billion_laughs_attack">Billion Laughs</a>. <strong>If it is not possible to disable DTDs completely, then external entities and external document type declarations must be disabled in the way that's specific to each parser.</strong></p>
+<h3 id="xml-parser-security-features-matrix">XML Parser Security Features Matrix<a class="headerlink" href="#xml-parser-security-features-matrix" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Security Feature</th>
+<th>Default (Parser-Dependent)</th>
+<th>Purpose</th>
+<th><strong>What Happens If Missing?</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>External Entities Disabled</strong></td>
+<td>Usually <strong>disabled</strong> (safe)</td>
+<td>Blocks external resource loading</td>
+<td>Full XXE possible → SSRF, file disclosure, internal scans</td>
+</tr>
+<tr>
+<td><strong>Disallow DOCTYPE Declaration</strong></td>
+<td>Varies</td>
+<td>Prevents ENTITY definitions</td>
+<td>Classic XXE payloads become fully functional</td>
+</tr>
+<tr>
+<td><strong>Disable External DTD Loading</strong></td>
+<td>Usually <strong>disabled</strong></td>
+<td>Stops loading remote DTDs</td>
+<td>Enables Blind XXE, SSRF behind firewalls</td>
+</tr>
+<tr>
+<td><strong>Secure Processing Mode</strong></td>
+<td>Varies</td>
+<td>Restricts recursion, network access, entity expansion</td>
+<td>Billion Laughs DoS and resource depletion become possible</td>
+</tr>
+<tr>
+<td><strong>Disable Parameter Entities</strong></td>
+<td>Varies</td>
+<td>Prevents <code>%entity;</code> injections</td>
+<td>Advanced XXE payloads bypass simple protections</td>
+</tr>
+<tr>
+<td><strong>XInclude Disabled</strong></td>
+<td>Usually <strong>disabled</strong></td>
+<td>Prevents including external files</td>
+<td>File read via <code>file://</code> and SSRF becomes possible</td>
+</tr>
+<tr>
+<td><strong>Limit Entity Expansion Count</strong></td>
+<td>Usually <strong>enabled</strong></td>
+<td>Prevents recursive entity abuse</td>
+<td>Memory exhaustion → parser or server DoS</td>
+</tr>
+<tr>
+<td><strong>Schema Validation Without External Fetching</strong></td>
+<td>Usually safe</td>
+<td>Ensures validation does not fetch external URLs</td>
+<td>Silent external HTTP calls triggered during validation</td>
+</tr>
+</tbody>
+</table>
+<h3 id="quick-impact-matrix-what-happens-if-missing">Quick Impact Matrix (What Happens If Missing?)<a class="headerlink" href="#quick-impact-matrix-what-happens-if-missing" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Missing Control</th>
+<th>Resulting Vulnerability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DOCTYPE not disabled</td>
+<td>Standard XXE fully exploitable</td>
+</tr>
+<tr>
+<td>External entities enabled</td>
+<td>SSRF, file exfiltration, port scanning</td>
+</tr>
+<tr>
+<td>External DTD loading allowed</td>
+<td>Blind XXE → hidden SSRF attacks</td>
+</tr>
+<tr>
+<td>No expansion limits</td>
+<td>Billion Laughs DoS</td>
+</tr>
+<tr>
+<td>XInclude enabled</td>
+<td>Local file disclosure + SSRF</td>
+</tr>
+<tr>
+<td>Secure processing disabled</td>
+<td>Critical protections bypassed</td>
+</tr>
+<tr>
+<td>Schema validation fetches external URLs</td>
+<td>Application makes unwanted outbound requests</td>
+</tr>
+</tbody>
+</table>
+<h3 id="minimal-xml-hardening-rules">Minimal XML Hardening Rules<a class="headerlink" href="#minimal-xml-hardening-rules" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Disable DOCTYPE</li>
+<li>Disable external entities</li>
+<li>Disable external DTD loading</li>
+<li>Enable secure processing mode</li>
+<li>Disable XInclude</li>
+<li>Limit entity expansion</li>
+<li>Do not use legacy XML parsers</li>
+<li>Never parse untrusted XML with default settings</li>
+</ul>
 <p><strong>Detailed XXE Prevention guidance is provided below for multiple languages (C++, Cold Fusion, Java, .NET, iOS, PHP, Python, Semgrep Rules) and their commonly used XML parsers.</strong></p>
 <h2 id="cc">C/C++<a class="headerlink" href="#cc" title="Permanent link">&para;</a></h2>
 <h3 id="libxml2">libxml2<a class="headerlink" href="#libxml2" title="Permanent link">&para;</a></h3>
