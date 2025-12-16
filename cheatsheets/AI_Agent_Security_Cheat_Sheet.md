@@ -82,7 +82,7 @@ def require_confirmation(func):
 - Apply content filtering for known injection patterns.
 - Consider using separate LLM calls to validate/summarize untrusted content.
 
-Please refer to the [LLM Prompt Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html) for detailed techniques.
+Please refer to the [LLM Prompt Injection Prevention Cheat Sheet](LLM_Prompt_Injection_Prevention_Cheat_Sheet.md) for detailed techniques.
 
 ### 3. Memory & Context Security
 
