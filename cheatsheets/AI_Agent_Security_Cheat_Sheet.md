@@ -688,7 +688,7 @@ class SecureContextBuilder:
 ## References
 
 - [OWASP LLM Top 10](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
-- [OWASP LLM Prompt Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html)
+- [OWASP LLM Prompt Injection Prevention Cheat Sheet](LLM_Prompt_Injection_Prevention_Cheat_Sheet.md)
 - [NIST AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework)
 - [OpenAI Safety Best Practices](https://platform.openai.com/docs/guides/safety-best-practices)
 - [Google Secure AI Framework (SAIF)](https://safety.google/safety/saif/)
