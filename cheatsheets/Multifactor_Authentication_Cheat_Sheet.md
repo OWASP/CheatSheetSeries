@@ -62,6 +62,42 @@ The most important place to require MFA on an application is when the user logs 
 
 If the application provides multiple ways for a user to authenticate these should all require MFA, or have other protections implemented. A common area that is missed is if the application provides a separate API that can be used to login, or has an associated mobile application.
 
+### One-Time Password (OTP) Handling and Storage
+
+OTPs are authentication secrets and should be handled with password-like hygiene. While their security traits differ from long-lived passwords, improper handling can still lead to user account compromise.
+
+At a minimum, OTP implementations SHOULD:
+
+- Enforce a short time-to-live (TTL)
+- Ensure OTPs are single use
+- Apply strict attempt limits
+- Invalidate the OTP on successful verification
+
+OTP implementations SHOULD NOT:
+
+- Log OTP values
+- Store OTPs in long-term plaintext form
+
+To further reduce risk and limit exposure, it is RECOMMENDED to:
+
+- Generate OTPs using a cryptographically secure random number generator
+- Consider 8-digit or longer codes where usability allows
+- On "resend", generate a new OTP and overwrite the old record
+
+#### Hashing OTPs
+
+Hashing OTPs is still recommended, but for different reasons than password hashing. OTPs typically have a very small keyspace (for example, ~1 million possibilities for a 6-digit code), which means a database attacker can brute-force any OTP hash quickly.
+
+As a result, hashing OTPs does not provide strong offline attack resistance in the way password hashing does.
+
+However, hashing remains useful to:
+
+- Prevent accidental disclosure via logs, metrics, or debugging tools
+- Reduce blast radius if the database is briefly exposed during the OTP’s validity window
+- Enforce good secret-handling discipline and avoid plaintext storage by default
+
+The goal is short-term exposure protection, not long-term cryptographic secrecy.
+
 ### Improving User Experience
 
 #### Risk Based Authentication
@@ -169,9 +205,9 @@ Passwords and PINs are the most common form of authentication due to the simplic
 
 Possession-based authentication is based on the user having a physical or digital item that is required to authenticate. This is the most common form of MFA, and is often used in conjunction with passwords. The most common types of possession-based authentication are hardware and software tokens, and digital certificates. If properly implemented then this can be significantly more difficult for a remote attacker to compromise; however it also creates an additional administrative burden on the user, as they must keep the authentication factor with them whenever they wish to use it.
 
-### One Time Password Tokens
+### One-Time Password Tokens
 
-One Time Password (OTP) tokens are a form of possession-based authentication, where the user is required to submit a constantly changing numeric code in order to authenticate. The most common of which is Time-based One Time Password (TOTP) tokens, which can be both hardware and software based.
+One-Time Password (OTP) tokens are a form of possession-based authentication, where the user is required to submit a constantly changing numeric code in order to authenticate. The most common of which is Time-based One-Time Password (TOTP) tokens, which can be both hardware and software based.
 
 #### Hardware OTP Tokens
 
@@ -192,7 +228,7 @@ Hardware OTP Tokens generate a constantly changing numeric codes, which must be 
 
 #### Software OTP Tokens
 
-A cheaper and easier alternative to hardware tokens is using software to generate Time-based One Time Password (TOTP) codes. This would typically involve the user installing a TOTP application on their mobile phone, and then scanning a QR code provided by the web application which provides the initial seed. The authenticator app then generates a six digit number every 60 seconds, in much the same way as a hardware token.
+A cheaper and easier alternative to hardware tokens is using software to generate Time-based One-Time Password (TOTP) codes. This would typically involve the user installing a TOTP application on their mobile phone, and then scanning a QR code provided by the web application which provides the initial seed. The authenticator app then generates a six digit number every 60 seconds, in much the same way as a hardware token.
 
 Most websites use standardized TOTP tokens, allowing the user to install any authenticator app that supports TOTP. However, a small number of applications use their own variants of this (such as Symantec), which requires the users to install a specific app in order to use the service. This should be avoided in favour of a standards-based approach.
 
