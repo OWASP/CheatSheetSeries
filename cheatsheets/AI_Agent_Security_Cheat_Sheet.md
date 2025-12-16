@@ -6,7 +6,7 @@ AI agents are autonomous systems powered by Large Language Models (LLMs) that ca
 
 ## Key Risks
 
-- **Prompt Injection (Direct & Indirect)**: Malicious instructions injected via user input or external data sources (websites, documents, emails) that hijack agent behavior. [LLM Prompt Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html)
+- **Prompt Injection (Direct & Indirect)**: Malicious instructions injected via user input or external data sources (websites, documents, emails) that hijack agent behavior. (See [LLM Prompt Injection Prevention Cheat Sheet](LLM_Prompt_Injection_Prevention_Cheat_Sheet.md))
 - **Tool Abuse & Privilege Escalation**: Agents exploiting overly permissive tools to perform unintended actions or access unauthorized resources.
 - **Data Exfiltration**: Sensitive information leaked through tool calls, API requests, or agent outputs.
 - **Memory Poisoning**: Malicious data persisted in agent memory to influence future sessions or other users.
