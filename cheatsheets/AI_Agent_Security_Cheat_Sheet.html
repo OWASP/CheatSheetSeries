@@ -1,0 +1,3999 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Website with the collection of all the cheat sheets of the project.">
+      
+      
+      
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html">
+      
+      
+        <link rel="prev" href="../IndexTopTen.html">
+      
+      
+        <link rel="next" href="AJAX_Security_Cheat_Sheet.html">
+      
+      
+      <link rel="icon" href="../assets/WebSite_Favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.42">
+    
+    
+      
+        <title>AI Agent Security - OWASP Cheat Sheet Series</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ai-agent-security-cheat-sheet" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../index.html" title="OWASP Cheat Sheet Series" class="md-header__button md-logo" aria-label="OWASP Cheat Sheet Series" data-md-component="logo">
+      
+  <img src="../assets/OWASP_Logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OWASP Cheat Sheet Series
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              AI Agent Security
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="OWASP Cheat Sheet Series" class="md-nav__button md-logo" aria-label="OWASP Cheat Sheet Series" data-md-component="logo">
+      
+  <img src="../assets/OWASP_Logo.svg" alt="logo">
+
+    </a>
+    OWASP Cheat Sheet Series
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/OWASP/CheatSheetSeries" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OWASP/CheatSheetSeries
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Glossary.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Index Alphabetical
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IndexASVS.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Index ASVS
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IndexMASVS.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Index MASVS
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IndexProactiveControls.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Index Proactive Controls
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IndexTopTen.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Index Top 10
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Cheatsheets
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Cheatsheets
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    AI Agent Security
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="AI_Agent_Security_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    AI Agent Security
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-risks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Risks
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      Best Practices
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Best Practices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-tool-security-least-privilege" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Tool Security &amp; Least Privilege
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Tool Security & Least Privilege">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bad-over-permissioned-tool-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bad: Over-permissioned tool configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#good-scoped-tool-with-allowlist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Good: Scoped tool with allowlist
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tool-authorization-middleware-example-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tool Authorization Middleware Example (Python)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-input-validation-prompt-injection-defense" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Input Validation &amp; Prompt Injection Defense
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-memory-context-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Memory &amp; Context Security
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Memory & Context Security">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bad-unvalidated-memory-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bad: Unvalidated memory storage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#good-validated-and-isolated-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      Good: Validated and isolated memory
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-human-in-the-loop-controls" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Human-in-the-Loop Controls
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Human-in-the-Loop Controls">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#action-classification-and-approval-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Action Classification and Approval Flow
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-output-validation-guardrails" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Output Validation &amp; Guardrails
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Output Validation & Guardrails">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#output-validation-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      Output Validation Pipeline
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-monitoring-observability" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Monitoring &amp; Observability
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Monitoring & Observability">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#agent-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      Agent Monitoring
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-multi-agent-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Multi-Agent Security
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Multi-Agent Security">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#secure-multi-agent-communication" class="md-nav__link">
+    <span class="md-ellipsis">
+      Secure Multi-Agent Communication
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-data-protection-privacy" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Data Protection &amp; Privacy
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Data Protection & Privacy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#data-classification-and-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Classification and Handling
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dos-and-donts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Do's and Don'ts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="AJAX_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AJAX Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Abuse_Case_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Abuse Case
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Access_Control_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Access Control
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Attack_Surface_Analysis_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Attack Surface Analysis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Authentication_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Authentication
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Authorization_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Authorization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Authorization_Testing_Automation_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Authorization Testing Automation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Automotive_Security.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Automotive Security.md
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Bean_Validation_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bean Validation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Browser_Extension_Vulnerabilities_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Browser Extension Vulnerabilities
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="C-Based_Toolchain_Hardening_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    C-Based Toolchain Hardening
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="CI_CD_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CI CD Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Choosing and Using Security Questions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Clickjacking_Defense_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Clickjacking Defense
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Content_Security_Policy_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Content Security Policy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Cookie_Theft_Mitigation_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cookie Theft Mitigation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Credential Stuffing Prevention
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cross-Site Request Forgery Prevention
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cross Site Scripting Prevention
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Cryptographic_Storage_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cryptographic Storage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="DOM_Clobbering_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DOM Clobbering Prevention
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="DOM_based_XSS_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DOM based XSS Prevention
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Database_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Database Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Denial_of_Service_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Denial of Service
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Dependency_Graph_SBOM_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dependency Graph SBOM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Deserialization_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Deserialization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Django_REST_Framework_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Django REST Framework
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Django_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Django Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Docker_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Docker Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="DotNet_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DotNet Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Drone_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Drone Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Error_Handling_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Error Handling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="File_Upload_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    File Upload
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Forgot_Password_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Forgot Password
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="GraphQL_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GraphQL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="HTML5_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HTML5 Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="HTTP_Headers_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HTTP Headers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="HTTP_Strict_Transport_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HTTP Strict Transport Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Infrastructure_as_Code_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Infrastructure as Code Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Injection Prevention
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Injection_Prevention_in_Java_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Injection Prevention in Java
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Input_Validation_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Input Validation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Insecure Direct Object Reference Prevention
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="JAAS_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    JAAS
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="JSON_Web_Token_for_Java_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    JSON Web Token for Java
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Java_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Java Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Key_Management_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Key Management
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Kubernetes_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kubernetes Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="LDAP_Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LDAP Injection Prevention
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="LLM_Prompt_Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LLM Prompt Injection Prevention
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Laravel_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Laravel
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Legacy_Application_Management_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Legacy Application Management
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Logging_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Logging
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Logging_Vocabulary_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Logging Vocabulary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Mass_Assignment_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mass Assignment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Microservices_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Microservices Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Microservices based Security Arch Doc
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Mobile_Application_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mobile Application Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Multifactor_Authentication_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Multifactor Authentication
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="NPM_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    NPM Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Network_Segmentation_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Network Segmentation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="NoSQL_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    NoSQL Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="NodeJS_Docker_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    NodeJS Docker
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Nodejs_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Nodejs Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="OAuth2_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OAuth2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="OS_Command_Injection_Defense_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OS Command Injection Defense
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="PHP_Configuration_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PHP Configuration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Password_Storage_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Password Storage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Pinning_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pinning
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Prototype_Pollution_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Prototype Pollution Prevention
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Query_Parameterization_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Query Parameterization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="REST_Assessment_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    REST Assessment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="REST_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    REST Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ruby_on_Rails_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ruby on Rails
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="SAML_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SAML Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="SQL_Injection_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SQL Injection Prevention
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Secrets_Management_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Secrets Management
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Secure_AI_Model_Ops_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Secure AI Model Ops
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Secure_Cloud_Architecture_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Secure Cloud Architecture
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Secure_Code_Review_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Secure Code Review
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Secure_Product_Design_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Secure Product Design
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Securing_Cascading_Style_Sheets_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Securing Cascading Style Sheets
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Server Side Request Forgery Prevention
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Serverless_FaaS_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Serverless FaaS Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Session_Management_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Session Management
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Software_Supply_Chain_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Software Supply Chain Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Symfony_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Symfony
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="TLS_Cipher_String_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TLS Cipher String
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Third_Party_Javascript_Management_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Third Party Javascript Management
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Third_Party_Payment_Gateway_Integration.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Third Party Payment Gateway Integration.md
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Threat_Modeling_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Threat Modeling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Transaction_Authorization_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Transaction Authorization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Transport_Layer_Protection_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Transport Layer Protection
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Transport_Layer_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Transport Layer Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Unvalidated Redirects and Forwards
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="User_Privacy_Protection_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Privacy Protection
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Virtual_Patching_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Virtual Patching
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Vulnerability_Disclosure_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Vulnerability Disclosure
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Vulnerable Dependency Management
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="WebSocket_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WebSocket Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Web_Service_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Web Service Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="XML_External_Entity_Prevention_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    XML External Entity Prevention
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="XML_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    XML Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="XSS_Filter_Evasion_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    XSS Filter Evasion
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="XS_Leaks_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    XS Leaks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Zero_Trust_Architecture_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Zero Trust Architecture
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="gRPC_Security_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    gRPC Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-risks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Risks
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      Best Practices
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Best Practices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-tool-security-least-privilege" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Tool Security &amp; Least Privilege
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Tool Security & Least Privilege">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bad-over-permissioned-tool-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bad: Over-permissioned tool configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#good-scoped-tool-with-allowlist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Good: Scoped tool with allowlist
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tool-authorization-middleware-example-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tool Authorization Middleware Example (Python)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-input-validation-prompt-injection-defense" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Input Validation &amp; Prompt Injection Defense
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-memory-context-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Memory &amp; Context Security
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Memory & Context Security">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bad-unvalidated-memory-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bad: Unvalidated memory storage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#good-validated-and-isolated-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      Good: Validated and isolated memory
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-human-in-the-loop-controls" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Human-in-the-Loop Controls
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Human-in-the-Loop Controls">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#action-classification-and-approval-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Action Classification and Approval Flow
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-output-validation-guardrails" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Output Validation &amp; Guardrails
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Output Validation & Guardrails">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#output-validation-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      Output Validation Pipeline
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-monitoring-observability" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Monitoring &amp; Observability
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Monitoring & Observability">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#agent-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      Agent Monitoring
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-multi-agent-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Multi-Agent Security
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Multi-Agent Security">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#secure-multi-agent-communication" class="md-nav__link">
+    <span class="md-ellipsis">
+      Secure Multi-Agent Communication
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-data-protection-privacy" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Data Protection &amp; Privacy
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Data Protection & Privacy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#data-classification-and-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Classification and Handling
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dos-and-donts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Do's and Don'ts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="ai-agent-security-cheat-sheet">AI Agent Security Cheat Sheet<a class="headerlink" href="#ai-agent-security-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>AI agents are autonomous systems powered by Large Language Models (LLMs) that can reason, plan, use tools, maintain memory, and take actions to accomplish goals. This expanded capability introduces unique security risks beyond traditional LLM prompt injection. This cheat sheet provides best practices to secure AI agent architectures and minimize attack surfaces.</p>
+<h2 id="key-risks">Key Risks<a class="headerlink" href="#key-risks" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Prompt Injection (Direct &amp; Indirect)</strong>: Malicious instructions injected via user input or external data sources (websites, documents, emails) that hijack agent behavior. (See <a href="LLM_Prompt_Injection_Prevention_Cheat_Sheet.html">LLM Prompt Injection Prevention Cheat Sheet</a>)</li>
+<li><strong>Tool Abuse &amp; Privilege Escalation</strong>: Agents exploiting overly permissive tools to perform unintended actions or access unauthorized resources.</li>
+<li><strong>Data Exfiltration</strong>: Sensitive information leaked through tool calls, API requests, or agent outputs.</li>
+<li><strong>Memory Poisoning</strong>: Malicious data persisted in agent memory to influence future sessions or other users.</li>
+<li><strong>Goal Hijacking</strong>: Manipulating agent objectives to serve attacker purposes while appearing legitimate.</li>
+<li><strong>Excessive Autonomy</strong>: Agents taking high-impact actions without appropriate human oversight.</li>
+<li><strong>Cascading Failures</strong>: Compromised agents in multi-agent systems propagating attacks to other agents.</li>
+<li><strong>Denial of Wallet (DoW)</strong>: Attacks causing excessive API/compute costs through unbounded agent loops.</li>
+<li><strong>Sensitive Data Exposure</strong>: PII, credentials, or confidential data inadvertently included in agent context or logs.</li>
+</ul>
+<h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">&para;</a></h2>
+<h3 id="1-tool-security-least-privilege">1. Tool Security &amp; Least Privilege<a class="headerlink" href="#1-tool-security-least-privilege" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Grant agents the minimum tools required for their specific task.</li>
+<li>Implement per-tool permission scoping (read-only vs. write, specific resources).</li>
+<li>Use separate tool sets for different trust levels (e.g., internal vs. user-facing agents).</li>
+<li>Require explicit tool authorization for sensitive operations.</li>
+</ul>
+<h4 id="bad-over-permissioned-tool-configuration">Bad: Over-permissioned tool configuration<a class="headerlink" href="#bad-over-permissioned-tool-configuration" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Dangerous: Agent has unrestricted shell access</span>
+<span class="n">tools</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;execute_command&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Execute any shell command&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;allowed_commands&quot;</span><span class="p">:</span> <span class="s2">&quot;*&quot;</span>  <span class="c1"># No restrictions</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</code></pre></div>
+<h4 id="good-scoped-tool-with-allowlist">Good: Scoped tool with allowlist<a class="headerlink" href="#good-scoped-tool-with-allowlist" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Safe: Restricted to specific, safe commands</span>
+<span class="n">tools</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;file_reader&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Read files from the reports directory&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;allowed_paths&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;/app/reports/*&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;allowed_operations&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;read&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;blocked_patterns&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;*.env&quot;</span><span class="p">,</span> <span class="s2">&quot;*.key&quot;</span><span class="p">,</span> <span class="s2">&quot;*.pem&quot;</span><span class="p">,</span> <span class="s2">&quot;*secret*&quot;</span><span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</code></pre></div>
+<h4 id="tool-authorization-middleware-example-python">Tool Authorization Middleware Example (Python)<a class="headerlink" href="#tool-authorization-middleware-example-python" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
+
+<span class="n">SENSITIVE_TOOLS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;send_email&quot;</span><span class="p">,</span> <span class="s2">&quot;execute_code&quot;</span><span class="p">,</span> <span class="s2">&quot;database_write&quot;</span><span class="p">,</span> <span class="s2">&quot;file_delete&quot;</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">require_confirmation</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">tool_name</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">tool_name</span> <span class="ow">in</span> <span class="n">SENSITIVE_TOOLS</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">context</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;user_confirmed&quot;</span><span class="p">):</span>
+                <span class="k">return</span> <span class="p">{</span>
+                    <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;pending_confirmation&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Action &#39;</span><span class="si">{</span><span class="n">tool_name</span><span class="si">}</span><span class="s2">&#39; requires user approval&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;params&quot;</span><span class="p">:</span> <span class="n">sanitize_for_display</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+                <span class="p">}</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="n">func</span><span class="p">(</span><span class="n">tool_name</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+</code></pre></div>
+<h3 id="2-input-validation-prompt-injection-defense">2. Input Validation &amp; Prompt Injection Defense<a class="headerlink" href="#2-input-validation-prompt-injection-defense" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Treat all external data as untrusted (user messages, retrieved documents, API responses, emails).</li>
+<li>Implement input sanitization before including external content in agent context.</li>
+<li>Use delimiters and clear boundaries between instructions and data.</li>
+<li>Apply content filtering for known injection patterns.</li>
+<li>Consider using separate LLM calls to validate/summarize untrusted content.</li>
+</ul>
+<p>Please refer to the <a href="LLM_Prompt_Injection_Prevention_Cheat_Sheet.html">LLM Prompt Injection Prevention Cheat Sheet</a> for detailed techniques.</p>
+<h3 id="3-memory-context-security">3. Memory &amp; Context Security<a class="headerlink" href="#3-memory-context-security" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Validate and sanitize data before storing in agent memory.</li>
+<li>Implement memory isolation between users/sessions.</li>
+<li>Set memory expiration and size limits.</li>
+<li>Audit memory contents for sensitive data before persistence.</li>
+<li>Use cryptographic integrity checks for long-term memory.</li>
+</ul>
+<h4 id="bad-unvalidated-memory-storage">Bad: Unvalidated memory storage<a class="headerlink" href="#bad-unvalidated-memory-storage" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Dangerous: Storing arbitrary user input in persistent memory</span>
+<span class="k">def</span> <span class="nf">save_memory</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">user_message</span><span class="p">,</span> <span class="n">assistant_response</span><span class="p">):</span>
+    <span class="n">agent</span><span class="o">.</span><span class="n">memory</span><span class="o">.</span><span class="n">add</span><span class="p">({</span>
+        <span class="s2">&quot;user&quot;</span><span class="p">:</span> <span class="n">user_message</span><span class="p">,</span>  <span class="c1"># Could contain injection payload</span>
+        <span class="s2">&quot;assistant&quot;</span><span class="p">:</span> <span class="n">assistant_response</span><span class="p">,</span>
+        <span class="s2">&quot;timestamp&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+    <span class="p">})</span>
+</code></pre></div>
+<h4 id="good-validated-and-isolated-memory">Good: Validated and isolated memory<a class="headerlink" href="#good-validated-and-isolated-memory" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+
+<span class="k">class</span> <span class="nc">SecureAgentMemory</span><span class="p">:</span>
+    <span class="n">MAX_MEMORY_ITEMS</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="n">MAX_ITEM_LENGTH</span> <span class="o">=</span> <span class="mi">5000</span>
+    <span class="n">MEMORY_TTL_HOURS</span> <span class="o">=</span> <span class="mi">24</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">encryption_key</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user_id</span> <span class="o">=</span> <span class="n">user_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">encryption_key</span> <span class="o">=</span> <span class="n">encryption_key</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">memories</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">memory_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;conversation&quot;</span><span class="p">):</span>
+        <span class="c1"># Validate content</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">MAX_ITEM_LENGTH</span><span class="p">:</span>
+            <span class="n">content</span> <span class="o">=</span> <span class="n">content</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">MAX_ITEM_LENGTH</span><span class="p">]</span>
+
+        <span class="c1"># Scan for sensitive data patterns</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_contains_sensitive_data</span><span class="p">(</span><span class="n">content</span><span class="p">):</span>
+            <span class="n">content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_redact_sensitive_data</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+
+        <span class="c1"># Scan for injection patterns</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sanitize_injection_attempts</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+
+        <span class="c1"># Create integrity-checked memory entry</span>
+        <span class="n">entry</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">content</span><span class="p">,</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">memory_type</span><span class="p">,</span>
+            <span class="s2">&quot;timestamp&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+            <span class="s2">&quot;user_id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_id</span><span class="p">,</span>
+            <span class="s2">&quot;checksum&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_checksum</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+        <span class="p">}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">memories</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_enforce_limits</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">get_context</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrieve valid, non-expired memories.&quot;&quot;&quot;</span>
+        <span class="n">valid_memories</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">cutoff</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">MEMORY_TTL_HOURS</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">mem</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">memories</span><span class="p">:</span>
+            <span class="n">mem_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromisoformat</span><span class="p">(</span><span class="n">mem</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">mem_time</span> <span class="o">&gt;</span> <span class="n">cutoff</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verify_checksum</span><span class="p">(</span><span class="n">mem</span><span class="p">):</span>
+                <span class="n">valid_memories</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mem</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">valid_memories</span>
+
+    <span class="k">def</span> <span class="nf">_contains_sensitive_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="n">sensitive_patterns</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="sa">r</span><span class="s1">&#39;\b\d</span><span class="si">{3}</span><span class="s1">-\d</span><span class="si">{2}</span><span class="s1">-\d</span><span class="si">{4}</span><span class="s1">\b&#39;</span><span class="p">,</span>  <span class="c1"># SSN</span>
+            <span class="sa">r</span><span class="s1">&#39;\b\d</span><span class="si">{16}</span><span class="s1">\b&#39;</span><span class="p">,</span>              <span class="c1"># Credit card</span>
+            <span class="sa">r</span><span class="s1">&#39;password\s*[:=]\s*\S+&#39;</span><span class="p">,</span>   <span class="c1"># Passwords</span>
+            <span class="sa">r</span><span class="s1">&#39;api[_-]?key\s*[:=]\s*\S+&#39;</span> <span class="c1"># API keys</span>
+        <span class="p">]</span>
+        <span class="k">return</span> <span class="nb">any</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">sensitive_patterns</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_compute_checksum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">content</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_id</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">encryption_key</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[:</span><span class="mi">16</span><span class="p">]</span>
+</code></pre></div>
+<h3 id="4-human-in-the-loop-controls">4. Human-in-the-Loop Controls<a class="headerlink" href="#4-human-in-the-loop-controls" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Require explicit approval for high-impact or irreversible actions.</li>
+<li>Implement action previews before execution.</li>
+<li>Set autonomy boundaries based on action risk levels.</li>
+<li>Provide clear audit trails of agent decisions and actions.</li>
+<li>Allow users to interrupt and rollback agent operations.</li>
+</ul>
+<h4 id="action-classification-and-approval-flow">Action Classification and Approval Flow<a class="headerlink" href="#action-classification-and-approval-flow" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+
+<span class="k">class</span> <span class="nc">RiskLevel</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">LOW</span> <span class="o">=</span> <span class="s2">&quot;low&quot;</span>           <span class="c1"># Read operations, safe queries</span>
+    <span class="n">MEDIUM</span> <span class="o">=</span> <span class="s2">&quot;medium&quot;</span>     <span class="c1"># Write operations, API calls</span>
+    <span class="n">HIGH</span> <span class="o">=</span> <span class="s2">&quot;high&quot;</span>         <span class="c1"># Financial, deletion, external comms</span>
+    <span class="n">CRITICAL</span> <span class="o">=</span> <span class="s2">&quot;critical&quot;</span> <span class="c1"># Irreversible, security-sensitive</span>
+
+<span class="n">ACTION_RISK_MAPPING</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;search_documents&quot;</span><span class="p">:</span> <span class="n">RiskLevel</span><span class="o">.</span><span class="n">LOW</span><span class="p">,</span>
+    <span class="s2">&quot;read_file&quot;</span><span class="p">:</span> <span class="n">RiskLevel</span><span class="o">.</span><span class="n">LOW</span><span class="p">,</span>
+    <span class="s2">&quot;write_file&quot;</span><span class="p">:</span> <span class="n">RiskLevel</span><span class="o">.</span><span class="n">MEDIUM</span><span class="p">,</span>
+    <span class="s2">&quot;send_email&quot;</span><span class="p">:</span> <span class="n">RiskLevel</span><span class="o">.</span><span class="n">HIGH</span><span class="p">,</span>
+    <span class="s2">&quot;execute_code&quot;</span><span class="p">:</span> <span class="n">RiskLevel</span><span class="o">.</span><span class="n">HIGH</span><span class="p">,</span>
+    <span class="s2">&quot;database_delete&quot;</span><span class="p">:</span> <span class="n">RiskLevel</span><span class="o">.</span><span class="n">CRITICAL</span><span class="p">,</span>
+    <span class="s2">&quot;transfer_funds&quot;</span><span class="p">:</span> <span class="n">RiskLevel</span><span class="o">.</span><span class="n">CRITICAL</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">PendingAction</span><span class="p">:</span>
+    <span class="n">action_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">tool_name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">parameters</span><span class="p">:</span> <span class="nb">dict</span>
+    <span class="n">risk_level</span><span class="p">:</span> <span class="n">RiskLevel</span>
+    <span class="n">explanation</span><span class="p">:</span> <span class="nb">str</span>
+
+<span class="k">class</span> <span class="nc">HumanInTheLoopController</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">auto_approve_threshold</span><span class="p">:</span> <span class="n">RiskLevel</span> <span class="o">=</span> <span class="n">RiskLevel</span><span class="o">.</span><span class="n">LOW</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">auto_approve_threshold</span> <span class="o">=</span> <span class="n">auto_approve_threshold</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pending_actions</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">request_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tool_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> 
+                            <span class="n">explanation</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="n">risk_level</span> <span class="o">=</span> <span class="n">ACTION_RISK_MAPPING</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">tool_name</span><span class="p">,</span> <span class="n">RiskLevel</span><span class="o">.</span><span class="n">HIGH</span><span class="p">)</span>
+
+        <span class="c1"># Auto-approve low-risk actions</span>
+        <span class="k">if</span> <span class="n">risk_level</span><span class="o">.</span><span class="n">value</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_approve_threshold</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;approved&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;auto&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+
+        <span class="c1"># Queue for human review</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="n">PendingAction</span><span class="p">(</span>
+            <span class="n">action_id</span><span class="o">=</span><span class="n">generate_uuid</span><span class="p">(),</span>
+            <span class="n">tool_name</span><span class="o">=</span><span class="n">tool_name</span><span class="p">,</span>
+            <span class="n">parameters</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_sanitize_params_for_display</span><span class="p">(</span><span class="n">params</span><span class="p">),</span>
+            <span class="n">risk_level</span><span class="o">=</span><span class="n">risk_level</span><span class="p">,</span>
+            <span class="n">explanation</span><span class="o">=</span><span class="n">explanation</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pending_actions</span><span class="p">[</span><span class="n">action</span><span class="o">.</span><span class="n">action_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">action</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;approved&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s2">&quot;pending&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s2">&quot;action_id&quot;</span><span class="p">:</span> <span class="n">action</span><span class="o">.</span><span class="n">action_id</span><span class="p">,</span>
+            <span class="s2">&quot;requires&quot;</span><span class="p">:</span> <span class="s2">&quot;human_approval&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;risk_level&quot;</span><span class="p">:</span> <span class="n">risk_level</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+            <span class="s2">&quot;preview&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_action_preview</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+        <span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">_generate_action_preview</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="n">PendingAction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        Action: </span><span class="si">{</span><span class="n">action</span><span class="o">.</span><span class="n">tool_name</span><span class="si">}</span>
+<span class="s2">        Risk Level: </span><span class="si">{</span><span class="n">action</span><span class="o">.</span><span class="n">risk_level</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span>
+<span class="s2">        Explanation: </span><span class="si">{</span><span class="n">action</span><span class="o">.</span><span class="n">explanation</span><span class="si">}</span>
+<span class="s2">        Parameters: </span><span class="si">{</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">action</span><span class="o">.</span><span class="n">parameters</span><span class="p">,</span><span class="w"> </span><span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+</code></pre></div>
+<h3 id="5-output-validation-guardrails">5. Output Validation &amp; Guardrails<a class="headerlink" href="#5-output-validation-guardrails" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Validate agent outputs before execution or display.</li>
+<li>Implement output filtering for sensitive data leakage.</li>
+<li>Use structured outputs with schema validation where possible.</li>
+<li>Set boundaries on output actions (rate limits, scope limits).</li>
+<li>Apply content safety filters to generated responses.</li>
+</ul>
+<h4 id="output-validation-pipeline">Output Validation Pipeline<a class="headerlink" href="#output-validation-pipeline" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">validator</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span>
+
+<span class="k">class</span> <span class="nc">AgentToolCall</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">tool_name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">parameters</span><span class="p">:</span> <span class="nb">dict</span>
+    <span class="n">reasoning</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+
+    <span class="nd">@validator</span><span class="p">(</span><span class="s1">&#39;tool_name&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">validate_tool_allowed</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+        <span class="n">allowed_tools</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;search&quot;</span><span class="p">,</span> <span class="s2">&quot;read_file&quot;</span><span class="p">,</span> <span class="s2">&quot;calculator&quot;</span><span class="p">,</span> <span class="s2">&quot;get_weather&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">v</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">allowed_tools</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tool &#39;</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s2">&#39; is not in allowed list&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">v</span>
+
+    <span class="nd">@validator</span><span class="p">(</span><span class="s1">&#39;parameters&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">validate_no_sensitive_data</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+        <span class="n">sensitive_patterns</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="sa">r</span><span class="s1">&#39;api[_-]?key&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;password&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;secret&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;token&#39;</span><span class="p">,</span>
+            <span class="sa">r</span><span class="s1">&#39;credential&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;private[_-]?key&#39;</span>
+        <span class="p">]</span>
+        <span class="n">params_str</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="n">sensitive_patterns</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">params_str</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Parameters contain potentially sensitive data&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">v</span>
+
+<span class="k">class</span> <span class="nc">OutputGuardrails</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pii_patterns</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_pii_patterns</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blocked_actions</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rate_limiter</span> <span class="o">=</span> <span class="n">RateLimiter</span><span class="p">(</span><span class="n">max_calls</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">window_seconds</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">validate_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent_output</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="c1"># Check rate limits</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">rate_limiter</span><span class="o">.</span><span class="n">allow</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="n">RateLimitExceeded</span><span class="p">(</span><span class="s2">&quot;Agent action rate limit exceeded&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Validate structure</span>
+        <span class="k">if</span> <span class="s2">&quot;tool_calls&quot;</span> <span class="ow">in</span> <span class="n">agent_output</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">call</span> <span class="ow">in</span> <span class="n">agent_output</span><span class="p">[</span><span class="s2">&quot;tool_calls&quot;</span><span class="p">]:</span>
+                <span class="n">validated</span> <span class="o">=</span> <span class="n">AgentToolCall</span><span class="p">(</span><span class="o">**</span><span class="n">call</span><span class="p">)</span>
+
+        <span class="c1"># Filter PII from responses</span>
+        <span class="k">if</span> <span class="s2">&quot;response&quot;</span> <span class="ow">in</span> <span class="n">agent_output</span><span class="p">:</span>
+            <span class="n">agent_output</span><span class="p">[</span><span class="s2">&quot;response&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_pii</span><span class="p">(</span><span class="n">agent_output</span><span class="p">[</span><span class="s2">&quot;response&quot;</span><span class="p">])</span>
+
+        <span class="c1"># Check for data exfiltration patterns</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_detect_exfiltration_attempt</span><span class="p">(</span><span class="n">agent_output</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">SecurityViolation</span><span class="p">(</span><span class="s2">&quot;Potential data exfiltration detected&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">agent_output</span>
+
+    <span class="k">def</span> <span class="nf">_detect_exfiltration_attempt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Detect attempts to exfiltrate data through tool calls.&quot;&quot;&quot;</span>
+        <span class="n">suspicious_patterns</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="c1"># Encoding sensitive data in URLs</span>
+            <span class="k">lambda</span> <span class="n">o</span><span class="p">:</span> <span class="s2">&quot;http&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">o</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">any</span><span class="p">(</span>
+                <span class="n">p</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">o</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;base64&quot;</span><span class="p">,</span> <span class="s2">&quot;encode&quot;</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">]</span>
+            <span class="p">),</span>
+            <span class="c1"># Large data in webhook/API calls</span>
+            <span class="k">lambda</span> <span class="n">o</span><span class="p">:</span> <span class="n">o</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tool_name&quot;</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;http_request&quot;</span><span class="p">,</span> <span class="s2">&quot;webhook&quot;</span><span class="p">]</span> <span class="ow">and</span> 
+                     <span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;parameters&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)))</span> <span class="o">&gt;</span> <span class="mi">10000</span><span class="p">,</span>
+        <span class="p">]</span>
+        <span class="k">return</span> <span class="nb">any</span><span class="p">(</span><span class="n">pattern</span><span class="p">(</span><span class="n">output</span><span class="p">)</span> <span class="k">for</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="n">suspicious_patterns</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="6-monitoring-observability">6. Monitoring &amp; Observability<a class="headerlink" href="#6-monitoring-observability" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Log all agent decisions, tool calls, and outcomes.</li>
+<li>Implement anomaly detection for unusual agent behavior.</li>
+<li>Track token usage and costs per session/user.</li>
+<li>Set up alerts for security-relevant events.</li>
+<li>Maintain audit trails for compliance and forensics.</li>
+</ul>
+<h4 id="agent-monitoring">Agent Monitoring<a class="headerlink" href="#agent-monitoring" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">structlog</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">structlog</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span>
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">AgentSecurityEvent</span><span class="p">:</span>
+    <span class="n">event_type</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">severity</span><span class="p">:</span> <span class="nb">str</span>  <span class="c1"># INFO, WARNING, CRITICAL</span>
+    <span class="n">agent_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">session_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">timestamp</span><span class="p">:</span> <span class="n">datetime</span>
+    <span class="n">details</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+    <span class="n">tool_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="k">class</span> <span class="nc">AgentMonitor</span><span class="p">:</span>
+    <span class="n">ANOMALY_THRESHOLDS</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;tool_calls_per_minute&quot;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
+        <span class="s2">&quot;failed_tool_calls&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="s2">&quot;injection_attempts&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s2">&quot;sensitive_data_access&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="s2">&quot;cost_per_session_usd&quot;</span><span class="p">:</span> <span class="mf">10.0</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">agent_id</span> <span class="o">=</span> <span class="n">agent_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session_metrics</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alert_handlers</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">log_tool_call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">tool_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
+                           <span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">result</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="c1"># Redact sensitive data before logging</span>
+        <span class="n">safe_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_redact_sensitive</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+        <span class="n">safe_result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_redact_sensitive</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+        <span class="n">event</span> <span class="o">=</span> <span class="n">AgentSecurityEvent</span><span class="p">(</span>
+            <span class="n">event_type</span><span class="o">=</span><span class="s2">&quot;tool_call&quot;</span><span class="p">,</span>
+            <span class="n">severity</span><span class="o">=</span><span class="s2">&quot;INFO&quot;</span><span class="p">,</span>
+            <span class="n">agent_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">agent_id</span><span class="p">,</span>
+            <span class="n">session_id</span><span class="o">=</span><span class="n">session_id</span><span class="p">,</span>
+            <span class="n">user_id</span><span class="o">=</span><span class="n">user_id</span><span class="p">,</span>
+            <span class="n">timestamp</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">(),</span>
+            <span class="n">tool_name</span><span class="o">=</span><span class="n">tool_name</span><span class="p">,</span>
+            <span class="n">details</span><span class="o">=</span><span class="p">{</span>
+                <span class="s2">&quot;parameters&quot;</span><span class="p">:</span> <span class="n">safe_params</span><span class="p">,</span>
+                <span class="s2">&quot;result_status&quot;</span><span class="p">:</span> <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;status&quot;</span><span class="p">),</span>
+                <span class="s2">&quot;execution_time_ms&quot;</span><span class="p">:</span> <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;execution_time_ms&quot;</span><span class="p">),</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+
+        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_emit_event</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_anomalies</span><span class="p">(</span><span class="n">session_id</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">log_security_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">event_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                                  <span class="n">severity</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">details</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">event</span> <span class="o">=</span> <span class="n">AgentSecurityEvent</span><span class="p">(</span>
+            <span class="n">event_type</span><span class="o">=</span><span class="n">event_type</span><span class="p">,</span>
+            <span class="n">severity</span><span class="o">=</span><span class="n">severity</span><span class="p">,</span>
+            <span class="n">agent_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">agent_id</span><span class="p">,</span>
+            <span class="n">session_id</span><span class="o">=</span><span class="n">session_id</span><span class="p">,</span>
+            <span class="n">user_id</span><span class="o">=</span><span class="n">user_id</span><span class="p">,</span>
+            <span class="n">timestamp</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">(),</span>
+            <span class="n">details</span><span class="o">=</span><span class="n">details</span>
+        <span class="p">)</span>
+
+        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_emit_event</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">severity</span> <span class="o">==</span> <span class="s2">&quot;CRITICAL&quot;</span><span class="p">:</span>
+            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_alert</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">_check_anomalies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">AgentSecurityEvent</span><span class="p">):</span>
+        <span class="n">metrics</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_metrics</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">session_id</span><span class="p">,</span> <span class="p">{</span>
+            <span class="s2">&quot;tool_calls&quot;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s2">&quot;failed_calls&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;total_cost&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+        <span class="p">})</span>
+
+        <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;tool_calls&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">())</span>
+
+        <span class="c1"># Check tool call rate</span>
+        <span class="n">recent_calls</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;tool_calls&quot;</span><span class="p">]</span> 
+                       <span class="k">if</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span><span class="p">)</span><span class="o">.</span><span class="n">seconds</span> <span class="o">&lt;</span> <span class="mi">60</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">recent_calls</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">ANOMALY_THRESHOLDS</span><span class="p">[</span><span class="s2">&quot;tool_calls_per_minute&quot;</span><span class="p">]:</span>
+            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_security_event</span><span class="p">(</span>
+                <span class="n">session_id</span><span class="p">,</span> <span class="s2">&quot;anomaly_detected&quot;</span><span class="p">,</span> <span class="s2">&quot;WARNING&quot;</span><span class="p">,</span>
+                <span class="p">{</span><span class="s2">&quot;reason&quot;</span><span class="p">:</span> <span class="s2">&quot;excessive_tool_calls&quot;</span><span class="p">,</span> <span class="s2">&quot;count&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">recent_calls</span><span class="p">)},</span>
+                <span class="n">event</span><span class="o">.</span><span class="n">user_id</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_redact_sensitive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Redact sensitive fields from log data.&quot;&quot;&quot;</span>
+        <span class="n">sensitive_keys</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;password&quot;</span><span class="p">,</span> <span class="s2">&quot;api_key&quot;</span><span class="p">,</span> <span class="s2">&quot;token&quot;</span><span class="p">,</span> <span class="s2">&quot;secret&quot;</span><span class="p">,</span> <span class="s2">&quot;credential&quot;</span><span class="p">}</span>
+
+        <span class="k">def</span> <span class="nf">redact</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="k">return</span> <span class="p">{</span>
+                    <span class="n">k</span><span class="p">:</span> <span class="s2">&quot;***REDACTED***&quot;</span> <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">sensitive_keys</span> <span class="k">else</span> <span class="n">redact</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                <span class="p">}</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">redact</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">obj</span>
+
+        <span class="k">return</span> <span class="n">redact</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="7-multi-agent-security">7. Multi-Agent Security<a class="headerlink" href="#7-multi-agent-security" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Implement trust boundaries between agents.</li>
+<li>Validate and sanitize inter-agent communications.</li>
+<li>Prevent privilege escalation through agent chains.</li>
+<li>Isolate agent execution environments.</li>
+<li>Apply circuit breakers to prevent cascading failures.</li>
+</ul>
+<h4 id="secure-multi-agent-communication">Secure Multi-Agent Communication<a class="headerlink" href="#secure-multi-agent-communication" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+<span class="kn">import</span> <span class="nn">jwt</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+
+<span class="k">class</span> <span class="nc">AgentTrustLevel</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">UNTRUSTED</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">INTERNAL</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">PRIVILEGED</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">SYSTEM</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="k">class</span> <span class="nc">SecureAgentBus</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Secure communication layer for multi-agent systems.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signing_key</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">signing_key</span> <span class="o">=</span> <span class="n">signing_key</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">agent_registry</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message_validators</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">circuit_breakers</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">def</span> <span class="nf">register_agent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">trust_level</span><span class="p">:</span> <span class="n">AgentTrustLevel</span><span class="p">,</span>
+                       <span class="n">allowed_recipients</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">agent_registry</span><span class="p">[</span><span class="n">agent_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;trust_level&quot;</span><span class="p">:</span> <span class="n">trust_level</span><span class="p">,</span>
+            <span class="s2">&quot;allowed_recipients&quot;</span><span class="p">:</span> <span class="n">allowed_recipients</span><span class="p">,</span>
+            <span class="s2">&quot;allowed_message_types&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_allowed_types</span><span class="p">(</span><span class="n">trust_level</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">circuit_breakers</span><span class="p">[</span><span class="n">agent_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">CircuitBreaker</span><span class="p">(</span>
+            <span class="n">failure_threshold</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+            <span class="n">recovery_timeout</span><span class="o">=</span><span class="mi">60</span>
+        <span class="p">)</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">send_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sender_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">recipient_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                          <span class="n">message_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">payload</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="c1"># Validate sender</span>
+        <span class="n">sender</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">agent_registry</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">sender_id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">sender</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">SecurityViolation</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown sender agent: </span><span class="si">{</span><span class="n">sender_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Check circuit breaker</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">circuit_breakers</span><span class="p">[</span><span class="n">sender_id</span><span class="p">]</span><span class="o">.</span><span class="n">is_open</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">CircuitBreakerOpen</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Agent </span><span class="si">{</span><span class="n">sender_id</span><span class="si">}</span><span class="s2"> is temporarily blocked&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Validate recipient authorization</span>
+        <span class="k">if</span> <span class="n">recipient_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sender</span><span class="p">[</span><span class="s2">&quot;allowed_recipients&quot;</span><span class="p">]:</span>
+            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log_security_event</span><span class="p">(</span>
+                <span class="s2">&quot;unauthorized_message_attempt&quot;</span><span class="p">,</span>
+                <span class="p">{</span><span class="s2">&quot;sender&quot;</span><span class="p">:</span> <span class="n">sender_id</span><span class="p">,</span> <span class="s2">&quot;recipient&quot;</span><span class="p">:</span> <span class="n">recipient_id</span><span class="p">}</span>
+            <span class="p">)</span>
+            <span class="k">raise</span> <span class="n">SecurityViolation</span><span class="p">(</span><span class="s2">&quot;Sender not authorized to message recipient&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Validate message type</span>
+        <span class="k">if</span> <span class="n">message_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sender</span><span class="p">[</span><span class="s2">&quot;allowed_message_types&quot;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="n">SecurityViolation</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Message type &#39;</span><span class="si">{</span><span class="n">message_type</span><span class="si">}</span><span class="s2">&#39; not allowed&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Sanitize payload</span>
+        <span class="n">sanitized_payload</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sanitize_payload</span><span class="p">(</span><span class="n">payload</span><span class="p">,</span> <span class="n">sender</span><span class="p">[</span><span class="s2">&quot;trust_level&quot;</span><span class="p">])</span>
+
+        <span class="c1"># Create signed message</span>
+        <span class="n">signed_message</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;sender&quot;</span><span class="p">:</span> <span class="n">sender_id</span><span class="p">,</span>
+            <span class="s2">&quot;recipient&quot;</span><span class="p">:</span> <span class="n">recipient_id</span><span class="p">,</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">message_type</span><span class="p">,</span>
+            <span class="s2">&quot;payload&quot;</span><span class="p">:</span> <span class="n">sanitized_payload</span><span class="p">,</span>
+            <span class="s2">&quot;timestamp&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+            <span class="s2">&quot;signature&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sign_message</span><span class="p">(</span><span class="n">sender_id</span><span class="p">,</span> <span class="n">recipient_id</span><span class="p">,</span> 
+                                           <span class="n">message_type</span><span class="p">,</span> <span class="n">sanitized_payload</span><span class="p">)</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">signed_message</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">receive_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">recipient_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="c1"># Verify signature</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verify_signature</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">SecurityViolation</span><span class="p">(</span><span class="s2">&quot;Invalid message signature&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Check message freshness (prevent replay attacks)</span>
+        <span class="n">msg_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromisoformat</span><span class="p">(</span><span class="n">message</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span> <span class="o">-</span> <span class="n">msg_time</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">SecurityViolation</span><span class="p">(</span><span class="s2">&quot;Message expired (possible replay attack)&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Validate recipient</span>
+        <span class="k">if</span> <span class="n">message</span><span class="p">[</span><span class="s2">&quot;recipient&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">recipient_id</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">SecurityViolation</span><span class="p">(</span><span class="s2">&quot;Message recipient mismatch&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">message</span><span class="p">[</span><span class="s2">&quot;payload&quot;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_sanitize_payload</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">trust_level</span><span class="p">:</span> <span class="n">AgentTrustLevel</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Remove sensitive data based on trust level.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">trust_level</span> <span class="o">&lt;</span> <span class="n">AgentTrustLevel</span><span class="o">.</span><span class="n">PRIVILEGED</span><span class="p">:</span>
+            <span class="c1"># Remove system-level fields for lower trust agents</span>
+            <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">payload</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> 
+                      <span class="k">if</span> <span class="ow">not</span> <span class="n">k</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;_system&quot;</span><span class="p">)}</span>
+
+        <span class="c1"># Always sanitize potential injection content</span>
+        <span class="k">return</span> <span class="n">sanitize_untrusted_content</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="8-data-protection-privacy">8. Data Protection &amp; Privacy<a class="headerlink" href="#8-data-protection-privacy" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Minimize sensitive data in agent context.</li>
+<li>Implement data classification and handling rules.</li>
+<li>Apply encryption for data at rest and in transit.</li>
+<li>Enforce data retention and deletion policies.</li>
+<li>Comply with privacy regulations (GDPR, CCPA).</li>
+</ul>
+<h4 id="data-classification-and-handling">Data Classification and Handling<a class="headerlink" href="#data-classification-and-handling" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
+
+<span class="k">class</span> <span class="nc">DataClassification</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">PUBLIC</span> <span class="o">=</span> <span class="s2">&quot;public&quot;</span>
+    <span class="n">INTERNAL</span> <span class="o">=</span> <span class="s2">&quot;internal&quot;</span>
+    <span class="n">CONFIDENTIAL</span> <span class="o">=</span> <span class="s2">&quot;confidential&quot;</span>
+    <span class="n">RESTRICTED</span> <span class="o">=</span> <span class="s2">&quot;restricted&quot;</span>  <span class="c1"># PII, financial, health</span>
+
+<span class="k">class</span> <span class="nc">DataProtectionPolicy</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classification_rules</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handling_rules</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">def</span> <span class="nf">classify_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataClassification</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Automatically classify data based on content patterns.&quot;&quot;&quot;</span>
+        <span class="n">patterns</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">DataClassification</span><span class="o">.</span><span class="n">RESTRICTED</span><span class="p">:</span> <span class="p">[</span>
+                <span class="sa">r</span><span class="s1">&#39;\b\d</span><span class="si">{3}</span><span class="s1">-\d</span><span class="si">{2}</span><span class="s1">-\d</span><span class="si">{4}</span><span class="s1">\b&#39;</span><span class="p">,</span>      <span class="c1"># SSN</span>
+                <span class="sa">r</span><span class="s1">&#39;\b\d</span><span class="si">{16}</span><span class="s1">\b&#39;</span><span class="p">,</span>                  <span class="c1"># Credit card</span>
+                <span class="sa">r</span><span class="s1">&#39;\b[A-Z]</span><span class="si">{2}</span><span class="s1">\d{6,9}\b&#39;</span><span class="p">,</span>         <span class="c1"># Passport</span>
+                <span class="sa">r</span><span class="s1">&#39;diagnosis|prescription|patient&#39;</span><span class="p">,</span>  <span class="c1"># Health</span>
+            <span class="p">],</span>
+            <span class="n">DataClassification</span><span class="o">.</span><span class="n">CONFIDENTIAL</span><span class="p">:</span> <span class="p">[</span>
+                <span class="sa">r</span><span class="s1">&#39;salary|compensation|bonus&#39;</span><span class="p">,</span>
+                <span class="sa">r</span><span class="s1">&#39;api[_-]?key|password|secret&#39;</span><span class="p">,</span>
+                <span class="sa">r</span><span class="s1">&#39;confidential|internal only&#39;</span><span class="p">,</span>
+            <span class="p">],</span>
+            <span class="n">DataClassification</span><span class="o">.</span><span class="n">INTERNAL</span><span class="p">:</span> <span class="p">[</span>
+                <span class="sa">r</span><span class="s1">&#39;@company\.com&#39;</span><span class="p">,</span>
+                <span class="sa">r</span><span class="s1">&#39;internal|draft|not for distribution&#39;</span><span class="p">,</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
+
+        <span class="k">for</span> <span class="n">classification</span><span class="p">,</span> <span class="n">pattern_list</span> <span class="ow">in</span> <span class="n">patterns</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pattern_list</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">classification</span>
+
+        <span class="k">return</span> <span class="n">DataClassification</span><span class="o">.</span><span class="n">PUBLIC</span>
+
+    <span class="k">def</span> <span class="nf">apply_protection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">classification</span><span class="p">:</span> <span class="n">DataClassification</span><span class="p">,</span>
+                         <span class="n">operation</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Apply appropriate protection based on classification.&quot;&quot;&quot;</span>
+        <span class="n">handlers</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">DataClassification</span><span class="o">.</span><span class="n">RESTRICTED</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;include_in_context&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_redact_fully</span><span class="p">,</span>
+                <span class="s2">&quot;log&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_redact_fully</span><span class="p">,</span>
+                <span class="s2">&quot;output&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_redact_fully</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="n">DataClassification</span><span class="o">.</span><span class="n">CONFIDENTIAL</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;include_in_context&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mask_partially</span><span class="p">,</span>
+                <span class="s2">&quot;log&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_redact_fully</span><span class="p">,</span>
+                <span class="s2">&quot;output&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mask_partially</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="n">DataClassification</span><span class="o">.</span><span class="n">INTERNAL</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;include_in_context&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+                <span class="s2">&quot;log&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mask_partially</span><span class="p">,</span>
+                <span class="s2">&quot;output&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">}</span>
+
+        <span class="n">handler</span> <span class="o">=</span> <span class="n">handlers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">classification</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">operation</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">handler</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_redact_fully</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;[REDACTED]&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_mask_partially</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;****&quot;</span>
+        <span class="k">return</span> <span class="n">data</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;*&quot;</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">-</span> <span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span>
+
+
+<span class="c1"># Usage in agent context building</span>
+<span class="k">class</span> <span class="nc">SecureContextBuilder</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">policy</span><span class="p">:</span> <span class="n">DataProtectionPolicy</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">policy</span> <span class="o">=</span> <span class="n">policy</span>
+
+    <span class="k">def</span> <span class="nf">build_context</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">documents</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">max_tokens</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4000</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">protected_docs</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">documents</span><span class="p">:</span>
+            <span class="n">classification</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">policy</span><span class="o">.</span><span class="n">classify_data</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="p">{})</span>
+            <span class="n">protected</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">policy</span><span class="o">.</span><span class="n">apply_protection</span><span class="p">(</span>
+                <span class="n">doc</span><span class="p">,</span> <span class="n">classification</span><span class="p">,</span> <span class="s2">&quot;include_in_context&quot;</span>
+            <span class="p">)</span>
+            <span class="n">protected_docs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">protected</span><span class="p">)</span>
+
+        <span class="c1"># Combine and truncate</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">---</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">protected_docs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">context</span><span class="p">[:</span><span class="n">max_tokens</span> <span class="o">*</span> <span class="mi">4</span><span class="p">]</span>  <span class="c1"># Rough char estimate</span>
+</code></pre></div>
+<h2 id="dos-and-donts">Do's and Don'ts<a class="headerlink" href="#dos-and-donts" title="Permanent link">&para;</a></h2>
+<p><strong>Do:</strong></p>
+<ul>
+<li>Apply least privilege to all agent tools and permissions.</li>
+<li>Validate and sanitize all external inputs (user messages, documents, API responses).</li>
+<li>Implement human-in-the-loop for high-risk actions.</li>
+<li>Isolate memory and context between users/sessions.</li>
+<li>Monitor agent behavior and set up anomaly detection.</li>
+<li>Use structured outputs with schema validation.</li>
+<li>Sign and verify inter-agent communications.</li>
+<li>Classify data and apply appropriate protections.</li>
+</ul>
+<p><strong>Don't:</strong></p>
+<ul>
+<li>Give agents unrestricted tool access or wildcard permissions.</li>
+<li>Trust content from external sources (websites, emails, documents).</li>
+<li>Allow agents to execute arbitrary code without sandboxing.</li>
+<li>Store sensitive data in agent memory without encryption/redaction.</li>
+<li>Let agents make high-impact decisions without human oversight.</li>
+<li>Ignore cost controls (unbounded loops can cause DoW).</li>
+<li>Pass unsanitized data between agents in multi-agent systems.</li>
+<li>Log sensitive data (PII, credentials) in plain text.</li>
+</ul>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://owasp.org/www-project-top-10-for-large-language-model-applications/">OWASP LLM Top 10</a></li>
+<li><a href="LLM_Prompt_Injection_Prevention_Cheat_Sheet.html">OWASP LLM Prompt Injection Prevention Cheat Sheet</a></li>
+<li><a href="https://www.nist.gov/itl/ai-risk-management-framework">NIST AI Risk Management Framework</a></li>
+<li><a href="https://platform.openai.com/docs/guides/safety-best-practices">OpenAI Safety Best Practices</a></li>
+<li><a href="https://safety.google/safety/saif/">Google Secure AI Framework (SAIF)</a></li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      ©Copyright <script>document.write(new Date().getFullYear())</script> - Cheat Sheets Series Team - This work is licensed under <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a>.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.sections", "navigation.expand"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+    
+  </body>
+</html>
