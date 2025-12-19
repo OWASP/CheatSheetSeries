@@ -1764,6 +1764,30 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#one-time-password-otp-handling-and-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      One-Time Password (OTP) Handling and Storage
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="One-Time Password (OTP) Handling and Storage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hashing-otps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hashing OTPs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#improving-user-experience" class="md-nav__link">
     <span class="md-ellipsis">
       Improving User Experience
@@ -1931,11 +1955,11 @@
           <li class="md-nav__item">
   <a href="#one-time-password-tokens" class="md-nav__link">
     <span class="md-ellipsis">
-      One Time Password Tokens
+      One-Time Password Tokens
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="One Time Password Tokens">
+    <nav class="md-nav" aria-label="One-Time Password Tokens">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -3588,6 +3612,30 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#one-time-password-otp-handling-and-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      One-Time Password (OTP) Handling and Storage
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="One-Time Password (OTP) Handling and Storage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hashing-otps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hashing OTPs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#improving-user-experience" class="md-nav__link">
     <span class="md-ellipsis">
       Improving User Experience
@@ -3755,11 +3803,11 @@
           <li class="md-nav__item">
   <a href="#one-time-password-tokens" class="md-nav__link">
     <span class="md-ellipsis">
-      One Time Password Tokens
+      One-Time Password Tokens
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="One Time Password Tokens">
+    <nav class="md-nav" aria-label="One-Time Password Tokens">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -4385,6 +4433,36 @@
 <li>Elevating a user session to an administrative session.</li>
 </ul>
 <p>If the application provides multiple ways for a user to authenticate these should all require MFA, or have other protections implemented. A common area that is missed is if the application provides a separate API that can be used to login, or has an associated mobile application.</p>
+<h3 id="one-time-password-otp-handling-and-storage">One-Time Password (OTP) Handling and Storage<a class="headerlink" href="#one-time-password-otp-handling-and-storage" title="Permanent link">&para;</a></h3>
+<p>OTPs are authentication secrets and should be handled with password-like hygiene. While their security traits differ from long-lived passwords, improper handling can still lead to user account compromise.</p>
+<p>At a minimum, OTP implementations SHOULD:</p>
+<ul>
+<li>Enforce a short time-to-live (TTL)</li>
+<li>Ensure OTPs are single use</li>
+<li>Apply strict attempt limits</li>
+<li>Invalidate the OTP on successful verification</li>
+</ul>
+<p>OTP implementations SHOULD NOT:</p>
+<ul>
+<li>Log OTP values</li>
+<li>Store OTPs in long-term plaintext form</li>
+</ul>
+<p>To further reduce risk and limit exposure, it is RECOMMENDED to:</p>
+<ul>
+<li>Generate OTPs using a cryptographically secure random number generator</li>
+<li>Consider 8-digit or longer codes where usability allows</li>
+<li>On "resend", generate a new OTP and overwrite the old record</li>
+</ul>
+<h4 id="hashing-otps">Hashing OTPs<a class="headerlink" href="#hashing-otps" title="Permanent link">&para;</a></h4>
+<p>Hashing OTPs is still recommended, but for different reasons than password hashing. OTPs typically have a very small keyspace (for example, ~1 million possibilities for a 6-digit code), which means a database attacker can brute-force any OTP hash quickly.</p>
+<p>As a result, hashing OTPs does not provide strong offline attack resistance in the way password hashing does.</p>
+<p>However, hashing remains useful to:</p>
+<ul>
+<li>Prevent accidental disclosure via logs, metrics, or debugging tools</li>
+<li>Reduce blast radius if the database is briefly exposed during the OTP’s validity window</li>
+<li>Enforce good secret-handling discipline and avoid plaintext storage by default</li>
+</ul>
+<p>The goal is short-term exposure protection, not long-term cryptographic secrecy.</p>
 <h3 id="improving-user-experience">Improving User Experience<a class="headerlink" href="#improving-user-experience" title="Permanent link">&para;</a></h3>
 <h4 id="risk-based-authentication">Risk Based Authentication<a class="headerlink" href="#risk-based-authentication" title="Permanent link">&para;</a></h4>
 <p>Having to frequently login with MFA creates an additional burden for users, and may cause them to disable MFA on the application. Risk based authentication can be used to reduce the frequency of MFA prompts, by only requiring MFA when the user is performing an action that is considered to be high risk. Some examples of this include:</p>
@@ -4473,8 +4551,8 @@
 </ul>
 <h2 id="something-you-have">Something You Have<a class="headerlink" href="#something-you-have" title="Permanent link">&para;</a></h2>
 <p>Possession-based authentication is based on the user having a physical or digital item that is required to authenticate. This is the most common form of MFA, and is often used in conjunction with passwords. The most common types of possession-based authentication are hardware and software tokens, and digital certificates. If properly implemented then this can be significantly more difficult for a remote attacker to compromise; however it also creates an additional administrative burden on the user, as they must keep the authentication factor with them whenever they wish to use it.</p>
-<h3 id="one-time-password-tokens">One Time Password Tokens<a class="headerlink" href="#one-time-password-tokens" title="Permanent link">&para;</a></h3>
-<p>One Time Password (OTP) tokens are a form of possession-based authentication, where the user is required to submit a constantly changing numeric code in order to authenticate. The most common of which is Time-based One Time Password (TOTP) tokens, which can be both hardware and software based.</p>
+<h3 id="one-time-password-tokens">One-Time Password Tokens<a class="headerlink" href="#one-time-password-tokens" title="Permanent link">&para;</a></h3>
+<p>One-Time Password (OTP) tokens are a form of possession-based authentication, where the user is required to submit a constantly changing numeric code in order to authenticate. The most common of which is Time-based One-Time Password (TOTP) tokens, which can be both hardware and software based.</p>
 <h4 id="hardware-otp-tokens">Hardware OTP Tokens<a class="headerlink" href="#hardware-otp-tokens" title="Permanent link">&para;</a></h4>
 <p>Hardware OTP Tokens generate a constantly changing numeric codes, which must be submitted when authenticating. Most well-known of these is the <a href="https://en.wikipedia.org/wiki/RSA_SecurID">RSA SecureID</a>, which generates a six digit number that changes every 60 seconds.</p>
 <h5 id="pros_2">Pros<a class="headerlink" href="#pros_2" title="Permanent link">&para;</a></h5>
@@ -4491,7 +4569,7 @@
 <li>Susceptible to phishing (although short-lived).</li>
 </ul>
 <h4 id="software-otp-tokens">Software OTP Tokens<a class="headerlink" href="#software-otp-tokens" title="Permanent link">&para;</a></h4>
-<p>A cheaper and easier alternative to hardware tokens is using software to generate Time-based One Time Password (TOTP) codes. This would typically involve the user installing a TOTP application on their mobile phone, and then scanning a QR code provided by the web application which provides the initial seed. The authenticator app then generates a six digit number every 60 seconds, in much the same way as a hardware token.</p>
+<p>A cheaper and easier alternative to hardware tokens is using software to generate Time-based One-Time Password (TOTP) codes. This would typically involve the user installing a TOTP application on their mobile phone, and then scanning a QR code provided by the web application which provides the initial seed. The authenticator app then generates a six digit number every 60 seconds, in much the same way as a hardware token.</p>
 <p>Most websites use standardized TOTP tokens, allowing the user to install any authenticator app that supports TOTP. However, a small number of applications use their own variants of this (such as Symantec), which requires the users to install a specific app in order to use the service. This should be avoided in favour of a standards-based approach.</p>
 <h5 id="pros_3">Pros<a class="headerlink" href="#pros_3" title="Permanent link">&para;</a></h5>
 <ul>
