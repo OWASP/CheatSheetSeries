@@ -53,7 +53,7 @@ CSRF tokens should be:
 
 CSRF tokens prevent CSRF because without a CSRF token, an attacker cannot create valid requests to the backend server.
 
-#### Transmissing CSRF Tokens in Synchronized Patterns
+#### Transmitting CSRF Tokens in Synchronized Patterns
 
 The CSRF token can be transmitted to the client as part of a response payload, such as a HTML or JSON response, then it can be transmitted back to the server as a hidden field on a form submission or via an AJAX request as a custom header value or part of a JSON payload. A CSRF token should not be transmitted in a cookie for synchronized patterns. A CSRF token must not be leaked in the server logs or in the URL. GET requests can potentially leak CSRF tokens at several locations, such as the browser history, log files, network utilities that log the first line of a HTTP request, and Referer headers if the protected site links to an external site.
 
