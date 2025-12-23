@@ -26,7 +26,7 @@ In short, the following principles should be followed to defend against CSRF:
 - **Do not use GET requests for state changing operations.**
 - **If for any reason you do it, protect those resources against CSRF**
 
-### Built-In Or Existing CSRF Implementations for CSRF Protection
+### Built-In Or Existing CSRF Implementations
 
 Before building a custom token or Fetch-Metadata implementation, check whether your framework or platform already provides CSRF protection you can use. Built-in defenses are generally preferable because they’re maintained by the framework authors and reduce the risk of subtle implementation mistakes. For example:
 
