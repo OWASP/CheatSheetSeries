@@ -166,7 +166,7 @@ The Fetch Metadata request headers are:
 - Sec-Fetch-Site — the primary signal for CSRF protection. It indicates the relationship between the request initiator’s origin and its target's origin: `same-origin`, `same-site`, `cross-site`, or `none`.
 - Sec-Fetch-Mode, Sec-Fetch-Dest, Sec-Fetch-User — additional headers that provide context about the request (such as the request mode, destination type, or whether it was triggered by a user navigation). More details are available in the [MDN documentation](https://developer.mozilla.org/en-US/docs/Glossary/Fetch_metadata_request_header).
 
-If any of headers above contain values not listed in the specification, in order to support forward-compatibility, servers should ignore those headers.
+If any of the headers above contain values not listed in the specification, in order to support forward-compatibility, servers should ignore those headers.
 
 ### Ease of use
 
@@ -209,7 +209,7 @@ For the rare cases of outdated or embedded browsers that lack `Sec-Fetch-*` supp
     const path = req.path;
     
     // Block if cross-site + unsafe method OR cross-site + sensitive endpoint
-    if (site === 'cross-site' && (! SAFE_METHODS.has(req.method) || SENSITIVE_ENDPOINTS.has(path))) {
+    if (site === 'cross-site' && (!SAFE_METHODS.has(req.method) || SENSITIVE_ENDPOINTS.has(path))) {
       return false; // forbid this request
     }
     ```
@@ -539,7 +539,7 @@ The exact syntax of populating the content attribute would depend on your web ap
 
 ### Overriding Defaults to Set Custom Header
 
-Several JavaScript libraries allow you to overriding default settings to have a header added automatically to all AJAX requests.
+Several JavaScript libraries allow you to override default settings to have a header added automatically to all AJAX requests.
 
 #### XMLHttpRequest (Native JavaScript)
 
