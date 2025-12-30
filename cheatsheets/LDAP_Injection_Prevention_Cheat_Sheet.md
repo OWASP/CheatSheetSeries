@@ -123,22 +123,21 @@ NamingEnumeration<SearchResult> results =
     ctx.search("ou=users,dc=example,dc=com", filter, new Object[]{ userInput }, controls);
 ```
 
-#### Safe C Sharp .NET TBA Example
+#### Safe C# .NET Libraries (2025)
 
-[.NET AntiXSS](https://blogs.msdn.microsoft.com/securitytools/2010/09/30/antixss-4-0-released/) (now the Encoder class) has LDAP encoding functions including `Encoder.LdapFilterEncode(string)`, `Encoder.LdapDistinguishedNameEncode(string)` and `Encoder.LdapDistinguishedNameEncode(string, bool, bool)`.
+| Library | .NET Support | NuGet | Notes |
+|---------|--------------|-------|-------|
+| [System.DirectoryServices.Protocols](https://learn.microsoft.com/en-us/dotnet/api/system.directoryservices.protocols) | .NET 8+ / Core | Official | Microsoft native |
+| [Novell.Directory.Ldap.NETStandard](https://www.nuget.org/packages/Novell.Directory.Ldap.NETStandard) | .NET Std 2.0+ | [NuGet](https://www.nuget.org/packages/Novell.Directory.Ldap.NETStandard) | Maintained |
+| [Sustainsys.S.DirectoryServices](https://www.nuget.org/packages/Sustainsys.S.DirectoryServices) | .NET 6+ | [NuGet](https://www.nuget.org/packages/Sustainsys.S.DirectoryServices) | Modern wrapper |
 
-`Encoder.LdapFilterEncode` encodes input according to [RFC4515](https://datatracker.ietf.org/doc/html/rfc4515) where unsafe values are converted to `\XX` where `XX` is the representation of the unsafe character.
+**Example:**
+var request = new SearchRequest(
+"dc=example,dc=com",
+$"(&(objectClass=person)(uid={userInput}))",
+SearchScope.Subtree
+);
 
-`Encoder.LdapDistinguishedNameEncode` encodes input according to [RFC2253](https://tools.ietf.org/html/rfc2253) where unsafe characters are converted to `#XX` where `XX` is the representation of the unsafe character and the comma, plus, quote, slash, less than and great than signs are escaped using slash notation (`\X`). In addition to this a space or octothorpe (`#`) at the beginning of the input string is `\` escaped as is a space at the end of a string.
-
-`LdapDistinguishedNameEncode(string, bool, bool)` is also provided so you may turn off the initial or final character escaping rules, for example if you are concatenating the escaped distinguished name fragment into the midst of a complete distinguished name.
-
-### Defense Option 2: Use Frameworks that Automatically Protect from LDAP Injection
-
-#### Safe .NET Example
-
-We recommend using [LINQ to LDAP](https://www.nuget.org/packages/LinqToLdap/) (for .NET Framework 4.5 or lower [until it has been updated](https://github.com/madhatter22/LinqToLdap/issues/31)) in DotNet. It provides automatic LDAP encoding when building LDAP queries.
-Contact the [Readme file](https://github.com/madhatter22/LinqToLdap/blob/master/README.md) in the project repository.
 
 ## Additional Defenses
 
