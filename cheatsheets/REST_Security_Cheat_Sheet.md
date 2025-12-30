@@ -124,7 +124,6 @@ without completing payment.
 - Are tokens reusable across workflow steps?
 - Are invalid state transitions consistently rejected?
 
-
 ## Input validation
 
 - Do not trust input parameters/objects.
