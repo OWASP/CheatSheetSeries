@@ -92,7 +92,7 @@ LLMs respond non-deterministically to variations. Simple modifications like rand
 - DAN (Do Anything Now) prompts that establish alternative personas
 - "Grandmother trick" using emotional manipulation
 - Hypothetical scenario framing to bypass content policies
-- See [Anthropic's mitigation strategies](https://docs.anthropic.com/en/docs/test-and-evaluate/strengthen-guardrails/mitigate-jailbreaks) for defenses
+- See [Anthropic's mitigation strategies](https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/mitigate-jailbreaks) for defenses
 
 ### Multi-Turn and Persistent Attacks
 
