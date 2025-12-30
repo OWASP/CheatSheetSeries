@@ -84,6 +84,7 @@ Modern REST APIs often implement business workflows through a sequence of endpoi
 ### Problem
 
 Out-of-order API execution occurs when an attacker:
+
 - Skips required workflow steps by directly calling later-stage endpoints
 - Replays or reuses tokens across workflow boundaries
 - Exploits assumptions that the frontend enforces correct sequencing
