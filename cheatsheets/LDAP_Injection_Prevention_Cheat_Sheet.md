@@ -131,13 +131,14 @@ NamingEnumeration<SearchResult> results =
 | [Novell.Directory.Ldap.NETStandard](https://www.nuget.org/packages/Novell.Directory.Ldap.NETStandard) | .NET Std 2.0+ | [NuGet](https://www.nuget.org/packages/Novell.Directory.Ldap.NETStandard) | Maintained |
 | [Sustainsys.S.DirectoryServices](https://www.nuget.org/packages/Sustainsys.S.DirectoryServices) | .NET 6+ | [NuGet](https://www.nuget.org/packages/Sustainsys.S.DirectoryServices) | Modern wrapper |
 
-**Example:**
+**Example (Secure - Parameterized):**
 var request = new SearchRequest(
-"dc=example,dc=com",
-$"(&(objectClass=person)(uid={userInput}))",
-SearchScope.Subtree
+    "dc=example,dc=com",
+    "(&(objectClass=person)(uid=?))",
+    SearchScope.Subtree
 );
-
+var filter = new EqualityFilter("uid", LdapEncoder.Escape(userInput));
+request.Filters.Add(filter);
 
 ## Additional Defenses
 
