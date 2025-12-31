@@ -77,6 +77,53 @@ API keys can reduce the impact of denial-of-service attacks. However, when they 
 
 In Java EE in particular, this can be difficult to implement properly. See [Bypassing Web Authentication and Authorization with HTTP Verb Tampering](../assets/REST_Security_Cheat_Sheet_Bypassing_VBAAC_with_HTTP_Verb_Tampering.pdf) for an explanation of this common misconfiguration.
 
+## Preventing Out-of-Order API Execution
+
+Modern REST APIs often implement business workflows through a sequence of endpoints (for example, create → validate → approve → finalize). If the backend does not explicitly validate workflow state transitions, attackers may invoke endpoints out of sequence to bypass intended controls.
+
+### Problem
+
+Out-of-order API execution occurs when an attacker:
+
+- Skips required workflow steps by directly calling later-stage endpoints
+- Replays or reuses tokens across workflow boundaries
+- Exploits assumptions that the frontend enforces correct sequencing
+
+Because each endpoint may be individually authenticated and authorized, traditional access control checks often fail to detect these issues.
+
+### Example
+
+A checkout workflow expects the following sequence:
+
+```http
+POST /checkout/create
+POST /checkout/pay
+POST /checkout/confirm
+```
+
+If the backend does not validate workflow state transitions, an attacker could directly invoke:
+
+```http
+POST /checkout/confirm
+```
+
+without completing payment.
+
+### Prevention Guidance
+
+- Enforce workflow state validation on the server side for every request
+- Model workflows explicitly using finite states or state machines
+- Bind tokens or identifiers to specific workflow stages
+- Avoid relying on frontend logic to enforce sequencing
+- Reject invalid or out-of-order transitions with clear error responses
+
+### Testing Checklist
+
+- Can endpoints be invoked out of sequence?
+- Does each endpoint validate the current workflow state?
+- Are tokens reusable across workflow steps?
+- Are invalid state transitions consistently rejected?
+
 ## Input validation
 
 - Do not trust input parameters/objects.
