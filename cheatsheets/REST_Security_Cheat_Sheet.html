@@ -2048,6 +2048,57 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#preventing-out-of-order-api-execution" class="md-nav__link">
+    <span class="md-ellipsis">
+      Preventing Out-of-Order API Execution
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Preventing Out-of-Order API Execution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      Problem
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prevention-guidance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prevention Guidance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testing-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing Checklist
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#input-validation" class="md-nav__link">
     <span class="md-ellipsis">
       Input validation
@@ -2963,6 +3014,57 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#preventing-out-of-order-api-execution" class="md-nav__link">
+    <span class="md-ellipsis">
+      Preventing Out-of-Order API Execution
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Preventing Out-of-Order API Execution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      Problem
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prevention-guidance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prevention Guidance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testing-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing Checklist
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#input-validation" class="md-nav__link">
     <span class="md-ellipsis">
       Input validation
@@ -3144,6 +3246,41 @@
 <li>Make sure the caller is authorised to use the incoming HTTP method on the resource collection, action, and record</li>
 </ul>
 <p>In Java EE in particular, this can be difficult to implement properly. See <a href="../assets/REST_Security_Cheat_Sheet_Bypassing_VBAAC_with_HTTP_Verb_Tampering.pdf">Bypassing Web Authentication and Authorization with HTTP Verb Tampering</a> for an explanation of this common misconfiguration.</p>
+<h2 id="preventing-out-of-order-api-execution">Preventing Out-of-Order API Execution<a class="headerlink" href="#preventing-out-of-order-api-execution" title="Permanent link">&para;</a></h2>
+<p>Modern REST APIs often implement business workflows through a sequence of endpoints (for example, create → validate → approve → finalize). If the backend does not explicitly validate workflow state transitions, attackers may invoke endpoints out of sequence to bypass intended controls.</p>
+<h3 id="problem">Problem<a class="headerlink" href="#problem" title="Permanent link">&para;</a></h3>
+<p>Out-of-order API execution occurs when an attacker:</p>
+<ul>
+<li>Skips required workflow steps by directly calling later-stage endpoints</li>
+<li>Replays or reuses tokens across workflow boundaries</li>
+<li>Exploits assumptions that the frontend enforces correct sequencing</li>
+</ul>
+<p>Because each endpoint may be individually authenticated and authorized, traditional access control checks often fail to detect these issues.</p>
+<h3 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h3>
+<p>A checkout workflow expects the following sequence:</p>
+<div class="highlight"><pre><span></span><code><span class="err">POST /checkout/create</span>
+<span class="err">POST /checkout/pay</span>
+<span class="err">POST /checkout/confirm</span>
+</code></pre></div>
+<p>If the backend does not validate workflow state transitions, an attacker could directly invoke:</p>
+<div class="highlight"><pre><span></span><code><span class="err">POST /checkout/confirm</span>
+</code></pre></div>
+<p>without completing payment.</p>
+<h3 id="prevention-guidance">Prevention Guidance<a class="headerlink" href="#prevention-guidance" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Enforce workflow state validation on the server side for every request</li>
+<li>Model workflows explicitly using finite states or state machines</li>
+<li>Bind tokens or identifiers to specific workflow stages</li>
+<li>Avoid relying on frontend logic to enforce sequencing</li>
+<li>Reject invalid or out-of-order transitions with clear error responses</li>
+</ul>
+<h3 id="testing-checklist">Testing Checklist<a class="headerlink" href="#testing-checklist" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Can endpoints be invoked out of sequence?</li>
+<li>Does each endpoint validate the current workflow state?</li>
+<li>Are tokens reusable across workflow steps?</li>
+<li>Are invalid state transitions consistently rejected?</li>
+</ul>
 <h2 id="input-validation">Input validation<a class="headerlink" href="#input-validation" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Do not trust input parameters/objects.</li>
