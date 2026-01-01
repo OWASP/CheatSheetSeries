@@ -31,7 +31,8 @@ This cheat sheet provides best practices to secure multi-tenant applications, en
 - Bind tenant context to the authenticated user session.
 - Propagate tenant context securely through all application layers.
 
-#### Bad: Trusting client-supplied tenant ID
+<details>
+<summary>Bad example: Trusting client-supplied tenant ID</summary>
 
 ```python
 # Dangerous: Tenant ID from request header without validation/query parameterization
@@ -40,7 +41,10 @@ def get_tenant_data(request):
     return db.execute("SELECT * FROM data WHERE tenant_id = :tid", {"tid": tenant_id})
 ```
 
-#### Good: Deriving tenant from authenticated session
+</details>
+
+<details>
+<summary>Good example: Deriving tenant from authenticated session</summary>
 
 ```python
 from functools import wraps
@@ -99,6 +103,8 @@ def require_tenant(func):
     return wrapper
 ```
 
+</details>
+
 ### 2. Database Isolation Strategies
 
 Choose an isolation strategy based on security requirements, compliance needs, and operational complexity:
@@ -110,7 +116,8 @@ Choose an isolation strategy based on security requirements, compliance needs, a
 | Shared Tables (Row-Level) | Medium | Cost-sensitive, high tenant count |
 | Hybrid | Variable | Different tiers for different customers |
 
-#### Row-Level Security Implementation (PostgreSQL)
+<details>
+<summary>Row-Level Security Implementation (PostgreSQL)</summary>
 
 ```sql
 -- Enable RLS on tenant tables
@@ -131,7 +138,10 @@ ALTER TABLE orders FORCE ROW LEVEL SECURITY;
 ALTER TABLE customers FORCE ROW LEVEL SECURITY;
 ```
 
-#### Application-Level Enforcement (Python/SQLAlchemy)
+</details>
+
+<details>
+<summary>Application-Level Enforcement (Python/SQLAlchemy)</summary>
 
 ```python
 from sqlalchemy import event, Column, String
@@ -200,6 +210,8 @@ def tenant_session(tenant_id: str):
         session.close()
 ```
 
+</details>
+
 ### 3. Preventing Cross-Tenant Data Access (IDOR Prevention)
 
 - Always validate that requested resources belong to the current tenant.
@@ -207,7 +219,8 @@ def tenant_session(tenant_id: str):
 - Implement authorization checks at the data access layer, not just API layer.
 - Avoid exposing sequential or guessable IDs.
 
-#### Bad: Direct object reference without tenant validation
+<details>
+<summary>Bad example: Direct object reference without tenant validation</summary>
 
 ```python
 # Dangerous: Only checks resource_id, not tenant ownership
@@ -219,7 +232,10 @@ async def get_document(document_id: str):
     return doc  # Could return another tenant's document!
 ```
 
-#### Good: Tenant-scoped resource access
+</details>
+
+<details>
+<summary>Good example: Tenant-scoped resource access</summary>
 
 ```python
 from uuid import UUID
@@ -283,6 +299,8 @@ async def get_document(document_id: UUID, db: Session = Depends(get_db)):
     return doc
 ```
 
+</details>
+
 ### 4. Cache & Session Isolation
 
 - Prefix all cache keys with tenant identifier.
@@ -290,7 +308,8 @@ async def get_document(document_id: UUID, db: Session = Depends(get_db)):
 - Implement cache key validation to prevent injection.
 - Set appropriate TTLs and validate tenant on cache retrieval.
 
-#### Bad: Shared cache without tenant isolation
+<details>
+<summary>Bad example: Shared cache without tenant isolation</summary>
 
 ```python
 # Dangerous: Cache key collision between tenants
@@ -302,7 +321,10 @@ def get_user_preferences(user_id: str):
     # ...
 ```
 
-#### Good: Tenant-isolated caching
+</details>
+
+<details>
+<summary>Good example: Tenant-isolated caching</summary>
 
 ```python
 import hashlib
@@ -393,6 +415,8 @@ async def get_user_preferences(user_id: str):
     return await db.fetch_preferences(user_id)
 ```
 
+</details>
+
 ### 5. API Security & Rate Limiting
 
 - Implement per-tenant rate limiting and quotas.
@@ -401,7 +425,8 @@ async def get_user_preferences(user_id: str):
 - Use separate API keys per tenant.
 - Implement tenant-aware request signing for B2B APIs.
 
-#### Tenant-Aware Rate Limiting
+<details>
+<summary>Tenant-Aware Rate Limiting</summary>
 
 ```python
 import time
@@ -509,6 +534,8 @@ class RateLimitMiddleware:
         return response
 ```
 
+</details>
+
 ### 6. File Storage & Blob Isolation
 
 - Use tenant-prefixed paths for all file storage.
@@ -517,7 +544,8 @@ class RateLimitMiddleware:
 - Use signed URLs with tenant context embedded.
 - Encrypt files at rest with tenant-specific keys (for high-security requirements).
 
-#### Secure Multi-Tenant File Storage
+<details>
+<summary>Secure Multi-Tenant File Storage</summary>
 
 ```python
 import boto3
@@ -621,6 +649,8 @@ class TenantFileStorage:
                 )
 ```
 
+</details>
+
 ### 7. Tenant Onboarding & Offboarding Security
 
 - Implement secure tenant provisioning with isolated resources.
@@ -629,7 +659,8 @@ class TenantFileStorage:
 - Maintain audit trail of provisioning/deprovisioning.
 - Implement data export for tenant portability.
 
-#### Secure Tenant Lifecycle Management
+<details>
+<summary>Secure Tenant Lifecycle Management</summary>
 
 ```python
 from dataclasses import dataclass
@@ -781,6 +812,8 @@ class TenantLifecycleManager:
         await self.audit.log("tenant_deletion_completed", {"tenant_id": tenant_id})
 ```
 
+</details>
+
 ### 8. Logging, Monitoring & Audit
 
 - Include tenant context in all log entries.
@@ -789,7 +822,8 @@ class TenantLifecycleManager:
 - Set up alerts for tenant isolation violations.
 - Ensure compliance with tenant-specific retention policies.
 
-#### Tenant-Aware Logging & Monitoring
+<details>
+<summary>Tenant-Aware Logging & Monitoring</summary>
 
 ```python
 import structlog
@@ -915,6 +949,8 @@ class CrossTenantAccessMonitor:
             
             raise SecurityException("Access denied: resource belongs to different tenant")
 ```
+
+</details>
 
 ## Do's and Don'ts
 
