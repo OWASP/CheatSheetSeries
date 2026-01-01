@@ -1,4 +1,6 @@
-# ASVS Index
+# ASVS 5.0 Index
+This index is based on OWASP Application Security Verification Standard (ASVS) version 5.0.
+
 
 ## Table of Contents
 
@@ -93,7 +95,7 @@
 
 The objective of this index is to help an OWASP [Application Security Verification Standard](https://owasp.org/www-project-application-security-verification-standard/) (ASVS) user clearly identify which cheat sheets are useful for each section during his or her usage of the ASVS.
 
-This index is based on the version 4.0.x of the ASVS.
+This index is based on the version 5.0 of the ASVS.
 
 ## V1: Architecture, Design and Threat Modeling Requirements
 
