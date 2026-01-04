@@ -127,11 +127,13 @@ NamingEnumeration<SearchResult> results =
 
 | Library | .NET Support | NuGet | Notes |
 |---------|--------------|-------|-------|
-| [System.DirectoryServices.Protocols](https://learn.microsoft.com/en-us/dotnet/api/system.directoryservices.protocols) | .NET 8+ / Core | Official | Microsoft native |
-| [Novell.Directory.Ldap.NETStandard](https://www.nuget.org/packages/Novell.Directory.Ldap.NETStandard) | .NET Std 2.0+ | [NuGet](https://www.nuget.org/packages/Novell.Directory.Ldap.NETStandard) | Maintained |
-| [Sustainsys.S.DirectoryServices](https://www.nuget.org/packages/Sustainsys.S.DirectoryServices) | .NET 6+ | [NuGet](https://www.nuget.org/packages/Sustainsys.S.DirectoryServices) | Modern wrapper |
+| [System.DirectoryServices.Protocols](https://learn.microsoft.com/en-us/dotnet/api/system.directoryservices.protocols) | .NET 6-10 / Core | [Official](https://www.nuget.org/packages/System.DirectoryServices.Protocols/) | Microsoft LDAP v3 |
+| [System.DirectoryServices](https://www.nuget.org/packages/system.directoryservices/) | .NET 6-10 | [NuGet](https://www.nuget.org/packages/system.directoryservices/) | Active Directory access |
+| [Novell.Directory.Ldap.NETStandard](https://www.nuget.org/packages/Novell.Directory.Ldap.NETStandard) | .NET Std 2.0+ | [NuGet](https://www.nuget.org/packages/Novell.Directory.Ldap.NETStandard) | Cross-platform LDAP |
 
 **Example (Secure - Parameterized):**
+
+```csharp
 var request = new SearchRequest(
     "dc=example,dc=com",
     "(&(objectClass=person)(uid=?))",
@@ -139,6 +141,7 @@ var request = new SearchRequest(
 );
 var filter = new EqualityFilter("uid", LdapEncoder.Escape(userInput));
 request.Filters.Add(filter);
+```
 
 ## Additional Defenses
 
