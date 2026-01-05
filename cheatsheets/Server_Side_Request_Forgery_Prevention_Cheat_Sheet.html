@@ -2411,6 +2411,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#deny-list-last-resort" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deny-list (Last Resort)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#semgrep-rules" class="md-nav__link">
     <span class="md-ellipsis">
       Semgrep Rules
@@ -3191,6 +3200,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#deny-list-last-resort" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deny-list (Last Resort)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#semgrep-rules" class="md-nav__link">
     <span class="md-ellipsis">
       Semgrep Rules
@@ -3509,6 +3527,49 @@ The user leverages the web application as a proxy to the HR system.</p>
 <p>In cloud environments SSRF is often used to access and steal credentials and access tokens from metadata services (e.g. AWS Instance Metadata Service, Azure Instance Metadata Service, GCP metadata server).</p>
 <p><a href="https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service/">IMDSv2</a> is an additional defence-in-depth mechanism for AWS that mitigates some of the instances of SSRF.</p>
 <p>To leverage this protection migrate to IMDSv2 and disable old IMDSv1. Check out <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html">AWS documentation</a> for more details.</p>
+<h2 id="deny-list-last-resort">Deny-list (Last Resort)<a class="headerlink" href="#deny-list-last-resort" title="Permanent link">&para;</a></h2>
+<p><strong>Deny-lists are bypass-prone. Prefer allow-lists.</strong></p>
+<p><strong>When unavoidable, block these minimum ranges:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Block IPs/Domains</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>AWS IMDS</strong></td>
+<td><code>169.254.169.254</code>, <code>metadata.amazonaws.com</code></td>
+</tr>
+<tr>
+<td><strong>GCP Metadata</strong></td>
+<td><code>metadata.google.internal</code>, <code>169.254.169.254</code></td>
+</tr>
+<tr>
+<td><strong>Azure IMDS</strong></td>
+<td><code>169.254.169.254</code></td>
+</tr>
+<tr>
+<td><strong>Localhost</strong></td>
+<td><code>127.0.0.0/8</code>, <code>0.0.0.0/8</code>, <code>::1/128</code></td>
+</tr>
+<tr>
+<td><strong>RFC1918 Private</strong></td>
+<td><code>10.0.0.0/8</code>, <code>172.16.0.0/12</code>, <code>192.168.0.0/16</code></td>
+</tr>
+<tr>
+<td><strong>Multicast</strong></td>
+<td><code>224.0.0.0/4</code>, <code>ff00::/8</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Full production example:</strong> <a href="https://github.com/cc-tweaked/CC-Tweaked/blob/b9ed66983d714bcb5c6bf15b428e01a035106dbf/projects/core/src/main/java/dan200/computercraft/core/apis/http/options/AddressPredicate.java#L112-L157">ComputerCraft SSRF deny-list</a></p>
+<p><strong>Sources:</strong></p>
+<ul>
+<li><a href="https://www.iana.org/assignments/iana-ipv4-special-registry/iana-ipv4-special-registry.xhtml">IANA IPv4 Special Registry</a></li>
+<li><a href="https://www.iana.org/assignments/iana-ipv6-special-registry/iana-ipv6-special-registry.xhtml">IANA IPv6 Special Registry</a></li>
+</ul>
 <h2 id="semgrep-rules">Semgrep Rules<a class="headerlink" href="#semgrep-rules" title="Permanent link">&para;</a></h2>
 <p><a href="https://semgrep.dev/">Semgrep</a> is a command-line tool for offline static analysis. Use pre-built or custom rules to enforce code and security standards in your codebase.
 Explore the <a href="https://semgrep.dev/r?q=ssrf">Semgrep rules</a> for SSRF to effectively identify and investigate potential SSRF vulnerabilities.</p>
