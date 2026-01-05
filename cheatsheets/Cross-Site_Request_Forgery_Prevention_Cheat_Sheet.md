@@ -420,26 +420,39 @@ Set-Cookie: JSESSIONID=xxxxx; SameSite=Lax
 All modern desktop and mobile browsers support the `SameSite` attribute. The main exceptions are legacy browsers including Opera Mini (all versions), UC Browser for Android, and older mobile browsers (iOS Safari < 13.2, Android Browser < 97). To track the browsers implementing it and know how the attribute is used, refer to the following [service](https://caniuse.com/#feat=same-site-cookie-attribute). Chrome implemented `SameSite=Lax` as the default behavior in 2020, and Firefox and Edge have followed suit. Additionally, the `Secure` flag is required for cookies that are marked as `SameSite=None`.
 
 It is important to note that this attribute should be implemented as an additional layer _defense in depth_ concept. This attribute protects the user through the browsers supporting it, and it contains as well 2 ways to bypass it as mentioned in the following [section](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7.1). This attribute should not replace a CSRF Token. Instead, it should co-exist with that token to protect  the user in a more robust way.
-### Same-Site CSRF via User-Generated Content
+### Same-Site Request Risks Involving User-Generated Content
+
+> **Note:** While this scenario is technically enabled by Cross-Site Scripting
+> (XSS) or content injection, it is discussed here because it can undermine CSRF
+> defenses that rely solely on SameSite cookies.
 
 SameSite cookies are a defense-in-depth mechanism and do not eliminate all CSRF
-risks. In particular, same-site CSRF can still occur when user-generated content
-is rendered within an application.
+risks. In particular, applications that render user-generated content within the
+same site may still allow authenticated, state-changing requests to be triggered
+in unintended ways.
 
-In scenarios such as forum posts, comments, or rich-text content, an attacker
-may be able to inject markup or declarative JavaScript that triggers
-state-changing requests on behalf of another user within the same site.
+When user-controlled content is rendered without strong isolation (for example,
+in forums, comments, or rich-text fields), it may be possible for that content to
+initiate same-origin requests. In such cases, the browser will include session
+cookies, and SameSite restrictions alone are insufficient to reliably indicate
+user intent.
 
 This risk is especially relevant when:
+
 - State-changing actions are exposed via GET requests
-- Declarative JavaScript frameworks are used (e.g., htmx, Alpine, Datastar)
-- User-generated content is not fully isolated from application logic
+- Declarative or client-side JavaScript frameworks are used
+  (e.g., htmx, Alpine, Datastar)
+- User-generated content is not isolated from application logic
+- SameSite cookies are treated as a primary CSRF mitigation
 
 To mitigate these risks:
+
 - **GET requests must never mutate application state**
-- **CSRF tokens should be required for all state-changing requests**
-- **SameSite cookies and Fetch Metadata should be treated as defense-in-depth,
-  not as replacements for CSRF tokens**
+- **CSRF tokens must be required for all state-changing requests**
+- **User-generated content should be properly sanitized or isolated**
+- **SameSite cookies and Fetch Metadata headers should be treated strictly as
+  defense-in-depth mechanisms, not as replacements for CSRF tokens**
+
 
 SameSite cookies alone do not fully protect against same-site CSRF scenarios,
 particularly when malicious user-generated content is rendered within the application.
