@@ -316,6 +316,28 @@ In cloud environments SSRF is often used to access and steal credentials and acc
 
 To leverage this protection migrate to IMDSv2 and disable old IMDSv1. Check out [AWS documentation](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html) for more details.
 
+## Deny-list (Last Resort)
+
+**Deny-lists are bypass-prone. Prefer allow-lists.**
+
+**When unavoidable, block these minimum ranges:**
+
+| Service | Block IPs/Domains |
+|---------|-------------------|
+| **AWS IMDS** | `169.254.169.254`, `metadata.amazonaws.com` |
+| **GCP Metadata** | `metadata.google.internal`, `169.254.169.254` |
+| **Azure IMDS** | `169.254.169.254` |
+| **Localhost** | `127.0.0.0/8`, `0.0.0.0/8`, `::1/128` |
+| **RFC1918 Private** | `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16` |
+| **Multicast** | `224.0.0.0/4`, `ff00::/8` |
+
+**Full production example:** [ComputerCraft SSRF deny-list](https://github.com/cc-tweaked/CC-Tweaked/blob/b9ed66983d714bcb5c6bf15b428e01a035106dbf/projects/core/src/main/java/dan200/computercraft/core/apis/http/options/AddressPredicate.java#L112-L157)
+
+**Sources:**
+
+- [IANA IPv4 Special Registry](https://www.iana.org/assignments/iana-ipv4-special-registry/iana-ipv4-special-registry.xhtml)
+- [IANA IPv6 Special Registry](https://www.iana.org/assignments/iana-ipv6-special-registry/iana-ipv6-special-registry.xhtml)
+
 ## Semgrep Rules
 
 [Semgrep](https://semgrep.dev/) is a command-line tool for offline static analysis. Use pre-built or custom rules to enforce code and security standards in your codebase.
