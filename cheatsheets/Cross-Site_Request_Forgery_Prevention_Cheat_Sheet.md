@@ -196,7 +196,7 @@ For the rare cases of outdated or embedded browsers that lack `Sec-Fetch-*` supp
     ```JavaScript
     const SAFE_METHODS = new Set(['GET','HEAD','OPTIONS']);
     const site = req.get('Sec-Fetch-Site'); // e.g. 'cross-site','same-site','same-origin','none'
-    
+
     if (site === 'cross-site' && !SAFE_METHODS.has(req.method)) {
       return false; // forbid this request
     }
@@ -210,10 +210,10 @@ For the rare cases of outdated or embedded browsers that lack `Sec-Fetch-*` supp
       '/user/profile',
       '/account/details',
     ]);
-    
+
     const site = req.get('Sec-Fetch-Site');
     const path = req.path;
-    
+
     // Block if cross-site + unsafe method OR cross-site + sensitive endpoint
     if (site === 'cross-site' && (!SAFE_METHODS.has(req.method) || SENSITIVE_ENDPOINTS.has(path))) {
       return false; // forbid this request
@@ -224,7 +224,7 @@ For the rare cases of outdated or embedded browsers that lack `Sec-Fetch-*` supp
 
     ```JavaScript
     const trustSameSite = false; // set true only if you trust sibling subdomains
-    
+
     if (site === 'same-origin') {
       return true;
     } else if (site === 'same-site') {
@@ -451,9 +451,8 @@ To mitigate these risks:
 - **CSRF tokens must be required for all state-changing requests**
 - **User-generated content should be properly sanitized or isolated**
 - **SameSite cookies and Fetch Metadata headers should be treated strictly as
-  defense-in-depth mechanisms, not as replacements for CSRF tokens**
-
-
+  defense-in-depth mechanisms**
+- **They must not be used as replacements for CSRF tokens**
 SameSite cookies alone do not fully protect against same-site CSRF scenarios,
 particularly when malicious user-generated content is rendered within the application.
 
@@ -653,7 +652,7 @@ const getCsrfToken = () => {
   const tokenCookie = document.cookie
     .split('; ')
     .find(cookie => cookie.startsWith('XSRF-TOKEN='));
-  
+
   return tokenCookie ? tokenCookie.split('=')[1] : '';
 };
 
@@ -933,7 +932,7 @@ function getCsrfToken(cookieName: string): string {
   const tokenCookie = document.cookie
     .split('; ')
     .find(cookie => cookie.startsWith(`${cookieName}=`));
-  
+
   return tokenCookie ? tokenCookie.split('=')[1] : '';
 }
 
@@ -948,7 +947,7 @@ function getCsrfToken(cookieName: string): string {
 
 // In a React component:
 // import { api } from './api';
-// 
+//
 // function UserProfile() {
 //   const updateUser = async (userData: UserData) => {
 //     try {
@@ -959,7 +958,7 @@ function getCsrfToken(cookieName: string): string {
 //       console.error('Failed to update profile', error);
 //     }
 //   };
-//   
+//
 //   // Rest of component...
 // }
 ```
@@ -997,7 +996,7 @@ export class CSRFProtectedFetch {
    * Performs a fetch request with CSRF protection
    */
   public async fetch<T>(
-    url: string, 
+    url: string,
     options: RequestInit = {}
   ): Promise<T> {
     const { method = 'GET' } = options;
@@ -1060,7 +1059,7 @@ export class CSRFProtectedFetch {
 //   baseUrl: '/api',
 //   csrfHeaderName: 'X-CSRF-Token'
 // });
-// 
+//
 // // In React component
 // const updateUser = async (userData: UserData) => {
 //   try {
