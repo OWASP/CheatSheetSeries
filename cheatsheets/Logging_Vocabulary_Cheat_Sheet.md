@@ -52,6 +52,7 @@ In order to better understand security event logging a good high-level understan
 Some languages have libraries which ease the job of adopting this logging vocabulary in applications:
 
 - Python: [lucabello/owasp-logger](https://github.com/lucabello/owasp-logger)
+- C#/.NET: [byteguard-hq/byteguard-security-logger](https://github.com/ByteGuard-HQ/byteguard-security-logger)
 
 ## Format
 
