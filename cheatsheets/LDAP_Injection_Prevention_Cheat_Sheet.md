@@ -123,24 +123,40 @@ NamingEnumeration<SearchResult> results =
     ctx.search("ou=users,dc=example,dc=com", filter, new Object[]{ userInput }, controls);
 ```
 
-#### Safe C# .NET Libraries (2025)
+#### Safe C# .NET Libraries
 
 | Library | .NET Support | NuGet | Notes |
 |---------|--------------|-------|-------|
-| [System.DirectoryServices.Protocols](https://learn.microsoft.com/en-us/dotnet/api/system.directoryservices.protocols) | .NET 6-10 / Core | [Official](https://www.nuget.org/packages/System.DirectoryServices.Protocols/) | Microsoft LDAP v3 |
-| [System.DirectoryServices](https://www.nuget.org/packages/system.directoryservices/) | .NET 6-10 | [NuGet](https://www.nuget.org/packages/system.directoryservices/) | Active Directory access |
+| [System.DirectoryServices.Protocols](https://learn.microsoft.com/en-us/dotnet/api/system.directoryservices.protocols) | .NET 6+ / Core | [Official](https://www.nuget.org/packages/System.DirectoryServices.Protocols/) | Microsoft LDAP v3 |
+| [System.DirectoryServices](https://learn.microsoft.com/en-us/dotnet/api/system.directoryservices) | .NET 6+ | [NuGet](https://www.nuget.org/packages/system.directoryservices/) | Active Directory access |
 | [Novell.Directory.Ldap.NETStandard](https://www.nuget.org/packages/Novell.Directory.Ldap.NETStandard) | .NET Std 2.0+ | [NuGet](https://www.nuget.org/packages/Novell.Directory.Ldap.NETStandard) | Cross-platform LDAP |
 
-**Example (Secure - Parameterized):**
+**Security Note:** None of these .NET LDAP libraries provide automatic input escaping. You MUST manually escape user input using RFC 4515 encoding before constructing LDAP filter strings.
+
+**Example (Secure - RFC 4515 Escaping):**
 
 ```csharp
+// Manual LDAP filter escaping per RFC 4515
+public static string EscapeLdapFilterValue(string value)
+{
+    if (string.IsNullOrEmpty(value))
+        return string.Empty;
+    
+    return value
+        .Replace("\\", "\\5c")
+        .Replace("*", "\\2a")
+        .Replace("(", "\\28")
+        .Replace(")", "\\29")
+        .Replace("\0", "\\00");
+}
+
+// Usage with System.DirectoryServices.Protocols
+var escapedUid = EscapeLdapFilterValue(userInput);
 var request = new SearchRequest(
     "dc=example,dc=com",
-    "(&(objectClass=person)(uid=?))",
+    $"(&(objectClass=person)(uid={escapedUid}))",
     SearchScope.Subtree
 );
-var filter = new EqualityFilter("uid", LdapEncoder.Escape(userInput));
-request.Filters.Add(filter);
 ```
 
 ## Additional Defenses
