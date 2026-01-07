@@ -1719,6 +1719,93 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="X-Robots-Tag">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recommendation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#x-dns-prefetch-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      X-DNS-Prefetch-Control
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="X-DNS-Prefetch-Control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recommendation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#public-key-pins-hpkp" class="md-nav__link">
+    <span class="md-ellipsis">
+      Public-Key-Pins (HPKP)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Public-Key-Pins (HPKP)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recommendation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-http-headers-in-different-technologies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Adding HTTP Headers in Different Technologies
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Adding HTTP Headers in Different Technologies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#php" class="md-nav__link">
+    <span class="md-ellipsis">
+      PHP
+    </span>
+  </a>
+  
 </li>
         
           <li class="md-nav__item">
@@ -3828,6 +3915,93 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="X-Robots-Tag">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recommendation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#x-dns-prefetch-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      X-DNS-Prefetch-Control
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="X-DNS-Prefetch-Control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recommendation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#public-key-pins-hpkp" class="md-nav__link">
+    <span class="md-ellipsis">
+      Public-Key-Pins (HPKP)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Public-Key-Pins (HPKP)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recommendation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-http-headers-in-different-technologies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Adding HTTP Headers in Different Technologies
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Adding HTTP Headers in Different Technologies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#php" class="md-nav__link">
+    <span class="md-ellipsis">
+      PHP
+    </span>
+  </a>
+  
 </li>
         
           <li class="md-nav__item">
@@ -4119,59 +4293,50 @@
 <li><em>NOTE</em>: Remember that attackers have other means of fingerprinting your tech stack.</li>
 </ul>
 <h3 id="x-robots-tag">X-Robots-Tag<a class="headerlink" href="#x-robots-tag" title="Permanent link">&para;</a></h3>
-<p>The HTTP <code>X-Robots-Tag</code> response header controls how search engines and other automated crawlers index and display resources such as PDFs, images, and other non-HTML content.<br />
+<p>The HTTP <code>X-Robots-Tag</code> response header controls how search engines and other automated crawlers index and display resources such as PDFs, images, and other non-HTML content.
 It functions similarly to the <code>&lt;meta name="robots"&gt;</code> tag, but is applied via the HTTP response header, allowing greater flexibility (e.g., for non-HTML files or server-wide rules).</p>
 <div class="highlight"><pre><span></span><code>X-Robots-Tag: noindex, nofollow
-````
-
-- **Note:** Only compliant crawlers respect these directives, and they must still make an HTTP request to read the headers before deciding how to handle the content.
-
-#### Recommendation
-
-Use the `X-Robots-Tag` header to control crawler behavior:
-
-- For **private or sensitive content** you don’t want indexed:
-
-  &gt; `X-Robots-Tag: noindex, nofollow`
-  &gt; This prevents compliant search engines from indexing the resource or following links on it.
-
-- For **public content** you want indexed and discoverable (e.g., documentation, datasets):
-
-  &gt; `X-Robots-Tag: index, follow`
-  &gt; This allows search engines to index the resource and follow its links.
-
-You can also use other directives such as `noarchive`, `nosnippet`, or `noimageindex` depending on your needs.
-Server configuration can apply this header selectively — for example, only on specific file types (like PDFs or images).
-
-### X-DNS-Prefetch-Control
-
-The `X-DNS-Prefetch-Control` HTTP response header controls DNS prefetching, a feature by which browsers proactively perform domain name resolution on both links that the user may choose to follow as well as URLs for items referenced by the document, including images, CSS, JavaScript, and so forth.
-
-#### Recommendation
-
-The default behavior of browsers is to perform DNS caching which is good for most websites.
-If you do not control links on your website, you might want to set `off` as a value to disable DNS prefetch to avoid leaking information to those domains.
-
-&gt; `X-DNS-Prefetch-Control: off`
-
-- *NOTE*: Do not rely on this functionality for anything production sensitive: it is not standard or fully supported and implementation may vary among browsers.
-
-### Public-Key-Pins (HPKP)
-
-The HTTP `Public-Key-Pins` response header is used to associate a specific cryptographic public key with a certain web server to decrease the risk of MITM attacks with forged certificates.
-
-#### Recommendation
-
-This header is deprecated and should not be used anymore.
-
-## Adding HTTP Headers in Different Technologies
-
-### PHP
-
-The sample code below sets the `X-Frame-Options` header in PHP.
-
-```php
-header(&quot;X-Frame-Options: DENY&quot;);
+</code></pre></div>
+<ul>
+<li><strong>Note:</strong> Only compliant crawlers respect these directives, and they must still make an HTTP request to read the headers before deciding how to handle the content.</li>
+</ul>
+<h4 id="recommendation_19">Recommendation<a class="headerlink" href="#recommendation_19" title="Permanent link">&para;</a></h4>
+<p>Use the <code>X-Robots-Tag</code> header to control crawler behavior:</p>
+<ul>
+<li>For <strong>private or sensitive content</strong> you don’t want indexed:</li>
+</ul>
+<blockquote>
+<p><code>X-Robots-Tag: noindex, nofollow</code>
+This prevents compliant search engines from indexing the resource or following links on it.</p>
+</blockquote>
+<ul>
+<li>For <strong>public content</strong> you want indexed and discoverable (e.g., documentation, datasets):</li>
+</ul>
+<blockquote>
+<p><code>X-Robots-Tag: index, follow</code>
+This allows search engines to index the resource and follow its links.</p>
+</blockquote>
+<p>You can also use other directives such as <code>noarchive</code>, <code>nosnippet</code>, or <code>noimageindex</code> depending on your needs.
+Server configuration can apply this header selectively — for example, only on specific file types (like PDFs or images).</p>
+<h3 id="x-dns-prefetch-control">X-DNS-Prefetch-Control<a class="headerlink" href="#x-dns-prefetch-control" title="Permanent link">&para;</a></h3>
+<p>The <code>X-DNS-Prefetch-Control</code> HTTP response header controls DNS prefetching, a feature by which browsers proactively perform domain name resolution on both links that the user may choose to follow as well as URLs for items referenced by the document, including images, CSS, JavaScript, and so forth.</p>
+<h4 id="recommendation_20">Recommendation<a class="headerlink" href="#recommendation_20" title="Permanent link">&para;</a></h4>
+<p>The default behavior of browsers is to perform DNS caching which is good for most websites.
+If you do not control links on your website, you might want to set <code>off</code> as a value to disable DNS prefetch to avoid leaking information to those domains.</p>
+<blockquote>
+<p><code>X-DNS-Prefetch-Control: off</code></p>
+</blockquote>
+<ul>
+<li><em>NOTE</em>: Do not rely on this functionality for anything production sensitive: it is not standard or fully supported and implementation may vary among browsers.</li>
+</ul>
+<h3 id="public-key-pins-hpkp">Public-Key-Pins (HPKP)<a class="headerlink" href="#public-key-pins-hpkp" title="Permanent link">&para;</a></h3>
+<p>The HTTP <code>Public-Key-Pins</code> response header is used to associate a specific cryptographic public key with a certain web server to decrease the risk of MITM attacks with forged certificates.</p>
+<h4 id="recommendation_21">Recommendation<a class="headerlink" href="#recommendation_21" title="Permanent link">&para;</a></h4>
+<p>This header is deprecated and should not be used anymore.</p>
+<h2 id="adding-http-headers-in-different-technologies">Adding HTTP Headers in Different Technologies<a class="headerlink" href="#adding-http-headers-in-different-technologies" title="Permanent link">&para;</a></h2>
+<h3 id="php">PHP<a class="headerlink" href="#php" title="Permanent link">&para;</a></h3>
+<p>The sample code below sets the <code>X-Frame-Options</code> header in PHP.</p>
+<div class="highlight"><pre><span></span><code><span class="x">header(&quot;X-Frame-Options: DENY&quot;);</span>
 </code></pre></div>
 <h3 id="apache">Apache<a class="headerlink" href="#apache" title="Permanent link">&para;</a></h3>
 <p>Below is an <code>.htaccess</code> sample configuration which sets the <code>X-Frame-Options</code> header in Apache. Note that without the <code>always</code> option, the header will only be sent for certain status codes, as described in <a href="https://httpd.apache.org/docs/2.4/mod/mod_headers.html#header">the Apache documentation</a>.</p>
