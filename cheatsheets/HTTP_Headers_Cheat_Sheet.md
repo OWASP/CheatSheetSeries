@@ -241,12 +241,12 @@ MvcHandler.DisableMvcResponseHeader = true;
 
 ### X-Robots-Tag
 
-The HTTP `X-Robots-Tag` response header controls how search engines and other automated crawlers index and display resources such as PDFs, images, and other non-HTML content.  
+The HTTP `X-Robots-Tag` response header controls how search engines and other automated crawlers index and display resources such as PDFs, images, and other non-HTML content.
 It functions similarly to the `<meta name="robots">` tag, but is applied via the HTTP response header, allowing greater flexibility (e.g., for non-HTML files or server-wide rules).
 
 ```none
 X-Robots-Tag: noindex, nofollow
-````
+```
 
 - **Note:** Only compliant crawlers respect these directives, and they must still make an HTTP request to read the headers before deciding how to handle the content.
 
