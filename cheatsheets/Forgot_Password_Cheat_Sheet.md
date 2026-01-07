@@ -70,7 +70,7 @@ It is essential to employ good security practices for the reset identifiers (tok
 - Stored in a secure manner, as discussed in the [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.md).
 
 - You can also use a password reset mechanism that doesn't need writing to the database until the password change is completed, by securely hashing the following elements: Current date, Username, Email, (if applicable: Mobile Number), Current password hash, and a value only known by server (a "server key").
-- Hashing these elements, ensure tokens expire at midnight, are linked to the username, token become invalidated is user is changing email, mobile number or password, and also the token is also invalidated after use (since a password change means the password hash is changed).
+- Hashing these elements, ensure tokens expire at midnight, are linked to the username, token become invalidated if user is changing email, mobile number or password, and also the token is also invalidated after use (since a password change means the password hash is changed).
 - Knowing only the username, you can rehash all the elements. If it hash to the same token, the user submitted a valid token.
 - The "server key" must be securely stored.
 
