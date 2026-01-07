@@ -66,8 +66,13 @@ It is essential to employ good security practices for the reset identifiers (tok
     - It is also possible to use JSON Web Tokens (JWTs) in place of random tokens, although this can introduce additional vulnerability, such as those discussed in the [JSON Web Token Cheat Sheet](JSON_Web_Token_for_Java_Cheat_Sheet.md).
 - Long enough to protect against brute-force attacks.
 - Linked to an individual user in the database.
-- Invalidated after they have been used.
+- Invalidated after they have been used. (Avoid invalidating the token if a password reset have not been successfully completed, as some mailproviders go around and "click" links to scan them for malicious content)
 - Stored in a secure manner, as discussed in the [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.md).
+
+- You can also use a password reset mechanism that doesn't need writing to the database until the password change is completed, by securely hashing the following elements: Current date, Username, Email, (if applicable: Mobile Number), Current password hash, and a value only known by server (a "server key").
+- Hashing these elements, ensure tokens expire at midnight, are linked to the username, token become invalidated is user is changing email, mobile number or password, and also the token is also invalidated after use (since a password change means the password hash is changed).
+- Knowing only the username, you can rehash all the elements. If it hash to the same token, the user submitted a valid token.
+- The "server key" must be securely stored.
 
 ### URL Tokens
 
@@ -85,6 +90,11 @@ URL tokens are passed in the query string of the URL, and are typically sent to 
 
 *Note:* URL tokens can follow on the same behavior of the [PINs](#pins) by creating a restricted session from the token. Decision should be made based on the needs and the expertise of the developer.
 
+Another solution is to submit the token as a hidden field when changing the password. This ensures a token don't get invalidated merely by clicking on the URL, but only after a password reset have been completed.
+If you are using this method, the validity of the token should NOT be checked when generating the password reset form, as this can lead to a brute force vulnerability. Instead, validate the token at form submission IF everything else is OK.
+If the new password doesn't adhere to policy, or if the new and confirm password fields differ, you should not check if the token is valid at all, to prevent brute-forcing by supplying intentionally invalid new passwords.
+This avoids creating a session alltogether.
+
 ### PINs
 
 PINs are numbers (between 6 and 12 digits) that are sent to the user through a side-channel such as SMS.
@@ -93,8 +103,14 @@ PINs are numbers (between 6 and 12 digits) that are sent to the user through a s
 2. Send it to the user via SMS or another mechanism.
    - Breaking the PIN up with spaces makes it easier for the user to read and enter.
 3. The user then enters the PIN along with their username on the password reset page.
-4. Create a limited session from that PIN that only permits the user to reset their password.
+4. Create a limited session from that PIN that only permits the user to reset their password.*
 5. Let the user create a new password and confirm it. Ensure that the same password policy used elsewhere in the application is applied.
+
+* Another solution is to request username, new password and PIN in one go on the same page. This avoids creating a session.
+In that case, make sure to not invalidate the PIN until a password reset have actually been completed, meaning that you should avoid invalidating the PIN if the supplied password didn't adhere to the password policy, or if the new and confirm password doesn't match.
+(In suck a case with a policy-violating new password, you should not check if the PIN is valid at all, to prevent a brute force vulnerability, where a attacker submits intentionally policy-violating passwords to find a valid reset PIN. Only check validity of the PIN if everything else is OK)
+
+- In this case, you can also create a PIN without writing to database, by following the token generation steps for "password reset mechanism that doesn't need writing to the database" in "General Security Practices", and then truncating the resulting hash so it can be represented as a PIN of the chosen length.
 
 ### Offline Methods
 
