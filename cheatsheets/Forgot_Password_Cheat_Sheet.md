@@ -108,7 +108,7 @@ PINs are numbers (between 6 and 12 digits) that are sent to the user through a s
 
 * Another solution is to request username, new password and PIN in one go on the same page. This avoids creating a session.
 In that case, make sure to not invalidate the PIN until a password reset have actually been completed, meaning that you should avoid invalidating the PIN if the supplied password didn't adhere to the password policy, or if the new and confirm password doesn't match.
-(In suck a case with a policy-violating new password, you should not check if the PIN is valid at all, to prevent a brute force vulnerability, where a attacker submits intentionally policy-violating passwords to find a valid reset PIN. Only check validity of the PIN if everything else is OK)
+(In such a case with a policy-violating new password, you should not check if the PIN is valid at all, to prevent a brute force vulnerability, where a attacker submits intentionally policy-violating passwords to find a valid reset PIN. Only check validity of the PIN if everything else is OK)
 
 - In this case, you can also create a PIN without writing to database, by following the token generation steps for "password reset mechanism that doesn't need writing to the database" in "General Security Practices", and then truncating the resulting hash so it can be represented as a PIN of the chosen length.
 
