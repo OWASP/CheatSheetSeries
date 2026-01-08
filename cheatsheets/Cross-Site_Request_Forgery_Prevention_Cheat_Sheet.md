@@ -246,7 +246,7 @@ For the rare cases of outdated or embedded browsers that lack `Sec-Fetch-*` supp
 
    3.1 To ensure that your site can still be linked from other sites, you have to allow simple (HTTP GET) top-level navigation.
 
-   ```javascript
+   ```JavaScript
    if (req.get('Sec-Fetch-Mode') === 'navigate' &&
        req.method === 'GET' &&
        req.get('Sec-Fetch-Dest') !== 'object' &&
