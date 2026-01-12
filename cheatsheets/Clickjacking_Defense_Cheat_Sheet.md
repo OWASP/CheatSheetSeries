@@ -70,7 +70,7 @@ The following [browsers](https://caniuse.com/#search=X-Frame-Options) support X-
 References:
 
 - [Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/web/http/headers/x-frame-options#browser_compatibility)
-- [IETF Draft](http://datatracker.ietf.org/doc/draft-ietf-websec-x-frame-options/)
+- [IETF Draft](https://datatracker.ietf.org/doc/draft-ietf-websec-x-frame-options/)
 - [X-Frame-Options Compatibility Test](https://erlend.oftedal.no/blog/tools/xframeoptions/) - Check this for the LATEST browser support info for the X-Frame-Options header
 
 ### Implementation
