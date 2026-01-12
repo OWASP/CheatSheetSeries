@@ -10,7 +10,7 @@ To sum up our recommendations:
 
 - **Use [Argon2id](#argon2id) with a minimum configuration of 19 MiB of memory, an iteration count of 2, and 1 degree of parallelism.**
 - **If [Argon2id](#argon2id) is not available, use [scrypt](#scrypt) with a minimum CPU/memory cost parameter of (2^17), a minimum block size of 8 (1024 bytes), and a parallelization parameter of 1.**
-- **For legacy systems using [bcrypt](#bcrypt), use a work factor of 10 or more and with a password limit of 72 bytes.**
+- **For legacy systems using [bcrypt](#bcrypt), use a work factor of 12 or more and with a password limit of 72 bytes.**
 - **If FIPS-140 compliance is required, use [PBKDF2](#pbkdf2) with a work factor of 600,000 or more and set with an internal hash function of HMAC-SHA-256.**
 - **Consider using a [pepper](#peppering) to provide additional defense in depth (though alone, it provides no additional secure characteristics).**
 
@@ -127,9 +127,12 @@ These configuration settings provide an equal level of defense. The only differe
 
 ### bcrypt
 
-The [bcrypt](https://en.wikipedia.org/wiki/bcrypt) password hashing function **should only** be used for password storage in legacy systems where Argon2 and scrypt are not available.
+The [bcrypt](https://en.wikipedia.org/wiki/bcrypt) password hashing function **should only** be used for password storage in legacy systems where Argon2 and scrypt are not available. Bcrypt's work factor is exponential, with each increment in the work factor roughly doubling the computation time and effort required to generate or verify a hash.
+- bcrypt with work factor of 10: 1,024 iterations
+- bcrypt with work factor of 11: 2,048 iterations (2x slower than work factor of 10)
+- bcrypt with work factor of 12: 4,096 iterations (4x slower than work factor of 10)
 
-The work factor should be as large as verification server performance will allow, with a minimum of 10.
+The work factor should be as large as verification server performance will allow, with a minimum of 12.
 
 #### Input Limits of bcrypt
 
