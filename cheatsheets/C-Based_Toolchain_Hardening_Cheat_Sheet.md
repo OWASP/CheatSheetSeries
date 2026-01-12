@@ -656,4 +656,3 @@ Finally, for runtime hardening, Microsoft provides **Windows Defender Exploit Gu
 Additionally, the [Process Mitigation Management Tool](https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-defender-exploit-guard/customize-exploit-protection) (`ProcessMitigations` module) allows administrators to configure exploit mitigation policies via PowerShell and Group Policy.
 
 ![Windows2](exploit-protection-guard.png)
-  
