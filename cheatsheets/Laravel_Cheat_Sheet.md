@@ -6,8 +6,6 @@ This *Cheatsheet* intends to provide security tips to developers building Larave
 
 The Laravel Framework provides in-built security features and is meant to be secure by default. However, it also provides additional flexibility for complex use cases. This means that developers unfamiliar with the inner workings of Laravel may fall into the trap of using complex features in a way that is not secure. This guide is meant to educate developers to avoid common pitfalls and develop Laravel applications in a secure manner.
 
-You may also refer the [Enlightn Security Documentation](https://www.laravel-enlightn.com/docs/security/), which highlights common vulnerabilities and good practices on securing Laravel applications.
-
 ## The Basics
 
 - Make sure your app is not in debug mode while in production. To turn off debug mode, set your `APP_DEBUG` environment variable to `false`:
@@ -26,7 +24,7 @@ php artisan key:generate
 
 - Set safe file and directory permissions on your Laravel application. In general, all Laravel directories should be setup with a max permission level of `775` and non-executable files with a max permission level of `664`. Executable files such as Artisan or deployment scripts should be provided with a max permission level of `775`.
 
-- Make sure your application does not have vulnerable dependencies. You can check this using the [Enlightn Security Checker](https://github.com/enlightn/security-checker).
+- Make sure your application does not have vulnerable dependencies.
 
 ## Cookie Security and Session Management
 
@@ -510,17 +508,9 @@ You should consider adding the following security headers to your web server or 
 
 For more information, refer the [OWASP secure headers project](https://owasp.org/www-project-secure-headers/).
 
-## Tools
-
-You should consider using [Enlightn](https://www.laravel-enlightn.com/), a static and dynamic analysis tool for Laravel applications that has over 45 automated security checks to identify potential security issues. There is both an open source version and a commercial version of Enlightn available. Enlightn includes an extensive 45 page documentation on security vulnerabilities and a great way to learn more on Laravel security is to just review its [documentation](https://www.laravel-enlightn.com/docs/security/).
-
-You should also use the [Enlightn Security Checker](https://github.com/enlightn/security-checker) or the [Local PHP Security Checker](https://github.com/fabpot/local-php-security-checker). Both of them are open source packages, licensed under the MIT and AGPL licenses respectively, that scan your PHP dependencies for known vulnerabilities using the [Security Advisories Database](https://github.com/FriendsOfPHP/security-advisories).
-
 ## References
 
 - [Laravel Documentation on Authentication](https://laravel.com/docs/authentication)
 - [Laravel Documentation on Authorization](https://laravel.com/docs/authorization)
 - [Laravel Documentation on CSRF](https://laravel.com/docs/csrf)
 - [Laravel Documentation on Validation](https://laravel.com/docs/validation)
-- [Enlightn SAST and DAST Tool](https://www.laravel-enlightn.com/)
-- [Laravel Enlightn Security Documentation](https://www.laravel-enlightn.com/docs/security/)
