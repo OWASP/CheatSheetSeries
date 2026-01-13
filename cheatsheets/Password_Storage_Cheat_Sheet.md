@@ -77,7 +77,7 @@ In this strategy, a password is hashed as usual using a password hashing algorit
 
 ### Using Work Factors
 
- The work factor is the number of iterations of the hashing algorithm that are performed for each password (usually, it's actually `2^work` iterations). The work factor is typically stored in the hash output. It makes calculating the hash more computationally expensive, which in turn reduces the speed and/or increases the cost for which an attacker can attempt to crack the password hash.
+The work factor is the number of iterations of the hashing algorithm that are performed for each password (usually, it's actually `2^work` iterations). The work factor is typically stored in the hash output. It makes calculating the hash more computationally expensive, which in turn reduces the speed and/or increases the cost for which an attacker can attempt to crack the password hash.
 
 When you choose a work factor, strike a balance between security and performance. Though higher work factors make hashes more difficult for an attacker to crack, they will slow down the process of verifying a login attempt. If the work factor is too high, the performance of the application may be degraded, which could be used by an attacker to carry out a denial of service attack by exhausting the server's CPU with a large number of login attempts.
 
@@ -128,6 +128,7 @@ These configuration settings provide an equal level of defense. The only differe
 ### bcrypt
 
 The [bcrypt](https://en.wikipedia.org/wiki/bcrypt) password hashing function **should only** be used for password storage in legacy systems where Argon2 and scrypt are not available. Bcrypt's work factor is exponential, with each increment in the work factor roughly doubling the computation time and effort required to generate or verify a hash.
+
 - bcrypt with work factor of 10: 1,024 iterations
 - bcrypt with work factor of 11: 2,048 iterations (2x slower than work factor of 10)
 - bcrypt with work factor of 12: 4,096 iterations (4x slower than work factor of 10)
