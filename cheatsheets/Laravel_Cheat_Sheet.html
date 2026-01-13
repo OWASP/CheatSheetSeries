@@ -1817,15 +1817,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#tools" class="md-nav__link">
-    <span class="md-ellipsis">
-      Tools
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#references" class="md-nav__link">
     <span class="md-ellipsis">
       References
@@ -3359,15 +3350,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#tools" class="md-nav__link">
-    <span class="md-ellipsis">
-      Tools
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#references" class="md-nav__link">
     <span class="md-ellipsis">
       References
@@ -3398,7 +3380,6 @@
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>This <em>Cheatsheet</em> intends to provide security tips to developers building Laravel applications. It aims to cover all common vulnerabilities and how to ensure that your Laravel applications are secure.</p>
 <p>The Laravel Framework provides in-built security features and is meant to be secure by default. However, it also provides additional flexibility for complex use cases. This means that developers unfamiliar with the inner workings of Laravel may fall into the trap of using complex features in a way that is not secure. This guide is meant to educate developers to avoid common pitfalls and develop Laravel applications in a secure manner.</p>
-<p>You may also refer the <a href="https://www.laravel-enlightn.com/docs/security/">Enlightn Security Documentation</a>, which highlights common vulnerabilities and good practices on securing Laravel applications.</p>
 <h2 id="the-basics">The Basics<a class="headerlink" href="#the-basics" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Make sure your app is not in debug mode while in production. To turn off debug mode, set your <code>APP_DEBUG</code> environment variable to <code>false</code>:</li>
@@ -3418,7 +3399,7 @@
 <p>Set safe file and directory permissions on your Laravel application. In general, all Laravel directories should be setup with a max permission level of <code>775</code> and non-executable files with a max permission level of <code>664</code>. Executable files such as Artisan or deployment scripts should be provided with a max permission level of <code>775</code>.</p>
 </li>
 <li>
-<p>Make sure your application does not have vulnerable dependencies. You can check this using the <a href="https://github.com/enlightn/security-checker">Enlightn Security Checker</a>.</p>
+<p>Make sure your application does not have vulnerable dependencies.</p>
 </li>
 </ul>
 <h2 id="cookie-security-and-session-management">Cookie Security and Session Management<a class="headerlink" href="#cookie-security-and-session-management" title="Permanent link">&para;</a></h2>
@@ -3737,17 +3718,12 @@
 <li>Content-Security-Policy</li>
 </ul>
 <p>For more information, refer the <a href="https://owasp.org/www-project-secure-headers/">OWASP secure headers project</a>.</p>
-<h2 id="tools">Tools<a class="headerlink" href="#tools" title="Permanent link">&para;</a></h2>
-<p>You should consider using <a href="https://www.laravel-enlightn.com/">Enlightn</a>, a static and dynamic analysis tool for Laravel applications that has over 45 automated security checks to identify potential security issues. There is both an open source version and a commercial version of Enlightn available. Enlightn includes an extensive 45 page documentation on security vulnerabilities and a great way to learn more on Laravel security is to just review its <a href="https://www.laravel-enlightn.com/docs/security/">documentation</a>.</p>
-<p>You should also use the <a href="https://github.com/enlightn/security-checker">Enlightn Security Checker</a> or the <a href="https://github.com/fabpot/local-php-security-checker">Local PHP Security Checker</a>. Both of them are open source packages, licensed under the MIT and AGPL licenses respectively, that scan your PHP dependencies for known vulnerabilities using the <a href="https://github.com/FriendsOfPHP/security-advisories">Security Advisories Database</a>.</p>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://laravel.com/docs/authentication">Laravel Documentation on Authentication</a></li>
 <li><a href="https://laravel.com/docs/authorization">Laravel Documentation on Authorization</a></li>
 <li><a href="https://laravel.com/docs/csrf">Laravel Documentation on CSRF</a></li>
 <li><a href="https://laravel.com/docs/validation">Laravel Documentation on Validation</a></li>
-<li><a href="https://www.laravel-enlightn.com/">Enlightn SAST and DAST Tool</a></li>
-<li><a href="https://www.laravel-enlightn.com/docs/security/">Laravel Enlightn Security Documentation</a></li>
 </ul>
 
 
