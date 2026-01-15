@@ -194,6 +194,8 @@
 
 [Secrets Management Cheat Sheet](cheatsheets/Secrets_Management_Cheat_Sheet.md)
 
+[Security Dashboards and Prioritization Cheat Sheet](cheatsheets/Security_Dashboards_and_Prioritization_Cheat_Sheet.md)
+
 [Symfony Cheat Sheet](cheatsheets/Symfony_Cheat_Sheet.md) ![Php](assets/Index_Php.svg) ![Bash](assets/Index_Bash.svg)
 
 ## T
