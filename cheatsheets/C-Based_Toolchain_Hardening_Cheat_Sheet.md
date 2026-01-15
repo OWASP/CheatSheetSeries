@@ -177,7 +177,9 @@ Defenses such as ASLR and DEP are especially important on Linux because [Data Ex
 
 Project level integration presents opportunities to harden your program or library with domain specific knowledge. For example, if the platform supports Position Independent Executables (PIE or ASLR) and data execution prevention (DEP), then you should integrate with it. The consequences of not doing so could result in exploitation. As a case in point, see KingCope's 0-days for MySQL in December, 2012 (CVE-2012-5579 and CVE-2012-5612, among others). Integration with platform security would have neutered a number of the 0-days.
 
-You also have the opportunity to include helpful libraries that are not needed for business logic support. For example, if you are working on a platform with [DMalloc](http://dmalloc.com) or [Address Sanitizer](https://github.com/google/sanitizers/tree/master/hwaddress-sanitizer), you should probably use it in your debug builds. For Ubuntu, DMalloc is available from the package manager and can be installed with `sudo apt install libdmalloc5`. For Apple platforms, it's available as a scheme option. Address Sanitizer is available in [GCC 4.8 and above](https://gcc.gnu.org/gcc-4.8/changes.html) for many platforms.
+You also have the opportunity to include helpful libraries that are not needed for business logic support. For example, if you are working on a platform with [DMalloc](https://dmalloc.com) or [Address Sanitizer](https://github.com/google/sanitizers/tree/master/hwaddress-sanitizer), you should probably use it in your debug builds.
+
+For Ubuntu, DMalloc is available from the package manager and can be installed with `sudo apt install libdmalloc5`. For Apple platforms, it's available as a scheme option. Address Sanitizer is available in [GCC 4.8 and above](https://gcc.gnu.org/gcc-4.8/changes.html) for many platforms.
 
 In addition, project level integration is an opportunity to harden third party libraries you chose to include. Because you chose to include them, you and your users are responsible for them. If you or your users endure a `SP800-53` audit, third party libraries will be in scope because the supply chain is included (specifically, item SA-12, Supply Chain Protection). The audits are not limited to those in the US Federal arena - financial institutions perform reviews, too. A perfect example of violating this guidance is [CVE-2012-1525](https://nvd.nist.gov/vuln/detail/CVE-2012-1525), which was due to [Adobe's inclusion of a defective Sablotron library](https://www.agarri.fr/blog/index.html).
 
@@ -654,4 +656,3 @@ Finally, for runtime hardening, Microsoft provides **Windows Defender Exploit Gu
 Additionally, the [Process Mitigation Management Tool](https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-defender-exploit-guard/customize-exploit-protection) (`ProcessMitigations` module) allows administrators to configure exploit mitigation policies via PowerShell and Group Policy.
 
 ![Windows2](exploit-protection-guard.png)
-  
