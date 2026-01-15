@@ -193,50 +193,50 @@ For the rare cases of outdated or embedded browsers that lack `Sec-Fetch-*` supp
 
    1.1. Treat cross-site as untrusted for state-changing actions. By default, reject non-safe methods (POST / PUT / PATCH / DELETE) when `Sec-Fetch-Site: cross-site`.
 
-    ```JavaScript
-    const SAFE_METHODS = new Set(['GET','HEAD','OPTIONS']);
-    const site = req.get('Sec-Fetch-Site'); // e.g. 'cross-site','same-site','same-origin','none'
-    
-    if (site === 'cross-site' && !SAFE_METHODS.has(req.method)) {
-      return false; // forbid this request
-    }
-    ```
+   ```JavaScript
+   const SAFE_METHODS = new Set(['GET','HEAD','OPTIONS']);
+   const site = req.get('Sec-Fetch-Site'); // e.g. 'cross-site','same-site','same-origin','none'
 
-    1.2 If your application relies on [safe HTTP methods](https://developer.mozilla.org/en-US/docs/Glossary/Safe/HTTP) (GET, HEAD, or OPTIONS) for state‑changing actions, you should explicitly reflect that in your policy – e.g., by requiring a Fetch‑Metadata header review for requests to those endpoints. This can be enforced with a policy rule like:
+   if (site === 'cross-site' && !SAFE_METHODS.has(req.method)) {
+     return false; // forbid this request
+   }
+   ```
 
-    ```JavaScript
-    const SAFE_METHODS = new Set(['GET','HEAD','OPTIONS']);
-    const SENSITIVE_ENDPOINTS = new Set([
-      '/user/profile',
-      '/account/details',
-    ]);
-    
-    const site = req.get('Sec-Fetch-Site');
-    const path = req.path;
-    
-    // Block if cross-site + unsafe method OR cross-site + sensitive endpoint
-    if (site === 'cross-site' && (!SAFE_METHODS.has(req.method) || SENSITIVE_ENDPOINTS.has(path))) {
-      return false; // forbid this request
-    }
-    ```
+   1.2 If your application relies on [safe HTTP methods](https://developer.mozilla.org/en-US/docs/Glossary/Safe/HTTP) (GET, HEAD, or OPTIONS) for state‑changing actions, you should explicitly reflect that in your policy – e.g., by requiring a Fetch‑Metadata header review for requests to those endpoints. This can be enforced with a policy rule like:
 
-    1.3. Allow `same-origin`. Treat `same-site` as allowed only if your threat model trusts sibling subdomains; otherwise handle `same-site` conservatively (for example, require additional validation).
+   ```JavaScript
+   const SAFE_METHODS = new Set(['GET','HEAD','OPTIONS']);
+   const SENSITIVE_ENDPOINTS = new Set([
+     '/user/profile',
+     '/account/details',
+   ]);
 
-    ```JavaScript
-    const trustSameSite = false; // set true only if you trust sibling subdomains
-    
-    if (site === 'same-origin') {
-      return true;
-    } else if (site === 'same-site') {
-      // handle same-site separately so the subcondition is clearly scoped to same-site
-      if (!trustSameSite && !SAFE_METHODS.has(req.method)) {
-        return false; // treat same-site as untrusted for state-changing methods
-      }
-      return true;
-    }
-    ```
+   const site = req.get('Sec-Fetch-Site');
+   const path = req.path;
 
-    1.4. Allow none for user-driven top-level navigations (bookmarks, typed URLs, explicit form submits) where appropriate.
+   // Block if cross-site + unsafe method OR cross-site + sensitive endpoint
+   if (site === 'cross-site' && (!SAFE_METHODS.has(req.method) || SENSITIVE_ENDPOINTS.has(path))) {
+     return false; // forbid this request
+   }
+   ```
+
+   1.3. Allow `same-origin`. Treat `same-site` as allowed only if your threat model trusts sibling subdomains; otherwise handle `same-site` conservatively (for example, require additional validation).
+
+   ```JavaScript
+   const trustSameSite = false; // set true only if you trust sibling subdomains
+
+   if (site === 'same-origin') {
+     return true;
+   } else if (site === 'same-site') {
+     // handle same-site separately so the subcondition is clearly scoped to same-site
+     if (!trustSameSite && !SAFE_METHODS.has(req.method)) {
+       return false; // treat same-site as untrusted for state-changing methods
+     }
+     return true;
+   }
+   ```
+
+   1.4. Allow none for user-driven top-level navigations (bookmarks, typed URLs, explicit form submits) where appropriate.
 
 2. If `Sec-Fetch-*` headers are absent: choose a fallback based on risk and compatibility requirements:
     2.1. Fail-safe (recommended for sensitive endpoints): treat absence as unknown and block the request.
@@ -246,16 +246,16 @@ For the rare cases of outdated or embedded browsers that lack `Sec-Fetch-*` supp
 
    3.1 To ensure that your site can still be linked from other sites, you have to allow simple (HTTP GET) top-level navigation.
 
-    ```JavaScript
-    if (req.get('Sec-Fetch-Mode') === 'navigate' &&
-        req.method === 'GET' &&
-        req.get('Sec-Fetch-Dest') !== 'object' &&
-        req.get('Sec-Fetch-Dest') !== 'embed') {
-      return true; // Allow this request
-    }
-    ```
+   ```JavaScript
+   if (req.get('Sec-Fetch-Mode') === 'navigate' &&
+       req.method === 'GET' &&
+       req.get('Sec-Fetch-Dest') !== 'object' &&
+       req.get('Sec-Fetch-Dest') !== 'embed') {
+     return true; // Allow this request
+   }
+   ```
 
-     3.2 Whitelist explicit cross-origin flows. If certain endpoints intentionally accept cross-origin requests (CORS JSON APIs, third-party integrations, webhooks), explicitly exempt those endpoints from the global Sec-Fetch deny policy and secure them with proper CORS configuration, authentication, and logging.
+   3.2 Whitelist explicit cross-origin flows. If certain endpoints intentionally accept cross-origin requests (CORS JSON APIs, third-party integrations, webhooks), explicitly exempt those endpoints from the global Sec-Fetch deny policy and secure them with proper CORS configuration, authentication, and logging.
 
 ### Requirements
 
