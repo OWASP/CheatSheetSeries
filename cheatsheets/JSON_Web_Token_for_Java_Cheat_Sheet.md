@@ -632,8 +632,6 @@ Alternatively, consider the use of tokens that are signed with RSA rather than u
 
 ## Common JWT Implementation Mistakes
 
-JSON Web Tokens (JWTs) are widely used in modern web applications, especially with OAuth 2.0 and OpenID Connect. While JWTs can be implemented securely, incorrect usage can lead to authentication, authorization, and session management vulnerabilities. This section outlines common mistakes developers make and provides practical recommendations for safe usage. The examples are language-neutral, focusing on concepts rather than a specific programming language.
-
 ---
 
 ### 1. Storing JWTs in Browser-Accessible Storage
@@ -731,12 +729,3 @@ Developers sometimes put **too much data** into the JWT payload, which increases
 **Recommendation:**  
 - Keep payloads minimal — include only necessary claims for authentication and authorization.  
 - Use references or IDs to server-side data instead of embedding full user information.
-
----
-
-### References
-
-- [OWASP JSON Web Token Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_Cheat_Sheet.html)  
-- [RFC 7519: JSON Web Token (JWT)](https://www.rfc-editor.org/rfc/rfc7519)  
-- [OWASP Top 10: Identification and Authentication Failures](https://owasp.org/Top10/)  
-- [JWT Best Practices](https://auth0.com/docs/secure/tokens/json-web-tokens)
