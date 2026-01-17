@@ -627,3 +627,103 @@ Alternatively, consider the use of tokens that are signed with RSA rather than u
 
 - [{JWT}.{Attack}.Playbook](https://github.com/ticarpi/jwt_tool/wiki) - A project documents the known attacks and potential security vulnerabilities and misconfigurations of JSON Web Tokens.
 - [JWT Best Practices Internet Draft](https://datatracker.ietf.org/doc/draft-ietf-oauth-jwt-bcp/)
+
+## Common JWT Implementation Mistakes
+
+---
+
+### 1. Storing JWTs in Browser-Accessible Storage
+
+Developers often store JWTs in `localStorage` or `sessionStorage`. While convenient, this exposes tokens to theft via **Cross-Site Scripting (XSS)** attacks. If an attacker executes malicious JavaScript in the application context, they can read and reuse the token.
+
+**Recommendation:**  
+- Prefer **HTTP-only, Secure cookies** with appropriate `SameSite` attributes.  
+- Implement protections against **Cross-Site Request Forgery (CSRF)** when using cookies.  
+- Limit client-side access to sensitive JWT data; store minimal claims in the payload.
+
+**Example Concept (pseudo-code):**
+```
+Set-Cookie: jwt=eyJ...; HttpOnly; Secure; SameSite=Strict
+```
+
+---
+
+### 2. Missing or Excessive Token Expiration
+
+JWTs without an expiration (`exp` claim) or with excessively long lifetimes increase the impact of token compromise. A stolen token can grant access long after it was issued.
+
+**Recommendation:**  
+- Always set a reasonable `exp` claim.  
+- For long sessions, use **refresh tokens** with rotation and revocation mechanisms.  
+- Monitor and invalidate tokens on suspicious activity.
+
+**Example Concept:**
+```
+{
+"sub": "user123",
+"exp": 1700000000 // expiration timestamp
+}
+```
+
+---
+
+### 3. Skipping Critical Token Validation
+
+Failing to validate JWT claims such as:
+- `iss` (issuer)  
+- `aud` (audience)  
+- `exp` (expiration)  
+- Token **signature**  
+
+can allow attackers to forge or reuse tokens across environments.
+
+**Recommendation:**  
+- Always validate the **signature** and all relevant claims.  
+- Use well-maintained libraries and **official key discovery** (e.g., JWKS endpoint).  
+- Reject tokens with unexpected or missing claims.
+
+**Example Concept:**
+```
+if token.issuer != "https://auth.example.com": reject()
+```
+
+---
+
+### 4. Using JWTs When Stateful Sessions Are Simpler
+
+JWTs are **stateless**, meaning revocation and real-time session management are harder. Developers sometimes use JWTs by default even when traditional **server-side sessions** would be safer.
+
+**Recommendation:**  
+- Evaluate whether JWTs are necessary.  
+- For browser-based apps, server-side sessions may simplify logout, revocation, and access control.
+
+---
+
+### 5. Treating JWTs as Encrypted Data
+
+Many developers assume JWTs are **encrypted**. However, most JWTs are **signed (JWS)** but **not encrypted**, so payloads are visible to clients.
+
+**Recommendation:**  
+- Never store sensitive information (passwords, secrets, personal identifiers) in JWT payloads unless using **encrypted JWTs (JWE)**.  
+- Only include information needed for the application to authorize requests.
+
+---
+
+### 6. Ignoring Token Revocation and Rotation
+
+Because JWTs are stateless, revoking a compromised token is not automatic. Developers often ignore **revocation**, leaving users exposed.
+
+**Recommendation:**  
+- Implement short-lived JWTs and **refresh tokens**.  
+- Maintain a revocation list for critical scenarios (e.g., compromised accounts).  
+- Rotate signing keys periodically and provide a key discovery mechanism.
+
+---
+
+### 7. Overloading JWT Payloads
+
+Developers sometimes put **too much data** into the JWT payload, which increases exposure risk and token size, affecting performance.
+
+**Recommendation:**  
+- Keep payloads minimal — include only necessary claims for authentication and authorization.  
+- Use references or IDs to server-side data instead of embedding full user information.
