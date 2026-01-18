@@ -40,8 +40,8 @@ def get_current_user(token: str = Depends(oauth2_scheme)):
 
 Use FastAPI's dependency injection system to enforce authentication and authorization consistently.
 
--   **Don't** embed authentication logic directly in route handlers.
--   **Do** create reusable dependencies for `get_current_user`, `get_current_active_user`, `get_current_admin_user`.
+- **Don't** embed authentication logic directly in route handlers.
+- **Do** create reusable dependencies for `get_current_user`, `get_current_active_user`, `get_current_admin_user`.
 
 ```python
 async def get_current_active_user(current_user: User = Depends(get_current_user)):
@@ -73,8 +73,8 @@ async def admin_dashboard():
 
 FastAPI uses Pydantic for data validation. Define strict schemas for all request bodies.
 
--   Use `EmailStr`, `HttpUrl`, and other specific types.
--   Use `Field` constraints (`min_length`, `max_length`, `regex`) to limit input range.
+- Use `EmailStr`, `HttpUrl`, and other specific types.
+- Use `Field` constraints (`min_length`, `max_length`, `regex`) to limit input range.
 
 ```python
 from pydantic import BaseModel, Field, EmailStr
@@ -116,8 +116,8 @@ app.add_middleware(
 
 FastAPI automatically generates documentation at `/docs` (Swagger UI) and `/redoc`.
 
--   **Development:** Useful for testing.
--   **Production:** Consider disabling or securing these routes to avoid information disclosure about your API structure.
+- **Development:** Useful for testing.
+- **Production:** Consider disabling or securing these routes to avoid information disclosure about your API structure.
 
 **Disable in Production:**
 
@@ -132,8 +132,8 @@ You can override the docs endpoints to require authentication.
 
 FastAPI's default exception handlers are good, but ensure you don't leak sensitive information (like stack traces from internal server errors) in the response body.
 
--   Use `HTTPException` for expected errors.
--   Add a global exception handler for unhandled exceptions to return a generic error message in production.
+- Use `HTTPException` for expected errors.
+- Add a global exception handler for unhandled exceptions to return a generic error message in production.
 
 ```python
 from fastapi import Request
@@ -154,8 +154,8 @@ async def global_exception_handler(request: Request, exc: Exception):
 
 When deploying with Uvicorn or Gunicorn with Uvicorn workers:
 
--   **Workers:** Configure an appropriate number of workers.
--   **Headers:** Ensure `ProxyHeadersMiddleware` (TrustedHostMiddleware) is used if behind a reverse proxy (Nginx, LB) to correctly identify client IP and scheme.
+- **Workers:** Configure an appropriate number of workers.
+- **Headers:** Ensure `ProxyHeadersMiddleware` (TrustedHostMiddleware) is used if behind a reverse proxy (Nginx, LB) to correctly identify client IP and scheme.
 
 ```python
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
@@ -167,6 +167,5 @@ app.add_middleware(
 
 ## References
 
--   [FastAPI Security Documentation](https://fastapi.tiangolo.com/tutorial/security/)
--   [OWASP API Security Top 10](https://owasp.org/www-project-api-security/)
--   [OWASP Cheat Sheet Series](https://cheatsheetseries.owasp.org/)
+- [FastAPI Security Documentation](https://fastapi.tiangolo.com/tutorial/security/)
+- [OWASP API Security Top 10](https://owasp.org/www-project-api-security/)
