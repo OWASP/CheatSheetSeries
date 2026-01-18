@@ -87,7 +87,7 @@ This is not a security header per se, but its security attributes are crucial.
 
 ### Strict-Transport-Security (HSTS)
 
-The HTTP `Strict-Transport-Security` response header (often abbreviated as HSTS) lets a website tell browsers that it should only be accessed using HTTPS, instead of using HTTP.
+The HTTP `Strict-Transport-Security` response header (often abbreviated as HSTS) instructs browsers to only access the website using HTTPS, even if a user attempts to connect over HTTP.
 
 #### Recommendation
 
