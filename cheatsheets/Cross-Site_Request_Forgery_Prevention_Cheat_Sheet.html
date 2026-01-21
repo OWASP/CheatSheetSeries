@@ -4005,51 +4005,42 @@ if (!constantTimeEquals(hmacFromRequest, expectedHmac)) {
 <li>If <code>Sec-Fetch-Site</code> is present</li>
 </ol>
 <p>1.1. Treat cross-site as untrusted for state-changing actions. By default, reject non-safe methods (POST / PUT / PATCH / DELETE) when <code>Sec-Fetch-Site: cross-site</code>.</p>
-<div class="highlight"><pre><span></span><code>```JavaScript
-const SAFE_METHODS = new Set([&#39;GET&#39;,&#39;HEAD&#39;,&#39;OPTIONS&#39;]);
-const site = req.get(&#39;Sec-Fetch-Site&#39;); // e.g. &#39;cross-site&#39;,&#39;same-site&#39;,&#39;same-origin&#39;,&#39;none&#39;
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">SAFE_METHODS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Set</span><span class="p">([</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span><span class="s1">&#39;HEAD&#39;</span><span class="p">,</span><span class="s1">&#39;OPTIONS&#39;</span><span class="p">]);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">site</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;Sec-Fetch-Site&#39;</span><span class="p">);</span><span class="w"> </span><span class="c1">// e.g. &#39;cross-site&#39;,&#39;same-site&#39;,&#39;same-origin&#39;,&#39;none&#39;</span>
 
-if (site === &#39;cross-site&#39; &amp;&amp; !SAFE_METHODS.has(req.method)) {
-  return false; // forbid this request
-}
-```
-
-1.2 If your application relies on [safe HTTP methods](https://developer.mozilla.org/en-US/docs/Glossary/Safe/HTTP) (GET, HEAD, or OPTIONS) for state‑changing actions, you should explicitly reflect that in your policy – e.g., by requiring a Fetch‑Metadata header review for requests to those endpoints. This can be enforced with a policy rule like:
-
-```JavaScript
-const SAFE_METHODS = new Set([&#39;GET&#39;,&#39;HEAD&#39;,&#39;OPTIONS&#39;]);
-const SENSITIVE_ENDPOINTS = new Set([
-  &#39;/user/profile&#39;,
-  &#39;/account/details&#39;,
-]);
-
-const site = req.get(&#39;Sec-Fetch-Site&#39;);
-const path = req.path;
-
-// Block if cross-site + unsafe method OR cross-site + sensitive endpoint
-if (site === &#39;cross-site&#39; &amp;&amp; (!SAFE_METHODS.has(req.method) || SENSITIVE_ENDPOINTS.has(path))) {
-  return false; // forbid this request
-}
-```
-
-1.3. Allow `same-origin`. Treat `same-site` as allowed only if your threat model trusts sibling subdomains; otherwise handle `same-site` conservatively (for example, require additional validation).
-
-```JavaScript
-const trustSameSite = false; // set true only if you trust sibling subdomains
-
-if (site === &#39;same-origin&#39;) {
-  return true;
-} else if (site === &#39;same-site&#39;) {
-  // handle same-site separately so the subcondition is clearly scoped to same-site
-  if (!trustSameSite &amp;&amp; !SAFE_METHODS.has(req.method)) {
-    return false; // treat same-site as untrusted for state-changing methods
-  }
-  return true;
-}
-```
-
-1.4. Allow none for user-driven top-level navigations (bookmarks, typed URLs, explicit form submits) where appropriate.
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">site</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;cross-site&#39;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="nx">SAFE_METHODS</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">method</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w"> </span><span class="c1">// forbid this request</span>
+<span class="p">}</span>
 </code></pre></div>
+<p>1.2 If your application relies on <a href="https://developer.mozilla.org/en-US/docs/Glossary/Safe/HTTP">safe HTTP methods</a> (GET, HEAD, or OPTIONS) for state‑changing actions, you should explicitly reflect that in your policy – e.g., by requiring a Fetch‑Metadata header review for requests to those endpoints. This can be enforced with a policy rule like:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">SAFE_METHODS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Set</span><span class="p">([</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span><span class="s1">&#39;HEAD&#39;</span><span class="p">,</span><span class="s1">&#39;OPTIONS&#39;</span><span class="p">]);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">SENSITIVE_ENDPOINTS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Set</span><span class="p">([</span>
+<span class="w">  </span><span class="s1">&#39;/user/profile&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="s1">&#39;/account/details&#39;</span><span class="p">,</span>
+<span class="p">]);</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">site</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;Sec-Fetch-Site&#39;</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">req</span><span class="p">.</span><span class="nx">path</span><span class="p">;</span>
+
+<span class="c1">// Block if cross-site + unsafe method OR cross-site + sensitive endpoint</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">site</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;cross-site&#39;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">SAFE_METHODS</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">method</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">SENSITIVE_ENDPOINTS</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="nx">path</span><span class="p">)))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w"> </span><span class="c1">// forbid this request</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>1.3. Allow <code>same-origin</code>. Treat <code>same-site</code> as allowed only if your threat model trusts sibling subdomains; otherwise handle <code>same-site</code> conservatively (for example, require additional validation).</p>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">trustSameSite</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w"> </span><span class="c1">// set true only if you trust sibling subdomains</span>
+
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">site</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;same-origin&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">site</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;same-site&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// handle same-site separately so the subcondition is clearly scoped to same-site</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">trustSameSite</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="nx">SAFE_METHODS</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">method</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span><span class="w"> </span><span class="c1">// treat same-site as untrusted for state-changing methods</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>1.4. Allow none for user-driven top-level navigations (bookmarks, typed URLs, explicit form submits) where appropriate.</p>
 <ol start="2">
 <li>
 <p>If <code>Sec-Fetch-*</code> headers are absent: choose a fallback based on risk and compatibility requirements:
@@ -4061,17 +4052,14 @@ if (site === &#39;same-origin&#39;) {
 </li>
 </ol>
 <p>3.1 To ensure that your site can still be linked from other sites, you have to allow simple (HTTP GET) top-level navigation.</p>
-<div class="highlight"><pre><span></span><code>```JavaScript
-if (req.get(&#39;Sec-Fetch-Mode&#39;) === &#39;navigate&#39; &amp;&amp;
-    req.method === &#39;GET&#39; &amp;&amp;
-    req.get(&#39;Sec-Fetch-Dest&#39;) !== &#39;object&#39; &amp;&amp;
-    req.get(&#39;Sec-Fetch-Dest&#39;) !== &#39;embed&#39;) {
-  return true; // Allow this request
-}
-```
-
- 3.2 Whitelist explicit cross-origin flows. If certain endpoints intentionally accept cross-origin requests (CORS JSON APIs, third-party integrations, webhooks), explicitly exempt those endpoints from the global Sec-Fetch deny policy and secure them with proper CORS configuration, authentication, and logging.
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;Sec-Fetch-Mode&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;navigate&#39;</span><span class="w"> </span><span class="o">&amp;&amp;</span>
+<span class="w">    </span><span class="nx">req</span><span class="p">.</span><span class="nx">method</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;GET&#39;</span><span class="w"> </span><span class="o">&amp;&amp;</span>
+<span class="w">    </span><span class="nx">req</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;Sec-Fetch-Dest&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="s1">&#39;object&#39;</span><span class="w"> </span><span class="o">&amp;&amp;</span>
+<span class="w">    </span><span class="nx">req</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;Sec-Fetch-Dest&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="s1">&#39;embed&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span><span class="w"> </span><span class="c1">// Allow this request</span>
+<span class="p">}</span>
 </code></pre></div>
+<p>3.2 Whitelist explicit cross-origin flows. If certain endpoints intentionally accept cross-origin requests (CORS JSON APIs, third-party integrations, webhooks), explicitly exempt those endpoints from the global Sec-Fetch deny policy and secure them with proper CORS configuration, authentication, and logging.</p>
 <h3 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Your application must be served over trustworthy URLs. Fetch Metadata request headers are only sent to <a href="https://www.w3.org/TR/secure-contexts/#is-url-trustworthy">potentially trustworthy URLs</a>. In practice, this includes <code>https</code>, <code>wss</code>, <code>file</code>, and <code>localhost</code> (including <code>127.0.0.0/8</code> and <code>::1/128</code>). See the <a href="https://www.w3.org/TR/secure-contexts/#is-origin-trustworthy">W3C Secure Contexts spec</a> for full details.</li>
