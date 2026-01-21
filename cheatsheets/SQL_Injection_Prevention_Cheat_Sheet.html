@@ -3354,14 +3354,14 @@
 <li>The application's database is a frequent target for attackers because it typically contains interesting/critical data.</li>
 </ol>
 <h2 id="what-is-a-sql-injection-attack">What Is a SQL Injection Attack?<a class="headerlink" href="#what-is-a-sql-injection-attack" title="Permanent link">&para;</a></h2>
-<p>Attackers can use SQL injection on an application if it has dynamic database queries that use string concatenation and user supplied input. To avoid SQL injection flaws, developers need to:</p>
+<p>Attackers can use SQL injection on an application if it has dynamic database queries that use string concatenation and user-supplied input. To avoid SQL injection flaws, developers need to:</p>
 <ol>
 <li>Stop writing dynamic queries with string concatenation or</li>
 <li>Prevent malicious SQL input from being included in executed queries.</li>
 </ol>
-<p>There are simple techniques for preventing SQL injection vulnerabilities and they can be used with practically any kind of programming language and any type of database. While XML databases can have similar problems (e.g., XPath and XQuery injection), these techniques can be used to protect them as well.</p>
+<p>There are simple techniques for preventing SQL injection vulnerabilities, and they can be used with practically any kind of programming language and any type of database. While XML databases can have similar problems (e.g., XPath and XQuery injection), these techniques can be used to protect them as well.</p>
 <h2 id="anatomy-of-a-typical-sql-injection-vulnerability">Anatomy of A Typical SQL Injection Vulnerability<a class="headerlink" href="#anatomy-of-a-typical-sql-injection-vulnerability" title="Permanent link">&para;</a></h2>
-<p>A common SQL injection flaw in Java is below. Because its unvalidated "customerName" parameter is simply appended to the query, an attacker can enter SQL code into that query and the application would take the attacker's code and execute it on the database.</p>
+<p>A common SQL injection flaw in Java is shown below. Because its unvalidated "customerName" parameter is simply appended to the query, an attacker can enter SQL code into that query and the application would take the attacker's code and execute it on the database.</p>
 <div class="highlight"><pre><span></span><code><span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;SELECT account_balance FROM user_data WHERE user_name = &quot;</span>
 <span class="w">             </span><span class="o">+</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;customerName&quot;</span><span class="p">);</span>
 <span class="k">try</span><span class="w"> </span><span class="p">{</span>
