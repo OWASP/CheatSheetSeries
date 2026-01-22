@@ -167,6 +167,46 @@ It is advisable to modify the default URL leading to the admin panel (example.co
 
 In the default app folder within your project, locate the `urls.py` file managing the top-level URLs. Within the file, modify the `urlpatterns` variable, a list, so that the URL leading to `admin.site.urls` is different from "admin/". This approach adds an extra layer of security by obscuring the common endpoint used for administrative access.
 
+
+## Content Security Policy
+
+- Include the `django.middleware.csp.ContentSecurityPolicyMiddleware` module in the `MIDDLEWARE` setting in your project's `settings.py` to add CSP related header to your responses.
+- Configure the CSP policies in your settings.py using the `SECURE_CSP` parameter, for example :
+
+```py
+from django.utils.csp import CSP
+
+SECURE_CSP = {
+    "default-src": [CSP.SELF],
+    "script-src": [CSP.SELF, CSP.NONCE],
+    "style-src": [CSP.SELF],
+}
+```
+- Add the csp context processor to your TEMPLATES setting, this will add the nonce to the context of all your Django templates
+
+```py
+TEMPLATES = [
+    {
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "OPTIONS": {
+            "context_processors": [
+                # ...
+                "django.template.context_processors.csp",
+            ],
+        },
+    },
+]
+```
+
+- In your templates add the nonce were it is needed:
+
+```html
+<script nonce="{{ csp_nonce }}">
+  // This JavaScript code will be allowed.
+</script>
+```
+
+
 ## Django's built-in command `check --deploy`
 
 Django has built-in command [`check --deploy`](https://docs.djangoproject.com/en/stable/ref/django-admin/#cmdoption-check-deploy) for security checks. Example:
