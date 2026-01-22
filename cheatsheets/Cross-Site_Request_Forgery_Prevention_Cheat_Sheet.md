@@ -10,28 +10,87 @@ However, successful CSRF attacks can only exploit the capabilities exposed by th
 
 In short, the following principles should be followed to defend against CSRF:
 
-**IMPORTANT: Remember that Cross-Site Scripting (XSS) can defeat all CSRF mitigation techniques!** While Cross-Site Scripting (XSS) vulnerabilities can bypass CSRF protections, CSRF tokens are still essential for web applications that rely on cookies for authentication. Consider the client and authentication method to determine the best approach for CSRF protection in your application.
+**IMPORTANT: Remember that Cross-Site Scripting (XSS) can defeat all CSRF mitigation techniques!** See the **[OWASP XSS Prevention Cheat Sheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md)** for detailed guidance on how to prevent XSS flaws. While Cross-Site Scripting (XSS) vulnerabilities can bypass CSRF protections, CSRF tokens are still essential for web applications that rely on cookies for authentication. Consider the client and authentication method to determine the best approach for CSRF protection in your application.
 
-- **See the OWASP [XSS Prevention Cheat Sheet](Cross_Site_Scripting_Prevention_Cheat_Sheet.md) for detailed guidance on how to prevent XSS flaws.**
-- **First, check if your framework has [built-in CSRF protection](#built-in-or-existing-csrf-implementations) and use it**
+- **First, check if your framework has [built-in CSRF protection](#built-in-or-existing-csrf-implementations) and use it.**
+- **Second, disallow [simple requests](#disallow-simple-requests) to reduce the attack surface area for CSRF for your application.**
 - **If the framework does not have built-in CSRF protection, add [CSRF tokens](#token-based-mitigation) to all state-changing requests (requests that cause actions on the site) and validate them on the backend.**
+    - **Stateful software should use the [synchronizer token pattern](#synchronizer-token-pattern)**
+    - **Stateless software should use [double submit cookies](#alternative-using-a-double-submit-cookie-pattern)**
+    - **If an API-driven site can't use `<form>` tags, consider [using custom request headers](#employing-custom-request-headers-for-ajaxapi)**
 - **If your software targets only modern browsers, you may rely on [Fetch Metadata headers](#fetch-metadata-headers) together with the fallback options described below to block cross-site state-changing requests.**
-- **Stateful software should use the [synchronizer token pattern](#synchronizer-token-pattern)**
-- **Stateless software should use [double submit cookies](#alternative-using-a-double-submit-cookie-pattern)**
-- **If an API-driven site can't use `<form>` tags, consider [using custom request headers](#employing-custom-request-headers-for-ajaxapi)**
 - **Implement at least one mitigation from [Defense in Depth Mitigations](#defense-in-depth-techniques) section**
-- **[SameSite Cookie Attribute](#samesite-cookie-attribute) can be used for session cookies** but be careful to NOT set a cookie specifically for a domain. This action introduces a security vulnerability because all subdomains of that domain will share the cookie, and this is particularly an issue if a subdomain has a CNAME to domains not in your control.
-- **Consider implementing [user interaction based protection](#user-interaction-based-csrf-defense) for highly sensitive operations**
-- **Consider [verifying the origin with standard headers](#using-standard-headers-to-verify-origin)**
-- **Do not use GET requests for state changing operations.**
-- **If for any reason you do it, protect those resources against CSRF**
+    - **[SameSite Cookie Attribute](#samesite-cookie-attribute) can be used for session cookies** but be careful to NOT set a cookie specifically for a domain. This action introduces a security vulnerability because all subdomains of that domain will share the cookie, and this is particularly an issue if a subdomain has a CNAME to domains not in your control.
+    - **Consider implementing [user interaction based protection](#user-interaction-based-csrf-defense) for highly sensitive operations**
+    - **Consider [verifying the origin with standard headers](#using-standard-headers-to-verify-origin)**
+- **Do not use GET, HEAD or OPTIONS requests for state changing operations. If for any reason you do it, protect those resources against CSRF.**
 
-### Built-In Or Existing CSRF Implementations
+## Built-In Or Existing CSRF Implementations
 
-Before building a custom token or Fetch-Metadata implementation, check whether your framework or platform already provides CSRF protection you can use. Built-in defenses are generally preferable because they’re maintained by the framework authors and reduce the risk of subtle implementation mistakes. For example:
+Before building a custom token or Fetch-Metadata implementation, check whether your framework or platform already provides CSRF protection you can use. Built-in defenses are generally preferable because they’re maintained by the framework authors and reduce the risk of subtle implementation mistakes.
+
+For example:
 
 - .NET can use [built-in protection](https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-2.1) to add tokens to CSRF vulnerable resources. If you choose to use this protection, .NET makes you responsible for proper configuration (such as key management and token management).
 - Starting from [1.25](https://pkg.go.dev/net/http@go1.25), Go developers can rely on the built-in [CrossOriginProtection](https://pkg.go.dev/net/http@go1.25#CrossOriginProtection) type. It implements a Fetch-Metadata-based CSRF defense (including validation of Sec-Fetch-Site and related headers) directly in the standard library.
+- Django developers can use [Cross Site Request Forgery protection middleware](https://docs.djangoproject.com/en/6.0/ref/csrf/).
+
+## Disallow Simple Requests
+
+When a `<form>` tag is used to submit data, it sends a ["simple" request](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#simple_requests) that browsers do not designate as "to be preflighted". These "simple" requests introduce risk of CSRF because browsers permit them to be sent to any origin. If your application uses `<form>` tags to submit data anywhere in your client, you will still need to protect them with alternate approaches described in this document such as tokens.
+
+> **Caveat:**
+Should a browser bug allow custom HTTP headers, or not enforce preflight on non-simple content types, it could compromise your security. Although unlikely, it is prudent to consider this in your threat model. Implementing CSRF tokens adds additional layer of defence and gives developers more control over security of the application.
+
+### Disallowing simple content types
+
+For a request to be deemed simple, it must have one of the following content types - `application/x-www-form-urlencoded`, `multipart/form-data` or `text/plain`.  Many modern web applications use JSON APIs so would naturally require CORS, however they may accept `text/plain` which would be vulnerable to CSRF. Therefore a simple mitigation is for the server or API to disallow these simple content types.
+
+### Employing Custom Request Headers for AJAX/API
+
+Both the synchronizer token and the double-submit cookie are used to prevent forgery of form data, but they can be tricky to implement and degrade usability. Many modern web applications do not use `<form>` tags to submit data. A user-friendly defense that is particularly well suited for AJAX or API endpoints is the use of a **custom request header**. No token is needed for this approach.
+
+In this pattern, the client appends a custom header to requests that require CSRF protection. The header can be any arbitrary key-value pair, as long as it does not conflict with existing headers.
+
+```
+X-CSRF-Token: RANDOM-TOKEN-VALUE
+```
+
+Many popular frameworks use standardized header names for CSRF protection:
+
+- `X-CSRF-Token` - Ruby on Rails, Laravel, Django
+- `X-XSRF-Token` - AngularJS
+- `CSRF-Token` - Express.js (csurf middleware)
+- `X-CSRFToken` - Django
+
+While any arbitrary header name will work, using one of these standard names can improve compatibility with existing tools and developer expectations.
+
+When handling the request, the API checks for the existence of this header. If the header does not exist, the backend rejects the request as potential forgery. This approach has several advantages:
+
+- UI changes are not required
+- No server state is introduced to track tokens
+
+This defense relies on the CORS preflight mechanism which sends an `OPTIONS` request to verify CORS compliance with the destination server. All modern browsers designate requests with custom headers as "to be preflighted". When the API verifies that the custom header is there, you know that the request must have been preflighted if it came from a browser.
+
+#### Custom Headers and CORS
+
+Cookies are not set on cross-origin requests (CORS) by default. To enable cookies on an API, you will set `Access-Control-Allow-Credentials=true`. The browser will reject any response that includes `Access-Control-Allow-Origin=*` if credentials are allowed. To allow CORS requests, but protect against CSRF, you need to make sure the server only allows a few select origins that you definitively control via the `Access-Control-Allow-Origin` header. Any cross-origin request from an allowed domain will be able to set custom headers.
+
+As an example, you might configure your backend to allow CORS with cookies from `http://www.yoursite.com` and `http://mobile.yoursite.com`, so that the only possible preflight responses are:
+
+```
+Access-Control-Allow-Origin=http://mobile.yoursite.com
+Access-Control-Allow-Credentials=true
+```
+
+or
+
+```
+Access-Control-Allow-Origin=http://www.yoursite.com
+Access-Control-Allow-Credentials=true
+```
+
+A less secure configuration would be to configure your backend server to allow CORS from all subdomains of your site using a regular expression. If an attacker is able to [take over a subdomain](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/10-Test_for_Subdomain_Takeover) (not uncommon with cloud services) your CORS configuration would allow them to bypass the same origin policy and forge a request with your custom header.
 
 ## Token-Based Mitigation
 
@@ -48,7 +107,7 @@ When a client issues a request, the server-side component must verify the existe
 CSRF tokens should be:
 
 - Unique per user session.
-- Secret
+- Secret.
 - Unpredictable (large random value generated by a [secure method](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html#rule---use-cryptographically-secure-pseudo-random-number-generators-csprng)).
 
 CSRF tokens prevent CSRF because without a CSRF token, an attacker cannot create valid requests to the backend server.
@@ -161,7 +220,7 @@ Since an attacker is unable to access the cookie value during a cross-site reque
 
 Though the Naive Double-Submit Cookie method is simple and scalable, it remains vulnerable to cookie injection attacks, especially when attackers control subdomains or network environments allowing them to plant or overwrite cookies. For instance, an attacker-controlled subdomain (e.g., via DNS takeover) could inject a matching cookie and thus forge a valid request token. [This resource](https://owasp.org/www-chapter-london/assets/slides/David_Johansson-Double_Defeat_of_Double-Submit_Cookie.pdf) details these vulnerabilities. Therefore, always prefer the _Signed Double-Submit Cookie_ pattern with session-bound HMAC tokens to mitigate these threats.
 
-## Fetch Metadata headers
+## Fetch Metadata Headers
 
 Fetch Metadata request headers provide extra information about the context from which an HTTP request was made. Servers can use these headers — most importantly `Sec-Fetch-Site` — as a lightweight and reliable method to block obvious cross-site requests. See the [Fetch Metadata specification](https://www.w3.org/TR/fetch-metadata/) for details.
 
@@ -276,63 +335,6 @@ For the rare cases of outdated or embedded browsers that lack `Sec-Fetch-*` supp
 - Start in “log only” mode. Record requests that would be blocked and review for false positives before enforcing. This is the safest way to discover legitimate flows that need whitelisting.
 - Monitor UA coverage. Track which user agents include `Sec-Fetch-*` and which don’t; ensure your fallback logic covers missing-header cases. Use metrics to decide when to enforce stricter policies.
 - Document exceptions. Keep an explicit list of endpoints whitelisted for cross-origin access.
-
-## Disallowing simple requests
-
-When a `<form>` tag is used to submit data, it sends a ["simple" request](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#simple_requests) that browsers do not designate as "to be preflighted". These "simple" requests introduce risk of CSRF because browsers permit them to be sent to any origin. If your application uses `<form>` tags to submit data anywhere in your client, you will still need to protect them with alternate approaches described in this document such as tokens.
-
-> **Caveat:**
-Should a browser bug allow custom HTTP headers, or not enforce preflight on non-simple content types, it could compromise your security. Although unlikely, it is prudent to consider this in your threat model. Implementing CSRF tokens adds additional layer of defence and gives developers more control over security of the application.
-
-### Disallowing simple content types
-
-For a request to be deemed simple, it must have one of the following content types - `application/x-www-form-urlencoded`, `multipart/form-data` or `text/plain`.  Many modern web applications use JSON APIs so would naturally require CORS, however they may accept `text/plain` which would be vulnerable to CSRF. Therefore a simple mitigation is for the server or API to disallow these simple content types.
-
-### Employing Custom Request Headers for AJAX/API
-
-Both the synchronizer token and the double-submit cookie are used to prevent forgery of form data, but they can be tricky to implement and degrade usability. Many modern web applications do not use `<form>` tags to submit data. A user-friendly defense that is particularly well suited for AJAX or API endpoints is the use of a **custom request header**. No token is needed for this approach.
-
-In this pattern, the client appends a custom header to requests that require CSRF protection. The header can be any arbitrary key-value pair, as long as it does not conflict with existing headers.
-
-```
-X-CSRF-Token: RANDOM-TOKEN-VALUE
-```
-
-Many popular frameworks use standardized header names for CSRF protection:
-
-- `X-CSRF-Token` - Ruby on Rails, Laravel, Django
-- `X-XSRF-Token` - AngularJS
-- `CSRF-Token` - Express.js (csurf middleware)
-- `X-CSRFToken` - Django
-
-While any arbitrary header name will work, using one of these standard names can improve compatibility with existing tools and developer expectations.
-
-When handling the request, the API checks for the existence of this header. If the header does not exist, the backend rejects the request as potential forgery. This approach has several advantages:
-
-- UI changes are not required
-- no server state is introduced to track tokens
-
-This defense relies on the CORS preflight mechanism which sends an `OPTIONS` request to verify CORS compliance with the destination server. All modern browsers designate requests with custom headers as "to be preflighted". When the API verifies that the custom header is there, you know that the request must have been preflighted if it came from a browser.
-
-#### Custom Headers and CORS
-
-Cookies are not set on cross-origin requests (CORS) by default. To enable cookies on an API, you will set `Access-Control-Allow-Credentials=true`. The browser will reject any response that includes `Access-Control-Allow-Origin=*` if credentials are allowed. To allow CORS requests, but protect against CSRF, you need to make sure the server only allows a few select origins that you definitively control via the `Access-Control-Allow-Origin` header. Any cross-origin request from an allowed domain will be able to set custom headers.
-
-As an example, you might configure your backend to allow CORS with cookies from `http://www.yoursite.com` and `http://mobile.yoursite.com`, so that the only possible preflight responses are:
-
-```
-Access-Control-Allow-Origin=http://mobile.yoursite.com
-Access-Control-Allow-Credentials=true
-```
-
-or
-
-```
-Access-Control-Allow-Origin=http://www.yoursite.com
-Access-Control-Allow-Credentials=true
-```
-
-A less secure configuration would be to configure your backend server to allow CORS from all subdomains of your site using a regular expression. If an attacker is able to [take over a subdomain](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/10-Test_for_Subdomain_Takeover) (not uncommon with cloud services) your CORS configuration would allow them to bypass the same origin policy and forge a request with your custom header.
 
 ## Dealing with Client-Side CSRF Attacks (IMPORTANT)
 
@@ -483,7 +485,7 @@ In addition to the `__Host-` prefix, the weaker `__Secure-` prefix is also suppo
 It relaxes the restrictions on domain overwrites, i.e., they
 
 - Can have `Domain` attributes and
-- can be overwritten by subdomains.
+- Can be overwritten by subdomains.
 - Can have a `Path` other than `/`.
 
 This relaxed variant can be used as an alternative to the "domain locked" `__Host-` prefix,
@@ -513,7 +515,7 @@ For example, if an attacker uses CSRF to assume an authenticated identity of a t
 
 Login CSRF can be mitigated by creating pre-sessions (sessions before a user is authenticated) and including tokens in login form. You can use any of the techniques mentioned above to generate tokens. Remember that pre-sessions cannot be transitioned to real sessions once the user is authenticated - the session should be destroyed and a new one should be made to avoid [session fixation attacks](http://www.acrossecurity.com/papers/session_fixation.pdf). This technique is described in [Robust Defenses for Cross-Site Request Forgery section 4.1](https://seclab.stanford.edu/websec/csrf/csrf.pdf). Login CSRF can also be mitigated by including a custom request headers in AJAX request as described [above](#employing-custom-request-headers-for-ajaxapi).
 
-## REFERENCE: Sample JEE Filter Demonstrating CSRF Protection
+## IMPLEMENTATION REFERENCE: Sample JEE Filter Demonstrating CSRF Protection
 
 The following [JEE web filter](https://github.com/righettod/poc-csrf/blob/master/src/main/java/eu/righettod/poccsrf/filter/CSRFValidationFilter.java) provides an example reference for some of the concepts described in this cheatsheet. It implements the following stateless mitigations ([OWASP CSRFGuard](https://github.com/aramrami/OWASP-CSRFGuard), cover a stateful approach).
 
@@ -525,7 +527,7 @@ The following [JEE web filter](https://github.com/righettod/poc-csrf/blob/master
 
 Full source is located [here](https://github.com/righettod/poc-csrf) and provides a runnable POC.
 
-## JavaScript: Automatically Including CSRF Tokens as an AJAX Request Header
+## IMPLEMENTATION REFERENCE: Automatically Including CSRF Tokens as an AJAX Request Header using JavaScript
 
 The following guidance for JavaScript by default considers **GET**, **HEAD** and **OPTIONS** methods as safe operations. Therefore **GET**, **HEAD**, and **OPTIONS** method AJAX calls need not be appended with a CSRF token header. However, if the verbs are used to perform state changing operations, they will also require a CSRF token header (although this is a bad practice, and should be avoided).
 
@@ -575,7 +577,7 @@ This can be done as demonstrated in the following code snippet:
 </script>
 ```
 
-#### CSRF Prevention in modern Frameworks
+#### CSRF Prevention in Modern Frameworks
 
 Modern Single Page Application (SPA) frameworks like Angular, React, and Vue typically rely on the cookie-to-header pattern to mitigate Cross-Site Request Forgery (CSRF) attacks. This approach leverages the fact that browsers automatically attach cookies to cross-origin requests, but only JavaScript running on the same origin can read values and set custom headers—making it possible to detect and block forged requests. The cookie-to-header pattern works as follows:
 
@@ -899,32 +901,34 @@ function getCsrfToken(cookieName: string): string {
   
   return tokenCookie ? tokenCookie.split('=')[1] : '';
 }
+```
 
-// USAGE EXAMPLE
+Usage Example:
 
-// Define api.ts
-// import { createCSRFProtectedAxios } from './csrf-axios';
-// export const api = createCSRFProtectedAxios({
-//   baseURL: '/api',
-//   csrfHeaderName: 'X-CSRF-Token'
-// });
+```typescript
+Define api.ts
+import { createCSRFProtectedAxios } from './csrf-axios';
+export const api = createCSRFProtectedAxios({
+  baseURL: '/api',
+  csrfHeaderName: 'X-CSRF-Token'
+});
 
-// In a React component:
-// import { api } from './api';
-// 
-// function UserProfile() {
-//   const updateUser = async (userData: UserData) => {
-//     try {
-//       // CSRF token is automatically added
-//       const response = await api.post('/users/profile', userData);
-//       return response.data;
-//     } catch (error) {
-//       console.error('Failed to update profile', error);
-//     }
-//   };
-//   
-//   // Rest of component...
-// }
+In a React component:
+import { api } from './api';
+
+function UserProfile() {
+  const updateUser = async (userData: UserData) => {
+    try {
+      // CSRF token is automatically added
+      const response = await api.post('/users/profile', userData);
+      return response.data;
+    } catch (error) {
+      console.error('Failed to update profile', error);
+    }
+  };
+  
+  // Rest of component...
+}
 ```
 
 For React applications using fetch API with TypeScript:
@@ -1015,24 +1019,26 @@ export class CSRFProtectedFetch {
     return tokenCookie ? tokenCookie.split('=')[1] : '';
   }
 }
+```
 
-// USAGE EXAMPLE
+Usage
 
+```typescript
 // Create an instance
-// const api = new CSRFProtectedFetch({
-//   baseUrl: '/api',
-//   csrfHeaderName: 'X-CSRF-Token'
-// });
-// 
-// // In React component
-// const updateUser = async (userData: UserData) => {
-//   try {
-//     // CSRF token is automatically added
-//     return await api.post('/users/profile', userData);
-//   } catch (error) {
-//     console.error('Failed to update profile', error);
-//   }
-// };
+const api = new CSRFProtectedFetch({
+  baseUrl: '/api',
+  csrfHeaderName: 'X-CSRF-Token'
+});
+
+// In React component
+const updateUser = async (userData: UserData) => {
+  try {
+    // CSRF token is automatically added
+    return await api.post('/users/profile', userData);
+  } catch (error) {
+    console.error('Failed to update profile', error);
+  }
+};
 ```
 
 ## References in Related Cheat Sheets
@@ -1045,5 +1051,5 @@ export class CSRFProtectedFetch {
 - [Common CSRF Prevention Misconceptions](https://medium.com/keylogged/common-csrf-prevention-misconceptions-67fd026d94a8)
 - [Robust Defenses for Cross-Site Request Forgery](https://seclab.stanford.edu/websec/csrf/csrf.pdf)
 - For Java: OWASP [CSRF Guard](https://owasp.org/www-project-csrfguard/) or [Spring Security](https://docs.spring.io/spring-security/site/docs/5.5.x-SNAPSHOT/reference/html5/#csrf)
-- For PHP and Apache: [CSRFProtector Project](https://github.com/OWASP/www-project-csrfprotector )
+- For PHP and Apache: [CSRFProtector Project](https://github.com/OWASP/www-project-csrfprotector)
 - For Angular: [Cross-Site Request Forgery (XSRF) Protection](https://angular.dev/best-practices/security#httpclient-xsrf-csrf-security)
