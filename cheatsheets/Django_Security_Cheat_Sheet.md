@@ -170,8 +170,8 @@ In the default app folder within your project, locate the `urls.py` file managin
 
 ## Content Security Policy
 
-- Include the `django.middleware.csp.ContentSecurityPolicyMiddleware` module in the `MIDDLEWARE` setting in your project's `settings.py` to add CSP related header to your responses.
-- Configure the CSP policies in your settings.py using the `SECURE_CSP` parameter, for example :
+- Include the `django.middleware.csp.ContentSecurityPolicyMiddleware` module in the `MIDDLEWARE` setting in your project's `settings.py` to add CSP-related header to your responses ([documentation](https://docs.djangoproject.com/fr/6.0/howto/csp/#basic-config)).
+- Configure the CSP policies in settings.py using the `SECURE_CSP` parameter, for example:
 
 ```py
 from django.utils.csp import CSP
@@ -182,7 +182,7 @@ SECURE_CSP = {
     "style-src": [CSP.SELF],
 }
 ```
-- Add the csp context processor to your TEMPLATES setting, this will add the nonce to the context of all your Django templates
+- Add the CSP context processor to your TEMPLATES setting. This will add the nonce to the context of all your Django templates:
 
 ```py
 TEMPLATES = [
@@ -198,7 +198,7 @@ TEMPLATES = [
 ]
 ```
 
-- In your templates add the nonce were it is needed:
+- In your templates, add the [nonce](https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html#nonce-based) where it is needed:
 
 ```html
 <script nonce="{{ csp_nonce }}">
