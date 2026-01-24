@@ -93,7 +93,7 @@ Need an architectural diagram? The [SAML technical overview](https://www.oasis-o
 
 ## Unsolicited Response (ie. IdP Initiated SSO) Considerations for Service Providers
 
-Unsolicited Response is inherently less secure by design due to the lack of **login [CSRF](https://owasp.org/www-community/attacks/csrf)** protection. This limitation arises because the Service Provider (SP) has no opportunity to create a pre-login session or verify that the authentication request was intentionally initiated by the user.  
+Unsolicited Response is inherently less secure by design due to the lack of **login [CSRF](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#possible-csrf-vulnerabilities-in-login-forms)** protection. This limitation arises because the Service Provider (SP) has no opportunity to create a pre-login session or verify that the authentication request was intentionally initiated by the user.  
 
 While this design does not make IdP-initiated SSO uniquely vulnerable to Man-in-the-Middle (MITM) attacks—those risks apply equally to SP-initiated flows if transport security is compromised—it does remove an important layer of login intent validation.  
 
