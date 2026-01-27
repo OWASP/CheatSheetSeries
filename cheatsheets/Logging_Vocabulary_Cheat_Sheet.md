@@ -721,6 +721,29 @@ CRITICAL
 
 ---
 
+### malicious_sqli:[userid|IP,parameter,ruleid,useragent]
+
+**Description**
+When request input matches a SQL injection (SQLi) signature or heuristic (e.g., comment delimiters, tautologies like `' OR 1=1 --`, stacked queries, `UNION SELECT`, etc.), block the request and log the attempt. Prefer recording a detection rule ID / category and the parameter name over logging the full payload.
+
+**Level:**
+CRITICAL
+
+**Example:**
+
+```
+{
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "malicious_sqli:127.0.0.1,search,SQLI-UNION,Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0",
+    "level": "CRITICAL",
+    "description": "Request from 127.0.0.1 contained a SQL injection pattern (rule SQLI-UNION) in parameter 'search'.",
+    ...
+}
+```
+
+---
+
 ### malicious_cors:[userid|IP,useragent,referer]
 
 **Description**
