@@ -58,6 +58,9 @@ A key concern when using passwords for authentication is password strength. A "s
 
 It is common for an application to have a mechanism that provides a means for a user to gain access to their account in the event they forget their password. Please see [Forgot Password Cheat Sheet](Forgot_Password_Cheat_Sheet.md) for details on this feature.
 
+For security considerations when using email as an authentication or account recovery channel, see the
+[Email Security Cheat Sheet](Email_Security_Cheat_Sheet.md).
+
 ### Store Passwords in a Secure Fashion
 
 It is critical for an application to store a password using the right cryptographic technique. Please see [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.md) for details on this feature.
