@@ -72,6 +72,8 @@
 
 [Error Handling Cheat Sheet](cheatsheets/Error_Handling_Cheat_Sheet.md) ![Java](assets/Index_Java.svg) ![Csharp](assets/Index_Csharp.svg) ![Xml](assets/Index_Xml.svg)
 
+[Email Security Cheat Sheet](cheatsheets/Email_Security_Cheat_Sheet.md)
+
 ## F
 
 [File Upload Cheat Sheet](cheatsheets/File_Upload_Cheat_Sheet.md)
