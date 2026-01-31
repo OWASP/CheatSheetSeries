@@ -96,8 +96,8 @@ Where possible, always log:
 - Input validation failures e.g. protocol violations, unacceptable encodings, invalid parameter names and values
     - A specific event for failures to validate a value against a discrete and finite list of valid values (e.g. a country from a dropdown). This is a high security event as it can only be attack activity. For example `input_validation_fail[:field,userid]`.
 - Output validation failures e.g. database record set mismatch, invalid data encoding
-- Authentication successes and failures
-- Authorization (access control) failures
+- Authentication successes and failures (for example,successful logins and invalid password attempts)
+- Authorization (access control) failures (such as attempts to access restricted resources without permission)
 - Session management failures e.g. cookie session identification value modification or suspicious JWT validation failures
 - Application errors and system events e.g. syntax and runtime errors, connectivity problems, performance issues, third party service error messages, file system errors, file upload virus detection, configuration changes
 - Application and related systems start-ups and shut-downs, and logging initialization (starting, stopping or pausing)
