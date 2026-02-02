@@ -10,7 +10,7 @@ NestJS is a progressive Node.js framework built with TypeScript. While it provid
 
 Security controls must be applied in the correct order:
 
-```
+```text
 Request → Middleware → Guards → Pipes → Handler → Response
             ↓            ↓         ↓
           CORS       Auth/Authz  Validation
@@ -28,11 +28,13 @@ DTOs alone provide no protection. Without proper ValidationPipe configuration, a
 ### Solution
 
 **Install Dependencies:**
+
 ```bash
 npm install class-validator class-transformer
 ```
 
 **Create DTOs with Validation:**
+
 ```typescript
 // create-user.dto.ts
 import { IsEmail, IsString, MinLength } from 'class-validator';
@@ -52,6 +54,7 @@ export class CreateUserDto {
 ```
 
 **Configure Global ValidationPipe:**
+
 ```typescript
 // main.ts
 import { ValidationPipe } from '@nestjs/common';
@@ -75,6 +78,7 @@ async function bootstrap() {
 **CRITICAL:** Using only `whitelist: true` is insufficient. It silently removes properties, allowing attackers to send large payloads that waste validation resources. Always use `forbidNonWhitelisted: true` for active rejection (defense-in-depth).
 
 **Attack Prevention Example:**
+
 ```bash
 # Attacker payload
 POST /users
@@ -92,11 +96,13 @@ POST /users
 ### JWT Authentication
 
 **Install Dependencies:**
+
 ```bash
 npm install @nestjs/jwt @nestjs/passport passport passport-jwt
 ```
 
 **Configure JWT Module:**
+
 ```typescript
 // auth.module.ts
 import { JwtModule } from '@nestjs/jwt';
@@ -116,6 +122,7 @@ export class AuthModule {}
 ```
 
 **Create JWT Guard:**
+
 ```typescript
 // jwt-auth.guard.ts
 import { Injectable, UnauthorizedException } from '@nestjs/common';
@@ -135,6 +142,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
 ### Role-Based Access Control
 
 **Define Roles:**
+
 ```typescript
 // roles.decorator.ts
 import { SetMetadata } from '@nestjs/common';
@@ -149,6 +157,7 @@ export const Roles = (...roles: Role[]) => SetMetadata(ROLES_KEY, roles);
 ```
 
 **Create Roles Guard:**
+
 ```typescript
 // roles.guard.ts
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
@@ -169,6 +178,7 @@ export class RolesGuard implements CanActivate {
 ```
 
 **Apply Guards (Order Matters!):**
+
 ```typescript
 @Controller('admin')
 @UseGuards(JwtAuthGuard, RolesGuard)  // Auth BEFORE Roles!
@@ -186,11 +196,13 @@ export class AdminController {
 ## Security Headers with Helmet
 
 **Install Helmet:**
+
 ```bash
 npm install helmet
 ```
 
 **Configure in main.ts:**
+
 ```typescript
 import helmet from 'helmet';
 
@@ -220,6 +232,7 @@ async function bootstrap() {
 ## CORS Configuration
 
 **Secure CORS Setup:**
+
 ```typescript
 // main.ts
 async function bootstrap() {
@@ -238,11 +251,13 @@ async function bootstrap() {
 ```
 
 **Environment Variable:**
+
 ```env
 ALLOWED_ORIGINS=https://app.example.com,https://admin.example.com
 ```
 
 **Common Mistake:**
+
 ```typescript
 // NEVER do this!
 app.enableCors({
@@ -256,11 +271,13 @@ When `credentials: true`, origin cannot be wildcard. Browsers will block this co
 ## Rate Limiting
 
 **Install Throttler:**
+
 ```bash
 npm install @nestjs/throttler
 ```
 
 **Global Configuration:**
+
 ```typescript
 // app.module.ts
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
@@ -284,6 +301,7 @@ export class AppModule {}
 ```
 
 **Custom Limits for Auth Endpoints:**
+
 ```typescript
 import { Throttle } from '@nestjs/throttler';
 
@@ -299,7 +317,8 @@ export class AuthController {
 
 ## SQL Injection Prevention
 
-**Safe: Use Repository Pattern**
+### Safe - Use Repository Pattern
+
 ```typescript
 // users.service.ts
 async findByEmail(email: string): Promise<User> {
@@ -307,7 +326,8 @@ async findByEmail(email: string): Promise<User> {
 }
 ```
 
-**Safe: Query Builder with Parameters**
+### Safe - Query Builder with Parameters
+
 ```typescript
 async findActiveUsers(minAge: number): Promise<User[]> {
   return this.usersRepository
@@ -317,7 +337,8 @@ async findActiveUsers(minAge: number): Promise<User[]> {
 }
 ```
 
-**Vulnerable: String Concatenation**
+### Vulnerable - String Concatenation
+
 ```typescript
 // NEVER DO THIS!
 async unsafeQuery(email: string) {
@@ -328,6 +349,7 @@ async unsafeQuery(email: string) {
 ```
 
 **Attack Example:**
+
 ```typescript
 email = "admin' OR '1'='1"
 // Result: SELECT * FROM users WHERE email = 'admin' OR '1'='1'
@@ -337,6 +359,7 @@ email = "admin' OR '1'='1"
 ## File Upload Security
 
 **Secure Upload Configuration:**
+
 ```typescript
 import { diskStorage } from 'multer';
 import { extname } from 'path';
@@ -363,6 +386,7 @@ export const imageUploadOptions = {
 ```
 
 **Apply to Controller:**
+
 ```typescript
 import { FileInterceptor } from '@nestjs/platform-express';
 
@@ -376,11 +400,13 @@ uploadFile(@UploadedFile() file: Express.Multer.File) {
 ## Environment Variables
 
 **Install Config Module:**
+
 ```bash
 npm install @nestjs/config joi
 ```
 
 **Configure with Validation:**
+
 ```typescript
 // app.module.ts
 import { ConfigModule } from '@nestjs/config';
@@ -401,15 +427,19 @@ export class AppModule {}
 ```
 
 **Never hardcode secrets:**
+
 ```typescript
+// Bad
 const secret = 'my-secret-key';
 
+// Good
 const secret = process.env.JWT_SECRET;
 ```
 
 ## Error Handling
 
 **Global Exception Filter:**
+
 ```typescript
 import { ExceptionFilter, Catch, HttpException, HttpStatus } from '@nestjs/common';
 
@@ -439,6 +469,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
 ```
 
 **Apply in main.ts:**
+
 ```typescript
 app.useGlobalFilters(new GlobalExceptionFilter());
 ```
@@ -447,7 +478,8 @@ app.useGlobalFilters(new GlobalExceptionFilter());
 
 ## Security Checklist
 
-### Before Production:
+### Before Production
+
 - [ ] ValidationPipe configured with `whitelist: true` AND `forbidNonWhitelisted: true`
 - [ ] All DTOs use `class-validator` decorators
 - [ ] JWT secret in environment variables (min 32 chars)
@@ -464,7 +496,7 @@ app.useGlobalFilters(new GlobalExceptionFilter());
 ## Quick Reference
 
 | Security Control | Where to Apply | Key Setting |
-|-----------------|----------------|-------------|
+| --------------- | -------------- | ----------- |
 | Input Validation | Global Pipe | `forbidNonWhitelisted: true` |
 | Authentication | Guard | Apply before RolesGuard |
 | CORS | Middleware | Specific origins only |
