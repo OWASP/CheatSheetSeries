@@ -794,6 +794,87 @@ CRITICAL
 
 ---
 
+## MCP Servers [MCP]
+
+This section focuses on concerns related to the use of MCP servers either within productivity applications, or at the enterprise level.
+
+---
+
+### mcp_prompt_injection[:userid]
+
+**Description**
+When an MCP client or server detects indicators of prompt injection (for example, instructions to ignore system/developer messages, attempts to override tool policies, requests to reveal secrets, or attempts to coerce tool calls outside of the intended task), block or constrain the action and log the event for investigation.
+
+_NOTE: Avoid logging the full prompt/tool I/O. Prefer logging a detection category or rule ID, the target tool/server, and request identifiers to support triage without creating a secondary sensitive-data or log-injection risk._
+
+**Level:**
+WARN
+
+**Example:**
+
+```
+{
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.cooldevapp_mcp_toolname",
+    "event": "mcp_prompt_injection:joebob1",
+    "level": "WARN",
+    "description": "A possible prompt injection has occurred",
+    ...
+}
+```
+
+---
+
+### mcp_resource_exhaustion[:userid]
+
+**Description**
+When an MCP client or server detects a request pattern intended to exhaust resources (for example, unusually large prompts, repeated retries, tool-call loops, or other behavior that drives excessive token usage and cost), terminate or throttle the activity and log the attempt.
+
+_NOTE: Avoid logging full prompts or tool inputs/outputs. Prefer logging measured usage (tokens in/out), policy thresholds, request identifiers, and the tool/model involved._
+
+**Level:**
+WARN
+
+**Example:**
+
+```
+{
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.cooldevapp_mcp_toolname",
+    "event": "mcp_resource_exhaustion:joebob1",
+    "level": "WARN",
+    "description": "Request blocked due to token budget overrun (tokens_in=18240, tokens_out=0, budget=8000)",
+    ...
+}
+```
+
+---
+
+### mcp_tool_poisoning[:userid]
+
+**Description**
+When an MCP client or server detects that a tool may be malicious or tampered with (for example, unexpected tool changes, signature/hash verification failures, suspicious tool metadata, or a tool sourced from an agent/tool marketplace with minimal validation), block or quarantine the tool and log the attempt.
+
+_NOTE: Tool ecosystems and agent marketplaces can enable rapid proliferation of third-party tools with relatively low validation. An internal marketplace or hashed allowlist for approved tools is highly recommended._
+
+**Level:**
+WARN
+
+**Example:**
+
+```
+{
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.cooldevapp_mcp_toolname",
+    "event": "mcp_tool_poisoning:joebob1",
+    "level": "WARN",
+    "description": "Tool execution blocked (tool=\"calendar_sync\", source=\"https://marketplace.example/tools/calendar_sync\", version=\"2.4.1\", signature=\"missing\", policy=\"allowlist_required\")",
+    ...
+}
+```
+
+---
+
 ## Privilege Changes [PRIVILEGE]
 
 This section focuses on object privilege changes such as read/write/execute permissions or objects in a database having authorization meta-information changed.
