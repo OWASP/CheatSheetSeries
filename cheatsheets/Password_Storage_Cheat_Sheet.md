@@ -30,7 +30,7 @@ For further guidance on encryption, see the [Cryptographic Storage Cheat Sheet](
 
 ### When Password Hashes Can Be Cracked
 
-**Strong passwords stored with modern hashing algorithms and using hashing best practices should be effectively impossible for an attacker to crack.**  It is your responsibility as an application owner to select a modern hashing algorithm.
+**Strong passwords stored with modern hashing algorithms and using hashing best practices should be effectively impossible for an attacker to crack.** It is your responsibility as an application owner to select a modern hashing algorithm.
 
 However, there are some situations where an attacker can "crack" the hashes in some circumstances by doing the following:
 
@@ -97,6 +97,7 @@ You do not need to hide which password hashing algorithm is used by an applicati
 
 When selecting a password hashing algorithm, developers should prefer modern algorithms that are designed to resist both GPU-based and memory-based attacks.
 Where available, newer algorithms should be chosen for new applications, while older algorithms may still be acceptable for legacy systems with appropriate configuration.
+
 Three hashing algorithms that should be considered.
 
 ### Argon2id
