@@ -8,9 +8,9 @@ Each year IBM Security commissions the Ponemon Institute to survey companies aro
 
 In addition to the millions of dollars lost due to breaches the report finds that the **mean time to identify** a breach continues to hover around **200 days**. Clearly our ability to monitor applications and alert on anomalous behavior would improve our time to identify and mitigate an attack against our applications.
 
-![IBM Cost of Data Breach Report 2020](../assets/cost-of-breach-2024.png)
+![IBM Cost of Data Breach Report 2025](../assets/cost-of-breach-2025.png)
 
-> IBM Cost of a Data Breach Study 2020, Fig.4, pg.10, [https://www.ibm.com/security/data-breach]
+> IBM Cost of a Data Breach Study 2025, Fig.4, pg.12, [https://www.ibm.com/reports/data-breach]
 
 This logging standard would seek to define specific keywords which, when applied consistently across software, would allow groups to simply monitor for these events terms across all applications and respond quickly in the event of attack.
 
