@@ -97,11 +97,19 @@ You do not need to hide which password hashing algorithm is used by an applicati
 
 Three hashing algorithms that should be considered:
 
+When selecting a password hashing algorithm, developers should prefer modern algorithms that are designed to resist both GPU-based and memory-based attacks. 
+Where available, newer algorithms should be chosen for new applications, while older algorithms may still be acceptable for legacy systems with appropriate configuration.
+
+
 ### Argon2id
 
 [Argon2](https://en.wikipedia.org/wiki/Argon2) was the winner of the 2015 [Password Hashing Competition](https://en.wikipedia.org/wiki/Password_Hashing_Competition). Out of the three Argon2 versions, use the  Argon2id variant since it provides a balanced approach to resisting both side-channel and GPU-based attacks.
 
 Rather than a simple work factor like other algorithms, Argon2id has three different parameters that can be configured: the base minimum of the minimum memory size (m), the minimum number of iterations (t), and the degree of parallelism (p). We recommend the following configuration settings:
+
+These parameters control how computationally expensive it is to compute a password hash. 
+Increasing memory usage, iteration count, or parallelism makes password cracking attempts significantly slower and more costly for attackers, while still remaining practical for legitimate authentication requests when tuned appropriately.
+
 
 - m=47104 (46 MiB), t=1, p=1 (Do not use with Argon2i)
 - m=19456 (19 MiB), t=2, p=1 (Do not use with Argon2i)
