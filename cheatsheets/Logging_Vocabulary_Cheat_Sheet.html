@@ -2011,6 +2011,15 @@ redirect_from: "/cheatsheets/Application_Logging_Vocabulary_Cheat_Sheet.html"
 </li>
         
           <li class="md-nav__item">
+  <a href="#malicious_sqliuseridipparameterruleiduseragent" class="md-nav__link">
+    <span class="md-ellipsis">
+      malicious_sqli:[userid|IP,parameter,ruleid,useragent]
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#malicious_corsuseridipuseragentreferer" class="md-nav__link">
     <span class="md-ellipsis">
       malicious_cors:[userid|IP,useragent,referer]
@@ -2023,6 +2032,48 @@ redirect_from: "/cheatsheets/Application_Logging_Vocabulary_Cheat_Sheet.html"
   <a href="#malicious_direct_referenceuseridip-useragent" class="md-nav__link">
     <span class="md-ellipsis">
       malicious_direct_reference:[userid|IP, useragent]
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mcp-servers-mcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      MCP Servers [MCP]
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MCP Servers [MCP]">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mcp_prompt_injectionuserid" class="md-nav__link">
+    <span class="md-ellipsis">
+      mcp_prompt_injection[:userid]
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mcp_resource_exhaustionuserid" class="md-nav__link">
+    <span class="md-ellipsis">
+      mcp_resource_exhaustion[:userid]
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mcp_tool_poisoninguserid" class="md-nav__link">
+    <span class="md-ellipsis">
+      mcp_tool_poisoning[:userid]
     </span>
   </a>
   
@@ -3901,6 +3952,15 @@ redirect_from: "/cheatsheets/Application_Logging_Vocabulary_Cheat_Sheet.html"
 </li>
         
           <li class="md-nav__item">
+  <a href="#malicious_sqliuseridipparameterruleiduseragent" class="md-nav__link">
+    <span class="md-ellipsis">
+      malicious_sqli:[userid|IP,parameter,ruleid,useragent]
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#malicious_corsuseridipuseragentreferer" class="md-nav__link">
     <span class="md-ellipsis">
       malicious_cors:[userid|IP,useragent,referer]
@@ -3913,6 +3973,48 @@ redirect_from: "/cheatsheets/Application_Logging_Vocabulary_Cheat_Sheet.html"
   <a href="#malicious_direct_referenceuseridip-useragent" class="md-nav__link">
     <span class="md-ellipsis">
       malicious_direct_reference:[userid|IP, useragent]
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mcp-servers-mcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      MCP Servers [MCP]
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MCP Servers [MCP]">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mcp_prompt_injectionuserid" class="md-nav__link">
+    <span class="md-ellipsis">
+      mcp_prompt_injection[:userid]
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mcp_resource_exhaustionuserid" class="md-nav__link">
+    <span class="md-ellipsis">
+      mcp_resource_exhaustion[:userid]
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mcp_tool_poisoninguserid" class="md-nav__link">
+    <span class="md-ellipsis">
+      mcp_tool_poisoning[:userid]
     </span>
   </a>
   
@@ -4225,9 +4327,9 @@ redirect_from: "/cheatsheets/Application_Logging_Vocabulary_Cheat_Sheet.html"
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
 <p>Each year IBM Security commissions the Ponemon Institute to survey companies around the world for information related to security breaches, mitigation, and the associated costs; the result is called the Cost of a Data Breach Report.</p>
 <p>In addition to the millions of dollars lost due to breaches the report finds that the <strong>mean time to identify</strong> a breach continues to hover around <strong>200 days</strong>. Clearly our ability to monitor applications and alert on anomalous behavior would improve our time to identify and mitigate an attack against our applications.</p>
-<p><img alt="IBM Cost of Data Breach Report 2020" src="../assets/cost-of-breach-2024.png" /></p>
+<p><img alt="IBM Cost of Data Breach Report 2025" src="../assets/cost-of-breach-2025.png" /></p>
 <blockquote>
-<p>IBM Cost of a Data Breach Study 2020, Fig.4, pg.10, [https://www.ibm.com/security/data-breach]</p>
+<p>IBM Cost of a Data Breach Study 2025, Fig.4, pg.12, [https://www.ibm.com/reports/data-breach]</p>
 </blockquote>
 <p>This logging standard would seek to define specific keywords which, when applied consistently across software, would allow groups to simply monitor for these events terms across all applications and respond quickly in the event of attack.</p>
 <h2 id="assumptions">Assumptions<a class="headerlink" href="#assumptions" title="Permanent link">&para;</a></h2>
@@ -4730,6 +4832,23 @@ CRITICAL</p>
 }
 </code></pre></div>
 <hr />
+<h3 id="malicious_sqliuseridipparameterruleiduseragent">malicious_sqli:[userid|IP,parameter,ruleid,useragent]<a class="headerlink" href="#malicious_sqliuseridipparameterruleiduseragent" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+When request input matches a SQL injection (SQLi) signature or heuristic (e.g., comment delimiters, tautologies like <code>' OR 1=1 --</code>, stacked queries, <code>UNION SELECT</code>, etc.), block the request and log the attempt.</p>
+<p><em>NOTE: Logging the payload is dangerous and may result in log injection. Prefer recording a detection rule ID / category and the parameter name over logging the full payload.</em></p>
+<p><strong>Level:</strong>
+CRITICAL</p>
+<p><strong>Example:</strong></p>
+<div class="highlight"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;malicious_sqli:127.0.0.1,search,SQLI-UNION,Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0&quot;,
+    &quot;level&quot;: &quot;CRITICAL&quot;,
+    &quot;description&quot;: &quot;Request from 127.0.0.1 contained a SQL injection pattern (rule SQLI-UNION) in parameter &#39;search&#39;.&quot;,
+    ...
+}
+</code></pre></div>
+<hr />
 <h3 id="malicious_corsuseridipuseragentreferer">malicious_cors:[userid|IP,useragent,referer]<a class="headerlink" href="#malicious_corsuseridipuseragentreferer" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
 When attempts are made from unauthorized origins they should of course be blocked, but also logged whenever possible. Even if we block an illegal cross-origin request the fact that the request is being made could be an indication of attack.</p>
@@ -4759,6 +4878,60 @@ CRITICAL</p>
     &quot;event&quot;: &quot;malicious_direct_reference:joebob1, Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0&quot;,
     &quot;level&quot;: &quot;CRITICAL&quot;,
     &quot;description&quot;: &quot;User joebob1 attempted to access an object to which they are not authorized&quot;,
+    ...
+}
+</code></pre></div>
+<hr />
+<h2 id="mcp-servers-mcp">MCP Servers [MCP]<a class="headerlink" href="#mcp-servers-mcp" title="Permanent link">&para;</a></h2>
+<p>This section focuses on concerns related to the use of MCP servers either within productivity applications, or at the enterprise level.</p>
+<hr />
+<h3 id="mcp_prompt_injectionuserid">mcp_prompt_injection[:userid]<a class="headerlink" href="#mcp_prompt_injectionuserid" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+When an MCP client or server detects indicators of prompt injection (for example, instructions to ignore system/developer messages, attempts to override tool policies, requests to reveal secrets, or attempts to coerce tool calls outside of the intended task), block or constrain the action and log the event for investigation.</p>
+<p><em>NOTE: Avoid logging the full prompt/tool I/O. Prefer logging a detection category or rule ID, the target tool/server, and request identifiers to support triage without creating a secondary sensitive-data or log-injection risk.</em></p>
+<p><strong>Level:</strong>
+WARN</p>
+<p><strong>Example:</strong></p>
+<div class="highlight"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.cooldevapp_mcp_toolname&quot;,
+    &quot;event&quot;: &quot;mcp_prompt_injection:joebob1&quot;,
+    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;description&quot;: &quot;A possible prompt injection has occurred&quot;,
+    ...
+}
+</code></pre></div>
+<hr />
+<h3 id="mcp_resource_exhaustionuserid">mcp_resource_exhaustion[:userid]<a class="headerlink" href="#mcp_resource_exhaustionuserid" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+When an MCP client or server detects a request pattern intended to exhaust resources (for example, unusually large prompts, repeated retries, tool-call loops, or other behavior that drives excessive token usage and cost), terminate or throttle the activity and log the attempt.</p>
+<p><em>NOTE: Avoid logging full prompts or tool inputs/outputs. Prefer logging measured usage (tokens in/out), policy thresholds, request identifiers, and the tool/model involved.</em></p>
+<p><strong>Level:</strong>
+WARN</p>
+<p><strong>Example:</strong></p>
+<div class="highlight"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.cooldevapp_mcp_toolname&quot;,
+    &quot;event&quot;: &quot;mcp_resource_exhaustion:joebob1&quot;,
+    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;description&quot;: &quot;Request blocked due to token budget overrun (tokens_in=18240, tokens_out=0, budget=8000)&quot;,
+    ...
+}
+</code></pre></div>
+<hr />
+<h3 id="mcp_tool_poisoninguserid">mcp_tool_poisoning[:userid]<a class="headerlink" href="#mcp_tool_poisoninguserid" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+When an MCP client or server detects that a tool may be malicious or tampered with (for example, unexpected tool changes, signature/hash verification failures, suspicious tool metadata, or a tool sourced from an agent/tool marketplace with minimal validation), block or quarantine the tool and log the attempt.</p>
+<p><em>NOTE: Tool ecosystems and agent marketplaces can enable rapid proliferation of third-party tools with relatively low validation. An internal marketplace or hashed allowlist for approved tools is highly recommended.</em></p>
+<p><strong>Level:</strong>
+WARN</p>
+<p><strong>Example:</strong></p>
+<div class="highlight"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.cooldevapp_mcp_toolname&quot;,
+    &quot;event&quot;: &quot;mcp_tool_poisoning:joebob1&quot;,
+    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;description&quot;: &quot;Tool execution blocked (tool=\&quot;calendar_sync\&quot;, source=\&quot;https://marketplace.example/tools/calendar_sync\&quot;, version=\&quot;2.4.1\&quot;, signature=\&quot;missing\&quot;, policy=\&quot;allowlist_required\&quot;)&quot;,
     ...
 }
 </code></pre></div>
