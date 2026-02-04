@@ -8,9 +8,9 @@ Each year IBM Security commissions the Ponemon Institute to survey companies aro
 
 In addition to the millions of dollars lost due to breaches the report finds that the **mean time to identify** a breach continues to hover around **200 days**. Clearly our ability to monitor applications and alert on anomalous behavior would improve our time to identify and mitigate an attack against our applications.
 
-![IBM Cost of Data Breach Report 2020](../assets/cost-of-breach-2024.png)
+![IBM Cost of Data Breach Report 2025](../assets/cost-of-breach-2025.png)
 
-> IBM Cost of a Data Breach Study 2020, Fig.4, pg.10, [https://www.ibm.com/security/data-breach]
+> IBM Cost of a Data Breach Study 2025, Fig.4, pg.12, [https://www.ibm.com/reports/data-breach]
 
 This logging standard would seek to define specific keywords which, when applied consistently across software, would allow groups to simply monitor for these events terms across all applications and respond quickly in the event of attack.
 
@@ -721,6 +721,31 @@ CRITICAL
 
 ---
 
+### malicious_sqli:[userid|IP,parameter,ruleid,useragent]
+
+**Description**
+When request input matches a SQL injection (SQLi) signature or heuristic (e.g., comment delimiters, tautologies like `' OR 1=1 --`, stacked queries, `UNION SELECT`, etc.), block the request and log the attempt.
+
+_NOTE: Logging the payload is dangerous and may result in log injection. Prefer recording a detection rule ID / category and the parameter name over logging the full payload._
+
+**Level:**
+CRITICAL
+
+**Example:**
+
+```
+{
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "malicious_sqli:127.0.0.1,search,SQLI-UNION,Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0",
+    "level": "CRITICAL",
+    "description": "Request from 127.0.0.1 contained a SQL injection pattern (rule SQLI-UNION) in parameter 'search'.",
+    ...
+}
+```
+
+---
+
 ### malicious_cors:[userid|IP,useragent,referer]
 
 **Description**
@@ -763,6 +788,87 @@ CRITICAL
     "event": "malicious_direct_reference:joebob1, Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0",
     "level": "CRITICAL",
     "description": "User joebob1 attempted to access an object to which they are not authorized",
+    ...
+}
+```
+
+---
+
+## MCP Servers [MCP]
+
+This section focuses on concerns related to the use of MCP servers either within productivity applications, or at the enterprise level.
+
+---
+
+### mcp_prompt_injection[:userid]
+
+**Description**
+When an MCP client or server detects indicators of prompt injection (for example, instructions to ignore system/developer messages, attempts to override tool policies, requests to reveal secrets, or attempts to coerce tool calls outside of the intended task), block or constrain the action and log the event for investigation.
+
+_NOTE: Avoid logging the full prompt/tool I/O. Prefer logging a detection category or rule ID, the target tool/server, and request identifiers to support triage without creating a secondary sensitive-data or log-injection risk._
+
+**Level:**
+WARN
+
+**Example:**
+
+```
+{
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.cooldevapp_mcp_toolname",
+    "event": "mcp_prompt_injection:joebob1",
+    "level": "WARN",
+    "description": "A possible prompt injection has occurred",
+    ...
+}
+```
+
+---
+
+### mcp_resource_exhaustion[:userid]
+
+**Description**
+When an MCP client or server detects a request pattern intended to exhaust resources (for example, unusually large prompts, repeated retries, tool-call loops, or other behavior that drives excessive token usage and cost), terminate or throttle the activity and log the attempt.
+
+_NOTE: Avoid logging full prompts or tool inputs/outputs. Prefer logging measured usage (tokens in/out), policy thresholds, request identifiers, and the tool/model involved._
+
+**Level:**
+WARN
+
+**Example:**
+
+```
+{
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.cooldevapp_mcp_toolname",
+    "event": "mcp_resource_exhaustion:joebob1",
+    "level": "WARN",
+    "description": "Request blocked due to token budget overrun (tokens_in=18240, tokens_out=0, budget=8000)",
+    ...
+}
+```
+
+---
+
+### mcp_tool_poisoning[:userid]
+
+**Description**
+When an MCP client or server detects that a tool may be malicious or tampered with (for example, unexpected tool changes, signature/hash verification failures, suspicious tool metadata, or a tool sourced from an agent/tool marketplace with minimal validation), block or quarantine the tool and log the attempt.
+
+_NOTE: Tool ecosystems and agent marketplaces can enable rapid proliferation of third-party tools with relatively low validation. An internal marketplace or hashed allowlist for approved tools is highly recommended._
+
+**Level:**
+WARN
+
+**Example:**
+
+```
+{
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.cooldevapp_mcp_toolname",
+    "event": "mcp_tool_poisoning:joebob1",
+    "level": "WARN",
+    "description": "Tool execution blocked (tool=\"calendar_sync\", source=\"https://marketplace.example/tools/calendar_sync\", version=\"2.4.1\", signature=\"missing\", policy=\"allowlist_required\")",
     ...
 }
 ```
