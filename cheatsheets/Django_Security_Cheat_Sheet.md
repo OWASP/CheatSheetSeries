@@ -169,7 +169,7 @@ In the default app folder within your project, locate the `urls.py` file managin
 
 ## Content Security Policy
 
-- Include the `django.middleware.csp.ContentSecurityPolicyMiddleware` module in the `MIDDLEWARE` setting in your project's `settings.py` to add CSP-related header to your responses ([documentation](https://docs.djangoproject.com/fr/6.0/howto/csp/#basic-config)).
+- Include the `django.middleware.csp.ContentSecurityPolicyMiddleware` module in the `MIDDLEWARE` setting in your project's `settings.py` to add CSP-related header to your responses ([documentation](https://docs.djangoproject.com/en/6.0/howto/csp/#basic-config)).
 - Configure the CSP policies in settings.py using the `SECURE_CSP` parameter, for example:
 
 ```py
