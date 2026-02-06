@@ -3,7 +3,7 @@
 When contributing:
 
 - Follow our restrictions on the [use of (generative) AI](#use-of-ai) for all issues, pull requests, comments and discussions.
-- Follow our [Code of Conduct](code_of_conduct.md).
+- Follow our [Code of Conduct](CODE_OF_CONDUCT.md).
 - For minor fixes such as a typo in existing cheat sheet, a simple pull request is all that's needed. For more involved changes, please follow the process laid out below.
 - :heavy_exclamation_mark: Focus on updating a single file in a Pull Request to make the review processes simpler for the core team.
 - :warning: Pull Requests marked as **WAITING_UPDATE** (indicating that the core team are waiting for an update from the author of the Pull Request) that do not receive any updates from the author in one month will be closed.
