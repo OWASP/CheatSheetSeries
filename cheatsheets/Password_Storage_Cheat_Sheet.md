@@ -115,7 +115,7 @@ These configuration settings provide an equal level of defense, and the only dif
 
 [scrypt](http://www.tarsnap.com/scrypt/scrypt.pdf) is a password-based key derivation function created by [Colin Percival](https://twitter.com/cperciva). While [Argon2id](#argon2id) should be the best choice for password hashing, [scrypt](#scrypt) should be used when the former is not available.
 
-Like [Argon2id](#argon2id), scrypt has three different parameters that can be configured: the minimum CPU/memory cost parameter (N), the blocksize (r) and the degree of parallelism (p). Use one of the following settings:
+Like [Argon2id](#argon2id), scrypt has three parameters that can be configured: the minimum memory cost parameter (N), the blocksize (r), and the degree of parallelism (p). Use one of the following settings:
 
 - N=2^17 (128 MiB), r=8 (1024 bytes), p=1
 - N=2^16 (64 MiB), r=8 (1024 bytes), p=2
@@ -123,7 +123,7 @@ Like [Argon2id](#argon2id), scrypt has three different parameters that can be co
 - N=2^14 (16 MiB), r=8 (1024 bytes), p=5
 - N=2^13 (8 MiB), r=8 (1024 bytes), p=10
 
-These configuration settings provide an equal level of defense. The only difference is a trade off between CPU and RAM usage.
+These configuration settings provide a similar minimal level of defense, with the main trade-off between CPU and RAM usage.
 
 ### bcrypt
 
