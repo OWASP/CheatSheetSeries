@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Threat modeling is a structured approach to identify and mitigate security threats in a system. This cheat sheet provides a concise, actionable guide for modern application developers, whether you're just getting started or looking for a refresher.  
+Threat modeling is a structured approach to identify and mitigate security threats in a system. This cheat sheet provides a concise, actionable guide for modern application developers, whether you're just getting started or looking for a refresher.
 For a more detailed explanation, see the OWASP [Threat Modeling project](https://owasp.org/www-project-threat-modeling/)
 
 ## Overview
@@ -101,8 +101,8 @@ STRIDE is flexible and easy to start with. Simple techniques such as **brainstor
 
 Once threats have been identified, they are often **ranked**. Ranking is ideally based on a combination of:
 
-1. **Likelihood** — how probable is the threat?  
-2. **Impact** — what is the potential damage if it occurs?  
+1. **Likelihood** — how probable is the threat?
+2. **Impact** — what is the potential damage if it occurs?
 
 High-likelihood, high-impact threats are prioritized first. However, estimating these values can be challenging, and teams may also consider **effort to remediate** as part of prioritization. Some practitioners advocate combining all three factors into a single prioritization metric for clarity.
 
@@ -128,7 +128,7 @@ Key review questions include:
 - Does the system model (e.g., DFD) accurately reflect the system?
 - Have all relevant threats been identified?
 - Has a response strategy been defined for each identified threat?
-- For threats requiring mitigation, do the proposed controls reduce risk to an acceptable level? 
+- For threats requiring mitigation, do the proposed controls reduce risk to an acceptable level?
 - Has the threat model been formally documented and stored for future reference?
 - Can the agreed-upon mitigations be tested, and can their effectiveness be measured?
 
