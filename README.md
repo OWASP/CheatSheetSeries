@@ -102,3 +102,5 @@ A special thank you to the following people for their help provided during the m
 - [Jakub Maćkowski](https://github.com/mackowski): For valuable help in updating the OWASP Wiki links for all the migrated cheat sheets.
 
 Open Worldwide Application Security Project and OWASP are registered trademarks of the OWASP Foundation, Inc.
+
+Editado
