@@ -123,7 +123,7 @@ Like [Argon2id](#argon2id), scrypt has three parameters that can be configured: 
 - N=2^14 (16 MiB), r=8 (1024 bytes), p=5
 - N=2^13 (8 MiB), r=8 (1024 bytes), p=10
 
-These configuration settings provide a similar minimal level of defense, with the main trade-off between CPU and RAM usage.
+These configuration settings provide a similar minimal level of defense, with the main trade-off between parallelism and RAM usage.
 
 ### bcrypt
 
