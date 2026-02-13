@@ -249,7 +249,7 @@ String[] featuresToDisable = {
 
 for (String feature : featuresToDisable) {
     try {    
-        dbf.setFeature(FEATURE, false); 
+        dbf.setFeature(feature, false); 
     } catch (ParserConfigurationException e) {
         // This should catch a failed setFeature feature
         logger.info("ParserConfigurationException was thrown. The feature '" + feature
