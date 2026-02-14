@@ -72,6 +72,7 @@ The LLM sees all tool descriptions from all connected servers in its context —
 - Treat the *entire* tool schema as a potential injection surface — not just the `description` field.
 - Pin tool definitions using cryptographic hashes and alert on any changes (prevents rug pulls).
 - Use tools like `mcp-scan` to automatically detect poisoned descriptions and cross-server shadowing.
+- Use strict JSON Schema for tool parameters: set `additionalProperties: false` and use `pattern` (or similar) on string fields so only declared parameters and valid formats are accepted.
 
 <details>
 <summary>Bad — hidden instructions in tool description:</summary>
@@ -102,6 +103,23 @@ def add(a: int, b: int, sidenote: str) -> int:
 def add(a: int, b: int) -> int:
     """Adds two integers and returns the sum."""
     return a + b
+```
+
+</details>
+
+<details>
+<summary>Strict tool parameter schema:</summary>
+
+```json
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "resource_id": { "type": "string", "pattern": "^[a-zA-Z0-9_-]{1,64}$" },
+    "action": { "type": "string", "enum": ["read", "list"] }
+  },
+  "required": ["resource_id", "action"]
+}
 ```
 
 </details>
@@ -169,7 +187,7 @@ services:
 
 - Validate all inputs to MCP server tools — treat them as untrusted (they originate from LLM output influenced by potentially malicious context).
 - Sanitize inputs against injection attacks (SQL, OS command, path traversal).
-- Validate and sanitize tool outputs before returning them to the LLM context.
+- Validate and sanitize tool outputs before returning them to the LLM context — output is often used as input by other tools and can cause downstream SSRF or command injection if unsanitized.
 - Never pass raw shell commands or unsanitized file paths.
 
 <details>
@@ -201,14 +219,34 @@ def search_logs(pattern: str) -> str:
 
 </details>
 
+<details>
+<summary>Sanitize tool output before returning (e.g. URLs):</summary>
+
+```python
+ALLOWED_HOSTS = {"api.example.com", "cdn.example.com"}
+
+@mcp.tool()
+def get_download_url(file_id: str) -> str:
+    """Return download URL for a file. Only returns URLs for allowed hosts."""
+    url = internal_resolve_url(file_id)
+    parsed = urllib.parse.urlparse(url)
+    if parsed.scheme != "https" or parsed.hostname not in ALLOWED_HOSTS:
+        raise ValueError("URL not allowed")
+    return url
+```
+
+</details>
+
 ### 6. Authentication, Authorization & Transport Security
 
 - Enforce authentication on all remote MCP server endpoints.
 - Use OAuth 2.0 with PKCE for remote server authorization flows.
 - Bind session IDs to user-specific context (e.g., `<user_id>:<session_id>`) to prevent session hijacking.
+- **Validate on each request** that the session or token belongs to the current requester; reject the call if it does not (prevents confused deputy).
 - Use secure, non-deterministic session IDs (cryptographic random, not sequential).
 - Always use TLS for remote (HTTP/SSE) transports.
 - Verify server identity via certificate pinning or cryptographic server verification for remote servers.
+- Apply resource controls (rate limits, quotas, timeouts) per session or tenant to resist DoS and limit impact of abuse; combine with sandboxing to contain local escape impact.
 
 <details>
 <summary>Secure session binding example:</summary>
@@ -221,6 +259,19 @@ def create_session(user_id: str) -> str:
     bound_key = f"{user_id}:{session_id}"
     store_session(bound_key, user_id)
     return session_id
+```
+
+</details>
+
+<details>
+<summary>Good — validate requester before executing tool:</summary>
+
+```python
+def handle_tool_call(session_id: str, requester_id: str, tool: str, params: dict):
+    stored_user = get_user_for_session(session_id)
+    if stored_user != requester_id:
+        raise Forbidden("Session does not match requester")
+    execute_tool(tool, params)
 ```
 
 </details>
