@@ -371,12 +371,6 @@ To use Security Checker run the following command using [Symfony CLI](https://gi
 symfony check:security
 ```
 
-You should also consider similar tools:
-
-- [Local PHP Security Checker](https://github.com/fabpot/local-php-security-checker)
-
-- [Enlightn Security Checker](https://github.com/enlightn/security-checker)
-
 ### Cross-Origin Resource Sharing (CORS)
 
 CORS is a security feature implemented in web browsers to control how web applications in one domain can request and interact with resources hosted on other domains.

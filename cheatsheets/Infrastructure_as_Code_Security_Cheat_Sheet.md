@@ -1,10 +1,10 @@
+# Infrastructure as Code Security Cheatsheet
+
 <!---
 Copyright 2021 Nokia
 Licensed under the Creative Commons Attribution-ShareAlike 3.0 Unported License
 SPDX-License-Identifier: CC-BY-SA-3.0
 --->
-
-# Infrastructure as Code Security Cheatsheet
 
 ## Introduction
 

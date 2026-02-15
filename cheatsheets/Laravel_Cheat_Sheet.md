@@ -6,8 +6,6 @@ This *Cheatsheet* intends to provide security tips to developers building Larave
 
 The Laravel Framework provides in-built security features and is meant to be secure by default. However, it also provides additional flexibility for complex use cases. This means that developers unfamiliar with the inner workings of Laravel may fall into the trap of using complex features in a way that is not secure. This guide is meant to educate developers to avoid common pitfalls and develop Laravel applications in a secure manner.
 
-You may also refer the [Enlightn Security Documentation](https://www.laravel-enlightn.com/docs/security/), which highlights common vulnerabilities and good practices on securing Laravel applications.
-
 ## The Basics
 
 - Make sure your app is not in debug mode while in production. To turn off debug mode, set your `APP_DEBUG` environment variable to `false`:
@@ -26,7 +24,7 @@ php artisan key:generate
 
 - Set safe file and directory permissions on your Laravel application. In general, all Laravel directories should be setup with a max permission level of `775` and non-executable files with a max permission level of `664`. Executable files such as Artisan or deployment scripts should be provided with a max permission level of `775`.
 
-- Make sure your application does not have vulnerable dependencies. You can check this using the [Enlightn Security Checker](https://github.com/enlightn/security-checker).
+- Make sure your application does not have vulnerable dependencies.
 
 ## Cookie Security and Session Management
 
@@ -49,7 +47,7 @@ protected $middlewareGroups = [
 ];
 ```
 
-- Enable the `HttpOnly` attribute on your session cookies via your `config/session.php` file, so that your session cookies are inaccessible from Javascript:
+- Enable the `HttpOnly` attribute on your session cookies via your `config/session.php` file, so that your session cookies are inaccessible from JavaScript:
 
 ```php
 'http_only' => true,
@@ -428,6 +426,77 @@ extract($request->all());
 
 In general, avoid passing any untrusted input data to these dangerous functions.
 
+## Rate Limiting
+
+Laravel provides built-in mechanisms to protect your routes from excessive requests and potential abuse.
+
+The two main ways to implement rate limiting are:
+
+1. **`throttle` middleware** – A built-in middleware that you can apply directly to routes or route groups.
+2. **`RateLimiter::for()`** – Allows you to define custom rate limiting rules with more flexibility.
+
+Below are the main ways to apply rate limiting effectively:
+
+### 1. Per Route
+
+Apply a limit directly to a single route using the `throttle` middleware:
+
+```php
+Route::get('/profile', function () {
+    return 'User profile';
+})->middleware('throttle:10,1'); // 10 requests per minute
+```
+
+### 2. Per Route Group
+
+Apply a limit to a group of routes:
+
+```php
+Route::middleware('throttle:20,1')->group(function () {
+    Route::get('/posts', fn () => 'Posts');
+    Route::get('/comments', fn () => 'Comments');
+});
+```
+
+### 3. Custom Rate Limiter
+
+Define a custom rate limiter in `RouteServiceProvider` using `RateLimiter::for()`:
+
+```php
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Support\Facades\RateLimiter;
+
+RateLimiter::for('custom-limit', function ($request) {
+    return Limit::perMinute(5)->by($request->user()?->id ?: $request->ip());
+});
+```
+
+Apply the custom limiter to your routes:
+
+```php
+Route::middleware('throttle:custom-limit')->get('/dashboard', fn () => 'Dashboard');
+```
+
+### 4. Global API / Web Rate Limiting
+
+Laravel allows you to apply global rate limiting to entire route groups like `api` or `web` by including the `throttle` middleware in `Kernel.php` (note that the `api` group is rate-limited by default).
+
+```php
+protected $middlewareGroups = [
+    'api' => [
+        'throttle:60,1', // 60 requests per minute globally for API
+        // ...
+    ],
+
+    'web' => [
+        'throttle:30,1', // 30 requests per minute globally for web
+        // ...
+    ],
+];
+```
+
+For more details, see the official Laravel documentation on [rate limiting](https://laravel.com/docs/12.x/routing#rate-limiting).
+
 ## Security Headers
 
 You should consider adding the following security headers to your web server or Laravel application middleware:
@@ -439,17 +508,9 @@ You should consider adding the following security headers to your web server or 
 
 For more information, refer the [OWASP secure headers project](https://owasp.org/www-project-secure-headers/).
 
-## Tools
-
-You should consider using [Enlightn](https://www.laravel-enlightn.com/), a static and dynamic analysis tool for Laravel applications that has over 45 automated security checks to identify potential security issues. There is both an open source version and a commercial version of Enlightn available. Enlightn includes an extensive 45 page documentation on security vulnerabilities and a great way to learn more on Laravel security is to just review its [documentation](https://www.laravel-enlightn.com/docs/security/).
-
-You should also use the [Enlightn Security Checker](https://github.com/enlightn/security-checker) or the [Local PHP Security Checker](https://github.com/fabpot/local-php-security-checker). Both of them are open source packages, licensed under the MIT and AGPL licenses respectively, that scan your PHP dependencies for known vulnerabilities using the [Security Advisories Database](https://github.com/FriendsOfPHP/security-advisories).
-
 ## References
 
 - [Laravel Documentation on Authentication](https://laravel.com/docs/authentication)
 - [Laravel Documentation on Authorization](https://laravel.com/docs/authorization)
 - [Laravel Documentation on CSRF](https://laravel.com/docs/csrf)
 - [Laravel Documentation on Validation](https://laravel.com/docs/validation)
-- [Enlightn SAST and DAST Tool](https://www.laravel-enlightn.com/)
-- [Laravel Enlightn Security Documentation](https://www.laravel-enlightn.com/docs/security/)

@@ -2,7 +2,8 @@
 
 ## Introduction
 
-Threat modeling is an important concept for modern application developers to understand. The goal of this cheatsheet is to provide a concise, but actionable, reference for both those new to threat modeling and those seeking a refresher. The official project page is [https://owasp.org/www-project-threat-model/](https://owasp.org/www-project-threat-model/).
+Threat modeling is an important concept for modern application developers to understand. The goal of this cheatsheet is to provide a concise, but actionable, reference for both those new to threat modeling and those seeking a refresher.
+The OWASP [Threat Modeling project](https://owasp.org/www-project-threat-modeling/) provides further information on various aspects of threat modeling.
 
 ## Overview
 
@@ -33,7 +34,7 @@ Proper threat modeling requires participants to think creatively and critically 
 
 ### Improved Visibility of Target of Evaluation (TOE)
 
-Threat modeling requires a deep understanding of the system being evaluated. To properly threat model, one must understand data flows, trust boundaries, and other characteristics of the system. Thus, [Stiliyana Simeonova](https://securityintelligence.com/threat-modeling-in-the-enterprise-part-1-understanding-the-basics/) asserts that improved visibility into a system and its interactions is one advantage of threat modeling.
+Threat modeling requires a deep understanding of the system being evaluated. To properly threat model, one must understand data flows, trust boundaries, and other characteristics of the system. Thus improved visibility into a system and its interactions is one advantage of threat modeling.
 
 ## Addressing Each Question
 
@@ -53,6 +54,24 @@ Brainstorming engages all participants, fostering better communication and mutua
 
 Integrating the results of brainstorming with formal modeling techniques can lead to a better understanding of the domain and more effective system design.
 
+### Cloud Threat Modeling
+
+Most modern systems are cloud-native or hybrid. Traditional threat modeling techniques (like STRIDE or DFDs) often need adaptation for cloud architectures, which introduce:
+
+- Shared responsibility models
+- Managed services and APIs
+- Multi-tenant and identity federation considerations
+- Dynamic infrastructure (IaC, serverless, containers)
+
+Cloud-native systems introduce unique considerations for threat modeling due to their distributed, service-oriented nature and shared responsibility model. In this context, the threat modeling process should account for:
+
+- **Cloud architecture components:** virtual networks, IAM roles, managed services, and storage buckets.
+- **Shared responsibility:** understanding which security controls are managed by the provider vs. the customer.
+- **Dynamic environments:** container orchestration, serverless functions, and ephemeral infrastructure.
+- **Compliance and data residency:** ensuring that workloads meet jurisdictional and privacy requirements.
+
+Cloud threat modeling frameworks such as AWS’s [Well-Architected Framework – Security Pillar](https://docs.aws.amazon.com/wellarchitected/latest/security-pillar/welcome.html) can serve as references.
+
 ### Threat Identification
 
 After the system has been modeled, it is now time to address the question of "what can go wrong?". This question must be explored with the inputs from the first step in mind; that is, it should focus on identifying and ranking threats within the context of the specific system being evaluated. In attempting to answer this question, threat modelers have a wealth of data sources and techniques at their disposal. For illustration purposes, this cheatsheet will leverage STRIDE; however, in practice, other approaches may be used alongside or instead of STRIDE.
@@ -61,10 +80,10 @@ STRIDE is a mature and popular threat modeling technique and mnemonic originally
 
 | Threat Category             | Violates          | Examples                                                                                                    |
 | --------------------------- | ----------------- | ----------------------------------------------------------------------------------------------------------- |
-| **S**poofing                | Authenticity      | An attacker steals the authentication token of a legitimate user and uses it to impersonate the user.       |
+| **S**poofing                | Authentication    | An attacker steals the authentication token of a legitimate user and uses it to impersonate the user.       |
 | **T**ampering               | Integrity         | An attacker abuses the application to perform unintended updates to a database.                             |
-| **R**epudiation             | Non-repudiability | An attacker manipulates logs to cover their actions.                                                        |
-| **I**nformation Disclosure  | Confidentiality   | An attacker extract data from a database containing user account info.                                      |
+| **R**epudiation             | Accounting        | An attacker manipulates logs to cover their actions.                                                        |
+| **I**nformation Disclosure  | Confidentiality   | An attacker extracts data from a database containing user account info.                                     |
 | **D**enial of Service       | Availability      | An attacker locks a legitimate user out of their account by performing many failed authentication attempts. |
 | **E**levation of Privileges | Authorization     | An attacker tampers with a JWT to change their role.                                                        |
 
@@ -81,7 +100,7 @@ Equipped with an understanding of both the system and applicable threats, it is 
 - **Transfer:** Shift responsibility to another entity such as the customer.
 - **Accept:** Do not mitigate, eliminate, or transfer the risk because none of the above options are acceptable given business requirements or constraints.
 
-If one decides to mitigates a threat, mitigation strategies must be formulated and documented as requirements. Depending on the complexity of the system, nature of threats identified, and the process used for identifying threats (STRIDE or another method), mitigation responses may be applied at either the category or individual threat level. In the former case, the mitigation would apply to all threats within that category. Mitigations strategies must be actionable not hypothetical; they must be something that can actually be built into to the system being developed. Although mitigations strategies must be tailored to the particular application, resources such as as [OWASP's ASVS](https://owasp.org/www-project-application-security-verification-standard/) and [MITRE's CWE list](https://cwe.mitre.org/index.html) can prove valuable when formulating these responses.
+If one decides to mitigate a threat, mitigation strategies must be formulated and documented as requirements. Depending on the complexity of the system, nature of threats identified, and the process used for identifying threats (STRIDE or another method), mitigation responses may be applied at either the category or individual threat level. In the former case, the mitigation would apply to all threats within that category. Mitigation strategies must be actionable not hypothetical; they must be something that can actually be built into to the system being developed. Although mitigation strategies must be tailored to the particular application, resources such as as [OWASP's ASVS](https://owasp.org/www-project-application-security-verification-standard/) and [MITRE's CWE list](https://cwe.mitre.org/index.html) can prove valuable when formulating these responses.
 
 ### Review and Validation
 

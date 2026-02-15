@@ -2,12 +2,12 @@
 
 ## Introduction
 
-This cheat sheet will discuss common and necessary security patterns to follow when creating and reviewing cloud architectures. Each section will cover a specific security guideline or cloud design decision to consider. This sheet is written for a medium to large scale enterprise system, so additional overhead elements will be discussed, which may be unecessary for smaller organizations.
+This cheat sheet will discuss common and necessary security patterns to follow when creating and reviewing cloud architectures. Each section will cover a specific security guideline or cloud design decision to consider. This sheet is written for a medium to large scale enterprise system, so additional overhead elements will be discussed, which may be unnecessary for smaller organizations.
 
 ## Risk Analysis, Threat Modeling, and Attack Surface Assessments
 
 With any application architecture, understanding the risks and threats is extremely important for proper security. No one can spend their entire budget or bandwidth focused on security, so properly allocating security resources is necessary.
-Therefore, enterprises must perform risk assessments, threat modeling activites, and attack surface assessments to identify the following:
+Therefore, enterprises must perform risk assessments, threat modeling activities, and attack surface assessments to identify the following:
 
 - What threats an application might face
 - The likelihood of those threats actualizing as attacks
@@ -61,7 +61,7 @@ URL Signing for object storage involves using some method or either statically o
 | Efficient access to many resources  |     Anyone can access/No privacy     |
 |       Simple public file share      |  Unauthenticated access to objects   |
 |                                     |  Visibility into full file system    |
-|                                     |     Accidently leak stored info      |
+|                                     |     Accidentally leak stored info      |
 
 ### VPCs and Subnets
 
@@ -267,16 +267,16 @@ Platform as a Service is in the middle between IaaS and SaaS. The developer cont
 - Application software
 - External data storage
 
-It provides neatly packaged code hosting and containerized options, which allow smaller development teams or less experienced developers a way to get started with their applications while ignoring more complex or superfluous computing tasks. It is generally less expensive than IaaS, while still retaining some control over elements that a SaaS system does not provide. However, developers could have problems with the specific limitations of the offering used, or issues with compatability, as the code must work with the correct container, framework or language version.
+It provides neatly packaged code hosting and containerized options, which allow smaller development teams or less experienced developers a way to get started with their applications while ignoring more complex or superfluous computing tasks. It is generally less expensive than IaaS, while still retaining some control over elements that a SaaS system does not provide. However, developers could have problems with the specific limitations of the offering used, or issues with compatibility, as the code must work with the correct container, framework or language version.
 
 Also, while scalability is very dependent on provider and setup, PaaS usually provides higher scalability due to containerization options and common, repeatable base OS systems. Compared to IaaS, where scalability must be built by the developer, and SaaS, where the performance is very platform specific.
 
 |              Pros              |              Cons              |
 |:------------------------------:|:------------------------------:|
-| Easier to onboard and maintain | Potential compatability issues |
+| Easier to onboard and maintain | Potential compatibility issues |
 |       Better scalability       |  Offering specific limitations |
 
-Manual security in PaaS solutions is similary less extensive (compared to IaaS). Application specific authentication and authorization must still be handled by the developer, along with any access to external data systems. However, the CSP is responsible for securing containerized instances, operating systems, ephemeral files systems, and certain networking controls.
+Manual security in PaaS solutions is similarly less extensive (compared to IaaS). Application specific authentication and authorization must still be handled by the developer, along with any access to external data systems. However, the CSP is responsible for securing containerized instances, operating systems, ephemeral files systems, and certain networking controls.
 
 ### SaaS
 
@@ -314,7 +314,7 @@ AWS provides an excellent example of this difference in management, identifying 
 
 #### Update Strategy for Self-managed Services
 
-Self-managed tooling will require additional overhead by developers and support engineers. Depending on the tool, basic version updates, upgrades to images like [AMIs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html) or [Compute Images](https://cloud.google.com/compute/docs/images), or other operating system level maintence will be required. Use automation to regularly update minor versions or [images](https://docs.aws.amazon.com/systems-manager/latest/userguide/automation-tutorial-update-patch-golden-ami.html), and schedule time in development cycles for refreshing stale resources.
+Self-managed tooling will require additional overhead by developers and support engineers. Depending on the tool, basic version updates, upgrades to images like [AMIs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html) or [Compute Images](https://cloud.google.com/compute/docs/images), or other operating system level maintenance will be required. Use automation to regularly update minor versions or [images](https://docs.aws.amazon.com/systems-manager/latest/userguide/automation-tutorial-update-patch-golden-ami.html), and schedule time in development cycles for refreshing stale resources.
 
 #### Avoid Gaps in Managed Service Security
 

@@ -9,16 +9,16 @@ This cheat sheet will help you prevent SQL injection flaws in your applications.
 
 ## What Is a SQL Injection Attack?
 
-Attackers can use SQL injection on an application if it has dynamic database queries that use string concatenation and user supplied input. To avoid SQL injection flaws, developers need to:
+Attackers can use SQL injection on an application if it has dynamic database queries that use string concatenation and user-supplied input. To avoid SQL injection flaws, developers need to:
 
 1. Stop writing dynamic queries with string concatenation or
 2. Prevent malicious SQL input from being included in executed queries.
 
-There are simple techniques for preventing SQL injection vulnerabilities and they can be used with practically any kind of programming language and any type of database. While XML databases can have similar problems (e.g., XPath and XQuery injection), these techniques can be used to protect them as well.
+There are simple techniques for preventing SQL injection vulnerabilities, and they can be used with practically any kind of programming language and any type of database. While XML databases can have similar problems (e.g., XPath and XQuery injection), these techniques can be used to protect them as well.
 
 ## Anatomy of A Typical SQL Injection Vulnerability
 
-A common SQL injection flaw in Java is below. Because its unvalidated "customerName" parameter is simply appended to the query, an attacker can enter SQL code into that query and the application would take the attacker's code and execute it on the database.
+A common SQL injection flaw in Java is shown below. Because its unvalidated "customerName" parameter is simply appended to the query, an attacker can enter SQL code into that query and the application would take the attacker's code and execute it on the database.
 
 ```java
 String query = "SELECT account_balance FROM user_data WHERE user_name = "

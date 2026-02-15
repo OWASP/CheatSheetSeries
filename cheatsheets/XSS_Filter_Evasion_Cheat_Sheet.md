@@ -29,7 +29,7 @@ javascript:/*--></title></style></textarea></script></xmp>
 
 ### Malformed A Tags
 
-This test skips the `[href](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#href)` attribute to demonstrate an XSS attack using event handlers:
+This test skips the [`href`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#href) attribute to demonstrate an XSS attack using event handlers:
 
 ```js
 \<a onmouseover="alert(document.cookie)"\>xxs link\</a\>

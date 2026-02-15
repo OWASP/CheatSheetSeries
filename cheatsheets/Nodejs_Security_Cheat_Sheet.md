@@ -341,7 +341,7 @@ app.use(hpp());
 
 #### Only return what is necessary
 
-Information about the users of an application is among the most critical information about the application. User tables generally include fields like id, username, full name, email address, birth date, password and in some cases social security numbers. Therefore, when querying and using user objects, you need to return only needed fields as it may be vulnerable to personal information disclosure. This is also correct for other objects stored on the database. If you just need a certain field of an object, you should only return the specific fields required. As an example, you can use a function like the following whenever you need to get information on a user. By doing so, you can only return the fields that are needed for your specific operation. In other words, if you only need to list names of the users available, you are not returning their email addresses or credit card numbers in addition to their full names.
+Information about the users of an application is among the most critical information about the application. User tables generally include fields like ID, username, full name, email address, birth date, password and in some cases social security numbers. Therefore, when querying and using user objects, you need to return only needed fields as it may be vulnerable to personal information disclosure. This is also correct for other objects stored on the database. If you just need a certain field of an object, you should only return the specific fields required. As an example, you can use a function like the following whenever you need to get information on a user. By doing so, you can only return the fields that are needed for your specific operation. In other words, if you only need to list names of the users available, you are not returning their email addresses or credit card numbers in addition to their full names.
 
 ```JavaScript
 exports.sanitizeUser = function(user) {
@@ -372,6 +372,56 @@ Apart from these, there are some special functions for object attributes. `Objec
 #### Use access control lists
 
 Authorization prevents users from acting outside of their intended permissions. In order to do so, users and their roles should be determined with consideration of the principle of least privilege. Each user role should only have access to the resources they must use. For your Node.js applications, you can use the [acl](https://www.npmjs.com/package/acl) module to provide ACL (access control list) implementation. With this module, you can create roles and assign users to these roles.
+
+### Permissions
+
+Starting with Node.js v20, a Permission Model is available to restrict application privileges. As of Node.js v23.5.0, the model is considered stable and can be enabled using the `--permission` flag (earlier versions require `--experimental-permission`).
+
+#### Usage
+
+```bash
+node --permission [--allow-<type>=...] app.js
+```
+
+#### Examples
+
+Use only `--permission` to restrict all permissions by default:
+
+```bash
+node --permission index.js
+```
+
+Use `--allow‑fs‑read` to specify which files or directories Node.js is allowed to read. This is especially useful to prevent Local File Inclusion (LFI) vulnerabilities:
+
+```bash
+node --permission --allow-fs-read=/uploads/ index.js
+```
+
+Use `--allow-fs-write` to specify where Node.js is allowed to write files:
+
+```bash
+node --permission --allow-fs-write=/uploads/ index.js
+```
+
+Unauthorized access triggers a runtime error:
+
+```text
+Error: Access to this API has been restricted
+code: 'ERR_ACCESS_DENIED'
+permission: 'FileSystemRead'
+resource: '/path/to/file'
+```
+
+Other flags:
+
+- `--allow-child-process` — allows using `child_process` APIs
+- `--allow-worker` — allows usage of `worker_threads` APIs
+- `--allow-addons` — enables loading native addons
+- `--allow-wasi` — enables usage of WASI modules
+
+**Important note:** Symbolic links are followed even if they point outside the allowed paths. This means that relative symlinks can bypass restrictions and grant unintended access. To stay secure make sure no allowed paths include relative symbolic links when using the permission model.
+
+For more details refer to the [official documentation](https://nodejs.org/api/permissions.html).
 
 ### Error & Exception Handling
 
@@ -443,7 +493,7 @@ app.use(helmet()); // Add various HTTP headers
 ```
 
 The top-level `helmet` function is a wrapper around 14 smaller middlewares.
-Bellow is a list of HTTP security headers covered by `helmet` middlewares:
+Below is a list of HTTP security headers covered by `helmet` middlewares:
 
 - **[Strict-Transport-Security](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security)**: [HTTP Strict Transport Security (HSTS)](https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html) dictates browsers that the application can only be accessed via HTTPS connections. In order to use it in your application, add the following codes:
 
@@ -510,15 +560,6 @@ The above code sets Cache-Control, Surrogate-Control, Pragma and Expires headers
 
 ```JavaScript
 app.use(helmet.ieNoOpen());
-```
-
-- **[Expect-CT](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Expect-CT):** Certificate Transparency is a new mechanism developed to fix some structural problems regarding current SSL infrastructure. Expect-CT header may enforce certificate transparency requirements. It can be implemented in your application as follows:
-
-```JavaScript
-const expectCt = require('expect-ct');
-app.use(expectCt({ maxAge: 123 }));
-app.use(expectCt({ enforce: true, maxAge: 123 }));
-app.use(expectCt({ enforce: true, maxAge: 123, reportUri: 'http://example.com'}));
 ```
 
 - **X-Powered-By:** X-Powered-By header is used to inform what technology is used in the server side. This is an unnecessary header causing information leakage, so it should be removed from your application. To do so, you can use the `hidePoweredBy` as follows:

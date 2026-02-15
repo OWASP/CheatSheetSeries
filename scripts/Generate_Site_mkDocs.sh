@@ -125,6 +125,7 @@ if [ ! -d "$SITE_DIR" ]; then
     exit 1
 fi
 
+
 echo "Site built successfully"
 
 cat > "$SITE_DIR/.htaccess" << 'EOF'
@@ -195,6 +196,7 @@ PYTHON_SCRIPT
 else
     echo "Warning: redirects.yml not found, skipping redirects"
 fi
+
 # echo "Step 6/7: Handling redirect for files that have changed"
 # #Authorization_Testing_Automation.md -> Authorization_Testing_Automation_Cheat_Sheet.md
 # #Drone_security_sheet.html -> Drone_Security_Cheat_Sheet.html

@@ -41,11 +41,11 @@ Plus, such filters frequently prevent authorized input, like `O'Brian`, where th
 
 While denylisting can be useful as an additional layer of defense to catch some common malicious patterns, it should not be relied upon as the primary method. Allowlisting remains the more robust and secure approach for preventing potentially harmful input.
 
-Allowlist validation is appropriate for all input fields provided by the user. allowlist validation involves defining exactly what IS authorized, and by definition, everything else is not authorized.
+Allowlist validation is appropriate for all input fields provided by the user. Allowlist validation involves defining exactly what IS authorized, and by definition, everything else is not authorized.
 
 If it's well structured data, like dates, social security numbers, zip codes, email addresses, etc. then the developer should be able to define a very strong validation pattern, usually based on regular expressions, for validating such input.
 
-If the input field comes from a fixed set of options, like a drop down list or radio buttons, then the input needs to match exactly one of the values offered to the user in the first place.
+If the input field comes from a fixed set of options, like a drop down list or radio buttons, then the input needs to match exactly one of the values offered to the user in the first place. Any failure to validate a value against this discrete list of options on the server side is a high security event and should be logged as a high severity event as it indicates that an attacker is tampering with the client-side code.
 
 ### Validating Free-form Unicode Text
 
@@ -154,11 +154,11 @@ Check the [File Upload Cheat Sheet](File_Upload_Cheat_Sheet.md).
 - Use a new filename to store the file on the OS. Do not use any user controlled text for this filename or for the temporary filename.
 - When the file is uploaded to web, it's suggested to rename the file on storage. For example, the uploaded filename is *test.JPG*, rename it to *JAI1287uaisdjhf.JPG* with a random filename. The purpose of doing it to prevent the risks of direct file access and ambiguous filename to evade the filter, such as `test.jpg;.asp or /../../../../../test.jpg`.
 - Uploaded files should be analyzed for malicious content (anti-malware, static analysis, etc).
-- The file path should not be able to specify by client-side. It's decided by server-side.
+- The client should not be able to specify the file path; it should be defined by the server.
 
 ### Public Serving of Uploaded Content
 
-- Ensure uploaded images are served with the correct content-type (e.g. image/jpeg, application/x-xpinstall)
+- Ensure uploaded images are served with the correct content-type (e.g. `image/jpeg`, `application/x-xpinstall`)
 
 ### Beware of Specific File Types
 
@@ -172,7 +172,7 @@ The upload feature should be using an allowlist approach to only allow specific 
 
 - Use image rewriting libraries to verify the image is valid and to strip away extraneous content.
 - Set the extension of the stored image to be a valid image extension based on the detected content type of the image from image processing (e.g. do not just trust the header from the upload).
-- Ensure the detected content type of the image is within a list of defined image types (jpg, png, etc)
+- Ensure the detected content type of the image is within a list of defined image types (jpg, PNG, etc)
 
 ## Email Address Validation
 

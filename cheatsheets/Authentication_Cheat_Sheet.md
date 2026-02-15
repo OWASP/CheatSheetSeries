@@ -20,30 +20,38 @@ The primary function of a User ID is to uniquely identify a user within a system
 
 Usernames are easy-to-remember identifiers chosen by the user and used for identifying themselves when logging into a system or service. The terms User ID and username might be used interchangeably if the username chosen by the user also serves as their unique identifier within the system.
 
-Users should be permitted to use their email address as a username, provided the email is verified during signup. Additionally, they should have the option to choose a username other than an email address. For information on validating email addresses, please visit the [input validation cheatsheet email discussion](Input_Validation_Cheat_Sheet.md#email-address-validation).
+Users should be permitted to use their email address as a username, provided the email is verified during sign-up. Additionally, they should have the option to choose a username other than an email address. For information on validating email addresses, please visit the [input validation cheat sheet email discussion](Input_Validation_Cheat_Sheet.md#email-address-validation).
 
 ### Authentication Solution and Sensitive Accounts
 
-- Do **NOT** allow login with sensitive accounts (i.e. accounts that can be used internally within the solution such as to a back-end / middle-ware / DB) to any front-end user interface
-- Do **NOT** use the same authentication solution (e.g. IDP / AD) used internally for unsecured access (e.g. public access / DMZ)
+- Do **NOT** allow login with sensitive accounts (i.e. accounts that can be used internally within the solution such as to a backend / middleware / database) to any front-end user interface
+- Do **NOT** use the same authentication solution (e.g. IDP / AD) used internally for unsecured access (e.g., public access / DMZ)
 
 ### Implement Proper Password Strength Controls
 
 A key concern when using passwords for authentication is password strength. A "strong" password policy makes it difficult or even improbable for one to guess the password through either manual or automated means. The following characteristics define a strong password:
 
 - Password Length
-    - **Minimum** length of the passwords should be **enforced** by the application. Passwords **shorter than 8 characters** are considered to be weak ([NIST SP800-63B](https://pages.nist.gov/800-63-3/sp800-63b.html)).
+    - **Minimum** length for passwords should be enforced by the application.
+        - If MFA is enabled passwords **shorter than 8 characters** are considered to be weak ([NIST SP800-63B](https://pages.nist.gov/800-63-4/sp800-63b.html#passwordver)).
+        - If MFA is not enabled passwords **shorter than 15 characters** are considered to be weak ([NIST SP800-63B](https://pages.nist.gov/800-63-4/sp800-63b.html#passwordver)).
     - **Maximum** password length should be **at least 64 characters** to allow passphrases ([NIST SP800-63B](https://pages.nist.gov/800-63-3/sp800-63b.html)). Note that certain implementations of hashing algorithms may cause [long password denial of service](https://www.acunetix.com/vulnerabilities/web/long-password-denial-of-service/).
 - Do not silently truncate passwords. The [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.md#maximum-password-lengths) provides further guidance on how to handle passwords that are longer than the maximum length.
 - Allow usage of **all** characters including unicode and whitespace. There should be no password composition rules limiting the type of characters permitted. There should be no requirement for upper or lower case or numbers or special characters.
 - Ensure credential rotation when a password leak occurs, at the time of compromise identification or when authenticator technology changes. Avoid requiring periodic password changes; instead, encourage users to pick strong passwords and enable [Multifactor Authentication Cheat Sheet (MFA)](Multifactor_Authentication_Cheat_Sheet.md). According to NIST guidelines, verifiers should not mandate arbitrary password changes (e.g., periodically).
-- Include a password strength meter to help users create a more complex password and block common and previously breached passwords
+- Include a password strength meter to help users create a more complex password
     - [zxcvbn-ts library](https://github.com/zxcvbn-ts/zxcvbn) can be used for this purpose.
-    - [Pwned Passwords](https://haveibeenpwned.com/Passwords) is a service where passwords can be checked against previously breached passwords. You can host it yourself or use the [API](https://haveibeenpwned.com/API/v3#PwnedPasswords).
+    - Other language implementations of zxcvbn [listed here](https://github.com/dropbox/zxcvbn?tab=readme-ov-file); however check the age and maturity of each example before use.
+- Block common and previously breached passwords
+    - [Pwned Passwords](https://haveibeenpwned.com/Passwords) is a service where passwords can be checked against previously breached passwords. Details on the API [are here](https://haveibeenpwned.com/API/v3#PwnedPasswords).
+    - Alternatively, you can download the [Pwned Passwords](https://haveibeenpwned.com/Passwords) database [using this mechanism](https://github.com/HaveIBeenPwned/PwnedPasswordsDownloader?tab=readme-ov-file#what-is-haveibeenpwned-downloader) to host it yourself.
+    - Other top password lists are available but there is no guarantee as to how updated they are:
+        - [Various password lists](https://github.com/danielmiessler/SecLists/tree/master/Passwords) hosted by SecLists from Daniel Miessler.
+        - Static copy of the top 100,000 passwords from "Have I Been Pwned" hosted by NCSC in [text](https://www.ncsc.gov.uk/static-assets/documents/PwnedPasswordsTop100k.txt) and [JSON](https://www.ncsc.gov.uk/static-assets/documents/PwnedPasswordsTop100k.json) format.
 
 #### For more detailed information check
 
-- [ASVS v4.0 Password Security Requirements](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x11-V2-Authentication.md#v21-password-security-requirements)
+- [ASVS v5.0 Password Security Requirements](https://github.com/OWASP/ASVS/blob/master/5.0/en/0x15-V6-Authentication.md#v62-password-security)
 - [Passwords Evolved: Authentication Guidance for the Modern Era](https://www.troyhunt.com/passwords-evolved-authentication-guidance-for-the-modern-era/)
 
 ### Implement Secure Password Recovery Mechanism
@@ -59,15 +67,15 @@ It is critical for an application to store a password using the right cryptograp
 Where possible, the user-supplied password should be compared to the stored password hash using a secure password comparison function provided by the language or framework, such as the [password_verify()](https://www.php.net/manual/en/function.password-verify.php) function in PHP. Where this is not possible, ensure that the comparison function:
 
 - Has a maximum input length, to protect against denial of service attacks with very long inputs.
-- Explicitly sets the type of both variables, to protect against type confusion attacks such as [Magic Hashes](https://www.whitehatsec.com/blog/magic-hashes/) in PHP.
+- Explicitly sets the type of both variables, to protect against type confusion attacks such as Magic Hashes in PHP.
 - Returns in constant time, to protect against timing attacks.
 
 ### Change Password Feature
 
 When developing a change password feature, ensure to have:
 
-- User is authenticated with active session.
-- Current password verification. This is to ensure that it's the legitimate user who is changing the password. The abuse case is this: a legitimate user is using a public computer to log in. This user forgets to log out. Then another person is using this public computer. If we don't verify the current password, this other person may be able to change the password.
+- The user is authenticated with an active session.
+- Current password verification. This is to ensure that it's the legitimate user who is changing the password. Consider this abuse case: a user logs in on a public computer and forgets to log out. Another person could then use that active session. If we don't verify the current password, this other person may be able to change the password.
 
 ### Transmit Passwords Only Over TLS or Other Strong Transport
 
@@ -79,15 +87,53 @@ The login page and all subsequent authenticated pages must be exclusively access
 
 In order to mitigate CSRF and session hijacking, it's important to require the current credentials for an account before updating sensitive account information such as the user's password or email address -- or before sensitive transactions, such as shipping a purchase to a new address. Without this countermeasure, an attacker may be able to execute sensitive transactions through a CSRF or XSS attack without needing to know the user's current credentials. Additionally, an attacker may get temporary physical access to a user's browser or steal their session ID to take over the user's session.
 
+### Reauthentication After Risk Events
+
+**Overview:**
+Reauthentication is critical when an account has experienced high-risk activity such as account recovery, password resets, or suspicious behavior patterns. This section outlines when and how to trigger reauthentication to protect users and prevent unauthorized access. For further details, see the [Require Re-authentication for Sensitive Features](#require-re-authentication-for-sensitive-features) section.
+
+#### When to Trigger Reauthentication
+
+- **Suspicious Account Activity**
+  When unusual login patterns, IP address changes, or device enrollments occur
+- **Account Recovery**
+  After users reset their passwords or change sensitive account details
+- **Critical Actions**
+  For high-risk actions like changing payment details or adding new trusted devices
+
+#### Reauthentication Mechanisms
+
+- **Adaptive Authentication**
+  Use risk-based authentication models that adapt to the user's behavior and context
+- **Multi-Factor Authentication (MFA)**
+  Require an additional layer of verification for sensitive actions or events
+- **Challenge-Based Verification**
+  Prompt users to confirm their identity with a challenge question or secondary method
+
+#### Implementation Recommendations
+
+- **Minimize User Friction**
+  Ensure that reauthentication does not disrupt the user experience unnecessarily
+- **Context-Aware Decisions**
+  Make reauthentication decisions based on context (e.g., geolocation, device type, prior patterns)
+- **Secure Session Management**
+  Invalidate sessions after reauthentication and rotate tokens—see the [OWASP Session Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html)
+
+#### References
+
+- [OWASP Session Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html)
+- OWASP ASVS – 2.2.2: Reauthentication requirements
+- NIST 800-63B: Digital Identity Guidelines – Authentication Assurance Levels
+
 ### Consider Strong Transaction Authentication
 
 Some applications should use a second factor to check whether a user may perform sensitive operations. For more information, see the [Transaction Authorization Cheat Sheet](Transaction_Authorization_Cheat_Sheet.md).
 
 #### TLS Client Authentication
 
-TLS Client Authentication, also known as two-way TLS authentication, consists of both, browser and server, sending their respective TLS certificates during the TLS handshake process. Just as you can validate the authenticity of a server by using the certificate and asking a verifiably-valid Certificate Authority (CA) if the certificate is valid, the server can authenticate the user by receiving a certificate from the client and validating against a third-party CA or its own CA. To do this, the server must provide the user with a certificate generated specifically for him, assigning values to the subject so that these can be used to determine what user the certificate should validate. The user installs the certificate on a browser and now uses it for the website.
+TLS Client Authentication, also known as two-way TLS authentication, consists of both browser and server sending their respective TLS certificates during the TLS handshake process. Just as you can validate the authenticity of a server by using the certificate and asking a verifiably-valid Certificate Authority (CA) if the certificate is valid, the server can authenticate the user by receiving a certificate from the client and validating against a third-party CA or its own CA. To do this, the server must provide the user with a certificate generated specifically for him, assigning values to the subject so that these can be used to determine what user the certificate should validate. The user installs the certificate on a browser and now uses it for the website.
 
-It is a good idea to do this when:
+This approach is appropriate when:
 
 - It is acceptable (or even preferred) that the user has access to the website only from a single computer/browser.
 - The user is not easily scared by the process of installing TLS certificates on their browser, or there will be someone, probably from IT support, who will do this for the user.
@@ -217,7 +263,7 @@ The [Multifactor Authentication Cheat Sheet](Multifactor_Authentication_Cheat_Sh
 
 #### Login Throttling
 
-Login Throttling is a protocol used to prevent an attacker from making too many attempts at guessing a password through normal interactive means, it includes:
+Login Throttling is a protocol used to prevent an attacker from making too many attempts at guessing a password through normal interactive means, it includes the following controls:
 
 - Maximum number of attempts.
 
@@ -235,7 +281,7 @@ Rather than implementing a fixed lockout duration (e.g., ten minutes), some appl
 
 - Amount of time to delay after each account lockout (max 2-3, after that permanent account lockout).
 
-When designing an account lockout system, care must be taken to prevent it from being used to cause a denial of service by locking out other users' accounts. One way this could be performed is to allow the user of the forgotten password functionality to log in, even if the account is locked out.
+When designing an account lockout system, care must be taken to prevent it from being used to cause a denial of service by locking out other users' accounts. One way this could be performed is to allow the use of the forgotten password functionality to log in, even if the account is locked out.
 
 #### CAPTCHA
 
@@ -259,21 +305,23 @@ Enable logging and monitoring of authentication functions to detect attacks/fail
 
 While authentication through a combination of username, password, and multi-factor authentication is considered generally secure, there are use cases where it isn't considered the best option or even safe. Examples of this are third-party applications that desire to connect to the web application, either from a mobile device, another website, desktop, or other situations. When this happens, it is NOT considered safe to allow the third-party application to store the user/password combo, since then it extends the attack surface into their hands, where it isn't in your control. For this and other use cases, there are several authentication protocols that can protect you from exposing your users' data to attackers.
 
-### OAuth
+### OAuth 2.0 and 2.1
 
-Open Authorization (OAuth) is a protocol that allows an application to authenticate against a server as a user, without requiring passwords or any third-party server that acts as an identity provider. It uses a token generated by the server and provides how the authorization flows most occur, so that a client, such as a mobile application, can tell the server what user is using the service.
+OAuth is an **authorization** framework for delegated access to APIs. See also: [OAuth 2.0 Cheat Sheet](OAuth2_Cheat_Sheet.md).
 
-The recommendation is to use and implement [OAuth 2.0](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics) since the very first version (OAuth1.0) has been found to be vulnerable to session fixation.
+> **Note:** OAuth 2.1 is an IETF Working Group draft that consolidates OAuth 2.0 and widely adopted best practices and is intended to replace RFC 6749/6750; guidance in this cheat sheet applies to both OAuth 2.0 and OAuth 2.1. References: [draft-ietf-oauth-v2-1-13](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-13), [oauth.net/2.1](https://oauth.net/2.1/)
 
-OAuth 2.0 relies on HTTPS for security and is currently used and implemented by APIs from companies such as Facebook, Google, Twitter, and Microsoft. OAuth 1.0a is more difficult to use because it requires the use of cryptographic libraries for digital signatures. However, since OAuth 1.0a does not rely on HTTPS for security, it can be more suited for higher-risk transactions.
+### OpenID Connect (OIDC)
 
-### OpenId
+**OpenID Connect 1.0 (OIDC)** is an identity layer **on top of OAuth**. It defines how a client (**relying party**) verifies the **end user's** identity using an **ID Token** (a signed JWT) and how to obtain user claims in an interoperable way. Use **OIDC for authentication/SSO**; use **OAuth for authorization** to APIs.
 
-OpenId is an HTTP-based protocol that uses identity providers to validate that a user is who they say they are. It is a very simple protocol that allows a service-provider-initiated way for single sign-on (SSO). This allows the user to re-use a single identity given to a trusted OpenId identity provider and be the same user on multiple websites, without the need to provide any website with the password, except for the OpenId identity provider.
+#### OIDC implementation guidance
 
-Due to its simplicity and that it provides protection of passwords, OpenId has been well adopted. Some of the well-known identity providers for OpenId are Stack Exchange, Google, Facebook, and Yahoo!
+- **Validate ID Tokens** on the relying party: issuer (`iss`), audience (`aud`), signature (per provider JWKs), expiration (`exp`).
+- Prefer **well-maintained libraries/SDKs** and provider discovery/JWKS endpoints.
+- Use the **UserInfo** endpoint when additional claims beyond the ID Token are required.
 
-For non-enterprise environments, OpenId is considered a secure and often better choice, as long as the identity provider is of trust.
+> **Avoid confusion:** **OpenID 2.0 ("OpenID")** was a separate, legacy authentication protocol that has been **superseded by OpenID Connect** and is considered obsolete. New systems should not implement OpenID 2.0. References: [OpenID Foundation — obsolete OpenID 2.0 libraries](https://openid.net/developers/libraries-for-obsolete-specifications/), [OpenID 2.0 → OIDC migration](https://openid.net/specs/ope)
 
 ### SAML
 
@@ -292,6 +340,8 @@ The Fast Identity Online (FIDO) Alliance has created two protocols to facilitate
 UAF takes advantage of existing security technologies present on devices for authentication including fingerprint sensors, cameras (face biometrics), microphones (voice biometrics), Trusted Execution Environments (TEEs), Secure Elements (SEs), and others. The protocol is designed to plug these device capabilities into a common authentication framework. UAF works with both native applications and web applications.
 
 U2F augments password-based authentication using a hardware token (typically USB) that stores cryptographic authentication keys and uses them for signing. The user can use the same token as a second factor for multiple applications. U2F works with web applications. It provides **protection against phishing** by using the URL of the website to look up the stored authentication key.
+
+**FIDO2**: FIDO2 and WebAuthn, encompassing previous standards (UAF/U2F), form the foundation of modern **Passkeys** technology. Passkeys enable users to securely log in using local user verification (such as biometrics or device PINs) and often supporting cloud synchronization across devices. This technology is widely supported by major platforms. (Windows Hello/Mac Touch ID)
 
 ## Password Managers
 
@@ -325,7 +375,7 @@ User email addresses often change. The following process is recommended to handl
 6. Create and store **two** time-limited nonces for (a) system administrators' notification, and (b) user confirmation.
 7. Send two email messages with links that include those nonces:
 
-    - A **notification-only email message** to the current address, alerting the user to the impending change and providing a link for an unexpected situation.
+    - A **notification-only email message** to the current address, alerting the user to the impending change and providing a link to report unexpected activity.
 
     - A **confirmation-required email message** to the proposed new address, instructing the user to confirm the change and providing a link for unexpected situations.
 
@@ -352,3 +402,27 @@ User email addresses often change. The following process is recommended to handl
 - It's worth noting that Google adopts a different approach with accounts secured only by a password -- [where the current email address receives a notification-only email](https://support.google.com/accounts/answer/55393?hl=en). This method carries risks and requires user vigilance.
 
 - Regular social engineering training is crucial. System administrators and help desk staff should be trained to follow the prescribed process and recognize and respond to social engineering attacks. Refer to [CISA's "Avoiding Social Engineering and Phishing Attacks"](https://www.cisa.gov/news-events/news/avoiding-social-engineering-and-phishing-attacks) for guidance.
+
+## Adaptive or Risk Based Authentication
+
+A feature of more advanced applications is the ability to require different authentication stages depending on various environmental and contextual attributes (including but not limited to, the sensitivity of the data for which access is being requested, time of day, user location, IP address, or device fingerprint).
+
+For example, an application may require MFA for the first login from a particular device but not for subsequent logins from that device. Alternatively, a single sign-on solution may authenticate the user and allow them to remain logged in for a day but require a reauthentication if they try to access their profile page.
+
+Another option is the opposite approach where an application allows low risk access with just something that identifies the device (e.g., a specific mobile device fingerprint, a persistent cookie and browser fingerprint, etc. from the previous IP address) and then gradually requires stronger authentication for more sensitive operations. An example might be to allow someone to trigger something to see their current bank balance, but not the account number or anything else. If they need to see transactions, then the application puts them through some base level authentication and if they want to do any money movement, then MFA is required.
+
+Questions that should be considered when implementing a mechanism like this include:
+
+- Are the policies being put in place in line with any corporate policies and especially any regulatory policy?
+- Which user‑ or device‑attributes (IP, geolocation, device fingerprint, time‑of‑day, behavioral biometrics, etc.) will we monitor at session start?
+- Which of those signals need to be refreshed during an active session, and at what cadence?
+- How will we ensure each signal’s accuracy and handle missing or low‑confidence data?
+- What scoring model (weights, thresholds, ML, rule‑based, hybrid) will convert raw signals into a risk tier?
+- Where will the model run (edge, API gateway, central service), and what is our latency budget?
+- What action maps to each risk tier (allow, CAPTCHA, step‑up MFA, block, revoke session)?
+- What user‑facing messages and error codes will accompany each action?
+- At which exact code or platform layers will we invoke the risk engine (login controller, middleware, API gateway, service mesh)?
+- How do we propagate decisions consistently across web, mobile, and API clients?
+- How do we mutate, extend, or revoke tokens/cookies when a mid‑session risk check escalates?
+- How do we synchronize state across multiple concurrent devices or browser tabs?
+- What monitoring and alerting will be in place for potentially suspicious activity, including how the user is notified.

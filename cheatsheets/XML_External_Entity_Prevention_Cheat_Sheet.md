@@ -23,6 +23,42 @@ factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true)
 
 Disabling [DTD](https://www.w3schools.com/xml/xml_dtd.asp)s also makes the parser secure against denial of services (DOS) attacks such as [Billion Laughs](https://en.wikipedia.org/wiki/Billion_laughs_attack). **If it is not possible to disable DTDs completely, then external entities and external document type declarations must be disabled in the way that's specific to each parser.**
 
+### XML Parser Security Features Matrix
+
+| Security Feature                                | Default (Parser-Dependent)  | Purpose                                               | **What Happens If Missing?**                              |
+| ----------------------------------------------- | --------------------------- | ----------------------------------------------------- | --------------------------------------------------------- |
+| **External Entities Disabled**                  | Usually **disabled** (safe) | Blocks external resource loading                      | Full XXE possible → SSRF, file disclosure, internal scans |
+| **Disallow DOCTYPE Declaration**                | Varies                      | Prevents ENTITY definitions                           | Classic XXE payloads become fully functional              |
+| **Disable External DTD Loading**                | Usually **disabled**        | Stops loading remote DTDs                             | Enables Blind XXE, SSRF behind firewalls                  |
+| **Secure Processing Mode**                      | Varies                      | Restricts recursion, network access, entity expansion | Billion Laughs DoS and resource depletion become possible |
+| **Disable Parameter Entities**                  | Varies                      | Prevents `%entity;` injections                        | Advanced XXE payloads bypass simple protections           |
+| **XInclude Disabled**                           | Usually **disabled**        | Prevents including external files                     | File read via `file://` and SSRF becomes possible         |
+| **Limit Entity Expansion Count**                | Usually **enabled**         | Prevents recursive entity abuse                       | Memory exhaustion → parser or server DoS                  |
+| **Schema Validation Without External Fetching** | Usually safe                | Ensures validation does not fetch external URLs       | Silent external HTTP calls triggered during validation    |
+
+### Quick Impact Matrix (What Happens If Missing?)
+
+| Missing Control                         | Resulting Vulnerability                      |
+| --------------------------------------- | -------------------------------------------- |
+| DOCTYPE not disabled                    | Standard XXE fully exploitable               |
+| External entities enabled               | SSRF, file exfiltration, port scanning       |
+| External DTD loading allowed            | Blind XXE → hidden SSRF attacks              |
+| No expansion limits                     | Billion Laughs DoS                           |
+| XInclude enabled                        | Local file disclosure + SSRF                 |
+| Secure processing disabled              | Critical protections bypassed                |
+| Schema validation fetches external URLs | Application makes unwanted outbound requests |
+
+### Minimal XML Hardening Rules
+
+- Disable DOCTYPE
+- Disable external entities
+- Disable external DTD loading
+- Enable secure processing mode
+- Disable XInclude
+- Limit entity expansion
+- Do not use legacy XML parsers
+- Never parse untrusted XML with default settings
+
 **Detailed XXE Prevention guidance is provided below for multiple languages (C++, Cold Fusion, Java, .NET, iOS, PHP, Python, Semgrep Rules) and their commonly used XML parsers.**
 
 ## C/C++
@@ -295,7 +331,7 @@ xmlInputFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
 xmlInputFactory.setProperty("javax.xml.stream.isSupportingExternalEntities", false);
 ```
 
-The setting `xmlInputFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");` is not required, as XMLInputFactory is dependent on Validator to perform XML validation against Schemas. Check the [Validator](#Validator) section for the specific configuration.
+The setting `xmlInputFactory.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");` is not required, as XMLInputFactory is dependent on Validator to perform XML validation against Schemas. Check the [Validator](#validator) section for the specific configuration.
 
 ### Oracle DOM Parser
 
@@ -408,6 +444,7 @@ Alternatively, if DTDs can't be completely disabled, disable external entities a
 SAXBuilder builder = new SAXBuilder();
 builder.setFeature("http://xml.org/sax/features/external-general-entities", false);
 builder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+builder.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
 builder.setExpandEntities(false);
 Document doc = builder.build(new File(fileName));
 ```
@@ -439,30 +476,24 @@ documentBuilder.setEntityResolver(noop);
 
 ### JAXB Unmarshaller
 
-**Because `javax.xml.bind.Unmarshaller` parses XML but does not support any flags for disabling XXE, you must parse the untrusted XML through a configurable secure parser first, generate a source object as a result, and pass the source object to the Unmarshaller.** For example:
+**You should ensure that the source to the `unmarshal` function of `javax.xml.bind.Unmarshaller` is `javax.xml.stream.XMLStreamReader` that was generated using `javax.xml.stream.XMLInputFactory` with safe properties, i.e. `XMLInputFactory.SUPPORT_DTD` and `XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES` set to `false`.** For example:
 
 ``` java
-SAXParserFactory spf = SAXParserFactory.newInstance();
-
-//Option 1: This is the PRIMARY defense against XXE
-spf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
-spf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-spf.setXIncludeAware(false);
-
-//Option 2: If disabling doctypes is not possible
-spf.setFeature("http://xml.org/sax/features/external-general-entities", false);
-spf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
-spf.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
-spf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-spf.setXIncludeAware(false);
-
-//Do unmarshall operation
-Source xmlSource = new SAXSource(spf.newSAXParser().getXMLReader(),
-                                new InputSource(new StringReader(xml)));
-JAXBContext jc = JAXBContext.newInstance(Object.class);
+File file = new File(xmlPath);
+XMLInputFactory xif = XMLInputFactory.newFactory();
+xif.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+xif.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, false);
+XMLStreamReader xsr = null;
+try {
+    xsr = xif.createXMLStreamReader(new StreamSource(file));
+} catch (XMLStreamException e) {
+    throw new RuntimeException(e);
+}  
 Unmarshaller um = jc.createUnmarshaller();
-um.unmarshal(xmlSource);
+um.unmarshal(xsr);
 ```
+
+Note that both the `createXMLStreamReader` and `unmarshal` methods have several overloads with various source types, so you need to pick the right one and do a possible conversion.
 
 ### XPathExpression
 
@@ -548,7 +579,7 @@ Previously, this information was based on some older articles which may not be 1
 
 **Below is an overview of all supported .NET XML parsers and their default safety levels. More details about each parser are included after this list.
 
-**XDocument (Ling to XML)
+**XDocument (LINQ to XML)
 
 This parser is protected from external entities at .NET Framework version 4.5.2 and protected from Billion Laughs at version 4.5.2 or greater, but it is uncertain if this parser is protected from Billion Laughs before version 4.5.2.
 
@@ -566,7 +597,7 @@ ASP.NET applications ≥ .NET 4.5.2 must also ensure setting the `<httpRuntime t
 
 For the purpose of understanding the above table, the `.NET Framework Version` for an ASP.NET applications is either the .NET version the application was build with or the httpRuntime's `targetFramework` (Web.config), **whichever is lower**.
 
-This configuration tag should not be confused with a simmilar configuration tag: `<compilation targetFramework="..." />` or the assemblies / projects targetFramework, which are **not** sufficient for achieving secure-by-default behaviour as advertised in the above table.
+This configuration tag should not be confused with a similar configuration tag: `<compilation targetFramework="..." />` or the assemblies / projects targetFramework, which are **not** sufficient for achieving secure-by-default behaviour as advertised in the above table.
 
 ### LINQ to XML
 

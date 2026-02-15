@@ -28,7 +28,7 @@ This cheat sheet will help users of the [OWASP Top Ten](https://owasp.org/Top10/
 - [Injection Prevention in Java Cheat Sheet](cheatsheets/Injection_Prevention_in_Java_Cheat_Sheet.md)
 - [SQL Injection Prevention Cheat Sheet](cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.md)
 - [Query Parameterization Cheat Sheet](cheatsheets/Query_Parameterization_Cheat_Sheet.md)
-- [Cross Site Scripting Prevention Cheat_Sheet](cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md)
+- [Cross Site Scripting Prevention Cheat Sheet](cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md)
 - [DOM based XSS Prevention Cheat Sheet](cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.md)
 - [XSS Filter Evasion Cheat Sheet](cheatsheets/XSS_Filter_Evasion_Cheat_Sheet.md)
 - [Content Security Policy Cheat Sheet](cheatsheets/Content_Security_Policy_Cheat_Sheet.md)

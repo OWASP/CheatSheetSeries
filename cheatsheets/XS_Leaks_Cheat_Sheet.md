@@ -309,11 +309,11 @@ You can disable the cache mechanism if you accept the degraded performance relat
 ### XS Leaks
 
 - [XS Leaks Wiki](https://xsleaks.dev/)
-- [XS Leaks Attacks & Prevention](https://www.appsecmonkey.com/blog/xs-leaks)
+- [XS Leaks Attacks & Prevention](https://developer.mozilla.org/en-US/docs/Web/Security/Attacks/XS-Leaks)
 
 ### Fetch Metadata
 
-- [Fetch Metadata and Isolation Policies](https://www.appsecmonkey.com/blog/fetch-metadata)
+- [Fetch Metadata and Isolation Policies](https://xsleaks.dev/docs/defenses/isolation-policies/)
 - [Protect your resources from attacks with Fetch Metadata](https://web.dev/fetch-metadata/)
 
 ### Framing protection

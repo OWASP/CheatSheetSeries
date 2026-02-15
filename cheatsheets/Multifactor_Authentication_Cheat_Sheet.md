@@ -62,6 +62,42 @@ The most important place to require MFA on an application is when the user logs 
 
 If the application provides multiple ways for a user to authenticate these should all require MFA, or have other protections implemented. A common area that is missed is if the application provides a separate API that can be used to login, or has an associated mobile application.
 
+### One-Time Password (OTP) Handling and Storage
+
+OTPs are authentication secrets and should be handled with password-like hygiene. While their security traits differ from long-lived passwords, improper handling can still lead to user account compromise.
+
+At a minimum, OTP implementations SHOULD:
+
+- Enforce a short time-to-live (TTL)
+- Ensure OTPs are single use
+- Apply strict attempt limits
+- Invalidate the OTP on successful verification
+
+OTP implementations SHOULD NOT:
+
+- Log OTP values
+- Store OTPs in long-term plaintext form
+
+To further reduce risk and limit exposure, it is RECOMMENDED to:
+
+- Generate OTPs using a cryptographically secure random number generator
+- Consider 8-digit or longer codes where usability allows
+- On "resend", generate a new OTP and overwrite the old record
+
+#### Hashing OTPs
+
+Hashing OTPs is still recommended, but for different reasons than password hashing. OTPs typically have a very small keyspace (for example, ~1 million possibilities for a 6-digit code), which means a database attacker can brute-force any OTP hash quickly.
+
+As a result, hashing OTPs does not provide strong offline attack resistance in the way password hashing does.
+
+However, hashing remains useful to:
+
+- Prevent accidental disclosure via logs, metrics, or debugging tools
+- Reduce blast radius if the database is briefly exposed during the OTP’s validity window
+- Enforce good secret-handling discipline and avoid plaintext storage by default
+
+The goal is short-term exposure protection, not long-term cryptographic secrecy.
+
 ### Improving User Experience
 
 #### Risk Based Authentication
@@ -111,6 +147,20 @@ Some suggestions of possible methods include:
 - Requiring the user contact the support team and having a rigorous process in place to verify their identity.
 - Requiring another trusted user to vouch for them.
 
+### Changing MFA Factors
+
+Users may need to update their authentication factors, such as changing a phone number, migrating to a new authenticator app, or replacing a lost hardware token. Because attackers can exploit this process to take over accounts, it must be strictly secured.
+
+Best practices include:
+
+- Require reauthentication with an existing enrolled factor before allowing changes.
+- Do not rely solely on the active session, as it may be hijacked.
+- Treat factor replacement as a high-risk action and apply risk-based checks (e.g., new device, unusual location).
+- Notify the user through out-of-band channels (such as email or push notification) whenever an MFA factor is changed.
+- Consider applying delays or step-up verification for high-value accounts.
+
+This ensures that even if a session is compromised, attackers cannot silently replace the user’s MFA factors and lock the legitimate user out.
+
 ### Consider Using a Third Party Service
 
 There are a number of third party services that provide MFA as a service. These can be a good option for applications that don't have the resources to implement MFA themselves, or for applications that require a high level of assurance in their MFA. However, it is important to consider the security of the third party service, and the implications of using it. For example, if the third party service is compromised, it could allow an attacker to bypass MFA on all of the applications that use it.
@@ -155,9 +205,9 @@ Passwords and PINs are the most common form of authentication due to the simplic
 
 Possession-based authentication is based on the user having a physical or digital item that is required to authenticate. This is the most common form of MFA, and is often used in conjunction with passwords. The most common types of possession-based authentication are hardware and software tokens, and digital certificates. If properly implemented then this can be significantly more difficult for a remote attacker to compromise; however it also creates an additional administrative burden on the user, as they must keep the authentication factor with them whenever they wish to use it.
 
-### One Time Password Tokens
+### One-Time Password Tokens
 
-One Time Password (OTP) tokens are a form of possession-based authentication, where the user is required to submit a constantly changing numeric code in order to authenticate. The most common of which is Time-based One Time Password (TOTP) tokens, which can be both hardware and software based.
+One-Time Password (OTP) tokens are a form of possession-based authentication, where the user is required to submit a constantly changing numeric code in order to authenticate. The most common of which is Time-based One-Time Password (TOTP) tokens, which can be both hardware and software based.
 
 #### Hardware OTP Tokens
 
@@ -178,7 +228,7 @@ Hardware OTP Tokens generate a constantly changing numeric codes, which must be 
 
 #### Software OTP Tokens
 
-A cheaper and easier alternative to hardware tokens is using software to generate Time-based One Time Password (TOTP) codes. This would typically involve the user installing a TOTP application on their mobile phone, and then scanning a QR code provided by the web application which provides the initial seed. The authenticator app then generates a six digit number every 60 seconds, in much the same way as a hardware token.
+A cheaper and easier alternative to hardware tokens is using software to generate Time-based One-Time Password (TOTP) codes. This would typically involve the user installing a TOTP application on their mobile phone, and then scanning a QR code provided by the web application which provides the initial seed. The authenticator app then generates a six digit number every 60 seconds, in much the same way as a hardware token.
 
 Most websites use standardized TOTP tokens, allowing the user to install any authenticator app that supports TOTP. However, a small number of applications use their own variants of this (such as Symantec), which requires the users to install a specific app in order to use the service. This should be avoided in favour of a standards-based approach.
 
@@ -250,7 +300,7 @@ Smartcards are credit-card size cards with a chip containing a digital certifica
 
 - Managing and distributing smartcards has the same costs and overheads as hardware tokens.
 - Smartcards are not natively supported by modern browsers, so require third party software.
-- Although most business-class laptops have smartcard readers built in, home systems often do not.
+- Although most business-class laptops have smartcard readers built-in, home systems often do not.
 - The use of smartcards requires backend PKIs.
 
 ### SMS Messages and Phone Calls
@@ -416,6 +466,30 @@ Gait analysis is based on the way the user walks using cameras and sensors. They
 
 - Requires specific hardware to implement.
 - Use outside of physical security systems is not widely tested.
+
+## Adaptive or Risk-Based Authentication
+
+Adaptive (or Risk-Based) Authentication adjusts authentication requirements dynamically based on the context of the login attempt. This technique helps improve user experience while strengthening security by applying additional verification steps only when risk is elevated.
+
+Common signals used to determine risk include:
+
+- Geolocation and IP reputation
+- Device fingerprinting
+- Time of access (e.g., 3 AM login)
+- Behavioral biometrics (e.g., typing speed or mouse movements)
+- Known compromised credentials
+
+If risk is detected, the system may:
+
+- Prompt for an additional factor (e.g., OTP)
+- Enforce re-authentication
+- Deny access and trigger alerting or account protection flows
+
+For more details on when to trigger reauthentication after high-risk events—such as account recovery or suspicious activity—see the [Reauthentication After Risk Events](Authentication_Cheat_Sheet.md#reauthentication-after-risk-events) section in the Authentication Cheat Sheet
+
+This method is widely used in modern authentication systems to balance usability and security. However, developers must ensure that risk signals cannot be spoofed and that fallback mechanisms are not weaker than the primary MFA methods.
+
+**Example Use Case**: A user logs in from a trusted device in a usual location — no additional prompt is needed. But if they log in from a new country using a Tor exit node, the system requires SMS verification or triggers an account lock until further verification.
 
 ## References and Further Reading
 

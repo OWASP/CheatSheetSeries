@@ -6,11 +6,11 @@ Welcome to the Cheat Sheet Help Guide. This guide is designed to help you naviga
 
 ### What's Inside This Guide
 
-1. [Basic Navigation](#Basic-Navigation)
-2. [Features](#Features)
-3. [FAQ](#FAQ)
-4. [Troubleshooting Guide](#Troubleshooting-Guide)
-5. [Feedback and Support](#Feedback-and-Support)
+1. [Basic Navigation](#basic-navigation)
+2. [Features](#features)
+3. [FAQ](#faq)
+4. [Troubleshooting Guide](#troubleshooting-guide)
+5. [Feedback and Support](#feedback-and-support)
 
 ## Guides
 

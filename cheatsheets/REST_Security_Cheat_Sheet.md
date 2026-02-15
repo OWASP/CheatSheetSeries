@@ -2,7 +2,7 @@
 
 ## Introduction
 
-[REST](http://en.wikipedia.org/wiki/Representational_state_transfer) (or **RE**presentational **S**tate **T**ransfer) is an architectural style first described in [Roy Fielding](https://en.wikipedia.org/wiki/Roy_Fielding)'s Ph.D. dissertation on [Architectural Styles and the Design of Network-based Software Architectures](https://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm).
+[REST](https://en.wikipedia.org/wiki/REST) (or **RE**presentational **S**tate **T**ransfer) is an architectural style first described in [Roy Fielding](https://en.wikipedia.org/wiki/Roy_Fielding)'s Ph.D. dissertation on [Architectural Styles and the Design of Network-based Software Architectures](https://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm).
 
 It evolved as Fielding wrote the HTTP/1.1 and URI specs and has been proven to be well-suited for developing distributed hypermedia applications. While REST is more widely applicable, it is most commonly used within the context of communicating with services via HTTP.
 
@@ -76,6 +76,53 @@ API keys can reduce the impact of denial-of-service attacks. However, when they 
 - Make sure the caller is authorised to use the incoming HTTP method on the resource collection, action, and record
 
 In Java EE in particular, this can be difficult to implement properly. See [Bypassing Web Authentication and Authorization with HTTP Verb Tampering](../assets/REST_Security_Cheat_Sheet_Bypassing_VBAAC_with_HTTP_Verb_Tampering.pdf) for an explanation of this common misconfiguration.
+
+## Preventing Out-of-Order API Execution
+
+Modern REST APIs often implement business workflows through a sequence of endpoints (for example, create → validate → approve → finalize). If the backend does not explicitly validate workflow state transitions, attackers may invoke endpoints out of sequence to bypass intended controls.
+
+### Problem
+
+Out-of-order API execution occurs when an attacker:
+
+- Skips required workflow steps by directly calling later-stage endpoints
+- Replays or reuses tokens across workflow boundaries
+- Exploits assumptions that the frontend enforces correct sequencing
+
+Because each endpoint may be individually authenticated and authorized, traditional access control checks often fail to detect these issues.
+
+### Example
+
+A checkout workflow expects the following sequence:
+
+```http
+POST /checkout/create
+POST /checkout/pay
+POST /checkout/confirm
+```
+
+If the backend does not validate workflow state transitions, an attacker could directly invoke:
+
+```http
+POST /checkout/confirm
+```
+
+without completing payment.
+
+### Prevention Guidance
+
+- Enforce workflow state validation on the server side for every request
+- Model workflows explicitly using finite states or state machines
+- Bind tokens or identifiers to specific workflow stages
+- Avoid relying on frontend logic to enforce sequencing
+- Reject invalid or out-of-order transitions with clear error responses
+
+### Testing Checklist
+
+- Can endpoints be invoked out of sequence?
+- Does each endpoint validate the current workflow state?
+- Are tokens reusable across workflow steps?
+- Are invalid state transitions consistently rejected?
 
 ## Input validation
 

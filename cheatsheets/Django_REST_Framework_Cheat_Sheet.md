@@ -30,7 +30,7 @@ The default class to use for queryset pagination. **In Django, pagination is dis
 
 ## OWASP API Security Top 10 (2019)
 
-The [OWASP API Security Top 10](https://owasp.org/www-project-api-security/) is a list of the most critical security risks for APIs that was developed by the [Open Web Application Security Project (OWASP)](https://owasp.org/). It is designed to help organizations identify and prioritize the most significant risks to their APIs so that they can implement appropriate controls to mitigate those risks.
+The [OWASP API Security Top 10](https://owasp.org/www-project-api-security/) is a list of the most critical security risks for APIs that was developed by the [Open Worldwide Application Security Project (OWASP)](https://owasp.org/). It is designed to help organizations identify and prioritize the most significant risks to their APIs so that they can implement appropriate controls to mitigate those risks.
 
 This section uses the 2019 version of the API Security Top 10. The best approach to securing your web API is to start at the top threat (A1 below) and work your way down. This will ensure that any time spent on security will be spent most effectively because you will cover the top threats first. After you look at the Top 10, it is generally advisable to assess for other threats or get a professional penetration test.
 
@@ -141,7 +141,7 @@ All applications have dependencies and those dependencies can have vulnerabiliti
 --Every week important security vulnerabilities are considered and potentially trigger an update.
 --In EXCEPTIONAL conditions, emergency updates may need to be applied.
 
-The Django Security team has information on [How Django discloses security issues](https://docs.djangoproject.com/en/4.1/internals/security/#how-django-discloses-security-issues).
+The Django Security team has information on [How Django discloses security issues](https://docs.djangoproject.com/en/stable/internals/security/#how-django-discloses-security-issues).
 
 When a library is under consideration, consider the "Security Health" of the library. How often it's updated? Does it have known vulnerabilities? Does it have an active community? etc. Some tools can help with this task (E.g. [Snyk Advisor](https://snyk.io/advisor/python))
 
@@ -158,5 +158,5 @@ PyCharm Security – [Pycharm-security](https://pycharm-security.readthedocs.io/
 ## Related Articles and References
 
 - [Django REST Framework (DRF) Secure Code Guidelines](https://openaccess.uoc.edu/handle/10609/147246)
-- [Django’s security policies](https://docs.djangoproject.com/en/4.1/internals/security/)
-- [Security in Django](https://docs.djangoproject.com/en/4.1/topics/security/)
+- [Django’s security policies](https://docs.djangoproject.com/en/stable/internals/security/)
+- [Security in Django](https://docs.djangoproject.com/en/stable/topics/security/)

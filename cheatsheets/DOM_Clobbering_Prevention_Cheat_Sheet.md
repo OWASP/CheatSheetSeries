@@ -88,7 +88,7 @@ For quick reference, below is the summary of guidelines discussed next.
 
 Robust HTML sanitizers can prevent or restrict the risk of DOM Clobbering. They can do so in multiple ways. For example:
 
-- completely remove named properties like `id` and `name`. While effective, this may hinder the usability when named properties are needed for legitimate functionalties.
+- completely remove named properties like `id` and `name`. While effective, this may hinder the usability when named properties are needed for legitimate functionalities.
 - namespace isolation, which can be, for example, prefixing the value of named properties by a constant string to limit the risk of naming collisions.
 - dynamically checking if named properties of the input mark has collisions with the existing DOM tree, and if that is the case, then remove named properties of the input markup.
 
@@ -138,11 +138,11 @@ DOM Clobbering can be avoided by defensive programming and adhering to a few cod
 
 ### \#4: Validate All Inputs to DOM Tree
 
-Before inserting any markup into the webpage's DOM tree, sanitize `id` and `name` attributes (see [HTML sanitization](#html-sanitization)).
+Before inserting any markup into the webpage's DOM tree, sanitize `id` and `name` attributes (see [HTML sanitization](#1-html-sanitization)).
 
 ### \#5: Use Explicit Variable Declarations
 
-When initializing varibles, always use a variable declarator like `var`, `let` or `const`, which prevents clobbering of the variable.
+When initializing variables, always use a variable declarator like `var`, `let` or `const`, which prevents clobbering of the variable.
 
 **Note:** Declaring a variable with `let` does not create a property on `window`, unlike `var`. Therefore, `window.VARNAME` can still be clobbered (assuming `VARNAME` is the name of the variable).
 

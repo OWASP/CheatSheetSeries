@@ -18,7 +18,7 @@ Any security questions presented to users to reset forgotten passwords must meet
 |----------------|-------------|
 | Memorable | The user must be able to recall the answer to the question, potentially years after creating their account. |
 | Consistent | The answer to the question must not change over time. |
-| Applicable | The user must be able to answer the question.
+| Applicable | The user must be able to answer the question. |
 | Confidential | The answer to the question must be hard for an attacker to obtain. |
 | Specific | The answer should be clear to the user. |
 

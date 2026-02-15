@@ -6,9 +6,9 @@ Thank you for submitting a Pull Request (PR) to the Cheat Sheet Series.
 
 Please make sure that for your contribution:
 
-- [ ] In case of a new Cheat Sheet, you have used the [Cheat Sheet template](https://github.com/OWASP/CheatSheetSeries/blob/master/templates/New_CheatSheet.md).
+- [ ] In case of a new Cheat Sheet, you have used the [Cheat Sheet template](../templates/New_CheatSheet.md).
 - [ ] All the markdown files do not raise any validation policy violation, see the [policy](https://github.com/OWASP/CheatSheetSeries/actions?query=workflow%3A%22Markdown+Link+Check%22).
-- [ ] All the markdown files follow these [format rules](https://github.com/OWASP/CheatSheetSeries/blob/master/CONTRIBUTING.md#markdown).
+- [ ] All the markdown files follow these [format rules](../CONTRIBUTING.md#markdown).
 - [ ] All your assets are stored in the **assets** folder.
 - [ ] All the images used are in the **PNG** format.
 - [ ] Any references to websites have been formatted as `[TEXT](URL)`
@@ -18,5 +18,14 @@ Please make sure that for your contribution:
 If your PR is related to an issue, please finish your PR text with the following line:
 
 This PR fixes issue #`<REPLACE WITH ISSUE NUMBER>`.
+
+## AI Tool Usage Disclosure (required for all PRs)
+
+Please select one of the following options:
+
+- [ ] I have NOT used any AI tool to generate the contents of this PR.
+- [ ] I have used AI tools to generate the contents of this PR. I have verified
+    the contents and I affirm the results. The LLM used is `[llm name and version]`
+    and the prompt used is `[your prompt here]`. [Feel free to add more details if needed]
 
 Thank you again for your contribution :smiley:

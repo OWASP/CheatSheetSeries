@@ -10,27 +10,31 @@ Application logging should be consistent within the application, consistent acro
 
 ## Purpose
 
-Application logging should always be included for security events. Application logs are invaluable data for:
+Application logging should always be included for security events. Application logs are invaluable data for both security and operational use cases.
 
-- Identifying security incidents
-- Monitoring policy violations
+### Operational use cases
+
+- General debugging
 - Establishing baselines
-- Assisting non-repudiation controls (note that the trait non-repudiation is hard to achieve for logs because their trustworthiness is often just based on the logging party being audited properly while mechanisms like digital signatures are hard to utilize here)
+- Business process monitoring e.g. sales process abandonment, transactions, connections
 - Providing information about problems and unusual conditions
-- Contributing additional application-specific data for incident investigation which is lacking in other log sources
-- Helping defend against vulnerability identification and exploitation through attack detection
+- Performance monitoring e.g. data load time, page timeouts
+- Other business-specific requirements
+
+### Security use cases
 
 Application logging might also be used to record other types of events too such as:
 
-- Security events
-- Business process monitoring e.g. sales process abandonment, transactions, connections
 - Anti-automation monitoring
+- Identifying security incidents
+- Monitoring policy violations
+- Assisting non-repudiation controls (note that the trait non-repudiation is hard to achieve for logs because their trustworthiness is often just based on the logging party being audited properly while mechanisms like digital signatures are hard to utilize here)
 - Audit trails e.g. data addition, modification and deletion, data exports
-- Performance monitoring e.g. data load time, page timeouts
 - Compliance monitoring
 - Data for subsequent requests for information e.g. data subject access, freedom of information, litigation, police and other regulatory investigations
 - Legally sanctioned interception of data e.g. application-layer wire-tapping
-- Other business-specific requirements
+- Contributing additional application-specific data for incident investigation which is lacking in other log sources
+- Helping defend against vulnerability identification and exploitation through attack detection
 
 Process monitoring, audit, and transaction logs/trails etc. are usually collected for different purposes than security event logging, and this often means they should be kept separate.
 
@@ -50,7 +54,7 @@ The application has the most information about the user (e.g. identity, roles, p
 
 Other sources of information about application usage that could also be considered are:
 
-- Client software e.g. actions on desktop software and mobile devices in local logs or using messaging technologies, JavaScript exception handler via Ajax, web browser such as using Content Security Policy (CSP) reporting mechanism
+- Client software e.g. actions on desktop software and mobile devices in local logs or using messaging technologies, JavaScript exception handler via AJAX, web browser such as using Content Security Policy (CSP) reporting mechanism
 - Embedded instrumentation code
 - Network firewalls
 - Network and host intrusion detection systems (NIDS and HIDS)
@@ -90,6 +94,7 @@ There is no one size fits all solution, and a blind checklist approach can lead 
 Where possible, always log:
 
 - Input validation failures e.g. protocol violations, unacceptable encodings, invalid parameter names and values
+    - A specific event for failures to validate a value against a discrete and finite list of valid values (e.g. a country from a dropdown). This is a high security event as it can only be attack activity. For example `input_validation_fail[:field,userid]`.
 - Output validation failures e.g. database record set mismatch, invalid data encoding
 - Authentication successes and failures
 - Authorization (access control) failures
@@ -108,7 +113,7 @@ Where possible, always log:
     - Deserialization failures
     - Network connections and associated failures such as backend TLS failures (including certificate validation failures), or requests with an unexpected HTTP verb
 - Legal and other opt-ins e.g. permissions for mobile phone capabilities, terms of use, terms & conditions, personal data usage consent, permission to receive marketing communications
-- Suspicous business logic activities such as:
+- Suspicious business logic activities such as:
     - Attempts to perform a set actions out of order/bypass flow control
     - Actions which don't make sense in the business context
     - Attempts to exceed limitations for particular actions
@@ -144,7 +149,7 @@ The properties for these will be different depending on the architecture, class 
     - Code location e.g. script name, module name
 - Who (human or machine user)
     - Source address e.g. user's device/machine identifier, user's IP address, cell/RF tower ID, mobile telephone number
-    - User identity (if authenticated or otherwise known) e.g. user database table primary key value, user name, license number
+    - User identity (if authenticated or otherwise known) e.g. user database table primary key-value, username, license number
 - What
     - Type of event `Note B`
     - Severity of event `Note B` e.g. `{0=emergency, 1=alert, ..., 7=debug}, {fatal, error, warning, info, debug, trace}`
@@ -370,12 +375,12 @@ Who is responsible for harm?
 - OWASP [ESAPI Documentation](https://owasp.org/www-project-enterprise-security-api/).
 - OWASP [Logging Project](https://owasp.org/www-project-security-logging/).
 - IETF [syslog protocol](https://tools.ietf.org/rfc/rfc5424.txt).
-- Mitre [Common Event Expression (CEE)](http://cee.mitre.org/) (as of 2014 no longer actively developed).
-- NIST [SP 800-92 Guide to Computer Security Log Management](http://csrc.nist.gov/publications/nistpubs/800-92/SP800-92.pdf).
+- Mitre [Common Event Expression (CEE)](https://cee.mitre.org/) (as of 2014 no longer actively developed).
+- NIST [SP 800-92 Guide to Computer Security Log Management](https://csrc.nist.gov/publications/nistpubs/800-92/SP800-92.pdf).
 - PCISSC [PCI DSS v2.0 Requirement 10 and PA-DSS v2.0 Requirement 4](https://www.pcisecuritystandards.org/security_standards/documents.php).
-- W3C [Extended Log File Format](http://www.w3.org/TR/WD-logfile.html).
-- Other [Build Visibility In, Richard Bejtlich, TaoSecurity blog](http://taosecurity.blogspot.co.uk/2009/08/build-visibility-in.html).
+- W3C [Extended Log File Format](https://www.w3.org/TR/WD-logfile.html).
+- Other [Build Visibility In, Richard Bejtlich, TaoSecurity blog](https://taosecurity.blogspot.co.uk/2009/08/build-visibility-in.html).
 - Other [Common Event Format (CEF), Arcsight](https://community.microfocus.com/t5/ArcSight-Connectors/ArcSight-Common-Event-Format-CEF-Implementation-Standard/ta-p/1645557).
 - Other [Log Event Extended Format (**LEEF**), IBM](https://www.ibm.com/developerworks/community/wikis/form/anonymous/api/wiki/9989d3d7-02c1-444e-92be-576b33d2f2be/page/3dc63f46-4a33-4e0b-98bf-4e55b74e556b/attachment/a19b9122-5940-4c89-ba3e-4b4fc25e2328/media/QRadar_LEEF_Format_Guide.pdf).
-- Other [Common Log File System (CLFS), Microsoft](http://msdn.microsoft.com/en-us/library/windows/desktop/bb986747(v=vs.85).aspx).
-- Other [Building Secure Applications: Consistent Logging, Rohit Sethi & Nish Bhalla, Symantec Connect](http://www.symantec.com/connect/articles/building-secure-applications-consistent-logging).
+- Other [Common Log File System (CLFS), Microsoft](https://msdn.microsoft.com/en-us/library/windows/desktop/bb986747(v=vs.85).aspx).
+- Other [Building Secure Applications: Consistent Logging, Rohit Sethi & Nish Bhalla, Symantec Connect](https://www.symantec.com/connect/articles/building-secure-applications-consistent-logging).

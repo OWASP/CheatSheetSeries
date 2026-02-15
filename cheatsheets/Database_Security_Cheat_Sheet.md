@@ -2,7 +2,11 @@
 
 ## Introduction
 
-This cheat sheet provides advice for securely configuring SQL and NoSQL databases. It is designed to be used by application developers if they are responsible for managing the databases. For details about protecting against SQL Injection attacks, see the [SQL Injection Prevention Cheat Sheet](SQL_Injection_Prevention_Cheat_Sheet.md).
+This cheat sheet provides guidance for securely configuring SQL databases such as MySQL, PostgreSQL, MariaDB, and Microsoft SQL Server.
+It is designed primarily for application developers and system administrators responsible for managing or interacting with relational databases.
+
+For application-layer injection defenses, see the [SQL Injection Prevention Cheat Sheet](SQL_Injection_Prevention_Cheat_Sheet.md).
+For guidance on non-relational systems (e.g., MongoDB, Redis, Cassandra, DynamoDB), refer to the [NoSQL Security Cheat Sheet](NoSQL_Security_Cheat_Sheet.md)
 
 ## Protecting the Backend Database
 
@@ -12,8 +16,7 @@ The application's backend database should be isolated from other servers and onl
 - Configuring the database to only bind on localhost.
 - Restricting access to the network port to specific hosts with firewall rules.
 - Placing the database server in a separate DMZ isolated from the application server.
-
-Similar protections should protect any web-based management tools used with the database, such as phpMyAdmin.
+- Protect any web-based management tools (e.g., phpMyAdmin, pgAdmin) with authentication, HTTPS, and network restrictions.
 
 When an application is running on an untrusted system (such as a thick-client), it should always connect to the backend through an API that can enforce appropriate access control and restrictions. Direct connections should **never ever** be made from a thick client to the backend database.
 
@@ -108,6 +111,7 @@ The following sections gives some further recommendations for specific database 
 
 ### MongoDB
 
+- See the [NoSQL Security Cheat Sheet](NoSQL_Security_Cheat_Sheet.md) for general guidance on securing NoSQL databases.
 - See the [MongoDB security checklist](https://docs.mongodb.com/manual/administration/security-checklist/).
 
 ### Redis

@@ -8,9 +8,9 @@ Each year IBM Security commissions the Ponemon Institute to survey companies aro
 
 In addition to the millions of dollars lost due to breaches the report finds that the **mean time to identify** a breach continues to hover around **200 days**. Clearly our ability to monitor applications and alert on anomalous behavior would improve our time to identify and mitigate an attack against our applications.
 
-![IBM Cost of Data Breach Report 2020](../assets/cost-of-breach-2020.png)
+![IBM Cost of Data Breach Report 2025](../assets/cost-of-breach-2025.png)
 
-> IBM Cost of a Data Breach Study 2020, Fig.34, pg.52, [https://www.ibm.com/security/data-breach]
+> IBM Cost of a Data Breach Study 2025, Fig.4, pg.12, [https://www.ibm.com/reports/data-breach]
 
 This logging standard would seek to define specific keywords which, when applied consistently across software, would allow groups to simply monitor for these events terms across all applications and respond quickly in the event of attack.
 
@@ -47,6 +47,13 @@ In order to better understand security event logging a good high-level understan
 - An employee "testing" how things work.
 - An API coded incorrectly doing things the author did not intend.
 
+### Implementation
+
+Some languages have libraries which ease the job of adopting this logging vocabulary in applications:
+
+- Python: [lucabello/owasp-logger](https://github.com/lucabello/owasp-logger)
+- C#/.NET: [byteguard-hq/byteguard-security-logger](https://github.com/ByteGuard-HQ/byteguard-security-logger)
+
 ## Format
 
 _NOTE: All dates should be logged in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format **WITH** UTC offset to ensure maximum portability_
@@ -73,9 +80,13 @@ _NOTE: All dates should be logged in [ISO 8601](https://en.wikipedia.org/wiki/IS
 
 ## The Vocabulary
 
-What follows are the various event types that should be captured. For each event type there is a prefix like "authn" and additional data that should be included for that event.
+What follows are the various event types that should be captured. For each event type there is a prefix like "authn" and additional data that may be included for that event.
 
 Portions of the full logging format are included for example, but a complete event log should follow the format above.
+
+**Note on Data Privacy:**
+
+All fields logged after event type should be considered optional. Businesses implementing this logging method should consider value of the fields being logged vs. responsibility as a data steward for the data logged. For example: logging user IP address may be useful for detection and response, but may be considered personally identifiable information when combined with other data and subject to regulation or deletion requests.
 
 ---
 
@@ -232,7 +243,7 @@ INFO
 An attempt to change a password that failed. May also trigger other events such as `authn_login_lock`.
 
 **Level:**
-WARN
+CRITICAL
 
 **Example:**
 
@@ -241,8 +252,8 @@ WARN
     "datetime": "2019-01-01 00:00:00,000",
     "appid": "foobar.netportal_auth",
     "event": "authn_password_change_fail:joebob1",
-    "level": "INFO",
-    "description": "User joebob1 failed to changing their password",
+    "level": "CRITICAL",
+    "description": "User joebob1 failed to change their password",
     ...
 }
 ```
@@ -429,6 +440,52 @@ All activity by privileged users such as admin should be recorded.
 
 ---
 
+## Encryption/Decryption [CRYPT]
+
+### crypt_decrypt_fail[userid]
+
+**Description**
+Failure to perform encryption and decryption could be simply due to a system error, or it may be related to authorization failures where a user lacks permissions on the related data.
+
+**Level:**: WARN
+
+**Example:**
+
+```
+{
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "crypt_decrypt_fail:joebob1",
+    "level": "WARN",
+    "description": "User joebob1 was unable to perform decryption" + err,
+    ...
+}
+```
+
+---
+
+### crypt_encrypt_fail[userid]
+
+**Description**
+Failure to perform encryption and decryption could be simply due to a system error, or it may be related to authorization failures where a user lacks permissions on the related data.
+
+**Level:**: WARN
+
+**Example:**
+
+```
+{
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "crypt_encrypt_fail:joebob1",
+    "level": "WARN",
+    "description": "User joebob1 was unable to perform encryption" + err,
+    ...
+}
+```
+
+---
+
 ## Excessive Use [EXCESS]
 
 ### excess_rate_limit_exceeded[userid,max]
@@ -545,7 +602,7 @@ When a file is deleted for normal reasons it should be recorded.
 
 ## Input Validation [INPUT]
 
-### input_validation_fail[:field,userid]
+### input_validation_fail:[(fieldone,fieldtwo...),userid]
 
 **Description**
 When input validation fails on the server-side it must either be because a) sufficient validation was not provided on the client, or b) client-side validation was bypassed. In either case it's an opportunity for attack and should be mitigated quickly.
@@ -559,9 +616,32 @@ WARN
 {
     "datetime": "2019-01-01 00:00:00,000",
     "appid": "foobar.netportal_auth",
-    "event": "input_validation_fail:date_of_birth,joebob1",
+    "event": "input_validation_fail:(zip,date_of_birth),joebob1",
     "level": "WARN",
     "description": "User joebob1 submitted data that failed validation.",
+    ...
+}
+```
+
+---
+
+### input_validation_discrete_fail[:field,userid]
+
+**Description**
+When server-side validation of a value against a discrete list of options (e.g. drop down list, radio buttons) fails, it is a strong indication of malicious activity as this indicates the client-side code has been tampered with.
+
+**Level:**
+WARN
+
+**Example:**
+
+```json
+{
+    "datetime": "2021-02-01T08:30:00-0500",
+    "appid": "foobar.netportal_auth",
+    "event": "input_validation_discrete_fail:country,joebob1",
+    "level": "WARN",
+    "description": "User joebob1 submitted an invalid value for the 'country' field.",
     ...
 }
 ```
@@ -608,7 +688,7 @@ CRITICAL
     "datetime": "2019-01-01 00:00:00,000",
     "appid": "foobar.netportal_auth",
     "event": "malicious_extraneous:dr@evil.com,creditcardnum,Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0",
-    "level": "WARN",
+    "level": "CRITICAL",
     "description": "User dr@evil.com included field creditcardnum in the request which is not handled by this service.",
     ...
 }
@@ -621,7 +701,7 @@ CRITICAL
 **Description**
 When obvious attack tools are identified either by signature or by user agent they should be logged.
 
-**TODO:** A future version of this standard should link to known attack tools, signatures and user-agent strings. For instance, the tool "Nikto" leaves behind its user agent by default with a string like **_"Mozilla/5.00 (Nikto/2.1.6) (Evasions:None) (Test:Port Check)"_**
+For example, the tool "Nikto" leaves behind its user agent by default with a string like **_"Mozilla/5.00 (Nikto/2.1.6) (Evasions:None) (Test:Port Check)"_**
 
 **Level:**
 CRITICAL
@@ -633,8 +713,33 @@ CRITICAL
     "datetime": "2019-01-01 00:00:00,000",
     "appid": "foobar.netportal_auth",
     "event": "malicious_attack_tool:127.0.0.1,nikto,Mozilla/5.00 (Nikto/2.1.6) (Evasions:None) (Test:Port Check)",
-    "level": "WARN",
+    "level": "CRITICAL",
     "description": "Attack traffic indicating use of Nikto coming from 127.0.0.1",
+    ...
+}
+```
+
+---
+
+### malicious_sqli:[userid|IP,parameter,ruleid,useragent]
+
+**Description**
+When request input matches a SQL injection (SQLi) signature or heuristic (e.g., comment delimiters, tautologies like `' OR 1=1 --`, stacked queries, `UNION SELECT`, etc.), block the request and log the attempt.
+
+_NOTE: Logging the payload is dangerous and may result in log injection. Prefer recording a detection rule ID / category and the parameter name over logging the full payload._
+
+**Level:**
+CRITICAL
+
+**Example:**
+
+```
+{
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "malicious_sqli:127.0.0.1,search,SQLI-UNION,Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0",
+    "level": "CRITICAL",
+    "description": "Request from 127.0.0.1 contained a SQL injection pattern (rule SQLI-UNION) in parameter 'search'.",
     ...
 }
 ```
@@ -658,7 +763,7 @@ CRITICAL
     "datetime": "2019-01-01 00:00:00,000",
     "appid": "foobar.netportal_auth",
     "event": "malicious_cors:127.0.0.1,Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0,attack.evil.com",
-    "level": "WARN",
+    "level": "CRITICAL",
     "description": "An illegal cross-origin request from 127.0.0.1 was referred from attack.evil.com"
     ...
 }
@@ -680,9 +785,90 @@ CRITICAL
 {
     "datetime": "2019-01-01 00:00:00,000",
     "appid": "foobar.netportal_auth",
-    "event": "malicious_direct:joebob1, Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0",
-    "level": "WARN",
+    "event": "malicious_direct_reference:joebob1, Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0",
+    "level": "CRITICAL",
     "description": "User joebob1 attempted to access an object to which they are not authorized",
+    ...
+}
+```
+
+---
+
+## MCP Servers [MCP]
+
+This section focuses on concerns related to the use of MCP servers either within productivity applications, or at the enterprise level.
+
+---
+
+### mcp_prompt_injection[:userid]
+
+**Description**
+When an MCP client or server detects indicators of prompt injection (for example, instructions to ignore system/developer messages, attempts to override tool policies, requests to reveal secrets, or attempts to coerce tool calls outside of the intended task), block or constrain the action and log the event for investigation.
+
+_NOTE: Avoid logging the full prompt/tool I/O. Prefer logging a detection category or rule ID, the target tool/server, and request identifiers to support triage without creating a secondary sensitive-data or log-injection risk._
+
+**Level:**
+WARN
+
+**Example:**
+
+```
+{
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.cooldevapp_mcp_toolname",
+    "event": "mcp_prompt_injection:joebob1",
+    "level": "WARN",
+    "description": "A possible prompt injection has occurred",
+    ...
+}
+```
+
+---
+
+### mcp_resource_exhaustion[:userid]
+
+**Description**
+When an MCP client or server detects a request pattern intended to exhaust resources (for example, unusually large prompts, repeated retries, tool-call loops, or other behavior that drives excessive token usage and cost), terminate or throttle the activity and log the attempt.
+
+_NOTE: Avoid logging full prompts or tool inputs/outputs. Prefer logging measured usage (tokens in/out), policy thresholds, request identifiers, and the tool/model involved._
+
+**Level:**
+WARN
+
+**Example:**
+
+```
+{
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.cooldevapp_mcp_toolname",
+    "event": "mcp_resource_exhaustion:joebob1",
+    "level": "WARN",
+    "description": "Request blocked due to token budget overrun (tokens_in=18240, tokens_out=0, budget=8000)",
+    ...
+}
+```
+
+---
+
+### mcp_tool_poisoning[:userid]
+
+**Description**
+When an MCP client or server detects that a tool may be malicious or tampered with (for example, unexpected tool changes, signature/hash verification failures, suspicious tool metadata, or a tool sourced from an agent/tool marketplace with minimal validation), block or quarantine the tool and log the attempt.
+
+_NOTE: Tool ecosystems and agent marketplaces can enable rapid proliferation of third-party tools with relatively low validation. An internal marketplace or hashed allowlist for approved tools is highly recommended._
+
+**Level:**
+WARN
+
+**Example:**
+
+```
+{
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.cooldevapp_mcp_toolname",
+    "event": "mcp_tool_poisoning:joebob1",
+    "level": "WARN",
+    "description": "Tool execution blocked (tool=\"calendar_sync\", source=\"https://marketplace.example/tools/calendar_sync\", version=\"2.4.1\", signature=\"missing\", policy=\"allowlist_required\")",
     ...
 }
 ```
@@ -711,7 +897,7 @@ WARN
 {
     "datetime": "2019-01-01 00:00:00,000",
     "appid": "foobar.netportal_auth",
-    "event": "malicious_direct:joebob1, /users/admin/some/important/path,0511,0777",
+    "event": "permissions_changed:joebob1, /users/admin/some/important/path,0511,0777",
     "level": "WARN",
     "description": "User joebob1 changed permissions on /users/admin/some/important/path",
     ...
@@ -830,7 +1016,7 @@ Also called a **_business logic attack_**, if a specific path is expected throug
 When a user reaches a part of the application out of sequence it may indicate intentional abuse of the business logic and should be tracked.
 
 **Level:**
-WARN
+CRITICAL
 
 **Example:**
 
@@ -839,7 +1025,7 @@ WARN
     "datetime": "2019-01-01 00:00:00,000",
     "appid": "foobar.netportal_auth",
     "event": "sequence_fail:joebob1",
-    "level": "WARN",
+    "level": "CRITICAL",
     "description": "User joebob1 has reached a part of the application out of the normal application flow.",
     ...
 }
@@ -887,7 +1073,7 @@ INFO
     "datetime": "2019-01-01 00:00:00,000",
     "appid": "foobar.netportal_auth",
     "event": "session_renewed:joebob1",
-    "level": "WARN",
+    "level": "INFO",
     "description": "User joebob1 was warned of expiring session and extended.",
     ...
 }
@@ -910,7 +1096,7 @@ INFO
     "datetime": "2019-01-01 00:00:00,000",
     "appid": "foobar.netportal_auth",
     "event": "session_expired:joebob1,revoked",
-    "level": "WARN",
+    "level": "INFO",
     "description": "User joebob1 session expired due to administrator revocation.",
     ...
 }
@@ -924,7 +1110,7 @@ INFO
 In the case a user attempts to access systems with an expire session it may be helpful to log, especially if combined with subsequent login failure. This could identify a case where a malicious user is attempting a session hijack or directly accessing another person's machine/browser.
 
 **Level:**
-WARN
+CRITICAL
 
 **Example:**
 
@@ -933,7 +1119,7 @@ WARN
     "datetime": "2019-01-01 00:00:00,000",
     "appid": "foobar.netportal_auth",
     "event": "session_use_after_expire:joebob1",
-    "level": "WARN",
+    "level": "CRITICAL",
     "description": "User joebob1 attempted access after session expired.",
     ...
 }

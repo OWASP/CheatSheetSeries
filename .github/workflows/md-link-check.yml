@@ -8,6 +8,9 @@ on:
 
 jobs:
   link-check:
+    permissions:
+      contents: read
+      pull-requests: write
     runs-on: ubuntu-24.04
     env:
       CI: true

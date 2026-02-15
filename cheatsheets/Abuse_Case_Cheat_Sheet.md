@@ -1,4 +1,8 @@
-# Abuse Case Cheat Sheet
+# Abuse Case Cheat Sheet (Historical)
+
+## Archive Statement
+
+Reviewers have identified that abuse cases are rarely used in practice. Additionally, the material is presented as a "getting started tutorial" which isn't appropriate for the cheat sheet series.
 
 ## Introduction
 
@@ -11,7 +15,7 @@ Often when the security level of an application is mentioned in requirements, th
 
 These security requirements are too generic, and thus useless for a development team...
 
-In order to build a secure application, from a pragmatic point of view, it is important to identify the attacks which the application must defend against, according to its business and technical context. Abuse cases are a frequently recommended _threat modeling_ tool, and reviewing the [threat modeling](https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html) cheat sheet may be helpful.
+In order to build a secure application, from a pragmatic point of view, it is important to identify the attacks which the application must defend against, according to its business and technical context. Abuse cases were a frequently recommended _threat modeling_ technique, and reviewing the [threat modeling](https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html) cheat sheet may be helpful. In practice, the abuse case framework seems heavyweight and there are few published examples or success stories.
 
 ### Objective
 
@@ -432,7 +436,7 @@ As an attacker, I find common open source or closed source packages with weaknes
 
 _Epic:_
 
-Exploitation of insufficient logging and monitoring is the bedrock of nearly every major incident. Attackers rely on the lack of monitoring and timely response to achieve their goals without being detected. In 2016, identifying a breach took an [average of 191 days](https://www-01.ibm.com/common/ssi/cgi-bin/ssialias?htmlfid=SEL03130WWEN) allowing substancial chance for damage to be inflicted.
+Exploitation of insufficient logging and monitoring is the bedrock of nearly every major incident. Attackers rely on the lack of monitoring and timely response to achieve their goals without being detected. In 2016, identifying a breach took an [average of 191 days](https://www-01.ibm.com/common/ssi/cgi-bin/ssialias?htmlfid=SEL03130WWEN) allowing substantial chance for damage to be inflicted.
 
 _Abuse Case:_
 

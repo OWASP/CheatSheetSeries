@@ -114,12 +114,11 @@ The `SECRET_KEY` parameter in settings.py is used for cryptographic signing and 
 Include the `django.middleware.security.SecurityMiddleware` module in the `MIDDLEWARE` setting in your project's `settings.py` to add security-related headers to your responses. This module is used to set the following parameters:
 
 - `SECURE_CONTENT_TYPE_NOSNIFF`: Set this key to `True`. Protects against MIME type sniffing attacks by enabling the header `X-Content-Type-Options: nosniff`.
-- `SECURE_BROWSER_XSS_FILTER`: Set this key to `True`. Enables the browser’s XSS filter by setting the header `X-XSS-Protection: 1; mode=block`.
 - `SECURE_HSTS_SECONDS`: Ensures the site is only accessible via HTTPS.
 
 Include the `django.middleware.clickjacking.XFrameOptionsMiddleware` module in the `MIDDLEWARE` setting in your project's `settings.py` (This module should be listed after the `django.middleware.security.SecurityMiddleware` module as ordering is important). This module is used to set the following parameters:
 
-- `X_FRAME_OPTIONS`: Set this key to to 'DENY' or 'SAMEORIGIN'. This setting adds the `X-Frame-Options` header to all HTTP responses. This protects against clickjacking attacks.
+- `X_FRAME_OPTIONS`: Set this key to 'DENY' or 'SAMEORIGIN'. This setting adds the `X-Frame-Options` header to all HTTP responses. This protects against clickjacking attacks.
 
 ## Cookies
 
@@ -145,21 +144,22 @@ Include the `django.middleware.clickjacking.XFrameOptionsMiddleware` module in t
   ```
 
 - For AJAX calls, the CSRF token for the request has to be extracted prior to being used in the the AJAX call.  
-- Additional recommendations and controls can be found at Django's [Cross Site Request Forgery protection](https://docs.djangoproject.com/en/3.2/ref/csrf/) documentation.
+- Additional recommendations and controls can be found at Django's [Cross Site Request Forgery protection](https://docs.djangoproject.com/en/5.2/ref/csrf/) documentation.
 
 ## Cross Site Scripting (XSS)
 
 The recommendations in this section are in addition to XSS recommendations already mentioned previously.
 
-- Use the built-in template system to render templates in Django. Refer to Django's [Automatic HTML escaping](https://docs.djangoproject.com/en/3.2/ref/templates/language/#automatic-html-escaping) documentation to learn more.
-- Avoid using `safe`, `mark_safe`, or `json_script` filters for disabling Django's automatic template escaping. The equivalent function in Python is the `make_safe()` function. Refer to the [json_script](https://docs.djangoproject.com/en/3.2/ref/templates/builtins/#json-script0) template filter documentation to learn more.
-- Refer to Django's [Cross Site Scripting (XSS) protection](https://docs.djangoproject.com/en/3.2/topics/security/#cross-site-scripting-xss-protection) documentation to learn more.
+- Use the built-in template system to render templates in Django. Refer to Django's [Automatic HTML escaping](https://docs.djangoproject.com/en/5.2/ref/templates/language/#automatic-html-escaping) documentation to learn more.
+- Try to avoid using the `safe` filter (or `mark_safe` function) to disable Django's automatic template escaping. If you do need to use it, make sure the input is from a trusted source. Extra caution is required when handling user-controlled inputs.
+- Use the [`json_script`](https://docs.djangoproject.com/en/5.2/ref/templates/builtins/#json-script) template filter for passing data to JavaScript in Django templates.
+- Refer to Django's [Cross Site Scripting (XSS) protection](https://docs.djangoproject.com/en/5.2/topics/security/#cross-site-scripting-xss-protection) documentation to learn more.
 
 ## HTTPS
 
 - Include the `django.middleware.security.SecurityMiddleware` module in the `MIDDLEWARE` setting in your project's `settings.py` if not already added.
 - Set the `SECURE_SSL_REDIRECT = True` in the `settings.py` file to ensure that all communication is over HTTPS. This will redirect any HTTP requests automatically to HTTPS. This is also a 301 (permanent) redirect, so your browser will remember the redirect for subsequent requests.
-- If your Django application is behind a proxy or load balancer, set the `SECURE_PROXY_SSL_HEADER` setting to `TRUE` so that Django can detect the original request's protocol. For futher details refer to [SECURE_PROXY_SSL_HEADER documentation](https://docs.djangoproject.com/en/3.2/ref/settings/#secure-proxy-ssl-header).
+- If your Django application is behind a proxy or load balancer, set the `SECURE_PROXY_SSL_HEADER` setting so that Django can detect the original request's protocol. For further details refer to [SECURE_PROXY_SSL_HEADER documentation](https://docs.djangoproject.com/en/5.2/ref/settings/#secure-proxy-ssl-header).
 
 ## Admin panel URL
 
@@ -167,9 +167,32 @@ It is advisable to modify the default URL leading to the admin panel (example.co
 
 In the default app folder within your project, locate the `urls.py` file managing the top-level URLs. Within the file, modify the `urlpatterns` variable, a list, so that the URL leading to `admin.site.urls` is different from "admin/". This approach adds an extra layer of security by obscuring the common endpoint used for administrative access.
 
+## Django's built-in command `check --deploy`
+
+Django has built-in command [`check --deploy`](https://docs.djangoproject.com/en/stable/ref/django-admin/#cmdoption-check-deploy) for security checks. Example:
+
+```
+$ ./manage.py check --deploy
+System check identified some issues:
+
+WARNINGS:
+?: (security.W004) You have not set a value for the SECURE_HSTS_SECONDS setting. If your entire site is served only over SSL, you may want to consider setting a value and enabling HTTP Strict Transport Security. Be sure to read the documentation first; enabling HSTS carelessly can cause serious, irreversible problems.
+?: (security.W008) Your SECURE_SSL_REDIRECT setting is not set to True. Unless your site should be available over both SSL and non-SSL connections, you may want to either set this setting True or configure a load balancer or reverse-proxy server to redirect all connections to HTTPS.
+?: (security.W009) Your SECRET_KEY has less than 50 characters, less than 5 unique characters, or it's prefixed with 'django-insecure-' indicating that it was generated automatically by Django. Please generate a long and random value, otherwise many of Django's security-critical features will be vulnerable to attack.
+?: (security.W012) SESSION_COOKIE_SECURE is not set to True. Using a secure-only session cookie makes it more difficult for network traffic sniffers to hijack user sessions.
+?: (security.W016) You have 'django.middleware.csrf.CsrfViewMiddleware' in your MIDDLEWARE, but you have not set CSRF_COOKIE_SECURE to True. Using a secure-only CSRF cookie makes it more difficult for network traffic sniffers to steal the CSRF token.
+?: (security.W018) You should not have DEBUG set to True in deployment.
+?: (security.W020) ALLOWED_HOSTS must not be empty in deployment.
+
+System check identified 7 issues (0 silenced).
+
+```
+
+You can harden your Django project by addressing the warnings generated by this command.
+
 ## References
 
 Additional documentation -
 
-- [Clickjacking Protection](https://docs.djangoproject.com/en/3.2/topics/security/#clickjacking-protection)
-- [Security Middleware](https://docs.djangoproject.com/en/3.2/topics/security/#module-django.middleware.security)
+- [Clickjacking Protection](https://docs.djangoproject.com/en/5.2/topics/security/#clickjacking-protection)
+- [Security Middleware](https://docs.djangoproject.com/en/5.2/ref/middleware/#module-django.middleware.security)
