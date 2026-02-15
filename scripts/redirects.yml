@@ -46,4 +46,13 @@ Crypto: cheatsheets/Cryptographic_Storage_Cheat_Sheet.html
 Password: cheatsheets/Password_Storage_Cheat_Sheet.html
 Session: cheatsheets/Session_Management_Cheat_Sheet.html
 
+# old redirects to the updated redirects
+cheatsheets/Authorization_Testing_Automation: cheatsheets/Authorization_Testing_Automation_Cheat_Sheet.html
+cheatsheets/Drone_security_sheet: cheatsheets/Drone_Security_Cheat_Sheet.html
+cheatsheets/Injection_Prevention_Cheat_Sheet_in_Java: cheatsheets/Injection_Prevention_in_Java_Cheat_Sheet.html
+cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java: cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html
+cheatsheets/Ruby_on_Rails_Cheatsheet: cheatsheets/Ruby_on_Rails_Cheat_Sheet.html
+cheatsheets/Nodejs_security_cheat_sheet: cheatsheets/Nodejs_Security_Cheat_Sheet.html
+cheatsheets/Application_Logging_Vocabulary_Cheat_Sheet: cheatsheets/Logging_Vocabulary_Cheat_Sheet.html
+
 # Add more redirects as needed 
