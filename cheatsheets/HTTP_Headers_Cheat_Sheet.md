@@ -300,11 +300,20 @@ header("X-Frame-Options: DENY");
 
 ### Apache
 
-Below is an `.htaccess` sample configuration which sets the `X-Frame-Options` header in Apache. Note that without the `always` option, the header will only be sent for certain status codes, as described in [the Apache documentation](https://httpd.apache.org/docs/2.4/mod/mod_headers.html#header).
+Below is an `.htaccess` sample configuration which sets the `X-Frame-Options` header in Apache.
+
+As described in the [Apache documentation](https://httpd.apache.org/docs/2.4/mod/mod_headers.html#header), `Header set` (default `onsuccess`) and `Header always set` operate on separate internal header tables.
+
+In some cases, both header tables may be used, which can result in duplicate headers if the same header is configured in both contexts.
+
+If a header needs to be removed entirely, it should be unset in both contexts (`onsuccess` and `always`).
+
+To avoid duplication and ensure the header is sent on all responses, unset it first and then use `always set`:
 
 ```lang-bsh
 <IfModule mod_headers.c>
-Header always set X-Frame-Options "DENY"
+  Header unset X-Frame-Options
+  Header always set X-Frame-Options "DENY"
 </IfModule>
 ```
 
