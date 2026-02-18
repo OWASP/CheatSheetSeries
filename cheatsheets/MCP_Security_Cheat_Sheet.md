@@ -213,8 +213,9 @@ import re
 def search_logs(pattern: str) -> str:
     """Search application logs for a pattern."""
     safe_pattern = re.escape(pattern)
+    compiled_pattern = re.compile(safe_pattern)
     with open("/var/log/app.log", "r") as f:
-        return "\n".join(line for line in f if re.search(safe_pattern, line))
+        return "\n".join(line for line in f if compiled_pattern.search(line))
 ```
 
 </details>
