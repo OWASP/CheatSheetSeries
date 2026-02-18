@@ -38,7 +38,7 @@ The LLM sees all tool descriptions from all connected servers in its context —
 
 - Grant each MCP server the minimum permissions needed for its function.
 - Use scoped, per-server credentials — never share tokens across servers.
-- Request narrow OAuth scopes (e.g., `gmail.readonly` not `gmail.full`).
+- Request narrow OAuth scopes (e.g., `mail.readonly` instead of `mail.modify` or `mail.full_access`).
 - Prefer ephemeral, short-lived tokens over long-lived PATs.
 
 <details>
