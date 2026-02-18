@@ -4,6 +4,18 @@
 
 This document will provide a starting point for AJAX security and will hopefully be updated and expanded reasonably often to provide more detailed information about specific frameworks and technologies.
 
+**Before applying any specific control, developers must adopt a fundamental security mindset:**
+All data should be considered untrusted unless explicitly validated and safely handled.
+This applies to:
+
+- Client-side input
+- API response
+- Third-party integrations
+- Internal services and microservices
+- Cached responses
+- Browser storage (localStorage, sessionStorage)
+- Hidden form fields
+
 ### Client-Side (JavaScript)
 
 #### Use `innerHTML` with extreme caution
@@ -108,7 +120,7 @@ Don't forget that the user controls the client-side logic. A number of browser p
 
 #### Don't rely on client business logic
 
-Just like the security one, make sure any interesting business rules/logic is duplicated on the server-side lest a user bypass this logic, leading to unexpected or costly behavior.
+As with security logic, make sure any important business rules are duplicated on the server side so a user cannot bypass them, which could lead to unexpected or costly behavior.
 
 #### Avoid writing serialization code
 
