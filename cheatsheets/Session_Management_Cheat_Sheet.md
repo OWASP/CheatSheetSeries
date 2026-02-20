@@ -165,6 +165,43 @@ Typically, session management capabilities to track users after authentication m
 - Ensure entire cookie should be encrypted if sensitive data is persisted in the cookie
 - Define all cookies being used by the application, their name and why they are needed
 
+### Implementation Examples
+
+#### FastAPI
+
+Developers using the [FastAPI](https://fastapi.tiangolo.com/) framework can set secure session cookies using the following pattern:
+
+```python
+from fastapi import FastAPI, Response, Request
+
+app = FastAPI()
+
+@app.post("/login")
+async def login(response: Response):
+    # Establish a unique session identifier
+    session_id = "your_secure_session_token"
+    
+    # Set the secure cookie
+    response.set_cookie(
+        key="session_id",
+        value=session_id,
+        httponly=True,
+        secure=True,     # Ensure cookie is only sent over HTTPS
+        samesite="Strict", # Mitigation against CSRF
+        max_age=3600,    # Cookie expires after 1 hour (3600 seconds)
+    )
+    return {"message": "Successfully logged in"}
+
+@app.post("/logout")
+async def logout(response: Response):
+    # Clear the session cookie
+    response.delete_cookie(key="session_id")
+    return {"message": "Successfully logged out"}
+```
+
+> [!NOTE]
+> When using `samesite="None"`, the `secure=True` attribute **must** be set, otherwise browsers will reject the cookie.
+
 ## HTML5 Web Storage API
 
 The Web Hypertext Application Technology Working Group (WHATWG) describes the HTML5 Web Storage APIs, `localStorage` and `sessionStorage`, as mechanisms for storing name-value pairs client-side.
