@@ -5,7 +5,7 @@
 
 Welcome to the official repository for the Open Worldwide Application Security Project® (OWASP) Cheat Sheet Series project. The project focuses on providing good security practices for builders in order to secure their applications.
 
-These cheat sheets are designed to provide concise, practical security guidance for developers, security engineers, and blue teams looking to improve defensive practices and application security posture.
+These cheat sheets are designed to provide concise, practical security guidance for developers looking to improve defensive practices and application security posture.
 
 In order to read the cheat sheets and **reference** them, use the project [official website](https://cheatsheetseries.owasp.org). The project details can be viewed on the [OWASP main website](https://owasp.org/www-project-cheat-sheets/) without the cheat sheets.
 
