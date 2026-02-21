@@ -87,6 +87,26 @@ The login page and all subsequent authenticated pages must be exclusively access
 
 In order to mitigate CSRF and session hijacking, it's important to require the current credentials for an account before updating sensitive account information such as the user's password or email address -- or before sensitive transactions, such as shipping a purchase to a new address. Without this countermeasure, an attacker may be able to execute sensitive transactions through a CSRF or XSS attack without needing to know the user's current credentials. Additionally, an attacker may get temporary physical access to a user's browser or steal their session ID to take over the user's session.
 
+### Where Authentication Decisions Should Occur in an API-Based System
+
+Modern applications are frequently implemented as API-first systems (e.g., REST APIs, microservices, single-page applications, or mobile backends). In these architectures, authentication and authorization responsibilities are distributed across multiple layers.
+
+While this cheat sheet provides detailed guidance on specific mechanisms (such as sessions, MFA, reauthentication, and token handling), it is important to clarify where those decisions should occur within the request lifecycle of an API-driven system.
+
+#### Typical API Request Lifecycle
+
+A simplified authentication flow in an API-based system may resemble the following:
+
+1. The client submits credentials to a login endpoint.
+2. The server validates credentials and performs any required MFA checks.
+3. Upon successful authentication, the server issues a session identifier or access token.
+4. The client includes the session identifier or token in subsequent API requests.
+5. Authentication middleware validates the session or token on every request.
+6. Authorization logic determines whether the authenticated subject may access the requested resource.
+7. Risk-based controls may trigger reauthentication or step-up authentication for sensitive actions.
+
+The following subsections describe the responsibilities of each architectural component.
+
 ### Reauthentication After Risk Events
 
 **Overview:**
