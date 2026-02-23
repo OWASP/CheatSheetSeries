@@ -631,6 +631,21 @@ function func() {
 
 This list mainly focuses on issues that are common in Node.js applications, with recommendations and examples. In addition to these, there are general [security by design principles](https://wiki.owasp.org/index.php/Security_by_Design_Principles) that apply to web applications regardless of technologies used in application server. You should also keep those principles in mind while developing your applications. You can always refer to [OWASP Cheat Sheet Series](https://cheatsheetseries.owasp.org/) to learn more about web application vulnerabilities and mitigation techniques used against them.
 
+##### Authentication and Credential Security
+
+##### Authentication and Credential Security
+
+Authentication mechanisms must be implemented securely to prevent unauthorized access and credential abuse in Node.js applications.
+
+- Use strong password hashing algorithms such as `bcrypt` or `argon2` when storing user passwords. Avoid using insecure hashing algorithms like MD5 or SHA1 for password storage.
+- Never store credentials in plaintext or hardcode secrets in source code. Use environment variables or secret management solutions.
+- Implement rate limiting and account lockout mechanisms to mitigate brute force attacks.
+- Enforce multi-factor authentication (MFA) where possible to strengthen account protection.
+- Follow secure session management practices, including using secure cookies and proper token expiration.
+
+Refer to the OWASP Authentication Cheat Sheet, Password Storage Cheat Sheet, and Session Management Cheat Sheet for additional guidance.
+
 ## Additional resources about Node.js security
 
 [Awesome Node.js Security resources](https://github.com/lirantal/awesome-nodejs-security)
+
