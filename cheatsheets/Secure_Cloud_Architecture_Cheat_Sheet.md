@@ -230,7 +230,7 @@ The decision to enable advanced DDoS protections for a specific application shou
 
 The Shared Responsibility Model is a framework for cloud service providers (CSPs) and those selling cloud based services to properly identify and segment the responsibilities of the developer and the provider. This is broken down into different levels of control, corresponding to different elements/layers of the technology stack. Generally, components like physical computing devices and data center space are the responsibility of the CSP. Depending on the level of [management](#self-managed-tooling), the developer could be responsible for the entire stack from operating system on up, or only for some ancillary functionality, code or administration.
 
-This responsiblitity model is often categorized into three levels of service called:
+This responsibility model is often categorized into three levels of service called:
 
 - Infrastructure as a Service ([IaaS](#iaas))
 - Platform as a Service ([PaaS](#paas))
