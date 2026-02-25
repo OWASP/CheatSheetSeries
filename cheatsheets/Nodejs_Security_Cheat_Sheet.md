@@ -635,7 +635,7 @@ This list mainly focuses on issues that are common in Node.js applications, with
 
 Authentication mechanisms must be implemented securely to prevent unauthorized access and credential abuse in Node.js applications.
 
-- Use strong password hashing algorithms such as `bcrypt` or `argon2` when storing user passwords. Avoid using insecure hashing algorithms like MD5 or SHA1 for password storage.
+- Use strong password hashing algorithms such as `bcrypt` or `Argon2id` when storing user passwords. Avoid using insecure hashing algorithms like MD5 or SHA1 for password storage.
 - Never store credentials in plaintext or hardcode secrets in source code. Use environment variables or secret management solutions.
 - Implement rate limiting and account lockout mechanisms to mitigate brute force attacks.
 - Enforce multi-factor authentication (MFA) where possible to strengthen account protection.
