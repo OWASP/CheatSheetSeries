@@ -44,6 +44,14 @@ When developers are taught how to write database queries, they should be told to
 
 If database queries use this coding style, the database will always distinguish between code and data, regardless of what user input is supplied. Also, prepared statements ensure that an attacker cannot change the intent of a query, even if SQL commands are inserted by an attacker.
 
+#### Why Parameterized Queries Prevent SQL Injection
+
+Parameterized queries prevent SQL injection because the SQL statement is defined, parsed, and compiled by the database engine before user-supplied input is bound to it. The database treats parameter values strictly as data, not as executable SQL code. 
+
+When a prepared statement is used, placeholders (such as `?`) are embedded in the query. These placeholders are later replaced with user input through a separate binding process. Even if the supplied input contains SQL keywords or operators (e.g., `OR 1=1`), it is interpreted as a literal value rather than part of the SQL command structure. 
+
+Because the query structure is fixed at the time of preparation, attackers cannot alter the intent of the statement.
+
 #### Safe Java Prepared Statement Example
 
 In the safe Java example below, if an attacker were to enter the userID as `tom' or '1'='1`, the parameterized query would look for a username that literally matches the entire string `tom' or '1'='1`. Thus, the database would be protected against injections of malicious SQL code.
@@ -177,7 +185,7 @@ For example:
 
 ```java
 public String someMethod(boolean sortOrder) {
- String SQLquery = "some SQL ... order by Salary " + (sortOrder ? "ASC" : "DESC");`
+ String SQLquery = "some SQL ... order by Salary " + (sortOrder ? "ASC" : "DESC");
  ...
 ```
 
