@@ -16,7 +16,7 @@ Attackers can use SQL injection on an application if it has dynamic database que
 
 There are simple techniques for preventing SQL injection vulnerabilities, and they can be used with practically any kind of programming language and any type of database. While XML databases can have similar problems (e.g., XPath and XQuery injection), these techniques can be used to protect them as well.
 
-## Anatomy of A Typical SQL Injection Vulnerability
+## Anatomy of a Typical SQL Injection Vulnerability
 
 A common SQL injection flaw in Java is shown below. Because its unvalidated "customerName" parameter is simply appended to the query, an attacker can enter SQL code into that query and the application would take the attacker's code and execute it on the database.
 
@@ -187,7 +187,7 @@ Input validation is also recommended as a secondary defense in ALL cases, even w
 
 ### Defense Option 4: STRONGLY DISCOURAGED: Escaping All User-Supplied Input
 
-In this approach, the developer will escape all user input before putting it in a query. It is very database specific in its implementation.  This methodology is frail compared to other defenses, and we CANNOT guarantee that this option will prevent all SQL injections in all situations.
+In this approach, the developer will escape all user input before putting it in a query. It is very database specific in its implementation.  TThis methodology is fragile compared to other defenses, and we CANNOT guarantee that this option will prevent all SQL injections in all situations.
 
 If an application is built from scratch or requires low risk tolerance, it should be built or re-written using parameterized queries, stored procedures, or some kind of Object Relational Mapper (ORM) that builds your queries for you.
 
