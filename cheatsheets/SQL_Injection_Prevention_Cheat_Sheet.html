@@ -2098,7 +2098,7 @@
         <li class="md-nav__item">
   <a href="#anatomy-of-a-typical-sql-injection-vulnerability" class="md-nav__link">
     <span class="md-ellipsis">
-      Anatomy of A Typical SQL Injection Vulnerability
+      Anatomy of a Typical SQL Injection Vulnerability
     </span>
   </a>
   
@@ -3070,7 +3070,7 @@
         <li class="md-nav__item">
   <a href="#anatomy-of-a-typical-sql-injection-vulnerability" class="md-nav__link">
     <span class="md-ellipsis">
-      Anatomy of A Typical SQL Injection Vulnerability
+      Anatomy of a Typical SQL Injection Vulnerability
     </span>
   </a>
   
@@ -3360,7 +3360,7 @@
 <li>Prevent malicious SQL input from being included in executed queries.</li>
 </ol>
 <p>There are simple techniques for preventing SQL injection vulnerabilities, and they can be used with practically any kind of programming language and any type of database. While XML databases can have similar problems (e.g., XPath and XQuery injection), these techniques can be used to protect them as well.</p>
-<h2 id="anatomy-of-a-typical-sql-injection-vulnerability">Anatomy of A Typical SQL Injection Vulnerability<a class="headerlink" href="#anatomy-of-a-typical-sql-injection-vulnerability" title="Permanent link">&para;</a></h2>
+<h2 id="anatomy-of-a-typical-sql-injection-vulnerability">Anatomy of a Typical SQL Injection Vulnerability<a class="headerlink" href="#anatomy-of-a-typical-sql-injection-vulnerability" title="Permanent link">&para;</a></h2>
 <p>A common SQL injection flaw in Java is shown below. Because its unvalidated "customerName" parameter is simply appended to the query, an attacker can enter SQL code into that query and the application would take the attacker's code and execute it on the database.</p>
 <div class="highlight"><pre><span></span><code><span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;SELECT account_balance FROM user_data WHERE user_name = &quot;</span>
 <span class="w">             </span><span class="o">+</span><span class="w"> </span><span class="n">request</span><span class="p">.</span><span class="na">getParameter</span><span class="p">(</span><span class="s">&quot;customerName&quot;</span><span class="p">);</span>
@@ -3475,7 +3475,7 @@ switch(PARAM):
 <p>Any time user input can be converted to a non-String, like a date, numeric, boolean, enumerated type, etc. before it is appended to a query, or used to select a value to append to the query, this ensures it is safe to do so.</p>
 <p>Input validation is also recommended as a secondary defense in ALL cases, even when using bind variables as discussed earlier in this article. More techniques on how to implement strong input validation is described in the <a href="Input_Validation_Cheat_Sheet.html">Input Validation Cheat Sheet</a>.</p>
 <h3 id="defense-option-4-strongly-discouraged-escaping-all-user-supplied-input">Defense Option 4: STRONGLY DISCOURAGED: Escaping All User-Supplied Input<a class="headerlink" href="#defense-option-4-strongly-discouraged-escaping-all-user-supplied-input" title="Permanent link">&para;</a></h3>
-<p>In this approach, the developer will escape all user input before putting it in a query. It is very database specific in its implementation.  This methodology is frail compared to other defenses, and we CANNOT guarantee that this option will prevent all SQL injections in all situations.</p>
+<p>In this approach, the developer will escape all user input before putting it in a query. It is very database specific in its implementation.  This methodology is fragile compared to other defenses, and we CANNOT guarantee that this option will prevent all SQL injections in all situations.</p>
 <p>If an application is built from scratch or requires low risk tolerance, it should be built or re-written using parameterized queries, stored procedures, or some kind of Object Relational Mapper (ORM) that builds your queries for you.</p>
 <h2 id="additional-defenses">Additional Defenses<a class="headerlink" href="#additional-defenses" title="Permanent link">&para;</a></h2>
 <p>Beyond adopting one of the four primary defenses, we also recommend adopting all of these additional defenses to provide defense in depth. These additional defenses are:</p>
