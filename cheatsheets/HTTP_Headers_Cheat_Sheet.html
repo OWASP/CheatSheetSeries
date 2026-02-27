@@ -4339,9 +4339,14 @@ If you do not control links on your website, you might want to set <code>off</co
 <div class="highlight"><pre><span></span><code><span class="x">header(&quot;X-Frame-Options: DENY&quot;);</span>
 </code></pre></div>
 <h3 id="apache">Apache<a class="headerlink" href="#apache" title="Permanent link">&para;</a></h3>
-<p>Below is an <code>.htaccess</code> sample configuration which sets the <code>X-Frame-Options</code> header in Apache. Note that without the <code>always</code> option, the header will only be sent for certain status codes, as described in <a href="https://httpd.apache.org/docs/2.4/mod/mod_headers.html#header">the Apache documentation</a>.</p>
+<p>Below is an <code>.htaccess</code> sample configuration which sets the <code>X-Frame-Options</code> header in Apache.</p>
+<p>As described in the <a href="https://httpd.apache.org/docs/2.4/mod/mod_headers.html#header">Apache documentation</a>, <code>Header set</code> (default <code>onsuccess</code>) and <code>Header always set</code> operate on separate internal header tables.</p>
+<p>In some cases, both header tables may be used, which can result in duplicate headers if the same header is configured in both contexts.</p>
+<p>If a header needs to be removed entirely, it should be unset in both contexts (<code>onsuccess</code> and <code>always</code>).</p>
+<p>To avoid duplication and ensure the header is sent on all responses, unset it first and then use <code>always set</code>:</p>
 <div class="highlight"><pre><span></span><code>&lt;IfModule mod_headers.c&gt;
-Header always set X-Frame-Options &quot;DENY&quot;
+  Header unset X-Frame-Options
+  Header always set X-Frame-Options &quot;DENY&quot;
 &lt;/IfModule&gt;
 </code></pre></div>
 <h3 id="iis">IIS<a class="headerlink" href="#iis" title="Permanent link">&para;</a></h3>
