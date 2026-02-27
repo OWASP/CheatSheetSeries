@@ -26,7 +26,7 @@
     - [V4.1 Generic Web Service Security](#v41-generic-web-service-security)
     - [V4.2 HTTP Message Structure Validation](#v42-http-message-structure-validation)
     - [V4.3 GraphQL](#v43-graphql)
-    - [V4.4 WebSocket](#v43-websocket)
+    - [V4.4 WebSocket](#v44-websocket)
 - [V5: File Handling](#v5-file-handling)
     - [V5.1 File Handling Documentation](#v51-file-handling-documentation)
     - [V5.2 File Upload and Content](#v52-file-upload-and-content)
