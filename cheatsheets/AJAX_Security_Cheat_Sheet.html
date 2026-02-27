@@ -766,9 +766,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#services-can-be-called-by-users-directly" class="md-nav__link">
+  <a href="#services-can-be-called-directly-by-users" class="md-nav__link">
     <span class="md-ellipsis">
-      Services can be called by users directly
+      Services can be called directly by users
     </span>
   </a>
   
@@ -3376,9 +3376,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#services-can-be-called-by-users-directly" class="md-nav__link">
+  <a href="#services-can-be-called-directly-by-users" class="md-nav__link">
     <span class="md-ellipsis">
-      Services can be called by users directly
+      Services can be called directly by users
     </span>
   </a>
   
@@ -3433,6 +3433,18 @@
 <h1 id="ajax-security-cheat-sheet">AJAX Security Cheat Sheet<a class="headerlink" href="#ajax-security-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>This document will provide a starting point for AJAX security and will hopefully be updated and expanded reasonably often to provide more detailed information about specific frameworks and technologies.</p>
+<p><strong>Before applying any specific control, developers must adopt a fundamental security mindset:</strong>
+All data should be considered untrusted unless explicitly validated and safely handled.
+This applies to:</p>
+<ul>
+<li>Client-side input</li>
+<li>API response</li>
+<li>Third-party integrations</li>
+<li>Internal services and microservices</li>
+<li>Cached responses</li>
+<li>Browser storage (localStorage, sessionStorage)</li>
+<li>Hidden form fields</li>
+</ul>
 <h3 id="client-side-javascript">Client-Side (JavaScript)<a class="headerlink" href="#client-side-javascript" title="Permanent link">&para;</a></h3>
 <h4 id="use-innerhtml-with-extreme-caution">Use <code>innerHTML</code> with extreme caution<a class="headerlink" href="#use-innerhtml-with-extreme-caution" title="Permanent link">&para;</a></h4>
 <p>Manipulating the Document Object Model (DOM) is common in web applications, especially in monolithic server-side rendering (e.g., PHP, ASP.NET) and AJAX-driven applications. While <code>innerHTML</code> seems like a convenient way to inject HTML content, it poses significant security risks on untrusted-data, particularly cross-site scripting (XSS).</p>
@@ -3507,7 +3519,7 @@
 <h4 id="dont-rely-on-client-logic-for-security">Don't rely on client logic for security<a class="headerlink" href="#dont-rely-on-client-logic-for-security" title="Permanent link">&para;</a></h4>
 <p>Don't forget that the user controls the client-side logic. A number of browser plugins are available to set breakpoints, skip code, change values, etc. Never rely on client logic for security.</p>
 <h4 id="dont-rely-on-client-business-logic">Don't rely on client business logic<a class="headerlink" href="#dont-rely-on-client-business-logic" title="Permanent link">&para;</a></h4>
-<p>Just like the security one, make sure any interesting business rules/logic is duplicated on the server-side lest a user bypass this logic, leading to unexpected or costly behavior.</p>
+<p>As with security logic, make sure any important business rules are duplicated on the server side so a user cannot bypass them, which could lead to unexpected or costly behavior.</p>
 <h4 id="avoid-writing-serialization-code">Avoid writing serialization code<a class="headerlink" href="#avoid-writing-serialization-code" title="Permanent link">&para;</a></h4>
 <p>This is hard and even a small mistake can cause large security issues. There are already a lot of frameworks to provide this functionality.</p>
 <p>Refer to the <a href="https://www.json.org/">JSON page</a> for more info.</p>
@@ -3522,7 +3534,7 @@
 <h4 id="dont-perform-encryption-in-client-side-code">Don't perform encryption in client-side code<a class="headerlink" href="#dont-perform-encryption-in-client-side-code" title="Permanent link">&para;</a></h4>
 <p>Use TLS/SSL and encrypt on the server!</p>
 <h4 id="dont-perform-security-impacting-logic-on-client-side">Don't perform security impacting logic on client-side<a class="headerlink" href="#dont-perform-security-impacting-logic-on-client-side" title="Permanent link">&para;</a></h4>
-<p>This principle serves as a fail-safe—if a security decision is ambiguous, default to performing it on the server.</p>
+<p>This principle serves as a fail-safe—if a security decision is ambiguous, perform it on the server.</p>
 <h3 id="server-side">Server-Side<a class="headerlink" href="#server-side" title="Permanent link">&para;</a></h3>
 <h4 id="use-csrf-protection">Use CSRF Protection<a class="headerlink" href="#use-csrf-protection" title="Permanent link">&para;</a></h4>
 <p>Take a look at the <a href="Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">Cross-Site Request Forgery (CSRF) Prevention</a> cheat sheet.</p>
@@ -3541,14 +3553,14 @@
 <div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;result&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;object&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inside an array&quot;</span><span class="p">}]}</span>
 </code></pre></div>
 <h4 id="avoid-writing-serialization-code-server-side">Avoid writing serialization code server-side<a class="headerlink" href="#avoid-writing-serialization-code-server-side" title="Permanent link">&para;</a></h4>
-<p>Remember ref vs. value types! Look for an existing library that has been reviewed.</p>
-<h4 id="services-can-be-called-by-users-directly">Services can be called by users directly<a class="headerlink" href="#services-can-be-called-by-users-directly" title="Permanent link">&para;</a></h4>
+<p>Remember reference vs. value types; use a reviewed library.</p>
+<h4 id="services-can-be-called-directly-by-users">Services can be called directly by users<a class="headerlink" href="#services-can-be-called-directly-by-users" title="Permanent link">&para;</a></h4>
 <p>Even though you only expect your AJAX client-side code to call those services, a malicious user can also call them directly.</p>
-<p>Make sure you validate inputs and treat them like they are under user control (because they are!).</p>
+<p>Validate inputs and treat them as if they are under user control.</p>
 <h4 id="avoid-building-xml-or-json-by-hand-use-the-framework">Avoid building XML or JSON by hand, use the framework<a class="headerlink" href="#avoid-building-xml-or-json-by-hand-use-the-framework" title="Permanent link">&para;</a></h4>
-<p>Use the framework and be safe, do it by hand and have security issues.</p>
+<p>Use the framework to serialize data; building payloads by hand can introduce security issues.</p>
 <h4 id="use-json-and-xml-schema-for-web-services">Use JSON and XML schema for web services<a class="headerlink" href="#use-json-and-xml-schema-for-web-services" title="Permanent link">&para;</a></h4>
-<p>You need to use a third-party library to validate web services.</p>
+<p>Use a third-party library to validate web service inputs.</p>
 
 
 
