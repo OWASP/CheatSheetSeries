@@ -133,9 +133,9 @@ In Kubernetes environments, [Network Policies](https://kubernetes.io/docs/concep
 
 ### RULE \#5b - Be careful when mapping container ports to the host with UFW
 
-[UFW (Uncomplicated Firewall)](https://help.ubuntu.com/community/UFW) is a popular host-based firewall for Linux. A common misconception is that UFW rules protect all inbound traffic — including traffic destined for Docker containers. However, **Docker manages its own `iptables` rules directly and bypasses UFW entirely**.
+[UFW (Uncomplicated Firewall)](https://help.ubuntu.com/community/UFW) is a popular host-based firewall for Linux. A common misconception is that UFW rules protect all inbound traffic — including traffic destined for Docker containers. However, **Docker manages its own `iptables` rules, which are evaluated before typical UFW INPUT rules, so published container ports may not be filtered by UFW policies by default**.
 
-When you publish a port with `-p 8000:8000`, Docker inserts `iptables` rules that open that port to **all interfaces and all source addresses**, regardless of any `UFW DENY` rules you may have set. This can unintentionally expose container services to the public internet.
+When you publish a port with `-p 8000:8000`, Docker inserts `iptables` rules that open that port to **all interfaces and all source addresses**, and these rules are typically accepted before UFW's filtering rules are applied. As a result, traffic may be allowed through regardless of any `UFW DENY` rules you have set, which can unintentionally expose container services to the public internet.
 
 #### Recommended Mitigations
 
