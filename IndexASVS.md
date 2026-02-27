@@ -166,7 +166,7 @@ This index is based on the version 5.0.x of the ASVS. For ASVS 4.0.x, please go 
 
 ### V1.4 Memory, String, and Unmanaged Code
 
-none.
+None.
 
 ### V1.5 Safe Deserialization
 
@@ -642,7 +642,7 @@ none.
 
 ### V17.1 TURN Server
 
-none.
+None.
 
 ## V17.2 Media
 
@@ -650,4 +650,4 @@ none.
 
 ## V17.3 Signaling
 
-none.
+None.
