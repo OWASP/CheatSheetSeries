@@ -126,9 +126,9 @@ This index is based on the version 5.0.x of the ASVS. For ASVS 4.0.x, please go 
 
 [Injection Prevention Cheat Sheet](cheatsheets/Injection_Prevention_Cheat_Sheet.md)
 
-[Injection Prevention Cheat Sheet in Java](cheatsheets/Injection_Prevention_in_Java_Cheat_Sheet.md)
-
 [Input Validation Cheat Sheet](cheatsheets/Input_Validation_Cheat_Sheet.md)
+
+[Java Security Cheat Sheet](cheatsheets/Java_Security_Cheat_Sheet.md)
 
 [LDAP Injection Prevention](cheatsheets/LDAP_Injection_Prevention_Cheat_Sheet.md)
 
