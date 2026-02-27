@@ -33,7 +33,7 @@
     - [V5.3 File Storage](#v53-file-storage)
     - [V5.4 File Download](#v54-file-download)
 - [V6: Authentication](#v6-authentication)
-    - [V6.1 Authentication Documentationn](#v61-authentication-documentation)
+    - [V6.1 Authentication Documentation](#v61-authentication-documentation)
     - [V6.2 Password Security](#v62-password-security)
     - [V6.3 General Authentication Security](#v63-general-authentication-security)
     - [V6.4 Authentication Factor Lifecycle and Recovery](#v64-authentication-factor-lifecycle-and-recovery)
@@ -42,7 +42,7 @@
     - [V6.7 Cryptographic authentication mechanism](#v67-cryptographic-authentication-mechanism)
     - [V6.8 Authentication with an Identity Provider](#v68-authentication-with-an-identity-provider)
 - [V7: Session Management](#v7-session-management)
-    - [V7.1 Session Management Documentations](#v71-session-management-documentations)
+    - [V7.1 Session Management Documentation](#v71-session-management-documentation)
     - [V7.2 Fundamental Session Management Security](#v72-fundamental-session-management-security)
     - [V7.3 Session Timeout](#v73-session-timeout)
     - [V7.4 Session Termination](#v74-session-termination)
@@ -106,7 +106,6 @@
 The objective of this index is to help an OWASP [Application Security Verification Standard](https://owasp.org/www-project-application-security-verification-standard/) (ASVS) user clearly identify which cheat sheets are useful for each section during his or her usage of the ASVS.
 
 This index is based on the version 5.0.x of the ASVS. For ASVS 4.0.x, please go to the [DEPRECATED: ASVS 4.0 Index](cheatsheets/IndexASVS4.m).
-
 
 ## V1: Encoding and Sanitization
 
