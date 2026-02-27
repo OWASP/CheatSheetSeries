@@ -105,7 +105,7 @@
 
 The objective of this index is to help an OWASP [Application Security Verification Standard](https://owasp.org/www-project-application-security-verification-standard/) (ASVS) user clearly identify which cheat sheets are useful for each section during his or her usage of the ASVS.
 
-This index is based on the version 5.0.x of the ASVS. For ASVS 4.0.x, please go to the [DEPRECATED: ASVS 4.0 Index](cheatsheets/IndexASVS4.m).
+This index is based on the version 5.0.x of the ASVS. For ASVS 4.0.x, please go to the [DEPRECATED: ASVS 4.0 Index](IndexASVS4.m).
 
 ## V1: Encoding and Sanitization
 
