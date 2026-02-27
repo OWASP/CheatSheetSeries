@@ -3,304 +3,126 @@
 ## Table of Contents
 
 - [Objective](#objective)
-- [V1: Architecture, Design and Threat Modeling Requirements](#v1-architecture-design-and-threat-modeling-requirements)
-    - [V1.1 Secure Software Development Lifecycle Requirements](#v11-secure-software-development-lifecycle-requirements)
-    - [V1.2 Authentication Architectural Requirements](#v12-authentication-architectural-requirements)
-    - [V1.3 Session Management Architectural Requirements](#v13-session-management-architectural-requirements)
-    - [V1.4 Access Control Architectural Requirements](#v14-access-control-architectural-requirements)
-    - [V1.5 Input and Output Architectural Requirements](#v15-input-and-output-architectural-requirements)
-    - [V1.6 Cryptographic Architectural Requirements](#v16-cryptographic-architectural-requirements)
-    - [V1.7 Errors, Logging and Auditing Architectural Requirements](#v17-errors-logging-and-auditing-architectural-requirements)
-    - [V1.8 Data Protection and Privacy Architectural Requirements](#v18-data-protection-and-privacy-architectural-requirements)
-    - [V1.9 Communications Architectural Requirements](#v19-communications-architectural-requirements)
-    - [V1.10 Malicious Software Architectural Requirements](#v110-malicious-software-architectural-requirements)
-    - [V1.11 Business Logic Architectural Requirements](#v111-business-logic-architectural-requirements)
-    - [V1.12 Secure File Upload Architectural Requirements](#v112-secure-file-upload-architectural-requirements)
-    - [V1.13 API Architectural Requirements](#v113-api-architectural-requirements)
-    - [V1.14 Configuration Architectural Requirements](#v114-configuration-architectural-requirements)
-- [V2: Authentication Verification Requirements](#v2-authentication-verification-requirements)
-    - [V2.1 Password Security Requirements](#v21-password-security-requirements)
-    - [V2.2 General Authenticator Requirements](#v22-general-authenticator-requirements)
-    - [V2.3 Authenticator Lifecycle Requirements](#v23-authenticator-lifecycle-requirements)
-    - [V2.4 Credential Storage Requirements](#v24-credential-storage-requirements)
-    - [V2.5 Credential Recovery Requirements](#v25-credential-recovery-requirements)
-    - [V2.6 Look-up Secret Verifier Requirements](#v26-look-up-secret-verifier-requirements)
-    - [V2.7 Out of Band Verifier Requirements](#v27-out-of-band-verifier-requirements)
-    - [V2.8 Single or Multi Factor One Time Verifier Requirements](#v28-single-or-multi-factor-one-time-verifier-requirements)
-    - [V2.9 Cryptographic Software and Devices Verifier Requirements](#v29-cryptographic-software-and-devices-verifier-requirements)
-    - [V2.10 Service Authentication Requirements](#v210-service-authentication-requirements)
-- [V3: Session Management Verification Requirements](#v3-session-management-verification-requirements)
-    - [V3.1 Fundamental Session Management Requirements](#v31-fundamental-session-management-requirements)
-    - [V3.2 Session Binding Requirements](#v32-session-binding-requirements)
-    - [V3.3 Session Logout and Timeout Requirements](#v33-session-logout-and-timeout-requirements)
-    - [V3.4 Cookie-based Session Management](#v34-cookie-based-session-management)
-    - [V3.5 Token-based Session Management](#v35-token-based-session-management)
-    - [V3.6 Re-authentication from a Federation or Assertion](#v36-re-authentication-from-a-federation-or-assertion)
-    - [V3.7 Defenses Against Session Management Exploits](#v37-defenses-against-session-management-exploits)
-- [V4: Access Control Verification Requirements](#v4-access-control-verification-requirements)
-    - [V4.1 General Access Control Design](#v41-general-access-control-design)
-    - [V4.2 Operation Level Access Control](#v42-operation-level-access-control)
-    - [V4.3 Other Access Control Considerations](#v43-other-access-control-considerations)
-- [V5: Validation, Sanitization and Encoding Verification Requirements](#v5-validation-sanitization-and-encoding-verification-requirements)
-    - [V5.1 Input Validation Requirements](#v51-input-validation-requirements)
-    - [V5.2 Sanitization and Sandboxing Requirements](#v52-sanitization-and-sandboxing-requirements)
-    - [V5.3 Output encoding and Injection Prevention Requirements](#v53-output-encoding-and-injection-prevention-requirements)
-    - [V5.4 Memory, String, and Unmanaged Code Requirements](#v54-memory-string-and-unmanaged-code-requirements)
-    - [V5.5 Deserialization Prevention Requirements](#v55-deserialization-prevention-requirements)
-- [V6: Stored Cryptography Verification Requirements](#v6-stored-cryptography-verification-requirements)
-    - [V6.1 Data Classification](#v61-data-classification)
-    - [V6.2 Algorithms](#v62-algorithms)
-    - [V6.3 Random Values](#v63-random-values)
-    - [V6.4 Secret Management](#v64-secret-management)
-- [V7: Error Handling and Logging Verification Requirements](#v7-error-handling-and-logging-verification-requirements)
-    - [V7.1 Log Content Requirements](#v71-log-content-requirements)
-    - [V7.2 Log Processing Requirements](#v72-log-processing-requirements)
-    - [V7.3 Log Protection Requirements](#v73-log-protection-requirements)
-    - [V7.4 Error Handling](#v74-error-handling)
-- [V8: Data Protection Verification Requirements](#v8-data-protection-verification-requirements)
-    - [V8.1 General Data Protection](#v81-general-data-protection)
-    - [V8.2 Client-side Data Protection](#v82-client-side-data-protection)
-    - [V8.3 Sensitive Private Data](#v83-sensitive-private-data)
-- [V9: Communications Verification Requirements](#v9-communications-verification-requirements)
-    - [V9.1 Communications Security Requirements](#v91-communications-security-requirements)
-    - [V9.2 Server Communications Security Requirements](#v92-server-communications-security-requirements)
-- [V10: Malicious Code Verification Requirements](#v10-malicious-code-verification-requirements)
-    - [V10.1 Code Integrity Controls](#v101-code-integrity-controls)
-    - [V10.2 Malicious Code Search](#v102-malicious-code-search)
-    - [V10.3 Deployed Application Integrity Controls](#v103-deployed-application-integrity-controls)
-- [V11: Business Logic Verification Requirements](#v11-business-logic-verification-requirements)
-    - [V11.1 Business Logic Security Requirements](#v111-business-logic-security-requirements)
-- [V12: File and Resources Verification Requirements](#v12-file-and-resources-verification-requirements)
-    - [V12.1 File Upload Requirements](#v121-file-upload-requirements)
-    - [V12.2 File Integrity Requirements](#v122-file-integrity-requirements)
-    - [V12.3 File execution Requirements](#v123-file-execution-requirements)
-    - [V12.4 File Storage Requirements](#v124-file-storage-requirements)
-    - [V12.5 File Download Requirements](#v125-file-download-requirements)
-    - [V12.6 SSRF Protection Requirements](#v126-ssrf-protection-requirements)
-- [V13: API and Web Service Verification Requirements](#v13-api-and-web-service-verification-requirements)
-    - [V13.1 Generic Web Service Security Verification Requirements](#v131-generic-web-service-security-verification-requirements)
-    - [V13.2 RESTful Web Service Verification Requirements](#v132-restful-web-service-verification-requirements)
-    - [V13.3 SOAP Web Service Verification Requirements](#v133-soap-web-service-verification-requirements)
-    - [V13.4 GraphQL and other Web Service Data Layer Security Requirements](#v134-graphql-and-other-web-service-data-layer-security-requirements)
-- [V14: Configuration Verification Requirements](#v14-configuration-verification-requirements)
-    - [V14.1 Build](#v141-build)
-    - [V14.2 Dependency](#v142-dependency)
-    - [V14.3 Unintended Security Disclosure Requirements](#v143-unintended-security-disclosure-requirements)
-    - [V14.4 HTTP Security Headers Requirements](#v144-http-security-headers-requirements)
-    - [V14.5 Validate HTTP Request Header Requirements](#v145-validate-http-request-header-requirements)
+- [V1: Encoding and Sanitization](#v1-encoding-and-sanitization)
+    - [V1.1 Encoding and Sanitization Architecture](#v11-encoding-and-sanitization-architecture)
+    - [V1.2 Injection Prevention](#v12-injection-prevention)
+    - [V1.3 Sanitization](#v13-sanitization)
+    - [V1.4 Memory, String, and Unmanaged Code](#v14-memory-string-and-unmanaged-code)
+    - [V1.5 Safe Deserialization](#v15-safe-deserialization)
+- [V2: Validation and Business Logic](#v2-validation-and-business-logic)
+    - [V2.1 Validation and Business Logic Documentation](#v21-validation-and-business-logic-documentation)
+    - [V2.2 Input Validation](#v22-input-validation)
+    - [V2.3 Business Logic Security](#v23-business-logic-security)
+    - [V2.4 Anti-automation](#v24-anti-automation)
+- [V3: Web Frontend Security](#v3-web-frontend-security)
+    - [V3.1 Web Frontend Security Documentation](#v31-web-frontend-security-documentation)
+    - [V3.2 Unintended Content Interpretation](#v32-unintended-content-interpretation)
+    - [V3.3 Cookie Setup](#v33-cookie-setup)
+    - [V3.4 Browser Security Mechanism Headers](#v34-browser-security-mechanism-headers)
+    - [V3.5 Browser Origin Separation](#v35-browser-origin-separation)
+    - [V3.6 External Resource Integrity](#v36-external-resource-integrity)
+    - [V3.7 Other Browser Security Considerations](#v37-other-browser-security-considerations)
+- [V4: API and Web Service](#v4-api-and-web-service)
+    - [V4.1 Generic Web Service Security](#v41-generic-web-service-security)
+    - [V4.2 HTTP Message Structure Validation](#v42-http-message-structure-validation)
+    - [V4.3 GraphQL](#v43-graphql)
+    - [V4.4 WebSocket](#v43-websocket)
+- [V5: File Handling](#v5-file-handling)
+    - [V5.1 File Handling Documentation](#v51-file-handling-documentation)
+    - [V5.2 File Upload and Content](#v52-file-upload-and-content)
+    - [V5.3 File Storage](#v53-file-storage)
+    - [V5.4 File Download](#v54-file-download)
+- [V6: Authentication](#v6-authentication)
+    - [V6.1 Authentication Documentationn](#v61-authentication-documentation)
+    - [V6.2 Password Security](#v62-password-security)
+    - [V6.3 General Authentication Security](#v63-general-authentication-security)
+    - [V6.4 Authentication Factor Lifecycle and Recovery](#v64-authentication-factor-lifecycle-and-recovery)
+    - [V6.5 General Multi-factor authentication requirements](#v65-general-multi-factor-authentication-requirements)
+    - [V6.6 Out-of-Band authentication mechanisms](#v66-out-of-band-authentication-mechanisms)
+    - [V6.7 Cryptographic authentication mechanism](#v67-cryptographic-authentication-mechanism)
+    - [V6.8 Authentication with an Identity Provider](#v68-authentication-with-an-identity-provider)
+- [V7: Session Management](#v7-session-management)
+    - [V7.1 Session Management Documentations](#v71-session-management-documentations)
+    - [V7.2 Fundamental Session Management Security](#v72-fundamental-session-management-security)
+    - [V7.3 Session Timeout](#v73-session-timeout)
+    - [V7.4 Session Termination](#v74-session-termination)
+    - [V7.5 Defenses Against Session Abuse](#v75-defenses-against-session-abuse)
+    - [V7.6 Federated Re-authentication](#v76-federated-re-authentication)
+- [V8: Authorization](#v8-authorization)
+    - [V8.1 Authorization Documentation](#v81-authorization-documentation)
+    - [V8.2 General Authorization Design](#v82-general-authorization-design)
+    - [V8.3 Operation Level Authorization](#v83-operation-level-authorization)
+    - [V8.4 Other Authorization Considerations](#v84-other-authorization-considerations)
+- [V9: Self-contained Tokens](#v9-self-contained-tokens)
+    - [V9.1 Token source and integrity](#v91-token-source-and-integrity)
+    - [V9.2 Token content](#v92-token-content)
+- [V10: OAuth and OIDC](#v10-oauth-and-oidc)
+    - [V10.1 Generic OAuth and OIDC Security](#v101-generic-oauth-and-oidc-security)
+    - [V10.2 OAuth Client](#v102-oauth-client)
+    - [V10.3 OAuth Resource Server](#v103-oauth-resource-server)
+    - [V10.4 OAuth Authorization Server](#v104-oauth-authorization-server)
+    - [V10.5 OIDC Client](#v105-oidc-client)
+    - [V10.6 OpenID Provider](#v106-openid-provider)
+    - [V10.7 Consent Management](#v107-consent-management)
+- [V11: Cryptography](#v11-cryptography)
+    - [V11.1 Cryptographic Inventory and Documentation](#v111-cryptographic-inventory-and-documentation)
+    - [V11.2 Secure Cryptography Implementation](#v112-secure-cryptography-implementation)
+    - [V11.3 Encryption Algorithms](#v113-encryption-algorithms)
+    - [V11.4 Hashing and Hash-based Functions](#v114-hashing-and-hash-based-functions)
+    - [V11.5 Random Values](#v115-random-values)
+    - [V11.6 Public Key Cryptography](#v116-public-key-cryptography)
+    - [V11.7 In-Use Data Cryptography](#v117-in-use-data-cryptography)
+- [V12: Secure Communication](#v12-secure-communication)
+    - [V12.1 General TLS Security Guidance](#v121-general-tls-security-guidance)
+    - [V12.2 HTTPS Communication with External Facing Services](#v122-https-communication-with-external-facing-services)
+    - [V12.3 General Service to Service Communication Security](#v123-general-service-to-service-communication-security)
+- [V13: Configuration](#v13-configuration)
+    - [V13.1 Configuration Documentation](#v131-configuration-documentation)
+    - [V13.2 Backend Communication Configuration](#v132-backend-communication-configuration)
+    - [V13.3 Secret Management](#v133-secret-management)
+    - [V13.4 Unintended Information Leakage](#v134-unintended-information-leakage)
+- [V14: Data Protection](#v14-data-protection)
+    - [V14.1 Data Protection Documentation](#v141-data-protection-documentation)
+    - [V14.2 General Data Protection](#v142-general-data-protection)
+    - [V14.3 Client-side Data Protection](#v143-client-side-data-protection)
+- [V15: Secure Coding and Architecture](#v15-secure-coding-and-architecture)
+    - [V15.1: Secure Coding and Architecture Documentation](#v151-secure-coding-and-architecture-documentation)
+    - [V15.2: Security Architecture and Dependencies](#v152-security-architecture-and-dependencies)
+    - [V15.3: Defensive Coding](#v153-defensive-coding)
+    - [V15.4: Safe Concurrency](#v154-safe-concurrency)
+- [V16: Security Logging and Error Handling](#v16-security-logging-and-error-handling)
+    - [V16.1: Security Logging Documentation](#v161-security-logging-documentation)
+    - [V16.2: General Logging](#v162-general-logging)
+    - [V16.3: Security Events](#v163-security-events)
+    - [V16.4: Log Protection](#v164-log-protection)
+    - [V16.5: Error Handling](#v165-error-handling)
+- [V17: WebRTC](#v17-webrtc)
+    - [V17.1: TURN Server](#v171-turn-server)
+    - [V17.2: Media](#v172-media)
+    - [V17.3: Signaling](#v173-signaling)
 
 ## Objective
 
 The objective of this index is to help an OWASP [Application Security Verification Standard](https://owasp.org/www-project-application-security-verification-standard/) (ASVS) user clearly identify which cheat sheets are useful for each section during his or her usage of the ASVS.
 
-This index is based on the version 4.0.x of the ASVS.
+This index is based on the version 5.0.x of the ASVS. For ASVS 4.0.x, please go to the [DEPRECATED: ASVS 4.0 Index](cheatsheets/IndexASVS4.m).
 
-## V1: Architecture, Design and Threat Modeling Requirements
 
-### V1.1 Secure Software Development Lifecycle Requirements
+## V1: Encoding and Sanitization
 
-[Threat Modeling Cheat Sheet](cheatsheets/Threat_Modeling_Cheat_Sheet.md)
+### V1.1 Encoding and Sanitization Architecture
 
-[Abuse Case Cheat Sheet](cheatsheets/Abuse_Case_Cheat_Sheet.md)
+[Cross Site Scripting Prevention Cheat Sheet](cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md)
 
-[Attack Surface Analysis Cheat Sheet](cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.md)
+### V1.2 Injection Prevention
 
-### V1.2 Authentication Architectural Requirements
+[Bean Validation Cheat Sheet](cheatsheets/Bean_Validation_Cheat_Sheet.md)
 
-None.
-
-### V1.3 Session Management Architectural Requirements
-
-None.
-
-### V1.4 Access Control Architectural Requirements
-
-[Docker Security Cheat Sheet](cheatsheets/Docker_Security_Cheat_Sheet.md)
-
-### V1.5 Input and Output Architectural Requirements
-
-[Abuse Case Cheat Sheet](cheatsheets/Abuse_Case_Cheat_Sheet.md)
-
-[Deserialization Cheat Sheet](cheatsheets/Deserialization_Cheat_Sheet.md)
-
-### V1.6 Cryptographic Architectural Requirements
-
-[Cryptographic Storage Cheat Sheet](cheatsheets/Cryptographic_Storage_Cheat_Sheet.md)
-
-[Key Management Cheat Sheet](cheatsheets/Key_Management_Cheat_Sheet.md)
-
-### V1.7 Errors, Logging and Auditing Architectural Requirements
-
-[Logging Cheat Sheet](cheatsheets/Logging_Cheat_Sheet.md)
-
-### V1.8 Data Protection and Privacy Architectural Requirements
-
-[Abuse Case Cheat Sheet](cheatsheets/Abuse_Case_Cheat_Sheet.md)
-
-[User Privacy Protection Cheat Sheet](cheatsheets/User_Privacy_Protection_Cheat_Sheet.md)
-
-### V1.9 Communications Architectural Requirements
-
-[Transport Layer Security Cheat Sheet](cheatsheets/Transport_Layer_Security_Cheat_Sheet.md)
-
-### V1.10 Malicious Software Architectural Requirements
-
-[Third Party Javascript Management Cheat Sheet](cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.md)
-
-[Virtual Patching Cheat Sheet](cheatsheets/Virtual_Patching_Cheat_Sheet.md)
-
-### V1.11 Business Logic Architectural Requirements
-
-[Abuse Case Cheat Sheet](cheatsheets/Abuse_Case_Cheat_Sheet.md)
-
-### V1.12 Secure File Upload Architectural Requirements
-
-None.
-
-### V1.13 API Architectural Requirements
-
-[REST Security Cheat Sheet](cheatsheets/REST_Security_Cheat_Sheet.md)
-
-### V1.14 Configuration Architectural Requirements
-
-None.
-
-## V2: Authentication Verification Requirements
-
-### V2.1 Password Security Requirements
-
-[Choosing and Using Security Questions Cheat Sheet](cheatsheets/Choosing_and_Using_Security_Questions_Cheat_Sheet.md)
-
-[Forgot Password Cheat Sheet](cheatsheets/Forgot_Password_Cheat_Sheet.md)
-
-[Credential Stuffing Prevention Cheat Sheet](cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.md)
-
-### V2.2 General Authenticator Requirements
-
-[Authentication Cheat Sheet](cheatsheets/Authentication_Cheat_Sheet.md)
-
-[Transport Layer Security Cheat Sheet](cheatsheets/Transport_Layer_Security_Cheat_Sheet.md)
-
-### V2.3 Authenticator Lifecycle Requirements
-
-None.
-
-### V2.4 Credential Storage Requirements
-
-[Password Storage Cheat Sheet](cheatsheets/Password_Storage_Cheat_Sheet.md)
-
-### V2.5 Credential Recovery Requirements
-
-[Choosing and Using Security Questions Cheat Sheet](cheatsheets/Choosing_and_Using_Security_Questions_Cheat_Sheet.md)
-
-[Forgot Password Cheat Sheet](cheatsheets/Forgot_Password_Cheat_Sheet.md)
-
-### V2.6 Look-up Secret Verifier Requirements
-
-None.
-
-### V2.7 Out of Band Verifier Requirements
-
-[Forgot Password Cheat Sheet](cheatsheets/Forgot_Password_Cheat_Sheet.md)
-
-### V2.8 Single or Multi Factor One Time Verifier Requirements
-
-None.
-
-### V2.9 Cryptographic Software and Devices Verifier Requirements
-
-[Cryptographic Storage Cheat Sheet](cheatsheets/Cryptographic_Storage_Cheat_Sheet.md)
-
-[Key Management Cheat Sheet](cheatsheets/Key_Management_Cheat_Sheet.md)
-
-### V2.10 Service Authentication Requirements
-
-None.
-
-## V3: Session Management Verification Requirements
-
-### V3.1 Fundamental Session Management Requirements
-
-None.
-
-### V3.2 Session Binding Requirements
-
-[Session Management Cheat Sheet](cheatsheets/Session_Management_Cheat_Sheet.md)
-
-[Transport Layer Security Cheat Sheet](cheatsheets/Transport_Layer_Security_Cheat_Sheet.md)
-
-### V3.3 Session Logout and Timeout Requirements
-
-[Session Management Cheat Sheet](cheatsheets/Session_Management_Cheat_Sheet.md)
-
-### V3.4 Cookie-based Session Management
-
-[Session Management Cheat Sheet](cheatsheets/Session_Management_Cheat_Sheet.md)
-
-[Cross-Site Request Forgery Prevention Cheat Sheet](cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md)
-
-### V3.5 Token-based Session Management
-
-[JSON Web Token Cheat Sheet for Java](cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.md)
-
-[REST Security Cheat Sheet](cheatsheets/REST_Security_Cheat_Sheet.md)
-
-### V3.6 Re-authentication from a Federation or Assertion
-
-None.
-
-### V3.7 Defenses Against Session Management Exploits
-
-[Session Management Cheat Sheet](cheatsheets/Session_Management_Cheat_Sheet.md)
-
-[Transaction Authorization Cheat Sheet](cheatsheets/Transaction_Authorization_Cheat_Sheet.md)
-
-## V4: Access Control Verification Requirements
-
-### V4.1 General Access Control Design
-
-[Access Control Cheat Sheet](cheatsheets/Access_Control_Cheat_Sheet.md)
-
-[Authorization Testing Automation](cheatsheets/Authorization_Testing_Automation_Cheat_Sheet.md)
-
-### V4.2 Operation Level Access Control
-
-[Insecure Direct Object Reference Prevention Cheat Sheet](cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md)
-
-[Cross-Site Request Forgery Prevention Cheat Sheet](cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md)
-
-[Authorization Testing Automation](cheatsheets/Authorization_Testing_Automation_Cheat_Sheet.md)
-
-### V4.3 Other Access Control Considerations
-
-[REST Assessment Cheat Sheet](cheatsheets/REST_Assessment_Cheat_Sheet.md)
-[Multifactor Authentication Cheat Sheet](cheatsheets/Multifactor_Authentication_Cheat_Sheet.md)
-
-## V5: Validation, Sanitization and Encoding Verification Requirements
-
-### V5.1 Input Validation Requirements
-
-[Mass Assignment Cheat Sheet](cheatsheets/Mass_Assignment_Cheat_Sheet.md)
-
-[Input Validation Cheat Sheet](cheatsheets/Input_Validation_Cheat_Sheet.md)
-
-### V5.2 Sanitization and Sandboxing Requirements
-
-[Server Side Request Forgery Prevention Cheat Sheet](cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md)
-
-[XSS Prevention Cheat Sheet](cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md)
+[Cross Site Scripting Prevention Cheat Sheet](cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md)
 
 [DOM based XSS Prevention Cheat Sheet](cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.md)
 
-[Unvalidated Redirects and Forwards Cheat Sheet](cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md)
-
-### V5.3 Output encoding and Injection Prevention Requirements
-
-[XSS Prevention Cheat Sheet](cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md)
-
-[DOM based XSS Prevention Cheat Sheet](cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.md)
-
-[HTML5 Security Cheat Sheet](cheatsheets/HTML5_Security_Cheat_Sheet.md)
+[File Upload Cheat Sheet](cheatsheets/File_Upload_Cheat_Sheet.md)
 
 [Injection Prevention Cheat Sheet](cheatsheets/Injection_Prevention_Cheat_Sheet.md)
 
@@ -308,198 +130,524 @@ None.
 
 [Input Validation Cheat Sheet](cheatsheets/Input_Validation_Cheat_Sheet.md)
 
-[LDAP Injection Prevention Cheat Sheet](cheatsheets/LDAP_Injection_Prevention_Cheat_Sheet.md)
+[LDAP Injection Prevention](cheatsheets/LDAP_Injection_Prevention_Cheat_Sheet.md)
 
-[OS Command Injection Defense Cheat Sheet](cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.md)
-
-[Protect File Upload Against Malicious File](cheatsheets/File_Upload_Cheat_Sheet.md)
+[OS Command Injection Defense](cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.md)
 
 [Query Parameterization Cheat Sheet](cheatsheets/Query_Parameterization_Cheat_Sheet.md)
 
-[SQL Injection Prevention Cheat Sheet](cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.md)
-
-[Unvalidated Redirects and Forwards Cheat Sheet](cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md)
-
-[Bean Validation Cheat Sheet](cheatsheets/Bean_Validation_Cheat_Sheet.md)
-
-[XXE Prevention Cheat Sheet](cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md)
+[SQL Injection Prevention](cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.md)
 
 [XML Security Cheat Sheet](cheatsheets/XML_Security_Cheat_Sheet.md)
 
-### V5.4 Memory, String, and Unmanaged Code Requirements
+[XSS Filter Evasion Cheat Sheet](cheatsheets/XSS_Filter_Evasion_Cheat_Sheet.md)
 
-None.
+[XML External Entity Prevention Cheat Sheet](cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md)
 
-### V5.5 Deserialization Prevention Requirements
+### V1.3 Sanitization
+
+[Cross-Site Request Forgery Prevention Cheat Sheet](cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md)
+
+[Cross Site Scripting Prevention Cheat Sheet](cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md)
+
+[DOM based XSS Prevention Cheat Sheet](cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.md)
+
+[Injection Prevention Cheat Sheet](cheatsheets/Injection_Prevention_Cheat_Sheet.md)
+
+[Injection Prevention Cheat Sheet in Java](cheatsheets/Injection_Prevention_in_Java_Cheat_Sheet.md)
+
+[Input Validation Cheat Sheet](cheatsheets/Input_Validation_Cheat_Sheet.md)
+
+[LDAP Injection Prevention](cheatsheets/LDAP_Injection_Prevention_Cheat_Sheet.md)
+
+[Server Side Request Forgery Prevention Cheat Sheet](cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md)
+
+[XML External Entity Prevention Cheat Sheet](cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md)
+
+### V1.4 Memory, String, and Unmanaged Code
+
+none.
+
+### V1.5 Safe Deserialization
 
 [Deserialization Cheat Sheet](cheatsheets/Deserialization_Cheat_Sheet.md)
 
-[XXE Prevention Cheat Sheet](cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md)
+[Server Side Request Forgery Prevention Cheat Sheet](cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md)
 
 [XML Security Cheat Sheet](cheatsheets/XML_Security_Cheat_Sheet.md)
 
-## V6: Stored Cryptography Verification Requirements
+[XML External Entity Prevention Cheat Sheet](cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md)
 
-### V6.1 Data Classification
+## V2: Validation and Business Logic
 
-[Abuse Case Cheat Sheet](cheatsheets/Abuse_Case_Cheat_Sheet.md)
-
-[User Privacy Protection Cheat Sheet](cheatsheets/User_Privacy_Protection_Cheat_Sheet.md)
-
-### V6.2 Algorithms
-
-[Cryptographic Storage Cheat Sheet](cheatsheets/Cryptographic_Storage_Cheat_Sheet.md)
-
-[Key Management Cheat Sheet](cheatsheets/Key_Management_Cheat_Sheet.md)
-
-### V6.3 Random Values
-
-None.
-
-### V6.4 Secret Management
-
-[Key Management Cheat Sheet](cheatsheets/Key_Management_Cheat_Sheet.md)
-
-## V7: Error Handling and Logging Verification Requirements
-
-### V7.1 Log Content Requirements
-
-[Logging Cheat Sheet](cheatsheets/Logging_Cheat_Sheet.md)
-
-### V7.2 Log Processing Requirements
-
-[Logging Cheat Sheet](cheatsheets/Logging_Cheat_Sheet.md)
-
-### V7.3 Log Protection Requirements
-
-[Logging Cheat Sheet](cheatsheets/Logging_Cheat_Sheet.md)
-
-### V7.4 Error Handling
-
-[Error Handling Cheat Sheet](cheatsheets/Error_Handling_Cheat_Sheet.md)
-
-## V8: Data Protection Verification Requirements
-
-### V8.1 General Data Protection
-
-None.
-
-### V8.2 Client-side Data Protection
-
-None.
-
-### V8.3 Sensitive Private Data
-
-None.
-
-## V9: Communications Verification Requirements
-
-### V9.1 Communications Security Requirements
-
-[HTTP Strict Transport Security Cheat Sheet](cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.md)
-
-[Transport Layer Security Cheat Sheet](cheatsheets/Transport_Layer_Security_Cheat_Sheet.md)
-
-### V9.2 Server Communications Security Requirements
-
-[Transport Layer Security Cheat Sheet](cheatsheets/Transport_Layer_Security_Cheat_Sheet.md)
-
-## V10: Malicious Code Verification Requirements
-
-### V10.1 Code Integrity Controls
-
-[Third Party Javascript Management Cheat Sheet](cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.md)
-
-### V10.2 Malicious Code Search
-
-None.
-
-### V10.3 Deployed Application Integrity Controls
-
-[Docker Security Cheat Sheet](cheatsheets/Docker_Security_Cheat_Sheet.md)
-
-## V11: Business Logic Verification Requirements
-
-### V11.1 Business Logic Security Requirements
+### V2.1 Validation and Business Logic Documentation
 
 [Abuse Case Cheat Sheet](cheatsheets/Abuse_Case_Cheat_Sheet.md)
 
-## V12: File and Resources Verification Requirements
+### V2.2 Input Validation
 
-### V12.1 File Upload Requirements
+[Input Validation Cheat Sheet](cheatsheets/Input_Validation_Cheat_Sheet.md)
 
-[Protect File Upload Against Malicious File](cheatsheets/File_Upload_Cheat_Sheet.md)
-
-### V12.2 File Integrity Requirements
-
-[Protect File Upload Against Malicious File](cheatsheets/File_Upload_Cheat_Sheet.md)
-
-[Third Party Javascript Management Cheat Sheet](cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.md)
-
-### V12.3 File execution Requirements
-
-None.
-
-### V12.4 File Storage Requirements
-
-None.
-
-### V12.5 File Download Requirements
-
-None.
-
-### V12.6 SSRF Protection Requirements
-
-[Server Side Request Forgery Prevention Cheat Sheet](cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md)
-
-[Unvalidated Redirects and Forwards Cheat Sheet](cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md)
-
-## V13: API and Web Service Verification Requirements
-
-### V13.1 Generic Web Service Security Verification Requirements
+[Microservices Security Cheat Sheet](cheatsheets/Microservices_Security_Cheat_Sheet.md)
 
 [Web Service Security Cheat Sheet](cheatsheets/Web_Service_Security_Cheat_Sheet.md)
 
-[Server Side Request Forgery Prevention Cheat Sheet](cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md)
+### V2.3 Business Logic Security
 
-### V13.2 RESTful Web Service Verification Requirements
+[Abuse Case Cheat Sheet](cheatsheets/Abuse_Case_Cheat_Sheet.md)
+
+### V2.4 Anti-automation
+
+[Denial of Service Cheat Sheet](cheatsheets/Denial_of_Service_Cheat_Sheet.md)
+
+## V3: Web Frontend Security
+
+### V3.1 Web Frontend Security Documentation
+
+[Content Security Policy Cheat Sheet](cheatsheets/Content_Security_Policy_Cheat_Sheet.md)
+
+[Cross-Site Request Forgery Prevention Cheat Sheet](cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md)
+
+[HTTP Strict Transport Security Cheat Sheet](cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.md)
+
+### V3.2 Unintended Content Interpretation
+
+[Cross-Site Request Forgery Prevention Cheat Sheet](cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md)
+
+[DOM Clobbering Prevention Cheat Sheet](cheatsheets/DOM_Clobbering_Prevention_Cheat_Sheet.md)
+
+[HTML5 Security Cheat Sheet](cheatsheets/HTML5_Security_Cheat_Sheet.md)
+
+[Third Party Javascript Management Cheat Sheet](cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.md)
+
+### V3.3 Cookie Setup
+
+[Cross-Site Request Forgery Prevention Cheat Sheet](cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md)
+
+[Session Management Cheat Sheet](cheatsheets/Session_Management_Cheat_Sheet.md)
+
+[Transport Layer Security Cheat Sheet](cheatsheets/Transport_Layer_Security_Cheat_Sheet.md)
+
+### V3.4 Browser Security Mechanism Headers
+
+[Cross-Site Request Forgery Prevention Cheat Sheet](cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md)
+
+[HTML5 Security Cheat Sheet](cheatsheets/HTML5_Security_Cheat_Sheet.md)
+
+[HTTP Strict Transport Security Cheat Sheet](cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.md)
+
+### V3.5 Browser Origin Separation
+
+[Cross-Site Request Forgery Prevention Cheat Sheet](cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md)
+
+[HTML5 Security Cheat Sheet](cheatsheets/HTML5_Security_Cheat_Sheet.md)
+
+### V3.6 External Resource Integrity
+
+[Third Party Javascript Management Cheat Sheet](cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.md)
+
+### V3.7 Other Browser Security Considerations
+
+[Cross-Site Request Forgery Prevention Cheat Sheet](cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md)
+
+[HTTP Strict Transport Security Cheat Sheet](cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.md)
+
+[Third Party Javascript Management Cheat Sheet](cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.md)
+
+[Unvalidated Redirects and Forwards Cheat Sheet](cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md)
+
+## V4: API and Web Service
+
+### V4.1 Generic Web Service Security
+
+[Cross-Site Request Forgery Prevention Cheat Sheet](cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md)
 
 [REST Assessment Cheat Sheet](cheatsheets/REST_Assessment_Cheat_Sheet.md)
 
 [REST Security Cheat Sheet](cheatsheets/REST_Security_Cheat_Sheet.md)
 
-[Cross-Site Request Forgery Prevention Cheat Sheet](cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md)
+[Transport Layer Security Cheat Sheet](cheatsheets/Transport_Layer_Security_Cheat_Sheet.md)
+
+[Web Service Security Cheat Sheet](cheatsheets/Web_Service_Security_Cheat_Sheet.md)
+
+### V4.2 HTTP Message Structure Validation
+
+[REST Security Cheat Sheet](cheatsheets/REST_Security_Cheat_Sheet.md)
+
+[Web Service Security Cheat Sheet](cheatsheets/Web_Service_Security_Cheat_Sheet.md)
+
+### V4.3 GraphQL
+
+[REST Security Cheat Sheet](cheatsheets/GraphQL_Cheat_Sheet.md)
+
+### V4.4 WebSocket
+
+[REST Security Cheat Sheet](cheatsheets/WebSocket_Security_Cheat_Sheet.md)
 
 [Transport Layer Security Cheat Sheet](cheatsheets/Transport_Layer_Security_Cheat_Sheet.md)
 
-### V13.3 SOAP Web Service Verification Requirements
+## V5: File Handling
 
-[XML Security Cheat Sheet](cheatsheets/XML_Security_Cheat_Sheet.md)
+### V5.1 File Handling Documentation
 
-### V13.4 GraphQL and other Web Service Data Layer Security Requirements
+[Input Validation Cheat Sheet](cheatsheets/Input_Validation_Cheat_Sheet.md)
 
-None.
+[File Upload Cheat Sheet](cheatsheets/File_Upload_Cheat_Sheet.md)
 
-## V14: Configuration Verification Requirements
+### V5.2 File Upload and Content
 
-### V14.1 Build
+[Input Validation Cheat Sheet](cheatsheets/Input_Validation_Cheat_Sheet.md)
+
+[File Upload Cheat Sheet](cheatsheets/File_Upload_Cheat_Sheet.md)
+
+### V5.3 File Storage
+
+[Input Validation Cheat Sheet](cheatsheets/Input_Validation_Cheat_Sheet.md)
+
+[Server Side Request Forgery Prevention Cheat Sheet](cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md)
+
+### V5.4 File Download
+
+[File Upload Cheat Sheet](cheatsheets/File_Upload_Cheat_Sheet.md)
+
+## V6: Authentication
+
+### V6.1 Authentication Documentation
+
+[Credential Stuffing Prevention Cheat Sheet](cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.md)
+
+### V6.2 Password Security
+
+[Authentication Cheat Sheet](cheatsheets/Authentication_Cheat_Sheet.md)
+
+### V6.3 General Authentication Security
+
+[Authentication Cheat Sheet](cheatsheets/Authentication_Cheat_Sheet.md)
+
+[Credential Stuffing Prevention Cheat Sheet](cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.md)
+
+[Forgot Password Cheat Sheet](cheatsheets/Forgot_Password_Cheat_Sheet.md)
+
+### V6.4 Authentication Factor Lifecycle and Recovery
+
+[Choosing and Using Security Questions Cheat Sheet](cheatsheets/Choosing_and_Using_Security_Questions_Cheat_Sheet.md)
+
+[Forgot Password Cheat Sheet](cheatsheets/Forgot_Password_Cheat_Sheet.md)
+
+[Multifactor Authentication Cheat Sheet](cheatsheets/Multifactor_Authentication_Cheat_Sheet.md)
+
+### V6.5 General Multi-factor authentication requirements
+
+[Authentication Cheat Sheet](cheatsheets/Authentication_Cheat_Sheet.md)
+
+[Multifactor Authentication Cheat Sheet](cheatsheets/Multifactor_Authentication_Cheat_Sheet.md)
+
+[Password Storage Cheat Sheet](cheatsheets/Password_Storage_Cheat_Sheet.md)
+
+[Transaction Authorization Cheat Sheet](cheatsheets/Transaction_Authorization_Cheat_Sheet.md)
+
+### V6.6 Out-of-Band authentication mechanisms
+
+[Forgot Password Cheat Sheet](cheatsheets/Forgot_Password_Cheat_Sheet.md)
+
+[Multifactor Authentication Cheat Sheet](cheatsheets/Multifactor_Authentication_Cheat_Sheet.md)
+
+### V6.7 Cryptographic authentication mechanism
+
+[Authentication Cheat Sheet](cheatsheets/Authentication_Cheat_Sheet.md)
+
+[Multifactor Authentication Cheat Sheet](cheatsheets/Multifactor_Authentication_Cheat_Sheet.md)
+
+### V6.8 Authentication with an Identity Provider
+
+[Authentication Cheat Sheet](cheatsheets/Authentication_Cheat_Sheet.md)
+
+## V7: Session Management
+
+[Session Management Cheat Sheet](cheatsheets/Session_Management_Cheat_Sheet.md)
+
+### V7.1 Session Management Documentation
+
+[Session Management Cheat Sheet](cheatsheets/Session_Management_Cheat_Sheet.md)
+
+### V7.2 Fundamental Session Management Security
+
+[Session Management Cheat Sheet](cheatsheets/Session_Management_Cheat_Sheet.md)
+
+### V7.3 Session Timeout
+
+[Session Management Cheat Sheet](cheatsheets/Session_Management_Cheat_Sheet.md)
+
+### V7.4 Session Termination
+
+[Session Management Cheat Sheet](cheatsheets/Session_Management_Cheat_Sheet.md)
+
+### V7.5 Defenses Against Session Abuse
+
+[Session Management Cheat Sheet](cheatsheets/Session_Management_Cheat_Sheet.md)
+
+### V7.6 Federated Re-authentication
+
+[Session Management Cheat Sheet](cheatsheets/Session_Management_Cheat_Sheet.md)
+
+## V8: Authorization
+
+### V8.1 Authorization Documentation
+
+[Authorization Cheat Sheet](cheatsheets/Authorization_Cheat_Sheet.md)
+
+[Authorization Testing Automation](cheatsheets/Authorization_Testing_Automation_Cheat_Sheet.md)
+
+### V8.2 General Authorization Design
+
+[Authorization Cheat Sheet](cheatsheets/Authorization_Cheat_Sheet.md)
+
+[Insecure Direct Object Reference Prevention Cheat Sheet](cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.md)
+
+[Session Management Cheat Sheet](cheatsheets/Session_Management_Cheat_Sheet.md)
+
+### V8.3 Operation Level Authorization
+
+[Transaction Authorization Cheat Sheet](cheatsheets/Transaction_Authorization_Cheat_Sheet.md)
+
+### V8.4 Other Authorization Considerations
+
+[Authorization Cheat Sheet](cheatsheets/Authorization_Cheat_Sheet.md)
+
+[Multi-Tenant Application Security Cheat Sheet](cheatsheets/Multi_Tenant_Security_Cheat_Sheet.md)
+
+## V9: Self-contained Tokens
+
+### V9.1 Token source and integrity
+
+[JSON Web Token Cheat Sheet for Java](cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.md)
+
+[SAML Security Cheat Sheet](cheatsheets/SAML_Security_Cheat_Sheet.md)
+
+### V9.2 Token content
+
+[REST Security Cheat Sheet](cheatsheets/REST_Security_Cheat_Sheet.md)
+
+## V10: OAuth and OIDC
+
+### V10.1 Generic OAuth and OIDC Security
+
+[OAuth 2.0 Protocol Cheatsheet](cheatsheets/OAuth2_Cheat_Sheet.md)
+
+### V10.2 OAuth Client
+
+[OAuth 2.0 Protocol Cheatsheet](cheatsheets/OAuth2_Cheat_Sheet.md)
+
+### V10.3 OAuth Resource Server
+
+[OAuth 2.0 Protocol Cheatsheet](cheatsheets/OAuth2_Cheat_Sheet.md)
+
+[Transport Layer Security Cheat Sheet](cheatsheets/Transport_Layer_Security_Cheat_Sheet.md)
+
+### V10.4 OAuth Authorization Server
+
+[OAuth 2.0 Protocol Cheatsheet](cheatsheets/OAuth2_Cheat_Sheet.md)
+
+[Transport Layer Security Cheat Sheet](cheatsheets/Transport_Layer_Security_Cheat_Sheet.md)
+
+[Unvalidated Redirects and Forwards Cheat Sheet](cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md)
+
+### V10.5 OIDC Client
+
+[OAuth 2.0 Protocol Cheatsheet](cheatsheets/OAuth2_Cheat_Sheet.md)
+
+### V10.6 OpenID Provider
+
+[OAuth 2.0 Protocol Cheatsheet](cheatsheets/OAuth2_Cheat_Sheet.md)
+
+### V10.7 Consent Management
+
+[Browser Extension Security Vulnerabilities](cheatsheets/Browser_Extension_Vulnerabilities_Cheat_Sheet.md)
+
+[Logging Cheat Sheet](cheatsheets/Logging_Cheat_Sheet.md)
+
+## V11: Cryptography
+
+### V11.1 Cryptographic Inventory and Documentation
+
+[Cryptographic Storage Cheat Sheet](cheatsheets/Cryptographic_Storage_Cheat_Sheet.md)
+
+[Key Management Cheat Sheet](cheatsheets/Key_Management_Cheat_Sheet.md)
+
+### V11.2 Secure Cryptography Implementation
+
+[Cryptographic Storage Cheat Sheet](cheatsheets/Cryptographic_Storage_Cheat_Sheet.md)
+
+### V11.3 Encryption Algorithms
+
+[Cryptographic Storage Cheat Sheet](cheatsheets/Cryptographic_Storage_Cheat_Sheet.md)
+
+[Key Management Cheat Sheet](cheatsheets/Key_Management_Cheat_Sheet.md)
+
+### V11.4 Hashing and Hash-based Functions
+
+[Password Storage Cheat Sheet](cheatsheets/Password_Storage_Cheat_Sheet.md)
+
+### V11.5 Random Values
+
+[Cryptographic Storage Cheat Sheet](cheatsheets/Cryptographic_Storage_Cheat_Sheet.md)
+
+### V11.6 Public Key Cryptography
+
+[Transport Layer Security Cheat Sheet](cheatsheets/Transport_Layer_Security_Cheat_Sheet.md)
+
+### V11.7 In-Use Data Cryptography
+
+[Key Management Cheat Sheet](cheatsheets/Key_Management_Cheat_Sheet.md)
+
+[Microservices Security Cheat Sheet](cheatsheets/Microservices_Security_Cheat_Sheet.md)
+
+[Secrets Management Cheat Sheet](cheatsheets/Secrets_Management_Cheat_Sheet.md)
+
+## V12: Secure Communication
+
+### V12.1 General TLS Security Guidance
+
+[Transport Layer Security Cheat Sheet](cheatsheets/Transport_Layer_Security_Cheat_Sheet.md)
+
+### V12.2 HTTPS Communication with External Facing Services
+
+[Transport Layer Security Cheat Sheet](cheatsheets/Transport_Layer_Security_Cheat_Sheet.md)
+
+### V12.3 General Service to Service Communication Security
+
+[Transport Layer Security Cheat Sheet](cheatsheets/Transport_Layer_Security_Cheat_Sheet.md)
+
+## V13: Configuration
+
+### V13.1 Configuration Documentation
+
+[Server Side Request Forgery Prevention Cheat Sheet](cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md)
+
+### V13.2 Backend Communication Configuration
 
 [Docker Security Cheat Sheet](cheatsheets/Docker_Security_Cheat_Sheet.md)
 
-### V14.2 Dependency
+[Server Side Request Forgery Prevention Cheat Sheet](cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md)
 
-[Docker Security Cheat Sheet](cheatsheets/Docker_Security_Cheat_Sheet.md)
+### V13.3 Secret Management
+
+[Cryptographic Storage Cheat Sheet](cheatsheets/Cryptographic_Storage_Cheat_Sheet.md)
+
+[Key Management Cheat Sheet](cheatsheets/Key_Management_Cheat_Sheet.md)
+
+### V13.4 Unintended Information Leakage
+
+[Django Cheat Sheet](cheatsheets/Laravel_Cheat_Sheet.md)
+
+[GraphQL Cheat Sheet](cheatsheets/Laravel_Cheat_Sheet.md)
+
+[Laravel Cheat Sheet](cheatsheets/Laravel_Cheat_Sheet.md)
+
+[NPM Security best practices](cheatsheets/NPM_Security_Cheat_Sheet.md)
+
+[Symfony Cheat Sheet](cheatsheets/Symfony_Cheat_Sheet.md)
+
+## V14: Data Protection
+
+### V14.1 Data Protection Documentation
+
+[Abuse Case Cheat Sheet](cheatsheets/Abuse_Case_Cheat_Sheet.md)
+
+[Cryptographic Storage Cheat Sheet](cheatsheets/Cryptographic_Storage_Cheat_Sheet.md)
+
+[User Privacy Protection Cheat Sheet](cheatsheets/User_Privacy_Protection_Cheat_Sheet.md)
+
+### V14.2 General Data Protection
+
+[HTML5 Security Cheat Sheet](cheatsheets/HTML5_Security_Cheat_Sheet.md)
+
+[User Privacy Protection Cheat Sheet](cheatsheets/User_Privacy_Protection_Cheat_Sheet.md)
+
+### V14.3 Client-side Data Protection
+
+[HTML5 Security Cheat Sheet](cheatsheets/HTML5_Security_Cheat_Sheet.md)
+
+## V15: Secure Coding and Architecture
+
+### V15.1: Secure Coding and Architecture Documentation
+
+[Abuse Case Cheat Sheet](cheatsheets/Abuse_Case_Cheat_Sheet.md)
+
+[Attack Surface Analysis Cheat Sheet](cheatsheets/Attack_Surface_Analysis_Cheat_Sheet.md)
+
+[Dependency Graph & SBOM Best Practices Cheat Sheet](cheatsheets/Dependency_Graph_SBOM_Cheat_Sheet.md)
+
+[Software Supply Chain Security](cheatsheets/Software_Supply_Chain_Security_Cheat_Sheet.md)
+
+[Third Party Javascript Management Cheat Sheet](cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.md)
+
+[Threat Modeling Cheat Sheet](cheatsheets/Threat_Modeling_Cheat_Sheet.md)
+
+### V15.2: Security Architecture and Dependencies
+
+[Software Supply Chain Security](cheatsheets/Software_Supply_Chain_Security_Cheat_Sheet.md)
+
+[Third Party Javascript Management Cheat Sheet](cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.md)
+
+[Virtual Patching Cheat Sheet](cheatsheets/Virtual_Patching_Cheat_Sheet.md)
 
 [Vulnerable Dependency Management Cheat Sheet](cheatsheets/Vulnerable_Dependency_Management_Cheat_Sheet.md)
 
-### V14.3 Unintended Security Disclosure Requirements
+### V15.3: Defensive Coding
+
+[Mass Assignment Cheat Sheet](cheatsheets/Mass_Assignment_Cheat_Sheet.md)
+
+[Prototype Pollution Prevention Cheat Sheet](cheatsheets/Prototype_Pollution_Prevention_Cheat_Sheet.md)
+
+[Unvalidated Redirects and Forwards Cheat Sheet](cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.md)
+
+### V15.4: Safe Concurrency
+
+[Secure Code Review Cheat Sheet](cheatsheets/Secure_Code_Review_Cheat_Sheet.md)
+
+[Transaction Authorization Cheat Sheet](cheatsheets/Transaction_Authorization_Cheat_Sheet.md)
+
+## V16: Security Logging and Error Handling
+
+### V16.1: Security Logging Documentation
+
+[Logging Cheat Sheet](cheatsheets/Logging_Cheat_Sheet.md)
+
+[Logging Vocabulary Cheat Sheet](cheatsheets/Logging_Vocabulary_Cheat_Sheet.md)
+
+### V16.2: General Logging
+
+[Logging Cheat Sheet](cheatsheets/Logging_Cheat_Sheet.md)
+
+[Session Management Cheat Sheet](cheatsheets/Session_Management_Cheat_Sheet.md)
+
+### V16.3: Security Events
+
+[Authorization Cheat Sheet](cheatsheets/Authorization_Cheat_Sheet.md)
+
+[Logging Cheat Sheet](cheatsheets/Logging_Cheat_Sheet.md)
+
+[Logging Vocabulary Cheat Sheet](cheatsheets/Logging_Vocabulary_Cheat_Sheet.md)
+
+### V16.4: Log Protection
+
+[Logging Cheat Sheet](cheatsheets/Logging_Cheat_Sheet.md)
+
+### V16.5: Error Handling
 
 [Error Handling Cheat Sheet](cheatsheets/Error_Handling_Cheat_Sheet.md)
 
-### V14.4 HTTP Security Headers Requirements
+## V17: WebRTC
 
-[Content Security Policy Cheat Sheet](cheatsheets/Content_Security_Policy_Cheat_Sheet.md)
+### V17.1 TURN Server
 
-### V14.5 Validate HTTP Request Header Requirements
+none.
 
-None.
+## V17.2 Media
+
+[Transport Layer Security Cheat Sheet](cheatsheets/Transport_Layer_Security_Cheat_Sheet.md)
+
+## V17.3 Signaling
+
+none.
