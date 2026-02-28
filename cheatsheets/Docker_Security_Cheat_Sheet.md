@@ -135,7 +135,7 @@ In Kubernetes environments, [Network Policies](https://kubernetes.io/docs/concep
 
 [UFW (Uncomplicated Firewall)](https://help.ubuntu.com/community/UFW) and [CSF (ConfigServer Security & Firewall)](https://configserver.com/cp/csf.html) are popular host-based firewalls for Linux. A common misconception is that firewall rules protect all inbound traffic — including traffic destined for Docker containers. However, **Docker manages its own `iptables` and `nftables` rules directly and bypasses these firewalls entirely**.
 
-When you publish a port with `-p 8000:8000`, Docker inserts `iptables` rules that open that port to **all interfaces and all source addresses**, regardless of any explicit firewall `DENY` rules you may have set. This can unintentionally expose container services to the public internet.
+When you publish a port with `-p 8000:8000`, Docker inserts `iptables` rules that open that port to **all interfaces and all source addresses**, and these rules are typically accepted before explicit firewall `DENY` rules are applied. As a result, traffic may be allowed through regardless of any `DENY` rules you have set, which can unintentionally expose container services to the public internet.
 
 #### Recommended Mitigations
 
