@@ -19,7 +19,7 @@ HSTS addresses the following threats:
 
 ## Examples
 
-Simple example, using a long (2 years = 31536000 seconds) max-age. This example is dangerous since it lacks `includeSubDomains`:
+Simple example, using a long (2 years = 63072000 seconds) max-age. This example is dangerous since it lacks `includeSubDomains`:
 
 `Strict-Transport-Security: max-age=63072000`
 
