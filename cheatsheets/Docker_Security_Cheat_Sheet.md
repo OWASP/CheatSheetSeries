@@ -131,11 +131,11 @@ For detailed guidance on configuring Docker networks for container communication
 
 In Kubernetes environments, [Network Policies](https://kubernetes.io/docs/concepts/services-networking/network-policies/) can be used to define rules that regulate pod interactions within the cluster. These policies provide a robust framework to control how pods communicate with each other and with other network endpoints. Additionally, [Network Policy Editor](https://networkpolicy.io/) simplifies the creation and management of network policies, making it more accessible to define complex networking rules through a user-friendly interface.
 
-### RULE \#5b - Be careful when mapping container ports to the host with UFW
+### RULE \#5a - Be careful when mapping container ports to the host with firewalls like UFW and CSF
 
-[UFW (Uncomplicated Firewall)](https://help.ubuntu.com/community/UFW) is a popular host-based firewall for Linux. A common misconception is that UFW rules protect all inbound traffic — including traffic destined for Docker containers. However, **Docker manages its own `iptables` rules directly and bypasses UFW entirely**.
+[UFW (Uncomplicated Firewall)](https://help.ubuntu.com/community/UFW) and [CSF (ConfigServer Security & Firewall)](https://configserver.com/cp/csf.html) are popular host-based firewalls for Linux. A common misconception is that firewall rules protect all inbound traffic — including traffic destined for Docker containers. However, **Docker manages its own `iptables` and `nftables` rules directly and bypasses these firewalls entirely**.
 
-When you publish a port with `-p 8000:8000`, Docker inserts `iptables` rules that open that port to **all interfaces and all source addresses**, regardless of any `UFW DENY` rules you may have set. This can unintentionally expose container services to the public internet.
+When you publish a port with `-p 8000:8000`, Docker inserts `iptables` rules that open that port to **all interfaces and all source addresses**, regardless of any explicit firewall `DENY` rules you may have set. This can unintentionally expose container services to the public internet.
 
 #### Recommended Mitigations
 
@@ -161,9 +161,9 @@ services:
       - "127.0.0.1:8000:8000"  # safe — localhost only
 ```
 
-**Option 2 — Use `ufw-docker` to enforce UFW rules over Docker networks:**
+**Option 2 — Use `ufw-docker` (or equivalent) to enforce firewall rules over Docker networks:**
 
-The [ufw-docker](https://github.com/chaifeng/ufw-docker) project provides a script and supplemental `iptables` rules that patch Docker's networking to respect UFW policies, allowing you to use standard UFW commands to control traffic to containers:
+For UFW specifically, the [ufw-docker](https://github.com/chaifeng/ufw-docker) project provides a script and supplemental `iptables` rules that patch Docker's networking to respect UFW policies, allowing you to use standard UFW commands to control traffic to containers:
 
 ```bash
 # Install ufw-docker integration rules
