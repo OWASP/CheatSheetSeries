@@ -321,6 +321,7 @@ Sorting applied on the name is an alphabetical one.
 ## [Session Management Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/tree/master/cheatsheets/Session_Management_Cheat_Sheet.md)
 
 - Raul Siles (DinoSec) - [raul@dinosec.com](mailto:raul@dinosec.com)
+- [Gabriel Corona](https://github.com/randomstuff)
 
 ## [Third Party Javascript Management Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/tree/master/cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.md)
 
