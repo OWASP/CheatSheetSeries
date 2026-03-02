@@ -171,6 +171,44 @@ s := grpc.NewServer(
 )
 ```
 
+Limit streaming sessions and message counts to prevent resource exhaustion. Monitor and enforce maximum messages per stream and maximum session duration.
+
+```go
+// Go - Secure streaming with message & duration limits
+func (s *server) StreamData(req *pb.StreamRequest, stream pb.MyService_StreamDataServer) error {
+    const maxMessages = 1000          // Max messages per stream
+    const maxDuration = 2 * time.Minute // Max total session time
+
+    start := time.Now()
+    msgCount := 0
+
+    for {
+        if time.Since(start) > maxDuration {
+            return status.Error(codes.ResourceExhausted, "stream duration exceeded")
+        }
+
+        if msgCount >= maxMessages {
+            return status.Error(codes.ResourceExhausted, "maximum messages exceeded")
+        }
+
+        msg, err := stream.Recv()
+        if err == io.EOF {
+            break
+        }
+        if err != nil {
+            return err
+        }
+
+        // Process message safely
+        processMessage(msg)
+
+        msgCount++
+    }
+
+    return nil
+} 
+```
+
 ## Rate Limiting and Resource Protection
 
 ### Implement Request Rate Limiting
