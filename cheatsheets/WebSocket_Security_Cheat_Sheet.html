@@ -3305,6 +3305,19 @@
 <span class="w">  </span><span class="nx">processBinaryData</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
 <span class="p">});</span>
 </code></pre></div>
+<p><strong>To prevent message replay attacks</strong> include timestamps or nonces in messages and reject duplicates to ensure old messages cannot be maliciously resent.</p>
+<div class="highlight"><pre><span></span><code><span class="nx">ws</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+
+<span class="w">  </span><span class="c1">// Check timestamp or nonce to prevent replay</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">isValidNonce</span><span class="p">(</span><span class="nx">message</span><span class="p">.</span><span class="nx">nonce</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">ws</span><span class="p">.</span><span class="nx">close</span><span class="p">(</span><span class="mf">1008</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Replay detected&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="w">  </span><span class="nx">processMessage</span><span class="p">(</span><span class="nx">message</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div>
 <p><strong>Always use <code>JSON.parse()</code> instead of <code>eval()</code></strong> for JSON processing - <code>eval()</code> enables code execution from untrusted input.</p>
 <div class="highlight"><pre><span></span><code><span class="c1">// Safe</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
