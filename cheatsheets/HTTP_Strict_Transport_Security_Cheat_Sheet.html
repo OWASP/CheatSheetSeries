@@ -2938,10 +2938,10 @@
 </li>
 </ul>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
-<p>Simple example, using a long (1 year = 31536000 seconds) max-age. This example is dangerous since it lacks <code>includeSubDomains</code>:</p>
-<p><code>Strict-Transport-Security: max-age=31536000</code></p>
+<p>Simple example, using a long (2 years = 63072000 seconds) max-age. This example is dangerous since it lacks <code>includeSubDomains</code>:</p>
+<p><code>Strict-Transport-Security: max-age=63072000</code></p>
 <p>This example is useful if all present and future subdomains will be HTTPS. This is a more secure option but will block access to certain pages that can only be served over HTTP:</p>
-<p><code>Strict-Transport-Security: max-age=31536000; includeSubDomains</code></p>
+<p><code>Strict-Transport-Security: max-age=63072000; includeSubDomains</code></p>
 <p>This example is useful if all present and future subdomains will be HTTPS. In this example we set a very short max-age in case of mistakes during initial rollout:</p>
 <p><code>Strict-Transport-Security: max-age=86400; includeSubDomains</code></p>
 <p><strong>Recommended:</strong></p>
@@ -2949,7 +2949,7 @@
 <li>If the site owner would like their domain to be included in the <a href="https://hstspreload.org">HSTS preload list</a> maintained by Chrome (and used by Firefox and Safari), then use the header below.</li>
 <li>Sending the <code>preload</code> directive from your site can have <strong>PERMANENT CONSEQUENCES</strong> and prevent users from accessing your site and any of its subdomains if you find you need to switch back to HTTP. Please read the details at <a href="https://hstspreload.org/#removal">preload removal</a> before sending the header with <code>preload</code>.</li>
 </ul>
-<p><code>Strict-Transport-Security: max-age=31536000; includeSubDomains; preload</code></p>
+<p><code>Strict-Transport-Security: max-age=63072000; includeSubDomains; preload</code></p>
 <p>The <code>preload</code> flag indicates the site owner's consent to have their domain preloaded. The site owner still needs to then go and submit the domain to the list.</p>
 <h2 id="problems">Problems<a class="headerlink" href="#problems" title="Permanent link">&para;</a></h2>
 <p>Site owners can use HSTS to identify users without cookies. This can lead to a significant privacy leak. Take a look <a href="http://www.leviathansecurity.com/blog/the-double-edged-sword-of-hsts-persistence-and-privacy">here</a> for more details.</p>
