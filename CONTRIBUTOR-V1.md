@@ -236,6 +236,10 @@ Sorting applied on the name is an alphabetical one.
 - Jim Manico - [jim.manico@owasp.org](mailto:jim.manico@owasp.org)
 - Katy Anton - [katy.anton@owasp.org](mailto:katy.anton@owasp.org)
 
+## [OAuth2 Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/tree/master/cheatsheets/OAuth2_Cheat_Sheet.md)
+
+- [Gabriel Corona](https://github.com/randomstuff)
+
 ## [PHP Configuration Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/tree/master/cheatsheets/PHP_Configuration_Cheat_Sheet.md)
 
 - Abbas Naderi - [abbas.naderi@owasp.org](mailto:abbas.naderi@owasp.org)
@@ -321,6 +325,7 @@ Sorting applied on the name is an alphabetical one.
 ## [Session Management Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/tree/master/cheatsheets/Session_Management_Cheat_Sheet.md)
 
 - Raul Siles (DinoSec) - [raul@dinosec.com](mailto:raul@dinosec.com)
+- [Gabriel Corona](https://github.com/randomstuff)
 
 ## [Third Party Javascript Management Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/tree/master/cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.md)
 
