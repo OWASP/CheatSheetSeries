@@ -662,15 +662,15 @@ class SecureContextBuilder:
 ```
 ### 9. Identity Propagation & Context
 
--Enforce User Context Propagation: 
+- Enforce User Context Propagation: 
         Require agents to pass the user's original authentication token (e.g., JWT) to any backend tool or API.
--Validate at the Source: 
+- Validate at the Source: 
         Ensure backend services validate the user's identity and permissions, preventing the agent from acting as a privileged "super-user".
--Maintain Audit Trails: 
+- Maintain Audit Trails: 
         Log all agent actions with the associated user identity to ensure non-repudiation and clear accountability.
--To ensure the agent only has the same permissions as the user (no "Super-User" powers).
--Telling the database: This request is coming from User, only show him his own data.
--Prevent Privilege Escalation: Ensure the agent only possesses the same permissions as the active user by acting as a passthrough for the user's authenticated identity.
+- To ensure the agent only has the same permissions as the user (no "Super-User" powers).
+- Telling the database: This request is coming from User, only show him his own data.
+- Prevent Privilege Escalation: Ensure the agent only possesses the same permissions as the active user by acting as a passthrough for the user's authenticated identity.
 
 Implementation: Passing User Identity to AI Tools (Python/FastAPI)
 ```Python
