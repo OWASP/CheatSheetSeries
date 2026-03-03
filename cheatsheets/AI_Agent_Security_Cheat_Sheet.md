@@ -660,6 +660,33 @@ class SecureContextBuilder:
         context = "\n---\n".join(protected_docs)
         return context[:max_tokens * 4]  # Rough char estimate
 ```
+### 9. Identity Propagation & Context
+
+-Enforce User Context Propagation: 
+        Require agents to pass the user's original authentication token (e.g., JWT) to any backend tool or API.
+-Validate at the Source: 
+        Ensure backend services validate the user's identity and permissions, preventing the agent from acting as a privileged "super-user".
+-Maintain Audit Trails: 
+        Log all agent actions with the associated user identity to ensure non-repudiation and clear accountability.
+-To ensure the agent only has the same permissions as the user (no "Super-User" powers).
+-Telling the database: This request is coming from User, only show him his own data.
+-Prevent Privilege Escalation: Ensure the agent only possesses the same permissions as the active user by acting as a passthrough for the user's authenticated identity.
+
+Implementation: Passing User Identity to AI Tools (Python/FastAPI)
+```Python
+from fastapi import Header, HTTPException
+async def secure_ai_tool(data: dict, authorization: str = Header(None)):
+    """
+    Ensures the AI Agent acts as a passthrough for the user's identity.
+    """
+    # 1. Extract and validate the HUMAN user's identity from the bearer token
+    user = verify_jwt(authorization) 
+    if not user:
+        raise HTTPException(status_code=401, detail="Valid user context required")
+    # 2. Perform the action using the specific human user's permissions
+    return await db.execute_action(user_id=user.id, **data)
+```
+
 
 ## Do's and Don'ts
 
