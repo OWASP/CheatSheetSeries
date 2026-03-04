@@ -131,9 +131,9 @@ For detailed guidance on configuring Docker networks for container communication
 
 In Kubernetes environments, [Network Policies](https://kubernetes.io/docs/concepts/services-networking/network-policies/) can be used to define rules that regulate pod interactions within the cluster. These policies provide a robust framework to control how pods communicate with each other and with other network endpoints. Additionally, [Network Policy Editor](https://networkpolicy.io/) simplifies the creation and management of network policies, making it more accessible to define complex networking rules through a user-friendly interface.
 
-### RULE \#5a - Be careful when mapping container ports to the host with firewalls like UFW and CSF
+### RULE \#5a - Be careful when mapping container ports to the host with firewalls like UFW
 
-[UFW (Uncomplicated Firewall)](https://help.ubuntu.com/community/UFW) and [CSF (ConfigServer Security & Firewall)](https://configserver.com/cp/csf.html) are popular host-based firewalls for Linux. A common misconception is that firewall rules protect all inbound traffic — including traffic destined for Docker containers. However, **Docker manages its own `iptables` and `nftables` rules directly and bypasses these firewalls entirely**.
+[UFW (Uncomplicated Firewall)](https://help.ubuntu.com/community/UFW) is a popular host-based firewall for Linux. A common misconception is that firewall rules protect all inbound traffic — including traffic destined for Docker containers. However, **Docker manages its own `iptables` and `nftables` rules directly and bypasses UFW entirely**. Note that other tools that use `iptables` or `nftables` can also have conflicts similar to UFW. If you are using other firewall tools, you should check if they are working correctly.
 
 When you publish a port with `-p 8000:8000`, Docker inserts `iptables` rules that open that port to **all interfaces and all source addresses**, and these rules are typically accepted before explicit firewall `DENY` rules are applied. As a result, traffic may be allowed through regardless of any `DENY` rules you have set, which can unintentionally expose container services to the public internet.
 
