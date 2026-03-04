@@ -175,38 +175,44 @@ Limit streaming sessions and message counts to prevent resource exhaustion. Moni
 
 ```go
 // Go - Secure streaming with message & duration limits
-func (s *server) StreamData(req *pb.StreamRequest, stream pb.MyService_StreamDataServer) error {
-    const maxMessages = 1000          // Max messages per stream
-    const maxDuration = 2 * time.Minute // Max total session time
-
-    start := time.Now()
+func (s *server) StreamData(stream pb.MyService_StreamDataServer) error {    const maxMessages = 1000          // Max messages per stream
+    const maxMessages = 1000             // Max messages per stream
+    const maxDuration = 2 * time.Minute  // Max total session time
+    
+    // Enforce an overall timeout so Recv does not block indefinitely.
+    ctx, cancel := context.WithTimeout(stream.Context(), maxDuration)
+    defer cancel()
     msgCount := 0
-
+    type recvResult struct {
+        msg *pb.StreamMessage // replace with the actual stream message type
+        err error
+    }
     for {
-        if time.Since(start) > maxDuration {
-            return status.Error(codes.ResourceExhausted, "stream duration exceeded")
-        }
-
         if msgCount >= maxMessages {
             return status.Error(codes.ResourceExhausted, "maximum messages exceeded")
         }
-
-        msg, err := stream.Recv()
-        if err == io.EOF {
-            break
+        recvCh := make(chan recvResult, 1)
+        // Perform Recv in a separate goroutine so we can select on context timeout.
+        go func() {
+            m, err := stream.Recv()
+            recvCh <- recvResult{msg: m, err: err}
+        }()
+        select {
+        case <-ctx.Done():
+            // Context deadline exceeded: enforce maxDuration.
+            return status.Error(codes.ResourceExhausted, "stream duration exceeded")
+        case res := <-recvCh:
+            if res.err == io.EOF {
+                return nil
+            }
+            if res.err != nil {
+                return res.err
+            }
+            // Process message safely
+            processMessage(res.msg)
+            msgCount++
         }
-        if err != nil {
-            return err
-        }
-
-        // Process message safely
-        processMessage(msg)
-
-        msgCount++
     }
-
-    return nil
-} 
 ```
 
 ## Rate Limiting and Resource Protection
