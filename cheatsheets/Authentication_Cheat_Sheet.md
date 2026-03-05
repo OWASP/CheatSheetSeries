@@ -283,6 +283,21 @@ Rather than implementing a fixed lockout duration (e.g., ten minutes), some appl
 
 When designing an account lockout system, care must be taken to prevent it from being used to cause a denial of service by locking out other users' accounts. One way this could be performed is to allow the use of the forgotten password functionality to log in, even if the account is locked out.
 
+##### Example Implementation (Node.js / Express)
+
+A simple example of login rate limiting can be implemented using middleware such as `express-rate-limit`.
+
+```javascript
+const rateLimit = require("express-rate-limit");
+
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  message: "Too many login attempts. Please try again later."
+});
+
+app.post("/login", loginLimiter, loginHandler);
+
 #### CAPTCHA
 
 The use of an effective CAPTCHA can help to prevent automated login attempts against accounts. However, many CAPTCHA implementations have weaknesses that allow them to be solved using automated techniques or can be outsourced to services that can solve them. As such, the use of CAPTCHA should be viewed as a defense-in-depth control to make brute-force attacks more time-consuming and expensive, rather than as a preventative.
