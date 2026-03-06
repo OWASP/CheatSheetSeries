@@ -76,6 +76,8 @@
 
 [File Upload Cheat Sheet](cheatsheets/File_Upload_Cheat_Sheet.md)
 
+[FastAPI Security Cheat Sheet](cheatsheets/FastAPI_Security_Cheat_Sheet.md) ![Python](assets/Index_Python.svg)
+
 [Forgot Password Cheat Sheet](cheatsheets/Forgot_Password_Cheat_Sheet.md)
 
 ## G
