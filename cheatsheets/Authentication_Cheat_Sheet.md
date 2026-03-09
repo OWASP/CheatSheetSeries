@@ -245,11 +245,11 @@ Error disclosure can also be used as a discrepancy factor, consult the [error ha
 
 There are a number of different types of automated attacks that attackers can use to try and compromise user accounts. The most common types are listed below:
 
-| Attack Type | Description |
-|-------------|-------------|
-| Brute Force | Testing multiple passwords from a dictionary or other source against a single account. |
-| Credential Stuffing | Testing username/password pairs obtained from the breach of another site. |
-| Password Spraying | Testing a single weak password against a large number of different accounts.|
+| Attack Type         | Description                                                                                      |
+|---------------------|--------------------------------------------------------------------------------------------------|
+| Brute Force         | Testing multiple passwords from a dictionary or other source against a single account.           |
+| Credential Stuffing | Testing username/password pairs obtained from the breach of another site.                        |
+| Password Spraying   | Testing a single weak password against a large number of different accounts.                     |
 
 Different protection mechanisms can be implemented to protect against these attacks. In many cases, these defenses do not provide complete protection, but when a number of them are implemented in a defense-in-depth approach, a reasonable level of protection can be achieved.
 
@@ -346,7 +346,6 @@ U2F augments password-based authentication using a hardware token (typically USB
 Developers implementing passkeys should rely on well-maintained WebAuthn libraries or platform APIs instead of attempting to implement authentication logic manually. Using mature libraries helps ensure correct handling of cryptographic operations, token validation, and browser compatibility across platforms.
 
 See also: [Web Authentication API (WebAuthn)](https://developer.mozilla.org/en-US/docs/Web/API/Web_Authentication_API).
-
 
 ## Password Managers
 
