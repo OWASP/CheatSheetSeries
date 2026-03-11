@@ -99,7 +99,7 @@ You do not need to hide which password hashing algorithm is used by an applicati
 When selecting a password hashing algorithm, developers should prefer modern algorithms that are designed to resist both GPU-based and memory-based attacks.
 Where available, newer algorithms should be chosen for new applications, while older algorithms may still be acceptable for legacy systems with appropriate configuration.
 
-Three hashing algorithms that should be considered.
+Several password hashing algorithms should be considered.
 
 ### Argon2id
 
@@ -117,6 +117,99 @@ Increasing memory usage, iteration count, or parallelism makes password cracking
 - m=7168 (7 MiB), t=5, p=1
 
 These configuration settings provide an equal level of defense, and the only difference is a trade off between CPU and RAM usage.
+
+#### Example Implementation (Node.js)
+
+The following example demonstrates secure password hashing using Argon2id in Node.js.
+
+```javascript
+import argon2 from "argon2";
+
+export async function hashPassword(password) {
+  return await argon2.hash(password, {
+    type: argon2.argon2id,
+    memoryCost: 19456,
+    timeCost: 2,
+    parallelism: 1
+  });
+}
+
+export async function verifyPassword(hash, password) {
+  return await argon2.verify(hash, password);
+}
+```
+
+##### Notes
+
+- The library automatically generates a unique salt.
+- The resulting hash includes algorithm parameters and salt.
+- Always verify passwords using the library’s verification function.
+
+#### Example Implementation (Python)
+
+The following example demonstrates secure password hashing using the `argon2-cffi` library.
+
+```python
+from argon2 import PasswordHasher
+from argon2.exceptions import VerifyMismatchError
+
+ph = PasswordHasher(
+    memory_cost=19456,
+    time_cost=2,
+    parallelism=1
+)
+
+def hash_password(password):
+    return ph.hash(password)
+
+def verify_password(stored_hash, password):
+    try:
+        ph.verify(stored_hash, password)
+        return True
+    except VerifyMismatchError:
+        # Password verification failed
+        return False
+```
+
+##### Notes
+
+- The library automatically generates salts.
+- Hash parameters are embedded in the stored hash string.
+- Verification should always use the library's verification function.
+
+#### Implementation Considerations
+
+##### Very Long Passwords
+
+Extremely long password inputs may cause excessive CPU or memory usage depending on the hashing implementation. Applications may enforce reasonable maximum password lengths to mitigate denial-of-service risks from extremely large inputs.
+
+##### Unicode Support
+
+Password hashing systems must support Unicode characters.
+
+Applications should:
+
+- Accept UTF-8 encoded input
+- Avoid reducing password entropy through normalization
+- Ensure consistent encoding before hashing
+
+##### Constant-Time Verification
+
+Password hashes must never be compared using standard equality operators.
+
+Instead, always use the password hashing library's built-in verification function to avoid timing attacks.
+
+##### Parameter Upgrades
+
+Password hashing parameters should be periodically reviewed and upgraded as hardware evolves.
+
+A recommended strategy:
+
+1. User logs in.
+2. Password is verified.
+3. If parameters are outdated, the password is re-hashed using stronger parameters.
+
+This allows gradual security upgrades without forcing all users to reset passwords simultaneously.
 
 ### scrypt
 
