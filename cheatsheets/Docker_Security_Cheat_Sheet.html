@@ -1143,6 +1143,30 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#rule-5a-be-careful-when-mapping-container-ports-to-the-host-with-firewalls-like-ufw" class="md-nav__link">
+    <span class="md-ellipsis">
+      RULE #5a - Be careful when mapping container ports to the host with firewalls like UFW
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RULE #5a - Be careful when mapping container ports to the host with firewalls like UFW">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommended-mitigations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recommended Mitigations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#rule-6-use-linux-security-module-seccomp-apparmor-or-selinux-for-runtime-security" class="md-nav__link">
     <span class="md-ellipsis">
       RULE #6 - Use Linux Security Module (seccomp, AppArmor, or SELinux) for Runtime Security
@@ -3033,6 +3057,30 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#rule-5a-be-careful-when-mapping-container-ports-to-the-host-with-firewalls-like-ufw" class="md-nav__link">
+    <span class="md-ellipsis">
+      RULE #5a - Be careful when mapping container ports to the host with firewalls like UFW
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RULE #5a - Be careful when mapping container ports to the host with firewalls like UFW">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommended-mitigations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recommended Mitigations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#rule-6-use-linux-security-module-seccomp-apparmor-or-selinux-for-runtime-security" class="md-nav__link">
     <span class="md-ellipsis">
       RULE #6 - Use Linux Security Module (seccomp, AppArmor, or SELinux) for Runtime Security
@@ -3236,6 +3284,34 @@ Remember not to run containers with the <code>--privileged</code> flag - this wi
 <p>Inter-Container Connectivity (icc) is enabled by default, allowing all containers to communicate with each other through the <a href="https://docs.docker.com/network/drivers/bridge/"><code>docker0</code> bridged network</a>. Instead of using the <code>--icc=false</code> flag with the Docker daemon, which completely disables inter-container communication, consider defining specific network configurations. This can be achieved by creating custom Docker networks and specifying which containers should be attached to them. This method provides more granular control over container communication.</p>
 <p>For detailed guidance on configuring Docker networks for container communication, refer to the <a href="https://docs.docker.com/network/#communication-between-containers">Docker Documentation</a>.</p>
 <p>In Kubernetes environments, <a href="https://kubernetes.io/docs/concepts/services-networking/network-policies/">Network Policies</a> can be used to define rules that regulate pod interactions within the cluster. These policies provide a robust framework to control how pods communicate with each other and with other network endpoints. Additionally, <a href="https://networkpolicy.io/">Network Policy Editor</a> simplifies the creation and management of network policies, making it more accessible to define complex networking rules through a user-friendly interface.</p>
+<h3 id="rule-5a-be-careful-when-mapping-container-ports-to-the-host-with-firewalls-like-ufw">RULE #5a - Be careful when mapping container ports to the host with firewalls like UFW<a class="headerlink" href="#rule-5a-be-careful-when-mapping-container-ports-to-the-host-with-firewalls-like-ufw" title="Permanent link">&para;</a></h3>
+<p><a href="https://help.ubuntu.com/community/UFW">UFW (Uncomplicated Firewall)</a> is a popular host-based firewall for Linux. A common misconception is that firewall rules protect all inbound traffic — including traffic destined for Docker containers. However, <strong>Docker manages its own <code>iptables</code> and <code>nftables</code> rules directly and bypasses UFW entirely</strong>. Note that other tools that use <code>iptables</code> or <code>nftables</code> can also have conflicts similar to UFW. If you are using other firewall tools, you should check if they are working correctly.</p>
+<p>When you publish a port with <code>-p 8000:8000</code>, Docker inserts <code>iptables</code> rules that open that port to <strong>all interfaces and all source addresses</strong>, and these rules are typically accepted before explicit firewall <code>DENY</code> rules are applied. As a result, traffic may be allowed through regardless of any <code>DENY</code> rules you have set, which can unintentionally expose container services to the public internet.</p>
+<h4 id="recommended-mitigations">Recommended Mitigations<a class="headerlink" href="#recommended-mitigations" title="Permanent link">&para;</a></h4>
+<p><strong>Option 1 — Bind published ports to localhost only:</strong></p>
+<p>Bind the host side of the port mapping to <code>127.0.0.1</code> so the service is only reachable locally, not from external networks:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Vulnerable: exposes port on all interfaces</span>
+docker<span class="w"> </span>run<span class="w"> </span>-p<span class="w"> </span><span class="m">8000</span>:8000<span class="w"> </span>myimage
+
+<span class="c1"># Safe: binds only to localhost</span>
+docker<span class="w"> </span>run<span class="w"> </span>-p<span class="w"> </span><span class="m">127</span>.0.0.1:8000:8000<span class="w"> </span>myimage
+</code></pre></div>
+<p>In a Docker Compose file:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">services</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">web</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">myimage</span>
+<span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;127.0.0.1:8000:8000&quot;</span><span class="w">  </span><span class="c1"># safe — localhost only</span>
+</code></pre></div>
+<p><strong>Option 2 — Use <code>ufw-docker</code> (or equivalent) to enforce firewall rules over Docker networks:</strong></p>
+<p>For UFW specifically, the <a href="https://github.com/chaifeng/ufw-docker">ufw-docker</a> project provides a script and supplemental <code>iptables</code> rules that patch Docker's networking to respect UFW policies, allowing you to use standard UFW commands to control traffic to containers:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Install ufw-docker integration rules</span>
+sudo<span class="w"> </span>ufw-docker<span class="w"> </span>install
+
+<span class="c1"># Allow external access to a specific container port</span>
+sudo<span class="w"> </span>ufw-docker<span class="w"> </span>allow<span class="w"> </span>mycontainer<span class="w"> </span><span class="m">8000</span>/tcp
+</code></pre></div>
+<p>Refer to the <a href="https://docs.docker.com/engine/network/packet-filtering-firewalls/">Docker and iptables documentation</a> for a deeper explanation of how Docker interacts with the host firewall.</p>
 <h3 id="rule-6-use-linux-security-module-seccomp-apparmor-or-selinux-for-runtime-security">RULE #6 - Use Linux Security Module (seccomp, AppArmor, or SELinux) for Runtime Security<a class="headerlink" href="#rule-6-use-linux-security-module-seccomp-apparmor-or-selinux-for-runtime-security" title="Permanent link">&para;</a></h3>
 <p><strong>First of all, do not disable default security profile!</strong> Always start with Docker’s or your host’s default profile as a baseline.</p>
 <p><strong>Security Profile Recommendations:</strong></p>
