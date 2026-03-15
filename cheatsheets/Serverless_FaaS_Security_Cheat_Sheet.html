@@ -3162,17 +3162,58 @@ However, the execution model (short-lived, event-driven functions running in man
 <h3 id="6-secrets-management">6. Secrets Management<a class="headerlink" href="#6-secrets-management" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Avoid storing secrets in environment variables.</li>
-<li>Fetch secrets from secure stores (AWS Secrets Manager, Azure Key Vault, GCP Secret Manager).</li>
+<li>Fetch secrets from vaults using local caching extensions where possible, not env vars.</li>
 <li>Use ephemeral credentials (STS, workload identity federation).</li>
 <li>Rotate secrets automatically.</li>
 </ul>
-<p><strong>AWS Lambda Secret Fetch (Python Boto3):</strong></p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">boto3</span><span class="o">,</span> <span class="nn">json</span>
+<p><strong>AWS Lambda Secret Fetch (Python via Parameters and Secrets Extension):</strong></p>
+<p><strong>Note:</strong> Ensure that the AWS Lambda Parameters and Secrets Extension is added and enabled for your function (for example, as a Lambda layer). Otherwise, <code>http://localhost:2773</code> will not be available and requests to it will fail.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">urllib.request</span>
+<span class="kn">import</span> <span class="nn">urllib.parse</span>
 
 <span class="k">def</span> <span class="nf">get_secret</span><span class="p">(</span><span class="n">secret_name</span><span class="p">):</span>
-    <span class="n">client</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s2">&quot;secretsmanager&quot;</span><span class="p">)</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_secret_value</span><span class="p">(</span><span class="n">SecretId</span><span class="o">=</span><span class="n">secret_name</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="s2">&quot;SecretString&quot;</span><span class="p">])</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Retrieves a secret using the AWS Lambda Extension local endpoint.</span>
+<span class="sd">    This method is faster and more cost-effective due to local caching.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># The extension provides a local HTTP endpoint on port 2773</span>
+    <span class="n">encoded_name</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">quote_plus</span><span class="p">(</span><span class="n">secret_name</span><span class="p">)</span>
+
+    <span class="n">secrets_extension_endpoint</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;http://localhost:2773/secretsmanager/get?secretId=</span><span class="si">{</span><span class="n">encoded_name</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Authenticate using the identity token provided by the Lambda environment.</span>
+    <span class="c1"># Fail fast if the token is missing to avoid confusing 4xx errors.</span>
+    <span class="n">session_token</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;AWS_SESSION_TOKEN&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">session_token</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+            <span class="s2">&quot;Missing AWS_SESSION_TOKEN required for &quot;</span>
+            <span class="s2">&quot;Parameters and Secrets Extension authentication.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;X-Aws-Parameters-Secrets-Token&quot;</span><span class="p">:</span> <span class="n">session_token</span>
+    <span class="p">}</span>
+
+    <span class="n">request</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span>
+        <span class="n">secrets_extension_endpoint</span><span class="p">,</span>
+        <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
+        <span class="n">method</span><span class="o">=</span><span class="s2">&quot;GET&quot;</span>
+    <span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span> <span class="k">as</span> <span class="n">response</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Error retrieving secret: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+
+        <span class="n">response_json</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+        <span class="n">secret_string</span> <span class="o">=</span> <span class="n">response_json</span><span class="p">[</span><span class="s2">&quot;SecretString&quot;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">secret_string</span><span class="p">)</span>
 </code></pre></div>
 <h3 id="7-monitoring-logging">7. Monitoring &amp; Logging<a class="headerlink" href="#7-monitoring-logging" title="Permanent link">&para;</a></h3>
 <ul>
