@@ -131,19 +131,61 @@ def lambda_handler(event, context):
 ### 6. Secrets Management
 
 - Avoid storing secrets in environment variables.
-- Fetch secrets from secure stores (AWS Secrets Manager, Azure Key Vault, GCP Secret Manager).
+- Fetch secrets from vaults using local caching extensions where possible, not env vars.
 - Use ephemeral credentials (STS, workload identity federation).
 - Rotate secrets automatically.
 
-**AWS Lambda Secret Fetch (Python Boto3):**
+**AWS Lambda Secret Fetch (Python via Parameters and Secrets Extension):**
+
+**Note:** Ensure that the AWS Lambda Parameters and Secrets Extension is added and enabled for your function (for example, as a Lambda layer). Otherwise, `http://localhost:2773` will not be available and requests to it will fail.
 
 ```python
-import boto3, json
+import os
+import json
+import urllib.request
+import urllib.parse
 
 def get_secret(secret_name):
-    client = boto3.client("secretsmanager")
-    response = client.get_secret_value(SecretId=secret_name)
-    return json.loads(response["SecretString"])
+    """
+    Retrieves a secret using the AWS Lambda Extension local endpoint.
+    This method is faster and more cost-effective due to local caching.
+    """
+    # The extension provides a local HTTP endpoint on port 2773
+    encoded_name = urllib.parse.quote_plus(secret_name)
+
+    secrets_extension_endpoint = (
+        f"http://localhost:2773/secretsmanager/get?secretId={encoded_name}"
+    )
+
+    # Authenticate using the identity token provided by the Lambda environment.
+    # Fail fast if the token is missing to avoid confusing 4xx errors.
+    session_token = os.environ.get("AWS_SESSION_TOKEN")
+    if not session_token:
+        raise RuntimeError(
+            "Missing AWS_SESSION_TOKEN required for "
+            "Parameters and Secrets Extension authentication."
+        )
+
+    headers = {
+        "X-Aws-Parameters-Secrets-Token": session_token
+    }
+
+    request = urllib.request.Request(
+        secrets_extension_endpoint,
+        headers=headers,
+        method="GET"
+    )
+
+    with urllib.request.urlopen(request, timeout=3) as response:
+        if response.status != 200:
+            raise Exception(
+                f"Error retrieving secret: {response.read().decode('utf-8')}"
+            )
+
+        response_json = json.loads(response.read())
+        secret_string = response_json["SecretString"]
+
+        return json.loads(secret_string)
 ```
 
 ### 7. Monitoring & Logging
