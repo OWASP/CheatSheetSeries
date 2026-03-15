@@ -111,6 +111,8 @@ This index is based on the version 5.0.x of the ASVS.
 
 ### V1.1 Encoding and Sanitization Architecture
 
+[Security Terminology Cheat Sheet](cheatsheets/Security_Terminology_Cheat_Sheet.md)
+
 [Cross Site Scripting Prevention Cheat Sheet](cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.md)
 
 ### V1.2 Injection Prevention
@@ -313,6 +315,8 @@ None.
 
 ### V6.1 Authentication Documentation
 
+[Security Terminology Cheat Sheet](cheatsheets/Security_Terminology_Cheat_Sheet.md)
+
 [Credential Stuffing Prevention Cheat Sheet](cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.md)
 
 ### V6.2 Password Security
@@ -393,6 +397,8 @@ None.
 
 ### V8.1 Authorization Documentation
 
+[Security Terminology Cheat Sheet](cheatsheets/Security_Terminology_Cheat_Sheet.md)
+
 [Authorization Cheat Sheet](cheatsheets/Authorization_Cheat_Sheet.md)
 
 [Authorization Testing Automation](cheatsheets/Authorization_Testing_Automation_Cheat_Sheet.md)
@@ -468,6 +474,8 @@ None.
 ## V11: Cryptography
 
 ### V11.1 Cryptographic Inventory and Documentation
+
+[Security Terminology Cheat Sheet](cheatsheets/Security_Terminology_Cheat_Sheet.md)
 
 [Cryptographic Storage Cheat Sheet](cheatsheets/Cryptographic_Storage_Cheat_Sheet.md)
 
@@ -570,6 +578,8 @@ None.
 ## V15: Secure Coding and Architecture
 
 ### V15.1: Secure Coding and Architecture Documentation
+
+[Security Terminology Cheat Sheet](cheatsheets/Security_Terminology_Cheat_Sheet.md)
 
 [Abuse Case Cheat Sheet](cheatsheets/Abuse_Case_Cheat_Sheet.md)
 
