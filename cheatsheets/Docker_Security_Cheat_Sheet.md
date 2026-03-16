@@ -131,6 +131,50 @@ For detailed guidance on configuring Docker networks for container communication
 
 In Kubernetes environments, [Network Policies](https://kubernetes.io/docs/concepts/services-networking/network-policies/) can be used to define rules that regulate pod interactions within the cluster. These policies provide a robust framework to control how pods communicate with each other and with other network endpoints. Additionally, [Network Policy Editor](https://networkpolicy.io/) simplifies the creation and management of network policies, making it more accessible to define complex networking rules through a user-friendly interface.
 
+### RULE \#5a - Be careful when mapping container ports to the host with firewalls like UFW
+
+[UFW (Uncomplicated Firewall)](https://help.ubuntu.com/community/UFW) is a popular host-based firewall for Linux. A common misconception is that firewall rules protect all inbound traffic — including traffic destined for Docker containers. However, **Docker manages its own `iptables` and `nftables` rules directly and bypasses UFW entirely**. Note that other tools that use `iptables` or `nftables` can also have conflicts similar to UFW. If you are using other firewall tools, you should check if they are working correctly.
+
+When you publish a port with `-p 8000:8000`, Docker inserts `iptables` rules that open that port to **all interfaces and all source addresses**, and these rules are typically accepted before explicit firewall `DENY` rules are applied. As a result, traffic may be allowed through regardless of any `DENY` rules you have set, which can unintentionally expose container services to the public internet.
+
+#### Recommended Mitigations
+
+**Option 1 — Bind published ports to localhost only:**
+
+Bind the host side of the port mapping to `127.0.0.1` so the service is only reachable locally, not from external networks:
+
+```bash
+# Vulnerable: exposes port on all interfaces
+docker run -p 8000:8000 myimage
+
+# Safe: binds only to localhost
+docker run -p 127.0.0.1:8000:8000 myimage
+```
+
+In a Docker Compose file:
+
+```yaml
+services:
+  web:
+    image: myimage
+    ports:
+      - "127.0.0.1:8000:8000"  # safe — localhost only
+```
+
+**Option 2 — Use `ufw-docker` (or equivalent) to enforce firewall rules over Docker networks:**
+
+For UFW specifically, the [ufw-docker](https://github.com/chaifeng/ufw-docker) project provides a script and supplemental `iptables` rules that patch Docker's networking to respect UFW policies, allowing you to use standard UFW commands to control traffic to containers:
+
+```bash
+# Install ufw-docker integration rules
+sudo ufw-docker install
+
+# Allow external access to a specific container port
+sudo ufw-docker allow mycontainer 8000/tcp
+```
+
+Refer to the [Docker and iptables documentation](https://docs.docker.com/engine/network/packet-filtering-firewalls/) for a deeper explanation of how Docker interacts with the host firewall.
+
 ### RULE \#6 - Use Linux Security Module (seccomp, AppArmor, or SELinux) for Runtime Security
 
 **First of all, do not disable default security profile!** Always start with Docker’s or your host’s default profile as a baseline.

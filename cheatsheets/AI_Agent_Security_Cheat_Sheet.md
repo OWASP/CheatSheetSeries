@@ -13,8 +13,11 @@ AI agents are autonomous systems powered by Large Language Models (LLMs) that ca
 - **Goal Hijacking**: Manipulating agent objectives to serve attacker purposes while appearing legitimate.
 - **Excessive Autonomy**: Agents taking high-impact actions without appropriate human oversight.
 - **Cascading Failures**: Compromised agents in multi-agent systems propagating attacks to other agents.
+- **AI Console Malicious Configuration**: AI developer consoles can be compelled to consume data that contains instructions driving malicious changes to the underlying LLM configuration.
 - **Denial of Wallet (DoW)**: Attacks causing excessive API/compute costs through unbounded agent loops.
 - **Sensitive Data Exposure**: PII, credentials, or confidential data inadvertently included in agent context or logs.
+- **Supply Chain Attacks**: Compromising third-party tools, APIs, or data sources used by agents.
+- **AI Console Malicious Configuration**: Malicious input consumed by the underlying AAL that prompts a change in the configuration of a poorly protected developer console.
 
 ## Best Practices
 
