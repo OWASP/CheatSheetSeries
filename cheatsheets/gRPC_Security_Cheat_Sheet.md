@@ -175,7 +175,8 @@ Limit streaming sessions and message counts to prevent resource exhaustion. Moni
 
 ```go
 // Go - Secure streaming with message & duration limits
-func (s *server) StreamData(stream pb.MyService_StreamDataServer) error {    const maxMessages = 1000          // Max messages per stream
+func (s *server) StreamData(stream pb.MyService_StreamDataServer) error {
+    const maxMessages = 1000          // Max messages per stream
     const maxMessages = 1000             // Max messages per stream
     const maxDuration = 2 * time.Minute  // Max total session time
     
@@ -199,8 +200,18 @@ func (s *server) StreamData(stream pb.MyService_StreamDataServer) error {    con
         }()
         select {
         case <-ctx.Done():
-            // Context deadline exceeded: enforce maxDuration.
-            return status.Error(codes.ResourceExhausted, "stream duration exceeded")
+            // Distinguish between deadline exceeded and cancellation.
+            switch ctx.Err() {
+            case context.DeadlineExceeded:
+                // Context deadline exceeded: enforce maxDuration.
+                return status.Error(codes.ResourceExhausted, "stream duration exceeded")
+            case context.Canceled:
+                 // RPC was canceled (for example, client disconnected or canceled).
+                 return status.Error(codes.Canceled, "stream canceled")
+            default:
+                // Fallback for unexpected context errors.
+                return status.Error(codes.Canceled, "stream terminated")
+            }
         case res := <-recvCh:
             if res.err == io.EOF {
                 return nil
@@ -213,6 +224,7 @@ func (s *server) StreamData(stream pb.MyService_StreamDataServer) error {    con
             msgCount++
         }
     }
+}
 ```
 
 ## Rate Limiting and Resource Protection
