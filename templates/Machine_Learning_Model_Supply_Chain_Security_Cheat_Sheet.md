@@ -1,4 +1,4 @@
-# Model Ops and Supply Chain Security Cheat Sheet
+# Machine Learning Model Supply Chain Security Cheat Sheet
 
 ## Introduction
 
