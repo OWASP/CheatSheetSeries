@@ -341,11 +341,13 @@ UAF takes advantage of existing security technologies present on devices for aut
 
 U2F augments password-based authentication using a hardware token (typically USB) that stores cryptographic authentication keys and uses them for signing. The user can use the same token as a second factor for multiple applications. U2F works with web applications. It provides **protection against phishing** by using the URL of the website to look up the stored authentication key.
 
-**FIDO2**: FIDO2 and WebAuthn, encompassing previous standards (UAF/U2F), form the foundation of modern **Passkeys** technology. Passkeys enable users to securely log in using local user verification (such as biometrics or device PINs) and often supporting cloud synchronization across devices. This technology is widely supported by major platforms (Windows Hello/Mac Touch ID).
+**FIDO2**: FIDO2 and WebAuthn, encompassing previous standards (UAF/U2F), form the foundation of modern **Passkeys** technology. Passkeys enable users to securely log in using local user verification (such as biometrics or device PINs), often with credential synchronization across devices.
 
-Developers implementing passkeys should rely on well-maintained WebAuthn libraries or platform APIs instead of attempting to implement authentication logic manually. Using mature libraries helps ensure correct handling of cryptographic operations, token validation, and browser compatibility across platforms.
+#### Hardware-backed Key Storage
 
-See also: [Web Authentication API (WebAuthn)](https://developer.mozilla.org/en-US/docs/Web/API/Web_Authentication_API).
+For platform passkeys, the private key is generated and stored by the operating system's secure key manager. Modern platforms typically provide hardware-backed protection for these keys, such as the Trusted Platform Module (TPM) on Windows, Secure Enclave on Apple devices, or the Android Keystore/StrongBox on Android.
+
+The private key is non-exportable and remains on the user’s device. During authentication, the platform security module signs a server challenge using this key. This hardware-backed protection of private keys is a core security property of passkeys and WebAuthn.
 
 ## Password Managers
 
