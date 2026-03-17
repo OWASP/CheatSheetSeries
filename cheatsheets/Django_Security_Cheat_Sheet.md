@@ -119,6 +119,13 @@ Include the `django.middleware.security.SecurityMiddleware` module in the `MIDDL
 Include the `django.middleware.clickjacking.XFrameOptionsMiddleware` module in the `MIDDLEWARE` setting in your project's `settings.py` (This module should be listed after the `django.middleware.security.SecurityMiddleware` module as ordering is important). This module is used to set the following parameters:
 
 - `X_FRAME_OPTIONS`: Set this key to 'DENY' or 'SAMEORIGIN'. This setting adds the `X-Frame-Options` header to all HTTP responses. This protects against clickjacking attacks.
+## Content Security Policy (CSP)
+
+Django does not provide built-in CSP support by default. CSP can be implemented using third-party libraries such as `django-csp` or by configuring HTTP response headers.
+
+For more details:
+- [OWASP Content Security Policy Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html)
+- [Django Security Documentation](https://docs.djangoproject.com/en/stable/topics/security/)
 
 ## Cookies
 
