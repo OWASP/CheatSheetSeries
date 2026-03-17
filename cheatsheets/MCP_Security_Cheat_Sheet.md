@@ -30,6 +30,7 @@ The LLM sees all tool descriptions from all connected servers in its context —
 - **Data Exfiltration via Legitimate Channels**: Attackers use prompt injection to encode sensitive data into seemingly normal tool calls (e.g., search queries, email subjects).
 - **Excessive Permissions / Over-Scoped Tokens**: MCP servers request broad OAuth scopes (full Gmail access vs. read-only), creating aggregation risk.
 - **Supply Chain Attacks**: Untrusted or compromised MCP server packages installed from public registries without review.
+- **Message Tampering and Replay**: JSON-RPC payloads modified after TLS termination by compromised proxies or middleware, or captured and re-sent to duplicate actions.
 - **Sandbox Escapes**: Local MCP servers running with full host access, enabling file system traversal, credential theft, or arbitrary code execution.
 
 ## Best Practices
@@ -283,7 +284,93 @@ def handle_tool_call(session_id: str, requester_id: str, tool: str, params: dict
 
 </details>
 
-### 7. Multi-Server Isolation & Cross-Origin Protection
+### 7. Message-Level Integrity and Replay Protection
+
+Transport-layer security (TLS) protects data in transit but does not guarantee message integrity at the application layer. A compromised proxy, middleware, or host-level agent can modify JSON-RPC payloads after TLS termination. Message-level signing ensures that tool calls and responses have not been tampered with between client and server.
+
+- Sign each MCP message (JSON-RPC request body) with an asymmetric key (e.g., ECDSA P-256) bound to the sender's identity. The signature should cover the full serialized payload, not just selected fields.
+- Include a unique nonce and timestamp in every signed message. Reject messages with duplicate nonces or timestamps outside an acceptable window (e.g., 5 minutes) to prevent replay attacks.
+- Pin tool definitions at discovery time using cryptographic hashes (e.g., SHA-256 over the canonical JSON of the tool name, description, and input schema). Before each tool execution, re-hash the current definition and compare against the pinned value. A mismatch indicates post-deployment mutation (rug pull).
+- Require mutual signing where both client and server sign their messages. Clients should verify server response signatures before processing results. Accept server public keys only from authenticated channels, not from unverified first-contact responses.
+- Bind signatures to agent or user identity. Each signed message should include the signer's identity reference (e.g., a certificate fingerprint or public key hash) so the receiver can attribute and audit the request cryptographically.
+- Fail closed when verification fails. If a signature is missing, invalid, or the nonce has been seen before, reject the message entirely. Never silently fall back to unsigned processing when signing is enabled.
+
+<details>
+<summary>Message signing flow:</summary>
+
+```python
+import hashlib
+import json
+import time
+import secrets
+from cryptography.hazmat.primitives.asymmetric import ec
+from cryptography.hazmat.primitives import hashes, serialization
+
+def sign_mcp_message(message: dict, private_key: ec.EllipticCurvePrivateKey,
+                     signer_id: str) -> dict:
+    """Sign an MCP JSON-RPC message with nonce and timestamp."""
+    envelope = {
+        "message": message,
+        "nonce": secrets.token_hex(16),
+        "timestamp": int(time.time()),
+        "signer": signer_id,
+    }
+    canonical = json.dumps(envelope, sort_keys=True, separators=(",", ":"))
+    signature = private_key.sign(
+        canonical.encode(), ec.ECDSA(hashes.SHA256())
+    )
+    envelope["signature"] = signature.hex()
+    return envelope
+```
+
+</details>
+
+<details>
+<summary>Tool definition hash-pinning:</summary>
+
+```python
+def pin_tool_definition(tool: dict) -> str:
+    """Create a SHA-256 fingerprint of a tool definition at discovery time."""
+    canonical = json.dumps(
+        {"name": tool["name"], "description": tool["description"],
+         "inputSchema": tool["inputSchema"]},
+        sort_keys=True, separators=(",", ":")
+    )
+    return hashlib.sha256(canonical.encode()).hexdigest()
+
+def verify_tool_integrity(tool: dict, pinned_hash: str) -> bool:
+    """Verify a tool definition has not changed since it was pinned."""
+    return pin_tool_definition(tool) == pinned_hash
+```
+
+</details>
+
+<details>
+<summary>Replay protection with nonce store:</summary>
+
+```python
+class NonceStore:
+    """Track seen nonces to reject replay attacks."""
+
+    def __init__(self, window_seconds: int = 300):
+        self.seen: dict[str, float] = {}
+        self.window = window_seconds
+
+    def check_and_store(self, nonce: str, timestamp: int) -> bool:
+        now = time.time()
+        if abs(now - timestamp) > self.window:
+            return False  # Outside acceptable time window
+        if nonce in self.seen:
+            return False  # Duplicate nonce — replay attempt
+        # Garbage collect expired entries
+        self.seen = {n: t for n, t in self.seen.items() if now - t < self.window}
+        self.seen[nonce] = now
+        return True
+```
+
+</details>
+
+### 8. Multi-Server Isolation & Cross-Origin Protection
 
 - Treat each MCP server as an untrusted, independent security domain.
 - Prevent tool descriptions from one server from referencing or modifying the behavior of tools from another server.
@@ -326,7 +413,7 @@ guardrails:
 
 </details>
 
-### 8. Supply Chain Security
+### 9. Supply Chain Security
 
 - Only install MCP servers from trusted, verified sources.
 - Review server source code and tool definitions before installation.
@@ -352,7 +439,7 @@ uvx mcp-scan proxy
 
 </details>
 
-### 9. Monitoring, Logging & Auditing
+### 10. Monitoring, Logging & Auditing
 
 - Log all MCP tool invocations with full parameters, user context, and timestamps.
 - Feed MCP logs into SIEM for anomaly detection.
@@ -381,7 +468,7 @@ def log_tool_call(user_id: str, tool_name: str, params: dict, result: str):
 
 </details>
 
-### 10. Consent & Installation Security
+### 11. Consent & Installation Security
 
 - Display a clear consent dialog before connecting any new MCP server.
 - Show the exact command that will be executed (for local servers), without truncation.
@@ -389,7 +476,7 @@ def log_tool_call(user_id: str, tool_name: str, params: dict, result: str):
 - Re-prompt for consent when tool definitions change.
 - Never allow web content or untrusted data to trigger MCP server installation.
 
-### 11. Prompt Injection via Tool Return Values
+### 12. Prompt Injection via Tool Return Values
 
 - Treat every tool response as **untrusted user input** — sanitize before feeding back into the LLM context.
 - Instruct the model explicitly (in system prompt) that tool return values are data, not instructions.
@@ -484,6 +571,8 @@ SECURITY RULES — these override everything else:
 - Use `mcp-scan` or equivalent tooling to detect poisoned tools.
 - Log and monitor all tool invocations centrally.
 - Verify MCP server sources and scan dependencies.
+- Sign MCP messages at the application layer — do not rely solely on transport-layer (TLS) security.
+- Pin tool definitions with cryptographic hashes and verify before each execution.
 
 **Don't**:
 
@@ -495,6 +584,8 @@ SECURITY RULES — these override everything else:
 - Assume a tool approved yesterday is the same tool today (rug pulls).
 - Ignore cross-server interactions — shadowing attacks are real.
 - Store secrets in MCP server code, configs, or environment variables.
+- Silently fall back to unsigned message processing when signing is configured.
+- Accept server public keys from unverified first-contact responses (TOFU without pinning).
 
 ## References
 
@@ -502,3 +593,4 @@ SECURITY RULES — these override everything else:
 - [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
 - [mcp-scan — Security Scanner for MCP Servers](https://github.com/invariantlabs-ai/mcp-scan)
 - [OWASP MCP Top 10](https://owasp.org/www-project-mcp-top-10/)
+- [IETF Internet-Draft: Secure MCP — Message Signing and Tool Integrity](https://datatracker.ietf.org/doc/draft-sharif-mcps-secure-mcp/)
