@@ -3376,8 +3376,8 @@
 <li>Take care of log injection attacks by sanitizing log data beforehand.</li>
 </ul>
 <h2 id="security-headers">Security Headers<a class="headerlink" href="#security-headers" title="Permanent link">&para;</a></h2>
-<p>There are a number of <a href="https://owasp.org/www-project-secure-headers/">security related headers</a> that can be returned in the HTTP responses to instruct browsers to act in specific ways. However, some of these headers are intended to be used with HTML responses, and as such may provide little or no security benefits on an API that does not return HTML.</p>
-<p>The following headers should be included in all API responses:</p>
+<p>There are a number of <a href="https://owasp.org/www-project-secure-headers/">security related headers</a> that can be returned in the HTTP responses to instruct browsers to act in specific ways. However, some of these headers are intended to be used with HTML responses, and as such may provide little or no security benefits on an API that does not return HTML. Note that if the API is only consumed by non-browser clients (e.g. mobile apps, server-to-server calls, CLI tools), most of these headers will have no effect since they are directives for browsers.</p>
+<p>The following headers should be included in all API responses that may be consumed by browser clients:</p>
 <table>
 <thead>
 <tr>
@@ -3408,7 +3408,7 @@
 </tr>
 <tr>
 <td><code>X-Frame-Options: DENY</code></td>
-<td>Header used to specify whether a response can be framed in a <code>&lt;frame&gt;</code>, <code>&lt;iframe&gt;</code>, <code>&lt;embed&gt;</code> or <code>&lt;object&gt;</code> element. For an API response, there is no requirement to be framed in any of those elements. Providing <code>DENY</code> prevents any domain from framing the response returned by the API call. This header with a <code>DENY</code> value protects protect against <a href="https://www.w3.org/Security/wiki/Clickjacking_Threats#Drag_and_drop_attacks">drag-and-drop</a> style clickjacking attacks.</td>
+<td>Legacy header superseded by <code>Content-Security-Policy: frame-ancestors 'none'</code> (see above). Still recommended for compatibility with older browsers that do not support CSP Level 2. Providing <code>DENY</code> prevents any domain from framing the response.</td>
 </tr>
 </tbody>
 </table>
