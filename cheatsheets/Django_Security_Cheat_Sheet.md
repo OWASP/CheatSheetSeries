@@ -125,8 +125,9 @@ Include the `django.middleware.clickjacking.XFrameOptionsMiddleware` module in t
 Django does not provide built-in Content Security Policy (CSP) support by default. CSP can be implemented using third-party libraries such as `django-csp` or by configuring HTTP response headers.
 
 For more details:
-- https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html
-- https://docs.djangoproject.com/en/stable/topics/security/
+
+- [OWASP Content Security Policy Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html)
+- [Django Security Documentation](https://docs.djangoproject.com/en/stable/topics/security/)
 
 ## Cookies
 
