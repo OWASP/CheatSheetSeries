@@ -3376,7 +3376,7 @@
 <li>Take care of log injection attacks by sanitizing log data beforehand.</li>
 </ul>
 <h2 id="security-headers">Security Headers<a class="headerlink" href="#security-headers" title="Permanent link">&para;</a></h2>
-<p>There are a number of <a href="https://owasp.org/www-project-secure-headers/">security related headers</a> that can be returned in the HTTP responses to instruct browsers to act in specific ways. However, some of these headers are intended to be used with HTML responses, and as such may provide little or no security benefits on an API that does not return HTML. Note that if the API is only consumed by non-browser clients (e.g. mobile apps, server-to-server calls, CLI tools), most of these headers will have no effect since they are directives for browsers.</p>
+<p>There are a number of <a href="https://owasp.org/www-project-secure-headers/">security related headers</a> that can be returned in the HTTP responses to instruct browsers to act in specific ways. However, some of these headers are intended to be used with HTML responses, and as such may provide little or no security benefits on an API that does not return HTML. Note that if the API is only consumed by non-browser clients (e.g. mobile apps, server-to-server calls, command-line tools), most of these headers will have no effect since they are directives for browsers.</p>
 <p>The following headers should be included in all API responses that may be consumed by browser clients:</p>
 <table>
 <thead>
