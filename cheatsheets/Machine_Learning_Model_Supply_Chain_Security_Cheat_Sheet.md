@@ -48,11 +48,10 @@ from safetensors.torch import load_file
 weights = load_file('safe_model.safetensors')
 ```
 
-
 ## Scope and Specific Controls
 
 ### Out of Scope: Prompt Injection
-This cheat sheet focuses on **Model Supply Chain Security** (the integrity of the model artifact itself). **Prompt Injection**, jailbreaking, and direct LLM output manipulation are out of scope. For guidance on those topics, refer to the [OWASP Top 10 for LLM Applications].
+This cheat sheet focuses on **Model Supply Chain Security** (the integrity of the model artifact itself). **Prompt Injection**, jailbreaking, and direct LLM output manipulation are out of scope. For guidance on those topics, refer to the [OWASP Top 10 for LLM Applications](https://genai.owasp.org/llm-top-10/).
 
 ### Model Format Conversion Attacks
 
@@ -81,13 +80,26 @@ Aligning with **NIST SP 800-218 (SSDF)**, an ML-BOM provides a verifiable record
 Many developers assume the `transformers` library is inherently safe. However, the `from_pretrained()` method reads a `config.json` file that can reference custom model classes.
 - **The Attack:** If `trust_remote_code=True` is set, the library will download and execute arbitrary Python code (e.g., a `modeling_*.py` file) from the repository immediately upon loading.
 - **Example:**
+
 ```python
 # DANGEROUS: Executes arbitrary code from the remote repo
 from transformers import AutoModel
 model = AutoModel.from_pretrained("malicious-user/repo-name", trust_remote_code=True)
 ```
 
-### ⚠️ Security Note on Safetensors
+**Defensive Statement:** Never set `trust_remote_code=True` in production environments.
+
+**Registry Controls:** Use Hugging Face's built-in malware scanning and "Pickle Scan" badges to verify model safety at the registry level before downloading.
+
+### Mitigation: Use `weights_only=True`
+Starting with PyTorch 2.6, `torch.load()` defaults to `weights_only=True`. This restricts unpickling to a safe subset of Python objects, preventing arbitrary code execution while still using the `.pth` format.
+
+```python
+# Safe loading in modern PyTorch
+weights = torch.load("model.pth", weights_only=True)
+```
+
+### Security Note on Safetensors
 
 While `safetensors` prevents code execution during weight loading, it does **not** solve the trust problem. A malicious repository can still bundle a safe `.safetensors` weight file with a malicious `config.json` that triggers code execution via the `trust_remote_code` flag. Always audit the repository files beyond just the weights.
 
@@ -104,6 +116,8 @@ modelscan -p ./path_to_model/model.pkl
 ### 2. Fickling (Trail of Bits)
 
 A static analysis tool that decompiles Python pickles to identify malicious intent safely.
+Fickling is a specialized tool designed to analyze and "de-pickle" Python object streams to identify malicious opcodes. It can also be used to create "safe" versions of existing pickle files.
+**Note:** Fickling is currently less actively maintained than ModelScan; prioritize ModelScan for up-to-date opcode coverage.
 
 ```bash
 pip install fickling
@@ -111,7 +125,10 @@ fickling my_model.pth
 ```
 
 ## References
-* [NIST SP 800-218: Secure Software Development Framework (SSDF)](https://doi.org/10.6028/NIST.SP.800-218)
+
+* [NIST SP 800-218A: AI-Specific Secure Software Development](https://doi.org/10.6028/NIST.SP.800-218A)
+* [MITRE ATLAS Framework](https://atlas.mitre.org/)
+* [OWASP AI Security Verification Standard (AISVS)](https://owasp.org/www-project-ai-security-verification-standard/)
 * [Hugging Face Security Documentation](https://huggingface.co/docs/hub/security)
 * [CycloneDX ML-BOM Specification](https://cyclonedx.org/capabilities/mlbom/)
 * [OWASP Top 10 for LLM Applications](https://genai.owasp.org/llm-top-10/)
