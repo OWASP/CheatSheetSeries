@@ -12,3 +12,6 @@ news.xml
 package-lock.json
 yarn.lock
 venv
+# Claude Code
+CLAUDE.md
+.claude/
