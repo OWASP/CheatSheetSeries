@@ -5,13 +5,13 @@
 This cheat sheet will help you prevent SQL injection flaws in your applications. It will define what SQL injection is, explain where those flaws occur, and provide four options for defending against SQL injection attacks. [SQL Injection](https://owasp.org/www-community/attacks/SQL_Injection) attacks are common because:
 
 1. SQL Injection vulnerabilities are very common, and
-2. The application's database is a frequent target for attackers because it typically contains interesting/critical data.
+2. 2. The application's database is a frequent target for attackers because it typically contains sensitive or critical data.
 
 ## What Is a SQL Injection Attack?
 
 Attackers can use SQL injection on an application if it has dynamic database queries that use string concatenation and user-supplied input. To avoid SQL injection flaws, developers need to:
 
-1. Stop writing dynamic queries with string concatenation or
+1. Stop writing dynamic queries with string concatenation.
 2. Prevent malicious SQL input from being included in executed queries.
 
 There are simple techniques for preventing SQL injection vulnerabilities, and they can be used with practically any kind of programming language and any type of database. While XML databases can have similar problems (e.g., XPath and XQuery injection), these techniques can be used to protect them as well.
