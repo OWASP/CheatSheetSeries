@@ -4,7 +4,7 @@
 
 This cheat sheet will help you prevent SQL injection flaws in your applications. It will define what SQL injection is, explain where those flaws occur, and provide four options for defending against SQL injection attacks. [SQL Injection](https://owasp.org/www-community/attacks/SQL_Injection) attacks are common because:
 
-1. SQL Injection vulnerabilities are very common, and
+1. SQL Injection vulnerabilities are very common.
 2. The application's database is a frequent target for attackers because it typically contains interesting/critical data.
 
 ## What Is a SQL Injection Attack?
