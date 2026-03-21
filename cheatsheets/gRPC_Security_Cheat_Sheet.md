@@ -173,60 +173,6 @@ s := grpc.NewServer(
 
 Limit streaming sessions and message counts to prevent resource exhaustion. Monitor and enforce maximum messages per stream and maximum session duration.
 
-```go
-// Go - Secure streaming with message & duration limits
-func (s *server) StreamData(stream pb.MyService_StreamDataServer) error {
-    const maxMessages = 1000          // Max messages per stream
-    const maxMessages = 1000             // Max messages per stream
-    const maxDuration = 2 * time.Minute  // Max total session time
-    
-    // Enforce an overall timeout so Recv does not block indefinitely.
-    ctx, cancel := context.WithTimeout(stream.Context(), maxDuration)
-    defer cancel()
-    msgCount := 0
-    type recvResult struct {
-        msg *pb.StreamMessage // replace with the actual stream message type
-        err error
-    }
-    for {
-        if msgCount >= maxMessages {
-            return status.Error(codes.ResourceExhausted, "maximum messages exceeded")
-        }
-        recvCh := make(chan recvResult, 1)
-        // Perform Recv in a separate goroutine so we can select on context timeout.
-        go func() {
-            m, err := stream.Recv()
-            recvCh <- recvResult{msg: m, err: err}
-        }()
-        select {
-        case <-ctx.Done():
-            // Distinguish between deadline exceeded and cancellation.
-            switch ctx.Err() {
-            case context.DeadlineExceeded:
-                // Context deadline exceeded: enforce maxDuration.
-                return status.Error(codes.ResourceExhausted, "stream duration exceeded")
-            case context.Canceled:
-                 // RPC was canceled (for example, client disconnected or canceled).
-                 return status.Error(codes.Canceled, "stream canceled")
-            default:
-                // Fallback for unexpected context errors.
-                return status.Error(codes.Canceled, "stream terminated")
-            }
-        case res := <-recvCh:
-            if res.err == io.EOF {
-                return nil
-            }
-            if res.err != nil {
-                return res.err
-            }
-            // Process message safely
-            processMessage(res.msg)
-            msgCount++
-        }
-    }
-}
-```
-
 ## Rate Limiting and Resource Protection
 
 ### Implement Request Rate Limiting
