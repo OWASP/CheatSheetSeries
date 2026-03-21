@@ -2,9 +2,13 @@
 
 ## Introduction
 
-Email addresses are widely used as primary identifiers in authentication and account recovery workflows. Improper handling of email validation, normalization, and verification can lead to account takeover, user enumeration, and identity confusion.
+Email addresses are widely used as primary identifiers in authentication
+and account recovery workflows. Improper handling of email validation,
+normalization, and verification can lead to account takeover, user
+enumeration, and identity confusion.
 
-This cheat sheet provides guidance on securely handling email addresses within identity systems.
+This cheat sheet provides guidance on securely handling email addresses
+within identity systems.
 
 ## Goals
 
@@ -25,19 +29,22 @@ Attackers may attempt to:
 
 ## Email Canonicalization
 
-Applications must define a consistent normalization strategy before storing or comparing email addresses.
+Applications must define a consistent normalization strategy before
+storing or comparing email addresses.
 
 ### Recommendations
 
 - Normalize the domain portion to lowercase
-- Avoid provider-specific transformations (e.g., Gmail dot removal) unless fully controlled
+- Avoid provider-specific transformations (e.g., Gmail dot removal)
+  unless fully controlled
 - Store both:
   - Original input (for display)
   - Canonical form (for comparison)
 
 ## Email Format Validation
 
-Strict regex-based validation often rejects valid addresses or introduces inconsistencies.
+Strict regex-based validation often rejects valid addresses or
+introduces inconsistencies.
 
 ### Recommendations
 
@@ -62,7 +69,8 @@ Unicode introduces spoofing risks via visually similar characters.
 
 ### Recommendation
 
-- Treat the entire email address as case-insensitive for identity purposes unless there is a strict requirement otherwise
+- Treat the entire email address as case-insensitive for identity
+  purposes unless there is a strict requirement otherwise
 
 ## Email Ownership Verification
 
@@ -96,7 +104,8 @@ Changing an email address is equivalent to changing identity.
 - Require re-authentication
 - Notify the existing email address of the change
 - Require confirmation of the new email address
-- Consider requiring confirmation from both addresses for high-risk systems
+- Consider requiring confirmation from both addresses for
+  high-risk systems
 
 ## Anti-Enumeration Controls
 
