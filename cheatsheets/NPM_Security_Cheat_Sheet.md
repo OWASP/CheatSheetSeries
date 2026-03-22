@@ -248,3 +248,29 @@ Closing our list of npm security best practices are the following tips to reduce
 - Be extra-careful when copy-pasting package installation instructions into the terminal. Make sure to verify in the source code repository as well as on the npm registry that this is indeed the package you are intending to install. You might verify the metadata of the package with `npm info` to fetch more information about contributors and latest versions.
 - Default to having an npm logged-out user in your daily work routines so your credentials won’t be the weak spot that would lead to easily compromising your account.
 - When installing packages, append the `--ignore-scripts` to reduce the risk of arbitrary command execution. For example: `npm install my-malicious-package --ignore-scripts`
+
+## 12) Prevent dependency confusion attacks
+
+A dependency confusion attack occurs when an attacker publishes a malicious package
+on the public npm registry using the same name as your internal private package,
+but with a higher version number. When you run `npm install`, npm may resolve the
+public malicious package instead of your internal one because of the higher version.
+
+Attackers typically discover internal package names through:
+
+- Leaked `package.json` files accidentally pushed to public GitHub repositories
+- Job postings that mention internal tools or package names
+- Error messages or stack traces that reveal internal dependency names
+
+To protect against dependency confusion:
+
+- Always use **scoped package names** for internal packages
+  (e.g., `@yourorg/package-name` instead of `package-name`)
+- Configure your `.npmrc` to explicitly point scoped packages to your
+  private registry:
+```ini
+  @yourorg:registry=https://your-private-registry.example.com
+```
+
+- Reserve your internal package names on the public npm registry by
+  publishing an empty placeholder to prevent attackers from claiming them
