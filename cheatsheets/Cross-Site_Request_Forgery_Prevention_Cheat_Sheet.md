@@ -96,7 +96,7 @@ It's a common misconception to include timestamps as a value to specify the CSRF
 
 Below is an example in pseudo-code that demonstrates the implementation steps described above:
 
-```code
+```javascript
 // Gather the values
 secret = getSecretSecurely("CSRF_SECRET") // HMAC secret key
 sessionID = session.sessionID // Current authenticated user session
@@ -116,7 +116,7 @@ response.setCookie("csrf_token=" + csrfToken + "; Secure") // Set Cookie without
 
 Below is an example in pseudo-code that demonstrates validation of the CSRF token once it is sent back from the client:
 
-```code
+```javascript
 // Get the CSRF token from the request
 csrfToken = request.getParameter("csrf_token") // From header or form field (NOT cookie)
 
@@ -419,7 +419,13 @@ Set-Cookie: JSESSIONID=xxxxx; SameSite=Lax
 
 All modern desktop and mobile browsers support the `SameSite` attribute. The main exceptions are legacy browsers including Opera Mini (all versions), UC Browser for Android, and older mobile browsers (iOS Safari < 13.2, Android Browser < 97). To track the browsers implementing it and know how the attribute is used, refer to the following [service](https://caniuse.com/#feat=same-site-cookie-attribute). Chrome implemented `SameSite=Lax` as the default behavior in 2020, and Firefox and Edge have followed suit. Additionally, the `Secure` flag is required for cookies that are marked as `SameSite=None`.
 
-It is important to note that this attribute should be implemented as an additional layer _defense in depth_ concept. This attribute protects the user through the browsers supporting it, and it contains as well 2 ways to bypass it as mentioned in the following [section](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-02#section-5.3.7.1). This attribute should not replace a CSRF Token. Instead, it should co-exist with that token to protect  the user in a more robust way.
+It is important to note that this attribute should be implemented as an additional layer of _defense in depth_. This attribute protects the user through browsers supporting it, but has important limitations:
+
+- **`SameSite=Lax` does not protect state-changing `GET` requests**: `SameSite=Lax` only blocks cookies on cross-site requests that use unsafe HTTP methods (e.g., `POST`, `PUT`, `DELETE`). Cross-site top-level navigations using safe methods (`GET`, `HEAD`, `OPTIONS`) still transmit cookies under `Lax`. If your application performs any state-changing operations via `GET` requests (which is itself strongly discouraged), `SameSite=Lax` will not protect those endpoints.
+
+- **Subdomain and sibling-domain vulnerabilities**: `SameSite` can be bypassed if any subdomain or sibling domain of your application is compromised (e.g., via XSS, HTML injection, or a [subdomain takeover](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/10-Test_for_Subdomain_Takeover) attack). A subdomain is considered "same-site", so an attacker controlling `vulnerable.example.com` can inject or overwrite cookies that are sent to `example.com`, defeating `SameSite` protection entirely. This is a significant risk on SaaS platforms where multiple tenants share a domain.
+
+This attribute should not replace a CSRF Token. Instead, it should co-exist with that token to protect the user in a more robust way.
 
 ### Using Standard Headers to Verify Origin
 
