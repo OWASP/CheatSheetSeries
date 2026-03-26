@@ -2003,6 +2003,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#12-prevent-dependency-confusion-attacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      12) Prevent dependency confusion attacks
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#final-recommendations" class="md-nav__link">
     <span class="md-ellipsis">
       Final Recommendations
@@ -3302,6 +3311,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#12-prevent-dependency-confusion-attacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      12) Prevent dependency confusion attacks
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#final-recommendations" class="md-nav__link">
     <span class="md-ellipsis">
       Final Recommendations
@@ -3501,6 +3519,20 @@ npx<span class="w"> </span>@cyclonedx/cyclonedx-npm<span class="w"> </span>--val
 <h3 id="automatic-provenance-generation">Automatic provenance generation<a class="headerlink" href="#automatic-provenance-generation" title="Permanent link">&para;</a></h3>
 <p>When publishing via trusted publishing, npm automatically generates provenance attestations that provide cryptographic proof of package authenticity. This helps users verify that packages come from legitimate sources and haven't been tampered with.</p>
 <p>For more information, see the <a href="https://docs.npmjs.com/trusted-publishers">npm trusted publishing documentation</a>.</p>
+<h2 id="12-prevent-dependency-confusion-attacks">12) Prevent dependency confusion attacks<a class="headerlink" href="#12-prevent-dependency-confusion-attacks" title="Permanent link">&para;</a></h2>
+<p>A dependency confusion attack occurs when an attacker publishes a malicious package on the public npm registry using the same name as your internal private package, but with a higher version number. When you run <code>npm install</code>, npm may resolve the public malicious package instead of your internal one because of the higher version.</p>
+<p>Attackers typically discover internal package names through:</p>
+<ul>
+<li>Leaked <code>package.json</code> files accidentally pushed to public GitHub repositories</li>
+<li>Job postings that mention internal tools or package names</li>
+<li>Error messages or stack traces that reveal internal dependency names</li>
+</ul>
+<p>To protect against dependency confusion:</p>
+<ul>
+<li>Always use <strong>scoped package names</strong> for internal packages (e.g., <code>@yourorg/package-name</code> instead of <code>package-name</code>)</li>
+<li>Configure your <code>.npmrc</code> to explicitly point scoped packages to your private registry by setting <code>@yourorg:registry=https://your-private-registry.example.com</code></li>
+<li>Reserve your internal package names on the public npm registry by publishing an empty placeholder to prevent attackers from claiming them.</li>
+</ul>
 <h2 id="final-recommendations">Final Recommendations<a class="headerlink" href="#final-recommendations" title="Permanent link">&para;</a></h2>
 <p>Closing our list of npm security best practices are the following tips to reduce the risk of such attacks:</p>
 <ul>
