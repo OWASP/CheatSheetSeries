@@ -3539,7 +3539,7 @@
 <p><em><strong>Java Timeout Example using <a href="https://www.graphql-java.com/documentation/instrumentation">Instrumentation</a></strong></em></p>
 <div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">TimeoutInstrumentation</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">SimpleInstrumentation</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nd">@Override</span>
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">DataFetcher</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">instrumentDataFetcher</span><span class="p">(</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">DataFetcher</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="nf">instrumentDataFetcher</span><span class="p">(</span>
 <span class="w">            </span><span class="n">DataFetcher</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">dataFetcher</span><span class="p">,</span><span class="w"> </span><span class="n">InstrumentationFieldFetchParameters</span><span class="w"> </span><span class="n">parameters</span>
 <span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">environment</span><span class="w"> </span><span class="o">-&gt;</span>

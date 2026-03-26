@@ -3904,7 +3904,7 @@ Click Me<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt
 <p>However, if the pages returned from your web application utilize a content type of <code>text/xhtml</code> or the file type extension of <code>*.xhtml</code> then HTML encoding may not work to mitigate against XSS.</p>
 <p>For example:</p>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="o">&amp;</span><span class="err">#</span><span class="nx">x61</span><span class="p">;</span><span class="nx">lert</span><span class="p">(</span><span class="mf">1</span><span class="p">);</span>
+<span class="o">&amp;</span><span class="n">#x61</span><span class="p">;</span><span class="nx">lert</span><span class="p">(</span><span class="mf">1</span><span class="p">);</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
 <p>The HTML encoded value above is still executable. If that isn't enough to keep in mind, you have to remember that encodings are lost when you retrieve them using the value attribute of a DOM element.</p>

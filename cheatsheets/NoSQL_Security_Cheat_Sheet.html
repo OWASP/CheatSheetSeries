@@ -3238,7 +3238,7 @@ This cheat sheet summarizes guidance to reduce risk when using NoSQL systems.</p
 <li>Sanitize and validate any raw expressions before passing to the DB.</li>
 </ul>
 <h4 id="example-pymongo-safe-usage">Example — PyMongo safe usage<a class="headerlink" href="#example-pymongo-safe-usage" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">pymongo</span> <span class="kn">import</span> <span class="n">MongoClient</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pymongo</span><span class="w"> </span><span class="kn">import</span> <span class="n">MongoClient</span>
 <span class="n">client</span> <span class="o">=</span> <span class="n">MongoClient</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">tls</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">collection</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">mydb</span><span class="o">.</span><span class="n">users</span>
 <span class="n">user</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">find_one</span><span class="p">({</span><span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="n">email_input</span><span class="p">})</span>

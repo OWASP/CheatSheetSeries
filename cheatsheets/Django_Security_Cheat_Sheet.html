@@ -3110,16 +3110,16 @@
 <ul>
 <li>Use the <code>@login_required</code> decorator to ensure that only authenticated users can access a view. The sample code below illustrates usage of <code>@login_required</code>.</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">django.contrib.auth.decorators</span> <span class="kn">import</span> <span class="n">login_required</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">django.contrib.auth.decorators</span><span class="w"> </span><span class="kn">import</span> <span class="n">login_required</span>
 
 <span class="c1"># User is redirected to default login page if not authenticated.</span>
 <span class="nd">@login_required</span>
-<span class="k">def</span> <span class="nf">my_view</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">my_view</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
   <span class="c1"># Your view logic</span>
 
 <span class="c1"># User is redirected to custom &#39;/login-page/&#39; if not authenticated.</span>
 <span class="nd">@login_required</span><span class="p">(</span><span class="n">login_url</span><span class="o">=</span><span class="s1">&#39;/login-page/&#39;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">my_view</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">my_view</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
   <span class="c1"># Your view logic</span>
 </code></pre></div>
 <ul>
@@ -3154,14 +3154,14 @@
 <ul>
 <li>Store passwords using <code>make-password</code> utility function to hash a plain-text password.</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">django.contrib.auth.hashers</span> <span class="kn">import</span> <span class="n">make_password</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">django.contrib.auth.hashers</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_password</span>
 <span class="c1">#...</span>
 <span class="n">hashed_pwd</span> <span class="o">=</span> <span class="n">make_password</span><span class="p">(</span><span class="s1">&#39;plaintext_password&#39;</span><span class="p">)</span>
 </code></pre></div>
 <ul>
 <li>Check a plaintext password against a hashed password by using the  <code>check-password</code> utility function.</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">django.contrib.auth.hashers</span> <span class="kn">import</span> <span class="n">check_password</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">django.contrib.auth.hashers</span><span class="w"> </span><span class="kn">import</span> <span class="n">check_password</span>
 <span class="c1">#...</span>
 <span class="n">plain_pwd</span> <span class="o">=</span> <span class="s1">&#39;plaintext_password&#39;</span>
 <span class="n">hashed_pwd</span> <span class="o">=</span> <span class="s1">&#39;hashed_password_from_database&#39;</span>
@@ -3178,7 +3178,7 @@
 <li>Ensure that the <code>SECRET_KEY</code> is generated using a strong random generator, such as <code>get_random_secret_key()</code> function in Django.</li>
 <li>Avoid hard coding the <code>SECRET_KEY</code> value in settings.py or any other location. Consider storing the key-value in environment variables or secrets managers.</li>
 </ul>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">os</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;DJANGO_SECRET_KEY&#39;</span><span class="p">)</span>
 </code></pre></div>
 <ul>

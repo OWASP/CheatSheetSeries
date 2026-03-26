@@ -3388,7 +3388,7 @@
 <h3 id="api12019-broken-object-level-authorization">API1:2019 Broken Object Level Authorization<a class="headerlink" href="#api12019-broken-object-level-authorization" title="Permanent link">&para;</a></h3>
 <p>When using object-level permissions, you should make sure that the object can be accessed by the user using the method <code>.check_object_permissions(request, obj)</code>.</p>
 <p>Example:</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_object</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_object</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="n">obj</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_queryset</span><span class="p">(),</span> <span class="n">pk</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;pk&quot;</span><span class="p">])</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">check_object_permissions</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">obj</span>

@@ -3490,8 +3490,8 @@ The user leverages the web application as a proxy to the HR system.</p>
 </ol>
 <p>The following Python3 script can be used, as a starting point, for the monitoring mentioned above:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Dependencies: pip install ipaddress dnspython</span>
-<span class="kn">import</span> <span class="nn">ipaddress</span>
-<span class="kn">import</span> <span class="nn">dns.resolver</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ipaddress</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">dns.resolver</span>
 
 <span class="c1"># Configure the allowlist to check</span>
 <span class="n">DOMAINS_ALLOWLIST</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;owasp.org&quot;</span><span class="p">,</span> <span class="s2">&quot;labslinux&quot;</span><span class="p">]</span>
@@ -3500,7 +3500,7 @@ The user leverages the web application as a proxy to the HR system.</p>
 <span class="n">DNS_RESOLVER</span> <span class="o">=</span> <span class="n">dns</span><span class="o">.</span><span class="n">resolver</span><span class="o">.</span><span class="n">Resolver</span><span class="p">()</span>
 <span class="n">DNS_RESOLVER</span><span class="o">.</span><span class="n">nameservers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;1.1.1.1&quot;</span><span class="p">]</span>
 
-<span class="k">def</span> <span class="nf">verify_dns_records</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">records</span><span class="p">,</span> <span class="nb">type</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">verify_dns_records</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">records</span><span class="p">,</span> <span class="nb">type</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Verify if one of the DNS records resolve to a non public IP address.</span>
 <span class="sd">    Return a boolean indicating if any error has been detected.</span>
@@ -3521,7 +3521,7 @@ The user leverages the web application as a proxy to the HR system.</p>
                 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[!] &#39;</span><span class="si">%s</span><span class="s2">&#39; is not valid IP address!&quot;</span> <span class="o">%</span> <span class="n">value</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">error_detected</span>
 
-<span class="k">def</span> <span class="nf">check</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Perform the check of the allowlist of domains.</span>
 <span class="sd">    Return a boolean indicating if any error has been detected.</span>
