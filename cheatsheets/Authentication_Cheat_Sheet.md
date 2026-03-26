@@ -345,9 +345,9 @@ U2F augments password-based authentication using a hardware token (typically USB
 
 #### Hardware-backed Key Storage
 
-For platform passkeys, the private key is generated and stored by the operating system's secure key manager. Modern platforms typically provide hardware-backed protection for these keys, such as the Trusted Platform Module (TPM) on Windows, Secure Enclave on Apple devices, or the Android Keystore/StrongBox on Android.
+For many authenticators, including common platform passkeys, the private key is generated and stored by the operating system's secure key manager. Depending on the platform and authenticator, keys may be protected using hardware-backed components such as the Trusted Platform Module (TPM) on Windows, Secure Enclave on Apple devices, or the Android Keystore/StrongBox on Android, or by other software-based mechanisms.
 
-The private key is non-exportable and remains on the user’s device. During authentication, the platform security module signs a server challenge using this key. This hardware-backed protection of private keys is a core security property of passkeys and WebAuthn.
+In typical implementations, the private key is intended to be non-exportable and bound to the authenticator, and the platform security module signs a server challenge using this key. However, some authenticators support credential synchronization or backup that may involve export or server-side storage, and not all implementations are hardware-backed. Relying parties should not assume that keys are hardware-backed and non-exportable unless this is verified (for example, via authenticator properties or attestation).
 
 ## Password Managers
 
