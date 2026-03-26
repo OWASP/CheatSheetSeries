@@ -425,7 +425,7 @@ None.
 
 ### V9.1 Token source and integrity
 
-[JSON Web Token Cheat Sheet](cheatsheets/JSON_Web_Token_Cheat_Sheet.md)
+[Authentication Cheat Sheet (JWT)](cheatsheets/Authentication_Cheat_Sheet.md#json-web-tokens-jwt)
 
 [SAML Security Cheat Sheet](cheatsheets/SAML_Security_Cheat_Sheet.md)
 

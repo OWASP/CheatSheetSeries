@@ -345,7 +345,7 @@ U2F augments password-based authentication using a hardware token (typically USB
 
 ### JSON Web Tokens (JWT)
 
-JSON Web Tokens (JWT, [RFC 7519](https://datatracker.ietf.org/doc/html/rfc7519)) are a compact, URL-safe way to represent claims between two parties. They are widely used as bearer tokens in authentication and authorization flows, including as OIDC ID tokens and OAuth 2.0 access tokens.
+JSON Web Tokens (JWT, [RFC 7519](https://datatracker.ietf.org/doc/html/rfc7519)) are a compact, URL-safe way to represent claims between two parties. A JWT consists of three base64url-encoded parts separated by dots: a **header** (algorithm and token type), a **payload** (claims such as subject, issuer, expiration), and a **signature**. They are widely used as bearer tokens in authentication and authorization flows, including as OIDC ID tokens and OAuth 2.0 access tokens.
 
 #### When to Use (and Not Use) JWTs
 
@@ -353,21 +353,27 @@ JWTs are well-suited for stateless authentication across distributed systems and
 
 - **Use** JWTs when stateless, cross-service token passing is required or when following standards like OIDC or OAuth 2.0.
 - **Avoid** JWTs as a drop-in replacement for server-side sessions in applications that need immediate revocation (e.g., on logout), unless a token denylist or short expiry with refresh tokens is in place.
-- **Avoid** storing sensitive or secret data in JWT payloads — the payload is base64-encoded, not encrypted by default.
+- **Avoid** storing sensitive or secret data in JWT payloads — the payload is base64url-encoded, not encrypted by default.
+
+If your application does not need to be fully stateless, consider using traditional server-side sessions and follow the [Session Management Cheat Sheet](Session_Management_Cheat_Sheet.md).
 
 #### Common JWT Implementation Mistakes
 
 The following mistakes are frequently observed in JWT-based authentication implementations:
 
-- **Insecure token storage**: Storing JWTs in `localStorage` or `sessionStorage` exposes them to cross-site scripting (XSS) attacks. Prefer HttpOnly cookies with `Secure` and `SameSite=Strict` flags, or use in-memory storage (e.g., JavaScript closures). If web storage must be used, ensure a strong Content Security Policy is in place and implement token fingerprinting.
-- **Missing or weak expiration**: Always set a short `exp` (expiration) claim. Long-lived tokens increase the window of exploitation if a token is compromised. Use short-lived access tokens paired with refresh tokens to balance security and usability.
-- **Accepting the `none` algorithm**: Never accept tokens with `alg: none`. Always explicitly specify and enforce the expected signing algorithm server-side. Do not allow the client to influence which algorithm is used.
-- **Skipping claim validation**: Always validate the `iss` (issuer), `aud` (audience), `exp` (expiration), and `nbf` (not before) claims before trusting the token. Failing to validate these claims is a common source of privilege escalation and token reuse vulnerabilities.
-- **Sensitive data in the payload**: JWT payloads are only base64-encoded, not encrypted. Do not store passwords, PII, secret keys, or other sensitive information in the payload. Use JSON Web Encryption (JWE) if payload confidentiality is required.
-- **Weak signing secrets**: HMAC-based JWTs (e.g., HS256) are only as secure as their secret. Use a cryptographically random secret of at least 256 bits. For distributed validation scenarios (where multiple services verify tokens), prefer asymmetric algorithms such as RS256 or ES256.
-- **No token revocation mechanism**: JWTs are stateless and remain valid until they expire. Implement a token denylist, keep expiry times short, or use refresh token rotation to support logout and revocation. See the [JSON Web Token Cheat Sheet](JSON_Web_Token_Cheat_Sheet.md) for implementation guidance.
+- **Accepting the `none` algorithm**: Never accept tokens signed with `alg: none`. Always explicitly specify and enforce the expected signing algorithm server-side; do not allow the client to dictate which algorithm is used.
+- **Skipping claim validation**: Always validate the `iss` (issuer), `aud` (audience), `exp` (expiration), and `nbf` (not before) claims. Failing to validate these is a common source of privilege escalation and token reuse vulnerabilities.
+- **Missing or weak expiration**: Always set a short `exp` claim. Long-lived tokens extend the window of exploitation if compromised. Use short-lived access tokens paired with refresh tokens to balance security and usability.
+- **Weak signing secrets**: HMAC-based JWTs (e.g., HS256) are only as secure as their signing secret. Use a cryptographically random secret of at least 256 bits. For distributed validation scenarios where multiple services verify tokens, prefer asymmetric algorithms such as RS256 or ES256 to avoid sharing a symmetric key across services.
+- **Sensitive data in the payload**: JWT payloads are base64url-encoded, not encrypted. Do not store passwords, PII, secret keys, or other sensitive data in the payload. Use JSON Web Encryption (JWE, [RFC 7516](https://datatracker.ietf.org/doc/html/rfc7516)) if payload confidentiality is required.
+- **Insecure token storage**: Storing JWTs in `localStorage` or `sessionStorage` exposes them to cross-site scripting (XSS) attacks. Prefer HttpOnly cookies with `Secure` and `SameSite=Strict` flags, or use in-memory storage (e.g., JavaScript closures). If web storage must be used, enforce a strict Content Security Policy and apply token fingerprinting (see below).
+- **Token sidejacking**: A stolen or intercepted token can be replayed by an attacker. Mitigate by binding the token to the user's browser session: generate a random fingerprint string at authentication time, store it in a hardened HttpOnly, Secure, SameSite=Strict cookie, and embed only its SHA-256 hash in the JWT payload. Validate the fingerprint on every request; any token replayed without the matching cookie must be rejected.
+- **No token revocation**: JWTs remain valid until they expire; there is no built-in logout. Options include: (a) short expiry times with refresh token rotation; (b) a server-side token denylist that stores a SHA-256 digest of revoked tokens until their natural expiry; or (c) combining token fingerprinting with `sessionStorage` so that clearing storage effectively prevents further token use.
 
-For comprehensive JWT implementation guidance including code examples, see the [JSON Web Token Cheat Sheet](JSON_Web_Token_Cheat_Sheet.md).
+#### Further Reading
+
+- [RFC 8725 — JSON Web Token Best Current Practices](https://datatracker.ietf.org/doc/html/rfc8725)
+- [{JWT}.{Attack}.Playbook](https://github.com/ticarpi/jwt_tool/wiki) — documents known JWT attacks and misconfigurations
 
 ## Password Managers
 

@@ -241,7 +241,7 @@ None.
 
 ### V3.5 Token-based Session Management
 
-[JSON Web Token Cheat Sheet](cheatsheets/JSON_Web_Token_Cheat_Sheet.md)
+[Authentication Cheat Sheet (JWT)](cheatsheets/Authentication_Cheat_Sheet.md#json-web-tokens-jwt)
 
 [REST Security Cheat Sheet](cheatsheets/REST_Security_Cheat_Sheet.md)
 
