@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Forgot_Password_Cheat_Sheet.html">
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Subdomain_Takeover_Prevention_Cheat_Sheet.html">
       
       
-        <link rel="prev" href="File_Upload_Cheat_Sheet.html">
+        <link rel="prev" href="Software_Supply_Chain_Security_Cheat_Sheet.html">
       
       
-        <link rel="next" href="GraphQL_Cheat_Sheet.html">
+        <link rel="next" href="Symfony_Cheat_Sheet.html">
       
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
@@ -24,7 +24,7 @@
     
     
       
-        <title>Forgot Password - OWASP Cheat Sheet Series</title>
+        <title>Subdomain Takeover Prevention - OWASP Cheat Sheet Series</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#forgot-password-cheat-sheet" class="md-skip">
+        <a href="#subdomain-takeover-prevention-cheat-sheet" class="md-skip">
           Skip to content
         </a>
       
@@ -111,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Forgot Password
+              Subdomain Takeover Prevention
             
           </span>
         </div>
@@ -1126,30 +1126,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Forgot Password
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="Forgot_Password_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="Forgot_Password_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1158,137 +1138,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    <span class="md-ellipsis">
-      Introduction
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#forgot-password-service" class="md-nav__link">
-    <span class="md-ellipsis">
-      Forgot Password Service
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Forgot Password Service">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#forgot-password-request" class="md-nav__link">
-    <span class="md-ellipsis">
-      Forgot Password Request
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#user-resets-password" class="md-nav__link">
-    <span class="md-ellipsis">
-      User Resets Password
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#methods" class="md-nav__link">
-    <span class="md-ellipsis">
-      Methods
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Methods">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#general-security-practices" class="md-nav__link">
-    <span class="md-ellipsis">
-      General Security Practices
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#url-tokens" class="md-nav__link">
-    <span class="md-ellipsis">
-      URL Tokens
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pins" class="md-nav__link">
-    <span class="md-ellipsis">
-      PINs
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#offline-methods" class="md-nav__link">
-    <span class="md-ellipsis">
-      Offline Methods
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#security-questions" class="md-nav__link">
-    <span class="md-ellipsis">
-      Security Questions
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#account-lockout" class="md-nav__link">
-    <span class="md-ellipsis">
-      Account Lockout
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -2432,10 +2281,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="Subdomain_Takeover_Prevention_Cheat_Sheet.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Subdomain Takeover Prevention
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="Subdomain_Takeover_Prevention_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -2444,6 +2313,248 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-subdomain-takeover-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How Subdomain Takeover Works
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How Subdomain Takeover Works">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-basic-mechanism" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Basic Mechanism
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-it-keeps-happening" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why It Keeps Happening
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#record-types-at-risk" class="md-nav__link">
+    <span class="md-ellipsis">
+      Record Types at Risk
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cloud-provider-vulnerability-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cloud Provider Vulnerability Reference
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cloud Provider Vulnerability Reference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#high-risk-takeover-possible-when-resource-is-removed" class="md-nav__link">
+    <span class="md-ellipsis">
+      High Risk: Takeover Possible When Resource Is Removed
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conditional-risk-takeover-possible-under-specific-circumstances" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conditional Risk: Takeover Possible Under Specific Circumstances
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#service-fingerprints-for-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Service Fingerprints for Detection
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prevention-strategies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prevention Strategies
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Prevention Strategies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-manage-dns-record-lifecycle-during-decommissioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Manage DNS Record Lifecycle During Decommissioning
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-maintain-a-dns-inventory-linked-to-resource-ownership" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Maintain a DNS Inventory Linked to Resource Ownership
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-implement-automated-dangling-record-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Implement Automated Dangling Record Detection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-use-domain-verification-where-available" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Use Domain Verification Where Available
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-restrict-wildcard-dns-records" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Restrict Wildcard DNS Records
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-establish-a-decommissioning-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Establish a Decommissioning Checklist
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-limit-the-blast-radius-with-proper-security-scoping" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Limit the Blast Radius with Proper Security Scoping
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#monitoring-and-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Monitoring and Detection
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Monitoring and Detection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#continuous-dns-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      Continuous DNS Monitoring
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#indicators-of-compromise" class="md-nav__link">
+    <span class="md-ellipsis">
+      Indicators of Compromise
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incident-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      Incident Response
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2933,28 +3044,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#forgot-password-service" class="md-nav__link">
+  <a href="#how-subdomain-takeover-works" class="md-nav__link">
     <span class="md-ellipsis">
-      Forgot Password Service
+      How Subdomain Takeover Works
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Forgot Password Service">
+    <nav class="md-nav" aria-label="How Subdomain Takeover Works">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#forgot-password-request" class="md-nav__link">
+  <a href="#the-basic-mechanism" class="md-nav__link">
     <span class="md-ellipsis">
-      Forgot Password Request
+      The Basic Mechanism
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#user-resets-password" class="md-nav__link">
+  <a href="#why-it-keeps-happening" class="md-nav__link">
     <span class="md-ellipsis">
-      User Resets Password
+      Why It Keeps Happening
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#record-types-at-risk" class="md-nav__link">
+    <span class="md-ellipsis">
+      Record Types at Risk
     </span>
   </a>
   
@@ -2966,55 +3086,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#methods" class="md-nav__link">
+  <a href="#cloud-provider-vulnerability-reference" class="md-nav__link">
     <span class="md-ellipsis">
-      Methods
+      Cloud Provider Vulnerability Reference
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Methods">
+    <nav class="md-nav" aria-label="Cloud Provider Vulnerability Reference">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#general-security-practices" class="md-nav__link">
+  <a href="#high-risk-takeover-possible-when-resource-is-removed" class="md-nav__link">
     <span class="md-ellipsis">
-      General Security Practices
+      High Risk: Takeover Possible When Resource Is Removed
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#url-tokens" class="md-nav__link">
+  <a href="#conditional-risk-takeover-possible-under-specific-circumstances" class="md-nav__link">
     <span class="md-ellipsis">
-      URL Tokens
+      Conditional Risk: Takeover Possible Under Specific Circumstances
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#pins" class="md-nav__link">
+  <a href="#service-fingerprints-for-detection" class="md-nav__link">
     <span class="md-ellipsis">
-      PINs
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#offline-methods" class="md-nav__link">
-    <span class="md-ellipsis">
-      Offline Methods
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#security-questions" class="md-nav__link">
-    <span class="md-ellipsis">
-      Security Questions
+      Service Fingerprints for Detection
     </span>
   </a>
   
@@ -3026,9 +3128,129 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#account-lockout" class="md-nav__link">
+  <a href="#prevention-strategies" class="md-nav__link">
     <span class="md-ellipsis">
-      Account Lockout
+      Prevention Strategies
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Prevention Strategies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-manage-dns-record-lifecycle-during-decommissioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Manage DNS Record Lifecycle During Decommissioning
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-maintain-a-dns-inventory-linked-to-resource-ownership" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Maintain a DNS Inventory Linked to Resource Ownership
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-implement-automated-dangling-record-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Implement Automated Dangling Record Detection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-use-domain-verification-where-available" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Use Domain Verification Where Available
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-restrict-wildcard-dns-records" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Restrict Wildcard DNS Records
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-establish-a-decommissioning-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Establish a Decommissioning Checklist
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-limit-the-blast-radius-with-proper-security-scoping" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Limit the Blast Radius with Proper Security Scoping
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#monitoring-and-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Monitoring and Detection
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Monitoring and Detection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#continuous-dns-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      Continuous DNS Monitoring
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#indicators-of-compromise" class="md-nav__link">
+    <span class="md-ellipsis">
+      Indicators of Compromise
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incident-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      Incident Response
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
     </span>
   </a>
   
@@ -3052,100 +3274,326 @@
   
 
 
-<h1 id="forgot-password-cheat-sheet">Forgot Password Cheat Sheet<a class="headerlink" href="#forgot-password-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h1 id="subdomain-takeover-prevention-cheat-sheet">Subdomain Takeover Prevention Cheat Sheet<a class="headerlink" href="#subdomain-takeover-prevention-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>In order to implement a proper user management system, systems integrate a <strong>Forgot Password</strong> service that allows the user to request a password reset.</p>
-<p>Even though this functionality looks straightforward and easy to implement, it is a common source of vulnerabilities, such as the renowned <a href="https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/03-Identity_Management_Testing/04-Testing_for_Account_Enumeration_and_Guessable_User_Account.html">user enumeration attack</a>.</p>
-<p>The following short guidelines can be used as a quick reference to protect the forgot password service:</p>
+<p>Subdomain takeover is a vulnerability that occurs when a DNS record (typically a CNAME) points to a cloud resource or third-party service that has been deprovisioned or no longer exists. An attacker can claim the orphaned resource and serve arbitrary content on the victim's subdomain.</p>
+<p>This vulnerability is consistently among the most reported findings in bug bounty programs. Despite being well understood, it remains prevalent because it is fundamentally an operational problem: teams create DNS records when spinning up services but rarely have processes to clean them up during decommissioning.</p>
+<p>The impact extends far beyond serving a defacement page. An attacker controlling a subdomain can:</p>
 <ul>
-<li><strong>Return a consistent message for both existent and non-existent accounts.</strong></li>
-<li><strong>Ensure that the time taken for the user response message is uniform.</strong></li>
-<li><strong>Use a side-channel to communicate the method to reset their password.</strong></li>
-<li><strong>Use <a href="#url-tokens">URL tokens</a> for the simplest and fastest implementation.</strong></li>
-<li><strong>Ensure that generated tokens or codes are:</strong><ul>
-<li><strong>Randomly generated using a cryptographically safe algorithm.</strong></li>
-<li><strong>Sufficiently long to protect against brute-force attacks.</strong></li>
-<li><strong>Stored securely.</strong></li>
-<li><strong>Single use and expire after an appropriate period.</strong></li>
+<li><strong>Steal session cookies</strong> scoped to the parent domain (e.g., cookies set on <code>.example.com</code> are sent to <code>attacker-controlled.example.com</code>)</li>
+<li><strong>Bypass Content Security Policy</strong> rules that trust wildcard subdomains (<code>*.example.com</code>)</li>
+<li><strong>Host convincing phishing pages</strong> on a domain the organization's users and customers already trust</li>
+<li><strong>Compromise OAuth and SSO flows</strong> that whitelist the subdomain as a valid redirect URI</li>
+<li><strong>Obtain valid TLS certificates</strong> for the subdomain from Certificate Authorities that use HTTP or email-based domain validation</li>
+<li><strong>Receive email</strong> addressed to the subdomain if MX records are involved, enabling password resets or account verification on third-party services</li>
 </ul>
-</li>
-<li><strong>Do not make a change to the account until a valid token is presented, such as locking out the account.</strong></li>
-</ul>
-<p>This cheat sheet is focused on resetting users passwords. For guidance on resetting multifactor authentication (MFA), see the relevant section in the <a href="Multifactor_Authentication_Cheat_Sheet.html#resetting-mfa">Multifactor Authentication Cheat Sheet</a>.</p>
-<h2 id="forgot-password-service">Forgot Password Service<a class="headerlink" href="#forgot-password-service" title="Permanent link">&para;</a></h2>
-<p>The password reset process can be broken into two main steps, detailed in the following sections.</p>
-<h3 id="forgot-password-request">Forgot Password Request<a class="headerlink" href="#forgot-password-request" title="Permanent link">&para;</a></h3>
-<p>When a user uses the forgot password service and inputs their username or email, the below should be followed to implement a secure process:</p>
-<ul>
-<li>Return a consistent message for both existent and non-existent accounts.</li>
-<li>Ensure that responses return in a consistent amount of time to prevent an attacker enumerating which accounts exist. This could be achieved by using asynchronous calls or by making sure that the same logic is followed, instead of using a quick exit method.</li>
-<li>Implement protections against excessive automated submissions such as rate-limiting on a per-account basis, requiring a CAPTCHA, or other controls. Otherwise an attacker could make thousands of password reset requests per hour for a given account, flooding the user's intake system (e.g., email inbox or SMS) with useless requests.</li>
-<li>Employ normal security measures, such as <a href="SQL_Injection_Prevention_Cheat_Sheet.html">SQL Injection Prevention methods</a> and <a href="Input_Validation_Cheat_Sheet.html">Input Validation</a>.</li>
-</ul>
-<h3 id="user-resets-password">User Resets Password<a class="headerlink" href="#user-resets-password" title="Permanent link">&para;</a></h3>
-<p>Once the user has proved their identity by providing the token (sent via an email) or code (sent via SMS or other mechanisms), they should reset their password to a new secure one. In order to secure this step, the measures that should be taken are:</p>
-<ul>
-<li>The user should confirm the password they set by writing it twice.</li>
-<li>Ensure that a secure password policy is in place, and is consistent with the rest of the application.</li>
-<li>Update and store the password following <a href="Password_Storage_Cheat_Sheet.html">secure practices</a>.</li>
-<li>Send the user an email informing them that their password has been reset (do not send the password in the email!).</li>
-<li>Once they have set their new password, the user should then login through the usual mechanism. Don't automatically log the user in, as this introduces additional complexity to the authentication and session handling code, and increases the likelihood of introducing vulnerabilities.</li>
-<li>Ask the user if they want to invalidate all of their existing sessions, or invalidate the sessions automatically.</li>
-</ul>
-<h2 id="methods">Methods<a class="headerlink" href="#methods" title="Permanent link">&para;</a></h2>
-<p>In order to allow a user to request a password reset, you will need to have some way to identify the user, or a means to reach out to them through a side-channel.</p>
-<p>This can be done through any of the following methods:</p>
-<ul>
-<li><a href="#url-tokens">URL tokens</a>.</li>
-<li><a href="#pins">PINs</a></li>
-<li><a href="#offline-methods">Offline methods</a></li>
-<li><a href="#security-questions">Security questions</a>.</li>
-</ul>
-<p>These methods can be used together to provide a greater degree of assurance that the user is who they claim to be. No matter what, you must ensure that a user always has a way to recover their account, even if that involves contacting the support team and proving their identity to staff.</p>
-<h3 id="general-security-practices">General Security Practices<a class="headerlink" href="#general-security-practices" title="Permanent link">&para;</a></h3>
-<p>It is essential to employ good security practices for the reset identifiers (tokens, codes, PINs, etc.). Some points don't apply to the <a href="#offline-methods">offline methods</a>, such as the lifetime restriction. All tokens and codes should be:</p>
-<ul>
-<li>Generated using a <a href="Cryptographic_Storage_Cheat_Sheet.html#secure-random-number-generation">cryptographically secure random number generator</a>.<ul>
-<li>It is also possible to use JSON Web Tokens (JWTs) in place of random tokens, although this can introduce additional vulnerability, such as those discussed in the <a href="JSON_Web_Token_for_Java_Cheat_Sheet.html">JSON Web Token Cheat Sheet</a>.</li>
-</ul>
-</li>
-<li>Long enough to protect against brute-force attacks.</li>
-<li>Linked to an individual user in the database.</li>
-<li>Invalidated after they have been used.</li>
-<li>Stored in a secure manner, as discussed in the <a href="Password_Storage_Cheat_Sheet.html">Password Storage Cheat Sheet</a>.</li>
-</ul>
-<h3 id="url-tokens">URL Tokens<a class="headerlink" href="#url-tokens" title="Permanent link">&para;</a></h3>
-<p>URL tokens are passed in the query string of the URL, and are typically sent to the user via email. The basic overview of the process is as follows:</p>
+<p>This cheat sheet provides practical guidance for developers, DevOps engineers, and infrastructure teams to prevent subdomain takeovers, detect dangling records before attackers do, and respond effectively when they are discovered.</p>
+<h2 id="how-subdomain-takeover-works">How Subdomain Takeover Works<a class="headerlink" href="#how-subdomain-takeover-works" title="Permanent link">&para;</a></h2>
+<h3 id="the-basic-mechanism">The Basic Mechanism<a class="headerlink" href="#the-basic-mechanism" title="Permanent link">&para;</a></h3>
 <ol>
-<li>Generate a token for the user and attach it in the URL query string.</li>
-<li>Send this token to the user via email.
-   - Don't rely on the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Host">Host</a> header while creating the reset URLs to avoid <a href="https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/07-Input_Validation_Testing/17-Testing_for_Host_Header_Injection">Host Header Injection</a> attacks. The URL should either be hard-coded, or validated against a list of trusted domains.
-   - Ensure that the URL is using HTTPS.</li>
-<li>The user receives the email, and browses to the URL with the attached token.
-   - Ensure that the reset password page adds the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy">Referrer Policy</a> tag with the <code>noreferrer</code> value in order to avoid <a href="https://portswigger.net/kb/issues/00500400_cross-domain-referer-leakage">referrer leakage</a>.
-   - Implement appropriate protection to prevent users from brute-forcing tokens in the URL, such as rate limiting.</li>
-<li>If required, perform any additional validation steps such as requiring the user to answer <a href="#security-questions">security questions</a>.</li>
-<li>Let the user create a new password and confirm it. Ensure that the same password policy used elsewhere in the application is applied.</li>
+<li>An organization creates a DNS record: <code>blog.example.com CNAME example-blog.herokuapp.com</code></li>
+<li>The Heroku app serves content on <code>blog.example.com</code></li>
+<li>Months later, the team decommissions the Heroku app but forgets to remove the DNS record</li>
+<li>The CNAME still points to <code>example-blog.herokuapp.com</code>, which no longer exists</li>
+<li>An attacker creates a new Heroku app with the name <code>example-blog</code> and claims the hostname</li>
+<li>The attacker now controls what is served on <code>blog.example.com</code></li>
 </ol>
-<p><em>Note:</em> URL tokens can follow on the same behavior of the <a href="#pins">PINs</a> by creating a restricted session from the token. Decision should be made based on the needs and the expertise of the developer.</p>
-<h3 id="pins">PINs<a class="headerlink" href="#pins" title="Permanent link">&para;</a></h3>
-<p>PINs are numbers (between 6 and 12 digits) that are sent to the user through a side-channel such as SMS.</p>
+<h3 id="why-it-keeps-happening">Why It Keeps Happening<a class="headerlink" href="#why-it-keeps-happening" title="Permanent link">&para;</a></h3>
+<p>The root cause is almost always a disconnect between infrastructure provisioning and DNS management:</p>
+<ul>
+<li><strong>Cloud resources are temporary, DNS records are persistent.</strong> Teams spin up and tear down services frequently, but DNS records tend to accumulate unless explicitly managed.</li>
+<li><strong>Different teams own different parts.</strong> The team that created the cloud resource may not have access to DNS management, and the team that manages DNS may not know the resource was removed.</li>
+<li><strong>No automated link between resources and DNS.</strong> Most organizations have no mechanism to detect when a DNS target stops existing.</li>
+<li><strong>Shadow IT and forgotten proof-of-concepts.</strong> Developers create temporary subdomains for testing or demos and never clean them up.</li>
+<li><strong>Mergers, acquisitions, and reorganizations.</strong> DNS zones inherited from acquired companies are often poorly inventoried, and the original infrastructure owners are no longer available.</li>
+</ul>
+<h3 id="record-types-at-risk">Record Types at Risk<a class="headerlink" href="#record-types-at-risk" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>CNAME records</strong> are the most common vector. If the canonical name resolves to a service that can be claimed, takeover is possible.</li>
+<li><strong>A records</strong> pointing to released IP addresses can be vulnerable if the IP is reassigned and the attacker obtains it. This is common in cloud environments where elastic IPs are released back to the provider's pool.</li>
+<li><strong>NS records</strong> delegating a subdomain to a third-party DNS provider are particularly dangerous. If the account at the DNS provider is closed, anyone who creates a new account can potentially claim the delegated zone and control all records under that subdomain.</li>
+<li><strong>MX records</strong> pointing to deprovisioned mail services can allow an attacker to receive email for the subdomain. Beyond intercepting password reset emails, this enables a more severe attack: most Certificate Authorities accept email-based domain validation (DV) using addresses like <code>admin@subdomain.example.com</code>. An attacker controlling MX records can complete DV challenges and obtain legitimate TLS certificates for the subdomain, enabling transparent HTTPS phishing or man-in-the-middle attacks.</li>
+</ul>
+<h2 id="cloud-provider-vulnerability-reference">Cloud Provider Vulnerability Reference<a class="headerlink" href="#cloud-provider-vulnerability-reference" title="Permanent link">&para;</a></h2>
+<p>Not all cloud services are equally vulnerable. The key factor is whether the service allows a new customer to claim a previously used hostname or resource name. This table is a snapshot; cloud providers continuously update their policies, so always verify current behavior against the community-maintained <a href="https://github.com/EdOverflow/can-i-take-over-xyz">can-i-take-over-xyz</a> repository.</p>
+<h3 id="high-risk-takeover-possible-when-resource-is-removed">High Risk: Takeover Possible When Resource Is Removed<a class="headerlink" href="#high-risk-takeover-possible-when-resource-is-removed" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Provider/Service</th>
+<th>Vulnerable Resource</th>
+<th>Indicator (CNAME Target)</th>
+<th>Takeover Mechanism</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AWS S3 (Website Hosting)</td>
+<td>S3 bucket</td>
+<td><code>*.s3.amazonaws.com</code>, <code>*.s3-website-*.amazonaws.com</code></td>
+<td>Bucket names are globally unique across all AWS accounts. If a bucket is deleted, any AWS account can recreate it with the same name and serve content on the CNAME.</td>
+</tr>
+<tr>
+<td>AWS Elastic Beanstalk</td>
+<td>Environment</td>
+<td><code>*.elasticbeanstalk.com</code></td>
+<td>Environment CNAMEs are globally unique and released on environment termination. An attacker can create a new environment with the same CNAME prefix.</td>
+</tr>
+<tr>
+<td>Azure App Service</td>
+<td>Web App</td>
+<td><code>*.azurewebsites.net</code></td>
+<td>App names are globally unique. After deletion, any Azure tenant can create a new app with the same name. Azure offers a <a href="https://learn.microsoft.com/en-us/azure/app-service/app-service-web-tutorial-custom-domain">domain verification mechanism</a> to mitigate this; see Prevention Strategies.</td>
+</tr>
+<tr>
+<td>Azure Traffic Manager</td>
+<td>Profile</td>
+<td><code>*.trafficmanager.net</code></td>
+<td>Profile names are globally unique and reclaimable after deletion.</td>
+</tr>
+<tr>
+<td>Azure CDN</td>
+<td>Endpoint</td>
+<td><code>*.azureedge.net</code></td>
+<td>Endpoint names are globally unique. A deleted endpoint name can be registered by another tenant.</td>
+</tr>
+<tr>
+<td>GitHub Pages (Custom Domains)</td>
+<td>Custom domain on repository</td>
+<td><code>*.github.io</code></td>
+<td>The primary risk is with custom domain configurations. When a repository using a custom domain is deleted or made private, the custom domain association is removed and an attacker can configure the same custom domain on their own GitHub Pages repository. Note: claiming the default <code>username.github.io</code> subdomain requires registering that GitHub username, which is not possible while the original account exists.</td>
+</tr>
+<tr>
+<td>Heroku</td>
+<td>App</td>
+<td><code>*.herokuapp.com</code></td>
+<td>App names are globally unique and released on app deletion. Any Heroku account can claim the name.</td>
+</tr>
+<tr>
+<td>Shopify</td>
+<td>Store</td>
+<td><code>shops.myshopify.com</code></td>
+<td>Custom domain associations can be claimed by any Shopify store.</td>
+</tr>
+<tr>
+<td>Netlify</td>
+<td>Site</td>
+<td><code>*.netlify.app</code>, <code>*.netlify.com</code></td>
+<td>Site names are reclaimable after deletion.</td>
+</tr>
+<tr>
+<td>Fastly</td>
+<td>CDN service</td>
+<td><code>*.fastly.net</code>, <code>*.global.ssl.fastly.net</code></td>
+<td>An attacker with a Fastly account can add the victim's domain to their own Fastly service configuration.</td>
+</tr>
+<tr>
+<td>Zendesk</td>
+<td>Support portal</td>
+<td><code>*.zendesk.com</code></td>
+<td>Support portal subdomain names can be reclaimed by new Zendesk accounts.</td>
+</tr>
+<tr>
+<td>Cargo Collective</td>
+<td>Portfolio</td>
+<td><code>*.cargocollective.com</code></td>
+<td>Portfolio names are reclaimable.</td>
+</tr>
+<tr>
+<td>Tumblr</td>
+<td>Blog</td>
+<td><code>*.tumblr.com</code></td>
+<td>Custom domain associations are released when a blog is deleted.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="conditional-risk-takeover-possible-under-specific-circumstances">Conditional Risk: Takeover Possible Under Specific Circumstances<a class="headerlink" href="#conditional-risk-takeover-possible-under-specific-circumstances" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Provider/Service</th>
+<th>Condition</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AWS CloudFront</td>
+<td>Distribution deleted while CNAME remains</td>
+<td>When a CloudFront distribution is deleted but the CNAME record still points to the <code>*.cloudfront.net</code> hostname, an attacker can create a new CloudFront distribution and add the victim's domain as an alternate domain name (CNAME). CloudFront does not always verify domain ownership when adding alternate domain names, making this exploitable. If the distribution still exists but is merely disabled, takeover is not possible.</td>
+</tr>
+<tr>
+<td>AWS Route 53 (NS Delegation)</td>
+<td>NS delegation to deleted hosted zone</td>
+<td>If a subdomain's NS records delegate to a Route 53 hosted zone that has been deleted, an attacker can create a new hosted zone for the same subdomain and may receive the same NS server assignments, effectively taking control of all DNS records for that subdomain.</td>
+</tr>
+<tr>
+<td>Google Cloud Storage</td>
+<td>Bucket deleted</td>
+<td>GCS bucket names are globally unique and can be reclaimed after deletion. Google imposes rate limits on bucket creation and may temporarily reserve recently deleted names, but this is not a documented security guarantee and should not be relied upon as a protection. Remove DNS records when decommissioning GCS buckets.</td>
+</tr>
+<tr>
+<td>Cloudflare</td>
+<td>Misconfigured SaaS setup</td>
+<td>Standard Cloudflare usage requires domain ownership verification via nameserver delegation. However, Cloudflare for SaaS (custom hostnames) configurations should use the <a href="https://developers.cloudflare.com/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/">custom hostname verification</a> feature to prevent hostname claim conflicts.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="service-fingerprints-for-detection">Service Fingerprints for Detection<a class="headerlink" href="#service-fingerprints-for-detection" title="Permanent link">&para;</a></h3>
+<p>When scanning for potential subdomain takeovers, look for these distinctive error responses that indicate the backend resource no longer exists:</p>
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Error Response Pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AWS S3</td>
+<td><code>NoSuchBucket</code>, <code>The specified bucket does not exist</code></td>
+</tr>
+<tr>
+<td>GitHub Pages</td>
+<td><code>There isn't a GitHub Pages site here.</code></td>
+</tr>
+<tr>
+<td>Heroku</td>
+<td><code>No such app</code>, <code>herokucdn.com/error-pages/no-such-app.html</code></td>
+</tr>
+<tr>
+<td>Azure App Service</td>
+<td><code>404 Web Site not found</code> on <code>*.azurewebsites.net</code></td>
+</tr>
+<tr>
+<td>Shopify</td>
+<td><code>Sorry, this shop is currently unavailable.</code></td>
+</tr>
+<tr>
+<td>Netlify</td>
+<td><code>Not Found - Request ID:</code></td>
+</tr>
+<tr>
+<td>Fastly</td>
+<td><code>Fastly error: unknown domain:</code></td>
+</tr>
+<tr>
+<td>Zendesk</td>
+<td><code>Help Center Closed</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="prevention-strategies">Prevention Strategies<a class="headerlink" href="#prevention-strategies" title="Permanent link">&para;</a></h2>
+<h3 id="1-manage-dns-record-lifecycle-during-decommissioning">1. Manage DNS Record Lifecycle During Decommissioning<a class="headerlink" href="#1-manage-dns-record-lifecycle-during-decommissioning" title="Permanent link">&para;</a></h3>
+<p>The correct order of operations when decommissioning a service is:</p>
 <ol>
-<li>Generate a PIN.</li>
-<li>Send it to the user via SMS or another mechanism.
-   - Breaking the PIN up with spaces makes it easier for the user to read and enter.</li>
-<li>The user then enters the PIN along with their username on the password reset page.</li>
-<li>Create a limited session from that PIN that only permits the user to reset their password.</li>
-<li>Let the user create a new password and confirm it. Ensure that the same password policy used elsewhere in the application is applied.</li>
+<li><strong>Redirect or serve a maintenance page</strong> at the subdomain to avoid broken links and user confusion during the transition period</li>
+<li><strong>Update or remove the DNS record</strong> pointing to the resource</li>
+<li><strong>Wait for DNS propagation</strong> (at least the TTL duration, typically 300 to 3600 seconds)</li>
+<li><strong>Then decommission the cloud resource</strong></li>
 </ol>
-<h3 id="offline-methods">Offline Methods<a class="headerlink" href="#offline-methods" title="Permanent link">&para;</a></h3>
-<p>Offline methods differ from other methods by allowing the user to reset their password without requesting a special identifier (such as a token or PIN) from the backend. However, authentication still needs to be conducted by the backend to ensure that the request is legitimate. Offline methods provide a certain identifier either on registration, or when the user wishes to configure it.</p>
-<p>These identifiers should be stored offline and in a secure fashion (<em>e.g.</em> password managers), and the backend should properly follow the <a href="#general-security-practices">general security practices</a>. Some implementations are built on <a href="Multifactor_Authentication_Cheat_Sheet.html#hardware-otp-tokens">hardware OTP tokens</a>, <a href="Multifactor_Authentication_Cheat_Sheet.html#certificates">certificates</a>, or any other implementation that could be used inside of an enterprise. These are out of scope for this cheat sheet.</p>
-<p>If account has MFA enabled, and you are looking for MFA recovery, different methods can be found in the corresponding <a href="Multifactor_Authentication_Cheat_Sheet.html#resetting-mfa">Multifactor Authentication cheat sheet</a>.</p>
-<h3 id="security-questions">Security Questions<a class="headerlink" href="#security-questions" title="Permanent link">&para;</a></h3>
-<p>Security questions should not be used as the sole mechanism for resetting passwords due to their answers frequently being easily guessable or obtainable by attackers. However, they can provide an additional layer of security when combined with the other methods discussed in this cheat sheet. If they are used, then ensure that secure questions are chosen as discussed in the <a href="Choosing_and_Using_Security_Questions_Cheat_Sheet.html">Security Questions cheat sheet</a>.</p>
-<h2 id="account-lockout">Account Lockout<a class="headerlink" href="#account-lockout" title="Permanent link">&para;</a></h2>
-<p>Accounts should not be locked out in response to a forgotten password attack, as this can be used to deny access to users with known usernames. For more details on account lockouts, see the <a href="Authentication_Cheat_Sheet.html">Authentication Cheat Sheet</a>.</p>
+<p>The common mistake is doing these steps in reverse: deleting the cloud resource first, which creates an immediate window for takeover that persists until someone notices the dangling record.</p>
+<p>In practice, immediately deleting the DNS record can cause disruption if the subdomain is linked from other pages, bookmarked by users, or indexed by search engines. Pointing the record to an internal server that returns an HTTP redirect to the main domain or a simple maintenance page is a reasonable intermediate step that eliminates the takeover risk while preserving a functional user experience during the transition.</p>
+<h3 id="2-maintain-a-dns-inventory-linked-to-resource-ownership">2. Maintain a DNS Inventory Linked to Resource Ownership<a class="headerlink" href="#2-maintain-a-dns-inventory-linked-to-resource-ownership" title="Permanent link">&para;</a></h3>
+<p>Keep a documented mapping between DNS records and the cloud resources they point to:</p>
+<ul>
+<li><strong>What resource</strong> does each CNAME, A, or NS record resolve to?</li>
+<li><strong>Which team</strong> owns the resource?</li>
+<li><strong>What project or service</strong> is it part of?</li>
+<li><strong>When</strong> was it created and when is it expected to be decommissioned?</li>
+<li><strong>What is the business justification</strong> for the subdomain?</li>
+</ul>
+<p>This can be as simple as a spreadsheet for small organizations or integrated into a Configuration Management Database (CMDB) for larger ones. The critical requirement is that it is consulted and updated during every infrastructure change. Infrastructure-as-Code tools like Terraform, Pulumi, or AWS CDK can also serve as a living inventory when DNS records and cloud resources are managed in the same codebase.</p>
+<h3 id="3-implement-automated-dangling-record-detection">3. Implement Automated Dangling Record Detection<a class="headerlink" href="#3-implement-automated-dangling-record-detection" title="Permanent link">&para;</a></h3>
+<p>Regularly scan DNS records to identify entries pointing to non-existent resources:</p>
+<ul>
+<li><strong>Scheduled scans:</strong> Run automated checks daily or weekly against all DNS records to verify that targets still resolve and respond with expected content, not cloud provider error pages.</li>
+<li><strong>CI/CD integration:</strong> Add DNS validation to deployment and teardown pipelines. When a service is removed, the pipeline should verify that associated DNS records are also removed before marking the decommissioning as complete.</li>
+<li><strong>DNS change monitoring:</strong> Alert when new CNAME records are created and when target resources return errors such as HTTP 404, NXDOMAIN, or cloud provider default error pages.</li>
+</ul>
+<p>Open-source tools for detection:</p>
+<ul>
+<li><a href="https://github.com/punk-security/dnsReaper">dnsReaper</a>: Actively maintained subdomain takeover scanner supporting 40+ service fingerprints with signature-based detection</li>
+<li><a href="https://github.com/projectdiscovery/nuclei">nuclei</a>: General-purpose vulnerability scanner with a dedicated set of <a href="https://github.com/projectdiscovery/nuclei-templates/tree/main/dns">subdomain takeover detection templates</a></li>
+<li><a href="https://github.com/EdOverflow/can-i-take-over-xyz">can-i-take-over-xyz</a>: Community-maintained reference documenting which services are and are not vulnerable, with proof-of-concept details</li>
+</ul>
+<h3 id="4-use-domain-verification-where-available">4. Use Domain Verification Where Available<a class="headerlink" href="#4-use-domain-verification-where-available" title="Permanent link">&para;</a></h3>
+<p>Several cloud providers offer domain verification mechanisms that prevent unauthorized users from associating a custom domain with their account. When available, these provide a strong defense layer:</p>
+<ul>
+<li><strong>Azure App Service:</strong> Supports <a href="https://learn.microsoft.com/en-us/azure/app-service/app-service-web-tutorial-custom-domain">custom domain verification via TXT records</a>. Adding a verification TXT record (e.g., <code>asuid.subdomain TXT &lt;verification-id&gt;</code>) ties the custom domain to a specific Azure subscription. Keep this TXT record in place even after decommissioning the App Service to prevent another tenant from claiming the domain.</li>
+<li><strong>Google Cloud:</strong> Many GCP services require domain verification through Google Search Console or a DNS TXT record before a custom domain can be associated. Retain verification records as long as the DNS record exists.</li>
+<li><strong>Cloudflare:</strong> Standard setup requires domain ownership via nameserver delegation. Cloudflare for SaaS configurations should use the <a href="https://developers.cloudflare.com/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/">custom hostname verification</a> feature.</li>
+<li><strong>AWS:</strong> AWS does not currently offer a universal domain verification mechanism for services like S3 or Elastic Beanstalk. For CloudFront, associating a distribution with a custom domain and keeping the distribution active (even if serving a redirect) prevents another account from claiming the domain name as an alternate CNAME.</li>
+</ul>
+<p>Where no domain verification is available, the DNS record itself is the only control. Removing it promptly on decommissioning is the only reliable protection.</p>
+<h3 id="5-restrict-wildcard-dns-records">5. Restrict Wildcard DNS Records<a class="headerlink" href="#5-restrict-wildcard-dns-records" title="Permanent link">&para;</a></h3>
+<p>Wildcard DNS records (<code>*.example.com</code>) are especially dangerous because they resolve for any subdomain, including those matching services that no longer exist. Any service that previously existed under the wildcard could potentially be taken over, and the organization may not even know which subdomains were in use.</p>
+<p>Avoid wildcard records unless absolutely necessary. If required:</p>
+<ul>
+<li>Scope them as narrowly as possible (e.g., <code>*.staging.example.com</code> rather than <code>*.example.com</code>)</li>
+<li>Combine with a reverse proxy or load balancer that maintains an allowlist of valid hostnames and returns an error for unrecognized ones</li>
+<li>Monitor Certificate Transparency logs for unexpected certificate issuance on subdomains matching the wildcard</li>
+</ul>
+<h3 id="6-establish-a-decommissioning-checklist">6. Establish a Decommissioning Checklist<a class="headerlink" href="#6-establish-a-decommissioning-checklist" title="Permanent link">&para;</a></h3>
+<p>Create a formal checklist that teams must follow when removing any externally facing service:</p>
+<ul>
+<li>[ ] Identify all DNS records (CNAME, A, MX, NS, TXT) associated with the service</li>
+<li>[ ] Point the DNS record to a maintenance page or redirect (if immediate removal causes user-facing disruption)</li>
+<li>[ ] Remove or update DNS records</li>
+<li>[ ] Wait for DNS propagation (at least the TTL duration)</li>
+<li>[ ] Decommission the cloud resource</li>
+<li>[ ] Revoke or let expire any SSL/TLS certificates issued for the subdomain</li>
+<li>[ ] Update the DNS inventory documentation</li>
+<li>[ ] Remove the subdomain from any OAuth redirect URI allowlists, CSP directives, or CORS configurations</li>
+<li>[ ] Verify that the subdomain no longer resolves or returns expected content</li>
+<li>[ ] Run a takeover detection scan against the subdomain to confirm it is not claimable</li>
+</ul>
+<h3 id="7-limit-the-blast-radius-with-proper-security-scoping">7. Limit the Blast Radius with Proper Security Scoping<a class="headerlink" href="#7-limit-the-blast-radius-with-proper-security-scoping" title="Permanent link">&para;</a></h3>
+<p>Even if a subdomain takeover occurs, limit the damage by properly scoping security controls:</p>
+<ul>
+<li><strong>Cookies:</strong> Do not scope session cookies to the parent domain (<code>.example.com</code>) unless necessary. Prefer setting cookies on the specific fully qualified subdomain (<code>app.example.com</code>). Use the <code>__Host-</code> cookie prefix where possible, which restricts the cookie to the exact origin.</li>
+<li><strong>Content Security Policy:</strong> Avoid using <code>*.example.com</code> in CSP directives. Explicitly list trusted subdomains. A taken-over subdomain matching a CSP wildcard allows the attacker to inject scripts or exfiltrate data without violating the policy.</li>
+<li><strong>CORS:</strong> Do not use wildcard subdomain patterns in <code>Access-Control-Allow-Origin</code> validation. Validate against an explicit allowlist of trusted origins.</li>
+<li><strong>OAuth/SSO:</strong> Do not whitelist entire subdomain patterns in redirect URI validations. Use exact-match redirect URIs. A taken-over subdomain in an OAuth redirect allowlist enables token theft.</li>
+<li><strong>Email (SPF/DKIM/DMARC):</strong> If SPF records include mechanisms that match the taken-over subdomain's IP, the attacker can send SPF-authenticated email appearing to originate from your domain.</li>
+</ul>
+<h2 id="monitoring-and-detection">Monitoring and Detection<a class="headerlink" href="#monitoring-and-detection" title="Permanent link">&para;</a></h2>
+<h3 id="continuous-dns-monitoring">Continuous DNS Monitoring<a class="headerlink" href="#continuous-dns-monitoring" title="Permanent link">&para;</a></h3>
+<p>Implement ongoing monitoring to catch dangling records before attackers do:</p>
+<ul>
+<li><strong>Compare DNS records against live resources.</strong> For every CNAME in your zone, verify the target still exists and responds with expected content rather than a cloud provider error page.</li>
+<li><strong>Monitor for service fingerprints.</strong> The error responses listed in the Service Fingerprints table above are strong indicators that a resource has been removed while the DNS record remains. Automated scanning for these patterns should run at least weekly.</li>
+<li><strong>Track DNS zone changes.</strong> Use version-controlled DNS management (e.g., Terraform, OctoDNS, or DNSControl) so all record additions and removals are reviewed, approved, and logged. This also creates an audit trail for investigating how a dangling record was introduced.</li>
+<li><strong>Monitor Certificate Transparency logs.</strong> Use services like <a href="https://crt.sh">crt.sh</a> or <a href="https://sslmate.com/certspotter/">certspotter</a> to alert on any certificate issuance for your subdomains. An unexpected certificate issued for a subdomain you don't control is a strong indicator that takeover has already occurred or is in progress.</li>
+</ul>
+<h3 id="indicators-of-compromise">Indicators of Compromise<a class="headerlink" href="#indicators-of-compromise" title="Permanent link">&para;</a></h3>
+<p>Signs that a subdomain may have already been taken over:</p>
+<ul>
+<li>Subdomain suddenly serves unexpected content, a parking page, or a different application than expected</li>
+<li>SSL/TLS certificate for the subdomain was issued to an unknown entity or organization (visible in Certificate Transparency logs)</li>
+<li>Users report phishing emails or pages appearing to come from the subdomain</li>
+<li>Web application firewall or proxy logs show the subdomain resolving to an IP address outside your known infrastructure ranges</li>
+<li>DMARC aggregate reports show email being sent from the subdomain that your organization did not originate</li>
+</ul>
+<h2 id="incident-response">Incident Response<a class="headerlink" href="#incident-response" title="Permanent link">&para;</a></h2>
+<p>If a subdomain takeover is discovered:</p>
+<ol>
+<li><strong>Remove the DNS record immediately.</strong> This is the fastest mitigation. It breaks the link between your domain and the attacker's resource. If the record cannot be removed quickly, update it to point to an IP or CNAME you control.</li>
+<li><strong>Revoke or request revocation of any certificates</strong> issued for the subdomain during the takeover period. Check Certificate Transparency logs to identify all certificates that were issued.</li>
+<li><strong>Assess the impact.</strong> Determine whether cookies scoped to the parent domain could have been stolen, whether phishing content was served and for how long, whether any OAuth or SSO flows referenced the subdomain, and whether the attacker could have received email for the subdomain (MX-based takeover).</li>
+<li><strong>Notify affected users</strong> if there is evidence that sensitive data was exposed, credentials were phished, or session cookies were intercepted.</li>
+<li><strong>Investigate the root cause.</strong> Identify the process gap that allowed the dangling record to persist and update decommissioning procedures to prevent recurrence.</li>
+<li><strong>Scan all DNS zones</strong> owned by the organization for other dangling records. The same process gap likely affects other subdomains.</li>
+<li><strong>Document the incident</strong> with a timeline, impact assessment, and corrective actions for internal review and to improve organizational response to future occurrences.</li>
+</ol>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/10-Test_for_Subdomain_Takeover">OWASP Web Security Testing Guide: Test for Subdomain Takeover (WSTG-CONFIG-10)</a></li>
+<li><a href="https://github.com/EdOverflow/can-i-take-over-xyz">can-i-take-over-xyz: Community-maintained list of vulnerable services</a></li>
+<li><a href="https://learn.microsoft.com/en-us/azure/security/fundamentals/subdomain-takeover">Microsoft: Prevent dangling DNS entries and avoid subdomain takeover</a></li>
+<li><a href="https://github.com/punk-security/dnsReaper">dnsReaper: Subdomain takeover detection tool</a></li>
+<li><a href="https://hackerone.com/hacktivity?querystring=subdomain+takeover">HackerOne Hacktivity: Subdomain takeover reports</a></li>
+</ul>
 
 
 
