@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This cheat sheet is intended to provide guidance for developers on how to defend against [Clickjacking](https://owasp.org/www-community/attacks/Clickjacking) (also known as UI redress attacks) and [Double Clickjacking](https://www.paulosyibelo.com/2024/12/doubleclickjacking-what.html?m=1) (also called forced multi-click exploitation)
+This cheat sheet is intended to provide guidance for developers on how to defend against [Clickjacking](https://owasp.org/www-community/attacks/Clickjacking) (also known as UI redress attacks) and [Double Clickjacking](https://www.paulosyibelo.com/2024/12/doubleclickjacking-what.html) (also called forced multi-click exploitation).
 
 ## Clickjacking
 
