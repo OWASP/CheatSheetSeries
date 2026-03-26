@@ -1,4 +1,4 @@
-# JSON Web Token Cheat Sheet for Java
+# JSON Web Token Cheat Sheet
 
 ## Introduction
 
@@ -51,7 +51,7 @@ HMACSHA256( base64UrlEncode(header) + "." + base64UrlEncode(payload), KEY )
 
 ## Objective
 
-This cheatsheet provides tips to prevent common security issues when using JSON Web Tokens (JWT) with Java.
+This cheat sheet provides tips to prevent common security issues when using JSON Web Tokens (JWT). While the code examples use Java, the security concepts and recommendations apply to all languages and frameworks.
 
 The tips presented in this article are part of a Java project that was created to show the correct way to handle creation and validation of JSON Web Tokens.
 
@@ -469,7 +469,7 @@ This occurs when an application stores the token in a manner exhibiting the foll
 
 1. Store the token using the browser *sessionStorage* container, or use JavaScript *closures* with *private* variables
 1. Add it as a *Bearer* HTTP `Authentication` header with JavaScript when calling services.
-1. Add [fingerprint](JSON_Web_Token_for_Java_Cheat_Sheet.md#token-sidejacking) information to the token.
+1. Add [fingerprint](JSON_Web_Token_Cheat_Sheet.md#token-sidejacking) information to the token.
 
 By storing the token in browser *sessionStorage* container it exposes the token to being stolen through an XSS attack. However, fingerprints added to the token prevent reuse of the stolen token by the attacker on their machine. To close a maximum of exploitation surfaces for an attacker, add a browser [Content Security Policy](https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html) to harden the execution context.
 

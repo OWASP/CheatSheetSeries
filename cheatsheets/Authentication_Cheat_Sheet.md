@@ -343,6 +343,32 @@ U2F augments password-based authentication using a hardware token (typically USB
 
 **FIDO2**: FIDO2 and WebAuthn, encompassing previous standards (UAF/U2F), form the foundation of modern **Passkeys** technology. Passkeys enable users to securely log in using local user verification (such as biometrics or device PINs) and often supporting cloud synchronization across devices. This technology is widely supported by major platforms. (Windows Hello/Mac Touch ID)
 
+### JSON Web Tokens (JWT)
+
+JSON Web Tokens (JWT, [RFC 7519](https://datatracker.ietf.org/doc/html/rfc7519)) are a compact, URL-safe way to represent claims between two parties. They are widely used as bearer tokens in authentication and authorization flows, including as OIDC ID tokens and OAuth 2.0 access tokens.
+
+#### When to Use (and Not Use) JWTs
+
+JWTs are well-suited for stateless authentication across distributed systems and for interoperating with standards such as OIDC and OAuth 2.0. However, they are not always the right choice:
+
+- **Use** JWTs when stateless, cross-service token passing is required or when following standards like OIDC or OAuth 2.0.
+- **Avoid** JWTs as a drop-in replacement for server-side sessions in applications that need immediate revocation (e.g., on logout), unless a token denylist or short expiry with refresh tokens is in place.
+- **Avoid** storing sensitive or secret data in JWT payloads — the payload is base64-encoded, not encrypted by default.
+
+#### Common JWT Implementation Mistakes
+
+The following mistakes are frequently observed in JWT-based authentication implementations:
+
+- **Insecure token storage**: Storing JWTs in `localStorage` or `sessionStorage` exposes them to cross-site scripting (XSS) attacks. Prefer HttpOnly cookies with `Secure` and `SameSite=Strict` flags, or use in-memory storage (e.g., JavaScript closures). If web storage must be used, ensure a strong Content Security Policy is in place and implement token fingerprinting.
+- **Missing or weak expiration**: Always set a short `exp` (expiration) claim. Long-lived tokens increase the window of exploitation if a token is compromised. Use short-lived access tokens paired with refresh tokens to balance security and usability.
+- **Accepting the `none` algorithm**: Never accept tokens with `alg: none`. Always explicitly specify and enforce the expected signing algorithm server-side. Do not allow the client to influence which algorithm is used.
+- **Skipping claim validation**: Always validate the `iss` (issuer), `aud` (audience), `exp` (expiration), and `nbf` (not before) claims before trusting the token. Failing to validate these claims is a common source of privilege escalation and token reuse vulnerabilities.
+- **Sensitive data in the payload**: JWT payloads are only base64-encoded, not encrypted. Do not store passwords, PII, secret keys, or other sensitive information in the payload. Use JSON Web Encryption (JWE) if payload confidentiality is required.
+- **Weak signing secrets**: HMAC-based JWTs (e.g., HS256) are only as secure as their secret. Use a cryptographically random secret of at least 256 bits. For distributed validation scenarios (where multiple services verify tokens), prefer asymmetric algorithms such as RS256 or ES256.
+- **No token revocation mechanism**: JWTs are stateless and remain valid until they expire. Implement a token denylist, keep expiry times short, or use refresh token rotation to support logout and revocation. See the [JSON Web Token Cheat Sheet](JSON_Web_Token_Cheat_Sheet.md) for implementation guidance.
+
+For comprehensive JWT implementation guidance including code examples, see the [JSON Web Token Cheat Sheet](JSON_Web_Token_Cheat_Sheet.md).
+
 ## Password Managers
 
 Password managers are programs, browser plugins, or web services that automate the management of a large quantity of different credentials. Most password managers have functionality to allow users to easily use them on websites, either:

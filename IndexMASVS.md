@@ -46,7 +46,7 @@ This index is based on version [2.1.0](https://github.com/OWASP/owasp-masvs/rele
 
 [Access Control Cheat Sheet](cheatsheets/Access_Control_Cheat_Sheet.md)
 
-[JSON Web Token Cheat Sheet for Java](cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.md)
+[JSON Web Token Cheat Sheet](cheatsheets/JSON_Web_Token_Cheat_Sheet.md)
 
 [Credential Stuffing Prevention Cheat Sheet](cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.md)
 
