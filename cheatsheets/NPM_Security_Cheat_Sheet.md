@@ -249,7 +249,7 @@ Closing our list of npm security best practices are the following tips to reduce
 - Default to having an npm logged-out user in your daily work routines so your credentials won’t be the weak spot that would lead to easily compromising your account.
 - When installing packages, append the `--ignore-scripts` to reduce the risk of arbitrary command execution. For example: `npm install my-malicious-package --ignore-scripts`
 
-## ## 12) Prevent dependency confusion attacks
+## 12) Prevent dependency confusion attacks
 
 A dependency confusion attack occurs when an attacker publishes a malicious package on the public npm registry using the same name as your internal private package, but with a higher version number. When you run `npm install`, npm may resolve the public malicious package instead of your internal one because of the higher version.
 
