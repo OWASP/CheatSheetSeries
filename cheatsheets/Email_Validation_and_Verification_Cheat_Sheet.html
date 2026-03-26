@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html">
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Email_Validation_and_Verification_Cheat_Sheet.html">
       
       
-        <link rel="prev" href="PHP_Configuration_Cheat_Sheet.html">
+        <link rel="prev" href="Drone_Security_Cheat_Sheet.html">
       
       
-        <link rel="next" href="Pinning_Cheat_Sheet.html">
+        <link rel="next" href="Error_Handling_Cheat_Sheet.html">
       
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
@@ -24,7 +24,7 @@
     
     
       
-        <title>Password Storage - OWASP Cheat Sheet Series</title>
+        <title>Email Validation and Verification - OWASP Cheat Sheet Series</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#password-storage-cheat-sheet" class="md-skip">
+        <a href="#email-validation-and-verification-in-identity-systems-cheat-sheet" class="md-skip">
           Skip to content
         </a>
       
@@ -111,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Password Storage
+              Email Validation and Verification
             
           </span>
         </div>
@@ -1084,10 +1084,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="Email_Validation_and_Verification_Cheat_Sheet.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Email Validation and Verification
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="Email_Validation_and_Verification_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -1096,6 +1116,326 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#goals" class="md-nav__link">
+    <span class="md-ellipsis">
+      Goals
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#threat-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Threat Model
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#email-canonicalization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Email Canonicalization
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Email Canonicalization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recommendations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#email-format-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Email Format Validation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Email Format Validation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendations_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recommendations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unicode-and-idn-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Unicode and IDN Considerations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Unicode and IDN Considerations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendations_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recommendations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#case-sensitivity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Case Sensitivity
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Case Sensitivity">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recommendation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#email-ownership-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      Email Ownership Verification
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Email Ownership Verification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendations_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recommendations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#password-reset-flows" class="md-nav__link">
+    <span class="md-ellipsis">
+      Password Reset Flows
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Password Reset Flows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendations_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recommendations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#email-change-workflows" class="md-nav__link">
+    <span class="md-ellipsis">
+      Email Change Workflows
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Email Change Workflows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendations_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recommendations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anti-enumeration-controls" class="md-nav__link">
+    <span class="md-ellipsis">
+      Anti-Enumeration Controls
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Anti-Enumeration Controls">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendations_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recommendations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#temporary-email-abuse" class="md-nav__link">
+    <span class="md-ellipsis">
+      Temporary Email Abuse
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Temporary Email Abuse">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendations_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recommendations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#email-as-an-authentication-factor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Email as an Authentication Factor
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Email as an Authentication Factor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendations_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recommendations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logging-and-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      Logging and Monitoring
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Logging and Monitoring">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendations_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recommendations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1903,30 +2243,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Password Storage
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="Password_Storage_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="Password_Storage_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1935,281 +2255,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    <span class="md-ellipsis">
-      Introduction
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#background" class="md-nav__link">
-    <span class="md-ellipsis">
-      Background
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Background">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#hashing-vs-encryption" class="md-nav__link">
-    <span class="md-ellipsis">
-      Hashing vs Encryption
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#when-password-hashes-can-be-cracked" class="md-nav__link">
-    <span class="md-ellipsis">
-      When Password Hashes Can Be Cracked
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#methods-for-enhancing-password-storage" class="md-nav__link">
-    <span class="md-ellipsis">
-      Methods for Enhancing Password Storage
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Methods for Enhancing Password Storage">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#salting" class="md-nav__link">
-    <span class="md-ellipsis">
-      Salting
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#peppering" class="md-nav__link">
-    <span class="md-ellipsis">
-      Peppering
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Peppering">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#common-requirements-for-peppering-strategies" class="md-nav__link">
-    <span class="md-ellipsis">
-      Common requirements for peppering strategies
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pre-hashing-peppers" class="md-nav__link">
-    <span class="md-ellipsis">
-      Pre-hashing peppers
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#post-hashing-peppers" class="md-nav__link">
-    <span class="md-ellipsis">
-      Post-hashing peppers
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#using-work-factors" class="md-nav__link">
-    <span class="md-ellipsis">
-      Using Work Factors
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Using Work Factors">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#upgrading-the-work-factor" class="md-nav__link">
-    <span class="md-ellipsis">
-      Upgrading the Work Factor
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#password-hashing-algorithms" class="md-nav__link">
-    <span class="md-ellipsis">
-      Password Hashing Algorithms
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Password Hashing Algorithms">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#argon2id" class="md-nav__link">
-    <span class="md-ellipsis">
-      Argon2id
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#scrypt" class="md-nav__link">
-    <span class="md-ellipsis">
-      scrypt
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#bcrypt" class="md-nav__link">
-    <span class="md-ellipsis">
-      bcrypt
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="bcrypt">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#input-limits-of-bcrypt" class="md-nav__link">
-    <span class="md-ellipsis">
-      Input Limits of bcrypt
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pre-hashing-passwords-with-bcrypt" class="md-nav__link">
-    <span class="md-ellipsis">
-      Pre-Hashing Passwords with bcrypt
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pbkdf2" class="md-nav__link">
-    <span class="md-ellipsis">
-      PBKDF2
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#parallel-pbkdf2" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parallel PBKDF2
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Parallel PBKDF2">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#pbkdf2-pre-hashing" class="md-nav__link">
-    <span class="md-ellipsis">
-      PBKDF2 Pre-Hashing
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#upgrading-legacy-hashes" class="md-nav__link">
-    <span class="md-ellipsis">
-      Upgrading Legacy Hashes
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Upgrading Legacy Hashes">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#international-characters" class="md-nav__link">
-    <span class="md-ellipsis">
-      International Characters
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -3119,28 +3164,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#background" class="md-nav__link">
+  <a href="#goals" class="md-nav__link">
     <span class="md-ellipsis">
-      Background
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Background">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#hashing-vs-encryption" class="md-nav__link">
-    <span class="md-ellipsis">
-      Hashing vs Encryption
+      Goals
     </span>
   </a>
   
 </li>
+      
+        <li class="md-nav__item">
+  <a href="#threat-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Threat Model
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#email-canonicalization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Email Canonicalization
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Email Canonicalization">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#when-password-hashes-can-be-cracked" class="md-nav__link">
+  <a href="#recommendations" class="md-nav__link">
     <span class="md-ellipsis">
-      When Password Hashes Can Be Cracked
+      Recommendations
     </span>
   </a>
   
@@ -3152,87 +3206,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#methods-for-enhancing-password-storage" class="md-nav__link">
+  <a href="#email-format-validation" class="md-nav__link">
     <span class="md-ellipsis">
-      Methods for Enhancing Password Storage
+      Email Format Validation
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Methods for Enhancing Password Storage">
+    <nav class="md-nav" aria-label="Email Format Validation">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#salting" class="md-nav__link">
+  <a href="#recommendations_1" class="md-nav__link">
     <span class="md-ellipsis">
-      Salting
+      Recommendations
     </span>
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#peppering" class="md-nav__link">
-    <span class="md-ellipsis">
-      Peppering
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Peppering">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#common-requirements-for-peppering-strategies" class="md-nav__link">
-    <span class="md-ellipsis">
-      Common requirements for peppering strategies
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pre-hashing-peppers" class="md-nav__link">
-    <span class="md-ellipsis">
-      Pre-hashing peppers
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#post-hashing-peppers" class="md-nav__link">
-    <span class="md-ellipsis">
-      Post-hashing peppers
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#using-work-factors" class="md-nav__link">
-    <span class="md-ellipsis">
-      Using Work Factors
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Using Work Factors">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#upgrading-the-work-factor" class="md-nav__link">
-    <span class="md-ellipsis">
-      Upgrading the Work Factor
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -3242,96 +3230,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#password-hashing-algorithms" class="md-nav__link">
+  <a href="#unicode-and-idn-considerations" class="md-nav__link">
     <span class="md-ellipsis">
-      Password Hashing Algorithms
+      Unicode and IDN Considerations
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Password Hashing Algorithms">
+    <nav class="md-nav" aria-label="Unicode and IDN Considerations">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#argon2id" class="md-nav__link">
+  <a href="#recommendations_2" class="md-nav__link">
     <span class="md-ellipsis">
-      Argon2id
+      Recommendations
     </span>
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#scrypt" class="md-nav__link">
-    <span class="md-ellipsis">
-      scrypt
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#bcrypt" class="md-nav__link">
-    <span class="md-ellipsis">
-      bcrypt
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="bcrypt">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#input-limits-of-bcrypt" class="md-nav__link">
-    <span class="md-ellipsis">
-      Input Limits of bcrypt
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pre-hashing-passwords-with-bcrypt" class="md-nav__link">
-    <span class="md-ellipsis">
-      Pre-Hashing Passwords with bcrypt
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pbkdf2" class="md-nav__link">
-    <span class="md-ellipsis">
-      PBKDF2
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#parallel-pbkdf2" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parallel PBKDF2
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Parallel PBKDF2">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#pbkdf2-pre-hashing" class="md-nav__link">
-    <span class="md-ellipsis">
-      PBKDF2 Pre-Hashing
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -3341,19 +3254,19 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#upgrading-legacy-hashes" class="md-nav__link">
+  <a href="#case-sensitivity" class="md-nav__link">
     <span class="md-ellipsis">
-      Upgrading Legacy Hashes
+      Case Sensitivity
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Upgrading Legacy Hashes">
+    <nav class="md-nav" aria-label="Case Sensitivity">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#international-characters" class="md-nav__link">
+  <a href="#recommendation" class="md-nav__link">
     <span class="md-ellipsis">
-      International Characters
+      Recommendation
     </span>
   </a>
   
@@ -3361,6 +3274,183 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#email-ownership-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      Email Ownership Verification
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Email Ownership Verification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendations_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recommendations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#password-reset-flows" class="md-nav__link">
+    <span class="md-ellipsis">
+      Password Reset Flows
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Password Reset Flows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendations_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recommendations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#email-change-workflows" class="md-nav__link">
+    <span class="md-ellipsis">
+      Email Change Workflows
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Email Change Workflows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendations_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recommendations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anti-enumeration-controls" class="md-nav__link">
+    <span class="md-ellipsis">
+      Anti-Enumeration Controls
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Anti-Enumeration Controls">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendations_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recommendations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#temporary-email-abuse" class="md-nav__link">
+    <span class="md-ellipsis">
+      Temporary Email Abuse
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Temporary Email Abuse">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendations_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recommendations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#email-as-an-authentication-factor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Email as an Authentication Factor
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Email as an Authentication Factor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendations_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recommendations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logging-and-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      Logging and Monitoring
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Logging and Monitoring">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommendations_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recommendations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
   
 </li>
       
@@ -3382,140 +3472,138 @@
   
 
 
-<h1 id="password-storage-cheat-sheet">Password Storage Cheat Sheet<a class="headerlink" href="#password-storage-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h1 id="email-validation-and-verification-in-identity-systems-cheat-sheet">Email Validation and Verification in Identity Systems Cheat Sheet<a class="headerlink" href="#email-validation-and-verification-in-identity-systems-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>This cheat sheet advises you on the proper methods for storing passwords for authentication. When passwords are stored, they must be protected from an attacker even if the application or database is compromised. Fortunately, a majority of modern languages and frameworks provide built-in functionality to help store passwords safely.</p>
-<p>However, once an attacker has acquired stored password hashes, they are always able to brute force hashes offline. Defenders can slow down offline attacks by selecting hash algorithms that are as resource intensive as possible.</p>
-<p>To sum up our recommendations:</p>
+<p>Email addresses are widely used as primary identifiers in authentication and account recovery workflows. Improper handling of email validation, normalization, and verification can lead to account takeover, user enumeration, and identity confusion.</p>
+<p>This cheat sheet provides guidance on securely handling email addresses within identity systems.</p>
+<h2 id="goals">Goals<a class="headerlink" href="#goals" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Use <a href="#argon2id">Argon2id</a> with a minimum configuration of 19 MiB of memory, an iteration count of 2, and 1 degree of parallelism.</strong></li>
-<li><strong>If <a href="#argon2id">Argon2id</a> is not available, use <a href="#scrypt">scrypt</a> with a minimum CPU/memory cost parameter of (2^17), a minimum block size of 8 (1024 bytes), and a parallelization parameter of 1.</strong></li>
-<li><strong>For legacy systems using <a href="#bcrypt">bcrypt</a>, use a work factor of 10 or more and with a password limit of 72 bytes.</strong></li>
-<li><strong>If FIPS-140 compliance is required, use <a href="#pbkdf2">PBKDF2</a> with a work factor of 600,000 or more and set with an internal hash function of HMAC-SHA-256.</strong></li>
-<li><strong>Consider using a <a href="#peppering">pepper</a> to provide additional defense in depth (though alone, it provides no additional secure characteristics).</strong></li>
+<li>Safely treat email as an identifier</li>
+<li>Prevent account takeover via email-based flows</li>
+<li>Reduce user enumeration risk</li>
+<li>Define secure verification and change workflows</li>
 </ul>
-<h2 id="background">Background<a class="headerlink" href="#background" title="Permanent link">&para;</a></h2>
-<h3 id="hashing-vs-encryption">Hashing vs Encryption<a class="headerlink" href="#hashing-vs-encryption" title="Permanent link">&para;</a></h3>
-<p>Hashing and encryption can keep sensitive data safe, but in almost all circumstances, <strong>passwords should be hashed, NOT encrypted.</strong></p>
-<p>Because <strong>hashing is a one-way function</strong> (i.e., it is impossible to "decrypt" a hash and obtain the original plaintext value), it is the most appropriate approach for password validation. Even if an attacker obtains the hashed password, they cannot use it to log in as the victim.</p>
-<p>Since <strong>encryption is a two-way function</strong>, attackers can retrieve the original plaintext from the encrypted data. It can be used to store data such as a user's address since this data is displayed in plaintext on the user's profile. Hashing their address would result in a garbled mess.</p>
-<p>The only time encryption should be used in passwords is in edge cases where it is necessary to obtain the original plaintext password. This might be necessary if the application needs to use the password to authenticate with another system that does not support a modern way to programmatically grant access, such as OpenID Connect (OIDC). Wherever possible, an alternative architecture should be used to avoid the need to store passwords in an encrypted form.</p>
-<p>For further guidance on encryption, see the <a href="Cryptographic_Storage_Cheat_Sheet.html">Cryptographic Storage Cheat Sheet</a>.</p>
-<h3 id="when-password-hashes-can-be-cracked">When Password Hashes Can Be Cracked<a class="headerlink" href="#when-password-hashes-can-be-cracked" title="Permanent link">&para;</a></h3>
-<p><strong>Strong passwords stored with modern hashing algorithms and using hashing best practices should be effectively impossible for an attacker to crack.</strong> It is your responsibility as an application owner to select a modern hashing algorithm.</p>
-<p>However, there are some situations where an attacker can "crack" the hashes in some circumstances by doing the following:</p>
+<h2 id="threat-model">Threat Model<a class="headerlink" href="#threat-model" title="Permanent link">&para;</a></h2>
+<p>Attackers may attempt to:</p>
 <ul>
-<li>Selecting a password you think the victim has chosen (e.g.<code>password1!</code>)</li>
-<li>Calculating the hash</li>
-<li>Comparing the hash you calculated to the hash of the victim. If they match, you have correctly "cracked" the hash and now know the plaintext value of their password.</li>
+<li>Register equivalent or visually similar email addresses</li>
+<li>Exploit inconsistent normalization logic</li>
+<li>Abuse password reset functionality</li>
+<li>Enumerate valid accounts</li>
+<li>Take over accounts through email change workflows</li>
 </ul>
-<p>Usually, the attacker will repeat this process with a list of large number of potential candidate passwords, such as:</p>
+<h2 id="email-canonicalization">Email Canonicalization<a class="headerlink" href="#email-canonicalization" title="Permanent link">&para;</a></h2>
+<p>Applications must define a consistent normalization strategy before storing or comparing email addresses.</p>
+<h3 id="recommendations">Recommendations<a class="headerlink" href="#recommendations" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Lists of passwords obtained from other compromised sites</li>
-<li>Brute force (trying every possible candidate)</li>
-<li>Dictionaries or wordlists of common passwords</li>
+<li>Normalize the domain portion to lowercase</li>
+<li>Avoid provider-specific transformations (e.g., Gmail dot removal) unless fully controlled</li>
+<li>Store both:<ul>
+<li>Original input (for display and communication)</li>
+<li>Canonical form (for comparison according to your policy)</li>
 </ul>
-<p>While the number of permutations can be enormous, with high speed hardware (such as GPUs) and cloud services with many servers for rent, the cost to an attacker is relatively small to do successful password cracking, especially when best practices for hashing are not followed.</p>
-<h2 id="methods-for-enhancing-password-storage">Methods for Enhancing Password Storage<a class="headerlink" href="#methods-for-enhancing-password-storage" title="Permanent link">&para;</a></h2>
-<h3 id="salting">Salting<a class="headerlink" href="#salting" title="Permanent link">&para;</a></h3>
-<p>A salt is a unique, randomly generated string that is added to each password as part of the hashing process. As the salt is unique for every user, an attacker has to crack hashes one at a time using the respective salt rather than calculating a hash once and comparing it against every stored hash. This makes cracking large numbers of hashes significantly harder, as the time required grows in direct proportion to the number of hashes.</p>
-<p>Salting also protects against an attacker's pre-computing hashes using rainbow tables or database-based lookups. Finally, salting means that it is impossible to determine whether two users have the same password without cracking the hashes, as the different salts will result in different hashes even if the passwords are the same.</p>
-<p>At the algorithm and specification level, modern password hashing functions such as <a href="#argon2id">Argon2id</a>, <a href="#bcrypt">bcrypt</a>, and <a href="#pbkdf2">PBKDF2</a> require the caller to provide a salt.
-However, most widely used implementations and libraries automatically generate and manage salts internally, so application developers typically do not need to handle salt generation manually when using these libraries correctly.</p>
-<h3 id="peppering">Peppering<a class="headerlink" href="#peppering" title="Permanent link">&para;</a></h3>
-<p><a href="https://datatracker.ietf.org/doc/html/draft-ietf-kitten-password-storage-07#section-4.2">Peppering</a> is a class of strategies that can be used in addition to salting to provide an additional layer of protection. It prevents an attacker from being able to crack any of the hashes if they only have access to the database, for example, if they have exploited a SQL injection vulnerability or obtained a backup of the database.</p>
-<h4 id="common-requirements-for-peppering-strategies">Common requirements for peppering strategies<a class="headerlink" href="#common-requirements-for-peppering-strategies" title="Permanent link">&para;</a></h4>
+</li>
+<li>Document the comparison policy explicitly and apply it consistently across registration, login, password reset, account recovery, and account linking flows</li>
+</ul>
+<h2 id="email-format-validation">Email Format Validation<a class="headerlink" href="#email-format-validation" title="Permanent link">&para;</a></h2>
+<p>Strict regex-based validation often rejects valid addresses or introduces inconsistencies.</p>
+<h3 id="recommendations_1">Recommendations<a class="headerlink" href="#recommendations_1" title="Permanent link">&para;</a></h3>
 <ul>
-<li>A pepper is <strong>shared between stored passwords</strong>, rather than being <em>unique</em> to an individual password like a password salt.</li>
-<li>Unlike a password salt, the pepper should not be public and <strong>should not be stored along with the generated hash</strong>. The pepper should be stored separately from the password database.</li>
-<li>Peppers are secrets and should be stored in "secrets vaults" or HSMs (Hardware Security Modules). See the <a href="Secrets_Management_Cheat_Sheet.html">Secrets Management Cheat Sheet</a> for more information on securely storing secrets.</li>
-<li>In the event of a pepper's compromise, the pepper will have to be changed. Peppers cannot be changed without knowledge of a user's password. Therefore changing a pepper will require forcing all users whose passwords were protected by the previous pepper to reset their passwords.</li>
+<li>Use well-tested libraries instead of custom regex</li>
+<li>Accept a broad range of valid formats</li>
+<li>Reject clearly malformed input only</li>
 </ul>
-<h4 id="pre-hashing-peppers">Pre-hashing peppers<a class="headerlink" href="#pre-hashing-peppers" title="Permanent link">&para;</a></h4>
-<p>In this strategy, a pepper is added to a password before being hashed by a password hashing algorithm. The computed hash is then stored in the database. In this case the pepper should be a random value generated securely. See the <a href="Cryptographic_Storage_Cheat_Sheet.html#secure-random-number-generation">Cryptographic_Storage_Cheat_Sheet</a> for more information on securely generating random values.</p>
-<h4 id="post-hashing-peppers">Post-hashing peppers<a class="headerlink" href="#post-hashing-peppers" title="Permanent link">&para;</a></h4>
-<p>In this strategy, a password is hashed as usual using a password hashing algorithm. The resulting password hash is then hashed again using an HMAC (e.g., HMAC-SHA256, HMAC-SHA512, depending on the desired output length) before storing the resulting hash in the database. In this case the pepper is acting as the HMAC key and should be generated as per requirements of the HMAC algorithm.</p>
-<h3 id="using-work-factors">Using Work Factors<a class="headerlink" href="#using-work-factors" title="Permanent link">&para;</a></h3>
-<p>The work factor is the number of iterations of the hashing algorithm that are performed for each password (usually, it's actually <code>2^work</code> iterations). The work factor is typically stored in the hash output. It makes calculating the hash more computationally expensive, which in turn reduces the speed and/or increases the cost for which an attacker can attempt to crack the password hash.</p>
-<p>When you choose a work factor, strike a balance between security and performance. Though higher work factors make hashes more difficult for an attacker to crack, they will slow down the process of verifying a login attempt. If the work factor is too high, the performance of the application may be degraded, which could be used by an attacker to carry out a denial of service attack by exhausting the server's CPU with a large number of login attempts.</p>
-<p>There is no golden rule for the ideal work factor - it will depend on the performance of the server and the number of users on the application. Determining the optimal work factor will require experimentation on the specific server(s) used by the application. As a general rule, calculating a hash should take less than one second.</p>
-<h4 id="upgrading-the-work-factor">Upgrading the Work Factor<a class="headerlink" href="#upgrading-the-work-factor" title="Permanent link">&para;</a></h4>
-<p>One key advantage of having a work factor is that it can be increased over time as hardware becomes more powerful and cheaper.</p>
-<p>The most common approach to upgrading the work factor is to wait until the user next authenticates, then re-hash their password with the new work factor. The different hashes will have different work factors and hashes may never be upgraded if the user doesn't log back into the application. Depending on the application, it may be appropriate to remove the older password hashes and require users to reset their passwords next time they need to login in order to avoid storing older and less secure hashes.</p>
-<h2 id="password-hashing-algorithms">Password Hashing Algorithms<a class="headerlink" href="#password-hashing-algorithms" title="Permanent link">&para;</a></h2>
-<p>Some modern hashing algorithms have been specifically designed to securely store passwords. This means that they should be slow (unlike algorithms such as MD5 and SHA-1, which were designed to be fast), and you can change how slow they are by changing the work factor.</p>
-<p>You do not need to hide which password hashing algorithm is used by an application. If you utilize a modern password hashing algorithm with proper configuration parameters, it should be safe to state in public which password hashing algorithms are in use and be listed <a href="https://pulse.michalspacek.cz/passwords/storages">here</a>.</p>
-<p>When selecting a password hashing algorithm, developers should prefer modern algorithms that are designed to resist both GPU-based and memory-based attacks.
-Where available, newer algorithms should be chosen for new applications, while older algorithms may still be acceptable for legacy systems with appropriate configuration.</p>
-<p>Three hashing algorithms that should be considered.</p>
-<h3 id="argon2id">Argon2id<a class="headerlink" href="#argon2id" title="Permanent link">&para;</a></h3>
-<p><a href="https://en.wikipedia.org/wiki/Argon2">Argon2</a> was the winner of the 2015 <a href="https://en.wikipedia.org/wiki/Password_Hashing_Competition">Password Hashing Competition</a>. Out of the three Argon2 versions, use the  Argon2id variant since it provides a balanced approach to resisting both side-channel and GPU-based attacks.</p>
-<p>Rather than a simple work factor like other algorithms, Argon2id has three different parameters that can be configured: the base minimum of the minimum memory size (m), the minimum number of iterations (t), and the degree of parallelism (p). We recommend the following configuration settings:</p>
-<p>These parameters control how computationally expensive it is to compute a password hash.
-Increasing memory usage, iteration count, or parallelism makes password cracking attempts significantly slower and more costly for attackers, while still remaining practical for legitimate authentication requests when tuned appropriately.</p>
+<h2 id="unicode-and-idn-considerations">Unicode and IDN Considerations<a class="headerlink" href="#unicode-and-idn-considerations" title="Permanent link">&para;</a></h2>
+<p>Unicode introduces spoofing risks via visually similar characters.</p>
+<h3 id="recommendations_2">Recommendations<a class="headerlink" href="#recommendations_2" title="Permanent link">&para;</a></h3>
 <ul>
-<li>m=47104 (46 MiB), t=1, p=1 (Do not use with Argon2i)</li>
-<li>m=19456 (19 MiB), t=2, p=1 (Do not use with Argon2i)</li>
-<li>m=12288 (12 MiB), t=3, p=1</li>
-<li>m=9216 (9 MiB), t=4, p=1</li>
-<li>m=7168 (7 MiB), t=5, p=1</li>
+<li>Normalize Unicode input</li>
+<li>Convert internationalized domains to punycode for comparison</li>
+<li>Be aware of homoglyph attacks (e.g., Latin vs Cyrillic characters)</li>
+<li>Be especially cautious with internationalized local-parts, because normalization and comparison behavior may differ across systems</li>
 </ul>
-<p>These configuration settings provide an equal level of defense, and the only difference is a trade off between CPU and RAM usage.</p>
-<h3 id="scrypt">scrypt<a class="headerlink" href="#scrypt" title="Permanent link">&para;</a></h3>
-<p><a href="http://www.tarsnap.com/scrypt/scrypt.pdf">scrypt</a> is a password-based key derivation function created by <a href="https://twitter.com/cperciva">Colin Percival</a>. While <a href="#argon2id">Argon2id</a> should be the best choice for password hashing, <a href="#scrypt">scrypt</a> should be used when the former is not available.</p>
-<p>Like <a href="#argon2id">Argon2id</a>, scrypt has three parameters that can be configured: the minimum memory cost parameter (N), the blocksize (r), and the degree of parallelism (p). Use one of the following settings:</p>
+<h2 id="case-sensitivity">Case Sensitivity<a class="headerlink" href="#case-sensitivity" title="Permanent link">&para;</a></h2>
 <ul>
-<li>N=2^17 (128 MiB), r=8 (1024 bytes), p=1</li>
-<li>N=2^16 (64 MiB), r=8 (1024 bytes), p=2</li>
-<li>N=2^15 (32 MiB), r=8 (1024 bytes), p=3</li>
-<li>N=2^14 (16 MiB), r=8 (1024 bytes), p=5</li>
-<li>N=2^13 (8 MiB), r=8 (1024 bytes), p=10</li>
+<li>Domain part: always case-insensitive</li>
+<li>Local part: technically case-sensitive under SMTP, though many providers do not enforce this in practice</li>
 </ul>
-<p>These configuration settings provide a similar minimal level of defense, with the main trade-off between parallelism and RAM usage.</p>
-<h3 id="bcrypt">bcrypt<a class="headerlink" href="#bcrypt" title="Permanent link">&para;</a></h3>
-<p>The <a href="https://en.wikipedia.org/wiki/bcrypt">bcrypt</a> password hashing function <strong>should only</strong> be used for password storage in legacy systems where Argon2 and scrypt are not available.</p>
-<p>The work factor should be as large as verification server performance will allow, with a minimum of 10.</p>
-<h4 id="input-limits-of-bcrypt">Input Limits of bcrypt<a class="headerlink" href="#input-limits-of-bcrypt" title="Permanent link">&para;</a></h4>
-<p>bcrypt has a maximum length input length of 72 bytes <a href="https://security.stackexchange.com/questions/39849/does-bcrypt-have-a-maximum-password-length">for most implementations</a>, so you should enforce a maximum password length of 72 bytes (or less if the bcrypt implementation in use has smaller limits).</p>
-<h4 id="pre-hashing-passwords-with-bcrypt">Pre-Hashing Passwords with bcrypt<a class="headerlink" href="#pre-hashing-passwords-with-bcrypt" title="Permanent link">&para;</a></h4>
-<p>An alternative approach is to pre-hash the user-supplied password with a fast algorithm such as SHA-2, HMAC, or BLAKE3 and then to hash the resulting hash value with bcrypt (i.e., <code>bcrypt(H($password)), $salt, $cost)</code>)..
-This can be <strong>dangerous</strong> because of null bytes in the hash output value and because of <a href="https://www.youtube.com/watch?v=OQD3qDYMyYQ">password shucking</a>.</p>
-<p>The original bcrypt expects a null terminated password string, this means that the hash value will only be used to the first null byte in the hash value. (<code>bcrypt(H($password)), $salt, $cost) == bcrypt("", $salt, $cost)</code> if <code>H($password)[0] == 0</code>)
-This increases the chance of finding a collision when <a href="https://blog.ircmaxell.com/2015/03/security-issue-combining-bcrypt-with.html">combining bcrypt with other hash functions</a> and can be avoided by encoding the hash value to printable string with something like base64.
-base64 can increases the length of the hash value above 72 characters and so there is a bit of truncation for large hash values from hashes like SHA-512, this is <a href="https://soatok.blog/2024/11/27/beyond-bcrypt/">negligible</a>.</p>
-<p>Password shucking uses the fact, that it is easy to check if  <code>bcrypt(base64(H($password))), $salt, $cost) == bcrypt(base64($leaked_hash), $salt, $cost)</code>.
-If the inner hash function <code>H</code> is used with the same password somewhere else and known to an attacker cracking the password can be reduced to breaking the hash function <code>H</code>.
-Just using pure SHA-512, ( i.e. <code>bcrypt(base64(sha512($password))), $salt, $cost)</code>) is a <strong>dangerous practice</strong> and is as secure as just using pure SHA-512.
-Password shucking only works if a leaked hash is known to the attacker, either through a breach database or rainbow tables.
-To mitigate password shucking a <a href="#peppering">pepper</a> can be used.</p>
-<p>To summarize if bcrypt has to be used and the password should to be pre-hashed you should do <code>bcrypt(base64(hmac-sha384(data:$password, key:$pepper)), $salt, $cost)</code> and store the pepper not in the database.</p>
-<h3 id="pbkdf2">PBKDF2<a class="headerlink" href="#pbkdf2" title="Permanent link">&para;</a></h3>
-<p>Since <a href="https://en.wikipedia.org/wiki/PBKDF2">PBKDF2</a> is recommended by <a href="https://pages.nist.gov/800-63-3/sp800-63b.html#memsecretver">NIST</a> and has FIPS-140 validated implementations, so it should be the preferred algorithm when these are required.</p>
-<p>The PBKDF2 algorithm requires that you select an internal hashing algorithm such as an HMAC or a variety of other hashing algorithms. HMAC-SHA-256 is widely supported and is recommended by NIST.</p>
-<p>The work factor for PBKDF2 is implemented through an iteration count, which should set differently based on the internal hashing algorithm used.</p>
+<h3 id="recommendation">Recommendation<a class="headerlink" href="#recommendation" title="Permanent link">&para;</a></h3>
 <ul>
-<li>PBKDF2-HMAC-SHA1: 1,400,000 iterations</li>
-<li>PBKDF2-HMAC-SHA256: 600,000 iterations</li>
-<li>PBKDF2-HMAC-SHA512: 220,000 iterations</li>
+<li>Preserve the original email address as entered by the user</li>
+<li>Define an explicit comparison policy for the local part based on your identity architecture and interoperability requirements</li>
+<li>Only fold or normalize the local part when the system fully owns that behavior and the decision will not create account-collision or mistaken-account risk</li>
 </ul>
-<h3 id="parallel-pbkdf2">Parallel PBKDF2<a class="headerlink" href="#parallel-pbkdf2" title="Permanent link">&para;</a></h3>
+<h2 id="email-ownership-verification">Email Ownership Verification<a class="headerlink" href="#email-ownership-verification" title="Permanent link">&para;</a></h2>
+<p>Email ownership must be verified before enabling account use.</p>
+<h3 id="recommendations_3">Recommendations<a class="headerlink" href="#recommendations_3" title="Permanent link">&para;</a></h3>
 <ul>
-<li>PPBKDF2-SHA512: cost 2</li>
-<li>PPBKDF2-SHA256: cost 5</li>
-<li>PPBKDF2-SHA1: cost 10</li>
+<li>Use cryptographically secure, random tokens</li>
+<li>Ensure tokens are:<ul>
+<li>Single-use</li>
+<li>Time-limited</li>
 </ul>
-<p>These configuration settings are equivalent in the defense they provide. (<a href="https://tobtu.com/minimum-password-settings/">Number as of december 2022, based on testing of RTX 4000 GPUs</a>)</p>
-<h4 id="pbkdf2-pre-hashing">PBKDF2 Pre-Hashing<a class="headerlink" href="#pbkdf2-pre-hashing" title="Permanent link">&para;</a></h4>
-<p>When PBKDF2 is used with an HMAC, and the password is longer than the hash function's block size (64 bytes for SHA-256), the password will be automatically pre-hashed. For example, the password "This is a password longer than 512 bits which is the block size of SHA-256" is converted to the hash value (in hex): <code>fa91498c139805af73f7ba275cca071e78d78675027000c99a9925e2ec92eedd</code>.</p>
-<p>Good implementations of PBKDF2 perform pre-hashing before the expensive iterated hashing phase. However, some implementations perform the conversion on each iteration, which can make hashing long passwords significantly more expensive than hashing short passwords. When users supply very long passwords, a potential denial of service vulnerability could occur, such as the one published in <a href="https://www.djangoproject.com/weblog/2013/sep/15/security/">Django</a> during 2013. Manual pre-hashing can reduce this risk but requires adding a <a href="#salting">salt</a> to the pre-hash step.</p>
-<h2 id="upgrading-legacy-hashes">Upgrading Legacy Hashes<a class="headerlink" href="#upgrading-legacy-hashes" title="Permanent link">&para;</a></h2>
-<p>Older applications that use less secure hashing algorithms, such as MD5 or SHA-1, can be upgraded to modern password hashing algorithms as described above. When the users enter their password (usually by authenticating on the application), that input should be re-hashed using the new algorithm. Defenders should expire the users' current password and require them to enter a new one, so that any older (less secure) hashes of their password are no longer useful to an attacker.</p>
-<p>However, this means that old (less secure) password hashes will be stored in the database until the user logs in. You can take one of two approaches to avoid this dilemma.</p>
-<p>Upgrade Method One: Expire and delete the password hashes of users who have been inactive for an extended period and require them to reset their passwords to login again. Although secure, this approach is not particularly user-friendly. Expiring the passwords of many users may cause issues for support staff or may be interpreted by users as an indication of a breach.</p>
-<p>Upgrade Method Two: Use the existing password hashes as inputs for a more secure algorithm. For example, if the application originally stored passwords as <code>md5($password)</code>, this could be easily upgraded to <code>bcrypt(md5($password))</code>. Layering the hashes avoids the need to know the original password; however, it can make the hashes easier to crack. These hashes should be replaced with direct hashes of the users' passwords next time the user logs in.</p>
-<p>Remember that once your password hashing method is selected, it will have to be upgraded in the future, so ensure that upgrading your hashing algorithm is as easy as possible. During the transition period, allow for a mix of old and new hashing algorithms. Using a mix of hashing algorithms is easier if the password hashing algorithm and work factor are stored with the password using a standard format, for example, the <a href="https://github.com/P-H-C/phc-string-format/blob/master/phc-sf-spec.md">modular PHC string format</a>.</p>
-<h3 id="international-characters">International Characters<a class="headerlink" href="#international-characters" title="Permanent link">&para;</a></h3>
-<p>Your hashing library must be able to accept a wide range of characters and should be compatible with all Unicode codepoints, so users can use the full range of characters available on modern devices - especially mobile keyboards. They should be able to select passwords from various languages and include pictograms. Prior to hashing the entropy of the user's entry should not be reduced, and password hashing libraries need to be able to use input that may contain a NULL byte.</p>
+</li>
+<li>Do not activate accounts before verification is completed</li>
+</ul>
+<h2 id="password-reset-flows">Password Reset Flows<a class="headerlink" href="#password-reset-flows" title="Permanent link">&para;</a></h2>
+<p>Password reset is a high-risk operation.</p>
+<h3 id="recommendations_4">Recommendations<a class="headerlink" href="#recommendations_4" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Use single-use, time-limited tokens</li>
+<li>Do not disclose whether an email exists in the system</li>
+<li>Invalidate tokens after use or expiration</li>
+<li>Rate limit reset requests</li>
+</ul>
+<h2 id="email-change-workflows">Email Change Workflows<a class="headerlink" href="#email-change-workflows" title="Permanent link">&para;</a></h2>
+<p>Changing an email address is equivalent to changing identity.</p>
+<h3 id="recommendations_5">Recommendations<a class="headerlink" href="#recommendations_5" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Require re-authentication</li>
+<li>Notify the existing email address of the change</li>
+<li>Require confirmation of the new email address</li>
+<li>Consider requiring confirmation from both addresses for high-risk systems</li>
+</ul>
+<h2 id="anti-enumeration-controls">Anti-Enumeration Controls<a class="headerlink" href="#anti-enumeration-controls" title="Permanent link">&para;</a></h2>
+<p>Attackers should not be able to determine whether an email is registered.</p>
+<h3 id="recommendations_6">Recommendations<a class="headerlink" href="#recommendations_6" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Use consistent responses for login and reset flows</li>
+<li>Avoid timing discrepancies between valid and invalid cases</li>
+<li>Implement rate limiting and monitoring</li>
+</ul>
+<h2 id="temporary-email-abuse">Temporary Email Abuse<a class="headerlink" href="#temporary-email-abuse" title="Permanent link">&para;</a></h2>
+<p>Disposable email services can be used to bypass controls.</p>
+<h3 id="recommendations_7">Recommendations<a class="headerlink" href="#recommendations_7" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Maintain a list of known disposable domains if appropriate</li>
+<li>Prefer risk-based controls over strict blocking</li>
+<li>Monitor for suspicious patterns of account creation</li>
+</ul>
+<h2 id="email-as-an-authentication-factor">Email as an Authentication Factor<a class="headerlink" href="#email-as-an-authentication-factor" title="Permanent link">&para;</a></h2>
+<p>Email should not be treated as a strong authentication factor.</p>
+<h3 id="recommendations_8">Recommendations<a class="headerlink" href="#recommendations_8" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Treat email as a weak factor</li>
+<li>Require multi-factor authentication (MFA) for sensitive operations</li>
+<li>Do not rely on email alone for account security</li>
+</ul>
+<h2 id="logging-and-monitoring">Logging and Monitoring<a class="headerlink" href="#logging-and-monitoring" title="Permanent link">&para;</a></h2>
+<p>Monitoring email-related flows helps detect abuse.</p>
+<h3 id="recommendations_9">Recommendations<a class="headerlink" href="#recommendations_9" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Log verification attempts and failures</li>
+<li>Monitor password reset activity</li>
+<li>Detect abnormal patterns (e.g., high-frequency requests)</li>
+<li>Avoid logging full email addresses; mask or pseudonymize them where logging is necessary (e.g., <code>j***@example.com</code>)</li>
+<li>Never log verification, reset, or authentication tokens or full verification/reset URLs</li>
+<li>Treat email addresses and related identifiers in logs as personal or sensitive data and restrict access accordingly</li>
+</ul>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://datatracker.ietf.org/doc/html/rfc5322">RFC 5322</a></li>
+<li><a href="Authentication_Cheat_Sheet.html">OWASP Authentication Cheat Sheet</a></li>
+<li><a href="Forgot_Password_Cheat_Sheet.html">OWASP Forgot Password Cheat Sheet</a></li>
+</ul>
 
 
 
