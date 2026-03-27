@@ -288,6 +288,16 @@ The HTTP `Public-Key-Pins` response header is used to associate a specific crypt
 
 This header is deprecated and should not be used anymore.
 
+## Secure File Download Headers
+
+When serving user-provided files, proper headers should be used to prevent unintended execution.
+
+- Use `Content-Disposition: attachment` to force download instead of inline rendering.
+- Use `Content-Type: application/octet-stream` for unknown or binary files.
+- Ensure `X-Content-Type-Options: nosniff` is set to prevent MIME type sniffing.
+
+These headers help reduce risks such as Cross-Site Scripting (XSS) and unintended file execution.
+
 ## Adding HTTP Headers in Different Technologies
 
 ### PHP
