@@ -241,6 +241,22 @@ When publishing via trusted publishing, npm automatically generates provenance a
 
 For more information, see the [npm trusted publishing documentation](https://docs.npmjs.com/trusted-publishers).
 
+## 12) Prevent dependency confusion attacks
+
+A dependency confusion attack occurs when an attacker publishes a malicious package on the public npm registry using the same name as your internal private package, but with a higher version number. When you run `npm install`, npm may resolve the public malicious package instead of your internal one because of the higher version.
+
+Attackers typically discover internal package names through:
+
+- Leaked `package.json` files accidentally pushed to public GitHub repositories
+- Job postings that mention internal tools or package names
+- Error messages or stack traces that reveal internal dependency names
+
+To protect against dependency confusion:
+
+- Always use **scoped package names** for internal packages (e.g., `@yourorg/package-name` instead of `package-name`)
+- Configure your `.npmrc` to explicitly point scoped packages to your private registry by setting `@yourorg:registry=https://your-private-registry.example.com`
+- Reserve your internal package names on the public npm registry by publishing an empty placeholder to prevent attackers from claiming them.
+
 ## Final Recommendations
 
 Closing our list of npm security best practices are the following tips to reduce the risk of such attacks:

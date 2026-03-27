@@ -171,6 +171,8 @@ s := grpc.NewServer(
 )
 ```
 
+Limit streaming sessions and message counts to prevent resource exhaustion. Monitor and enforce maximum messages per stream and maximum session duration.
+
 ## Rate Limiting and Resource Protection
 
 ### Implement Request Rate Limiting

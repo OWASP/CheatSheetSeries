@@ -120,6 +120,15 @@ Include the `django.middleware.clickjacking.XFrameOptionsMiddleware` module in t
 
 - `X_FRAME_OPTIONS`: Set this key to 'DENY' or 'SAMEORIGIN'. This setting adds the `X-Frame-Options` header to all HTTP responses. This protects against clickjacking attacks.
 
+## Content Security Policy
+
+Django does not provide built-in Content Security Policy (CSP) support by default. CSP can be implemented using third-party libraries such as `django-csp` or by configuring HTTP response headers.
+
+For more details:
+
+- [OWASP Content Security Policy Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html)
+- [Django Security Documentation](https://docs.djangoproject.com/en/stable/topics/security/)
+
 ## Cookies
 
 - `SESSION_COOKIE_SECURE`: Set this key to `True` in the `settings.py` file. This will send the session cookie over secure (HTTPS) connections only.

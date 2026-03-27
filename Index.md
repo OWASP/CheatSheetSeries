@@ -184,6 +184,8 @@
 
 [Securing Cascading Style Sheets Cheat Sheet](cheatsheets/Securing_Cascading_Style_Sheets_Cheat_Sheet.md)
 
+[Security Terminology Cheat Sheet](cheatsheets/Security_Terminology_Cheat_Sheet.md)
+
 [SQL Injection Prevention Cheat Sheet](cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.md) ![Java](assets/Index_Java.svg) ![Csharp](assets/Index_Csharp.svg) ![Vbnet](assets/Index_Vbnet.svg)
 
 [Server Side Request Forgery Prevention Cheat Sheet](cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md) ![Java](assets/Index_Java.svg) ![Python](assets/Index_Python.svg) ![Ruby](assets/Index_Ruby.svg) ![Bash](assets/Index_Bash.svg)
