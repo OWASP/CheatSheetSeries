@@ -215,15 +215,20 @@ One of the main targets for typosquatting attacks are user credentials, since an
 
 ### Slopsquatting attacks
 
-Slopsquatting is a newer attack vector that exploits AI-powered coding assistants and Large Language Models (LLMs). When developers use AI tools to generate code or package recommendations, these models may occasionally "hallucinate" package names that don't actually exist. Attackers monitor these hallucinations and create malicious packages with those exact names, knowing that developers may blindly trust and install packages suggested by their AI assistants.
+Slopsquatting is a newer attack vector that exploits AI coding assistants. When developers ask AI tools like ChatGPT or GitHub Copilot to suggest packages, these models may hallucinate package names that do not actually exist. Attackers monitor these hallucinations and publish malicious packages with those exact names, knowing developers may blindly trust and install AI-suggested packages.
+
+Unlike typosquatting which exploits human typing errors, slopsquatting exploits AI's tendency to generate plausible-looking but non-existent package names — making it harder to detect since the suggested name looks completely legitimate.
+
+For example, an AI assistant might suggest `node-fetch-promise` instead of the real package `node-fetch`. If an attacker has already published a malicious package under that hallucinated name, installing it compromises your system silently.
 
 To protect against slopsquatting:
 
-- Always verify that packages suggested by AI tools actually exist and are legitimate
-- Check the package's repository, download statistics, and maintainer information
-- Cross-reference AI suggestions with official documentation
-- Be skeptical of packages with very low download counts or recent creation dates
-- Review the package source code before installing, especially for AI-suggested packages
+- Run `npm view <package-name>` before installing any AI-suggested package to confirm it exists.
+- Check the package download count — legitimate packages have thousands or millions of downloads while newly published malicious ones have very few.
+- Verify the package has a real GitHub repository with genuine code, commits and contributors.
+- Be suspicious of packages created very recently with no release history.
+- Never blindly run `npm install` on packages suggested by AI tools without independent verification.
+- In team environments, add `npm view <package-name>` as a CI check for any new AI-suggested dependencies before they reach production.
 
 ## 11) Use trusted publishers for secure package publishing
 
