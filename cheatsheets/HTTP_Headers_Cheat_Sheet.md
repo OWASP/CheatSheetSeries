@@ -54,6 +54,8 @@ Set the Content-Type header correctly throughout the site.
 
 The `Referrer-Policy` HTTP header controls how much referrer information (sent via the Referer header) should be included with requests.
 
+
+
 #### Recommendation
 
 Referrer policy has been supported by browsers since 2014. Today, the default behavior in modern browsers is to no longer send all referrer information (origin, path, and query string) to the same site but to only send the origin to other sites. However, since not all users may be using the latest browsers we suggest forcing this behavior by sending this header on all responses.
@@ -61,6 +63,32 @@ Referrer policy has been supported by browsers since 2014. Today, the default be
 > `Referrer-Policy: strict-origin-when-cross-origin`
 
 - *NOTE:* For more information on configuring this header please see [Mozilla Referrer-Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy).
+
+### Cache-Control
+
+The `Cache-Control` HTTP header defines how responses are cached by browsers and intermediate systems such as proxies.
+
+Improper caching of sensitive content can lead to security issues such as data leakage or unauthorized access, especially when shared caches are involved.
+
+Common directives include:
+
+- `no-store`: Prevents the response from being stored in any cache. This is the safest option for sensitive data such as authentication responses or personal information.
+
+- `no-cache`: Allows the response to be stored, but requires the cache to revalidate with the server before using it. This ensures that stale data is not served.
+
+- `private`: Allows caching only in the user’s browser, but prevents storage in shared caches such as proxies.
+
+It is important not to confuse `no-cache` with `no-store`. While `no-cache` still allows storage under certain conditions, `no-store` completely disables caching.
+
+#### Recommendation
+
+For sensitive or user-specific content, use:
+
+> `Cache-Control: no-store`
+
+For content that can be cached per user but not shared:
+
+> `Cache-Control: private`
 
 ### Content-Type
 
