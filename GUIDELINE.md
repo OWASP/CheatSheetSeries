@@ -1,245 +1,159 @@
-# Cheat Sheet Creation Guide
+# Cheat Sheet Writing Guide
 
-## Basic Cheat Sheet Template
+This guide helps you write effective cheat sheet content. For the contribution process (how to submit issues, set up your environment, and open pull requests), see [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## What Makes a Good Cheat Sheet
+
+The best cheat sheets in this project share a few qualities:
+
+- **Written for developers**, not security experts. Assume your reader builds software daily but does not have deep security knowledge.
+- **Practical over theoretical.** Actionable advice that can be implemented today beats academic discussion.
+- **Concise.** Cheat sheets are reference material. Get to the point.
+- **Opinionated.** Recommend specific approaches rather than listing every possible option. Developers want to know what to do, not evaluate trade-offs themselves.
+
+## Getting Started
+
+Copy the template and rename it for your topic:
+
+```bash
+cp templates/New_CheatSheet.md cheatsheets/Your_Topic_Cheat_Sheet.md
+```
+
+File naming rules:
+
+- Use only letters, numbers, hyphens, and underscores
+- End with `_Cheat_Sheet.md`
+- Example: `API_Rate_Limiting_Cheat_Sheet.md`
+
+## Structure
+
+Every cheat sheet follows this structure:
 
 ```markdown
-
-# [Topic] Cheat Sheet
+# Your Topic Cheat Sheet
 
 ## Introduction
 
-Brief overview of the topic, its importance in application security, and target audience.
+A brief overview: what is this topic, why does it matter for security,
+and who should read this cheat sheet.
 
-## Table of Contents
+## Main Sections
 
-- [Background](#background)
-- [Threat Analysis](#threat-analysis)
-- [Prevention Strategies](#prevention-strategies)
-- [Implementation Guide](#implementation-guide)
-- [Testing & Validation](#testing--validation)
-- [Monitoring & Maintenance](#monitoring--maintenance)
-- [References & Resources](#references--resources)
+Organize your advice into clear sections. Most cheat sheets have
+3-6 top-level sections covering different aspects of the topic.
 
-## Background
+## References
 
-### What is [Topic]?
-
-Definition and explanation of the security concept.
-
-### Why is [Topic] Important?
-
-Explanation of why this security topic matters.
-
-### Current Threat Landscape
-
-Overview of current threats and attack vectors.
-
-## Threat Analysis
-
-### Attack Vectors
-
-- Attack Vector 1: Description and examples
-- Attack Vector 2: Description and examples
-- Attack Vector 3: Description and examples
-
-### Vulnerability Types
-
-- Vulnerability Type 1: Description and impact
-- Vulnerability Type 2: Description and impact
-- Vulnerability Type 3: Description and impact
-
-### Risk Assessment
-
-- High Risk: Critical vulnerabilities and their impact
-- Medium Risk: Moderate vulnerabilities and their impact
-- Low Risk: Minor vulnerabilities and their impact
-
-## Prevention Strategies
-
-### Defense in Depth
-
-1. Layer 1: Primary defense mechanism
-2. Layer 2: Secondary defense mechanism
-3. Layer 3: Tertiary defense mechanism
-
-### Best Practices
-
-- Best Practice 1: Description and implementation
-- Best Practice 2: Description and implementation
-- Best Practice 3: Description and implementation
-
-## Implementation Guide
-
-### Step-by-Step Implementation
-
-#### Step 1: Preparation
-
-language
-// Code example for step 1
-
-
-#### Step 2: Configuration
-
-language
-// Code example for step 2
-
-
-#### Step 3: Validation
-
-language
-// Code example for step 3
-
-
-### Framework-Specific Implementation
-
-#### Framework A
-
-language
-// Framework A specific implementation
-
-
-#### Framework B
-
-language
-// Framework B specific implementation
-
-
-## Testing & Validation
-
-### Testing Methods
-
-- Method 1: Description and tools
-- Method 2: Description and tools
-- Method 3: Description and tools
-
-### Validation Checklist
-
-- [ ] Check 1: Description
-- [ ] Check 2: Description
-- [ ] Check 3: Description
-
-### Tools & Utilities
-
-- Tool 1: Description and usage
-- Tool 2: Description and usage
-- Tool 3: Description and usage
-
-## Monitoring & Maintenance
-
-### Ongoing Monitoring
-
-- Metric 1: What to monitor and how
-- Metric 2: What to monitor and how
-- Metric 3: What to monitor and how
-
-### Maintenance Tasks
-
-- Task 1: Frequency and procedure
-- Task 2: Frequency and procedure
-- Task 3: Frequency and procedure
-
-### Incident Response
-
-- Detection: How to detect issues
-- Response: How to respond to issues
-- Recovery: How to recover from issues
-
-## References & Resources
-
-### Further Reading
-
-- [Resource 1](link): Description
-- [Resource 2](link): Description
-- [Resource 3](link): Description
-
-### Tools & Utilities
-
-- [Tool 1](link): Description
-- [Tool 2](link): Description
-- [Tool 3](link): Description
-
-### Standards & Frameworks
-
-- [Standard 1](link): Description
-- [Standard 2](link): Description
-- [Standard 3](link): Description
-
-### Related Cheat Sheets
-
-- [Related Cheat Sheet 1](link): Description
-- [Related Cheat Sheet 2](link): Description
-- [Related Cheat Sheet 3](link): Description
-
+Links to external resources, standards, or related cheat sheets.
 ```
 
-### Advanced Template Features
+### Introduction
+
+The introduction should be 2-4 sentences that tell the reader what the cheat sheet covers and why it matters. Here is a real example from the Authentication Cheat Sheet:
+
+> **Authentication** is the process of verifying that an individual, entity, or website is whom it claims to be. This cheat sheet provides guidance on implementing authentication in web applications.
+
+Short, clear, and sets expectations for what follows.
+
+### Main Sections
+
+Organize your content into 3-6 top-level sections. Each section should address a distinct aspect of the topic. Use subsections (H3) to break down complex areas.
+
+Look at existing cheat sheets for inspiration:
+
+- [Authentication Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html) - organized by concern (passwords, MFA, logging)
+- [Docker Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html) - organized as numbered rules
+- [Input Validation Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html) - organized by technique
+
+### References
+
+Link to authoritative external resources: RFCs, NIST publications, OWASP standards, and related cheat sheets. Don't repeat content from other cheat sheets - link to them instead.
+
+## Writing Tips
+
+### Show, Don't Just Tell
+
+Short, working code examples are more valuable than paragraphs of explanation. Compare:
+
+**Weak** (too abstract):
+
+```text
+// Validate input here
+validate(input);
+```
+
+**Strong** (specific and copy-pasteable):
+
+```java
+// Use an allowlist to validate expected input
+Pattern emailPattern = Pattern.compile(
+    "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+if (!emailPattern.matcher(userEmail).matches()) {
+    throw new ValidationException("Invalid email format");
+}
+```
+
+When a topic applies to multiple languages, use separate labeled code blocks:
+
+````markdown
+#### Java
+
+```java
+// Java example here
+```
+
+#### Python
+
+```python
+# Python example here
+```
+````
+
+### Use Tables for Comparisons
+
+Tables work well for showing secure vs. insecure approaches side by side:
+
+| Approach | Secure | Insecure |
+|----------|--------|----------|
+| Password storage | bcrypt/Argon2 hash | MD5/SHA-1 hash |
+| Session tokens | Cryptographically random | Sequential IDs |
+| Error messages | Generic message | Stack trace to user |
+
+Use [tablesgenerator.com](https://www.tablesgenerator.com/markdown_tables) to build Markdown tables easily.
+
+### Keep Recommendations Feasible
+
+It is much better to give _good_ practices that developers can actually follow than _best_ practices that are completely impractical. If a recommendation requires specialized tools, significant infrastructure changes, or deep expertise, say so explicitly and offer a simpler alternative where possible.
+
+### Support Claims with References
+
+When making security recommendations, link to authoritative sources. Inline links work best:
 
 ```markdown
-
-#### Code Comparison Tables
-
-| Aspect | Secure Implementation | Vulnerable Implementation |
-|--------|---------------------|---------------------------|
-| Input Validation | `validateInput(input)` | `raw_input()` |
-| Output Encoding | `html.escape(output)` | Direct output |
-| Authentication | `verifyToken(token)` | No verification |
-
-#### Risk Assessment Matrix
-
-| Threat | Likelihood | Impact | Risk Level |
-|--------|------------|--------|------------|
-| Threat 1 | High | High | Critical |
-| Threat 2 | Medium | High | High |
-| Threat 3 | Low | Medium | Medium |
-
-#### Implementation Checklist
-
-### Implementation Checklist
-
-#### Preparation
-- [ ] Review security requirements
-- [ ] Identify target environment
-- [ ] Gather necessary tools
-
-#### Implementation
-- [ ] Configure security settings
-- [ ] Implement validation logic
-- [ ] Test functionality
-
-#### Validation
-- [ ] Run security tests
-- [ ] Verify configurations
-- [ ] Document changes
+Use Argon2id for password hashing as recommended by
+[OWASP](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html)
+and [NIST SP 800-63B](https://pages.nist.gov/800-63-3/sp800-63b.html).
 ```
 
----
+### Stay Focused
 
-## Conclusion
+Cover one topic well. If you find yourself writing extensively about a related topic, it probably deserves its own cheat sheet. Link to existing cheat sheets rather than duplicating their content.
 
-This guideline helps you to create security guidance that helps practitioners implement effective security controls.
+## Common Mistakes to Avoid
 
-### Key Success Factors
+- **Writing for security experts.** If your cheat sheet requires security expertise to understand, it needs to be simplified.
+- **Being too abstract.** "Validate all input" is not helpful. Show what validation looks like in code.
+- **Covering too much.** A focused cheat sheet on one topic is better than a sprawling guide that tries to cover everything.
+- **Listing without recommending.** Don't just present options - tell the reader which approach to use and why.
+- **Skipping the "why".** A brief explanation of _why_ a practice matters helps developers prioritize and remember it.
 
-1. **Clear Scope**: Define what you're covering and what you're not
-2. **Practical Focus**: Emphasize actionable guidance over theory
-3. **Comprehensive Coverage**: Address all major aspects of the topic
-4. **Current Information**: Keep content up-to-date with latest threats and defenses
-5. **Community Engagement**: Gather feedback and continuously improve
-6. **Quality Assurance**: Thorough review and testing of all content
+## Quick Reference
 
-### Next Steps
-
-1. **Choose Your Topic**: Select a security domain that needs coverage
-2. **Research Existing Content**: Review current cheat sheets and identify gaps
-3. **Plan Your Structure**: Use the templates provided to organize your content
-4. **Develop Content**: Write comprehensive, practical guidance
-5. **Review & Test**: Validate technical accuracy and usability
-6. **Publish & Maintain**: Share with community and keep updated
-
-### Remember
-
-The goal is to create **practical, concise, and actionable security guidance** that helps practitioners build more secure applications and systems. Focus on providing value to your target audience and maintaining high quality standards.
-
----
-
-*This guide is based on analysis of existing OWASP cheat sheets to identify common patterns and best practices for creating effective security documentation.*
+| What | Where |
+|------|-------|
+| Template for new cheat sheets | [templates/New_CheatSheet.md](templates/New_CheatSheet.md) |
+| Existing cheat sheets | [cheatsheets/](cheatsheets/) directory |
+| Draft cheat sheets | [cheatsheets_draft/](cheatsheets_draft/) directory |
+| Image assets | [assets/](assets/) directory |
+| Contribution process and style guide | [CONTRIBUTING.md](CONTRIBUTING.md) |
+| Published site | [cheatsheetseries.owasp.org](https://cheatsheetseries.owasp.org/) |
