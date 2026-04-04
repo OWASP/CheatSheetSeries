@@ -1838,6 +1838,24 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#secure-file-download-headers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Secure File Download Headers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#references_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1946,7 +1964,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#references_1" class="md-nav__link">
+  <a href="#references_2" class="md-nav__link">
     <span class="md-ellipsis">
       References
     </span>
@@ -4130,6 +4148,24 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#secure-file-download-headers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Secure File Download Headers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#references_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -4238,7 +4274,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#references_1" class="md-nav__link">
+  <a href="#references_2" class="md-nav__link">
     <span class="md-ellipsis">
       References
     </span>
@@ -4497,6 +4533,20 @@ If you do not control links on your website, you might want to set <code>off</co
 <p>The HTTP <code>Public-Key-Pins</code> response header is used to associate a specific cryptographic public key with a certain web server to decrease the risk of MITM attacks with forged certificates.</p>
 <h4 id="recommendation_22">Recommendation<a class="headerlink" href="#recommendation_22" title="Permanent link">&para;</a></h4>
 <p>This header is deprecated and should not be used anymore.</p>
+<h3 id="secure-file-download-headers">Secure File Download Headers<a class="headerlink" href="#secure-file-download-headers" title="Permanent link">&para;</a></h3>
+<p>When serving user-provided files, proper HTTP headers should be used to prevent unintended execution in the browser.</p>
+<ul>
+<li>Use <code>Content-Disposition: attachment</code> to force download instead of inline rendering.</li>
+<li>Use <code>Content-Type: application/octet-stream</code> for unknown or binary files.</li>
+<li>Ensure <code>X-Content-Type-Options: nosniff</code> is set to prevent MIME type sniffing.</li>
+</ul>
+<p>These headers help reduce risks such as Cross-Site Scripting (XSS) and unintended file execution.</p>
+<h3 id="references_1">References<a class="headerlink" href="#references_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Disposition">MDN - Content-Disposition</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type">MDN - Content-Type</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options">MDN - X-Content-Type-Options</a></li>
+</ul>
 <h2 id="adding-http-headers-in-different-technologies">Adding HTTP Headers in Different Technologies<a class="headerlink" href="#adding-http-headers-in-different-technologies" title="Permanent link">&para;</a></h2>
 <h3 id="php">PHP<a class="headerlink" href="#php" title="Permanent link">&para;</a></h3>
 <p>The sample code below sets the <code>X-Frame-Options</code> header in PHP.</p>
@@ -4550,7 +4600,7 @@ If you do not control links on your website, you might want to set <code>off</co
 <h3 id="smartscanner">SmartScanner<a class="headerlink" href="#smartscanner" title="Permanent link">&para;</a></h3>
 <p><a href="https://www.thesmartscanner.com/">SmartScanner</a> has a dedicated <a href="https://www.thesmartscanner.com/docs/configuring-security-tests">test profile</a> for testing security of HTTP headers.
 Online tools usually test the homepage of the given address. But SmartScanner scans the whole website. So, you can make sure all of your web pages have the right HTTP Headers in place.</p>
-<h2 id="references_1">References<a class="headerlink" href="#references_1" title="Permanent link">&para;</a></h2>
+<h2 id="references_2">References<a class="headerlink" href="#references_2" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options">Mozilla: X-Frame-Options</a></li>
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection">Mozilla: X-XSS-Protection</a></li>
