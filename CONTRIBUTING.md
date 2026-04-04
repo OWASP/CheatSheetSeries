@@ -1,6 +1,6 @@
 # Contributing Guide
 
-Thank you for your interest in the OWASP Cheat Sheet Series! This guide covers **how to contribute** - the process, rules, and policies. For guidance on **how to write good cheat sheet content**, see the [Cheat Sheet Writing Guide](GUIDELINE.md).
+Thank you for your interest in the OWASP Cheat Sheet Series! This guide covers **how to contribute** including the process, project rules, and policies. For guidance on **how to write good cheat sheet content**, see the [Cheat Sheet Writing Guide](GUIDELINE.md).
 
 When contributing:
 
