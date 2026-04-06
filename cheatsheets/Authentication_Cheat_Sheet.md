@@ -323,6 +323,47 @@ OAuth is an **authorization** framework for delegated access to APIs. See also: 
 
 > **Avoid confusion:** **OpenID 2.0 ("OpenID")** was a separate, legacy authentication protocol that has been **superseded by OpenID Connect** and is considered obsolete. New systems should not implement OpenID 2.0. References: [OpenID Foundation — obsolete OpenID 2.0 libraries](https://openid.net/developers/libraries-for-obsolete-specifications/), [OpenID 2.0 → OIDC migration](https://openid.net/specs/openid-connect-migration-1_0.html)
 
+### Common JWT Implementation Mistakes
+
+JSON Web Tokens (JWTs) are widely used to carry authentication and session state in modern applications — particularly in OAuth 2.0 and OIDC flows, where the ID Token is itself a JWT. Despite their ubiquity, JWTs are frequently misimplemented in ways that undermine authentication security.
+
+#### Storing JWTs in browser-accessible storage
+
+Storing JWTs in `localStorage` or `sessionStorage` exposes them to theft via any Cross-Site Scripting (XSS) vulnerability on the page, since JavaScript running in the page has unrestricted access to these stores.
+
+**Recommendation:** Store short-lived access tokens in memory (a JavaScript variable or module closure) and use `HttpOnly`, `Secure`, `SameSite=Strict` cookies for refresh tokens. If `localStorage` is used, ensure a robust Content Security Policy (CSP) is in place and understand the residual risk.
+
+#### Missing or insufficient token expiration
+
+A JWT without an `exp` claim — or one with an `exp` set far in the future — cannot be effectively revoked once issued. If the token is later stolen, it remains valid indefinitely.
+
+**Recommendation:** Set short `exp` values for access tokens (typically 15 minutes to 1 hour). Use a refresh token flow to issue new access tokens without requiring re-authentication. Validate the `exp` claim server-side on every request; never skip expiry checks as a performance optimisation.
+
+#### Failing to validate issuer, audience, and signature claims
+
+The JWT specification defines several registered claims that prevent token reuse across different services and issuers. Applications that only decode the payload without verifying these claims are vulnerable to cross-service token injection.
+
+**Recommendation:** Always validate:
+
+- **`iss` (issuer):** Confirm the token was issued by the expected authority.
+- **`aud` (audience):** Confirm the token was issued for this specific service or client ID.
+- **`sub` (subject):** Confirm the subject identifier belongs to an active, authorised account.
+- **Signature:** Verify the signature using the authoritative public key or shared secret. Never accept tokens signed with `alg: none`.
+
+#### Placing sensitive data in JWT payloads
+
+The JWT payload is Base64Url-encoded, not encrypted. Anyone who holds the token — including the client, any intermediary, or an attacker who intercepts it — can decode and read its contents.
+
+**Recommendation:** Never include passwords, PII, financial data, or internal system identifiers in a JWT payload unless the token is explicitly encrypted (JWE). If any sensitive claim is required, use opaque tokens backed by a server-side session store instead of self-contained JWTs.
+
+#### Using JWTs where they are not appropriate
+
+JWTs are designed for stateless, short-lived bearer credentials. They are a poor fit for scenarios that require immediate revocation (for example, after a security event such as a password change or account suspension), because the token remains cryptographically valid until its `exp` is reached.
+
+**Recommendation:** For sessions that require instant revocation, supplement JWTs with a server-side denylist keyed on the `jti` (JWT ID) claim, or replace JWTs with opaque session tokens backed by a session store that can be invalidated on demand.
+
+For detailed guidance on JWT attack classes and mitigations, see the [OWASP JSON Web Token Cheat Sheet](JSON_Web_Token_for_Java_Cheat_Sheet.md).
+
 ### SAML
 
 Security Assertion Markup Language (SAML) is often considered to compete with OpenId. The most recommended version is 2.0 since it is very feature-complete and provides strong security. Like OpenId, SAML uses identity providers, but unlike OpenId, it is XML-based and provides more flexibility. SAML is based on browser redirects which send XML data. Furthermore, SAML isn't only initiated by a service provider; it can also be initiated from the identity provider. This allows the user to navigate through different portals while still being authenticated without having to do anything, making the process transparent.
