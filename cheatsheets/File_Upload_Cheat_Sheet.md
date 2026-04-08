@@ -115,6 +115,8 @@ If there are enough resources, manual file review should be conducted in a sandb
 
 Adding some automation to the review could be helpful, which is a harsh process and should be well studied before its usage. Some services (_e.g._ Virus Total) provide APIs to scan files against well known malicious file hashes. Some frameworks can check and validate the raw content type and validating it against predefined file types, such as in [ASP.NET Drawing Library](https://docs.microsoft.com/en-us/dotnet/api/system.drawing.imaging.imageformat). Beware of data leakage threats and information gathering by public services.
 
+In Node.js environments, libraries such as [Pompelmi](https://github.com/nicktommy/pompelmi) can help implement pre-storage inspection of untrusted uploads, including file signature checks, MIME mismatch detection, and risky archive inspection.
+
 ### File Storage Location
 
 The location where the files should be stored must be chosen based on security and business requirements. The following points are set by security priority, and are inclusive:
