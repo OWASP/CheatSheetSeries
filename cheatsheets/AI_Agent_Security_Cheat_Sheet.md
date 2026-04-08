@@ -28,7 +28,7 @@ AI agents are autonomous systems powered by Large Language Models (LLMs) that ca
 - Use separate tool sets for different trust levels (e.g., internal vs. user-facing agents).
 - Require explicit tool authorization for sensitive operations.
 
-#### Bad: Over-permissioned tool configuration
+#### Bad: Over-permissioned Model Context Protocol (MCP) tool configuration
 
 ```python
 # Dangerous: Agent has unrestricted shell access
@@ -41,7 +41,7 @@ tools = [
 ]
 ```
 
-#### Good: Scoped tool with allowlist
+#### Good: Scoped MCP tool with allowlist
 
 ```python
 # Safe: Restricted to specific, safe commands
