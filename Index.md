@@ -1,6 +1,6 @@
 # Index Alphabetical
 
-**91** cheat sheets available.
+**92** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -15,6 +15,8 @@
 [Authentication Cheat Sheet](cheatsheets/Authentication_Cheat_Sheet.md)
 
 [Authorization Cheat Sheet](cheatsheets/Authorization_Cheat_Sheet.md)
+
+[AI Model Supply Chain Security Cheat Sheet](cheatsheets/AI_Model_Supply_Chain_Security_Cheat_Sheet.md) ![Python](assets/Index_Python.svg) ![Shell](assets/Index_Shell.svg)
 
 [AJAX Security Cheat Sheet](cheatsheets/AJAX_Security_Cheat_Sheet.md) ![Json](assets/Index_Json.svg)
 
