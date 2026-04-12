@@ -142,7 +142,7 @@ Check that the code is stable and safe to use, and that the action does not requ
 
 #### Always pin all action and reusable workflow versions with a commit hash and check for impostor commits
 
-Check that the used commit belongs to the specified org/repo. This will prevent dependency confusion attacks, as currently GitHub resolves the commit SHA,
+Check that the used commit belongs to the specified organization/repository. This will prevent dependency confusion attacks, as currently GitHub resolves the commit SHA,
 finds a matching object and executes it regardless of which fork it originated from. This check can be automated with the Zizmor `impostor-commit` [rule](https://docs.zizmor.sh/audits/#impostor-commit).
 
 #### Use automated dependency update tools
