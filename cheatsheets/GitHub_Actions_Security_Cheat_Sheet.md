@@ -101,7 +101,8 @@ Workflows triggered by `pull_request_target` run in the context of the base (tar
 If untrusted code from a PR is checked out and used, this may lead to code execution.
 There are some common patterns, like labeling workflows where untrusted code is not checked out, but in general, try to avoid the `pull_request_target` trigger.
 
-**NEVER** check out (via `actions/checkout` or GitHub CLI) and run untrusted code in this context.
+> [!IMPORTANT]
+> Never check out (via `actions/checkout` or GitHub CLI) and run untrusted code in this context.
 
 #### Avoid using the `workflow_run` trigger
 
@@ -127,7 +128,8 @@ With the `pull_request_target` trigger and the `labeled` event, `github.event.pu
 Labels can be applied only by authorized users (i.e., GitHub accounts with write permissions), so the workflow may not need to explicitly implement additional authorization checks.
 Since the `pull_request_target` trigger is dangerous, always check out code using a trusted commit SHA available via `github.event.pull_request.head.sha`, which reflects the state of the pull request at the time the label was applied.
 
-In general, **NEVER** check out code using mutable references (e.g., pull request numbers or branch names) - always use immutable references such as a full commit SHA.
+> [!IMPORTANT]
+> In general, never check out code using mutable references (e.g., pull request numbers or branch names) - always use immutable references such as a full commit SHA.
 
 ### Use third-party GitHub Actions and reusable workflows securely
 
