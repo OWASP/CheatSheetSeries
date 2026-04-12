@@ -142,10 +142,6 @@ Check that the code is stable and safe to use, and that the action does not requ
 
 #### Always pin all action and reusable workflow versions with a commit hash and check for impostor commits
 
-```yaml
-- uses: some_org/some_action@9f3c2a7b6d1e4f8c0a5b9d2e7c6f1a8b3e4d5c6a # v1.1.1
-```
-
 Check that the used commit belongs to the specified org/repo. This will prevent dependency confusion attacks, as currently GitHub resolves the commit SHA,
 finds a matching object and executes it regardless of which fork it originated from. This check can be automated with the Zizmor `impostor-commit` [rule](https://docs.zizmor.sh/audits/#impostor-commit).
 
@@ -158,21 +154,6 @@ finds a matching object and executes it regardless of which fork it originated f
 
 Always set `permissions: {}` at the workflow level to disable all permissions by default. Then, grant only the specific permissions needed at the job level.
 
-```yaml
-name: Release on PyPI
-on:
-  push:
-    tags:
-      - v*
-permissions: {} # <-- No permission by default at the workflow level
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write # <- Explicitly assigned permissions
-...
-```
-
 ### Require approval for deployments or publications to critical environments
 
 Use [GitHub environments](https://docs.github.com/en/actions/how-tos/deploy/configure-and-manage-deployments/manage-environments) with required approval rules. Define a list of authorized accounts who must manually approve deployments to production or other critical environments before workflow execution.
@@ -180,20 +161,8 @@ Use [GitHub environments](https://docs.github.com/en/actions/how-tos/deploy/conf
 ### Sanitize user input
 
 An attacker may submit a malicious payload via context (e.g., via PR title) that could cause remote execution.
-To prevent injection, always use intermediate environment variables to pass any context into `run:` and similar code execution blocks.
+To prevent injection, always use [intermediate environment variables](https://docs.github.com/en/actions/reference/security/secure-use#good-practices-for-mitigating-script-injection-attacks) to pass any context into `run:` and similar code execution blocks.
 Although some input contexts may appear relatively safe, it is better to always follow this approach for consistency and security.
-
-```yaml
-- name: Check PR title
-  env:
-    PR_TITLE: ${{ github.event.issue.title }} # <-- use environment variable
-  run: |
-    title="${PR_TITLE}"
-    if [[ ! $title =~ ^.*:\ .*$ ]]; then
-      echo "Bad PR title"
-      exit 1
-    fi
-```
 
 ### Protect secrets used in workflows
 
@@ -208,35 +177,18 @@ If complete elimination cannot be achieved:
 
 - Never hardcode secrets in workflow files.
 - Pass secrets at the step level, not the job level.
-- Prefer environment-level secrets that are only accessible when a job targets a specific environment.
-
-```yaml
-jobs:
-  deploy:
-    name: Deploy Release
-    runs-on: ubuntu-latest
-    environment:
-      name: production
-    steps:
-      - name: Deploy to production
-        env:
-          API_KEY: ${{ secrets.API_KEY }}
-        run: deploy.sh
-```
-
+- Prefer [environment-level secrets](https://docs.github.com/en/actions/how-tos/deploy/configure-and-manage-deployments/manage-environments) that are only accessible when a job targets a specific environment.
 - Rotate secrets regularly.
 
 #### Eliminate `secrets: inherit` while reusing workflows
 
 When using the `inherit` keyword while invoking a reusable workflow, all the calling workflow’s secrets (organization, repository and environment secrets) are passed to the called workflow, even if the called workflow does not need them.
-When you call a reusable workflow, explicitly pass each secret required by the called workflow:
+When you call a reusable workflow, explicitly pass each secret required by the called workflow.
 
-```yaml
-notify-team:
-uses: ./.github/workflows/notify.yml
-  secrets:
-    MSTEAMS_WEBHOOK: ${{ secrets.MSTEAMS_WEBHOOK }}
-```
+#### Mask sensitive data
+
+Mask all sensitive information that is not a GitHub secret by using `::add-mask::{value}`.
+Masking a value prevents a string or variable from being printed in the log
 
 #### Use secret scanning tools
 
@@ -251,15 +203,9 @@ Implement secret scanning in both pre-commit and pull request stages to prevent 
 Unless needed for git operations, `actions/checkout` should be used with `persist-credentials: false`.
 This prevents Git credentials from being persisted to the workflow's environment, reducing the risk of credential exposure if the workflow is compromised.
 
-```yaml
-- name: Checkout code
-  uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-  with:
-    persist-credentials: false
-```
-
 ## References
 
+- [Secure use reference](https://docs.github.com/en/actions/reference/security/secure-use)
 - [Keeping your GitHub Actions and workflows secure Part 1: Preventing pwn requests](https://securitylab.github.com/resources/github-actions-preventing-pwn-requests)
 - [Keeping your GitHub Actions and workflows secure Part 2: Untrusted input](https://securitylab.github.com/resources/github-actions-untrusted-input)
 - [Keeping your GitHub Actions and workflows secure Part 3: How to trust your building blocks](https://securitylab.github.com/resources/github-actions-building-blocks)
