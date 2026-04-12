@@ -46,8 +46,8 @@ Continuously improve by actively learning from other incidents through publicly 
 > Please note that the `Require approval for first-time contributors` setting presents a security risk because an attacker can submit an initially legitimate-looking pull request
 > (e.g., a typo fix) to gain trust and later submit subsequent PRs that introduce malicious changes which are executed in CI without requiring further approval.
 
-- Enable the setting `Require approval for all external contributors`. In the repo settings, navigate to `Settings` → `Action` → `General` → `Approval for running fork pull request workflows from contributors` and choose `Require approval for all external contributors`. This ensures that workflows triggered by pull requests from forks (i.e., users who are not members of the repository or organization) do not run automatically and therefore prevents untrusted code execution.
-- Restrict default `GITHUB_TOKEN` permissions. In the repo settings, navigate to `Settings` → `Action` → `General` → `Workflow permissions` and choose `Read repository contents and packages permissions`. Explicitly grant additional permissions in the workflow file if required.
+- Enable the setting `Require approval for all external contributors` in the repository settings. This ensures that workflows triggered by pull requests from forks (i.e., users who are not members of the repository or organization) do not run automatically and therefore prevents untrusted code execution.
+- Restrict default `GITHUB_TOKEN` permissions to `Read repository contents and packages permissions` in the repository settings. Explicitly grant additional permissions in the workflow file if required.
 - Enforce strong branch protection rules. Configure branch protection to require pull request reviews, status checks, signed commits and `CODEOWNERS` approval before merging into protected branches. Tools such as the [OpenSSF Scorecard](https://github.com/ossf/scorecard-action) can help audit these settings.
 
 ## Restrict egress traffic from GitHub-hosted runners
@@ -56,7 +56,7 @@ Use solutions (e.g., [Harden-Runner](https://github.com/step-security/harden-run
 
 ## Use self-hosted runners with extra caution
 
-Self-hosted runners usually have access to internal networks and may cache credentials, secrets, or store internal data.
+Self-hosted runners usually have access to internal networks and may cache credentials, secrets or store internal data.
 Because they execute arbitrary code by design, they can be used by an attacker to establish persistent remote access and exfiltrate secrets.
 In general, never use self-hosted runners with public repositories, as anyone who can fork the repository and open a pull request can potentially execute code on your runner.
 
@@ -84,7 +84,7 @@ To reduce this risk, disable all forms of caching in release or publishing workf
 ## Be careful with AI assistant running in CI/CD pipeline
 
 Sometimes, an AI assistant is used directly in workflows, e.g., to review pull requests or triage submitted issues.
-This creates a risk of prompt injection attacks, where malicious input manipulates the AI assistant's behavior. If the workflow running the AI assistant has access to secrets or a `GITHUB_TOKEN` with write permissions and can be triggered by untrusted users (e.g., any GitHub account), this may lead to secret exfiltration or unauthorized actions.
+This creates a risk of prompt injection attacks, where malicious input manipulates the AI assistant's behavior. If the workflow running the AI assistant has access to secrets or a `GITHUB_TOKEN` with `write` permissions and can be triggered by untrusted users (e.g., any GitHub account), this may lead to secret exfiltration or unauthorized actions.
 A real-world example is the ["clinejection" attack](https://adnanthekhan.com/posts/clinejection/).
 
 To mitigate potential attacks, limit AI assistant capabilities — only enable the minimum tools and actions required for task execution.
@@ -179,8 +179,7 @@ Use [GitHub environments](https://docs.github.com/en/actions/how-tos/deploy/conf
 
 An attacker may submit a malicious payload via context (e.g., via PR title) that could cause remote execution.
 To prevent injection, always use intermediate environment variables to pass any context into `run:` and similar code execution blocks.
-
-NOTE: Some context may be safe, but it is better to always use this approach.
+Although some input contexts may appear relatively safe, it is better to always follow this approach for consistency and security.
 
 ```yaml
 - name: Check PR title
