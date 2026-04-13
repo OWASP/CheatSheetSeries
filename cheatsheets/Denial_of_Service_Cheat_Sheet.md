@@ -4,6 +4,8 @@
 
 This cheat sheet describes a methodology for handling denial of service (DoS) attacks on different layers. It also serves as a platform for further discussion and analysis, since there are many different ways to perform DoS attacks.
 
+See [the Open CRE project on denial of service](https://www.opencre.org/cre/623-550) for additional technical requirements and mappings.
+
 ### Fundamentals
 
 Because anti-DoS methods cannot be one-step solutions, your developers and application/infrastructure architects must develop DoS solutions carefully.  They must keep in mind that "availability" is a basic part of the [CIA triad](https://whatis.techtarget.com/definition/Confidentiality-integrity-and-availability-CIA).
