@@ -68,14 +68,17 @@ The intended audience of the cheat sheets is developers, _not_ security experts.
 
 The purpose of the cheat sheets is to provide **useful, practical advice** that can be followed by developers. It is much better to give _good_ practices that can actually be followed than _best_ practices that are completely impractical.
 
+**Prefer architectural guidance over code samples.** Cheat sheets should focus on architectural patterns, design principles, and security decisions rather than language-specific code. Code samples require ongoing maintenance across languages and frameworks, and snippets taken out of context are often not fully secure. Describing _what_ to do and _why_ is more durable and broadly useful than showing _how_ in a single language. When code examples are included, they should be short, clearly illustrative, and not presented as production-ready implementations.
+
 When submitting changes in a PR, consider the following areas:
 
 - The content should be useful to developers.
 - The content should be factual and correct.
 - Statements should be supported by authoritative references where possible.
 - Recommendations should be feasible for the majority of developers to implement.
+- Guidance should be architectural and language-agnostic where possible, with code samples used sparingly to illustrate a point.
 
-For detailed guidance on writing effective cheat sheet content, including structure, code examples, and tables, see the [Cheat Sheet Writing Guide](GUIDELINE.md).
+For detailed guidance on writing effective cheat sheet content, including structure and approach, see the [Cheat Sheet Writing Guide](GUIDELINE.md).
 
 ### Structure
 
