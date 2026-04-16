@@ -152,7 +152,7 @@ For more details:
   </form>
   ```
 
-- For AJAX calls, the CSRF token for the request has to be extracted prior to being used in the the AJAX call.  
+- For AJAX calls, the CSRF token for the request has to be extracted prior to being used in the AJAX call.  
 - Additional recommendations and controls can be found at Django's [Cross Site Request Forgery protection](https://docs.djangoproject.com/en/5.2/ref/csrf/) documentation.
 
 ## Cross Site Scripting (XSS)
