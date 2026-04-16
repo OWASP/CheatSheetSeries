@@ -279,8 +279,8 @@ References:
 Container scanning tools are especially important as part of a successful security strategy. They can detect known vulnerabilities, secrets and misconfigurations in container images and provide a report of the findings with recommendations on how to fix them. Some examples of popular container scanning tools are:
 
 - Free
-    - [Clair](https://github.com/coreos/clair)
-    - [ThreatMapper](https://github.com/deepfence/ThreatMapper)
+    - [Clair](https://github.com/quay/clair)
+    - [Grype](https://github.com/anchore/grype)
     - [Trivy](https://github.com/aquasecurity/trivy)
 - Commercial
     - [Snyk](https://snyk.io/) **(open source and free option available)**
@@ -292,7 +292,8 @@ Container scanning tools are especially important as part of a successful securi
 To detect secrets in images:
 
 - [ggshield](https://github.com/GitGuardian/ggshield) **(open source and free option available)**
-- [SecretScanner](https://github.com/deepfence/SecretScanner) **(open source)**
+- [Gitleaks](https://github.com/gitleaks/gitleaks) **(open source)**
+- [TruffleHog](https://github.com/trufflesecurity/trufflehog) **(open source)**
 
 To detect misconfigurations in Kubernetes:
 
