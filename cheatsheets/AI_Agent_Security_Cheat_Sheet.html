@@ -499,18 +499,18 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#bad-over-permissioned-tool-configuration" class="md-nav__link">
+  <a href="#bad-over-permissioned-model-context-protocol-mcp-tool-configuration" class="md-nav__link">
     <span class="md-ellipsis">
-      Bad: Over-permissioned tool configuration
+      Bad: Over-permissioned Model Context Protocol (MCP) tool configuration
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#good-scoped-tool-with-allowlist" class="md-nav__link">
+  <a href="#good-scoped-mcp-tool-with-allowlist" class="md-nav__link">
     <span class="md-ellipsis">
-      Good: Scoped tool with allowlist
+      Good: Scoped MCP tool with allowlist
     </span>
   </a>
   
@@ -3148,18 +3148,18 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#bad-over-permissioned-tool-configuration" class="md-nav__link">
+  <a href="#bad-over-permissioned-model-context-protocol-mcp-tool-configuration" class="md-nav__link">
     <span class="md-ellipsis">
-      Bad: Over-permissioned tool configuration
+      Bad: Over-permissioned Model Context Protocol (MCP) tool configuration
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#good-scoped-tool-with-allowlist" class="md-nav__link">
+  <a href="#good-scoped-mcp-tool-with-allowlist" class="md-nav__link">
     <span class="md-ellipsis">
-      Good: Scoped tool with allowlist
+      Good: Scoped MCP tool with allowlist
     </span>
   </a>
   
@@ -3408,7 +3408,7 @@
 <li>Use separate tool sets for different trust levels (e.g., internal vs. user-facing agents).</li>
 <li>Require explicit tool authorization for sensitive operations.</li>
 </ul>
-<h4 id="bad-over-permissioned-tool-configuration">Bad: Over-permissioned tool configuration<a class="headerlink" href="#bad-over-permissioned-tool-configuration" title="Permanent link">&para;</a></h4>
+<h4 id="bad-over-permissioned-model-context-protocol-mcp-tool-configuration">Bad: Over-permissioned Model Context Protocol (MCP) tool configuration<a class="headerlink" href="#bad-over-permissioned-model-context-protocol-mcp-tool-configuration" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="c1"># Dangerous: Agent has unrestricted shell access</span>
 <span class="n">tools</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">{</span>
@@ -3418,7 +3418,7 @@
     <span class="p">}</span>
 <span class="p">]</span>
 </code></pre></div>
-<h4 id="good-scoped-tool-with-allowlist">Good: Scoped tool with allowlist<a class="headerlink" href="#good-scoped-tool-with-allowlist" title="Permanent link">&para;</a></h4>
+<h4 id="good-scoped-mcp-tool-with-allowlist">Good: Scoped MCP tool with allowlist<a class="headerlink" href="#good-scoped-mcp-tool-with-allowlist" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="c1"># Safe: Restricted to specific, safe commands</span>
 <span class="n">tools</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">{</span>
