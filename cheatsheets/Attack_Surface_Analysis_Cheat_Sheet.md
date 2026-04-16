@@ -35,7 +35,7 @@ With this approach, you don't need to understand every endpoint in order to unde
 
 Microservice and Cloud Native applications are comprised of multiple smaller components, loosely coupled using APIs and independently scalable. When assessing the attack surface for applications of this architectural style, you should prioritize the components that are reachable from an attack source (e.g. external traffic from the Internet). Such components may be located behind tiers of proxies, load balancers and ingress controllers, and may auto-scale without warning.
 
-Open source tooling such as [Scope](https://github.com/weaveworks/scope) or [ThreatMapper](https://github.com/deepfence/ThreatMapper) assist in visualizing the attack surface.
+Open source tooling such as [Cilium Hubble](https://github.com/cilium/hubble) and [kubeshark](https://github.com/kubeshark/kubeshark) assist in visualizing the attack surface for Kubernetes and service-mesh deployments.
 
 ## Identifying and Mapping the Attack Surface
 
