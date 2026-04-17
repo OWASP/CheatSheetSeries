@@ -98,6 +98,7 @@ Orphaned Deployments – Test or deprecated models left accessible in production
 
 ## References
 
+- [AI Model Supply Chain Security Cheat Sheet](AI_Model_Supply_Chain_Security_Cheat_Sheet.md)
 - [OWASP LLM Prompt Injection Cheat Sheet](LLM_Prompt_Injection_Prevention_Cheat_Sheet.md)  
 - [OWASP ASVS / Proactive Controls](https://owasp.org/www-project-application-security-verification-standard/)  
 - [OWASP AISVS](https://owasp.org/www-project-artificial-intelligence-security-verification-standard-aisvs-docs/)
