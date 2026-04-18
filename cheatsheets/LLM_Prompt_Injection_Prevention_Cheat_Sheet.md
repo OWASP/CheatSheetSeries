@@ -469,6 +469,8 @@ For advanced red teaming, see [Microsoft's AI red team best practices](https://w
 
 - [NeMo Guardrails - Conversational AI guardrails](https://github.com/NVIDIA/NeMo-Guardrails)
 - [Garak LLM vulnerability scanner](https://github.com/leondz/garak)
+- [jpi-guard](https://www.nexus-api-lab.com/jpi-guard.html) — Japanese-specialized prompt injection detection API. Handles full-width Unicode bypass attacks (e.g. `ａｂｃ` → `abc` normalization), polite-language disguise attacks specific to Japanese grammar, and indirect injection via external content. Available as a remote MCP server for Claude-based applications.
+- [inject-guard-en](https://www.nexus-api-lab.com/inject-guard-en.html) — English prompt injection detection API with MCP server support. Detects direct injection, encoding obfuscation, and indirect injection from external content. Free tier: 2,000 requests/month, no credit card required.
 
 **Testing and Evaluation:**
 
