@@ -97,7 +97,7 @@ This section contains some recommendations. In general, a static code analyzer (
 
 #### Avoid using the `pull_request_target` trigger
 
-Workflows triggered by `pull_request_target` run in the context of the base (target) repository and have access to the `GITHUB_TOKEN` with write permissions and GitHub secrets available to the workflow.
+Workflows triggered by `pull_request_target` run in the context of the base (target) repository and have access to the `GITHUB_TOKEN` with `write` permissions and GitHub secrets available to the workflow.
 If untrusted code from a PR is checked out and used, this may lead to code execution.
 There are some common patterns, like labeling workflows where untrusted code is not checked out, but in general, try to avoid the `pull_request_target` trigger.
 
@@ -124,9 +124,10 @@ To secure the implementation with the `issue_comment` trigger:
 2. Use the commit SHA in a comment that triggers the workflow: instead of using a `/ok-to-test` comment, design the workflow to accept `/ok-to-test(<trusted_sha_commit>)` and check out code only from `<trusted_sha_commit>` submitted by an authorized actor. This will help mitigate the checkout and execution of untrusted code.
 
 Alternatively, consider replacing the `issue_comment` trigger with label-based triggers.
-With the `pull_request_target` trigger and the `labeled` event, `github.event.pull_request.head.sha` contains the latest commit SHA for the pull request.
-Labels can be applied only by authorized users (i.e., GitHub accounts with write permissions), so the workflow may not need to explicitly implement additional authorization checks.
-Since the `pull_request_target` trigger is dangerous, always check out code using a trusted commit SHA available via `github.event.pull_request.head.sha`, which reflects the state of the pull request at the time the label was applied.
+When using the `pull_request` trigger with the labeled event, `github.event.pull_request.head.sha` contains the latest commit SHA for the pull request.
+Labels can only be applied by authorized users (i.e., GitHub accounts with write permissions), so the workflow does not need to implement additional authorization checks.
+Additionally, since the event is triggered by a user with write permissions, the workflow can consume `GITHUB_TOKEN` with `write` permissions and required GitHub secrets.
+The workflow should check out the code using the trusted commit SHA available via `github.event.pull_request.head.sha`, which reflects the state of the pull request at the time the label was applied.
 
 > [!IMPORTANT]
 > In general, never check out code using mutable references (e.g., pull request numbers or branch names) - always use immutable references such as a full commit SHA.
