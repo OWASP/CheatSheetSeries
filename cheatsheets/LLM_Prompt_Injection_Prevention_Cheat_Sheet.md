@@ -469,6 +469,7 @@ For advanced red teaming, see [Microsoft's AI red team best practices](https://w
 
 - [NeMo Guardrails - Conversational AI guardrails](https://github.com/NVIDIA/NeMo-Guardrails)
 - [Garak LLM vulnerability scanner](https://github.com/leondz/garak)
+- [inject-guard-en - Production-ready prompt injection detection API with context-aware scanning](https://nexus-api-lab.com/en/jpi-guard.html)
 
 **Testing and Evaluation:**
 
