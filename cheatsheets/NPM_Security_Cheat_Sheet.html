@@ -2012,6 +2012,48 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#13-verify-documentation-examples-before-copying-into-production" class="md-nav__link">
+    <span class="md-ellipsis">
+      13) Verify documentation examples before copying into production
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13) Verify documentation examples before copying into production">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      The pattern
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#real-world-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Real-world examples
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-to-protect-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to protect yourself
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#final-recommendations" class="md-nav__link">
     <span class="md-ellipsis">
       Final Recommendations
@@ -3320,6 +3362,48 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#13-verify-documentation-examples-before-copying-into-production" class="md-nav__link">
+    <span class="md-ellipsis">
+      13) Verify documentation examples before copying into production
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13) Verify documentation examples before copying into production">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      The pattern
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#real-world-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Real-world examples
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-to-protect-yourself" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to protect yourself
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#final-recommendations" class="md-nav__link">
     <span class="md-ellipsis">
       Final Recommendations
@@ -3536,6 +3620,26 @@ npx<span class="w"> </span>@cyclonedx/cyclonedx-npm<span class="w"> </span>--val
 <li>Configure your <code>.npmrc</code> to explicitly point scoped packages to your private registry by setting <code>@yourorg:registry=https://your-private-registry.example.com</code></li>
 <li>Reserve your internal package names on the public npm registry by publishing an empty placeholder to prevent attackers from claiming them.</li>
 </ul>
+<h2 id="13-verify-documentation-examples-before-copying-into-production">13) Verify documentation examples before copying into production<a class="headerlink" href="#13-verify-documentation-examples-before-copying-into-production" title="Permanent link">&para;</a></h2>
+<p>Library README files and official examples are often copied directly into production code. While the libraries themselves may use secure defaults internally, their documentation examples sometimes demonstrate insecure patterns that undermine those very defaults. This creates a "documentation attack surface" — a class of vulnerability where the security risk comes not from the library's code, but from how its documentation teaches developers to use it.</p>
+<h3 id="the-pattern">The pattern<a class="headerlink" href="#the-pattern" title="Permanent link">&para;</a></h3>
+<p>A library implements strong security internally but its README examples use weaker configurations for brevity or backward compatibility. Developers copy these examples verbatim, unknowingly introducing vulnerabilities that the library was designed to prevent. Unlike supply chain attacks, these vulnerabilities pass every audit tool because the library code itself is safe — only the copy-pasted usage pattern is insecure.</p>
+<h3 id="real-world-examples">Real-world examples<a class="headerlink" href="#real-world-examples" title="Permanent link">&para;</a></h3>
+<p>This pattern has been documented across popular npm packages with combined weekly downloads exceeding 195 million:</p>
+<ul>
+<li><strong>Weak key derivation</strong>: A widely-used encryption library's README examples derive AES keys from passphrases using MD5 with a single iteration (EVP_BytesToKey), allowing a GPU to test billions of candidate passphrases per second. The library's own PBKDF2 module uses stronger defaults, but the prominent AES examples do not use it.</li>
+<li><strong>Credential exposure on redirect</strong>: An HTTP client library's README demonstrates a <code>beforeRedirect</code> callback that re-injects authorization headers after the library has already stripped them during protocol downgrades (HTTPS to HTTP), effectively bypassing the library's own security mechanism.</li>
+<li><strong>Regex anchoring</strong>: Libraries that accept regex patterns for validation (e.g., JWT audience matching, CORS origin matching) show examples with unanchored patterns like <code>/example\.com/</code>, which match <code>malicious-example.com</code>. The fix is <code>^https:\/\/example\.com$</code>, but the documentation doesn't demonstrate anchoring.</li>
+<li><strong>Insecure randomness</strong>: A file upload library's README generates filenames with <code>Math.random()</code> while the library's own default uses <code>crypto.randomBytes(16)</code>. Developers who customize the filename — following the README example — downgrade from cryptographic to predictable randomness.</li>
+</ul>
+<h3 id="how-to-protect-yourself">How to protect yourself<a class="headerlink" href="#how-to-protect-yourself" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Never copy README examples into production without a security review.</strong> Treat documentation code the same way you treat code from Stack Overflow — as a starting point, not a production-ready solution.</li>
+<li><strong>Check for secure defaults in the library's source code.</strong> If the library internally uses <code>crypto.randomBytes()</code>, <code>PBKDF2</code>, or anchored regex patterns, but the README example uses <code>Math.random()</code>, <code>MD5</code>, or unanchored patterns, prefer the library's internal approach.</li>
+<li><strong>Validate security-sensitive parameters.</strong> When a library accepts patterns, keys, or credentials as input, verify that your usage matches security best practices for that parameter type (anchored regex, authenticated encryption, HTTPS-only credentials).</li>
+<li><strong>Report insecure documentation.</strong> If you find a README example that teaches an insecure pattern, file an issue with the maintainer. Documentation vulnerabilities affect every developer who copies the example.</li>
+</ul>
+<p>For more context on this pattern, see the discussion at the <a href="https://github.com/nodejs/security-wg/issues/1560">Node.js Security Working Group</a>.</p>
 <h2 id="final-recommendations">Final Recommendations<a class="headerlink" href="#final-recommendations" title="Permanent link">&para;</a></h2>
 <p>Closing our list of npm security best practices are the following tips to reduce the risk of such attacks:</p>
 <ul>
