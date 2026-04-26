@@ -343,6 +343,12 @@ U2F augments password-based authentication using a hardware token (typically USB
 
 **FIDO2**: FIDO2 and WebAuthn, encompassing previous standards (UAF/U2F), form the foundation of modern **Passkeys** technology. Passkeys enable users to securely log in using local user verification (such as biometrics or device PINs) and often supporting cloud synchronization across devices. This technology is widely supported by major platforms. (Windows Hello/Mac Touch ID)
 
+### JSON Web Tokens (JWT)
+
+JSON Web Tokens (JWT, [RFC 7519](https://datatracker.ietf.org/doc/html/rfc7519)) are widely used as bearer tokens in authentication and authorization flows, including as OIDC ID tokens and OAuth 2.0 access tokens. They are well-suited for stateless, cross-service authentication, but are not always the right choice — applications that require immediate session revocation on logout may find traditional server-side sessions simpler (see the [Session Management Cheat Sheet](Session_Management_Cheat_Sheet.md)).
+
+For comprehensive guidance on JWT structure, common vulnerabilities, and secure implementation, see the [JSON Web Token Cheat Sheet](JSON_Web_Token_Cheat_Sheet.md).
+
 ## Password Managers
 
 Password managers are programs, browser plugins, or web services that automate the management of a large quantity of different credentials. Most password managers have functionality to allow users to easily use them on websites, either:

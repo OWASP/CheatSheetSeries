@@ -60,7 +60,7 @@ This cheat sheet will help users of the [OWASP Top Ten](https://owasp.org/Top10/
 - [Choosing and Using Security Questions Cheat Sheet](cheatsheets/Choosing_and_Using_Security_Questions_Cheat_Sheet.md)
 - [Credential Stuffing Prevention Cheat Sheet](cheatsheets/Credential_Stuffing_Prevention_Cheat_Sheet.md)
 - [Denial of Service Cheat Sheet](cheatsheets/Denial_of_Service_Cheat_Sheet.md)
-- [JSON Web Token for Java Cheat Sheet](cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.md)
+- [JSON Web Token Cheat Sheet](cheatsheets/JSON_Web_Token_Cheat_Sheet.md)
 - [Multifactor Authentication Cheat Sheet](cheatsheets/Multifactor_Authentication_Cheat_Sheet.md)
 - [Password Storage Cheat Sheet](cheatsheets/Password_Storage_Cheat_Sheet.md)
 - [SAML Security Cheat Sheet](cheatsheets/SAML_Security_Cheat_Sheet.md)
