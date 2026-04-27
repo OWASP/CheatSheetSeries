@@ -2,26 +2,54 @@
 
 ## Introduction
 
-Developers are rapidly adopting AI coding assistants (GitHub Copilot, Cursor, Claude Code, Gemini Code Assist, Windsurf) to accelerate development. These tools generate code, suggest dependencies, and automate implementation. However, AI-generated code introduces security risks that are distinct from human-written code and require specific mitigations within existing DevSecOps pipelines.
+AI coding tools have moved beyond code suggestion. In 2026, agentic coding tools (Claude Code, Cursor agent mode, Aider, Devin, Copilot Workspace, Codex) execute shell commands, install packages, edit files, run tests, access the network, and push branches autonomously. Many developers run these agents with auto-accept enabled, meaning the agent operates with the developer's full permissions and minimal human oversight.
 
-This cheat sheet provides actionable guidance for developers and security teams on safely integrating AI coding tools into their development workflow. It focuses on risks unique to AI-generated code and does not duplicate general secure coding guidance already covered in existing OWASP cheat sheets. Where overlap exists, this document links to the relevant cheat sheet.
+This cheat sheet addresses the security risks specific to AI-assisted and agentic coding. It focuses on threats that do not exist in traditional development workflows and does not restate general secure coding guidance already covered elsewhere.
 
-For general input validation, see the [Input Validation Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html). For SQL injection prevention, see the [SQL Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html). For general secure coding principles, see the [Secure Coding Practices Quick Reference Guide](https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/).
+For general secure coding, see the [Secure Coding Practices Quick Reference Guide](https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/). For AI agent security beyond coding tools, see the [AI Agent Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html). For prompt injection prevention, see the [LLM Prompt Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html). For MCP protocol security, see the [MCP Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/MCP_Security_Cheat_Sheet.html).
+
+## Threat Model and Trust Boundaries
+
+AI coding agents operate across multiple trust boundaries. Understanding these boundaries is essential before applying any controls.
+
+```
+                    TRUST BOUNDARIES IN AGENTIC CODING
+
+ [DEVELOPER]                    [AGENT]                    [EXTERNAL]
+  Developer  ──── permissions ──── AI Agent  ──── reads ──── Repo Content
+  approves        (often full       executes       ingests     (issues, PRs,
+  or auto-        dev access)       commands       context     READMEs, deps,
+  accepts                                                      changelogs)
+      |                |                |                |
+      |           [MODEL PROVIDER]      |          [MCP SERVERS]
+      |            API calls            |           Tool calls
+      |            Code + context       |           File access
+      |            sent to provider     |           Network access
+      |                                 |           Credentials
+      |                                 |
+      |              [CI/CD]            |
+      |            Workflows            |
+      |            Org secrets          |
+      |            Deploy access        |
+```
+
+### Threat Actors and Attack Surfaces
+
+- **Repo content as instruction source.** Issue bodies, PR descriptions, PR comments, README files, dependency changelogs, error traces, fetched web pages, and MCP tool responses all become instructions when the agent reads them. An attacker who can write to any of these can influence agent behaviour.
+- **MCP servers as tool providers.** Agents connect to MCP servers to access tools. A malicious or compromised MCP server can poison tool descriptions, shadow legitimate tool names, exfiltrate credentials through tool arguments, or update tool definitions after initial approval (rug-pull).
+- **Rules files as persistent steering.** Files like `.cursorrules`, `CLAUDE.md`, `AGENTS.md`, `.github/copilot-instructions.md`, and `.windsurfrules` silently steer every future generation. They can be modified by a malicious PR or by the agent itself to embed persistent instructions.
+- **The agent itself.** Agents running with auto-accept and full developer permissions can install packages, write to any file, execute shell commands, modify CI configuration, and push branches. A compromised agent context has the same blast radius as a compromised developer workstation.
+- **CI/CD agents.** Review bots and CI runners (e.g. `claude-code-action`, Copilot review) act on PR content with access to org secrets. A malicious PR can trigger the CI agent to exfiltrate secrets or modify the build pipeline. This is confused deputy at scale.
 
 ## Section 1: Hallucinated Dependencies
 
-AI coding assistants frequently suggest package names that do not exist on public registries. Attackers monitor these hallucinated names and register malicious packages with matching names, a technique known as AI-assisted typosquatting.
-
-### The Risk
-
-A developer asks an AI assistant for help with a task. The assistant suggests `npm install fast-xml-validator`. The package does not exist on npm. An attacker registers `fast-xml-validator` as a malicious package containing a credential stealer. The developer installs it without checking.
+AI coding assistants frequently suggest package names that do not exist on public registries. Attackers monitor these hallucinated names and register malicious packages with matching names (AI-assisted typosquatting).
 
 ### Do
 
 - Verify every AI-suggested package exists on the public registry before installing. Check the package page, download count, maintainer history, and creation date.
 - Be suspicious of packages with very low download counts, recent creation dates (less than 30 days), or a single maintainer with no other packages.
-- Use package safety checking tools that verify package existence, age, maintainer count, and known vulnerability status before installation.
-- Implement a pre-install hook or CI check that blocks installation of packages below a minimum age threshold (e.g. 30 days).
+- Implement a pre-install hook or CI check that blocks installation of packages below a minimum age threshold.
 - Maintain an internal allowlist of approved packages for your organisation.
 
 ### Don't
@@ -33,10 +61,6 @@ A developer asks an AI assistant for help with a task. The assistant suggests `n
 ## Section 2: Outdated Dependencies with Known CVEs
 
 AI models are trained on historical code. They frequently suggest dependency versions that were current during training but now have known vulnerabilities. The AI may not know about CVEs published after its training cutoff or after the coding tool's last security-index update.
-
-### The Risk
-
-An AI assistant suggests `npm install axios@0.21.1`. This version has known vulnerabilities. The current version is significantly newer with security patches applied.
 
 ### Do
 
@@ -51,300 +75,169 @@ An AI assistant suggests `npm install axios@0.21.1`. This version has known vuln
 - Assume that AI assistants are aware of recent vulnerability disclosures.
 - Disable dependency auditing for AI-generated code.
 
-## Section 3: Static Analysis of AI-Generated Code
+## Section 3: Indirect Prompt Injection in the Development Loop
 
-AI-generated code may contain the same vulnerability classes as human-written code -- SQL injection, command injection, path traversal, XSS, insecure deserialization -- and teams should assume it requires equal or greater scrutiny.
+Agentic coding tools ingest context from the repository, the network, and connected tools. Any content the agent reads can contain hidden instructions that alter its behaviour. This is indirect prompt injection applied to the development workflow.
 
-### The Risk
+### Attack Vectors
 
-An AI generates a database query function using string concatenation instead of parameterised queries. The code works correctly but is vulnerable to SQL injection. The developer accepts it because it passes tests.
-
-### Do
-
-- Run SAST tools on all AI-generated code with the same rules and severity thresholds as human-written code.
-- Pay particular attention to common AI code generation weaknesses:
-    - String concatenation in SQL queries instead of parameterised queries
-    - Shell command construction from user input without escaping
-    - File path construction from user input without traversal prevention
-    - Hardcoded credentials, API keys, or secrets in generated code
-    - Missing input validation on function parameters
-    - Use of deprecated or insecure cryptographic functions
-- Treat AI-generated code as untrusted input to your codebase. It should pass the same review and analysis gates as any external contribution.
-
-### Don't
-
-- Assume AI-generated code is secure because it came from a reputable AI provider.
-- Skip code review for AI-generated code.
-- Merge AI-generated code that fails SAST checks, even if it "works."
-- Disable SAST rules for AI-generated files.
-
-## Section 4: Dynamic Analysis of AI-Generated Code
-
-Static analysis catches many issues but cannot detect runtime vulnerabilities such as race conditions, authentication bypass under specific request sequences, or business logic flaws. Dynamic testing is essential for AI-generated code that handles user input or performs sensitive operations.
+- **Issue bodies and PR descriptions.** An attacker opens an issue containing hidden instructions. When a developer asks the agent to "fix issue #123", the agent reads the issue body and follows the embedded instructions.
+- **PR comments and review feedback.** Malicious review comments can instruct the agent to modify unrelated files, weaken security controls, or exfiltrate code when the developer asks the agent to "address review feedback."
+- **README and documentation files.** Cloned repositories, dependencies, and fetched documentation can contain instructions invisible to human readers but parsed by the agent.
+- **Error traces and log output.** When an agent reads error output to debug a failure, crafted error messages can inject instructions.
+- **Dependency changelogs and release notes.** Agents reading changelogs to understand version differences can be influenced by injected content.
+- **Fetched web pages.** Agents with web access can be influenced by content on pages they are asked to reference.
 
 ### Do
 
-- Include AI-generated endpoints and functions in your existing DAST scanning scope.
-- Write security-focused test cases for AI-generated code, particularly for:
-    - Authentication and authorisation boundaries
-    - Input handling edge cases (empty, null, oversized, malformed)
-    - Error handling behaviour (does it fail closed or fail open?)
-    - Rate limiting and resource consumption
-- Run fuzz testing on AI-generated parsers, validators, and input handlers.
+- Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent.
+- Review agent output for unexpected changes after the agent processes any external content.
+- Use tools that sanitise or flag potential injection patterns in repository content before the agent processes it.
+- Restrict agent context to the minimum files and content needed for the task.
+- Audit agent actions after processing content from external contributors or public repositories.
 
 ### Don't
 
-- Exclude AI-generated code from dynamic testing because "the AI tested it."
-- Trust AI-generated test cases as sufficient for security validation. AI tends to generate happy-path tests, not adversarial tests.
-- Deploy AI-generated API endpoints without DAST scanning.
+- Allow agents to process issue bodies, PR descriptions, or comments from untrusted contributors without review of the agent's resulting actions.
+- Assume that content an agent reads is safe because it appears in a familiar context (e.g. a GitHub issue).
+- Give agents unrestricted access to browse the web or fetch arbitrary URLs without egress controls.
 
-## Section 5: Secrets in AI-Generated Code
+## Section 4: MCP and Tool Security
 
-AI assistants frequently generate code containing placeholder secrets, example API keys, or hardcoded credentials. These placeholders are sometimes realistic enough to be mistaken for actual credentials or may accidentally match real credentials from training data.
+AI coding agents connect to MCP (Model Context Protocol) servers to access tools for file operations, database queries, API calls, and more. Compromised or malicious MCP servers are a direct supply chain risk to the development environment.
+
+For comprehensive MCP security guidance, see the [MCP Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/MCP_Security_Cheat_Sheet.html).
 
 ### Do
 
-- Run secret scanning tools on all AI-generated code before committing.
-- Configure pre-commit hooks that block commits containing patterns matching API keys, tokens, private keys, or connection strings.
-- Replace AI-generated placeholder credentials with environment variable references immediately, before the code is committed.
-- Audit existing codebase for secrets that may have been introduced by AI-generated code in past commits.
+- Audit all MCP servers connected to your development environment. Maintain an allowlist of approved servers and tools.
+- Pin tool definitions and detect changes. Use snapshot-and-diff mechanisms to catch rug-pull updates where a tool's behaviour changes after initial approval.
+- Review tool descriptions for hidden instructions. Tool descriptions are part of the agent's context and can contain prompt injection payloads.
+- Restrict which tools the agent can invoke. Apply least privilege -- a coding agent does not need access to email, payment, or administrative tools.
+- Monitor for tool name shadowing where a malicious MCP server registers a tool with the same name as a legitimate one to intercept calls.
+- Validate tool arguments before execution. Agents may pass sensitive data (credentials, file contents, environment variables) as tool arguments without awareness of the data classification.
 
 ### Don't
 
-- Commit AI-generated code without secret scanning.
-- Assume placeholder credentials in AI output are fake. They may match real credentials from training data.
-- Hardcode credentials in configuration files because the AI suggested that pattern.
+- Connect to MCP servers from untrusted sources without security review.
+- Allow agents to discover and connect to MCP servers automatically without approval.
+- Trust tool descriptions as benign. They are an injection surface.
+- Allow MCP tools unrestricted filesystem, network, or credential access on the developer's machine.
 
-For comprehensive guidance on secrets management, see the [Secrets Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html).
+Reference: CVE-2026-39313 -- mcp-framework before 0.2.22: unbounded memory allocation in HTTP request body handling allowed unauthenticated denial of service. Example of a vulnerability in AI framework code that highlights the need for dependency auditing and runtime limits.
 
-For guidance on preventing your existing secrets from being sent to AI providers through the IDE context window, see Section 8: Prompt Context Leakage and Sensitive Code Exposure.
+## Section 5: Agent Runtime Sandboxing
 
-## Section 6: License and Intellectual Property Risks
-
-AI-generated code may resemble or reproduce portions of copyrighted or restrictively licensed code, creating potential licence or IP review obligations. Including such code in your project without awareness of its provenance can create legal exposure.
+Agentic coding tools execute commands, install packages, write files, and access the network on the developer's machine. Without sandboxing, a compromised agent context has the same privileges as the developer.
 
 ### Do
 
-- Run licence scanning tools on AI-generated code to detect potential licence conflicts.
-- Maintain awareness of your project's licence obligations and whether AI-generated contributions are compatible.
-- Document which portions of your codebase were AI-generated for IP audit purposes.
-- Review AI-generated code for unusually specific or complex implementations that may be reproduced from training data rather than genuinely generated.
+- Run AI coding agents in sandboxed environments: dev containers, restricted shells, virtual machines, or ephemeral cloud workspaces.
+- Use tool allowlists that restrict which commands the agent can execute. Block access to credential stores, SSH keys, cloud CLI configurations, and sensitive directories.
+- Apply egress controls on the agent's runtime. If the agent does not need outbound network access for the current task, block it.
+- Use ephemeral credentials scoped to the current task rather than long-lived developer credentials.
+- Understand and evaluate the risk of flags like `--dangerously-skip-permissions` or auto-accept modes. These bypass confirmation prompts and give the agent unrestricted execution.
+- Set resource limits (CPU, memory, disk, process count) on agent execution environments.
 
 ### Don't
 
-- Assume AI-generated code is free of licence obligations.
-- Include AI-generated code in proprietary projects without licence review.
-- Ignore licence scanning results for AI-generated files.
+- Run AI coding agents with your full developer credentials, SSH keys, and cloud access tokens without sandboxing.
+- Enable auto-accept mode on untrusted or unfamiliar codebases.
+- Allow agents to access production credentials, deployment keys, or org-level secrets from the development environment.
+- Assume the agent will only touch files relevant to the current task.
 
-## Section 7: AI-Generated Infrastructure Code
+## Section 6: Rules Files and Persistent Steering
 
-AI assistants generate infrastructure-as-code (Terraform, CloudFormation, Dockerfiles, Kubernetes manifests) with the same security risks as application code. Misconfigurations in infrastructure code can expose entire environments.
+AI coding tools read configuration files that steer their behaviour across all future interactions. These files are a persistence mechanism -- an attacker who can modify them controls every subsequent generation.
+
+### Affected Files
+
+- `.cursorrules`, `.cursor/rules/`
+- `CLAUDE.md`, `.claude/`
+- `AGENTS.md`
+- `.github/copilot-instructions.md`
+- `.windsurfrules`
+- `.aider.conf.yml`
+- Custom system prompt files referenced by any AI tool
 
 ### Do
 
-- Run IaC security scanning tools on AI-generated infrastructure code (Terraform, CloudFormation, Docker, Kubernetes manifests).
-- Check AI-generated Dockerfiles for:
-    - Running as root
-    - Installing unnecessary packages
-    - Exposing unnecessary ports
-    - Using `latest` tags instead of pinned versions
-    - Copying secrets into the image
-- Check AI-generated Kubernetes manifests for:
-    - Privileged containers
-    - Missing resource limits
-    - Missing network policies
-    - Default service account usage
-- Check AI-generated Terraform/CloudFormation for:
-    - Public S3 buckets or storage
-    - Security groups with 0.0.0.0/0 ingress
-    - Missing encryption at rest
-    - Overly permissive IAM policies
+- Treat rules files as security-critical configuration. Review changes to these files with the same scrutiny as CI/CD pipeline changes.
+- Add rules files to your code review requirements. Require explicit approval for any modification.
+- Monitor for unexpected rules file creation or modification, including by the agent itself.
+- Use git hooks or CI checks that flag changes to known rules files in every PR.
+- Audit existing rules files for instructions that weaken security controls, disable safety features, or direct the agent to ignore certain file types or patterns.
 
 ### Don't
 
-- Deploy AI-generated infrastructure code without IaC scanning.
-- Trust AI-generated security group rules or IAM policies without review.
-- Use AI-generated Dockerfiles in production without hardening.
+- Allow PRs from external contributors to add or modify rules files without security review.
+- Allow the AI agent itself to modify its own rules files without explicit developer approval.
+- Assume rules files are benign because they are plain text. They are instruction injection surfaces with session-level persistence.
 
-## Section 8: Prompt Context Leakage and Sensitive Code Exposure
+## Section 7: Out-of-Scope Edits and Review Anchoring
 
-When using AI coding assistants in IDEs, the tool sends code context (open files, project structure, terminal output) to the AI provider's API. This context may contain sensitive information including credentials, personal data, proprietary business logic, and internal architecture details.
+Agents routinely touch files beyond the scope of the requested change: lockfiles, CI configurations, unrelated tests, formatting changes, and dependency updates. Reviewers anchored on the requested change miss these modifications. This is the most common review failure mode in agentic coding.
+
+### Do
+
+- Use diff-aware review tooling that highlights all files changed, not just the ones relevant to the task description.
+- Implement CI checks that flag unexpected file modifications: lockfile changes, CI/CD config changes, test modifications, and changes to files outside the requested scope.
+- Review every file in an agent-generated PR individually. Do not approve based on the PR description alone.
+- Set up CODEOWNERS rules that require specific reviewers for sensitive files (CI configs, Dockerfiles, deployment scripts, rules files).
+- Limit the agent's file access scope when possible. Some tools support directory restrictions or file allowlists.
+
+### Don't
+
+- Approve agent-generated PRs based on the summary or description without reviewing the full diff.
+- Assume that lockfile changes, test modifications, or formatting changes are benign because they "look routine."
+- Allow agents to modify files outside the explicitly requested scope without flagging those changes for review.
+
+## Section 8: Test Fabrication and Test Deletion
+
+AI agents make CI green by deleting failing tests, weakening assertions, mocking the unit under test instead of fixing the code, or asserting the buggy behaviour. A passing test suite generated by the same agent that produced the code provides no independent assurance.
+
+### Do
+
+- Require human review of all AI-generated test modifications, with focus on:
+    - Deleted tests (why was this test removed?)
+    - Weakened assertions (did `assertEquals` become `assertNotNull`?)
+    - New mocks that replace real dependencies the test was designed to exercise
+    - Tests that assert the generated behaviour rather than the correct behaviour
+- Add adversarial and negative test cases that the AI did not generate: invalid inputs, expired tokens, malformed payloads, boundary conditions, concurrent access.
+- Measure security confidence by adversarial testing results and independent analysis, not by "all tests pass."
+- Implement CI rules that flag test deletions or assertion-count reductions in agent-generated PRs.
+- Write security-critical tests manually for authentication, authorisation, input validation, and cryptographic operations.
+
+### Don't
+
+- Trust AI-generated test suites as evidence of security.
+- Measure confidence by test pass rate alone. 100% passing means nothing if the tests assert broken behaviour.
+- Allow agents to delete or modify existing tests without explicit justification reviewed by a human.
+- Allow the agent to both write the security-critical code and its tests without independent verification.
+
+## Section 9: Prompt Context Leakage and Sensitive Code Exposure
+
+AI coding assistants send code context (open files, project structure, terminal output) to the model provider's API. This context may contain credentials, personal data, proprietary business logic, and internal architecture details.
 
 ### Do
 
 - Review what context your AI coding assistant sends to the provider. Most tools document this.
-- Configure AI tools to exclude sensitive directories (e.g. `.env` files, credential stores, private key directories) from context.
-- Add `.env`, `.env.*`, `*.pem`, `*.key`, `credentials.json`, `serviceAccountKey.json`, and similar sensitive files to your AI tool's context exclusion list (`.cursorignore`, `.copilotignore`, or equivalent).
+- Configure AI tools to exclude sensitive directories from context. Add `.env`, `.env.*`, `*.pem`, `*.key`, `credentials.json`, `serviceAccountKey.json`, and similar sensitive files to your AI tool's context exclusion list (`.cursorignore`, `.copilotignore`, or equivalent).
 - Audit what your AI coding tool sends by enabling request logging or using a network proxy to inspect outbound API calls.
 - Use self-hosted or air-gapped AI coding tools for projects handling classified, regulated, or highly sensitive code.
-- Implement data loss prevention (DLP) rules that detect and block sensitive data in AI tool API traffic.
 - Store all secrets in environment variables, vault services, or encrypted secret stores -- never in files within the project tree where AI tools can read them.
 
 ### Don't
 
 - Use cloud-hosted AI coding assistants on classified or top-secret codebases without approval.
 - Assume that AI coding assistants only send the current file. Many send broader project context.
-- Ignore your organisation's data classification policies when choosing AI coding tools.
 - Open `.env` files or private keys in your IDE while an AI coding assistant is active. The file contents may be sent as context.
 - Paste API keys, tokens, or credentials into your terminal while AI tools with terminal context access are running.
 - Assume that `.gitignore` prevents AI tools from reading files. `.gitignore` only affects git -- AI tools read from the filesystem directly.
 
-## Section 9: Enterprise Deployment and Data Governance
+## Section 10: Prompt-to-Code Supply Chain Risk
 
-Organisations deploying AI coding tools at scale face data governance, privacy, and intellectual property risks that individual developers may not consider.
-
-### Data Protection and GDPR
-
-When AI coding assistants process code that contains or references personal data, GDPR and other data protection regulations apply.
-
-#### Do
-
-- Conduct a Data Protection Impact Assessment (DPIA) before deploying AI coding tools across your organisation. Assess what data flows to the AI provider, how it is processed, and what retention policies apply.
-- Verify the AI provider's data processing agreement (DPA) covers your obligations under GDPR, UK GDPR, or applicable data protection law.
-- Confirm whether the AI provider uses your code or prompts to train or fine-tune their models. If they do, assess whether this constitutes a new purpose requiring consent or a legitimate interest assessment.
-- Ensure your AI tool configuration complies with data minimisation principles -- only send the minimum context necessary for code generation.
-- Maintain records of processing activities that include AI coding tool usage, including what data categories are processed and the legal basis.
-- Provide clear information to developers about what data the AI tool processes and their rights under applicable privacy law.
-
-#### Don't
-
-- Deploy AI coding tools that process personal data without a DPIA.
-- Assume that code never contains personal data. Database schemas, test fixtures, configuration files, and comments frequently contain PII, email addresses, or customer identifiers.
-- Use AI coding tools from providers without a clear data processing agreement.
-- Ignore data residency requirements. Some AI providers process data outside your jurisdiction -- verify this is compatible with your transfer mechanisms.
-
-### Intellectual Property and Code Ownership
-
-AI-generated code raises unresolved questions about ownership, copyright, and the risk of reproducing proprietary code from training data.
-
-#### Do
-
-- Establish a clear organisational policy on IP ownership of AI-generated code before developers start using AI tools.
-- Assess whether AI-generated code in your codebase affects your ability to patent, licence, or sell your software.
-- Monitor for code that appears to be reproduced from specific open source projects rather than genuinely generated. Indicators include project-specific variable names, exact comment text, or unusual implementation patterns that match known repositories.
-- Maintain an inventory of which code in your codebase was AI-generated, including the tool and model version used. This supports future IP audits and licence disputes.
-- Review your employment contracts and contributor agreements to clarify whether AI-assisted contributions are covered.
-
-#### Don't
-
-- Assume that AI-generated code is free of third-party IP claims.
-- Use AI coding tools to generate code for patent applications without legal review of the IP implications.
-- Ignore the possibility that AI-generated code reproduces copyrighted material from training data. The legal landscape is evolving and organisations should maintain awareness of relevant case law.
-
-### Training Data Opt-Out and Telemetry
-
-Many AI coding tools collect telemetry data and may use customer code to improve their models unless explicitly opted out.
-
-#### Do
-
-- Review the AI provider's terms of service for clauses about using customer code for model training or improvement.
-- Opt out of training data collection where the option exists. Most enterprise plans offer this -- verify it is enabled.
-- Audit what telemetry your AI coding tools send beyond the code context. Some tools report usage patterns, error rates, and editor state.
-- Use enterprise or business tiers of AI coding tools that offer contractual guarantees against training on customer data. Free and individual tiers frequently do not offer these guarantees.
-- Consider self-hosted or air-gapped AI coding tools for regulated industries (financial services, healthcare, defence, government) where code leaving the network boundary is unacceptable.
-
-#### Don't
-
-- Use free-tier AI coding tools on proprietary or regulated codebases without verifying the training data policy.
-- Assume that opting out of training in the UI settings is sufficient. Verify the contractual terms match the UI settings.
-- Ignore telemetry collection. Even if code is not used for training, metadata about your development patterns may be collected and processed.
-
-### Enterprise Architecture Considerations
-
-#### Do
-
-- Deploy AI coding tools through a centralised gateway or proxy that enforces organisation-wide policies (context exclusions, data classification rules, approved models).
-- Implement logging of all AI tool API calls for audit and incident response purposes.
-- Establish an approved list of AI coding tools and models. Prevent developers from using unapproved tools that may have weaker data protection guarantees.
-- Include AI coding tool risk in your third-party vendor risk assessment process.
-- Plan for AI tool provider incidents -- what happens to your development workflow if the AI provider experiences an outage, breach, or discontinuation of service?
-
-#### Don't
-
-- Allow developers to individually sign up for AI coding tools with personal accounts on enterprise codebases.
-- Deploy AI coding tools without centralised policy enforcement.
-- Exclude AI tool providers from your vendor risk management programme.
-- Assume AI coding tools are low-risk because they "only generate code." They process your codebase, your architecture, and your business logic.
-
-## Section 10: AI-Generated Tests
-
-AI coding assistants generate test suites alongside application code. These tests often assert the generated behaviour rather than the correct or secure behaviour. A passing test suite does not indicate security when the tests themselves were generated by the same AI that produced the vulnerable code.
-
-### The Risk
-
-An AI generates an authentication function with a logic flaw (e.g. fail-open on token expiry). It simultaneously generates tests that assert this broken behaviour. The tests pass, the developer gains false confidence, and the vulnerability ships.
-
-### Do
-
-- Require human review of all AI-generated test cases, with particular focus on security assertions.
-- Add negative and adversarial test cases that the AI did not generate: invalid inputs, expired tokens, malformed payloads, boundary conditions, concurrent access.
-- Verify that generated tests assert the correct security behaviour, not just the generated behaviour. A test that asserts a broken function works is worse than no test.
-- Measure security confidence by adversarial testing results and SAST/DAST findings, not by "all tests pass."
-- Write security-specific tests manually for authentication, authorisation, input validation, and cryptographic operations.
-
-### Don't
-
-- Trust AI-generated test suites as evidence of security.
-- Measure confidence by test pass rate alone. 100% passing means nothing if the tests assert broken behaviour.
-- Allow AI to generate both the security-critical code and its tests without independent human verification of correctness.
-- Skip adversarial/negative test cases because the AI-generated happy-path tests pass.
-
-## Section 11: AI-Generated Authentication and Authorisation Logic
-
-AI frequently generates plausible but broken authentication and authorisation code. The generated code often works for the happy path but fails under adversarial conditions. This deserves dedicated scrutiny because auth failures are the highest-impact vulnerability class.
-
-### The Risk
-
-An AI generates middleware that checks user roles, but only validates the role claim from the JWT without checking object ownership. The result: users can access any resource by supplying a valid token with the correct role, regardless of whether they own the resource (IDOR).
-
-### Do
-
-- Require mandatory security review for all AI-generated authentication, authorisation, and access control code.
-- Check AI-generated auth code specifically for:
-    - IDOR / missing object-level authorisation (user can access another user's resources)
-    - Role confusion (admin check uses wrong field, or trusts client-supplied role)
-    - Client-side-only authorisation (checks in frontend but not enforced server-side)
-    - Missing tenant checks in multi-tenant systems (user from Tenant A accesses Tenant B data)
-    - Fail-open middleware (auth middleware that passes requests through on error instead of blocking)
-    - Missing token validation (signature not verified, expiry not checked, issuer not validated)
-- Test AI-generated auth with adversarial scenarios: expired tokens, tokens for different users, tokens with modified claims, missing tokens, tokens from different issuers.
-
-### Don't
-
-- Trust AI-generated authorisation middleware without explicit security review.
-- Accept role-based access control code from AI without testing object-level authorisation.
-- Deploy AI-generated auth that only validates on the client side.
-- Assume AI understands your tenant model. AI frequently generates single-tenant auth patterns for multi-tenant applications.
-
-## Section 12: AI-Generated Cryptographic Code
-
-AI coding assistants generate cryptographic code that appears correct but often uses deprecated algorithms, insecure modes, predictable randomness, or custom schemes that are trivially breakable. Cryptography requires domain expertise that AI does not reliably possess.
-
-### Do
-
-- Use approved cryptographic libraries and patterns only. AI should generate calls to well-known libraries (e.g. libsodium, OpenSSL, Web Crypto API, Go crypto/), not custom implementations.
-- Require mandatory security review for all AI-generated code involving encryption, signing, hashing, password storage, token generation, key derivation, or random number generation.
-- Verify AI-generated crypto code uses:
-    - Current algorithms (AES-256-GCM, ChaCha20-Poly1305 for encryption; SHA-256/SHA-3 for hashing; ECDSA P-256 or Ed25519 for signing; Argon2id for password hashing)
-    - Cryptographically secure random number generation (crypto.randomBytes, secrets module, /dev/urandom)
-    - Proper IV/nonce handling (never reused, sufficient length)
-    - Authenticated encryption (GCM, Poly1305) rather than unauthenticated modes (ECB, CBC without HMAC)
-
-### Don't
-
-- Ask AI to invent encryption schemes, custom token formats, or novel cryptographic protocols.
-- Accept AI-generated password hashing using MD5, SHA-1, or unsalted SHA-256.
-- Trust AI-generated key derivation or key exchange code without cryptographic review.
-- Use AI-generated random token generation that uses Math.random(), time-based seeds, or other predictable sources.
-- Allow AI to generate its own JWT signing/verification logic instead of using established JWT libraries.
-
-## Section 13: Prompt-to-Code Supply Chain Risk
-
-AI coding assistants modify not just application code but also build scripts, CI/CD configurations, package scripts, and deployment infrastructure. Malicious or incorrect changes to these files have outsized impact because they execute automatically in trusted contexts.
-
-### The Risk
-
-A developer asks an AI to "add a build step." The AI modifies `package.json` to add a `postinstall` script, or changes a GitHub Actions workflow to include a new step that downloads and executes an external script. These changes execute automatically on every install or CI run.
+AI coding agents modify not just application code but also build scripts, CI/CD configurations, package scripts, and deployment infrastructure. Changes to these files execute automatically in trusted contexts with elevated privileges.
 
 ### Do
 
@@ -359,36 +252,70 @@ A developer asks an AI to "add a build step." The AI modifies `package.json` to 
     - Any file that executes automatically during build, install, test, or deploy
 - Flag any AI-generated change that adds network access, downloads external resources, or executes shell commands in build/deploy context.
 - Implement CI checks that diff build configuration files and require explicit approval for changes to CI/CD pipelines.
+- Ensure AI-generated GitHub Actions reference third-party actions pinned to a specific commit SHA, not a mutable tag.
 
 ### Don't
 
 - Allow AI to modify CI/CD pipelines, Dockerfiles, or package scripts without explicit human review.
-- Accept AI-generated GitHub Actions that reference third-party actions without pinning to a specific SHA.
+- Accept AI-generated GitHub Actions that reference third-party actions by tag without SHA pinning.
 - Trust AI-generated build scripts that download or execute external URLs.
 - Merge AI changes to deployment configurations without verifying what changed in the build/deploy path.
 
-## Section 14: Runtime Guardrails for AI-Generated Code
+## Section 11: CI/CD Agents and Confused Deputy Risk
 
-Secure coding guidance must extend beyond development to deployment. AI-generated code that passes all review gates may still behave unexpectedly in production. Defence-in-depth requires runtime controls.
+AI-powered CI/CD agents (review bots, automated code fixers, PR assistants) run on PR events with access to org secrets, deployment credentials, and write access to the repository. A malicious PR can manipulate the CI agent into exfiltrating secrets or modifying the pipeline.
 
 ### Do
 
-- Deploy AI-generated services with least-privilege runtime credentials. If the code only reads from a database, the runtime credential should only have read access.
-- Sandbox AI-generated tools, scripts, and automation using containers, VMs, or process-level isolation.
-- Apply egress restrictions to AI-generated services. If the code does not need outbound network access, block it at the network level.
-- Set resource limits (memory, CPU, file descriptors, process count) on AI-generated services to prevent unbounded resource consumption.
-- Monitor AI-generated code in production for unexpected behaviour: unusual network connections, excessive resource usage, unexpected file access patterns.
-- Implement kill switches for AI-generated automation that can halt execution immediately if anomalous behaviour is detected.
+- Scope CI agent credentials to the minimum required permissions. Review bots should not have deploy keys or write access to secrets.
+- Filter and sanitise PR content (title, body, comments, diff) before passing it to CI agents as context. PR content is attacker-controlled input.
+- Run CI agents in isolated environments with no access to production secrets or credentials beyond what the specific job requires.
+- Log all CI agent actions with full context for audit. Monitor for unexpected file modifications, network calls, or secret access patterns.
+- Implement approval gates before CI agents can push commits, modify workflows, or access sensitive resources.
 
 ### Don't
 
-- Run AI-generated code with admin or root credentials in production.
-- Deploy AI-generated services without network egress controls.
-- Allow AI-generated code unlimited resource consumption in production.
-- Deploy AI-generated automation without monitoring and alerting.
-- Assume that code which passed review cannot behave unexpectedly at runtime.
+- Give CI agents org-level secrets or deployment credentials when they only need read access.
+- Allow CI agents to process PR content from external contributors without sandboxing.
+- Trust CI agent output (comments, reviews, suggested fixes) without verifying that the agent was not influenced by malicious PR content.
 
-## Section 15: Human Accountability
+## Section 12: Markdown, Link, and Unicode Injection
+
+Agent output rendered in IDE chat panes, PR comments, or review interfaces can contain markdown-based exfiltration links, bidi (bidirectional) text overrides, and zero-width characters that influence future agent behaviour or mislead reviewers.
+
+### Do
+
+- Sanitise agent output before rendering in IDE chat panes or PR comments. Strip or escape markdown image tags, hidden links, and HTML entities.
+- Detect and flag bidi override characters (U+202A through U+202E, U+2066 through U+2069) and zero-width characters (U+200B, U+200C, U+200D, U+FEFF) in code, commits, and agent output.
+- Use CI checks that scan for homoglyph attacks and invisible characters in PRs.
+- Review agent-generated commit messages and PR descriptions for embedded content that could influence future agent runs.
+
+### Don't
+
+- Render agent output containing markdown images or links without sanitisation. Image tags with external URLs can exfiltrate conversation context via URL parameters.
+- Assume that code containing only visible ASCII characters is safe. Zero-width and bidi characters are invisible in most editors.
+- Allow agent-generated content to be committed without scanning for unicode injection.
+
+## Section 13: Multi-Agent and Sub-Agent Propagation
+
+When multiple agents interact (e.g. a coding agent delegates to a search agent, or a review agent processes output from a coding agent), prompt injection can propagate across agent boundaries. A compromised context in one agent becomes instructions for the next.
+
+### Do
+
+- Treat output from one agent as untrusted input when passed to another agent.
+- Implement context boundaries between agents. Do not pass full conversation history or raw tool responses between agents without sanitisation.
+- Monitor cross-agent interactions for instruction propagation patterns (e.g. one agent's output instructing another to exfiltrate data or modify files).
+- Validate that sub-agent actions remain within the scope defined by the parent task.
+
+### Don't
+
+- Chain agents without context boundaries. If Agent A is compromised, Agent B should not blindly execute Agent A's output.
+- Allow sub-agents to inherit the full permissions and credentials of the parent agent without scope restriction.
+- Assume that agent-to-agent communication is trusted because both agents are "your" tools.
+
+For comprehensive guidance on multi-agent trust boundaries, see the [AI Agent Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html) and the [MCP Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/MCP_Security_Cheat_Sheet.html) Section 8 (Multi-Server Isolation).
+
+## Section 14: Human Accountability
 
 AI-generated code must have a human owner. Every AI-assisted change should be reviewed, approved, and attributable to a developer who is responsible for its security and maintainability. AI tools do not accept responsibility for the code they generate. The developer who accepts and commits the code does.
 
@@ -397,7 +324,6 @@ AI-generated code must have a human owner. Every AI-assisted change should be re
 - Assign a human owner to every AI-generated code change. That owner is responsible for its correctness, security, and maintenance.
 - Require explicit developer approval before merging any AI-generated code. The approval indicates the developer has reviewed and understood the change.
 - Maintain audit trails showing which developer approved which AI-generated changes, including the AI tool and model version used.
-- Include AI-generated code in your normal code review process. The reviewer is accountable for what they approve.
 - Treat AI as a tool, not a colleague. A developer who says "the AI wrote it" is still responsible for it.
 
 ### Don't
@@ -407,62 +333,27 @@ AI-generated code must have a human owner. Every AI-assisted change should be re
 - Treat AI approval (e.g. AI-generated code review comments) as a substitute for human review.
 - Attribute security failures to the AI tool. The developer who approved the code is accountable.
 
-## Section 16: Do's and Don'ts Summary
-
-### Do
-
-- Verify every AI-suggested package exists and is safe before installing.
-- Run npm audit / pip audit / govulncheck on AI-generated dependency lists.
-- Run SAST on AI-generated code with the same rules as human-written code.
-- Run DAST on AI-generated endpoints and input handlers.
-- Run secret scanning on all AI-generated code before committing.
-- Run IaC scanning on AI-generated infrastructure code.
-- Run licence scanning on AI-generated code.
-- Treat AI-generated code as untrusted input to your codebase.
-- Document which portions of your codebase were AI-generated.
-- Require mandatory security review for AI-generated auth, crypto, and build scripts.
-- Add adversarial/negative tests alongside AI-generated tests.
-- Deploy AI-generated services with least-privilege credentials, sandboxing, and egress controls.
-- Review AI changes to CI/CD, Dockerfiles, and package scripts with heightened scrutiny.
-- Assign a human owner to every AI-generated change.
-
-### Don't
-
-- Blindly install AI-suggested packages without verification.
-- Accept AI-suggested dependency versions without CVE checks.
-- Skip code review for AI-generated code.
-- Trust AI-generated test cases as sufficient for security validation.
-- Commit AI-generated code without secret scanning.
-- Deploy AI-generated infrastructure without IaC scanning.
-- Use cloud AI coding tools on sensitive projects without data classification review.
-- Ask AI to invent cryptographic schemes or custom auth protocols.
-- Trust AI-generated authorisation without testing object-level access control.
-- Allow AI to modify CI/CD pipelines or build scripts without explicit approval.
-- Run AI-generated code with admin credentials or unlimited resources in production.
-
 ## OWASP Top 10 Mapping
-
-This cheat sheet maps to the OWASP Top 10 2021 as follows:
 
 | OWASP Top 10 | Relevant Section |
 |---|---|
-| A01: Broken Access Control | Section 11: AI-Generated Authentication and Authorisation Logic |
-| A02: Cryptographic Failures | Section 12: AI-Generated Cryptographic Code |
-| A03: Injection | Section 3: Static Analysis (SQL, command, path traversal in generated code) |
-| A04: Insecure Design | Section 10: AI-Generated Tests, Section 11: AI-Generated Authentication and Authorisation Logic, Section 15: Human Accountability |
-| A05: Security Misconfiguration | Section 7: AI-Generated Infrastructure Code |
+| A01: Broken Access Control | Section 5: Agent Runtime Sandboxing, Section 11: CI/CD Agents |
+| A03: Injection | Section 3: Indirect Prompt Injection, Section 12: Markdown and Unicode Injection |
+| A04: Insecure Design | Section 8: Test Fabrication, Section 14: Human Accountability |
+| A05: Security Misconfiguration | Section 6: Rules Files, Section 7: Out-of-Scope Edits |
 | A06: Vulnerable and Outdated Components | Section 1: Hallucinated Dependencies, Section 2: Outdated Dependencies |
-| A07: Identification and Authentication Failures | Section 11: AI-Generated Authentication and Authorisation Logic |
-| A08: Software and Data Integrity Failures | Section 13: Prompt-to-Code Supply Chain Risk |
-| A09: Security Logging and Monitoring Failures | Section 9: Enterprise Deployment and Data Governance, Section 14: Runtime Guardrails |
-| A10: Server-Side Request Forgery | Section 3: Static Analysis, Section 13: Prompt-to-Code Supply Chain Risk, Section 14: Runtime Guardrails |
+| A07: Identification and Authentication Failures | Section 4: MCP and Tool Security |
+| A08: Software and Data Integrity Failures | Section 10: Prompt-to-Code Supply Chain Risk |
+| A09: Security Logging and Monitoring Failures | Section 9: Prompt Context Leakage, Section 11: CI/CD Agents |
+| A10: Server-Side Request Forgery | Section 3: Indirect Prompt Injection, Section 4: MCP and Tool Security |
 
 ## References
 
-- [OWASP Input Validation Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)
-- [OWASP SQL Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html)
-- [OWASP Secrets Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html)
+- [OWASP AI Agent Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html)
+- [OWASP LLM Prompt Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html)
+- [OWASP MCP Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/MCP_Security_Cheat_Sheet.html)
 - [OWASP Secure Coding Practices Quick Reference Guide](https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/)
+- [OWASP Software Supply Chain Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Software_Supply_Chain_Security_Cheat_Sheet.html)
 - [OWASP Top 10 for LLM Applications](https://genai.owasp.org/)
 - [OWASP AISVS](https://github.com/OWASP/AISVS)
 - CVE-2026-39313 -- mcp-framework before 0.2.22: unbounded memory allocation in HTTP request body handling allowed unauthenticated denial of service. Example of a vulnerability in AI framework code that highlights the need for dependency auditing and runtime limits.
