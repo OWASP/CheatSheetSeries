@@ -84,6 +84,17 @@ However, be advised that these frameworks have also presented vulnerabilities an
 
 The storage capabilities or repository used by the session management mechanism to temporarily save the session IDs must be secure, protecting the session IDs against local or remote accidental disclosure or unauthorized access.
 
+### Server-Side Session ID Storage
+
+The random session ID sent to the client should not be stored verbatim in the server-side session repository. If that store is exposed through a backup, replica, log, or stolen database snapshot, every active session ID becomes immediately usable to impersonate the corresponding user. Treat session IDs in storage the same way you treat password material: persist only a value that lets the server *verify* the presented ID without recovering it.
+
+Recommended pattern:
+
+- The cookie carries the random session ID (CSPRNG, at least 128 bits, as covered above).
+- The server-side store keeps a one-way derivative such as `hash(session_id)` keyed alongside the session metadata. On each request, the server hashes the presented ID and looks up the matching record using a constant-time comparison.
+- Use a memory-hard KDF such as Argon2id when the threat model includes full database disclosure (see [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.md)). For most deployments, an HMAC over the session ID with a per-server secret achieves a similar property at far lower per-request cost.
+- Do not write the raw session ID to application logs, error pages, or telemetry.
+
 ### Used vs. Accepted Session ID Exchange Mechanisms
 
 A web application should make use of cookies for session ID exchange management. If a user submits a session ID through a different exchange mechanism, such as a URL parameter, the web application should avoid accepting it as part of a defensive strategy to stop session fixation.
