@@ -184,6 +184,8 @@
 
 [Secure Cloud Architecture Cheat Sheet](cheatsheets/Secure_Cloud_Architecture_Cheat_Sheet.md)
 
+[Secure Coding with AI Cheat Sheet](cheatsheets/Secure_Coding_with_AI_Cheat_Sheet.md)
+
 [Securing Cascading Style Sheets Cheat Sheet](cheatsheets/Securing_Cascading_Style_Sheets_Cheat_Sheet.md)
 
 [Security Terminology Cheat Sheet](cheatsheets/Security_Terminology_Cheat_Sheet.md)
