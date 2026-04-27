@@ -15,6 +15,7 @@ This cheat sheet covers the practical controls needed to secure the full RAG pip
 Not all controls need to be implemented at once. The following priority guide helps organisations focus on the highest-impact controls first:
 
 **Implement immediately (foundational):**
+
 - Document hashing and integrity verification at ingestion (Section 1)
 - Context window protection with delimiters and chunk limits (Section 3)
 - Access control metadata on every vector chunk (Section 4)
@@ -25,6 +26,7 @@ Not all controls need to be implemented at once. The following priority guide he
 - Fail-closed behaviour across the RAG pipeline (Section 14)
 
 **Implement next (compliance and audit):**
+
 - Signed source attribution on every RAG response (Section 5)
 - Vector index integrity monitoring and access controls (Section 7)
 - Tool invocation controls and agent safety (Section 10)
@@ -33,6 +35,7 @@ Not all controls need to be implemented at once. The following priority guide he
 - Data deletion and retention controls for regulatory compliance (Sections 4, 11)
 
 **Advanced (high-security and regulated environments):**
+
 - Embedding distribution monitoring and cross-model validation (Section 2)
 - Embedding privacy controls and differential privacy (Section 2)
 
@@ -309,19 +312,19 @@ RAG pipelines must not be treated as black boxes. Full observability across ever
 - Log the full pipeline for every request: query received, chunks retrieved (with document IDs and access control metadata), model input assembled, model output generated, and any tool calls triggered.
 - Store replayable traces that allow security teams to reconstruct exactly what happened during an incident -- which query retrieved which chunks, which chunks influenced which output.
 - Alert on anomalous patterns:
-  - Unusual retrieval patterns (a user suddenly retrieving from document collections they have never accessed)
-  - Repeated prompt injection attempts
-  - Access control violations (attempts to retrieve restricted chunks)
-  - Sudden changes in retrieval distribution (may indicate index tampering)
+    - Unusual retrieval patterns (a user suddenly retrieving from document collections they have never accessed)
+    - Repeated prompt injection attempts
+    - Access control violations (attempts to retrieve restricted chunks)
+    - Sudden changes in retrieval distribution (may indicate index tampering)
 - Build red-team test cases into CI/CD pipelines. Minimum test cases for every deployment:
-  - Poisoned document retrieval (does a known-bad document get surfaced?)
-  - Indirect prompt injection (does retrieved content override the system prompt?)
-  - Cross-tenant retrieval (does tenant A's query return tenant B's chunks?)
-  - Stale permission checks (does a revoked user still retrieve restricted documents?)
-  - Cache leakage (does User A receive a cached response scoped to User B?)
-  - Unauthorised tool invocation (does RAG output trigger a tool the user is not authorised to use?)
-  - Source attribution tampering (can attribution metadata be modified after generation?)
-  - Data deletion verification (are chunks removed after source document deletion?)
+    - Poisoned document retrieval (does a known-bad document get surfaced?)
+    - Indirect prompt injection (does retrieved content override the system prompt?)
+    - Cross-tenant retrieval (does tenant A's query return tenant B's chunks?)
+    - Stale permission checks (does a revoked user still retrieve restricted documents?)
+    - Cache leakage (does User A receive a cached response scoped to User B?)
+    - Unauthorised tool invocation (does RAG output trigger a tool the user is not authorised to use?)
+    - Source attribution tampering (can attribution metadata be modified after generation?)
+    - Data deletion verification (are chunks removed after source document deletion?)
 - Define and rehearse incident response procedures specific to RAG: how to quarantine a poisoned document, how to invalidate affected cache entries, how to identify all users who received tainted responses.
 
 ### Don't
