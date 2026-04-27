@@ -172,6 +172,8 @@
 
 ## R
 
+[RAG Security Cheat Sheet](cheatsheets/RAG_Security_Cheat_Sheet.md)
+
 [REST Security Cheat Sheet](cheatsheets/REST_Security_Cheat_Sheet.md)
 
 [REST Assessment Cheat Sheet](cheatsheets/REST_Assessment_Cheat_Sheet.md)
