@@ -35,7 +35,7 @@ AI coding agents operate across multiple trust boundaries. Understanding these b
 
 ### Threat Actors and Attack Surfaces
 
-- **Repo content as instruction source.** Issue bodies, PR descriptions, PR comments, README files, dependency changelogs, error traces, fetched web pages, and MCP tool responses all become instructions when the agent reads them. An attacker who can write to any of these can influence agent behaviour.
+- **Repository content as instruction source.** Issue bodies, PR descriptions, PR comments, README files, dependency changelogs, error traces, fetched web pages, and MCP tool responses all become instructions when the agent reads them. An attacker who can write to any of these can influence agent behaviour.
 - **MCP servers as tool providers.** Agents connect to MCP servers to access tools. A malicious or compromised MCP server can poison tool descriptions, shadow legitimate tool names, exfiltrate credentials through tool arguments, or update tool definitions after initial approval (rug-pull).
 - **Rules files as persistent steering.** Files like `.cursorrules`, `CLAUDE.md`, `AGENTS.md`, `.github/copilot-instructions.md`, and `.windsurfrules` silently steer every future generation. They can be modified by a malicious PR or by the agent itself to embed persistent instructions.
 - **The agent itself.** Agents running with auto-accept and full developer permissions can install packages, write to any file, execute shell commands, modify CI configuration, and push branches. A compromised agent context has the same blast radius as a compromised developer workstation.
@@ -281,18 +281,18 @@ AI-powered CI/CD agents (review bots, automated code fixers, PR assistants) run 
 
 ## Section 12: Markdown, Link, and Unicode Injection
 
-Agent output rendered in IDE chat panes, PR comments, or review interfaces can contain markdown-based exfiltration links, bidi (bidirectional) text overrides, and zero-width characters that influence future agent behaviour or mislead reviewers.
+Agent output rendered in IDE chat panes, PR comments, or review interfaces can contain Markdown-based exfiltration links, bidi (bidirectional) text overrides, and zero-width characters that influence future agent behaviour or mislead reviewers.
 
 ### Do
 
-- Sanitise agent output before rendering in IDE chat panes or PR comments. Strip or escape markdown image tags, hidden links, and HTML entities.
+- Sanitise agent output before rendering in IDE chat panes or PR comments. Strip or escape Markdown image tags, hidden links, and HTML entities.
 - Detect and flag bidi override characters (U+202A through U+202E, U+2066 through U+2069) and zero-width characters (U+200B, U+200C, U+200D, U+FEFF) in code, commits, and agent output.
 - Use CI checks that scan for homoglyph attacks and invisible characters in PRs.
 - Review agent-generated commit messages and PR descriptions for embedded content that could influence future agent runs.
 
 ### Don't
 
-- Render agent output containing markdown images or links without sanitisation. Image tags with external URLs can exfiltrate conversation context via URL parameters.
+- Render agent output containing Markdown images or links without sanitisation. Image tags with external URLs can exfiltrate conversation context via URL parameters.
 - Assume that code containing only visible ASCII characters is safe. Zero-width and bidi characters are invisible in most editors.
 - Allow agent-generated content to be committed without scanning for unicode injection.
 
