@@ -193,6 +193,14 @@ class PromptInjectionFilter:
         return text[:10000]  # Limit length
 ```
 
+The `_is_similar_word` helper above is intentionally minimal and only catches anagram-style scrambles. For production deployments, prefer an established [string metric](https://en.wikipedia.org/wiki/String_metric) library so the detector covers a wider range of obfuscations:
+
+- **Levenshtein / Damerau-Levenshtein distance**: catches insertions, deletions, substitutions, and (Damerau variant) adjacent transpositions. Threshold of `1` or `2` over short keywords reliably catches typoglycemia variants and common typos. Available in `python-Levenshtein`, `rapidfuzz`, Java `apache-commons-text`, and Go `agnivade/levenshtein`.
+- **Jaro-Winkler similarity**: weights matching prefixes higher, useful when the attacker preserves the start of a token. Common in record-linkage libraries.
+- **Phonetic algorithms (Soundex, Metaphone, NYSIIS)**: catch homophone-style obfuscations but are English-biased; combine with one of the above rather than using alone.
+
+Pick the algorithm that matches the obfuscation classes in your threat model, set a strict similarity threshold, and pre-compute it against the keyword list at startup so per-request cost stays bounded.
+
 ### Structured Prompts with Clear Separation
 
 Use structured formats that clearly separate instructions from user data. See [StruQ research](https://arxiv.org/abs/2402.06363) for the foundational approach to structured queries.
