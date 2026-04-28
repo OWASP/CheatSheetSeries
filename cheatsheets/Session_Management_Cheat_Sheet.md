@@ -92,7 +92,8 @@ Recommended pattern:
 
 - The cookie carries the random session ID (CSPRNG, at least 128 bits, as covered above).
 - The server-side store keeps a one-way derivative such as `hash(session_id)` keyed alongside the session metadata. On each request, the server hashes the presented ID and looks up the matching record using a constant-time comparison.
-- Use a memory-hard KDF such as Argon2id when the threat model includes full database disclosure (see [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.md)). For most deployments, an HMAC over the session ID with a per-server secret achieves a similar property at far lower per-request cost.
+- For most deployments, use an HMAC over the session ID with a per-server secret as the practical default. This protects against database-level exfiltration only (backups, replicas, log dumps, stolen snapshots); it does not protect if the application server itself is compromised, since the attacker can read the HMAC key and forge derivatives directly.
+- For elevated threat models, where you want defence-in-depth against an attacker who has both the database and the HMAC key, use a memory-hard KDF such as Argon2id (see [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.md)). It removes the single-key shortcut at a significant per-request cost, so it is not the right default for high-volume applications.
 - Do not write the raw session ID to application logs, error pages, or telemetry.
 
 ### Used vs. Accepted Session ID Exchange Mechanisms
