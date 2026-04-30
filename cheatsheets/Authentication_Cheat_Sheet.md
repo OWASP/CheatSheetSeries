@@ -110,6 +110,38 @@ Reauthentication is critical when an account has experienced high-risk activity 
 - **Challenge-Based Verification**
   Prompt users to confirm their identity with a challenge question or secondary method
 
+## Common Authentication Attack Scenarios
+Modern authentication systems are frequently targeted by attackers using automated and manual techniques. Understanding these attack patterns helps teams design stronger controls and detect malicious activity early.
+
+- **Credential Stuffing** — Attackers use large lists of leaked username/password pairs to attempt logins at scale, exploiting password reuse across sites.
+- **Password Spraying** — Instead of trying many passwords for one user, attackers try one common password across many accounts to avoid lockouts.
+- **Brute Force Attacks** — Automated tools attempt many password combinations until the correct one is found.
+- **MFA Fatigue Attacks** — Attackers repeatedly trigger MFA push notifications hoping the user will approve one out of frustration or confusion.
+- **Session Hijacking** — Attackers steal or intercept session tokens to impersonate a legitimate user without needing credentials.
+
+## Recommended Defensive Controls
+To mitigate these authentication threats, organizations should implement layered defenses that combine strong authentication mechanisms with intelligent detection and response capabilities.
+
+- **Rate Limiting & Lockout Policies** — Slow down or block repeated failed login attempts to reduce brute force and spraying attacks.
+- **MFA Enforcement** — Require multi-factor authentication for all users, especially privileged accounts.
+- **Passwordless or Strong Authentication** — Use WebAuthn, FIDO2, or hardware-based authentication to eliminate password-related risks.
+- **IP Reputation & Anomaly Detection** — Block or challenge logins from known malicious IPs, TOR exit nodes, or unusual geolocations.
+- **Session Hardening** — Use secure cookies, short session lifetimes, and automatic invalidation after logout or inactivity.
+- **Push Notification Protections** — Implement number matching, device binding, or limited MFA retries to reduce MFA fatigue attacks.
+
+## SOC Monitoring & Detection Guidance
+Security Operations Centers (SOCs) play a critical role in detecting authentication-related attacks. Effective monitoring helps identify early signs of compromise and prevents unauthorized access.
+
+- **Monitor Failed Login Patterns** — Sudden spikes in failed logins, especially across many accounts, may indicate credential stuffing or password spraying.
+- **Track Successful Logins After Multiple Failures** — A successful login following many failures can signal a brute force attempt that finally succeeded.
+- **Detect Impossible Travel Events** — Logins from geographically distant locations within a short time window may indicate account compromise.
+- **Watch for Excessive MFA Prompts** — Multiple denied or ignored MFA requests can indicate MFA fatigue attacks.
+- **Alert on New Device or Browser Logins** — Unexpected device fingerprints or user agents can reveal unauthorized access attempts.
+- **Correlate Authentication Events with Other Alerts** — Combine login anomalies with endpoint, network, or cloud alerts to identify multi-stage attacks.
+
+
+
+
 #### Implementation Recommendations
 
 - **Minimize User Friction**
