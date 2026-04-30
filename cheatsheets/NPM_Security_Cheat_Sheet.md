@@ -262,6 +262,32 @@ To protect against dependency confusion:
 - Configure your `.npmrc` to explicitly point scoped packages to your private registry by setting `@yourorg:registry=https://your-private-registry.example.com`
 - Reserve your internal package names on the public npm registry by publishing an empty placeholder to prevent attackers from claiming them.
 
+## 13) Verify documentation examples before copying into production
+
+Library README files and official examples are often copied directly into production code. While the libraries themselves may use secure defaults internally, their documentation examples sometimes demonstrate insecure patterns that undermine those very defaults. This creates a "documentation attack surface" — a class of vulnerability where the security risk comes not from the library's code, but from how its documentation teaches developers to use it.
+
+### The pattern
+
+A library implements strong security internally but its README examples use weaker configurations for brevity or backward compatibility. Developers copy these examples verbatim, unknowingly introducing vulnerabilities that the library was designed to prevent. Unlike supply chain attacks, these vulnerabilities pass every audit tool because the library code itself is safe — only the copy-pasted usage pattern is insecure.
+
+### Real-world examples
+
+This pattern has been documented across popular npm packages with combined weekly downloads exceeding 195 million:
+
+- **Weak key derivation**: A widely-used encryption library's README examples derive AES keys from passphrases using MD5 with a single iteration (EVP_BytesToKey), allowing a GPU to test billions of candidate passphrases per second. The library's own PBKDF2 module uses stronger defaults, but the prominent AES examples do not use it.
+- **Credential exposure on redirect**: An HTTP client library's README demonstrates a `beforeRedirect` callback that re-injects authorization headers after the library has already stripped them during protocol downgrades (HTTPS to HTTP), effectively bypassing the library's own security mechanism.
+- **Regex anchoring**: Libraries that accept regex patterns for validation (e.g., JWT audience matching, CORS origin matching) show examples with unanchored patterns like `/example\.com/`, which match `malicious-example.com`. The fix is `^https:\/\/example\.com$`, but the documentation doesn't demonstrate anchoring.
+- **Insecure randomness**: A file upload library's README generates filenames with `Math.random()` while the library's own default uses `crypto.randomBytes(16)`. Developers who customize the filename — following the README example — downgrade from cryptographic to predictable randomness.
+
+### How to protect yourself
+
+- **Never copy README examples into production without a security review.** Treat documentation code the same way you treat code from Stack Overflow — as a starting point, not a production-ready solution.
+- **Check for secure defaults in the library's source code.** If the library internally uses `crypto.randomBytes()`, `PBKDF2`, or anchored regex patterns, but the README example uses `Math.random()`, `MD5`, or unanchored patterns, prefer the library's internal approach.
+- **Validate security-sensitive parameters.** When a library accepts patterns, keys, or credentials as input, verify that your usage matches security best practices for that parameter type (anchored regex, authenticated encryption, HTTPS-only credentials).
+- **Report insecure documentation.** If you find a README example that teaches an insecure pattern, file an issue with the maintainer. Documentation vulnerabilities affect every developer who copies the example.
+
+For more context on this pattern, see the discussion at the [Node.js Security Working Group](https://github.com/nodejs/security-wg/issues/1560).
+
 ## Final Recommendations
 
 Closing our list of npm security best practices are the following tips to reduce the risk of such attacks:

@@ -1,6 +1,6 @@
 # Index Alphabetical
 
-**91** cheat sheets available.
+**92** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -25,6 +25,8 @@
 ## B
 
 [Bean Validation Cheat Sheet](cheatsheets/Bean_Validation_Cheat_Sheet.md) ![Java](assets/Index_Java.svg) ![Xml](assets/Index_Xml.svg)
+
+[Business Logic Security Cheat Sheet](cheatsheets/Business_Logic_Security_Cheat_Sheet.md)
 
 ## C
 

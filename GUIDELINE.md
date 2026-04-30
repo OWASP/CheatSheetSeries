@@ -71,43 +71,29 @@ Link to authoritative external resources: RFCs, NIST publications, OWASP standar
 
 ## Writing Tips
 
-### Show, Don't Just Tell
+### Lead with Architecture, Not Code
 
-Short, working code examples are more valuable than paragraphs of explanation. Compare:
+Cheat sheets should prioritize architectural patterns, design principles, and security decisions over language-specific code samples. Architectural guidance applies across languages and frameworks, making it more durable and broadly useful. Code samples require ongoing maintenance and, when taken out of context, are often not fully secure.
 
-**Weak** (too abstract):
+**Prefer this** (architectural guidance):
 
-```text
-// Validate input here
-validate(input);
-```
+> Use a dedicated password hashing algorithm (Argon2id, bcrypt, or scrypt) with appropriate cost factors. Never use general-purpose hash functions like SHA-256 for password storage. Delegate hashing to a well-maintained library rather than implementing it yourself. Store the algorithm identifier and cost parameters alongside the hash so you can upgrade without invalidating existing passwords.
 
-**Strong** (specific and copy-pasteable):
+**Over this** (language-specific code):
 
 ```java
-// Use an allowlist to validate expected input
-Pattern emailPattern = Pattern.compile(
-    "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
-if (!emailPattern.matcher(userEmail).matches()) {
-    throw new ValidationException("Invalid email format");
-}
+String hash = BCrypt.hashpw(password, BCrypt.gensalt(12));
 ```
 
-When a topic applies to multiple languages, use separate labeled code blocks:
+A code snippet like the one above may look correct but omits error handling, input validation, and context that matter in production. Architectural guidance helps developers make the right decisions regardless of their language or framework.
 
-````markdown
-#### Java
+### When to Use Code Examples
 
-```java
-// Java example here
-```
+Code examples are appropriate when they illustrate a concept that is difficult to explain in prose alone, such as a specific API call pattern or configuration syntax. When you do include code:
 
-#### Python
-
-```python
-# Python example here
-```
-````
+- Keep it short and clearly illustrative, not production-ready.
+- Use pseudocode or a single common language rather than providing examples in multiple languages.
+- Make clear that the example is for illustration and that developers should consult their framework's documentation for complete usage.
 
 ### Use Tables for Comparisons
 
@@ -142,7 +128,7 @@ Cover one topic well. If you find yourself writing extensively about a related t
 ## Common Mistakes to Avoid
 
 - **Writing for security experts.** If your cheat sheet requires security expertise to understand, it needs to be simplified.
-- **Being too abstract.** "Validate all input" is not helpful. Show what validation looks like in code.
+- **Being too abstract.** "Validate all input" is not helpful. Describe the specific validation strategy and what it protects against.
 - **Covering too much.** A focused cheat sheet on one topic is better than a sprawling guide that tries to cover everything.
 - **Listing without recommending.** Don't just present options - tell the reader which approach to use and why.
 - **Skipping the "why".** A brief explanation of _why_ a practice matters helps developers prioritize and remember it.
