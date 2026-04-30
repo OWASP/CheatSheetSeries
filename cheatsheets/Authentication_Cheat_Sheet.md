@@ -10,6 +10,9 @@
 
 **Session Management** is a process by which a server maintains the state of an entity interacting with it. This is required for a server to remember how to react to subsequent requests throughout a transaction. Sessions are maintained on the server by a session identifier which can be passed back and forth between the client and server when transmitting and receiving requests. Sessions should be unique per user and computationally very difficult to predict. The [Session Management Cheat Sheet](Session_Management_Cheat_Sheet.md) contains further guidance on the best practices in this area.
 
+Authentication weaknesses are also highlighted in the OWASP Top 10 (2021) under the “Identification and Authentication Failures” category, emphasizing the importance of implementing strong and modern authentication controls.
+
+
 ## Authentication General Guidelines
 
 ### User IDs
