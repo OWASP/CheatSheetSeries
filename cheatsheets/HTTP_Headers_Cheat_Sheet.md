@@ -88,7 +88,7 @@ The `Cache-Control` header defines how responses are cached by browsers and inte
 
 These directives help reduce the risk of sensitive data being stored or exposed through caching, but use `no-store` when storage of sensitive data must be strictly prevented.
 
-### References
+#### References
 
 - [MDN - Cache-Control](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control)
 
@@ -315,7 +315,7 @@ When serving user-provided files, proper HTTP headers should be used to prevent 
 
 These headers help reduce risks such as Cross-Site Scripting (XSS) and unintended file execution.
 
-### References
+#### References
 
 - [MDN - Content-Disposition](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Disposition)
 - [MDN - Content-Type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type)
