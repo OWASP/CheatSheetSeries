@@ -32,7 +32,7 @@ Before adding tooling, identify which OAT categories apply to your application a
 | Login | OAT-008 Credential Stuffing | Rate limit + breached-password check + MFA |
 | Signup | OAT-019 Account Creation | Email/phone verification + velocity limits |
 | Search / catalog | OAT-011 Scraping | Rate limit per identity + behavioral signal |
-| Checkout / cart | OAT-005 Scalping, OAT-001 Carding | Queue + purchase limits + 3-D Secure |
+| Checkout / cart | OAT-005 Scalping, OAT-001 Carding | Queue + purchase limits + 3D Secure |
 | Public API | OAT-011, OAT-014 | API keys + per-key quotas + signed requests |
 | Comments / reviews | OAT-020 Account Aggregation, spam | Reputation + delayed publishing |
 
