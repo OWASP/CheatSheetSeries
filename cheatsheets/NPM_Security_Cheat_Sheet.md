@@ -44,11 +44,11 @@ Apply these npm security best practices to minimize the malicious module attack 
 - Hold-off on upgrading immediately to new versions; allow new package versions some time to circulate before trying them out.
 - Before upgrading, make sure to review changelog and release notes for the upgraded version.
 - When installing packages make sure to add the `--ignore-scripts` suffix to disable the execution of any scripts by third-party packages.
-- Consider adding `ignore-scripts` to your `.npmrc` project file, or to your global npm configuration.
+- Consider adding `ignore-scripts=true` to your `.npmrc` project file, or to your global npm configuration.
 
 ### Using an allowlist for lifecycle scripts
 
-Disabling lifecycle scripts by default by adding `ignore-script` to your `.npmrc` file is the safest option. If you use packages that rely on lifecycle scripts for legitimate reasons, you can use a plugin like [`@lavamoat/allow-scripts`](https://github.com/LavaMoat/LavaMoat/tree/main/packages/allow-scripts) to create an _allowlist_ of packages authorized to run lifecycle scripts.
+Disabling lifecycle scripts by default by adding `ignore-scripts=true` to your `.npmrc` file is the safest option. If you use packages that rely on lifecycle scripts for legitimate reasons, you can use a plugin like [`@lavamoat/allow-scripts`](https://github.com/LavaMoat/LavaMoat/tree/main/packages/allow-scripts) to create an _allowlist_ of packages authorized to run lifecycle scripts.
 
 Here's how the allowlist would look like in the `package.json` file on a project using the popular image processing package [sharp](https://www.npmjs.com/package/sharp):
 
@@ -110,7 +110,7 @@ Hosting your own registry was never so easy! Let’s check the most important fe
 
 - It supports the npm registry format including private package features, scope support, package access control and authenticated users in the web interface.
 - It provides capabilities to hook remote registries and the power to route dependencies to different registries and cache their tarballs. To reduce duplicate downloads and save bandwidth in your local development and CI servers, you should proxy all dependencies.
-- As an authentication provider it uses htpasswd security by default, but also supports Gitlab, Bitbucket, and LDAP. You can also use your own.
+- As an authentication provider it uses htpasswd security by default, but also supports GitLab, Bitbucket, and LDAP. You can also use your own.
 - It’s easy to scale using a different storage provider.
 - If your project is based in Docker, using the official image is the best choice.
 - It enables really fast bootstrap for testing environments, and is handy for testing big mono-repo projects.
