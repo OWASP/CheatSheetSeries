@@ -86,15 +86,18 @@ The storage capabilities or repository used by the session management mechanism 
 
 ### Server-Side Session ID Storage
 
-The random session ID sent to the client should not be stored verbatim in the server-side session repository. If that store is exposed through a backup, replica, log, or stolen database snapshot, every active session ID becomes immediately usable to impersonate the corresponding user. Treat session IDs in storage the same way you treat password material: persist only a value that lets the server *verify* the presented ID without recovering it.
+The random session ID in the user's cookie shouldn't sit verbatim in the server-side store. If a backup, a replica, an audit log or a stolen DB snapshot ends up somewhere it shouldn't, every raw ID in there is immediately replayable. This is the same threat model as a password table, so the server should keep something it can verify a presented ID against without being able to recover it.
 
-Recommended pattern:
+The shape:
 
-- The cookie carries the random session ID (CSPRNG, at least 128 bits, as covered above).
-- The server-side store keeps a one-way derivative such as `hash(session_id)` keyed alongside the session metadata. On each request, the server hashes the presented ID and looks up the matching record using a constant-time comparison.
-- For most deployments, use an HMAC over the session ID with a per-server secret as the practical default. This protects against database-level exfiltration only (backups, replicas, log dumps, stolen snapshots); it does not protect if the application server itself is compromised, since the attacker can read the HMAC key and forge derivatives directly.
-- For elevated threat models, where you want defence-in-depth against an attacker who has both the database and the HMAC key, use a memory-hard KDF such as Argon2id (see [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.md)). It removes the single-key shortcut at a significant per-request cost, so it is not the right default for high-volume applications.
-- Do not write the raw session ID to application logs, error pages, or telemetry.
+- Cookie carries the random ID (CSPRNG, 128 bits minimum, per the section above).
+- Server stores `H(session_id)` alongside the session record, and on each request it hashes the cookie value and does a constant-time compare.
+
+For the choice of `H`, an HMAC over the session ID with a per-server secret is the practical default. It's cheap, it covers the database-exfil paths most teams actually face (backups, replicas, dumps, log captures), and it doesn't add latency at scale. What it doesn't cover is a full application-server compromise, because at that point the attacker reads the key and recomputes the derivative directly.
+
+If your threat model includes that case (host compromise leaking both DB and key), swap the HMAC for a memory-hard KDF like Argon2id and follow the [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.md) for parameter selection. The per-request cost is high enough this is rarely the right default for high-traffic sites, but it removes the single-key shortcut.
+
+Wherever you land, don't write the raw session ID outside of the cookie. Not in app logs, not in error pages, not in distributed-tracing payloads.
 
 ### Used vs. Accepted Session ID Exchange Mechanisms
 
