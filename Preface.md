@@ -2,7 +2,8 @@
 
 ![ProjectLogoOfficial](assets/Preface_Cheatsheet_Logo.png)
 
-The **OWASP Cheat Sheet Series** was created to provide a concise collection of high value information on specific application security topics. These cheat sheets were created by various application security professionals who have expertise in specific topics.
+The OWASP Cheat Sheet Series provides concise, practical guidance for building secure applications. Each cheat sheet focuses on a specific security topic and highlights the most important recommendations developers and security teams should follow. The goal is to make essential security knowledge easy to understand, easy to apply, and accessible to everyone.
+
 
 We hope that this project provides you with excellent security guidance in an easy to read format. :smile:
 
