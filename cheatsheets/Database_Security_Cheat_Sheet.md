@@ -18,7 +18,7 @@ The application's backend database should be isolated from other servers and onl
 - Placing the database server in a separate DMZ isolated from the application server.
 - Protect any web-based management tools (e.g., phpMyAdmin, pgAdmin) with authentication, HTTPS, and network restrictions.
 
-When an application is running on an untrusted system (such as a thick-client), it should always connect to the backend through an API that can enforce appropriate access control and restrictions. Direct connections should **never ever** be made from a thick client to the backend database.
+When an application is running on an untrusted system (such as a thick-client), it should always connect to the backend through an API that can enforce appropriate access control and restrictions. Direct connections should **never** be made from a thick client to the backend database.
 
 ### Implementing Transport Layer Protection
 
@@ -26,8 +26,8 @@ Most database default configurations start with unencrypted network connections,
 
 - Configure the database to only allow encrypted connections.
 - Install a trusted digital certificate on the server.
-- The client application to connect using TLSv1.2+ with modern ciphers (e.g, AES-GCM or ChaCha20).
-- The client application to verify that the digital certificate is correct.
+- The client application should connect using TLSv1.2+ with modern ciphers (e.g, AES-GCM or ChaCha20).
+- The client application should verify that the digital certificate is correct.
 
 The [Transport Layer Security Cheat Sheet](Transport_Layer_Security_Cheat_Sheet.md) contains further guidance on securely configuring TLS.
 
@@ -78,7 +78,7 @@ Most security-critical applications, apply permissions at more granular levels, 
 
 ## Database Configuration and Hardening
 
-The database server's underlying operating system should be hardened by basing the it on a secure baseline such as the [CIS Benchmarks](https://www.cisecurity.org/cis-benchmarks/) or the [Microsoft Security Baselines](https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-security-baselines).
+The database server's underlying operating system should be hardened by basing it on a secure baseline such as the [CIS Benchmarks](https://www.cisecurity.org/cis-benchmarks/) or the [Microsoft Security Baselines](https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-security-baselines).
 
 The database application should also be properly configured and hardened. The following principles should apply to any database application and platform:
 
@@ -88,7 +88,7 @@ The database application should also be properly configured and hardened. The fo
 - Store [transaction logs](https://en.wikipedia.org/wiki/Transaction_log) on a separate disk to the main database files.
 - Configure a regular backup of the database. Ensure that the backups are protected with appropriate permissions, and ideally encrypted.
 
-The following sections gives some further recommendations for specific database software, in addition to the more general recommendations given above.
+The following sections give some further recommendations for specific database software, in addition to the more general recommendations given above.
 
 ### Hardening a Microsoft SQL Server
 
