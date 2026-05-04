@@ -67,6 +67,10 @@ Orphaned Deployments – Test or deprecated models left accessible in production
 - Validate and sanitize all inputs.
 - Use rate limiting and abuse detection (e.g. bot detection, anomaly scoring).
 - Use structured prompt templates for LLMs to separate instructions from user input.
+- Set per-tenant token, request, concurrency, and spend limits to reduce denial-of-wallet risk.
+- Enforce recursion, retry, and chain-depth limits for agentic or tool-using inference flows.
+- Implement circuit breakers or kill switches for abnormal cost, latency, or tool-call spikes.
+- Monitor usage telemetry in near real time and alert on sudden changes in tokens, requests, or spend.
 
 ### 5. Deployment & Infrastructure
 
