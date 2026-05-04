@@ -97,6 +97,7 @@ Where possible, always log:
     - A specific event for failures to validate a value against a discrete and finite list of valid values (e.g. a country from a dropdown). This is a high security event as it can only be attack activity. For example `input_validation_fail[:field,userid]`.
 - Output validation failures e.g. database record set mismatch, invalid data encoding
 - Authentication successes and failures
+   Failed authentication attempts provide critical early indicators of credential‑based attacks such as brute‑force, credential‑stuffing, and password‑spraying. Monitoring repeated failures for the same account, failures from multiple IP addresses, or rapid bursts of login attempts helps detect account takeover attempts before they succeed. This aligns with the cheat sheet’s guidance that “Authentication successes and failures” must always be logged, as these events are essential for identifying security incidents and supporting incident investigation. Refer to OWASP ASVS 7.1.1 for authentication failure logging requirements.
 - Authorization (access control) failures
 - Session management failures e.g. cookie session identification value modification or suspicious JWT validation failures
 - Application errors and system events e.g. syntax and runtime errors, connectivity problems, performance issues, third party service error messages, file system errors, file upload virus detection, configuration changes
