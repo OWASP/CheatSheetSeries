@@ -3214,6 +3214,10 @@ It helps MLOps, DevOps, and security teams protect the model lifecycle from deve
 <li>Validate and sanitize all inputs.</li>
 <li>Use rate limiting and abuse detection (e.g. bot detection, anomaly scoring).</li>
 <li>Use structured prompt templates for LLMs to separate instructions from user input.</li>
+<li>Set per-tenant token, request, concurrency, and spend limits to reduce denial-of-wallet risk.</li>
+<li>Enforce recursion, retry, and chain-depth limits for agentic or tool-using inference flows.</li>
+<li>Implement circuit breakers or kill switches for abnormal cost, latency, or tool-call spikes.</li>
+<li>Monitor usage telemetry in near real time and alert on sudden changes in tokens, requests, or spend.</li>
 </ul>
 <h3 id="5-deployment-infrastructure">5. Deployment &amp; Infrastructure<a class="headerlink" href="#5-deployment-infrastructure" title="Permanent link">&para;</a></h3>
 <ul>
