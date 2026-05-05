@@ -3181,14 +3181,14 @@ For guidance on non-relational systems (e.g., MongoDB, Redis, Cassandra, DynamoD
 <li>Placing the database server in a separate DMZ isolated from the application server.</li>
 <li>Protect any web-based management tools (e.g., phpMyAdmin, pgAdmin) with authentication, HTTPS, and network restrictions.</li>
 </ul>
-<p>When an application is running on an untrusted system (such as a thick-client), it should always connect to the backend through an API that can enforce appropriate access control and restrictions. Direct connections should <strong>never ever</strong> be made from a thick client to the backend database.</p>
+<p>When an application is running on an untrusted system (such as a thick-client), it should always connect to the backend through an API that can enforce appropriate access control and restrictions. Direct connections should <strong>never</strong> be made from a thick client to the backend database.</p>
 <h3 id="implementing-transport-layer-protection">Implementing Transport Layer Protection<a class="headerlink" href="#implementing-transport-layer-protection" title="Permanent link">&para;</a></h3>
 <p>Most database default configurations start with unencrypted network connections, though some do encrypt the initial authentication (such as Microsoft SQL Server). Even if the initial authentication is encrypted, the rest of the traffic will be unencrypted and all kinds of sensitive information will be sent across the network in clear text. The following steps should be taken to prevent unencrypted traffic:</p>
 <ul>
 <li>Configure the database to only allow encrypted connections.</li>
 <li>Install a trusted digital certificate on the server.</li>
-<li>The client application to connect using TLSv1.2+ with modern ciphers (e.g, AES-GCM or ChaCha20).</li>
-<li>The client application to verify that the digital certificate is correct.</li>
+<li>The client application should connect using TLSv1.2+ with modern ciphers (e.g, AES-GCM or ChaCha20).</li>
+<li>The client application should verify that the digital certificate is correct.</li>
 </ul>
 <p>The <a href="Transport_Layer_Security_Cheat_Sheet.html">Transport Layer Security Cheat Sheet</a> contains further guidance on securely configuring TLS.</p>
 <h2 id="configuring-secure-authentication">Configuring Secure Authentication<a class="headerlink" href="#configuring-secure-authentication" title="Permanent link">&para;</a></h2>
@@ -3232,7 +3232,7 @@ For guidance on non-relational systems (e.g., MongoDB, Redis, Cassandra, DynamoD
 <li>Blocking access to the underlying tables, and requiring all access through restricted <a href="https://en.wikipedia.org/wiki/View_(SQL)">views</a>.</li>
 </ul>
 <h2 id="database-configuration-and-hardening">Database Configuration and Hardening<a class="headerlink" href="#database-configuration-and-hardening" title="Permanent link">&para;</a></h2>
-<p>The database server's underlying operating system should be hardened by basing the it on a secure baseline such as the <a href="https://www.cisecurity.org/cis-benchmarks/">CIS Benchmarks</a> or the <a href="https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-security-baselines">Microsoft Security Baselines</a>.</p>
+<p>The database server's underlying operating system should be hardened by basing it on a secure baseline such as the <a href="https://www.cisecurity.org/cis-benchmarks/">CIS Benchmarks</a> or the <a href="https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-security-baselines">Microsoft Security Baselines</a>.</p>
 <p>The database application should also be properly configured and hardened. The following principles should apply to any database application and platform:</p>
 <ul>
 <li>Install any required security updates and patches.</li>
@@ -3241,7 +3241,7 @@ For guidance on non-relational systems (e.g., MongoDB, Redis, Cassandra, DynamoD
 <li>Store <a href="https://en.wikipedia.org/wiki/Transaction_log">transaction logs</a> on a separate disk to the main database files.</li>
 <li>Configure a regular backup of the database. Ensure that the backups are protected with appropriate permissions, and ideally encrypted.</li>
 </ul>
-<p>The following sections gives some further recommendations for specific database software, in addition to the more general recommendations given above.</p>
+<p>The following sections give some further recommendations for specific database software, in addition to the more general recommendations given above.</p>
 <h3 id="hardening-a-microsoft-sql-server">Hardening a Microsoft SQL Server<a class="headerlink" href="#hardening-a-microsoft-sql-server" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Disable <code>xp_cmdshell</code>, <code>xp_dirtree</code> and other stored procedures that are not required.</li>
