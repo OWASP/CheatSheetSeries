@@ -12,7 +12,7 @@ This cheat sheet covers the practical controls needed to secure the full RAG pip
 
 ## Implementation Priority
 
-Not all controls need to be implemented at once. The following priority guide helps organisations focus on the highest-impact controls first:
+Not all controls need to be implemented at once. The following priority guide helps organizations focus on the highest-impact controls first:
 
 **Implement immediately (foundational):**
 
@@ -20,10 +20,10 @@ Not all controls need to be implemented at once. The following priority guide he
 - Context window protection with delimiters and chunk limits (Section 3)
 - Access control metadata on every vector chunk (Section 4)
 - Tenant and classification isolation in vector stores (Section 6)
-- Query normalisation and abuse pattern detection (Section 8)
+- Query normalization and abuse pattern detection (Section 8)
 - Output validation and policy enforcement (Section 9)
 - Full pipeline observability and logging (Section 12)
-- Fail-closed behaviour across the RAG pipeline (Section 14)
+- Fail-closed behavior across the RAG pipeline (Section 14)
 
 **Implement next (compliance and audit):**
 
@@ -41,9 +41,9 @@ Not all controls need to be implemented at once. The following priority guide he
 
 ## Section 1: Document Poisoning
 
-Document poisoning occurs when malicious content is injected into the retrieval corpus. When the poisoned document is later retrieved by a query, the malicious content is included in the language model's context window, potentially altering its behaviour.
+Document poisoning occurs when malicious content is injected into the retrieval corpus. When the poisoned document is later retrieved by a query, the malicious content is included in the language model's context window, potentially altering its behavior.
 
-This is the most common and immediately exploitable RAG attack vector. Any organisation with a shared knowledge base (Confluence, SharePoint, Google Drive, S3 buckets) where multiple users or systems can upload documents is at risk.
+This is the most common and immediately exploitable RAG attack vector. Any organization with a shared knowledge base (Confluence, SharePoint, Google Drive, S3 buckets) where multiple users or systems can upload documents is at risk.
 
 ### Attack Vectors
 
@@ -83,7 +83,7 @@ This is an advanced attack that requires knowledge of the embedding model being 
 
 - Monitor embedding distribution statistics. A document whose embedding is unusually close to many different query clusters may be adversarially crafted.
 - Implement embedding drift detection. If a document's embedding changes significantly after re-embedding with an updated model, investigate.
-- For high-security applications, use multiple embedding models and compare retrieval results. A document that ranks highly with one model but not others may be adversarially optimised for that specific model.
+- For high-security applications, use multiple embedding models and compare retrieval results. A document that ranks highly with one model but not others may be adversarially optimized for that specific model.
 - Log the embedding model version used for each document. When models are updated, flag documents whose relative positions change significantly.
 
 ### Don't
@@ -94,14 +94,14 @@ This is an advanced attack that requires knowledge of the embedding model being 
 
 ### Embedding Privacy
 
-Embeddings are not anonymised data. They can leak information about the source content through inversion attacks, similarity probing, and membership inference.
+Embeddings are not anonymized data. They can leak information about the source content through inversion attacks, similarity probing, and membership inference.
 
 #### Do
 
 - Treat embeddings as sensitive data subject to the same access controls as the source documents.
 - Encrypt embeddings at rest.
 - Limit similarity query exposure (restrict top-k results, apply relevance thresholds).
-- For high-risk datasets (medical records, financial data, legal documents), consider adding calibrated noise to embeddings to reduce inversion risk.
+- For high-risk datasets (medical records, financial data, legal documents), consider adding calibrated noise to embeddings to reduce inversion risk. See Song & Raghunathan (2020), "Information Leakage in Embedding Models" for background on embedding inversion attacks and differential privacy mitigations.
 
 #### Don't
 
@@ -111,7 +111,7 @@ Embeddings are not anonymised data. They can leak information about the source c
 
 ## Section 3: Context Window Attacks
 
-When retrieved documents are injected into the language model's context window, they can override system prompts, alter the model's behaviour, or cause it to ignore safety instructions. This is an immediate, practical threat that affects every RAG deployment.
+When retrieved documents are injected into the language model's context window, they can override system prompts, alter the model's behavior, or cause it to ignore safety instructions. This is an immediate, practical threat that affects every RAG deployment.
 
 ### Attack Vectors
 
@@ -140,7 +140,7 @@ Documents in the retrieval corpus often have access control policies (classifica
 
 ### Attack Vectors
 
-- A classified document is chunked and stored in a shared vector store without per-chunk access control metadata. An unauthorised user's query retrieves a chunk from the classified document.
+- A classified document is chunked and stored in a shared vector store without per-chunk access control metadata. An unauthorized user's query retrieves a chunk from the classified document.
 - Document-level permissions are checked at ingestion but not at retrieval time, allowing permission changes to be ignored.
 - A user with access to one department's documents retrieves chunks from another department's restricted documents because the vector store has no access control boundaries.
 
@@ -195,7 +195,7 @@ When a RAG system returns an answer, the user or downstream system needs to know
 
 ## Section 6: Chunk Isolation
 
-In multi-tenant or multi-classification environments, vector stores must prevent cross-boundary data leakage. A query from one context must not retrieve chunks from another context. This is mandatory for any organisation handling multiple clients, departments with different security clearances, or regulated data.
+In multi-tenant or multi-classification environments, vector stores must prevent cross-boundary data leakage. A query from one context must not retrieve chunks from another context. This is mandatory for any organization handling multiple clients, departments with different security clearances, or regulated data.
 
 ### Do
 
@@ -217,7 +217,7 @@ The vector index itself is a critical component. If an attacker can modify the i
 ### Do
 
 - Monitor vector index integrity using periodic checksum verification.
-- Restrict write access to the vector index to authorised ingestion pipelines only. No application code or agent endpoint should have direct write access.
+- Restrict write access to the vector index to authorized ingestion pipelines only. No application code or agent endpoint should have direct write access.
 - Log all index modifications (inserts, updates, deletes) with timestamps and the identity of the modifier.
 - Implement index snapshots for rollback in case of detected tampering.
 - Alert on unexpected index size changes (sudden growth may indicate bulk poisoning, sudden shrinkage may indicate deletion attacks).
@@ -236,20 +236,20 @@ Users or agents can craft queries designed to surface specific sensitive documen
 
 ### Do
 
-- Normalise and inspect queries for abuse patterns before retrieval. Do not rely on sanitisation alone; enforce access control and retrieval boundaries independently.
+- Normalize and inspect queries for abuse patterns before retrieval. Do not rely on sanitization alone; enforce access control and retrieval boundaries independently.
 - Rate limit queries per user or agent identity to prevent systematic probing of the corpus.
-- Monitor query patterns for reconnaissance behaviour (e.g. an agent systematically varying query terms to map the contents of the vector store).
+- Monitor query patterns for reconnaissance behavior (e.g. an agent systematically varying query terms to map the contents of the vector store).
 - Log all queries with the querying entity's identity for audit purposes.
 
 ### Don't
 
-- Pass raw user input directly to the vector similarity search without inspection and normalisation.
+- Pass raw user input directly to the vector similarity search without inspection and normalization.
 - Allow unlimited query volume without rate limiting.
 - Return similarity scores to the user or agent (scores can be used to map the corpus structure through differential analysis).
 
 ## Section 9: Output Validation and Enforcement
 
-Even if everything upstream is secure, the model can still generate outputs that leak sensitive data from retrieved chunks, produce unsafe instructions, or trigger unintended actions in downstream systems. Output validation is the last line of defence.
+Even if everything upstream is secure, the model can still generate outputs that leak sensitive data from retrieved chunks, produce unsafe instructions, or trigger unintended actions in downstream systems. Output validation is the last line of defense.
 
 ### Do
 
@@ -273,7 +273,7 @@ Modern RAG is rarely standalone -- it is embedded in agent systems where retriev
 ### Do
 
 - Require explicit user confirmation for high-risk actions triggered by RAG-influenced model output (e.g. payments, data deletion, external API calls).
-- Enforce tool-level authorisation checks independently of model decisions. The model deciding to call a tool is not the same as the user being authorised to use that tool.
+- Enforce tool-level authorization checks independently of model decisions. The model deciding to call a tool is not the same as the user being authorized to use that tool.
 - Maintain an allowlist of permitted tools per context. A customer support RAG agent should not have access to payment tools.
 - Log all tool invocations with full traceability: which query triggered which retrieval, which retrieval influenced which model output, and which model output triggered which tool call.
 - Implement circuit breakers that halt tool execution if anomalous patterns are detected (e.g. unusually high volume of tool calls, tool calls to endpoints not previously used).
@@ -281,9 +281,9 @@ Modern RAG is rarely standalone -- it is embedded in agent systems where retriev
 ### Don't
 
 - Allow retrieved content to directly influence tool execution without an intermediate validation step.
-- Permit arbitrary tool chaining from model output. Each tool call should be independently authorised.
+- Permit arbitrary tool chaining from model output. Each tool call should be independently authorized.
 - Grant the model direct access to sensitive APIs. The model should request actions through a controlled interface, not execute them directly.
-- Assume that because the retrieval was authorised, the resulting tool call is also authorised.
+- Assume that because the retrieval was authorized, the resulting tool call is also authorized.
 
 ## Section 11: Caching Risks
 
@@ -322,7 +322,7 @@ RAG pipelines must not be treated as black boxes. Full observability across ever
     - Cross-tenant retrieval (does tenant A's query return tenant B's chunks?)
     - Stale permission checks (does a revoked user still retrieve restricted documents?)
     - Cache leakage (does User A receive a cached response scoped to User B?)
-    - Unauthorised tool invocation (does RAG output trigger a tool the user is not authorised to use?)
+    - Unauthorized tool invocation (does RAG output trigger a tool the user is not authorized to use?)
     - Source attribution tampering (can attribution metadata be modified after generation?)
     - Data deletion verification (are chunks removed after source document deletion?)
 - Define and rehearse incident response procedures specific to RAG: how to quarantine a poisoned document, how to invalidate affected cache entries, how to identify all users who received tainted responses.
@@ -341,7 +341,7 @@ RAG ingestion pipelines often rely on third-party connectors (Google Drive API, 
 
 - Vet all third-party connectors and integrations feeding the ingestion pipeline. Review their security posture, data handling practices, and update cadence.
 - Validate data from external APIs before ingestion. Do not trust that the API response is clean -- scan for injection patterns, verify document integrity, check content type.
-- Pin versions of embedding models and ingestion libraries. An uncontrolled update to the embedding model can change retrieval behaviour across the entire corpus.
+- Pin versions of embedding models and ingestion libraries. An uncontrolled update to the embedding model can change retrieval behavior across the entire corpus.
 - Maintain an inventory of all ingestion sources and connectors with their access credentials, update schedules, and responsible owners.
 
 ### Don't
@@ -352,7 +352,7 @@ RAG ingestion pipelines often rely on third-party connectors (Google Drive API, 
 
 ## Section 14: Fail-Closed Design
 
-When any component of the RAG pipeline fails, the system must deny the request rather than fall back to potentially unsafe behaviour. This principle applies at every stage.
+When any component of the RAG pipeline fails, the system must deny the request rather than fall back to potentially unsafe behavior. This principle applies at every stage.
 
 ### Fail-Closed Examples
 
@@ -364,7 +364,7 @@ When any component of the RAG pipeline fails, the system must deny the request r
 
 ### Do
 
-- Implement fail-closed behaviour at every stage of the pipeline.
+- Implement fail-closed behavior at every stage of the pipeline.
 - Return clear error messages that indicate which stage failed, so operators can diagnose the issue.
 - Alert on repeated failures, which may indicate an active attack (e.g. an attacker deliberately causing retrieval failures to force the model into answering from memory).
 
@@ -374,51 +374,11 @@ When any component of the RAG pipeline fails, the system must deny the request r
 - Silently degrade functionality. Users and operators must know when the system is not operating with full security controls.
 - Treat pipeline failures as performance issues. In a security context, a failed retrieval or a failed access control check is a security event.
 
-## Section 15: Do's and Don'ts Summary
-
-### Do
-
-- Hash every document at ingestion and verify before retrieval.
-- Scan documents for adversarial patterns before adding to the corpus.
-- Protect the context window with delimiters, chunk limits, and post-content system prompt reinforcement.
-- Store access control metadata alongside every vector chunk.
-- Enforce access controls at retrieval time, not just ingestion time.
-- Isolate chunks by tenant and classification level.
-- Return signed source attribution with every RAG response.
-- Monitor vector index integrity and restrict write access.
-- Normalise, inspect, and rate limit all queries.
-- Deploy vector databases with authentication enabled.
-- Validate all model outputs before returning to users or downstream systems.
-- Require explicit confirmation for high-risk tool invocations triggered by RAG output.
-- Scope response caches by user, tenant, and permission level.
-- Log the full pipeline for every request with replayable traces.
-- Vet all third-party ingestion connectors and validate their output.
-- Implement fail-closed behaviour at every stage of the pipeline.
-- Treat embeddings as sensitive data and encrypt at rest.
-
-### Don't
-
-- Ingest documents from untrusted sources without scanning.
-- Trust retrieved content as instructions to the language model.
-- Strip access control metadata during chunking or embedding.
-- Share vector stores across tenants without isolation.
-- Return RAG responses without source attribution.
-- Allow direct write access to vector indices from application endpoints.
-- Pass raw user queries to the retrieval engine without sanitisation.
-- Deploy vector databases with default credentials.
-- Return similarity scores to users or agents.
-- Execute model outputs directly in agent or automation contexts without validation.
-- Allow retrieved content to influence tool execution without an intermediate validation step.
-- Share response cache across users without permission-scoped isolation.
-- Treat RAG as a black box without pipeline observability.
-- Trust external ingestion integrations implicitly.
-- Fall back to model-only responses when retrieval fails.
-- Assume embeddings are irreversible or non-sensitive.
-
 ## References
 
 - [OWASP AISVS C08](https://github.com/OWASP/AISVS) -- Memory, Embeddings and Vector Database Security
 - [OWASP MCP Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/MCP_Security_Cheat_Sheet.html) -- Section 7: Message-Level Integrity
 - [OWASP Top 10 for LLM Applications](https://genai.owasp.org/) -- LLM06: Sensitive Information Disclosure, LLM01: Prompt Injection
-- [OWASP Top 10 for Agentic Applications](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/) -- ASI06: Memory and Context Poisoning
+- [OWASP Top 10 for Agentic Applications](https://genai.owasp.org/) -- ASI06: Memory and Context Poisoning (see the GenAI project site for the latest URL)
 - [NIST AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework) -- Governance, mapping, measuring, and managing AI risks
+- Song & Raghunathan (2020), "Information Leakage in Embedding Models" -- Background on embedding inversion attacks and differential privacy
