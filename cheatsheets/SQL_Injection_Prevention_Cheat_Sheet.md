@@ -177,7 +177,7 @@ For example:
 
 ```java
 public String someMethod(boolean sortOrder) {
- String SQLquery = "some SQL ... order by Salary " + (sortOrder ? "ASC" : "DESC");`
+ String SQLquery = "some SQL ... order by Salary " + (sortOrder ? "ASC" : "DESC");
  ...
 ```
 
