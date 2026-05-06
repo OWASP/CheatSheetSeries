@@ -63,9 +63,11 @@ The most important place to require MFA on an application is when the user logs 
 If the application provides multiple ways for a user to authenticate these should all require MFA, or have other protections implemented. A common area that is missed is if the application provides a separate API that can be used to login, or has an associated mobile application.
 
 ### MFA Fatigue / Push Notification Abuse
+
 MFA fatigue (also known as push notification abuse) occurs when an attacker repeatedly triggers MFA push prompts in an attempt to coerce the user into approving an authentication request. This technique relies on user fatigue, confusion, or accidental approval.
 
-**Defensive Controls**
+#### Defensive Controls
+
 - Apply rate limiting and throttling to MFA push attempts.
 - Prefer user‑initiated (“pull”) MFA flows instead of unsolicited push prompts.
 - Provide clear alerts for unexpected MFA activity.
@@ -73,17 +75,21 @@ MFA fatigue (also known as push notification abuse) occurs when an attacker repe
 - Implement number matching or challenge‑response prompts to prevent accidental approvals.
 
 ### Number Matching
+
 Number matching requires the user to enter a code displayed on the login screen into their authenticator app. This ensures the user is actively participating in the authentication process and prevents attackers from approving MFA requests on a stolen or compromised device.
 
-**Benefits**
+#### Benefits
+
 - Strong protection against MFA fatigue and push abuse.
 - Reduces accidental or inattentive approvals.
 - Ensures the user is present and engaged during authentication.
 
 ### Device Binding
+
 Device binding ties MFA approval to a specific trusted device. Only a registered device can approve authentication requests, reducing the risk of attacker‑controlled devices being used for MFA approval.
 
-**Benefits**
+#### Benefits
+
 - Prevents MFA approvals from untrusted or unknown devices.
 - Strengthens the integrity of the MFA process.
 - Supports phishing‑resistant authentication flows.
