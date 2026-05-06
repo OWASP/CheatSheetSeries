@@ -58,32 +58,14 @@ Rate limiting is the foundational control. Apply it at multiple keys, not just I
 
 Use a token-bucket or sliding-window algorithm. Avoid fixed-window counters: they allow bursts at boundary times.
 
-Example (Express with `express-rate-limit` and Redis store):
+A correct login-endpoint rate limit applies **two independent buckets**, both of which must be under their threshold for the request to pass:
 
-```javascript
-import rateLimit from 'express-rate-limit';
-import RedisStore from 'rate-limit-redis';
-import { createClient } from 'redis';
+- **Per-username bucket** — limits attempts against any single account regardless of source IP. Defends a targeted account from a distributed attack.
+- **Per-IP (or per-IP+ASN) bucket** — limits the volume of attempts originating from one source against any account. Defends against credential-stuffing sweeps that try one password per account.
 
-const redis = createClient({ url: process.env.REDIS_URL });
-await redis.connect();
+A common mistake is to use a single bucket keyed on the *combination* of IP and username (e.g., `login:<ip>:<user>`). This creates one bucket per pair, which means a single IP can attempt the threshold against an unlimited number of usernames before any limit fires — exactly the credential-stuffing pattern you were trying to stop. Always check the two buckets separately.
 
-const loginLimiter = rateLimit({
-  store: new RedisStore({ sendCommand: (...args) => redis.sendCommand(args) }),
-  windowMs: 15 * 60 * 1000,            // 15 minutes
-  max: 5,                              // 5 attempts per key
-  keyGenerator: (req) =>
-    `login:${req.ip}:${req.body?.username ?? 'anon'}`,
-  standardHeaders: true,
-  legacyHeaders: false,
-  // Do not return 429 with verbose info that helps tuning by attackers.
-  handler: (_req, res) => res.status(429).json({ error: 'Too many attempts' }),
-});
-
-app.post('/login', loginLimiter, loginHandler);
-```
-
-When a limit is hit, prefer a generic `429 Too Many Requests` without a `Retry-After` value precise enough to schedule retries.
+When a limit is hit, return a generic `429 Too Many Requests`. Avoid `Retry-After` values precise enough to schedule retries against. Do not include diagnostic detail (which bucket fired, remaining attempts) — that information is useful only to attackers tuning their tooling.
 
 ## Device and Network Fingerprinting (Privacy-Aware)
 
@@ -113,7 +95,7 @@ Visible CAPTCHAs (image grids, distorted text) are accessibility-hostile, machin
 
 Prefer the following alternatives or layer them:
 
-- **Cryptographic attestation tokens** — Privacy Pass (RFC 9576), Apple Private Access Tokens, Google Web Environment Integrity successors. The browser proves "I am a real device on a known platform" without identifying the user.
+- **Cryptographic attestation tokens** — Privacy Pass (RFC 9576), Apple Private Access Tokens, and emerging device-attestation APIs. The client proves "I am a real device on a known platform" without identifying the user.
 - **Invisible risk scoring** — Cloudflare Turnstile, reCAPTCHA v3, hCaptcha Enterprise. The provider returns a score; you decide the threshold.
 - **Proof of Work (PoW)** — the client must compute a hash that costs single-digit milliseconds for a human but accumulates significantly across thousands of bot requests. Useful for unauthenticated, expensive endpoints.
 - **WebAuthn / Passkeys** — for high-value flows, possession of a registered authenticator is a far stronger bot signal than any CAPTCHA.
@@ -295,5 +277,5 @@ Anti-bot defenses collect data. Treat them like any other data-processing activi
 - [OWASP Credential Stuffing Prevention Cheat Sheet](Credential_Stuffing_Prevention_Cheat_Sheet.md)
 - [OWASP Logging Cheat Sheet](Logging_Cheat_Sheet.md)
 - [OWASP Authentication Cheat Sheet](Authentication_Cheat_Sheet.md)
-- [OWASP Multifactor Authentication Cheat_Sheet](Multifactor_Authentication_Cheat_Sheet.md)
+- [OWASP Multifactor Authentication Cheat Sheet](Multifactor_Authentication_Cheat_Sheet.md)
 - HaveIBeenPwned — [Pwned Passwords API](https://haveibeenpwned.com/API/v3#PwnedPasswords)
