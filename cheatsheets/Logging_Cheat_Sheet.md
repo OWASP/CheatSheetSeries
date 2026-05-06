@@ -85,6 +85,68 @@ This could be a centralized log collection and management system (e.g. SIEM or S
 
 Consider separate files/tables for extended event information such as error stack traces or a record of HTTP request and response headers and bodies.
 
+### SOC Detection Guidance for Authentication Events
+
+Authentication logs provide high‑value signals for detecting account compromise, credential abuse, and session hijacking. The following detection patterns help SOC teams identify suspicious activity early.
+
+#### Impossible Travel
+
+Detect authentication attempts from two geographic locations that cannot be physically reached within the time window.
+
+Useful indicators:
+- Source IP geolocation
+- ASN changes
+- Login velocity anomalies
+- Device fingerprint mismatch
+
+#### Login Anomaly Detection
+
+Identify logins that deviate from a user’s normal behavior.
+
+Common signals:
+- New device or browser
+- New operating system or user agent
+- Unusual time of day
+- Unfamiliar IP range or ASN
+- Sudden change in MFA method
+
+#### Device Fingerprint Mismatch
+
+Alert when a login claims to be from a known device but presents:
+- A different browser fingerprint
+- A different OS version
+- A different hardware profile
+- A different IP reputation score
+
+#### MFA Failure Patterns
+
+Repeated MFA failures may indicate:
+- Credential stuffing attempts
+- MFA fatigue attacks
+- Stolen password + attacker lacking second factor
+- Brute‑force attempts on OTP codes
+
+#### High‑Risk Correlation Events
+
+Correlate authentication events with:
+- Password reset attempts
+- MFA reset or factor changes
+- Email change requests
+- Session revocation or reauthentication prompts
+- Privilege escalation or admin‑panel access
+
+#### Recommended Log Sources
+
+Effective detection requires collecting:
+- Identity provider (IdP) logs
+- Application authentication logs
+- VPN and SSO logs
+- Geo‑IP and IP reputation data
+- Device fingerprint telemetry
+- Browser user‑agent and client hints
+- MFA provider logs
+
+
 ### Which events to log
 
 The level and content of security monitoring, alerting, and reporting needs to be set during the requirements and design stage of projects, and should be proportionate to the information security risks. This can then be used to define what should be logged.
