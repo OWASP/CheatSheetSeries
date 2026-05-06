@@ -94,6 +94,7 @@ Authentication logs provide high‑value signals for detecting account compromis
 Detect authentication attempts from two geographic locations that cannot be physically reached within the time window.
 
 Useful indicators:
+
 - Source IP geolocation
 - ASN changes
 - Login velocity anomalies
@@ -104,6 +105,7 @@ Useful indicators:
 Identify logins that deviate from a user’s normal behavior.
 
 Common signals:
+
 - New device or browser
 - New operating system or user agent
 - Unusual time of day
@@ -113,6 +115,7 @@ Common signals:
 #### Device Fingerprint Mismatch
 
 Alert when a login claims to be from a known device but presents:
+
 - A different browser fingerprint
 - A different OS version
 - A different hardware profile
@@ -121,6 +124,7 @@ Alert when a login claims to be from a known device but presents:
 #### MFA Failure Patterns
 
 Repeated MFA failures may indicate:
+
 - Credential stuffing attempts
 - MFA fatigue attacks
 - Stolen password + attacker lacking second factor
@@ -129,6 +133,7 @@ Repeated MFA failures may indicate:
 #### High‑Risk Correlation Events
 
 Correlate authentication events with:
+
 - Password reset attempts
 - MFA reset or factor changes
 - Email change requests
@@ -138,6 +143,7 @@ Correlate authentication events with:
 #### Recommended Log Sources
 
 Effective detection requires collecting:
+
 - Identity provider (IdP) logs
 - Application authentication logs
 - VPN and SSO logs
