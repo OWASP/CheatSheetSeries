@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Subdomain_Takeover_Prevention_Cheat_Sheet.html">
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Bot_Management_and_Anti-Automation_Cheat_Sheet.html">
       
       
-        <link rel="prev" href="Software_Supply_Chain_Security_Cheat_Sheet.html">
+        <link rel="prev" href="Bean_Validation_Cheat_Sheet.html">
       
       
-        <link rel="next" href="Symfony_Cheat_Sheet.html">
+        <link rel="next" href="Browser_Extension_Vulnerabilities_Cheat_Sheet.html">
       
       
       <link rel="icon" href="../assets/WebSite_Favicon.png">
@@ -24,7 +24,7 @@
     
     
       
-        <title>Subdomain Takeover Prevention - OWASP Cheat Sheet Series</title>
+        <title>Bot Management and Anti-Automation - OWASP Cheat Sheet Series</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#subdomain-takeover-prevention-cheat-sheet" class="md-skip">
+        <a href="#bot-management-and-anti-automation-cheat-sheet" class="md-skip">
           Skip to content
         </a>
       
@@ -111,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Subdomain Takeover Prevention
+              Bot Management and Anti-Automation
             
           </span>
         </div>
@@ -622,10 +622,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="Bot_Management_and_Anti-Automation_Cheat_Sheet.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Bot Management and Anti-Automation
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="Bot_Management_and_Anti-Automation_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -634,6 +654,203 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-threats-and-risks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Threats and Risks
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#threat-modeling-before-controls" class="md-nav__link">
+    <span class="md-ellipsis">
+      Threat Modeling Before Controls
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#layered-defense-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      Layered Defense Architecture
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rate-limiting-and-quotas" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rate Limiting and Quotas
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#device-and-network-fingerprinting-privacy-aware" class="md-nav__link">
+    <span class="md-ellipsis">
+      Device and Network Fingerprinting (Privacy-Aware)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#captcha-and-its-modern-alternatives" class="md-nav__link">
+    <span class="md-ellipsis">
+      CAPTCHA and Its Modern Alternatives
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#honeypots-and-tarpits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Honeypots and Tarpits
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#defending-specific-flows" class="md-nav__link">
+    <span class="md-ellipsis">
+      Defending Specific Flows
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Defending Specific Flows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#account-creation-oat-019" class="md-nav__link">
+    <span class="md-ellipsis">
+      Account creation (OAT-019)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#login-oat-008" class="md-nav__link">
+    <span class="md-ellipsis">
+      Login (OAT-008)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inventory-scalping-oat-005-oat-015" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inventory / scalping (OAT-005, OAT-015)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#public-apis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Public APIs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#response-strategy-dont-always-block" class="md-nav__link">
+    <span class="md-ellipsis">
+      Response Strategy: Don't Always Block
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logging-and-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      Logging and Monitoring
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#privacy-and-compliance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Privacy and Compliance
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anti-patterns-to-avoid" class="md-nav__link">
+    <span class="md-ellipsis">
+      Anti-Patterns to Avoid
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Checklist
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2428,30 +2645,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Subdomain Takeover Prevention
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="Subdomain_Takeover_Prevention_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="Subdomain_Takeover_Prevention_Cheat_Sheet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2460,248 +2657,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    <span class="md-ellipsis">
-      Introduction
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#how-subdomain-takeover-works" class="md-nav__link">
-    <span class="md-ellipsis">
-      How Subdomain Takeover Works
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="How Subdomain Takeover Works">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#the-basic-mechanism" class="md-nav__link">
-    <span class="md-ellipsis">
-      The Basic Mechanism
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#why-it-keeps-happening" class="md-nav__link">
-    <span class="md-ellipsis">
-      Why It Keeps Happening
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#record-types-at-risk" class="md-nav__link">
-    <span class="md-ellipsis">
-      Record Types at Risk
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#cloud-provider-vulnerability-reference" class="md-nav__link">
-    <span class="md-ellipsis">
-      Cloud Provider Vulnerability Reference
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Cloud Provider Vulnerability Reference">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#high-risk-takeover-possible-when-resource-is-removed" class="md-nav__link">
-    <span class="md-ellipsis">
-      High Risk: Takeover Possible When Resource Is Removed
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#conditional-risk-takeover-possible-under-specific-circumstances" class="md-nav__link">
-    <span class="md-ellipsis">
-      Conditional Risk: Takeover Possible Under Specific Circumstances
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#service-fingerprints-for-detection" class="md-nav__link">
-    <span class="md-ellipsis">
-      Service Fingerprints for Detection
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#prevention-strategies" class="md-nav__link">
-    <span class="md-ellipsis">
-      Prevention Strategies
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Prevention Strategies">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-manage-dns-record-lifecycle-during-decommissioning" class="md-nav__link">
-    <span class="md-ellipsis">
-      1. Manage DNS Record Lifecycle During Decommissioning
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-maintain-a-dns-inventory-linked-to-resource-ownership" class="md-nav__link">
-    <span class="md-ellipsis">
-      2. Maintain a DNS Inventory Linked to Resource Ownership
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-implement-automated-dangling-record-detection" class="md-nav__link">
-    <span class="md-ellipsis">
-      3. Implement Automated Dangling Record Detection
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#4-use-domain-verification-where-available" class="md-nav__link">
-    <span class="md-ellipsis">
-      4. Use Domain Verification Where Available
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#5-restrict-wildcard-dns-records" class="md-nav__link">
-    <span class="md-ellipsis">
-      5. Restrict Wildcard DNS Records
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#6-establish-a-decommissioning-checklist" class="md-nav__link">
-    <span class="md-ellipsis">
-      6. Establish a Decommissioning Checklist
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#7-limit-the-blast-radius-with-proper-security-scoping" class="md-nav__link">
-    <span class="md-ellipsis">
-      7. Limit the Blast Radius with Proper Security Scoping
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#monitoring-and-detection" class="md-nav__link">
-    <span class="md-ellipsis">
-      Monitoring and Detection
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Monitoring and Detection">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#continuous-dns-monitoring" class="md-nav__link">
-    <span class="md-ellipsis">
-      Continuous DNS Monitoring
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#indicators-of-compromise" class="md-nav__link">
-    <span class="md-ellipsis">
-      Indicators of Compromise
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#incident-response" class="md-nav__link">
-    <span class="md-ellipsis">
-      Incident Response
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#references" class="md-nav__link">
-    <span class="md-ellipsis">
-      References
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -3191,37 +3146,109 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#how-subdomain-takeover-works" class="md-nav__link">
+  <a href="#common-threats-and-risks" class="md-nav__link">
     <span class="md-ellipsis">
-      How Subdomain Takeover Works
+      Common Threats and Risks
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="How Subdomain Takeover Works">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#threat-modeling-before-controls" class="md-nav__link">
+    <span class="md-ellipsis">
+      Threat Modeling Before Controls
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#layered-defense-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      Layered Defense Architecture
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rate-limiting-and-quotas" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rate Limiting and Quotas
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#device-and-network-fingerprinting-privacy-aware" class="md-nav__link">
+    <span class="md-ellipsis">
+      Device and Network Fingerprinting (Privacy-Aware)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#captcha-and-its-modern-alternatives" class="md-nav__link">
+    <span class="md-ellipsis">
+      CAPTCHA and Its Modern Alternatives
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#honeypots-and-tarpits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Honeypots and Tarpits
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#defending-specific-flows" class="md-nav__link">
+    <span class="md-ellipsis">
+      Defending Specific Flows
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Defending Specific Flows">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#the-basic-mechanism" class="md-nav__link">
+  <a href="#account-creation-oat-019" class="md-nav__link">
     <span class="md-ellipsis">
-      The Basic Mechanism
+      Account creation (OAT-019)
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#why-it-keeps-happening" class="md-nav__link">
+  <a href="#login-oat-008" class="md-nav__link">
     <span class="md-ellipsis">
-      Why It Keeps Happening
+      Login (OAT-008)
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#record-types-at-risk" class="md-nav__link">
+  <a href="#inventory-scalping-oat-005-oat-015" class="md-nav__link">
     <span class="md-ellipsis">
-      Record Types at Risk
+      Inventory / scalping (OAT-005, OAT-015)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#public-apis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Public APIs
     </span>
   </a>
   
@@ -3233,162 +3260,45 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#cloud-provider-vulnerability-reference" class="md-nav__link">
+  <a href="#response-strategy-dont-always-block" class="md-nav__link">
     <span class="md-ellipsis">
-      Cloud Provider Vulnerability Reference
+      Response Strategy: Don't Always Block
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Cloud Provider Vulnerability Reference">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#high-risk-takeover-possible-when-resource-is-removed" class="md-nav__link">
-    <span class="md-ellipsis">
-      High Risk: Takeover Possible When Resource Is Removed
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#conditional-risk-takeover-possible-under-specific-circumstances" class="md-nav__link">
-    <span class="md-ellipsis">
-      Conditional Risk: Takeover Possible Under Specific Circumstances
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#service-fingerprints-for-detection" class="md-nav__link">
-    <span class="md-ellipsis">
-      Service Fingerprints for Detection
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#prevention-strategies" class="md-nav__link">
+  <a href="#logging-and-monitoring" class="md-nav__link">
     <span class="md-ellipsis">
-      Prevention Strategies
+      Logging and Monitoring
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Prevention Strategies">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-manage-dns-record-lifecycle-during-decommissioning" class="md-nav__link">
-    <span class="md-ellipsis">
-      1. Manage DNS Record Lifecycle During Decommissioning
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-maintain-a-dns-inventory-linked-to-resource-ownership" class="md-nav__link">
-    <span class="md-ellipsis">
-      2. Maintain a DNS Inventory Linked to Resource Ownership
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-implement-automated-dangling-record-detection" class="md-nav__link">
-    <span class="md-ellipsis">
-      3. Implement Automated Dangling Record Detection
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#4-use-domain-verification-where-available" class="md-nav__link">
-    <span class="md-ellipsis">
-      4. Use Domain Verification Where Available
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#5-restrict-wildcard-dns-records" class="md-nav__link">
-    <span class="md-ellipsis">
-      5. Restrict Wildcard DNS Records
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#6-establish-a-decommissioning-checklist" class="md-nav__link">
-    <span class="md-ellipsis">
-      6. Establish a Decommissioning Checklist
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#7-limit-the-blast-radius-with-proper-security-scoping" class="md-nav__link">
-    <span class="md-ellipsis">
-      7. Limit the Blast Radius with Proper Security Scoping
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#monitoring-and-detection" class="md-nav__link">
+  <a href="#privacy-and-compliance" class="md-nav__link">
     <span class="md-ellipsis">
-      Monitoring and Detection
+      Privacy and Compliance
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Monitoring and Detection">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#continuous-dns-monitoring" class="md-nav__link">
-    <span class="md-ellipsis">
-      Continuous DNS Monitoring
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#indicators-of-compromise" class="md-nav__link">
-    <span class="md-ellipsis">
-      Indicators of Compromise
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#incident-response" class="md-nav__link">
+  <a href="#anti-patterns-to-avoid" class="md-nav__link">
     <span class="md-ellipsis">
-      Incident Response
+      Anti-Patterns to Avoid
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Checklist
     </span>
   </a>
   
@@ -3421,325 +3331,305 @@
   
 
 
-<h1 id="subdomain-takeover-prevention-cheat-sheet">Subdomain Takeover Prevention Cheat Sheet<a class="headerlink" href="#subdomain-takeover-prevention-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h1 id="bot-management-and-anti-automation-cheat-sheet">Bot Management and Anti-Automation Cheat Sheet<a class="headerlink" href="#bot-management-and-anti-automation-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>Subdomain takeover is a vulnerability that occurs when a DNS record (typically a CNAME) points to a cloud resource or third-party service that has been deprovisioned or no longer exists. An attacker can claim the orphaned resource and serve arbitrary content on the victim's subdomain.</p>
-<p>This vulnerability is consistently among the most reported findings in bug bounty programs. Despite being well understood, it remains prevalent because it is fundamentally an operational problem: teams create DNS records when spinning up services but rarely have processes to clean them up during decommissioning.</p>
-<p>The impact extends far beyond serving a defacement page. An attacker controlling a subdomain can:</p>
+<p>Modern web applications face a continuous stream of automated traffic that is not a Distributed Denial of Service event but is still abusive: credential stuffing, content scraping, inventory hoarding (scalping), fake account creation, gift-card enumeration, card testing, fake reviews, click fraud, and skewed analytics. The OWASP <strong>Automated Threats to Web Applications</strong> project (OAT-001 through OAT-021) catalogues these patterns.</p>
+<p>This cheat sheet provides defensive guidance that goes beyond the <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html">Credential Stuffing Prevention Cheat Sheet</a> and addresses the full spectrum of automated abuse. It focuses on architecture, signals, response strategy, and CAPTCHA alternatives.</p>
+<p>The objective is <strong>not to block all bots</strong> (search engine crawlers, monitoring agents, and accessibility tools are legitimate) but to raise the cost of abusive automation while keeping legitimate users and bots unaffected.</p>
+<h2 id="common-threats-and-risks">Common Threats and Risks<a class="headerlink" href="#common-threats-and-risks" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Steal session cookies</strong> scoped to the parent domain (e.g., cookies set on <code>.example.com</code> are sent to <code>attacker-controlled.example.com</code>)</li>
-<li><strong>Bypass Content Security Policy</strong> rules that trust wildcard subdomains (<code>*.example.com</code>)</li>
-<li><strong>Host convincing phishing pages</strong> on a domain the organization's users and customers already trust</li>
-<li><strong>Compromise OAuth and SSO flows</strong> that whitelist the subdomain as a valid redirect URI</li>
-<li><strong>Obtain valid TLS certificates</strong> for the subdomain from Certificate Authorities that use HTTP or email-based domain validation</li>
-<li><strong>Receive email</strong> addressed to the subdomain if MX records are involved, enabling password resets or account verification on third-party services</li>
+<li><strong>OAT-008 Credential Stuffing</strong> — replaying breached username/password pairs.</li>
+<li><strong>OAT-011 Scraping</strong> — large-scale content, price, or PII extraction.</li>
+<li><strong>OAT-005 Scalping / Inventory Hoarding</strong> — buying limited stock for resale.</li>
+<li><strong>OAT-019 Account Creation</strong> — fake accounts at signup endpoints.</li>
+<li><strong>OAT-012 Cashing Out</strong> — using stolen accounts to extract value.</li>
+<li><strong>OAT-001 Carding</strong> — testing stolen card numbers via low-value purchases.</li>
+<li><strong>OAT-003 Ad Fraud</strong> — fake clicks and impressions.</li>
+<li><strong>OAT-002 Token Cracking</strong> — brute-forcing gift cards, vouchers, coupons.</li>
+<li><strong>OAT-015 Denial of Inventory</strong> — adding items to cart to deplete stock.</li>
+<li><strong>OAT-014 Vulnerability Scanning</strong> — automated probing for weaknesses.</li>
+<li><strong>Skewed business metrics</strong> — bots polluting A/B tests, recommendations, fraud models.</li>
+<li><strong>Privacy violations</strong> — over-collecting fingerprinting data to defend against bots.</li>
 </ul>
-<p>This cheat sheet provides practical guidance for developers, DevOps engineers, and infrastructure teams to prevent subdomain takeovers, detect dangling records before attackers do, and respond effectively when they are discovered.</p>
-<h2 id="how-subdomain-takeover-works">How Subdomain Takeover Works<a class="headerlink" href="#how-subdomain-takeover-works" title="Permanent link">&para;</a></h2>
-<h3 id="the-basic-mechanism">The Basic Mechanism<a class="headerlink" href="#the-basic-mechanism" title="Permanent link">&para;</a></h3>
-<ol>
-<li>An organization creates a DNS record: <code>blog.example.com CNAME example-blog.herokuapp.com</code></li>
-<li>The Heroku app serves content on <code>blog.example.com</code></li>
-<li>Months later, the team decommissions the Heroku app but forgets to remove the DNS record</li>
-<li>The CNAME still points to <code>example-blog.herokuapp.com</code>, which no longer exists</li>
-<li>An attacker creates a new Heroku app with the name <code>example-blog</code> and claims the hostname</li>
-<li>The attacker now controls what is served on <code>blog.example.com</code></li>
-</ol>
-<h3 id="why-it-keeps-happening">Why It Keeps Happening<a class="headerlink" href="#why-it-keeps-happening" title="Permanent link">&para;</a></h3>
-<p>The root cause is almost always a disconnect between infrastructure provisioning and DNS management:</p>
-<ul>
-<li><strong>Cloud resources are temporary, DNS records are persistent.</strong> Teams spin up and tear down services frequently, but DNS records tend to accumulate unless explicitly managed.</li>
-<li><strong>Different teams own different parts.</strong> The team that created the cloud resource may not have access to DNS management, and the team that manages DNS may not know the resource was removed.</li>
-<li><strong>No automated link between resources and DNS.</strong> Most organizations have no mechanism to detect when a DNS target stops existing.</li>
-<li><strong>Shadow IT and forgotten proof-of-concepts.</strong> Developers create temporary subdomains for testing or demos and never clean them up.</li>
-<li><strong>Mergers, acquisitions, and reorganizations.</strong> DNS zones inherited from acquired companies are often poorly inventoried, and the original infrastructure owners are no longer available.</li>
-</ul>
-<h3 id="record-types-at-risk">Record Types at Risk<a class="headerlink" href="#record-types-at-risk" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong>CNAME records</strong> are the most common vector. If the canonical name resolves to a service that can be claimed, takeover is possible.</li>
-<li><strong>A records</strong> pointing to released IP addresses can be vulnerable if the IP is reassigned and the attacker obtains it. This is common in cloud environments where elastic IPs are released back to the provider's pool.</li>
-<li><strong>NS records</strong> delegating a subdomain to a third-party DNS provider are particularly dangerous. If the account at the DNS provider is closed, anyone who creates a new account can potentially claim the delegated zone and control all records under that subdomain.</li>
-<li><strong>MX records</strong> pointing to deprovisioned mail services can allow an attacker to receive email for the subdomain. Beyond intercepting password reset emails, this enables a more severe attack: most Certificate Authorities accept email-based domain validation (DV) using addresses like <code>admin@subdomain.example.com</code>. An attacker controlling MX records can complete DV challenges and obtain legitimate TLS certificates for the subdomain, enabling transparent HTTPS phishing or man-in-the-middle attacks.</li>
-</ul>
-<h2 id="cloud-provider-vulnerability-reference">Cloud Provider Vulnerability Reference<a class="headerlink" href="#cloud-provider-vulnerability-reference" title="Permanent link">&para;</a></h2>
-<p>Not all cloud services are equally vulnerable. The key factor is whether the service allows a new customer to claim a previously used hostname or resource name. This table is a snapshot; cloud providers continuously update their policies, so always verify current behavior against the community-maintained <a href="https://github.com/EdOverflow/can-i-take-over-xyz">can-i-take-over-xyz</a> repository.</p>
-<h3 id="high-risk-takeover-possible-when-resource-is-removed">High Risk: Takeover Possible When Resource Is Removed<a class="headerlink" href="#high-risk-takeover-possible-when-resource-is-removed" title="Permanent link">&para;</a></h3>
+<h2 id="threat-modeling-before-controls">Threat Modeling Before Controls<a class="headerlink" href="#threat-modeling-before-controls" title="Permanent link">&para;</a></h2>
+<p>Before adding tooling, identify which OAT categories apply to your application and which endpoints are at risk. A login form, a search page, a checkout, and a public API have very different threat profiles and defenses.</p>
 <table>
 <thead>
 <tr>
-<th>Provider/Service</th>
-<th>Vulnerable Resource</th>
-<th>Indicator (CNAME Target)</th>
-<th>Takeover Mechanism</th>
+<th>Endpoint type</th>
+<th>Primary OAT risk</th>
+<th>Suggested first control</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>AWS S3 (Website Hosting)</td>
-<td>S3 bucket</td>
-<td><code>*.s3.amazonaws.com</code>, <code>*.s3-website-*.amazonaws.com</code></td>
-<td>Bucket names are globally unique across all AWS accounts. If a bucket is deleted, any AWS account can recreate it with the same name and serve content on the CNAME.</td>
+<td>Login</td>
+<td>OAT-008 Credential Stuffing</td>
+<td>Rate limit + breached-password check + MFA</td>
 </tr>
 <tr>
-<td>AWS Elastic Beanstalk</td>
-<td>Environment</td>
-<td><code>*.elasticbeanstalk.com</code></td>
-<td>Environment CNAMEs are globally unique and released on environment termination. An attacker can create a new environment with the same CNAME prefix.</td>
+<td>Signup</td>
+<td>OAT-019 Account Creation</td>
+<td>Email/phone verification + velocity limits</td>
 </tr>
 <tr>
-<td>Azure App Service</td>
-<td>Web App</td>
-<td><code>*.azurewebsites.net</code></td>
-<td>App names are globally unique. After deletion, any Azure tenant can create a new app with the same name. Azure offers a <a href="https://learn.microsoft.com/en-us/azure/app-service/app-service-web-tutorial-custom-domain">domain verification mechanism</a> to mitigate this; see Prevention Strategies.</td>
+<td>Search / catalog</td>
+<td>OAT-011 Scraping</td>
+<td>Rate limit per identity + behavioral signal</td>
 </tr>
 <tr>
-<td>Azure Traffic Manager</td>
-<td>Profile</td>
-<td><code>*.trafficmanager.net</code></td>
-<td>Profile names are globally unique and reclaimable after deletion.</td>
+<td>Checkout / cart</td>
+<td>OAT-005 Scalping, OAT-001 Carding</td>
+<td>Queue + purchase limits + 3D Secure</td>
 </tr>
 <tr>
-<td>Azure CDN</td>
-<td>Endpoint</td>
-<td><code>*.azureedge.net</code></td>
-<td>Endpoint names are globally unique. A deleted endpoint name can be registered by another tenant.</td>
+<td>Public API</td>
+<td>OAT-011, OAT-014</td>
+<td>API keys + per-key quotas + signed requests</td>
 </tr>
 <tr>
-<td>GitHub Pages (Custom Domains)</td>
-<td>Custom domain on repository</td>
-<td><code>*.github.io</code></td>
-<td>The primary risk is with custom domain configurations. When a repository using a custom domain is deleted or made private, the custom domain association is removed and an attacker can configure the same custom domain on their own GitHub Pages repository. Note: claiming the default <code>username.github.io</code> subdomain requires registering that GitHub username, which is not possible while the original account exists.</td>
-</tr>
-<tr>
-<td>Heroku</td>
-<td>App</td>
-<td><code>*.herokuapp.com</code></td>
-<td>App names are globally unique and released on app deletion. Any Heroku account can claim the name.</td>
-</tr>
-<tr>
-<td>Shopify</td>
-<td>Store</td>
-<td><code>shops.myshopify.com</code></td>
-<td>Custom domain associations can be claimed by any Shopify store.</td>
-</tr>
-<tr>
-<td>Netlify</td>
-<td>Site</td>
-<td><code>*.netlify.app</code>, <code>*.netlify.com</code></td>
-<td>Site names are reclaimable after deletion.</td>
-</tr>
-<tr>
-<td>Fastly</td>
-<td>CDN service</td>
-<td><code>*.fastly.net</code>, <code>*.global.ssl.fastly.net</code></td>
-<td>An attacker with a Fastly account can add the victim's domain to their own Fastly service configuration.</td>
-</tr>
-<tr>
-<td>Zendesk</td>
-<td>Support portal</td>
-<td><code>*.zendesk.com</code></td>
-<td>Support portal subdomain names can be reclaimed by new Zendesk accounts.</td>
-</tr>
-<tr>
-<td>Cargo Collective</td>
-<td>Portfolio</td>
-<td><code>*.cargocollective.com</code></td>
-<td>Portfolio names are reclaimable.</td>
-</tr>
-<tr>
-<td>Tumblr</td>
-<td>Blog</td>
-<td><code>*.tumblr.com</code></td>
-<td>Custom domain associations are released when a blog is deleted.</td>
+<td>Comments / reviews</td>
+<td>OAT-020 Account Aggregation, spam</td>
+<td>Reputation + delayed publishing</td>
 </tr>
 </tbody>
 </table>
-<h3 id="conditional-risk-takeover-possible-under-specific-circumstances">Conditional Risk: Takeover Possible Under Specific Circumstances<a class="headerlink" href="#conditional-risk-takeover-possible-under-specific-circumstances" title="Permanent link">&para;</a></h3>
+<h2 id="layered-defense-architecture">Layered Defense Architecture<a class="headerlink" href="#layered-defense-architecture" title="Permanent link">&para;</a></h2>
+<p>A single control is brittle. Combine controls at three layers:</p>
+<ol>
+<li><strong>Edge layer</strong> — CDN, WAF, or anti-bot service: IP reputation, ASN filtering, TLS fingerprint (JA3/JA4), HTTP/2 fingerprint, basic rate limits.</li>
+<li><strong>Application layer</strong> — session-aware rate limits, identity-bound quotas, behavioral signals, honeypots, CAPTCHA challenges.</li>
+<li><strong>Backend / business layer</strong> — anomaly detection on transactions, account-velocity rules, fraud scoring, async review queues.</li>
+</ol>
+<p>A request that looks human at one layer (good IP, valid CAPTCHA) may still fail at another (10 checkouts in 30 seconds with different cards).</p>
+<h2 id="rate-limiting-and-quotas">Rate Limiting and Quotas<a class="headerlink" href="#rate-limiting-and-quotas" title="Permanent link">&para;</a></h2>
+<p>Rate limiting is the foundational control. Apply it at multiple keys, not just IP.</p>
+<ul>
+<li><strong>Per IP</strong> — coarse, defeated by residential proxy networks but still useful as a floor.</li>
+<li><strong>Per session / cookie</strong> — defeated by cookie clearing, useful against unsophisticated bots.</li>
+<li><strong>Per authenticated identity</strong> — most reliable; applies after login.</li>
+<li><strong>Per endpoint</strong> — the login endpoint deserves a tighter limit than the home page.</li>
+<li><strong>Per ASN or geo</strong> — useful when traffic from datacenter ASNs is unexpected.</li>
+</ul>
+<p>Use a token-bucket or sliding-window algorithm. Avoid fixed-window counters: they allow bursts at boundary times.</p>
+<p>A correct login-endpoint rate limit applies <strong>two independent buckets</strong>, both of which must be under their threshold for the request to pass:</p>
+<ul>
+<li><strong>Per-username bucket</strong> — limits attempts against any single account regardless of source IP. Defends a targeted account from a distributed attack.</li>
+<li><strong>Per-IP (or per-IP+ASN) bucket</strong> — limits the volume of attempts originating from one source against any account. Defends against credential-stuffing sweeps that try one password per account.</li>
+</ul>
+<p>A common mistake is to use a single bucket keyed on the <em>combination</em> of IP and username (e.g., <code>login:&lt;ip&gt;:&lt;user&gt;</code>). This creates one bucket per pair, which means a single IP can attempt the threshold against an unlimited number of usernames before any limit fires — exactly the credential-stuffing pattern you were trying to stop. Always check the two buckets separately.</p>
+<p>When a limit is hit, return a generic <code>429 Too Many Requests</code>. Avoid <code>Retry-After</code> values precise enough to schedule retries against. Do not include diagnostic detail (which bucket fired, remaining attempts) — that information is useful only to attackers tuning their tooling.</p>
+<h2 id="device-and-network-fingerprinting-privacy-aware">Device and Network Fingerprinting (Privacy-Aware)<a class="headerlink" href="#device-and-network-fingerprinting-privacy-aware" title="Permanent link">&para;</a></h2>
+<p>Fingerprinting helps detect bots that rotate IPs but reuse client environments. Use <strong>passive, network-level</strong> signals first; resort to client-side fingerprinting only when necessary.</p>
+<p>Network signals (no client cooperation needed):</p>
+<ul>
+<li><strong>JA3 / JA4</strong> — TLS ClientHello fingerprint. Headless tooling often produces uncommon JA3 values.</li>
+<li><strong>HTTP/2 fingerprint (Akamai)</strong> — frame ordering, settings, priorities.</li>
+<li><strong>Client Hints (<code>Sec-CH-UA-*</code>)</strong> — declared but verifiable against TLS fingerprint.</li>
+</ul>
+<p>Browser-side signals (last resort, with consent where required):</p>
+<ul>
+<li>WebGL renderer string, canvas hash, font list, audio context — strong but invasive.</li>
+<li>Page-level behavioral telemetry (mouse paths, scroll, focus) — collect only on sensitive flows.</li>
+</ul>
+<p><strong>Privacy guidance:</strong></p>
+<ul>
+<li>Document fingerprinting in your privacy notice; some jurisdictions (EU/UK ePrivacy, CCPA) require disclosure or opt-out.</li>
+<li>Hash or truncate any fingerprint before storage; do not retain raw values that enable re-identification.</li>
+<li>Set short retention windows (hours to days) for anti-bot signals — long enough to detect, short enough to limit surveillance risk.</li>
+<li>Avoid fingerprinting authenticated, low-risk traffic (a logged-in user reading their own profile does not need to be fingerprinted again).</li>
+</ul>
+<h2 id="captcha-and-its-modern-alternatives">CAPTCHA and Its Modern Alternatives<a class="headerlink" href="#captcha-and-its-modern-alternatives" title="Permanent link">&para;</a></h2>
+<p>Visible CAPTCHAs (image grids, distorted text) are accessibility-hostile, machine-solvable by ML, and outsourced to human solver farms for fractions of a cent per solve. Treat them as a <strong>last-resort step-up</strong>, not a primary defense.</p>
+<p>Prefer the following alternatives or layer them:</p>
+<ul>
+<li><strong>Cryptographic attestation tokens</strong> — Privacy Pass (RFC 9576), Apple Private Access Tokens, and emerging device-attestation APIs. The client proves "I am a real device on a known platform" without identifying the user.</li>
+<li><strong>Invisible risk scoring</strong> — Cloudflare Turnstile, reCAPTCHA v3, hCaptcha Enterprise. The provider returns a score; you decide the threshold.</li>
+<li><strong>Proof of Work (PoW)</strong> — the client must compute a hash that costs single-digit milliseconds for a human but accumulates significantly across thousands of bot requests. Useful for unauthenticated, expensive endpoints.</li>
+<li><strong>WebAuthn / Passkeys</strong> — for high-value flows, possession of a registered authenticator is a far stronger bot signal than any CAPTCHA.</li>
+</ul>
+<p>Example Proof of Work challenge (server side):</p>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">randomBytes</span><span class="p">,</span><span class="w"> </span><span class="nx">createHash</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;crypto&#39;</span><span class="p">;</span>
+
+<span class="c1">// Issue: client receives `challenge` and must find a `nonce`</span>
+<span class="c1">// such that sha256(challenge || nonce) starts with N zero bits.</span>
+<span class="kd">function</span><span class="w"> </span><span class="nx">issuePoW</span><span class="p">(</span><span class="nx">difficultyBits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">18</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">challenge</span><span class="o">:</span><span class="w"> </span><span class="nx">randomBytes</span><span class="p">(</span><span class="mf">16</span><span class="p">).</span><span class="nx">toString</span><span class="p">(</span><span class="s1">&#39;hex&#39;</span><span class="p">),</span>
+<span class="w">    </span><span class="nx">difficulty</span><span class="o">:</span><span class="w"> </span><span class="nx">difficultyBits</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">expiresAt</span><span class="o">:</span><span class="w"> </span><span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">60</span><span class="nx">_000</span><span class="p">,</span>
+<span class="w">  </span><span class="p">};</span>
+<span class="p">}</span>
+
+<span class="kd">function</span><span class="w"> </span><span class="nx">verifyPoW</span><span class="p">(</span><span class="nx">challenge</span><span class="p">,</span><span class="w"> </span><span class="nx">nonce</span><span class="p">,</span><span class="w"> </span><span class="nx">difficultyBits</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">hash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">createHash</span><span class="p">(</span><span class="s1">&#39;sha256&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="nx">challenge</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">nonce</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="nx">digest</span><span class="p">();</span>
+<span class="w">  </span><span class="c1">// Count leading zero bits.</span>
+<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="nx">bits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span>
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">const</span><span class="w"> </span><span class="kr">byte</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nx">hash</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="kr">byte</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="mf">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">bits</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mf">8</span><span class="p">;</span><span class="w"> </span><span class="k">continue</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">bits</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">clz32</span><span class="p">(</span><span class="kr">byte</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">24</span><span class="p">;</span>
+<span class="w">    </span><span class="k">break</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">bits</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="nx">difficultyBits</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Tune <code>difficultyBits</code> so a real client spends a few hundred milliseconds; raise it under attack.</p>
+<h2 id="honeypots-and-tarpits">Honeypots and Tarpits<a class="headerlink" href="#honeypots-and-tarpits" title="Permanent link">&para;</a></h2>
+<p>Cheap, effective, and zero impact on legitimate users.</p>
+<ul>
+<li><strong>Hidden form fields</strong> — a <code>&lt;input type="text" name="website" /&gt;</code> styled <code>display:none</code> and labeled "leave blank." Bots fill it; humans do not. Reject the submission.</li>
+<li><strong>Robots.txt traps</strong> — disallow a bait path in <code>robots.txt</code>; treat any traffic to it as malicious (well-behaved crawlers respect the directive; abusive ones do not).</li>
+<li><strong>Tarpitting</strong> — for detected bots, do not return <code>403</code>. Slow responses progressively (e.g., <code>setTimeout(send, 5000 + jitter)</code>). The bot's throughput collapses without telegraphing detection.</li>
+<li><strong>Canary content</strong> — embed unique, watermarked records on listing pages. If they appear elsewhere, you have proof of scraping and a fingerprint of the scraper.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="cm">&lt;!-- Honeypot field. Real users never see or fill this. --&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">aria-hidden</span><span class="o">=</span><span class="s">&quot;true&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;company_url&quot;</span><span class="p">&gt;</span>Leave this field empty<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;company_url&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;company_url&quot;</span> <span class="na">tabindex</span><span class="o">=</span><span class="s">&quot;-1&quot;</span> <span class="na">autocomplete</span><span class="o">=</span><span class="s">&quot;off&quot;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</code></pre></div>
+<p>Server side: if <code>company_url</code> is non-empty, silently drop the request or route to a tarpit.</p>
+<h2 id="defending-specific-flows">Defending Specific Flows<a class="headerlink" href="#defending-specific-flows" title="Permanent link">&para;</a></h2>
+<h3 id="account-creation-oat-019">Account creation (OAT-019)<a class="headerlink" href="#account-creation-oat-019" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Verify email <strong>before</strong> the account is usable; do not just send a confirmation, gate features behind it.</li>
+<li>Check email against disposable-domain lists (refresh weekly).</li>
+<li>For phone verification, check the carrier type — VoIP numbers are abundant and cheap.</li>
+<li>Apply a per-IP, per-ASN, per-device-fingerprint signup velocity limit (e.g., 3 per hour).</li>
+<li>Reject signup if the email's local-part has high entropy and recent-creation domain.</li>
+</ul>
+<h3 id="login-oat-008">Login (OAT-008)<a class="headerlink" href="#login-oat-008" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Apply per-username <strong>and</strong> per-IP limits with separate windows.</li>
+<li>Check the submitted password against breach corpora (e.g., HaveIBeenPwned k-Anonymity API) — do not block, but require a step-up.</li>
+<li>On suspicious patterns, require MFA even for low-risk users.</li>
+<li>See the <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html">Credential Stuffing Prevention Cheat Sheet</a> for full guidance.</li>
+</ul>
+<h3 id="inventory-scalping-oat-005-oat-015">Inventory / scalping (OAT-005, OAT-015)<a class="headerlink" href="#inventory-scalping-oat-005-oat-015" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Waiting room / virtual queue</strong> for limited drops — randomized admission, tokens bound to session and identity.</li>
+<li><strong>Per-account purchase limits</strong> enforced server side, including identity proxies (same payment method, same shipping address, same device).</li>
+<li><strong>Hold time</strong> — inventory in cart must be paid for within N seconds or released; prevents cart-camping.</li>
+<li><strong>Address and payment dedup</strong> at order time using normalized hashes (street + zip, BIN + last4 + holder hash).</li>
+</ul>
+<h3 id="public-apis">Public APIs<a class="headerlink" href="#public-apis" title="Permanent link">&para;</a></h3>
+<ul>
+<li>API keys with rotating secrets, <strong>not</strong> static bearer tokens checked in to client code.</li>
+<li>Per-key quotas advertised in <code>X-RateLimit-*</code> headers so well-behaved clients self-throttle.</li>
+<li>Request signing (e.g., HMAC of method + path + timestamp + body) to prevent replay and require a stable secret.</li>
+<li>Tier APIs explicitly: a public catalogue endpoint may serve cached, slightly-delayed data; partner APIs serve realtime data with an authenticated key.</li>
+</ul>
+<h2 id="response-strategy-dont-always-block">Response Strategy: Don't Always Block<a class="headerlink" href="#response-strategy-dont-always-block" title="Permanent link">&para;</a></h2>
+<p>Hard blocks teach attackers what worked. A graduated response is more durable.</p>
 <table>
 <thead>
 <tr>
-<th>Provider/Service</th>
-<th>Condition</th>
-<th>Details</th>
+<th>Confidence</th>
+<th>Response</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>AWS CloudFront</td>
-<td>Distribution deleted while CNAME remains</td>
-<td>When a CloudFront distribution is deleted but the CNAME record still points to the <code>*.cloudfront.net</code> hostname, an attacker can create a new CloudFront distribution and add the victim's domain as an alternate domain name (CNAME). CloudFront does not always verify domain ownership when adding alternate domain names, making this exploitable. If the distribution still exists but is merely disabled, takeover is not possible.</td>
+<td>Low (suspicious)</td>
+<td>Log; serve normally; flag the session</td>
 </tr>
 <tr>
-<td>AWS Route 53 (NS Delegation)</td>
-<td>NS delegation to deleted hosted zone</td>
-<td>If a subdomain's NS records delegate to a Route 53 hosted zone that has been deleted, an attacker can create a new hosted zone for the same subdomain and may receive the same NS server assignments, effectively taking control of all DNS records for that subdomain.</td>
+<td>Medium</td>
+<td>Step-up: CAPTCHA, MFA, or PoW challenge</td>
 </tr>
 <tr>
-<td>Google Cloud Storage</td>
-<td>Bucket deleted</td>
-<td>GCS bucket names are globally unique and can be reclaimed after deletion. Google imposes rate limits on bucket creation and may temporarily reserve recently deleted names, but this is not a documented security guarantee and should not be relied upon as a protection. Remove DNS records when decommissioning GCS buckets.</td>
+<td>High</td>
+<td>Tarpit (slow responses), serve stale or randomized data</td>
 </tr>
 <tr>
-<td>Cloudflare</td>
-<td>Misconfigured SaaS setup</td>
-<td>Standard Cloudflare usage requires domain ownership verification via nameserver delegation. However, Cloudflare for SaaS (custom hostnames) configurations should use the <a href="https://developers.cloudflare.com/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/">custom hostname verification</a> feature to prevent hostname claim conflicts.</td>
+<td>Very high</td>
+<td>Soft-block specific actions (e.g., disable checkout, allow browsing)</td>
+</tr>
+<tr>
+<td>Confirmed abuse</td>
+<td>Account hold + manual review; do not delete to allow forensics</td>
 </tr>
 </tbody>
 </table>
-<h3 id="service-fingerprints-for-detection">Service Fingerprints for Detection<a class="headerlink" href="#service-fingerprints-for-detection" title="Permanent link">&para;</a></h3>
-<p>When scanning for potential subdomain takeovers, look for these distinctive error responses that indicate the backend resource no longer exists:</p>
-<table>
-<thead>
-<tr>
-<th>Service</th>
-<th>Error Response Pattern</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>AWS S3</td>
-<td><code>NoSuchBucket</code>, <code>The specified bucket does not exist</code></td>
-</tr>
-<tr>
-<td>GitHub Pages</td>
-<td><code>There isn't a GitHub Pages site here.</code></td>
-</tr>
-<tr>
-<td>Heroku</td>
-<td><code>No such app</code>, <code>herokucdn.com/error-pages/no-such-app.html</code></td>
-</tr>
-<tr>
-<td>Azure App Service</td>
-<td><code>404 Web Site not found</code> on <code>*.azurewebsites.net</code></td>
-</tr>
-<tr>
-<td>Shopify</td>
-<td><code>Sorry, this shop is currently unavailable.</code></td>
-</tr>
-<tr>
-<td>Netlify</td>
-<td><code>Not Found - Request ID:</code></td>
-</tr>
-<tr>
-<td>Fastly</td>
-<td><code>Fastly error: unknown domain:</code></td>
-</tr>
-<tr>
-<td>Zendesk</td>
-<td><code>Help Center Closed</code></td>
-</tr>
-</tbody>
-</table>
-<h2 id="prevention-strategies">Prevention Strategies<a class="headerlink" href="#prevention-strategies" title="Permanent link">&para;</a></h2>
-<h3 id="1-manage-dns-record-lifecycle-during-decommissioning">1. Manage DNS Record Lifecycle During Decommissioning<a class="headerlink" href="#1-manage-dns-record-lifecycle-during-decommissioning" title="Permanent link">&para;</a></h3>
-<p>The correct order of operations when decommissioning a service is:</p>
-<ol>
-<li><strong>Redirect or serve a maintenance page</strong> at the subdomain to avoid broken links and user confusion during the transition period</li>
-<li><strong>Update or remove the DNS record</strong> pointing to the resource</li>
-<li><strong>Wait for DNS propagation</strong> (at least the TTL duration, typically 300 to 3600 seconds)</li>
-<li><strong>Then decommission the cloud resource</strong></li>
-</ol>
-<p>The common mistake is doing these steps in reverse: deleting the cloud resource first, which creates an immediate window for takeover that persists until someone notices the dangling record.</p>
-<p>In practice, immediately deleting the DNS record can cause disruption if the subdomain is linked from other pages, bookmarked by users, or indexed by search engines. Pointing the record to an internal server that returns an HTTP redirect to the main domain or a simple maintenance page is a reasonable intermediate step that eliminates the takeover risk while preserving a functional user experience during the transition.</p>
-<h3 id="2-maintain-a-dns-inventory-linked-to-resource-ownership">2. Maintain a DNS Inventory Linked to Resource Ownership<a class="headerlink" href="#2-maintain-a-dns-inventory-linked-to-resource-ownership" title="Permanent link">&para;</a></h3>
-<p>Keep a documented mapping between DNS records and the cloud resources they point to:</p>
+<p>For scrapers specifically, returning <strong>plausible but slightly wrong data</strong> (price ±1%, fake stock counts) poisons the dataset and is often more damaging to the business case for scraping than a 403.</p>
+<h2 id="logging-and-monitoring">Logging and Monitoring<a class="headerlink" href="#logging-and-monitoring" title="Permanent link">&para;</a></h2>
+<p>Bot incidents are detected post-hoc almost as often as in real time. Log enough to investigate.</p>
+<p>For each request to a sensitive endpoint, capture:</p>
 <ul>
-<li><strong>What resource</strong> does each CNAME, A, or NS record resolve to?</li>
-<li><strong>Which team</strong> owns the resource?</li>
-<li><strong>What project or service</strong> is it part of?</li>
-<li><strong>When</strong> was it created and when is it expected to be decommissioned?</li>
-<li><strong>What is the business justification</strong> for the subdomain?</li>
+<li>Timestamp, request ID, route, status code.</li>
+<li>Client IP, ASN, country.</li>
+<li>TLS fingerprint (JA3/JA4) and HTTP/2 fingerprint.</li>
+<li>User-Agent (raw, plus parsed family/version).</li>
+<li>Authenticated identity (or session ID hash).</li>
+<li>Decision and signals (e.g., <code>bot_score=0.87</code>, <code>rule=login_velocity</code>).</li>
 </ul>
-<p>This can be as simple as a spreadsheet for small organizations or integrated into a Configuration Management Database (CMDB) for larger ones. The critical requirement is that it is consulted and updated during every infrastructure change. Infrastructure-as-Code tools like Terraform, Pulumi, or AWS CDK can also serve as a living inventory when DNS records and cloud resources are managed in the same codebase.</p>
-<h3 id="3-implement-automated-dangling-record-detection">3. Implement Automated Dangling Record Detection<a class="headerlink" href="#3-implement-automated-dangling-record-detection" title="Permanent link">&para;</a></h3>
-<p>Regularly scan DNS records to identify entries pointing to non-existent resources:</p>
+<p>Mask credentials and PII in logs (see the <a href="Logging_Cheat_Sheet.html">Logging Cheat Sheet</a>).</p>
+<p>Build dashboards for: requests-per-second by endpoint, 4xx/5xx rate, fail rate by route, signup-to-purchase funnel, login success rate. Sudden shifts (more than 3-sigma) on these are bot signals.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Minimal structured log record for an anti-bot decision.</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span><span class="o">,</span><span class="w"> </span><span class="nn">hashlib</span><span class="o">,</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">log_decision</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="n">score</span><span class="p">,</span> <span class="n">decision</span><span class="p">,</span> <span class="n">rule</span><span class="p">):</span>
+    <span class="n">record</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;ts&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">),</span>
+        <span class="s2">&quot;route&quot;</span><span class="p">:</span> <span class="n">req</span><span class="o">.</span><span class="n">path</span><span class="p">,</span>
+        <span class="s2">&quot;ip&quot;</span><span class="p">:</span> <span class="n">req</span><span class="o">.</span><span class="n">remote_addr</span><span class="p">,</span>
+        <span class="s2">&quot;asn&quot;</span><span class="p">:</span> <span class="n">req</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;X-ASN&quot;</span><span class="p">),</span>  <span class="c1"># set by your edge</span>
+        <span class="s2">&quot;ja4&quot;</span><span class="p">:</span> <span class="n">req</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;X-TLS-JA4&quot;</span><span class="p">),</span>
+        <span class="s2">&quot;ua&quot;</span><span class="p">:</span> <span class="n">req</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;User-Agent&quot;</span><span class="p">),</span>
+        <span class="s2">&quot;session&quot;</span><span class="p">:</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">cookies</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;sid&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[:</span><span class="mi">16</span><span class="p">],</span>
+        <span class="s2">&quot;score&quot;</span><span class="p">:</span> <span class="n">score</span><span class="p">,</span>
+        <span class="s2">&quot;decision&quot;</span><span class="p">:</span> <span class="n">decision</span><span class="p">,</span>   <span class="c1"># allow | challenge | tarpit | block</span>
+        <span class="s2">&quot;rule&quot;</span><span class="p">:</span> <span class="n">rule</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">record</span><span class="p">))</span>
+</code></pre></div>
+<h2 id="privacy-and-compliance">Privacy and Compliance<a class="headerlink" href="#privacy-and-compliance" title="Permanent link">&para;</a></h2>
+<p>Anti-bot defenses collect data. Treat them like any other data-processing activity.</p>
 <ul>
-<li><strong>Scheduled scans:</strong> Run automated checks daily or weekly against all DNS records to verify that targets still resolve and respond with expected content, not cloud provider error pages.</li>
-<li><strong>CI/CD integration:</strong> Add DNS validation to deployment and teardown pipelines. When a service is removed, the pipeline should verify that associated DNS records are also removed before marking the decommissioning as complete.</li>
-<li><strong>DNS change monitoring:</strong> Alert when new CNAME records are created and when target resources return errors such as HTTP 404, NXDOMAIN, or cloud provider default error pages.</li>
+<li>Document the lawful basis (legitimate interest is typical) and the categories of data collected.</li>
+<li>Apply <strong>data minimization</strong>: collect what you need to score the request and discard the rest.</li>
+<li>Set a short retention period for raw signals; aggregate for longer-term analytics.</li>
+<li>If you use a third-party anti-bot vendor, list them as a sub-processor and review their DPIA.</li>
+<li>Do not block users solely because their browser is hardened (privacy-respecting users often look "bot-like"). Prefer challenge to block.</li>
+<li>Provide an accessible alternative when challenging users with CAPTCHAs (audio CAPTCHA, support contact).</li>
 </ul>
-<p>Open-source tools for detection:</p>
+<h2 id="anti-patterns-to-avoid">Anti-Patterns to Avoid<a class="headerlink" href="#anti-patterns-to-avoid" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://github.com/punk-security/dnsReaper">dnsReaper</a>: Actively maintained subdomain takeover scanner supporting 40+ service fingerprints with signature-based detection</li>
-<li><a href="https://github.com/projectdiscovery/nuclei">nuclei</a>: General-purpose vulnerability scanner with a dedicated set of <a href="https://github.com/projectdiscovery/nuclei-templates/tree/main/dns">subdomain takeover detection templates</a></li>
-<li><a href="https://github.com/EdOverflow/can-i-take-over-xyz">can-i-take-over-xyz</a>: Community-maintained reference documenting which services are and are not vulnerable, with proof-of-concept details</li>
+<li>Blocking all traffic with non-standard User-Agents — breaks legitimate research, accessibility, and integration tools.</li>
+<li>Relying solely on a single edge vendor "magic box" — when it tunes wrong, your entire site goes down or opens up.</li>
+<li>Storing raw fingerprints indefinitely.</li>
+<li>CAPTCHAs at every login attempt — destroys conversion and trains users to solve mechanically.</li>
+<li>"Hidden" anti-bot rules with no logging — you cannot tune what you cannot see.</li>
+<li>Hard-blocking on first signal, with no graduated response — gives attackers a clean signal to iterate against.</li>
 </ul>
-<h3 id="4-use-domain-verification-where-available">4. Use Domain Verification Where Available<a class="headerlink" href="#4-use-domain-verification-where-available" title="Permanent link">&para;</a></h3>
-<p>Several cloud providers offer domain verification mechanisms that prevent unauthorized users from associating a custom domain with their account. When available, these provide a strong defense layer:</p>
+<h2 id="checklist">Checklist<a class="headerlink" href="#checklist" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Azure App Service:</strong> Supports <a href="https://learn.microsoft.com/en-us/azure/app-service/app-service-web-tutorial-custom-domain">custom domain verification via TXT records</a>. Adding a verification TXT record (e.g., <code>asuid.subdomain TXT &lt;verification-id&gt;</code>) ties the custom domain to a specific Azure subscription. Keep this TXT record in place even after decommissioning the App Service to prevent another tenant from claiming the domain.</li>
-<li><strong>Google Cloud:</strong> Many GCP services require domain verification through Google Search Console or a DNS TXT record before a custom domain can be associated. Retain verification records as long as the DNS record exists.</li>
-<li><strong>Cloudflare:</strong> Standard setup requires domain ownership via nameserver delegation. Cloudflare for SaaS configurations should use the <a href="https://developers.cloudflare.com/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/">custom hostname verification</a> feature.</li>
-<li><strong>AWS:</strong> AWS does not currently offer a universal domain verification mechanism for services like S3 or Elastic Beanstalk. For CloudFront, associating a distribution with a custom domain and keeping the distribution active (even if serving a redirect) prevents another account from claiming the domain name as an alternate CNAME.</li>
+<li>[ ] Map application endpoints to the OWASP Automated Threats (OAT) catalogue.</li>
+<li>[ ] Apply rate limits at IP, identity, and endpoint levels, using a sliding window.</li>
+<li>[ ] Layer defenses across edge, application, and business logic.</li>
+<li>[ ] Use TLS/HTTP-level fingerprints before resorting to browser fingerprinting.</li>
+<li>[ ] Replace visible CAPTCHAs with attestation tokens, invisible scoring, or PoW where possible.</li>
+<li>[ ] Add honeypot fields and tarpit responses for high-confidence detections.</li>
+<li>[ ] Verify email and phone numbers at signup; track signup velocity.</li>
+<li>[ ] Enforce per-account purchase, address, and payment-method limits on scarce inventory.</li>
+<li>[ ] Sign API requests; advertise quotas via <code>X-RateLimit-*</code> headers.</li>
+<li>[ ] Log decisions with signals; build anomaly dashboards.</li>
+<li>[ ] Mask PII and rotate raw signal storage on a short schedule.</li>
+<li>[ ] Document anti-bot processing in your privacy notice.</li>
+<li>[ ] Provide accessibility alternatives to any user-facing challenge.</li>
 </ul>
-<p>Where no domain verification is available, the DNS record itself is the only control. Removing it promptly on decommissioning is the only reliable protection.</p>
-<h3 id="5-restrict-wildcard-dns-records">5. Restrict Wildcard DNS Records<a class="headerlink" href="#5-restrict-wildcard-dns-records" title="Permanent link">&para;</a></h3>
-<p>Wildcard DNS records (<code>*.example.com</code>) are especially dangerous because they resolve for any subdomain, including those matching services that no longer exist. Any service that previously existed under the wildcard could potentially be taken over, and the organization may not even know which subdomains were in use.</p>
-<p>Avoid wildcard records unless absolutely necessary. If required:</p>
-<ul>
-<li>Scope them as narrowly as possible (e.g., <code>*.staging.example.com</code> rather than <code>*.example.com</code>)</li>
-<li>Combine with a reverse proxy or load balancer that maintains an allowlist of valid hostnames and returns an error for unrecognized ones</li>
-<li>Monitor Certificate Transparency logs for unexpected certificate issuance on subdomains matching the wildcard</li>
-</ul>
-<h3 id="6-establish-a-decommissioning-checklist">6. Establish a Decommissioning Checklist<a class="headerlink" href="#6-establish-a-decommissioning-checklist" title="Permanent link">&para;</a></h3>
-<p>Create a formal checklist that teams must follow when removing any externally facing service:</p>
-<ul>
-<li>[ ] Identify all DNS records (CNAME, A, MX, NS, TXT) associated with the service</li>
-<li>[ ] Point the DNS record to a maintenance page or redirect (if immediate removal causes user-facing disruption)</li>
-<li>[ ] Remove or update DNS records</li>
-<li>[ ] Wait for DNS propagation (at least the TTL duration)</li>
-<li>[ ] Decommission the cloud resource</li>
-<li>[ ] Revoke or let expire any SSL/TLS certificates issued for the subdomain</li>
-<li>[ ] Update the DNS inventory documentation</li>
-<li>[ ] Remove the subdomain from any OAuth redirect URI allowlists, CSP directives, or CORS configurations</li>
-<li>[ ] Verify that the subdomain no longer resolves or returns expected content</li>
-<li>[ ] Run a takeover detection scan against the subdomain to confirm it is not claimable</li>
-</ul>
-<h3 id="7-limit-the-blast-radius-with-proper-security-scoping">7. Limit the Blast Radius with Proper Security Scoping<a class="headerlink" href="#7-limit-the-blast-radius-with-proper-security-scoping" title="Permanent link">&para;</a></h3>
-<p>Even if a subdomain takeover occurs, limit the damage by properly scoping security controls:</p>
-<ul>
-<li><strong>Cookies:</strong> Do not scope session cookies to the parent domain (<code>.example.com</code>) unless necessary. Prefer setting cookies on the specific fully qualified subdomain (<code>app.example.com</code>). Use the <code>__Host-</code> cookie prefix where possible, which restricts the cookie to the exact origin.</li>
-<li><strong>Content Security Policy:</strong> Avoid using <code>*.example.com</code> in CSP directives. Explicitly list trusted subdomains. A taken-over subdomain matching a CSP wildcard allows the attacker to inject scripts or exfiltrate data without violating the policy.</li>
-<li><strong>CORS:</strong> Do not use wildcard subdomain patterns in <code>Access-Control-Allow-Origin</code> validation. Validate against an explicit allowlist of trusted origins.</li>
-<li><strong>OAuth/SSO:</strong> Do not whitelist entire subdomain patterns in redirect URI validations. Use exact-match redirect URIs. A taken-over subdomain in an OAuth redirect allowlist enables token theft.</li>
-<li><strong>Email (SPF/DKIM/DMARC):</strong> If SPF records include mechanisms that match the taken-over subdomain's IP, the attacker can send SPF-authenticated email appearing to originate from your domain.</li>
-</ul>
-<h2 id="monitoring-and-detection">Monitoring and Detection<a class="headerlink" href="#monitoring-and-detection" title="Permanent link">&para;</a></h2>
-<h3 id="continuous-dns-monitoring">Continuous DNS Monitoring<a class="headerlink" href="#continuous-dns-monitoring" title="Permanent link">&para;</a></h3>
-<p>Implement ongoing monitoring to catch dangling records before attackers do:</p>
-<ul>
-<li><strong>Compare DNS records against live resources.</strong> For every CNAME in your zone, verify the target still exists and responds with expected content rather than a cloud provider error page.</li>
-<li><strong>Monitor for service fingerprints.</strong> The error responses listed in the Service Fingerprints table above are strong indicators that a resource has been removed while the DNS record remains. Automated scanning for these patterns should run at least weekly.</li>
-<li><strong>Track DNS zone changes.</strong> Use version-controlled DNS management (e.g., Terraform, OctoDNS, or DNSControl) so all record additions and removals are reviewed, approved, and logged. This also creates an audit trail for investigating how a dangling record was introduced.</li>
-<li><strong>Monitor Certificate Transparency logs.</strong> Use services like <a href="https://crt.sh">crt.sh</a> or <a href="https://sslmate.com/certspotter/">certspotter</a> to alert on any certificate issuance for your subdomains. An unexpected certificate issued for a subdomain you don't control is a strong indicator that takeover has already occurred or is in progress.</li>
-</ul>
-<h3 id="indicators-of-compromise">Indicators of Compromise<a class="headerlink" href="#indicators-of-compromise" title="Permanent link">&para;</a></h3>
-<p>Signs that a subdomain may have already been taken over:</p>
-<ul>
-<li>Subdomain suddenly serves unexpected content, a parking page, or a different application than expected</li>
-<li>SSL/TLS certificate for the subdomain was issued to an unknown entity or organization (visible in Certificate Transparency logs)</li>
-<li>Users report phishing emails or pages appearing to come from the subdomain</li>
-<li>Web application firewall or proxy logs show the subdomain resolving to an IP address outside your known infrastructure ranges</li>
-<li>DMARC aggregate reports show email being sent from the subdomain that your organization did not originate</li>
-</ul>
-<h2 id="incident-response">Incident Response<a class="headerlink" href="#incident-response" title="Permanent link">&para;</a></h2>
-<p>If a subdomain takeover is discovered:</p>
-<ol>
-<li><strong>Remove the DNS record immediately.</strong> This is the fastest mitigation. It breaks the link between your domain and the attacker's resource. If the record cannot be removed quickly, update it to point to an IP or CNAME you control.</li>
-<li><strong>Revoke or request revocation of any certificates</strong> issued for the subdomain during the takeover period. Check Certificate Transparency logs to identify all certificates that were issued.</li>
-<li><strong>Assess the impact.</strong> Determine whether cookies scoped to the parent domain could have been stolen, whether phishing content was served and for how long, whether any OAuth or SSO flows referenced the subdomain, and whether the attacker could have received email for the subdomain (MX-based takeover).</li>
-<li><strong>Notify affected users</strong> if there is evidence that sensitive data was exposed, credentials were phished, or session cookies were intercepted.</li>
-<li><strong>Investigate the root cause.</strong> Identify the process gap that allowed the dangling record to persist and update decommissioning procedures to prevent recurrence.</li>
-<li><strong>Scan all DNS zones</strong> owned by the organization for other dangling records. The same process gap likely affects other subdomains.</li>
-<li><strong>Document the incident</strong> with a timeline, impact assessment, and corrective actions for internal review and to improve organizational response to future occurrences.</li>
-</ol>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/10-Test_for_Subdomain_Takeover">OWASP Web Security Testing Guide: Test for Subdomain Takeover (WSTG-CONFIG-10)</a></li>
-<li><a href="https://github.com/EdOverflow/can-i-take-over-xyz">can-i-take-over-xyz: Community-maintained list of vulnerable services</a></li>
-<li><a href="https://learn.microsoft.com/en-us/azure/security/fundamentals/subdomain-takeover">Microsoft: Prevent dangling DNS entries and avoid subdomain takeover</a></li>
-<li><a href="https://github.com/punk-security/dnsReaper">dnsReaper: Subdomain takeover detection tool</a></li>
-<li><a href="https://hackerone.com/hacktivity?querystring=subdomain+takeover">HackerOne Hacktivity: Subdomain takeover reports</a></li>
+<li><a href="https://owasp.org/www-project-automated-threats-to-web-applications/">OWASP Automated Threats to Web Applications (OAT)</a></li>
+<li><a href="Credential_Stuffing_Prevention_Cheat_Sheet.html">OWASP Credential Stuffing Prevention Cheat Sheet</a></li>
+<li><a href="Logging_Cheat_Sheet.html">OWASP Logging Cheat Sheet</a></li>
+<li><a href="Authentication_Cheat_Sheet.html">OWASP Authentication Cheat Sheet</a></li>
+<li><a href="Multifactor_Authentication_Cheat_Sheet.html">OWASP Multifactor Authentication Cheat Sheet</a></li>
+<li>HaveIBeenPwned — <a href="https://haveibeenpwned.com/API/v3#PwnedPasswords">Pwned Passwords API</a></li>
 </ul>
 
 
