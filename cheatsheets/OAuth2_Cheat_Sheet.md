@@ -35,11 +35,11 @@ Originally, PKCE is intended to be used solely focused on securing native apps, 
 8. If a Client sends a valid PKCE "code_challenge" parameter in the authorization request, the authorization server enforces the correct usage of "code_verifier" at the token endpoint.
 9. Authorization Servers are mitigating PKCE Downgrade Attacks by ensuring a token request containing a "code_verifier" parameter is accepted only if a "code_challenge" parameter is present in the authorization request.
 
-## Implicit Grant
+## Implicit Grant (DEPRECATED — DO NOT USE)
 
-The implicit grant is a simplified authorization code flow optimized for clients implemented in a browser using a scripting language such as JavaScript. In the implicit flow, instead of issuing the client an authorization code, the client is issued an access token directly (as the result of the resource owner authorization). The grant type is implicit, as no intermediate credentials (such as an authorization code) are issued (and later used to obtain an access token).
+The Implicit Grant (`response_type=token`) is **deprecated** by [RFC 9700 §2.1.2](https://datatracker.ietf.org/doc/html/rfc9700#section-2.1.2) and removed from OAuth 2.1. It exposes access tokens in the URL fragment, which leaks via browser history, referrer headers, and proxy/server logs, and cannot be sender-constrained. Major identity providers have either disabled it or marked it for removal.
 
-10. Clients are using the response type "code" (aka authorization code grant type) or any other response type that causes the authorization server to issue access tokens in the token response, such as the "code id_token" response type. This allows the Authorization Server to detect replay attempts by attackers and generally reduces the attack surface since access tokens are not exposed in the URLs. It also allows the Authorization Server to sender-constrain the issued tokens (e.g., using PoP mechanisms like DPoP).
+10. Clients **must** use the Authorization Code Grant with PKCE (`response_type=code`) for all client types, including SPAs and native applications. Existing applications using the Implicit Grant must migrate. The hybrid `code id_token` response type may be used only when an OpenID Connect ID Token is required at the authorization endpoint; access tokens must still be obtained via the token endpoint and never via the front channel.
 
 ## Token Replay Prevention
 

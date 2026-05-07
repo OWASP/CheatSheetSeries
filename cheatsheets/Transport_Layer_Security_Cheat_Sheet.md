@@ -20,11 +20,9 @@ The terms "SSL", "SSL/TLS" and "TLS" are frequently used interchangeably, and in
 
 ### Only Support Strong Protocols
 
-General purpose web applications should default to **TLS 1.3** (support TLS 1.2 if necessary) with all other protocols disabled.
+Web applications must default to **TLS 1.3** and may support TLS 1.2 for compatibility. **TLS 1.0 and TLS 1.1 are formally deprecated by [RFC 8996](https://datatracker.ietf.org/doc/html/rfc8996) (March 2021) and must be disabled.** They are also forbidden by [PCI DSS](https://www.pcisecuritystandards.org/documents/Migrating-from-SSL-Early-TLS-Info-Supp-v1_1.pdf), disallowed by NIST SP 800-52 Rev. 2, and removed from all mainstream browsers. SSLv2 and SSLv3 must always be disabled.
 
- In specific and uncommon situations where a web server is required to accommodate legacy clients that depend on outdated and unsecured browsers (like Internet Explorer 10), activating TLS 1.0 may be the only option. However, this approach should be exercised with caution and is generally not advised due to the security implications. Additionally, ["TLS_FALLBACK_SCSV" extension](https://tools.ietf.org/html/rfc7507) should be enabled in order to prevent downgrade attacks against newer clients.
-
-Note that PCI DSS [forbids the use of legacy protocols such as TLS 1.0](https://www.pcisecuritystandards.org/documents/Migrating-from-SSL-Early-TLS-Info-Supp-v1_1.pdf).
+If interoperability with end-of-life clients is a hard business requirement, isolate them on a dedicated endpoint with no access to sensitive data — do not weaken the primary endpoint. The ["TLS_FALLBACK_SCSV" extension](https://tools.ietf.org/html/rfc7507) should be enabled to prevent protocol downgrade attacks.
 
 ### Only Support Strong Ciphers
 
