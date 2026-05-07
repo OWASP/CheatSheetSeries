@@ -2574,6 +2574,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#cookie-name-prefixes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cookie Name Prefixes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#domain-and-path-attributes" class="md-nav__link">
     <span class="md-ellipsis">
       Domain and Path Attributes
@@ -3699,6 +3708,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#cookie-name-prefixes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cookie Name Prefixes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#domain-and-path-attributes" class="md-nav__link">
     <span class="md-ellipsis">
       Domain and Path Attributes
@@ -4259,8 +4277,17 @@
 <p>See the OWASP <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">XSS (Cross Site Scripting) Prevention Cheat Sheet</a>.</p>
 <p>See also: <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#Secure_and_HttpOnly_cookies">HttpOnly</a></p>
 <h3 id="samesite-attribute">SameSite Attribute<a class="headerlink" href="#samesite-attribute" title="Permanent link">&para;</a></h3>
-<p>SameSite defines a cookie attribute preventing browsers from sending a SameSite flagged cookie with cross-site requests. The main goal is to mitigate the risk of cross-origin information leakage, and provides some protection against cross-site request forgery attacks.</p>
+<p>The <code>SameSite</code> attribute prevents the browser from sending the cookie on cross-site requests, mitigating cross-origin leakage and providing CSRF defense. Session cookies must explicitly set <code>SameSite=Strict</code> (preferred) or <code>SameSite=Lax</code>. Never use <code>SameSite=None</code> without <code>Secure</code>, and do not rely on the browser-default value, which varies across browsers and versions.</p>
 <p>See also: <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#SameSite_cookies">SameSite</a></p>
+<h3 id="cookie-name-prefixes">Cookie Name Prefixes<a class="headerlink" href="#cookie-name-prefixes" title="Permanent link">&para;</a></h3>
+<p>Use cookie name prefixes to bind cookies to security properties at the browser level (<a href="https://datatracker.ietf.org/doc/html/draft-ietf-httpbis-rfc6265bis">RFC 6265bis §4.1.3</a>):</p>
+<ul>
+<li><code>__Host-</code> — the cookie must be set with <code>Secure</code>, must not have a <code>Domain</code> attribute, and must use <code>Path=/</code>. Prevents subdomain forgery and HTTPS downgrade attacks. <strong>Recommended for session IDs.</strong></li>
+<li><code>__Secure-</code> — the cookie must be set with <code>Secure</code>. Use only when subdomain sharing is required.</li>
+</ul>
+<p>Example:</p>
+<div class="highlight"><pre><span></span><code><span class="err">Set-Cookie: __Host-SessionID=&lt;value&gt;; Secure; HttpOnly; SameSite=Strict; Path=/</span>
+</code></pre></div>
 <h3 id="domain-and-path-attributes">Domain and Path Attributes<a class="headerlink" href="#domain-and-path-attributes" title="Permanent link">&para;</a></h3>
 <p>The <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Directives"><code>Domain</code> cookie attribute</a> instructs web browsers to only send the cookie to the specified domain and all subdomains. If the attribute is not set, by default the cookie will only be sent to the origin server. The <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Directives"><code>Path</code> cookie attribute</a> instructs web browsers to only send the cookie to the specified directory or subdirectories (or paths or resources) within the web application. If the attribute is not set, by default the cookie will only be sent for the directory (or path) of the resource requested and setting the cookie.</p>
 <p>It is recommended to use a narrow or restricted scope for these two attributes. In this way, the <code>Domain</code> attribute should not be set (restricting the cookie just to the origin server) and the <code>Path</code> attribute should be set as restrictive as possible to the web application path that makes use of the session ID.</p>
@@ -4283,6 +4310,9 @@
 <p>The Web Hypertext Application Technology Working Group (WHATWG) describes the HTML5 Web Storage APIs, <code>localStorage</code> and <code>sessionStorage</code>, as mechanisms for storing name-value pairs client-side.
 Unlike HTTP cookies, the contents of <code>localStorage</code> and <code>sessionStorage</code> are not automatically shared within requests or responses by the browser and are used for storing data client-side.</p>
 <h3 id="the-localstorage-api">The localStorage API<a class="headerlink" href="#the-localstorage-api" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><strong>WARNING — Do not store authentication tokens, session IDs, JWTs, refresh tokens, or any credential in <code>localStorage</code> or <code>sessionStorage</code>.</strong> These APIs are accessible to any JavaScript executing in the origin, so a single XSS vulnerability discloses every token. Use <code>HttpOnly; Secure; SameSite=Strict</code> cookies (preferred) or a Backend-for-Frontend (BFF) pattern. See <a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-browser-based-apps">OAuth 2.0 for Browser-Based Apps</a>.</p>
+</blockquote>
 <h4 id="scope">Scope<a class="headerlink" href="#scope" title="Permanent link">&para;</a></h4>
 <p>Data stored using the <code>localStorage</code> API is accessible by pages which are loaded from the same origin, which is defined as the scheme (<code>https://</code>), host (<code>example.com</code>), port (<code>443</code>) and domain/realm (<code>example.com</code>).
 This provides similar access to this data as would be achieved by using the <code>secure</code> flag on a cookie, meaning that data stored from <code>https</code> could not be retrieved via <code>http</code>. Due to potential concurrent access from separate windows/threads, data stored using <code>localStorage</code> may be susceptible to shared access issues (such as race-conditions) and should be considered non-locking (<a href="https://html.spec.whatwg.org/multipage/webstorage.html#the-localstorage-attribute">Web Storage API Spec</a>).</p>

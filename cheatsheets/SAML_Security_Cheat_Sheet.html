@@ -3946,8 +3946,12 @@ openssl req -x509 -new -nodes -key private.key -sha256 -days 365 -out certificat
 <li><a href="#validate-signatures">Validate Signatures</a></li>
 <li>Validate if signed by an authorized IdP</li>
 <li>Validate IDP certificates for revocation against CRL/OCSP if they are present</li>
+<li>Validate the <code>Destination</code> attribute on <code>&lt;samlp:Response&gt;</code> exactly matches the SP's expected Assertion Consumer Service (ACS) URL (<a href="https://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf">SAML Core 2.0 §3.2.2.1</a>). Reject responses that are missing <code>Destination</code> or where it does not match — this prevents cross-SP assertion replay.</li>
+<li>Validate <code>&lt;saml:Audience&gt;</code> matches the SP's EntityID</li>
 <li>Validate NotBefore and NotOnorAfter</li>
-<li>Validate Recipient attribute</li>
+<li>Validate Recipient attribute, <code>InResponseTo</code>, and <code>&lt;saml:SubjectConfirmationData&gt;</code> (<code>Recipient</code>, <code>NotOnOrAfter</code>, <code>InResponseTo</code>)</li>
+<li>Explicitly verify the signature algorithm is at least RSA-SHA-256 (or stronger). Reject SHA-1-based algorithms (<code>http://www.w3.org/2000/09/xmldsig#rsa-sha1</code>, <code>...#hmac-sha1</code>) and <code>&lt;ds:DigestMethod Algorithm="...sha1"&gt;</code>. NIST SP 800-131A Rev. 2 disallows SHA-1 in digital signatures.</li>
+<li>Verify the <code>&lt;ds:Reference URI&gt;</code> in the XML signature covers the <code>&lt;saml:Assertion&gt;</code> element being trusted. This mitigates <a href="https://arxiv.org/pdf/1401.7483v1.pdf">XML Signature Wrapping</a> attacks.</li>
 <li>Define criteria for SAML logout</li>
 <li>Exchange assertions only over secure transports like TLS</li>
 <li>Define criteria for session management</li>
