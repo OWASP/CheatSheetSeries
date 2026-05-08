@@ -2,7 +2,7 @@
 
 Before choosing an authorization pattern, you need to understand the context it must operate in. This Cheat Sheet introduces the key dimensions that characterize how policies are owned, how quickly they must take effect, and how they reach the Policy Decision Points (PDPs) that evaluate them. These dimensions directly influence which [Authorization Patterns](Authorization_Patterns_Cheat_Sheet.md) are suitable for your system — and which are not.
 
-> See also: *Cheat Sheet 5 – Authorization Data Dimensions, Distribution & Performance*
+> See also: *Authorization Data Dimensions, Distribution & Performance*
 
 ## Policy Characteristics
 
@@ -10,7 +10,6 @@ Policy characteristics define how authorization policies are authored, maintaine
 
 > **Don't confuse change latency with change frequency.**
 > Frequency describes how often policies are updated — this affects governance and authoring workflows. Latency describes how quickly an update must reach the PDPs once published. Both are independent dimensions and both influence architecture choices.
-
 
 ### Policy Ownership
 
@@ -50,11 +49,11 @@ Policy change latency requirements directly determine how policies must be deliv
 
 Policies are proactively pushed from the Policy Administration Point (PAP) to the PDP and stored locally for evaluation. This strategy suits policies that tend to have immediate to fast change latencies, requiring agile, incremental updates without disrupting service availability.
 
-**Pros**
+#### Pros
 
 - Enables dynamic policy updates without PDP redeployment, supporting high availability.
 
-**Cons**
+#### Cons
 
 - Requires robust synchronization mechanisms to deploy the correct versions of required policies to each PDP instance.
 - Demands governance controls to enforce ownership boundaries — e.g., microservice teams must only be able to update their own policies, while domain or central teams retain control over shared or organizational policies.
@@ -65,11 +64,11 @@ Policies are proactively pushed from the Policy Administration Point (PAP) to th
 
 Policies are embedded directly within the PDP (e.g., as code, or as static configuration) and cannot be updated without restarting or redeploying the PDP. Stability and operational simplicity are prioritized over agility.
 
-**Pros**
+#### Pros
 
 - Simplifies policy management, as policies are bundled with the PDP, and no external synchronization is needed.
 
-**Cons**
+#### Cons
 
 - Increases deployment overhead, as changes involve rebuilding and/or redeploying the PDP.
 - Limits scalability for needs with frequent policy adjustments.
@@ -79,21 +78,21 @@ Policies are embedded directly within the PDP (e.g., as code, or as static confi
 
 ## Operational Considerations
 
-| Dimension | Out-of-Band Delivered | Embedded |
-|---|---|---|
-| **Suitable latency** | Immediate, Fast | Delayed |
-| **Deployment overhead** | Low (no redeployment needed) | High (rebuild/redeploy per change) |
-| **Sync mechanism required** | Yes | No |
-| **Governance complexity** | Medium — ownership boundaries must be enforced at the distribution layer | Medium — deploying team implicitly controls policy activation |
-| **Scalability for frequent changes** | High | Low |
+| Dimension                            | Out-of-Band Delivered                                                    | Embedded                                                      |
+|--------------------------------------|--------------------------------------------------------------------------|---------------------------------------------------------------|
+| **Suitable latency**                 | Immediate, Fast                                                          | Delayed                                                       |
+| **Deployment overhead**              | Low (no redeployment needed)                                             | High (rebuild/redeploy per change)                            |
+| **Sync mechanism required**          | Yes                                                                      | No                                                            |
+| **Governance complexity**            | Medium — ownership boundaries must be enforced at the distribution layer | Medium — deploying team implicitly controls policy activation |
+| **Scalability for frequent changes** | High                                                                     | Low                                                           |
 
 ## Ownership × Latency × Distribution — Quick Reference
 
-| Ownership | Typical Change Latency | Recommended Distribution Strategy |
-|---|---|---|
-| Microservice Team | Immediate to Fast | Out-of-Band Delivered |
-| Domain Level | Fast | Out-of-Band Delivered |
-| Central (Org) | Fast to Delayed | Out-of-Band Delivered or Embedded |
+| Ownership         | Typical Change Latency | Recommended Distribution Strategy |
+|-------------------|------------------------|-----------------------------------|
+| Microservice Team | Immediate to Fast      | Out-of-Band Delivered             |
+| Domain Level      | Fast                   | Out-of-Band Delivered             |
+| Central (Org)     | Delayed                | Embedded                          |
 
 ## Security Considerations
 
