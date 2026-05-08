@@ -3683,17 +3683,17 @@
 </ul>
 <h3 id="6-establish-a-decommissioning-checklist">6. Establish a Decommissioning Checklist<a class="headerlink" href="#6-establish-a-decommissioning-checklist" title="Permanent link">&para;</a></h3>
 <p>Create a formal checklist that teams must follow when removing any externally facing service:</p>
-<ul>
-<li>[ ] Identify all DNS records (CNAME, A, MX, NS, TXT) associated with the service</li>
-<li>[ ] Point the DNS record to a maintenance page or redirect (if immediate removal causes user-facing disruption)</li>
-<li>[ ] Remove or update DNS records</li>
-<li>[ ] Wait for DNS propagation (at least the TTL duration)</li>
-<li>[ ] Decommission the cloud resource</li>
-<li>[ ] Revoke or let expire any SSL/TLS certificates issued for the subdomain</li>
-<li>[ ] Update the DNS inventory documentation</li>
-<li>[ ] Remove the subdomain from any OAuth redirect URI allowlists, CSP directives, or CORS configurations</li>
-<li>[ ] Verify that the subdomain no longer resolves or returns expected content</li>
-<li>[ ] Run a takeover detection scan against the subdomain to confirm it is not claimable</li>
+<ul class="task-list">
+<li class="task-list-item"><input type="checkbox" disabled/> Identify all DNS records (CNAME, A, MX, NS, TXT) associated with the service</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Point the DNS record to a maintenance page or redirect (if immediate removal causes user-facing disruption)</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Remove or update DNS records</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Wait for DNS propagation (at least the TTL duration)</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Decommission the cloud resource</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Revoke or let expire any SSL/TLS certificates issued for the subdomain</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Update the DNS inventory documentation</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Remove the subdomain from any OAuth redirect URI allowlists, CSP directives, or CORS configurations</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Verify that the subdomain no longer resolves or returns expected content</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Run a takeover detection scan against the subdomain to confirm it is not claimable</li>
 </ul>
 <h3 id="7-limit-the-blast-radius-with-proper-security-scoping">7. Limit the Blast Radius with Proper Security Scoping<a class="headerlink" href="#7-limit-the-blast-radius-with-proper-security-scoping" title="Permanent link">&para;</a></h3>
 <p>Even if a subdomain takeover occurs, limit the damage by properly scoping security controls:</p>

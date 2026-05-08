@@ -3993,77 +3993,77 @@
 </ul>
 <h2 id="review-checklists">Review Checklists<a class="headerlink" href="#review-checklists" title="Permanent link">&para;</a></h2>
 <h3 id="input-validation">Input Validation<a class="headerlink" href="#input-validation" title="Permanent link">&para;</a></h3>
-<ul>
-<li>[ ] <strong>Server-side validation</strong>: All inputs validated on server regardless of client-side checks</li>
-<li>[ ] <strong>Allowlist validation</strong>: Uses allowlists rather than blocklists for input validation</li>
-<li>[ ] <strong>Output encoding</strong>: Context-appropriate encoding (HTML, JavaScript, CSS, URL, SQL)</li>
-<li>[ ] <strong>File upload security</strong>: Content-based validation, size limits, safe storage</li>
-<li>[ ] <strong>SQL injection prevention</strong>: Parameterized queries or stored procedures used</li>
-<li>[ ] <strong>Length limits</strong>: Input length restrictions enforced</li>
-<li>[ ] <strong>Character handling</strong>: Special characters and Unicode properly processed</li>
-<li>[ ] <strong>Error messages</strong>: No sensitive information disclosed in error responses</li>
+<ul class="task-list">
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Server-side validation</strong>: All inputs validated on server regardless of client-side checks</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Allowlist validation</strong>: Uses allowlists rather than blocklists for input validation</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Output encoding</strong>: Context-appropriate encoding (HTML, JavaScript, CSS, URL, SQL)</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>File upload security</strong>: Content-based validation, size limits, safe storage</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>SQL injection prevention</strong>: Parameterized queries or stored procedures used</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Length limits</strong>: Input length restrictions enforced</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Character handling</strong>: Special characters and Unicode properly processed</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Error messages</strong>: No sensitive information disclosed in error responses</li>
 </ul>
 <h3 id="authentication-session-management">Authentication &amp; Session Management<a class="headerlink" href="#authentication-session-management" title="Permanent link">&para;</a></h3>
-<ul>
-<li>[ ] <strong>Password security</strong>: Strong hashing algorithms and salt usage (for more information, see <a href="Password_Storage_Cheat_Sheet.html">Password Storage Cheat Sheet</a>)</li>
-<li>[ ] <strong>Account protection</strong>: Lockout mechanisms with appropriate thresholds</li>
-<li>[ ] <strong>Session management</strong>: Secure token generation (≥128 bits entropy)</li>
-<li>[ ] <strong>Session lifecycle</strong>: Proper invalidation on logout/timeout</li>
-<li>[ ] <strong>Re-authentication</strong>: Required for sensitive operations</li>
-<li>[ ] <strong>Multi-factor authentication</strong>: Implementation for high-risk accounts (for more information, see <a href="Multifactor_Authentication_Cheat_Sheet.html">Multifactor Authentication Cheat Sheet</a>)</li>
-<li>[ ] <strong>Password reset</strong>: Secure, time-limited reset mechanisms (for more information, see <a href="Forgot_Password_Cheat_Sheet.html">Forgot Password Cheat Sheet</a>)</li>
-<li>[ ] <strong>Session security</strong>: HttpOnly, Secure, SameSite cookie attributes</li>
-<li>[ ] <strong>Concurrent sessions</strong>: Appropriate limits and monitoring</li>
+<ul class="task-list">
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Password security</strong>: Strong hashing algorithms and salt usage (for more information, see <a href="Password_Storage_Cheat_Sheet.html">Password Storage Cheat Sheet</a>)</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Account protection</strong>: Lockout mechanisms with appropriate thresholds</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Session management</strong>: Secure token generation (≥128 bits entropy)</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Session lifecycle</strong>: Proper invalidation on logout/timeout</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Re-authentication</strong>: Required for sensitive operations</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Multi-factor authentication</strong>: Implementation for high-risk accounts (for more information, see <a href="Multifactor_Authentication_Cheat_Sheet.html">Multifactor Authentication Cheat Sheet</a>)</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Password reset</strong>: Secure, time-limited reset mechanisms (for more information, see <a href="Forgot_Password_Cheat_Sheet.html">Forgot Password Cheat Sheet</a>)</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Session security</strong>: HttpOnly, Secure, SameSite cookie attributes</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Concurrent sessions</strong>: Appropriate limits and monitoring</li>
 </ul>
 <h3 id="authorization">Authorization<a class="headerlink" href="#authorization" title="Permanent link">&para;</a></h3>
-<ul>
-<li>[ ] <strong>Server-side enforcement</strong>: All access controls enforced server-side</li>
-<li>[ ] <strong>Fail-safe defaults</strong>: Default deny access policy</li>
-<li>[ ] <strong>IDOR prevention</strong>: Proper authorization for resource access</li>
-<li>[ ] <strong>Function-level controls</strong>: Administrative functions properly protected</li>
-<li>[ ] <strong>Role validation</strong>: Role assignments cannot be manipulated</li>
-<li>[ ] <strong>Privilege escalation</strong>: Horizontal and vertical escalation prevented</li>
-<li>[ ] <strong>Centralized decisions</strong>: Access control logic centralized</li>
-<li>[ ] <strong>Post-authentication checks</strong>: Authorization verified after authentication</li>
+<ul class="task-list">
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Server-side enforcement</strong>: All access controls enforced server-side</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Fail-safe defaults</strong>: Default deny access policy</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>IDOR prevention</strong>: Proper authorization for resource access</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Function-level controls</strong>: Administrative functions properly protected</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Role validation</strong>: Role assignments cannot be manipulated</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Privilege escalation</strong>: Horizontal and vertical escalation prevented</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Centralized decisions</strong>: Access control logic centralized</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Post-authentication checks</strong>: Authorization verified after authentication</li>
 </ul>
 <h3 id="cryptography">Cryptography<a class="headerlink" href="#cryptography" title="Permanent link">&para;</a></h3>
-<ul>
-<li>[ ] <strong>Strong algorithms</strong>: Modern algorithms (AES-256, RSA-2048+, ECDSA P-256+)</li>
-<li>[ ] <strong>Key management</strong>: Proper key generation, storage, and rotation (for more information, see <a href="Key_Management_Cheat_Sheet.html">Key Management Cheat Sheet</a>)</li>
-<li>[ ] <strong>Certificate validation</strong>: Proper validation including hostname verification</li>
-<li>[ ] <strong>Random generation</strong>: Cryptographically secure random number generation</li>
-<li>[ ] <strong>Data protection</strong>: Encryption at rest and in transit</li>
-<li>[ ] <strong>IV/Nonce handling</strong>: Unique and unpredictable initialization vectors</li>
-<li>[ ] <strong>Library maintenance</strong>: Up-to-date cryptographic libraries</li>
-<li>[ ] <strong>Side-channel protection</strong>: Consideration of timing and other side-channel attacks</li>
+<ul class="task-list">
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Strong algorithms</strong>: Modern algorithms (AES-256, RSA-2048+, ECDSA P-256+)</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Key management</strong>: Proper key generation, storage, and rotation (for more information, see <a href="Key_Management_Cheat_Sheet.html">Key Management Cheat Sheet</a>)</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Certificate validation</strong>: Proper validation including hostname verification</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Random generation</strong>: Cryptographically secure random number generation</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Data protection</strong>: Encryption at rest and in transit</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>IV/Nonce handling</strong>: Unique and unpredictable initialization vectors</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Library maintenance</strong>: Up-to-date cryptographic libraries</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Side-channel protection</strong>: Consideration of timing and other side-channel attacks</li>
 </ul>
 <h3 id="business-logic">Business Logic<a class="headerlink" href="#business-logic" title="Permanent link">&para;</a></h3>
-<ul>
-<li>[ ] <strong>Workflow integrity</strong>: Proper state validation in multi-step processes</li>
-<li>[ ] <strong>Race condition prevention</strong>: Synchronization in concurrent operations</li>
-<li>[ ] <strong>Transaction atomicity</strong>: Proper rollback and consistency mechanisms</li>
-<li>[ ] <strong>Resource limits</strong>: Rate limiting and resource quotas implemented</li>
-<li>[ ] <strong>Business rule enforcement</strong>: Cannot bypass rules through direct API access</li>
+<ul class="task-list">
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Workflow integrity</strong>: Proper state validation in multi-step processes</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Race condition prevention</strong>: Synchronization in concurrent operations</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Transaction atomicity</strong>: Proper rollback and consistency mechanisms</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Resource limits</strong>: Rate limiting and resource quotas implemented</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Business rule enforcement</strong>: Cannot bypass rules through direct API access</li>
 </ul>
 <h3 id="configuration-deployment">Configuration &amp; Deployment<a class="headerlink" href="#configuration-deployment" title="Permanent link">&para;</a></h3>
-<ul>
-<li>[ ] <strong>Secure defaults</strong>: Security-focused default configurations</li>
-<li>[ ] <strong>Environment separation</strong>: Proper isolation between environments</li>
-<li>[ ] <strong>Secrets management</strong>: No hardcoded secrets, proper secret storage and rotation (for more information, see <a href="Secrets_Management_Cheat_Sheet.html">Secrets Management Cheat Sheet</a>)</li>
-<li>[ ] <strong>Error handling</strong>: Graceful error handling without information disclosure (for more information, see <a href="Error_Handling_Cheat_Sheet.html">Error Handling Cheat Sheet</a>)</li>
-<li>[ ] <strong>Logging security</strong>: Sensitive data not logged, proper log protection (for more information, see <a href="Logging_Cheat_Sheet.html">Logging Cheat Sheet</a>)</li>
-<li>[ ] <strong>Security headers</strong>: Appropriate HTTP security headers configured (for more information, see <a href="HTTP_Headers_Cheat_Sheet.html">HTTP Headers Cheat Sheet</a>)</li>
-<li>[ ] <strong>TLS configuration</strong>: Strong cipher suites and protocol versions (for more information, see <a href="Transport_Layer_Security_Cheat_Sheet.html">Transport Layer Security Cheat Sheet</a>)</li>
-<li>[ ] <strong>Dependency management</strong>: Up-to-date libraries without known vulnerabilities (for more information, see <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html">Vulnerable Dependency Management Cheat Sheet</a>)</li>
+<ul class="task-list">
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Secure defaults</strong>: Security-focused default configurations</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Environment separation</strong>: Proper isolation between environments</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Secrets management</strong>: No hardcoded secrets, proper secret storage and rotation (for more information, see <a href="Secrets_Management_Cheat_Sheet.html">Secrets Management Cheat Sheet</a>)</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Error handling</strong>: Graceful error handling without information disclosure (for more information, see <a href="Error_Handling_Cheat_Sheet.html">Error Handling Cheat Sheet</a>)</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Logging security</strong>: Sensitive data not logged, proper log protection (for more information, see <a href="Logging_Cheat_Sheet.html">Logging Cheat Sheet</a>)</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Security headers</strong>: Appropriate HTTP security headers configured (for more information, see <a href="HTTP_Headers_Cheat_Sheet.html">HTTP Headers Cheat Sheet</a>)</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>TLS configuration</strong>: Strong cipher suites and protocol versions (for more information, see <a href="Transport_Layer_Security_Cheat_Sheet.html">Transport Layer Security Cheat Sheet</a>)</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Dependency management</strong>: Up-to-date libraries without known vulnerabilities (for more information, see <a href="Vulnerable_Dependency_Management_Cheat_Sheet.html">Vulnerable Dependency Management Cheat Sheet</a>)</li>
 </ul>
 <h3 id="security-monitoring">Security Monitoring<a class="headerlink" href="#security-monitoring" title="Permanent link">&para;</a></h3>
-<ul>
-<li>[ ] <strong>Security events</strong>: Authentication failures, authorization violations logged</li>
-<li>[ ] <strong>Anomaly detection</strong>: Unusual patterns and behaviors monitored</li>
-<li>[ ] <strong>Audit trails</strong>: Complete audit logs for sensitive operations</li>
-<li>[ ] <strong>Real-time alerts</strong>: Critical security events trigger immediate notifications</li>
-<li>[ ] <strong>Log integrity</strong>: Logs protected from tampering and unauthorized access</li>
-<li>[ ] <strong>Incident response</strong>: Clear procedures for security incident handling</li>
+<ul class="task-list">
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Security events</strong>: Authentication failures, authorization violations logged</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Anomaly detection</strong>: Unusual patterns and behaviors monitored</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Audit trails</strong>: Complete audit logs for sensitive operations</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Real-time alerts</strong>: Critical security events trigger immediate notifications</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Log integrity</strong>: Logs protected from tampering and unauthorized access</li>
+<li class="task-list-item"><input type="checkbox" disabled/> <strong>Incident response</strong>: Clear procedures for security incident handling</li>
 </ul>
 <h2 id="tools-and-techniques">Tools and Techniques<a class="headerlink" href="#tools-and-techniques" title="Permanent link">&para;</a></h2>
 <h3 id="code-editors">Code Editors<a class="headerlink" href="#code-editors" title="Permanent link">&para;</a></h3>
