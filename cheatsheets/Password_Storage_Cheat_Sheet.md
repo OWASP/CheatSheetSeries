@@ -167,9 +167,9 @@ The PBKDF2 algorithm requires that you select an internal hashing algorithm such
 
 The work factor for PBKDF2 is implemented through an iteration count, which should set differently based on the internal hashing algorithm used.
 
-- PBKDF2-HMAC-SHA1: 1,400,000 iterations
-- PBKDF2-HMAC-SHA256: 600,000 iterations
+- PBKDF2-HMAC-SHA256: 600,000 iterations (recommended)
 - PBKDF2-HMAC-SHA512: 220,000 iterations
+- PBKDF2-HMAC-SHA1: 1,400,000 iterations — **legacy only**, do not select for new systems. NIST SP 800-131A Rev. 2 disallows SHA-1 for new use after 2030.
 
 ### Parallel PBKDF2
 

@@ -1024,7 +1024,8 @@ This section contains guidance for specific topics in .NET.
 
 - Lock down config files.
     - Remove all aspects of configuration that are not in use.
-    - Encrypt sensitive parts of the `web.config` using `aspnet_regiis -pe` ([command line help](https://docs.microsoft.com/en-us/previous-versions/dotnet/netframework-2.0/k6h9cz8h(v=vs.80))).
+    - For modern .NET (Core / 6+ / 8+): do not store secrets in source-controlled config files. Use [User Secrets](https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets) for development and a managed secret store (Azure Key Vault, AWS Secrets Manager, HashiCorp Vault) accessed via Managed Identity / Workload Identity for production.
+    - For legacy .NET Framework / ASP.NET Web Forms only: encrypt sensitive `web.config` sections using `aspnet_regiis -pe` ([command line help](https://docs.microsoft.com/en-us/previous-versions/dotnet/netframework-2.0/k6h9cz8h(v=vs.80))).
 - For ClickOnce applications, the .NET Framework should be upgraded to use the latest version to ensure support of TLS 1.2 or later.
 
 ### Data Access
