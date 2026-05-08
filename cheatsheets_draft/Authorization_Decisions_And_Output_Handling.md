@@ -56,13 +56,13 @@ The PEP retrieves all potentially relevant data from a data source and checks ea
 
 ![PDP as Filter](../assets/PDP_as_filter.svg)
 
-**Pros**
+#### Pros
 
 - Simple to implement.
 - Works with any PDP type.
 - Easy to debug and monitor.
 
-**Cons**
+#### Cons
 
 - High latency and poor scalability for large candidate sets due to repeated PDP calls.
 - Increases resource consumption by retrieving more data than needed.
@@ -78,14 +78,14 @@ The PEP makes a single request to the PDP, and the PDP returns the complete set 
 
 ![Authorized Data Set](../assets/Authorized_data_set.svg)
 
-**Pros**
+#### Pros
 
 - No candidate set needs to be retrieved in advance.
 - Reduces round-trips by returning all results at once.
 - Simplifies PEP logic — the PDP handles the complexity of determining the authorized set.
 - Well-suited for ReBAC or NGAC PDPs that can leverage internal graph data to compute permitted resources.
 
-**Cons**
+#### Cons
 
 - Externalizing the PEP to e.g., an external proxy is only feasible for low to medium cardinality output data sets.
 - Might complicate error handling and monitoring of data access.
@@ -101,7 +101,7 @@ The PEP calls the PDP, and the PDP returns a filter expression — such as a que
 
 ![Authorization Filter](../assets/Authorization_filter.svg)
 
-**Pros**
+#### Pros
 
 - No candidate set needs to be retrieved in advance.
 - Highly efficient for large datasets — filtering happens at the data source.
@@ -109,7 +109,7 @@ The PEP calls the PDP, and the PDP returns a filter expression — such as a que
 - Reduces PDP load.
 - Enables flexible PEP placement — as part of the service or as an external proxy.
 
-**Cons**
+#### Cons
 
 - Not supported by every PDP (ReBAC und NGAC PDPs do not support that at all).
 - Requires the PEP or data access layer to apply the returned filter correctly.
@@ -119,13 +119,13 @@ The PEP calls the PDP, and the PDP returns a filter expression — such as a que
 
 ## Interaction & Output Handling — Quick Reference
 
-| Scenario | Common Approach                                                           |
-|---|---------------------------------------------------------------------------|
-| Single access check | Single Decision Request                                                   |
-| Multiple actions for one object (e.g. render UI controls) | Batch Request |
-| One action across a small, known candidate set | PDP as Filter                                            |
-| Authorized set must be derived — low/medium cardinality | Authorization Filter or Authorized Data Set                               |
-| Authorized set must be derived — high cardinality | Authorization Filter or paginated Authorized Data Set                     |
+| Scenario                                                  | Common Approach                                       |
+|-----------------------------------------------------------|-------------------------------------------------------|
+| Single access check                                       | Single Decision Request                               |
+| Multiple actions for one object (e.g. render UI controls) | Batch Request                                         |
+| One action across a small, known candidate set            | PDP as Filter                                         |
+| Authorized set must be derived — low/medium cardinality   | Authorization Filter or Authorized Data Set           |
+| Authorized set must be derived — high cardinality         | Authorization Filter or paginated Authorized Data Set |
 
 ## Performance Considerations
 
@@ -147,16 +147,16 @@ The following factors are most relevant when evaluating integration and output h
 
 ## Performance Quick Reference
 
-| Design Choice                                | Performance Impact |
-|----------------------------------------------|---|
-| Batch Request                                | Reduces round-trips; increases payload size |
-| PDP as Filter                                | Poor scalability for large candidate sets; repeated PDP calls multiply integration overhead |
-| PDP as Filter with batching                  | Reduces round-trips; still retrieves more data than needed |
-| Authorized Data Set (low/medium cardinality) | Efficient; single round-trip |
-| Authorized Data Set (high cardinality)       | Requires pagination or streaming; risks large response payloads |
-| Authorization Filter                         | Usually best for large queryable datasets; shifts cost to data source |
-| Remote PDP                                   | Adds network and serialization overhead per call |
-| In-process/Sidecar PDP                       | Reduces integration overhead; increases local CPU/memory pressure |
+| Design Choice                                | Performance Impact                                                                                                  |
+|----------------------------------------------|---------------------------------------------------------------------------------------------------------------------|
+| Batch Request                                | Reduces round-trips; increases payload size                                                                         |
+| PDP as Filter                                | Poor scalability for large candidate sets; repeated PDP calls multiply integration overhead                         |
+| PDP as Filter with batching                  | Reduces round-trips; still retrieves more data than needed                                                          |
+| Authorized Data Set (low/medium cardinality) | Efficient; single round-trip                                                                                        |
+| Authorized Data Set (high cardinality)       | Requires pagination or streaming; risks large response payloads                                                     |
+| Authorization Filter                         | Usually best for large queryable datasets; shifts cost to data source                                               |
+| Remote PDP                                   | Adds network and serialization overhead per call                                                                    |
+| In-process/Sidecar PDP                       | Reduces integration overhead; increases local CPU/memory pressure                                                   |
 | Decision caching                             | Reduces latency; may produce stale decisions if invalidation is not aligned with freshness and latency requirements |
-| Fallback: fail-open                          | Improves availability; weakens security posture |
-| Fallback: fail-closed                        | Preserves security posture; may degrade availability |
+| Fallback: fail-open                          | Improves availability; weakens security posture                                                                     |
+| Fallback: fail-closed                        | Preserves security posture; may degrade availability                                                                |
