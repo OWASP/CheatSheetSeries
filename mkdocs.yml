@@ -63,6 +63,7 @@ markdown_extensions:
   - pymdownx.highlight
   - pymdownx.superfences # Required by Pygments
   - pymdownx.inlinehilite
+  - pymdownx.tasklist
   - pymdownx.emoji:
       emoji_index: !!python/name:pymdownx.emoji.twemoji
       emoji_generator: !!python/name:pymdownx.emoji.to_svg
