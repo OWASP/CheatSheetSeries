@@ -4,8 +4,8 @@
   "description": "OWASP CSS Project",
   "main": "index.js",
   "devDependencies": {
-    "markdownlint-cli": "^0.45.0",
-    "textlint": "^14.8.4",
+    "markdownlint-cli": "^0.48.0",
+    "textlint": "^15.6.1",
     "textlint-filter-rule-comments": "^1.2.2",
     "textlint-rule-terminology": "^5.2.12"
   },
