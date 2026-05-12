@@ -38,7 +38,7 @@ jobs:
         echo ::set-output name=links::**Following links are broken:** %0A$links
     - name: Send comment to PR with broken links
       if: failure() && github.event_name == 'pull_request'
-      uses: thollander/actions-comment-pull-request@main
+      uses: thollander/actions-comment-pull-request@24bffb9b452ba05a4f3f77933840a6a841d1b32b # v3.0.1
       with:
         message: ${{ steps.brokenlinks.outputs.links }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
