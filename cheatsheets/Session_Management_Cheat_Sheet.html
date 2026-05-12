@@ -4311,7 +4311,8 @@
 Unlike HTTP cookies, the contents of <code>localStorage</code> and <code>sessionStorage</code> are not automatically shared within requests or responses by the browser and are used for storing data client-side.</p>
 <h3 id="the-localstorage-api">The localStorage API<a class="headerlink" href="#the-localstorage-api" title="Permanent link">&para;</a></h3>
 <blockquote>
-<p><strong>WARNING — Do not store authentication tokens, session IDs, JWTs, refresh tokens, or any credential in <code>localStorage</code> or <code>sessionStorage</code>.</strong> These APIs are accessible to any JavaScript executing in the origin, so a single XSS vulnerability discloses every token. Use <code>HttpOnly; Secure; SameSite=Strict</code> cookies (preferred) or a Backend-for-Frontend (BFF) pattern. See <a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-browser-based-apps">OAuth 2.0 for Browser-Based Apps</a>.</p>
+<p>[!WARNING]
+Do not store authentication tokens, session IDs, JWTs, refresh tokens, or any credential in <code>localStorage</code> or <code>sessionStorage</code>. These APIs are accessible to any JavaScript executing in the origin, so a single XSS vulnerability discloses every token. Use <code>HttpOnly; Secure; SameSite=Strict</code> cookies (preferred) or a Backend-for-Frontend (BFF) pattern. See <a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-browser-based-apps">OAuth 2.0 for Browser-Based Apps</a>.</p>
 </blockquote>
 <h4 id="scope">Scope<a class="headerlink" href="#scope" title="Permanent link">&para;</a></h4>
 <p>Data stored using the <code>localStorage</code> API is accessible by pages which are loaded from the same origin, which is defined as the scheme (<code>https://</code>), host (<code>example.com</code>), port (<code>443</code>) and domain/realm (<code>example.com</code>).

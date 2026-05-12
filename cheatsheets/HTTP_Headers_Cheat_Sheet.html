@@ -1880,11 +1880,11 @@
           <li class="md-nav__item">
   <a href="#public-key-pins-hpkp" class="md-nav__link">
     <span class="md-ellipsis">
-      Public-Key-Pins (HPKP)
+      Public-Key-Pins (HPKP) ❌
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Public-Key-Pins (HPKP)">
+    <nav class="md-nav" aria-label="Public-Key-Pins (HPKP) ❌">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -4223,11 +4223,11 @@
           <li class="md-nav__item">
   <a href="#public-key-pins-hpkp" class="md-nav__link">
     <span class="md-ellipsis">
-      Public-Key-Pins (HPKP)
+      Public-Key-Pins (HPKP) ❌
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Public-Key-Pins (HPKP)">
+    <nav class="md-nav" aria-label="Public-Key-Pins (HPKP) ❌">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -4616,10 +4616,10 @@ If you do not control links on your website, you might want to set <code>off</co
 <ul>
 <li><em>NOTE</em>: Do not rely on this functionality for anything production sensitive: it is not standard or fully supported and implementation may vary among browsers.</li>
 </ul>
-<h3 id="public-key-pins-hpkp">Public-Key-Pins (HPKP)<a class="headerlink" href="#public-key-pins-hpkp" title="Permanent link">&para;</a></h3>
-<p>The HTTP <code>Public-Key-Pins</code> response header is used to associate a specific cryptographic public key with a certain web server to decrease the risk of MITM attacks with forged certificates.</p>
+<h3 id="public-key-pins-hpkp">Public-Key-Pins (HPKP) ❌<a class="headerlink" href="#public-key-pins-hpkp" title="Permanent link">&para;</a></h3>
+<p>The HTTP <code>Public-Key-Pins</code> response header was used to associate a specific cryptographic public key with a web server to mitigate MITM attacks with forged certificates. It was removed from Chromium in 2018 and is unsupported by all modern browsers.</p>
 <h4 id="recommendation_22">Recommendation<a class="headerlink" href="#recommendation_22" title="Permanent link">&para;</a></h4>
-<p>This header is deprecated and should not be used anymore.</p>
+<p>Do not use. Remove any <code>Public-Key-Pins</code> or <code>Public-Key-Pins-Report-Only</code> headers from production. Rely on Certificate Transparency (CT) and CAA DNS records, which provide superior compromise detection without the operational brittleness of pinning.</p>
 <h3 id="secure-file-download-headers">Secure File Download Headers<a class="headerlink" href="#secure-file-download-headers" title="Permanent link">&para;</a></h3>
 <p>When serving user-provided files, proper HTTP headers should be used to prevent unintended execution in the browser.</p>
 <ul>

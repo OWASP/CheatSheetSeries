@@ -4846,7 +4846,11 @@
 <li>The use of smartcards requires backend PKIs.</li>
 </ul>
 <h3 id="sms-messages-and-phone-calls">SMS Messages and Phone Calls<a class="headerlink" href="#sms-messages-and-phone-calls" title="Permanent link">&para;</a></h3>
-<p>SMS messages or phone calls can be used to provide users with a single-use code that they must submit as an additional factor. Due to the risks posed by these methods, they should not be used to protect applications that hold Personally Identifiable Information (PII) or where there is financial risk. e.g. healthcare and banking. <a href="https://pages.nist.gov/800-63-3/sp800-63b.html">NIST SP 800-63</a> does not allow these factors for applications containing PII.</p>
+<blockquote>
+<p>[!WARNING]
+NIST SP 800-63B-4 designates SMS and PSTN-delivered codes as a <em>restricted</em> authenticator because of SS7 interception, SIM-swap, and number-porting attacks. Do not use SMS for high-value or PII-handling applications. Where it is the only available factor, document the risk acceptance, enforce per-account rate limits, monitor for SIM-swap signals, and plan migration to TOTP, push notifications, or WebAuthn/FIDO2.</p>
+</blockquote>
+<p>SMS messages or phone calls can be used to provide users with a single-use code that they must submit as an additional factor. Due to the risks posed by these methods, they should not be used to protect applications that hold Personally Identifiable Information (PII) or where there is financial risk. e.g. healthcare and banking. <a href="https://pages.nist.gov/800-63-3/sp800-63b.html">NIST SP 800-63B</a> classifies these as restricted authenticators and discourages their use for applications containing PII.</p>
 <h4 id="pros_7">Pros<a class="headerlink" href="#pros_7" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Relatively simple to implement.</li>

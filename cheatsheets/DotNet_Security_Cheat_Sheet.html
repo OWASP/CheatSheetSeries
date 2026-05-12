@@ -4799,7 +4799,12 @@ go to <a href="http://github.com/johnstaveley/SecurityEssentials/">Security Esse
 <ul>
 <li>Lock down config files.<ul>
 <li>Remove all aspects of configuration that are not in use.</li>
-<li>Encrypt sensitive parts of the <code>web.config</code> using <code>aspnet_regiis -pe</code> (<a href="https://docs.microsoft.com/en-us/previous-versions/dotnet/netframework-2.0/k6h9cz8h(v=vs.80)">command line help</a>).</li>
+<li><strong>Do not store secrets in source-controlled config files (<code>web.config</code>, <code>appsettings.json</code>).</strong> Keep secrets out of the configuration file entirely.<ul>
+<li>Modern .NET (Core / 6+ / 8+): use <a href="https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets">User Secrets</a> for development and a managed secret store (Azure Key Vault, AWS Secrets Manager, HashiCorp Vault) accessed via Managed Identity / Workload Identity for production.</li>
+<li>Legacy .NET Framework (4.7.1+): use <a href="https://learn.microsoft.com/en-us/aspnet/config-builder">Configuration Builders</a> (e.g. <code>Microsoft.Configuration.ConfigurationBuilders.Azure</code>, <code>...Environment</code>) to inject secrets at runtime from a secret store or environment variables, so they never appear in <code>web.config</code>.</li>
+<li>Only as a last resort — for legacy applications that cannot be modified — encrypt sensitive <code>web.config</code> sections using <code>aspnet_regiis -pe</code> (<a href="https://docs.microsoft.com/en-us/previous-versions/dotnet/netframework-2.0/k6h9cz8h(v=vs.80)">command line help</a>). Note that this only protects the file at rest on the server; the application still loads the plaintext into memory.</li>
+</ul>
+</li>
 </ul>
 </li>
 <li>For ClickOnce applications, the .NET Framework should be upgraded to use the latest version to ensure support of TLS 1.2 or later.</li>
