@@ -14,13 +14,13 @@ jobs:
       WORKFLOW_GOOGLE_ANALYTICS_KEY: ${{ secrets.GOOGLE_ANALYTICS_KEY }}
     steps:
     - name: Setup Action
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
     - name: Setup Node
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v6
       with:
         node-version: 20.x
     - name: Setup Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: '3.x'
     - name: Install system dependencies for lxml
@@ -36,7 +36,7 @@ jobs:
     - name: Test bundle
       run: zip -T bundle.zip
     - name: Upload bundle as artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: Bundle
         path: bundle.zip
@@ -48,7 +48,7 @@ jobs:
       CI: true
     steps:
     - name: Setup Action
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         fetch-depth: 0 # fetch all branches
     - name: Install dependencies
@@ -60,7 +60,7 @@ jobs:
         shopt -s extglob
         rm -rdfv !("CNAME"|"robots.txt"|"_config.yml")
     - name: Download new build from artifact
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v8
       with:
         name: Bundle
     - name: Display structure of downloaded files
