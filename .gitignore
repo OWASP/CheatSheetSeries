@@ -9,7 +9,6 @@ site/
 generated/
 .DS_Store
 news.xml
-package-lock.json
 yarn.lock
 venv
 # Claude Code
