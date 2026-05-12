@@ -1,0 +1,63 @@
+name: Citation Density Check
+
+on:
+  pull_request:
+    branches:
+      - master
+
+permissions:
+  contents: read
+
+jobs:
+  citations:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Verify new H2 sections include at least one citation
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+
+          mapfile -t files < <(git diff --name-only "$BASE_SHA" "$HEAD_SHA" \
+            | grep -E '^cheatsheets/.+\.md$' || true)
+
+          if [ "${#files[@]}" -eq 0 ]; then
+            echo "No published cheat sheets touched; skipping citation check."
+            exit 0
+          fi
+
+          fail=0
+
+          for f in "${files[@]}"; do
+            [ -f "$f" ] || continue
+
+            mapfile -t added_h2_lines < <(git diff -U0 "$BASE_SHA" "$HEAD_SHA" -- "$f" \
+              | grep -E '^\+## ' | sed 's/^+//' || true)
+
+            [ "${#added_h2_lines[@]}" -eq 0 ] && continue
+
+            for heading in "${added_h2_lines[@]}"; do
+              start=$(grep -nFx "$heading" "$f" | head -1 | cut -d: -f1 || true)
+              [ -z "$start" ] && continue
+
+              next=$(awk -v s="$start" 'NR>s && /^## / {print NR; exit}' "$f")
+              if [ -z "$next" ]; then
+                section=$(awk -v s="$start" 'NR>=s' "$f")
+              else
+                section=$(awk -v s="$start" -v e="$next" 'NR>=s && NR<e' "$f")
+              fi
+
+              if ! printf '%s' "$section" | grep -qE '\[[^]]+\]\(https?://[^)]+\)'; then
+                echo "::error file=$f::New H2 section '$heading' contains no inline citation ([text](https://...)). Cite a primary source (RFC, NIST, OWASP standard, vendor doc)."
+                fail=1
+              fi
+            done
+          done
+
+          exit "$fail"

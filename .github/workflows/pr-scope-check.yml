@@ -1,0 +1,61 @@
+name: PR Scope Check
+
+on:
+  pull_request:
+    branches:
+      - master
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  scope:
+    runs-on: ubuntu-24.04
+    env:
+      MAX_CHEATSHEETS_TOUCHED: 3
+      MAX_NET_ADDITIONS: 1500
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Evaluate PR scope
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: |
+          set -euo pipefail
+
+          touched=$(git diff --name-only "$BASE_SHA" "$HEAD_SHA" \
+            | grep -E '^cheatsheets(_draft)?/.+\.md$' \
+            | sort -u || true)
+          touched_count=$(printf '%s\n' "$touched" | grep -c . || true)
+
+          additions=$(git diff --numstat "$BASE_SHA" "$HEAD_SHA" \
+            | awk '$1 ~ /^[0-9]+$/ {a+=$1} END {print a+0}')
+          deletions=$(git diff --numstat "$BASE_SHA" "$HEAD_SHA" \
+            | awk '$2 ~ /^[0-9]+$/ {d+=$2} END {print d+0}')
+          net=$(( additions - deletions ))
+
+          echo "Cheat sheets touched: $touched_count"
+          printf '%s\n' "$touched"
+          echo "Net additions: $net (additions=$additions, deletions=$deletions)"
+
+          fail=0
+
+          if [ "$touched_count" -gt "$MAX_CHEATSHEETS_TOUCHED" ]; then
+            echo "::error::This PR modifies $touched_count cheat sheets (limit: $MAX_CHEATSHEETS_TOUCHED). Split into focused PRs, one cheat sheet or one coordinated set per PR."
+            fail=1
+          fi
+
+          if [ "$net" -gt "$MAX_NET_ADDITIONS" ]; then
+            if ! printf '%s' "$PR_BODY" | grep -qE '#[0-9]+'; then
+              echo "::error::Net additions ($net) exceed $MAX_NET_ADDITIONS lines and the PR body does not reference a tracking issue. Link an issue (e.g., 'Fixes #1234') that justifies the scope."
+              fail=1
+            fi
+          fi
+
+          exit "$fail"
