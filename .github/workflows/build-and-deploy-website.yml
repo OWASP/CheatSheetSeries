@@ -88,17 +88,3 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         branch: gh-pages
-    - name: Send update to Slack
-      if: always()
-      env:
-        JOB_STATUS: ${{ job.status }}
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
-      run: |
-        case "$JOB_STATUS" in
-          success)   MSG='Offline website deployment: **success**' ;;
-          failure)   MSG='Offline website deployment: **fail**' ;;
-          cancelled) MSG='Offline website deployment **cancelled**' ;;
-          *)         MSG="Offline website deployment: **$JOB_STATUS**" ;;
-        esac
-        payload=$(jq -nc --arg text "$MSG" '{text: $text}')
-        curl -fsSL -X POST -H 'Content-Type: application/json' --data "$payload" "$SLACK_WEBHOOK_URL"
