@@ -89,12 +89,16 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         branch: gh-pages
     - name: Send update to Slack
-      uses: innocarpe/actions-slack@b2f50d9d8037ef8a1f77fa4659767747120124e4 # v1.1
-      with:
-        status: ${{ job.status }}
-        success_text: 'Offline website deployment: **success**'
-        failure_text: 'Offline website deployment: **fail**'
-        cancelled_text: 'Offline website deployment **cancelled**'
+      if: always()
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        JOB_STATUS: ${{ job.status }}
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+      run: |
+        case "$JOB_STATUS" in
+          success)   MSG='Offline website deployment: **success**' ;;
+          failure)   MSG='Offline website deployment: **fail**' ;;
+          cancelled) MSG='Offline website deployment **cancelled**' ;;
+          *)         MSG="Offline website deployment: **$JOB_STATUS**" ;;
+        esac
+        payload=$(jq -nc --arg text "$MSG" '{text: $text}')
+        curl -fsSL -X POST -H 'Content-Type: application/json' --data "$payload" "$SLACK_WEBHOOK_URL"
