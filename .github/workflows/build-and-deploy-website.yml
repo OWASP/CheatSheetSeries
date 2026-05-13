@@ -44,6 +44,8 @@ jobs:
     name: Deploy offline website
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     env:
       CI: true
     steps:
@@ -84,7 +86,4 @@ jobs:
         git add --all .
         git commit -a -m "Deploy the generated website via GitHub Actions"
     - name: Publish the build to gh-pages
-      uses: ad-m/github-push-action@4cc74773234f74829a8c21bc4d69dd4be9cfa599 # v1.1.0
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: gh-pages
+      run: git push origin HEAD:gh-pages
