@@ -467,7 +467,7 @@ Examples of some JavaScript sandbox / sanitizers:
 
 ### GUIDELINE \#10 - Don't eval() JSON to convert it to native JavaScript objects
 
-Don't `eval()` JSON to convert it to native JavaScript objects. Instead use `JSON.toJSON()` and `JSON.parse()` (Chris Schmidt).
+Don't `eval()` JSON to convert it to native JavaScript objects. Use the built-in `JSON.parse()` to deserialize JSON into JavaScript values, and `JSON.stringify()` to serialize JavaScript values into JSON. `JSON.parse()` rejects anything that is not valid JSON, so it cannot execute attacker-supplied code the way `eval()` can.
 
 ## Common Problems Associated with Mitigating DOM Based XSS
 
