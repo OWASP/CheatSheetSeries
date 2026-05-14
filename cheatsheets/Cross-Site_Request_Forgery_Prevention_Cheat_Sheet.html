@@ -5325,6 +5325,10 @@ if (!constantTimeEquals(hmacFromRequest, expectedHmac)) {
 </code></pre></div>
 <p>Note: The <code>constantTimeEquals</code> function should be used to compare the HMACs to prevent timing attacks. This function compares two strings in constant time, regardless of how many characters match.</p>
 <h3 id="naive-double-submit-cookie-pattern-discouraged">Naive Double-Submit Cookie Pattern (DISCOURAGED)<a class="headerlink" href="#naive-double-submit-cookie-pattern-discouraged" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>[!WARNING]
+The Naive Double-Submit Cookie pattern is bypassable by an attacker who can write cookies on the target domain (e.g., via a vulnerable sibling subdomain, DNS takeover, or plaintext-HTTP cookie injection on a non-<code>__Host-</code> cookie). For new code, use the <a href="#signed-double-submit-cookie-recommended">Signed Double-Submit Cookie</a> pattern above. The naive pattern is documented for reference only.</p>
+</blockquote>
 <p>The <em>Naive Double-Submit Cookie</em> method is a scalable and easy-to-implement technique which uses a cryptographically strong random value as a cookie and as a request parameter (even before user authentication). Then the server verifies if the cookie value and request value match.</p>
 <p>The site must require that every transaction request from the user includes this random value as a <strong>custom request header or form parameter ONLY. Cookie validation is INSECURE</strong>.</p>
 <p><strong>Why?</strong> Browsers auto-send cookies on cross-site requests. Attackers can trigger this automatically. Security requires <em>explicit</em> client submission (header/param) proving user intent.</p>

@@ -4960,16 +4960,16 @@
 <h3 id="reporting-directives">Reporting Directives<a class="headerlink" href="#reporting-directives" title="Permanent link">&para;</a></h3>
 <p>Reporting directives deliver violations of prevented behaviors to specified locations. These directives serve no purpose on their own and are dependent on other directives.</p>
 <ul>
-<li><code>report-to</code> which is a group name defined in the header in a JSON formatted header value.<ul>
+<li><code>report-to</code> (CSP Level 3, used together with the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Reporting_API">Reporting API</a>) is the <strong>primary, current</strong> reporting directive. It references a group name defined in the <code>Reporting-Endpoints</code> (or legacy <code>Report-To</code>) response header containing a JSON-formatted endpoint list.<ul>
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/report-to">MDN report-to documentation</a></li>
 </ul>
 </li>
-<li><code>report-uri</code> directive is deprecated by <code>report-to</code>, which is a URI that the reports are sent to.<ul>
-<li>Goes by the format of: <code>Content-Security-Policy: report-uri https://example.com/csp-reports</code></li>
+<li><code>report-uri</code> is <strong>deprecated</strong> by CSP Level 3 in favor of <code>report-to</code>. It takes a URI that reports are sent to.<ul>
+<li>Format: <code>Content-Security-Policy: report-uri https://example.com/csp-reports</code></li>
 </ul>
 </li>
 </ul>
-<p>In order to ensure backward compatibility, use the 2 directives in conjunction. Whenever a browser supports <code>report-to</code>, it will ignore <code>report-uri</code>. Otherwise, <code>report-uri</code> will be used.</p>
+<p>For backward compatibility, declare both directives in conjunction. Browsers that support <code>report-to</code> will use it and ignore <code>report-uri</code>; older browsers fall back to <code>report-uri</code>. Once support for legacy browsers is no longer required, <code>report-uri</code> can be removed.</p>
 <h3 id="special-directive-sources">Special Directive Sources<a class="headerlink" href="#special-directive-sources" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
