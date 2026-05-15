@@ -7,5 +7,6 @@
     "MD029": false,
     "MD033": { "allowed_elements": [ "details" , "summary" ]},
     "MD040": false,
-    "MD059": false
+    "MD059": false,
+    "MD060": false
 }
