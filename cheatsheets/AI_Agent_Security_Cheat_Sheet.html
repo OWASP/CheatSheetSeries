@@ -690,6 +690,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#high-impact-action-integrity-controls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        High-Impact Action Integrity Controls
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -796,6 +807,56 @@
     <span class="md-ellipsis">
       
         Data Classification and Handling
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-secure-agent-testing-adversarial-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Secure Agent Testing &amp; Adversarial Validation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Secure Agent Testing &amp; Adversarial Validation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#abuse-case-test-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Abuse-Case Test Matrix
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cicd-and-release-gates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CI/CD and Release Gates
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validation-evidence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validation Evidence
       
     </span>
   </a>
@@ -4309,6 +4370,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#high-impact-action-integrity-controls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        High-Impact Action Integrity Controls
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -4426,6 +4498,56 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#9-secure-agent-testing-adversarial-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Secure Agent Testing &amp; Adversarial Validation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Secure Agent Testing &amp; Adversarial Validation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#abuse-case-test-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Abuse-Case Test Matrix
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cicd-and-release-gates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CI/CD and Release Gates
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validation-evidence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validation Evidence
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -4484,6 +4606,8 @@
 <li><strong>Memory Poisoning</strong>: Malicious data persisted in agent memory to influence future sessions or other users.</li>
 <li><strong>Goal Hijacking</strong>: Manipulating agent objectives to serve attacker purposes while appearing legitimate.</li>
 <li><strong>Excessive Autonomy</strong>: Agents taking high-impact actions without appropriate human oversight.</li>
+<li><strong>High-Impact Action Abuse</strong>: Agents executing irreversible, financial, administrative, or externally visible operations without independent validation.</li>
+<li><strong>Decision and Approval Manipulation</strong>: Attackers influencing risk scores, model confidence, or approval thresholds to bypass safeguards.</li>
 <li><strong>Cascading Failures</strong>: Compromised agents in multi-agent systems propagating attacks to other agents.</li>
 <li><strong>AI Console Malicious Configuration</strong>: AI developer consoles can be compelled to consume data that contains instructions driving malicious changes to the underlying LLM configuration.</li>
 <li><strong>Denial of Wallet (DoW)</strong>: Attacks causing excessive API/compute costs through unbounded agent loops.</li>
@@ -4705,6 +4829,16 @@
 <span class="s2">        Parameters: </span><span class="si">{</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">action</span><span class="o">.</span><span class="n">parameters</span><span class="p">,</span><span class="w"> </span><span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span>
 <span class="s2">        &quot;&quot;&quot;</span>
 </code></pre></div>
+<h4 id="high-impact-action-integrity-controls">High-Impact Action Integrity Controls<a class="headerlink" href="#high-impact-action-integrity-controls" title="Permanent link">&para;</a></h4>
+<p>For destructive, financial, administrative, or externally visible actions, add controls beyond a simple approval prompt:</p>
+<ul>
+<li>Separate decision-making from execution. The agent can propose an action, but a policy service or execution component should independently validate scope, privilege, and approval state before execution.</li>
+<li>Bind approval to the exact action. Include the actor, tool name, target resource, normalized parameters, timestamp, and expiry in the approval record.</li>
+<li>Use short-lived authorization artifacts and replay protection for irreversible operations.</li>
+<li>Require step-up authentication for critical actions such as account recovery, payment initiation, privilege changes, bulk deletion, or production deployment.</li>
+<li>Make high-impact actions idempotent where possible and require explicit duplicate confirmation when idempotency is not possible.</li>
+<li>Fail closed when risk classification, approval validation, policy lookup, or audit logging fails.</li>
+</ul>
 <h3 id="5-output-validation-guardrails">5. Output Validation &amp; Guardrails<a class="headerlink" href="#5-output-validation-guardrails" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Validate agent outputs before execution or display.</li>
@@ -4787,6 +4921,8 @@
 <li>Track token usage and costs per session/user.</li>
 <li>Set up alerts for security-relevant events.</li>
 <li>Maintain audit trails for compliance and forensics.</li>
+<li>Log structured decision metadata for high-risk actions, including action classification, risk score when applicable, authorization outcome, approval identifier, execution result, and policy version.</li>
+<li>Monitor for drift in approval behavior, repeated approval bypass attempts, elevated privilege usage, abnormal tool invocation frequency, and sudden increases in high-risk actions.</li>
 </ul>
 <h4 id="agent-monitoring">Agent Monitoring<a class="headerlink" href="#agent-monitoring" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">structlog</span>
@@ -5103,6 +5239,68 @@
         <span class="n">context</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">---</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">protected_docs</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">context</span><span class="p">[:</span><span class="n">max_tokens</span> <span class="o">*</span> <span class="mi">4</span><span class="p">]</span>  <span class="c1"># Rough char estimate</span>
 </code></pre></div>
+<h3 id="9-secure-agent-testing-adversarial-validation">9. Secure Agent Testing &amp; Adversarial Validation<a class="headerlink" href="#9-secure-agent-testing-adversarial-validation" title="Permanent link">&para;</a></h3>
+<p>AI agents should undergo structured security testing before production deployment and after material changes to prompts, tools, memory, retrieval, policies, or model providers. Testing should exercise both application controls and agent-specific failure modes.</p>
+<h4 id="abuse-case-test-matrix">Abuse-Case Test Matrix<a class="headerlink" href="#abuse-case-test-matrix" title="Permanent link">&para;</a></h4>
+<p>Maintain repeatable test cases for:</p>
+<table>
+<thead>
+<tr>
+<th>Abuse case</th>
+<th>What to validate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prompt override</td>
+<td>System and developer instructions are not silently replaced by user or retrieved content</td>
+</tr>
+<tr>
+<td>Tool misuse</td>
+<td>Unauthorized tools are denied even when the model requests them confidently</td>
+</tr>
+<tr>
+<td>Privilege escalation</td>
+<td>Low-trust sessions cannot reach privileged tools, credentials, or admin actions</td>
+</tr>
+<tr>
+<td>Memory poisoning</td>
+<td>Malicious content is sanitized, scoped, expired, or rejected before persistence</td>
+</tr>
+<tr>
+<td>Data exfiltration</td>
+<td>Sensitive context is not leaked through tool calls, citations, logs, or final output</td>
+</tr>
+<tr>
+<td>Recursive tool abuse</td>
+<td>Chain depth, retry, token, and cost limits stop runaway loops</td>
+</tr>
+<tr>
+<td>Approval bypass</td>
+<td>High-impact actions cannot execute without a valid, unexpired, parameter-bound approval</td>
+</tr>
+<tr>
+<td>Multi-agent chaining</td>
+<td>One compromised agent cannot cause another agent to exceed its trust boundary</td>
+</tr>
+</tbody>
+</table>
+<h4 id="cicd-and-release-gates">CI/CD and Release Gates<a class="headerlink" href="#cicd-and-release-gates" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Run adversarial test suites in CI/CD for agent templates, tool policies, and prompt changes.</li>
+<li>Include regression tests for previously observed injection, memory poisoning, and tool-abuse failures.</li>
+<li>Block releases when high-risk tool policies, approval logic, or credential scopes change without updated tests.</li>
+<li>Keep red-team prompts and expected denials version controlled, but do not store secrets or live customer data in test fixtures.</li>
+<li>Review test changes carefully; attackers may try to weaken or remove security tests in the same pull request that changes agent behavior.</li>
+</ul>
+<h4 id="validation-evidence">Validation Evidence<a class="headerlink" href="#validation-evidence" title="Permanent link">&para;</a></h4>
+<p>For production agents, retain evidence that shows:</p>
+<ul>
+<li>The tested agent version, model provider, tool policy, and retrieval configuration.</li>
+<li>The abuse cases executed and their expected results.</li>
+<li>The approval, denial, timeout, or circuit-breaker behavior observed.</li>
+<li>Any accepted residual risk and the compensating control.</li>
+</ul>
 <h2 id="dos-and-donts">Do's and Don'ts<a class="headerlink" href="#dos-and-donts" title="Permanent link">&para;</a></h2>
 <p><strong>Do:</strong></p>
 <ul>
@@ -5114,6 +5312,10 @@
 <li>Use structured outputs with schema validation.</li>
 <li>Sign and verify inter-agent communications.</li>
 <li>Classify data and apply appropriate protections.</li>
+<li>Separate decision-making from execution for irreversible operations.</li>
+<li>Perform structured adversarial testing before production deployment.</li>
+<li>Enforce token, cost, retry, and tool-chain limits.</li>
+<li>Log structured decision metadata for high-risk actions.</li>
 </ul>
 <p><strong>Don't:</strong></p>
 <ul>
@@ -5125,6 +5327,9 @@
 <li>Ignore cost controls (unbounded loops can cause DoW).</li>
 <li>Pass unsanitized data between agents in multi-agent systems.</li>
 <li>Log sensitive data (PII, credentials) in plain text.</li>
+<li>Rely solely on model output for authorization decisions.</li>
+<li>Skip adversarial testing after prompt, tool, memory, retrieval, or provider changes.</li>
+<li>Permit unlimited recursion, retries, or tool chaining.</li>
 </ul>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>

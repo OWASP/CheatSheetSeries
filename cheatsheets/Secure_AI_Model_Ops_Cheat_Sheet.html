@@ -3014,10 +3014,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#6-monitoring-logging" class="md-nav__link">
+  <a href="#6-runtime-hardware-isolation" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6. Monitoring &amp; Logging
+        6. Runtime &amp; Hardware Isolation
       
     </span>
   </a>
@@ -3025,10 +3025,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#7-adversarial-robustness" class="md-nav__link">
+  <a href="#7-monitoring-logging" class="md-nav__link">
     <span class="md-ellipsis">
       
-        7. Adversarial Robustness
+        7. Monitoring &amp; Logging
       
     </span>
   </a>
@@ -3036,10 +3036,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#8-incident-response-governance" class="md-nav__link">
+  <a href="#8-adversarial-robustness" class="md-nav__link">
     <span class="md-ellipsis">
       
-        8. Incident Response &amp; Governance
+        8. Adversarial Robustness
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-incident-response-governance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Incident Response &amp; Governance
       
     </span>
   </a>
@@ -4101,10 +4112,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#6-monitoring-logging" class="md-nav__link">
+  <a href="#6-runtime-hardware-isolation" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6. Monitoring &amp; Logging
+        6. Runtime &amp; Hardware Isolation
       
     </span>
   </a>
@@ -4112,10 +4123,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#7-adversarial-robustness" class="md-nav__link">
+  <a href="#7-monitoring-logging" class="md-nav__link">
     <span class="md-ellipsis">
       
-        7. Adversarial Robustness
+        7. Monitoring &amp; Logging
       
     </span>
   </a>
@@ -4123,10 +4134,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#8-incident-response-governance" class="md-nav__link">
+  <a href="#8-adversarial-robustness" class="md-nav__link">
     <span class="md-ellipsis">
       
-        8. Incident Response &amp; Governance
+        8. Adversarial Robustness
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-incident-response-governance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Incident Response &amp; Governance
       
     </span>
   </a>
@@ -4184,6 +4206,7 @@ It helps MLOps, DevOps, and security teams protect the model lifecycle from deve
 <p>Open Artifact Stores – Public access to model binaries, datasets, or logs due to misconfigured storage or missing access controls.</p>
 <p>Lack of Monitoring &amp; Drift Detection – Absence of systems to detect shifts in model behavior, data distribution, or performance.</p>
 <p>Orphaned Deployments – Test or deprecated models left accessible in production environments, often unprotected.</p>
+<p>Weak Runtime Isolation - Shared training or inference infrastructure allows cross-tenant data exposure, credential reuse, side-channel leakage, or unauthorized access to accelerator memory.</p>
 <h2 id="real-world-examples">Real-World Examples<a class="headerlink" href="#real-world-examples" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Data Poisoning via Public Dataset Manipulation: Attackers inject mislabeled samples into open-source datasets. These poisoned samples, when used during training, degrade model accuracy or introduce bias.</li>
@@ -4235,14 +4258,27 @@ It helps MLOps, DevOps, and security teams protect the model lifecycle from deve
 <li>Minimize permissions for training and inference jobs (least privilege).</li>
 <li>Isolate environments for development, staging, and production.</li>
 </ul>
-<h3 id="6-monitoring-logging">6. Monitoring &amp; Logging<a class="headerlink" href="#6-monitoring-logging" title="Permanent link">&para;</a></h3>
+<h3 id="6-runtime-hardware-isolation">6. Runtime &amp; Hardware Isolation<a class="headerlink" href="#6-runtime-hardware-isolation" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Separate training, evaluation, and production inference workloads by trust boundary.</li>
+<li>Avoid sharing GPU or accelerator devices between mutually untrusted tenants unless the platform provides strong hardware-backed partitioning and memory isolation.</li>
+<li>Clear model inputs, outputs, temporary files, caches, and accelerator memory between jobs where the runtime supports it.</li>
+<li>Run untrusted model evaluation, fine-tuning, and conversion jobs in sandboxes or isolated workers with restricted network egress.</li>
+<li>Use microVMs, gVisor, Kata Containers, confidential compute, or dedicated nodes for high-sensitivity models and datasets.</li>
+<li>Disable access to host paths, container sockets, cloud metadata services, and unnecessary device mounts from model-serving containers.</li>
+<li>Apply per-workload CPU, memory, GPU, disk, process, and network limits to prevent noisy-neighbor and denial-of-service impact.</li>
+<li>Keep model-serving credentials scoped to the specific model, endpoint, and environment rather than sharing broad platform credentials.</li>
+<li>Validate that job teardown removes temporary artifacts, local checkpoints, prompt logs, and cached embeddings.</li>
+<li>Monitor runtime isolation failures, unexpected device access, cross-namespace network traffic, and attempts to access metadata endpoints.</li>
+</ul>
+<h3 id="7-monitoring-logging">7. Monitoring &amp; Logging<a class="headerlink" href="#7-monitoring-logging" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Monitor input distribution, output entropy, and latency.</li>
 <li>Detect drift via statistical analysis or shadow models.</li>
 <li>Log requests and access with traceability (avoid logging sensitive data).</li>
 <li>Alert on unusual usage patterns (e.g., scraping, injection attempts).</li>
 </ul>
-<h3 id="7-adversarial-robustness">7. Adversarial Robustness<a class="headerlink" href="#7-adversarial-robustness" title="Permanent link">&para;</a></h3>
+<h3 id="8-adversarial-robustness">8. Adversarial Robustness<a class="headerlink" href="#8-adversarial-robustness" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Include adversarial examples in testing and evaluation.</li>
 <li>Use robust training techniques (e.g., adversarial training, input denoising).</li>
@@ -4250,7 +4286,7 @@ It helps MLOps, DevOps, and security teams protect the model lifecycle from deve
 <li>Use shadow deployments to evaluate candidate model behavior on real production inputs without affecting live outputs.</li>
 <li>Use canary releases to gradually route a small percentage of traffic to the new model with rapid rollback capability if there are problems.</li>
 </ul>
-<h3 id="8-incident-response-governance">8. Incident Response &amp; Governance<a class="headerlink" href="#8-incident-response-governance" title="Permanent link">&para;</a></h3>
+<h3 id="9-incident-response-governance">9. Incident Response &amp; Governance<a class="headerlink" href="#9-incident-response-governance" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Define escalation procedures for model abuse or drift.</li>
 <li>Implement rollback mechanisms for model deployments.</li>
