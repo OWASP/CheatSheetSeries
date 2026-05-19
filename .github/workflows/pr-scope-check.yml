@@ -17,7 +17,7 @@ jobs:
       MAX_NET_ADDITIONS: 1500
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
