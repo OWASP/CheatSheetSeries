@@ -151,9 +151,9 @@ int main() {
 ```
 
 Key points:
-Use std::string to avoid buffer overflow
-Sanitize special characters to prevent injection attacks
-Always validate input on the server side
+- Use std::string to avoid buffer overflow
+- Sanitize special characters to prevent injection attacks
+- Always validate input on the server side
 
 ## Client-side vs Server-side Validation
 
