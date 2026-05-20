@@ -296,6 +296,39 @@ pb.directory(new File("TrustedDir"));
 Process p = pb.start();
 ```
 
+## C++ SQL Injection Prevention Example
+Use parameterized queries logic to prevent SQL injection attacks in C++.
+
+```cpp
+#include <iostream>
+#include <string>
+#include <algorithm>
+
+// Simple input sanitization for SQL special characters
+std::string sanitize_sql_input(std::string input) {
+    input.erase(std::remove_if(input.begin(), input.end(),
+        [](char c) {
+            return c == '\'' || c == ';' || c == '\\';
+        }), input.end());
+    return input;
+}
+
+int main() {
+    std::string user_input;
+    std::cout << "Enter user ID: ";
+    std::getline(std::cin, user_input);
+
+    std::string safe_input = sanitize_sql_input(user_input);
+    // Use sanitized input for parameterized SQL queries
+    std::cout << "Sanitized input for query: " << safe_input << std::endl;
+    return 0;
+}
+```
+Key security notes:
+- Never concatenate raw user input into SQL statements
+- Sanitize special SQL characters
+- Prefer parameterized prepared statements in production environments
+
 ### Network Protocols
 
 Web applications often communicate with network daemons (like SMTP, IMAP, FTP) where user input becomes part of the communication stream. Here it is possible to inject command sequences to abuse an established session.
