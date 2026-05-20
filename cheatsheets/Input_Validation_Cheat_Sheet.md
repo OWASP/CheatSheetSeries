@@ -121,6 +121,40 @@ Some Allowlist validators have also been predefined in various open source packa
 
 - [Apache Commons Validator](http://commons.apache.org/proper/commons-validator/)
 
+## C++ Safe Input Validation Example
+
+The following is a secure C++ example for input validation, which can prevent buffer overflow and injection attacks.
+
+```cpp
+#include <iostream>
+#include <string>
+#include <algorithm>
+
+// Filter dangerous characters
+std::string sanitize_input(std::string input) {
+    input.erase(std::remove_if(input.begin(), input.end(),
+        [](char c) {
+            return c == '<' || c == '>' || c == '&' || c == '\'' || c == '"';
+        }), input.end());
+    return input;
+}
+
+int main() {
+    std::string user_input;
+    std::cout << "Please input: ";
+    std::getline(std::cin, user_input);
+
+    std::string safe_str = sanitize_input(user_input);
+    std::cout << "Safe output: " << safe_str << std::endl;
+    return 0;
+}
+```
+
+Key points:
+Use std::string to avoid buffer overflow
+Sanitize special characters to prevent injection attacks
+Always validate input on the server side
+
 ## Client-side vs Server-side Validation
 
 Input validation **must** be implemented on the server-side before any data is processed by an application’s functions, as any JavaScript-based input validation performed on the client-side can be circumvented by an attacker who disables JavaScript or uses a web proxy. Implementing both client-side JavaScript-based validation for UX and server-side validation for security is the recommended approach, leveraging each for their respective strengths.
