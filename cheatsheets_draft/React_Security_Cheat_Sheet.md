@@ -707,7 +707,7 @@ AI coding assistants generate React code that developers commit to production at
 
 The speed of AI-assisted development does not reduce the requirement for security review. Treat AI-generated code with the same scrutiny applied to any untrusted contribution. Review generated code against the patterns in this cheat sheet before committing, and include AI-generated files in automated security scanning pipelines.
 
-Where possible, provide explicit security constraints in prompts to coding assistants — specifying that generated code must follow OWASP guidelines, avoid known antipatterns, and use the specific safe patterns documented here — reduces but does not eliminate the risk of insecure output.
+Where possible, provide explicit security constraints in prompts to coding assistants — specifying that generated code must follow OWASP guidelines, avoid known antipatterns, and use the specific safe patterns documented here. This reduces but does not eliminate the risk of insecure output.
 
 Related CWE: [CWE-1357: Reliance on Insufficiently Trustworthy Component](https://cwe.mitre.org/data/definitions/1357.html)
 
