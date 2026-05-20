@@ -1058,6 +1058,44 @@ export class CSRFProtectedFetch {
 // };
 ```
 
+## C++ CSRF Token Validation Example
+Secure token validation in C++ to prevent Cross-Site Request Forgery attacks.
+
+```cpp
+#include <iostream>
+#include <string>
+
+// Validate CSRF token to prevent unauthorized requests
+bool validate_csrf_token(const std::string& client_token, const std::string& server_token) {
+    // Use constant-time comparison to prevent timing attacks
+    if (client_token.size() != server_token.size()) {
+        return false;
+    }
+
+    unsigned char result = 0;
+    for (size_t i = 0; i < client_token.size(); ++i) {
+        result |= client_token[i] ^ server_token[i];
+    }
+    return result == 0;
+}
+
+int main() {
+    std::string client = "user_token_123";
+    std::string server = "user_token_123";
+    
+    if (validate_csrf_token(client, server)) {
+        std::cout << "CSRF check passed" << std::endl;
+    } else {
+        std::cout << "CSRF check failed" << std::endl;
+    }
+    return 0;
+}
+```
+Security Notes:
+- Use constant-time comparison to prevent timing attacks
+- Always validate CSRF tokens on the server side
+- Tokens should be crytographically secure and per-session
+
 ## References in Related Cheat Sheets
 
 ### CSRF
