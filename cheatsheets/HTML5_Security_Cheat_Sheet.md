@@ -55,9 +55,9 @@ Web Messaging (also known as Cross Domain Messaging) provides a means of messagi
 
 ### Client-side databases
 
-- Web SQL Database was deprecated by the W3C in 2010 and is **removed from all major browsers**: Chromium dropped support in version 119 (October 2023) and Safari/Firefox never shipped it for third-party origins. Do not use Web SQL.
+- Web SQL Database was deprecated by the W3C in 2010 and is **removed from all major browsers**: Chromium dropped support in version 119 (October 2023) and Safari/Firefox never shipped it for third-party origins. Do not use Web SQL. If you specifically need an SQL interface in the browser, prefer running an embedded engine such as the official [SQLite WebAssembly build (`sqlite-wasm`)](https://sqlite.org/wasm/doc/trunk/about.md), backed by IndexedDB or the Origin Private File System (OPFS) for persistence.
 - The current standard for client-side structured storage is **[IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API)**, a transactional key-value store that has been a W3C Recommendation since 2015 and is supported in all evergreen browsers.
-- Underlying storage mechanisms vary across user agents and operating systems. Any user with local privileges on the machine can read or modify the stored data, so do not assume client-side storage provides confidentiality. Do not store session tokens, credentials, or other secrets in IndexedDB.
+- Underlying storage mechanisms vary across user agents and operating systems. A user (or any process running with that user's privileges, including malware) with read access to the browser profile directory on disk can read or modify the stored data, so do not assume client-side storage provides confidentiality. Do not store session tokens, credentials, or other secrets in IndexedDB unless they are encrypted with a key that is not itself recoverable from the browser (for example, derived from a user-supplied passphrase that is never persisted, or wrapped by a non-extractable [Web Crypto](https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API) `CryptoKey`).
 - A single [Cross-Site Scripting](https://owasp.org/www-community/attacks/xss/) vulnerability can read or write any data in IndexedDB; treat its contents as untrusted input on read.
 - Apply the same input validation and output encoding rules to data coming from IndexedDB as you would to data coming from the network.
 
@@ -149,12 +149,11 @@ Text areas and input fields for PII (name, email, address, phone number) and log
     - Only register Service Workers from your own origin and **only serve the worker script over HTTPS** with a long-cache-busting filename (e.g. `sw.<hash>.js`).
     - Validate that the scope of the Service Worker is restricted (use the `scope` option or the `Service-Worker-Allowed` response header) so a compromised worker cannot intercept unrelated paths.
     - A malicious or compromised Service Worker can intercept *every* request from its scope until it is unregistered or the cache TTL expires; have a documented kill-switch (e.g. an unregister flow you can ship in a hotfix).
-    - When connecting through insecure networks, do not cache responses that contain sensitive data; pair caching with `Cache-Control: no-store` headers on those responses.
-- Users should only allow offline-capable installations from trusted origins and clear site data after using untrusted networks.
+    - Do not cache responses that contain sensitive data. Send `Cache-Control: no-store` on those responses so the Cache API will not retain them.
 
 ## Progressive Enhancements and Graceful Degradation Risks
 
-- The best practice now is to determine the capabilities that a browser supports and augment with substitutes only for capabilities that are not directly supported. Polyfills and additional scripting from third-party sources should be code-reviewed and pinned to specific, integrity-checked versions (Subresource Integrity). Do not fall back to obsolete browser plugins — Adobe Flash Player reached end-of-life on 31 December 2020 and is removed from all browsers; Java applets, Silverlight, and ActiveX are likewise unsupported. Native HTML5 (`<video>`, `<audio>`, `<canvas>`, WebAssembly) covers these legacy use cases.
+- The best practice now is to determine the capabilities that a browser supports and augment with substitutes only for capabilities that are not directly supported. Do not fall back to obsolete browser plugins — Adobe Flash Player reached end-of-life on 31 December 2020 and is removed from all browsers; Java applets, Silverlight, and ActiveX are likewise unsupported. Native HTML5 (`<video>`, `<audio>`, `<canvas>`, WebAssembly) covers these legacy use cases.
 
 ## HTTP Headers to enhance security
 
