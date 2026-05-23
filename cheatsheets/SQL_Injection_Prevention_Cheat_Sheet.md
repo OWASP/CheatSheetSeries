@@ -9,7 +9,7 @@ This cheat sheet will help you prevent SQL injection flaws in your applications.
 
 ## What Is a SQL Injection Attack?
 
-Attackers can use SQL injection on an application if it has dynamic database queries that use string concatenation and user-supplied input. To avoid SQL injection flaws, developers need to:
+Attackers can exploit SQL injection vulnerabilities when an application constructs dynamic database queries using string concatenation with unsanitized user input.
 
 1. Stop writing dynamic queries with string concatenation.
 2. Prevent malicious SQL input from being included in executed queries.
