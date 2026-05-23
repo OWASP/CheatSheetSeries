@@ -388,6 +388,43 @@ References:
 
 - [ASP.NET Error Handling](https://docs.microsoft.com/en-us/aspnet/web-forms/overview/getting-started/getting-started-with-aspnet-45-web-forms/aspnet-error-handling)
 
+## C++ Secure Error‑Handling Example
+This example prevents crashes from null‑pointer dereference and division‑by‑zero errors, following OWASP secure coding practices.
+
+```cpp
+#include <stdexcept>
+#include <iostream>
+
+// Safe division to avoid division‑by‑zero crash
+int safe_divide(int numerator, int denominator) {
+    if (denominator == 0) {
+        throw std::domain_error("Division by zero is prohibited");
+    }
+    return numerator / denominator;
+}
+
+// Safe pointer access to avoid null‑pointer dereference
+int safe_access(int* data_ptr) {
+    if (data_ptr == nullptr) {
+        throw std::invalid_argument("Null pointer access blocked");
+    }
+    return *data_ptr;
+}
+
+int main() {
+    try {
+        safe_divide(10, 0);
+    } catch (const std::exception& e) {
+        std::cerr << "Security error caught: " << e.what() << std::endl;
+    }
+    return 0;
+}
+```
+Key security notes:
+- Validate inputs before execution
+- Catch exceptions to avoid program crash
+- Prevent undefined behavior from invalid memory access
+
 ## Sources of the prototype
 
 The source code of all the sandbox projects created to find the right setup to use is stored in this [GitHub repository](https://github.com/righettod/poc-error-handling).

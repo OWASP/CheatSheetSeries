@@ -632,6 +632,29 @@ The problem is pandemic, and not just boring user-land programs. Projects which 
 
 Unlike other examples, the above code will not debug itself, and you will have to set breakpoints and trace calls to determine the point of first failure. (And the code above gambles that the truncated file does not exist or is not under an adversary's control by blindly performing the `open`).
 
+## C++ Hardened Compilation & Secure Code Example
+This example shows modern C++ secure coding practices compatible with hardened toolchains (compiler protections).
+
+```cpp
+#include <iostream>
+#include <memory>
+
+int main() {
+    // Use smart pointers to avoid memory leaks and dangling pointers
+    std::unique_ptr<int> secure_ptr = std::make_unique<int>(42);
+
+    // Compiler hardening flags recommended:
+    // -fstack-protector-strong -Wformat -Wformat-security -fPIE -pie
+
+    std::cout << "Secure value: " << *secure_ptr << std::endl;
+    return 0;
+}
+```
+Security Key Notes:
+- Use C++ smart pointers instead of raw manual memory management
+- Enable stack protection, format string security checks via compiler flags
+- Position-Independent Executable(PIE) for memory layout randomization
+
 ## Runtime
 
 The previous sections concentrated on setting up your project for success. This section will examine additional hints for running with increased diagnostics and defenses. Not all platforms are created equal - GNU Linux is difficult to impossible to [add hardening to a program after compiling and static linking](https://sourceware.org/ml/binutils/2012-03/msg00309.html), while Windows allows post-build hardening through a download. Remember, the goal is to find the point of first failure quickly so you can improve the reliability and security of the code.
