@@ -108,7 +108,7 @@ Requiring users to create their own username when registering on the website mak
 
 The majority of off-the-shelf tools are designed for a single step login process, where the credentials are POSTed to the server, and the response indicates whether or not the login attempt was successful. By adding additional steps to this process, such as requiring the username and password to be entered sequentially, or requiring that the user first obtains a random [CSRF Token](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md) before they can login, this makes the attack slightly more difficult to perform, and doubles the number of requests that the attacker must make.
 
-Multi-step login processes, however, should be mindful that they do not faciliate [user enumeration](Authentication_Cheat_Sheet.md).  Enumerating users prior to a credential stuffing attack may result in a harder to identify, lower request volume attack.
+Multi-step login processes, however, should be mindful that they do not facilitate [user enumeration](Authentication_Cheat_Sheet.md).  Enumerating users prior to a credential stuffing attack may result in a harder to identify, lower request volume attack.
 
 ### Require JavaScript and Block Headless Browsers
 
