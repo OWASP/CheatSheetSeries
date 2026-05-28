@@ -6,8 +6,7 @@ on:
     branches:
     - master
 
-permissions:
-  contents: read
+permissions: {}
 
 jobs:
   link-check:
