@@ -26,7 +26,7 @@ If interoperability with end-of-life clients is a hard business requirement, iso
 
 ### Only Support Strong Ciphers
 
-There are a large number of different ciphers (or cipher suites) that are supported by TLS, that provide varying levels of security. Where possible, only GCM ciphers should be enabled. However, if it is necessary to support legacy clients, then other ciphers may be required. At a minimum, the following types of ciphers should always be disabled:
+There are a large number of different ciphers (or cipher suites) that are supported by TLS, that provide varying levels of security. For TLS 1.3, use the standard AEAD cipher suites (AES‑GCM or ChaCha20‑Poly1305). If TLS 1.2 is still required, prefer AEAD‑based suites there as well and avoid CBC‑mode ciphers. At a minimum, the following types of ciphers should always be disabled:
 
 - Null ciphers
 - Anonymous ciphers
