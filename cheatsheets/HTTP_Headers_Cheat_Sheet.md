@@ -88,7 +88,7 @@ The `Cache-Control` header defines how responses are cached by browsers and inte
 
 These directives help reduce the risk of sensitive data being stored or exposed through caching, but use `no-store` when storage of sensitive data must be strictly prevented.
 
-### References
+#### References
 
 - [MDN - Cache-Control](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control)
 

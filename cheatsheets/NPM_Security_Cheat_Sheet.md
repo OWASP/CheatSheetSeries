@@ -13,7 +13,7 @@ The npm CLI packs up a project into a tar archive (tarball) in order to push it 
 
 Developers may end up updating the `.gitignore` file, but forget to update `.npmignore` as well, which can lead to a potentially sensitive file not being pushed to source control, but still being included in the npm package.
 
-Another good practice to adopt is making use of the `files` property in package.json, which works as an allowlist and specifies the array of files to be included in the package that is to be created and installed (while the ignore file functions as a denylist). The `files` property and an ignore file can both be used together to determine which files should explicitly be included, as well as excluded, from the package. When using both, the former the `files` property in package.json takes precedence over the ignore file.
+Another good practice to adopt is making use of the `files` property in `package.json`, which works as an allowlist and specifies the array of files to be included in the package that is to be created and installed (while the ignore file functions as a denylist). The `files` property and an ignore file can both be used together to determine which files should explicitly be included, as well as excluded, from the package. When using both, the `files` property in `package.json` takes precedence over the ignore file.
 
 When a package is published, the npm CLI will verbosely display the archive being created. To be extra careful, add a `--dry-run` command-line argument to your publish command in order to first review how the tarball is created without actually publishing it to the registry.
 
@@ -23,7 +23,7 @@ For details about revoking access token, see the official documentation: [Revoki
 
 We embraced the birth of package lockfiles with open arms, which introduced: deterministic installations across different environments, and enforced dependency expectations across team collaboration. Life is good! Or so I thought… what would have happened had I slipped a change into the project’s `package.json` file but had forgotten to commit the lockfile alongside of it?
 
-Both Yarn, and npm act the same during dependency installation . When they detect an inconsistency between the project’s `package.json` and the lockfile, they compensate for such change based on the `package.json` manifest by installing different versions than those that were recorded in the lockfile.
+Both Yarn and npm act the same during dependency installation. When they detect an inconsistency between the project’s `package.json` and the lockfile, they compensate for such change based on the `package.json` manifest by installing different versions than those that were recorded in the lockfile.
 
 This kind of situation can be hazardous for build and production environments as they could pull in unintended package versions and render the entire benefit of a lockfile futile.
 
@@ -38,17 +38,17 @@ The npm CLI works with package run-scripts. If you’ve ever run `npm start` or 
 
 With this capability, bad actors may create or alter packages to perform malicious acts by running any arbitrary command when their package is installed. A couple of cases where we’ve seen this already happening is the popular [eslint-scope incident](https://snyk.io/vuln/npm:eslint-scope:20180712) that harvested npm tokens, and the [crossenv incident](https://snyk.io/vuln/npm:crossenv:20170802), along with 36 other packages that abused a typosquatting attack on the npm registry.
 
-Apply these npm security best practices in order to minimize the malicious module attack surface:
+Apply these npm security best practices to minimize the malicious module attack surface:
 
-- Always vet and perform due-diligence on third-party modules that you install in order to confirm their health and credibility.
+- Always vet and perform due-diligence on third-party modules you install to confirm their health and credibility.
 - Hold-off on upgrading immediately to new versions; allow new package versions some time to circulate before trying them out.
 - Before upgrading, make sure to review changelog and release notes for the upgraded version.
 - When installing packages make sure to add the `--ignore-scripts` suffix to disable the execution of any scripts by third-party packages.
-- Consider adding `ignore-scripts` to your `.npmrc` project file, or to your global npm configuration.
+- Consider adding `ignore-scripts=true` to your `.npmrc` project file, or to your global npm configuration.
 
 ### Using an allowlist for lifecycle scripts
 
-Disabling lifecycle scripts by default by adding `ignore-script` to your `.npmrc` file is the safest option. If you use packages that rely on lifecycle scripts for legitimate reasons, you can use a plugin like [`@lavamoat/allow-scripts`](https://github.com/LavaMoat/LavaMoat/tree/main/packages/allow-scripts) to create an _allowlist_ of packages authorized to run lifecylce scripts.
+Disabling lifecycle scripts by default by adding `ignore-scripts=true` to your `.npmrc` file is the safest option. If you use packages that rely on lifecycle scripts for legitimate reasons, you can use a plugin like [`@lavamoat/allow-scripts`](https://github.com/LavaMoat/LavaMoat/tree/main/packages/allow-scripts) to create an _allowlist_ of packages authorized to run lifecycle scripts.
 
 Here's how the allowlist would look like in the `package.json` file on a project using the popular image processing package [sharp](https://www.npmjs.com/package/sharp):
 
@@ -68,11 +68,11 @@ Here's how the allowlist would look like in the `package.json` file on a project
 
 Rushing to constantly upgrade dependencies to their latest releases is not necessarily a good practice if it is done without reviewing release notes, the code changes, and generally testing new upgrades in a comprehensive manner. With that said, staying out of date and not upgrading at all, or after a long time, is a source for trouble as well.
 
-The npm CLI can provide information about the freshness of dependencies you use with regards to their semantic versioning offset. By running `npm outdated`, you can see which packages are out of date. Dependencies in yellow correspond to the semantic versioning as specified in the package.json manifest, and dependencies colored in red mean that there’s an update available. Furthermore, the output also shows the latest version for each dependency.
+The npm CLI can provide information about the freshness of dependencies you use with regards to their semantic versioning offset. By running `npm outdated`, you can see which packages are out of date. Dependencies in yellow correspond to the semantic versioning as specified in the `package.json` manifest, and dependencies colored in red mean an update is available. Furthermore, the output also shows the latest version for each dependency.
 
 ### npm doctor command
 
-Between the variety of Node.js package managers, and different versions of Node.js you may have installed in your path, how do you verify a healthy npm installation and working environment? Whether you’re working with the npm CLI in a development environment or within a CI, it is important to assess that everything is working as expected.
+Between the variety of Node.js package managers and different versions of Node.js you may have installed in your path, how do you verify a healthy npm installation and working environment? Whether you’re working with the npm CLI in a development environment or within a CI, it is important to assess that everything is working as expected.
 
 Call the doctor! The npm CLI incorporates a health assessment tool to diagnose your environment for a well-working npm interaction. Run `npm doctor` to review your npm setup:
 
@@ -97,23 +97,23 @@ Security doesn’t end by just scanning for security vulnerabilities when instal
 
 ### Use a local npm proxy
 
-The npm registry is the biggest collection of packages that is available for all JavaScript developers and is also the home of the most of the Open Source projects for web developers. But sometimes you might have different needs in terms of security, deployments or performance. When this is true, npm allows you to switch to a different registry:
+The npm registry is the biggest collection of packages that is available for all JavaScript developers and is also the home of most Open Source projects for web developers. But sometimes you might have different needs in terms of security, deployments or performance. When this is true, npm allows you to switch to a different registry:
 
 When you run `npm install`, it automatically starts a communication with the main registry to resolve all your dependencies; if you wish to use a different registry, that too is pretty straightforward:
 
 - Set `npm set registry` to set up a default registry.
 - Use the argument `--registry` for one single registry.
 
-[Verdaccio](https://verdaccio.org/) is a simple lightweight zero-config-required private registry and installing it is as simple as follows: `$ npm install --global verdaccio`.
+[Verdaccio](https://verdaccio.org/) is a simple, lightweight zero-config-required private registry and installing it is as simple as follows: `$ npm install --global verdaccio`.
 
 Hosting your own registry was never so easy! Let’s check the most important features of this tool:
 
 - It supports the npm registry format including private package features, scope support, package access control and authenticated users in the web interface.
-- It provides capabilities to hook remote registries and the power to route each dependency to different registries and caching tarballs. To reduce duplicate downloads and save bandwidth in your local development and CI servers, you should proxy all dependencies.
-- As an authentication provider by default, it uses an htpasswd security, but also supports Gitlab, Bitbucket, LDAP. You can also use your own.
+- It provides capabilities to hook remote registries and the power to route dependencies to different registries and cache their tarballs. To reduce duplicate downloads and save bandwidth in your local development and CI servers, you should proxy all dependencies.
+- As an authentication provider it uses htpasswd security by default, but also supports GitLab, Bitbucket, and LDAP. You can also use your own.
 - It’s easy to scale using a different storage provider.
 - If your project is based in Docker, using the official image is the best choice.
-- It enables really fast bootstrap for testing environments, and is handy for testing big mono-repos projects.
+- It enables really fast bootstrap for testing environments, and is handy for testing big mono-repo projects.
 
 ### Governance & Verification Steps
 
@@ -159,13 +159,13 @@ Supply-chain attacks increasingly target build artifacts, registries and CI cred
 - Verify packages during CI: check signatures or provenance, validate the SBOM, [run SCA and static analysis](#5-audit-for-vulnerabilities-in-open-source-dependencies), and [install from pinned lockfile resolutions](#2-enforce-the-lockfile).
 - Automate monitoring and alerts for unusual publishes, token usage or dependency changes and keep a documented remediation playbook (revoke tokens, deprecate/yank compromised packages, publish fixes and notify consumers).
 
-These measures are incremental and low-risk to adopt. Combined they make supply-chain attacks harder and speed up identification & recovery if a compromise occurs.
+These measures are incremental and low-risk to adopt. Combined they make supply-chain attacks harder and speed up identification and recovery if a compromise occurs.
 
 ## 7) Responsibly disclose security vulnerabilities
 
 When security vulnerabilities are found, they pose a potentially serious threat if they are publicised without prior warning or appropriate remedial action for users who cannot protect themselves.
 
-It is recommended that security researchers follow a responsible disclosure program, which is a set of processes and guidelines that aims to connect the researchers with the vendor or maintainer of the vulnerable asset, in order to convey the vulnerability, it’s impact and applicability. Once the vulnerability is correctly triaged, the vendor and researcher coordinate a fix and a publication date for the vulnerability in an effort to provide an upgrade-path or remediation for affected users before the security issue is made public.
+It is recommended that security researchers follow a responsible disclosure program, which is a set of processes and guidelines that aims to connect the researchers with the vendor or maintainer of the vulnerable asset, in order to convey the vulnerability, its impact and applicability. Once the vulnerability is correctly triaged, the vendor and researcher coordinate a fix and a publication date for the vulnerability in an effort to provide an upgrade-path or remediation for affected users before the security issue is made public.
 
 ## 8) Enable 2FA
 
@@ -176,7 +176,7 @@ Enabling two-factor authentication (2FA) is a critical npm security best practic
 
 To get started, see the official documentation: [Requiring 2FA](https://docs.npmjs.com/requiring-2fa-for-package-publishing-and-settings-modification).
 
-Equip yourself with an authentication application, such as Google Authentication, which you can install on a mobile device, and you’re ready to get started. One easy way to get started with the 2FA extended protection for your account is through npm’s user interface, which allows enabling it very easily. If you’re a command-line person, it’s also easy to enable 2FA when using a supported npm client version (>=5.5.1):
+Equip yourself with an authentication application, such as Google Authenticator, which you can install on a mobile device, and you’re ready to get started. One easy way to get started with the 2FA extended protection for your account is through npm’s user interface, which allows enabling it very easily. If you’re a command-line person, it’s also easy to enable 2FA when using a supported npm client version (>=5.5.1):
 
 ```sh
 npm profile enable-2fa auth-and-writes

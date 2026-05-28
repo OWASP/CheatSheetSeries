@@ -226,7 +226,7 @@ JavaScript is a dynamic language and depending on how the framework parses a URL
 
 #### Perform output escaping
 
-In addition to input validation, you should escape all HTML and JavaScript content shown to users via application in order to prevent cross-site scripting (XSS) attacks. You can use [escape-html](https://github.com/component/escape-html) or [node-esapi](https://github.com/ESAPI/node-esapi) libraries to perform output escaping.
+In addition to input validation, you should escape all HTML and JavaScript content shown to users via application in order to prevent cross-site scripting (XSS) attacks. For context-aware escaping, use [escape-html](https://github.com/component/escape-html). When you need to render user-supplied HTML (rather than escape it), use a maintained sanitizer such as [DOMPurify](https://github.com/cure53/DOMPurify) (with `jsdom` for server-side use) or [`sanitize-html`](https://www.npmjs.com/package/sanitize-html). Avoid `node-esapi`, which is no longer actively maintained.
 
 #### Perform application activity logging
 

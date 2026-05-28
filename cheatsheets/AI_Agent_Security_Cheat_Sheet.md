@@ -12,6 +12,8 @@ AI agents are autonomous systems powered by Large Language Models (LLMs) that ca
 - **Memory Poisoning**: Malicious data persisted in agent memory to influence future sessions or other users.
 - **Goal Hijacking**: Manipulating agent objectives to serve attacker purposes while appearing legitimate.
 - **Excessive Autonomy**: Agents taking high-impact actions without appropriate human oversight.
+- **High-Impact Action Abuse**: Agents executing irreversible, financial, administrative, or externally visible operations without independent validation.
+- **Decision and Approval Manipulation**: Attackers influencing risk scores, model confidence, or approval thresholds to bypass safeguards.
 - **Cascading Failures**: Compromised agents in multi-agent systems propagating attacks to other agents.
 - **AI Console Malicious Configuration**: AI developer consoles can be compelled to consume data that contains instructions driving malicious changes to the underlying LLM configuration.
 - **Denial of Wallet (DoW)**: Attacks causing excessive API/compute costs through unbounded agent loops.
@@ -253,6 +255,17 @@ class HumanInTheLoopController:
         """
 ```
 
+#### High-Impact Action Integrity Controls
+
+For destructive, financial, administrative, or externally visible actions, add controls beyond a simple approval prompt:
+
+- Separate decision-making from execution. The agent can propose an action, but a policy service or execution component should independently validate scope, privilege, and approval state before execution.
+- Bind approval to the exact action. Include the actor, tool name, target resource, normalized parameters, timestamp, and expiry in the approval record.
+- Use short-lived authorization artifacts and replay protection for irreversible operations.
+- Require step-up authentication for critical actions such as account recovery, payment initiation, privilege changes, bulk deletion, or production deployment.
+- Make high-impact actions idempotent where possible and require explicit duplicate confirmation when idempotency is not possible.
+- Fail closed when risk classification, approval validation, policy lookup, or audit logging fails.
+
 ### 5. Output Validation & Guardrails
 
 - Validate agent outputs before execution or display.
@@ -338,6 +351,8 @@ class OutputGuardrails:
 - Track token usage and costs per session/user.
 - Set up alerts for security-relevant events.
 - Maintain audit trails for compliance and forensics.
+- Log structured decision metadata for high-risk actions, including action classification, risk score when applicable, authorization outcome, approval identifier, execution result, and policy version.
+- Monitor for drift in approval behavior, repeated approval bypass attempts, elevated privilege usage, abnormal tool invocation frequency, and sudden increases in high-risk actions.
 
 #### Agent Monitoring
 
@@ -663,6 +678,42 @@ class SecureContextBuilder:
         return context[:max_tokens * 4]  # Rough char estimate
 ```
 
+### 9. Secure Agent Testing & Adversarial Validation
+
+AI agents should undergo structured security testing before production deployment and after material changes to prompts, tools, memory, retrieval, policies, or model providers. Testing should exercise both application controls and agent-specific failure modes.
+
+#### Abuse-Case Test Matrix
+
+Maintain repeatable test cases for:
+
+| Abuse case | What to validate |
+| --- | --- |
+| Prompt override | System and developer instructions are not silently replaced by user or retrieved content |
+| Tool misuse | Unauthorized tools are denied even when the model requests them confidently |
+| Privilege escalation | Low-trust sessions cannot reach privileged tools, credentials, or admin actions |
+| Memory poisoning | Malicious content is sanitized, scoped, expired, or rejected before persistence |
+| Data exfiltration | Sensitive context is not leaked through tool calls, citations, logs, or final output |
+| Recursive tool abuse | Chain depth, retry, token, and cost limits stop runaway loops |
+| Approval bypass | High-impact actions cannot execute without a valid, unexpired, parameter-bound approval |
+| Multi-agent chaining | One compromised agent cannot cause another agent to exceed its trust boundary |
+
+#### CI/CD and Release Gates
+
+- Run adversarial test suites in CI/CD for agent templates, tool policies, and prompt changes.
+- Include regression tests for previously observed injection, memory poisoning, and tool-abuse failures.
+- Block releases when high-risk tool policies, approval logic, or credential scopes change without updated tests.
+- Keep red-team prompts and expected denials version controlled, but do not store secrets or live customer data in test fixtures.
+- Review test changes carefully; attackers may try to weaken or remove security tests in the same pull request that changes agent behavior.
+
+#### Validation Evidence
+
+For production agents, retain evidence that shows:
+
+- The tested agent version, model provider, tool policy, and retrieval configuration.
+- The abuse cases executed and their expected results.
+- The approval, denial, timeout, or circuit-breaker behavior observed.
+- Any accepted residual risk and the compensating control.
+
 ## Do's and Don'ts
 
 **Do:**
@@ -675,6 +726,10 @@ class SecureContextBuilder:
 - Use structured outputs with schema validation.
 - Sign and verify inter-agent communications.
 - Classify data and apply appropriate protections.
+- Separate decision-making from execution for irreversible operations.
+- Perform structured adversarial testing before production deployment.
+- Enforce token, cost, retry, and tool-chain limits.
+- Log structured decision metadata for high-risk actions.
 
 **Don't:**
 
@@ -686,6 +741,9 @@ class SecureContextBuilder:
 - Ignore cost controls (unbounded loops can cause DoW).
 - Pass unsanitized data between agents in multi-agent systems.
 - Log sensitive data (PII, credentials) in plain text.
+- Rely solely on model output for authorization decisions.
+- Skip adversarial testing after prompt, tool, memory, retrieval, or provider changes.
+- Permit unlimited recursion, retries, or tool chaining.
 
 ## References
 

@@ -27,6 +27,8 @@ Lack of Monitoring & Drift Detection – Absence of systems to detect shifts in 
 
 Orphaned Deployments – Test or deprecated models left accessible in production environments, often unprotected.
 
+Weak Runtime Isolation - Shared training or inference infrastructure allows cross-tenant data exposure, credential reuse, side-channel leakage, or unauthorized access to accelerator memory.
+
 ## Real-World Examples
 
 - Data Poisoning via Public Dataset Manipulation: Attackers inject mislabeled samples into open-source datasets. These poisoned samples, when used during training, degrade model accuracy or introduce bias.
@@ -79,14 +81,27 @@ Orphaned Deployments – Test or deprecated models left accessible in production
 - Minimize permissions for training and inference jobs (least privilege).
 - Isolate environments for development, staging, and production.
 
-### 6. Monitoring & Logging
+### 6. Runtime & Hardware Isolation
+
+- Separate training, evaluation, and production inference workloads by trust boundary.
+- Avoid sharing GPU or accelerator devices between mutually untrusted tenants unless the platform provides strong hardware-backed partitioning and memory isolation.
+- Clear model inputs, outputs, temporary files, caches, and accelerator memory between jobs where the runtime supports it.
+- Run untrusted model evaluation, fine-tuning, and conversion jobs in sandboxes or isolated workers with restricted network egress.
+- Use microVMs, gVisor, Kata Containers, confidential compute, or dedicated nodes for high-sensitivity models and datasets.
+- Disable access to host paths, container sockets, cloud metadata services, and unnecessary device mounts from model-serving containers.
+- Apply per-workload CPU, memory, GPU, disk, process, and network limits to prevent noisy-neighbor and denial-of-service impact.
+- Keep model-serving credentials scoped to the specific model, endpoint, and environment rather than sharing broad platform credentials.
+- Validate that job teardown removes temporary artifacts, local checkpoints, prompt logs, and cached embeddings.
+- Monitor runtime isolation failures, unexpected device access, cross-namespace network traffic, and attempts to access metadata endpoints.
+
+### 7. Monitoring & Logging
 
 - Monitor input distribution, output entropy, and latency.
 - Detect drift via statistical analysis or shadow models.
 - Log requests and access with traceability (avoid logging sensitive data).
 - Alert on unusual usage patterns (e.g., scraping, injection attempts).
 
-### 7. Adversarial Robustness
+### 8. Adversarial Robustness
 
 - Include adversarial examples in testing and evaluation.
 - Use robust training techniques (e.g., adversarial training, input denoising).
@@ -94,7 +109,7 @@ Orphaned Deployments – Test or deprecated models left accessible in production
 - Use shadow deployments to evaluate candidate model behavior on real production inputs without affecting live outputs.
 - Use canary releases to gradually route a small percentage of traffic to the new model with rapid rollback capability if there are problems.
 
-### 8. Incident Response & Governance
+### 9. Incident Response & Governance
 
 - Define escalation procedures for model abuse or drift.
 - Implement rollback mechanisms for model deployments.

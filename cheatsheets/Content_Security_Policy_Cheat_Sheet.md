@@ -247,12 +247,12 @@ Navigation directives instruct the browser about the locations that the document
 
 Reporting directives deliver violations of prevented behaviors to specified locations. These directives serve no purpose on their own and are dependent on other directives.
 
-- `report-to` which is a group name defined in the header in a JSON formatted header value.
+- `report-to` (CSP Level 3, used together with the [Reporting API](https://developer.mozilla.org/en-US/docs/Web/API/Reporting_API)) is the __primary, current__ reporting directive. It references a group name defined in the `Reporting-Endpoints` (or legacy `Report-To`) response header containing a JSON-formatted endpoint list.
     - [MDN report-to documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/report-to)
-- `report-uri` directive is deprecated by `report-to`, which is a URI that the reports are sent to.
-    - Goes by the format of: `Content-Security-Policy: report-uri https://example.com/csp-reports`
+- `report-uri` is __deprecated__ by CSP Level 3 in favor of `report-to`. It takes a URI that reports are sent to.
+    - Format: `Content-Security-Policy: report-uri https://example.com/csp-reports`
 
-In order to ensure backward compatibility, use the 2 directives in conjunction. Whenever a browser supports `report-to`, it will ignore `report-uri`. Otherwise, `report-uri` will be used.
+For backward compatibility, declare both directives in conjunction. Browsers that support `report-to` will use it and ignore `report-uri`; older browsers fall back to `report-uri`. Once support for legacy browsers is no longer required, `report-uri` can be removed.
 
 ### Special Directive Sources
 
