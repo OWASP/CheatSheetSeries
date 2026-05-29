@@ -190,13 +190,15 @@ All cookies should be marked with the "[Secure](https://developer.mozilla.org/en
 
 Although TLS provides protection of data while it is in transit, it does not provide any protection for data once it has reached the requesting system. As such, this information may be stored in the cache of the user's browser, or by any intercepting proxies which are configured to perform TLS decryption.
 
-Where sensitive data is returned in responses, HTTP headers should be used to instruct the browser and any proxy servers not to cache the information, in order to prevent it being stored or returned to other users. This can be achieved by setting the following HTTP headers in the response:
+Where sensitive data is returned in responses, HTTP headers should be used to instruct the browser and any proxy server not to cache the information, in order to prevent it being stored or returned to other users. For modern HTTP/1.1+ clients and intermediaries, a single header is sufficient:
 
 ```text
-Cache-Control: no-cache, no-store, must-revalidate
-Pragma: no-cache
-Expires: 0
+Cache-Control: no-store
 ```
+
+`no-store` is the strongest cache directive: it forbids both shared and private caches from storing any part of the response. The legacy combination `Cache-Control: no-cache, no-store, must-revalidate` plus `Pragma: no-cache` and `Expires: 0` is only required if you must support pre-HTTP/1.1 caches (effectively obsolete in 2024+) and adds no protection beyond `no-store` on a modern stack. Note that `Cache-Control` governs the HTTP cache; it does not control whether the browser stores cookies in its cookie jar — that is controlled by the cookie attributes (`Max-Age`, `Expires`, `Session`).
+
+If you also need to clear data already cached on the client at sign-out, additionally send [`Clear-Site-Data`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Clear-Site-Data) (e.g. `Clear-Site-Data: "cache", "cookies", "storage"`).
 
 ### Use HTTP Strict Transport Security
 

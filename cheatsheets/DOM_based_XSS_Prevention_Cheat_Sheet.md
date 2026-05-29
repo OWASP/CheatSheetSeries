@@ -467,7 +467,10 @@ Examples of some JavaScript sandbox / sanitizers:
 
 ### GUIDELINE \#10 - Don't eval() JSON to convert it to native JavaScript objects
 
-Don't `eval()` JSON to convert it to native JavaScript objects. Instead use `JSON.toJSON()` and `JSON.parse()` (Chris Schmidt).
+Don't `eval()` JSON to convert it to native JavaScript objects. Use the built-in `JSON.parse()` to deserialize JSON into JavaScript values, and `JSON.stringify()` to serialize JavaScript values into JSON. `JSON.parse()` rejects anything that is not valid JSON, so it cannot execute attacker-supplied code the way `eval()` can.
+
+> [!WARNING]
+> `JSON.stringify()` is **not** an output-encoding function. Its output is valid JSON but is not safe to embed directly in an HTML, HTML-attribute, or inline `<script>` context — characters like `<`, `>`, `&`, `"`, `'`, ` `, and ` ` can break out of the surrounding context and enable XSS. When embedding the output of `JSON.stringify()` in a page, either (a) deliver it as a separate JSON response and parse it client-side with `JSON.parse()`, or (b) HTML-encode (or JavaScript-string-encode, depending on the sink) the serialized string before injecting it. See [OWASP XSS Prevention Rules #3 and #3.1](Cross_Site_Scripting_Prevention_Cheat_Sheet.md).
 
 ## Common Problems Associated with Mitigating DOM Based XSS
 
