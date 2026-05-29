@@ -5013,7 +5013,11 @@ Another option provided by Gaz (Gareth) was to use a specific code construct to 
 <li><a href="https://owasp.org/www-pdf-archive/OWASPSummit2011DOMSandboxingBrowserSecurityTrack.pdf">OWASP Summit 2011 - DOM Sandboxing</a></li>
 </ul>
 <h3 id="guideline-10-dont-eval-json-to-convert-it-to-native-javascript-objects">GUIDELINE #10 - Don't eval() JSON to convert it to native JavaScript objects<a class="headerlink" href="#guideline-10-dont-eval-json-to-convert-it-to-native-javascript-objects" title="Permanent link">&para;</a></h3>
-<p>Don't <code>eval()</code> JSON to convert it to native JavaScript objects. Instead use <code>JSON.toJSON()</code> and <code>JSON.parse()</code> (Chris Schmidt).</p>
+<p>Don't <code>eval()</code> JSON to convert it to native JavaScript objects. Use the built-in <code>JSON.parse()</code> to deserialize JSON into JavaScript values, and <code>JSON.stringify()</code> to serialize JavaScript values into JSON. <code>JSON.parse()</code> rejects anything that is not valid JSON, so it cannot execute attacker-supplied code the way <code>eval()</code> can.</p>
+<blockquote>
+<p>[!WARNING]
+<code>JSON.stringify()</code> is <strong>not</strong> an output-encoding function. Its output is valid JSON but is not safe to embed directly in an HTML, HTML-attribute, or inline <code>&lt;script&gt;</code> context — characters like <code>&lt;</code>, <code>&gt;</code>, <code>&amp;</code>, <code>"</code>, <code>'</code>, <code></code>, and <code></code> can break out of the surrounding context and enable XSS. When embedding the output of <code>JSON.stringify()</code> in a page, either (a) deliver it as a separate JSON response and parse it client-side with <code>JSON.parse()</code>, or (b) HTML-encode (or JavaScript-string-encode, depending on the sink) the serialized string before injecting it. See <a href="Cross_Site_Scripting_Prevention_Cheat_Sheet.html">OWASP XSS Prevention Rules #3 and #3.1</a>.</p>
+</blockquote>
 <h2 id="common-problems-associated-with-mitigating-dom-based-xss">Common Problems Associated with Mitigating DOM Based XSS<a class="headerlink" href="#common-problems-associated-with-mitigating-dom-based-xss" title="Permanent link">&para;</a></h2>
 <h3 id="complex-contexts">Complex Contexts<a class="headerlink" href="#complex-contexts" title="Permanent link">&para;</a></h3>
 <p>In many cases the context isn't always straightforward to discern.</p>
