@@ -6,6 +6,8 @@ on:
     branches:
     - master
 
+permissions: {}
+
 jobs:
   lint:
     permissions:
