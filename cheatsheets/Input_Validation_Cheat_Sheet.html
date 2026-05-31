@@ -1905,10 +1905,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#allow-list-regular-expression-examples" class="md-nav__link">
+  <a href="#allowlist-regular-expression-examples" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Allow List Regular Expression Examples
+        Allowlist Regular Expression Examples
       
     </span>
   </a>
@@ -4212,10 +4212,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#allow-list-regular-expression-examples" class="md-nav__link">
+  <a href="#allowlist-regular-expression-examples" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Allow List Regular Expression Examples
+        Allowlist Regular Expression Examples
       
     </span>
   </a>
@@ -4442,7 +4442,7 @@
 <h2 id="implementing-input-validation">Implementing Input Validation<a class="headerlink" href="#implementing-input-validation" title="Permanent link">&para;</a></h2>
 <p>Input validation can be implemented using any programming technique that allows effective enforcement of syntactic and semantic correctness, for example:</p>
 <ul>
-<li>Data type validators available natively in web application frameworks (such as <a href="https://docs.djangoproject.com/en/1.11/ref/validators/">Django Validators</a>, <a href="https://commons.apache.org/proper/commons-validator/apidocs/org/apache/commons/validator/package-summary.html#doc.Usage.validator">Apache Commons Validators</a> etc).</li>
+<li>Use data type validators available natively in web application frameworks (such as <a href="https://docs.djangoproject.com/en/1.11/ref/validators/">Django Validators</a>, <a href="https://commons.apache.org/proper/commons-validator/apidocs/org/apache/commons/validator/package-summary.html#doc.Usage.validator">Apache Commons Validators</a> etc).</li>
 <li>Validation against <a href="http://json-schema.org/">JSON Schema</a> and <a href="https://www.w3schools.com/xml/schema_intro.asp">XML Schema (XSD)</a> for input in these formats.</li>
 <li>Type conversion (e.g. <code>Integer.parseInt()</code> in Java, <code>int()</code> in Python) with strict exception handling</li>
 <li>Minimum and maximum value range check for numerical parameters and dates, minimum and maximum length check for strings.</li>
@@ -4476,14 +4476,14 @@
 <h3 id="regular-expressions-regex">Regular Expressions (Regex)<a class="headerlink" href="#regular-expressions-regex" title="Permanent link">&para;</a></h3>
 <p>Developing regular expressions can be complicated, and is well beyond the scope of this cheat sheet.</p>
 <p>There are lots of resources on the internet about how to write regular expressions, including this <a href="https://www.regular-expressions.info/">site</a> and the <a href="https://owasp.org/www-community/OWASP_Validation_Regex_Repository">OWASP Validation Regex Repository</a>.</p>
-<p>When designing regular expression, be aware of <a href="https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS">RegEx Denial of Service (ReDoS) attacks</a>. These attacks cause a program using a poorly designed Regular Expression to operate very slowly and utilize CPU resources for a very long time.</p>
+<p>When designing regular expressions, be aware of <a href="https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS">RegEx Denial of Service (ReDoS) attacks</a>. These attacks cause a program using a poorly designed Regular Expression to operate very slowly and utilize CPU resources for a very long time.</p>
 <p>In summary, input validation should:</p>
 <ul>
 <li>Be applied to all input data, at minimum.</li>
 <li>Define the allowed set of characters to be accepted.</li>
 <li>Define a minimum and maximum length for the data (e.g. <code>{1,25}</code>).</li>
 </ul>
-<h2 id="allow-list-regular-expression-examples">Allow List Regular Expression Examples<a class="headerlink" href="#allow-list-regular-expression-examples" title="Permanent link">&para;</a></h2>
+<h2 id="allowlist-regular-expression-examples">Allowlist Regular Expression Examples<a class="headerlink" href="#allowlist-regular-expression-examples" title="Permanent link">&para;</a></h2>
 <p>Validating a U.S. Zip Code (5 digits plus optional -4)</p>
 <div class="highlight"><pre><span></span><code>^\d{5}(-\d{4})?$
 </code></pre></div>
@@ -4539,12 +4539,12 @@ TX|UT|VT|VI|VA|WA|WV|WI|WY)$
 </ul>
 <h3 id="public-serving-of-uploaded-content">Public Serving of Uploaded Content<a class="headerlink" href="#public-serving-of-uploaded-content" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Ensure uploaded images are served with the correct content-type (e.g. <code>image/jpeg</code>, <code>application/x-xpinstall</code>)</li>
+<li>Ensure uploaded images are served with the correct content-type (e.g. <code>image/jpeg</code>, <code>image/png</code>)</li>
 </ul>
 <h3 id="beware-of-specific-file-types">Beware of Specific File Types<a class="headerlink" href="#beware-of-specific-file-types" title="Permanent link">&para;</a></h3>
 <p>The upload feature should be using an allowlist approach to only allow specific file types and extensions. However, it is important to be aware of the following file types that, if allowed, could result in security vulnerabilities:</p>
 <ul>
-<li><strong>crossdomain.xml</strong> / <strong>clientaccesspolicy.xml:</strong> allows cross-domain data loading in Flash, Java and Silverlight. If permitted on sites with authentication this can permit cross-domain data theft and CSRF attacks. Note this can get pretty complicated depending on the specific plugin version in question, so its best to just prohibit files named "crossdomain.xml" or "clientaccesspolicy.xml".</li>
+<li><strong>crossdomain.xml</strong> / <strong>clientaccesspolicy.xml:</strong> allows cross-domain data loading in Flash, Java and Silverlight. If permitted on sites with authentication this can permit cross-domain data theft and CSRF attacks. Note this can get pretty complicated depending on the specific plugin version in question, so it's best to just prohibit files named "crossdomain.xml" or "clientaccesspolicy.xml".</li>
 <li><strong>.htaccess</strong> and <strong>.htpasswd:</strong> Provides server configuration options on a per-directory basis, and should not be permitted. See <a href="http://en.wikipedia.org/wiki/Htaccess">HTACCESS documentation</a>.</li>
 <li>Web executable script files are suggested not to be allowed such as <code>aspx, asp, css, swf, xhtml, rhtml, shtml, jsp, js, pl, php, cgi</code>.</li>
 </ul>
