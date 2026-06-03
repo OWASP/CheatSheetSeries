@@ -162,7 +162,7 @@ document.getElementById("bb").onmouseover = \u0061\u006c\u0065\u0072\u0074\u0028
 
 //The following example is tricky
 // first testIt will be assigned as an onmousehover event handler, The second testIt will fire while parsing.
-// becasue second testIt is a separate js statement
+// because second testIt is a separate js statement
 // this happen because of ; separator
 //"testIt;testIt" is JavaScript encoded.
 document.getElementById("bb").onmouseover = \u0074\u0065\u0073\u0074\u0049\u0074\u003b\u0074\u0065\u0073
@@ -351,7 +351,7 @@ If your code looked like the following, you would need to only double JavaScript
 ```javascript
 setTimeout("customFunction('<%=doubleJavaScriptEncodedData%>', y)");
 function customFunction (firstName, lastName)
-     alert("Hello" + firstName + " " + lastNam);
+     alert("Hello" + firstName + " " + lastName);
 }
 ```
 

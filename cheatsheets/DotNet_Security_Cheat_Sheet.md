@@ -325,7 +325,7 @@ public static class AesGcmSimple
 
 - Again, follow the algorithm guidance in the [OWASP Cryptographic Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html#algorithms).
 
-The following code snippet shows an example of using Eliptic Curve/Diffie Helman (ECDH) together with AES-GCM to perform encryption/decryption of data between two different sides without the need the transfer the symmetric key between the two sides. Instead, the sides exchange public keys and can then use ECDH to generate a shared secret which can be used for the symmetric encryption.
+The following code snippet shows an example of using Elliptic Curve/Diffie-Hellman (ECDH) together with AES-GCM to perform encryption/decryption of data between two different sides without the need to transfer the symmetric key between the two sides. Instead, the sides exchange public keys and can then use ECDH to generate a shared secret which can be used for the symmetric encryption.
 
 Again, it is strongly recommended to have a cryptography expert review your final design and code, as even the most trivial error can severely weaken your encryption.
 

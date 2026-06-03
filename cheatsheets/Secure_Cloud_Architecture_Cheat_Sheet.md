@@ -115,7 +115,7 @@ As an example, consider the architecture below. An API gateway connects to a com
 
 ### Exploring Different Levels of Trust
 
-Architects have to select a trust configuration between components, using quantative factors like risk score/tolerance, velocity of project, as well as subjective security goals. Each example below details trust boundary relationships to better explain the implications of trusting a certain resource. The threat level of a specific resource as a color from green (safe) to red (dangerous) will outline which resources shouldn't be trusted.
+Architects have to select a trust configuration between components, using quantitative factors like risk score/tolerance, velocity of project, as well as subjective security goals. Each example below details trust boundary relationships to better explain the implications of trusting a certain resource. The threat level of a specific resource as a color from green (safe) to red (dangerous) will outline which resources shouldn't be trusted.
 
 #### 1. No trust example
 
