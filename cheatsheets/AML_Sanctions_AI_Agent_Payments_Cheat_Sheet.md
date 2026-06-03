@@ -183,7 +183,7 @@ Use the **JSON Canonicalization Scheme (JCS), [RFC 8785](https://www.rfc-editor.
 
 Agent payments often traverse multiple agents (orchestrator to sub-agent to service). If the compliance receipt stays only with the issuing system, accountability is lost at the first hop. The signed receipt MUST **travel with the transaction** so every downstream party can independently verify who was screened, against which lists, and what was decided, without trusting an upstream agent's word.
 
-Bind each receipt to the specific transaction (include the transaction or intent hash in the signed payload) and propagate it end to end. Each hop verifies the inbound receipt and, if it takes its own action, appends its own signed receipt, producing a verifiable chain of accountability across agents.
+Bind each receipt to the specific transaction (include the transaction or intent hash in the signed payload) and propagate it end-to-end. Each hop verifies the inbound receipt and, if it takes its own action, appends its own signed receipt, producing a verifiable chain of accountability across agents. Message-level integrity and replay defence for such receipts is covered in [Section 7 of the OWASP MCP Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/MCP_Security_Cheat_Sheet.html#7-message-level-integrity-and-replay-defence).
 
 ### Do
 
@@ -198,7 +198,7 @@ Bind each receipt to the specific transaction (include the transaction or intent
 
 ## Section 10: Binding Sanctions-List Freshness to the Receipt
 
-A receipt stating "screened, no match" is meaningless without which version of the list, and as of when. Sanctions lists change frequently; a clean screen against a stale list is a compliance gap. Bind the **list version and timestamp** into the signed receipt so screening freshness is itself non-tamperable and auditable.
+A receipt stating "screened, no match" is meaningless without which version of the list, and as of when. Sanctions lists change frequently; a clean screen against a stale list is a compliance gap. Bind the **list version and timestamp** into the signed receipt so screening freshness is itself non-tamperable and auditable. Public sanctions sources such as the [OFAC Sanctions List Search](https://sanctionssearch.ofac.treas.gov/) and the [EU Consolidated Sanctions List](https://data.europa.eu/data/datasets/consolidated-list-of-persons-groups-and-entities-subject-to-eu-financial-sanctions) change frequently, so the version screened against must be recorded.
 
 ### Do
 
@@ -213,7 +213,7 @@ A receipt stating "screened, no match" is meaningless without which version of t
 
 ## Section 11: Regulatory Mapping
 
-The controls in this cheat sheet map to common AML and sanctions obligations. This mapping is illustrative and is not legal advice; obligations vary by jurisdiction.
+The controls in this cheat sheet map to common AML and sanctions obligations. This mapping is illustrative and is not legal advice; obligations vary by jurisdiction. For underlying obligations see, for example, the [Bank Secrecy Act](https://www.fincen.gov/index.php/resources/statutes-and-regulations/bank-secrecy-act) and [FinCEN Customer Due Diligence Requirements](https://www.fincen.gov/resources/statutes-regulations/federal-register-notices/customer-due-diligence-requirements).
 
 | Control (this cheat sheet) | Maps to |
 | --- | --- |
