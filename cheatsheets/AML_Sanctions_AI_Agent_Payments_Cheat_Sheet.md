@@ -232,7 +232,6 @@ The controls in this cheat sheet map to common AML and sanctions obligations. Th
 
 - Don't rely on a single jurisdiction's lists or rules for a cross-border agent payment system.
 
-
 ## Section 12: Do's and Don'ts Summary
 
 The consolidated controls below align with the AI-system-specific verification requirements in the [OWASP Artificial Intelligence Security Verification Standard (AISVS)](https://github.com/OWASP/AISVS), in particular Chapter 10 (MCP Security Requirements).
