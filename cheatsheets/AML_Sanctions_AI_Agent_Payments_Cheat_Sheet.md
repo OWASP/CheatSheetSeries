@@ -162,7 +162,78 @@ Institutions must decide whether to run their own screening engine or use a host
 - Send agent private keys or full identity credentials to a third-party screening provider. Send only the minimum identity attributes needed.
 - Assume that TLS alone provides sufficient integrity. After TLS termination at a load balancer or CDN, the plaintext request is visible to downstream components.
 
-## Section 8: Do's and Don'ts Summary
+## Section 8: Receipt Canonicalization (RFC 8785 / JCS)
+
+A compliance receipt is only verifiable across systems if every party serializes it to the **exact same bytes** before signing and verifying. JSON permits variable key order, whitespace, and number formatting, so two systems can produce different byte streams for the *same* logical receipt, and a signature over one will fail against the other.
+
+Use the **JSON Canonicalization Scheme (JCS), [RFC 8785](https://www.rfc-editor.org/rfc/rfc8785)**, to produce a deterministic byte representation before hashing and signing. The signer canonicalizes, hashes (for example with SHA-256), then signs; every verifier canonicalizes the received receipt identically and checks the signature. This makes receipts verifiable by **any** counterparty, regulator, or downstream agent, not just the issuing system.
+
+### Do
+
+- Canonicalize every receipt with RFC 8785 (JCS) before signing, and again before verifying.
+- Sign over the hash of the canonical bytes, not raw or pretty-printed JSON.
+- Record the canonicalization, hash, and signature algorithm in the receipt (for example `canon: jcs`, `alg: ecdsa-p256-sha256`) so any verifier can reproduce it.
+
+### Don't
+
+- Don't sign framework-default or pretty-printed JSON, because key order or whitespace differences break cross-system verification.
+- Don't assume two services emit identical JSON for the same object; they usually will not.
+
+## Section 9: Cross-Agent Payment Accountability
+
+Agent payments often traverse multiple agents (orchestrator to sub-agent to service). If the compliance receipt stays only with the issuing system, accountability is lost at the first hop. The signed receipt MUST **travel with the transaction** so every downstream party can independently verify who was screened, against which lists, and what was decided, without trusting an upstream agent's word.
+
+Bind each receipt to the specific transaction (include the transaction or intent hash in the signed payload) and propagate it end to end. Each hop verifies the inbound receipt and, if it takes its own action, appends its own signed receipt, producing a verifiable chain of accountability across agents.
+
+### Do
+
+- Attach the signed compliance receipt to the transaction and propagate it across every agent hop.
+- Bind each receipt to the transaction by signing over the transaction or intent hash.
+- At each hop, verify the inbound receipt before acting, and append a new signed receipt for any action taken.
+
+### Don't
+
+- Don't keep the receipt only in the issuing system's logs, because downstream agents then cannot prove screening occurred.
+- Don't let a downstream agent rely on an upstream agent's unverifiable claim that screening happened.
+
+## Section 10: Binding Sanctions-List Freshness to the Receipt
+
+A receipt stating "screened, no match" is meaningless without which version of the list, and as of when. Sanctions lists change frequently; a clean screen against a stale list is a compliance gap. Bind the **list version and timestamp** into the signed receipt so screening freshness is itself non-tamperable and auditable.
+
+### Do
+
+- Include the sanctions-list source(s), version or publication date, and screening timestamp **inside the signed receipt**.
+- Define a maximum acceptable list age, record it in the receipt, and fail-closed if it is exceeded.
+- Make list freshness auditable after the fact from the receipt alone.
+
+### Don't
+
+- Don't assert a screening result without recording the list version and date it was screened against.
+- Don't treat "screened" as a boolean; a clean result against an out-of-date list is not compliant.
+
+## Section 11: Regulatory Mapping
+
+The controls in this cheat sheet map to common AML and sanctions obligations. This mapping is illustrative and is not legal advice; obligations vary by jurisdiction.
+
+| Control (this cheat sheet) | Maps to |
+| --- | --- |
+| Agent identity before screening (Section 1) | KYC/KYB attribution; FATF Recommendation 10 (Customer Due Diligence) |
+| Entity and operator screening (Sections 2-3) | OFAC, EU, UK, and UN sanctions screening; FATF Recommendation 6 |
+| Signed audit trail and receipt (Sections 4, 8-10) | Recordkeeping; FATF Recommendation 11; multi-year retention (BSA, EU AMLD) |
+| Sanctions-list freshness in receipt (Section 10) | Obligation to screen against current lists; sanctions-evasion controls |
+| Fail-closed enforcement (Section 5) | Blocking obligations for sanctioned parties |
+| Trust-tiered limits (Section 6) | Risk-based approach (FATF Recommendation 1); monitoring thresholds |
+
+### Do
+
+- Treat this table as a starting point and confirm specific obligations with qualified counsel for each operating jurisdiction.
+
+### Don't
+
+- Don't rely on a single jurisdiction's lists or rules for a cross-border agent payment system.
+
+
+## Section 12: Do's and Don'ts Summary
 
 The consolidated controls below align with the AI-system-specific verification requirements in the [OWASP Artificial Intelligence Security Verification Standard (AISVS)](https://github.com/OWASP/AISVS), in particular Chapter 10 (MCP Security Requirements).
 
