@@ -4814,7 +4814,7 @@
 
 <span class="c1">//The following example is tricky</span>
 <span class="c1">// first testIt will be assigned as an onmousehover event handler, The second testIt will fire while parsing.</span>
-<span class="c1">// becasue second testIt is a separate js statement</span>
+<span class="c1">// because second testIt is a separate js statement</span>
 <span class="c1">// this happen because of ; separator</span>
 <span class="c1">//&quot;testIt;testIt&quot; is JavaScript encoded.</span>
 <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;bb&quot;</span><span class="p">).</span><span class="nx">onmouseover</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">\u0074\u0065\u0073\u0074\u0049\u0074\u003b\u0074\u0065\u0073</span>
@@ -4935,7 +4935,7 @@
 <p>If your code looked like the following, you would need to only double JavaScript encode input data.</p>
 <div class="highlight"><pre><span></span><code><span class="nx">setTimeout</span><span class="p">(</span><span class="s2">&quot;customFunction(&#39;&lt;%=doubleJavaScriptEncodedData%&gt;&#39;, y)&quot;</span><span class="p">);</span>
 <span class="kd">function</span><span class="w"> </span><span class="nx">customFunction</span><span class="w"> </span><span class="p">(</span><span class="nx">firstName</span><span class="p">,</span><span class="w"> </span><span class="nx">lastName</span><span class="p">)</span>
-<span class="w">     </span><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">firstName</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">lastNam</span><span class="p">);</span>
+<span class="w">     </span><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">firstName</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">lastName</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div>
 <p>The <code>doubleJavaScriptEncodedData</code> has its first layer of JavaScript encoding reversed (upon execution) in the single quotes.</p>
