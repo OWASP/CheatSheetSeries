@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Microservices_Security_Cheat_Sheet.html">
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Regression_Testing_Cheat_Sheet.html">
       
       
-        <link rel="prev" href="Mass_Assignment_Cheat_Sheet.html">
+        <link rel="prev" href="Authorization_Cheat_Sheet.html">
       
       
-        <link rel="next" href="Microservices_based_Security_Arch_Doc_Cheat_Sheet.html">
+        <link rel="next" href="Authorization_Testing_Automation_Cheat_Sheet.html">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>Microservices Security - OWASP Cheat Sheet Series</title>
+        <title>Authorization Regression Testing - OWASP Cheat Sheet Series</title>
       
     
     
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#microservices-security-cheat-sheet" class="md-skip">
+        <a href="#authorization-regression-testing-cheat-sheet" class="md-skip">
           Skip to content
         </a>
       
@@ -113,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Microservices Security
+              Authorization Regression Testing
             
           </span>
         </div>
@@ -695,10 +695,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="Authorization_Regression_Testing_Cheat_Sheet.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Authorization Regression Testing
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="Authorization_Regression_Testing_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
         
   
   
@@ -714,6 +741,220 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#authorization-test-matrix-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Authorization Test Matrix Design
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Authorization Test Matrix Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#define-the-access-policy-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Define the Access Policy Model
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#machine-readable-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Machine-Readable Rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#regression-testing-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Regression Testing Patterns
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Regression Testing Patterns">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#horizontal-escalation-idor-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Horizontal Escalation (IDOR) Validation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vertical-escalation-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vertical Escalation Validation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tenant-isolation-breakage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tenant Isolation Breakage
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contract-driven-authorization-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Contract-Driven Authorization Validation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#automated-testing-framework-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Automated Testing Framework Integration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cicd-gating-and-sdlc-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CI/CD Gating and SDLC Integration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="References">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#owasp-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OWASP Resources
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#related-owasp-cheat-sheets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related OWASP Cheat Sheets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#standards-and-specifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Standards and Specifications
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tools
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2235,37 +2476,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Microservices Security
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="Microservices_Security_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="Microservices_Security_Cheat_Sheet.html" class="md-nav__link">
         
   
   
@@ -2281,271 +2495,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#introduction" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Introduction
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#edge-level-authorization" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Edge-level authorization
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#service-level-authorization" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Service-level authorization
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Service-level authorization">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#service-level-authorization-existing-patterns" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Service-level authorization: existing patterns
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Service-level authorization: existing patterns">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#decentralized-pattern" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Decentralized pattern
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#centralized-pattern-with-single-policy-decision-point" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Centralized pattern with single policy decision point
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#centralized-pattern-with-embedded-policy-decision-point" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Centralized pattern with embedded policy decision point
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#recommendations-on-how-to-implement-authorization" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Recommendations on how to implement authorization
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#external-entity-identity-propagation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        External Entity Identity Propagation
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="External Entity Identity Propagation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#identity-propagation-existing-patterns" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Identity propagation: existing patterns
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Identity propagation: existing patterns">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#sending-the-external-entity-identity-as-clear-or-self-signed-data-structures" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Sending the external entity identity as clear or self-signed data structures
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#using-a-data-structure-signed-by-a-trusted-issuer" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Using a data structure signed by a trusted issuer
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#recommendation-on-how-to-implement-identity-propagation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Recommendation on how to implement identity propagation
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#service-to-service-authentication" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Service-to-service authentication
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Service-to-service authentication">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#existing-patterns" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Existing patterns
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Existing patterns">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#mutual-transport-layer-security" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Mutual transport layer security
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#token-based" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Token-based
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#logging" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Logging
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#references" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        References
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -4164,45 +4113,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#edge-level-authorization" class="md-nav__link">
+  <a href="#authorization-test-matrix-design" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Edge-level authorization
+        Authorization Test Matrix Design
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#service-level-authorization" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Service-level authorization
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Service-level authorization">
+    <nav class="md-nav" aria-label="Authorization Test Matrix Design">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#service-level-authorization-existing-patterns" class="md-nav__link">
+  <a href="#define-the-access-policy-model" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Service-level authorization: existing patterns
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Service-level authorization: existing patterns">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#decentralized-pattern" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Decentralized pattern
+        Define the Access Policy Model
       
     </span>
   </a>
@@ -4210,37 +4136,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#centralized-pattern-with-single-policy-decision-point" class="md-nav__link">
+  <a href="#machine-readable-rules" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Centralized pattern with single policy decision point
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#centralized-pattern-with-embedded-policy-decision-point" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Centralized pattern with embedded policy decision point
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#recommendations-on-how-to-implement-authorization" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Recommendations on how to implement authorization
+        Machine-Readable Rules
       
     </span>
   </a>
@@ -4253,34 +4152,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#external-entity-identity-propagation" class="md-nav__link">
+  <a href="#regression-testing-patterns" class="md-nav__link">
     <span class="md-ellipsis">
       
-        External Entity Identity Propagation
+        Regression Testing Patterns
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="External Entity Identity Propagation">
+    <nav class="md-nav" aria-label="Regression Testing Patterns">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#identity-propagation-existing-patterns" class="md-nav__link">
+  <a href="#horizontal-escalation-idor-validation" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Identity propagation: existing patterns
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Identity propagation: existing patterns">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#sending-the-external-entity-identity-as-clear-or-self-signed-data-structures" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Sending the external entity identity as clear or self-signed data structures
+        Horizontal Escalation (IDOR) Validation
       
     </span>
   </a>
@@ -4288,26 +4175,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#using-a-data-structure-signed-by-a-trusted-issuer" class="md-nav__link">
+  <a href="#vertical-escalation-validation" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Using a data structure signed by a trusted issuer
+        Vertical Escalation Validation
       
     </span>
   </a>
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-        
           <li class="md-nav__item">
-  <a href="#recommendation-on-how-to-implement-identity-propagation" class="md-nav__link">
+  <a href="#tenant-isolation-breakage" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Recommendation on how to implement identity propagation
+        Tenant Isolation Breakage
       
     </span>
   </a>
@@ -4320,66 +4202,32 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#service-to-service-authentication" class="md-nav__link">
+  <a href="#contract-driven-authorization-validation" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Service-to-service authentication
+        Contract-Driven Authorization Validation
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Service-to-service authentication">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#existing-patterns" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Existing patterns
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Existing patterns">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#mutual-transport-layer-security" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Mutual transport layer security
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#token-based" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Token-based
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#logging" class="md-nav__link">
+  <a href="#automated-testing-framework-integration" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Logging
+        Automated Testing Framework Integration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cicd-gating-and-sdlc-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CI/CD Gating and SDLC Integration
       
     </span>
   </a>
@@ -4394,6 +4242,56 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="References">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#owasp-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OWASP Resources
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#related-owasp-cheat-sheets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related OWASP Cheat Sheets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#standards-and-specifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Standards and Specifications
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tools
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -4417,164 +4315,118 @@
   
 
 
-<h1 id="microservices-security-cheat-sheet">Microservices Security Cheat Sheet<a class="headerlink" href="#microservices-security-cheat-sheet" title="Permanent link">&para;</a></h1>
+<h1 id="authorization-regression-testing-cheat-sheet">Authorization Regression Testing Cheat Sheet<a class="headerlink" href="#authorization-regression-testing-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>The microservice architecture is being increasingly used for designing and implementing application systems in both cloud-based and on-premise infrastructures, high-scale applications and services. There are many security challenges that need to be addressed in the application design and implementation phases. The fundamental security requirements that have to be addressed during design phase are authentication and authorization. Therefore, it is vital for applications security architects to understand and properly use existing architecture patterns to implement authentication and authorization in microservices-based systems. The goal of this cheat sheet is to identify such patterns and to do recommendations for applications security architects on possible ways to use them.</p>
-<h2 id="edge-level-authorization">Edge-level authorization<a class="headerlink" href="#edge-level-authorization" title="Permanent link">&para;</a></h2>
-<p>In simple scenarios, authorization can happen only at the edge level (API gateway). The API gateway can be leveraged to centralize enforcement of authorization for all downstream microservices, eliminating the need to provide authentication and access control for each of the individual services. In such cases, NIST recommends implementing mitigating controls such as mutual authentication to prevent direct, anonymous connections to the internal services (API gateway bypass). It should be noted that authorization at the edge layer has the <a href="https://www.youtube.com/watch?v=UnXjwCWgBKU">following limitations</a>:</p>
+<p>Authorization implementation is rarely static. As applications evolve, new API endpoints are added, data layers are refactored, and microservices are decoupled. While initial security testing might validate access controls at launch, the "Day 2" problem emerges quickly: <strong>How do engineering teams ensure that new features or structural changes do not break existing authorization logic?</strong></p>
+<p><a href="https://owasp.org/Top10/A01_2021-Broken_Access_Control/">Broken Access Control (BAC)</a> was ranked the number-one risk in the OWASP Top Ten 2021, and <a href="https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/05-Authorization_Testing/04-Testing_for_Insecure_Direct_Object_References">Insecure Direct Object Reference (IDOR)</a> is one of its most frequently exploited sub-categories. This cheat sheet provides actionable, architectural guidance on implementing automated authorization regression testing within the Software Development Life Cycle (SDLC). By shifting from manual, point-in-time penetration testing to continuous, developer-centric regression suites, engineering teams can catch BAC, IDOR, and tenant isolation failures before they reach production.</p>
+<p>Key topics covered in this cheat sheet include:</p>
 <ul>
-<li>Pushing all authorization decisions to the API gateway can quickly become hard to manage in complex ecosystems with many roles and access control rules.</li>
-<li>The API gateway may become a single point of decision that may violate the “defense in depth” principle.</li>
-<li>Operation teams typically own the API gateway, so development teams cannot directly make authorization changes, slowing down velocity due to additional communication and process overhead.</li>
+<li>Designing an automated authorization test matrix.</li>
+<li>Common regression testing patterns for horizontal, vertical, and tenant isolation tests.</li>
+<li>Validating authorization schemas using API contracts.</li>
+<li>Integrating authorization tests into CI/CD pipelines.</li>
 </ul>
-<p>In most cases, development teams implement authorization in both places – at the edge level at a coarse level of granularity, and at service level. To authenticate an external entity, the edge can use access tokens (referenced token or self-contained token) transmitted via HTTP headers (e.g., “Cookie” or “Authorization”) or use mTLS.</p>
-<h2 id="service-level-authorization">Service-level authorization<a class="headerlink" href="#service-level-authorization" title="Permanent link">&para;</a></h2>
-<p>Service-level authorization gives each microservice more control to enforce access control policies.
-For further discussion, we will use terms and definitions according with <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-162.pdf">NIST SP 800-162</a>. The functional components of an access control system can be classified as follows:</p>
+<h2 id="authorization-test-matrix-design">Authorization Test Matrix Design<a class="headerlink" href="#authorization-test-matrix-design" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p><strong>Relationship to the Authorization Testing Automation Cheat Sheet</strong></p>
+<p>The <a href="Authorization_Testing_Automation_Cheat_Sheet.html">Authorization Testing Automation Cheat Sheet</a> provides a foundational, XML-driven approach to building and executing an authorization matrix against REST services — including a full Java/JUnit integration test harness. <strong>This cheat sheet extends that foundation</strong> by focusing on the <em>continuous regression</em> dimension: how to design matrices in formats (YAML/JSON) suited to modern test runners, which specific failure patterns to prioritize in a regression suite (IDOR, vertical escalation, tenant boundary), how to couple tests to OpenAPI contracts, and how to gate pull requests automatically in CI/CD. If you are new to authorization test matrices, start with the <a href="Authorization_Testing_Automation_Cheat_Sheet.html">Authorization Testing Automation Cheat Sheet</a> first, then return here for SDLC-integration guidance.</p>
+</blockquote>
+<p>The foundation of continuous authorization testing is a structured mapping of rules that can be consumed by automated frameworks. Rather than writing scattered, one-off test cases, design a central matrix.</p>
+<h3 id="define-the-access-policy-model">Define the Access Policy Model<a class="headerlink" href="#define-the-access-policy-model" title="Permanent link">&para;</a></h3>
+<p>Before writing tests, explicitly define the application's access model using the <strong>Actor-Resource-Action</strong> pattern described in <a href="https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/05-Authorization_Testing/">OWASP WSTG - Testing for Authorization</a>:</p>
 <ul>
-<li>Policy Administration Point (PAP): Provides a user interface for creating, managing, testing, and debugging access control rules.</li>
-<li>Policy Decision Point (PDP): Computes access decisions by evaluating the applicable access control policy.</li>
-<li>Policy Enforcement Point (PEP): Enforces policy decisions in response to a request from a subject requesting access to a protected object.</li>
-<li>Policy Information Point (PIP): Serves as the retrieval source of attributes or the data required for policy evaluation to provide the information needed by the PDP to make decisions.</li>
+<li><strong>Actor (Who):</strong> The logical role or specific user attempting the operation (e.g., <code>Tenant_Admin</code>, <code>Standard_User</code>, <code>Anonymous_User</code>).</li>
+<li><strong>Resource (What):</strong> The object or data being accessed (e.g., <code>Invoice_123</code>, <code>/api/v2/users</code>, <code>System_Settings</code>).</li>
+<li><strong>Action (How):</strong> The operation being performed (e.g., <code>READ</code>, <code>CREATE</code>, <code>DELETE</code>, <code>EXECUTE</code>).</li>
 </ul>
-<p><img alt="NIST ABAC framework" src="../assets/NIST_ABAC.png" /></p>
-<h3 id="service-level-authorization-existing-patterns">Service-level authorization: existing patterns<a class="headerlink" href="#service-level-authorization-existing-patterns" title="Permanent link">&para;</a></h3>
-<h4 id="decentralized-pattern">Decentralized pattern<a class="headerlink" href="#decentralized-pattern" title="Permanent link">&para;</a></h4>
-<p>The development team implements PDP and PEP directly at the microservice code level. All the access control rules and attributes that need to implement that rule are defined and stored on each microservice (step 1). When a microservice receives a request along with some authorization metadata (e.g., end user context or requested resource ID), the microservice analyzes it (step 3) to generate an access control policy decision and then enforces authorization (step 4).
-<img alt="Decentralized pattern HLD" src="../assets/Dec_pattern_HLD.png" /></p>
-<p>Existing programming language frameworks allow development teams to implement authorization at the microservice layer. For example, <a href="https://www.youtube.com/watch?v=v2J32nd0g24">Spring Security allows</a> developers to enable scopes checking (e.g., using scopes extracted from incoming JWT) in the resource server and use it to enforce authorization.</p>
-<p>Implementing authorization at the source code level means that the code must be updated whenever the development team wants to modify authorization logic.</p>
-<h4 id="centralized-pattern-with-single-policy-decision-point">Centralized pattern with single policy decision point<a class="headerlink" href="#centralized-pattern-with-single-policy-decision-point" title="Permanent link">&para;</a></h4>
-<p>In this pattern, access control rules are defined, stored, and evaluated centrally. Access control rules are defined using PAP (step 1) and delivered to a centralized PDP, along with attributes required to evaluate those rules (step 2). When a subject invokes a microservice endpoint (step 3), the microservice code invokes the centralized PDP via a network call, and the PDP generates an access control policy decision by evaluating the query input against access control rules and attributes (step 4). Based on the PDP decision, the microservice enforces authorization (step 5).</p>
-<p><img alt="Centralized pattern with single policy decision point HLD" src="../assets/Single_PDP_HLD.png" /></p>
-<p>To define access control rules, development/operation teams have to use some language or notation. An example is Extensible Access Control Markup Language (XACML) and Next Generation Access Control (NGAC), which is a standard to describe policy rules.</p>
-<p>This pattern can cause latency issues due to additional network calls to the remote PDP endpoint, but it can be mitigated by caching authorization policy decisions at the microservice level. It should be mentioned that the PDP must be operated in high-availability mode to prevent resilience and availability issues. Application security architects should combine it with other patterns (e.g., authorization on API gateway level) to enforce the "defense in depth" principle.</p>
-<h4 id="centralized-pattern-with-embedded-policy-decision-point">Centralized pattern with embedded policy decision point<a class="headerlink" href="#centralized-pattern-with-embedded-policy-decision-point" title="Permanent link">&para;</a></h4>
-<p>In this pattern, access control rules are defined centrally but stored and evaluated at the microservice level. Access control rules are defined using PAP (step 1) and delivered to an embedded PDP, along with attributes required to evaluate those rules (step 2). When a subject invokes a microservice endpoint (step 3), the microservice code invokes the PDP, and the PDP generates an access control policy decision by evaluating the query input against access control rules and attributes (step 4). Based on the PDP decision, the microservice enforces authorization (step 5).</p>
-<p><img alt="Centralized pattern with embedded policy decision point HLD" src="../assets/Embed_PDP_HLD.png" /></p>
-<p>The PDP code in this case, can be implemented as a microservice built-in library or sidecar in a service mesh architecture. Due to possible network/host failures and network latency, it is advisable to implement embedded PDP as a microservice library or sidecar on the same host as the microservice. Embedded PDP usually stores authorization policy and policy-related data in-memory to minimize external dependencies during authorization enforcement and get low latency. The main difference from the “Centralized pattern with single policy decision point” approach, is that authorization <em>decisions</em> do not store on the microservice side, up-to-date authorization <em>policy</em> is stored on the microservice side instead. It should be mentioned that caching authorization decisions may lead to applying outdated authorization rules and access control violations.</p>
-<p>Netflix presented (<a href="https://www.youtube.com/watch?v=R6tUNpRpdnY">link</a>, <a href="https://conferences.oreilly.com/velocity/vl-ca-2018/public/schedule/detail/66606.html">link</a>) a real case of using “Centralized pattern with embedded PDP” pattern to implement authorization on the microservices level.</p>
-<p><img alt="Centralized pattern with embedded policy decision point HLD" src="../assets/Netflix_AC.png" /></p>
+<h3 id="machine-readable-rules">Machine-Readable Rules<a class="headerlink" href="#machine-readable-rules" title="Permanent link">&para;</a></h3>
+<p>Store this matrix in a machine-readable format (e.g., JSON, YAML, or structured test fixtures) rather than a spreadsheet. This allows testing frameworks to dynamically generate test cases, reducing manual maintenance as the authorization policy evolves.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Example Test Fixture Definition</span>
+<span class="nt">policies</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">resource</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/api/invoices/{id}&quot;</span>
+<span class="w">    </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;GET&quot;</span>
+<span class="w">    </span><span class="nt">owner_role</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;tenant_user&quot;</span>
+<span class="w">    </span><span class="nt">allowed_roles</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;tenant_admin&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;system_auditor&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">denied_roles</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;anonymous&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;different_tenant_user&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">expected_denial_code</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">403</span>
+</code></pre></div>
+<h2 id="regression-testing-patterns">Regression Testing Patterns<a class="headerlink" href="#regression-testing-patterns" title="Permanent link">&para;</a></h2>
+<p>Automated tests should specifically target the ways authorization usually degrades over time. Implement the following test patterns in your regression suite.</p>
+<h3 id="horizontal-escalation-idor-validation">Horizontal Escalation (IDOR) Validation<a class="headerlink" href="#horizontal-escalation-idor-validation" title="Permanent link">&para;</a></h3>
+<p><a href="https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/05-Authorization_Testing/04-Testing_for_Insecure_Direct_Object_References">Horizontal privilege escalation</a> occurs when a user accesses a resource belonging to another user with the same privilege level. The <a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">OWASP IDOR Prevention Cheat Sheet</a> describes the root cause: missing server-side ownership checks on object identifiers.</p>
 <ul>
-<li>The Policy portal and Policy repository are UI-based systems for creating, managing, and versioning access control rules.</li>
-<li>The Aggregator fetches data used in access control rules from all external sources and keeps it up to date.</li>
-<li>The Distributor pulls access control rules (from the Policy repository) and data used in access control rules (from Aggregators) to distribute them among PDPs.</li>
-<li>The PDP (library) asynchronously pulls access control rules and data and keeps them up to date to enforce authorization by the PEP component.</li>
+<li><strong>Pattern:</strong> The "Multi-User Replay."</li>
+<li><strong>Implementation:</strong> Authenticate as User A and create Resource X. Capture the resource identifier. Authenticate as User B (same role, different account) and attempt to read, update, and delete Resource X.</li>
+<li><strong>Assertion:</strong> The system must return a <a href="https://www.rfc-editor.org/rfc/rfc9110#section-15.5.4"><code>403 Forbidden</code></a> or <code>404 Not Found</code> (to avoid information leakage about resource existence), never a <code>200 OK</code>.</li>
 </ul>
-<h3 id="recommendations-on-how-to-implement-authorization">Recommendations on how to implement authorization<a class="headerlink" href="#recommendations-on-how-to-implement-authorization" title="Permanent link">&para;</a></h3>
-<ol>
-<li>To achieve scalability, it is not advisable to hardcode authorization policy in source code (decentralized pattern) but use a special language to express policy instead. The goal is to externalize/decouple authorization from code, and not just with a gateway/proxy acting as a checkpoint. The recommended pattern for service-level authorization is "Centralized pattern with embedded PDP" due to its resilience and wide adoption.</li>
-<li>The authorization solution should be a platform-level solution; a dedicated team (e.g., Platform security team) must be accountable for the development and operation of the authorization solution as well as sharing microservice blueprint/library/components that implement authorization among development teams.</li>
-<li>The authorization solution should be based on widely-used solutions because implementing a custom solution has the following cons:<ul>
-<li>Security or engineering teams have to build and maintain a custom solution.</li>
-<li>It is necessary to build and maintain client library SDKs for every language used in the system architecture.</li>
-<li>There is a necessity to train every developer on custom authorization service API and integration, and there’s no open-source community to source information from.</li>
-</ul>
-</li>
-<li>There is a probability that not all access control policies can be enforced by gateways/proxies and shared authorization library/components, so some specific access control rules still have to be implemented on microservice business code level. In order to do that, it is advisable to have microservice development teams use simple questionnaires/check-lists to uncover such security requirements and handle them properly during microservice development.</li>
-<li>It is advisable to implement the “defense in depth” principle and enforce authorization on:<ul>
-<li>Gateway and proxy level, at a coarse level of granularity.</li>
-<li>Microservice level, using shared authorization library/components to enforce fine-granted decisions.</li>
-<li>Microservice business code level, to implement business-specific access control rules.</li>
-</ul>
-</li>
-<li>Formal procedures on access control policy must be implemented on development, approval and rolling-out.</li>
-</ol>
-<h2 id="external-entity-identity-propagation">External Entity Identity Propagation<a class="headerlink" href="#external-entity-identity-propagation" title="Permanent link">&para;</a></h2>
-<p>To make fine-grained authorization decisions at the microservice level, a microservice has to understand the caller’s context (e.g., user ID, user roles/groups). In order to allow the internal service layer to enforce authorization, the edge layer has to propagate an authenticated external entity identity (e.g., end user context) along with a request to downstream microservices. One of the simplest ways to propagate external entity identity is to reuse the access token received by the edge and pass it to internal microservices. However, it should be mentioned that this approach is highly insecure due to possible external access token leakage and may increase an attack surface because the communication relies on a proprietary token-based system implementation. If an internal service is unintentionally exposed to the external network, then it can be directly accessed using the leaked access token. This attack is not possible if the internal service only accepts a token format known only to internal services. This pattern is also not external access token agnostic, i.e., internal services have to understand external access tokens and support a wide range of authentication techniques to extract identity from different types of external tokens (e.g., JWT, cookie, OpenID Connect token).</p>
-<h3 id="identity-propagation-existing-patterns">Identity propagation: existing patterns<a class="headerlink" href="#identity-propagation-existing-patterns" title="Permanent link">&para;</a></h3>
-<h4 id="sending-the-external-entity-identity-as-clear-or-self-signed-data-structures">Sending the external entity identity as clear or self-signed data structures<a class="headerlink" href="#sending-the-external-entity-identity-as-clear-or-self-signed-data-structures" title="Permanent link">&para;</a></h4>
-<p>In this approach, the microservice extracts the external entity identity from the incoming request (e.g., by parsing the incoming access token), creates a data structure (e.g., JSON or self-signed JWT) with that context, and passes it on to an internal microservice.
-In this scenario, the recipient microservice has to trust the calling microservice. If the calling microservice wants to violate access control rules, it can do so by setting any user/client ID or user roles it wants in the HTTP header. This approach is suitable only in highly trusted environments where every microservice is developed by a trusted development team that applies secure software development practices.</p>
-<h4 id="using-a-data-structure-signed-by-a-trusted-issuer">Using a data structure signed by a trusted issuer<a class="headerlink" href="#using-a-data-structure-signed-by-a-trusted-issuer" title="Permanent link">&para;</a></h4>
-<p>In this pattern, after the external request is authenticated by the authentication service at the edge layer, a data structure representing the external entity identity (e.g., containing user ID, user roles/groups, or permissions) is generated, signed, or encrypted by the trusted issuer and propagated to internal microservices.
-<img alt="Signed ID propagation" src="../assets/Signed_ID_propogation.png" /></p>
-<p><a href="https://www.infoq.com/presentations/netflix-user-identity/">Netflix presented</a> a real-world case of using that pattern: a structure called “Passport” that contains the user ID and its attributes and which is HMAC protected at the edge level for each incoming request. This structure is propagated to internal microservices and never exposed outside.</p>
-<ol>
-<li>The Edge Authentication Service (EAS) obtains a secret key from the Key Management System.</li>
-<li>EAS receives an access token (e.g., in a cookie, JWT, OAuth2 token) from the incoming request.</li>
-<li>EAS decrypts the access token, resolves the external entity identity, and sends it to the internal services in the signed “Passport” structure.</li>
-<li>Internal services can extract user identity to enforce authorization (e.g., to implement identity-based authorization) using wrappers.</li>
-<li>If necessary, internal service can propagate the “Passport” structure to downstream services in the call chain.</li>
-</ol>
-<p><img alt="Netflix ID propagation approach" src="../assets/Netflix_ID_prop.png" />
-It should be mentioned that the pattern is external access token agnostic and allows for decoupling of external entities from their internal representations.</p>
-<h3 id="recommendation-on-how-to-implement-identity-propagation">Recommendation on how to implement identity propagation<a class="headerlink" href="#recommendation-on-how-to-implement-identity-propagation" title="Permanent link">&para;</a></h3>
-<ol>
-<li>In order to implement an external access token agnostic and extendable system, decouple the access tokens issued for an external entity from its internal representation. Use a single data structure to represent and propagate the external entity identity among microservices. The edge-level service has to verify the incoming external access token, issue an internal entity representation structure, and propagate it to downstream services.</li>
-<li>Using an internal entity representation structure signed (symmetric or asymmetric encryption) by a trusted issuer is a recommended pattern adopted by the community.</li>
-<li>The internal entity representation structure should be extensible to enable adding more claims that may lead to low latency.</li>
-<li>The internal entity representation structure must not be exposed outside (e.g., to a browser or external device)</li>
-</ol>
-<h2 id="service-to-service-authentication">Service-to-service authentication<a class="headerlink" href="#service-to-service-authentication" title="Permanent link">&para;</a></h2>
-<h3 id="existing-patterns">Existing patterns<a class="headerlink" href="#existing-patterns" title="Permanent link">&para;</a></h3>
-<h4 id="mutual-transport-layer-security">Mutual transport layer security<a class="headerlink" href="#mutual-transport-layer-security" title="Permanent link">&para;</a></h4>
-<p>With an mTLS approach, each microservice can legitimately identify who it talks to, in addition to achieving confidentiality and integrity of the transmitted data. Each microservice in the deployment has to carry a public/private key pair and use that key pair to authenticate to the recipient microservices via mTLS. mTLS is usually implemented with a self-hosted Public Key Infrastructure. The main challenges of using mTLS are key provisioning and trust bootstrap, certificate revocation, and key rotation.</p>
-<h4 id="token-based">Token-based<a class="headerlink" href="#token-based" title="Permanent link">&para;</a></h4>
-<p>The token-based approach works at the application layer. A token is a container that may contain the caller ID (microservice ID) and its permissions (scopes). The caller microservice can obtain a signed token by invoking a special security token service using its own service ID and password and then attaches it to every outgoing request, e.g., via HTTP headers. The called microservice can extract the token and validate it online or offline.
-<img alt="Signed ID propagation" src="../assets/Token_validation.png" /></p>
-<ol>
-<li>Online scenario:<ul>
-<li>To validate incoming tokens, the microservice invokes a centralized service token service via network call.</li>
-<li>Revoked (compromised) tokens can be detected.</li>
-<li>High latency.</li>
-<li>Should be applied to critical requests.</li>
-</ul>
-</li>
-<li>Offline scenario:<ul>
-<li>To validate incoming tokens, the microservice uses the downloaded service token service public key.</li>
-<li>Revoked (compromised) tokens may not be detected.</li>
-<li>Low latency.</li>
-<li>Should be applied to non-critical requests.
-In most cases, token-based authentication works over TLS, which provides confidentiality and integrity of data in transit.</li>
-</ul>
-</li>
-</ol>
-<h2 id="logging">Logging<a class="headerlink" href="#logging" title="Permanent link">&para;</a></h2>
-<p>Logging services in microservice-based systems aim to meet the principles of accountability and traceability and help detect security anomalies in operations via log analysis. Therefore, it is vital for application security architects to understand and adequately use existing architecture patterns to implement audit logging in microservices-based systems for security operations. A high-level architecture design is shown in the picture below and is based on the following principles:</p>
+<h3 id="vertical-escalation-validation">Vertical Escalation Validation<a class="headerlink" href="#vertical-escalation-validation" title="Permanent link">&para;</a></h3>
+<p>Vertical escalation occurs when a lower-privileged user accesses functions reserved for higher-privileged roles. This maps directly to <a href="https://cwe.mitre.org/data/definitions/269.html">CWE-269: Improper Privilege Management</a>.</p>
 <ul>
-<li>Each microservice writes a log message to a local file using standard output (via stdout, stderr).</li>
-<li>The logging agent periodically pulls log messages and sends (publishes) them to the message broker (e.g., NATS, Apache Kafka).</li>
-<li>The central logging service subscribes to messages in the message broker, receives them, and processes them.
-<img alt="Logging pattern" src="../assets/ms_logging_pattern.png" /></li>
+<li><strong>Pattern:</strong> The "Role Demotion Check."</li>
+<li><strong>Implementation:</strong> Build a suite of tests that target administrative endpoints (e.g., <code>/api/admin/users/delete</code>). Iterate through all non-administrative roles (including unauthenticated users) and attempt to execute the endpoints.</li>
+<li><strong>Assertion:</strong> Ensure the endpoints explicitly reject the requests. Relying on UI hiding is insufficient; <a href="https://owasp.org/www-project-proactive-controls/v3/en/c7-enforce-access-controls">the API layer must enforce the check</a> — client-side controls are trivially bypassed.</li>
 </ul>
-<p>High-level recommendations to logging subsystem architecture with its rationales are listed below.</p>
-<ol>
-<li>Microservice shall not send log messages directly to the central logging subsystem using network communication. Microservice shall write its log message to a local log file:<ul>
-<li>this allows to mitigate the threat of data loss due to logging service failure due to attack or in case of its flooding by legitimate microservice</li>
-<li>in case of logging service outage, microservice will still write log messages to the local file (without data loss), and after logging service recovery, logs will be available to shipping;</li>
+<h3 id="tenant-isolation-breakage">Tenant Isolation Breakage<a class="headerlink" href="#tenant-isolation-breakage" title="Permanent link">&para;</a></h3>
+<p>In multi-tenant SaaS applications, logic changes (like caching or query modifications) can inadvertently leak data across tenant boundaries, a scenario covered by the <a href="Multi_Tenant_Security_Cheat_Sheet.html">Multi-Tenant Security Cheat Sheet</a>.</p>
+<ul>
+<li><strong>Pattern:</strong> The "Cross-Tenant Boundary Test."</li>
+<li><strong>Implementation:</strong> Provision two distinct tenants (Tenant Alpha and Tenant Beta) in the test environment. Seed data into Tenant Alpha. Execute broad read queries (e.g., <code>GET /api/all-records</code>) as a user from Tenant Beta.</li>
+<li><strong>Assertion:</strong> Assert that the response payload contains absolutely no records belonging to Tenant Alpha. Even a single leaked record identifier constitutes a critical failure.</li>
 </ul>
-</li>
-<li>There shall be a dedicated component (logging agent) decoupled from the microservice. The logging agent shall collect log data on the microservice  (read local log file) and send it to the central logging subsystem. Due to possible network latency issues, the logging agent shall be deployed on the same host (virtual or physical machine) with the microservice:<ul>
-<li>this allows mitigating the threat of data loss due to logging service failure due to attack or in case of its flooding by legitimate microservice</li>
-<li>in case of logging agent failure, microservice still writes information to the log file, logging agent after recovery will read the file and send information to message broker;</li>
+<h2 id="contract-driven-authorization-validation">Contract-Driven Authorization Validation<a class="headerlink" href="#contract-driven-authorization-validation" title="Permanent link">&para;</a></h2>
+<p>When building APIs, the authorization schema should be explicitly defined in the API contract. The <a href="https://spec.openapis.org/oas/v3.1.0#security-scheme-object">OpenAPI Specification</a> provides <code>securitySchemes</code> and <code>security</code> fields to formally declare authorization requirements at both the global and per-operation level.</p>
+<ul>
+<li><strong>Schema-Aware Testing:</strong> Use the OpenAPI definition as the source of truth for authorization requirements. If the specification states an endpoint requires an <a href="https://www.rfc-editor.org/rfc/rfc6749">OAuth2</a> scope of <code>read:invoices</code>, the testing framework should automatically verify that tokens lacking this scope receive a <a href="https://www.rfc-editor.org/rfc/rfc9110#section-15.5.2"><code>401 Unauthorized</code></a> or <code>403 Forbidden</code> response. Tools such as <a href="https://schemathesis.readthedocs.io/en/stable/">Schemathesis</a> can read the OpenAPI document and auto-generate these negative test cases.</li>
+<li><strong>Middleware Enforcement:</strong> Configure API gateways or web frameworks to automatically enforce the security definitions present in the OpenAPI contract. Regression tests should validate that this middleware has not been bypassed or disabled following a refactor.</li>
 </ul>
-</li>
-<li>A possible DoS attack on the central logging subsystem logging agent shall not use an asynchronous request/response pattern to send log messages. There shall be a message broker to implement the asynchronous connection between the logging agent and central logging service:<ul>
-<li>this allows to mitigate the threat of data loss due to logging service failure in case of its flooding by legitimate microservice</li>
-<li>in case of logging service outage, microservice will still write log messages to the local file (without data loss), and after logging service recovery, logs will be available to shipping;</li>
+<h2 id="automated-testing-framework-integration">Automated Testing Framework Integration<a class="headerlink" href="#automated-testing-framework-integration" title="Permanent link">&para;</a></h2>
+<p>Authorization tests must live alongside functional tests in the developer's standard toolkit, following the guidance in <a href="https://owaspsamm.org/model/verification/security-testing/">OWASP SAMM: Security Testing</a>.</p>
+<ul>
+<li><strong>Test Frameworks:</strong> Use standard test runners (e.g., <a href="https://docs.pytest.org/"><code>pytest</code></a> for Python, <a href="https://jestjs.io/"><code>Jest</code></a> for JavaScript, <a href="https://junit.org/junit5/"><code>JUnit</code></a> for Java) to build authorization suites. This keeps the barrier to entry low and ensures the tests run in the same CI pipeline as functional tests.</li>
+<li><strong>Property-Based Testing:</strong> Tools like <a href="https://schemathesis.readthedocs.io/en/stable/">Schemathesis</a> or <a href="https://dredd.org/en/latest/">Dredd</a> can read an OpenAPI specification and automatically generate negative test cases (e.g., sending requests without tokens, with expired tokens, or with tokens missing required scopes) to ensure the API fails securely.</li>
+<li><strong>Session Switching:</strong> Design the test suite to quickly and cheaply swap authentication context (e.g., swapping JWTs in the <code>Authorization</code> header as defined in <a href="https://www.rfc-editor.org/rfc/rfc6750">RFC 6750</a>) without requiring a full login flow for every test.</li>
 </ul>
-</li>
-<li>Logging agent and message broker shall use mutual authentication (e.g., based on TLS) to encrypt all transmitted data (log messages) and authenticate themselves:<ul>
-<li>this allows mitigating threats such as: microservice spoofing, logging/transport system spoofing, network traffic injection, sniffing network traffic</li>
+<h2 id="cicd-gating-and-sdlc-integration">CI/CD Gating and SDLC Integration<a class="headerlink" href="#cicd-gating-and-sdlc-integration" title="Permanent link">&para;</a></h2>
+<p>The value of an authorization regression suite is only realized if it prevents vulnerable code from merging. The <a href="CI_CD_Security_Cheat_Sheet.html">OWASP CI/CD Security Cheat Sheet</a> describes broader pipeline hardening; the recommendations below focus specifically on authorization gates.</p>
+<ul>
+<li><strong>Blocking PR Builds:</strong> The authorization test suite must be a required check in the CI/CD pipeline (e.g., <a href="https://docs.github.com/en/actions">GitHub Actions</a>, GitLab CI). If an authorization test fails, the Pull Request cannot be merged.</li>
+<li><strong>Dedicated Test Suites:</strong> Tag or group authorization tests distinctly (e.g., <code>@pytest.mark.authz</code> or a dedicated <code>authz-tests</code> npm script). This allows developers to run them quickly and independently during local development.</li>
+<li><strong>Monitoring in Lower Environments:</strong> Configure CI environments to flag unusual volumes of <a href="https://www.rfc-editor.org/rfc/rfc9110#section-15.5.2"><code>401 Unauthorized</code></a> or <a href="https://www.rfc-editor.org/rfc/rfc9110#section-15.5.4"><code>403 Forbidden</code></a> responses during integration testing, which may indicate that a developer's functional changes are colliding with existing security controls.</li>
 </ul>
-</li>
-<li>Message broker shall enforce access control policy to mitigate unauthorized access and implement the principle of least privileges:<ul>
-<li>this allows mitigating the threat of microservice elevation of privileges</li>
-</ul>
-</li>
-<li>Logging agent shall filter/sanitize output log messages to make sure that sensitive data (e.g., PII, passwords, API keys) is never sent to the central logging subsystem (data minimization principle). For a comprehensive overview of items that should be excluded from logging, please see the <a href="Logging_Cheat_Sheet.html#data-to-exclude">OWASP Logging Cheat Sheet</a>.</li>
-<li>Microservices shall generate a correlation ID that uniquely identifies every call chain and helps group log messages to investigate them. The logging agent shall include a correlation ID in every log message.</li>
-<li>The logging agent shall periodically provide health and status data to indicate its availability or non-availability.</li>
-<li>The logging agent shall publish log messages in a structured logs format (e.g., JSON, CSV).</li>
-<li>The logging agent shall append log messages with context data, e.g., platform context (hostname, container name), runtime context (class name, filename).</li>
-</ol>
-<p>For a comprehensive overview of events that should be logged and possible data format, please see the <a href="Logging_Cheat_Sheet.html#which-events-to-log">OWASP Logging Cheat Sheet</a> and <a href="Logging_Vocabulary_Cheat_Sheet.html">Application Logging Vocabulary Cheat Sheet</a></p>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<h3 id="owasp-resources">OWASP Resources<a class="headerlink" href="#owasp-resources" title="Permanent link">&para;</a></h3>
 <ul>
-<li><a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-204.pdf">NIST Special Publication 800-204</a> “Security Strategies for Microservices-based Application Systems”</li>
-<li><a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-204A.pdf">NIST Special Publication 800-204A</a> “Building Secure Microservices-based Applications Using Service-Mesh Architecture”</li>
-<li><a href="https://www.manning.com/books/microservices-security-in-action">Microservices Security in Action</a>, Prabath Siriwardena and Nuwan Dias, 2020, Manning</li>
+<li><a href="https://owasp.org/Top10/A01_2021-Broken_Access_Control/">OWASP Top Ten 2021 — A01: Broken Access Control</a></li>
+<li><a href="https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/05-Authorization_Testing/">OWASP Web Security Testing Guide v4.2 — Authorization Testing</a></li>
+<li><a href="https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/05-Authorization_Testing/04-Testing_for_Insecure_Direct_Object_References">OWASP WSTG — Testing for Insecure Direct Object References</a></li>
+<li><a href="https://owasp.org/www-project-proactive-controls/v3/en/c7-enforce-access-controls">OWASP Proactive Controls C7: Enforce Access Controls</a></li>
+<li><a href="https://owaspsamm.org/model/verification/security-testing/">OWASP Software Assurance Maturity Model (SAMM): Security Testing</a></li>
+<li><a href="https://raw.githubusercontent.com/OWASP/ASVS/v4.0.3/4.0/OWASP%20Application%20Security%20Verification%20Standard%204.0.3-en.pdf">OWASP Application Security Verification Standard (ASVS) 4.0 — V4: Access Control</a></li>
+</ul>
+<h3 id="related-owasp-cheat-sheets">Related OWASP Cheat Sheets<a class="headerlink" href="#related-owasp-cheat-sheets" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="Authorization_Cheat_Sheet.html">Authorization Cheat Sheet</a></li>
+<li><a href="Authorization_Testing_Automation_Cheat_Sheet.html">Authorization Testing Automation Cheat Sheet</a></li>
+<li><a href="Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">Insecure Direct Object Reference Prevention Cheat Sheet</a></li>
+<li><a href="Multi_Tenant_Security_Cheat_Sheet.html">Multi-Tenant Security Cheat Sheet</a></li>
+<li><a href="CI_CD_Security_Cheat_Sheet.html">CI/CD Security Cheat Sheet</a></li>
+</ul>
+<h3 id="standards-and-specifications">Standards and Specifications<a class="headerlink" href="#standards-and-specifications" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://spec.openapis.org/oas/v3.1.0#security-scheme-object">OpenAPI Specification 3.1.0 — Security Scheme Object</a></li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc6749">OAuth 2.0 Authorization Framework (RFC 6749)</a></li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc6750">OAuth 2.0 Bearer Token Usage (RFC 6750)</a></li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc9110#section-15.5.2">HTTP Semantics (RFC 9110) — 401 Unauthorized</a></li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc9110#section-15.5.4">HTTP Semantics (RFC 9110) — 403 Forbidden</a></li>
+<li><a href="https://cwe.mitre.org/data/definitions/269.html">CWE-269: Improper Privilege Management</a></li>
+</ul>
+<h3 id="tools">Tools<a class="headerlink" href="#tools" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://schemathesis.readthedocs.io/en/stable/">Schemathesis — Property-based API testing</a></li>
+<li><a href="https://dredd.org/en/latest/">Dredd — HTTP API Testing Framework</a></li>
+<li><a href="https://docs.pytest.org/">pytest — Python test framework</a></li>
+<li><a href="https://junit.org/junit5/">JUnit 5 — Java test framework</a></li>
+<li><a href="https://jestjs.io/">Jest — JavaScript test framework</a></li>
 </ul>
 
 
