@@ -26,11 +26,16 @@ If interoperability with end-of-life clients is a hard business requirement, iso
 
 ### Only Support Strong Ciphers
 
-There are a large number of different ciphers (or cipher suites) that are supported by TLS, that provide varying levels of security. For TLS 1.3, use the standard AEAD cipher suites (AES‑GCM or ChaCha20‑Poly1305). If TLS 1.2 is still required, prefer AEAD‑based suites there as well and avoid CBC‑mode ciphers. At a minimum, the following types of ciphers should always be disabled:
+There are a large number of different ciphers (or cipher suites) that are supported by TLS, that provide varying levels of security.
 
-- Null ciphers
-- Anonymous ciphers
-- EXPORT ciphers
+For TLS 1.3, use the standard AEAD cipher suites (AES‑GCM or ChaCha20‑Poly1305).
+
+If TLS 1.2 is still required, prefer AEAD‑based suites there as well and avoid CBC‑mode ciphers. At a minimum, the following types of [ciphersuites](https://ciphersuite.info/) should always be disabled:
+
+- Null ciphers;
+- Anonymous ciphers (`TLS_*_anon_*`);
+- EXPORT ciphers (`TLS_*_EXPORT_*`);
+- RSA transport (`TLS_RSA_*`) and ephemeral/static Diffie-Hellman key agreement (`TLS_DH_*`, `TLS_ECDH_*`) which do not provide forward secrecy.
 
 The Mozilla Foundation provides an [easy-to-use secure configuration generator](https://ssl-config.mozilla.org/) for web, database and mail servers. This tool allows site administrators to select the software they are using and receive a configuration file that is optimized to balance security and compatibility for a wide variety of browser versions and server software.
 
@@ -38,10 +43,13 @@ The Mozilla Foundation provides an [easy-to-use secure configuration generator](
 
 The practice of earlier than TLS 1.3 protocol versions of Diffie-Hellman parameter generation for use by the ephemeral Diffie-Hellman key exchange (signified by the "DHE" or "EDH" strings in the cipher suite name) had practical issues. For example, the client had no say in the selection of server parameters, meaning it could only unconditionally accept or drop, and the random parameter generation often resulted to denial of service attacks (CVE-2022-40735, CVE-2002-20001).
 
-TLS 1.3 restricts Diffie-Hellman group parameters to known groups via the `supported_groups` extension. The available
-Diffie-Hellman groups are `ffdhe2048`, `ffdhe3072`, `ffdhe4096`, `ffdhe6144`, `ffdhe8192` as specified in [RFC7919](https://www.rfc-editor.org/rfc/rfc7919).
+The `supported_groups` extension is used to negotiate which Diffie-Hellman group are supported:
 
-By default openssl 3.0 enables all the above groups. To modify them ensure that the right Diffie-Hellman group parameters are present in `openssl.cnf`. For example
+- the available Finite Field Diffie-Hellman groups are `ffdhe2048`, `ffdhe3072`, `ffdhe4096`, `ffdhe6144`, `ffdhe8192` as specified in [RFC7919](https://www.rfc-editor.org/rfc/rfc7919);
+- Elliptic Curve Diffie-Hellman groups include `x25519`, `prime256v1`, `x448`, `secp384r1`;
+- for post-quantum cryptography, `X25519MLKEM768` it currently used (though it is not a group, proper).
+
+For OpenSSL, the list of enabled groups can be configured ins in `openssl.cnf`. For example
 
 ```text
 openssl_conf = openssl_init
@@ -50,19 +58,19 @@ ssl_conf = ssl_module
 [ssl_module]
 system_default = tls_system_default
 [tls_system_default]
-Groups = x25519:prime256v1:x448:ffdhe2048:ffdhe3072
+Groups = X25519MLKEM768:x25519:prime256v1:x448:ffdhe2048:ffdhe3072
 ```
 
-An apache configuration would look like
+An Apache configuration would look like
 
 ```text
-SSLOpenSSLConfCmd Groups x25519:secp256r1:ffdhe3072
+SSLOpenSSLConfCmd Curves X25519MLKEM768:X25519:prime256v1:secp384r1
 ```
 
 The same group on NGINX would look like the following
 
 ```text
-ssl_ecdh_curve x25519:secp256r1:ffdhe3072;
+ssl_ecdh_curve X25519MLKEM768:X25519:prime256v1:secp384r1;
 ```
 
 For TLS 1.2 or earlier versions it is recommended not to set Diffie-Hellman parameters.
@@ -105,7 +113,7 @@ Additionally, there are a number of offline tools that can be used:
 
 ### Use Strong Keys and Protect Them
 
-The private key used to generate the cipher key must be sufficiently strong for the anticipated lifetime of the private key and corresponding certificate. The current best practice is to select a key size of at least 2048 bits. Additional information on key lifetimes and comparable key strengths can be found [here](http://www.keylength.com/en/compare/) and in [NIST SP 800-57](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf).
+The private key used to generate the cipher key must be sufficiently strong for the anticipated lifetime of the private key and corresponding certificate. The current best practice is to select a key size of at least 2048 bits when using RSA keys. Additional information on key lifetimes and comparable key strengths can be found [here](http://www.keylength.com/en/compare/) and in [NIST SP 800-57](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf).
 
 The private key should also be protected from unauthorized access using filesystem permissions and other technical and administrative controls.
 
