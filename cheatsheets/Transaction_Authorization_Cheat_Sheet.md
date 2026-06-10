@@ -42,7 +42,7 @@ In general, the user must verify all significant transaction data as a part of t
 
 ### 1.2 Change of authorization token should be authorized using the current authorization token
 
-If a user can use the application interface to change the authorization token, they should be able to authorize the operation with their current authorization credentials (as is the case with [password change procedure](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/04-Authentication_Testing/09-Testing_for_Weak_Password_Change_or_Reset_Functionalities.html)). For example: when a user changes a phone number for SMS codes an authorization SMS code should be sent to the current phone number.
+If a user can use the application interface to change the authorization token, they should be able to authorize the operation with their current authorization credentials (as is the case with [password change procedure](https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/04-Authentication_Testing/09-Testing_for_Weak_Password_Change_or_Reset_Functionalities.html)). For example: when a user changes a phone number for SMS codes, an authorization SMS code should be sent to the current phone number.
 
 ### 1.3 Change of authorization method should be authorized using the current authorization method
 
@@ -111,7 +111,7 @@ Transaction authorization is usually performed in multiple steps, e.g.:
 5. The user responds with the authorization credentials.
 6. The application validates authorization and executes a transaction.
 
-**The developers must ensure that the business logic flow for a transaction authorization occurs in in sequential order so users (or attackers) cannot perform the steps out of order or even skip any of the steps. This should protect against attack techniques such as:
+**The developers must ensure that the business logic flow for a transaction authorization occurs in sequential order so users (or attackers) cannot perform the steps out of order or even skip any of the steps.** This should protect against attack techniques such as:
 
 - Overwriting transaction data before user will enter the authorization credentials
 - Skipping transaction authorization
