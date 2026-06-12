@@ -2,160 +2,290 @@
 
 ## Introduction
 
-Webhooks provide a mechanism where a Server-side application can notify a client-side application when a new even (that the client-side application might be interested in) has occurred on the server. Webhooks are incredibly useful and a resource-light way to implement event reactions. However, webhooks can also be abused and the following considerations must be taken into account to secure Webhooks. It should also be noted that webhook security considerations apply to both publisher/server and subscriber/client.
+Webhooks are HTTP callbacks that allow a server to push event notifications to a registered client endpoint. Because they accept unauthenticated inbound HTTP traffic by default, every layer of the delivery pipeline must be deliberately hardened.
 
-At the core of webhooks fundamental security best practices are available however are not enabled by default. This is a gap in the “default secure” principle however with focus and configuration this gap can be addressed. One item to note is webhook urls by default carry a high level of confidentiality. This comes from the lack of default secure principle mentioned above. With this webhook urls should be kept secret and while the security community has generally accepted that obscurity is not security it is a best practice to follow. If your webhooks are sharing sensitive information the following considerations should be reviewed and implemented.
+Security controls apply to **both sides**: the publisher (sending events) and the subscriber (receiving and processing events).
 
-At high level, the following requirements outline the security mechanisms in various ways. These high level requirements allow engineers and developers to properly implement security controls.
+---
 
-- Webhook URLs should be treated like any other secrets like password, Keys, API token and should NOT be hardcoded in source code.
-- It's important to secure Webhook URLs in Vault than storing it in Version Control System.
-- Communication between Client and Webhook server should be mutually Authenticated - TLS Authentication
-- Webhook requests should be signed and signature should be validated.
-- Follow Payload best practices for Payload, HTTP Methods and prevent from Attacks.
+## Threat Model Summary
 
-## Contents
+| Threat | Primary Control |
+|---|---|
+| Spoofed / forged events | HMAC signature verification |
+| Replay attack | Timestamp + event-ID deduplication |
+| Secret leakage | Secrets manager, log redaction |
+| SSRF via callback URL | IP/hostname allowlisting on publisher |
+| Denial of service | Rate limiting, async queues |
+| Duplicate processing | Idempotent event handlers |
+| Man-in-the-middle | TLS 1.2+ with valid CA certificate |
+| Payload injection | Input validation, schema enforcement |
 
-Controls for Securing Webhooks
+---
 
-- Treat Webhooks as Secrets
-- Enable SSL/TLS
-- Authentication
-- OAuth Authorization
-- Crude Authorized Access
-- Message Protection and Secrecy
-- Cross Site Request Forgery
-- Revocation
-- Pass Secrets in Request header
-- Fail Safe and Secure
-- Replay Protections
-- Payload best practices
-- HTTP Methods best practices
+## Controls
 
-## Treat Webhooks as Secrets
+### 1. Transport Security
 
-Secure Webhook tokens - Keep Webhook Authentication tokens(in URL) out of source code, configuration files and keep them out of logs. Do not print Webhook URLs with token in logs, Do not store write URLs with token or hard code it in source. Webhook Authentication tokens should be securely stored in Vault.
+All webhook traffic must be encrypted in transit. An unencrypted connection allows any network observer to read payloads and steal signing secrets.
 
-Abuse Case:
+- **Require HTTPS** on every webhook endpoint — reject plain HTTP.
+- Enforce **TLS 1.2 or higher**; disable TLS 1.0/1.1 and weak cipher suites.
+- Use a certificate from a trusted CA — reject self-signed certificates in production.
+- As a publisher, validate the subscriber's certificate before delivery.
 
-- Find a Webhook URL with token in github and try to post a simple message to it.
+See [Transport Layer Security Cheat Sheet](../cheatsheets/Transport_Layer_Security_Cheat_Sheet.md).
 
-## Transport Security
+---
 
-Enable SSL/TLS - The first step you should take to secure web application is to ensure that you are using HTTPS for web application's end point. Data transmitted over the Internet should always be encrypted. Your endpoint URL should support HTTPS, and you should add that secure URL to your webhook settings. Avoid connecting to an HTTPS URL with a self-signed certificate and weak Ciphers. Server must be correctly configured to support HTTPS with a valid server certificate.
+### 2. Signature Verification (HMAC)
 
-Abuse Case:
+Signing lets the subscriber confirm that a delivery came from the legitimate publisher and that the body was not tampered with.
 
-- Use an existing webhook and try to make a request to it using http://.
-- Alternative abuse case is to negotiate weak SSL/TLS when making a webhook request.
-- Alternative abuse case is to look at the certificate and see if it is self-signed. If it does not follow a strong chain of trust it should not be trusted for sensitive data or production traffic unless other mechanisms are in place
+**Publisher:**
 
-## Authentication
+- Generate a random signing secret (≥ 32 bytes) per registered webhook.
+- Compute `HMAC-SHA256` over the raw request body (include a timestamp — see Section 5).
+- Send the hex digest in a dedicated header (e.g., `X-Hub-Signature-256`).
 
-TLS Authentication
+**Subscriber:**
 
-Mutual TLS - Mutual TLS to authenticate the client, it builds upon normal TLS by adding client Authentication in addition to Server Authentication to ensure traffic is both secure and trusted in both directions. Mutual TLS guarantees that both Client and Webhook Server present a certificate during TLS handshake which mutually proves identity.
+- Read the **raw** request body _before_ your framework parses it.
+- Recompute the HMAC locally and compare using a **constant-time function** (`hmac.compare_digest`, `MessageDigest.isEqual`) — never use `==`.
+- Return `401` on mismatch; do not reveal why validation failed.
 
-Abuse Case:
+> ❌ String equality comparison (`sig == expected`) is vulnerable to timing attacks.
 
-- TLS hardening (do not use TLS 1.0 or 1.1)
-- Certificate theft from system
+#### Canonicalization Pitfalls
 
-Basic Auth - HTTP Basic Authentication will require Username and Password along with Webhook URL to Authenticate against Web Server. In an effort to enforce the high security standards, refrain from using Basic Auth and go for request signatures. If it becomes inevitable, make sure Intruder lockout is enabled and Strong password policy is enforced.
+Verify signatures against the **exact raw bytes received**. Any transformation before verification can invalidate the signature.
 
-Abuse Case:
+Do not:
 
-- Brute force Attack
-- Disclosure from information in logs
+- Reformat or pretty-print JSON
+- Reorder fields
+- Change whitespace or line endings
+- Convert character encodings
 
-## OAuth Token
+---
 
-OAuth Authorization - When you build your own endpoint for Authentication, make sure OAuth is set for Authorization OAuth 2.0 requires an Authentication token, which can be issued by Authorization server in order to connect to Webhook endpoint. OAuth token should be included in the Authorization header. Make sure that OAuth token has lifetime/Expiry set.
+### 3. Secret Management
 
-Abuse Case:
+A compromised signing secret lets an attacker forge valid webhook deliveries indefinitely. Treat webhook secrets with the same care as database credentials or API keys.
 
-- Session hijacking
-- Other OAuth attacks
+- Store signing secrets in a secrets manager (HashiCorp Vault, AWS Secrets Manager, Azure Key Vault, GCP Secret Manager). See [Secrets Management Cheat Sheet](../cheatsheets/Secrets_Management_Cheat_Sheet.md).
+- **Never** hard-code secrets in source code, config files, or container images.
+- Use **per-webhook secrets** — a single shared secret is a single point of failure.
+- Redact secrets from all logs and error responses.
 
-## Crude Authorized Access
+#### Secret Rotation
 
-IP Whitelisting - When designing network architecture, you may wish to have one set of servers and a load balancer in a DMZ that receive webhook requests from Server, and then proxy those requests to your private network. Have proper whitelist configured to allow inbound traffic to be whitelisted in Firewall with host name which list the egress IPs under the host's A record. This can be technically complex to manage, especially when the IP addresses of the webhook provider change. If you’re processing webhooks using an app developed by the webhook provider, or the open source community, and you don’t own the code, make sure to review their docs or ask them questions to confirm they abide by security best practices.
+Abrupt rotation causes delivery failures if the new secret is deployed before the subscriber has updated. Use a **dual-secret window** to avoid downtime:
 
-Abuse Case:
+1. Generate the new secret.
+2. Configure the publisher to sign with both old and new secrets (or include both signatures in the header).
+3. Update the subscriber to accept either.
+4. After confirming delivery with the new secret, revoke the old one.
+5. Return `4xx` on requests signed only with the revoked secret.
 
-- Using a targeted webhook with IP whitelisting go to a system that would not be in the whitelist and try to use it. If you can GET or POST the control is not in place.
+---
 
-## Message Protection and Secrecy
+### 4. Authentication (Defence in Depth)
 
-Get your Web Authentication Key setup - By default, a webhook URL is open and may receive a payload from anybody who knows the URL. The Key is the only thing that protects the webhook and should be handled with the highest secrecy. For security reasons, we recommend you to accept requests only from trusted sources. This is accomplished by signing your requests with a Hash-based Message Authentication Code (or HMAC). Once you defined a secret HMAC, Server will only accept signed requests for that webhook. To sign a request you need to generate hash digests of your request body using the sha512 algorithm and send it in HTTP header. If it is tampered or left blank then Server would respond with HTTP/1.1 400 Bad Request header and message like "The request is expected to be signed".
+HMAC signing verifies payload integrity but does not authenticate the transport connection itself. Layering an additional authentication mechanism limits exposure if a signing secret is ever compromised.
 
-It’s recommended to include a signature header as part of POST request, this allows additional layer of security to ensure requests are originating from legitimate source. You can have your own solution for this or leverage official libraries from third party integration.
+Layer one or more of the following on top of HMAC signing:
 
-Abuse Case:
+| Method | When to Use |
+|---|---|
+| **Mutual TLS (mTLS)** | High-assurance, machine-to-machine pipelines |
+| **Bearer token / API key** | Simple integrations; store in secrets manager, rotate regularly |
+| **OAuth 2.0** | User-delegated flows; validate `exp`, `aud`, `iss` on every request |
+| **IP allowlisting** | Additional layer; fragile when publisher IPs rotate — not a sole control |
 
-- Using a targeted webhook capture a message and replay it with a removed or replaced HMAC. If the service accepts the message it is vulnerable to this attack as it is not validating the HMAC
+See [OAuth2 Cheat Sheet](../cheatsheets/OAuth2_Cheat_Sheet.md) for OAuth-specific guidance.
 
-## Cross Site Request Forgery
+---
 
-CSRF protection - CSRF Protection for webhooks is an important Security feature to prevent Cross Site Request Forgery. If you’re using Rails, Django, or another web framework, your site might automatically check that every POST request contains a CSRF token. However, this security measure might also prevent your site from processing legitimate requests. If so, you might need to exempt the webhooks route from CSRF protection and handle them.
+### 5. Replay Attack Protection
 
-Abuse Case:
+A valid captured request can be re-delivered by an attacker. Signature verification alone does not prevent this — a replayed request carries a valid signature. Binding the signature to a short-lived timestamp closes this window.
 
-- Using a targeted webhook try sending a webhook POST request with a known list of malformed Cross-Site Request Forgery payloads.
+- Include a Unix timestamp in the signed material; transmit it in the signature header (e.g., `t=<unix_ts>,v1=<digest>`).
+- **Reject** requests whose timestamp differs from server time by more than ±5 minutes.
+- For higher assurance: cache recently seen event IDs for **at least the length of the timestamp validation window** (e.g., Redis with TTL ≥ 5 minutes) and reject duplicates.
 
-## Revocation
+---
 
-Revocation - Have provision to reset a webhook's authentication key. To ensure that you do not lose any webhook requests between the time you reset your key and when you update your application to start using that new key, your webhook processor should reject requests with failed signatures with custom Status code.
+### 6. Idempotency and Duplicate Event Handling
 
-Abuse Case:
+Publishers retry on network failures — your endpoint may receive the same event more than once. Processing a payment or sending a notification twice can cause real harm, so idempotency is a correctness concern as much as a security one.
 
-- Using a targeted webhook, capture HTTP Request with Auth key. Generate new Authkey for the Webhook URL, try POST ing with expired Auth key, Invalid Authkey, payload and validate.
+- Use the platform-provided **event ID** (e.g., `event_id`, `delivery_id`) as an idempotency key.
+- Persist processed event IDs and skip re-processing on a duplicate.
+- Return `HTTP 200` immediately for known duplicates to stop re-delivery.
+- Design downstream operations (DB writes, emails, payments) to be **idempotent by default**.
 
-## Pass Secrets in Request Header
+---
 
-Protection from repudiation attacks - Most webhook providers allow you to pass a secret or a "token" in every webhook request. Example Github. The secret is typically passed as an HTTP header, as a field in the JSON payload or appended to the request URL. When you confirm the token you received is the one you expected, it helps validate the request was sent by the webhook publisher.
+### 7. SSRF Prevention (Publisher Side)
 
-Abuse Case:
+When your application delivers webhooks to user-supplied URLs, an attacker can register an internal IP address or cloud metadata endpoint as the target, using your server as a proxy to probe the internal network.
 
-- Using a targeted webhook capture a known good message. Tamper or remove the Token from Request Header and POST the message to target URL. The webhook should respond that the message was invalid. If it does not it is vulnerable to repudiation attacks
+- **Resolve the hostname to an IP before delivery**; block:
+    - Loopback: `127.0.0.0/8`, `::1`
+    - RFC 1918: `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`
+    - Link-local / Cloud IMDS: `169.254.0.0/16` (includes `169.254.169.254`)
+    - Internal DNS names (e.g., `metadata.google.internal`)
+- **Re-resolve immediately before the HTTP request** to prevent DNS rebinding.
+- **Disable HTTP redirects** or validate every redirect target against the same rules.
+- **Allowlist schemes** — accept `https://` only; block `file://`, `gopher://`, `ftp://`, etc.
 
-## Fail Safe and Secure
+See [Server-Side Request Forgery Prevention Cheat Sheet](../cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md).
 
-Event Handling - Handling webhook events correctly is crucial to making sure your integration's business logic works as expected. Webhook endpoints might occasionally receive the same event more than once or Webhook Receivers might receive crafted or malicious payload. We advise you to guard against duplicated event receipts and crafted messages by making your event processing idempotent. One way of doing this is logging the events you’ve processed, and then not processing already-logged events. In any case of failures, do not display detailed errors that can reveal sensitive information to Attacker.
+---
 
-Abuse Case:
+### 8. Rate Limiting
 
-- Using a targeted webhook try to send incorrect, corrupted or flawed messages to the webhook targeting processing flaws in the webhook service or any services processing webhook messages. If the service does not handle the corrupt/flawed message it is vulnerable to this attack.
+Without rate limiting, a misconfigured publisher or a malicious actor can flood your endpoint and cause a denial of service. Both sides of the pipeline need protection.
 
-## Replay protections
+**Publisher:** Implement per-subscriber delivery rate limits with exponential back-off and a maximum retry count.
 
-Replay Attacks - Anyone who is sniffing traffic can intercept the request and replay it. To protect against replay attacks, you can rely on adding timestamp for when the webhook event was generated. These should be added to the header. Timestamps are typically used as a seed for computing and verifying a signature. If you try to just change the timestamp, the signature verification will fail because it's not valid.
+**Subscriber:**
 
-Abuse Case:
+- Apply rate limiting at the API gateway or application layer.
+- Return `429 Too Many Requests` with a `Retry-After` header when the limit is exceeded.
+- Decouple ingestion from processing with an async queue (SQS, Kafka, RabbitMQ) to absorb traffic spikes without dropping events.
 
-- Using a targeted webhook capture a webhook message and POST and replay the same message without modification. If you can do this, replay attacks are possible
+---
 
-## Payload best practices
+### 9. Input Validation
 
-Service Attack Vector - In most cases webhooks are being used as input for a service account. In these scenarios you need to be mindful to validate the data coming using tight validations of the payload for injection, DDOS, XSS, and other attacks that can be found in the OWASP TOP 10.
+Treat every incoming payload as untrusted input regardless of the source IP or a valid signature. A signed payload can still contain malicious field values that exploit downstream processing.
 
-Abuse Case:
+- Reject requests with an unexpected `Content-Type`.
+- Enforce a **maximum payload size** to prevent memory exhaustion.
+- Validate the payload against a **strict schema** (allowlisted fields, typed values) before processing.
+- **Validate before processing and apply context-appropriate output encoding** — e.g., parameterised queries for SQL, escaped output for HTML rendering.
 
-- Using a targeted webhook use POST method to the webhook trying to take advantage of security weaknesses in the service or application that is receiving webhook messages. This can include simple attacks such as sending large amounts of data to complex attacks like injection.
+See [Input Validation Cheat Sheet](../cheatsheets/Input_Validation_Cheat_Sheet.md) and [Injection Prevention Cheat Sheet](../cheatsheets/Injection_Prevention_Cheat_Sheet.md).
 
-## HTTP Methods best practices
+---
 
-Supported HTTP methods- While writing or exposing Webhook. Make sure only enable selected HTTP methods like GET and POST. Other methods like PUT, DELETE and even OPTIONS and HEAD should be disabled if not required.
+### 10. HTTP Method Restriction
 
-Abuse Case:
+Webhook endpoints should only accept `POST` requests. Allowing other methods unnecessarily expands the attack surface and may expose unintended framework behaviour.
 
-- Using a targeted webhook URL, try sending payloads using different HTTP methods like DELETE and PUT and observe the HTTP response.
+- Accept **only the methods required** — typically `POST`.
+- Return `405 Method Not Allowed` for all others.
+- Explicitly disable `PUT`, `DELETE`, `PATCH`, `TRACE`, and `OPTIONS` unless needed.
 
-## Reference Docs
+---
 
-- Python Webhook Tester: [https://webhook.site](https://webhook.site/)
-- [https://www.fullstackpython.com/webhooks.html](https://www.fullstackpython.com/webhooks.html)
-- [https://www.nexmo.com/blog/2019/06/28/using-message-signatures-to-ensure-secure-incoming-webhooks-dr](https://www.nexmo.com/blog/2019/06/28/using-message-signatures-to-ensure-secure-incoming-webhooks-dr)
-- [https://community.spinnaker.io/t/how-to-secure-webhooks/1122](https://community.spinnaker.io/t/how-to-secure-webhooks/1122)
-- [https://stripe.com/docs/webhooks/signatures#replay-attacks](https://stripe.com/docs/webhooks/signatures#replay-attacks)
-- [https://developer.box.com/guides/webhooks/handle/setup-signatures/](https://developer.box.com/guides/webhooks/handle/setup-signatures/)
+### 11. CSRF Considerations
+
+Webhook endpoints must be **exempted from framework CSRF token checks** because the publisher is a server, not a browser, and cannot supply a CSRF token. However, removing CSRF protection without a replacement leaves the endpoint open — HMAC signature verification serves as the functional equivalent.
+
+- Scope the CSRF exemption to the webhook route only — do not disable it globally.
+- Ensure HMAC verification is in place before granting the exemption.
+
+---
+
+### 12. Fail Securely
+
+Error responses are visible to the sender. Leaking internal details — exception messages, stack traces, or field names — can aid an attacker in crafting more targeted requests.
+
+- Return `200` only after the event has been acknowledged (queued or processed).
+- Return `400` for malformed payloads; `401`/`403` for signature failures.
+- **Never** return stack traces or verbose error details in HTTP responses — log them server-side.
+- Set up alerting for events that repeatedly fail processing (dead-letter queue).
+
+---
+
+### 13. Logging and Monitoring
+
+Logs are your primary tool for detecting abuse, diagnosing integration failures, and responding to incidents. Log enough to be useful, but avoid logging secrets or full payloads that may contain sensitive customer data.
+
+**Log:**
+
+- Timestamp, source IP, HTTP method, response status, event ID, event type, and processing latency.
+
+**Do NOT log:**
+
+- Full request bodies (may contain PII), signing secrets, or raw `Authorization` header values.
+
+**Alert on:**
+
+- Spike in signature verification failures (may indicate scanning or an attacker probing the endpoint).
+- Sustained `4xx`/`5xx` delivery errors (processing failures or upstream misconfiguration).
+- Deliveries arriving from unexpected source IPs.
+
+See [Logging Cheat Sheet](../cheatsheets/Logging_Cheat_Sheet.md).
+
+---
+
+### 14. Event Ordering
+
+Webhook events may arrive out of order due to retries, queueing, or network delays. Building your handler assuming in-order delivery leads to subtle data consistency bugs — for example, processing a `payment.failed` event before the corresponding `payment.created`.
+
+- Do not assume chronological delivery order.
+- Use event timestamps or sequence numbers in the payload when ordering matters.
+- When consistency is critical, fetch the current object state from the publisher API rather than relying solely on the event payload.
+
+---
+
+## Quick Reference Checklist
+
+| Control | Publisher | Subscriber |
+|---|---|---|
+| TLS 1.2+ with valid CA certificate | ✅ | ✅ |
+| HMAC-SHA256 signature on every delivery | ✅ Sign | ✅ Verify (constant-time) |
+| Per-webhook secret in secrets manager | ✅ | ✅ |
+| Dual-secret rotation window | ✅ | ✅ |
+| Timestamp in signed material | ✅ Include | ✅ Enforce ±5 min window |
+| Event-ID deduplication (replay protection) | — | ✅ |
+| Idempotent event processing | — | ✅ |
+| SSRF validation on callback URLs | ✅ | — |
+| Rate limiting | ✅ Throttle/backoff | ✅ 429 + async queue |
+| Schema validation | — | ✅ |
+| POST-only, 405 for others | — | ✅ |
+| No verbose errors in responses | — | ✅ |
+| Structured logs (no secrets) | ✅ | ✅ |
+
+---
+
+## Security Testing
+
+The following test cases cover the most common webhook security defects. Run these against your implementation before going to production and after any significant change to your webhook handling code.
+
+- **Invalid or missing signature** — endpoint must return `401`, not `200`.
+- **Replay attempt** — resubmit a captured request after the tolerance window; endpoint must reject it.
+- **Duplicate event ID** — send the same event twice; only one should be processed.
+- **Oversized payload** — send a payload exceeding your size limit; endpoint must return `400` or `413`.
+- **SSRF callback URL** (publisher side) — attempt to register `http://169.254.169.254/` as a webhook URL; delivery must be blocked.
+- **Secret rotation** — verify both the old and new secret are accepted during the dual-secret window, and only the new one is accepted after revocation.
+
+---
+
+## Related OWASP Cheat Sheets
+
+- [Transport Layer Security Cheat Sheet](../cheatsheets/Transport_Layer_Security_Cheat_Sheet.md)
+- [Secrets Management Cheat Sheet](../cheatsheets/Secrets_Management_Cheat_Sheet.md)
+- [Server-Side Request Forgery Prevention Cheat Sheet](../cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md)
+- [Input Validation Cheat Sheet](../cheatsheets/Input_Validation_Cheat_Sheet.md)
+- [Injection Prevention Cheat Sheet](../cheatsheets/Injection_Prevention_Cheat_Sheet.md)
+- [Cross-Site Request Forgery Prevention Cheat Sheet](../cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md)
+- [Logging Cheat Sheet](../cheatsheets/Logging_Cheat_Sheet.md)
+- [OAuth2 Cheat Sheet](../cheatsheets/OAuth2_Cheat_Sheet.md)
+- [Denial of Service Cheat Sheet](../cheatsheets/Denial_of_Service_Cheat_Sheet.md)
+- [Threat Modeling Cheat Sheet](../cheatsheets/Threat_Modeling_Cheat_Sheet.md)
+
+---
+
+## References
+
+- [Stripe: Webhook Signature Verification](https://stripe.com/docs/webhooks/signatures)
+- [GitHub: Securing Your Webhooks](https://docs.github.com/en/webhooks/using-webhooks/securing-your-webhooks)
+- [Standard Webhooks Specification](https://www.standardwebhooks.com/)
+- [OWASP SSRF Prevention](https://owasp.org/www-community/attacks/Server_Side_Request_Forgery)
+- [webhook.site — Testing Tool](https://webhook.site/)
