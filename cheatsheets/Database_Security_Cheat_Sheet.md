@@ -15,7 +15,7 @@ The application's backend database should be isolated from other servers and onl
 - Disabling network (TCP) access and requiring all access is over a local socket file or named pipe.
 - Configuring the database to only bind on localhost.
 - Restricting access to the network port to specific hosts with firewall rules.
-- Placing the database server in a separate DMZ isolated from the application server.
+- Placing the database server on a dedicated internal network segment that is isolated from the application server.
 - Protect any web-based management tools (e.g., phpMyAdmin, pgAdmin) with authentication, HTTPS, and network restrictions.
 
 When an application is running on an untrusted system (such as a thick-client), it should always connect to the backend through an API that can enforce appropriate access control and restrictions. Direct connections should **never** be made from a thick client to the backend database.
