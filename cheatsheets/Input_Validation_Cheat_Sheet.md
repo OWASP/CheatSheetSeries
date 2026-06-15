@@ -33,6 +33,50 @@ Input validation can be implemented using any programming technique that allows 
 - Regular expressions for any other structured data covering the whole input string `(^...$)` and **not** using "any character" wildcard (such as `.` or `\S`)
 - Denylisting known dangerous patterns can be used as an additional layer of defense, but it should supplement - not replace - allowlisting, to help catch some commonly observed attacks or patterns without relying on it as the main validation method.
 
+## Common Pitfalls in Input Validation
+
+Even when teams try to implement input validation, a lot of applications still end up vulnerable because of small oversights or assumptions that don’t hold up in the real world. These are some of the issues that come up again and again during security reviews and incident investigations.
+
+### Relying Only on Client-Side Validation
+
+Client-side checks (like JavaScript validation or HTML5 rules) are helpful for user experience, but they’re not security controls. Anyone can bypass them by turning off scripts, modifying requests, or using tools like curl or Burp. The server must always validate the final input. [OWASP Testing Guide](https://owasp.org/www-project-web-security-testing-guide/)
+
+### Using Blacklists Instead of Whitelists
+
+Trying to block “bad” input with a blacklist almost always fails. Attackers can use encoding tricks, alternate characters, or new payloads you didn’t think of. It’s much safer to define what *good* input looks like and only allow that. [NIST SP 800‑53 SA-11](https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final)
+
+### Skipping Validation After Deserialization
+
+Data that looked safe before serialization can become unsafe once it’s parsed again. Formats like JSON, XML, and protobuf can hide unexpected structures or types. Always validate *after* deserialization, when you know exactly what the data looks like. [OWASP Deserialization Cheat Sheet](https://cheatsheetseries.owasp.org/)
+
+### Trusting Internal APIs or Microservices Too Much
+
+It’s common for internal services to skip validation because they’re “inside the perimeter.” But modern attacks often target internal trust boundaries. Every service—internal or external—needs proper validation. [CISA Zero Trust Guidance](https://www.cisa.gov/zero-trust-maturity-model)
+
+### Not Validating File Uploads or Filenames
+
+File uploads are a huge attack surface. You need to validate the file type, size, extension, and even the filename. Attackers can sneak in traversal sequences or special characters that cause trouble later. [OWASP File Upload Cheat Sheet](https://cheatsheetseries.owasp.org/)
+
+### Using Unsafe or Overly Complex Regular Expressions
+
+Some regex patterns can cause catastrophic backtracking (ReDoS), slowing your server to a crawl. Keep patterns simple, anchored, and performance-tested. [OWASP ReDoS Prevention](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS)
+
+### Ignoring Nested JSON or Large Arrays
+
+Attackers often hide malicious data deep inside nested objects or huge arrays. Validation needs to walk the entire structure and enforce limits at every level.
+
+### Overlooking Unicode Normalization
+
+Unicode can be tricky. Different characters can look identical or behave unexpectedly, which can let attackers slip past naive filters. Normalizing input (like using NFC) helps avoid these issues. [Unicode Security Considerations](https://unicode.org/reports/tr36/)
+
+### Assuming JSON Input Is Automatically Safe
+
+JSON feels structured and predictable, but attackers can still inject harmful strings, unexpected types, or oversized payloads. It needs the same level of validation as any other input.
+
+### Forgetting to Validate Before Logging or Storing Data
+
+Unvalidated input written to logs or databases can lead to log injection, stored XSS, or parsing errors later. Validation should happen before the data goes anywhere—logs included.
+
 ### Allowlist vs Denylist
 
 It is a common mistake to use denylist validation in order to try to detect possibly dangerous characters and patterns like the apostrophe `'` character, the string `1=1`, or the `<script>` tag, but this is a massively flawed approach as it is trivial for an attacker to bypass such filters.
