@@ -343,6 +343,34 @@ Email verification requires that the user enters a code or clicks a link sent to
 - Email may be received by the same device the user is authenticating from.
 - Susceptible to phishing.
 
+- ## Modern MFA Attack Patterns (Vendor‑Neutral)
+
+Even with MFA in place, attackers continue to find ways around it. The patterns below reflect common techniques seen across modern environments. These examples are vendor-neutral and focus on the underlying weaknesses rather than specific products or malware families.
+
+### MFA Fatigue / Push Abuse
+Attackers repeatedly trigger push notifications to overwhelm users until one is approved accidentally or out of frustration.
+
+### Token Theft
+Session cookies, refresh tokens, or other post-authentication tokens can be stolen and reused, allowing attackers to bypass MFA entirely.
+
+### Reverse-Proxy Phishing Kits
+Phishing frameworks can intercept MFA codes or session tokens in real time by sitting between the user and the legitimate service.
+
+### Cloud MFA Misconfigurations
+Legacy protocols, weak conditional access rules, or incomplete MFA enforcement can leave gaps that attackers exploit.
+
+### Weak MFA on Remote Access Services
+Services like RDP, SSH, or VPN may have MFA enabled inconsistently or incorrectly, allowing attackers to gain initial access.
+
+### Cross-Platform MFA Weaknesses
+When MFA is applied differently across Windows, Linux, and cloud systems, attackers may target the weakest link to move laterally.
+
+### Device Compromise
+If a user’s device is already compromised, attackers may approve MFA prompts, steal tokens, or intercept authentication flows.
+
+### Token Replay
+Captured or intercepted tokens can sometimes be reused if they are not bound to the device, session, or client.
+
 ## Something You Are
 
 Inherence-based authentication is based on the physical attributes of the user. This is less common for web applications as it requires the user to have specific hardware, and is often considered to be the most invasive in terms of privacy. However, it is commonly used for operating system authentication, and is also used in some mobile applications.
