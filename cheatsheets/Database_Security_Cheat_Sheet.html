@@ -4239,7 +4239,7 @@ For guidance on non-relational systems (e.g., MongoDB, Redis, Cassandra, DynamoD
 <li>Disabling network (TCP) access and requiring all access is over a local socket file or named pipe.</li>
 <li>Configuring the database to only bind on localhost.</li>
 <li>Restricting access to the network port to specific hosts with firewall rules.</li>
-<li>Placing the database server in a separate DMZ isolated from the application server.</li>
+<li>Placing the database server on a dedicated internal network segment that is isolated from the application server.</li>
 <li>Protect any web-based management tools (e.g., phpMyAdmin, pgAdmin) with authentication, HTTPS, and network restrictions.</li>
 </ul>
 <p>When an application is running on an untrusted system (such as a thick-client), it should always connect to the backend through an API that can enforce appropriate access control and restrictions. Direct connections should <strong>never</strong> be made from a thick client to the backend database.</p>
