@@ -366,7 +366,7 @@ The are a number of common types of biometrics that are used, including:
 - If compromised, biometric data can be difficult to change.
 - Hardware may be vulnerable to additional attack vectors.
 
-- ## Modern MFA Attack Patterns and Mitigations
+## Modern MFA Attack Patterns and Mitigations
 
 ### Modern MFA Attack Patterns
 
@@ -376,7 +376,7 @@ Attackers increasingly target MFA flows directly rather than passwords. The foll
 
 Attackers repeatedly trigger push notifications hoping the user will approve one out of frustration or confusion.
 
-**Mitigations**
+#### Mitigations
 
 - Enforce number matching or challenge/response instead of simple “Approve/Deny” pushes.
 - Rate‑limit MFA prompts and lock the flow after repeated denials.
@@ -389,7 +389,7 @@ Attackers repeatedly trigger push notifications hoping the user will approve one
 
 Attackers use phishing kits or reverse proxies (e.g., Evilginx, Modlishka) to intercept MFA codes and session cookies in real time.
 
-**Mitigations**
+#### Mitigations
 
 - Prefer FIDO2/WebAuthn with origin binding, which cannot be proxied.
 - Enforce TLS certificate pinning in mobile apps.
@@ -402,7 +402,7 @@ Attackers use phishing kits or reverse proxies (e.g., Evilginx, Modlishka) to in
 
 Attackers socially engineer mobile carriers to transfer a victim’s phone number to a new SIM, allowing interception of SMS‑based MFA codes.
 
-**Mitigations**
+#### Mitigations
 
 - Avoid SMS as a primary MFA factor for high‑risk accounts.
 - Use FIDO2, hardware tokens, or app‑based TOTP instead.
@@ -415,7 +415,7 @@ Attackers socially engineer mobile carriers to transfer a victim’s phone numbe
 
 Attackers steal session cookies or tokens after MFA is completed, bypassing the need to authenticate again.
 
-**Mitigations**
+#### Mitigations
 
 - Use short‑lived session tokens with continuous re‑authentication for sensitive actions.
 - Bind sessions to device, IP reputation, or client TLS key.
@@ -428,7 +428,7 @@ Attackers steal session cookies or tokens after MFA is completed, bypassing the 
 
 Some MFA systems bind authentication to a specific device. Attackers attempt to clone or register unauthorized devices.
 
-**Mitigations**
+#### Mitigations
 
 - Require explicit user approval for new device enrollment.
 - Use cryptographic device attestation (e.g., FIDO2 attestation).
@@ -441,13 +441,12 @@ Some MFA systems bind authentication to a specific device. Attackers attempt to 
 
 Attackers exploit misconfigured identity providers to force a weaker MFA flow or bypass MFA entirely.
 
-**Mitigations**
+#### Mitigations
 
 - Enforce MFA at the IdP, not at downstream applications.
 - Disable legacy authentication protocols (IMAP, POP3, SMTP AUTH, WS‑Trust).
 - Require strong MFA policies for all OAuth/OIDC clients.
 - Monitor for MFA policy changes and admin‑level modifications.
-
 
 ## Somewhere You Are
 
