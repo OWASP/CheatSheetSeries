@@ -5217,6 +5217,7 @@
 <li>Check that a user has fewer than N items, then add one.</li>
 <li>Check that a slot is available, then book it.</li>
 <li>Check that a referral code hasn't been applied to this account, then apply it.</li>
+<li>Check whether a registration request is unique, then insert the new user record.</li>
 </ul>
 <p>Each of these is a race condition waiting to happen unless the check and the act are inside a single atomic operation.</p>
 <h3 id="use-database-transactions-and-locks">Use Database Transactions and Locks<a class="headerlink" href="#use-database-transactions-and-locks" title="Permanent link">&para;</a></h3>
