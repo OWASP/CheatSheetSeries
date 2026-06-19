@@ -4564,31 +4564,38 @@
 <p>Web applications must default to <strong>TLS 1.3</strong> and may support TLS 1.2 for compatibility. <strong>TLS 1.0 and TLS 1.1 are formally deprecated by <a href="https://datatracker.ietf.org/doc/html/rfc8996">RFC 8996</a> (March 2021) and must be disabled.</strong> They are also forbidden by <a href="https://www.pcisecuritystandards.org/documents/Migrating-from-SSL-Early-TLS-Info-Supp-v1_1.pdf">PCI DSS</a>, disallowed by NIST SP 800-52 Rev. 2, and removed from all mainstream browsers. SSLv2 and SSLv3 must always be disabled.</p>
 <p>If interoperability with end-of-life clients is a hard business requirement, isolate them on a dedicated endpoint with no access to sensitive data — do not weaken the primary endpoint. The <a href="https://tools.ietf.org/html/rfc7507">"TLS_FALLBACK_SCSV" extension</a> should be enabled to prevent protocol downgrade attacks.</p>
 <h3 id="only-support-strong-ciphers">Only Support Strong Ciphers<a class="headerlink" href="#only-support-strong-ciphers" title="Permanent link">&para;</a></h3>
-<p>There are a large number of different ciphers (or cipher suites) that are supported by TLS, that provide varying levels of security. For TLS 1.3, use the standard AEAD cipher suites (AES‑GCM or ChaCha20‑Poly1305). If TLS 1.2 is still required, prefer AEAD‑based suites there as well and avoid CBC‑mode ciphers. At a minimum, the following types of ciphers should always be disabled:</p>
+<p>There are a large number of different ciphers (or cipher suites) that are supported by TLS, that provide varying levels of security.</p>
+<p>For TLS 1.3, use the standard AEAD cipher suites (AES‑GCM or ChaCha20‑Poly1305).</p>
+<p>If TLS 1.2 is still required, prefer AEAD‑based suites there as well and avoid CBC‑mode ciphers. At a minimum, the following types of <a href="https://ciphersuite.info/">ciphersuites</a> should always be disabled:</p>
 <ul>
-<li>Null ciphers</li>
-<li>Anonymous ciphers</li>
-<li>EXPORT ciphers</li>
+<li>Null ciphers;</li>
+<li>Anonymous ciphers (<code>TLS_*_anon_*</code>);</li>
+<li>EXPORT ciphers (<code>TLS_*_EXPORT_*</code>);</li>
+<li>RSA transport (<code>TLS_RSA_*</code>) and ephemeral/static Diffie-Hellman key agreement (<code>TLS_DH_*</code>, <code>TLS_ECDH_*</code>) which do not provide forward secrecy.</li>
 </ul>
 <p>The Mozilla Foundation provides an <a href="https://ssl-config.mozilla.org/">easy-to-use secure configuration generator</a> for web, database and mail servers. This tool allows site administrators to select the software they are using and receive a configuration file that is optimized to balance security and compatibility for a wide variety of browser versions and server software.</p>
 <h3 id="set-the-appropriate-diffie-hellman-groups">Set the appropriate Diffie-Hellman groups<a class="headerlink" href="#set-the-appropriate-diffie-hellman-groups" title="Permanent link">&para;</a></h3>
 <p>The practice of earlier than TLS 1.3 protocol versions of Diffie-Hellman parameter generation for use by the ephemeral Diffie-Hellman key exchange (signified by the "DHE" or "EDH" strings in the cipher suite name) had practical issues. For example, the client had no say in the selection of server parameters, meaning it could only unconditionally accept or drop, and the random parameter generation often resulted to denial of service attacks (CVE-2022-40735, CVE-2002-20001).</p>
-<p>TLS 1.3 restricts Diffie-Hellman group parameters to known groups via the <code>supported_groups</code> extension. The available
-Diffie-Hellman groups are <code>ffdhe2048</code>, <code>ffdhe3072</code>, <code>ffdhe4096</code>, <code>ffdhe6144</code>, <code>ffdhe8192</code> as specified in <a href="https://www.rfc-editor.org/rfc/rfc7919">RFC7919</a>.</p>
-<p>By default openssl 3.0 enables all the above groups. To modify them ensure that the right Diffie-Hellman group parameters are present in <code>openssl.cnf</code>. For example</p>
+<p>The <code>supported_groups</code> extension is used to negotiate which Diffie-Hellman group are supported:</p>
+<ul>
+<li>the available Finite Field Diffie-Hellman groups are <code>ffdhe2048</code>, <code>ffdhe3072</code>, <code>ffdhe4096</code>, <code>ffdhe6144</code>, <code>ffdhe8192</code> as specified in <a href="https://www.rfc-editor.org/rfc/rfc7919">RFC7919</a>;</li>
+<li>Elliptic Curve Diffie-Hellman groups include <code>x25519</code>, <code>prime256v1</code>, <code>x448</code>, <code>secp384r1</code>;</li>
+<li>for post-quantum cryptography, <code>X25519MLKEM768</code> it currently used (though it is not a group, proper).</li>
+</ul>
+<p>For OpenSSL, the list of enabled groups can be configured ins in <code>openssl.cnf</code>. For example</p>
 <div class="highlight"><pre><span></span><code>openssl_conf = openssl_init
 [openssl_init]
 ssl_conf = ssl_module
 [ssl_module]
 system_default = tls_system_default
 [tls_system_default]
-Groups = x25519:prime256v1:x448:ffdhe2048:ffdhe3072
+Groups = X25519MLKEM768:x25519:prime256v1:x448:ffdhe2048:ffdhe3072
 </code></pre></div>
-<p>An apache configuration would look like</p>
-<div class="highlight"><pre><span></span><code>SSLOpenSSLConfCmd Groups x25519:secp256r1:ffdhe3072
+<p>An Apache configuration would look like</p>
+<div class="highlight"><pre><span></span><code>SSLOpenSSLConfCmd Curves X25519MLKEM768:X25519:prime256v1:secp384r1
 </code></pre></div>
 <p>The same group on NGINX would look like the following</p>
-<div class="highlight"><pre><span></span><code>ssl_ecdh_curve x25519:secp256r1:ffdhe3072;
+<div class="highlight"><pre><span></span><code>ssl_ecdh_curve X25519MLKEM768:X25519:prime256v1:secp384r1;
 </code></pre></div>
 <p>For TLS 1.2 or earlier versions it is recommended not to set Diffie-Hellman parameters.</p>
 <h3 id="disable-compression">Disable Compression<a class="headerlink" href="#disable-compression" title="Permanent link">&para;</a></h3>
@@ -4621,7 +4628,7 @@ Groups = x25519:prime256v1:x448:ffdhe2048:ffdhe3072
 </ul>
 <h2 id="certificates">Certificates<a class="headerlink" href="#certificates" title="Permanent link">&para;</a></h2>
 <h3 id="use-strong-keys-and-protect-them">Use Strong Keys and Protect Them<a class="headerlink" href="#use-strong-keys-and-protect-them" title="Permanent link">&para;</a></h3>
-<p>The private key used to generate the cipher key must be sufficiently strong for the anticipated lifetime of the private key and corresponding certificate. The current best practice is to select a key size of at least 2048 bits. Additional information on key lifetimes and comparable key strengths can be found <a href="http://www.keylength.com/en/compare/">here</a> and in <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf">NIST SP 800-57</a>.</p>
+<p>The private key used to generate the cipher key must be sufficiently strong for the anticipated lifetime of the private key and corresponding certificate. The current best practice is to select a key size of at least 2048 bits when using RSA keys. Additional information on key lifetimes and comparable key strengths can be found <a href="http://www.keylength.com/en/compare/">here</a> and in <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf">NIST SP 800-57</a>.</p>
 <p>The private key should also be protected from unauthorized access using filesystem permissions and other technical and administrative controls.</p>
 <h3 id="use-strong-cryptographic-hashing-algorithms">Use Strong Cryptographic Hashing Algorithms<a class="headerlink" href="#use-strong-cryptographic-hashing-algorithms" title="Permanent link">&para;</a></h3>
 <p>Certificates should use SHA-256 for the hashing algorithm, rather than the older MD5 and SHA-1 algorithms. These have a number of cryptographic weaknesses, and are not trusted by modern browsers.</p>
