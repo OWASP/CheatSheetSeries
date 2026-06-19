@@ -41,7 +41,7 @@ Note: Client‑side validation and denylisting are already covered in the sectio
 
 ### Skipping Validation After Deserialization
 
-Data that appears safe before serialization can become unsafe once parsed again. Formats like JSON, XML, and protobuf may contain unexpected structures or types after deserialization. Always validate after deserialization, when the final structure is known.Reference: OWASP Deserialization Cheat Sheet (cheatsheetseries.owasp.org in Bing)
+Data that appears safe before serialization can become unsafe once parsed again. Formats like JSON, XML, and protobuf may contain unexpected structures or types after deserialization. Always validate after deserialization, when the final structure is known.Reference: OWASP Deserialization Cheat Sheet (cheatsheetseries.owasp.org in Bing).
 
 ### Trusting Internal APIs or Microservices Too Much
 
