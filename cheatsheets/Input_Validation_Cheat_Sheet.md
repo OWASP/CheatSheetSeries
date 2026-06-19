@@ -41,7 +41,8 @@ Note: Client‑side validation and denylisting are already covered in the sectio
 
 ### Skipping Validation After Deserialization
 
-Data that appears safe before serialization can become unsafe once parsed again. Formats like JSON, XML, and protobuf may contain unexpected structures or types after deserialization. Always validate after deserialization, when the final structure is known.Reference: OWASP Deserialization Cheat Sheet (cheatsheetseries.owasp.org in Bing).
+Data that appears safe before serialization can become unsafe once parsed again. Formats like JSON, XML, and protobuf may contain unexpected structures or types after deserialization. Always validate after deserialization, when the final structure is known.
+Reference: OWASP Deserialization Cheat Sheet (cheatsheetseries.owasp.org in Bing).
 
 ### Trusting Internal APIs or Microservices Too Much
 
@@ -62,7 +63,8 @@ Reference: OWASP API Security Top 10 – API4:2023 (Unrestricted Resource Consum
 
 ### Overlooking Unicode Normalization
 
-Normalization must occur before validation so that visually similar or canonically equivalent characters are evaluated consistently. However, Unicode TR36 warns that normalization alone is not a security control — it must be paired with strict allowlisting and canonicalization rules.Reference: Unicode Technical Report #36 (Security Considerations).
+Normalization must occur before validation so that visually similar or canonically equivalent characters are evaluated consistently. However, Unicode TR36 warns that normalization alone is not a security control — it must be paired with strict allowlisting and canonicalization rules.
+Reference: Unicode Technical Report #36 (Security Considerations).
 
 ### Assuming JSON Input Is Automatically Safe
 
@@ -70,7 +72,8 @@ JSON feels structured and predictable, but attackers can still inject harmful st
 
 ### Forgetting to Validate Before Logging or Storing Data
 
-Input validation reduces unexpected or malformed data, but log injection is primarily mitigated through output encoding when writing to logs. Applications should validate structure and type on input, and then safely encode log entries on output to prevent injection.*Reference: OWASP Logging Cheat Sheet*  
+Input validation reduces unexpected or malformed data, but log injection is primarily mitigated through output encoding when writing to logs. Applications should validate structure and type on input, and then safely encode log entries on output to prevent injection.
+*Reference: OWASP Logging Cheat Sheet*  
 
 ### Allowlist vs Denylist
 
