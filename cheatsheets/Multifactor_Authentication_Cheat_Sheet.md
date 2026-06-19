@@ -366,6 +366,89 @@ The are a number of common types of biometrics that are used, including:
 - If compromised, biometric data can be difficult to change.
 - Hardware may be vulnerable to additional attack vectors.
 
+- ## Modern MFA Attack Patterns and Mitigations
+
+### Modern MFA Attack Patterns
+
+Attackers increasingly target MFA flows directly rather than passwords. The following patterns represent the most common and high‑impact MFA bypass techniques observed in modern systems.
+
+### MFA Fatigue (Push Bombing)
+
+Attackers repeatedly trigger push notifications hoping the user will approve one out of frustration or confusion.
+
+**Mitigations**
+
+- Enforce number matching or challenge/response instead of simple “Approve/Deny” pushes.
+- Rate‑limit MFA prompts and lock the flow after repeated denials.
+- Notify users when multiple prompts occur in a short period.
+- Prefer phishing‑resistant factors such as FIDO2/WebAuthn.
+
+---
+
+### Real‑Time Phishing (Adversary‑in‑the‑Middle)
+
+Attackers use phishing kits or reverse proxies (e.g., Evilginx, Modlishka) to intercept MFA codes and session cookies in real time.
+
+**Mitigations**
+
+- Prefer FIDO2/WebAuthn with origin binding, which cannot be proxied.
+- Enforce TLS certificate pinning in mobile apps.
+- Use phishing‑resistant login pages with domain‑level protections (HSTS, CSP).
+- Monitor for suspicious IPs, impossible travel, and unusual device fingerprints.
+
+---
+
+### SIM Swap & Phone Number Takeover
+
+Attackers socially engineer mobile carriers to transfer a victim’s phone number to a new SIM, allowing interception of SMS‑based MFA codes.
+
+**Mitigations**
+
+- Avoid SMS as a primary MFA factor for high‑risk accounts.
+- Use FIDO2, hardware tokens, or app‑based TOTP instead.
+- Implement carrier‑independent verification (email, authenticator app, device binding).
+- Alert users when phone number changes occur.
+
+---
+
+### Token Theft & Session Hijacking
+
+Attackers steal session cookies or tokens after MFA is completed, bypassing the need to authenticate again.
+
+**Mitigations**
+
+- Use short‑lived session tokens with continuous re‑authentication for sensitive actions.
+- Bind sessions to device, IP reputation, or client TLS key.
+- Implement token replay detection and rotating refresh tokens.
+- Enforce secure cookie flags: `HttpOnly`, `Secure`, `SameSite=Strict`.
+
+---
+
+### Device Binding Bypass
+
+Some MFA systems bind authentication to a specific device. Attackers attempt to clone or register unauthorized devices.
+
+**Mitigations**
+
+- Require explicit user approval for new device enrollment.
+- Use cryptographic device attestation (e.g., FIDO2 attestation).
+- Notify users of new device registrations.
+- Enforce step‑up authentication for device management actions.
+
+---
+
+### OAuth / SSO MFA Downgrade
+
+Attackers exploit misconfigured identity providers to force a weaker MFA flow or bypass MFA entirely.
+
+**Mitigations**
+
+- Enforce MFA at the IdP, not at downstream applications.
+- Disable legacy authentication protocols (IMAP, POP3, SMTP AUTH, WS‑Trust).
+- Require strong MFA policies for all OAuth/OIDC clients.
+- Monitor for MFA policy changes and admin‑level modifications.
+
+
 ## Somewhere You Are
 
 Location-based authentication is based on the user's physical location. It is sometimes argued that location is used when deciding whether or not to require MFA (as discussed [above](#when-to-require-mfa)) however this is effectively the same as considering it to be a factor in its own right. Two prominent examples of this are the [Conditional Access Policies](https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/overview) available in Microsoft Azure, and the [Network Unlock](https://docs.microsoft.com/en-us/windows/security/information-protection/bitlocker/bitlocker-how-to-enable-network-unlock) functionality in BitLocker.
