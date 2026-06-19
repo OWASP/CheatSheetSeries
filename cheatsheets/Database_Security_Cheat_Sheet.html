@@ -4266,7 +4266,7 @@ For guidance on non-relational systems (e.g., MongoDB, Redis, Cassandra, DynamoD
 <li>Removing user accounts when an application is decommissioned.</li>
 <li>Changing the passwords when staff leave, or there is reason to believe that they may have been compromised.</li>
 </ul>
-<p>For Microsoft SQL Server, consider the use of <a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/authentication-in-sql-server">Windows or Integrated-Authentication</a>, which uses existing Windows accounts rather than SQL Server accounts. This also removes the requirement to store credentials in the application, as it will connect using the credentials of the Windows user it is running under. The <a href="https://dev.mysql.com/doc/connector-net/en/connector-net-programming-authentication-windows-native.html">Windows Native Authentication Plugins</a> provides similar functionality for MySQL.</p>
+<p>For Microsoft SQL Server, consider the use of <a href="https://learn.microsoft.com/en-us/dotnet/framework/data/adonet/sql/authentication-in-sql-server">Windows or Integrated-Authentication</a>, which uses existing Windows accounts rather than SQL Server accounts. This also removes the requirement to store credentials in the application, as it will connect using the credentials of the Windows user it is running under. The <a href="https://dev.mysql.com/doc/connector-net/en/connector-net-programming-authentication-windows-native.html">Windows Native Authentication Plugins</a> provides similar functionality for MySQL.</p>
 <h3 id="storing-database-credentials-securely">Storing Database Credentials Securely<a class="headerlink" href="#storing-database-credentials-securely" title="Permanent link">&para;</a></h3>
 <p>Database credentials should never be stored in the application source code, especially if they are unencrypted. Instead, they should be stored in a configuration file that:</p>
 <ul>
@@ -4274,7 +4274,7 @@ For guidance on non-relational systems (e.g., MongoDB, Redis, Cassandra, DynamoD
 <li>Has appropriate permissions so that it can only be read by the required user(s).</li>
 <li>Is not checked into source code repositories.</li>
 </ul>
-<p>Where possible, these credentials should also be encrypted or otherwise protected using built-in functionality, such as the <code>web.config</code> encryption available in <a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/connection-strings-and-configuration-files#encrypting-configuration-file-sections-using-protected-configuration">ASP.NET</a>.</p>
+<p>Where possible, these credentials should also be encrypted or otherwise protected using built-in functionality, such as the <code>web.config</code> encryption available in <a href="https://learn.microsoft.com/en-us/dotnet/framework/data/adonet/connection-strings-and-configuration-files#encrypting-configuration-file-sections-using-protected-configuration">ASP.NET</a>.</p>
 <h2 id="creating-secure-permissions">Creating Secure Permissions<a class="headerlink" href="#creating-secure-permissions" title="Permanent link">&para;</a></h2>
 <p>When developers are assigning permissions to database user accounts, they should employ the principle of least privilege (i.e, the accounts should only have the minimal permissions required for the application to function). This principle can be applied at a number of increasingly granular levels depending on the functionality available in the database. You can do the following in all environments:</p>
 <ul>
@@ -4293,7 +4293,7 @@ For guidance on non-relational systems (e.g., MongoDB, Redis, Cassandra, DynamoD
 <li>Blocking access to the underlying tables, and requiring all access through restricted <a href="https://en.wikipedia.org/wiki/View_(SQL)">views</a>.</li>
 </ul>
 <h2 id="database-configuration-and-hardening">Database Configuration and Hardening<a class="headerlink" href="#database-configuration-and-hardening" title="Permanent link">&para;</a></h2>
-<p>The database server's underlying operating system should be hardened by basing it on a secure baseline such as the <a href="https://www.cisecurity.org/cis-benchmarks/">CIS Benchmarks</a> or the <a href="https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-security-baselines">Microsoft Security Baselines</a>.</p>
+<p>The database server's underlying operating system should be hardened by basing it on a secure baseline such as the <a href="https://www.cisecurity.org/cis-benchmarks/">CIS Benchmarks</a> or the <a href="https://learn.microsoft.com/en-us/windows/security/threat-protection/windows-security-baselines">Microsoft Security Baselines</a>.</p>
 <p>The database application should also be properly configured and hardened. The following principles should apply to any database application and platform:</p>
 <ul>
 <li>Install any required security updates and patches.</li>
@@ -4308,9 +4308,9 @@ For guidance on non-relational systems (e.g., MongoDB, Redis, Cassandra, DynamoD
 <li>Disable <code>xp_cmdshell</code>, <code>xp_dirtree</code> and other stored procedures that are not required.</li>
 <li>Disable Common Language Runtime (CLR) execution.</li>
 <li>Disable the SQL Browser service.</li>
-<li>Disable <a href="https://docs.microsoft.com/en-us/sql/relational-databases/security/choose-an-authentication-mode?view=sql-server-ver15">Mixed Mode Authentication</a> unless it is required.</li>
-<li>Ensure that the sample <a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/linq/downloading-sample-databases">Northwind and AdventureWorks databases</a> have been removed.</li>
-<li>See Microsoft's articles on <a href="https://docs.microsoft.com/en-us/sql/relational-databases/security/securing-sql-server">securing SQL Server</a>.</li>
+<li>Disable <a href="https://learn.microsoft.com/en-us/sql/relational-databases/security/choose-an-authentication-mode?view=sql-server-ver15">Mixed Mode Authentication</a> unless it is required.</li>
+<li>Ensure that the sample <a href="https://learn.microsoft.com/en-us/dotnet/framework/data/adonet/sql/linq/downloading-sample-databases">Northwind and AdventureWorks databases</a> have been removed.</li>
+<li>See Microsoft's articles on <a href="https://learn.microsoft.com/en-us/sql/relational-databases/security/securing-sql-server">securing SQL Server</a>.</li>
 </ul>
 <h3 id="hardening-a-mysql-or-a-mariadb-server">Hardening a MySQL or a MariaDB Server<a class="headerlink" href="#hardening-a-mysql-or-a-mariadb-server" title="Permanent link">&para;</a></h3>
 <ul>
