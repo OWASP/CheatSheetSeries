@@ -37,17 +37,11 @@ Input validation can be implemented using any programming technique that allows 
 
 Even when teams try to implement input validation, a lot of applications still end up vulnerable because of small oversights or assumptions that don’t hold up in the real world. These are some of the issues that come up again and again during security reviews and incident investigations.
 
-### Relying Only on Client-Side Validation
-
-Client-side checks (like JavaScript validation or HTML5 rules) are helpful for user experience, but they’re not security controls. Anyone can bypass them by turning off scripts, modifying requests, or using tools like curl or Burp. The server must always validate the final input. [OWASP Testing Guide](https://owasp.org/www-project-web-security-testing-guide/)
-
-### Using Blacklists Instead of Whitelists
-
-Trying to block “bad” input with a blacklist almost always fails. Attackers can use encoding tricks, alternate characters, or new payloads you didn’t think of. It’s much safer to define what *good* input looks like and only allow that. [NIST SP 800‑53 SA-11](https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final)
+Note: Client‑side validation and denylisting are already covered in the sections below. See “Server‑Side Validation” and “Allowlist vs Denylist” for detailed guidance.
 
 ### Skipping Validation After Deserialization
 
-Data that looked safe before serialization can become unsafe once it’s parsed again. Formats like JSON, XML, and protobuf can hide unexpected structures or types. Always validate *after* deserialization, when you know exactly what the data looks like. [OWASP Deserialization Cheat Sheet](https://cheatsheetseries.owasp.org/)
+Data that appears safe before serialization can become unsafe once parsed again. Formats like JSON, XML, and protobuf may contain unexpected structures or types after deserialization. Always validate after deserialization, when the final structure is known.Reference: OWASP Deserialization Cheat Sheet (cheatsheetseries.owasp.org in Bing)
 
 ### Trusting Internal APIs or Microservices Too Much
 
@@ -63,11 +57,12 @@ Some regex patterns can cause catastrophic backtracking (ReDoS), slowing your se
 
 ### Ignoring Nested JSON or Large Arrays
 
-Attackers often hide malicious data deep inside nested objects or huge arrays. Validation needs to walk the entire structure and enforce limits at every level.
+Attackers may hide malicious or unexpected data deep inside nested objects or extremely large arrays. Validation should enforce limits on depth, element count, and overall structure to prevent resource‑exhaustion or parser abuse.
+Reference: OWASP API Security Top 10 – API4:2023 (Unrestricted Resource Consumption).
 
 ### Overlooking Unicode Normalization
 
-Unicode can be tricky. Different characters can look identical or behave unexpectedly, which can let attackers slip past naive filters. Normalizing input (like using NFC) helps avoid these issues. [Unicode Security Considerations](https://unicode.org/reports/tr36/)
+Normalization must occur before validation so that visually similar or canonically equivalent characters are evaluated consistently. However, Unicode TR36 warns that normalization alone is not a security control — it must be paired with strict allowlisting and canonicalization rules.Reference: Unicode Technical Report #36 (Security Considerations).
 
 ### Assuming JSON Input Is Automatically Safe
 
@@ -75,7 +70,7 @@ JSON feels structured and predictable, but attackers can still inject harmful st
 
 ### Forgetting to Validate Before Logging or Storing Data
 
-Unvalidated input written to logs or databases can lead to log injection, stored XSS, or parsing errors later. Validation should happen before the data goes anywhere—logs included.
+Input validation reduces unexpected or malformed data, but log injection is primarily mitigated through output encoding when writing to logs. Applications should validate structure and type on input, and then safely encode log entries on output to prevent injection.*Reference: OWASP Logging Cheat Sheet*  
 
 ### Allowlist vs Denylist
 
