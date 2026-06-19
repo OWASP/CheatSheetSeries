@@ -46,7 +46,7 @@ As with any system that has its own user accounts, the usual account management 
 - Removing user accounts when an application is decommissioned.
 - Changing the passwords when staff leave, or there is reason to believe that they may have been compromised.
 
-For Microsoft SQL Server, consider the use of [Windows or Integrated-Authentication](https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/authentication-in-sql-server), which uses existing Windows accounts rather than SQL Server accounts. This also removes the requirement to store credentials in the application, as it will connect using the credentials of the Windows user it is running under. The [Windows Native Authentication Plugins](https://dev.mysql.com/doc/connector-net/en/connector-net-programming-authentication-windows-native.html) provides similar functionality for MySQL.
+For Microsoft SQL Server, consider the use of [Windows or Integrated-Authentication](https://learn.microsoft.com/en-us/dotnet/framework/data/adonet/sql/authentication-in-sql-server), which uses existing Windows accounts rather than SQL Server accounts. This also removes the requirement to store credentials in the application, as it will connect using the credentials of the Windows user it is running under. The [Windows Native Authentication Plugins](https://dev.mysql.com/doc/connector-net/en/connector-net-programming-authentication-windows-native.html) provides similar functionality for MySQL.
 
 ### Storing Database Credentials Securely
 
@@ -56,7 +56,7 @@ Database credentials should never be stored in the application source code, espe
 - Has appropriate permissions so that it can only be read by the required user(s).
 - Is not checked into source code repositories.
 
-Where possible, these credentials should also be encrypted or otherwise protected using built-in functionality, such as the `web.config` encryption available in [ASP.NET](https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/connection-strings-and-configuration-files#encrypting-configuration-file-sections-using-protected-configuration).
+Where possible, these credentials should also be encrypted or otherwise protected using built-in functionality, such as the `web.config` encryption available in [ASP.NET](https://learn.microsoft.com/en-us/dotnet/framework/data/adonet/connection-strings-and-configuration-files#encrypting-configuration-file-sections-using-protected-configuration).
 
 ## Creating Secure Permissions
 
@@ -78,7 +78,7 @@ Most security-critical applications, apply permissions at more granular levels, 
 
 ## Database Configuration and Hardening
 
-The database server's underlying operating system should be hardened by basing it on a secure baseline such as the [CIS Benchmarks](https://www.cisecurity.org/cis-benchmarks/) or the [Microsoft Security Baselines](https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-security-baselines).
+The database server's underlying operating system should be hardened by basing it on a secure baseline such as the [CIS Benchmarks](https://www.cisecurity.org/cis-benchmarks/) or the [Microsoft Security Baselines](https://learn.microsoft.com/en-us/windows/security/threat-protection/windows-security-baselines).
 
 The database application should also be properly configured and hardened. The following principles should apply to any database application and platform:
 
@@ -95,9 +95,9 @@ The following sections give some further recommendations for specific database s
 - Disable `xp_cmdshell`, `xp_dirtree` and other stored procedures that are not required.
 - Disable Common Language Runtime (CLR) execution.
 - Disable the SQL Browser service.
-- Disable [Mixed Mode Authentication](https://docs.microsoft.com/en-us/sql/relational-databases/security/choose-an-authentication-mode?view=sql-server-ver15) unless it is required.
-- Ensure that the sample [Northwind and AdventureWorks databases](https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/linq/downloading-sample-databases) have been removed.
-- See Microsoft's articles on [securing SQL Server](https://docs.microsoft.com/en-us/sql/relational-databases/security/securing-sql-server).
+- Disable [Mixed Mode Authentication](https://learn.microsoft.com/en-us/sql/relational-databases/security/choose-an-authentication-mode?view=sql-server-ver15) unless it is required.
+- Ensure that the sample [Northwind and AdventureWorks databases](https://learn.microsoft.com/en-us/dotnet/framework/data/adonet/sql/linq/downloading-sample-databases) have been removed.
+- See Microsoft's articles on [securing SQL Server](https://learn.microsoft.com/en-us/sql/relational-databases/security/securing-sql-server).
 
 ### Hardening a MySQL or a MariaDB Server
 
