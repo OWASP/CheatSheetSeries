@@ -1731,6 +1731,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#segregate-runners-using-runner-groups-and-labels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Segregate runners using runner groups and labels
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#maintain-curated-shared-workflows-and-actions" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4339,6 +4350,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#segregate-runners-using-runner-groups-and-labels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Segregate runners using runner groups and labels
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#maintain-curated-shared-workflows-and-actions" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4683,6 +4705,7 @@ Please note that the <code>Require approval for first-time contributors</code> s
 <li>Enable the setting <code>Require approval for all external contributors</code> in the repository settings. This ensures that workflows triggered by pull requests from forks (i.e., users who are not members of the repository or organization) do not run automatically and therefore prevents untrusted code execution.</li>
 <li>Restrict default <code>GITHUB_TOKEN</code> permissions to <code>Read repository contents and packages permissions</code> in the repository settings. Explicitly grant additional permissions in the workflow file if required.</li>
 <li>Enforce strong branch protection rules. Configure branch protection to require pull request reviews, status checks, signed commits and <code>CODEOWNERS</code> approval before merging into protected branches. Tools such as the <a href="https://github.com/ossf/scorecard-action">OpenSSF Scorecard</a> can help audit these settings.</li>
+<li>Require workflows to pass before merging via <a href="https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets#require-workflows-to-pass-before-merging">repository rulesets</a> to enforce organizational or enterprise-level requirements — such as checking for required labels or validating commit messages — before code is merged.</li>
 </ul>
 <h2 id="restrict-egress-traffic-from-github-hosted-runners">Restrict egress traffic from GitHub-hosted runners<a class="headerlink" href="#restrict-egress-traffic-from-github-hosted-runners" title="Permanent link">&para;</a></h2>
 <p>Use solutions (e.g., <a href="https://github.com/step-security/harden-runner">Harden-Runner</a>) to monitor and restrict egress traffic from GitHub-hosted runners to prevent secret exfiltration.</p>
@@ -4697,6 +4720,15 @@ In general, never use self-hosted runners with public repositories, as anyone wh
 <li>Use ephemeral runners (e.g., container-based runners) and destroy the runner environment after each job execution to prevent persistence.</li>
 <li>Do not store sensitive data on runner machines, as any user who can invoke workflows has access to the runner environment.</li>
 <li>Restrict runner network access and avoid giving self-hosted runners access to sensitive infrastructure.</li>
+</ul>
+<h2 id="segregate-runners-using-runner-groups-and-labels">Segregate runners using runner groups and labels<a class="headerlink" href="#segregate-runners-using-runner-groups-and-labels" title="Permanent link">&para;</a></h2>
+<p>Use <a href="https://docs.github.com/en/actions/concepts/runners/runner-groups">runner groups</a> and <a href="https://docs.github.com/en/actions/how-tos/manage-runners/self-hosted-runners/apply-labels">labels</a> to separate high-privilege runners from low-privilege runners. High-privilege runners may have access to sensitive resources, while low-privilege runners should not.</p>
+<p>This separation gives more granular control over <a href="https://docs.github.com/en/actions/how-tos/manage-runners/self-hosted-runners/manage-access#changing-which-repositories-can-access-a-runner-group">which repositories can access a runner group</a> and which workflows can target specific runners, reducing the risk that a compromised or misconfigured workflow gains access to sensitive resources.</p>
+<p>For example, consider creating:</p>
+<ul>
+<li>A runner group for container image build runners, limited to only the repositories that require those privileges.</li>
+<li>A runner group for runners with access to restricted networks.</li>
+<li>A separate runner group for low-privilege tasks such as linting and static analysis, used by repositories where secrets are absent or isolated in separate environments.</li>
 </ul>
 <h2 id="maintain-curated-shared-workflows-and-actions">Maintain curated shared workflows and actions<a class="headerlink" href="#maintain-curated-shared-workflows-and-actions" title="Permanent link">&para;</a></h2>
 <p>If you need to support several repositories, establish a centralized repository of curated, security-reviewed workflows/actions and reuse it across other repositories.</p>
