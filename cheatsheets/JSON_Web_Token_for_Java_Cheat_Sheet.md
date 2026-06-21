@@ -207,19 +207,36 @@ Since JWTs are stateless, There is no session maintained on the server(s) servin
 
 Another way to protect against this is to implement a token denylist that will be used to mimic the "logout" feature that exists with traditional session management system.
 
-The denylist will keep a digest (SHA-256 encoded in HEX) of the token with a revocation date. This entry must endure at least until the expiration of the token.
+When the user wants to "logout" then it call a dedicated service that will add the token's identifying claims (`jti` and `aud`) to the denylist resulting in an immediate invalidation of the token for further usage in the application.
 
-When the user wants to "logout" then it call a dedicated service that will add the provided user token to the denylist resulting in an immediate invalidation of the token for further usage in the application.
+**Note:**
+
+Do not use the raw JWT or a hash of it as the denylist key.
+
+A denylist keyed on a digest of the raw token (e.g. `SHA-256(token)`) is unsafe, because a JWT does not have a single canonical byte representation. The same logically valid token can be transformed into a *different* byte sequence that still passes signature verification — which means it hashes differently and silently bypasses the denylist. This can happen for two independent reasons:
+
+- **ECDSA signature malleability.** For JWTs signed with an ECDSA algorithm (e.g. `ES256`), a valid signature `(r, s)` has a second, equally valid form `(r, (-s) mod n)`, where `n` is the order of the curve's generator point. Both signatures verify successfully against the same public key for the same header and payload, but produce different token bytes — and therefore a different digest. An attacker in possession of a revoked token can compute this alternate signature and obtain a token that still authenticates.
+- **Non-strict JWT parsing.** Many JWT libraries tolerate multiple, non-canonical encodings of the same logical token — for example, base64url values with extraneous padding, alternate-but-decodable character substitutions, or trailing bytes with differing unused bits that decode to identical content. These variants are byte-for-byte different from the original token and therefore also bypass a hash-based denylist, regardless of signing algorithm (HMAC, RSA, or ECDSA).
+
+Because of this, the denylist must be keyed on a value that is **stable across these malleable encodings**, not on the token's raw bytes. The recommended approach is to use the `jti` (JWT ID) claim, which is a unique identifier assigned by the issuer at creation time and embedded inside the signed payload — making it immune to the malleability classes above, since any tampering with it invalidates the signature. Combining `jti` with the `aud` (audience) claim allows revocation to be scoped per relying party in multi-audience deployments.
+
+As a complementary hardening measure, JWT libraries should be configured (or chosen) to reject non-canonical encodings outright — strict base64url decoding, no padding tolerance — rather than relying on revocation logic to compensate for parser leniency.
 
 #### Implementation Example
 
 ##### Block List Storage
 
+The following example demonstrates a denylist keyed on `jti` and `aud` rather than the raw token, per the recommendation above.
+
 A database table with the following structure will be used as the central denylist storage.
 
 ``` sql
-create table if not exists revoked_token(jwt_token_digest varchar(255) primary key,
-revocation_date timestamp default now());
+create table if not exists revoked_token(
+  jwt_id varchar(255) not null,
+  aud varchar(255) not null,
+  revocation_date timestamp default now(),
+  primary key (jwt_id, aud)
+);
 ```
 
 ##### Token Revocation Management
@@ -228,85 +245,95 @@ Code in charge of adding a token to the denylist and checking if a token is revo
 
 ``` java
 /**
-* Handle the revocation of the token (logout).
-* Use a DB in order to allow multiple instances to check for revoked token
-* and allow cleanup at centralized DB level.
-*/
+ * Handle the revocation of the token (logout).
+ * Revocation is keyed on the token's "jti" and "aud" claims rather than
+ * a hash of the raw token, since JWTs do not have a single canonical
+ * byte representation (see warning above) and a raw-token or
+ * digest-based denylist can be bypassed via ECDSA signature
+ * malleability or lenient JWT parsing. Both claims are embedded in the
+ * signed payload, so neither can be altered without invalidating the
+ * signature.
+ * Use a DB in order to allow multiple instances to check for revoked
+ * tokens and allow cleanup at centralized DB level.
+ */
 public class TokenRevoker {
 
- /** DB Connection */
- @Resource("jdbc/storeDS")
- private DataSource storeDS;
+    /** DB Connection */
+    @Resource("jdbc/storeDS")
+    private DataSource storeDS;
 
- /**
-  * Verify if a digest encoded in HEX of the ciphered token is present
-  * in the revocation table
-  *
-  * @param jwtInHex Token encoded in HEX
-  * @return Presence flag
-  * @throws Exception If any issue occur during communication with DB
-  */
- public boolean isTokenRevoked(String jwtInHex) throws Exception {
-     boolean tokenIsPresent = false;
-     if (jwtInHex != null && !jwtInHex.trim().isEmpty()) {
-         //Decode the ciphered token
-         byte[] cipheredToken = DatatypeConverter.parseHexBinary(jwtInHex);
+    /**
+     * Verify if a given token (identified by its "jti" + "aud" claims)
+     * is present in the revocation table.
+     *
+     * @param decodedToken Verified, decoded token (signature already validated)
+     * @return Presence flag
+     * @throws Exception If any issue occurs during communication with DB
+     */
+    public boolean isTokenRevoked(DecodedJWT decodedToken) throws Exception {
+        String jwtId = decodedToken.getId(); // value of the "jti" claim
 
-         //Compute a SHA256 of the ciphered token
-         MessageDigest digest = MessageDigest.getInstance("SHA-256");
-         byte[] cipheredTokenDigest = digest.digest(cipheredToken);
-         String jwtTokenDigestInHex = DatatypeConverter.printHexBinary(cipheredTokenDigest);
+        // Per RFC 7519, "aud" may contain multiple values. This example
+        // only considers the first audience for simplicity; a production
+        // implementation handling multi-audience tokens should check
+        // revocation against every value in the list.
+        String audience = decodedToken.getAudience().isEmpty()
+            ? null : decodedToken.getAudience().get(0);
 
-         //Search token digest in HEX in DB
-         try (Connection con = this.storeDS.getConnection()) {
-             String query = "select jwt_token_digest from revoked_token where jwt_token_digest = ?";
-             try (PreparedStatement pStatement = con.prepareStatement(query)) {
-                 pStatement.setString(1, jwtTokenDigestInHex);
-                 try (ResultSet rSet = pStatement.executeQuery()) {
-                     tokenIsPresent = rSet.next();
-                 }
-             }
-         }
-     }
+        if (jwtId == null || jwtId.trim().isEmpty() || audience == null) {
+            // A token with no "jti" or "aud" cannot be safely revoked by
+            // this mechanism; treat it as untrusted in that case.
+            throw new IllegalArgumentException("Token has no \"jti\" or \"aud\" claim");
+        }
 
-     return tokenIsPresent;
- }
+        boolean tokenIsPresent;
+        try (Connection con = this.storeDS.getConnection()) {
+            String query = "select jwt_id from revoked_token where jwt_id = ? and aud = ?";
+            try (PreparedStatement pStatement = con.prepareStatement(query)) {
+                pStatement.setString(1, jwtId);
+                pStatement.setString(2, audience);
+                try (ResultSet rSet = pStatement.executeQuery()) {
+                    tokenIsPresent = rSet.next();
+                }
+            }
+        }
+        return tokenIsPresent;
+    }
 
+    /**
+     * Add a token's "jti" + "aud" claims to the revocation table.
+     *
+     * @param decodedToken Verified, decoded token (signature already validated)
+     * @throws Exception If any issue occurs during communication with DB
+     */
+    public void revokeToken(DecodedJWT decodedToken) throws Exception {
+        String jwtId = decodedToken.getId();
 
- /**
-  * Add a digest encoded in HEX of the ciphered token to the revocation token table
-  *
-  * @param jwtInHex Token encoded in HEX
-  * @throws Exception If any issue occur during communication with DB
-  */
- public void revokeToken(String jwtInHex) throws Exception {
-     if (jwtInHex != null && !jwtInHex.trim().isEmpty()) {
-         //Decode the ciphered token
-         byte[] cipheredToken = DatatypeConverter.parseHexBinary(jwtInHex);
+        // See note in isTokenRevoked() regarding multi-audience tokens.
+        String audience = decodedToken.getAudience().isEmpty()
+            ? null : decodedToken.getAudience().get(0);
 
-         //Compute a SHA256 of the ciphered token
-         MessageDigest digest = MessageDigest.getInstance("SHA-256");
-         byte[] cipheredTokenDigest = digest.digest(cipheredToken);
-         String jwtTokenDigestInHex = DatatypeConverter.printHexBinary(cipheredTokenDigest);
+        if (jwtId == null || jwtId.trim().isEmpty() || audience == null) {
+            throw new IllegalArgumentException("Token has no \"jti\" or \"aud\" claim");
+        }
 
-         //Check if the token digest in HEX is already in the DB and add it if it is absent
-         if (!this.isTokenRevoked(jwtInHex)) {
-             try (Connection con = this.storeDS.getConnection()) {
-                 String query = "insert into revoked_token(jwt_token_digest) values(?)";
-                 int insertedRecordCount;
-                 try (PreparedStatement pStatement = con.prepareStatement(query)) {
-                     pStatement.setString(1, jwtTokenDigestInHex);
-                     insertedRecordCount = pStatement.executeUpdate();
-                 }
-                 if (insertedRecordCount != 1) {
-                     throw new IllegalStateException("Number of inserted record is invalid," +
-                     " 1 expected but is " + insertedRecordCount);
-                 }
-             }
-         }
-
-     }
- }
+        if (!this.isTokenRevoked(decodedToken)) {
+            try (Connection con = this.storeDS.getConnection()) {
+                String query = "insert into revoked_token(jwt_id, aud) values(?, ?)";
+                int insertedRecordCount;
+                try (PreparedStatement pStatement = con.prepareStatement(query)) {
+                    pStatement.setString(1, jwtId);
+                    pStatement.setString(2, audience);
+                    insertedRecordCount = pStatement.executeUpdate();
+                }
+                if (insertedRecordCount != 1) {
+                    throw new IllegalStateException("Number of inserted record is invalid," +
+                    " 1 expected but is " + insertedRecordCount);
+                }
+            }
+        }
+    }
+}
 ```
 
 ### Token Information Disclosure
