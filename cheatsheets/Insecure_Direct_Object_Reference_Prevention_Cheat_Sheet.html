@@ -1939,10 +1939,32 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#verifying-access-controls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verifying access controls
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#mitigation" class="md-nav__link">
     <span class="md-ellipsis">
       
         Mitigation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-articles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related Articles
       
     </span>
   </a>
@@ -3985,10 +4007,32 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#verifying-access-controls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verifying access controls
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#mitigation" class="md-nav__link">
     <span class="md-ellipsis">
       
         Mitigation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-articles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related Articles
       
     </span>
   </a>
@@ -4018,6 +4062,12 @@
 <h1 id="insecure-direct-object-reference-prevention-cheat-sheet">Insecure Direct Object Reference Prevention Cheat Sheet<a class="headerlink" href="#insecure-direct-object-reference-prevention-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>Insecure Direct Object Reference (IDOR) is a vulnerability that arises when attackers can access or modify objects by manipulating identifiers used in a web application's URLs or parameters. It occurs due to missing access control checks, which fail to verify whether a user should be allowed to access specific data.</p>
+<p>There are three ingredients to an IDOR:</p>
+<ol>
+<li>An <strong>object</strong> such as an account, document, support ticket, transaction or partner profile.</li>
+<li>A <strong>reference</strong> to that object in the form of an ID, UUID, account number, token or slug.</li>
+<li>A <strong>missing object-level authorization check</strong> that allows a user to access or manipulate an object they should not be able to access.</li>
+</ol>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
 <p>For instance, when a user accesses their profile, the application might generate a URL like this:</p>
 <div class="highlight"><pre><span></span><code>https://example.org/users/123
@@ -4031,8 +4081,25 @@
 &lt;/form&gt;
 </code></pre></div>
 <p>In this example, the application allows users to update their profiles by submitting a form with the user ID in a hidden field. If the app doesn't perform proper access control on the server-side, attackers can manipulate the "user_id" field to modify profiles of other users without authorization.</p>
+<p>IDORs however are not limited to user profiles and sequential IDs. For instance:</p>
+<div class="highlight"><pre><span></span><code>GET /documents/annual-report.pdf
+</code></pre></div>
+<p>In this example, the filename acts as the object reference. If an attacker modifies the filename to another valid document, such as:</p>
+<div class="highlight"><pre><span></span><code>GET /documents/financial-statement.pdf
+</code></pre></div>
+<p>and gains access to a document belonging to another user, the application is vulnerable to IDOR. Object references are not limited to numeric identifiers and may include filenames, account numbers, tokens, or other values.</p>
 <h2 id="identifier-complexity">Identifier complexity<a class="headerlink" href="#identifier-complexity" title="Permanent link">&para;</a></h2>
 <p>In some cases, using more complex identifiers like GUIDs can make it practically impossible for attackers to guess valid values. However, even with complex identifiers, access control checks are essential. If attackers obtain URLs for unauthorized objects, the application should still block their access attempts.</p>
+<h2 id="verifying-access-controls">Verifying access controls<a class="headerlink" href="#verifying-access-controls" title="Permanent link">&para;</a></h2>
+<p>When testing for IDOR vulnerabilities, it is useful to create multiple user accounts with different authorization scopes. This allows developers and testers to verify that object-level authorization checks are consistently enforced.</p>
+<p>For example:</p>
+<ol>
+<li>Create User A and User B.</li>
+<li>Create objects owned by each user (documents, support tickets, invoices, etc.).</li>
+<li>Authenticate as User A and attempt to access User B's objects by modifying object references in requests.</li>
+<li>Verify that the application denies unauthorized access regardless of whether the object identifier is predictable or unguessable.</li>
+</ol>
+<p>This verification should be performed for all operations involving object references, including read, create, update, delete, export, and administrative actions.</p>
 <h2 id="mitigation">Mitigation<a class="headerlink" href="#mitigation" title="Permanent link">&para;</a></h2>
 <p>To mitigate IDOR, implement access control checks for each object that users try to access. Web frameworks often provide ways to facilitate this. Additionally, use complex identifiers as a defense-in-depth measure, but remember that access control is crucial even with these identifiers.</p>
 <p>Avoid exposing identifiers in URLs and POST bodies if possible. Instead, determine the currently authenticated user from session information. When using multi-step flows, pass identifiers in the session to prevent tampering.</p>
@@ -4044,6 +4111,11 @@
 </code></pre></div>
 <p>Verify the user's permission every time an access attempt is made. Implement this structurally using the recommended approach for your web framework.</p>
 <p>As an additional defense-in-depth measure, replace enumerable numeric identifiers with more complex, random identifiers. You can achieve this by adding a column with random strings in the database table and using those strings in the URLs instead of numeric primary keys. Another option is to use UUIDs or other long random values as primary keys. Avoid encrypting identifiers as it can be challenging to do so securely.</p>
+<h2 id="related-articles">Related Articles<a class="headerlink" href="#related-articles" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://owasp.org/www-community/attacks/insecure_direct_object_reference">Insecure Direct Object Reference (IDOR)</a></li>
+<li><a href="https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/05-Authorization_Testing/04-Testing_for_Insecure_Direct_Object_References">Testing for Insecure Direct Object References</a></li>
+</ul>
 
 
 
