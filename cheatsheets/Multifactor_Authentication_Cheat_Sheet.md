@@ -372,59 +372,47 @@ The are a number of common types of biometrics that are used, including:
 ## Modern MFA Attack Patterns and Mitigations
 
 ### MFA Fatigue Attacks (Push Notification Bombing)
-
 Attackers spam MFA push notifications hoping the user approves one out of annoyance or accidental interaction.
 
 **Mitigations:**
-
 - Enforce **Number Matching** / Challenge-Response to break the "Approve" loop ([NIST SP 800-63-4](https://pages.nist.gov/800-63-4/sp800-63.html)).
 - Strictly rate-limit and lock out MFA prompts after repeated unapproved attempts ([OWASP ASVS v4.0](https://owasp.org/www-project-application-security-verification-standard/)).
 
 ### Real-Time Phishing (Adversary-in-the-Middle / AiTM)
-
 Attackers use reverse-proxy tools (e.g., Evilginx) to intercept credentials and standard MFA tokens (SMS, TOTP) in real-time.
 
 **Mitigations:**
-
 - Mandate **Phishing-Resistant MFA** (FIDO2 / WebAuthn) which cryptographically binds the authentication to the origin URL ([CISA Phishing Guidance](https://www.cisa.gov/sites/default/files/2025-03/Phishing%20Guidance%20-%20Stopping%20the%20Attack%20Cycle%20at%20Phase%20One%20508.pdf)).
 - Implement risk-based authentication to block known VPN/proxy IP spaces and impossible travel ([CISA Multi-Factor Authentication Guidance](https://www.cisa.gov/mfa)).
 
 ### SIM Swap & Phone Number Takeover
-
 Attackers socially engineer telecoms to transfer a victim's number, intercepting out-of-band SMS or voice MFA codes.
 
 **Mitigations:**
-
-- **Deprecate Telephony MFA** for high-privilege accounts ([NIST SP 800-63-4](https://pages.nist.gov/800-63-4/sp800-63.html). 
+- **Deprecate Telephony MFA** for high-privilege accounts ([NIST SP 800-63-4](https://pages.nist.gov/800-63-4/sp800-63.html)).
 - Default to TOTP authenticator apps or FIDO2 hardware keys.
 
 ### Token Theft & Session Hijacking
-
 Attackers use infostealer malware or XSS to steal post-authentication session cookies/tokens, bypassing the MFA layer entirely.
 
 **Mitigations:**
-
-- Implement **Continuous Access Evaluation (CAE)** with short-lived tokens ([Microsoft CAE Documentation](https://learn.microsoft.com/en-us/azure/active-directory/conditional-access/concept-continuous-access-evaluation). 
-- Enforce strict cookie flags (`HttpOnly`, `Secure`, `SameSite=Strict`) and bind sessions to device hardware (Token Binding).
+- Implement **Continuous Access Evaluation (CAE)** with short-lived tokens ([Microsoft CAE Documentation](https://learn.microsoft.com/en-us/azure/active-directory/conditional-access/concept-continuous-access-evaluation)).
+- Enforce strict cookie flags (`HttpOnly`, `Secure`, `SameSite=Strict`) and bind sessions to device hardware.
 
 ### Device Binding Bypass
-
 Attackers extract cryptographic keys or clone device fingerprints to spoof a "trusted device" and bypass MFA prompts.
 
 **Mitigations:**
-
 - Store device identity keys strictly in non-exportable hardware modules (TPM or Secure Enclave).
 - Require OS-level platform attestation (e.g., Android Play Integrity, iOS DeviceCheck) before granting access.
 
 ### MFA Downgrade Attacks (OAuth/SSO)
-
 Attackers manipulate the authentication flow to fall back from strong MFA (e.g., WebAuthn) to weaker, legacy channels (e.g., SMS).
 
 **Mitigations:**
-
 - Completely disable legacy authentication endpoints (e.g., basic auth, older WS-Trust).
 - Enforce strict conditional access policies that forbid fallback to lower-assurance methods for privileged accounts.
-  
+
 ## Somewhere You Are
 
 Location-based authentication is based on the user's physical location. It is sometimes argued that location is used when deciding whether or not to require MFA (as discussed [above](#when-to-require-mfa)) however this is effectively the same as considering it to be a factor in its own right. Two prominent examples of this are the [Conditional Access Policies](https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/overview) available in Microsoft Azure, and the [Network Unlock](https://docs.microsoft.com/en-us/windows/security/information-protection/bitlocker/bitlocker-how-to-enable-network-unlock) functionality in BitLocker.
