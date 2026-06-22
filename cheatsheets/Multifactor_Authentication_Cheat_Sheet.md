@@ -395,7 +395,7 @@ Attackers socially engineer telecoms to transfer a victim's number, intercepting
 
 **Mitigations:**
 
-- **Deprecate Telephony MFA** for high-privilege accounts ([NIST SP 800-63-4](https://pages.nist.gov/800-63-4/sp800-63.html)). 
+- **Deprecate Telephony MFA** for high-privilege accounts ([NIST SP 800-63-4](https://pages.nist.gov/800-63-4/sp800-63.html). 
 - Default to TOTP authenticator apps or FIDO2 hardware keys.
 
 ### Token Theft & Session Hijacking
@@ -404,7 +404,7 @@ Attackers use infostealer malware or XSS to steal post-authentication session co
 
 **Mitigations:**
 
-- Implement **Continuous Access Evaluation (CAE)** with short-lived tokens ([Microsoft CAE Documentation](https://learn.microsoft.com/en-us/azure/active-directory/conditional-access/concept-continuous-access-evaluation)). 
+- Implement **Continuous Access Evaluation (CAE)** with short-lived tokens ([Microsoft CAE Documentation](https://learn.microsoft.com/en-us/azure/active-directory/conditional-access/concept-continuous-access-evaluation). 
 - Enforce strict cookie flags (`HttpOnly`, `Secure`, `SameSite=Strict`) and bind sessions to device hardware (Token Binding).
 
 ### Device Binding Bypass
