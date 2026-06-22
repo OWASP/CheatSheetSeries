@@ -1200,6 +1200,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="FIDO">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hardware-backed-key-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hardware-backed Key Storage
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
       </ul>
@@ -4984,6 +5001,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="FIDO">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hardware-backed-key-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hardware-backed Key Storage
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
       </ul>
@@ -5109,7 +5143,7 @@
 <li>If MFA is not enabled passwords <strong>shorter than 15 characters</strong> are considered to be weak (<a href="https://pages.nist.gov/800-63-4/sp800-63b.html#passwordver">NIST SP800-63B</a>).</li>
 </ul>
 </li>
-<li><strong>Maximum</strong> password length should be <strong>at least 64 characters</strong> to allow passphrases (<a href="https://pages.nist.gov/800-63-3/sp800-63b.html">NIST SP800-63B</a>). Note that certain implementations of hashing algorithms may cause <a href="https://www.acunetix.com/vulnerabilities/web/long-password-denial-of-service/">long password denial of service</a>.</li>
+<li><strong>Maximum</strong> password length should be <strong>at least 64 characters</strong> to allow passphrases (<a href="https://pages.nist.gov/800-63-4/sp800-63b.html#passwordlength">NIST SP800-63B</a>). Note that certain implementations of hashing algorithms may cause <a href="https://www.acunetix.com/vulnerabilities/web/long-password-denial-of-service/">long password denial of service</a>.</li>
 </ul>
 </li>
 <li>Do not silently truncate passwords. The <a href="Password_Storage_Cheat_Sheet.html#maximum-password-lengths">Password Storage Cheat Sheet</a> provides further guidance on how to handle passwords that are longer than the maximum length.</li>
@@ -5369,7 +5403,10 @@ ENDIF
 <p>The Fast Identity Online (FIDO) Alliance has created two protocols to facilitate online authentication: the Universal Authentication Framework (UAF) protocol and the Universal Second Factor (U2F) protocol. While UAF focuses on passwordless authentication, U2F allows the addition of a second factor to existing password-based authentication. Both protocols are based on a public key cryptography challenge-response model.</p>
 <p>UAF takes advantage of existing security technologies present on devices for authentication including fingerprint sensors, cameras (face biometrics), microphones (voice biometrics), Trusted Execution Environments (TEEs), Secure Elements (SEs), and others. The protocol is designed to plug these device capabilities into a common authentication framework. UAF works with both native applications and web applications.</p>
 <p>U2F augments password-based authentication using a hardware token (typically USB) that stores cryptographic authentication keys and uses them for signing. The user can use the same token as a second factor for multiple applications. U2F works with web applications. It provides <strong>protection against phishing</strong> by using the URL of the website to look up the stored authentication key.</p>
-<p><strong>FIDO2</strong>: FIDO2 and WebAuthn, encompassing previous standards (UAF/U2F), form the foundation of modern <strong>Passkeys</strong> technology. Passkeys enable users to securely log in using local user verification (such as biometrics or device PINs) and often supporting cloud synchronization across devices. This technology is widely supported by major platforms. (Windows Hello/Mac Touch ID)</p>
+<p><strong>FIDO2</strong>: FIDO2 and WebAuthn, encompassing previous standards (UAF/U2F), form the foundation of modern <strong>Passkeys</strong> technology. Passkeys enable users to securely log in using local user verification (such as biometrics or device PINs), often with credential synchronization across devices.</p>
+<h4 id="hardware-backed-key-storage">Hardware-backed Key Storage<a class="headerlink" href="#hardware-backed-key-storage" title="Permanent link">&para;</a></h4>
+<p>For many authenticators, including common platform passkeys, the private key is generated and stored by the operating system's secure key manager. Depending on the platform and authenticator, keys may be protected using hardware-backed components such as the Trusted Platform Module (TPM) on Windows, Secure Enclave on Apple devices, or the Android Keystore/StrongBox on Android, or by other software-based mechanisms.</p>
+<p>In typical implementations, the private key is intended to be non-exportable and bound to the authenticator, and the platform security module signs a server challenge using this key. However, some authenticators support credential synchronization or backup that may involve export or server-side storage, and not all implementations are hardware-backed. Relying parties should not assume that keys are hardware-backed and non-exportable unless this is verified (for example, via authenticator properties or attestation).</p>
 <h2 id="password-managers">Password Managers<a class="headerlink" href="#password-managers" title="Permanent link">&para;</a></h2>
 <p>Password managers are programs, browser plugins, or web services that automate the management of a large quantity of different credentials. Most password managers have functionality to allow users to easily use them on websites, either:
 (a) by pasting the passwords into the login form
