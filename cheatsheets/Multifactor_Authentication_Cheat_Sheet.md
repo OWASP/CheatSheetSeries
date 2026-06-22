@@ -374,7 +374,7 @@ Attackers increasingly target MFA flows directly rather than passwords. The foll
 
 ### MFA Fatigue (Push Bombing)
 
-Attackers repeatedly trigger push notifications hoping the user will approve one out of frustration or confusion.
+Attackers repeatedly trigger push notifications hoping the user will approve one out of frustration or confusion. [CISA: Mitigating MFA Fatigue Attacks](https://www.cisa.gov/news-events/cybersecurity-advisories/aa22-258a).
 
 #### Mitigations
 
@@ -387,7 +387,7 @@ Attackers repeatedly trigger push notifications hoping the user will approve one
 
 ### Real‑Time Phishing (Adversary‑in‑the‑Middle)
 
-Attackers use phishing kits or reverse proxies (e.g., Evilginx, Modlishka) to intercept MFA codes and session cookies in real time.
+Attackers use phishing kits or reverse proxies (e.g., Evilginx, Modlishka) to intercept MFA codes and session cookies in real time. [CISA: Implementing Phishing-Resistant MFA](https://www.cisa.gov/resources-tools/resources/implementing-phishing-resistant-mfa).
 
 #### Mitigations
 
@@ -400,7 +400,7 @@ Attackers use phishing kits or reverse proxies (e.g., Evilginx, Modlishka) to in
 
 ### SIM Swap & Phone Number Takeover
 
-Attackers socially engineer mobile carriers to transfer a victim’s phone number to a new SIM, allowing interception of SMS‑based MFA codes.
+Attackers socially engineer mobile carriers to transfer a victim’s phone number to a new SIM, allowing interception of SMS‑based MFA codes. CISA notes that SMS‑based factors are highly vulnerable to these interception vectors and should be avoided for sensitive workflows. [CISA: Implementing Phishing-Resistant MFA](https://www.cisa.gov/resources-tools/resources/implementing-phishing-resistant-mfa).
 
 #### Mitigations
 
@@ -408,12 +408,12 @@ Attackers socially engineer mobile carriers to transfer a victim’s phone numbe
 - Use FIDO2, hardware tokens, or app‑based TOTP instead.
 - Implement carrier‑independent verification (email, authenticator app, device binding).
 - Alert users when phone number changes occur.
-
+  
 ---
 
 ### Token Theft & Session Hijacking
 
-Attackers steal session cookies or tokens after MFA is completed, bypassing the need to authenticate again.
+Attackers steal session cookies or tokens after MFA is completed, bypassing the need to authenticate again. NIST highlights the risks of session hijacking and the importance of binding authentication to the client. [NIST SP 800-63B-4: Authentication and Authenticator Management](https://pages.nist.gov/800-63-4/sp800-63b.html).
 
 #### Mitigations
 
@@ -426,20 +426,20 @@ Attackers steal session cookies or tokens after MFA is completed, bypassing the 
 
 ### Device Binding Bypass
 
-Some MFA systems bind authentication to a specific device. Attackers attempt to clone or register unauthorized devices.
+Some MFA systems bind authentication to a specific device. Attackers attempt to clone or register unauthorized devices to bypass this restriction. [FIDO Alliance Specifications](https://fidoalliance.org/specifications/).
 
 #### Mitigations
 
-- Require explicit user approval for new device enrollment.
-- Use cryptographic device attestation (e.g., FIDO2 attestation).
-- Notify users of new device registrations.
-- Enforce step‑up authentication for device management actions.
+- Require explicit user approval and step-up verification for any new device enrollment.
+- Enforce hardware-backed cryptographic device attestation (e.g., FIDO2 attestation) to verify the device's legitimacy.
+- Notify users immediately through out-of-band channels whenever a new device registration occurs.
+- Conduct strict server-side validation of client-side generated key pairs during initialization.
 
 ---
 
 ### OAuth / SSO MFA Downgrade
 
-Attackers exploit misconfigured identity providers to force a weaker MFA flow or bypass MFA entirely.
+Attackers exploit misconfigured identity providers to force a weaker MFA flow or bypass MFA entirely. Misconfigurations remain a primary vector for identity-layer bypasses in cloud architectures. [CISA: Cloud Security Technical Reference Architecture](https://www.cisa.gov/resources-tools/resources/cloud-security-technical-reference-architecture).
 
 #### Mitigations
 
