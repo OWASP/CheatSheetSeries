@@ -4918,96 +4918,141 @@ TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
 <h4 id="how-to-prevent_2">How to Prevent<a class="headerlink" href="#how-to-prevent_2" title="Permanent link">&para;</a></h4>
 <p>Since JWTs are stateless, There is no session maintained on the server(s) serving client requests. As such, there is no session to invalidate on the server side. A well implemented Token Sidejacking solution (as explained above) should alleviate the need for maintaining denylist on server side. This is because a hardened cookie used in the Token Sidejacking can be considered as secure as a session ID used in the traditional session system, and unless both the cookie and the JWT are intercepted/stolen, the JWT is unusable. A logout can thus be 'simulated' by clearing the JWT from session storage. If the user chooses to close the browser instead, then both the cookie and sessionStorage are cleared automatically.</p>
 <p>Another way to protect against this is to implement a token denylist that will be used to mimic the "logout" feature that exists with traditional session management system.</p>
-<p>The denylist will keep a digest (SHA-256 encoded in HEX) of the token with a revocation date. This entry must endure at least until the expiration of the token.</p>
-<p>When the user wants to "logout" then it call a dedicated service that will add the provided user token to the denylist resulting in an immediate invalidation of the token for further usage in the application.</p>
+<p>When the user wants to "logout" then it call a dedicated service that will add the token's identifying claims (<code>jti</code> and <code>iss</code>) to the denylist resulting in an immediate invalidation of the token for further usage in the application.</p>
+<p><strong>Note:</strong></p>
+<p>Do not use the raw JWT or a hash of it as the denylist key.</p>
+<p>A denylist keyed on a digest of the raw token (e.g. <code>SHA-256(token)</code>) is unsafe, because a JWT does not have a single canonical byte representation. The same logically valid token can be transformed into a <em>different</em> byte sequence that still passes signature verification — which means it hashes differently and silently bypasses the denylist. This can happen for two independent reasons:</p>
+<ul>
+<li><strong>ECDSA signature malleability.</strong> For JWTs signed with an ECDSA algorithm (e.g. <code>ES256</code>), a valid signature <code>(r, s)</code> has a second, equally valid form <code>(r, (-s) mod n)</code>, where <code>n</code> is the order of the curve's generator point. Both signatures verify successfully against the same public key for the same header and payload, but produce different token bytes — and therefore a different digest. An attacker in possession of a revoked token can compute this alternate signature and obtain a token that still authenticates.</li>
+<li><strong>Non-strict JWT parsing.</strong> Many JWT libraries tolerate multiple, non-canonical encodings of the same logical token — for example, base64url values with extraneous padding, alternate-but-decodable character substitutions, or trailing bytes with differing unused bits that decode to identical content. These variants are byte-for-byte different from the original token and therefore also bypass a hash-based denylist, regardless of signing algorithm (HMAC, RSA, or ECDSA).</li>
+</ul>
+<p>Because of this, the denylist must be keyed on a value that is <strong>stable across these malleable encodings</strong>, not on the token's raw bytes. The recommended approach is to use the <code>jti</code> (JWT ID) claim, which is a unique identifier assigned by the issuer at creation time and embedded inside the signed payload — making it immune to the malleability classes above, since any tampering with it invalidates the signature. Combining <code>jti</code> with the <code>iss</code> (issuer) claim ensures a globally unique denylist key — <code>jti</code> uniqueness is only guaranteed within a single issuer, so a (<code>jti</code>, <code>iss</code>) pair is required to prevent collisions between tokens from different issuers. Note that this denylist is audience-maintained (operated by the relying party), not by the issuer itself.</p>
 <h4 id="implementation-example_2">Implementation Example<a class="headerlink" href="#implementation-example_2" title="Permanent link">&para;</a></h4>
 <h5 id="block-list-storage">Block List Storage<a class="headerlink" href="#block-list-storage" title="Permanent link">&para;</a></h5>
+<p>The following example demonstrates a denylist keyed on <code>jti</code> and <code>iss</code> rather than the raw token, per the recommendation above.</p>
 <p>A database table with the following structure will be used as the central denylist storage.</p>
-<div class="highlight"><pre><span></span><code><span class="k">create</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">exists</span><span class="w"> </span><span class="n">revoked_token</span><span class="p">(</span><span class="n">jwt_token_digest</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span><span class="w"> </span><span class="k">primary</span><span class="w"> </span><span class="k">key</span><span class="p">,</span>
-<span class="n">revocation_date</span><span class="w"> </span><span class="k">timestamp</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="n">now</span><span class="p">());</span>
+<div class="highlight"><pre><span></span><code><span class="k">create</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">exists</span><span class="w"> </span><span class="n">revoked_token</span><span class="p">(</span>
+<span class="w">  </span><span class="n">jwt_id</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">null</span><span class="p">,</span>
+<span class="w">  </span><span class="n">iss</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">null</span><span class="p">,</span>
+<span class="w">  </span><span class="n">expires_at</span><span class="w"> </span><span class="k">timestamp</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="k">null</span><span class="p">,</span>
+<span class="w">  </span><span class="n">revocation_date</span><span class="w"> </span><span class="k">timestamp</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="n">now</span><span class="p">(),</span>
+<span class="w">  </span><span class="k">primary</span><span class="w"> </span><span class="k">key</span><span class="w"> </span><span class="p">(</span><span class="n">jwt_id</span><span class="p">,</span><span class="w"> </span><span class="n">iss</span><span class="p">)</span>
+<span class="p">);</span>
 </code></pre></div>
 <h5 id="token-revocation-management">Token Revocation Management<a class="headerlink" href="#token-revocation-management" title="Permanent link">&para;</a></h5>
 <p>Code in charge of adding a token to the denylist and checking if a token is revoked.</p>
 <div class="highlight"><pre><span></span><code><span class="cm">/**</span>
-<span class="cm">* Handle the revocation of the token (logout).</span>
-<span class="cm">* Use a DB in order to allow multiple instances to check for revoked token</span>
-<span class="cm">* and allow cleanup at centralized DB level.</span>
-<span class="cm">*/</span>
+<span class="cm"> * Handle the revocation of the token (logout).</span>
+<span class="cm"> * Revocation is keyed on the token&#39;s &quot;jti&quot; and &quot;iss&quot; claims rather than</span>
+<span class="cm"> * a hash of the raw token, since JWTs do not have a single canonical</span>
+<span class="cm"> * byte representation (see warning above) and a raw-token or</span>
+<span class="cm"> * digest-based denylist can be bypassed via ECDSA signature</span>
+<span class="cm"> * malleability or lenient JWT parsing. Both claims are embedded in the</span>
+<span class="cm"> * signed payload, so neither can be altered without invalidating the</span>
+<span class="cm"> * signature. The (jti, iss) pair is used because jti uniqueness is</span>
+<span class="cm"> * only guaranteed per issuer — a malicious or rogue issuer could mint</span>
+<span class="cm"> * a JWT with the same jti as a legitimate one, causing a collision.</span>
+<span class="cm"> * Note: this denylist is audience-maintained (operated by the relying</span>
+<span class="cm"> * party), not by the issuer itself.</span>
+<span class="cm"> * Use a DB in order to allow multiple instances to check for revoked</span>
+<span class="cm"> * tokens and allow cleanup at centralized DB level.</span>
+<span class="cm"> */</span>
 <span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">TokenRevoker</span><span class="w"> </span><span class="p">{</span>
 
-<span class="w"> </span><span class="cm">/** DB Connection */</span>
-<span class="w"> </span><span class="nd">@Resource</span><span class="p">(</span><span class="s">&quot;jdbc/storeDS&quot;</span><span class="p">)</span>
-<span class="w"> </span><span class="kd">private</span><span class="w"> </span><span class="n">DataSource</span><span class="w"> </span><span class="n">storeDS</span><span class="p">;</span>
+<span class="w">    </span><span class="cm">/** DB Connection */</span>
+<span class="w">    </span><span class="nd">@Resource</span><span class="p">(</span><span class="s">&quot;jdbc/storeDS&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">DataSource</span><span class="w"> </span><span class="n">storeDS</span><span class="p">;</span>
 
-<span class="w"> </span><span class="cm">/**</span>
-<span class="cm">  * Verify if a digest encoded in HEX of the ciphered token is present</span>
-<span class="cm">  * in the revocation table</span>
-<span class="cm">  *</span>
-<span class="cm">  * @param jwtInHex Token encoded in HEX</span>
-<span class="cm">  * @return Presence flag</span>
-<span class="cm">  * @throws Exception If any issue occur during communication with DB</span>
-<span class="cm">  */</span>
-<span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">isTokenRevoked</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">jwtInHex</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
-<span class="w">     </span><span class="kt">boolean</span><span class="w"> </span><span class="n">tokenIsPresent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
-<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">jwtInHex</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="n">jwtInHex</span><span class="p">.</span><span class="na">trim</span><span class="p">().</span><span class="na">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<span class="w">         </span><span class="c1">//Decode the ciphered token</span>
-<span class="w">         </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">cipheredToken</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DatatypeConverter</span><span class="p">.</span><span class="na">parseHexBinary</span><span class="p">(</span><span class="n">jwtInHex</span><span class="p">);</span>
+<span class="w">    </span><span class="cm">/**</span>
+<span class="cm">     * Verify if a given token (identified by its &quot;jti&quot; + &quot;iss&quot; claims)</span>
+<span class="cm">     * is present in the revocation table.</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param decodedToken Verified, decoded token (signature already validated)</span>
+<span class="cm">     * @return Presence flag</span>
+<span class="cm">     * @throws Exception If any issue occurs during communication with DB</span>
+<span class="cm">     */</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">isTokenRevoked</span><span class="p">(</span><span class="n">DecodedJWT</span><span class="w"> </span><span class="n">decodedToken</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">jwtId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">decodedToken</span><span class="p">.</span><span class="na">getId</span><span class="p">();</span><span class="w">       </span><span class="c1">// value of the &quot;jti&quot; claim</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">issuer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">decodedToken</span><span class="p">.</span><span class="na">getIssuer</span><span class="p">();</span><span class="w">  </span><span class="c1">// value of the &quot;iss&quot; claim</span>
 
-<span class="w">         </span><span class="c1">//Compute a SHA256 of the ciphered token</span>
-<span class="w">         </span><span class="n">MessageDigest</span><span class="w"> </span><span class="n">digest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MessageDigest</span><span class="p">.</span><span class="na">getInstance</span><span class="p">(</span><span class="s">&quot;SHA-256&quot;</span><span class="p">);</span>
-<span class="w">         </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">cipheredTokenDigest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">digest</span><span class="p">.</span><span class="na">digest</span><span class="p">(</span><span class="n">cipheredToken</span><span class="p">);</span>
-<span class="w">         </span><span class="n">String</span><span class="w"> </span><span class="n">jwtTokenDigestInHex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DatatypeConverter</span><span class="p">.</span><span class="na">printHexBinary</span><span class="p">(</span><span class="n">cipheredTokenDigest</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">jwtId</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">jwtId</span><span class="p">.</span><span class="na">trim</span><span class="p">().</span><span class="na">isEmpty</span><span class="p">()</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">issuer</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">issuer</span><span class="p">.</span><span class="na">trim</span><span class="p">().</span><span class="na">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// A token without &quot;jti&quot; or &quot;iss&quot; cannot be safely tracked</span>
+<span class="w">            </span><span class="c1">// in this denylist; such a token should be rejected upstream.</span>
+<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalArgumentException</span><span class="p">(</span><span class="s">&quot;Token has no \&quot;jti\&quot; or \&quot;iss\&quot; claim&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
 
-<span class="w">         </span><span class="c1">//Search token digest in HEX in DB</span>
-<span class="w">         </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">Connection</span><span class="w"> </span><span class="n">con</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">storeDS</span><span class="p">.</span><span class="na">getConnection</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<span class="w">             </span><span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;select jwt_token_digest from revoked_token where jwt_token_digest = ?&quot;</span><span class="p">;</span>
-<span class="w">             </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">PreparedStatement</span><span class="w"> </span><span class="n">pStatement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">con</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="n">query</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                 </span><span class="n">pStatement</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">jwtTokenDigestInHex</span><span class="p">);</span>
-<span class="w">                 </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ResultSet</span><span class="w"> </span><span class="n">rSet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pStatement</span><span class="p">.</span><span class="na">executeQuery</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                     </span><span class="n">tokenIsPresent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rSet</span><span class="p">.</span><span class="na">next</span><span class="p">();</span>
-<span class="w">                 </span><span class="p">}</span>
-<span class="w">             </span><span class="p">}</span>
-<span class="w">         </span><span class="p">}</span>
-<span class="w">     </span><span class="p">}</span>
+<span class="w">        </span><span class="kt">boolean</span><span class="w"> </span><span class="n">tokenIsPresent</span><span class="p">;</span>
+<span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">Connection</span><span class="w"> </span><span class="n">con</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">storeDS</span><span class="p">.</span><span class="na">getConnection</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;select jwt_id from revoked_token where jwt_id = ? and iss = ?&quot;</span><span class="p">;</span>
+<span class="w">            </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">PreparedStatement</span><span class="w"> </span><span class="n">pStatement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">con</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="n">query</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">pStatement</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">jwtId</span><span class="p">);</span>
+<span class="w">                </span><span class="n">pStatement</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">issuer</span><span class="p">);</span>
+<span class="w">                </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ResultSet</span><span class="w"> </span><span class="n">rSet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pStatement</span><span class="p">.</span><span class="na">executeQuery</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="n">tokenIsPresent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rSet</span><span class="p">.</span><span class="na">next</span><span class="p">();</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">tokenIsPresent</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 
-<span class="w">     </span><span class="k">return</span><span class="w"> </span><span class="n">tokenIsPresent</span><span class="p">;</span>
-<span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="cm">/**</span>
+<span class="cm">     * Add a token&#39;s &quot;jti&quot; + &quot;iss&quot; claims to the revocation table, along</span>
+<span class="cm">     * with the token&#39;s expiration so the entry can be purged once it is</span>
+<span class="cm">     * no longer needed (i.e. once the token itself would have expired</span>
+<span class="cm">     * naturally).</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param decodedToken Verified, decoded token (signature already validated)</span>
+<span class="cm">     * @throws Exception If any issue occurs during communication with DB</span>
+<span class="cm">     */</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">revokeToken</span><span class="p">(</span><span class="n">DecodedJWT</span><span class="w"> </span><span class="n">decodedToken</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">jwtId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">decodedToken</span><span class="p">.</span><span class="na">getId</span><span class="p">();</span>
+<span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">issuer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">decodedToken</span><span class="p">.</span><span class="na">getIssuer</span><span class="p">();</span>
+<span class="w">        </span><span class="n">Date</span><span class="w"> </span><span class="n">expiresAt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">decodedToken</span><span class="p">.</span><span class="na">getExpiresAt</span><span class="p">();</span><span class="w"> </span><span class="c1">// value of the &quot;exp&quot; claim</span>
 
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">jwtId</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">jwtId</span><span class="p">.</span><span class="na">trim</span><span class="p">().</span><span class="na">isEmpty</span><span class="p">()</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">issuer</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">issuer</span><span class="p">.</span><span class="na">trim</span><span class="p">().</span><span class="na">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalArgumentException</span><span class="p">(</span><span class="s">&quot;Token has no \&quot;jti\&quot; or \&quot;iss\&quot; claim&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">expiresAt</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalArgumentException</span><span class="p">(</span><span class="s">&quot;Token has no \&quot;exp\&quot; claim; cannot schedule purge&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
 
-<span class="w"> </span><span class="cm">/**</span>
-<span class="cm">  * Add a digest encoded in HEX of the ciphered token to the revocation token table</span>
-<span class="cm">  *</span>
-<span class="cm">  * @param jwtInHex Token encoded in HEX</span>
-<span class="cm">  * @throws Exception If any issue occur during communication with DB</span>
-<span class="cm">  */</span>
-<span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">revokeToken</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">jwtInHex</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
-<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">jwtInHex</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="n">jwtInHex</span><span class="p">.</span><span class="na">trim</span><span class="p">().</span><span class="na">isEmpty</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<span class="w">         </span><span class="c1">//Decode the ciphered token</span>
-<span class="w">         </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">cipheredToken</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DatatypeConverter</span><span class="p">.</span><span class="na">parseHexBinary</span><span class="p">(</span><span class="n">jwtInHex</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="na">isTokenRevoked</span><span class="p">(</span><span class="n">decodedToken</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">Connection</span><span class="w"> </span><span class="n">con</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">storeDS</span><span class="p">.</span><span class="na">getConnection</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;insert into revoked_token(jwt_id, iss, expires_at) values(?, ?, ?)&quot;</span><span class="p">;</span>
+<span class="w">                </span><span class="kt">int</span><span class="w"> </span><span class="n">insertedRecordCount</span><span class="p">;</span>
+<span class="w">                </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">PreparedStatement</span><span class="w"> </span><span class="n">pStatement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">con</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="n">query</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="n">pStatement</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">jwtId</span><span class="p">);</span>
+<span class="w">                    </span><span class="n">pStatement</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">issuer</span><span class="p">);</span>
+<span class="w">                    </span><span class="n">pStatement</span><span class="p">.</span><span class="na">setTimestamp</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">java</span><span class="p">.</span><span class="na">sql</span><span class="p">.</span><span class="na">Timestamp</span><span class="p">(</span><span class="n">expiresAt</span><span class="p">.</span><span class="na">getTime</span><span class="p">()));</span>
+<span class="w">                    </span><span class="n">insertedRecordCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pStatement</span><span class="p">.</span><span class="na">executeUpdate</span><span class="p">();</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">insertedRecordCount</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalStateException</span><span class="p">(</span><span class="s">&quot;Number of inserted record is invalid,&quot;</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                    </span><span class="s">&quot; 1 expected but is &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">insertedRecordCount</span><span class="p">);</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
 
-<span class="w">         </span><span class="c1">//Compute a SHA256 of the ciphered token</span>
-<span class="w">         </span><span class="n">MessageDigest</span><span class="w"> </span><span class="n">digest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MessageDigest</span><span class="p">.</span><span class="na">getInstance</span><span class="p">(</span><span class="s">&quot;SHA-256&quot;</span><span class="p">);</span>
-<span class="w">         </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">cipheredTokenDigest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">digest</span><span class="p">.</span><span class="na">digest</span><span class="p">(</span><span class="n">cipheredToken</span><span class="p">);</span>
-<span class="w">         </span><span class="n">String</span><span class="w"> </span><span class="n">jwtTokenDigestInHex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DatatypeConverter</span><span class="p">.</span><span class="na">printHexBinary</span><span class="p">(</span><span class="n">cipheredTokenDigest</span><span class="p">);</span>
-
-<span class="w">         </span><span class="c1">//Check if the token digest in HEX is already in the DB and add it if it is absent</span>
-<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="na">isTokenRevoked</span><span class="p">(</span><span class="n">jwtInHex</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">             </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">Connection</span><span class="w"> </span><span class="n">con</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">storeDS</span><span class="p">.</span><span class="na">getConnection</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                 </span><span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;insert into revoked_token(jwt_token_digest) values(?)&quot;</span><span class="p">;</span>
-<span class="w">                 </span><span class="kt">int</span><span class="w"> </span><span class="n">insertedRecordCount</span><span class="p">;</span>
-<span class="w">                 </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">PreparedStatement</span><span class="w"> </span><span class="n">pStatement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">con</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="n">query</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                     </span><span class="n">pStatement</span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">jwtTokenDigestInHex</span><span class="p">);</span>
-<span class="w">                     </span><span class="n">insertedRecordCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pStatement</span><span class="p">.</span><span class="na">executeUpdate</span><span class="p">();</span>
-<span class="w">                 </span><span class="p">}</span>
-<span class="w">                 </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">insertedRecordCount</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                     </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalStateException</span><span class="p">(</span><span class="s">&quot;Number of inserted record is invalid,&quot;</span><span class="w"> </span><span class="o">+</span>
-<span class="w">                     </span><span class="s">&quot; 1 expected but is &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">insertedRecordCount</span><span class="p">);</span>
-<span class="w">                 </span><span class="p">}</span>
-<span class="w">             </span><span class="p">}</span>
-<span class="w">         </span><span class="p">}</span>
-
-<span class="w">     </span><span class="p">}</span>
-<span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="cm">/**</span>
+<span class="cm">     * Purge expired entries from the denylist. Intended to be run on a</span>
+<span class="cm">     * schedule (e.g. a daily cron job or scheduled task) so the table</span>
+<span class="cm">     * does not grow unbounded -- once a token&#39;s own &quot;exp&quot; has passed,</span>
+<span class="cm">     * it would already be rejected by signature/expiry validation, so</span>
+<span class="cm">     * keeping its denylist entry is no longer necessary.</span>
+<span class="cm">     *</span>
+<span class="cm">     * @throws Exception If any issue occurs during communication with DB</span>
+<span class="cm">     */</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">purgeExpiredEntries</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">Connection</span><span class="w"> </span><span class="n">con</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">storeDS</span><span class="p">.</span><span class="na">getConnection</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;delete from revoked_token where expires_at &lt; ?&quot;</span><span class="p">;</span>
+<span class="w">            </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">PreparedStatement</span><span class="w"> </span><span class="n">pStatement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">con</span><span class="p">.</span><span class="na">prepareStatement</span><span class="p">(</span><span class="n">query</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">pStatement</span><span class="p">.</span><span class="na">setTimestamp</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">java</span><span class="p">.</span><span class="na">sql</span><span class="p">.</span><span class="na">Timestamp</span><span class="p">(</span><span class="n">System</span><span class="p">.</span><span class="na">currentTimeMillis</span><span class="p">()));</span>
+<span class="w">                </span><span class="n">pStatement</span><span class="p">.</span><span class="na">executeUpdate</span><span class="p">();</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 <h3 id="token-information-disclosure">Token Information Disclosure<a class="headerlink" href="#token-information-disclosure" title="Permanent link">&para;</a></h3>
 <h4 id="symptom_3">Symptom<a class="headerlink" href="#symptom_3" title="Permanent link">&para;</a></h4>
