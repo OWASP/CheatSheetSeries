@@ -424,6 +424,7 @@ Attackers manipulate the authentication flow to fall back from strong MFA (e.g.,
 
 - Completely disable legacy authentication endpoints (e.g., basic auth, older WS-Trust).
 - Enforce strict conditional access policies that forbid fallback to lower-assurance methods for privileged accounts.
+  
 ## Somewhere You Are
 
 Location-based authentication is based on the user's physical location. It is sometimes argued that location is used when deciding whether or not to require MFA (as discussed [above](#when-to-require-mfa)) however this is effectively the same as considering it to be a factor in its own right. Two prominent examples of this are the [Conditional Access Policies](https://docs.microsoft.com/en-us/azure/active-directory/conditional-access/overview) available in Microsoft Azure, and the [Network Unlock](https://docs.microsoft.com/en-us/windows/security/information-protection/bitlocker/bitlocker-how-to-enable-network-unlock) functionality in BitLocker.
