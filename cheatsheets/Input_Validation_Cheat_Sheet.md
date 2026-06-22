@@ -45,7 +45,8 @@ Data that appears safe before serialization can become unsafe once parsed again.
 Reference: OWASP Deserialization Cheat Sheet (cheatsheetseries.owasp.org in Bing).
 
 ### Trusting Internal APIs or Microservices Too Much
-It’s common for internal services to skip validation because they’re “inside the perimeter.” But modern attacks often target internal trust boundaries. Every service—internal or external—needs proper validation. [CISA Zero Trust Maturity Model](https://www.cisa.gov/resources-tools/resources/zero-trust-maturity-model)
+
+It’s common for internal services to skip validation because they’re “inside the perimeter.” But modern attacks often target internal trust boundaries. Every service—internal or external—needs proper validation. [CISA Zero Trust Maturity Model](https://www.cisa.gov/resources-tools/resources/zero-trust-maturity-model).
 
 ### Not Validating File Uploads or Filenames
 
