@@ -207,7 +207,7 @@ Since JWTs are stateless, There is no session maintained on the server(s) servin
 
 Another way to protect against this is to implement a token denylist that will be used to mimic the "logout" feature that exists with traditional session management system.
 
-When the user wants to "logout" then it call a dedicated service that will add the token's identifying claims (`jti` and `aud`) to the denylist resulting in an immediate invalidation of the token for further usage in the application.
+When the user wants to "logout" then it call a dedicated service that will add the token's identifying claims (`jti` and `iss`) to the denylist resulting in an immediate invalidation of the token for further usage in the application.
 
 **Note:**
 
@@ -218,24 +218,23 @@ A denylist keyed on a digest of the raw token (e.g. `SHA-256(token)`) is unsafe,
 - **ECDSA signature malleability.** For JWTs signed with an ECDSA algorithm (e.g. `ES256`), a valid signature `(r, s)` has a second, equally valid form `(r, (-s) mod n)`, where `n` is the order of the curve's generator point. Both signatures verify successfully against the same public key for the same header and payload, but produce different token bytes — and therefore a different digest. An attacker in possession of a revoked token can compute this alternate signature and obtain a token that still authenticates.
 - **Non-strict JWT parsing.** Many JWT libraries tolerate multiple, non-canonical encodings of the same logical token — for example, base64url values with extraneous padding, alternate-but-decodable character substitutions, or trailing bytes with differing unused bits that decode to identical content. These variants are byte-for-byte different from the original token and therefore also bypass a hash-based denylist, regardless of signing algorithm (HMAC, RSA, or ECDSA).
 
-Because of this, the denylist must be keyed on a value that is **stable across these malleable encodings**, not on the token's raw bytes. The recommended approach is to use the `jti` (JWT ID) claim, which is a unique identifier assigned by the issuer at creation time and embedded inside the signed payload — making it immune to the malleability classes above, since any tampering with it invalidates the signature. Combining `jti` with the `aud` (audience) claim allows revocation to be scoped per relying party in multi-audience deployments.
-
-As a complementary hardening measure, JWT libraries should be configured (or chosen) to reject non-canonical encodings outright — strict base64url decoding, no padding tolerance — rather than relying on revocation logic to compensate for parser leniency.
+Because of this, the denylist must be keyed on a value that is **stable across these malleable encodings**, not on the token's raw bytes. The recommended approach is to use the `jti` (JWT ID) claim, which is a unique identifier assigned by the issuer at creation time and embedded inside the signed payload — making it immune to the malleability classes above, since any tampering with it invalidates the signature. Combining `jti` with the `iss` (issuer) claim ensures a globally unique denylist key — `jti` uniqueness is only guaranteed within a single issuer, so a (`jti`, `iss`) pair is required to prevent collisions between tokens from different issuers. Note that this denylist is audience-maintained (operated by the relying party), not by the issuer itself.
 
 #### Implementation Example
 
 ##### Block List Storage
 
-The following example demonstrates a denylist keyed on `jti` and `aud` rather than the raw token, per the recommendation above.
+The following example demonstrates a denylist keyed on `jti` and `iss` rather than the raw token, per the recommendation above.
 
 A database table with the following structure will be used as the central denylist storage.
 
 ``` sql
 create table if not exists revoked_token(
   jwt_id varchar(255) not null,
-  aud varchar(255) not null,
+  iss varchar(255) not null,
+  expires_at timestamp not null,
   revocation_date timestamp default now(),
-  primary key (jwt_id, aud)
+  primary key (jwt_id, iss)
 );
 ```
 
@@ -246,13 +245,17 @@ Code in charge of adding a token to the denylist and checking if a token is revo
 ``` java
 /**
  * Handle the revocation of the token (logout).
- * Revocation is keyed on the token's "jti" and "aud" claims rather than
+ * Revocation is keyed on the token's "jti" and "iss" claims rather than
  * a hash of the raw token, since JWTs do not have a single canonical
  * byte representation (see warning above) and a raw-token or
  * digest-based denylist can be bypassed via ECDSA signature
  * malleability or lenient JWT parsing. Both claims are embedded in the
  * signed payload, so neither can be altered without invalidating the
- * signature.
+ * signature. The (jti, iss) pair is used because jti uniqueness is
+ * only guaranteed per issuer — a malicious or rogue issuer could mint
+ * a JWT with the same jti as a legitimate one, causing a collision.
+ * Note: this denylist is audience-maintained (operated by the relying
+ * party), not by the issuer itself.
  * Use a DB in order to allow multiple instances to check for revoked
  * tokens and allow cleanup at centralized DB level.
  */
@@ -263,7 +266,7 @@ public class TokenRevoker {
     private DataSource storeDS;
 
     /**
-     * Verify if a given token (identified by its "jti" + "aud" claims)
+     * Verify if a given token (identified by its "jti" + "iss" claims)
      * is present in the revocation table.
      *
      * @param decodedToken Verified, decoded token (signature already validated)
@@ -271,27 +274,21 @@ public class TokenRevoker {
      * @throws Exception If any issue occurs during communication with DB
      */
     public boolean isTokenRevoked(DecodedJWT decodedToken) throws Exception {
-        String jwtId = decodedToken.getId(); // value of the "jti" claim
+        String jwtId = decodedToken.getId();       // value of the "jti" claim
+        String issuer = decodedToken.getIssuer();  // value of the "iss" claim
 
-        // Per RFC 7519, "aud" may contain multiple values. This example
-        // only considers the first audience for simplicity; a production
-        // implementation handling multi-audience tokens should check
-        // revocation against every value in the list.
-        String audience = decodedToken.getAudience().isEmpty()
-            ? null : decodedToken.getAudience().get(0);
-
-        if (jwtId == null || jwtId.trim().isEmpty() || audience == null) {
-            // A token with no "jti" or "aud" cannot be safely revoked by
-            // this mechanism; treat it as untrusted in that case.
-            throw new IllegalArgumentException("Token has no \"jti\" or \"aud\" claim");
+        if (jwtId == null || jwtId.trim().isEmpty() || issuer == null || issuer.trim().isEmpty()) {
+            // A token without "jti" or "iss" cannot be safely tracked
+            // in this denylist; such a token should be rejected upstream.
+            throw new IllegalArgumentException("Token has no \"jti\" or \"iss\" claim");
         }
 
         boolean tokenIsPresent;
         try (Connection con = this.storeDS.getConnection()) {
-            String query = "select jwt_id from revoked_token where jwt_id = ? and aud = ?";
+            String query = "select jwt_id from revoked_token where jwt_id = ? and iss = ?";
             try (PreparedStatement pStatement = con.prepareStatement(query)) {
                 pStatement.setString(1, jwtId);
-                pStatement.setString(2, audience);
+                pStatement.setString(2, issuer);
                 try (ResultSet rSet = pStatement.executeQuery()) {
                     tokenIsPresent = rSet.next();
                 }
@@ -301,35 +298,59 @@ public class TokenRevoker {
     }
 
     /**
-     * Add a token's "jti" + "aud" claims to the revocation table.
+     * Add a token's "jti" + "iss" claims to the revocation table, along
+     * with the token's expiration so the entry can be purged once it is
+     * no longer needed (i.e. once the token itself would have expired
+     * naturally).
      *
      * @param decodedToken Verified, decoded token (signature already validated)
      * @throws Exception If any issue occurs during communication with DB
      */
     public void revokeToken(DecodedJWT decodedToken) throws Exception {
         String jwtId = decodedToken.getId();
+        String issuer = decodedToken.getIssuer();
+        Date expiresAt = decodedToken.getExpiresAt(); // value of the "exp" claim
 
-        // See note in isTokenRevoked() regarding multi-audience tokens.
-        String audience = decodedToken.getAudience().isEmpty()
-            ? null : decodedToken.getAudience().get(0);
-
-        if (jwtId == null || jwtId.trim().isEmpty() || audience == null) {
-            throw new IllegalArgumentException("Token has no \"jti\" or \"aud\" claim");
+        if (jwtId == null || jwtId.trim().isEmpty() || issuer == null || issuer.trim().isEmpty()) {
+            throw new IllegalArgumentException("Token has no \"jti\" or \"iss\" claim");
+        }
+        if (expiresAt == null) {
+            throw new IllegalArgumentException("Token has no \"exp\" claim; cannot schedule purge");
         }
 
         if (!this.isTokenRevoked(decodedToken)) {
             try (Connection con = this.storeDS.getConnection()) {
-                String query = "insert into revoked_token(jwt_id, aud) values(?, ?)";
+                String query = "insert into revoked_token(jwt_id, iss, expires_at) values(?, ?, ?)";
                 int insertedRecordCount;
                 try (PreparedStatement pStatement = con.prepareStatement(query)) {
                     pStatement.setString(1, jwtId);
-                    pStatement.setString(2, audience);
+                    pStatement.setString(2, issuer);
+                    pStatement.setTimestamp(3, new java.sql.Timestamp(expiresAt.getTime()));
                     insertedRecordCount = pStatement.executeUpdate();
                 }
                 if (insertedRecordCount != 1) {
                     throw new IllegalStateException("Number of inserted record is invalid," +
                     " 1 expected but is " + insertedRecordCount);
                 }
+            }
+        }
+    }
+
+    /**
+     * Purge expired entries from the denylist. Intended to be run on a
+     * schedule (e.g. a daily cron job or scheduled task) so the table
+     * does not grow unbounded -- once a token's own "exp" has passed,
+     * it would already be rejected by signature/expiry validation, so
+     * keeping its denylist entry is no longer necessary.
+     *
+     * @throws Exception If any issue occurs during communication with DB
+     */
+    public void purgeExpiredEntries() throws Exception {
+        try (Connection con = this.storeDS.getConnection()) {
+            String query = "delete from revoked_token where expires_at < ?";
+            try (PreparedStatement pStatement = con.prepareStatement(query)) {
+                pStatement.setTimestamp(1, new java.sql.Timestamp(System.currentTimeMillis()));
+                pStatement.executeUpdate();
             }
         }
     }
