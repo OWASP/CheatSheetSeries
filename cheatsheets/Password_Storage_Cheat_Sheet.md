@@ -161,11 +161,11 @@ To summarize if bcrypt has to be used and the password should to be pre-hashed y
 
 ### PBKDF2
 
-Since [PBKDF2](https://en.wikipedia.org/wiki/PBKDF2) is recommended by [NIST](https://pages.nist.gov/800-63-3/sp800-63b.html#memsecretver) and has FIPS-140 validated implementations, so it should be the preferred algorithm when these are required.
+Since [PBKDF2](https://en.wikipedia.org/wiki/PBKDF2) is recommended by [NIST](https://pages.nist.gov/800-63-3/sp800-63b.html#memsecretver) and has FIPS-140 validated implementations, it should be the preferred algorithm when these are required.
 
 The PBKDF2 algorithm requires that you select an internal hashing algorithm such as an HMAC or a variety of other hashing algorithms. HMAC-SHA-256 is widely supported and is recommended by NIST.
 
-The work factor for PBKDF2 is implemented through an iteration count, which should set differently based on the internal hashing algorithm used.
+The work factor for PBKDF2 is implemented through an iteration count, which should be set differently based on the internal hashing algorithm used.
 
 - PBKDF2-HMAC-SHA256: 600,000 iterations (recommended)
 - PBKDF2-HMAC-SHA512: 220,000 iterations
