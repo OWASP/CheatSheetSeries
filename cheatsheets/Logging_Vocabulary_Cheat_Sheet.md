@@ -820,7 +820,7 @@ CRITICAL
 ### malicious_csrf:[userid|IP]
 
 **Description**
-When a state-changing request arrives without a valid anti-CSRF token (or with a mismatched token, Origin, or Referer) it may indicate a cross-site request forgery attempt. Block the request and log the attempt.
+When a state-changing request arrives without a valid anti-CSRF token (or with a mismatched token, Origin, or Referer) it may indicate a cross-site request forgery attempt. Block the request and log the attempt. See the [OWASP Cross-Site Request Forgery Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html) for token and Origin/Referer validation guidance.
 
 **Level:**
 WARN
@@ -845,7 +845,7 @@ WARN
 **Description**
 When a browser reports a Content-Security-Policy violation to your report endpoint, log the violation. In Report-Only mode this is high-noise — browser extensions and injected third-party scripts trigger benign violations — so WARN is appropriate; promote to CRITICAL only if you treat enforced-mode blocks as attack signal.
 
-_NOTE: CSP report fields such as `document-uri`, `referrer`, and `blocked-uri` routinely contain full URLs whose query strings carry session or reset tokens. Strip the query string/fragment before logging, and prefer the effective-directive + blocked-uri (origin+path) over the full report body to avoid a secondary sensitive-data or log-injection risk._
+_NOTE: CSP report fields such as `document-uri`, `referrer`, and `blocked-uri` are URL-valued (see the [W3C Content Security Policy Level 3](https://www.w3.org/TR/CSP3/#violation-events) violation report definition) and routinely contain full URLs whose query strings carry session or reset tokens. Strip the query string/fragment before logging, and prefer the effective-directive + blocked-uri (origin+path) over the full report body to avoid a secondary sensitive-data or log-injection risk._
 
 **Level:**
 WARN
