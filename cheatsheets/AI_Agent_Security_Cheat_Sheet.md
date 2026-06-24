@@ -277,6 +277,8 @@ For destructive, financial, administrative, or externally visible actions, add c
 #### Output Validation Pipeline
 
 ```python
+import json
+import re
 from pydantic import BaseModel, validator
 from typing import Optional, List
 
@@ -480,6 +482,12 @@ class AgentMonitor:
 from typing import Optional
 import jwt
 from datetime import datetime, timedelta
+
+import uuid
+from pybreaker import CircuitBreaker  # pip install pybreaker
+
+def generate_uuid() -> str:
+    return str(uuid.uuid4())
 
 class AgentTrustLevel(Enum):
     UNTRUSTED = 0
