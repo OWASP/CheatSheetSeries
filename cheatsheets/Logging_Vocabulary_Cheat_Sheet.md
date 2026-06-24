@@ -53,6 +53,7 @@ Some languages have libraries which ease the job of adopting this logging vocabu
 
 - Python: [lucabello/owasp-logger](https://github.com/lucabello/owasp-logger)
 - C#/.NET: [byteguard-hq/byteguard-security-logger](https://github.com/ByteGuard-HQ/byteguard-security-logger)
+- Python / Java / Go / Node.js: [thatsjet/security_event_logger](https://github.com/thatsjet/security_event_logger)
 
 ## Format
 
@@ -510,6 +511,28 @@ Expected service limit ceilings should be established and alerted when exceeded,
 
 ---
 
+### excess_sessions_exceeded[userid,max]
+
+**Description**
+When a user exceeds the maximum number of concurrent sessions allowed it should be logged. An unusually high concurrent-session count can indicate credential sharing or account takeover.
+
+**Level:**: WARN
+
+**Example:**
+
+```
+{
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "excess_sessions_exceeded:app.foobarapi.prod,5",
+    "level": "WARN",
+    "description": "User app.foobarapi.prod exceeded the max of 5 concurrent sessions",
+    ...
+}
+```
+
+---
+
 ## File Upload [UPLOAD]
 
 ### upload_complete[userid,filename,type]
@@ -648,7 +671,7 @@ WARN
 
 ---
 
-## Malicious Behavior [MALICIOUS
+## Malicious Behavior [MALICIOUS]
 
 ### malicious_excess_404:[userid|IP,useragent]
 
@@ -788,6 +811,54 @@ CRITICAL
     "event": "malicious_direct_reference:joebob1, Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0",
     "level": "CRITICAL",
     "description": "User joebob1 attempted to access an object to which they are not authorized",
+    ...
+}
+```
+
+---
+
+### malicious_csrf:[userid|IP]
+
+**Description**
+When a state-changing request arrives without a valid anti-CSRF token (or with a mismatched token, Origin, or Referer) it may indicate a cross-site request forgery attempt. Block the request and log the attempt. See the [OWASP Cross-Site Request Forgery Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html) for token and Origin/Referer validation guidance.
+
+**Level:**
+WARN
+
+**Example:**
+
+```
+{
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "malicious_csrf:joebob1",
+    "level": "WARN",
+    "description": "A state-changing request from joebob1 was missing a valid anti-CSRF token",
+    ...
+}
+```
+
+---
+
+### malicious_csp_violation:[userid|IP,effective_directive,blocked_uri,useragent]
+
+**Description**
+When a browser reports a Content-Security-Policy violation to your report endpoint, log the violation. In Report-Only mode this is high-noise — browser extensions and injected third-party scripts trigger benign violations — so WARN is appropriate; promote to CRITICAL only if you treat enforced-mode blocks as attack signal.
+
+_NOTE: CSP report fields such as `document-uri`, `referrer`, and `blocked-uri` are URL-valued (see the [W3C Content Security Policy Level 3](https://www.w3.org/TR/CSP3/#violation-events) violation report definition) and routinely contain full URLs whose query strings carry session or reset tokens. Strip the query string/fragment before logging, and prefer the effective-directive + blocked-uri (origin+path) over the full report body to avoid a secondary sensitive-data or log-injection risk._
+
+**Level:**
+WARN
+
+**Example:**
+
+```
+{
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "malicious_csp_violation:203.0.113.7,script-src,https://foobar.com/dashboard,Mozilla/5.0",
+    "level": "WARN",
+    "description": "A CSP violation for directive script-src was reported by a browser at 203.0.113.7",
     ...
 }
 ```
@@ -1098,6 +1169,29 @@ INFO
     "event": "session_expired:joebob1,revoked",
     "level": "INFO",
     "description": "User joebob1 session expired due to administrator revocation.",
+    ...
+}
+```
+
+---
+
+### session_logout:[userid,sessionid]
+
+**Description**
+When a user explicitly logs out (as opposed to a timeout or administrative revocation) the event may be logged. This is a more explicit alternative to `session_expired:[userid,logout]` for systems that distinguish a user-initiated logout.
+
+**Level:**
+INFO
+
+**Example:**
+
+```
+{
+    "datetime": "2019-01-01 00:00:00,000",
+    "appid": "foobar.netportal_auth",
+    "event": "session_logout:joebob1,kx12ab",
+    "level": "INFO",
+    "description": "User joebob1 logged out",
     ...
 }
 ```
