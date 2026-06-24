@@ -2561,6 +2561,17 @@ redirect_from: "/cheatsheets/Application_Logging_Vocabulary_Cheat_Sheet.html"
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#excess_sessions_exceededuseridmax" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        excess_sessions_exceeded[userid,max]
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2670,12 +2681,12 @@ redirect_from: "/cheatsheets/Application_Logging_Vocabulary_Cheat_Sheet.html"
   <a href="#malicious-behavior-malicious" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Malicious Behavior [MALICIOUS
+        Malicious Behavior [MALICIOUS]
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Malicious Behavior [MALICIOUS">
+    <nav class="md-nav" aria-label="Malicious Behavior [MALICIOUS]">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2738,6 +2749,28 @@ redirect_from: "/cheatsheets/Application_Logging_Vocabulary_Cheat_Sheet.html"
     <span class="md-ellipsis">
       
         malicious_direct_reference:[userid|IP, useragent]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#malicious_csrfuseridip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        malicious_csrf:[userid|IP]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#malicious_csp_violationuseridipeffective_directiveblocked_uriuseragent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        malicious_csp_violation:[userid|IP,effective_directive,blocked_uri,useragent]
       
     </span>
   </a>
@@ -2955,6 +2988,17 @@ redirect_from: "/cheatsheets/Application_Logging_Vocabulary_Cheat_Sheet.html"
     <span class="md-ellipsis">
       
         session_expired:[userid,reason]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#session_logoutuseridsessionid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        session_logout:[userid,sessionid]
       
     </span>
   </a>
@@ -5170,6 +5214,17 @@ redirect_from: "/cheatsheets/Application_Logging_Vocabulary_Cheat_Sheet.html"
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#excess_sessions_exceededuseridmax" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        excess_sessions_exceeded[userid,max]
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -5279,12 +5334,12 @@ redirect_from: "/cheatsheets/Application_Logging_Vocabulary_Cheat_Sheet.html"
   <a href="#malicious-behavior-malicious" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Malicious Behavior [MALICIOUS
+        Malicious Behavior [MALICIOUS]
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Malicious Behavior [MALICIOUS">
+    <nav class="md-nav" aria-label="Malicious Behavior [MALICIOUS]">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -5347,6 +5402,28 @@ redirect_from: "/cheatsheets/Application_Logging_Vocabulary_Cheat_Sheet.html"
     <span class="md-ellipsis">
       
         malicious_direct_reference:[userid|IP, useragent]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#malicious_csrfuseridip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        malicious_csrf:[userid|IP]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#malicious_csp_violationuseridipeffective_directiveblocked_uriuseragent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        malicious_csp_violation:[userid|IP,effective_directive,blocked_uri,useragent]
       
     </span>
   </a>
@@ -5564,6 +5641,17 @@ redirect_from: "/cheatsheets/Application_Logging_Vocabulary_Cheat_Sheet.html"
     <span class="md-ellipsis">
       
         session_expired:[userid,reason]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#session_logoutuseridsessionid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        session_logout:[userid,sessionid]
       
     </span>
   </a>
@@ -5811,6 +5899,7 @@ redirect_from: "/cheatsheets/Application_Logging_Vocabulary_Cheat_Sheet.html"
 <ul>
 <li>Python: <a href="https://github.com/lucabello/owasp-logger">lucabello/owasp-logger</a></li>
 <li>C#/.NET: <a href="https://github.com/ByteGuard-HQ/byteguard-security-logger">byteguard-hq/byteguard-security-logger</a></li>
+<li>Python / Java / Go / Node.js: <a href="https://github.com/thatsjet/security_event_logger">thatsjet/security_event_logger</a></li>
 </ul>
 <h2 id="format">Format<a class="headerlink" href="#format" title="Permanent link">&para;</a></h2>
 <p><em>NOTE: All dates should be logged in <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a> format <strong>WITH</strong> UTC offset to ensure maximum portability</em></p>
@@ -6127,6 +6216,21 @@ Expected service limit ceilings should be established and alerted when exceeded,
 }
 </code></pre></div>
 <hr />
+<h3 id="excess_sessions_exceededuseridmax">excess_sessions_exceeded[userid,max]<a class="headerlink" href="#excess_sessions_exceededuseridmax" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+When a user exceeds the maximum number of concurrent sessions allowed it should be logged. An unusually high concurrent-session count can indicate credential sharing or account takeover.</p>
+<p><strong>Level:</strong>: WARN</p>
+<p><strong>Example:</strong></p>
+<div class="highlight"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;excess_sessions_exceeded:app.foobarapi.prod,5&quot;,
+    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;description&quot;: &quot;User app.foobarapi.prod exceeded the max of 5 concurrent sessions&quot;,
+    ...
+}
+</code></pre></div>
+<hr />
 <h2 id="file-upload-upload">File Upload [UPLOAD]<a class="headerlink" href="#file-upload-upload" title="Permanent link">&para;</a></h2>
 <h3 id="upload_completeuseridfilenametype">upload_complete[userid,filename,type]<a class="headerlink" href="#upload_completeuseridfilenametype" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
@@ -6221,7 +6325,7 @@ WARN</p>
 <span class="p">}</span>
 </code></pre></div>
 <hr />
-<h2 id="malicious-behavior-malicious">Malicious Behavior [MALICIOUS<a class="headerlink" href="#malicious-behavior-malicious" title="Permanent link">&para;</a></h2>
+<h2 id="malicious-behavior-malicious">Malicious Behavior [MALICIOUS]<a class="headerlink" href="#malicious-behavior-malicious" title="Permanent link">&para;</a></h2>
 <h3 id="malicious_excess_404useridipuseragent">malicious_excess_404:[userid|IP,useragent]<a class="headerlink" href="#malicious_excess_404useridipuseragent" title="Permanent link">&para;</a></h3>
 <p><strong>Description</strong>
 When a user makes numerous requests for files that don't exist it often is an indicator of attempts to "force-browse" for files that could exist and is often behavior indicating malicious intent.</p>
@@ -6317,6 +6421,39 @@ CRITICAL</p>
     &quot;event&quot;: &quot;malicious_direct_reference:joebob1, Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0&quot;,
     &quot;level&quot;: &quot;CRITICAL&quot;,
     &quot;description&quot;: &quot;User joebob1 attempted to access an object to which they are not authorized&quot;,
+    ...
+}
+</code></pre></div>
+<hr />
+<h3 id="malicious_csrfuseridip">malicious_csrf:[userid|IP]<a class="headerlink" href="#malicious_csrfuseridip" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+When a state-changing request arrives without a valid anti-CSRF token (or with a mismatched token, Origin, or Referer) it may indicate a cross-site request forgery attempt. Block the request and log the attempt. See the <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html">OWASP Cross-Site Request Forgery Prevention Cheat Sheet</a> for token and Origin/Referer validation guidance.</p>
+<p><strong>Level:</strong>
+WARN</p>
+<p><strong>Example:</strong></p>
+<div class="highlight"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;malicious_csrf:joebob1&quot;,
+    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;description&quot;: &quot;A state-changing request from joebob1 was missing a valid anti-CSRF token&quot;,
+    ...
+}
+</code></pre></div>
+<hr />
+<h3 id="malicious_csp_violationuseridipeffective_directiveblocked_uriuseragent">malicious_csp_violation:[userid|IP,effective_directive,blocked_uri,useragent]<a class="headerlink" href="#malicious_csp_violationuseridipeffective_directiveblocked_uriuseragent" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+When a browser reports a Content-Security-Policy violation to your report endpoint, log the violation. In Report-Only mode this is high-noise — browser extensions and injected third-party scripts trigger benign violations — so WARN is appropriate; promote to CRITICAL only if you treat enforced-mode blocks as attack signal.</p>
+<p><em>NOTE: CSP report fields such as <code>document-uri</code>, <code>referrer</code>, and <code>blocked-uri</code> are URL-valued (see the <a href="https://www.w3.org/TR/CSP3/#violation-events">W3C Content Security Policy Level 3</a> violation report definition) and routinely contain full URLs whose query strings carry session or reset tokens. Strip the query string/fragment before logging, and prefer the effective-directive + blocked-uri (origin+path) over the full report body to avoid a secondary sensitive-data or log-injection risk.</em></p>
+<p><strong>Level:</strong>
+WARN</p>
+<p><strong>Example:</strong></p>
+<div class="highlight"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;malicious_csp_violation:203.0.113.7,script-src,https://foobar.com/dashboard,Mozilla/5.0&quot;,
+    &quot;level&quot;: &quot;WARN&quot;,
+    &quot;description&quot;: &quot;A CSP violation for directive script-src was reported by a browser at 203.0.113.7&quot;,
     ...
 }
 </code></pre></div>
@@ -6526,6 +6663,22 @@ INFO</p>
     &quot;event&quot;: &quot;session_expired:joebob1,revoked&quot;,
     &quot;level&quot;: &quot;INFO&quot;,
     &quot;description&quot;: &quot;User joebob1 session expired due to administrator revocation.&quot;,
+    ...
+}
+</code></pre></div>
+<hr />
+<h3 id="session_logoutuseridsessionid">session_logout:[userid,sessionid]<a class="headerlink" href="#session_logoutuseridsessionid" title="Permanent link">&para;</a></h3>
+<p><strong>Description</strong>
+When a user explicitly logs out (as opposed to a timeout or administrative revocation) the event may be logged. This is a more explicit alternative to <code>session_expired:[userid,logout]</code> for systems that distinguish a user-initiated logout.</p>
+<p><strong>Level:</strong>
+INFO</p>
+<p><strong>Example:</strong></p>
+<div class="highlight"><pre><span></span><code>{
+    &quot;datetime&quot;: &quot;2019-01-01 00:00:00,000&quot;,
+    &quot;appid&quot;: &quot;foobar.netportal_auth&quot;,
+    &quot;event&quot;: &quot;session_logout:joebob1,kx12ab&quot;,
+    &quot;level&quot;: &quot;INFO&quot;,
+    &quot;description&quot;: &quot;User joebob1 logged out&quot;,
     ...
 }
 </code></pre></div>
