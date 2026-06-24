@@ -15,6 +15,7 @@ In order to read the cheat sheets and **reference** them, use the project [offic
 
 - [Jim Manico](https://github.com/jmanico)
 - [Jakub Maćkowski](https://github.com/mackowski)
+- [Gabriel Corona](https://github.com/randomstuff)
 
 ### Core team
 
