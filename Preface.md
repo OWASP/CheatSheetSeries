@@ -14,6 +14,7 @@ Project leaders:
 
 - [Jim Manico](https://github.com/jmanico)
 - [Jakub Maćkowski](https://github.com/mackowski)
+- [Gabriel Corona](https://github.com/randomstuff)
 
 Core team:
 
