@@ -377,7 +377,7 @@ Attackers spam MFA push notifications hoping the user approves one out of annoya
 
 **Mitigations:**
 
-- Enforce **Number Matching** / Challenge-Response to break the "Approve" loop ([NIST SP 800-63-4](https://pages.nist.gov/800-63-4/sp800-63.html)).
+- Enforce **Number Matching** / Challenge-Response to break the "Approve" loop. CISA – Phishing Guidance: Stopping the Attack Cycle at Phase One.( https://www.cisa.gov).
 - Strictly rate-limit and lock out MFA prompts after repeated unapproved attempts ([OWASP ASVS v4.0](https://owasp.org/www-project-application-security-verification-standard/)).
 
 ### Real-Time Phishing (Adversary-in-the-Middle / AiTM)
@@ -387,7 +387,7 @@ Attackers use reverse-proxy tools (e.g., Evilginx) to intercept credentials and 
 **Mitigations:**
 
 - Mandate **Phishing-Resistant MFA** (FIDO2 / WebAuthn) which cryptographically binds the authentication to the origin URL ([CISA Phishing Guidance](https://www.cisa.gov/sites/default/files/2025-03/Phishing%20Guidance%20-%20Stopping%20the%20Attack%20Cycle%20at%20Phase%20One%20508.pdf)).
-- Implement risk-based authentication to block known VPN/proxy IP spaces and impossible travel ([CISA Multi-Factor Authentication Guidance](https://www.cisa.gov/mfa)).
+- Implement risk-based authentication to block known VPN/proxy IP spaces and impossible travel ([CISA. Zero Trust Maturity Model, Identity Pillar](https://www.cisa.gov/zero-trust-maturity-model).
 
 ### SIM Swap & Phone Number Takeover
 
