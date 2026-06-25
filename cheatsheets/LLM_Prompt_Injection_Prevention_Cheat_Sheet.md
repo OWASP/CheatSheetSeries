@@ -343,9 +343,9 @@ There are three useful placements:
 
 The strongest architectural form of this idea is **CaMeL** (CApabilities for MachinE Learning), [described by Google DeepMind](https://arxiv.org/pdf/2503.18813). It improves upon the original **Dual-LLM pattern** [proposed by Simon Willison](https://simonwillison.net/2023/Apr/25/dual-llm-pattern/#update-11th-april-2025-camel-addresses-flaws-in-this-proposal) to prevent injected data from manipulating tool arguments. CaMeL secures the system through strict data tracking:
 
-* **Privileged planning:** A Privileged LLM only job is to write a step-by-step plan using computer code (like pseudo-python [example on Google research repo](https://github.com/google-research/camel-prompt-injection)) to fulfill the request. Essentially, this planner AI never looks at the potentially risky or untrusted documents, it just sets up a blueprint.
-* **Quarantined parsing:** A quarantined LLM with zero tool access parses the untrusted data, this AI is allowed to read the risky document and extract information from it, but it is locked in a digital quarantine, it has zero power to use tools, take actions or act, even if it reads a hacker's prompt injection.
-* **Capability tracking:** A custom interpreter program executes the plan, tracking the data flow graph and enforcing security policies via metadata tags (capabilities).
+- **Privileged planning:** A Privileged LLM only job is to write a step-by-step plan using computer code (like pseudo-python [example on Google research repo](https://github.com/google-research/camel-prompt-injection)) to fulfill the request. Essentially, this planner AI never looks at the potentially risky or untrusted documents, it just sets up a blueprint.
+- **Quarantined parsing:** A quarantined LLM with zero tool access parses the untrusted data, this AI is allowed to read the risky document and extract information from it, but it is locked in a digital quarantine, it has zero power to use tools, take actions or act, even if it reads a hacker's prompt injection.
+- **Capability tracking:** A custom interpreter program executes the plan, tracking the data flow graph and enforcing security policies via metadata tags (capabilities).
 
 If an injection attempts an unauthorized action such as exfiltrating a confidential file to an attacker, the interpreter detects the rule violation and automatically blocks the tool execution. CaMeL's design doesn't just try to teach the AI to "be good", it mathematically separates the planning from the reading and tracks every piece of data so bad actions are blocked.
 
@@ -357,7 +357,7 @@ It is important to notice that although CaMeL is a promising path towards prompt
 - The guardrail should have a different attack surface than the primary model. A purpose-trained classifier is preferable to a general-purpose chat model from the same family, because the same jailbreak that defeats the primary model is more likely to defeat a guardrail that shares its training and prompt format.
 - Each guardrail call adds latency and cost. Reserve heavier checks for higher-risk paths (tool invocations, ingestion of external content, sensitive output) and rely on cheaper deterministic checks for routine traffic.
 - Log every guardrail decision and watch for drift. Sudden changes in the approval rate, or in the distribution of refusal reasons, often precede a working bypass.
-- Keep in mind that, as ever, the most vulnerable pieces of a system are humans, as we are prone to get _user fatigue_ when constantly being prompted to approve or deny actions, which can affect even the most cautious among us. 
+- Keep in mind that, as ever, the most vulnerable pieces of a system are humans, as we are prone to get _user fatigue_ when constantly being prompted to approve or deny actions, which can affect even the most cautious among us.
 
 ## Secure Implementation Pipeline
 
