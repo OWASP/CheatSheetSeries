@@ -377,7 +377,8 @@ Attackers spam MFA push notifications hoping the user approves one out of annoya
 
 **Mitigations:**
 
-- Enforce **Number Matching** / Challenge-Response to break the "Approve" loop. CISA – Phishing Guidance: Stopping the Attack Cycle at Phase One.( https://www.cisa.gov).
+- Enforce **Number Matching** / Challenge-Response to break the "Approve" loop.
+-  CISA – Phishing Guidance: Stopping the Attack Cycle at Phase One.[CISA]( https://www.cisa.gov).
 - Strictly rate-limit and lock out MFA prompts after repeated unapproved attempts ([OWASP ASVS v4.0](https://owasp.org/www-project-application-security-verification-standard/)).
 
 ### Real-Time Phishing (Adversary-in-the-Middle / AiTM)
