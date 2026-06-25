@@ -485,9 +485,8 @@ from datetime import datetime, timedelta
 
 import uuid
 from pybreaker import CircuitBreaker  # pip install pybreaker
-
-def generate_uuid() -> str:
-    return str(uuid.uuid4())
+# Usage: CircuitBreaker(fail_max=5, reset_timeout=60)
+# Generate UUIDs inline with: str(uuid.uuid4())
 
 class AgentTrustLevel(Enum):
     UNTRUSTED = 0
