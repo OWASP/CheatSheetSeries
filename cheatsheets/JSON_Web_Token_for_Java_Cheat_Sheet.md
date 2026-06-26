@@ -357,6 +357,13 @@ public class TokenRevoker {
 }
 ```
 
+#### Issuer-Side Revocation: Token Status List
+
+The denylist approach described above is typically operated by the relying party (resource server) — it works well when the audience maintains its own revocation state close to where tokens are validated. However, in some deployments the issuer needs to centrally broadcast revocation state to multiple relying parties without requiring each one to maintain its own denylist.
+
+For this use case, the IETF [Token Status List (TSL)](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-status-list) draft defines a scalable, issuer-maintained revocation mechanism. TSL is used in SD-JWT Verifiable Credentials and other high-scale
+deployments where a single issuer serves many relying parties. Consult the TSL draft for implementation guidance when issuer-side revocation is required.
+
 ### Token Information Disclosure
 
 #### Symptom
