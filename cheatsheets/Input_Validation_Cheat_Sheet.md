@@ -68,6 +68,7 @@ Reference: Unicode Technical Report #36 (Security Considerations).
 ### Assuming JSON Input Is Automatically Safe
 
 JSON feels structured and predictable, but attackers can still inject harmful strings, unexpected types, or oversized payloads. It needs the same level of validation as any other input.
+Reference: OWASP API Security Top 10 – API8:2023 (Security Misconfiguration).
 
 ### Forgetting to Validate Before Logging or Storing Data
 
