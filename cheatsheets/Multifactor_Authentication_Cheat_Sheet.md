@@ -388,7 +388,7 @@ Attackers deploy reverse‑proxy phishing kits (e.g., Evilginx, Modlishka, Murae
 
 **Mitigations:**
 
-- Mandate Phishing‑Resistant MFA (FIDO2/WebAuthn), which cryptographically binds authentication to the legitimate origin     and prevents AiTM replay.([CISA Phishing Guidance](https://www.cisa.gov/sites/default/files/2025-   03/Phishing%20Guidance%20-%20Stopping%20the%20Attack%20Cycle%20at%20Phase%20One%20508.pdf)).  
+- Mandate Phishing‑Resistant MFA (FIDO2/WebAuthn), which cryptographically binds authentication to the legitimate origin     and prevents AiTM replay. [CISA Phishing Guidance](https://www.cisa.gov/sites/default/files/2025-03/Phishing%20Guidance%20-%20Stopping%20the%20Attack%20Cycle%20at%20Phase%20One%20508.pdf).
 - Use risk‑based authentication to detect suspicious post‑compromise activity (e.g., proxy IPs, anomalous locations),  though this does not prevent AiTM itself.
   Reference: CISA Zero Trust Maturity Model – Identity Pillar (risk‑based access decisions).
 
