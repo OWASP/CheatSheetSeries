@@ -2194,6 +2194,17 @@ redirect_from: "/cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.html"
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#issuer-side-revocation-token-status-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issuer-Side Revocation: Token Status List
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -4557,6 +4568,17 @@ redirect_from: "/cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.html"
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#issuer-side-revocation-token-status-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issuer-Side Revocation: Token Status List
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -5054,6 +5076,10 @@ TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
+<h4 id="issuer-side-revocation-token-status-list">Issuer-Side Revocation: Token Status List<a class="headerlink" href="#issuer-side-revocation-token-status-list" title="Permanent link">&para;</a></h4>
+<p>The denylist approach described above is typically operated by the relying party (resource server) — it works well when the audience maintains its own revocation state close to where tokens are validated. However, in some deployments the issuer needs to centrally broadcast revocation state to multiple relying parties without requiring each one to maintain its own denylist.</p>
+<p>For this use case, the IETF <a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-status-list">Token Status List (TSL)</a> draft defines a scalable, issuer-maintained revocation mechanism. TSL is used in SD-JWT Verifiable Credentials and other high-scale
+deployments where a single issuer serves many relying parties. Consult the TSL draft for implementation guidance when issuer-side revocation is required.</p>
 <h3 id="token-information-disclosure">Token Information Disclosure<a class="headerlink" href="#token-information-disclosure" title="Permanent link">&para;</a></h3>
 <h4 id="symptom_3">Symptom<a class="headerlink" href="#symptom_3" title="Permanent link">&para;</a></h4>
 <p>This attack occurs when an attacker has access to a token (or a set of tokens) and extracts information stored in it (the contents of JWTs are base64 encoded, but is not encrypted by default) in order to obtain information about the system. Information can be for example the security roles, login format...</p>
