@@ -384,12 +384,13 @@ Attackers spam MFA push notifications hoping the user approves one out of annoya
 
 ### Real-Time Phishing (Adversary-in-the-Middle / AiTM)
 
-Attackers use reverse-proxy tools (e.g., Evilginx) to intercept credentials and standard MFA tokens (SMS, TOTP) in real-time.
+Attackers deploy reverse‑proxy phishing kits (e.g., Evilginx, Modlishka, Muraena) that sit between the user and the legitimate website. These tools capture credentials and the resulting session cookies, allowing the attacker to impersonate the user in real time.
 
 **Mitigations:**
 
-- Mandate **Phishing-Resistant MFA** (FIDO2 / WebAuthn) which cryptographically binds the authentication to the origin URL ([CISA Phishing Guidance](https://www.cisa.gov/sites/default/files/2025-03/Phishing%20Guidance%20-%20Stopping%20the%20Attack%20Cycle%20at%20Phase%20One%20508.pdf)).
-- Implement risk-based authentication to block known VPN/proxy IP spaces and impossible travel ([CISA. Zero Trust Maturity Model, Identity Pillar](https://www.cisa.gov/zero-trust-maturity-model).
+- Mandate Phishing‑Resistant MFA (FIDO2/WebAuthn), which cryptographically binds authentication to the legitimate origin     and prevents AiTM replay.([CISA Phishing Guidance](https://www.cisa.gov/sites/default/files/2025-   03/Phishing%20Guidance%20-%20Stopping%20the%20Attack%20Cycle%20at%20Phase%20One%20508.pdf)).  
+- Use risk‑based authentication to detect suspicious post‑compromise activity (e.g., proxy IPs, anomalous locations),  though this does not prevent AiTM itself.
+  Reference: CISA Zero Trust Maturity Model – Identity Pillar (risk‑based access decisions).
 
 ### SIM Swap & Phone Number Takeover
 
@@ -408,6 +409,8 @@ Attackers use infostealer malware or XSS to steal post-authentication session co
 
 - Implement **Continuous Access Evaluation (CAE)** with short-lived tokens ([Microsoft CAE Documentation](https://learn.microsoft.com/en-us/azure/active-directory/conditional-access/concept-continuous-access-evaluation)).
 - Enforce strict cookie flags (`HttpOnly`, `Secure`, `SameSite=Strict`) and bind sessions to device hardware.
+- Impossible travel detection can identify stolen session tokens being replayed from a different geography, but it does not prevent token theft itself.
+  Reference: Microsoft Entra ID Identity Protection – Impossible Travel Detection.
 
 ### Device Binding Bypass
 
@@ -415,9 +418,13 @@ Attackers extract cryptographic keys or clone device fingerprints to spoof a "tr
 
 **Mitigations:**
 
-- Store device identity keys strictly in non-exportable hardware modules (TPM or Secure Enclave).
-- Require OS-level platform attestation (e.g., Android Play Integrity, iOS DeviceCheck) before granting access.
-
+- Use hardware‑backed, non‑exportable device keys (TPM, Secure Enclave) to ensure device binding cannot be cloned or replayed.
+  Reference: NIST SP 800‑63B – Digital Identity Guidelines (Authenticator Assurance Levels).
+- Prefer phishing‑resistant MFA (FIDO2/WebAuthn), which provides origin‑bound, device‑bound authentication resistant to device binding bypass.
+  Reference: FIDO Alliance – FIDO2/WebAuthn Security Specifications.
+- Validate device attestation metadata to ensure the authenticator is genuine and hardware‑protected.
+  Reference: W3C WebAuthn Level 2 – Attestation Statement Formats.
+  
 ### MFA Downgrade Attacks (OAuth/SSO)
 
 Attackers manipulate the authentication flow to fall back from strong MFA (e.g., WebAuthn) to weaker, legacy channels (e.g., SMS).
