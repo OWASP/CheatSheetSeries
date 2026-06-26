@@ -378,7 +378,7 @@ Attackers spam MFA push notifications hoping the user approves one out of annoya
 **Mitigations:**
 
 - Enforce Number Matching (challenge–response) to prevent users from blindly approving MFA prompts during fatigue attacks.
-  Reference: Microsoft Authenticator – Number Matching Documentation.
+  Reference: Microsoft Authenticator – Number Matching Documentation(example implementation of challenge–response MFA).
 - Follow CISA’s guidance on deploying phishing‑resistant MFA to eliminate push‑based MFA fatigue attacks.
   Reference: CISA – Phishing‑Resistant MFA Guidance.
 
