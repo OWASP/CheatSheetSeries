@@ -511,8 +511,8 @@ class SecureAgentBus:
             "allowed_message_types": self._get_allowed_types(trust_level)
         }
         self.circuit_breakers[agent_id] = CircuitBreaker(
-            failure_threshold=5,
-            recovery_timeout=60
+            fail_max=5,
+            reset_timeout=60
         )
     
     async def send_message(self, sender_id: str, recipient_id: str,
@@ -523,7 +523,7 @@ class SecureAgentBus:
             raise SecurityViolation(f"Unknown sender agent: {sender_id}")
         
         # Check circuit breaker
-        if self.circuit_breakers[sender_id].is_open:
+        if self.circuit_breakers[sender_id].current_state == "open":
             raise CircuitBreakerOpen(f"Agent {sender_id} is temporarily blocked")
         
         # Validate recipient authorization
