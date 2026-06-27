@@ -4817,7 +4817,8 @@
 <li>Allow users to interrupt and rollback agent operations.</li>
 </ul>
 <h4 id="action-classification-and-approval-flow">Action Classification and Approval Flow<a class="headerlink" href="#action-classification-and-approval-flow" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">uuid</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">RiskLevel</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
@@ -4859,7 +4860,7 @@
 
         <span class="c1"># Queue for human review</span>
         <span class="n">action</span> <span class="o">=</span> <span class="n">PendingAction</span><span class="p">(</span>
-            <span class="n">action_id</span><span class="o">=</span><span class="n">generate_uuid</span><span class="p">(),</span>
+            <span class="n">action_id</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()),</span>
             <span class="n">tool_name</span><span class="o">=</span><span class="n">tool_name</span><span class="p">,</span>
             <span class="n">parameters</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_sanitize_params_for_display</span><span class="p">(</span><span class="n">params</span><span class="p">),</span>
             <span class="n">risk_level</span><span class="o">=</span><span class="n">risk_level</span><span class="p">,</span>
@@ -4904,7 +4905,9 @@
 <li>Apply content safety filters to generated responses.</li>
 </ul>
 <h4 id="output-validation-pipeline">Output Validation Pipeline<a class="headerlink" href="#output-validation-pipeline" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">validator</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">validator</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">AgentToolCall</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
@@ -5102,6 +5105,11 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">jwt</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
 
+<span class="kn">import</span><span class="w"> </span><span class="nn">uuid</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pybreaker</span><span class="w"> </span><span class="kn">import</span> <span class="n">CircuitBreaker</span>  <span class="c1"># pip install pybreaker</span>
+<span class="c1"># Usage: CircuitBreaker(fail_max=5, reset_timeout=60)</span>
+<span class="c1"># Generate UUIDs inline with: str(uuid.uuid4())</span>
+
 <span class="k">class</span><span class="w"> </span><span class="nc">AgentTrustLevel</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
     <span class="n">UNTRUSTED</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">INTERNAL</span> <span class="o">=</span> <span class="mi">1</span>
@@ -5125,8 +5133,8 @@
             <span class="s2">&quot;allowed_message_types&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_allowed_types</span><span class="p">(</span><span class="n">trust_level</span><span class="p">)</span>
         <span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">circuit_breakers</span><span class="p">[</span><span class="n">agent_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">CircuitBreaker</span><span class="p">(</span>
-            <span class="n">failure_threshold</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
-            <span class="n">recovery_timeout</span><span class="o">=</span><span class="mi">60</span>
+            <span class="n">fail_max</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+            <span class="n">reset_timeout</span><span class="o">=</span><span class="mi">60</span>
         <span class="p">)</span>
 
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">send_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sender_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">recipient_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -5137,8 +5145,8 @@
             <span class="k">raise</span> <span class="n">SecurityViolation</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown sender agent: </span><span class="si">{</span><span class="n">sender_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="c1"># Check circuit breaker</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">circuit_breakers</span><span class="p">[</span><span class="n">sender_id</span><span class="p">]</span><span class="o">.</span><span class="n">is_open</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">CircuitBreakerOpen</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Agent </span><span class="si">{</span><span class="n">sender_id</span><span class="si">}</span><span class="s2"> is temporarily blocked&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">circuit_breakers</span><span class="p">[</span><span class="n">sender_id</span><span class="p">]</span><span class="o">.</span><span class="n">current_state</span> <span class="o">==</span> <span class="s2">&quot;open&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Agent </span><span class="si">{</span><span class="n">sender_id</span><span class="si">}</span><span class="s2"> is temporarily blocked&quot;</span><span class="p">)</span>
 
         <span class="c1"># Validate recipient authorization</span>
         <span class="k">if</span> <span class="n">recipient_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sender</span><span class="p">[</span><span class="s2">&quot;allowed_recipients&quot;</span><span class="p">]:</span>
