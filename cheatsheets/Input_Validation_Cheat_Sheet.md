@@ -49,7 +49,7 @@ Modern Zero Trust guidance (such as the CISA Zero Trust Maturity Model) emphasiz
 
 ### Not Validating File Uploads or Filenames
 
-File uploads are a huge attack surface. You need to validate the file type, size, extension, and even the filename. Attackers can sneak in traversal sequences or special characters that cause trouble later. [OWASP File Upload Cheat Sheet](https://cheatsheetseries.owasp.org/)
+File uploads are a huge attack surface. You need to validate the file type, size, extension, and even the filename. Attackers can sneak in traversal sequences or special characters that cause trouble later. [OWASP File Upload Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html)
 
 ### Using Unsafe or Overly Complex Regular Expressions
 
