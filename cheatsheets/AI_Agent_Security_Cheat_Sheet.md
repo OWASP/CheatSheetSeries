@@ -186,6 +186,7 @@ class SecureAgentMemory:
 #### Action Classification and Approval Flow
 
 ```python
+import uuid
 from enum import Enum
 from dataclasses import dataclass
 
@@ -228,7 +229,7 @@ class HumanInTheLoopController:
         
         # Queue for human review
         action = PendingAction(
-            action_id=generate_uuid(),
+            action_id=str(uuid.uuid4()),
             tool_name=tool_name,
             parameters=self._sanitize_params_for_display(params),
             risk_level=risk_level,
@@ -277,6 +278,8 @@ For destructive, financial, administrative, or externally visible actions, add c
 #### Output Validation Pipeline
 
 ```python
+import json
+import re
 from pydantic import BaseModel, validator
 from typing import Optional, List
 
@@ -481,6 +484,11 @@ from typing import Optional
 import jwt
 from datetime import datetime, timedelta
 
+import uuid
+from pybreaker import CircuitBreaker  # pip install pybreaker
+# Usage: CircuitBreaker(fail_max=5, reset_timeout=60)
+# Generate UUIDs inline with: str(uuid.uuid4())
+
 class AgentTrustLevel(Enum):
     UNTRUSTED = 0
     INTERNAL = 1
@@ -504,8 +512,8 @@ class SecureAgentBus:
             "allowed_message_types": self._get_allowed_types(trust_level)
         }
         self.circuit_breakers[agent_id] = CircuitBreaker(
-            failure_threshold=5,
-            recovery_timeout=60
+            fail_max=5,
+            reset_timeout=60
         )
     
     async def send_message(self, sender_id: str, recipient_id: str,
@@ -516,8 +524,8 @@ class SecureAgentBus:
             raise SecurityViolation(f"Unknown sender agent: {sender_id}")
         
         # Check circuit breaker
-        if self.circuit_breakers[sender_id].is_open:
-            raise CircuitBreakerOpen(f"Agent {sender_id} is temporarily blocked")
+        if self.circuit_breakers[sender_id].current_state == "open":
+            raise RuntimeError(f"Agent {sender_id} is temporarily blocked")
         
         # Validate recipient authorization
         if recipient_id not in sender["allowed_recipients"]:
