@@ -45,7 +45,7 @@ Data that appears safe before serialization can become unsafe once parsed again.
 
 ### Trusting Internal APIs or Microservices Too Much
 
-It’s common for internal services to skip validation because they’re “inside the perimeter.” But modern attacks often target internal trust boundaries. Every service—internal or external—needs proper validation. [CISA Zero Trust Maturity Model](https://www.cisa.gov/resources-tools/resources/zero-trust-maturity-model).
+Modern Zero Trust guidance (such as the CISA Zero Trust Maturity Model) emphasizes that no system -internal or external should be implicitly trusted based on network location. This principle applies to internal APIs and microservices, which must validate all inputs even when operating inside the perimeter.
 
 ### Not Validating File Uploads or Filenames
 
