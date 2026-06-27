@@ -186,6 +186,7 @@ class SecureAgentMemory:
 #### Action Classification and Approval Flow
 
 ```python
+import uuid
 from enum import Enum
 from dataclasses import dataclass
 
@@ -228,7 +229,7 @@ class HumanInTheLoopController:
         
         # Queue for human review
         action = PendingAction(
-            action_id=generate_uuid(),
+            action_id=str(uuid.uuid4()),
             tool_name=tool_name,
             parameters=self._sanitize_params_for_display(params),
             risk_level=risk_level,
@@ -524,7 +525,7 @@ class SecureAgentBus:
         
         # Check circuit breaker
         if self.circuit_breakers[sender_id].current_state == "open":
-            raise CircuitBreakerOpen(f"Agent {sender_id} is temporarily blocked")
+            raise RuntimeError(f"Agent {sender_id} is temporarily blocked")
         
         # Validate recipient authorization
         if recipient_id not in sender["allowed_recipients"]:
