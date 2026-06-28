@@ -35,7 +35,7 @@ Input validation can be implemented using any programming technique that allows 
 
 ## Common Pitfalls in Input Validation
 
-Even when teams try to implement input validation, a lot of applications still end up vulnerable because of small oversights or assumptions that don’t hold up in the real world. These are some of the issues that come up again and again during security reviews and incident investigations.
+Even when teams try to implement input validation, a lot of applications still end up vulnerable because of small oversights or assumptions that don’t hold up in the real world.These are common implementation mistakes that frequently lead to validation weaknesses in real-world applications.
 
 Note: Client‑side validation and denylisting are already covered in the sections below. See “Server‑Side Validation” and “Allowlist vs Denylist” for detailed guidance.
 
