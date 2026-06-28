@@ -67,14 +67,12 @@ Reference: Unicode Technical Report #36 (Security Considerations).
 
 ### Assuming JSON Input Is Automatically Safe
 
-Because JSON is a structured data format, developers sometimes assume its contents are inherently safe. However, JSON payloads remain untrusted input. Applications should validate field presence, data types, length, ranges, and overall structure before processing.[OWASP Input Validation Cheatsheet](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html).
-
+Because JSON is a structured data format, developers sometimes assume its contents are inherently safe. However, JSON payloads remain untrusted input. Applications should validate field presence, data types, length, ranges, and overall structure before processing.[OWASP Logging Cheat Sheet](<https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html>)
 
 ### Forgetting to Validate Before Logging or Storing Data
 
-Input validation reduces unexpected or malformed data, but log injection is primarily mitigated through output encoding when writing to logs. Applications should validate structure and type on input, and then safely encode log entries on output to prevent injection.[OWASP Logging Cheat Sheet ](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html ).
+Input validation reduces unexpected or malformed data, but log injection is primarily mitigated through output encoding when writing to logs. Applications should validate structure and type on input, and then safely encode log entries on output to prevent injection.[OWASP Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html).
  
-
 ### Allowlist vs Denylist
 
 It is a common mistake to use denylist validation in order to try to detect possibly dangerous characters and patterns like the apostrophe `'` character, the string `1=1`, or the `<script>` tag, but this is a massively flawed approach as it is trivial for an attacker to bypass such filters.
