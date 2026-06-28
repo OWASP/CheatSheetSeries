@@ -67,13 +67,13 @@ Reference: Unicode Technical Report #36 (Security Considerations).
 
 ### Assuming JSON Input Is Automatically Safe
 
-JSON feels structured and predictable, but attackers can still inject harmful strings, unexpected types, or oversized payloads. It needs the same level of validation as any other input.
-Reference: OWASP API Security Top 10 – API8:2023 (Security Misconfiguration).
+Because JSON is a structured data format, developers sometimes assume its contents are inherently safe. However, JSON payloads remain untrusted input. Applications should validate field presence, data types, length, ranges, and overall structure before processing.[OWASP Input Validation Cheatsheet](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html).
+
 
 ### Forgetting to Validate Before Logging or Storing Data
 
-Input validation reduces unexpected or malformed data, but log injection is primarily mitigated through output encoding when writing to logs. Applications should validate structure and type on input, and then safely encode log entries on output to prevent injection.
-*Reference: OWASP Logging Cheat Sheet*  
+Input validation reduces unexpected or malformed data, but log injection is primarily mitigated through output encoding when writing to logs. Applications should validate structure and type on input, and then safely encode log entries on output to prevent injection.[OWASP Logging Cheat Sheet ](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html ).
+ 
 
 ### Allowlist vs Denylist
 
