@@ -397,7 +397,7 @@ Reverse-proxy phishing kits (such as Evilginx, Modlishka, and Muraena) intercept
 - Use risk-based authentication to detect suspicious post-compromise activity such as proxy IPs or anomalous locations.  
   [CISA Zero Trust Maturity Model v2.0](https://www.cisa.gov/resources-tools/resources/zero-trust-maturity-model)
 
-- Monitor for indicators of AiTM activity, such as anomalous sign‑in locations,reverse‑proxy infrastructure,token replay, or suspicious session behavior. 
+- Monitor for indicators of AiTM activity, such as anomalous sign‑in locations,reverse‑proxy infrastructure,token replay, or suspicious session behavior.
   [Microsoft Entra ID – AiTM Attack Analysis](https://learn.microsoft.com/en-us/entra/identity-protection/overview-aitm)
 
 ### SIM Swap and Phone Number Takeover
