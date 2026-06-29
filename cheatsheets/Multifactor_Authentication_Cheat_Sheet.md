@@ -397,7 +397,7 @@ Reverse-proxy phishing kits (such as Evilginx, Modlishka, and Muraena) intercept
 - Use risk-based authentication to detect suspicious post-compromise activity such as proxy IPs or anomalous locations.  
   [CISA Zero Trust Maturity Model v2.0](https://www.cisa.gov/resources-tools/resources/zero-trust-maturity-model)
 
-- Monitor for AiTM indicators such as mismatched TLS fingerprints or unexpected reverse-proxy headers.  
+- Monitor for indicators of AiTM activity, such as anomalous sign‑in locations, reverse‑proxy infrastructure, token replay, or suspicious session behavior. 
   [Microsoft Entra ID – AiTM Attack Analysis](https://learn.microsoft.com/en-us/entra/identity-protection/overview-aitm)
 
 ### SIM Swap and Phone Number Takeover
@@ -420,14 +420,14 @@ Infostealer malware, malicious browser extensions, or cross-site scripting (XSS)
 - Implement Continuous Access Evaluation (CAE) with short-lived tokens to reduce replay windows.  
   [Microsoft CAE](https://learn.microsoft.com/en-us/azure/active-directory/conditional-access/concept-continuous-access-evaluation)
 
-- Enforce strict cookie flags (`HttpOnly`, `Secure`, `SameSite=Strict`) and bind sessions to device hardware.
-
+- Enforce secure cookie attributes (HttpOnly, Secure, and an appropriate SameSite value) and, where supported, use device-based Conditional Access or proof-of-possession tokens to reduce token replay.
+  
 - Use impossible travel detection to identify stolen tokens replayed from different geographies.  
   [Microsoft Entra ID – Identity Protection](https://learn.microsoft.com/en-us/entra/id-protection/howto-identity-protection-investigate-risky-users#impossible-travel)
 
 ### Device Binding Bypass
 
-Attackers clone device fingerprints or extract cryptographic keys to impersonate a trusted device and bypass MFA prompts.
+Attackers clone device fingerprints or extract cryptographic keys to impersonate a trusted device or compromise device-based authentication. 
 
 #### Mitigations
 
