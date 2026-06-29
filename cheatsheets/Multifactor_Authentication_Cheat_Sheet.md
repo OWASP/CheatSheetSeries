@@ -377,7 +377,7 @@ Modern identity attacks increasingly target MFA mechanisms themselves. The follo
 
 Attackers repeatedly trigger MFA push notifications hoping the user approves one out of annoyance or accidental interaction.
 
-**Mitigations**
+#### Mitigations
 
 - Enforce number matching (challenge–response) to prevent blind approvals.  
   [Microsoft Entra ID – Number Matching](https://learn.microsoft.com/en-us/entra/identity/authentication/how-to-mfa-number-matching)
@@ -389,7 +389,7 @@ Attackers repeatedly trigger MFA push notifications hoping the user approves one
 
 Reverse-proxy phishing kits (such as Evilginx, Modlishka, and Muraena) intercept credentials and session cookies, enabling attackers to impersonate users in real time.
 
-**Mitigations**
+#### Mitigations
 
 - Mandate phishing-resistant MFA (FIDO2/WebAuthn), which binds authentication to the legitimate origin and prevents AiTM replay.  
   [CISA – Implementing Phishing-Resistant MFA](https://www.cisa.gov/resources-tools/resources/implementing-phishing-resistant-mfa)
@@ -404,7 +404,7 @@ Reverse-proxy phishing kits (such as Evilginx, Modlishka, and Muraena) intercept
 
 Attackers socially engineer telecom providers to transfer a victim’s phone number, intercepting SMS or voice MFA codes.
 
-**Mitigations**
+#### Mitigations
 
 - Deprecate telephony-based MFA for high-privilege or sensitive accounts.  
   [NIST SP 800-63-4 – Digital Identity Guidelines](https://pages.nist.gov/800-63-4/sp800-63.html)
@@ -415,7 +415,7 @@ Attackers socially engineer telecom providers to transfer a victim’s phone num
 
 Infostealer malware, malicious browser extensions, or cross-site scripting (XSS) can steal session cookies or tokens, bypassing MFA entirely.
 
-**Mitigations**
+#### Mitigations
 
 - Implement Continuous Access Evaluation (CAE) with short-lived tokens to reduce replay windows.  
   [Microsoft CAE](https://learn.microsoft.com/en-us/azure/active-directory/conditional-access/concept-continuous-access-evaluation)
@@ -429,7 +429,7 @@ Infostealer malware, malicious browser extensions, or cross-site scripting (XSS)
 
 Attackers clone device fingerprints or extract cryptographic keys to impersonate a trusted device and bypass MFA prompts.
 
-**Mitigations**
+#### Mitigations
 
 - Use hardware-backed, non-exportable device keys (TPM, Secure Enclave) to prevent cloning.  
   [NIST SP 800-63-4B – Authenticator Assurance Levels](https://pages.nist.gov/800-63-4/sp800-63b.html)
@@ -444,7 +444,7 @@ Attackers clone device fingerprints or extract cryptographic keys to impersonate
 
 Attackers manipulate authentication flows to downgrade from strong MFA (such as WebAuthn) to weaker legacy methods (such as SMS or basic authentication).
 
-**Mitigations**
+#### Mitigations
 
 - Disable legacy authentication endpoints such as basic auth and older WS-Trust flows.  
   [Microsoft Entra ID – Blocking Legacy Authentication](https://learn.microsoft.com/en-us/entra/identity/conditional-access/block-legacy-authentication)
@@ -452,7 +452,7 @@ Attackers manipulate authentication flows to downgrade from strong MFA (such as 
 - Enforce conditional access policies that forbid fallback to lower-assurance methods for privileged accounts.
 
 - Follow OAuth 2.0 Security Best Current Practice to prevent downgrade and redirect-based manipulation.  
-  [RFC 9700 – OAuth 2.0 Security Best Current Practice](https://datatracker.ietf.org/doc/rfc9700/).
+  [RFC 9700 – OAuth 2.0 Security Best Current Practice](https://datatracker.ietf.org/doc/rfc9700/)
 
 ## Somewhere You Are
 
