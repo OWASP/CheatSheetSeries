@@ -371,68 +371,88 @@ The are a number of common types of biometrics that are used, including:
 
 ## Modern MFA Attack Patterns and Mitigations
 
+Modern identity attacks increasingly target MFA mechanisms themselves. The following patterns reflect real-world incidents observed across cloud environments, enterprise identity systems, and large-scale phishing campaigns. Each attack pattern includes mitigations aligned with current NIST, CISA, Microsoft Entra ID, and FIDO2/WebAuthn guidance.
+
 ### MFA Fatigue Attacks (Push Notification Bombing)
 
-Attackers spam MFA push notifications hoping the user approves one out of annoyance or accidental interaction.
+Attackers repeatedly trigger MFA push notifications hoping the user approves one out of annoyance or accidental interaction.
 
-**Mitigations:**
+**Mitigations**
 
-- Enforce Number Matching (challenge–response) to prevent users from blindly approving MFA prompts during fatigue attacks.
-  Reference: Microsoft Authenticator – Number Matching Documentation(example implementation of challenge–response MFA).
-- Follow CISA’s guidance on deploying phishing‑resistant MFA to eliminate push‑based MFA fatigue attacks.
-  Reference: CISA – Phishing‑Resistant MFA Guidance.
+- Enforce number matching (challenge–response) to prevent blind approvals.  
+  [Microsoft Entra ID – Number Matching](https://learn.microsoft.com/en-us/entra/identity/authentication/how-to-mfa-number-matching)
+
+- Deploy phishing-resistant MFA to eliminate push-based MFA fatigue.  
+  [CISA – Implementing Phishing-Resistant MFA](https://www.cisa.gov/resources-tools/resources/implementing-phishing-resistant-mfa)
 
 ### Real-Time Phishing (Adversary-in-the-Middle / AiTM)
 
-Attackers deploy reverse‑proxy phishing kits (e.g., Evilginx, Modlishka, Muraena) that sit between the user and the legitimate website. These tools capture credentials and the resulting session cookies, allowing the attacker to impersonate the user in real time.
+Reverse-proxy phishing kits (such as Evilginx, Modlishka, and Muraena) intercept credentials and session cookies, enabling attackers to impersonate users in real time.
 
-**Mitigations:**
+**Mitigations**
 
-- Mandate Phishing‑Resistant MFA (FIDO2/WebAuthn), which cryptographically binds authentication to the legitimate origin     and prevents AiTM replay. [CISA Phishing Guidance](https://www.cisa.gov/sites/default/files/2025-03/Phishing%20Guidance%20-%20Stopping%20the%20Attack%20Cycle%20at%20Phase%20One%20508.pdf).
-- Use risk‑based authentication to detect suspicious post‑compromise activity (e.g., proxy IPs, anomalous locations),  though this does not prevent AiTM itself.
-  Reference: CISA Zero Trust Maturity Model – Identity Pillar (risk‑based access decisions).
+- Mandate phishing-resistant MFA (FIDO2/WebAuthn), which binds authentication to the legitimate origin and prevents AiTM replay.  
+  [CISA – Implementing Phishing-Resistant MFA](https://www.cisa.gov/resources-tools/resources/implementing-phishing-resistant-mfa)
 
-### SIM Swap & Phone Number Takeover
+- Use risk-based authentication to detect suspicious post-compromise activity such as proxy IPs or anomalous locations.  
+  [CISA Zero Trust Maturity Model v2.0](https://www.cisa.gov/resources-tools/resources/zero-trust-maturity-model)
 
-Attackers socially engineer telecoms to transfer a victim's number, intercepting out-of-band SMS or voice MFA codes.
+- Monitor for AiTM indicators such as mismatched TLS fingerprints or unexpected reverse-proxy headers.  
+  [Microsoft Entra ID – AiTM Attack Analysis](https://learn.microsoft.com/en-us/entra/identity-protection/overview-aitm)
 
-**Mitigations:**
+### SIM Swap and Phone Number Takeover
 
-- **Deprecate Telephony MFA** for high-privilege accounts ([NIST SP 800-63-4](https://pages.nist.gov/800-63-4/sp800-63.html)).
-- Default to TOTP authenticator apps or FIDO2 hardware keys.
+Attackers socially engineer telecom providers to transfer a victim’s phone number, intercepting SMS or voice MFA codes.
 
-### Token Theft & Session Hijacking
+**Mitigations**
 
-Attackers use infostealer malware or XSS to steal post-authentication session cookies or tokens, bypassing MFA entirely.
+- Deprecate telephony-based MFA for high-privilege or sensitive accounts.  
+  [NIST SP 800-63-4 – Digital Identity Guidelines](https://pages.nist.gov/800-63-4/sp800-63.html)
 
-**Mitigations:**
+- Prefer TOTP authenticator apps or FIDO2 hardware keys, which are not vulnerable to number-porting attacks.
 
-- Implement **Continuous Access Evaluation (CAE)** with short-lived tokens ([Microsoft CAE Documentation](https://learn.microsoft.com/en-us/azure/active-directory/conditional-access/concept-continuous-access-evaluation)).
+### Token Theft and Session Hijacking
+
+Infostealer malware, malicious browser extensions, or cross-site scripting (XSS) can steal session cookies or tokens, bypassing MFA entirely.
+
+**Mitigations**
+
+- Implement Continuous Access Evaluation (CAE) with short-lived tokens to reduce replay windows.  
+  [Microsoft CAE](https://learn.microsoft.com/en-us/azure/active-directory/conditional-access/concept-continuous-access-evaluation)
+
 - Enforce strict cookie flags (`HttpOnly`, `Secure`, `SameSite=Strict`) and bind sessions to device hardware.
-- Impossible travel detection can identify stolen session tokens being replayed from a different geography, but it does not prevent token theft itself.
-  Reference: Microsoft Entra ID Identity Protection – Impossible Travel Detection.
+
+- Use impossible travel detection to identify stolen tokens replayed from different geographies.  
+  [Microsoft Entra ID – Identity Protection](https://learn.microsoft.com/en-us/entra/id-protection/howto-identity-protection-investigate-risky-users#impossible-travel)
 
 ### Device Binding Bypass
 
-Attackers extract cryptographic keys or clone device fingerprints to spoof a "trusted device" and bypass MFA prompts.
+Attackers clone device fingerprints or extract cryptographic keys to impersonate a trusted device and bypass MFA prompts.
 
-**Mitigations:**
+**Mitigations**
 
-- Use hardware‑backed, non‑exportable device keys (TPM, Secure Enclave) to ensure device binding cannot be cloned or replayed.
-  Reference: NIST SP 800‑63B – Digital Identity Guidelines (Authenticator Assurance Levels).
-- Prefer phishing‑resistant MFA (FIDO2/WebAuthn), which provides origin‑bound, device‑bound authentication resistant to device binding bypass.
-  Reference: FIDO Alliance – FIDO2/WebAuthn Security Specifications.
-- Validate device attestation metadata to ensure the authenticator is genuine and hardware‑protected.
-  Reference: W3C WebAuthn Level 2 – Attestation Statement Formats.
-  
+- Use hardware-backed, non-exportable device keys (TPM, Secure Enclave) to prevent cloning.  
+  [NIST SP 800-63-4B – Authenticator Assurance Levels](https://pages.nist.gov/800-63-4/sp800-63b.html)
+
+- Prefer FIDO2/WebAuthn, which provides origin-bound and device-bound authentication resistant to device spoofing.  
+  [FIDO Alliance – Specifications](https://fidoalliance.org/specifications/)
+
+- Validate device attestation metadata to ensure the authenticator is genuine and hardware-protected.  
+  [W3C WebAuthn Level 2 – Attestation Formats](https://www.w3.org/TR/webauthn-2/#sctn-attestation)
+
 ### MFA Downgrade Attacks (OAuth/SSO)
 
-Attackers manipulate the authentication flow to fall back from strong MFA (e.g., WebAuthn) to weaker, legacy channels (e.g., SMS).
+Attackers manipulate authentication flows to downgrade from strong MFA (such as WebAuthn) to weaker legacy methods (such as SMS or basic authentication).
 
-**Mitigations:**
+**Mitigations**
 
-- Completely disable legacy authentication endpoints (e.g., basic auth, older WS-Trust).
-- Enforce strict conditional access policies that forbid fallback to lower-assurance methods for privileged accounts.
+- Disable legacy authentication endpoints such as basic auth and older WS-Trust flows.  
+  [Microsoft Entra ID – Blocking Legacy Authentication](https://learn.microsoft.com/en-us/entra/identity/conditional-access/block-legacy-authentication)
+
+- Enforce conditional access policies that forbid fallback to lower-assurance methods for privileged accounts.
+
+- Follow OAuth 2.0 Security Best Current Practice to prevent downgrade and redirect-based manipulation.  
+  [RFC 9700 – OAuth 2.0 Security Best Current Practice](https://datatracker.ietf.org/doc/rfc9700/).
 
 ## Somewhere You Are
 
