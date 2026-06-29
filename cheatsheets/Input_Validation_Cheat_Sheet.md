@@ -33,46 +33,6 @@ Input validation can be implemented using any programming technique that allows 
 - Regular expressions for any other structured data covering the whole input string `(^...$)` and **not** using "any character" wildcard (such as `.` or `\S`)
 - Denylisting known dangerous patterns can be used as an additional layer of defense, but it should supplement - not replace - allowlisting, to help catch some commonly observed attacks or patterns without relying on it as the main validation method.
 
-## Common Pitfalls in Input Validation
-
-Even when teams try to implement input validation, a lot of applications still end up vulnerable because of small oversights or assumptions that don’t hold up in the real world.These are common implementation mistakes that frequently lead to validation weaknesses in real-world applications.
-
-Note: Client‑side validation and denylisting are already covered in the sections below. See “Server‑Side Validation” and “Allowlist vs Denylist” for detailed guidance.
-
-### Skipping Validation After Deserialization
-
-Data that appears safe before serialization can become unsafe once parsed again. Formats like JSON, XML, and protobuf may contain unexpected structures or types after deserialization. Always validate after deserialization, when the final structure is known.*Reference: [OWASP Deserialization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Deserialization_Cheat_Sheet.html).
-
-### Trusting Internal APIs or Microservices Too Much
-
-Modern Zero Trust guidance (such as the CISA Zero Trust Maturity Model) emphasizes that no system -internal or external should be implicitly trusted based on network location. This principle applies to internal APIs and microservices, which must validate all inputs even when operating inside the perimeter.
-
-### Not Validating File Uploads or Filenames
-
-File uploads are a huge attack surface. You need to validate the file type, size, extension, and even the filename. Attackers can sneak in traversal sequences or special characters that cause trouble later. [OWASP File Upload Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html)
-
-### Using Unsafe or Overly Complex Regular Expressions
-
-Some regex patterns can cause catastrophic backtracking (ReDoS), slowing your server to a crawl. Keep patterns simple, anchored, and performance-tested. [OWASP ReDoS Prevention](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS)
-
-### Ignoring Nested JSON or Large Arrays
-
-Attackers may hide malicious or unexpected data deep inside nested objects or extremely large arrays. Validation should enforce limits on depth, element count, and overall structure to prevent resource‑exhaustion or parser abuse.
-Reference: OWASP API Security Top 10 – API4:2023 (Unrestricted Resource Consumption).
-
-### Overlooking Unicode Normalization
-
-Normalization must occur before validation so that visually similar or canonically equivalent characters are evaluated consistently. However, Unicode TR36 warns that normalization alone is not a security control — it must be paired with strict allowlisting and canonicalization rules.
-Reference: Unicode Technical Report #36 (Security Considerations).
-
-### Assuming JSON Input Is Automatically Safe
-
-Because JSON is a structured data format, developers sometimes assume its contents are inherently safe. However, JSON payloads remain untrusted input. Applications should validate field presence, data types, length, ranges, and overall structure before processing.[OWASP Input Validation Cheat Sheet](<https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html>)
-
-### Forgetting to Validate Before Logging or Storing Data
-
-Input validation reduces unexpected or malformed data, but log injection is primarily mitigated through output encoding when writing to logs. Applications should validate structure and type on input, and then safely encode log entries on output to prevent injection.[OWASP Logging Cheat Sheet](<https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html>)
-
 ### Allowlist vs Denylist
 
 It is a common mistake to use denylist validation in order to try to detect possibly dangerous characters and patterns like the apostrophe `'` character, the string `1=1`, or the `<script>` tag, but this is a massively flawed approach as it is trivial for an attacker to bypass such filters.
