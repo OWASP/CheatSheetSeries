@@ -1,7 +1,3 @@
----
-redirect_from: "/cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.html"
----
-
 
 <!doctype html>
 <html lang="en" class="no-js">
@@ -14,7 +10,7 @@ redirect_from: "/cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.html"
       
       
       
-        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html">
+        <link rel="canonical" href="https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_Cheat_Sheet.html">
       
       
         <link rel="prev" href="JAAS_Cheat_Sheet.html">
@@ -31,7 +27,7 @@ redirect_from: "/cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.html"
     
     
       
-        <title>JSON Web Token for Java - OWASP Cheat Sheet Series</title>
+        <title>JSON Web Token - OWASP Cheat Sheet Series</title>
       
     
     
@@ -82,7 +78,7 @@ redirect_from: "/cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.html"
     <div data-md-component="skip">
       
         
-        <a href="#json-web-token-cheat-sheet-for-java" class="md-skip">
+        <a href="#json-web-token-cheat-sheet" class="md-skip">
           Skip to content
         </a>
       
@@ -117,7 +113,7 @@ redirect_from: "/cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.html"
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              JSON Web Token for Java
+              JSON Web Token
             
           </span>
         </div>
@@ -1922,7 +1918,7 @@ redirect_from: "/cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.html"
   <span class="md-ellipsis">
     
   
-    JSON Web Token for Java
+    JSON Web Token
   
 
     
@@ -1933,14 +1929,14 @@ redirect_from: "/cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.html"
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <a href="JSON_Web_Token_for_Java_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
+      <a href="JSON_Web_Token_Cheat_Sheet.html" class="md-nav__link md-nav__link--active">
         
   
   
   <span class="md-ellipsis">
     
   
-    JSON Web Token for Java
+    JSON Web Token
   
 
     
@@ -4787,7 +4783,7 @@ redirect_from: "/cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.html"
   
 
 
-<h1 id="json-web-token-cheat-sheet-for-java">JSON Web Token Cheat Sheet for Java<a class="headerlink" href="#json-web-token-cheat-sheet-for-java" title="Permanent link">&para;</a></h1>
+<h1 id="json-web-token-cheat-sheet">JSON Web Token Cheat Sheet<a class="headerlink" href="#json-web-token-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p>Many applications use <strong>JSON Web Tokens</strong> (JWT) to allow the client to indicate its identity for further exchange after authentication.</p>
 <p>From <a href="https://jwt.io/introduction">JWT.IO</a>:</p>
@@ -5210,7 +5206,7 @@ See RFC5116: https://tools.ietf.org/html/rfc5116
 <ol>
 <li>Store the token using the browser <em>sessionStorage</em> container, or use JavaScript <em>closures</em> with <em>private</em> variables</li>
 <li>Add it as a <em>Bearer</em> HTTP <code>Authentication</code> header with JavaScript when calling services.</li>
-<li>Add <a href="JSON_Web_Token_for_Java_Cheat_Sheet.html#token-sidejacking">fingerprint</a> information to the token.</li>
+<li>Add <a href="JSON_Web_Token_Cheat_Sheet.html#token-sidejacking">fingerprint</a> information to the token.</li>
 </ol>
 <p>By storing the token in browser <em>sessionStorage</em> container it exposes the token to being stolen through an XSS attack. However, fingerprints added to the token prevent reuse of the stolen token by the attacker on their machine. To close a maximum of exploitation surfaces for an attacker, add a browser <a href="https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html">Content Security Policy</a> to harden the execution context.</p>
 <p>But, we know that <em>sessionStorage</em> is not always practical due to its per-tab scope, and the storage method for tokens should balance <em>security</em> and <em>usability</em>.</p>
