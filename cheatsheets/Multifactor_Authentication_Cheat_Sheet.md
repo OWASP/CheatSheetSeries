@@ -343,42 +343,6 @@ Email verification requires that the user enters a code or clicks a link sent to
 - Email may be received by the same device the user is authenticating from.
 - Susceptible to phishing.
 
-## Modern MFA Attack Patterns (Vendor‑Neutral)
-
-Even with MFA in place, attackers continue to find ways around it. The patterns below reflect common techniques seen across modern environments. These examples are vendor-neutral and focus on underlying weaknesses rather than specific products or malware families.
-
-### MFA Fatigue / Push Abuse
-
-Attackers repeatedly trigger push notifications to overwhelm users until one is approved accidentally or out of frustration. This technique has been widely documented in real-world intrusions. [Microsoft](https://www.microsoft.com/en-us/security/blog/2022/09/12/defending-against-mfa-fatigue-attacks/)
-
-### Token Theft
-
-Session cookies, refresh tokens, or other post-authentication tokens can be stolen and reused, allowing attackers to bypass MFA entirely. NIST highlights the risks of session hijacking and the importance of binding authentication to the client. [NIST SP 800‑63B](https://pages.nist.gov/800-63-3/sp800-63b.html)
-
-### Reverse-Proxy Phishing Kits
-
-Reverse-proxy phishing frameworks can intercept MFA codes or session tokens in real time by sitting between the user and the legitimate service. CISA recommends phishing-resistant MFA specifically to mitigate these attacks. [CISA](https://www.cisa.gov/news-events/alerts/2022/10/31/implementing-phishing-resistant-mfa)
-
-### Cloud MFA Misconfigurations
-
-Legacy protocols, weak conditional access rules, or incomplete MFA enforcement can leave gaps that attackers exploit. Misconfigurations are a leading cause of MFA bypass in cloud environments. [Microsoft](https://www.microsoft.com/en-us/security/blog/2021/10/07/5-identity-attack-vectors-and-how-to-prevent-them/)
-
-### Weak MFA on Remote Access Services
-
-Services like RDP, SSH, or VPN may have MFA enabled inconsistently or incorrectly, allowing attackers to gain initial access. CISA advisories frequently highlight remote-access MFA gaps in real incidents. [CISA](https://www.cisa.gov/news-events/cybersecurity-advisories)
-
-### Cross-Platform MFA Weaknesses
-
-When MFA is applied differently across Windows, Linux, SaaS, and cloud systems, attackers may target the weakest link to move laterally. NIST emphasizes consistent authenticator assurance across systems. [NIST SP 800‑63B](https://pages.nist.gov/800-63-3/sp800-63b.html)
-
-### Device Compromise
-
-If a user’s device is already compromised, attackers may approve MFA prompts, steal tokens, or intercept authentication flows. Compromised endpoints remain a major vector for MFA bypass. [Microsoft](https://www.microsoft.com/en-us/security/blog/2023/03/13/understanding-identity-based-attacks/)
-
-### Token Replay
-
-Captured or intercepted tokens can sometimes be reused if they are not bound to the device, session, or client. Google Cloud provides detailed analysis of session hijacking and replay attacks. [Google Cloud](https://cloud.google.com/blog/topics/threat-intelligence/understanding-session-hijacking)
-
 ## Something You Are
 
 Inherence-based authentication is based on the physical attributes of the user. This is less common for web applications as it requires the user to have specific hardware, and is often considered to be the most invasive in terms of privacy. However, it is commonly used for operating system authentication, and is also used in some mobile applications.
