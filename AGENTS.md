@@ -53,7 +53,7 @@ Citations are necessary, not sufficient — the most detailed rejections in this
 ### 5. Architecture over code — for general topics
 
 - For general topics, prefer architectural patterns, design principles, and security decisions over language-specific code. Code rots, and out-of-context snippets are often insecure.
-- **Carve-out:** language-specific, injection/payload, parameterization, and hardening sheets are *expected* to be code-dense — that is correct for them (~40% of the corpus is code-heavy by design). This rule targets gratuitous boilerplate in architectural topics, not legitimately code-heavy sheets.
+- **Carve-out:** language-specific, injection/payload, parameterization, and hardening sheets are _expected_ to be code-dense — that is correct for them (~40% of the corpus is code-heavy by design). This rule targets gratuitous boilerplate in architectural topics, not legitimately code-heavy sheets.
 - When code is illustrative, keep it short (not production-ready) and language-tag fences where practical.
 
 ### 6. No slop
