@@ -371,7 +371,7 @@ The are a number of common types of biometrics that are used, including:
 
 ## Modern MFA Attack Patterns and Mitigations
 
-Modern identity attacks increasingly target MFA mechanisms themselves. The following patterns reflect real-world incidents observed across cloud environments, enterprise identity systems, and large-scale phishing campaigns. Each attack pattern includes mitigations aligned with current NIST, CISA, Microsoft Entra ID, and FIDO2/WebAuthn guidance.
+Attackers increasingly target MFA implementations rather than attempting to bypass authentication entirely. The following sections describe common attacks and recommended mitigations. Each attack pattern includes mitigations aligned with current NIST, CISA, Microsoft Entra ID, and FIDO2/WebAuthn guidance.
 
 ### MFA Fatigue Attacks (Push Notification Bombing)
 
