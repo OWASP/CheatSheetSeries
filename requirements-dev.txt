@@ -1,0 +1,6 @@
+# Test-only dependencies. Install with:
+#   pip install -r requirements-dev.txt
+#
+# Kept separate from requirements.txt so the runtime image for mkdocs/feedgen
+# does not pull in pytest.
+pytest>=7.0

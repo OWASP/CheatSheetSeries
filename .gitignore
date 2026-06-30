@@ -14,3 +14,8 @@ venv
 # Claude Code
 CLAUDE.md
 .claude/
+# Python bytecode
+__pycache__/
+*.pyc
+# Internal planning notes
+docs/plans/
