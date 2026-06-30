@@ -52,6 +52,8 @@ Ensure that the validation occurs after decoding the filename, and that a proper
 
 - Double extensions, _e.g._ `.jpg.php`, where it circumvents easily the regex `\.jpg`
 - Null bytes, _e.g._ `.php%00.jpg`, where `.jpg` gets truncated and `.php` becomes the new extension
+- Case manipulation, _e.g._ `.pHp`, `.PHP5`, to bypass case-sensitive blocklist filters
+- Alternative extensions tied to the same interpreter, _e.g._ `.phtml`, `.phar`, `.pht` for PHP, or `.jsp`/`.jspx`, `.asp`/`.aspx` for Java/.NET
 - Generic bad regex that isn't properly tested and well reviewed. Refrain from building your own logic unless you have enough knowledge on this topic.
 
 Refer to the [Input Validation CS](Input_Validation_Cheat_Sheet.md) to properly parse and process the extension.
@@ -125,6 +127,8 @@ The location where the files should be stored must be chosen based on security a
    - If read access is required, setting proper controls is a must (_e.g._ internal IP, authorized user, etc.)
 
 Storing files in a studied manner in databases is one additional technique. This is sometimes used for automatic backup processes, non file-system attacks, and permissions issues. In return, this opens up the door to performance issues (in some cases), storage considerations for the database and its backups, and this opens up the door to SQLi attack. This is advised only when a DBA is on the team and that this process shows to be an improvement on storing them on the file-system.
+
+Be aware that an attacker may attempt to upload a web server configuration file (e.g. `.htaccess`, `web.config`) into the upload directory. If the web server allows per-directory configuration overrides, such a file could be used to change how that directory handles file types, for example mapping an otherwise harmless extension to be executed by the server. Storing files outside the webroot, as recommended above, removes this risk entirely, since the uploaded directory is never directly served by the web server in the first place.
 
 > Some files are emailed or processed once they are uploaded, and are not stored on the server. It is essential to conduct the security measures discussed in this sheet before doing any actions on them.
 
