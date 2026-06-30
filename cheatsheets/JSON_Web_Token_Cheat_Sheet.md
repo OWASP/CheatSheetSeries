@@ -51,11 +51,7 @@ HMACSHA256( base64UrlEncode(header) + "." + base64UrlEncode(payload), KEY )
 
 ## Objective
 
-This cheatsheet provides tips to prevent common security issues when using JSON Web Tokens (JWT) with Java.
-
-The tips presented in this article are part of a Java project that was created to show the correct way to handle creation and validation of JSON Web Tokens.
-
-You can find the Java project [here](https://github.com/righettod/poc-jwt), it uses the official [JWT library](https://jwt.io/#libraries).
+This cheatsheet provides tips to prevent common security issues when using JSON Web Tokens (JWT).
 
 In the rest of the article, the term **token** refers to the **JSON Web Tokens** (JWT).
 
