@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Many applications use **JSON Web Tokens** (JWT) to allow the client to indicate its identity for further exchange after authentication.
+Many applications use [**JSON Web Tokens**](https://datatracker.ietf.org/doc/html/rfc7519) (JWT) to allow the client to indicate its identity for further exchange after authentication.
 
 From [JWT.IO](https://jwt.io/introduction):
 
@@ -674,7 +674,10 @@ The simplest way to prevent this attack is to ensure that the secret used to sig
 
 Alternatively, consider the use of tokens that are signed with RSA rather than using an HMAC and secret key.
 
-#### Further Reading
+## References
 
 - [{JWT}.{Attack}.Playbook](https://github.com/ticarpi/jwt_tool/wiki) - A project documents the known attacks and potential security vulnerabilities and misconfigurations of JSON Web Tokens.
-- [JWT Best Practices Internet Draft](https://datatracker.ietf.org/doc/draft-ietf-oauth-jwt-bcp/)
+- [jwt.io](https://jwt.io/)
+- [JSON Web Tokens](https://datatracker.ietf.org/doc/html/rfc7519) (JWT)
+- [JWT Best Practices](https://datatracker.ietf.org/doc/html/rfc8725)
+- [JWT IANA Registry](https://www.iana.org/assignments/jwt/jwt.xhtml)
