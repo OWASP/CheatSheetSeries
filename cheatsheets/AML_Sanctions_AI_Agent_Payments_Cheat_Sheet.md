@@ -173,6 +173,7 @@ Use the **JSON Canonicalization Scheme (JCS), [RFC 8785](https://www.rfc-editor.
 - Canonicalize every receipt with RFC 8785 (JCS) before signing, and again before verifying.
 - Sign over the hash of the canonical bytes, not raw or pretty-printed JSON.
 - Record the canonicalization, hash, and signature algorithm in the receipt (for example `canon: jcs`, `alg: ecdsa-p256-sha256`) so any verifier can reproduce it.
+- Derive a stable **content address** (`action_ref`) for each action: `action_ref = SHA-256(JCS({agent_id, action_type, scope, timestamp_ms}))`. This 64-character hex string uniquely and recomputably identifies the action across systems, enabling cross-system receipt correlation without replaying the full event log.
 
 ### Don't
 
@@ -205,6 +206,22 @@ A receipt stating "screened, no match" is meaningless without which version of t
 - Include the sanctions-list source(s), version or publication date, and screening timestamp **inside the signed receipt**.
 - Define a maximum acceptable list age, record it in the receipt, and fail-closed if it is exceeded.
 - Make list freshness auditable after the fact from the receipt alone.
+- Bind the freshness record to the specific agent action using the `action_ref` content address (Section 8), so an auditor can link the screening result to the transaction without relying on log position:
+
+```json
+{
+  "screening_sources": [
+    {
+      "list": "OFAC-SDN",
+      "version": "2026-06-04",
+      "freshness_max_age_hours": 24,
+      "screening_timestamp_ms": 1749081600000
+    }
+  ],
+  "result": "no_match",
+  "action_ref": "a3f7c2..."
+}
+```
 
 ### Don't
 
@@ -223,6 +240,7 @@ The controls in this cheat sheet map to common AML and sanctions obligations. Th
 | Sanctions-list freshness in receipt (Section 10) | Obligation to screen against current lists; sanctions-evasion controls |
 | Fail-closed enforcement (Section 5) | Blocking obligations for sanctioned parties |
 | Trust-tiered limits (Section 6) | Risk-based approach (FATF Recommendation 1); monitoring thresholds |
+| Signed receipt with `action_ref` content address (Sections 4, 8-10) | EU AI Act Article 12 (automatic tamper-evident logging for high-risk AI systems, enforcement August 2, 2026); ISO/IEC 42001 Annex A (AI management system records) |
 
 ### Do
 
