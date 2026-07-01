@@ -24,12 +24,10 @@ Signed JWT have the following structure:
 [base64url(header)].[base64url(claims)].[base64url(signature)]
 ```
 
-For example, the following example (taken from [JWT.IO](https://jwt.io/#debugger)):
+For example, the following example ([taken from JWT.IO](https://jwt.io/#token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30)):
 
 ```text
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.
-eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.
-TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30
 ```
 
 The first part ([**header**](https://datatracker.ietf.org/doc/html/rfc7515#section-4)) can be decoded into:
@@ -47,7 +45,8 @@ The second part ([**claims**](https://datatracker.ietf.org/doc/html/rfc7519#sect
 {
   "sub": "1234567890",
   "name": "John Doe",
-  "admin": true
+  "admin": true,
+  "iat": 1516239022
 }
 ```
 
@@ -58,7 +57,7 @@ base64url(
     HMACSHA256(
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
         + "."
-        + "eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9",
+        + "eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0",
         key
     )
 )
