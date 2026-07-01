@@ -12,5 +12,9 @@ news.xml
 yarn.lock
 venv
 # Claude Code
-CLAUDE.md
-.claude/
+# CLAUDE.md, AGENTS.md and the shared .claude/ commands+agents are committed so
+# every contributor using AI inherits the project's review rules. Only local,
+# machine-specific settings stay out of git.
+.claude/settings.local.json
+.claude/settings.json
+.claude/worktrees/
