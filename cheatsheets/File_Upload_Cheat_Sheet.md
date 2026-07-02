@@ -52,8 +52,8 @@ Ensure that the validation occurs after decoding the filename, and that a proper
 
 - Double extensions, _e.g._ `.jpg.php`, where it circumvents easily the regex `\.jpg`
 - Null bytes, _e.g._ `.php%00.jpg`, where `.jpg` gets truncated and `.php` becomes the new extension
-- Case manipulation, _e.g._ `.pHp`, `.PHP5`, to bypass case-sensitive blocklist filters
-- Alternative extensions tied to the same interpreter, _e.g._ `.phtml`, `.phar`, `.pht` for PHP, or `.jsp`/`.jspx`, `.asp`/`.aspx` for Java/.NET ([PortSwigger](https://portswigger.net/web-security/file-upload))
+- Case manipulation, _e.g._ `.pHp`, `.phP`, to bypass case-sensitive blocklist filters
+- Alternative extensions that may be mapped to the same server-side interpreter depending on configuration, _e.g._ `.phtml`, `.php5`, `.pht` for PHP, or `.jsp`/`.jspx`, `.asp`/`.aspx` for Java/.NET ([PortSwigger](https://portswigger.net/web-security/file-upload))
 - Windows NTFS Alternate Data Streams, _e.g._ `shell.asp:.jpg` or `shell.php::$DATA`, where the colon is interpreted as a stream separator and the actual file created on disk carries the extension before the colon - reject any filename containing a colon (`:`) ([OWASP - Unrestricted File Upload](https://owasp.org/www-community/vulnerabilities/Unrestricted_File_Upload))
 - Windows 8.3 short filenames, _e.g._ `.htaccess` resolving to `HTACCE~1`, which can still be functional even if a filter only matches the long filename — disable 8.3 short filename generation on the server (`fsutil behavior set disable8dot3 1` for new files; existing short names require separate remediation), or use latest IIS version along with WAF to filter requests with `~`, `*` ,`?` etc .([OWASP - Unrestricted File Upload](https://owasp.org/www-community/vulnerabilities/Unrestricted_File_Upload))
 - Generic bad regex that isn't properly tested and well reviewed. Refrain from building your own logic unless you have enough knowledge on this topic.
