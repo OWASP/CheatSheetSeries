@@ -1984,17 +1984,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#objective" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Objective
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#consideration-about-using-jwt" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2368,24 +2357,24 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#further-reading" class="md-nav__link">
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Further Reading
+        References
       
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -4358,17 +4347,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#objective" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Objective
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#consideration-about-using-jwt" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4742,24 +4720,24 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#further-reading" class="md-nav__link">
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Further Reading
+        References
       
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -4785,41 +4763,47 @@
 
 <h1 id="json-web-token-cheat-sheet">JSON Web Token Cheat Sheet<a class="headerlink" href="#json-web-token-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>Many applications use <strong>JSON Web Tokens</strong> (JWT) to allow the client to indicate its identity for further exchange after authentication.</p>
-<p>From <a href="https://jwt.io/introduction">JWT.IO</a>:</p>
-<blockquote>
-<p>JSON Web Token (JWT) is an open standard (RFC 7519) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed. JWTs can be signed using a secret (with the HMAC algorithm) or a public/private key pair using RSA.</p>
-</blockquote>
-<p>JWTs are used to carry information related to the identity and characteristics (claims) of a client. This information is signed by the server to ensure it has not been tampered with after being sent to the client. This prevents an attacker from modifying the identity or characteristics — for example, changing the role from a simple user to an admin or altering the client's login.</p>
-<p>The token is created during authentication (it is issued upon successful authentication) and is verified by the server before any processing. Applications use the token to allow a client to present what is essentially an "identity card" to the server. The server can then securely verify the token's validity and integrity. This approach is stateless and portable, meaning it works across different client and server technologies, and over various transport channels — although HTTP is the most commonly used.</p>
+<p>This cheat sheet provides tips to prevent common security issues when using JSON Web Tokens (JWT).</p>
+<p><a href="https://datatracker.ietf.org/doc/html/rfc7519"><strong>JSON Web Tokens</strong></a> (JWT) are security tokens for carrying information (<strong>claims</strong>), often about a user, an application, etc. (<strong>subject</strong>). JWTs can provide authenticity of the claims (<strong>signed JWT</strong>) and/or confidentiality of the claims (<strong>encrypted JWT</strong>). In addition, JWT defines <a href="https://www.iana.org/assignments/jwt/jwt.xhtml">standard claims</a>.</p>
+<p>JWTs are used in a wide range of applications such as:</p>
+<ul>
+<li>In <a href="https://openid.net/specs/openid-connect-core-1_0.html">OpenID Connect</a>, the <a href="https://openid.net/specs/openid-connect-core-1_0.html#IDToken">ID token</a> is a JWT used to represent the identity of the connected user.</li>
+<li>In <a href="https://datatracker.ietf.org/doc/html/rfc6749">OAuth 2</a>, the access token used to obtain access to a protected resource <a href="https://datatracker.ietf.org/doc/html/rfc9068">can be a JWT</a>.</li>
+<li>A JWT is often suggested for “stateless” user sessions. However, this usage is <a href="http://cryto.net/~joepie91/blog/2016/06/13/stop-using-jwt-for-sessions/">frowned upon</a>.</li>
+</ul>
+<p>In its most common form (signed JWT), this information is protected by the generating application (<strong>issuer</strong>) using a signature to ensure it has not been tampered with. This signature prevents attackers, such as a malicious client or user, from forging a token or modifying the claims in an existing token, for example changing the user role from a simple user to an admin or altering the client's login. The JWT can be seen as a protected identity card or certificate about a user, an application, etc. An application (<strong>presenter</strong>) presents the token to a consuming application (<strong>audience</strong>) which can verify the token's authenticity and validity and take decisions or actions based on these claims.</p>
+<p>JWT can also provide confidentiality of the claims (encrypted JWT). Encryption is currently not treated in this cheat sheet but many aspects of this cheat sheet are applicable to encrypted JWTs.</p>
 <h2 id="token-structure">Token Structure<a class="headerlink" href="#token-structure" title="Permanent link">&para;</a></h2>
-<p>Token structure example taken from <a href="https://jwt.io/#debugger">JWT.IO</a>:</p>
-<p><code>[Base64(HEADER)].[Base64(PAYLOAD)].[Base64(SIGNATURE)]</code></p>
-<div class="highlight"><pre><span></span><code>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.
-eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.
-TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
+<p>Signed JWTs have the following structure:</p>
+<div class="highlight"><pre><span></span><code>[base64url(header)].[base64url(claims)].[base64url(signature)]
 </code></pre></div>
-<p>Chunk 1: <strong>Header</strong></p>
+<p>For example, the following example (<a href="https://jwt.io/#token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30">taken from JWT.IO</a>):</p>
+<div class="highlight"><pre><span></span><code>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30
+</code></pre></div>
+<p>The first part (<a href="https://datatracker.ietf.org/doc/html/rfc7515#section-4"><strong>header</strong></a>) can be decoded into:</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;alg&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;HS256&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;typ&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;JWT&quot;</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>Chunk 2: <strong>Payload</strong></p>
+<p>The second part (<a href="https://datatracker.ietf.org/doc/html/rfc7519#section-4"><strong>claims</strong></a>) can be decoded into:</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;sub&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1234567890&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;John Doe&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;admin&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">  </span><span class="nt">&quot;admin&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;iat&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1516239022</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>Chunk 3: <strong>Signature</strong></p>
-<div class="highlight"><pre><span></span><code><span class="nx">HMACSHA256</span><span class="p">(</span><span class="w"> </span><span class="nx">base64UrlEncode</span><span class="p">(</span><span class="nx">header</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot;.&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">base64UrlEncode</span><span class="p">(</span><span class="nx">payload</span><span class="p">),</span><span class="w"> </span><span class="nx">KEY</span><span class="w"> </span><span class="p">)</span>
+<p>The last part (<strong>signature</strong>) guarantees the authenticity of both the header and the claims, either using a public/private key pair (digital signature) or a shared secret (MAC), depending on the <code>alg</code> header value. For our example, it is computed as:</p>
+<div class="highlight"><pre><span></span><code><span class="nx">base64url</span><span class="p">(</span>
+<span class="w">    </span><span class="nx">HMACSHA256</span><span class="p">(</span>
+<span class="w">        </span><span class="s2">&quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9&quot;</span>
+<span class="w">        </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot;.&quot;</span>
+<span class="w">        </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot;eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">key</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="p">)</span>
 </code></pre></div>
-<h2 id="objective">Objective<a class="headerlink" href="#objective" title="Permanent link">&para;</a></h2>
-<p>This cheatsheet provides tips to prevent common security issues when using JSON Web Tokens (JWT) with Java.</p>
-<p>The tips presented in this article are part of a Java project that was created to show the correct way to handle creation and validation of JSON Web Tokens.</p>
-<p>You can find the Java project <a href="https://github.com/righettod/poc-jwt">here</a>, it uses the official <a href="https://jwt.io/#libraries">JWT library</a>.</p>
-<p>In the rest of the article, the term <strong>token</strong> refers to the <strong>JSON Web Tokens</strong> (JWT).</p>
 <h2 id="consideration-about-using-jwt">Consideration about Using JWT<a class="headerlink" href="#consideration-about-using-jwt" title="Permanent link">&para;</a></h2>
 <p>Even if a JWT is "easy" to use and allow to expose services (mostly REST style) in a stateless way, it's not the solution that fits for all applications because it comes with some caveats, like for example the question of the storage of the token (tackled in this cheatsheet) and others...</p>
 <p>If your application does not need to be fully stateless, you can consider using traditional session system provided by all web frameworks and follow the advice from the dedicated <a href="Session_Management_Cheat_Sheet.html">session management cheat sheet</a>. However, for stateless applications, when well implemented, it's a good candidate.</p>
@@ -5338,10 +5322,14 @@ See RFC5116: https://tools.ietf.org/html/rfc5116
 <h4 id="how-to-prevent_5">How to Prevent<a class="headerlink" href="#how-to-prevent_5" title="Permanent link">&para;</a></h4>
 <p>The simplest way to prevent this attack is to ensure that the secret used to sign the JWTs is strong and unique, in order to make it harder for an attacker to crack. As this secret would never need to be typed by a human, it should be at least 64 characters, and generated using a <a href="Cryptographic_Storage_Cheat_Sheet.html#secure-random-number-generation">secure source of randomness</a>.</p>
 <p>Alternatively, consider the use of tokens that are signed with RSA rather than using an HMAC and secret key.</p>
-<h4 id="further-reading">Further Reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h4>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://github.com/ticarpi/jwt_tool/wiki">{JWT}.{Attack}.Playbook</a> - A project documents the known attacks and potential security vulnerabilities and misconfigurations of JSON Web Tokens.</li>
-<li><a href="https://datatracker.ietf.org/doc/draft-ietf-oauth-jwt-bcp/">JWT Best Practices Internet Draft</a></li>
+<li><a href="https://jwt.io/">jwt.io</a></li>
+<li><a href="https://datatracker.ietf.org/doc/html/rfc7519">JSON Web Tokens</a> (JWT)</li>
+<li><a href="https://datatracker.ietf.org/doc/html/rfc8725">JWT Best Practices</a></li>
+<li><a href="https://www.iana.org/assignments/jwt/jwt.xhtml">JWT IANA Registry</a></li>
+<li><a href="https://datatracker.ietf.org/doc/html/rfc9068">JWT Profile for OAuth 2.0 Access Tokens</a></li>
 </ul>
 
 
