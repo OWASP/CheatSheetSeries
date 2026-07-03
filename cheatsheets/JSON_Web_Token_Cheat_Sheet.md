@@ -2,29 +2,35 @@
 
 ## Introduction
 
-Many applications use **JSON Web Tokens** (JWT) to allow the client to indicate its identity for further exchange after authentication.
+This cheat sheet provides tips to prevent common security issues when using JSON Web Tokens (JWT).
 
-From [JWT.IO](https://jwt.io/introduction):
+[**JSON Web Tokens**](https://datatracker.ietf.org/doc/html/rfc7519) (JWT) are security tokens for carrying information (**claims**), often about a user, an application, etc. (**subject**). JWTs can provide authenticity of the claims (**signed JWT**) and/or confidentiality of the claims (**encrypted JWT**). In addition, JWT defines [standard claims](https://www.iana.org/assignments/jwt/jwt.xhtml).
 
-> JSON Web Token (JWT) is an open standard (RFC 7519) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed. JWTs can be signed using a secret (with the HMAC algorithm) or a public/private key pair using RSA.
+JWTs are used in a wide range of applications such as:
 
-JWTs are used to carry information related to the identity and characteristics (claims) of a client. This information is signed by the server to ensure it has not been tampered with after being sent to the client. This prevents an attacker from modifying the identity or characteristics — for example, changing the role from a simple user to an admin or altering the client's login.
+- In [OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html), the [ID token](https://openid.net/specs/openid-connect-core-1_0.html#IDToken) is a JWT used to represent the identity of the connected user.
+- In [OAuth 2](https://datatracker.ietf.org/doc/html/rfc6749), the access token used to obtain access to a protected resource [can be a JWT](https://datatracker.ietf.org/doc/html/rfc9068).
+- A JWT is often suggested for “stateless” user sessions. However, this usage is [frowned upon](http://cryto.net/~joepie91/blog/2016/06/13/stop-using-jwt-for-sessions/).
 
-The token is created during authentication (it is issued upon successful authentication) and is verified by the server before any processing. Applications use the token to allow a client to present what is essentially an "identity card" to the server. The server can then securely verify the token's validity and integrity. This approach is stateless and portable, meaning it works across different client and server technologies, and over various transport channels — although HTTP is the most commonly used.
+In its most common form (signed JWT), this information is protected by the generating application (**issuer**) using a signature to ensure it has not been tampered with. This signature prevents attackers, such as a malicious client or user, from forging a token or modifying the claims in an existing token, for example changing the user role from a simple user to an admin or altering the client's login. The JWT can be seen as a protected identity card or certificate about a user, an application, etc. An application (**presenter**) presents the token to a consuming application (**audience**) which can verify the token's authenticity and validity and take decisions or actions based on these claims.
+
+JWT can also provide confidentiality of the claims (encrypted JWT). Encryption is currently not treated in this cheat sheet but many aspects of this cheat sheet are applicable to encrypted JWTs.
 
 ## Token Structure
 
-Token structure example taken from [JWT.IO](https://jwt.io/#debugger):
+Signed JWTs have the following structure:
 
-`[Base64(HEADER)].[Base64(PAYLOAD)].[Base64(SIGNATURE)]`
-
-```text
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.
-eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.
-TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ
+```
+[base64url(header)].[base64url(claims)].[base64url(signature)]
 ```
 
-Chunk 1: **Header**
+For example, the following example ([taken from JWT.IO](https://jwt.io/#token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30)):
+
+```text
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30
+```
+
+The first part ([**header**](https://datatracker.ietf.org/doc/html/rfc7515#section-4)) can be decoded into:
 
 ```json
 {
@@ -33,31 +39,29 @@ Chunk 1: **Header**
 }
 ```
 
-Chunk 2: **Payload**
+The second part ([**claims**](https://datatracker.ietf.org/doc/html/rfc7519#section-4)) can be decoded into:
 
 ```json
 {
   "sub": "1234567890",
   "name": "John Doe",
-  "admin": true
+  "admin": true,
+  "iat": 1516239022
 }
 ```
 
-Chunk 3: **Signature**
+The last part (**signature**) guarantees the authenticity of both the header and the claims, either using a public/private key pair (digital signature) or a shared secret (MAC), depending on the `alg` header value. For our example, it is computed as:
 
 ```javascript
-HMACSHA256( base64UrlEncode(header) + "." + base64UrlEncode(payload), KEY )
+base64url(
+    HMACSHA256(
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+        + "."
+        + "eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0",
+        key
+    )
+)
 ```
-
-## Objective
-
-This cheatsheet provides tips to prevent common security issues when using JSON Web Tokens (JWT) with Java.
-
-The tips presented in this article are part of a Java project that was created to show the correct way to handle creation and validation of JSON Web Tokens.
-
-You can find the Java project [here](https://github.com/righettod/poc-jwt), it uses the official [JWT library](https://jwt.io/#libraries).
-
-In the rest of the article, the term **token** refers to the **JSON Web Tokens** (JWT).
 
 ## Consideration about Using JWT
 
@@ -678,7 +682,11 @@ The simplest way to prevent this attack is to ensure that the secret used to sig
 
 Alternatively, consider the use of tokens that are signed with RSA rather than using an HMAC and secret key.
 
-#### Further Reading
+## References
 
 - [{JWT}.{Attack}.Playbook](https://github.com/ticarpi/jwt_tool/wiki) - A project documents the known attacks and potential security vulnerabilities and misconfigurations of JSON Web Tokens.
-- [JWT Best Practices Internet Draft](https://datatracker.ietf.org/doc/draft-ietf-oauth-jwt-bcp/)
+- [jwt.io](https://jwt.io/)
+- [JSON Web Tokens](https://datatracker.ietf.org/doc/html/rfc7519) (JWT)
+- [JWT Best Practices](https://datatracker.ietf.org/doc/html/rfc8725)
+- [JWT IANA Registry](https://www.iana.org/assignments/jwt/jwt.xhtml)
+- [JWT Profile for OAuth 2.0 Access Tokens](https://datatracker.ietf.org/doc/html/rfc9068)
