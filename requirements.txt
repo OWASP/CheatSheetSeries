@@ -1,7 +1,7 @@
 Babel==2.18.0
 certifi==2026.6.17
 charset-normalizer==3.4.7
-click==8.4.1
+click==8.4.2
 colorama==0.4.6
 feedgen==1.0.0
 ghp-import==2.1.0
@@ -19,11 +19,11 @@ paginate==0.5.7
 pathspec==1.1.1
 platformdirs==4.10.0
 Pygments==2.20.0
-pymdown-extensions==10.21.3
+pymdown-extensions==11.0
 python-dateutil==2.9.0.post0
 PyYAML==6.0.3
 pyyaml_env_tag==1.1
-regex==2026.5.9
+regex==2026.6.28
 requests==2.34.2
 six==1.17.0
 urllib3==2.7.0
