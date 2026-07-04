@@ -1981,16 +1981,89 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#consideration-about-using-jwt" class="md-nav__link">
+    <nav class="md-nav" aria-label="Token Structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Consideration about Using JWT
+        Example
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#considerations-about-using-jwts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Considerations about using JWTs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Considerations about using JWTs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#not-using-jwts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Not using JWTs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#public-key-signatures-vs-mac" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Public-key Signatures vs. MAC
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#public-key-signatures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Public-key Signatures
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Public-key Signatures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mac" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MAC
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2364,6 +2437,17 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#relation-to-other-formats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Relation to other formats
+      
+    </span>
+  </a>
   
 </li>
       
@@ -4344,16 +4428,89 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#consideration-about-using-jwt" class="md-nav__link">
+    <nav class="md-nav" aria-label="Token Structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Consideration about Using JWT
+        Example
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#considerations-about-using-jwts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Considerations about using JWTs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Considerations about using JWTs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#not-using-jwts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Not using JWTs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#public-key-signatures-vs-mac" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Public-key Signatures vs. MAC
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#public-key-signatures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Public-key Signatures
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Public-key Signatures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mac" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MAC
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -4731,6 +4888,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#relation-to-other-formats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Relation to other formats
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#references" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4767,20 +4935,29 @@
 <p><a href="https://datatracker.ietf.org/doc/html/rfc7519"><strong>JSON Web Tokens</strong></a> (JWT) are security tokens for carrying information (<strong>claims</strong>), often about a user, an application, etc. (<strong>subject</strong>). JWTs can provide authenticity of the claims (<strong>signed JWT</strong>) and/or confidentiality of the claims (<strong>encrypted JWT</strong>). In addition, JWT defines <a href="https://www.iana.org/assignments/jwt/jwt.xhtml">standard claims</a>.</p>
 <p>JWTs are used in a wide range of applications such as:</p>
 <ul>
-<li>In <a href="https://openid.net/specs/openid-connect-core-1_0.html">OpenID Connect</a>, the <a href="https://openid.net/specs/openid-connect-core-1_0.html#IDToken">ID token</a> is a JWT used to represent the identity of the connected user.</li>
+<li>In <a href="https://openid.net/specs/openid-connect-core-1_0.html">OpenID Connect</a>, the <a href="https://openid.net/specs/openid-connect-core-1_0.html#IDToken">ID token</a> is a JWT used to represent the identity and attributes of the connected user.</li>
 <li>In <a href="https://datatracker.ietf.org/doc/html/rfc6749">OAuth 2</a>, the access token used to obtain access to a protected resource <a href="https://datatracker.ietf.org/doc/html/rfc9068">can be a JWT</a>.</li>
 <li>A JWT is often suggested for “stateless” user sessions. However, this usage is <a href="http://cryto.net/~joepie91/blog/2016/06/13/stop-using-jwt-for-sessions/">frowned upon</a>.</li>
+<li>A <a href="https://datatracker.ietf.org/doc/html/rfc9449#name-dpop-proof-jwts">DPoP Proof JWT</a> can be used to prove possession of a private key.</li>
+<li>In <a href="https://spiffe.io/">SPIFFE</a>, a <a href="https://github.com/spiffe/spiffe/blob/main/standards/JWT-SVID.md">JWT-SVID</a> can be used to authenticate a workload.</li>
 </ul>
 <p>In its most common form (signed JWT), this information is protected by the generating application (<strong>issuer</strong>) using a signature to ensure it has not been tampered with. This signature prevents attackers, such as a malicious client or user, from forging a token or modifying the claims in an existing token, for example changing the user role from a simple user to an admin or altering the client's login. The JWT can be seen as a protected identity card or certificate about a user, an application, etc. An application (<strong>presenter</strong>) presents the token to a consuming application (<strong>audience</strong>) which can verify the token's authenticity and validity and take decisions or actions based on these claims.</p>
 <p>JWT can also provide confidentiality of the claims (encrypted JWT). Encryption is currently not treated in this cheat sheet but many aspects of this cheat sheet are applicable to encrypted JWTs.</p>
 <h2 id="token-structure">Token Structure<a class="headerlink" href="#token-structure" title="Permanent link">&para;</a></h2>
 <p>Signed JWTs have the following structure:</p>
-<div class="highlight"><pre><span></span><code>[base64url(header)].[base64url(claims)].[base64url(signature)]
+<div class="highlight"><pre><span></span><code>{base64url(json(header))}.{base64url(json(claims))}.{base64url(signature)}
 </code></pre></div>
+<p>The following elements are present in signed JWTs:</p>
+<ul>
+<li><strong>Protected Header:</strong> the JWT header contains some information about the token such as the type of token (IANA media type) and the cryptographic algorithms used to protect the token.</li>
+<li><strong>Claims:</strong> the content JWT is a list of claims (usually about the subject). See the <a href="https://www.iana.org/assignments/jwt/jwt.xhtml">JWT IANA Registry</a> for a list of standard claims.</li>
+<li><strong>Signature:</strong> a signature in JWT is either a public-key digital signature (using a public/private key pair) or a MAC (using a shared secret). The signature protects both the protected headers and the claims.</li>
+</ul>
+<h3 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h3>
 <p>For example, the following example (<a href="https://jwt.io/#token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30">taken from JWT.IO</a>):</p>
 <div class="highlight"><pre><span></span><code>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30
 </code></pre></div>
-<p>The first part (<a href="https://datatracker.ietf.org/doc/html/rfc7515#section-4"><strong>header</strong></a>) can be decoded into:</p>
+<p>The first part (<a href="https://datatracker.ietf.org/doc/html/rfc7515#section-4"><strong>protected header</strong></a>) can be decoded into:</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;alg&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;HS256&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;typ&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;JWT&quot;</span>
@@ -4804,9 +4981,157 @@
 <span class="w">    </span><span class="p">)</span>
 <span class="p">)</span>
 </code></pre></div>
-<h2 id="consideration-about-using-jwt">Consideration about Using JWT<a class="headerlink" href="#consideration-about-using-jwt" title="Permanent link">&para;</a></h2>
-<p>Even if a JWT is "easy" to use and allow to expose services (mostly REST style) in a stateless way, it's not the solution that fits for all applications because it comes with some caveats, like for example the question of the storage of the token (tackled in this cheatsheet) and others...</p>
-<p>If your application does not need to be fully stateless, you can consider using traditional session system provided by all web frameworks and follow the advice from the dedicated <a href="Session_Management_Cheat_Sheet.html">session management cheat sheet</a>. However, for stateless applications, when well implemented, it's a good candidate.</p>
+<h2 id="considerations-about-using-jwts">Considerations about using JWTs<a class="headerlink" href="#considerations-about-using-jwts" title="Permanent link">&para;</a></h2>
+<h3 id="not-using-jwts">Not using JWTs<a class="headerlink" href="#not-using-jwts" title="Permanent link">&para;</a></h3>
+<p>Before using JWTs to solve your problems, you should consider if they are really necessary for your use case.</p>
+<p>JWTs are often suggested for “stateless” user sessions. However, if you use JWTs for user sessions, you will need a solution for managing session invalidation. This can be achieved using a deny list of revoked sessions/tokens. If your application implements such a deny list, user sessions won't be completely stateless anymore which might defeat the benefits of stateless sessions. You might want to consider using a plain session system and follow the advices from the dedicated <a href="Session_Management_Cheat_Sheet.html">session management cheat sheet</a>.</p>
+<h3 id="public-key-signatures-vs-mac">Public-key Signatures vs. MAC<a class="headerlink" href="#public-key-signatures-vs-mac" title="Permanent link">&para;</a></h3>
+<p>A signed JWT can be authenticated using either a digital signature or a MAC:</p>
+<ul>
+<li><strong>When using a digital signature,</strong> the issuer of the token uses its private key to generate a signature. The audience of the token can use the associated public key to verify the authenticity of the token. Whereas the private key must only be known by the issuer, the public key can be public.</li>
+<li><strong>When using a MAC,</strong> a shared secret is shared between the issuer and the audience. The <em>same</em> shared secret is used by the issuer to generate the token and by the audience to verify the authenticity of the token.</li>
+</ul>
+<p>The two approaches differ on how credentials are managed.</p>
+<p>When using a digital signature:</p>
+<ul>
+<li>The issuer can reuse the same public key for many different audiences.</li>
+<li>The audience of the token only need public information to validate the token authenticity which removes the risk of secret leakage by the audience.</li>
+<li>Because the public key does not need to be secret, it can easily be distributed (eg. by publishing it at a public HTTPS URI).</li>
+<li>This makes key rotation simpler as well.</li>
+<li>Traditional digital signature schemes might be <a href="https://datatracker.ietf.org/doc/html/rfc9958#name-asymmetric-cryptography">broken by post quantum computers</a> in the future. They would need to be replaced with post-quantum digital signature schemes which <a href="https://datatracker.ietf.org/doc/html/rfc9958#name-impact-on-constrained-devic">heavier</a> are traditional signature schemes.</li>
+</ul>
+<p>When using a MAC:</p>
+<ul>
+<li>A different secret must be used for each (issuer, audience) pair. If, for example, the same secret is reused for difference audiences, one audience can forge a token (impersonating the issuer).</li>
+<li>Secret keys must obviously not be published at a public HTTPS URI. Some solution for secret distribution and rotation must be found.</li>
+<li>MAC are much faster than digital signatures (but this is usually negligible in practice).</li>
+</ul>
+<p>Using a MAC may be interesting in the following cases:</p>
+<ul>
+<li>The issuer of the token is the sole audience of the token. Even in this case, it might be easier to use digital signature for secret rotation/distribution.</li>
+<li>The issuer of the token is the audience. In this case, there is no problem of secret rotation/distribution.</li>
+</ul>
+<h3 id="public-key-signatures">Public-key Signatures<a class="headerlink" href="#public-key-signatures" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Signature scheme</th>
+<th>Identifier</th>
+<th>Type</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EdDSA</td>
+<td>EdDSA, Ed448, Ed25519</td>
+<td>Traditional</td>
+<td>Recommended, limited support</td>
+</tr>
+<tr>
+<td>ECDSA</td>
+<td>ES256, ES384, ES512</td>
+<td>Traditional</td>
+<td>Recommended</td>
+</tr>
+<tr>
+<td>RSASSA-PSS</td>
+<td>PS256, PS384, PS512</td>
+<td>Traditional</td>
+<td>Recommended</td>
+</tr>
+<tr>
+<td>RSASSA-PKCS1-v1_5</td>
+<td>RS256, RS384, RS512</td>
+<td>Traditional</td>
+<td>Not recommended</td>
+</tr>
+<tr>
+<td>Hybrid ML-DSA / EdDSA</td>
+<td>ML-DSA-44-Ed25519, etc.</td>
+<td>PQ/T hybrid</td>
+<td><a href="https://ietf-wg-jose.github.io/draft-ietf-jose-pq-composite-sigs/draft-ietf-jose-pq-composite-sigs.html">Draft</a></td>
+</tr>
+<tr>
+<td>Hybrid ML-DSA / ECDSA</td>
+<td>ML-DSA-44-ES256, etc.</td>
+<td>PQ/T hybrid</td>
+<td><a href="https://ietf-wg-jose.github.io/draft-ietf-jose-pq-composite-sigs/draft-ietf-jose-pq-composite-sigs.html">Draft</a></td>
+</tr>
+<tr>
+<td>ML-DSA</td>
+<td>ML-DSA-44, ML-DSA-65, ML-DSA-87</td>
+<td>Post-quantum</td>
+<td>Very limited support at best</td>
+</tr>
+</tbody>
+</table>
+<p>Explanations:</p>
+<ul>
+<li>Support for EdDSA in JWT implementations is currently limited.</li>
+<li>Generating ECDSA signatures may be dangerous on embedded systems where the quality of the randomness may be problematic. In this case, you the implementation must use deterministic ECDA as defined in <a href="https://datatracker.ietf.org/doc/html/rfc6979">RFC 6979</a>.</li>
+<li>Post-quantum signatures (<a href="https://datatracker.ietf.org/doc/html/rfc9964">ML-DSA</a>) or <a href="https://ietf-wg-jose.github.io/draft-ietf-jose-pq-composite-sigs/draft-ietf-jose-pq-composite-sigs.html">hybrid post quantum signatures</a> are designed to be resistant against quantum computers. However, they produce very large signatures, resulting in very large JWTs. Their usage is probably not justified at the moment unless you need signatures with a long validity.</li>
+</ul>
+<p>Key management:</p>
+<ul>
+<li>Do not reuse the key pair for another purpose (eg. for encryption).</li>
+<li>Using the same key for authenticating different types of JWTs is fine as long as this does not introduce a risk of token type confusion.</li>
+<li>Do not publish your private key!</li>
+</ul>
+<h4 id="mac">MAC<a class="headerlink" href="#mac" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Signature scheme</th>
+<th>Identifier</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HMAC with SHA-2</td>
+<td>HS256, HS384, HS512</td>
+<td>Recommended</td>
+</tr>
+</tbody>
+</table>
+<p>Secret management:</p>
+<ul>
+<li>Do not reuse the same secret for another purpose (eg. for encryption).</li>
+<li>Using the same key for authenticating different types of JWTs is fine as long as this does not introduce a risk of token type confusion.</li>
+<li>Do not reuse the same secret with another audience.</li>
+<li>Do not reuse the same secret with another issuer.</li>
+<li>Do not use a password as MAC secret.</li>
+<li>The secret must be generated using a local, cryptographically secure secret generator.</li>
+<li>The secret must have at least the same size as the output (eg. 256, 384 and 512 bits respectively for HS256, HS384 and HS512).</li>
+<li>Do not publish your secret key!</li>
+<li>The secret must have at least 160 bits of entropy.</li>
+<li>For HMAC, the secret <a href="https://datatracker.ietf.org/doc/html/rfc2104#section-3">should be at least as long as the output size</a>.</li>
+</ul>
+<p>Valid HMAC secret generation example:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">secrets</span>
+<span class="n">secret_for_hs256</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_bytes</span><span class="p">(</span><span class="mi">256</span><span class="o">//</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">secret_for_hs512</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_bytes</span><span class="p">(</span><span class="mi">512</span><span class="o">//</span><span class="mi">8</span><span class="p">)</span>
+</code></pre></div>
+<p>Invalid HMAC secret generation:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">secrets</span>
+
+<span class="c1"># Using a password/passphrase is not OK:</span>
+<span class="n">bad_secret</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;MyProject2026&quot;</span>
+
+<span class="c1"># Using a hardcoded secret is not OK:</span>
+<span class="n">bad_secret</span> <span class="o">=</span> <span class="n">urlsafe_b64decode</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;KYkbbclxtjJMiHzoPvuahOfarej0VV-nQZPFxK0hyro=&#39;</span><span class="p">)</span>
+
+<span class="c1"># Not a secure randomness source:</span>
+<span class="n">bad_secret</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randbytes</span><span class="p">(</span><span class="mi">256</span><span class="o">//</span><span class="mi">8</span><span class="p">)</span>
+
+<span class="c1"># Not enough entropy:</span>
+<span class="n">bad_secret</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_bytes</span><span class="p">(</span><span class="mi">128</span><span class="o">//</span><span class="mi">8</span><span class="p">)</span>
+
+<span class="c1"># Not enough entropy for HS512</span>
+<span class="n">meh_secret_for_hs512</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_bytes</span><span class="p">(</span><span class="mi">256</span><span class="o">//</span><span class="mi">8</span><span class="p">)</span>
+</code></pre></div>
 <h2 id="issues">Issues<a class="headerlink" href="#issues" title="Permanent link">&para;</a></h2>
 <h3 id="none-hashing-algorithm">None Hashing Algorithm<a class="headerlink" href="#none-hashing-algorithm" title="Permanent link">&para;</a></h3>
 <h4 id="symptom">Symptom<a class="headerlink" href="#symptom" title="Permanent link">&para;</a></h4>
@@ -5321,15 +5646,45 @@ See RFC5116: https://tools.ietf.org/html/rfc5116
 <p>There are a number of <a href="https://www.notsosecure.com/crafting-way-json-web-tokens/">guides</a> that document this process in greater detail.</p>
 <h4 id="how-to-prevent_5">How to Prevent<a class="headerlink" href="#how-to-prevent_5" title="Permanent link">&para;</a></h4>
 <p>The simplest way to prevent this attack is to ensure that the secret used to sign the JWTs is strong and unique, in order to make it harder for an attacker to crack. As this secret would never need to be typed by a human, it should be at least 64 characters, and generated using a <a href="Cryptographic_Storage_Cheat_Sheet.html#secure-random-number-generation">secure source of randomness</a>.</p>
-<p>Alternatively, consider the use of tokens that are signed with RSA rather than using an HMAC and secret key.</p>
+<p>Alternatively, consider the use of tokens that are signed using a digital signature (public-key cryptography) rather than using an HMAC and secret key.</p>
+<h2 id="relation-to-other-formats">Relation to other formats<a class="headerlink" href="#relation-to-other-formats" title="Permanent link">&para;</a></h2>
+<p>JWT is a profile of the more general JOSE format (<a href="https://tools.ietf.org/html/rfc7515">RFC 7515</a>, <a href="https://tools.ietf.org/html/rfc7516">RFC 7516</a>). While this cheat sheet is focused on JWTs, a large part of what is discussed here is more generally applicable to JOSE messages in general.</p>
+<p>Conversely, <a href="https://datatracker.ietf.org/doc/html/rfc8392">CWT</a>, and more generally <a href="https://datatracker.ietf.org/doc/rfc9052/">COSE</a>, have a very similar design and many of the things discussed might be applicable to CWT and COSE as well.</p>
+<p>Depending on the application, some alternatives to JWT and JOSE might be:</p>
+<ul>
+<li>opaque tokens;</li>
+<li><a href="https://datatracker.ietf.org/doc/html/rfc8392">CBOR Object Token</a> (CWT) and <a href="https://datatracker.ietf.org/doc/html/rfc8152">CBOR Object Signing and Encryption</a> (COSE);</li>
+<li><a href="https://paseto.io/">PASETO</a>;</li>
+<li><a href="https://www.biscuitsec.org/">Eclipse Biscuit</a>;</li>
+<li><a href="https://github.com/fernet/spec/blob/master/Spec.md">Fernet</a>;</li>
+<li><a href="https://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0.html">Security Assertion Markup Language (SAML)</a> and <a href="https://www.w3.org/TR/xmldsig-core2/">XML signature</a>.</li>
+</ul>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<p>Main JWT and JOSE specifications:</p>
+<ul>
+<li><a href="https://datatracker.ietf.org/doc/html/rfc7515">RFC 7515</a>, JSON Web Signature (JWS)</li>
+<li><a href="https://datatracker.ietf.org/doc/html/rfc7516">RFC 7516</a>, JSON Web Encryption (JWE)</li>
+<li><a href="https://datatracker.ietf.org/doc/html/rfc7517">RFC 7517</a>, JSON Web Key (JWK)</li>
+<li><a href="https://datatracker.ietf.org/doc/html/rfc7519">RFC 7519</a>, JSON Web Token (JWT)</li>
+<li><a href="https://datatracker.ietf.org/doc/html/rfc8725">RFC 8725</a>, JWT Best Practices</li>
+</ul>
+<p>Some applications of JWTs:</p>
+<ul>
+<li><a href="https://datatracker.ietf.org/doc/html/rfc9068">JWT Profile for OAuth 2.0 Access Tokens</a></li>
+</ul>
+<p>IANA registries:</p>
+<ul>
+<li><a href="https://www.iana.org/assignments/jose/jose.xhtml">JSON Object Signing and Encryption (JOSE) IANA Reguistry</a></li>
+<li><a href="https://www.iana.org/assignments/jwt/jwt.xhtml">JSON Web Token IANA Reguistry (JWT)</a></li>
+</ul>
+<p>Attacks on JWT and JOSE:</p>
 <ul>
 <li><a href="https://github.com/ticarpi/jwt_tool/wiki">{JWT}.{Attack}.Playbook</a> - A project documents the known attacks and potential security vulnerabilities and misconfigurations of JSON Web Tokens.</li>
-<li><a href="https://jwt.io/">jwt.io</a></li>
-<li><a href="https://datatracker.ietf.org/doc/html/rfc7519">JSON Web Tokens</a> (JWT)</li>
-<li><a href="https://datatracker.ietf.org/doc/html/rfc8725">JWT Best Practices</a></li>
+<li><a href="https://community.auth0.com/c/jwt/8">JWT.io Discussion Forum</a> (Hosted by <a href="https://auth0.com/">Auth0</a>)</li>
+</ul>
+<p>Other useful links:</p>
+<ul>
 <li><a href="https://www.iana.org/assignments/jwt/jwt.xhtml">JWT IANA Registry</a></li>
-<li><a href="https://datatracker.ietf.org/doc/html/rfc9068">JWT Profile for OAuth 2.0 Access Tokens</a></li>
 </ul>
 
 
