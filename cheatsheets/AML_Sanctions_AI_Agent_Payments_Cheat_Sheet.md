@@ -211,7 +211,25 @@ A receipt stating "screened, no match" is meaningless without which version of t
 - Don't assert a screening result without recording the list version and date it was screened against.
 - Don't treat "screened" as a boolean; a clean result against an out-of-date list is not compliant.
 
-## Section 11: Regulatory Mapping
+## Section 11: Payment Decision Evidence (Approvals, Denials, and Holds)
+
+Section 4 makes the screening interaction auditable. The payment decision itself needs the same treatment: when an agent-initiated payment is allowed, denied, or held for human approval, that decision should produce a signed receipt at decision time, over a canonical serialization (Section 8). Denials matter most: the record an examiner asks for first is proof that a sanctioned or over-limit payment was actually blocked, and a log that only records successful payments cannot show the controls ever fired.
+
+### Do
+
+- Produce a signed receipt for every payment decision outcome: allow, deny, and held-for-approval alike, fixed at the moment of decision.
+- Treat denial receipts as first-class evidence with the same signing, chaining, and retention as approvals.
+- Make receipts verifiable offline against the operator's published public key with open tooling, so an examiner or counterparty can verify exported records without trusting the operator's logging infrastructure or querying live systems.
+- Apply minimum disclosure: carry the amount, asset, and a hashed counterparty identifier so a limit or sanctions predicate can be verified by a third party without exposing the full counterparty graph.
+- For HTTP-native agent payment protocols (e.g. x402, EIP-3009 transfer authorizations), record the payment facts from the actual wire messages (or their hashes) rather than an application-level restatement.
+
+### Don't
+
+- Don't log only successful payments; an evidence trail with no refusals cannot demonstrate that blocking controls work.
+- Don't require access to your live systems to validate historical records; evidence should verify from the exported bytes and a published key alone.
+- Don't restate wire-level payment authorizations in application logs and treat the restatement as evidence; hash and reference the signed wire artifact itself.
+
+## Section 12: Regulatory Mapping
 
 The controls in this cheat sheet map to common AML and sanctions obligations. This mapping is illustrative and is not legal advice; obligations vary by jurisdiction. For underlying obligations see, for example, the [Bank Secrecy Act](https://www.fincen.gov/index.php/resources/statutes-and-regulations/bank-secrecy-act) and [FinCEN Customer Due Diligence Requirements](https://www.fincen.gov/resources/statutes-regulations/federal-register-notices/customer-due-diligence-requirements).
 
@@ -232,7 +250,7 @@ The controls in this cheat sheet map to common AML and sanctions obligations. Th
 
 - Don't rely on a single jurisdiction's lists or rules for a cross-border agent payment system.
 
-## Section 12: Do's and Don'ts Summary
+## Section 13: Do's and Don'ts Summary
 
 The consolidated controls below align with the AI-system-specific verification requirements in the [OWASP Artificial Intelligence Security Verification Standard (AISVS)](https://github.com/OWASP/AISVS), in particular Chapter 10 (MCP Security Requirements).
 
@@ -266,6 +284,7 @@ The consolidated controls below align with the AI-system-specific verification r
 - [OWASP MCP Top 10](https://owasp.org/www-project-mcp-top-10/) -- MCP01 (Token Mismanagement), MCP07 (Insufficient Auth), MCP08 (Lack of Audit)
 - [OWASP API Security Top 10 (2023)](https://owasp.org/API-Security/editions/2023/en/0x00-header/) -- API4 Unrestricted Resource Consumption
 - [IETF draft-sharif-mcps-secure-mcp](https://datatracker.ietf.org/doc/draft-sharif-mcps-secure-mcp/) -- Cryptographic Security Layer for MCP
+- [IETF draft-farley-acta-signed-receipts](https://datatracker.ietf.org/doc/draft-farley-acta-signed-receipts/) -- Signed Decision Receipts for agent actions, including payment allow/deny decisions
 - [NIST SP 800-53 Revision 5](https://csrc.nist.gov/pubs/sp/800/53/r5/final) -- Security and Privacy Controls for Information Systems and Organizations
 - [NIST SP 800-209](https://csrc.nist.gov/pubs/sp/800/209/final) -- Security Guidelines for Storage Infrastructure
 - [OFAC Sanctions List Search](https://sanctionssearch.ofac.treas.gov/)
