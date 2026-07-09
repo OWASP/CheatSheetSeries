@@ -194,39 +194,78 @@ This issue should now be fixed in JWT libraries.
 
 Mitigation:
 
-* Make sure that `"alg":"none"` is not accepted by your JWT parser. It should be disabled by default by recent implementations.
+- Make sure that `"alg":"none"` is not accepted by your JWT parser. It should be disabled by default by recent implementations.
 
-## Features
+## JWT revocation
 
-### JWT deny list
+### Token Status List
 
-It token revocation, is needed an implementation might maintain a token denylist. An suitable approach would be to maintain the deny list based on the `jti` and `iss` claims. Combining the `jti` with ths `iss` is required because `jti` are scoped by issuer.
+If revocation of the JWTs by the issuer is needed, the [Token Status Lists](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-status-list) (TSL) can be used:
 
-```python
-jti = claims.get("jti")
-iss = claims.get("iss")
-exp = claims.get("exp")
-deny_list.insert((jti, iss), exp)
+- the JWT contains the URI of a TSL;
+- the TSL aggregates the revocation status of several tokens in compressed form;
+- the consumer of the token can fetch the TSL to obtain the revocation status of the JWT.
+
+The issuer includes a `status` claim in the JWT. This claims contains the URI of the associated TSL and the index of the status of the JWT within this list:
+
+```json
+{
+    "iss": "https://issuer.example/",
+    "sub": "NsxuACbpJ9N7Ix96aWrYxHX-EZ4",
+    "iat": 1783635268,
+    "nbf": 1783635268,
+    "exp": 1783653268,
+    "status": {
+        "status_list": {
+            "idx": 6,
+            "uri": "https://issuer.example/tsl/JAffke55FR5gtJQ_rtktWkSaTlI"
+        }
+    }
+}
 ```
 
-**Warning:** Do not use the raw JWT or a hash of it (`SHA-256(token)`) as the denylist key. This is unsafe, because a JWT does not have a single canonical byte representation. The same logically valid token can be transformed into a *different* byte sequence that still passes signature verification — which means it hashes differently and silently bypasses the denylist. This can happen for two independent reasons:
+## Replay protection
 
-- **ECDSA signature malleability.** For JWTs signed with an ECDSA algorithm (e.g. `ES256`), a valid signature `(r, s)` has a second, equally valid form `(r, (-s) mod n)`, where `n` is the order of the curve's generator point. Both signatures verify successfully against the same public key for the same header and payload, but produce different token bytes — and therefore a different digest. An attacker in possession of a revoked token can compute this alternate signature and obtain a token that still authenticates.
-- **Non-strict JWT parsing.** Many JWT libraries tolerate multiple, non-canonical encodings of the same logical token — for example, base64url values with extraneous padding, alternate-but-decodable character substitutions, or trailing bytes with differing unused bits that decode to identical content. These variants are byte-for-byte different from the original token and therefore also bypass a hash-based denylist, regardless of signing algorithm (HMAC, RSA, or ECDSA).
+### JWT denylist
+
+In some cases, the consumer of the token might want to maintain a JWT denylist. This might be for example used a simple form of JWT replay protection or as a workaround for the “stateless session” invalidation problem.
+
+A JWT deny list can typically be implemented based on the  `jti` and `iss` claims:
 
 ```python
-# Not secure:
-exp = claims.get("exp")
-token_hash = hashlib.sha256(token.encode("utf-8")).digest()
-deny_list.insert(token_hash, exp)
+def revoke_token(claims):
+    jti = claims.get("jti")
+    iss = claims.get("iss")
+    exp = claims.get("exp")
+    deny_list.insert((jti, iss), exp)
+
+def is_token_revoked(claims) -> bool:
+    jti = claims.get("jti")
+    iss = claims.get("iss")
+    return deny_list.contains((jti, iss))
 ```
 
-#### Issuer-Side Revocation: Token Status List
+Depending on the application and the type of JWT, other claims might be more suitable.
 
-The denylist approach described above is typically operated by the relying party (resource server) — it works well when the audience maintains its own revocation state close to where tokens are validated. However, in some deployments the issuer needs to centrally broadcast revocation state to multiple relying parties without requiring each one to maintain its own denylist.
+**Warning:** Using the raw JWT or a secure hash of the JWT (`SHA-256(token)`) as the denylist key is *not safe* and might expose the application to **denylist bypass through [JWT malleability](https://www.gabriel.urdhr.fr/2026/06/27/ecdsa-jwt-malleability/)**. An attacker in possession of a revoked JWT might be able to modify an alternative representation of the JWT that still passes signature verification:
 
-For this use case, the IETF [Token Status List (TSL)](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-status-list) draft defines a scalable, issuer-maintained revocation mechanism. TSL is used in SD-JWT Verifiable Credentials and other high-scale
-deployments where a single issuer serves many relying parties. Consult the TSL draft for implementation guidance when issuer-side revocation is required.
+- because of non-strict JWT parsing of the JWT implementation;
+- for ECDSA JWTs, because of the malleability of ECDSA signatures.
+
+```python
+# Not secure. Might be vulnerable to JWT malleability:
+def unsafe_revoke_token(claims):
+    exp = claims.get("exp")
+    token_hash = hashlib.sha256(token.encode("utf-8")).digest()
+    deny_list.insert(token_hash, exp)
+```
+
+Before implementing such a JWT denylist, you should consider whether there is a better solution for your problem:
+
+- Token Status List is a scalable solution for revocation of the JWT by the issuer.
+- Freshness and replay protection can often by implementing by using a `nonce` bound to the session in the JWT claims. This approach is [used in OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html#NonceNotes).
+- Token reuse can be mitigated by using short expiration time in the JWT.
+- The risk of token exfiltration can be mitigated by using sender constrained JWT (such a [DPoP](https://datatracker.ietf.org/doc/html/rfc9449) or [TLS-bound JWT](https://www.rfc-editor.org/info/rfc8705/#section-3)).
 
 ## References
 
