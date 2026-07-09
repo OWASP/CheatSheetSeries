@@ -263,7 +263,7 @@ The [Multifactor Authentication Cheat Sheet](Multifactor_Authentication_Cheat_Sh
 
 #### Login Throttling
 
-Login Throttling is a protocol used to prevent an attacker from making too many attempts at guessing a password through normal interactive means, it includes the following controls:
+Login Throttling is a security mechanism used to prevent an attacker from making too many attempts at guessing a password through normal interactive means, it includes the following controls:
 
 - Maximum number of attempts.
 
