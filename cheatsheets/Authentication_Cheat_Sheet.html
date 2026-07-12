@@ -5144,6 +5144,7 @@
 </ul>
 </li>
 <li><strong>Maximum</strong> password length should be <strong>at least 64 characters</strong> to allow passphrases (<a href="https://pages.nist.gov/800-63-4/sp800-63b.html#passwordlength">NIST SP800-63B</a>). Note that certain implementations of hashing algorithms may cause <a href="https://www.acunetix.com/vulnerabilities/web/long-password-denial-of-service/">long password denial of service</a>.</li>
+<li>Longer passphrases are effective because they raise the number of guesses an attacker's dictionary or wordlist has to cover, not because of a precise entropy value: NIST notes that "estimating entropy for user-chosen passwords is challenging" and recommends length and blocklist checks (see below) over composition or entropy math (<a href="https://pages.nist.gov/800-63-4/sp800-63b/passwords/#appA">NIST SP800-63B, Strength of Passwords</a>). Avoid advertising a bits-of-entropy figure to users as a guarantee of strength.</li>
 </ul>
 </li>
 <li>Do not silently truncate passwords. The <a href="Password_Storage_Cheat_Sheet.html#maximum-password-lengths">Password Storage Cheat Sheet</a> provides further guidance on how to handle passwords that are longer than the maximum length.</li>
