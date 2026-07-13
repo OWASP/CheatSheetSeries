@@ -418,7 +418,7 @@ Attackers convince a telecommunications provider to transfer a victim's phone nu
 **References**
 
 - NIST SP 800-63: https://pages.nist.gov/800-63-4/
-- CISA – Implementing Phishing-Resistant MFA: https://www.cisa.gov/resources-tools/resources/implementing-phishing-resistant-mfa
+- CISA – Implementing Phishing-Resistant MFA: https://www.cisa.gov/sites/default/files/publications/fact-sheet-implementing-phishing-resistant-mfa-508c.pdf
 
 ---
 
