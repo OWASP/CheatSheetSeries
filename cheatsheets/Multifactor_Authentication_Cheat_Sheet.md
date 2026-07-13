@@ -382,12 +382,10 @@ Attackers repeatedly send MFA push notifications, often combined with social eng
 - Require challenge-response push authentication (for example, number matching) to prevent blind approval of authentication requests.
 - Prefer phishing-resistant authenticators (FIDO2/WebAuthn), which eliminate push-based approval attacks.
 
-**References**
+#### References
 
-- NIST SP 800-63B: https://pages.nist.gov/800-63-4/sp800-63b.html
-- CISA – Implementing Phishing-Resistant MFA: https://www.cisa.gov/sites/default/files/publications/fact-sheet-implementing-phishing-resistant-mfa-508c.pdf
-
----
+- [NIST SP 800-63B](https://pages.nist.gov/800-63-4/sp800-63b.html)
+- [CISA – Implementing Phishing-Resistant MFA](https://www.cisa.gov/sites/default/files/publications/fact-sheet-implementing-phishing-resistant-mfa-508c.pdf)
 
 ### Real-Time Phishing (Adversary-in-the-Middle)
 
@@ -398,13 +396,12 @@ Reverse-proxy phishing frameworks relay authentication traffic between the user 
 - Require phishing-resistant authenticators (FIDO2/WebAuthn), which bind authentication to the legitimate origin and are resistant to adversary-in-the-middle phishing.
 - Monitor for anomalous authentication and session activity to detect potential session hijacking following successful authentication.
 
-**References**
+#### References
 
-- NIST SP 800-63B: https://pages.nist.gov/800-63-4/sp800-63b.html
-- CISA – Implementing Phishing-Resistant MFA:  https://www.cisa.gov/sites/default/files/publications/fact-sheet-implementing-phishing-resistant-mfa-508c.pdf
-- FIDO Alliance Specifications: https://fidoalliance.org/specifications/
+- [NIST SP 800-63B](https://pages.nist.gov/800-63-4/sp800-63b.html)
+- [CISA – Implementing Phishing-Resistant MFA](https://www.cisa.gov/sites/default/files/publications/fact-sheet-implementing-phishing-resistant-mfa-508c.pdf)
 
----
+- [FIDO Alliance Specifications](https://fidoalliance.org/specifications/)
 
 ### SIM Swap and Phone Number Takeover
 
@@ -415,12 +412,11 @@ Attackers convince a telecommunications provider to transfer a victim's phone nu
 - Avoid SMS or voice-based MFA for privileged or high-value accounts.
 - Prefer phishing-resistant authenticators (FIDO2/WebAuthn). Where these are not available, TOTP authenticator applications provide stronger protection than SMS or voice-based OTP.
 
-**References**
+#### References
 
-- NIST SP 800-63: https://pages.nist.gov/800-63-4/
-- CISA – Implementing Phishing-Resistant MFA: https://www.cisa.gov/sites/default/files/publications/fact-sheet-implementing-phishing-resistant-mfa-508c.pdf
+- [NIST SP 800-63](https://pages.nist.gov/800-63-4/)
+- [CISA – Implementing Phishing-Resistant MFA](https://www.cisa.gov/sites/default/files/publications/fact-sheet-implementing-phishing-resistant-mfa-508c.pdf)
 
----
 
 ### Token Theft and Session Hijacking
 
@@ -432,12 +428,10 @@ Malware, malicious browser extensions, or cross-site scripting (XSS) can steal s
 - Protect session cookies using the `HttpOnly`, `Secure`, and appropriate `SameSite` cookie attributes.
 - Where supported, use proof-of-possession mechanisms to reduce token replay.
 
-**References**
+#### References
 
-- OAuth 2.0 Security Best Current Practice (RFC 9700): https://datatracker.ietf.org/doc/rfc9700/
-- OWASP Session Management Cheat Sheet: https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html
-
----
+- [OAuth 2.0 Security Best Current Practice (RFC 9700)](https://datatracker.ietf.org/doc/rfc9700/)
+- [OWASP Session Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html)
 
 ### Device Binding Bypass
 
@@ -449,13 +443,11 @@ Attackers attempt to bypass device-based authentication by extracting exportable
 - Prefer FIDO2/WebAuthn authenticators, which provide origin-bound public-key authentication that resists phishing and credential replay.
 - Where attestation is required, validate authenticator attestation according to organizational policy.
 
-**References**
+#### References
 
-- NIST SP 800-63B: https://pages.nist.gov/800-63-4/sp800-63b.html
-- W3C WebAuthn: https://www.w3.org/TR/webauthn-3/
-- FIDO Alliance Specifications: https://fidoalliance.org/specifications/
-
----
+- [NIST SP 800-63B](https://pages.nist.gov/800-63-4/sp800-63b.html)
+- [W3C WebAuthn](https://www.w3.org/TR/webauthn-3/)
+- [FIDO Alliance Specifications](https://fidoalliance.org/specifications/)
 
 ### MFA Downgrade Attacks
 
@@ -467,10 +459,10 @@ Attackers attempt to downgrade authentication from phishing-resistant methods to
 - Prevent fallback from phishing-resistant authenticators to lower-assurance authentication methods unless explicitly authorized.
 - Follow OAuth 2.0 Security Best Current Practice when implementing OAuth-based authentication flows.
 
-**References**
+#### References
 
-- OAuth 2.0 Security Best Current Practice (RFC 9700): https://datatracker.ietf.org/doc/rfc9700/
-- NIST SP 800-63B: https://pages.nist.gov/800-63-4/sp800-63b.html
+- [OAuth 2.0 Security Best Current Practice (RFC 9700)](https://datatracker.ietf.org/doc/rfc9700/)
+- [NIST SP 800-63B](https://pages.nist.gov/800-63-4/sp800-63b.html)
   
 ## Somewhere You Are
 
