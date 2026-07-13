@@ -400,7 +400,6 @@ Reverse-proxy phishing frameworks relay authentication traffic between the user 
 
 - [NIST SP 800-63B](https://pages.nist.gov/800-63-4/sp800-63b.html)
 - [CISA – Implementing Phishing-Resistant MFA](https://www.cisa.gov/sites/default/files/publications/fact-sheet-implementing-phishing-resistant-mfa-508c.pdf)
-
 - [FIDO Alliance Specifications](https://fidoalliance.org/specifications/)
 
 ### SIM Swap and Phone Number Takeover
@@ -416,7 +415,6 @@ Attackers convince a telecommunications provider to transfer a victim's phone nu
 
 - [NIST SP 800-63](https://pages.nist.gov/800-63-4/)
 - [CISA – Implementing Phishing-Resistant MFA](https://www.cisa.gov/sites/default/files/publications/fact-sheet-implementing-phishing-resistant-mfa-508c.pdf)
-
 
 ### Token Theft and Session Hijacking
 
