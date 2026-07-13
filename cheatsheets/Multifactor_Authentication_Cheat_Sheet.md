@@ -385,7 +385,7 @@ Attackers repeatedly send MFA push notifications, often combined with social eng
 **References**
 
 - NIST SP 800-63B: https://pages.nist.gov/800-63-4/sp800-63b.html
-- CISA – Implementing Phishing-Resistant MFA: https://www.cisa.gov/resources-tools/resources/implementing-phishing-resistant-mfa
+- CISA – Implementing Phishing-Resistant MFA: https://www.cisa.gov/sites/default/files/publications/fact-sheet-implementing-phishing-resistant-mfa-508c.pdf
 
 ---
 
