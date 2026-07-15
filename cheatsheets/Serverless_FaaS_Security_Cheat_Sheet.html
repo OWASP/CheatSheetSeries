@@ -4237,7 +4237,7 @@ However, the execution model (short-lived, event-driven functions running in man
 <li>Cold start data leakage (persistent state, side-channel timing).</li>
 <li>Function chaining abuse (compromised function invoking others).</li>
 <li>Shared environment risks (multi-tenant leakage, <code>/tmp</code> reuse).</li>
-<li>Hardcoded secrets in code or env vars.</li>
+<li>Hardcoded secrets in code or platform config.</li>
 <li>Excessive network access.</li>
 </ul>
 <h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">&para;</a></h2>
@@ -4331,8 +4331,7 @@ However, the execution model (short-lived, event-driven functions running in man
 </code></pre></div>
 <h3 id="6-secrets-management">6. Secrets Management<a class="headerlink" href="#6-secrets-management" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Avoid storing secrets in environment variables.</li>
-<li>Fetch secrets from vaults using local caching extensions where possible, not env vars.</li>
+<li>Fetch secrets at runtime from a vault or caching extension — not from platform-level function configuration (e.g. Lambda Environment Variables).</li>
 <li>Use ephemeral credentials (STS, workload identity federation).</li>
 <li>Rotate secrets automatically.</li>
 </ul>
@@ -4411,7 +4410,7 @@ However, the execution model (short-lived, event-driven functions running in man
 <ul>
 <li>Enforce least privilege per function.</li>
 <li>Validate all event inputs.</li>
-<li>Fetch secrets from vaults, not env vars.</li>
+<li>Fetch secrets from vaults, not platform config.</li>
 <li>Restrict network egress.</li>
 <li>Monitor invocations and logs.</li>
 </ul>
