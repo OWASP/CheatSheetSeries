@@ -35,7 +35,7 @@ A key concern when using passwords for authentication is password strength. A "s
     - **Minimum** length for passwords should be enforced by the application.
         - If MFA is enabled passwords **shorter than 8 characters** are considered to be weak ([NIST SP800-63B](https://pages.nist.gov/800-63-4/sp800-63b.html#passwordver)).
         - If MFA is not enabled passwords **shorter than 15 characters** are considered to be weak ([NIST SP800-63B](https://pages.nist.gov/800-63-4/sp800-63b.html#passwordver)).
-    - Maximum password length should be at least 64 characters to allow passphrases(NIST SP800-63B)(https://pages.nist.gov/800-63-4/sp800-63b.html#passwordlength). Note that certain implementations of hashing algorithms may cause long password denial of service.
+    - Maximum password length should be at least 64 characters to allow passphrases ([NIST SP800-63B](https://pages.nist.gov/800-63-4/sp800-63b.html#passwordlength)). Note that certain implementations of hashing algorithms may cause long password denial of service.
 
 - Longer passphrases are effective because they raise the number of guesses an attacker's dictionary or wordlist has to cover, not because of a precise entropy value: NIST notes that "estimating entropy for user-chosen passwords is challenging" and recommends length and blocklist checks (see below) over composition or entropy math ([NIST SP800-63B, Strength of Passwords](https://pages.nist.gov/800-63-4/sp800-63b/passwords/#appA)). Avoid advertising a bits-of-entropy figure to users as a guarantee of strength.
 
