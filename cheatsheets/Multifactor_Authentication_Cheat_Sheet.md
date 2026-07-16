@@ -369,9 +369,9 @@ The are a number of common types of biometrics that are used, including:
 - If compromised, biometric data can be difficult to change.
 - Hardware may be vulnerable to additional attack vectors.
 
-  ## Modern MFA Attack Patterns and Mitigations
+  ## MFA Attack Patterns and Mitigations
 
-Attackers increasingly target weaknesses in MFA deployments, authentication workflows, and authenticated sessions rather than attempting to defeat MFA cryptographically. The following attack patterns summarize common techniques and recommended mitigations based on current guidance from NIST, CISA, OAuth, and the FIDO Alliance.
+Attackers increasingly target weaknesses in MFA deployments and authentication workflows rather than attempting to defeat MFA itself. The following sections describe common attack patterns and recommended mitigations based on guidance from NIST, CISA, the FIDO Alliance, and OAuth standards.
 
 ### MFA Fatigue (Push Notification Bombing)
 
@@ -380,21 +380,21 @@ Attackers repeatedly send MFA push notifications, often combined with social eng
 #### Mitigations
 
 - Require challenge-response push authentication (for example, number matching) to prevent blind approval of authentication requests.
-- Prefer phishing-resistant authenticators (FIDO2/WebAuthn), which eliminate push-based approval attacks.
+- Prefer phishing-resistant authenticators (FIDO2/WebAuthn), which are not susceptible to MFA fatigue attacks.
 
 #### References
 
 - [NIST SP 800-63B](https://pages.nist.gov/800-63-4/sp800-63b.html)
 - [CISA – Implementing Phishing-Resistant MFA](https://www.cisa.gov/sites/default/files/publications/fact-sheet-implementing-phishing-resistant-mfa-508c.pdf)
 
-### Real-Time Phishing (Adversary-in-the-Middle)
+### Real-Time Phishing Using Reverse Proxies
 
-Reverse-proxy phishing frameworks relay authentication traffic between the user and the legitimate service to capture credentials, session cookies, or authentication tokens.
+Attackers use reverse-proxy phishing frameworks (such as Evilginx, Modlishka, and Muraena) to present convincing copies of legitimate login pages. These frameworks relay authentication traffic between the user and the legitimate service, allowing attackers to capture credentials and session tokens in real-time.
 
 #### Mitigations
 
-- Require phishing-resistant authenticators (FIDO2/WebAuthn), which bind authentication to the legitimate origin and are resistant to adversary-in-the-middle phishing.
-- Monitor for anomalous authentication and session activity to detect potential session hijacking following successful authentication.
+- Require phishing-resistant authenticators (FIDO2/WebAuthn), which bind authentication to the legitimate origin and are resistant to real time phishing attacks.
+- Monitor for anomalous authentication and session activity that may indicate credential or session compromise.
 
 #### References
 
@@ -409,37 +409,23 @@ Attackers convince a telecommunications provider to transfer a victim's phone nu
 #### Mitigations
 
 - Avoid SMS or voice-based MFA for privileged or high-value accounts.
-- Prefer phishing-resistant authenticators (FIDO2/WebAuthn). Where these are not available, TOTP authenticator applications provide stronger protection than SMS or voice-based OTP.
+- Prefer phishing-resistant authenticators such as FIDO2/WebAuthn. Where these are not available, use TOTP authenticator applications (RFC 6238) instead of SMS or voice-based OTP.
 
 #### References
 
 - [NIST SP 800-63](https://pages.nist.gov/800-63-4/)
 - [CISA – Implementing Phishing-Resistant MFA](https://www.cisa.gov/sites/default/files/publications/fact-sheet-implementing-phishing-resistant-mfa-508c.pdf)
-
-### Token Theft and Session Hijacking
-
-Malware, malicious browser extensions, or cross-site scripting (XSS) can steal session cookies or authentication tokens, allowing attackers to access authenticated sessions without repeating MFA.
-
-#### Mitigations
-
-- Use short-lived access tokens and continuous session evaluation where supported to reduce opportunities for token replay.
-- Protect session cookies using the `HttpOnly`, `Secure`, and appropriate `SameSite` cookie attributes.
-- Where supported, use proof-of-possession mechanisms to reduce token replay.
-
-#### References
-
-- [OAuth 2.0 Security Best Current Practice (RFC 9700)](https://datatracker.ietf.org/doc/rfc9700/)
-- [OWASP Session Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html)
+- [RFC 6238 – TOTP: Time-Based One-Time Password Algorithm](https://datatracker.ietf.org/doc/html/rfc6238)
 
 ### Device Binding Bypass
 
-Attackers attempt to bypass device-based authentication by extracting exportable credentials or replaying cloned device attributes when authenticators are not hardware protected.
+Attackers attempt to bypass device-based authentication by extracting exportable cryptographic keys or replaying cloned device attributes when authenticators are not hardware-protected.
 
 #### Mitigations
 
 - Prefer hardware-backed, non-exportable cryptographic keys where supported.
 - Prefer FIDO2/WebAuthn authenticators, which provide origin-bound public-key authentication that resists phishing and credential replay.
-- Where attestation is required, validate authenticator attestation according to organizational policy.
+- Where authenticator attestation is required, validate it according to organizational policy.
 
 #### References
 
@@ -449,14 +435,14 @@ Attackers attempt to bypass device-based authentication by extracting exportable
 
 ### MFA Downgrade Attacks
 
-Attackers attempt to downgrade authentication from phishing-resistant methods to weaker authentication mechanisms or legacy protocols.
+Attackers attempt to force authentication through legacy protocols or authentication flows that do not enforce the same MFA requirements as modern authentication methods. Weak fallback mechanisms or legacy authentication endpoints can allow users to authenticate with lower-assurance factors than intended.
 
 #### Mitigations
 
-- Disable legacy authentication protocols and endpoints that cannot enforce modern MFA requirements.
-- Prevent fallback from phishing-resistant authenticators to lower-assurance authentication methods unless explicitly authorized.
-- Follow OAuth 2.0 Security Best Current Practice when implementing OAuth-based authentication flows.
-
+- Disable legacy authentication protocols and endpoints that cannot enforce MFA consistently.
+- Prevent fallback from phishing-resistant authenticators to lower-assurance authentication methods unless required by a documented security policy.
+- Follow OAuth 2.0 Security Best Current Practice when implementing OAuth-based authentication flows to help prevent downgrade and protocol confusion attacks.
+  
 #### References
 
 - [OAuth 2.0 Security Best Current Practice (RFC 9700)](https://datatracker.ietf.org/doc/rfc9700/)
