@@ -88,12 +88,12 @@ The login page and all subsequent authenticated pages must be exclusively access
 
 In order to mitigate CSRF and session hijacking, it's important to require the current credentials for an account before updating sensitive account information such as the user's password or email address -- or before sensitive transactions, such as shipping a purchase to a new address. Without this countermeasure, an attacker may be able to execute sensitive transactions through a CSRF or XSS attack without needing to know the user's current credentials. Additionally, an attacker may get temporary physical access to a user's browser or steal their session ID to take over the user's session.
 
-### Reauthentication After Risk Events
+### Re-authentication After Risk Events
 
 **Overview:**
-Reauthentication is critical when an account has experienced high-risk activity such as account recovery, password resets, or suspicious behavior patterns. This section outlines when and how to trigger reauthentication to protect users and prevent unauthorized access. For further details, see the [Require Re-authentication for Sensitive Features](#require-re-authentication-for-sensitive-features) section.
+Re-authentication is critical when an account has experienced high-risk activity such as account recovery, password resets, or suspicious behavior patterns. This section outlines when and how to trigger re-authentication to protect users and prevent unauthorized access. For further details, see the [Require Re-authentication for Sensitive Features](#require-re-authentication-for-sensitive-features) section.
 
-#### When to Trigger Reauthentication
+#### When to Trigger Re-authentication
 
 - **Suspicious Account Activity**
   When unusual login patterns, IP address changes, or device enrollments occur
@@ -102,7 +102,7 @@ Reauthentication is critical when an account has experienced high-risk activity 
 - **Critical Actions**
   For high-risk actions like changing payment details or adding new trusted devices
 
-#### Reauthentication Mechanisms
+#### Re-authentication Mechanisms
 
 - **Adaptive Authentication**
   Use risk-based authentication models that adapt to the user's behavior and context
@@ -114,16 +114,16 @@ Reauthentication is critical when an account has experienced high-risk activity 
 #### Implementation Recommendations
 
 - **Minimize User Friction**
-  Ensure that reauthentication does not disrupt the user experience unnecessarily
+  Ensure that re-authentication does not disrupt the user experience unnecessarily
 - **Context-Aware Decisions**
-  Make reauthentication decisions based on context (e.g., geolocation, device type, prior patterns)
+  Make re-authentication decisions based on context (e.g., geolocation, device type, prior patterns)
 - **Secure Session Management**
-  Invalidate sessions after reauthentication and rotate tokens—see the [OWASP Session Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html)
+  Invalidate sessions after re-authentication and rotate tokens—see the [OWASP Session Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html)
 
 #### References
 
 - [OWASP Session Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html)
-- OWASP ASVS – 2.2.2: Reauthentication requirements
+- OWASP ASVS – 2.2.2: Re-authentication requirements
 - NIST 800-63B: Digital Identity Guidelines – Authentication Assurance Levels
 
 ### Consider Strong Transaction Authentication
