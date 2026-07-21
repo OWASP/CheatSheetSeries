@@ -506,7 +506,7 @@ Prefer phishing-resistant authenticators (FIDO2/WebAuthn), which bind authentica
 
 Attackers repeatedly send MFA push notifications, often combined with social engineering, hoping the user eventually approves one.
 
-**Mitigations**
+#### Mitigations
 
 - Require challenge-response push authentication (for example, number matching) to prevent blind approval of authentication requests.
 - Rate-limit or cap push notifications to prevent repeated prompt abuse.
@@ -516,7 +516,7 @@ Attackers repeatedly send MFA push notifications, often combined with social eng
 
 Attackers use reverse-proxy phishing frameworks (such as Evilginx, Modlishka, and Muraena) to present convincing copies of legitimate login pages. These frameworks relay authentication traffic between the user and the legitimate service, allowing attackers to capture credentials and session tokens in real-time.
 
-**Mitigations**
+#### Mitigations
 
 - Monitor for anomalous authentication and session activity that may indicate credential or session compromise (for example, impossible travel, new ASN, or sudden MFA method changes).
 - Use phishing-resistant authenticators (see Passkeys section), which bind authentication to the legitimate origin and are resistant to real-time phishing attacks.
@@ -525,7 +525,7 @@ Attackers use reverse-proxy phishing frameworks (such as Evilginx, Modlishka, an
 
 Attackers convince a telecommunications provider to transfer a victim's phone number, allowing interception of SMS or voice-based one-time passwords.
 
-**Mitigations**
+#### Mitigations
 
 - Avoid SMS or voice-based MFA for privileged or high-value accounts.
 - Where phishing-resistant authenticators are not available, use TOTP authenticator applications (RFC 6238) instead of SMS or voice-based OTP.
@@ -535,7 +535,7 @@ Attackers convince a telecommunications provider to transfer a victim's phone nu
 
 Attackers attempt to bypass device-based authentication by extracting exportable cryptographic keys or replaying cloned device attributes when authenticators are not hardware-protected.
 
-**Mitigations**
+#### Mitigations
 
 - Prefer hardware-backed, non-exportable cryptographic keys (for example, platform authenticators backed by TPM, Secure Enclave, or Android StrongBox).
 - Validate authenticator attestation where required by organizational policy.
@@ -544,7 +544,7 @@ Attackers attempt to bypass device-based authentication by extracting exportable
 
 Attackers attempt to force authentication through legacy protocols or authentication flows that do not enforce the same MFA requirements as modern authentication methods. Weak fallback mechanisms or legacy authentication endpoints can allow users to authenticate with lower-assurance factors than intended.
 
-**Mitigations**
+#### Mitigations
 
 - Disable legacy authentication protocols and endpoints that cannot enforce MFA consistently.
 - Prevent fallback from phishing-resistant authenticators to lower-assurance authentication methods unless required by a documented security policy.
