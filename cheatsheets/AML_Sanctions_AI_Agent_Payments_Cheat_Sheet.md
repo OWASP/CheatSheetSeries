@@ -12,7 +12,7 @@ The controls described here are complementary to the [OWASP MCP Security Cheat S
 
 Agent-initiated payments are subject to the same regulatory framework as human-initiated payments. Key regulations include:
 
-- **Bank Secrecy Act (BSA)**: Requires financial institutions to maintain effective AML programmes, including customer identification, transaction monitoring, and suspicious activity reporting. The [Bank Secrecy Act](https://www.fincen.gov/index.php/resources/statutes-and-regulations/bank-secrecy-act) does not distinguish between human-initiated and agent-initiated transactions.
+- **Bank Secrecy Act (BSA)**: Requires financial institutions to maintain effective AML programs, including customer identification, transaction monitoring, and suspicious activity reporting. The [Bank Secrecy Act](https://www.fincen.gov/index.php/resources/statutes-and-regulations/bank-secrecy-act) does not distinguish between human-initiated and agent-initiated transactions.
 - **OFAC Sanctions**: The Office of Foreign Assets Control requires all US persons and entities to screen transactions against the Specially Designated Nationals (SDN) list and other sanctions lists. Screening obligations apply regardless of whether the transaction was initiated by a human or an agent.
 - **FinCEN Requirements**: [FinCEN](https://www.fincen.gov/) rules require Customer Identification Programs (CIP), Customer Due Diligence (CDD), and Suspicious Activity Reports (SARs). When an agent acts on behalf of a customer, the institution must be able to identify both the customer and the agent.
 - **UK Financial Sanctions (OFSI)**: HM Treasury's Office of Financial Sanctions Implementation maintains the [UK Consolidated Sanctions List](https://www.gov.uk/government/publications/financial-sanctions-consolidated-list-of-targets). Screening is mandatory for all financial transactions regardless of initiation method.
@@ -21,7 +21,7 @@ Agent-initiated payments are subject to the same regulatory framework as human-i
 
 ### Key Principle
 
-Regulators do not care whether a transaction was initiated by a human clicking a button or an agent calling an API. The compliance obligations are identical. The burden is on the institution to prove that screening occurred, that the agent was authorised, and that the results are tamper-evident.
+Regulators do not care whether a transaction was initiated by a human clicking a button or an agent calling an API. The compliance obligations are identical. The burden is on the institution to prove that screening occurred, that the agent was authorized, and that the results are tamper-evident.
 
 ## Section 1: Agent Identity Before Screening
 
@@ -66,7 +66,7 @@ The agent itself is software. But the agent has an operator -- the developer, co
 
 ### Do
 
-- Screen the agent's declared operator (organisation name, jurisdiction, registration number) against sanctions lists during agent onboarding.
+- Screen the agent's declared operator (organization name, jurisdiction, registration number) against sanctions lists during agent onboarding.
 - Re-screen agent operators periodically (at minimum when sanctions lists are updated) and revoke agent access if the operator becomes sanctioned.
 - Record the operator's screening status as part of the agent's trust profile.
 - Require agents to declare their operator identity as part of their cryptographic passport or identity credential.
@@ -106,7 +106,7 @@ When screening fails -- due to a timeout, service outage, malformed response, or
 - Deny the payment or transaction if screening cannot be completed successfully.
 - Return a clear, structured error to the agent indicating that screening failed and the transaction cannot proceed.
 - Log all screening failures with the same level of detail as successful screens, including the reason for failure.
-- Alert compliance teams when screening failure rates exceed a threshold, as this may indicate a denial-of-service attack designed to force fail-open behaviour.
+- Alert compliance teams when screening failure rates exceed a threshold, as this may indicate a denial-of-service attack designed to force fail-open behavior.
 - Implement circuit breakers that halt agent-initiated payments entirely if the screening service is unavailable for an extended period.
 
 ### Don't
@@ -124,8 +124,8 @@ Not all agents should be treated equally. Unverified or low-trust agents should 
 
 - Implement per-agent rate limits based on cryptographic identity (public key fingerprint or passport ID).
 - Set lower rate limits for newly registered or low-trust agents (e.g. L0/L1) and higher limits for verified, high-trust agents (e.g. L3/L4).
-- Include rate limit status in screening responses (remaining quota, reset time) so agents can adjust their behaviour.
-- Downgrade an agent's rate limit allocation if anomalous behaviour is detected (e.g. sudden spike in screening requests, unusual entity patterns).
+- Include rate limit status in screening responses (remaining quota, reset time) so agents can adjust their behavior.
+- Downgrade an agent's rate limit allocation if anomalous behavior is detected (e.g. sudden spike in screening requests, unusual entity patterns).
 
 ### Don't
 
@@ -142,14 +142,14 @@ Institutions must decide whether to run their own screening engine or use a host
 - The institution maintains the sanctions lists, the matching engine, and the screening API on its own infrastructure.
 - Agent requests stay within the institution's network boundary.
 - The institution has full control over list update frequency, matching algorithms, and data retention.
-- Requires operational investment in list ingestion, normalisation, and matching quality.
+- Requires operational investment in list ingestion, normalization, and matching quality.
 
 ### Hosted Screening (Third-Party API)
 
 - The institution calls a third-party screening API (e.g. a sanctions screening provider).
 - Agent identity credentials and screening data leave the institution's network boundary.
 - The institution must ensure the third-party provider meets applicable regulatory requirements.
-- Data minimisation principles apply -- send only the minimum data needed for screening, not the agent's full context.
+- Data minimization principles apply -- send only the minimum data needed for screening, not the agent's full context.
 
 ### Do
 
@@ -183,7 +183,7 @@ Use the **JSON Canonicalization Scheme (JCS), [RFC 8785](https://www.rfc-editor.
 
 Agent payments often traverse multiple agents (orchestrator to sub-agent to service). If the compliance receipt stays only with the issuing system, accountability is lost at the first hop. The signed receipt MUST **travel with the transaction** so every downstream party can independently verify who was screened, against which lists, and what was decided, without trusting an upstream agent's word.
 
-Bind each receipt to the specific transaction (include the transaction or intent hash in the signed payload) and propagate it end-to-end. Each hop verifies the inbound receipt and, if it takes its own action, appends its own signed receipt, producing a verifiable chain of accountability across agents. Message-level integrity and replay defence for such receipts is covered in [Section 7 of the OWASP MCP Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/MCP_Security_Cheat_Sheet.html#7-message-level-integrity-and-replay-defence).
+Bind each receipt to the specific transaction (include the transaction or intent hash in the signed payload) and propagate it end-to-end. Each hop verifies the inbound receipt and, if it takes its own action, appends its own signed receipt, producing a verifiable chain of accountability across agents. Message-level integrity and replay defense for such receipts is covered in [Section 7 of the OWASP MCP Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/MCP_Security_Cheat_Sheet.html#7-message-level-integrity-and-replay-defence).
 
 ### Do
 
