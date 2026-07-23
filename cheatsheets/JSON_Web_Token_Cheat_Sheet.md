@@ -196,6 +196,64 @@ Mitigation:
 
 - Make sure that `"alg":"none"` is not accepted by your JWT parser. It should be disabled by default by recent implementations.
 
+### Key type confusion
+
+Some JWT implementations would accept to use a public key intended for public-key digital signature as if it was a secret key used for MAC verification. In this context, an attacker could forge a MAC-based JWT by using the public key of the real issuer as if it was a secret key.
+
+This threat is also called “key confusion” or “algorithm confusion”.
+
+Example of legitimate token issuance:
+
+```python
+token = jwt.encode(claims, private_key_bytes, algorithm="ES256")
+```
+
+Example of attacker forging a token based on key type confusion:
+
+```python
+token = jwt.encode(claims, public_key_bytes, algorithm="HS256")
+```
+
+Example of validation potentially vulnerable to key type confusion:
+
+```python
+# If the token is using a MAC, the library might interpret the public key bytes as a MAC secret:
+decoded = jwt.decode(token, public_key_bytes, algorithms=jwt.algorithms.get_default_algorithms())
+```
+
+Note: this issue is [mitigated](https://github.com/jpadilla/pyjwt/commit/9c528670c455b8d948aff95ed50e22940d1ad3fc) in recent versions of the PyJWT library by detecting whether a MAC key appears to be a public key (in PEM of SSH format).
+
+Mitigations (at validation):
+
+- use a library which is not vulnerable to the issue (eg. strong-typing of the type of key);
+- chose the key depending on the requested signature algorithm or validate that the key used for validation is consistent with the signature algorithm;
+- if possible, hardcode the accepted algorithms and do not mix public-key digital signatures algorithms and MAC algorithms.
+
+Example of validation not vulnerable because MAC algorithms are not accepted:
+
+```python
+decoded = jwt.decode(token, public_key_bytes, algorithms=["ES256"])
+```
+
+Example of validation not vulnerable because the key is strictly typed:
+
+```python
+from joserfc import jwt, jwk
+
+# {"kty":"EC",
+#  "crv":"P-256",
+#  "x":"f83OJ3D2xF1Bg8vub9tLe1gHMzV76e8Tus9uPHvRVEU",
+#  "y":"x_FEzRu9m36HLN_tue659LNpXW6pCyStikYjKIWI5a0"}
+public_key = jwk.import_key(jwk)
+decoded = jwt.decode(encoded, public_key)
+```
+
+References:
+
+- [Algorithm confusion attacks](https://portswigger.net/web-security/jwt/algorithm-confusion);
+- [CVE-2022-29217](https://nvd.nist.gov/vuln/detail/cve-2022-29217), Key confusion through non-blocklisted public key formats (PyJWT);
+- [CVE-2023-48223](https://nvd.nist.gov/vuln/detail/CVE-2023-48223), JWT Algorithm Confusion in fast-jwt.
+
 ## JWT revocation
 
 ### Token Status List
