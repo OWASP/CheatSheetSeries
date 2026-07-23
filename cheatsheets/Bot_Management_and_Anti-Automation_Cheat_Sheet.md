@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Modern web applications face a continuous stream of automated traffic that is not a Distributed Denial of Service event but is still abusive: credential stuffing, content scraping, inventory hoarding (scalping), fake account creation, gift-card enumeration, card testing, fake reviews, click fraud, and skewed analytics. The OWASP **Automated Threats to Web Applications** project (OAT-001 through OAT-021) catalogues these patterns.
+Modern web applications face a continuous stream of automated traffic that is not a Distributed Denial of Service event but is still abusive: credential stuffing, content scraping, inventory hoarding (scalping), fake account creation, gift-card enumeration, card testing, fake reviews, click fraud, and skewed analytics. The OWASP **Automated Threats to Web Applications** project (OAT-001 through OAT-021) catalogs these patterns.
 
 This cheat sheet provides defensive guidance that goes beyond the [Credential Stuffing Prevention Cheat Sheet](Credential_Stuffing_Prevention_Cheat_Sheet.md) and addresses the full spectrum of automated abuse. It focuses on architecture, signals, response strategy, and CAPTCHA alternatives.
 
@@ -180,7 +180,7 @@ Server side: if `company_url` is non-empty, silently drop the request or route t
 - API keys with rotating secrets, **not** static bearer tokens checked in to client code.
 - Per-key quotas advertised in `X-RateLimit-*` headers so well-behaved clients self-throttle.
 - Request signing (e.g., HMAC of method + path + timestamp + body) to prevent replay and require a stable secret.
-- Tier APIs explicitly: a public catalogue endpoint may serve cached, slightly-delayed data; partner APIs serve realtime data with an authenticated key.
+- Tier APIs explicitly: a public catalog endpoint may serve cached, slightly-delayed data; partner APIs serve realtime data with an authenticated key.
 
 ## Response Strategy: Don't Always Block
 
@@ -257,7 +257,7 @@ Anti-bot defenses collect data. Treat them like any other data-processing activi
 
 ## Checklist
 
-- [ ] Map application endpoints to the OWASP Automated Threats (OAT) catalogue.
+- [ ] Map application endpoints to the OWASP Automated Threats (OAT) catalog.
 - [ ] Apply rate limits at IP, identity, and endpoint levels, using a sliding window.
 - [ ] Layer defenses across edge, application, and business logic.
 - [ ] Use TLS/HTTP-level fingerprints before resorting to browser fingerprinting.

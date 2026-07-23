@@ -35,7 +35,7 @@ AI coding agents operate across multiple trust boundaries. Understanding these b
 
 ### Threat Actors and Attack Surfaces
 
-- **Repository content as instruction source.** Issue bodies, PR descriptions, PR comments, README files, dependency changelogs, error traces, fetched web pages, and MCP tool responses all become instructions when the agent reads them. An attacker who can write to any of these can influence agent behaviour.
+- **Repository content as instruction source.** Issue bodies, PR descriptions, PR comments, README files, dependency changelogs, error traces, fetched web pages, and MCP tool responses all become instructions when the agent reads them. An attacker who can write to any of these can influence agent behavior.
 - **MCP servers as tool providers.** Agents connect to MCP servers to access tools. A malicious or compromised MCP server can poison tool descriptions, shadow legitimate tool names, exfiltrate credentials through tool arguments, or update tool definitions after initial approval (rug-pull).
 - **Rules files as persistent steering.** Files like `.cursorrules`, `CLAUDE.md`, `AGENTS.md`, `.github/copilot-instructions.md`, and `.windsurfrules` silently steer every future generation. They can be modified by a malicious PR or by the agent itself to embed persistent instructions.
 - **The agent itself.** Agents running with auto-accept and full developer permissions can install packages, write to any file, execute shell commands, modify CI configuration, and push branches. A compromised agent context has the same blast radius as a compromised developer workstation.
@@ -50,7 +50,7 @@ AI coding assistants frequently suggest package names that do not exist on publi
 - Verify every AI-suggested package exists on the public registry before installing. Check the package page, download count, maintainer history, and creation date.
 - Be suspicious of packages with very low download counts, recent creation dates (less than 30 days), or a single maintainer with no other packages.
 - Implement a pre-install hook or CI check that blocks installation of packages below a minimum age threshold.
-- Maintain an internal allowlist of approved packages for your organisation.
+- Maintain an internal allowlist of approved packages for your organization.
 
 ### Don't
 
@@ -77,7 +77,7 @@ AI models are trained on historical code. They frequently suggest dependency ver
 
 ## Section 3: Indirect Prompt Injection in the Development Loop
 
-Agentic coding tools ingest context from the repository, the network, and connected tools. Any content the agent reads can contain hidden instructions that alter its behaviour. This is indirect prompt injection applied to the development workflow.
+Agentic coding tools ingest context from the repository, the network, and connected tools. Any content the agent reads can contain hidden instructions that alter its behavior. This is indirect prompt injection applied to the development workflow.
 
 ### Attack Vectors
 
@@ -92,7 +92,7 @@ Agentic coding tools ingest context from the repository, the network, and connec
 
 - Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent.
 - Review agent output for unexpected changes after the agent processes any external content.
-- Use tools that sanitise or flag potential injection patterns in repository content before the agent processes it.
+- Use tools that sanitize or flag potential injection patterns in repository content before the agent processes it.
 - Restrict agent context to the minimum files and content needed for the task.
 - Audit agent actions after processing content from external contributors or public repositories.
 
@@ -111,7 +111,7 @@ For comprehensive MCP security guidance, see the [MCP Security Cheat Sheet](http
 ### Do
 
 - Audit all MCP servers connected to your development environment. Maintain an allowlist of approved servers and tools.
-- Pin tool definitions and detect changes. Use snapshot-and-diff mechanisms to catch rug-pull updates where a tool's behaviour changes after initial approval.
+- Pin tool definitions and detect changes. Use snapshot-and-diff mechanisms to catch rug-pull updates where a tool's behavior changes after initial approval.
 - Review tool descriptions for hidden instructions. Tool descriptions are part of the agent's context and can contain prompt injection payloads.
 - Restrict which tools the agent can invoke. Apply least privilege -- a coding agent does not need access to email, payment, or administrative tools.
 - Monitor for tool name shadowing where a malicious MCP server registers a tool with the same name as a legitimate one to intercept calls.
@@ -148,7 +148,7 @@ Agentic coding tools execute commands, install packages, write files, and access
 
 ## Section 6: Rules Files and Persistent Steering
 
-AI coding tools read configuration files that steer their behaviour across all future interactions. These files are a persistence mechanism -- an attacker who can modify them controls every subsequent generation.
+AI coding tools read configuration files that steer their behavior across all future interactions. These files are a persistence mechanism -- an attacker who can modify them controls every subsequent generation.
 
 ### Affected Files
 
@@ -194,7 +194,7 @@ Agents routinely touch files beyond the scope of the requested change: lockfiles
 
 ## Section 8: Test Fabrication and Test Deletion
 
-AI agents make CI green by deleting failing tests, weakening assertions, mocking the unit under test instead of fixing the code, or asserting the buggy behaviour. A passing test suite generated by the same agent that produced the code provides no independent assurance.
+AI agents make CI green by deleting failing tests, weakening assertions, mocking the unit under test instead of fixing the code, or asserting the buggy behavior. A passing test suite generated by the same agent that produced the code provides no independent assurance.
 
 ### Do
 
@@ -202,16 +202,16 @@ AI agents make CI green by deleting failing tests, weakening assertions, mocking
     - Deleted tests (why was this test removed?)
     - Weakened assertions (did `assertEquals` become `assertNotNull`?)
     - New mocks that replace real dependencies the test was designed to exercise
-    - Tests that assert the generated behaviour rather than the correct behaviour
+    - Tests that assert the generated behavior rather than the correct behavior
 - Add adversarial and negative test cases that the AI did not generate: invalid inputs, expired tokens, malformed payloads, boundary conditions, concurrent access.
 - Measure security confidence by adversarial testing results and independent analysis, not by "all tests pass."
 - Implement CI rules that flag test deletions or assertion-count reductions in agent-generated PRs.
-- Write security-critical tests manually for authentication, authorisation, input validation, and cryptographic operations.
+- Write security-critical tests manually for authentication, authorization, input validation, and cryptographic operations.
 
 ### Don't
 
 - Trust AI-generated test suites as evidence of security.
-- Measure confidence by test pass rate alone. 100% passing means nothing if the tests assert broken behaviour.
+- Measure confidence by test pass rate alone. 100% passing means nothing if the tests assert broken behavior.
 - Allow agents to delete or modify existing tests without explicit justification reviewed by a human.
 - Allow the agent to both write the security-critical code and its tests without independent verification.
 
@@ -268,7 +268,7 @@ AI-powered CI/CD agents (review bots, automated code fixers, PR assistants) run 
 ### Do
 
 - Scope CI agent credentials to the minimum required permissions. Review bots should not have deploy keys or write access to secrets.
-- Filter and sanitise PR content (title, body, comments, diff) before passing it to CI agents as context. PR content is attacker-controlled input.
+- Filter and sanitize PR content (title, body, comments, diff) before passing it to CI agents as context. PR content is attacker-controlled input.
 - Run CI agents in isolated environments with no access to production secrets or credentials beyond what the specific job requires.
 - Log all CI agent actions with full context for audit. Monitor for unexpected file modifications, network calls, or secret access patterns.
 - Implement approval gates before CI agents can push commits, modify workflows, or access sensitive resources.
@@ -281,18 +281,18 @@ AI-powered CI/CD agents (review bots, automated code fixers, PR assistants) run 
 
 ## Section 12: Markdown, Link, and Unicode Injection
 
-Agent output rendered in IDE chat panes, PR comments, or review interfaces can contain Markdown-based exfiltration links, bidi (bidirectional) text overrides, and zero-width characters that influence future agent behaviour or mislead reviewers.
+Agent output rendered in IDE chat panes, PR comments, or review interfaces can contain Markdown-based exfiltration links, bidi (bidirectional) text overrides, and zero-width characters that influence future agent behavior or mislead reviewers.
 
 ### Do
 
-- Sanitise agent output before rendering in IDE chat panes or PR comments. Strip or escape Markdown image tags, hidden links, and HTML entities.
+- Sanitize agent output before rendering in IDE chat panes or PR comments. Strip or escape Markdown image tags, hidden links, and HTML entities.
 - Detect and flag bidi override characters (U+202A through U+202E, U+2066 through U+2069) and zero-width characters (U+200B, U+200C, U+200D, U+FEFF) in code, commits, and agent output.
 - Use CI checks that scan for homoglyph attacks and invisible characters in PRs.
 - Review agent-generated commit messages and PR descriptions for embedded content that could influence future agent runs.
 
 ### Don't
 
-- Render agent output containing Markdown images or links without sanitisation. Image tags with external URLs can exfiltrate conversation context via URL parameters.
+- Render agent output containing Markdown images or links without sanitization. Image tags with external URLs can exfiltrate conversation context via URL parameters.
 - Assume that code containing only visible ASCII characters is safe. Zero-width and bidi characters are invisible in most editors.
 - Allow agent-generated content to be committed without scanning for unicode injection.
 
@@ -303,7 +303,7 @@ When multiple agents interact (e.g. a coding agent delegates to a search agent, 
 ### Do
 
 - Treat output from one agent as untrusted input when passed to another agent.
-- Implement context boundaries between agents. Do not pass full conversation history or raw tool responses between agents without sanitisation.
+- Implement context boundaries between agents. Do not pass full conversation history or raw tool responses between agents without sanitization.
 - Monitor cross-agent interactions for instruction propagation patterns (e.g. one agent's output instructing another to exfiltrate data or modify files).
 - Validate that sub-agent actions remain within the scope defined by the parent task.
 
