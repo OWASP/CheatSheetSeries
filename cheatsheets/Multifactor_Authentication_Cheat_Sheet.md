@@ -494,6 +494,71 @@ This method is widely used in modern authentication systems to balance usability
 
 **Example Use Case**: A user logs in from a trusted device in a usual location — no additional prompt is needed. But if they log in from a new country using a Tor exit node, the system requires SMS verification or triggers an account lock until further verification.
 
+## MFA Attack Patterns and Mitigations
+
+Attackers increasingly target weaknesses in MFA deployments and authentication workflows rather than attempting to defeat MFA itself. The following sections describe common attack patterns and recommended mitigations based on guidance from NIST, the Cybersecurity and Infrastructure Security Agency (CISA), the FIDO Alliance, and OAuth standards.
+
+### Primary Phishing-Resistant Control
+
+Prefer phishing-resistant authenticators (FIDO2/WebAuthn), which bind authentication to the legitimate origin and resist credential theft, MFA fatigue, and reverse-proxy phishing. See the Passkeys section for additional guidance.
+
+### MFA Fatigue (Push Notification Bombing)
+
+Attackers repeatedly send MFA push notifications, often combined with social engineering, hoping the user eventually approves one.
+
+#### Mitigations
+
+- Require challenge-response push authentication (for example, number matching) to prevent blind approval of authentication requests.
+- Rate-limit or cap push notifications to prevent repeated prompt abuse.
+- Monitor for anomalous authentication activity, such as multiple push prompts in a short period or new-device token reuse.
+
+### Real-Time Phishing Using Reverse Proxies
+
+Attackers use reverse-proxy phishing frameworks (such as Evilginx, Modlishka, and Muraena) to present convincing copies of legitimate login pages. These frameworks relay authentication traffic between the user and the legitimate service, allowing attackers to capture credentials and session tokens in real-time.
+
+#### Mitigations
+
+- Monitor for anomalous authentication and session activity that may indicate credential or session compromise (for example, impossible travel, new ASN, or sudden MFA method changes).
+- Use phishing-resistant authenticators (see Passkeys section), which bind authentication to the legitimate origin and are resistant to real-time phishing attacks.
+
+### SIM Swap and Phone Number Takeover
+
+Attackers convince a telecommunications provider to transfer a victim's phone number, allowing interception of SMS or voice-based one-time passwords.
+
+#### Mitigations
+
+- Avoid SMS or voice-based MFA for privileged or high-value accounts.
+- Where phishing-resistant authenticators are not available, use TOTP authenticator applications (RFC 6238) instead of SMS or voice-based OTP.
+- See also: [SMS Messages and Phone Calls](#sms-messages-and-phone-calls).
+
+### Device Binding Bypass
+
+Attackers attempt to bypass device-based authentication by extracting exportable cryptographic keys or replaying cloned device attributes when authenticators are not hardware-protected.
+
+#### Mitigations
+
+- Prefer hardware-backed, non-exportable cryptographic keys (for example, platform authenticators backed by TPM, Secure Enclave, or Android StrongBox).
+- Validate authenticator attestation where required by organizational policy.
+
+### MFA Downgrade Attacks
+
+Attackers attempt to force authentication through legacy protocols or authentication flows that do not enforce the same MFA requirements as modern authentication methods. Weak fallback mechanisms or legacy authentication endpoints can allow users to authenticate with lower-assurance factors than intended.
+
+#### Mitigations
+
+- Disable legacy authentication protocols and endpoints that cannot enforce MFA consistently.
+- Prevent fallback from phishing-resistant authenticators to lower-assurance authentication methods unless required by a documented security policy.
+- Follow OAuth 2.0 Security Best Current Practice (RFC 9700) to prevent OAuth protocol-level downgrade and mix-up attacks.
+
+### References and Further Reading
+
+- [NIST SP 800‑63B](https://pages.nist.gov/800-63-4/sp800-63b.html)
+- [CISA – Implementing Phishing-Resistant MFA](https://www.cisa.gov/sites/default/files/publications/fact-sheet-implementing-phishing-resistant-mfa-508c.pdf)
+- [FIDO Alliance Specifications](https://fidoalliance.org/specifications/)
+- [W3C WebAuthn](https://www.w3.org/TR/webauthn-3/)
+- [RFC 6238 – TOTP](https://datatracker.ietf.org/doc/html/rfc6238)
+- [OAuth 2.0 Security Best Current Practice (RFC 9700)](https://datatracker.ietf.org/doc/rfc9700/)
+
 ## References and Further Reading
 
 - [NIST SP 800-63](https://pages.nist.gov/800-63-3/sp800-63b.html)
