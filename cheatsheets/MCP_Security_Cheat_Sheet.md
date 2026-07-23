@@ -104,7 +104,7 @@ Transport-layer security (TLS) protects data in transit but does not guarantee m
 - Treat each MCP server as an untrusted, independent security domain.
 - Prevent tool descriptions from one server from referencing or modifying the behavior of tools from another server.
 - Monitor for cross-server data flows (e.g., credentials from server A appearing in calls to server B).
-- Use an MCP proxy or gateway to enforce isolation policies between servers.
+- Use an MCP proxy or gateway to enforce isolation policies between servers. Open-source tools such as [mcp-slim-guard](https://github.com/lennney/mcp-slim-guard) can act as a drop-in security proxy providing SSRF protection, injection detection, tool allow/deny filtering, rate limiting, and audit logging across all connected servers.
 
 ### 9. Supply Chain Security
 
@@ -173,5 +173,6 @@ Transport-layer security (TLS) protects data in transit but does not guarantee m
 - [MCP Specification — Security Best Practices](https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices)
 - [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
 - [mcp-scan — Security Scanner for MCP Servers](https://github.com/invariantlabs-ai/mcp-scan)
+- [mcp-slim-guard — MCP Security Proxy with Compression](https://github.com/lennney/mcp-slim-guard)
 - [OWASP MCP Top 10](https://owasp.org/www-project-mcp-top-10/)
 - [IETF Internet-Draft: Secure MCP — Message Signing and Tool Integrity](https://datatracker.ietf.org/doc/draft-sharif-mcps-secure-mcp/)
