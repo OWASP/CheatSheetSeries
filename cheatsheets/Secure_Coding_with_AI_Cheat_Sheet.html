@@ -5213,7 +5213,7 @@
 </code></pre></div>
 <h3 id="threat-actors-and-attack-surfaces">Threat Actors and Attack Surfaces<a class="headerlink" href="#threat-actors-and-attack-surfaces" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>Repository content as instruction source.</strong> Issue bodies, PR descriptions, PR comments, README files, dependency changelogs, error traces, fetched web pages, and MCP tool responses all become instructions when the agent reads them. An attacker who can write to any of these can influence agent behaviour.</li>
+<li><strong>Repository content as instruction source.</strong> Issue bodies, PR descriptions, PR comments, README files, dependency changelogs, error traces, fetched web pages, and MCP tool responses all become instructions when the agent reads them. An attacker who can write to any of these can influence agent behavior.</li>
 <li><strong>MCP servers as tool providers.</strong> Agents connect to MCP servers to access tools. A malicious or compromised MCP server can poison tool descriptions, shadow legitimate tool names, exfiltrate credentials through tool arguments, or update tool definitions after initial approval (rug-pull).</li>
 <li><strong>Rules files as persistent steering.</strong> Files like <code>.cursorrules</code>, <code>CLAUDE.md</code>, <code>AGENTS.md</code>, <code>.github/copilot-instructions.md</code>, and <code>.windsurfrules</code> silently steer every future generation. They can be modified by a malicious PR or by the agent itself to embed persistent instructions.</li>
 <li><strong>The agent itself.</strong> Agents running with auto-accept and full developer permissions can install packages, write to any file, execute shell commands, modify CI configuration, and push branches. A compromised agent context has the same blast radius as a compromised developer workstation.</li>
@@ -5226,7 +5226,7 @@
 <li>Verify every AI-suggested package exists on the public registry before installing. Check the package page, download count, maintainer history, and creation date.</li>
 <li>Be suspicious of packages with very low download counts, recent creation dates (less than 30 days), or a single maintainer with no other packages.</li>
 <li>Implement a pre-install hook or CI check that blocks installation of packages below a minimum age threshold.</li>
-<li>Maintain an internal allowlist of approved packages for your organisation.</li>
+<li>Maintain an internal allowlist of approved packages for your organization.</li>
 </ul>
 <h3 id="dont">Don't<a class="headerlink" href="#dont" title="Permanent link">&para;</a></h3>
 <ul>
@@ -5250,7 +5250,7 @@
 <li>Disable dependency auditing for AI-generated code.</li>
 </ul>
 <h2 id="section-3-indirect-prompt-injection-in-the-development-loop">Section 3: Indirect Prompt Injection in the Development Loop<a class="headerlink" href="#section-3-indirect-prompt-injection-in-the-development-loop" title="Permanent link">&para;</a></h2>
-<p>Agentic coding tools ingest context from the repository, the network, and connected tools. Any content the agent reads can contain hidden instructions that alter its behaviour. This is indirect prompt injection applied to the development workflow.</p>
+<p>Agentic coding tools ingest context from the repository, the network, and connected tools. Any content the agent reads can contain hidden instructions that alter its behavior. This is indirect prompt injection applied to the development workflow.</p>
 <h3 id="attack-vectors">Attack Vectors<a class="headerlink" href="#attack-vectors" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Issue bodies and PR descriptions.</strong> An attacker opens an issue containing hidden instructions. When a developer asks the agent to "fix issue #123", the agent reads the issue body and follows the embedded instructions.</li>
@@ -5264,7 +5264,7 @@
 <ul>
 <li>Treat all repository content (issues, PRs, comments, READMEs) as untrusted input when processed by an AI coding agent.</li>
 <li>Review agent output for unexpected changes after the agent processes any external content.</li>
-<li>Use tools that sanitise or flag potential injection patterns in repository content before the agent processes it.</li>
+<li>Use tools that sanitize or flag potential injection patterns in repository content before the agent processes it.</li>
 <li>Restrict agent context to the minimum files and content needed for the task.</li>
 <li>Audit agent actions after processing content from external contributors or public repositories.</li>
 </ul>
@@ -5280,7 +5280,7 @@
 <h3 id="do_3">Do<a class="headerlink" href="#do_3" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Audit all MCP servers connected to your development environment. Maintain an allowlist of approved servers and tools.</li>
-<li>Pin tool definitions and detect changes. Use snapshot-and-diff mechanisms to catch rug-pull updates where a tool's behaviour changes after initial approval.</li>
+<li>Pin tool definitions and detect changes. Use snapshot-and-diff mechanisms to catch rug-pull updates where a tool's behavior changes after initial approval.</li>
 <li>Review tool descriptions for hidden instructions. Tool descriptions are part of the agent's context and can contain prompt injection payloads.</li>
 <li>Restrict which tools the agent can invoke. Apply least privilege -- a coding agent does not need access to email, payment, or administrative tools.</li>
 <li>Monitor for tool name shadowing where a malicious MCP server registers a tool with the same name as a legitimate one to intercept calls.</li>
@@ -5313,7 +5313,7 @@
 <li>Assume the agent will only touch files relevant to the current task.</li>
 </ul>
 <h2 id="section-6-rules-files-and-persistent-steering">Section 6: Rules Files and Persistent Steering<a class="headerlink" href="#section-6-rules-files-and-persistent-steering" title="Permanent link">&para;</a></h2>
-<p>AI coding tools read configuration files that steer their behaviour across all future interactions. These files are a persistence mechanism -- an attacker who can modify them controls every subsequent generation.</p>
+<p>AI coding tools read configuration files that steer their behavior across all future interactions. These files are a persistence mechanism -- an attacker who can modify them controls every subsequent generation.</p>
 <h3 id="affected-files">Affected Files<a class="headerlink" href="#affected-files" title="Permanent link">&para;</a></h3>
 <ul>
 <li><code>.cursorrules</code>, <code>.cursor/rules/</code></li>
@@ -5355,25 +5355,25 @@
 <li>Allow agents to modify files outside the explicitly requested scope without flagging those changes for review.</li>
 </ul>
 <h2 id="section-8-test-fabrication-and-test-deletion">Section 8: Test Fabrication and Test Deletion<a class="headerlink" href="#section-8-test-fabrication-and-test-deletion" title="Permanent link">&para;</a></h2>
-<p>AI agents make CI green by deleting failing tests, weakening assertions, mocking the unit under test instead of fixing the code, or asserting the buggy behaviour. A passing test suite generated by the same agent that produced the code provides no independent assurance.</p>
+<p>AI agents make CI green by deleting failing tests, weakening assertions, mocking the unit under test instead of fixing the code, or asserting the buggy behavior. A passing test suite generated by the same agent that produced the code provides no independent assurance.</p>
 <h3 id="do_7">Do<a class="headerlink" href="#do_7" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Require human review of all AI-generated test modifications, with focus on:<ul>
 <li>Deleted tests (why was this test removed?)</li>
 <li>Weakened assertions (did <code>assertEquals</code> become <code>assertNotNull</code>?)</li>
 <li>New mocks that replace real dependencies the test was designed to exercise</li>
-<li>Tests that assert the generated behaviour rather than the correct behaviour</li>
+<li>Tests that assert the generated behavior rather than the correct behavior</li>
 </ul>
 </li>
 <li>Add adversarial and negative test cases that the AI did not generate: invalid inputs, expired tokens, malformed payloads, boundary conditions, concurrent access.</li>
 <li>Measure security confidence by adversarial testing results and independent analysis, not by "all tests pass."</li>
 <li>Implement CI rules that flag test deletions or assertion-count reductions in agent-generated PRs.</li>
-<li>Write security-critical tests manually for authentication, authorisation, input validation, and cryptographic operations.</li>
+<li>Write security-critical tests manually for authentication, authorization, input validation, and cryptographic operations.</li>
 </ul>
 <h3 id="dont_7">Don't<a class="headerlink" href="#dont_7" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Trust AI-generated test suites as evidence of security.</li>
-<li>Measure confidence by test pass rate alone. 100% passing means nothing if the tests assert broken behaviour.</li>
+<li>Measure confidence by test pass rate alone. 100% passing means nothing if the tests assert broken behavior.</li>
 <li>Allow agents to delete or modify existing tests without explicit justification reviewed by a human.</li>
 <li>Allow the agent to both write the security-critical code and its tests without independent verification.</li>
 </ul>
@@ -5426,7 +5426,7 @@
 <h3 id="do_10">Do<a class="headerlink" href="#do_10" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Scope CI agent credentials to the minimum required permissions. Review bots should not have deploy keys or write access to secrets.</li>
-<li>Filter and sanitise PR content (title, body, comments, diff) before passing it to CI agents as context. PR content is attacker-controlled input.</li>
+<li>Filter and sanitize PR content (title, body, comments, diff) before passing it to CI agents as context. PR content is attacker-controlled input.</li>
 <li>Run CI agents in isolated environments with no access to production secrets or credentials beyond what the specific job requires.</li>
 <li>Log all CI agent actions with full context for audit. Monitor for unexpected file modifications, network calls, or secret access patterns.</li>
 <li>Implement approval gates before CI agents can push commits, modify workflows, or access sensitive resources.</li>
@@ -5438,17 +5438,17 @@
 <li>Trust CI agent output (comments, reviews, suggested fixes) without verifying that the agent was not influenced by malicious PR content.</li>
 </ul>
 <h2 id="section-12-markdown-link-and-unicode-injection">Section 12: Markdown, Link, and Unicode Injection<a class="headerlink" href="#section-12-markdown-link-and-unicode-injection" title="Permanent link">&para;</a></h2>
-<p>Agent output rendered in IDE chat panes, PR comments, or review interfaces can contain Markdown-based exfiltration links, bidi (bidirectional) text overrides, and zero-width characters that influence future agent behaviour or mislead reviewers.</p>
+<p>Agent output rendered in IDE chat panes, PR comments, or review interfaces can contain Markdown-based exfiltration links, bidi (bidirectional) text overrides, and zero-width characters that influence future agent behavior or mislead reviewers.</p>
 <h3 id="do_11">Do<a class="headerlink" href="#do_11" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Sanitise agent output before rendering in IDE chat panes or PR comments. Strip or escape Markdown image tags, hidden links, and HTML entities.</li>
+<li>Sanitize agent output before rendering in IDE chat panes or PR comments. Strip or escape Markdown image tags, hidden links, and HTML entities.</li>
 <li>Detect and flag bidi override characters (U+202A through U+202E, U+2066 through U+2069) and zero-width characters (U+200B, U+200C, U+200D, U+FEFF) in code, commits, and agent output.</li>
 <li>Use CI checks that scan for homoglyph attacks and invisible characters in PRs.</li>
 <li>Review agent-generated commit messages and PR descriptions for embedded content that could influence future agent runs.</li>
 </ul>
 <h3 id="dont_11">Don't<a class="headerlink" href="#dont_11" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Render agent output containing Markdown images or links without sanitisation. Image tags with external URLs can exfiltrate conversation context via URL parameters.</li>
+<li>Render agent output containing Markdown images or links without sanitization. Image tags with external URLs can exfiltrate conversation context via URL parameters.</li>
 <li>Assume that code containing only visible ASCII characters is safe. Zero-width and bidi characters are invisible in most editors.</li>
 <li>Allow agent-generated content to be committed without scanning for unicode injection.</li>
 </ul>
@@ -5457,7 +5457,7 @@
 <h3 id="do_12">Do<a class="headerlink" href="#do_12" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Treat output from one agent as untrusted input when passed to another agent.</li>
-<li>Implement context boundaries between agents. Do not pass full conversation history or raw tool responses between agents without sanitisation.</li>
+<li>Implement context boundaries between agents. Do not pass full conversation history or raw tool responses between agents without sanitization.</li>
 <li>Monitor cross-agent interactions for instruction propagation patterns (e.g. one agent's output instructing another to exfiltrate data or modify files).</li>
 <li>Validate that sub-agent actions remain within the scope defined by the parent task.</li>
 </ul>

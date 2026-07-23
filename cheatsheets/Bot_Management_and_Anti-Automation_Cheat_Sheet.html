@@ -4359,7 +4359,7 @@
 
 <h1 id="bot-management-and-anti-automation-cheat-sheet">Bot Management and Anti-Automation Cheat Sheet<a class="headerlink" href="#bot-management-and-anti-automation-cheat-sheet" title="Permanent link">&para;</a></h1>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>Modern web applications face a continuous stream of automated traffic that is not a Distributed Denial of Service event but is still abusive: credential stuffing, content scraping, inventory hoarding (scalping), fake account creation, gift-card enumeration, card testing, fake reviews, click fraud, and skewed analytics. The OWASP <strong>Automated Threats to Web Applications</strong> project (OAT-001 through OAT-021) catalogues these patterns.</p>
+<p>Modern web applications face a continuous stream of automated traffic that is not a Distributed Denial of Service event but is still abusive: credential stuffing, content scraping, inventory hoarding (scalping), fake account creation, gift-card enumeration, card testing, fake reviews, click fraud, and skewed analytics. The OWASP <strong>Automated Threats to Web Applications</strong> project (OAT-001 through OAT-021) catalogs these patterns.</p>
 <p>This cheat sheet provides defensive guidance that goes beyond the <a href="Credential_Stuffing_Prevention_Cheat_Sheet.html">Credential Stuffing Prevention Cheat Sheet</a> and addresses the full spectrum of automated abuse. It focuses on architecture, signals, response strategy, and CAPTCHA alternatives.</p>
 <p>The objective is <strong>not to block all bots</strong> (search engine crawlers, monitoring agents, and accessibility tools are legitimate) but to raise the cost of abusive automation while keeping legitimate users and bots unaffected.</p>
 <h2 id="common-threats-and-risks">Common Threats and Risks<a class="headerlink" href="#common-threats-and-risks" title="Permanent link">&para;</a></h2>
@@ -4545,7 +4545,7 @@
 <li>API keys with rotating secrets, <strong>not</strong> static bearer tokens checked in to client code.</li>
 <li>Per-key quotas advertised in <code>X-RateLimit-*</code> headers so well-behaved clients self-throttle.</li>
 <li>Request signing (e.g., HMAC of method + path + timestamp + body) to prevent replay and require a stable secret.</li>
-<li>Tier APIs explicitly: a public catalogue endpoint may serve cached, slightly-delayed data; partner APIs serve realtime data with an authenticated key.</li>
+<li>Tier APIs explicitly: a public catalog endpoint may serve cached, slightly-delayed data; partner APIs serve realtime data with an authenticated key.</li>
 </ul>
 <h2 id="response-strategy-dont-always-block">Response Strategy: Don't Always Block<a class="headerlink" href="#response-strategy-dont-always-block" title="Permanent link">&para;</a></h2>
 <p>Hard blocks teach attackers what worked. A graduated response is more durable.</p>
@@ -4634,7 +4634,7 @@
 </ul>
 <h2 id="checklist">Checklist<a class="headerlink" href="#checklist" title="Permanent link">&para;</a></h2>
 <ul class="task-list">
-<li class="task-list-item"><input type="checkbox" disabled/> Map application endpoints to the OWASP Automated Threats (OAT) catalogue.</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Map application endpoints to the OWASP Automated Threats (OAT) catalog.</li>
 <li class="task-list-item"><input type="checkbox" disabled/> Apply rate limits at IP, identity, and endpoint levels, using a sliding window.</li>
 <li class="task-list-item"><input type="checkbox" disabled/> Layer defenses across edge, application, and business logic.</li>
 <li class="task-list-item"><input type="checkbox" disabled/> Use TLS/HTTP-level fingerprints before resorting to browser fingerprinting.</li>

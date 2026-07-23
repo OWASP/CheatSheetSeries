@@ -5015,7 +5015,7 @@
 <h2 id="regulatory-context">Regulatory Context<a class="headerlink" href="#regulatory-context" title="Permanent link">&para;</a></h2>
 <p>Agent-initiated payments are subject to the same regulatory framework as human-initiated payments. Key regulations include:</p>
 <ul>
-<li><strong>Bank Secrecy Act (BSA)</strong>: Requires financial institutions to maintain effective AML programmes, including customer identification, transaction monitoring, and suspicious activity reporting. The <a href="https://www.fincen.gov/index.php/resources/statutes-and-regulations/bank-secrecy-act">Bank Secrecy Act</a> does not distinguish between human-initiated and agent-initiated transactions.</li>
+<li><strong>Bank Secrecy Act (BSA)</strong>: Requires financial institutions to maintain effective AML programs, including customer identification, transaction monitoring, and suspicious activity reporting. The <a href="https://www.fincen.gov/index.php/resources/statutes-and-regulations/bank-secrecy-act">Bank Secrecy Act</a> does not distinguish between human-initiated and agent-initiated transactions.</li>
 <li><strong>OFAC Sanctions</strong>: The Office of Foreign Assets Control requires all US persons and entities to screen transactions against the Specially Designated Nationals (SDN) list and other sanctions lists. Screening obligations apply regardless of whether the transaction was initiated by a human or an agent.</li>
 <li><strong>FinCEN Requirements</strong>: <a href="https://www.fincen.gov/">FinCEN</a> rules require Customer Identification Programs (CIP), Customer Due Diligence (CDD), and Suspicious Activity Reports (SARs). When an agent acts on behalf of a customer, the institution must be able to identify both the customer and the agent.</li>
 <li><strong>UK Financial Sanctions (OFSI)</strong>: HM Treasury's Office of Financial Sanctions Implementation maintains the <a href="https://www.gov.uk/government/publications/financial-sanctions-consolidated-list-of-targets">UK Consolidated Sanctions List</a>. Screening is mandatory for all financial transactions regardless of initiation method.</li>
@@ -5023,7 +5023,7 @@
 <li><strong>OCC BSA/AML Exam Procedures</strong>: <a href="https://www.occ.treas.gov/topics/supervision-and-examination/bsa/index-bsa.html">OCC examiners</a> assess whether institutions have controls to identify the originator of each transaction. When agents initiate transactions, the institution must demonstrate that agent identity was verified and the transaction was screened.</li>
 </ul>
 <h3 id="key-principle">Key Principle<a class="headerlink" href="#key-principle" title="Permanent link">&para;</a></h3>
-<p>Regulators do not care whether a transaction was initiated by a human clicking a button or an agent calling an API. The compliance obligations are identical. The burden is on the institution to prove that screening occurred, that the agent was authorised, and that the results are tamper-evident.</p>
+<p>Regulators do not care whether a transaction was initiated by a human clicking a button or an agent calling an API. The compliance obligations are identical. The burden is on the institution to prove that screening occurred, that the agent was authorized, and that the results are tamper-evident.</p>
 <h2 id="section-1-agent-identity-before-screening">Section 1: Agent Identity Before Screening<a class="headerlink" href="#section-1-agent-identity-before-screening" title="Permanent link">&para;</a></h2>
 <p>Before an agent is permitted to access sanctions screening services or initiate a payment, its identity must be cryptographically verified. Self-declared identity headers (e.g. <code>X-Agent-ID</code>, <code>X-Agent-Role</code>) without cryptographic proof MUST be rejected. The message-level identity primitives in <a href="https://cheatsheetseries.owasp.org/cheatsheets/MCP_Security_Cheat_Sheet.html#7-message-level-integrity-and-replay-defence">Section 7 of the OWASP MCP Security Cheat Sheet</a> apply directly to the agent-payment context.</p>
 <h3 id="do">Do<a class="headerlink" href="#do" title="Permanent link">&para;</a></h3>
@@ -5061,7 +5061,7 @@
 <p>The agent itself is software. But the agent has an operator -- the developer, company, or deployer that built and runs it. The agent's operator must also be screened against sanctions lists. The framework for verifying the underlying entity follows the <a href="https://www.fincen.gov/resources/statutes-regulations/federal-register-notices/customer-due-diligence-requirements">FinCEN Customer Due Diligence Requirements</a> applied to the operator as the regulated counterparty behind the agent.</p>
 <h3 id="do_2">Do<a class="headerlink" href="#do_2" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Screen the agent's declared operator (organisation name, jurisdiction, registration number) against sanctions lists during agent onboarding.</li>
+<li>Screen the agent's declared operator (organization name, jurisdiction, registration number) against sanctions lists during agent onboarding.</li>
 <li>Re-screen agent operators periodically (at minimum when sanctions lists are updated) and revoke agent access if the operator becomes sanctioned.</li>
 <li>Record the operator's screening status as part of the agent's trust profile.</li>
 <li>Require agents to declare their operator identity as part of their cryptographic passport or identity credential.</li>
@@ -5097,7 +5097,7 @@
 <li>Deny the payment or transaction if screening cannot be completed successfully.</li>
 <li>Return a clear, structured error to the agent indicating that screening failed and the transaction cannot proceed.</li>
 <li>Log all screening failures with the same level of detail as successful screens, including the reason for failure.</li>
-<li>Alert compliance teams when screening failure rates exceed a threshold, as this may indicate a denial-of-service attack designed to force fail-open behaviour.</li>
+<li>Alert compliance teams when screening failure rates exceed a threshold, as this may indicate a denial-of-service attack designed to force fail-open behavior.</li>
 <li>Implement circuit breakers that halt agent-initiated payments entirely if the screening service is unavailable for an extended period.</li>
 </ul>
 <h3 id="dont_4">Don't<a class="headerlink" href="#dont_4" title="Permanent link">&para;</a></h3>
@@ -5113,8 +5113,8 @@
 <ul>
 <li>Implement per-agent rate limits based on cryptographic identity (public key fingerprint or passport ID).</li>
 <li>Set lower rate limits for newly registered or low-trust agents (e.g. L0/L1) and higher limits for verified, high-trust agents (e.g. L3/L4).</li>
-<li>Include rate limit status in screening responses (remaining quota, reset time) so agents can adjust their behaviour.</li>
-<li>Downgrade an agent's rate limit allocation if anomalous behaviour is detected (e.g. sudden spike in screening requests, unusual entity patterns).</li>
+<li>Include rate limit status in screening responses (remaining quota, reset time) so agents can adjust their behavior.</li>
+<li>Downgrade an agent's rate limit allocation if anomalous behavior is detected (e.g. sudden spike in screening requests, unusual entity patterns).</li>
 </ul>
 <h3 id="dont_5">Don't<a class="headerlink" href="#dont_5" title="Permanent link">&para;</a></h3>
 <ul>
@@ -5129,14 +5129,14 @@
 <li>The institution maintains the sanctions lists, the matching engine, and the screening API on its own infrastructure.</li>
 <li>Agent requests stay within the institution's network boundary.</li>
 <li>The institution has full control over list update frequency, matching algorithms, and data retention.</li>
-<li>Requires operational investment in list ingestion, normalisation, and matching quality.</li>
+<li>Requires operational investment in list ingestion, normalization, and matching quality.</li>
 </ul>
 <h3 id="hosted-screening-third-party-api">Hosted Screening (Third-Party API)<a class="headerlink" href="#hosted-screening-third-party-api" title="Permanent link">&para;</a></h3>
 <ul>
 <li>The institution calls a third-party screening API (e.g. a sanctions screening provider).</li>
 <li>Agent identity credentials and screening data leave the institution's network boundary.</li>
 <li>The institution must ensure the third-party provider meets applicable regulatory requirements.</li>
-<li>Data minimisation principles apply -- send only the minimum data needed for screening, not the agent's full context.</li>
+<li>Data minimization principles apply -- send only the minimum data needed for screening, not the agent's full context.</li>
 </ul>
 <h3 id="do_6">Do<a class="headerlink" href="#do_6" title="Permanent link">&para;</a></h3>
 <ul>
@@ -5165,7 +5165,7 @@
 </ul>
 <h2 id="section-9-cross-agent-payment-accountability">Section 9: Cross-Agent Payment Accountability<a class="headerlink" href="#section-9-cross-agent-payment-accountability" title="Permanent link">&para;</a></h2>
 <p>Agent payments often traverse multiple agents (orchestrator to sub-agent to service). If the compliance receipt stays only with the issuing system, accountability is lost at the first hop. The signed receipt MUST <strong>travel with the transaction</strong> so every downstream party can independently verify who was screened, against which lists, and what was decided, without trusting an upstream agent's word.</p>
-<p>Bind each receipt to the specific transaction (include the transaction or intent hash in the signed payload) and propagate it end-to-end. Each hop verifies the inbound receipt and, if it takes its own action, appends its own signed receipt, producing a verifiable chain of accountability across agents. Message-level integrity and replay defence for such receipts is covered in <a href="https://cheatsheetseries.owasp.org/cheatsheets/MCP_Security_Cheat_Sheet.html#7-message-level-integrity-and-replay-defence">Section 7 of the OWASP MCP Security Cheat Sheet</a>.</p>
+<p>Bind each receipt to the specific transaction (include the transaction or intent hash in the signed payload) and propagate it end-to-end. Each hop verifies the inbound receipt and, if it takes its own action, appends its own signed receipt, producing a verifiable chain of accountability across agents. Message-level integrity and replay defense for such receipts is covered in <a href="https://cheatsheetseries.owasp.org/cheatsheets/MCP_Security_Cheat_Sheet.html#7-message-level-integrity-and-replay-defence">Section 7 of the OWASP MCP Security Cheat Sheet</a>.</p>
 <h3 id="do_8">Do<a class="headerlink" href="#do_8" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Attach the signed compliance receipt to the transaction and propagate it across every agent hop.</li>
