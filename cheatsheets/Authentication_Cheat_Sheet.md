@@ -36,6 +36,7 @@ A key concern when using passwords for authentication is password strength. A "s
         - If MFA is enabled passwords **shorter than 8 characters** are considered to be weak ([NIST SP800-63B](https://pages.nist.gov/800-63-4/sp800-63b.html#passwordver)).
         - If MFA is not enabled passwords **shorter than 15 characters** are considered to be weak ([NIST SP800-63B](https://pages.nist.gov/800-63-4/sp800-63b.html#passwordver)).
     - **Maximum** password length should be **at least 64 characters** to allow passphrases ([NIST SP800-63B](https://pages.nist.gov/800-63-4/sp800-63b.html#passwordlength)). Note that certain implementations of hashing algorithms may cause [long password denial of service](https://www.acunetix.com/vulnerabilities/web/long-password-denial-of-service/).
+    - Longer passphrases are effective because they raise the number of guesses an attacker's dictionary or wordlist has to cover, not because of a precise entropy value: NIST notes that "estimating entropy for user-chosen passwords is challenging" and recommends length and blocklist checks (see below) over composition or entropy math ([NIST SP800-63B, Strength of Passwords](https://pages.nist.gov/800-63-4/sp800-63b/passwords/#appA)). Avoid advertising a bits-of-entropy figure to users as a guarantee of strength.
 - Do not silently truncate passwords. The [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.md#maximum-password-lengths) provides further guidance on how to handle passwords that are longer than the maximum length.
 - Allow usage of **all** characters including unicode and whitespace. There should be no password composition rules limiting the type of characters permitted. There should be no requirement for upper or lower case or numbers or special characters.
 - Ensure credential rotation when a password leak occurs, at the time of compromise identification or when authenticator technology changes. Avoid requiring periodic password changes; instead, encourage users to pick strong passwords and enable [Multifactor Authentication Cheat Sheet (MFA)](Multifactor_Authentication_Cheat_Sheet.md). According to NIST guidelines, verifiers should not mandate arbitrary password changes (e.g., periodically).
@@ -87,12 +88,12 @@ The login page and all subsequent authenticated pages must be exclusively access
 
 In order to mitigate CSRF and session hijacking, it's important to require the current credentials for an account before updating sensitive account information such as the user's password or email address -- or before sensitive transactions, such as shipping a purchase to a new address. Without this countermeasure, an attacker may be able to execute sensitive transactions through a CSRF or XSS attack without needing to know the user's current credentials. Additionally, an attacker may get temporary physical access to a user's browser or steal their session ID to take over the user's session.
 
-### Reauthentication After Risk Events
+### Re-authentication After Risk Events
 
 **Overview:**
-Reauthentication is critical when an account has experienced high-risk activity such as account recovery, password resets, or suspicious behavior patterns. This section outlines when and how to trigger reauthentication to protect users and prevent unauthorized access. For further details, see the [Require Re-authentication for Sensitive Features](#require-re-authentication-for-sensitive-features) section.
+Re-authentication is critical when an account has experienced high-risk activity such as account recovery, password resets, or suspicious behavior patterns. This section outlines when and how to trigger re-authentication to protect users and prevent unauthorized access. For further details, see the [Require Re-authentication for Sensitive Features](#require-re-authentication-for-sensitive-features) section.
 
-#### When to Trigger Reauthentication
+#### When to Trigger Re-authentication
 
 - **Suspicious Account Activity**
   When unusual login patterns, IP address changes, or device enrollments occur
@@ -101,7 +102,7 @@ Reauthentication is critical when an account has experienced high-risk activity 
 - **Critical Actions**
   For high-risk actions like changing payment details or adding new trusted devices
 
-#### Reauthentication Mechanisms
+#### Re-authentication Mechanisms
 
 - **Adaptive Authentication**
   Use risk-based authentication models that adapt to the user's behavior and context
@@ -113,16 +114,16 @@ Reauthentication is critical when an account has experienced high-risk activity 
 #### Implementation Recommendations
 
 - **Minimize User Friction**
-  Ensure that reauthentication does not disrupt the user experience unnecessarily
+  Ensure that re-authentication does not disrupt the user experience unnecessarily
 - **Context-Aware Decisions**
-  Make reauthentication decisions based on context (e.g., geolocation, device type, prior patterns)
+  Make re-authentication decisions based on context (e.g., geolocation, device type, prior patterns)
 - **Secure Session Management**
-  Invalidate sessions after reauthentication and rotate tokens—see the [OWASP Session Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html)
+  Invalidate sessions after re-authentication and rotate tokens—see the [OWASP Session Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html)
 
 #### References
 
 - [OWASP Session Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html)
-- OWASP ASVS – 2.2.2: Reauthentication requirements
+- OWASP ASVS – 2.2.2: Re-authentication requirements
 - NIST 800-63B: Digital Identity Guidelines – Authentication Assurance Levels
 
 ### Consider Strong Transaction Authentication
@@ -263,7 +264,7 @@ The [Multifactor Authentication Cheat Sheet](Multifactor_Authentication_Cheat_Sh
 
 #### Login Throttling
 
-Login Throttling is a protocol used to prevent an attacker from making too many attempts at guessing a password through normal interactive means, it includes the following controls:
+Login Throttling is a security mechanism used to prevent an attacker from making too many attempts at guessing a password through normal interactive means, it includes the following controls:
 
 - Maximum number of attempts.
 

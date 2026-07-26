@@ -801,7 +801,7 @@ DO NOT: Use the BinaryFormatter type which is dangerous and [not recommended]
 .NET offers several in-box serializers that can handle untrusted data safely:
 
 - XmlSerializer and DataContractSerializer to serialize object graphs into and from XML. Do not confuse DataContractSerializer with NetDataContractSerializer.
-- BinaryReader and BinaryWriter for XML and JSON.
+- BinaryReader and BinaryWriter for reading and writing primitive data types (such as Int32, Double, Boolean, and String) in binary format.
 - The System.Text.Json APIs to serialize object graphs into JSON.
 
 ### A09 Security Logging and Monitoring Failures
