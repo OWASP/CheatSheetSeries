@@ -46,6 +46,32 @@ Usually, the attacker will repeat this process with a list of large number of po
 
 While the number of permutations can be enormous, with high speed hardware (such as GPUs) and cloud services with many servers for rent, the cost to an attacker is relatively small to do successful password cracking, especially when best practices for hashing are not followed.
 
+### Modern Password Cracking Techniques
+
+Understanding modern password cracking methodologies is essential for defenders to implement effective countermeasures:
+
+| Technique | Description | Effectiveness |
+|-----------|-------------|---------------|
+| **Dictionary Attack** | Attempts passwords from a wordlist of common passwords, leaked credentials, and known patterns. Most passwords are cracked at this stage. | High (cracks majority of weak passwords) |
+| **Hybrid Attack** | Appends or prepends characters (e.g., numbers, symbols) to dictionary words. Targets `password1!` or `Summer2024!` patterns. | High (catches common mutations) |
+| **Rule-Based Attack** | Applies transformation rules (leet speak, capitalization, substitution) to wordlist entries. Tools like Hashcat and John the Ripper support custom rule engines. | Very High (amplifies wordlist coverage) |
+| **Brute Force Attack** | Exhaustively tries every possible character combination up to a given length. Exponentially more expensive as length increases. | Low for 8+ char passwords; effective for short/weak ones |
+| **Mask Attack** | A targeted brute force where character positions are assigned character sets (e.g., `?u?l?l?l?d?d?d?d` for "Aaaa1234"). Dramatically reduces search space vs pure brute force. | Very High (optimal balance of speed and coverage) |
+| **Combinator Attack** | Concatenates two words from a wordlist to form compound passwords (e.g., `admin` + `1234` = `admin1234`). | High (catches compound patterns) |
+
+Modern password cracking tools leverage GPU acceleration (CUDA, OpenCL) to achieve billions of hashes per second for fast algorithms. For example, a single consumer GPU can attempt **~100 billion MD5 hashes per second** or **~20 billion SHA-1 hashes per second**, making even moderately complex passwords crackable in minutes when fast hashing algorithms are used.
+
+### Defensive Countermeasures
+
+To protect against these cracking techniques, implement the following:
+
+1. **Use slow, memory-hard hashing algorithms** (Argon2id, scrypt, bcrypt, or PBKDF2 with high work factors) to limit cracking speed to thousands or hundreds of attempts per second rather than billions.
+2. **Enforce minimum password complexity and length** — passwords under 8 characters are trivially crackable. NIST SP 800-63B recommends a minimum of 8 characters, with 12+ characters strongly preferred.
+3. **Implement rate-limiting and account lockout** after repeated failed attempts to prevent online brute force attacks.
+4. **Use multi-factor authentication (MFA)** so that even if a password is cracked, an additional factor is required for access.
+5. **Educate users against password reuse** — credential stuffing attacks use passwords leaked from other breaches.
+6. **Deploy breach detection services** (e.g., Have I Been Pwned API) to alert users when their credentials appear in known breaches.
+
 ## Methods for Enhancing Password Storage
 
 ### Salting
