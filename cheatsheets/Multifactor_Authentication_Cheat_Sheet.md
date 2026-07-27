@@ -496,9 +496,9 @@ This method is widely used in modern authentication systems to balance usability
 
 ## MFA Attack Patterns and Mitigations
 
-Attackers increasingly target weaknesses in MFA deployments and authentication workflows rather than attempting to defeat MFA itself. The following sections describe common attack patterns and recommended mitigations based on guidance from NIST, the Cybersecurity and Infrastructure Security Agency (CISA), the FIDO Alliance, and OAuth standards.
+Attackers increasingly target weaknesses in MFA deployments and authentication workflows rather than attempting to defeat MFA itself. The following sections describe common attack patterns and recommended mitigations based on guidance from NIST, the Cybersecurity and Infrastructure Security Agency (CISA), the FIDO Alliance, and OAuth security standards.
 
-### Primary Phishing-Resistant Control
+### General Mitigation: Primary Phishing-Resistant Control
 
 Prefer phishing-resistant authenticators (FIDO2/WebAuthn), which bind authentication to the legitimate origin and resist credential theft, MFA fatigue, and reverse-proxy phishing. See the Passkeys section for additional guidance.
 
@@ -527,10 +527,11 @@ Attackers convince a telecommunications provider to transfer a victim's phone nu
 
 #### Mitigations
 
-- Avoid SMS or voice-based MFA for privileged or high-value accounts.
-- Where phishing-resistant authenticators are not available, use TOTP authenticator applications (RFC 6238) instead of SMS or voice-based OTP.
+- Encourage carrier account PINs or port-out protection where available to reduce unauthorized number transfers.
+- Monitor for unexpected phone-number changes or SIM replacement events.
+- Prefer phishing-resistant authenticators or TOTP instead of SMS/voice OTP.
 - See also: [SMS Messages and Phone Calls](#sms-messages-and-phone-calls).
-
+  
 ### Device Binding Bypass
 
 Attackers attempt to bypass device-based authentication by extracting exportable cryptographic keys or replaying cloned device attributes when authenticators are not hardware-protected.
@@ -550,19 +551,16 @@ Attackers attempt to force authentication through legacy protocols or authentica
 - Prevent fallback from phishing-resistant authenticators to lower-assurance authentication methods unless required by a documented security policy.
 - Follow OAuth 2.0 Security Best Current Practice (RFC 9700) to prevent OAuth protocol-level downgrade and mix-up attacks.
 
-### References and Further Reading
-
-- [NIST SP 800‑63B](https://pages.nist.gov/800-63-4/sp800-63b.html)
-- [CISA – Implementing Phishing-Resistant MFA](https://www.cisa.gov/sites/default/files/publications/fact-sheet-implementing-phishing-resistant-mfa-508c.pdf)
-- [FIDO Alliance Specifications](https://fidoalliance.org/specifications/)
-- [W3C WebAuthn](https://www.w3.org/TR/webauthn-3/)
-- [RFC 6238 – TOTP](https://datatracker.ietf.org/doc/html/rfc6238)
-- [OAuth 2.0 Security Best Current Practice (RFC 9700)](https://datatracker.ietf.org/doc/rfc9700/)
-
 ## References and Further Reading
 
+- [NIST SP 800‑63B](https://pages.nist.gov/800-63-4/sp800-63b.html)
 - [NIST SP 800-63](https://pages.nist.gov/800-63-3/sp800-63b.html)
 - [Your Pa$$word doesn't matter](https://techcommunity.microsoft.com/t5/Azure-Active-Directory-Identity/Your-Pa-word-doesn-t-matter/ba-p/731984)
 - [FIDO2](https://fidoalliance.org/fido2/)
 - [ENISA Handbook on Security of Personal Data Processing](https://www.enisa.europa.eu/publications/handbook-on-security-of-personal-data-processing/@@download/fullReport)
 - [Google Cloud Adding MFA](https://cloud.google.com/identity-platform/docs/web/mfa)
+- [CISA – Implementing Phishing-Resistant MFA](https://www.cisa.gov/sites/default/files/publications/fact-sheet-implementing-phishing-resistant-mfa-508c.pdf)
+- [FIDO Alliance Specifications](https://fidoalliance.org/specifications/)
+- [W3C WebAuthn](https://www.w3.org/TR/webauthn-3/)
+- [RFC 6238 – TOTP](https://datatracker.ietf.org/doc/html/rfc6238)
+- [OAuth 2.0 Security Best Current Practice (RFC 9700)](https://datatracker.ietf.org/doc/rfc9700/)
