@@ -496,7 +496,7 @@ This method is widely used in modern authentication systems to balance usability
 
 ## MFA Attack Patterns and Mitigations
 
-Attackers increasingly target weaknesses in MFA deployments and authentication workflows rather than attempting to defeat MFA itself. The following sections describe common attack patterns and recommended mitigations based on guidance from NIST, the Cybersecurity and Infrastructure Security Agency (CISA), the FIDO Alliance, and OAuth security standards.
+Attackers increasingly target weaknesses in MFA deployments and authentication workflows rather than attempting to defeat MFA itself. The following sections describe common attack patterns and recommended mitigations based on guidance from [NIST SP 800-63B](https://pages.nist.gov/800-63-4/sp800-63b.html), [CISA's Implementing Phishing-Resistant MFA](https://www.cisa.gov/sites/default/files/publications/fact-sheet-implementing-phishing-resistant-mfa-508c.pdf), the [FIDO Alliance Specifications](https://fidoalliance.org/specifications/), and [OAuth 2.0 Security Best Current Practice (RFC 9700)](https://datatracker.ietf.org/doc/rfc9700/).
 
 ### General Mitigation: Primary Phishing-Resistant Control
 
