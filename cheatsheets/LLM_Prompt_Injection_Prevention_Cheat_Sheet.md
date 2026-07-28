@@ -500,6 +500,7 @@ For advanced red teaming, see [Microsoft's AI red team best practices](https://w
 **Testing and Evaluation:**
 
 - [AI Safety Evaluation Methods](https://atlas.mitre.org/techniques/AML.T0051)
+- [PromptTrace - Free hands-on labs to practice prompt injection attacks and defenses against real LLMs](https://prompttrace.airedlab.com)
 
 **Recent Research:**
 
