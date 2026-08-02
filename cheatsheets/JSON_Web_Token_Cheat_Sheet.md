@@ -280,7 +280,7 @@ When claim confidentiality is required, use [JSON Web Encryption (JWE) — RFC 7
 - `alg` — the key encryption algorithm, used to protect the Content Encryption Key (CEK) for the intended recipient (e.g. `RSA-OAEP`)
 - `enc` — the content encryption algorithm, an AEAD algorithm used to encrypt the actual payload (e.g. `A256GCM`)
 
-When both integrity and confidentiality are needed, use a **nested JWT**: sign the claims first (JWS), then encrypt the resulting signed token (JWE). This ensures the signature covers the actual claims while the outer JWE provides confidentiality. Set the `cty` header to `JWT` in the outer JWE to signal nesting
+When both integrity and confidentiality are needed, use a **nested JWT**: sign the claims first (JWS), then encrypt the resulting signed token (JWE) ([RFC 7519, Section 11.2](https://www.rfc-editor.org/rfc/rfc7519#section-11.2)).This ensures the signature covers the actual claims while the outer JWE provides confidentiality. Set the `cty` header to `JWT` in the outer JWE to signal nesting
 ([RFC 7516, Section 4.1.12](https://www.rfc-editor.org/rfc/rfc7516#section-4.1.12)).
 
 **Note:**
