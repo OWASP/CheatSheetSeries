@@ -208,7 +208,7 @@ Mitigations:
 
 - Do not take the verification key from the token unless that key can be tied, through a chain of trust, to a root trust anchor associated with the issuer.
 - Prefer trust material established out of band, such as a pinned key or the `jwks_uri` published in the issuer's metadata.
-- Validate or sanitise `kid` before using it in a lookup, since it also reaches databases and directories as an injection vector.
+- Validate or sanitize `kid` before using it in a lookup, since it also reaches databases and directories as an injection vector.
 - Where keys are fetched by URL, see the [Server Side Request Forgery Prevention Cheat Sheet](Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md).
 
 References:
