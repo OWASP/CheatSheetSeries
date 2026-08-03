@@ -2090,6 +2090,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#key-type-confusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key type confusion
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -4237,6 +4248,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#key-type-confusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key type confusion
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -4540,6 +4562,45 @@
 <p>Mitigation:</p>
 <ul>
 <li>Make sure that <code>"alg":"none"</code> is not accepted by your JWT parser. It should be disabled by default by recent implementations.</li>
+</ul>
+<h3 id="key-type-confusion">Key type confusion<a class="headerlink" href="#key-type-confusion" title="Permanent link">&para;</a></h3>
+<p>Some JWT implementations would accept to use a public key intended for public-key digital signature as if it was a secret key used for MAC verification. In this context, an attacker could forge a MAC-based JWT by using the public key of the real issuer as if it was a secret key.</p>
+<p>This threat is also called “key confusion” or “algorithm confusion”.</p>
+<p>Example of legitimate token issuance:</p>
+<div class="highlight"><pre><span></span><code><span class="n">token</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">claims</span><span class="p">,</span> <span class="n">private_key_bytes</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;ES256&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>Example of attacker forging a token based on key type confusion:</p>
+<div class="highlight"><pre><span></span><code><span class="n">token</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">claims</span><span class="p">,</span> <span class="n">public_key_bytes</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;HS256&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>Example of validation potentially vulnerable to key type confusion:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># If the token is using a MAC, the library might interpret the public key bytes as a MAC secret:</span>
+<span class="n">decoded</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">public_key_bytes</span><span class="p">,</span> <span class="n">algorithms</span><span class="o">=</span><span class="n">jwt</span><span class="o">.</span><span class="n">algorithms</span><span class="o">.</span><span class="n">get_default_algorithms</span><span class="p">())</span>
+</code></pre></div>
+<p>Note: this issue is <a href="https://github.com/jpadilla/pyjwt/commit/9c528670c455b8d948aff95ed50e22940d1ad3fc">mitigated</a> in recent versions of the PyJWT library by detecting whether a MAC key appears to be a public key (in PEM of SSH format).</p>
+<p>Mitigations (at validation):</p>
+<ul>
+<li>use a library which is not vulnerable to the issue (eg. strong-typing of the type of key);</li>
+<li>chose the key depending on the requested signature algorithm or validate that the key used for validation is consistent with the signature algorithm;</li>
+<li>if possible, hardcode the accepted algorithms and do not mix public-key digital signatures algorithms and MAC algorithms.</li>
+</ul>
+<p>Example of validation not vulnerable because MAC algorithms are not accepted:</p>
+<div class="highlight"><pre><span></span><code><span class="n">decoded</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">public_key_bytes</span><span class="p">,</span> <span class="n">algorithms</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ES256&quot;</span><span class="p">])</span>
+</code></pre></div>
+<p>Example of validation not vulnerable because the key is strictly typed:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">joserfc</span><span class="w"> </span><span class="kn">import</span> <span class="n">jwt</span><span class="p">,</span> <span class="n">jwk</span>
+
+<span class="c1"># {&quot;kty&quot;:&quot;EC&quot;,</span>
+<span class="c1">#  &quot;crv&quot;:&quot;P-256&quot;,</span>
+<span class="c1">#  &quot;x&quot;:&quot;f83OJ3D2xF1Bg8vub9tLe1gHMzV76e8Tus9uPHvRVEU&quot;,</span>
+<span class="c1">#  &quot;y&quot;:&quot;x_FEzRu9m36HLN_tue659LNpXW6pCyStikYjKIWI5a0&quot;}</span>
+<span class="n">public_key</span> <span class="o">=</span> <span class="n">jwk</span><span class="o">.</span><span class="n">import_key</span><span class="p">(</span><span class="n">jwk</span><span class="p">)</span>
+<span class="n">decoded</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">encoded</span><span class="p">,</span> <span class="n">public_key</span><span class="p">)</span>
+</code></pre></div>
+<p>References:</p>
+<ul>
+<li><a href="https://portswigger.net/web-security/jwt/algorithm-confusion">Algorithm confusion attacks</a>;</li>
+<li><a href="https://nvd.nist.gov/vuln/detail/cve-2022-29217">CVE-2022-29217</a>, Key confusion through non-blocklisted public key formats (PyJWT);</li>
+<li><a href="https://nvd.nist.gov/vuln/detail/CVE-2023-48223">CVE-2023-48223</a>, JWT Algorithm Confusion in fast-jwt.</li>
 </ul>
 <h2 id="jwt-revocation">JWT revocation<a class="headerlink" href="#jwt-revocation" title="Permanent link">&para;</a></h2>
 <h3 id="token-status-list">Token Status List<a class="headerlink" href="#token-status-list" title="Permanent link">&para;</a></h3>
