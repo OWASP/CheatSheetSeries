@@ -4479,7 +4479,7 @@
 </ul>
 <p>As JWTs contain details of the authenticated entity (user etc.) a disconnect can occur between the JWT and the current state of the users session, for example, if the session is terminated earlier than the expiration time due to an explicit logout or an idle timeout. When an explicit session termination event occurs, a unique, server-issued identifier (the <code>jti</code> claim, optionally combined with <code>aud</code>) should be submitted to a denylist on the API which will invalidate that JWT for any requests until the expiration of the token. See the <a href="JSON_Web_Token_Cheat_Sheet.html#no-built-in-token-revocation-by-the-user">JSON_Web_Token_Cheat_Sheet</a> for further details.</p>
 <h2 id="api-keys">API Keys<a class="headerlink" href="#api-keys" title="Permanent link">&para;</a></h2>
-<p>Public REST services without access control run the risk of being farmed leading to excessive bills for bandwidth or compute cycles. API keys can be used to mitigate this risk. They are also often used by organisation to monetize APIs; instead of blocking high-frequency calls, clients are given access in accordance to a purchased access plan.</p>
+<p>Public REST services without access control run the risk of being farmed leading to excessive bills for bandwidth or compute cycles. API keys can be used to mitigate this risk. They are also often used by organization to monetize APIs; instead of blocking high-frequency calls, clients are given access in accordance to a purchased access plan.</p>
 <p>API keys can reduce the impact of denial-of-service attacks. However, when they are issued to third-party clients, they are relatively easy to compromise.</p>
 <ul>
 <li>Require API keys for every request to the protected endpoint.</li>
@@ -4491,7 +4491,7 @@
 <ul>
 <li>Apply an allowlist of permitted HTTP Methods e.g. <code>GET</code>, <code>POST</code>, <code>PUT</code>.</li>
 <li>Reject all requests not matching the allowlist with HTTP response code <code>405 Method not allowed</code>.</li>
-<li>Make sure the caller is authorised to use the incoming HTTP method on the resource collection, action, and record</li>
+<li>Make sure the caller is authorized to use the incoming HTTP method on the resource collection, action, and record</li>
 </ul>
 <p>In Java EE in particular, this can be difficult to implement properly. See <a href="../assets/REST_Security_Cheat_Sheet_Bypassing_VBAAC_with_HTTP_Verb_Tampering.pdf">Bypassing Web Authentication and Authorization with HTTP Verb Tampering</a> for an explanation of this common misconfiguration.</p>
 <h2 id="preventing-out-of-order-api-execution">Preventing Out-of-Order API Execution<a class="headerlink" href="#preventing-out-of-order-api-execution" title="Permanent link">&para;</a></h2>
@@ -4618,7 +4618,7 @@
 </tr>
 </tbody>
 </table>
-<p>The headers below are only intended to provide additional security when responses are rendered as HTML. As such, if the API will <strong>never</strong> return HTML in responses, then these headers may not be necessary. However, if there is any uncertainty about the function of the headers, or the types of information that the API returns (or may return in future), then it is recommended to include them as part of a defence-in-depth approach.</p>
+<p>The headers below are only intended to provide additional security when responses are rendered as HTML. As such, if the API will <strong>never</strong> return HTML in responses, then these headers may not be necessary. However, if there is any uncertainty about the function of the headers, or the types of information that the API returns (or may return in future), then it is recommended to include them as part of a defense-in-depth approach.</p>
 <table>
 <thead>
 <tr>
