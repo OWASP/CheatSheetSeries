@@ -189,7 +189,7 @@ The `strict-dynamic` directive can be used as part of a Strict CSP in combinatio
 
 If a script block which has either the correct hash or nonce is creating additional DOM elements and executing JS inside of them, `strict-dynamic` tells the browser to trust those elements as well without having to explicitly add nonces or hashes for each one.
 
-Note that whilst `strict-dynamic` is a CSP level 3 feature, CSP level 3 is very widely supported in common, modern browsers.
+Note that while `strict-dynamic` is a CSP level 3 feature, CSP level 3 is very widely supported in common, modern browsers.
 
 For more details, check out [strict-dynamic usage](https://w3c.github.io/webappsec-csp/#strict-dynamic-usage).
 
