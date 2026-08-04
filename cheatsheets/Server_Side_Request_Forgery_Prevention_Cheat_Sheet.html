@@ -4777,7 +4777,7 @@ The user leverages the web application as a proxy to the HR system.</p>
 <p>Similar to the following <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html#network-layer">section</a>.</p>
 <h2 id="imdsv2-in-aws">IMDSv2 in AWS<a class="headerlink" href="#imdsv2-in-aws" title="Permanent link">&para;</a></h2>
 <p>In cloud environments SSRF is often used to access and steal credentials and access tokens from metadata services (e.g. AWS Instance Metadata Service, Azure Instance Metadata Service, GCP metadata server).</p>
-<p><a href="https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service/">IMDSv2</a> is an additional defence-in-depth mechanism for AWS that mitigates some of the instances of SSRF.</p>
+<p><a href="https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service/">IMDSv2</a> is an additional defense-in-depth mechanism for AWS that mitigates some of the instances of SSRF.</p>
 <p>To leverage this protection migrate to IMDSv2 and disable old IMDSv1. Check out <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html">AWS documentation</a> for more details.</p>
 <h2 id="deny-list-last-resort">Deny-list (Last Resort)<a class="headerlink" href="#deny-list-last-resort" title="Permanent link">&para;</a></h2>
 <p><strong>Deny-lists are bypass-prone. Prefer allow-lists.</strong></p>
