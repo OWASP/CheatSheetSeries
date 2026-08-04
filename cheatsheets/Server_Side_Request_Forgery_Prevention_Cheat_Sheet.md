@@ -30,7 +30,7 @@ Depending on the application's functionality and requirements, there are two bas
 - Application can send request only to **identified and trusted applications**: Case when [allowlist](https://en.wikipedia.org/wiki/Whitelisting) approach is available.
 - Application can send requests to **ANY external IP address or domain name**: Case when [allowlist](https://en.wikipedia.org/wiki/Whitelisting) approach is unavailable.
 
-Because these two cases are very different, this cheat sheet will describe defences against them separately.
+Because these two cases are very different, this cheat sheet will describe defenses against them separately.
 
 ### Case 1 - Application can send request only to identified and trusted applications
 
