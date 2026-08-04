@@ -1240,10 +1240,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#minimise-the-storage-of-sensitive-information" class="md-nav__link">
+  <a href="#minimize-the-storage-of-sensitive-information" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Minimise the Storage of Sensitive Information
+        Minimize the Storage of Sensitive Information
       
     </span>
   </a>
@@ -1329,10 +1329,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#defence-in-depth" class="md-nav__link">
+  <a href="#defense-in-depth" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Defence in Depth
+        Defense in Depth
       
     </span>
   </a>
@@ -4170,10 +4170,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#minimise-the-storage-of-sensitive-information" class="md-nav__link">
+  <a href="#minimize-the-storage-of-sensitive-information" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Minimise the Storage of Sensitive Information
+        Minimize the Storage of Sensitive Information
       
     </span>
   </a>
@@ -4259,10 +4259,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#defence-in-depth" class="md-nav__link">
+  <a href="#defense-in-depth" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Defence in Depth
+        Defense in Depth
       
     </span>
   </a>
@@ -4400,7 +4400,7 @@
 <li>At the hardware level (e.g, encrypted RAID cards or SSDs)</li>
 </ul>
 <p>Which layer(s) are most appropriate will depend on the threat model. For example, hardware level encryption is effective at protecting against the physical theft of the server, but will provide no protection if an attacker is able to compromise the server remotely.</p>
-<h3 id="minimise-the-storage-of-sensitive-information">Minimise the Storage of Sensitive Information<a class="headerlink" href="#minimise-the-storage-of-sensitive-information" title="Permanent link">&para;</a></h3>
+<h3 id="minimize-the-storage-of-sensitive-information">Minimize the Storage of Sensitive Information<a class="headerlink" href="#minimize-the-storage-of-sensitive-information" title="Permanent link">&para;</a></h3>
 <p>The best way to protect sensitive information is to not store it in the first place. Although this applies to all kinds of information, it is most often applicable to credit card details, as they are highly desirable for attackers, and PCI DSS has such stringent requirements for how they must be stored. Wherever possible, the storage of sensitive information should be avoided.</p>
 <h2 id="algorithms">Algorithms<a class="headerlink" href="#algorithms" title="Permanent link">&para;</a></h2>
 <p>For symmetric encryption <strong>AES</strong> with a key that's at least <strong>128 bits</strong> (ideally <strong>256 bits</strong>) and a secure <a href="#cipher-modes">mode</a> should be used as the preferred algorithm.</p>
@@ -4419,7 +4419,7 @@
 <h3 id="custom-algorithms">Custom Algorithms<a class="headerlink" href="#custom-algorithms" title="Permanent link">&para;</a></h3>
 <p>Don't do this.</p>
 <h3 id="cipher-modes">Cipher Modes<a class="headerlink" href="#cipher-modes" title="Permanent link">&para;</a></h3>
-<p>There are various <a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation">modes</a> that can be used to allow block ciphers (such as AES) to encrypt arbitrary amounts of data, in the same way that a stream cipher would. These modes have different security and performance characteristics, and a full discussion of them is outside the scope of this cheat sheet. Some of the modes have requirements to generate secure initialisation vectors (IVs) and other attributes, but these should be handled automatically by the library.</p>
+<p>There are various <a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation">modes</a> that can be used to allow block ciphers (such as AES) to encrypt arbitrary amounts of data, in the same way that a stream cipher would. These modes have different security and performance characteristics, and a full discussion of them is outside the scope of this cheat sheet. Some of the modes have requirements to generate secure initialization vectors (IVs) and other attributes, but these should be handled automatically by the library.</p>
 <p>Where available, authenticated modes should always be used. These provide guarantees of the integrity and authenticity of the data, as well as confidentiality. The most commonly used authenticated modes are <strong><a href="https://en.wikipedia.org/wiki/Galois/Counter_Mode">GCM</a></strong> and <strong><a href="https://en.wikipedia.org/wiki/CCM_mode">CCM</a></strong>, which should be used as a first preference.</p>
 <p>If GCM or CCM are not available, then <a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_%28CTR%29">CTR</a> mode or <a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Cipher_Block_Chaining_%28CBC%29">CBC</a> mode should be used. As these do not provide any guarantees about the authenticity of the data, separate authentication should be implemented, such as using the <a href="https://en.wikipedia.org/wiki/Authenticated_encryption#Encrypt-then-MAC_%28EtM%29">Encrypt-then-MAC</a> technique. Care needs to be taken when using this method with <a href="https://en.wikipedia.org/wiki/CBC-MAC#Security_with_fixed_and_variable-length_messages">variable length messages</a></p>
 <p><a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#ECB">ECB</a> should not be used outside of very specific circumstances.</p>
@@ -4429,7 +4429,7 @@
 <h3 id="secure-random-number-generation">Secure Random Number Generation<a class="headerlink" href="#secure-random-number-generation" title="Permanent link">&para;</a></h3>
 <p>Random numbers (or strings) are needed for various security critical functionality, such as generating encryption keys, IVs, session IDs, CSRF tokens or password reset tokens. As such, it is important that these are generated securely, and that it is not possible for an attacker to guess and predict them.</p>
 <p>It is generally not possible for computers to generate truly random numbers (without special hardware), so most systems and languages provide two different types of randomness.</p>
-<p>Pseudo-Random Number Generators (PRNG) provide low-quality randomness that are much faster, and can be used for non-security related functionality (such as ordering results on a page, or randomising UI elements). However, they <strong>must not</strong> be used for anything security critical, as it is often possible for attackers to guess or predict the output.</p>
+<p>Pseudo-Random Number Generators (PRNG) provide low-quality randomness that are much faster, and can be used for non-security related functionality (such as ordering results on a page, or randomizing UI elements). However, they <strong>must not</strong> be used for anything security critical, as it is often possible for attackers to guess or predict the output.</p>
 <p>Cryptographically Secure Pseudo-Random Number Generators (CSPRNG) are designed to produce a much higher quality of randomness (more strictly, a greater amount of entropy), making them safe to use for security-sensitive functionality. However, they are slower and more CPU intensive, can end up blocking in some circumstances when large amounts of random data are requested. As such, if large amounts of non-security related randomness are needed, they may not be appropriate.</p>
 <p>The table below shows the recommended algorithms for each language, as well as insecure functions that should not be used.</p>
 <table>
@@ -4496,8 +4496,8 @@
 <h4 id="uuids-and-guids">UUIDs and GUIDs<a class="headerlink" href="#uuids-and-guids" title="Permanent link">&para;</a></h4>
 <p>Universally unique identifiers (UUIDs or GUIDs) are sometimes used as a quick way to generate random strings. Although they can provide a reasonable source of randomness, this will depend on the <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier#Versions">type or version</a> of the UUID that is created.</p>
 <p>Specifically, version 1 UUIDs are comprised of a high precision timestamp and the MAC address of the system that generated them, so are <strong>not random</strong> (although they may be hard to guess, given the timestamp is to the nearest 100ns). Type 4 UUIDs are randomly generated, although whether this is done using a CSPRNG will depend on the implementation. Unless this is known to be secure in the specific language or framework, the randomness of UUIDs should not be relied upon.</p>
-<h3 id="defence-in-depth">Defence in Depth<a class="headerlink" href="#defence-in-depth" title="Permanent link">&para;</a></h3>
-<p>Applications should be designed to still be secure even if cryptographic controls fail. Any information that is stored in an encrypted form should also be protected by additional layers of security. Application should also not rely on the security of encrypted URL parameters, and should enforce strong access control to prevent unauthorised access to information.</p>
+<h3 id="defense-in-depth">Defense in Depth<a class="headerlink" href="#defense-in-depth" title="Permanent link">&para;</a></h3>
+<p>Applications should be designed to still be secure even if cryptographic controls fail. Any information that is stored in an encrypted form should also be protected by additional layers of security. Application should also not rely on the security of encrypted URL parameters, and should enforce strong access control to prevent unauthorized access to information.</p>
 <h2 id="key-management">Key Management<a class="headerlink" href="#key-management" title="Permanent link">&para;</a></h2>
 <h3 id="processes">Processes<a class="headerlink" href="#processes" title="Permanent link">&para;</a></h3>
 <p>Formal processes should be implemented (and tested) to cover all aspects of key management, including:</p>
@@ -4514,7 +4514,7 @@
 <p>Encryption keys should be changed (or rotated) based on a number of different criteria:</p>
 <ul>
 <li>If the previous key is known (or suspected) to have been compromised.<ul>
-<li>This could also be caused by a someone who had access to the key leaving the organisation.</li>
+<li>This could also be caused by a someone who had access to the key leaving the organization.</li>
 </ul>
 </li>
 <li>After a specified period of time has elapsed (known as the cryptoperiod).<ul>
