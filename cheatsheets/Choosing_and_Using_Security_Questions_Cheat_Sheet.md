@@ -24,7 +24,9 @@ Any security questions presented to users to reset forgotten passwords must meet
 
 ### Types of Security Questions
 
+<!-- textlint-disable terminology -->
 Security questions fall into two main types. With *user defined* security questions, the user must choose a question from a list, and provide an answer to the question. Common examples are "What is your favourite colour?" or "What was your first car?"
+<!-- textlint-enable terminology -->
 
 These are easy for applications to implement, as the additional information required is provided by the user when they first create their account. However, users will often choose weak or easily discovered answers to these questions.
 
