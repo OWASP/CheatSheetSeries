@@ -16,7 +16,7 @@ JWTs are used in a wide range of applications such as:
 
 In its most common form (signed JWT), this information is protected by the generating application (**issuer**) using a signature to ensure it has not been tampered with. This signature prevents attackers, such as a malicious client or user, from forging a token or modifying the claims in an existing token, for example changing the user role from a simple user to an admin or altering the client's login. The JWT can be seen as a protected identity card or certificate about a user, an application, etc. An application (**presenter**) presents the token to a consuming application (**audience**) which can verify the token's authenticity and validity and take decisions or actions based on these claims.
 
-JWT can also provide confidentiality of the claims (encrypted JWT). Encryption is currently not treated in this cheat sheet but many aspects of this cheat sheet are applicable to encrypted JWTs.
+JWT can also provide confidentiality of the claims (encrypted JWT). See the [Token Confidentiality and JWE](#token-confidentiality-and-jwe)   section below for a brief introduction.
 
 ## Token Structure
 
@@ -324,6 +324,26 @@ Before implementing such a JWT denylist, you should consider whether there is a 
 - Freshness and replay protection can often by implementing by using a `nonce` bound to the session in the JWT claims. This approach is [used in OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html#NonceNotes).
 - Token reuse can be mitigated by using short expiration time in the JWT.
 - The risk of token exfiltration can be mitigated by using sender constrained JWT (such a [DPoP](https://datatracker.ietf.org/doc/html/rfc9449) or [TLS-bound JWT](https://www.rfc-editor.org/info/rfc8705/#section-3)).
+
+## Token Confidentiality and JWE
+
+### Why Signed Tokens Do Not Provide Confidentiality
+
+A signed JWT (JWS) provides integrity and authentication, it proves the token was not tampered with and who issued it. However, the payload is only base64url encoded, not encrypted. Anyone who intercepts a JWS can trivially decode the payload and read all claims. Do not store personally identifiable information (PII) or other sensitive data in a signed JWT expecting it to be protected from disclosure.
+
+### Using JWE for Claim Confidentiality
+
+When claim confidentiality is required, use [JSON Web Encryption (JWE) — RFC 7516](https://www.rfc-editor.org/rfc/rfc7516). JWE encrypts the payload using authenticated encryption (AEAD), with two algorithm layers:
+
+- `alg` — the key encryption algorithm, used to protect the Content Encryption Key (CEK) for the intended recipient (e.g. `RSA-OAEP`)
+- `enc` — the content encryption algorithm, an AEAD algorithm used to encrypt the actual payload (e.g. `A256GCM`)
+
+When both integrity and confidentiality are needed, use a **nested JWT**: sign the claims first (JWS), then encrypt the resulting signed token (JWE) ([RFC 7519, Section 11.2](https://www.rfc-editor.org/rfc/rfc7519#section-11.2)).This ensures the signature covers the actual claims while the outer JWE provides confidentiality. Set the `cty` header to `JWT` in the outer JWE to signal nesting
+([RFC 7516, Section 4.1.12](https://www.rfc-editor.org/rfc/rfc7516#section-4.1.12)).
+
+**Note:**
+
+Full JWE implementation guidance is out of scope for this cheat sheet and will be addressed in a dedicated JWE cheat sheet.
 
 ## References
 
