@@ -177,7 +177,7 @@ For more information on these, see the "other" related articles listed at the en
 
 **Note A:** The "Interaction identifier" is a method of linking all (relevant) events for a single user interaction (e.g. desktop application form submission, web page request, mobile app button click, web service call). The application knows all these events relate to the same interaction, and this should be recorded instead of losing the information and forcing subsequent correlation techniques to re-construct the separate events. For example, a single SOAP request may have multiple input validation failures and they may span a small range of times. As another example, an output validation failure may occur much later than the input submission for a long-running "saga request" submitted by the application to a database server.
 
-**Note B:** Each organisation should ensure it has a consistent, and documented, approach to classification of events (type, confidence, severity), the syntax of descriptions, and field lengths and data types including the format used for dates/times.
+**Note B:** Each organization should ensure it has a consistent, and documented, approach to classification of events (type, confidence, severity), the syntax of descriptions, and field lengths and data types including the format used for dates/times.
 
 ### Data to exclude
 
@@ -200,7 +200,7 @@ The following should usually not be recorded directly in the logs, but instead s
 - Information it is illegal to collect in the relevant jurisdictions
 - Information a user has opted out of collection, or not consented to e.g. use of do not track, or where consent to collect has expired
 
-Sometimes the following data can also exist, and whilst useful for subsequent investigation, it may also need to be treated in some special manner before the event is recorded:
+Sometimes the following data can also exist, and while useful for subsequent investigation, it may also need to be treated in some special manner before the event is recorded:
 
 - File paths
 - Database connection strings
@@ -224,7 +224,7 @@ It may be desirable to be able to alter the level of logging (type of events bas
 
 If your development framework supports suitable logging mechanisms, use or build upon that. Otherwise, implement an application-wide log handler which can be called from other modules/components.
 
-Document the interface referencing the organisation-specific event classification and description syntax requirements.
+Document the interface referencing the organization-specific event classification and description syntax requirements.
 
 If possible create this log handler as a standard module that can be thoroughly tested, deployed in multiple applications, and added to a list of approved and recommended modules.
 
