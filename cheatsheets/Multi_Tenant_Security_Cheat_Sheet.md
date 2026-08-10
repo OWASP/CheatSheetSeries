@@ -133,12 +133,30 @@ CREATE POLICY tenant_isolation_policy ON customers
     FOR ALL
     USING (tenant_id = current_setting('app.current_tenant')::uuid);
 
--- Force RLS for table owners too (important!)
+-- Force RLS for table owners (not superusers or BYPASSRLS roles)
 ALTER TABLE orders FORCE ROW LEVEL SECURITY;
 ALTER TABLE customers FORCE ROW LEVEL SECURITY;
 ```
 
 </details>
+
+#### Do Not Serve Requests with a Role That Bypasses RLS
+
+`FORCE ROW LEVEL SECURITY` applies policies to a table owner. It does not constrain a superuser or a role with the `BYPASSRLS` attribute; PostgreSQL documents that [both always bypass row security](https://www.postgresql.org/docs/current/ddl-rowsecurity.html).
+
+- Connect the normal application request path with a least-privileged role that is neither a superuser nor a `BYPASSRLS` role.
+- Reserve privileged connections for migrations and explicitly authorized administrative jobs.
+- Do not serve tenant requests through a privileged connection. If a privileged job processes tenant data, it must enforce tenant scope itself because RLS will not do so.
+- Check the deployed request role, not only the role declared in source-controlled configuration. PostgreSQL exposes `rolsuper` and `rolbypassrls` in [`pg_roles`](https://www.postgresql.org/docs/current/view-pg-roles.html).
+
+#### Scope Tenant Context to the Transaction
+
+The example policy depends on `current_setting('app.current_tenant')`. A normal `SET` persists until the session ends after its transaction commits, while [`SET LOCAL` lasts only for the current transaction](https://www.postgresql.org/docs/current/sql-set.html). When an application or connection pool reuses a database session without resetting it, session-scoped tenant state can therefore be inherited by the next request.
+
+- Begin a transaction, set the tenant context with `SET LOCAL`, or call `set_config('app.current_tenant', tenant_id, true)`, then execute all tenant queries in that same transaction. The `true` argument makes [`set_config` transaction-local](https://www.postgresql.org/docs/current/functions-admin.html#FUNCTIONS-ADMIN-SET).
+- Re-establish the tenant context for every transaction. Never assume a newly borrowed connection has the correct setting.
+- Fail closed if the tenant context is missing or invalid; do not fall back to an unscoped query.
+- Commit or roll back before returning the connection to the pool.
 
 <details>
 <summary>Application-Level Enforcement (Python/SQLAlchemy)</summary>
@@ -197,7 +215,7 @@ def tenant_session(tenant_id: str):
     """Create a tenant-scoped database session."""
     session = TenantAwareSession(bind=engine, tenant_id=tenant_id)
     
-    # Set PostgreSQL RLS context
+    # The final true makes the tenant context transaction-local
     session.execute(f"SELECT set_config('app.current_tenant', :tenant_id, true);")
 
     try:
@@ -211,6 +229,17 @@ def tenant_session(tenant_id: str):
 ```
 
 </details>
+
+#### Verify Tenant Isolation
+
+Test isolation through the same role, connection path, and pooling mode used by the application. A privileged test connection can make a correct policy appear broken, while a test that never exercises the deployed request role can miss a bypass.
+
+- **Test negative paths.** For every tenant-scoped table, prove tenant A cannot select, insert, update, or delete tenant B's rows. Also test the permitted same-tenant operation so a broken test setup cannot pass by denying everything.
+- **Discover coverage.** Derive the expected tenant-scoped table inventory from the schema or an explicit classification, then compare it with PostgreSQL's [`pg_class.relrowsecurity` and `relforcerowsecurity`](https://www.postgresql.org/docs/current/catalog-pg-class.html) and the [`pg_policies`](https://www.postgresql.org/docs/current/view-pg-policies.html) view. Fail when a new table has no classification, RLS is disabled, or the expected policy is absent.
+- **Assert the request role.** In the deployed environment, fail a configuration test if the request-path role has `rolsuper` or `rolbypassrls` set.
+- **Exercise connection reuse.** Run requests for two tenants over reused connections and prove the second request cannot observe the first request's tenant context.
+
+A fixed hand-maintained table list is not enough: the same omission that leaves RLS off a new table can also leave that table out of the test. Make unclassified tables fail the coverage check unless they are explicitly recorded as shared.
 
 ### 3. Preventing Cross-Tenant Data Access (IDOR Prevention)
 
@@ -965,6 +994,9 @@ class CrossTenantAccessMonitor:
 - Use separate encryption keys for high-security tenants.
 - Implement complete data deletion for offboarding.
 - Monitor and alert on cross-tenant access attempts.
+- Set database tenant context locally for every transaction.
+- Enumerate tenant-scoped tables and test cross-tenant denial for each one.
+- Verify the application request role cannot bypass row security.
 
 **Don't:**
 
@@ -977,9 +1009,13 @@ class CrossTenantAccessMonitor:
 - Skip tenant validation for "internal" services.
 - Retain tenant data indefinitely after offboarding.
 - Log sensitive tenant data in plain text.
+- Serve tenant requests with a superuser or `BYPASSRLS` role.
+- Store tenant context in a session-scoped database setting that can survive connection reuse.
 
 ## References
 
 - [OWASP Cloud Tenant Isolation](https://owasp.org/www-project-cloud-tenant-isolation/)
 - [OWASP Authorization Cheat Sheet](Authorization_Cheat_Sheet.md)
 - [AWS SaaS Tenant Isolation Strategies](https://docs.aws.amazon.com/wellarchitected/latest/saas-lens/tenant-isolation.html)
+- [PostgreSQL Row Security Policies](https://www.postgresql.org/docs/current/ddl-rowsecurity.html)
+- [PostgreSQL SET](https://www.postgresql.org/docs/current/sql-set.html)
