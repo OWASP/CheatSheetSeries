@@ -332,18 +332,22 @@ async def get_document(document_id: UUID, db: Session = Depends(get_db)):
 
 ### 4. Cache & Session Isolation
 
-- Prefix all cache keys with tenant identifier.
-- Use separate cache namespaces or instances for sensitive tenants.
-- Implement cache key validation to prevent injection.
-- Set appropriate TTLs and validate tenant on cache retrieval.
+- Classify each cached value as global, tenant-scoped, or user-scoped.
+- Include the tenant identifier in every cache key whose value or authorization varies by tenant.
+- Give intentionally shared entries an explicit global namespace and document why they are safe to share.
+- Include every other attribute that changes the result, such as user, locale, feature set, or permission version.
+- Authorize the request before reading a protected cached value; cache-key separation does not replace authorization.
+- Use separate cache instances for tenants that require stronger physical isolation.
+- Set appropriate TTLs and invalidate entries when data or authorization changes.
 
 <details>
-<summary>Bad example: Shared cache without tenant isolation</summary>
+<summary>Bad example: Tenant-scoped data stored under a shared key</summary>
 
 ```python
-# Dangerous: Cache key collision between tenants
+# Dangerous: user IDs are not guaranteed to be unique across tenants,
+# and the key incorrectly places tenant-scoped data in a global namespace.
 def get_user_preferences(user_id: str):
-    cache_key = f"preferences:{user_id}"  # Same key for different tenants!
+    cache_key = f"global:user-preferences:{user_id}"
     cached = redis.get(cache_key)
     if cached:
         return json.loads(cached)
@@ -353,95 +357,41 @@ def get_user_preferences(user_id: str):
 </details>
 
 <details>
-<summary>Good example: Tenant-isolated caching</summary>
+<summary>Good example: Explicit tenant and global cache scopes</summary>
 
 ```python
-import hashlib
 import json
-from typing import Optional, Any
-from functools import wraps
 
-class TenantAwareCache:
-    """Cache implementation with tenant isolation."""
-    
-    def __init__(self, redis_client):
-        self.redis = redis_client
-        self.default_ttl = 3600
-    
-    def _build_key(self, tenant_id: str, key: str) -> str:
-        """Build tenant-scoped cache key."""
-        # Validate key format to prevent injection
-        if not key or any(c in key for c in ['{', '}', '\n', '\r']):
-            raise ValueError("Invalid cache key format")
-        
-        # Use hash of tenant_id to prevent key enumeration
-        tenant_hash = hashlib.sha256(tenant_id.encode()).hexdigest()[:16]
-        return f"t:{tenant_hash}:{key}"
-    
-    def get(self, key: str, tenant_id: str = None) -> Optional[Any]:
-        """Get cached value for current tenant."""
-        tenant_id = tenant_id or current_tenant.get().tenant_id
-        full_key = self._build_key(tenant_id, key)
-        
-        cached = self.redis.get(full_key)
-        if cached:
-            data = json.loads(cached)
-            # Verify tenant_id in cached data matches (defense in depth)
-            if data.get("_tenant_id") != tenant_id:
-                self.redis.delete(full_key)  # Purge potentially poisoned entry
-                return None
-            return data.get("value")
-        return None
-    
-    def set(self, key: str, value: Any, ttl: int = None, tenant_id: str = None):
-        """Set cached value for current tenant."""
-        tenant_id = tenant_id or current_tenant.get().tenant_id
-        full_key = self._build_key(tenant_id, key)
-        
-        # Include tenant_id in cached data for verification
-        data = {
-            "_tenant_id": tenant_id,
-            "value": value
-        }
-        
-        self.redis.setex(full_key, ttl or self.default_ttl, json.dumps(data))
-    
-    def invalidate_tenant(self, tenant_id: str):
-        """Invalidate all cache entries for a tenant."""
-        tenant_hash = hashlib.sha256(tenant_id.encode()).hexdigest()[:16]
-        pattern = f"t:{tenant_hash}:*"
-        
-        cursor = 0
-        while True:
-            cursor, keys = self.redis.scan(cursor, match=pattern, count=1000)
-            if keys:
-                self.redis.delete(*keys)
-            if cursor == 0:
-                break
+def tenant_cache_key(tenant_id: str, resource: str, item_id: str) -> str:
+    return f"tenant:{tenant_id}:{resource}:{item_id}"
 
-def tenant_cached(key_template: str, ttl: int = 3600):
-    """Decorator for tenant-aware caching."""
-    def decorator(func):
-        @wraps(func)
-        async def wrapper(*args, **kwargs):
-            cache = get_tenant_cache()
-            cache_key = key_template.format(**kwargs)
-            
-            cached = cache.get(cache_key)
-            if cached is not None:
-                return cached
-            
-            result = await func(*args, **kwargs)
-            cache.set(cache_key, result, ttl=ttl)
-            return result
-        return wrapper
-    return decorator
+def global_cache_key(resource: str, version: str) -> str:
+    return f"global:{resource}:{version}"
 
-# Usage
-@tenant_cached("user_prefs:{user_id}", ttl=1800)
 async def get_user_preferences(user_id: str):
-    # This is automatically cached per-tenant
-    return await db.fetch_preferences(user_id)
+    # These application-specific helpers derive tenant context from the
+    # verified session and enforce access before the cache lookup.
+    tenant_id = require_authenticated_tenant()
+    await authorize_user_access(tenant_id, user_id)
+
+    # Preferences vary by tenant, so tenant_id is part of the key.
+    key = tenant_cache_key(tenant_id, "user-preferences", user_id)
+    if cached := redis.get(key):
+        return json.loads(cached)
+
+    preferences = await db.fetch_preferences(tenant_id, user_id)
+    redis.setex(key, 1800, json.dumps(preferences))
+    return preferences
+
+async def get_country_codes():
+    # This versioned reference data is identical and authorized for all tenants.
+    key = global_cache_key("country-codes", "v1")
+    if cached := redis.get(key):
+        return json.loads(cached)
+
+    country_codes = await db.fetch_public_country_codes()
+    redis.setex(key, 86400, json.dumps(country_codes))
+    return country_codes
 ```
 
 </details>
@@ -987,7 +937,7 @@ class CrossTenantAccessMonitor:
 
 - Derive tenant context from authenticated, verified tokens.
 - Use database-level isolation (RLS, schemas) as defense in depth.
-- Include tenant_id in all resource queries, cache keys, and storage paths.
+- Include tenant_id in tenant-scoped resource queries, cache keys, and storage paths.
 - Implement per-tenant rate limiting and quotas.
 - Log tenant context with every operation.
 - Validate tenant ownership at the data access layer.
@@ -1001,7 +951,7 @@ class CrossTenantAccessMonitor:
 **Don't:**
 
 - Trust tenant IDs from client headers or request parameters.
-- Use shared cache keys without tenant prefixes.
+- Use a shared cache key for data or authorization that varies by tenant.
 - Expose sequential or guessable tenant/resource IDs.
 - Allow queries without tenant filters (even for admins without explicit override).
 - Store tenant data without tenant_id columns.
