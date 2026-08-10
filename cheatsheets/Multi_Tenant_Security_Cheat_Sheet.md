@@ -140,7 +140,7 @@ ALTER TABLE customers FORCE ROW LEVEL SECURITY;
 
 </details>
 
-#### Do Not Serve Requests with a Role That Bypasses RLS
+#### Do Not Use an RLS-Bypassing Role for Tenant-Scoped Request Paths
 
 `FORCE ROW LEVEL SECURITY` applies policies to a table owner. It does not constrain a superuser or a role with the `BYPASSRLS` attribute; PostgreSQL documents that [both always bypass row security](https://www.postgresql.org/docs/current/ddl-rowsecurity.html).
 
