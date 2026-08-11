@@ -20,7 +20,7 @@ Next.js applications have multiple server entry points. A check in one does not 
 
 | Entry point | Secure use |
 |-------------|------------|
-| Proxy (`proxy.ts`; `middleware.ts` before Next.js 16) | Use for optimistic redirects and request filtering. Do not make it the only authorization layer. |
+| Proxy (`proxy.ts` in Next.js 16+; deprecated `middleware.ts` remains available during migration) | Use for optimistic redirects and request filtering. Do not make it the only authorization layer. |
 | Server Action | Treat each reachable action as a client-callable POST entry point. Validate input, then apply authentication and resource authorization when the operation is protected. |
 | Route Handler (`route.ts`) or Pages API Route (`pages/api`) | Treat it as an HTTP endpoint with an explicit audience. Apply the controls appropriate to a public endpoint, authenticated API, service endpoint, or webhook. |
 | Server Component, page, or data loader | Authorize before reading protected data. Return a narrow DTO rather than a database record. |
@@ -44,13 +44,22 @@ Classify each action as public or protected, then apply the relevant controls:
 - Return only authorized result fields because Server Action return values are serialized to the client.
 - Apply rate limits or stronger re-authentication to expensive or high-impact operations.
 
-Next.js compares the request `Origin` with the host for Server Actions. Keep [`serverActions.allowedOrigins`](https://nextjs.org/docs/app/api-reference/config/next-config-js/serverActions#allowedorigins) narrow when a trusted proxy requires additional origins. This built-in check does not replace authentication, authorization, or the general controls in the [CSRF Prevention Cheat Sheet](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md).
+Next.js compares the request `Origin` with the host for Server Actions. Keep [`serverActions.allowedOrigins`](https://nextjs.org/docs/app/api-reference/config/next-config-js/serverActions#allowedorigins) narrow when a trusted proxy requires additional origins. On a self-hosted deployment, ensure that only trusted infrastructure can establish the canonical `Host` or `X-Forwarded-Host` value seen by the application. A [historical Server Action SSRF advisory](https://github.com/vercel/next.js/security/advisories/GHSA-fr5h-rqp8-mj6g), fixed in Next.js 14.1.1, demonstrates why patching and trustworthy host handling both matter. This built-in Origin check does not replace authentication, authorization, or the general controls in the [CSRF Prevention Cheat Sheet](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md).
 
 ### Protect Route Handlers and Pages API Routes separately
 
 Protecting a page does not protect a Route Handler or API Route that serves related data. Next.js says to treat [Route Handlers as public-facing API endpoints](https://nextjs.org/docs/app/guides/authentication#route-handlers). Classify each handler's audience: an intentionally public endpoint may require input validation and abuse controls, a webhook may authenticate a signature, and a protected API requires the applicable authentication plus object-level or tenant-level authorization from the [Authorization Cheat Sheet](Authorization_Cheat_Sheet.md).
 
 Do not infer that a handler is private because only a Server Component calls it. If no browser, service, webhook, or external client needs the HTTP API, call the DAL directly from the Server Component and remove the extra entry point.
+
+### Protect Draft Mode as a privileged state change
+
+If the application uses Draft Mode, treat the handler that enables it as a protected entry point. Calling `enable()` on the value returned by `await draftMode()` sets the `__prerender_bypass` cookie; it does not authenticate the caller or validate a secret by itself. The [Draft Mode guide](https://nextjs.org/docs/app/guides/draft-mode) recommends validating a shared secret and confirming that the requested content exists before enabling the mode.
+
+- Authenticate the CMS or other caller and use a high-entropy secret when a shared-secret integration is appropriate.
+- Validate any requested content identifier against the trusted content source before enabling Draft Mode.
+- Redirect to a server-established path returned by that source, not directly to an untrusted query parameter.
+- Test that an unauthenticated caller cannot obtain the `__prerender_bypass` cookie or use a Draft Mode entry point to expose unpublished content.
 
 ## Control Data Crossing into the Browser
 
@@ -78,6 +87,8 @@ Before caching a response or function result, classify its audience, such as pub
 - Do not add shared `Cache-Control` directives to personalized `getServerSideProps` responses.
 - After authorization or tenancy changes, prevent reuse under stale permissions by invalidating affected keys or tags, advancing a permission version in the key, or using another bounded expiration strategy.
 
+Treat cache invalidation as a mutation capability. [`revalidatePath`](https://nextjs.org/docs/app/api-reference/functions/revalidatePath) and [`revalidateTag`](https://nextjs.org/docs/app/api-reference/functions/revalidateTag) can be called from server entry points, while [`updateTag`](https://nextjs.org/docs/app/api-reference/functions/updateTag) is limited to Server Actions. Authenticate and authorize callers, derive the invalidation target from an authorized object or validate it against constrained application-owned path and tag patterns, and apply abuse controls to externally reachable invalidation handlers. A deliberately global purge should require the correspondingly privileged operation.
+
 `use cache: private` can read request-time values, but its results are cached in the browser's memory and are still delivered to that browser. The [directive documentation](https://nextjs.org/docs/app/api-reference/directives/use-cache-private) does not make over-broad data safe to return.
 
 For user-, tenant-, or permission-scoped caches, test representative identities with different entitlements: fill the cache as identity A, then request the same route and object identifiers as identity B. Repeat after changing a role or tenant membership. This catches missing audience keys that a positive-path cache test cannot.
@@ -92,18 +103,27 @@ Review `next.config.*`, Proxy matchers, and route configuration with the same ca
 - Define every `images.remotePatterns` restriction the application can enforce. Next.js warns that [omitted fields imply broad wildcards](https://nextjs.org/docs/app/api-reference/components/image#remotepatterns); allow port, pathname, or query variation only when the use case requires it and the trust model accounts for the broader match.
 - Keep `images.dangerouslyAllowLocalIP` disabled unless a reviewed private-network use case requires it. Next.js warns that enabling it can let users [access content on the internal network](https://nextjs.org/docs/app/api-reference/components/image#dangerouslyallowlocalip). Apply the [SSRF Prevention Cheat Sheet](Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md) to any server-side fetch destination.
 - Keep `serverActions.allowedOrigins` restricted to trusted application and proxy origins.
+- Leave [`productionBrowserSourceMaps`](https://nextjs.org/docs/app/api-reference/config/next-config-js/productionBrowserSourceMaps) disabled unless the operational need justifies publicly serving the original browser source maps. Enabling it causes Next.js to emit and automatically serve those files.
+- Deploy an optimized production build with an appropriate production server or adapter. Do not expose [`next dev`](https://nextjs.org/docs/app/api-reference/cli/next#next-dev-options), which enables development-mode hot reloading and error reporting, as the production service.
 
 Security-sensitive configuration assembled from environment variables is still code. Validate hosts and origins against an allowlist at startup and fail closed when a required value is missing or invalid. Validate other configuration using an appropriate schema, type, or range constraint.
+
+### Choose a CSP compatible with the rendering model
+
+Use a Content Security Policy (CSP) appropriate to the application's script, style, and third-party resource requirements; see the [Content Security Policy Cheat Sheet](Content_Security_Policy_Cheat_Sheet.md) for general policy design. Next.js can [generate a fresh nonce in Proxy and apply it during rendering](https://nextjs.org/docs/app/guides/content-security-policy#nonces). A nonce must be unpredictable and unique for each response; do not cache HTML in a way that reuses it for another response.
+
+Nonce-based CSP has an architectural cost: Next.js requires dynamic rendering, disables static optimization and ISR for those pages, and does not support Partial Prerendering (PPR) with request-specific nonces. Applications that retain static rendering can use a CSP without nonces when their resource policy permits it. Do not weaken a production policy with development-only directives such as `'unsafe-eval'` merely to make the development server work.
 
 ## Verify the Boundaries
 
 Framework controls need direct negative-path tests. The [Next.js production checklist](https://nextjs.org/docs/app/guides/production-checklist#security) recommends checking authorization inside protected Server Actions rather than relying on Proxy, layouts, or pages.
 
-- Inventory application-defined Server Actions, Route Handlers, Pages API Routes, server-side data loaders, Proxy matchers, cached functions, rewrites, redirects, and remote image patterns. Classify each applicable audience and effect.
+- Inventory application-defined Server Actions, Route Handlers, Pages API Routes, Draft Mode entry points, server-side data loaders, Proxy matchers, cached functions, cache-invalidation call sites, rewrites, redirects, CSP configuration, source map settings, and remote image patterns. Classify each applicable audience and effect.
 - Call actions and handlers directly without first loading their page. For protected operations, verify the applicable unauthenticated, unauthorized, wrong-owner, and wrong-tenant requests fail. For public operations, verify the intended public behavior and abuse controls.
 - For protected route families that use Proxy for early filtering, exercise an unmatched or bypassed-Proxy path and prove the handler or data boundary still denies unauthorized access.
 - Inspect the applicable rendered HTML, React Server Component payloads, Pages Router data responses, and Server Action responses for fields that should remain server-only.
 - Run cross-user and cross-tenant tests for audience-scoped caches, including after permission changes and revalidation.
+- Call Draft Mode and cache-invalidation handlers directly and prove that unauthorized callers cannot enable preview state or invalidate content.
 - Keep Next.js on a supported patched release. [CVE-2024-46982](https://github.com/vercel/next.js/security/advisories/GHSA-gp8f-8m3g-qvj9) is an example where an affected Pages Router response could be cached when the application intended otherwise.
 
 Security tests should fail when a new application entry point or cache is added without an explicit classification. A fixed hand-maintained list can miss the new file for the same reason the control was omitted, so derive the inventory from the route and source tree where practical.
