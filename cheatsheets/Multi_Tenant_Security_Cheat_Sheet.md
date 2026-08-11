@@ -157,7 +157,9 @@ ALTER TABLE customers FORCE ROW LEVEL SECURITY;
 
 #### Scope Tenant Context to the Transaction
 
-The example policy depends on `current_setting('app.current_tenant')`. A normal `SET` persists until the session ends after its transaction commits, while [`SET LOCAL` lasts only for the current transaction](https://www.postgresql.org/docs/current/sql-set.html). When an application or connection pool reuses a database session without resetting it, session-scoped tenant state can therefore be inherited by the next request.
+The example policy depends on `current_setting('app.current_tenant')`. Because it omits the optional `missing_ok => true` argument, PostgreSQL raises an error if the setting does not exist instead of returning `NULL`; that is a deliberate fail-closed choice. The [`current_setting` documentation](https://www.postgresql.org/docs/current/functions-admin.html#FUNCTIONS-ADMIN-SET) describes both behaviors.
+
+A normal `SET` persists until the session ends after its transaction commits, while [`SET LOCAL` lasts only for the current transaction](https://www.postgresql.org/docs/current/sql-set.html). When an application or connection pool reuses a database session without resetting it, session-scoped tenant state can therefore be inherited by the next request.
 
 - Begin a transaction, set the tenant context with `SET LOCAL`, or call `set_config('app.current_tenant', tenant_id, true)`, then execute queries that depend on that setting in the same transaction. The `true` argument makes [`set_config` transaction-local](https://www.postgresql.org/docs/current/functions-admin.html#FUNCTIONS-ADMIN-SET).
 - Re-establish the tenant context for every transaction. Never assume a newly borrowed connection has the correct setting.
@@ -167,10 +169,11 @@ The example policy depends on `current_setting('app.current_tenant')`. A normal 
 <details>
 <summary>Application-Level Enforcement (Python/SQLAlchemy)</summary>
 
+SQLAlchemy [deprecated `QueryEvents.before_compile`](https://docs.sqlalchemy.org/en/20/orm/events.html#sqlalchemy.orm.QueryEvents.before_compile) because it does not cover ORM-level attribute and relationship loads. The current [recommended pattern](https://docs.sqlalchemy.org/en/20/orm/queryguide/api.html#sqlalchemy.orm.with_loader_criteria) combines `SessionEvents.do_orm_execute` with `with_loader_criteria` so criteria propagate to occurrences of the mapped entity, including eager and lazy relationship loads.
+
 ```python
 from sqlalchemy import event, Column, String, text
-from sqlalchemy.orm import Session, Query
-from sqlalchemy.ext.declarative import declared_attr
+from sqlalchemy.orm import Session, declared_attr, with_loader_criteria
 from contextlib import contextmanager
 
 class TenantMixin:
@@ -183,7 +186,7 @@ class TenantMixin:
 class TenantAwareSession(Session):
     """Session carrying tenant context for participating ORM operations."""
     
-    def __init__(self, *args, tenant_id: str = None, **kwargs):
+    def __init__(self, *args, tenant_id: str | None = None, **kwargs):
         super().__init__(*args, **kwargs)
         self._tenant_id = tenant_id
     
@@ -193,34 +196,42 @@ class TenantAwareSession(Session):
             raise SecurityException("Tenant ID not set on session")
         return self._tenant_id
 
-# Add a default filter to the legacy ORM Query API for mapped tenant models.
-# Raw SQL, Session.execute(), bulk operations, and other access paths need
-# their own tenant enforcement.
-@event.listens_for(Query, "before_compile", retval=True)
-def add_tenant_filter(query):
-    tenant_id = current_tenant.get()
-    if not tenant_id:
-        raise SecurityException("No tenant context for query")
-    
-    for desc in query.column_descriptions:
-        entity = desc.get('entity')
-        if entity and hasattr(entity, 'tenant_id'):
-            query = query.filter(entity.tenant_id == tenant_id.tenant_id)
-    
-    return query
+# Add tenant criteria to ORM SELECTs issued through TenantAwareSession.
+# with_loader_criteria propagates this rule to eager and lazy relationship loads.
+@event.listens_for(TenantAwareSession, "do_orm_execute")
+def add_tenant_filter(execute_state):
+    if (
+        execute_state.is_select
+        and not execute_state.is_column_load
+        and not execute_state.is_relationship_load
+    ):
+        tenant_id = execute_state.session.tenant_id
+        execute_state.statement = execute_state.statement.options(
+            with_loader_criteria(
+                TenantMixin,
+                lambda model: model.tenant_id == tenant_id,
+                include_aliases=True,
+            )
+        )
 
-# Set tenant_id for inserts of models that inherit TenantMixin
-@event.listens_for(TenantMixin, "before_insert", propagate=True)
-def set_tenant_on_insert(mapper, connection, target):
-    ctx = current_tenant.get()
-    if not ctx:
-        raise SecurityException("Cannot insert without tenant context")
-    target.tenant_id = ctx.tenant_id
+# Set and validate tenant_id for new mapped objects in this session.
+@event.listens_for(TenantAwareSession, "before_flush")
+def set_tenant_on_insert(session, flush_context, instances):
+    tenant_id = session.tenant_id
+    for target in session.new:
+        if isinstance(target, TenantMixin):
+            if target.tenant_id not in (None, tenant_id):
+                raise SecurityException("Object tenant does not match session")
+            target.tenant_id = tenant_id
 
 # Secure session factory
 @contextmanager
 def tenant_session(tenant_id: str):
     """Create a tenant-scoped database session."""
+    ctx = current_tenant.get()
+    if not ctx or ctx.tenant_id != tenant_id:
+        raise SecurityException("Tenant session requires verified context")
+
     session = TenantAwareSession(bind=engine, tenant_id=tenant_id)
     
     try:
@@ -240,7 +251,7 @@ def tenant_session(tenant_id: str):
 
 </details>
 
-This ORM helper is defense in depth, not complete enforcement. It covers only the model and query paths shown. Raw SQL, bulk operations, relationship loading, and alternative query APIs require separate controls; use database policies or constrained roles as the final boundary where possible.
+This ORM helper is defense in depth, not complete enforcement. It applies tenant criteria to ORM SELECTs issued through `TenantAwareSession`, with the criteria propagated to relationship loaders. Raw SQL, Core connections, bulk operations, and code using another session type require separate controls; use database policies or constrained roles as the final boundary where possible.
 
 #### Verify Tenant Isolation
 
@@ -408,9 +419,12 @@ async def get_country_codes():
 
 </details>
 
-### 5. API Security & Rate Limiting
+### 5. API, Asynchronous Work & Resource Controls
+
+#### API Security & Rate Limiting
 
 - When tenants share capacity or quotas, include tenant identity as one rate-limit dimension alongside any required global, endpoint, user, or IP limits.
+- Rate limits at the HTTP boundary do not constrain every shared resource. Where tenant load can affect other tenants, apply tenant-aware limits or scheduling to the relevant bottlenecks, such as concurrent work, queued messages, database connections, fan-out, CPU, or memory. Retain global safety limits, and isolate a worker or resource pool when the risk or service commitment justifies the operational cost. The [AWS SaaS Lens](https://docs.aws.amazon.com/wellarchitected/latest/saas-lens/pe-selection.html) describes scaling, throttling, and selective resource isolation as complementary noisy-neighbor controls.
 - Validate server-verified tenant context on every tenant-scoped API request. Public or global endpoints need no artificial tenant context.
 - Bind API credentials to explicit tenant sets, environments, and permission scopes. An intentionally cross-tenant service identity must be separately authorized and least privileged.
 - When B2B request signing is required, bind the signature to the security-relevant request context, such as tenant selection, target audience, method, path, body digest, and expiration, as applicable.
@@ -530,6 +544,15 @@ class RateLimitMiddleware:
 ```
 
 </details>
+
+#### Tenant-Aware Asynchronous Work
+
+Classify asynchronous work as global, tenant-scoped, or explicitly cross-tenant. A shared queue or topic is not itself a tenant-isolation boundary. [Microsoft's multitenant messaging guidance](https://learn.microsoft.com/en-us/azure/architecture/guide/multitenant/approaches/messaging) describes the trade-off between shared and dedicated messaging infrastructure and the need for application-enforced isolation when infrastructure is shared.
+
+- For tenant-scoped work, derive tenant context from the authenticated producer and bind it to the message through trusted broker routing, authenticated metadata, or an integrity-protected payload. Do not let an unverified message field replace the producer's authorized scope.
+- At the consumer, authenticate the producer or broker path, re-establish tenant context, and authorize the operation and target resource. Re-check time-sensitive membership or permission when delayed execution could make the original decision stale.
+- Scope idempotency and deduplication keys, retry state, dead-letter access, and per-tenant ordering when their data or effects vary by tenant. Global jobs and authorized cross-tenant jobs should use explicit identities and scopes rather than a fabricated tenant.
+- Apply tenant-aware queue depth, concurrency, and throughput controls when a shared worker fleet or broker is susceptible to noisy-neighbor load; retain service-wide limits for aggregate exhaustion.
 
 ### 6. File Storage & Blob Isolation
 
@@ -721,7 +744,8 @@ class TenantLifecycleManager:
             await self.db.execute(f"CREATE SCHEMA {schema_name}")
             await self._apply_schema_migrations(schema_name)
             
-            # 3. Generate API credentials
+            # 3. Generate a high-entropy random API credential.
+            # SHA-256 is used for this random key, not for a user password.
             api_key = secrets.token_urlsafe(32)
             api_key_hash = hashlib.sha256(api_key.encode()).hexdigest()
             await self.db.store_api_key(tenant_id, api_key_hash)
@@ -822,6 +846,8 @@ class TenantLifecycleManager:
 ```
 
 </details>
+
+The SHA-256 example applies only to the high-entropy random credential created by [`secrets.token_urlsafe(32)`](https://docs.python.org/3/library/secrets.html#secrets.token_urlsafe). A fast digest does not make a low-entropy or user-chosen secret safe against offline guessing. Store passwords according to the [Password Storage Cheat Sheet](Password_Storage_Cheat_Sheet.md), using a suitable password-hashing function rather than this API-key pattern.
 
 ### 8. Logging, Monitoring & Audit
 
@@ -990,6 +1016,8 @@ class CrossTenantAccessMonitor:
 - Use an enforceable isolation boundary appropriate to the data and threat model; database controls such as RLS or schema and credential separation can provide defense in depth.
 - Include tenant scope in queries, cache keys, and storage boundaries when the resource or result varies by tenant.
 - Include tenant identity in rate limits and quotas when tenants share capacity or have tenant-level entitlements; retain any needed global, endpoint, user, or IP limits.
+- Bound tenant consumption of other shared bottlenecks, such as queued work, concurrency, database connections, and compute, when those resources can create cross-tenant availability impact.
+- Carry verified tenant context through tenant-scoped asynchronous work and re-establish authorization at the consumer.
 - Log verified tenant context for tenant-scoped security and audit events.
 - Enforce tenant ownership at a boundary traversed by every tenant-owned access path.
 - Use separate encryption keys when the risk or compliance model requires cryptographic isolation.
@@ -1008,6 +1036,8 @@ class CrossTenantAccessMonitor:
 - Store tenant-owned data without an enforceable tenant association or isolation boundary; a literal `tenant_id` column is not required by every architecture.
 - Give a tenant-scoped credential access to other tenants. Explicitly cross-tenant service credentials require their own least-privileged scope and controls.
 - Skip authorization merely because a service is internal.
+- Treat a tenant identifier in a queued message as authorization proof without authenticating the producer path and authorizing the consumer operation.
+- Allow one tenant unbounded consumption of a shared queue, worker pool, connection pool, or other resource that can degrade other tenants.
 - Retain tenant data beyond the documented retention policy without a contractual or legal basis and appropriate access restrictions.
 - Log sensitive tenant data in plain text.
 - Serve ordinary tenant-scoped PostgreSQL RLS request paths with a superuser or `BYPASSRLS` role.
@@ -1018,5 +1048,8 @@ class CrossTenantAccessMonitor:
 - [OWASP Cloud Tenant Isolation](https://owasp.org/www-project-cloud-tenant-isolation/)
 - [OWASP Authorization Cheat Sheet](Authorization_Cheat_Sheet.md)
 - [AWS SaaS Tenant Isolation Strategies](https://docs.aws.amazon.com/wellarchitected/latest/saas-lens/tenant-isolation.html)
+- [AWS SaaS Performance Efficiency Guidance](https://docs.aws.amazon.com/wellarchitected/latest/saas-lens/pe-selection.html)
+- [Microsoft Multitenant Messaging Guidance](https://learn.microsoft.com/en-us/azure/architecture/guide/multitenant/approaches/messaging)
 - [PostgreSQL Row Security Policies](https://www.postgresql.org/docs/current/ddl-rowsecurity.html)
 - [PostgreSQL SET](https://www.postgresql.org/docs/current/sql-set.html)
+- [SQLAlchemy ORM Query Events](https://docs.sqlalchemy.org/en/20/orm/queryguide/api.html#sqlalchemy.orm.with_loader_criteria)
