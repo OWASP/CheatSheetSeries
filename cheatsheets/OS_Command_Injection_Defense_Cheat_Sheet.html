@@ -4436,7 +4436,6 @@
 <p>For example use <code>mkdir()</code> instead of <code>system("mkdir /dir_name")</code>.</p>
 <p>If there are available libraries or APIs for the language you use, this is the preferred method.</p>
 <h3 id="defense-option-2-escape-values-added-to-os-commands-specific-to-each-os">Defense option 2: Escape values added to OS commands specific to each OS<a class="headerlink" href="#defense-option-2-escape-values-added-to-os-commands-specific-to-each-os" title="Permanent link">&para;</a></h3>
-<p><strong>TODO: To enhance.</strong></p>
 <p>For examples, see <a href="https://www.php.net/manual/en/function.escapeshellarg.php">escapeshellarg()</a> in PHP.</p>
 <p>The <code>escapeshellarg()</code> surrounds the user input in single quotes, so if the malformed user input is something like <code>&amp; echo "hello"</code>, the final output will be like <code>calc '&amp; echo "hello"'</code> which will be parsed as a single argument to the command <code>calc</code>.</p>
 <p>Even though <code>escapeshellarg()</code> prevents OS Command Injection, an attacker can still pass a single argument to the command.</p>
