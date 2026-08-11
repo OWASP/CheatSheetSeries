@@ -2101,6 +2101,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#trusting-key-material-named-in-the-token-header" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trusting key material named in the token header
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -4259,6 +4270,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#trusting-key-material-named-in-the-token-header" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trusting key material named in the token header
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -4601,6 +4623,22 @@
 <li><a href="https://portswigger.net/web-security/jwt/algorithm-confusion">Algorithm confusion attacks</a>;</li>
 <li><a href="https://nvd.nist.gov/vuln/detail/cve-2022-29217">CVE-2022-29217</a>, Key confusion through non-blocklisted public key formats (PyJWT);</li>
 <li><a href="https://nvd.nist.gov/vuln/detail/CVE-2023-48223">CVE-2023-48223</a>, JWT Algorithm Confusion in fast-jwt.</li>
+</ul>
+<h3 id="trusting-key-material-named-in-the-token-header">Trusting key material named in the token header<a class="headerlink" href="#trusting-key-material-named-in-the-token-header" title="Permanent link">&para;</a></h3>
+<p>A JWS header can carry the verification key itself or a pointer to it: <code>jwk</code> (an embedded key), <code>jku</code> (a URL to a JWK Set), <code>x5u</code> (a URL to an X.509 certificate) and <code>x5c</code> (an embedded certificate chain), alongside the key selection hints <code>kid</code>, <code>x5t</code> and <code>x5t#S256</code>. An application that resolves or selects its verification key from these header parameters, without tying the result back to something it already trusts, can be steered into trusting a key the attacker controls, because the header is unauthenticated attacker input.</p>
+<p>An attacker can forge their own token, include their own public key in <code>jwk</code>, or point <code>jku</code> or <code>x5u</code> at a JWK Set or certificate they host, and sign the token with the matching private key. A verifier that trusts the key it has just read from the token accepts the forgery. An attacker can also try to smuggle a symmetric key through the same parameters, in the hope that the implementation will use it for MAC verification.</p>
+<p>These parameters have legitimate uses, so the distinction is anchoring rather than avoidance. <code>x5c</code> and <code>x5u</code> are usable where the certificate chain validates up to an anchor already trusted for that issuer, and <code>kid</code>, <code>x5t</code> and <code>x5t#S256</code> are the normal way to choose which key from an already configured JWKS should verify a given token. What must not happen is treating any of them as the source of trust rather than as a pointer within it.</p>
+<p>Mitigations:</p>
+<ul>
+<li>Do not take the verification key from the token unless that key can be tied, through a chain of trust, to a root trust anchor associated with the issuer.</li>
+<li>Prefer trust material established out of band, such as a pinned key or the <code>jwks_uri</code> published in the issuer's metadata.</li>
+<li>Validate or sanitize <code>kid</code> before using it in a lookup, since it also reaches databases and directories as an injection vector.</li>
+<li>Where keys are fetched by URL, see the <a href="Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html">Server Side Request Forgery Prevention Cheat Sheet</a>.</li>
+</ul>
+<p>References:</p>
+<ul>
+<li><a href="https://datatracker.ietf.org/doc/html/rfc8725#name-do-not-trust-received-claim">RFC 8725, Do Not Trust Received Claims</a>;</li>
+<li><a href="https://nvd.nist.gov/vuln/detail/CVE-2018-0114">CVE-2018-0114</a>, a key embedded in the JWS header trusted for verification.</li>
 </ul>
 <h2 id="jwt-revocation">JWT revocation<a class="headerlink" href="#jwt-revocation" title="Permanent link">&para;</a></h2>
 <h3 id="token-status-list">Token Status List<a class="headerlink" href="#token-status-list" title="Permanent link">&para;</a></h3>
