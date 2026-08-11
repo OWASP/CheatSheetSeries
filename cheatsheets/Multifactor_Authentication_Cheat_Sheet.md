@@ -319,7 +319,8 @@ SMS messages or phone calls can be used to provide users with a single-use code 
 
 - Requires the user to have a mobile device or landline.
 - Require user to have signal or internet access to receive the call or message.
-- Calls and SMS messages may cost money to send need to protect against attackers requesting a large number of messages to exhaust funds.
+- Calls and SMS messages may cost money to send. 
+- Need to protect against attackers requesting a large number of messages to exhaust funds.
 - Susceptible to SIM swapping attacks.
 - SMS messages may be received on the same device the user is authenticating from.
 - Susceptible to phishing.
