@@ -272,8 +272,8 @@ Judge such a source on the same criteria as a detection tool, plus:
 - Free
     - Linux distribution security teams are the reference model here: [Debian](https://www.debian.org/security/faq) and [Red Hat](https://access.redhat.com/security/updates/backporting) both backport security fixes into the version shipped in the stable release instead of upgrading it. When the dependency is consumed as an operating system package, take the distribution's patched build rather than maintaining a private patch.
 - Commercial
+    - [Seal Security](https://docs.sealsecurity.io/introduction/what-is-seal): backported patches published as sealed versions built from the version in use.
     - [HeroDevs](https://www.herodevs.com/support): maintained drop-in replacements for end-of-life open source versions.
     - [Chainguard](https://www.chainguard.dev/unchained/chainguard-libraries-for-python-now-generally-available-with-cve-remediation-and-malware-protection): backported patches for selected critical and high severity vulnerabilities in its library builds.
-    - [Seal Security](https://docs.sealsecurity.io/introduction/what-is-seal): backported patches published as sealed versions built from the version in use.
 
 This list is not exhaustive and coverage changes quickly, so verify it against the project's own ecosystems and version lines.
