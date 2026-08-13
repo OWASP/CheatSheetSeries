@@ -260,20 +260,13 @@ It's important to ensure, during the selection process of a vulnerable dependenc
 
 ### Remediation and maintained backports
 
-The tools above detect vulnerable dependencies, they do not fix them. When the fixed version cannot be adopted, the patch still has to come from somewhere: either the development team maintains it or someone else does. The sources below maintain patches for versions that upstream no longer fixes.
+The tools above detect vulnerable dependencies, they do not fix them. When the fixed version cannot be adopted, the patch still has to come from somewhere: either the development team maintains it or someone else does.
 
-Judge such a source on the same criteria as a detection tool, plus:
+Linux distribution security teams are the reference model for the second option. [Debian](https://www.debian.org/security/faq) and [Red Hat](https://access.redhat.com/security/updates/backporting) both backport security fixes into the version shipped in the stable release instead of upgrading it. When the dependency is consumed as an operating system package, take the distribution's patched build rather than maintaining a private patch.
+
+Language ecosystem packages are rarely covered that way, so the choice there is between maintaining the patch in-house and paying someone to maintain it. Judge either option on the same criteria as a detection tool, plus:
 
 - Coverage of the ecosystems, version lines and severities the project depends on, with a published response time.
 - Publication of the patch itself and of its provenance, so that the change can be reviewed instead of being trusted blindly.
 - Delivery as a compatible artifact through a registry or proxy that the build already uses, so that no manifest rewrite is required.
 - A documented way out, so that leaving the source does not mean re-patching everything from scratch.
-
-- Free
-    - Linux distribution security teams are the reference model here: [Debian](https://www.debian.org/security/faq) and [Red Hat](https://access.redhat.com/security/updates/backporting) both backport security fixes into the version shipped in the stable release instead of upgrading it. When the dependency is consumed as an operating system package, take the distribution's patched build rather than maintaining a private patch.
-- Commercial
-    - [Seal Security](https://seal.security): backported patches published as sealed versions built from the version in use.
-    - [HeroDevs](https://www.herodevs.com/support): maintained drop-in replacements for end-of-life open source versions.
-    - [Chainguard](https://www.chainguard.dev/unchained/chainguard-libraries-for-python-now-generally-available-with-cve-remediation-and-malware-protection): backported patches for selected critical and high severity vulnerabilities in its library builds.
-
-This list is not exhaustive and coverage changes quickly, so verify it against the project's own ecosystems and version lines.
