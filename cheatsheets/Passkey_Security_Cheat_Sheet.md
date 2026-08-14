@@ -194,6 +194,8 @@ Choose policy according to the application's threat model:
 
 ## Deployment and Review Checklist
 
+Use this checklist together with the W3C [registration](https://www.w3.org/TR/webauthn-3/#sctn-registering-a-new-credential) and [authentication](https://www.w3.org/TR/webauthn-3/#sctn-verifying-assertion) verification procedures.
+
 ### Server and Protocol
 
 - Use a maintained WebAuthn server library and keep it updated.
