@@ -2,9 +2,9 @@
 
 ## Introduction
 
-Passkeys are [WebAuthn public key credentials](https://www.w3.org/TR/webauthn-3/#sctn-use-cases) that let a user authenticate without sending a shared secret to the application. The authenticator keeps the private key and the relying party stores a public key. A passkey is scoped to a relying party identifier (RP ID), which provides phishing resistance when the ceremony and server-side verification are implemented correctly.
+Passkeys are [discoverable WebAuthn public key credentials](https://www.w3.org/TR/webauthn-3/#client-side-discoverable-public-key-credential-source) used for passwordless authentication without sending a shared secret to the application. Web applications exercise passkeys through WebAuthn. The authenticator keeps the private key and the relying party stores a public key. A passkey is scoped to a relying party identifier (RP ID), which provides phishing resistance when the ceremony and server-side verification are implemented correctly.
 
-This cheat sheet is for developers who build the relying-party side of passkey registration, authentication, credential management, and account recovery. The main recommendations are:
+This cheat sheet is for developers who build the WebAuthn relying-party side of passkey registration, authentication, credential management, and account recovery. Its scope includes passkeys used with [platform and roaming authenticators](https://www.w3.org/TR/webauthn-3/#sctn-authenticator-taxonomy), including security keys that support discoverable credentials, and both synced and device-bound passkeys. [Legacy FIDO U2F/CTAP1 second-factor credentials](https://www.w3.org/TR/webauthn-3/#sctn-backwards-compatibility-with-fido-u2f) are outside this passkey scope. The main recommendations are:
 
 - Use a maintained WebAuthn server library and validate every required ceremony field on the server.
 - Bind registration to the intended account and require recent authentication before changing passkeys.
@@ -19,7 +19,8 @@ This cheat sheet is for developers who build the relying-party side of passkey r
 - The **relying party (RP)** is the application that registers and authenticates users.
 - The **client** is the browser or other software that calls the WebAuthn API.
 - The **authenticator** creates credentials and signs authentication assertions. It can be built into a device or be a separate roaming authenticator.
-- A **passkey** is a discoverable WebAuthn credential. It may be device-bound or may be synced between devices by a credential provider.
+- The [**WebAuthn/FIDO2 protocol**](https://www.w3.org/TR/webauthn-3/#sctn-intro) spans the RP, client, and authenticator. WebAuthn is the web-facing API used by RPs, while CTAP handles communication between clients and roaming authenticators.
+- A **passkey** is a discoverable WebAuthn credential used for passwordless authentication. It may be held by a platform or roaming authenticator, and it may be device-bound or synced between devices by a credential provider.
 - The **credential ID** identifies a credential to the RP. The corresponding private key remains under authenticator control.
 - The **user handle** is an opaque RP-generated identifier for an account. It is not a username or email address.
 - **User presence (UP)** shows that a person interacted with the authenticator.
@@ -141,7 +142,7 @@ Create an authenticated application session only after every required check succ
 
 ### Handle Signature Counters Conservatively
 
-An increasing signature counter can provide a signal that some authenticators have been cloned. The WebAuthn [signature counter considerations](https://www.w3.org/TR/webauthn-3/#sctn-sign-counter) explain why it is not a universal clone-detection mechanism. Some authenticators do not implement a counter, and a synced credential may be used from multiple authenticator instances whose counter behavior is not strictly monotonic.
+A non-increasing signature counter can signal that an authenticator may be cloned, malfunctioning, or affected by out-of-order assertion processing. The WebAuthn [signature counter considerations](https://www.w3.org/TR/webauthn-3/#sctn-sign-counter) explain why it is not a universal clone-detection mechanism. Some authenticators do not implement a counter, and a synced credential may be used from multiple authenticator instances whose counter behavior is not strictly monotonic.
 
 When a nonzero counter does not increase as expected, record the event and evaluate it with other account-risk signals. Do not automatically lock out every user solely because of a counter anomaly. Follow the selected library's guidance and document the RP's response policy.
 
