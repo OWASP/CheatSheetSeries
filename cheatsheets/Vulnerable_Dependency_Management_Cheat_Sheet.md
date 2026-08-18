@@ -202,6 +202,14 @@ If possible, create a unit test that mimics the vulnerability in order to ensure
 
 If you have a set of automated unit or integration or functional or security tests that exists for the application then run them to verify that the patch does not impact the stability of the application.
 
+A patch written in-house does not get the benefit of the doubt that an upstream release gets, so hold it to an explicit bar before considering the vulnerability handled:
+
+- The test reproducing the vulnerability fails against the unpatched dependency and passes against the patched one. A test that passes in both cases proves nothing about the patch.
+- The tests of the dependency itself still pass, which catches behavior that the patch broke but the application does not exercise directly.
+- The alert raised by the detection tool is suppressed per [CVE](https://en.wikipedia.org/wiki/Common_Vulnerabilities_and_Exposures) only once the two points above hold. Suppressing the alert, or changing a version string so that the tool stops matching it, records a fix but does not make one.
+
+Expect the tool to keep flagging the dependency even after a correct patch, because [looking at the version number of a package will not tell you whether the fix is present](https://access.redhat.com/security/updates/backporting). That is a reporting problem to be handled with a scoped suppression, not a reason to change the patch.
+
 ### Case 4
 
 #### Context
