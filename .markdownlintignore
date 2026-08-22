@@ -1,0 +1,4 @@
+# Claude Code agent/command prompt files are tooling, not cheat sheet content,
+# and are not subject to the documentation markdown rules (they use YAML
+# frontmatter and prose, which would trip MD041 etc.).
+.claude/

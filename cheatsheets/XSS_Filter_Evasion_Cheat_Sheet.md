@@ -687,7 +687,9 @@ This attack only works in IE and remember that you need to be between HTML and B
 </BODY></HTML>
 ```
 
+<!-- textlint-disable terminology -->
 (This is how Grey Magic hacked Hotmail and Yahoo!)
+<!-- textlint-enable terminology -->
 
 ### Assuming you can only fit in a few characters and it filters against `.js`
 

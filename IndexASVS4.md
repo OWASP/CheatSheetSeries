@@ -241,7 +241,7 @@ None.
 
 ### V3.5 Token-based Session Management
 
-[JSON Web Token Cheat Sheet for Java](cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.md)
+[JSON Web Token Cheat Sheet](cheatsheets/JSON_Web_Token_Cheat_Sheet.md)
 
 [REST Security Cheat Sheet](cheatsheets/REST_Security_Cheat_Sheet.md)
 

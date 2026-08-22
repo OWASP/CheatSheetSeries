@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This cheatsheet covers defences against two common types of authentication-related attacks: credential stuffing and password spraying. Although these are separate, distinct attacks, in many cases the defences that would be implemented to protect against them are the same, and they would also be effective at protecting against brute-force attacks.  A summary of these different attacks is listed below:
+This cheatsheet covers defenses against two common types of authentication-related attacks: credential stuffing and password spraying. Although these are separate, distinct attacks, in many cases the defenses that would be implemented to protect against them are the same, and they would also be effective at protecting against brute-force attacks.  A summary of these different attacks is listed below:
 
 | Attack Type | Description |
 |-------------|-------------|
@@ -108,7 +108,7 @@ Requiring users to create their own username when registering on the website mak
 
 The majority of off-the-shelf tools are designed for a single step login process, where the credentials are POSTed to the server, and the response indicates whether or not the login attempt was successful. By adding additional steps to this process, such as requiring the username and password to be entered sequentially, or requiring that the user first obtains a random [CSRF Token](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md) before they can login, this makes the attack slightly more difficult to perform, and doubles the number of requests that the attacker must make.
 
-Multi-step login processes, however, should be mindful that they do not faciliate [user enumeration](Authentication_Cheat_Sheet.md).  Enumerating users prior to a credential stuffing attack may result in a harder to identify, lower request volume attack.
+Multi-step login processes, however, should be mindful that they do not facilitate [user enumeration](Authentication_Cheat_Sheet.md).  Enumerating users prior to a credential stuffing attack may result in a harder to identify, lower request volume attack.
 
 ### Require JavaScript and Block Headless Browsers
 
@@ -126,7 +126,7 @@ These techniques provide some level of security without resorting to user tracki
 
 [ASVS v4.0 Password Security Requirements](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x11-V2-Authentication.md#v21-password-security-requirements) provision (2.1.7) on verifying new passwords presence in breached password datasets should be implemented.
 
-There are both commercial and free services that may be of use for validating passwords presence in prior breaches.  A well known free service for this is [Pwned Passwords](https://haveibeenpwned.com/Passwords). You can host a copy of the application yourself, or use the [API](https://haveibeenpwned.com/API/v2#PwnedPasswords).
+There are both commercial and free services that may be of use for validating passwords presence in prior breaches.  A well known free service for this is [Pwned Passwords](https://haveibeenpwned.com/Passwords). You can host a copy of the application yourself, or use the [API](https://haveibeenpwned.com/API/v3#PwnedPasswords).
 
 ### Notify users about unusual security events
 

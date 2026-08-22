@@ -1,6 +1,6 @@
 # Index Alphabetical
 
-**91** cheat sheets available.
+**92** cheat sheets available.
 
 *Icons beside the cheat sheet name indicate in which language(s) code snippet(s) are provided.*
 
@@ -25,6 +25,8 @@
 ## B
 
 [Bean Validation Cheat Sheet](cheatsheets/Bean_Validation_Cheat_Sheet.md) ![Java](assets/Index_Java.svg) ![Xml](assets/Index_Xml.svg)
+
+[Business Logic Security Cheat Sheet](cheatsheets/Business_Logic_Security_Cheat_Sheet.md)
 
 ## C
 
@@ -108,7 +110,7 @@
 
 [JAAS Cheat Sheet](cheatsheets/JAAS_Cheat_Sheet.md) ![Java](assets/Index_Java.svg)
 
-[JSON Web Token for Java Cheat Sheet](cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.md) ![Javascript](assets/Index_Javascript.svg) ![Java](assets/Index_Java.svg) ![Json](assets/Index_Json.svg) ![Sql](assets/Index_Sql.svg)
+[JSON Web Token Cheat Sheet](cheatsheets/JSON_Web_Token_Cheat_Sheet.md) ![Javascript](assets/Index_Javascript.svg) ![Java](assets/Index_Java.svg) ![Json](assets/Index_Json.svg) ![Sql](assets/Index_Sql.svg)
 
 ## K
 
@@ -170,6 +172,8 @@
 
 ## R
 
+[RAG Security Cheat Sheet](cheatsheets/RAG_Security_Cheat_Sheet.md)
+
 [REST Security Cheat Sheet](cheatsheets/REST_Security_Cheat_Sheet.md)
 
 [REST Assessment Cheat Sheet](cheatsheets/REST_Assessment_Cheat_Sheet.md)
@@ -181,6 +185,8 @@
 [Secure Product Design Cheat Sheet](cheatsheets/Secure_Product_Design_Cheat_Sheet.md)
 
 [Secure Cloud Architecture Cheat Sheet](cheatsheets/Secure_Cloud_Architecture_Cheat_Sheet.md)
+
+[Secure Coding with AI Cheat Sheet](cheatsheets/Secure_Coding_with_AI_Cheat_Sheet.md)
 
 [Securing Cascading Style Sheets Cheat Sheet](cheatsheets/Securing_Cascading_Style_Sheets_Cheat_Sheet.md)
 

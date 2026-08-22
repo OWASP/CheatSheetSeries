@@ -27,7 +27,7 @@ It's highly recommended to perform automated analysis of the dependencies from t
 
 **Note:**
 
-In the rest of the cheat sheet, when we refer to _development team_ then we assume that the team contains a member with the required application security skills or can refer to someone in the company having these kind of skills to analyse the vulnerability impacting the dependency.
+In the rest of the cheat sheet, when we refer to _development team_ then we assume that the team contains a member with the required application security skills or can refer to someone in the company having these kind of skills to analyze the vulnerability impacting the dependency.
 
 ## Remark about the detection
 

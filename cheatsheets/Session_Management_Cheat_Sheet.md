@@ -134,9 +134,22 @@ See also: [HttpOnly](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#S
 
 ### SameSite Attribute
 
-SameSite defines a cookie attribute preventing browsers from sending a SameSite flagged cookie with cross-site requests. The main goal is to mitigate the risk of cross-origin information leakage, and provides some protection against cross-site request forgery attacks.
+The `SameSite` attribute controls whether browsers send a cookie with cross-site requests. `SameSite=Strict` excludes cross-site requests, while `SameSite=Lax` permits top-level cross-site navigations that use safe HTTP methods. Treat `SameSite` as [defense in depth against CSRF](Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.md#samesite-cookie-attribute), not as a replacement for a CSRF token. Session cookies must explicitly set `SameSite=Strict` (preferred) or `SameSite=Lax`. Never use `SameSite=None` without `Secure`, and do not rely on the browser-default value, which varies across browsers and versions.
 
-See also: [SameSite](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#SameSite_cookies)
+See also: [SameSite](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie#samesitesamesite-value)
+
+### Cookie Name Prefixes
+
+Use cookie name prefixes to bind cookies to security properties at the browser level ([RFC 6265bis §4.1.3](https://datatracker.ietf.org/doc/html/draft-ietf-httpbis-rfc6265bis)):
+
+- `__Host-` — the cookie must be set with `Secure`, must not have a `Domain` attribute, and must use `Path=/`. Prevents subdomain forgery and HTTPS downgrade attacks. **Recommended for session IDs.**
+- `__Secure-` — the cookie must be set with `Secure`. Use only when subdomain sharing is required.
+
+Example:
+
+```http
+Set-Cookie: __Host-SessionID=<value>; Secure; HttpOnly; SameSite=Strict; Path=/
+```
 
 ### Domain and Path Attributes
 
@@ -171,6 +184,9 @@ The Web Hypertext Application Technology Working Group (WHATWG) describes the HT
 Unlike HTTP cookies, the contents of `localStorage` and `sessionStorage` are not automatically shared within requests or responses by the browser and are used for storing data client-side.
 
 ### The localStorage API
+
+> [!WARNING]
+> Do not store authentication tokens, session IDs, JWTs, refresh tokens, or any credential in `localStorage` or `sessionStorage`. These APIs are accessible to any JavaScript executing in the origin, so a single XSS vulnerability discloses every token. Use `HttpOnly; Secure; SameSite=Strict` cookies (preferred) or a Backend-for-Frontend (BFF) pattern. See [OAuth 2.0 for Browser-Based Apps](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-browser-based-apps).
 
 #### Scope
 

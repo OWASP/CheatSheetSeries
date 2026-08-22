@@ -88,7 +88,7 @@ The `Cache-Control` header defines how responses are cached by browsers and inte
 
 These directives help reduce the risk of sensitive data being stored or exposed through caching, but use `no-store` when storage of sensitive data must be strictly prevented.
 
-### References
+#### References
 
 - [MDN - Cache-Control](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control)
 
@@ -297,13 +297,13 @@ If you do not control links on your website, you might want to set `off` as a va
 
 - *NOTE*: Do not rely on this functionality for anything production sensitive: it is not standard or fully supported and implementation may vary among browsers.
 
-### Public-Key-Pins (HPKP)
+### Public-Key-Pins (HPKP) ❌
 
-The HTTP `Public-Key-Pins` response header is used to associate a specific cryptographic public key with a certain web server to decrease the risk of MITM attacks with forged certificates.
+The HTTP `Public-Key-Pins` response header was used to associate a specific cryptographic public key with a web server to mitigate MITM attacks with forged certificates. It was removed from Chromium in 2018 and is unsupported by all modern browsers.
 
 #### Recommendation
 
-This header is deprecated and should not be used anymore.
+Do not use. Remove any `Public-Key-Pins` or `Public-Key-Pins-Report-Only` headers from production. Rely on Certificate Transparency (CT) and CAA DNS records, which provide superior compromise detection without the operational brittleness of pinning.
 
 ### Secure File Download Headers
 

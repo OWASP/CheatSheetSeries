@@ -325,7 +325,7 @@ public static class AesGcmSimple
 
 - Again, follow the algorithm guidance in the [OWASP Cryptographic Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html#algorithms).
 
-The following code snippet shows an example of using Eliptic Curve/Diffie Helman (ECDH) together with AES-GCM to perform encryption/decryption of data between two different sides without the need the transfer the symmetric key between the two sides. Instead, the sides exchange public keys and can then use ECDH to generate a shared secret which can be used for the symmetric encryption.
+The following code snippet shows an example of using Elliptic Curve/Diffie-Hellman (ECDH) together with AES-GCM to perform encryption/decryption of data between two different sides without the need to transfer the symmetric key between the two sides. Instead, the sides exchange public keys and can then use ECDH to generate a shared secret which can be used for the symmetric encryption.
 
 Again, it is strongly recommended to have a cryptography expert review your final design and code, as even the most trivial error can severely weaken your encryption.
 
@@ -801,7 +801,7 @@ DO NOT: Use the BinaryFormatter type which is dangerous and [not recommended]
 .NET offers several in-box serializers that can handle untrusted data safely:
 
 - XmlSerializer and DataContractSerializer to serialize object graphs into and from XML. Do not confuse DataContractSerializer with NetDataContractSerializer.
-- BinaryReader and BinaryWriter for XML and JSON.
+- BinaryReader and BinaryWriter for reading and writing primitive data types (such as Int32, Double, Boolean, and String) in binary format.
 - The System.Text.Json APIs to serialize object graphs into JSON.
 
 ### A09 Security Logging and Monitoring Failures
@@ -1024,7 +1024,10 @@ This section contains guidance for specific topics in .NET.
 
 - Lock down config files.
     - Remove all aspects of configuration that are not in use.
-    - Encrypt sensitive parts of the `web.config` using `aspnet_regiis -pe` ([command line help](https://docs.microsoft.com/en-us/previous-versions/dotnet/netframework-2.0/k6h9cz8h(v=vs.80))).
+    - **Do not store secrets in source-controlled config files (`web.config`, `appsettings.json`).** Keep secrets out of the configuration file entirely.
+        - Modern .NET (Core / 6+ / 8+): use [User Secrets](https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets) for development and a managed secret store (Azure Key Vault, AWS Secrets Manager, HashiCorp Vault) accessed via Managed Identity / Workload Identity for production.
+        - Legacy .NET Framework (4.7.1+): use [Configuration Builders](https://learn.microsoft.com/en-us/aspnet/config-builder) (e.g. `Microsoft.Configuration.ConfigurationBuilders.Azure`, `...Environment`) to inject secrets at runtime from a secret store or environment variables, so they never appear in `web.config`.
+        - Only as a last resort — for legacy applications that cannot be modified — encrypt sensitive `web.config` sections using `aspnet_regiis -pe` ([command line help](https://docs.microsoft.com/en-us/previous-versions/dotnet/netframework-2.0/k6h9cz8h(v=vs.80))). Note that this only protects the file at rest on the server; the application still loads the plaintext into memory.
 - For ClickOnce applications, the .NET Framework should be upgraded to use the latest version to ensure support of TLS 1.2 or later.
 
 ### Data Access

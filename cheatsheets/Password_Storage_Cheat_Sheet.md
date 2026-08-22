@@ -4,7 +4,7 @@
 
 This cheat sheet advises you on the proper methods for storing passwords for authentication. When passwords are stored, they must be protected from an attacker even if the application or database is compromised. Fortunately, a majority of modern languages and frameworks provide built-in functionality to help store passwords safely.
 
-However, once an attacker has acquired stored password hashes, they are always able to brute force hashes offline. Defenders can slow down offline attacks by selecting hash algorithms that are as resource intensive as possible.
+Passwords should never be stored in plain text. Instead, they must be protected using strong, slow hashing algorithms such as Argon2id, bcrypt, or PBKDF2. A unique salt must be added to each password to prevent attackers from using precomputed lookup tables like rainbow tables. Fast hashing algorithms such as SHA‑256 are not suitable for password storage because they allow attackers to perform large numbers of guesses quickly. Using slow, memory‑hard algorithms makes brute‑force attacks significantly more difficult, expensive, and time‑consuming.
 
 To sum up our recommendations:
 
@@ -161,15 +161,15 @@ To summarize if bcrypt has to be used and the password should to be pre-hashed y
 
 ### PBKDF2
 
-Since [PBKDF2](https://en.wikipedia.org/wiki/PBKDF2) is recommended by [NIST](https://pages.nist.gov/800-63-3/sp800-63b.html#memsecretver) and has FIPS-140 validated implementations, so it should be the preferred algorithm when these are required.
+Since [PBKDF2](https://en.wikipedia.org/wiki/PBKDF2) is recommended by [NIST](https://pages.nist.gov/800-63-3/sp800-63b.html#memsecretver) and has FIPS-140 validated implementations, it should be the preferred algorithm when these are required.
 
 The PBKDF2 algorithm requires that you select an internal hashing algorithm such as an HMAC or a variety of other hashing algorithms. HMAC-SHA-256 is widely supported and is recommended by NIST.
 
-The work factor for PBKDF2 is implemented through an iteration count, which should set differently based on the internal hashing algorithm used.
+The work factor for PBKDF2 is implemented through an iteration count, which should be set differently based on the internal hashing algorithm used.
 
-- PBKDF2-HMAC-SHA1: 1,400,000 iterations
-- PBKDF2-HMAC-SHA256: 600,000 iterations
+- PBKDF2-HMAC-SHA256: 600,000 iterations (recommended)
 - PBKDF2-HMAC-SHA512: 220,000 iterations
+- PBKDF2-HMAC-SHA1: 1,400,000 iterations — **legacy only**, do not select for new systems. NIST SP 800-131A Rev. 2 disallows SHA-1 for new use after 2030.
 
 ### Parallel PBKDF2
 

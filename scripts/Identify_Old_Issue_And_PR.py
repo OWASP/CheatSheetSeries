@@ -51,7 +51,7 @@ def is_old_pull_request(issue):
 
 # Grab the list of open Issues/PR
 buffer = "Grab the list of open Issues/PR via the GitHub API...\n"
-response = requests.get(ISSUE_API)
+response = requests.get(ISSUE_API, timeout=30)
 if response.status_code != 200:
     print("Cannot load the list of Issues/PR content: HTTP %s received!" % response.status_code)
     sys.exit(1)
@@ -89,9 +89,9 @@ if len(sys.argv) == 2:
         color = "good"
     else:
         color = "warning"
-    message = "{\"text\": \"Old PR and Issue identification watchdog\",\"attachments\": [ {\"fallback\": \"%s\",\"color\":\"%s\",\"title\": \"Status\",\"text\": \"%s\"}]}" % (color, buffer, buffer)
+    message = "{\"text\": \"Old PR and Issue identification watchdog\",\"attachments\": [ {\"fallback\": \"%s\",\"color\":\"%s\",\"title\": \"Status\",\"text\": \"%s\"}]}" % (buffer, color, buffer)
     request_headers = {"Content-Type": "application/json"}
-    response = requests.post(sys.argv[1], headers=request_headers, data=message)
+    response = requests.post(sys.argv[1], headers=request_headers, data=message, timeout=30)
     if response.status_code != 200:
         print("Cannot send notification to slack: HTTP %s received!" % response.status_code)
         sys.exit(2)

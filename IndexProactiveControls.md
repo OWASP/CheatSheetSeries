@@ -104,7 +104,7 @@ This cheat sheet will help users of the [OWASP Top Ten Proactive Controls 2018](
 
 [JAAS Cheat Sheet](cheatsheets/JAAS_Cheat_Sheet.md)
 
-[JSON Web Token Cheat Sheet for Java](cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.md)
+[JSON Web Token Cheat Sheet](cheatsheets/JSON_Web_Token_Cheat_Sheet.md)
 
 [Password Storage Cheat Sheet](cheatsheets/Password_Storage_Cheat_Sheet.md)
 

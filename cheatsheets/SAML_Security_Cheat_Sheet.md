@@ -278,8 +278,12 @@ SAML Signing keys are a top security asset and [target of attackers](https://www
 - [Validate Signatures](#validate-signatures)
 - Validate if signed by an authorized IdP
 - Validate IDP certificates for revocation against CRL/OCSP if they are present
+- Validate the `Destination` attribute on `<samlp:Response>` exactly matches the SP's expected Assertion Consumer Service (ACS) URL ([SAML Core 2.0 §3.2.2.1](https://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf)). Reject responses that are missing `Destination` or where it does not match — this prevents cross-SP assertion replay.
+- Validate `<saml:Audience>` matches the SP's EntityID
 - Validate NotBefore and NotOnorAfter
-- Validate Recipient attribute
+- Validate Recipient attribute, `InResponseTo`, and `<saml:SubjectConfirmationData>` (`Recipient`, `NotOnOrAfter`, `InResponseTo`)
+- Explicitly verify the signature algorithm is at least RSA-SHA-256 (or stronger). Reject SHA-1-based algorithms (`http://www.w3.org/2000/09/xmldsig#rsa-sha1`, `...#hmac-sha1`) and `<ds:DigestMethod Algorithm="...sha1">`. NIST SP 800-131A Rev. 2 disallows SHA-1 in digital signatures.
+- Verify the `<ds:Reference URI>` in the XML signature covers the `<saml:Assertion>` element being trusted. This mitigates [XML Signature Wrapping](https://arxiv.org/pdf/1401.7483v1.pdf) attacks.
 - Define criteria for SAML logout
 - Exchange assertions only over secure transports like TLS
 - Define criteria for session management

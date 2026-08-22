@@ -203,7 +203,7 @@ Sorting applied on the name is an alphabetical one.
 
 - Dr. A.L. Gottlieb - [AnthonyG@owasp.org](mailto:AnthonyG@owasp.org)
 
-## [JSON Web Token Cheat Sheet for Java](https://github.com/OWASP/CheatSheetSeries/tree/master/cheatsheets/JSON_Web_Token_Cheat_Sheet_for_Java.md)
+## [JSON Web Token Cheat Sheet](https://github.com/OWASP/CheatSheetSeries/tree/master/cheatsheets/JSON_Web_Token_Cheat_Sheet.md)
 
 - Dominique Righetto - [dominique.righetto@owasp.org](mailto:dominique.righetto@owasp.org)
 - Jim Manico - [jim.manico@owasp.org](mailto:jim.manico@owasp.org)
