@@ -144,35 +144,108 @@ Minimum policy items:
 
 ## Practical CI/CD snippets & patterns
 
-**GitHub Actions (example)** — generate CycloneDX and upload as artifact, then sign with cosign.
+**GitHub Actions (example)** — generate CycloneDX SBOM, scan for vulnerabilities, sign with keyless cosign, attest provenance, and publish to Dependency-Track.
 
 ```yaml
-name: Build and SBOM
+name: Build, SBOM, and Security
 on: [push]
+
+# Required for keyless cosign signing via GitHub OIDC
+permissions:
+  id-token: write
+  contents: read
+  packages: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      
+      # Build your application
       - name: Build
         run: ./gradlew assemble
+      
+      # Generate SBOM in CycloneDX format
       - name: Generate SBOM
         run: |
-          syft packages dir:./build/libs -o cyclonedx-json > sbom.json
+          # Install Syft if not already available
+          curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin
+          syft packages dir:./build/libs -o cyclonedx-json=sbom.json
+      
+      # Scan SBOM for vulnerabilities using Grype
+      - name: Vulnerability Scan
+        run: |
+          # Install Grype if not already available
+          curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin
+          # Fail the build on high or critical vulnerabilities
+          grype sbom:./sbom.json --fail-on high
+      
+      # Upload SBOM as build artifact for traceability
       - name: Upload SBOM
         uses: actions/upload-artifact@v4
         with:
           name: sbom
           path: sbom.json
-      - name: Sign Artifact & SBOM
+      
+      # Sign SBOM using keyless cosign (GitHub OIDC)
+      # No stored keys required - uses GitHub's identity token
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@v3
+      
+      - name: Sign SBOM (keyless)
         run: |
-          cosign sign --key ${{ secrets.COSIGN_KEY }} my-registry/my-app:${{ github.sha }}
-          cosign sign-blob --key ${{ secrets.COSIGN_KEY }} --output-signature sbom.json.sig sbom.json
-      - name: Push image
-        run: ./push-image.sh
+          # Keyless signing via GitHub OIDC - no secrets needed
+          cosign sign-blob --yes \
+            --output-certificate sbom.json.pem \
+            --output-signature sbom.json.sig \
+            sbom.json
+      
+      # Create SLSA provenance attestation
+      - name: Attest SBOM Provenance
+        run: |
+          # Generate SLSA provenance predicate
+          cosign attest-blob --yes \
+            --type slsaprovenance \
+            --predicate <(echo '{"buildType":"https://github.com/slsa-framework/slsa-github-generator@v1","builder":{"id":"'${GITHUB_SERVER_URL}'/'${GITHUB_REPOSITORY}'/actions"},"invocation":{"configSource":{"uri":"'${GITHUB_SERVER_URL}'/'${GITHUB_REPOSITORY}'","digest":{"sha1":"'${GITHUB_SHA}'"},"entryPoint":"'${GITHUB_WORKFLOW}'"}}}') \
+            sbom.json
+      
+      # Push container image (if applicable)
+      - name: Build and Push Image
+        run: |
+          docker build -t my-registry/my-app:${{ github.sha }} .
+          docker push my-registry/my-app:${{ github.sha }}
+      
+      # Sign container image (keyless)
+      - name: Sign Container Image
+        run: |
+          cosign sign --yes my-registry/my-app:${{ github.sha }}
+      
+      # Publish SBOM to Dependency-Track for centralized management
+      - name: Publish SBOM to Dependency-Track
+        env:
+          DTRACK_URL: ${{ secrets.DTRACK_URL }}  # https://dtrack.example.com
+          DTRACK_API_KEY: ${{ secrets.DTRACK_API_KEY }}
+          PROJECT_NAME: "my-app"
+          PROJECT_VERSION: ${{ github.sha }}
+        run: |
+          # Upload SBOM to Dependency-Track via REST API
+          curl -X POST "${DTRACK_URL}/api/v1/bom" \
+            -H "X-Api-Key: ${DTRACK_API_KEY}" \
+            -H "Content-Type: multipart/form-data" \
+            -F "project=${PROJECT_NAME}" \
+            -F "projectVersion=${PROJECT_VERSION}" \
+            -F "bom=@sbom.json"
 ```
 
-**Fail-fast vs Warn**: In CI, fail the pipeline if SBOM generation fails, but avoid failing builds on non-actionable low-severity findings — instead surface results to triage dashboards.
+**Key improvements in this example:**
+
+1. **Keyless signing** — Uses GitHub OIDC (`id-token: write`) instead of storing cosign keys in secrets. This eliminates key rotation burden and follows current Sigstore best practice.
+2. **Vulnerability scanning** — Grype scans the SBOM and fails the build on high/critical vulnerabilities, gating the release.
+3. **Provenance attestation** — `cosign attest-blob` creates an SLSA provenance predicate binding the SBOM to the build process.
+4. **SBOM publishing** — Uploads to Dependency-Track for centralized vulnerability management and policy enforcement.
+
+**Fail-fast vs Warn**: In CI, fail the pipeline if SBOM generation fails, but avoid failing builds on non-actionable low-severity findings — instead surface results to triage dashboards. Adjust the `--fail-on` threshold in Grype based on your risk tolerance (`critical`, `high`, `medium`, `low`, or `negligible`).
 
 ## Example workflows (short)
 
