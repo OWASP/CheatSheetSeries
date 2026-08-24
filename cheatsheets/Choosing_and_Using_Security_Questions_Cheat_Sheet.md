@@ -24,7 +24,9 @@ Any security questions presented to users to reset forgotten passwords must meet
 
 ### Types of Security Questions
 
+<!-- textlint-disable terminology -->
 Security questions fall into two main types. With *user defined* security questions, the user must choose a question from a list, and provide an answer to the question. Common examples are "What is your favourite colour?" or "What was your first car?"
+<!-- textlint-enable terminology -->
 
 These are easy for applications to implement, as the additional information required is provided by the user when they first create their account. However, users will often choose weak or easily discovered answers to these questions.
 
@@ -70,7 +72,7 @@ As such, it is generally best not to allow users to write their own questions.
 
 #### Restricting Answers
 
-Enforcing a minimum length for answers can prevent users from entering strings such as "a" or "123" for their answers. However, depending on the questions asked, it could also prevent users from being able to correctly answer the question. For example, asking for a first name or surname could result in a two letter answer such as "Li", and a colour-based question could be four letters such as "blue".
+Enforcing a minimum length for answers can prevent users from entering strings such as "a" or "123" for their answers. However, depending on the questions asked, it could also prevent users from being able to correctly answer the question. For example, asking for a first name or surname could result in a two letter answer such as "Li", and a color-based question could be four letters such as "blue".
 
 Answers should also be checked against a denylist, including:
 

@@ -182,6 +182,56 @@ bad_secret = secrets.token_bytes(128//8)
 meh_secret_for_hs512 = secrets.token_bytes(256//8)
 ```
 
+### Header fields
+
+The following table lists some important JWT (JOSE) header parameters for security purpose.
+
+| Parameter       | Semantic                               | Security impact
+|-----------------|----------------------------------------|----------------
+| `alg`           | Signature algorithm                    | Signature algorithm used, risk of key type confusion
+| `typ`           | Media type                             | Protection against token type confusion
+| `jku`           | Verification key (URL to the JWK)      | Risk of untrusted key usage, risk or SSRF
+| `x5u`           | Verification key (URL to certificate)  | Risk of untrusted key usage, risk or SSRF
+| `jwk`           | Verification key (JWK)                 | Risk of untrusted key usage
+| `kid`           | Verification key (key ID)              | Risk of untrusted key usage
+| `x5c`           | Verification key (certificate chain)   | Risk of untrusted key usage
+| `x5t`           | Verification key (certificate hash)    | Risk of untrusted key usage
+| `x5t#S256`      | Verification key (certificate hash)    | Risk of untrusted key usage
+
+See the [header parameters subregistry](https://www.iana.org/assignments/jose/jose.xhtml#web-signature-encryption-header-parameters) for a list of standard JWT (JOSE) header parameters.
+
+### Claims
+
+The following table lists some important JWT claims for security purpose.
+
+| Parameter       | Semantic                               | Security impact
+|-----------------|----------------------------------------|----------------
+| `exp`           | Expiration                             | Token validity
+| `nbf`           | Not valid before                       | Token validity
+| `status`        | Reference to token status list         | Token revocation, risk of SSRF
+| `iss`           | Issuer                                 | Scoping of claims (eg. `iss`), risk of untrusted issuer, risk of SSRF
+| `aud`           | Audience                               | Protection against audience confusion
+| `sub`, `sub_id` | Subject identifier                     | Subject/user identification, risk of cross-issuer user impersonation
+| `jti`           | Token identifier                       | Audit (logs)
+| `iat`           | Issuance timestamp                     | Audit (logs)
+| `azp`           | Authorized Party (OIDC)                | Audit (logs), authorization
+| `client_id`     | Client (OAuth 2)                       | Audit (logs), authorization
+| `auth_time`     | Authentication timestamp (OIDC)        | Enforcing authentication freshness
+| `acr`           | Authentication class                   | Enforcing authentication strength (eg. MFA)
+| `amr`           | Authentication method reference        | Enforcing authentication strength (eg. MFA)
+| `cnf`           | Token holder (public) key              | Sender constrained token
+| `may_act`       | Authorized Actor (impersonation/delegation) | Risk of cross-issuer user impersonation
+| `act`           | Actor (delegation, “on behalf of”)     | Audit (logs), risk of invalid actor imputation
+| `scope`         | Token restriction (OAuth 2)            | Authorization
+| `roles`         | User roles                             | Authorization, risk of spoofed cross-issuer authorization
+| `groups`        | User groups                            | Authorization, risk of spoofed cross-issuer authorization
+| `entitlements`  | User entitlements                      | Authorization, risk of spoofed cross-issuer authorization
+| `authorization_details` | Fine grained authorizations    | Authorization, risk of spoofed cross-issuer authorization
+
+See the [JSON Web Token Claims subregistry](https://www.iana.org/assignments/jwt/jwt.xhtml) for a list of standard JWT claims.
+
+Many implementation have built-in support for validating core JWT claims such as `nbf`, `exp`, `iss` and `aud`.
+
 ## Threats on JWTs
 
 See [RFC 8725](https://datatracker.ietf.org/doc/html/rfc8725#name-threats-and-vulnerabilities) for a discussion on threats and vulnerabilities related to JWT.
@@ -195,6 +245,84 @@ This issue should now be fixed in JWT libraries.
 Mitigation:
 
 - Make sure that `"alg":"none"` is not accepted by your JWT parser. It should be disabled by default by recent implementations.
+
+### Key type confusion
+
+Some JWT implementations would accept to use a public key intended for public-key digital signature as if it was a secret key used for MAC verification. In this context, an attacker could forge a MAC-based JWT by using the public key of the real issuer as if it was a secret key.
+
+This threat is also called “key confusion” or “algorithm confusion”.
+
+Example of legitimate token issuance:
+
+```python
+token = jwt.encode(claims, private_key_bytes, algorithm="ES256")
+```
+
+Example of attacker forging a token based on key type confusion:
+
+```python
+token = jwt.encode(claims, public_key_bytes, algorithm="HS256")
+```
+
+Example of validation potentially vulnerable to key type confusion:
+
+```python
+# If the token is using a MAC, the library might interpret the public key bytes as a MAC secret:
+decoded = jwt.decode(token, public_key_bytes, algorithms=jwt.algorithms.get_default_algorithms())
+```
+
+Note: this issue is [mitigated](https://github.com/jpadilla/pyjwt/commit/9c528670c455b8d948aff95ed50e22940d1ad3fc) in recent versions of the PyJWT library by detecting whether a MAC key appears to be a public key (in PEM of SSH format).
+
+Mitigations (at validation):
+
+- use a library which is not vulnerable to the issue (eg. strong-typing of the type of key);
+- chose the key depending on the requested signature algorithm or validate that the key used for validation is consistent with the signature algorithm;
+- if possible, hardcode the accepted algorithms and do not mix public-key digital signatures algorithms and MAC algorithms.
+
+Example of validation not vulnerable because MAC algorithms are not accepted:
+
+```python
+decoded = jwt.decode(token, public_key_bytes, algorithms=["ES256"])
+```
+
+Example of validation not vulnerable because the key is strictly typed:
+
+```python
+from joserfc import jwt, jwk
+
+# {"kty":"EC",
+#  "crv":"P-256",
+#  "x":"f83OJ3D2xF1Bg8vub9tLe1gHMzV76e8Tus9uPHvRVEU",
+#  "y":"x_FEzRu9m36HLN_tue659LNpXW6pCyStikYjKIWI5a0"}
+public_key = jwk.import_key(jwk)
+decoded = jwt.decode(encoded, public_key)
+```
+
+References:
+
+- [Algorithm confusion attacks](https://portswigger.net/web-security/jwt/algorithm-confusion);
+- [CVE-2022-29217](https://nvd.nist.gov/vuln/detail/cve-2022-29217), Key confusion through non-blocklisted public key formats (PyJWT);
+- [CVE-2023-48223](https://nvd.nist.gov/vuln/detail/CVE-2023-48223), JWT Algorithm Confusion in fast-jwt.
+
+### Trusting key material named in the token header
+
+A JWS header can carry the verification key itself or a pointer to it: `jwk` (an embedded key), `jku` (a URL to a JWK Set), `x5u` (a URL to an X.509 certificate) and `x5c` (an embedded certificate chain), alongside the key selection hints `kid`, `x5t` and `x5t#S256`. An application that resolves or selects its verification key from these header parameters, without tying the result back to something it already trusts, can be steered into trusting a key the attacker controls, because the header is unauthenticated attacker input.
+
+An attacker can forge their own token, include their own public key in `jwk`, or point `jku` or `x5u` at a JWK Set or certificate they host, and sign the token with the matching private key. A verifier that trusts the key it has just read from the token accepts the forgery. An attacker can also try to smuggle a symmetric key through the same parameters, in the hope that the implementation will use it for MAC verification.
+
+These parameters have legitimate uses, so the distinction is anchoring rather than avoidance. `x5c` and `x5u` are usable where the certificate chain validates up to an anchor already trusted for that issuer, and `kid`, `x5t` and `x5t#S256` are the normal way to choose which key from an already configured JWKS should verify a given token. What must not happen is treating any of them as the source of trust rather than as a pointer within it.
+
+Mitigations:
+
+- Do not take the verification key from the token unless that key can be tied, through a chain of trust, to a root trust anchor associated with the issuer.
+- Prefer trust material established out of band, such as a pinned key or the `jwks_uri` published in the issuer's metadata.
+- Validate or sanitize `kid` before using it in a lookup, since it also reaches databases and directories as an injection vector.
+- Where keys are fetched by URL, see the [Server Side Request Forgery Prevention Cheat Sheet](Server_Side_Request_Forgery_Prevention_Cheat_Sheet.md).
+
+References:
+
+- [RFC 8725, Do Not Trust Received Claims](https://datatracker.ietf.org/doc/html/rfc8725#name-do-not-trust-received-claim);
+- [CVE-2018-0114](https://nvd.nist.gov/vuln/detail/CVE-2018-0114), a key embedded in the JWS header trusted for verification.
 
 ## JWT revocation
 
