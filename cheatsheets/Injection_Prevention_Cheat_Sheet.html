@@ -2159,38 +2159,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#escape-all-variables-using-the-right-ldap-encoding-function" class="md-nav__link">
+  <a href="#use-the-right-ldap-encoding-function" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Escape all variables using the right LDAP encoding function
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#example-code-java_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Example code - Java
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Example code - Java">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#safe-java-for-ldap-escaping-example" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Safe Java for LDAP escaping Example
+        Use the right LDAP encoding function
       
     </span>
   </a>
@@ -2286,7 +2258,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#example-code-java_2" class="md-nav__link">
+  <a href="#example-code-java_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         Example code - Java
@@ -4830,38 +4802,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#escape-all-variables-using-the-right-ldap-encoding-function" class="md-nav__link">
+  <a href="#use-the-right-ldap-encoding-function" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Escape all variables using the right LDAP encoding function
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#example-code-java_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Example code - Java
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Example code - Java">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#safe-java-for-ldap-escaping-example" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Safe Java for LDAP escaping Example
+        Use the right LDAP encoding function
       
     </span>
   </a>
@@ -4957,7 +4901,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#example-code-java_2" class="md-nav__link">
+  <a href="#example-code-java_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         Example code - Java
@@ -5193,53 +5137,8 @@
 <h6 id="automated-exploitation_1">Automated Exploitation<a class="headerlink" href="#automated-exploitation_1" title="Permanent link">&para;</a></h6>
 <p>Scanner module of tool like OWASP <a href="https://www.zaproxy.org/">ZAP</a> have module to detect LDAP injection issue.</p>
 <h5 id="remediation_1">Remediation<a class="headerlink" href="#remediation_1" title="Permanent link">&para;</a></h5>
-<h6 id="escape-all-variables-using-the-right-ldap-encoding-function">Escape all variables using the right LDAP encoding function<a class="headerlink" href="#escape-all-variables-using-the-right-ldap-encoding-function" title="Permanent link">&para;</a></h6>
-<p>The main way LDAP stores names is based on DN (<a href="https://ldapwiki.com/wiki/Distinguished%20Names">distinguished name</a>). You can think of this like a unique identifier. These are sometimes used to access resources, like a username.</p>
-<p>A DN might look like this</p>
-<div class="highlight"><pre><span></span><code>cn=Richard Feynman, ou=Physics Department, dc=Caltech, dc=edu
-</code></pre></div>
-<p>or</p>
-<div class="highlight"><pre><span></span><code>uid=inewton, ou=Mathematics Department, dc=Cambridge, dc=com
-</code></pre></div>
-<p>There are certain characters that are considered special characters in a DN. The exhaustive list is the following: <code>\ # + &lt; &gt; , ; " =</code> and leading or trailing spaces</p>
-<p>Each DN points to exactly 1 entry, which can be thought of sort of like a row in a RDBMS. For each entry, there will be 1 or more attributes which are analogous to RDBMS columns. If you are interested in searching through LDAP for users will certain attributes, you may do so with search filters. In a search filter, you can use standard boolean logic to get a list of users matching an arbitrary constraint. Search filters are written in Polish notation AKA prefix notation.</p>
-<p>Example:</p>
-<div class="highlight"><pre><span></span><code>(&amp;(ou=Physics)(| (manager=cn=Freeman Dyson,ou=Physics,dc=Caltech,dc=edu)
-(manager=cn=Albert Einstein,ou=Physics,dc=Princeton,dc=edu) ))
-</code></pre></div>
-<p>When building LDAP queries in application code, you MUST escape any untrusted data that is added to any LDAP query. There are two forms of LDAP escaping. Encoding for LDAP Search and Encoding for LDAP DN (distinguished name). The proper escaping depends on whether you are sanitizing input for a search filter, or you are using a DN as a username-like credential for accessing some resource.</p>
-<h5 id="example-code-java_1">Example code - Java<a class="headerlink" href="#example-code-java_1" title="Permanent link">&para;</a></h5>
-<h6 id="safe-java-for-ldap-escaping-example">Safe Java for LDAP escaping Example<a class="headerlink" href="#safe-java-for-ldap-escaping-example" title="Permanent link">&para;</a></h6>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">escapeDN</span><span class="w"> </span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w"> </span><span class="c1">//From RFC 2253 and the / character for JNDI</span>
-<span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kt">char</span><span class="o">[]</span><span class="w"> </span><span class="n">META_CHARS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="sc">&#39;+&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;&quot;&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;&lt;&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;&gt;&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;;&#39;</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;/&#39;</span><span class="p">};</span>
-<span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">escapedStr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">String</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
-<span class="w"> </span><span class="c1">//Backslash is both a Java and an LDAP escape character,</span>
-<span class="w"> </span><span class="c1">//so escape it first</span>
-<span class="w"> </span><span class="n">escapedStr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">escapedStr</span><span class="p">.</span><span class="na">replaceAll</span><span class="p">(</span><span class="s">&quot;\\\\\\\\&quot;</span><span class="p">,</span><span class="s">&quot;\\\\\\\\&quot;</span><span class="p">);</span>
-<span class="w"> </span><span class="c1">//Positional characters - see RFC 2253</span>
-<span class="w"> </span><span class="n">escapedStr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">escapedStr</span><span class="p">.</span><span class="na">replaceAll</span><span class="p">(</span><span class="s">&quot;\^#&quot;</span><span class="p">,</span><span class="s">&quot;\\\\\\\\#&quot;</span><span class="p">);</span>
-<span class="w"> </span><span class="n">escapedStr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">escapedStr</span><span class="p">.</span><span class="na">replaceAll</span><span class="p">(</span><span class="s">&quot;\^ | $&quot;</span><span class="p">,</span><span class="s">&quot;\\\\\\\\ &quot;</span><span class="p">);</span>
-<span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">META_CHARS</span><span class="p">.</span><span class="na">length</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">escapedStr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">escapedStr</span><span class="p">.</span><span class="na">replaceAll</span><span class="p">(</span><span class="s">&quot;\\\\&quot;</span><span class="w"> </span><span class="o">+</span>
-<span class="w">                     </span><span class="n">META_CHARS</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">,</span><span class="s">&quot;\\\\\\\\&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">META_CHARS</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">);</span>
-<span class="w"> </span><span class="p">}</span>
-<span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">escapedStr</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-<p>Note, that the backslash character is a Java String literal and a regular expression escape character.</p>
-<div class="highlight"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">escapeSearchFilter</span><span class="w"> </span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">filter</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w"> </span><span class="c1">//From RFC 2254</span>
-<span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">escapedStr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">String</span><span class="p">(</span><span class="n">filter</span><span class="p">);</span>
-<span class="w"> </span><span class="n">escapedStr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">escapedStr</span><span class="p">.</span><span class="na">replaceAll</span><span class="p">(</span><span class="s">&quot;\\\\\\\\&quot;</span><span class="p">,</span><span class="s">&quot;\\\\\\\\5c&quot;</span><span class="p">);</span>
-<span class="w"> </span><span class="n">escapedStr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">escapedStr</span><span class="p">.</span><span class="na">replaceAll</span><span class="p">(</span><span class="s">&quot;\\\\\*&quot;</span><span class="p">,</span><span class="s">&quot;\\\\\\\\2a&quot;</span><span class="p">);</span>
-<span class="w"> </span><span class="n">escapedStr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">escapedStr</span><span class="p">.</span><span class="na">replaceAll</span><span class="p">(</span><span class="s">&quot;\\\\(&quot;</span><span class="p">,</span><span class="s">&quot;\\\\\\\\28&quot;</span><span class="p">);</span>
-<span class="w"> </span><span class="n">escapedStr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">escapedStr</span><span class="p">.</span><span class="na">replaceAll</span><span class="p">(</span><span class="s">&quot;\\\\)&quot;</span><span class="p">,</span><span class="s">&quot;\\\\\\\\29&quot;</span><span class="p">);</span>
-<span class="w"> </span><span class="n">escapedStr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">escapedStr</span><span class="p">.</span><span class="na">replaceAll</span><span class="p">(</span><span class="s">&quot;\\\\&quot;</span><span class="w"> </span><span class="o">+</span>
-<span class="w">               </span><span class="n">Character</span><span class="p">.</span><span class="na">toString</span><span class="p">(</span><span class="err">&#39;\\</span><span class="n">u0000</span><span class="err">&#39;</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;\\\\\\\\00&quot;</span><span class="p">);</span>
-<span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">escapedStr</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
+<h6 id="use-the-right-ldap-encoding-function">Use the right LDAP encoding function<a class="headerlink" href="#use-the-right-ldap-encoding-function" title="Permanent link">&para;</a></h6>
+<p>LDAP distinguished names and LDAP search filters require different escaping rules, defined by <a href="https://datatracker.ietf.org/doc/html/rfc4514">RFC 4514</a> and <a href="https://datatracker.ietf.org/doc/html/rfc4515">RFC 4515</a>, respectively. Avoid custom escaping code and use a library encoder for the correct context. See the <a href="LDAP_Injection_Prevention_Cheat_Sheet.html">LDAP Injection Prevention Cheat Sheet</a> for current defenses and examples.</p>
 <h4 id="xpath-injection">XPath Injection<a class="headerlink" href="#xpath-injection" title="Permanent link">&para;</a></h4>
 <p>TODO</p>
 <h3 id="scripting-languages">Scripting languages<a class="headerlink" href="#scripting-languages" title="Permanent link">&para;</a></h3>
@@ -5270,7 +5169,7 @@
 </li>
 </ol>
 <p><code>^[a-z0-9]{3,10}$</code></p>
-<h4 id="example-code-java_2">Example code - Java<a class="headerlink" href="#example-code-java_2" title="Permanent link">&para;</a></h4>
+<h4 id="example-code-java_1">Example code - Java<a class="headerlink" href="#example-code-java_1" title="Permanent link">&para;</a></h4>
 <h5 id="incorrect-usage">Incorrect Usage<a class="headerlink" href="#incorrect-usage" title="Permanent link">&para;</a></h5>
 <div class="highlight"><pre><span></span><code><span class="n">ProcessBuilder</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ProcessBuilder</span><span class="p">(</span><span class="s">&quot;C:\DoStuff.exe -arg1 -arg2&quot;</span><span class="p">);</span>
 </code></pre></div>

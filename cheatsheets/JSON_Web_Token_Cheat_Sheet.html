@@ -2062,6 +2062,28 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#header-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Header fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#claims" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Claims
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -4231,6 +4253,28 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#header-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Header fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#claims" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Claims
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -4576,6 +4620,185 @@
 <span class="c1"># Not enough entropy for HS512</span>
 <span class="n">meh_secret_for_hs512</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_bytes</span><span class="p">(</span><span class="mi">256</span><span class="o">//</span><span class="mi">8</span><span class="p">)</span>
 </code></pre></div>
+<h3 id="header-fields">Header fields<a class="headerlink" href="#header-fields" title="Permanent link">&para;</a></h3>
+<p>The following table lists some important JWT (JOSE) header parameters for security purpose.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Semantic</th>
+<th>Security impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>alg</code></td>
+<td>Signature algorithm</td>
+<td>Signature algorithm used, risk of key type confusion</td>
+</tr>
+<tr>
+<td><code>typ</code></td>
+<td>Media type</td>
+<td>Protection against token type confusion</td>
+</tr>
+<tr>
+<td><code>jku</code></td>
+<td>Verification key (URL to the JWK)</td>
+<td>Risk of untrusted key usage, risk or SSRF</td>
+</tr>
+<tr>
+<td><code>x5u</code></td>
+<td>Verification key (URL to certificate)</td>
+<td>Risk of untrusted key usage, risk or SSRF</td>
+</tr>
+<tr>
+<td><code>jwk</code></td>
+<td>Verification key (JWK)</td>
+<td>Risk of untrusted key usage</td>
+</tr>
+<tr>
+<td><code>kid</code></td>
+<td>Verification key (key ID)</td>
+<td>Risk of untrusted key usage</td>
+</tr>
+<tr>
+<td><code>x5c</code></td>
+<td>Verification key (certificate chain)</td>
+<td>Risk of untrusted key usage</td>
+</tr>
+<tr>
+<td><code>x5t</code></td>
+<td>Verification key (certificate hash)</td>
+<td>Risk of untrusted key usage</td>
+</tr>
+<tr>
+<td><code>x5t#S256</code></td>
+<td>Verification key (certificate hash)</td>
+<td>Risk of untrusted key usage</td>
+</tr>
+</tbody>
+</table>
+<p>See the <a href="https://www.iana.org/assignments/jose/jose.xhtml#web-signature-encryption-header-parameters">header parameters subregistry</a> for a list of standard JWT (JOSE) header parameters.</p>
+<h3 id="claims">Claims<a class="headerlink" href="#claims" title="Permanent link">&para;</a></h3>
+<p>The following table lists some important JWT claims for security purpose.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Semantic</th>
+<th>Security impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>exp</code></td>
+<td>Expiration</td>
+<td>Token validity</td>
+</tr>
+<tr>
+<td><code>nbf</code></td>
+<td>Not valid before</td>
+<td>Token validity</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td>Reference to token status list</td>
+<td>Token revocation, risk of SSRF</td>
+</tr>
+<tr>
+<td><code>iss</code></td>
+<td>Issuer</td>
+<td>Scoping of claims (eg. <code>iss</code>), risk of untrusted issuer, risk of SSRF</td>
+</tr>
+<tr>
+<td><code>aud</code></td>
+<td>Audience</td>
+<td>Protection against audience confusion</td>
+</tr>
+<tr>
+<td><code>sub</code>, <code>sub_id</code></td>
+<td>Subject identifier</td>
+<td>Subject/user identification, risk of cross-issuer user impersonation</td>
+</tr>
+<tr>
+<td><code>jti</code></td>
+<td>Token identifier</td>
+<td>Audit (logs)</td>
+</tr>
+<tr>
+<td><code>iat</code></td>
+<td>Issuance timestamp</td>
+<td>Audit (logs)</td>
+</tr>
+<tr>
+<td><code>azp</code></td>
+<td>Authorized Party (OIDC)</td>
+<td>Audit (logs), authorization</td>
+</tr>
+<tr>
+<td><code>client_id</code></td>
+<td>Client (OAuth 2)</td>
+<td>Audit (logs), authorization</td>
+</tr>
+<tr>
+<td><code>auth_time</code></td>
+<td>Authentication timestamp (OIDC)</td>
+<td>Enforcing authentication freshness</td>
+</tr>
+<tr>
+<td><code>acr</code></td>
+<td>Authentication class</td>
+<td>Enforcing authentication strength (eg. MFA)</td>
+</tr>
+<tr>
+<td><code>amr</code></td>
+<td>Authentication method reference</td>
+<td>Enforcing authentication strength (eg. MFA)</td>
+</tr>
+<tr>
+<td><code>cnf</code></td>
+<td>Token holder (public) key</td>
+<td>Sender constrained token</td>
+</tr>
+<tr>
+<td><code>may_act</code></td>
+<td>Authorized Actor (impersonation/delegation)</td>
+<td>Risk of cross-issuer user impersonation</td>
+</tr>
+<tr>
+<td><code>act</code></td>
+<td>Actor (delegation, “on behalf of”)</td>
+<td>Audit (logs), risk of invalid actor imputation</td>
+</tr>
+<tr>
+<td><code>scope</code></td>
+<td>Token restriction (OAuth 2)</td>
+<td>Authorization</td>
+</tr>
+<tr>
+<td><code>roles</code></td>
+<td>User roles</td>
+<td>Authorization, risk of spoofed cross-issuer authorization</td>
+</tr>
+<tr>
+<td><code>groups</code></td>
+<td>User groups</td>
+<td>Authorization, risk of spoofed cross-issuer authorization</td>
+</tr>
+<tr>
+<td><code>entitlements</code></td>
+<td>User entitlements</td>
+<td>Authorization, risk of spoofed cross-issuer authorization</td>
+</tr>
+<tr>
+<td><code>authorization_details</code></td>
+<td>Fine grained authorizations</td>
+<td>Authorization, risk of spoofed cross-issuer authorization</td>
+</tr>
+</tbody>
+</table>
+<p>See the <a href="https://www.iana.org/assignments/jwt/jwt.xhtml">JSON Web Token Claims subregistry</a> for a list of standard JWT claims.</p>
+<p>Many implementation have built-in support for validating core JWT claims such as <code>nbf</code>, <code>exp</code>, <code>iss</code> and <code>aud</code>.</p>
 <h2 id="threats-on-jwts">Threats on JWTs<a class="headerlink" href="#threats-on-jwts" title="Permanent link">&para;</a></h2>
 <p>See <a href="https://datatracker.ietf.org/doc/html/rfc8725#name-threats-and-vulnerabilities">RFC 8725</a> for a discussion on threats and vulnerabilities related to JWT.</p>
 <h3 id="unsecured-jwts">Unsecured JWTs<a class="headerlink" href="#unsecured-jwts" title="Permanent link">&para;</a></h3>
