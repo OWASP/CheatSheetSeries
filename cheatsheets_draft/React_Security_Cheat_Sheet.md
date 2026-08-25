@@ -2,7 +2,7 @@
 
 ## Introduction
 
-React provides built-in protections against common vulnerabilites through JSX escaping, but several common patterns bypass these protections entirely. As React moves toward server-side rendering and React Server Components, the attack surface has expanded. This cheat sheet covers the most critical security pitfalls for React developers.
+React provides built-in protections against common vulnerabilities through JSX escaping, but several common patterns bypass these protections entirely. As React moves toward server-side rendering and React Server Components, the attack surface has expanded. This cheat sheet covers the most critical security pitfalls for React developers.
 
 Key areas covered:
 
